@@ -23,10 +23,12 @@ source module /ci/lib/io.sh
 export BAZEL_CONFIG=""
 export RUN_INTEGRATION_TESTS="no"
 export BUILD_TOOL="CMake"
-driver_script="ci/kokoro/macos/build-bazel.sh"
 
 # TODO(#4896): Enable generator integration tests for macos.
 export GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS="no"
+
+BRANCH="${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-main}"
+readonly BRANCH
 
 if [[ $# -eq 1 ]]; then
   export BUILD_NAME="${1}"
@@ -56,33 +58,8 @@ else
   exit 1
 fi
 
-# In some versions of Kokoro `google-cloud-sdk` is not installed by default, or
-# it is just partially installed. This gives us a more consistent environment.
-echo "================================================================"
-io::log_yellow "Update or reinstall 'google-cloud-sdk'."
-export HOMEBREW_NO_AUTO_UPDATE=1
-export HOMEBREW_NO_INSTALL_CLEANUP=1
-brew --config
-# Ignore errors, maybe the local version is functional.
-brew reinstall google-cloud-sdk || brew install google-cloud-sdk || true
-# Continue despite `brew doctor` errors and warnings.
-brew doctor || true
-
-echo "================================================================"
-io::log_yellow "change working directory to project root."
-cd "${PROJECT_ROOT}"
-
-NCPU="$(sysctl -n hw.logicalcpu)"
-readonly NCPU
-
-KOKORO_GFILE_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
-readonly KOKORO_GFILE_DIR
-
-echo "================================================================"
-io::log_yellow "building with ${NCPU} cores on ${PWD}."
-
+driver_script="ci/kokoro/macos/build-bazel.sh"
 script_flags=()
-
 if [[ "${BUILD_NAME}" == "bazel" ]]; then
   export BUILD_TOOL="Bazel"
   driver_script="ci/kokoro/macos/build-bazel.sh"
@@ -99,11 +76,48 @@ else
   exit 1
 fi
 
+cd "${PROJECT_ROOT}"
+NCPU="$(sysctl -n hw.logicalcpu)"
+readonly NCPU
+
+function google_time() {
+  curl -sI google.com | tr -d '\r' | sed -n 's/Date: \(.*\)/\1/p'
+}
+io::log_h1 "Machine Info"
+printf "%10s %s\n" "host:" "$(date -u -R)"
+printf "%10s %s\n" "google:" "$(google_time)"
+printf "%10s %s\n" "kernel:" "$(uname -v)"
+printf "%10s %s\n" "os:" "$(sw_vers | xargs)"
+printf "%10s %s\n" "arch:" "$(arch)"
+printf "%10s %s\n" "cpus:" "${NCPU}"
+printf "%10s %s\n" "mem:" "$(($(sysctl -n hw.memsize) / 1024 / 1024 / 1024)) GB"
+printf "%10s %s\n" "term:" "${TERM-}"
+printf "%10s %s\n" "bash:" "$(bash --version 2>&1 | head -1)"
+printf "%10s %s\n" "clang:" "$(clang --version 2>&1 | head -1)"
+printf "%10s %s\n" "cmake:" "$(cmake --version 2>&1 | head -1)"
+printf "%10s %s\n" "bazel:" "$(bazel --version 2>&1 | head -1)"
+printf "%10s %s\n" "brew:" "$(brew --version 2>&1 | head -1)"
+printf "%10s %s\n" "branch:" "${BRANCH}"
+
+io::log_h1 "Starting Build: ${BUILD_NAME}"
+
+# In some versions of Kokoro `google-cloud-sdk` is not installed by default, or
+# it is just partially installed. This gives us a more consistent environment.
+io::log_h2 "Updating google-cloud-sdk with brew"
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_INSTALL_CLEANUP=1
+brew --config
+# Ignore errors, maybe the local version is functional.
+brew reinstall google-cloud-sdk || brew install google-cloud-sdk || true
+# Continue despite `brew doctor` errors and warnings.
+brew doctor || true
+
+KOKORO_GFILE_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
+readonly KOKORO_GFILE_DIR
+
 # We need this environment variable because on macOS gRPC crashes if it cannot
 # find the credentials, even if you do not use them. Some of the unit tests do
 # exactly that.
-echo "================================================================"
-io::log_yellow "define GOOGLE_APPLICATION_CREDENTIALS."
 export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/kokoro-run-key.json"
 
 # Download the gRPC `roots.pem` file. On macOS gRPC does not use the native
@@ -112,17 +126,11 @@ export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/kokoro-run-key.json"
 #    https://github.com/grpc/grpc/pull/16246
 # But it was closed without being merged, and there are open bugs:
 #    https://github.com/grpc/grpc/issues/16571
-echo "================================================================"
-io::log_yellow "getting roots.pem for gRPC."
+io::log_h1 "Getting roots.pem for gRPC"
 export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="${KOKORO_GFILE_DIR}/roots.pem"
 rm -f "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
 curl -sSL --retry 10 -o "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}" \
   https://pki.google.com/roots.pem
-
-BRANCH="${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-main}"
-readonly BRANCH
-echo "================================================================"
-io::log_yellow "detected the branch name: ${BRANCH}."
 
 CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
 readonly CACHE_BUCKET
@@ -132,14 +140,12 @@ readonly CACHE_FOLDER
 CACHE_NAME="cache-macos-${BUILD_NAME}"
 readonly CACHE_NAME
 
-echo "================================================================"
+io::log_h1 "Downloading cache"
 brew install coreutils # To get gtimeout
 gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
   "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 
-echo "================================================================"
-io::log_yellow "starting build script."
-
+io::log_h1 "Running build script: ${driver_script}"
 if "${driver_script}" "${script_flags[@]+"${script_flags[@]}"}"; then
   io::log_green "build script was successful."
 else
@@ -147,8 +153,7 @@ else
   exit 1
 fi
 
-io::log_yellow "post build cache upload + cleanup"
-
+io::log_h1 "Uploading cache"
 gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/upload-cache.sh" \
   "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 

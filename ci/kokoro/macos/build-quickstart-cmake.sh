@@ -20,13 +20,12 @@ source module /ci/lib/io.sh
 source module /ci/etc/integration-tests-config.sh
 source module /ci/etc/quickstart-config.sh
 
-echo "================================================================"
-io::log_yellow "Update or install dependencies."
+io::log_h2 "Update or install dependencies"
 
 # Fetch vcpkg at the specified hash.
 vcpkg_dir="${HOME}/vcpkg-quickstart"
 mkdir -p "${vcpkg_dir}"
-echo "Downloading vcpkg into ${vcpkg_dir}..."
+io::log "Downloading vcpkg into ${vcpkg_dir}..."
 curl -sSL "https://github.com/microsoft/vcpkg/archive/2021.05.12.tar.gz" |
   tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
 (
@@ -49,7 +48,6 @@ if [[ -r "${CREDENTIALS_FILE}" ]]; then
 fi
 readonly run_quickstart
 
-echo "================================================================"
 cd "${PROJECT_ROOT}"
 cmake_flags=(
   "-DCMAKE_TOOLCHAIN_FILE=${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake"
@@ -64,18 +62,17 @@ build_quickstart() {
   local ninja
   ninja="$("${vcpkg_dir}/vcpkg" "--feature-flags=-manifests" fetch ninja)"
 
-  echo
-  io::log_yellow "Configure CMake for ${library}'s quickstart."
+  io::log_h2 "Configure CMake for ${library}'s quickstart"
   "${cmake}" "-GNinja" "-DCMAKE_MAKE_PROGRAM=${ninja}" \
     "-H${source_dir}" "-B${binary_dir}" "${cmake_flags[@]}"
 
   echo
-  io::log_yellow "Compiling ${library}'s quickstart."
+  io::log_h2 "Compiling ${library}'s quickstart"
   "${cmake}" --build "${binary_dir}"
 
   if [[ "${run_quickstart}" == "true" ]]; then
     echo
-    io::log_yellow "Running ${library}'s quickstart."
+    io::log_h2 "Running ${library}'s quickstart"
     args=()
     while IFS="" read -r line; do
       args+=("${line}")
@@ -88,9 +85,7 @@ build_quickstart() {
 
 errors=""
 for library in $(quickstart::libraries); do
-  echo
-  echo "================================================================"
-  io::log_yellow "Building ${library}'s quickstart"
+  io::log_h2 "Building ${library}'s quickstart"
   if ! build_quickstart "${library}"; then
     io::log_red "Building ${library}'s quickstart failed"
     errors="${errors} ${library}"
@@ -99,7 +94,6 @@ for library in $(quickstart::libraries); do
   fi
 done
 
-echo "================================================================"
 if [[ -z "${errors}" ]]; then
   io::log_green "All quickstart builds were successful"
 else

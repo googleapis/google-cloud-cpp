@@ -20,9 +20,7 @@ source module /ci/etc/integration-tests-config.sh
 source module /ci/etc/quickstart-config.sh
 source module /ci/lib/io.sh
 
-echo
-echo "================================================================"
-io::log_yellow "update or install Bazel."
+io::log_h2 "update or install Bazel"
 
 # macOS does not have sha256sum by default, but `shasum -a 256` does the same
 # thing:
@@ -35,8 +33,6 @@ mkdir -p "cmake-out/download"
   "${PROJECT_ROOT}/ci/install-bazel.sh" >/dev/null
 )
 
-echo
-echo "================================================================"
 readonly BAZEL_BIN="$HOME/bin/bazel"
 io::log "Using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" version
@@ -73,7 +69,6 @@ if [[ -r "${CREDENTIALS_FILE}" ]]; then
 fi
 readonly run_quickstart
 
-echo "================================================================"
 cd "${PROJECT_ROOT}"
 
 build_quickstart() {
@@ -93,8 +88,7 @@ build_quickstart() {
       @go_sdk//...
       @remotejdk11_macos//:jdk
     )
-    echo
-    io::log_yellow "Fetching deps for ${library}'s quickstart [${repeat}/3]."
+    io::log_yellow "Fetching deps for ${library}'s quickstart [${repeat}/3]"
     if "${BAZEL_BIN}" fetch ... "${external[@]}"; then
       break
     else
@@ -103,13 +97,12 @@ build_quickstart() {
     sleep $((120 * repeat))
   done
 
-  echo
-  io::log_yellow "Compiling ${library}'s quickstart"
+  io::log_h2 "Compiling ${library}'s quickstart"
   "${BAZEL_BIN}" build "${bazel_args[@]}" ...
 
   if [[ "${run_quickstart}" == "true" ]]; then
     echo
-    io::log_yellow "Running ${library}'s quickstart."
+    io::log_yellow "Running ${library}'s quickstart"
     args=()
     while IFS="" read -r line; do
       args+=("${line}")
@@ -125,9 +118,7 @@ build_quickstart() {
 
 errors=""
 for library in $(quickstart::libraries); do
-  echo
-  echo "================================================================"
-  io::log_yellow "Building ${library}'s quickstart"
+  io::log_h2 "Building ${library}'s quickstart"
   if ! build_quickstart "${library}"; then
     io::log_red "Building ${library}'s quickstart failed"
     errors="${errors} ${library}"
@@ -136,7 +127,6 @@ for library in $(quickstart::libraries); do
   fi
 done
 
-echo "================================================================"
 if [[ -z "${errors}" ]]; then
   io::log_green "All quickstart builds were successful"
 else

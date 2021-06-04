@@ -19,6 +19,8 @@ if ((CI_KOKORO_LIB_GCLOUD_SH__++ != 0)); then
   return 0
 fi # include guard
 
+source module /ci/lib/io.sh
+
 if [[ -z "${GCLOUD_CONFIG:-}" ]]; then
   readonly GCLOUD_CONFIG="cloud-cpp-integration"
 fi
@@ -62,8 +64,6 @@ delete_gcloud_config() {
 create_gcloud_config() {
   if ! "${GCLOUD_BIN}" --quiet config configurations \
     describe "${GCLOUD_CONFIG}" >/dev/null 2>&1; then
-    echo
-    echo "================================================================"
     io::log "Create the gcloud configuration for the cloud-cpp tests."
     "${GCLOUD_BIN}" --quiet --no-user-output-enabled config configurations \
       create --no-activate "${GCLOUD_CONFIG}" >/dev/null

@@ -30,19 +30,15 @@ readonly BINARY_DIR="$2"
 NCPU="$(sysctl -n hw.logicalcpu)"
 readonly NCPU
 
-echo "================================================================"
-io::log_yellow "Update or install dependencies."
-
+io::log_h2 "Update or install dependencies"
 brew install openssl
 brew install cmake || cmake --version
 brew install ninja || ninja --version
 
-echo "================================================================"
-io::log_yellow "ccache stats"
+io::log_h2 "ccache stats"
 ccache --show-stats
 ccache --zero-stats
 
-echo "================================================================"
 cd "${PROJECT_ROOT}"
 
 # Sets OPENSSL_ROOT_DIR to its install path from homebrew.
@@ -55,12 +51,10 @@ cmake_flags=(
   "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
 )
 
-echo "================================================================"
-io::log_yellow "Configure CMake."
+io::log_h2 "Configure CMake"
 cmake -GNinja "-H${SOURCE_DIR}" "-B${BINARY_DIR}" "${cmake_flags[@]}"
 
-echo "================================================================"
-io::log_yellow "Compiling with ${NCPU} cpus."
+io::log_h2 "Compiling with ${NCPU} cpus"
 cmake --build "${BINARY_DIR}" -- -j "${NCPU}"
 
 # When user a super-build the tests are hidden in a subdirectory. We can tell
@@ -68,15 +62,13 @@ cmake --build "${BINARY_DIR}" -- -j "${NCPU}"
 if [[ -r "${BINARY_DIR}/CTestTestfile.cmake" ]]; then
   # If the file is not present, then this is a super build, which automatically
   # run the tests anyway, no need to run them again.
-  echo "================================================================"
-  io::log_yellow "Running unit tests."
+  io::log_h2 "Running unit tests"
   (
     cd "${BINARY_DIR}"
     ctest \
       -LE integration-test \
       --output-on-failure -j "${NCPU}"
   )
-  echo "================================================================"
 fi
 
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
@@ -93,9 +85,7 @@ should_run_integration_tests() {
 }
 
 if should_run_integration_tests; then
-  echo
-  echo "================================================================"
-  io::log_yellow "running integration tests."
+  io::log_h2 "Running integration tests"
   (
     export GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON="${TEST_KEY_FILE_JSON}"
     export GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12="${TEST_KEY_FILE_P12}"
@@ -121,13 +111,9 @@ if should_run_integration_tests; then
   )
 fi
 
-echo "================================================================"
-io::log_yellow "ccache stats"
+io::log_h2 "ccache stats"
 ccache --show-stats
 ccache --zero-stats
 
-echo "================================================================"
 io::log_green "Build finished successfully"
-echo "================================================================"
-
 exit 0

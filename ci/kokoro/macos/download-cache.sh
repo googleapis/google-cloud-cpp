@@ -40,7 +40,6 @@ readonly DOWNLOAD="cmake-out/download"
 mkdir -p "${DOWNLOAD}"
 cache_download_tarball "${CACHE_FOLDER}" "${DOWNLOAD}" "${CACHE_NAME}.tar.gz"
 
-echo "================================================================"
 io::log "Extracting build cache"
 tar -C / -zxf "${DOWNLOAD}/${CACHE_NAME}.tar.gz"
 io::log "Extraction completed"
