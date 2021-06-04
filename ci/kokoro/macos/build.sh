@@ -99,22 +99,6 @@ else
   exit 1
 fi
 
-# Sadly, the Kokoro machines seem to be out of sync
-if [[ "${RUNNING_CI:-}" != "yes" ]]; then
-  io::log_yellow "Skipping clock sync for interactive build"
-elif type ntpdate >/dev/null 2>&1; then
-  echo "================================================================"
-  io::log_yellow "using ntpdate to synchronize clock from time.google.com."
-  sudo ntpdate time.google.com
-elif type sntp >/dev/null 2>&1; then
-  echo "================================================================"
-  io::log_yellow "using sntp to synchronize clock from time.google.com."
-  sudo sntp -sS time.google.com
-else
-  echo "================================================================"
-  io::log_red "no command available to sync clock"
-fi
-
 # We need this environment variable because on macOS gRPC crashes if it cannot
 # find the credentials, even if you do not use them. Some of the unit tests do
 # exactly that.
