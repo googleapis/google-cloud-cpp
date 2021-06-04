@@ -42,7 +42,7 @@ pubsub_client_unit_tests = [
     "internal/user_agent_prefix_test.cc",
     "message_test.cc",
     "publisher_connection_test.cc",
-    "publisher_option_test.cc",
+    "publisher_options_test.cc",
     "publisher_test.cc",
     "schema_admin_client_test.cc",
     "schema_admin_connection_test.cc",
