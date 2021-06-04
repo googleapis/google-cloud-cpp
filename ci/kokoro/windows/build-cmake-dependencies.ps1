@@ -126,7 +126,7 @@ if ($RunningCI -and $HasBuildCache) {
 
 # Integrate installed packages into the build environment.
 Push-Location "${vcpkg_dir}"
-&"vcpkg.exe" integrate install
+&".\vcpkg.exe" integrate install
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "vcpkg integrate failed with exit code $LastExitCode"
     Exit ${LastExitCode}
@@ -136,7 +136,7 @@ Pop-Location
 # Remove old versions of the packages.
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cleanup outdated vcpkg packages."
 Push-Location "${vcpkg_dir}"
-&"vcpkg.exe" remove ${vcpkg_flags} --outdated --recurse
+&".\vcpkg.exe" remove ${vcpkg_flags} --outdated --recurse
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "vcpkg remove --outdated failed with exit code $LastExitCode"
     Exit ${LastExitCode}
@@ -148,7 +148,7 @@ ForEach($_ in (1, 2, 3)) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Warmup vcpkg [$_]"
     # Additional dependencies, these are not downloaded by `bazel fetch ...`,
     # but are needed to compile the code
-    &"vcpkg.exe" install ${vcpkg_flags} "crc32c"
+    &".\vcpkg.exe" install ${vcpkg_flags} "crc32c"
     if ($LastExitCode -eq 0) {
         break
     }
@@ -159,7 +159,7 @@ Pop-Location
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Building vcpkg packages."
 Push-Location "${vcpkg_dir}"
 foreach ($pkg in $packages) {
-    &"vcpkg.exe" install ${vcpkg_flags} "${pkg}"
+    &".\vcpkg.exe" install ${vcpkg_flags} "${pkg}"
     if ($LastExitCode) {
         Write-Host -ForegroundColor Red "vcpkg install $pkg failed with exit code $LastExitCode"
         Exit ${LastExitCode}
@@ -169,7 +169,7 @@ Pop-Location
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) vcpkg list"
 Push-Location "${vcpkg_dir}"
-&"vcpkg.exe" list
+&".\vcpkg.exe" list
 Pop-Location
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cleanup vcpkg buildtrees"
