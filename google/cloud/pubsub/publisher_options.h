@@ -56,7 +56,7 @@ class PublisherOptions {
    * send multiple messages in a single "batch" to the service. The following
    * configuration options can be used to improve throughput: sending larger
    * batches reduces CPU and network overhead. Note that batches are subject
-   * to [quota limits]
+   * to [quota limits].
    *
    * [quota limits]: https://cloud.google.com/pubsub/quotas#resource_limits
    */
@@ -176,13 +176,13 @@ class PublisherOptions {
 
   /// Flow control based on pending bytes.
   PublisherOptions& set_maximum_pending_bytes(std::size_t v) {
-    maximum_pending_bytes_ = (std::max)(v, kDefaultMinimumMessageSize);
+    maximum_pending_bytes_ = v;
     return *this;
   }
 
   /// Flow control based on pending messages.
   PublisherOptions& set_maximum_pending_messages(std::size_t v) {
-    maximum_pending_messages_ = (std::max)(v, std::size_t{1});
+    maximum_pending_messages_ = v;
     return *this;
   }
 
@@ -229,10 +229,6 @@ class PublisherOptions {
       (std::numeric_limits<std::size_t>::max)();
   static std::size_t constexpr kDefaultMaximumPendingMessages =
       (std::numeric_limits<std::size_t>::max)();
-  // According to https://cloud.google.com/pubsub/pricing, the minimum legal
-  // size for a message is 21 bytes. Setting the pending message bytes size to
-  // less than this number leads to deadlocks.
-  static std::size_t constexpr kDefaultMinimumMessageSize = 21;
 
   enum class FullPublisherAction { kIgnored, kRejects, kBlocks };
 

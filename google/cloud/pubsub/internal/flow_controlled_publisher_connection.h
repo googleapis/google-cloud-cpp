@@ -69,6 +69,8 @@ class FlowControlledPublisherConnection
            pending_bytes_ > options_.maximum_pending_bytes();
   }
   bool MakesFull(std::size_t message_size) const {
+    // Accept at least one message before blocking or rejecting data.
+    if (pending_messages_ == 0) return false;
     return pending_messages_ + 1 > options_.maximum_pending_messages() ||
            pending_bytes_ + message_size > options_.maximum_pending_bytes();
   }

@@ -51,7 +51,7 @@ TEST(PublisherOptions, MaximumPendingBytes) {
   EXPECT_EQ(10000000, b1.maximum_pending_bytes());
 
   auto const b2 = PublisherOptions{}.set_maximum_pending_bytes(0);
-  EXPECT_NE(0, b2.maximum_pending_bytes());
+  EXPECT_EQ(0, b2.maximum_pending_bytes());
 }
 
 TEST(PublisherOptions, MaximumPendingMessages) {
@@ -62,7 +62,7 @@ TEST(PublisherOptions, MaximumPendingMessages) {
   EXPECT_EQ(1000, b1.maximum_pending_messages());
 
   auto const b2 = PublisherOptions{}.set_maximum_pending_messages(0);
-  EXPECT_NE(0, b2.maximum_pending_messages());
+  EXPECT_EQ(0, b2.maximum_pending_messages());
 }
 
 TEST(PublisherOptions, FullPublisherAction) {

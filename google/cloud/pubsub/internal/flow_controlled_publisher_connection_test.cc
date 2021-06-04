@@ -125,6 +125,32 @@ TEST(FlowControlledPublisherConnection, RejectOnMessages) {
   EXPECT_THAT(m4.get(), IsOk());
 }
 
+TEST(FlowControlledPublisherConnection, AcceptsAtLeastOne) {
+  AsyncSequencer<StatusOr<std::string>> publish;
+  auto mock = std::make_shared<MockPublisherConnection>();
+  EXPECT_CALL(*mock, Publish)
+      .WillRepeatedly(
+          [&publish](pubsub::PublisherConnection::PublishParams const&) {
+            return publish.PushBack("Publish()");
+          });
+
+  auto under_test = FlowControlledPublisherConnection::Create(
+      pubsub::PublisherOptions{}
+          .set_full_publisher_rejects()
+          .set_maximum_pending_messages(0)
+          .set_maximum_pending_bytes(0),
+      mock);
+
+  auto m0 = under_test->Publish({MakeTestMessage(128)});
+  auto rejected = under_test->Publish({MakeTestMessage(128)});
+  EXPECT_THAT(rejected.get(), StatusIs(StatusCode::kFailedPrecondition));
+  publish.PopFront().set_value(make_status_or(std::string{"ack-m0"}));
+  EXPECT_THAT(m0.get(), IsOk());
+  auto m1 = under_test->Publish({MakeTestMessage(128)});
+  publish.PopFront().set_value(make_status_or(std::string{"ack-m1"}));
+  EXPECT_THAT(m1.get(), IsOk());
+}
+
 auto constexpr kMessageSize = 1024;
 auto constexpr kExpectedMaxMessages = 4;
 auto constexpr kExpectedMaxBytes = kExpectedMaxMessages * kMessageSize;
