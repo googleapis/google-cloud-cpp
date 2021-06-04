@@ -218,7 +218,7 @@ void GetIamPolicy(std::vector<std::string> const& argv) {
     std::cout << "Policy successfully retrieved: " << response->DebugString()
               << "\n";
   }
-  //! [END iam_get_iam_policy] [iam-get-iam-policy]
+  //! [END iam_get_policy] [iam-get-iam-policy]
   (argv.at(0));
 }
 
@@ -235,7 +235,7 @@ void SetIamPolicy(std::vector<std::string> const& argv) {
     if (!response) throw std::runtime_error(response.status().message());
     std::cout << "Policy successfully set: " << response->DebugString() << "\n";
   }
-  //! [END iam_set_iam_policy] [iam-set-iam-policy]
+  //! [END iam_set_policy] [iam-set-iam-policy]
   (argv.at(0));
 }
 
@@ -253,7 +253,7 @@ void TestIamPermissions(std::vector<std::string> const& argv) {
     std::cout << "Permissions successfully tested: " << response->DebugString()
               << "\n";
   }
-  //! [END iam_test_iam_permissions] [iam-test-iam-permissions]
+  //! [END iam_test_permissions] [iam-test-iam-permissions]
   (argv.at(0), {argv.begin() + 1, argv.end()});
 }
 
@@ -276,7 +276,7 @@ void QueryGrantableRoles(std::vector<std::string> const& argv) {
       std::cout << "No grantable roles found in resource: " << resource << "\n";
     }
   }
-  //! [END iam_query_grantable_roles] [iam-query-grantable-roles]
+  //! [END iam_view_grantable_roles] [iam-query-grantable-roles]
   (argv.at(0));
 }
 
