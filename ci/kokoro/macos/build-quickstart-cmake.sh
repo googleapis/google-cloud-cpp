@@ -25,16 +25,16 @@ io::log_yellow "Update or install dependencies."
 
 # Fetch vcpkg at the specified hash.
 vcpkg_dir="${HOME}/vcpkg-quickstart"
-vcpkg_bin="${vcpkg_dir}/vcpkg"
 mkdir -p "${vcpkg_dir}"
 echo "Downloading vcpkg into ${vcpkg_dir}..."
-curl -sSL "https://github.com/microsoft/vcpkg/archive/2021.04.30.tar.gz" |
+curl -sSL "https://github.com/microsoft/vcpkg/archive/2021.05.12.tar.gz" |
   tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
-env CC="ccache cc" CXX="ccache c++" "${vcpkg_dir}/bootstrap-vcpkg.sh"
-
-"${vcpkg_bin}" remove --outdated --recurse
-"${PROJECT_ROOT}/ci/retry-command.sh" 2 5 \
-  "${vcpkg_bin}" install google-cloud-cpp
+(
+  cd "${vcpkg_dir}"
+  CC="ccache cc" CXX="ccache c++" ./bootstrap-vcpkg.sh
+  ./vcpkg remove --outdated --recurse
+  ./vcpkg install google-cloud-cpp
+)
 
 run_quickstart="false"
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"

@@ -48,7 +48,8 @@ if ($args.count -ge 1) {
     $vcpkg_flags=("--triplet", "${env:VCPKG_TRIPLET}")
 }
 $vcpkg_dir = "cmake-out\${vcpkg_base}"
-$vcpkg_version = "2021.04.30"
+$vcpkg_version = "2021.05.12"
+$Env:VCPKG_FEATURE_FLAGS = "-manifests"
 
 New-Item -ItemType Directory -Path "cmake-out" -ErrorAction SilentlyContinue
 # Download the right version of `vcpkg`
