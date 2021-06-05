@@ -16,23 +16,17 @@
 
 set -eu
 
-source "$(dirname "$0")/../../lib/init.sh"
-source module ci/cloudbuild/builds/lib/cmake.sh
-source module ci/etc/quickstart-config.sh
-source module ci/lib/io.sh
-
 export CC=gcc
 export CXX=g++
 
-io::log_h2 "Installing vcpkg"
-vcpkg_dir="${HOME}/vcpkg-quickstart"
-mkdir -p "${vcpkg_dir}"
-io::log "Downloading vcpkg into ${vcpkg_dir}..."
-curl -sSL "https://github.com/microsoft/vcpkg/archive/2021.05.12.tar.gz" |
-  tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
-env -C "${vcpkg_dir}" CC="ccache ${CC}" CXX="ccache ${CXX}" ./bootstrap-vcpkg.sh
+source "$(dirname "$0")/../../lib/init.sh"
+source module ci/cloudbuild/builds/lib/cmake.sh
+source module ci/cloudbuild/builds/lib/vcpkg.sh
+source module ci/etc/quickstart-config.sh
+source module ci/lib/io.sh
 
 io::log_h2 "Installing google-cloud-cpp with vcpkg"
+vcpkg_dir="$(vcpkg::root_dir)"
 env -C "${vcpkg_dir}" ./vcpkg remove --outdated --recurse
 env -C "${vcpkg_dir}" ./vcpkg install google-cloud-cpp
 
