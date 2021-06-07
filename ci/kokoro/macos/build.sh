@@ -139,7 +139,6 @@ CACHE_NAME="cache-macos-${BUILD_NAME}"
 readonly CACHE_NAME
 
 io::log_h1 "Downloading cache"
-# brew install coreutils # To get gtimeout
 gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
   "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 
