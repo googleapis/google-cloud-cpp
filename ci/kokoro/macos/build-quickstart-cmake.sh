@@ -23,7 +23,7 @@ source module /ci/etc/quickstart-config.sh
 io::log_h2 "Update or install dependencies"
 
 # vcpkg needs this
-brew install pkg-config || pkg-config --version
+brew list --versions pkg-config || brew install pkg-config
 
 # Fetch vcpkg at the specified hash.
 vcpkg_dir="${HOME}/vcpkg-quickstart"

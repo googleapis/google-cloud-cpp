@@ -31,10 +31,10 @@ NCPU="$(sysctl -n hw.logicalcpu)"
 readonly NCPU
 
 io::log_h2 "Update or install dependencies"
-brew install openssl
-brew install ccache || ccache --version
-brew install cmake || cmake --version
-brew install ninja || ninja --version
+brew list --versions openssl || brew install openssl
+brew list --versions ccache || brew install ccache
+brew list --versions cmake || brew install cmake
+brew list --versions ninja || brew install ninja
 
 io::log_h2 "ccache stats"
 ccache --show-stats
