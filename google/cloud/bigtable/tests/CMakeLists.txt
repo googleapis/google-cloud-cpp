@@ -18,15 +18,12 @@
 # Bigtable emulator.
 set(bigtable_client_integration_tests
     # cmake-format: sort
-    admin_async_future_integration_test.cc
-    admin_backup_async_future_integration_test.cc
     admin_backup_integration_test.cc
     admin_iam_policy_integration_test.cc
     admin_integration_test.cc
     data_async_future_integration_test.cc
     data_integration_test.cc
     filters_integration_test.cc
-    instance_admin_async_future_integration_test.cc
     instance_admin_integration_test.cc
     mutations_integration_test.cc
     table_sample_rows_integration_test.cc)
@@ -70,7 +67,6 @@ google_cloud_cpp_add_common_options(${target})
 # We just know that these tests need to be run against production.
 set(bigtable_integration_tests_production
     # cmake-format: sort
-    admin_backup_async_future_integration_test.cc
     admin_backup_integration_test.cc admin_iam_policy_integration_test.cc)
 
 foreach (fname ${bigtable_integration_tests_production})
