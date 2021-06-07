@@ -99,18 +99,16 @@ printf "%10s %s\n" "bazel:" "$(bazel --version 2>&1 | head -1)"
 printf "%10s %s\n" "brew:" "$(brew --version 2>&1 | head -1)"
 printf "%10s %s\n" "branch:" "${BRANCH}"
 
-io::log_h1 "Starting Build: ${BUILD_NAME}"
+io::log_h2 "Brew packages"
+brew list --versions --formula
+brew list --versions --cask
 
-# In some versions of Kokoro `google-cloud-sdk` is not installed by default, or
-# it is just partially installed. This gives us a more consistent environment.
-io::log_h2 "Updating google-cloud-sdk with brew"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
-brew --config
-# Ignore errors, maybe the local version is functional.
-brew reinstall google-cloud-sdk || brew install google-cloud-sdk || true
-# Continue despite `brew doctor` errors and warnings.
-brew doctor || true
+brew list --versions coreutils || brew install coreutils
+brew list --versions --cask google-cloud-sdk || brew install --cask google-cloud-sdk
+
+io::log_h1 "Starting Build: ${BUILD_NAME}"
 
 KOKORO_GFILE_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
 readonly KOKORO_GFILE_DIR
@@ -141,7 +139,7 @@ CACHE_NAME="cache-macos-${BUILD_NAME}"
 readonly CACHE_NAME
 
 io::log_h1 "Downloading cache"
-brew install coreutils # To get gtimeout
+# brew install coreutils # To get gtimeout
 gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
   "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 
