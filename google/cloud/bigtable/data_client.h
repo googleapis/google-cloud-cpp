@@ -29,16 +29,9 @@ inline namespace BIGTABLE_CLIENT_NS {
 // Forward declare some classes so we can be friends.
 class Table;
 namespace internal {
-class AsyncBulkMutatorNoex;
 class AsyncRetryBulkApply;
 class AsyncRowSampler;
 class BulkMutator;
-template <typename ReadRowCallback,
-          typename std::enable_if<
-              google::cloud::internal::is_invocable<
-                  ReadRowCallback, CompletionQueue&, Row, grpc::Status&>::value,
-              int>::type>
-class AsyncRowReader;
 class LoggingDataClient;
 }  // namespace internal
 
@@ -96,19 +89,12 @@ class DataClient {
   // classes that do use them friends.
  protected:
   friend class Table;
-  friend class internal::AsyncBulkMutatorNoex;
   friend class internal::AsyncRetryBulkApply;
   friend class internal::AsyncRowSampler;
   friend class internal::BulkMutator;
   friend class RowReader;
   template <typename RowFunctor, typename FinishFunctor>
   friend class AsyncRowReader;
-  template <typename ReadRowCallback,
-            typename std::enable_if<google::cloud::internal::is_invocable<
-                                        ReadRowCallback, CompletionQueue&, Row,
-                                        grpc::Status&>::value,
-                                    int>::type>
-  friend class internal::AsyncRowReader;
   friend class internal::LoggingDataClient;
 
   //@{

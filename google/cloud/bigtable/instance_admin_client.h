@@ -28,16 +28,8 @@ inline namespace BIGTABLE_CLIENT_NS {
 // Forward declare some classes so we can be friends.
 class InstanceAdmin;
 namespace internal {
-template <typename Client, typename ResponseType>
-class AsyncLongrunningOp;
 template <typename Client, typename Response>
 class AsyncLongrunningOperation;
-template <typename Client, typename Response, typename MemberFunctionType,
-          typename IdempotencyPolicy, typename Functor>
-class AsyncRetryAndPollUnaryRpc;
-class AsyncListClusters;
-class AsyncListInstances;
-class AsyncListAppProfiles;
 class LoggingInstanceAdminClient;
 }  // namespace internal
 
@@ -96,13 +88,8 @@ class InstanceAdminClient {
   // classes that do use them friends.
  protected:
   friend class InstanceAdmin;
-  template <typename Client, typename ResponseType>
-  friend class internal::AsyncLongrunningOp;
   template <typename Client, typename Response>
   friend class internal::AsyncLongrunningOperation;
-  friend class internal::AsyncListClusters;
-  friend class internal::AsyncListInstances;
-  friend class internal::AsyncListAppProfiles;
   friend class internal::LoggingInstanceAdminClient;
   //@{
   /// @name The `google.bigtable.v2.InstanceAdmin` wrappers.
