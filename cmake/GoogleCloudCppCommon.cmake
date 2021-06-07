@@ -98,7 +98,7 @@ else ()
         set(DOXYGEN_GENERATE_TAGFILE
             "${CMAKE_CURRENT_BINARY_DIR}/${GOOGLE_CLOUD_CPP_SUBPROJECT}.tag")
         set(DOXYGEN_LAYOUT_FILE
-            "${PROJECT_SOURCE_DIR}/doc/config/DoxygenLayout.xml")
+            "${PROJECT_SOURCE_DIR}/ci/etc/doxygen/DoxygenLayout.xml")
         set(GOOGLE_CLOUD_CPP_COMMON_TAG
             "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag")
         if (NOT ("cloud" STREQUAL "${GOOGLE_CLOUD_CPP_SUBPROJECT}"))
