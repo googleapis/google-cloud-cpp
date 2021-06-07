@@ -24,7 +24,6 @@ load(":iam_client_samples.bzl", "iam_client_samples")
     name = test.replace("/", "_").replace(".cc", ""),
     timeout = "long",
     srcs = [test],
-    copts = ["-I$(GENDIR)"],
     tags = [
         "integration-test",
     ],

@@ -155,7 +155,7 @@ void GetServiceAccountKey(std::vector<std::string> const& argv) {
   [](std::string const& key_name) {
     iam::IAMClient client(iam::MakeIAMConnection());
     auto response = client.GetServiceAccountKey(
-        key_name, ::google::iam::admin::v1::ServiceAccountPublicKeyType::
+        key_name, google::iam::admin::v1::ServiceAccountPublicKeyType::
                       TYPE_X509_PEM_FILE);
     if (!response) throw std::runtime_error(response.status().message());
     std::cout << "ServiceAccountKey successfully retrieved: "
@@ -176,7 +176,7 @@ std::string CreateServiceAccountKey(std::vector<std::string> const& argv) {
     iam::IAMClient client(iam::MakeIAMConnection());
     auto response = client.CreateServiceAccountKey(
         name,
-        ::google::iam::admin::v1::ServiceAccountPrivateKeyType::
+        google::iam::admin::v1::ServiceAccountPrivateKeyType::
             TYPE_GOOGLE_CREDENTIALS_FILE,
         google::iam::admin::v1::ServiceAccountKeyAlgorithm::KEY_ALG_RSA_2048);
     if (!response) throw std::runtime_error(response.status().message());
@@ -293,8 +293,8 @@ void CreateRole(std::vector<std::string> const& argv) {
     google::iam::admin::v1::CreateRoleRequest request;
     request.set_parent(absl::StrCat("projects/", parent));
     request.set_role_id(role_id);
-    ::google::iam::admin::v1::Role role;
-    role.set_stage(::google::iam::admin::v1::Role::GA);
+    google::iam::admin::v1::Role role;
+    role.set_stage(google::iam::admin::v1::Role::GA);
     for (auto const& permission : included_permissions) {
       *role.add_included_permissions() = permission;
     }
@@ -376,9 +376,9 @@ void UpdateRole(std::vector<std::string> const& argv) {
     iam::IAMClient client(iam::MakeIAMConnection());
     google::iam::admin::v1::UpdateRoleRequest request;
     request.set_name(name);
-    ::google::iam::admin::v1::Role role;
+    google::iam::admin::v1::Role role;
     role.set_title(title);
-    ::google::protobuf::FieldMask update_mask;
+    google::protobuf::FieldMask update_mask;
     *update_mask.add_paths() = "title";
     *request.mutable_role() = role;
     *request.mutable_update_mask() = update_mask;
@@ -419,7 +419,7 @@ void ListRoles(std::vector<std::string> const& argv) {
   [](std::string const& project) {
     iam::IAMClient client(iam::MakeIAMConnection());
     int count = 0;
-    ::google::iam::admin::v1::ListRolesRequest request;
+    google::iam::admin::v1::ListRolesRequest request;
     request.set_parent(project);
     for (auto const& role : client.ListRoles(request)) {
       if (!role) throw std::runtime_error(role.status().message());
@@ -471,10 +471,10 @@ void PatchServiceAccount(std::vector<std::string> const& argv) {
   [](std::string const& name, std::string const& display_name) {
     iam::IAMClient client(iam::MakeIAMConnection());
     google::iam::admin::v1::PatchServiceAccountRequest request;
-    ::google::iam::admin::v1::ServiceAccount service_account;
+    google::iam::admin::v1::ServiceAccount service_account;
     service_account.set_name(name);
     service_account.set_display_name(display_name);
-    ::google::protobuf::FieldMask update_mask;
+    google::protobuf::FieldMask update_mask;
     *update_mask.add_paths() = "display_name";
     *request.mutable_service_account() = service_account;
     *request.mutable_update_mask() = update_mask;
