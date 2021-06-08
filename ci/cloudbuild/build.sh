@@ -162,8 +162,8 @@ fi
 : "${TRIGGER_TYPE:=manual}"
 : "${BRANCH_NAME:=$(git branch --show-current)}"
 : "${COMMIT_SHA:=$(git rev-parse HEAD)}"
-: "${CODECOV_TOKEN:="$(tr -d '[:space:]' <<<"${CODECOV_TOKEN:-}")"}"
-: "${LOG_LINKER_PAT:="$(tr -d '[:space:]' <<<"${LOG_LINKER_PAT:-}")"}"
+CODECOV_TOKEN="$(tr -d '[:space:]' <<<"${CODECOV_TOKEN:-}")"
+LOG_LINKER_PAT="$(tr -d '[:space:]' <<<"${LOG_LINKER_PAT:-}")"
 
 export TRIGGER_TYPE
 export BRANCH_NAME
