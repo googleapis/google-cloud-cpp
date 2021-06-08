@@ -569,15 +569,9 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   code_generators.push_back(absl::make_unique<IdempotencyPolicyGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
-  // TODO(#6721) - make this the default
-  auto const with_auth_decorator = std::count(
-      vars.begin(), vars.end(),
-      std::make_pair(std::string{"with_auth_decorator"}, std::string{"true"}));
-  if (with_auth_decorator) {
-    code_generators.push_back(absl::make_unique<AuthDecoratorGenerator>(
-        service, service_vars, CreateMethodVars(*service, service_vars),
-        context));
-  }
+  code_generators.push_back(absl::make_unique<AuthDecoratorGenerator>(
+      service, service_vars, CreateMethodVars(*service, service_vars),
+      context));
   code_generators.push_back(absl::make_unique<LoggingDecoratorGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));

@@ -36,7 +36,7 @@ class GoldenKitchenSinkStubFactoryTest : public ::testing::Test {
 };
 
 TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithoutLogging) {
-  auto default_stub = CreateDefaultGoldenKitchenSinkStub({});
+  auto default_stub = CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, {});
   auto const log_lines = log_.ExtractLines();
   EXPECT_EQ(log_lines.size(), 0);
 }
@@ -44,7 +44,8 @@ TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithoutLogging) {
 TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithLogging) {
   Options options;
   options.set<TracingComponentsOption>({"rpc"});
-  auto default_stub = CreateDefaultGoldenKitchenSinkStub(options);
+  auto default_stub =
+      CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Enabled logging for gRPC calls")));
 }

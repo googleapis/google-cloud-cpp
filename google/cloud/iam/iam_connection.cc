@@ -660,9 +660,9 @@ class IAMConnectionImpl : public IAMConnection {
 std::shared_ptr<IAMConnection> MakeIAMConnection(Options options) {
   options = iam_internal::IAMDefaultOptions(std::move(options));
   auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
-  return std::make_shared<IAMConnectionImpl>(
-      std::move(background), iam_internal::CreateDefaultIAMStub(options),
-      options);
+  auto stub = iam_internal::CreateDefaultIAMStub(background->cq(), options);
+  return std::make_shared<IAMConnectionImpl>(std::move(background),
+                                             std::move(stub), options);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

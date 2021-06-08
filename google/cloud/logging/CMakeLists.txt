@@ -31,6 +31,8 @@ find_package(absl CONFIG REQUIRED)
 # configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
     google_cloud_cpp_logging # cmake-format: sort
+    internal/logging_service_v2_auth_decorator.cc
+    internal/logging_service_v2_auth_decorator.h
     internal/logging_service_v2_logging_decorator.cc
     internal/logging_service_v2_logging_decorator.h
     internal/logging_service_v2_metadata_decorator.cc

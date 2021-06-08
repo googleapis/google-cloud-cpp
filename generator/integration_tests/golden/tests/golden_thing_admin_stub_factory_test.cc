@@ -36,7 +36,7 @@ class GoldenStubFactoryTest : public ::testing::Test {
 };
 
 TEST_F(GoldenStubFactoryTest, DefaultStubWithoutLogging) {
-  auto default_stub = CreateDefaultGoldenThingAdminStub({});
+  auto default_stub = CreateDefaultGoldenThingAdminStub(CompletionQueue{}, {});
   auto const log_lines = log_.ExtractLines();
   EXPECT_EQ(log_lines.size(), 0);
 }
@@ -44,7 +44,8 @@ TEST_F(GoldenStubFactoryTest, DefaultStubWithoutLogging) {
 TEST_F(GoldenStubFactoryTest, DefaultStubWithLogging) {
   Options options;
   options.set<TracingComponentsOption>({"rpc"});
-  auto default_stub = CreateDefaultGoldenThingAdminStub(options);
+  auto default_stub =
+      CreateDefaultGoldenThingAdminStub(CompletionQueue{}, options);
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Enabled logging for gRPC calls")));
 }

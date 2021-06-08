@@ -15,11 +15,10 @@
 #include "google/cloud/iam/iam_client.h"
 #include "google/cloud/iam/iam_options.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/log.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -53,7 +52,6 @@ class IamIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   void SetUp() override {
-    options_.set<TracingComponentsOption>({"rpc"});
     retry_policy_ = absl::make_unique<IAMLimitedErrorCountRetryPolicy>(1);
     backoff_policy_ = absl::make_unique<ExponentialBackoffPolicy>(
         std::chrono::seconds(1), std::chrono::seconds(1), 2.0);
@@ -71,8 +69,8 @@ class IamIntegrationTest
     ASSERT_FALSE(iam_service_account_.empty());
     ASSERT_FALSE(invalid_iam_service_account_.empty());
   }
+
   std::vector<std::string> ClearLogLines() { return log_.ExtractLines(); }
-  Options options_;
   std::unique_ptr<IAMRetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
   std::string iam_project_;
@@ -82,6 +80,15 @@ class IamIntegrationTest
  private:
   testing_util::ScopedLog log_;
 };
+
+Options TestFailureOptions() {
+  auto const expiration =
+      std::chrono::system_clock::now() + std::chrono::minutes(15);
+  return Options{}
+      .set<TracingComponentsOption>({"rpc"})
+      .set<UnifiedCredentialsOption>(
+          MakeAccessTokenCredentials("invalid-access-token", expiration));
+}
 
 TEST_F(IamIntegrationTest, ListServiceAccountsSuccess) {
   auto client = IAMClient(MakeIAMConnection());
@@ -97,13 +104,14 @@ TEST_F(IamIntegrationTest, ListServiceAccountsSuccess) {
 }
 
 TEST_F(IamIntegrationTest, ListServiceAccountsFailure) {
-  options_.set<IAMRetryPolicyOption>(retry_policy_->clone());
-  options_.set<IAMBackoffPolicyOption>(backoff_policy_->clone());
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto options = TestFailureOptions()
+                     .set<IAMRetryPolicyOption>(retry_policy_->clone())
+                     .set<IAMBackoffPolicyOption>(backoff_policy_->clone());
+  auto client = IAMClient(MakeIAMConnection(std::move(options)));
   auto response = client.ListServiceAccounts("projects/invalid");
   auto begin = response.begin();
   ASSERT_NE(begin, response.end());
-  EXPECT_THAT(*begin, StatusIs(StatusCode::kNotFound));
+  EXPECT_THAT(*begin, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListServiceAccounts")));
 }
@@ -117,7 +125,7 @@ TEST_F(IamIntegrationTest, GetServiceAccountSuccess) {
 }
 
 TEST_F(IamIntegrationTest, GetServiceAccountFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   auto response = client.GetServiceAccount("projects/-/serviceAccounts/" +
                                            invalid_iam_service_account_);
   EXPECT_THAT(response, Not(IsOk()));
@@ -127,7 +135,7 @@ TEST_F(IamIntegrationTest, GetServiceAccountFailure) {
 
 TEST_F(IamIntegrationTest, CreateServiceAccountFailure) {
   ::google::iam::admin::v1::ServiceAccount service_account;
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   auto response = client.CreateServiceAccount("", "", service_account);
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
@@ -166,7 +174,7 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudSuccess) {
 
 TEST_F(IamIntegrationTest, DeleteServiceAccountFailure) {
   ::google::iam::admin::v1::ServiceAccount service_account;
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   auto response = client.DeleteServiceAccount("");
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
@@ -174,7 +182,7 @@ TEST_F(IamIntegrationTest, DeleteServiceAccountFailure) {
 }
 
 TEST_F(IamIntegrationTest, ListServiceAccountKeysFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   auto response = client.ListServiceAccountKeys(
       "projects/-/serviceAccounts/" + invalid_iam_service_account_, {});
   EXPECT_THAT(response, Not(IsOk()));
@@ -183,7 +191,7 @@ TEST_F(IamIntegrationTest, ListServiceAccountKeysFailure) {
 }
 
 TEST_F(IamIntegrationTest, GetServiceAccountKeyFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   auto response = client.GetServiceAccountKey(
       "projects/-/serviceAccounts/" + invalid_iam_service_account_, {});
   EXPECT_THAT(response, Not(IsOk()));
@@ -192,7 +200,7 @@ TEST_F(IamIntegrationTest, GetServiceAccountKeyFailure) {
 }
 
 TEST_F(IamIntegrationTest, CreateServiceAccountKeyFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   auto response = client.CreateServiceAccountKey(
       "projects/-/serviceAccounts/" + invalid_iam_service_account_,
       ::google::iam::admin::v1::ServiceAccountPrivateKeyType::
@@ -204,7 +212,7 @@ TEST_F(IamIntegrationTest, CreateServiceAccountKeyFailure) {
 }
 
 TEST_F(IamIntegrationTest, DeleteServiceAccountKeyFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   auto response = client.DeleteServiceAccountKey("projects/-/serviceAccounts/" +
                                                  invalid_iam_service_account_);
   EXPECT_THAT(response, Not(IsOk()));
@@ -262,7 +270,7 @@ TEST_F(IamIntegrationTest, GetIamPolicySuccess) {
 }
 
 TEST_F(IamIntegrationTest, GetIamPolicyFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   auto response = client.GetIamPolicy("");
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
@@ -281,7 +289,7 @@ TEST_F(IamIntegrationTest, SetIamPolicySuccess) {
 }
 
 TEST_F(IamIntegrationTest, SetIamPolicyFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   auto response = client.SetIamPolicy("", {});
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
@@ -298,7 +306,7 @@ TEST_F(IamIntegrationTest, TestIamPermissionsSuccess) {
 }
 
 TEST_F(IamIntegrationTest, TestIamPermissionsFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   auto response = client.TestIamPermissions("", {});
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
@@ -316,11 +324,11 @@ TEST_F(IamIntegrationTest, QueryGrantableRolesSuccess) {
 }
 
 TEST_F(IamIntegrationTest, QueryGrantableRolesFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   auto response = client.QueryGrantableRoles("");
   auto begin = response.begin();
   ASSERT_NE(begin, response.end());
-  EXPECT_THAT(*begin, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(*begin, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("QueryGrantableRoles")));
 }
@@ -341,14 +349,15 @@ TEST_F(IamIntegrationTest, ListServiceAccountsProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, ListServiceAccountsProtoFailure) {
-  options_.set<IAMRetryPolicyOption>(retry_policy_->clone());
-  options_.set<IAMBackoffPolicyOption>(backoff_policy_->clone());
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto options = TestFailureOptions()
+                     .set<IAMRetryPolicyOption>(retry_policy_->clone())
+                     .set<IAMBackoffPolicyOption>(backoff_policy_->clone());
+  auto client = IAMClient(MakeIAMConnection(std::move(options)));
   ::google::iam::admin::v1::ListServiceAccountsRequest request;
   auto response = client.ListServiceAccounts(request);
   auto begin = response.begin();
   ASSERT_NE(begin, response.end());
-  EXPECT_THAT(*begin, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(*begin, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListServiceAccounts")));
 }
@@ -363,7 +372,7 @@ TEST_F(IamIntegrationTest, GetServiceAccountProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, GetServiceAccountProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::admin::v1::GetServiceAccountRequest request;
   auto response = client.GetServiceAccount(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -441,7 +450,7 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, EnableServiceAccountProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::admin::v1::EnableServiceAccountRequest request;
   auto response = client.EnableServiceAccount(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -450,7 +459,7 @@ TEST_F(IamIntegrationTest, EnableServiceAccountProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, DisableServiceAccountProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::admin::v1::DisableServiceAccountRequest request;
   auto response = client.DisableServiceAccount(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -459,7 +468,7 @@ TEST_F(IamIntegrationTest, DisableServiceAccountProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, ListServiceAccountKeysProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::admin::v1::ListServiceAccountKeysRequest request;
   request.set_name("projects/-/serviceAccounts/" +
                    invalid_iam_service_account_);
@@ -470,7 +479,7 @@ TEST_F(IamIntegrationTest, ListServiceAccountKeysProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, GetServiceAccountKeyProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::admin::v1::GetServiceAccountKeyRequest request;
   request.set_name("projects/-/serviceAccounts/" +
                    invalid_iam_service_account_);
@@ -481,7 +490,7 @@ TEST_F(IamIntegrationTest, GetServiceAccountKeyProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, CreateServiceAccountKeyProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::admin::v1::CreateServiceAccountKeyRequest request;
   request.set_name("projects/-/serviceAccounts/" +
                    invalid_iam_service_account_);
@@ -492,7 +501,7 @@ TEST_F(IamIntegrationTest, CreateServiceAccountKeyProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, UploadServiceAccountKeyProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::admin::v1::UploadServiceAccountKeyRequest request;
   request.set_name("projects/-/serviceAccounts/" +
                    invalid_iam_service_account_);
@@ -503,7 +512,7 @@ TEST_F(IamIntegrationTest, UploadServiceAccountKeyProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, DeleteServiceAccountKeyProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::admin::v1::DeleteServiceAccountKeyRequest request;
   request.set_name("projects/-/serviceAccounts/" +
                    invalid_iam_service_account_);
@@ -523,7 +532,7 @@ TEST_F(IamIntegrationTest, GetIamPolicyProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, GetIamPolicyProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::v1::GetIamPolicyRequest request;
   auto response = client.GetIamPolicy(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -543,7 +552,7 @@ TEST_F(IamIntegrationTest, SetIamPolicyProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, SetIamPolicyProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::v1::SetIamPolicyRequest request;
   auto response = client.SetIamPolicy(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -562,7 +571,7 @@ TEST_F(IamIntegrationTest, TestIamPermissionsProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, TestIamPermissionsProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::v1::TestIamPermissionsRequest request;
   auto response = client.TestIamPermissions(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -583,32 +592,33 @@ TEST_F(IamIntegrationTest, QueryGrantableRolesProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, QueryGrantableRolesProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::admin::v1::QueryGrantableRolesRequest request;
   auto response = client.QueryGrantableRoles(request);
   auto begin = response.begin();
   ASSERT_NE(begin, response.end());
-  EXPECT_THAT(*begin, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(*begin, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("QueryGrantableRoles")));
 }
 
 TEST_F(IamIntegrationTest, ListRolesProtoFailure) {
-  options_.set<IAMRetryPolicyOption>(retry_policy_->clone());
-  options_.set<IAMBackoffPolicyOption>(backoff_policy_->clone());
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto options = TestFailureOptions()
+                     .set<IAMRetryPolicyOption>(retry_policy_->clone())
+                     .set<IAMBackoffPolicyOption>(backoff_policy_->clone());
+  auto client = IAMClient(MakeIAMConnection(std::move(options)));
   ::google::iam::admin::v1::ListRolesRequest request;
   request.set_parent("projects/*");
   auto response = client.ListRoles(request);
   auto begin = response.begin();
   ASSERT_NE(begin, response.end());
-  EXPECT_THAT(*begin, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(*begin, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListRoles")));
 }
 
 TEST_F(IamIntegrationTest, GetRoleProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::admin::v1::GetRoleRequest request;
   request.set_name("projects/*");
   auto response = client.GetRole(request);
@@ -618,7 +628,7 @@ TEST_F(IamIntegrationTest, GetRoleProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, CreateRoleProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::admin::v1::CreateRoleRequest request;
   auto response = client.CreateRole(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -627,7 +637,7 @@ TEST_F(IamIntegrationTest, CreateRoleProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, UpdateRoleProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::admin::v1::UpdateRoleRequest request;
   auto response = client.UpdateRole(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -636,7 +646,7 @@ TEST_F(IamIntegrationTest, UpdateRoleProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, DeleteRoleProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::admin::v1::DeleteRoleRequest request;
   auto response = client.DeleteRole(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -645,7 +655,7 @@ TEST_F(IamIntegrationTest, DeleteRoleProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, UndeleteRoleProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::admin::v1::UndeleteRoleRequest request;
   auto response = client.UndeleteRole(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -691,9 +701,9 @@ TEST_F(IamIntegrationTest, RoleProtoCrudSuccess) {
 
   list_response = client.ListRoles(list_request);
   std::vector<std::string> role_ids;
-  for (auto const& role : list_response) {
-    if (role) {
-      role_ids.push_back(role->name());
+  for (auto const& r : list_response) {
+    if (r) {
+      role_ids.push_back(r->name());
     }
   }
   auto expected_role_id =
@@ -738,12 +748,12 @@ TEST_F(IamIntegrationTest, QueryTestablePermissionsProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, QueryTestablePermissionsProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::admin::v1::QueryTestablePermissionsRequest request;
   auto response = client.QueryTestablePermissions(request);
   auto begin = response.begin();
   ASSERT_NE(begin, response.end());
-  EXPECT_THAT(*begin, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(*begin, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("QueryTestablePermissions")));
 }
@@ -759,7 +769,7 @@ TEST_F(IamIntegrationTest, QueryAuditableServicesProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, QueryAuditableServicesProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::admin::v1::QueryAuditableServicesRequest request;
   auto response = client.QueryAuditableServices(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -782,7 +792,7 @@ TEST_F(IamIntegrationTest, LintPolicyProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, LintPolicyProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(options_));
+  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
   ::google::iam::admin::v1::LintPolicyRequest request;
   auto response = client.LintPolicy(request);
   EXPECT_THAT(response, Not(IsOk()));
