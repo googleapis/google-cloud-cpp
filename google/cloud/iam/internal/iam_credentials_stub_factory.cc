@@ -17,6 +17,7 @@
 // source: google/iam/credentials/v1/iamcredentials.proto
 
 #include "google/cloud/iam/internal/iam_credentials_stub_factory.h"
+#include "google/cloud/iam/internal/iam_credentials_auth_decorator.h"
 #include "google/cloud/iam/internal/iam_credentials_logging_decorator.h"
 #include "google/cloud/iam/internal/iam_credentials_metadata_decorator.h"
 #include "google/cloud/iam/internal/iam_credentials_stub.h"
@@ -33,17 +34,28 @@ namespace iam_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<IAMCredentialsStub> CreateDefaultIAMCredentialsStub(
-    Options const& options) {
-  auto channel = grpc::CreateCustomChannel(
-      options.get<EndpointOption>(), options.get<GrpcCredentialOption>(),
-      internal::MakeChannelArguments(options));
+    google::cloud::CompletionQueue cq, Options const& options) {
+  auto auth = [&] {
+    if (options.has<google::cloud::UnifiedCredentialsOption>()) {
+      return google::cloud::internal::CreateAuthenticationStrategy(
+          options.get<google::cloud::UnifiedCredentialsOption>(), std::move(cq),
+          options);
+    }
+    return google::cloud::internal::CreateAuthenticationStrategy(
+        options.get<google::cloud::GrpcCredentialOption>());
+  }();
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::iam::credentials::v1::IAMCredentials::NewStub(channel);
   std::shared_ptr<IAMCredentialsStub> stub =
       std::make_shared<DefaultIAMCredentialsStub>(std::move(service_grpc_stub));
 
+  if (auth->RequiresConfigureContext()) {
+    stub =
+        std::make_shared<IAMCredentialsAuth>(std::move(auth), std::move(stub));
+  }
   stub = std::make_shared<IAMCredentialsMetadata>(std::move(stub));
-
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<IAMCredentialsLogging>(
@@ -52,7 +64,6 @@ std::shared_ptr<IAMCredentialsStub> CreateDefaultIAMCredentialsStub(
   }
   return stub;
 }
-
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace iam_internal
 }  // namespace cloud

@@ -19,6 +19,7 @@
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
 #include "absl/types/variant.h"
+#include "generator/internal/auth_decorator_generator.h"
 #include "generator/internal/client_generator.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/connection_generator.h"
@@ -448,6 +449,13 @@ VarsDictionary CreateServiceVars(
       absl::StrCat(descriptor.name(), "LimitedErrorCountRetryPolicy");
   vars["limited_time_retry_policy_name"] =
       absl::StrCat(descriptor.name(), "LimitedTimeRetryPolicy");
+  vars["auth_class_name"] = absl::StrCat(descriptor.name(), "Auth");
+  vars["auth_cc_path"] = absl::StrCat(vars["product_path"], "internal/",
+                                      ServiceNameToFilePath(descriptor.name()),
+                                      "_auth_decorator.cc");
+  vars["auth_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_auth_decorator.h");
   vars["logging_class_name"] = absl::StrCat(descriptor.name(), "Logging");
   vars["logging_cc_path"] = absl::StrCat(
       vars["product_path"], "internal/",
@@ -559,6 +567,9 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<IdempotencyPolicyGenerator>(
+      service, service_vars, CreateMethodVars(*service, service_vars),
+      context));
+  code_generators.push_back(absl::make_unique<AuthDecoratorGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<LoggingDecoratorGenerator>(

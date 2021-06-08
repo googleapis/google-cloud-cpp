@@ -244,9 +244,10 @@ std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
   options =
       logging_internal::LoggingServiceV2DefaultOptions(std::move(options));
   auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
+  auto stub = logging_internal::CreateDefaultLoggingServiceV2Stub(
+      background->cq(), options);
   return std::make_shared<LoggingServiceV2ConnectionImpl>(
-      std::move(background),
-      logging_internal::CreateDefaultLoggingServiceV2Stub(options), options);
+      std::move(background), std::move(stub), options);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

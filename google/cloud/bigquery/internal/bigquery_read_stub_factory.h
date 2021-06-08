@@ -20,6 +20,9 @@
 
 #include "google/cloud/bigquery/bigquery_read_connection.h"
 #include "google/cloud/bigquery/internal/bigquery_read_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -29,8 +32,7 @@ namespace bigquery_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<BigQueryReadStub> CreateDefaultBigQueryReadStub(
-    Options const& options);
-
+    google::cloud::CompletionQueue cq, Options const& options);
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace bigquery_internal
 }  // namespace cloud

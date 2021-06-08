@@ -222,10 +222,10 @@ std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
   options = golden_internal::GoldenKitchenSinkDefaultOptions(
       std::move(options));
   auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
+  auto stub = golden_internal::CreateDefaultGoldenKitchenSinkStub(
+    background->cq(), options);
   return std::make_shared<GoldenKitchenSinkConnectionImpl>(
-      std::move(background),
-      golden_internal::CreateDefaultGoldenKitchenSinkStub(options),
-      options);
+      std::move(background), std::move(stub), options);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

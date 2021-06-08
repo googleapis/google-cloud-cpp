@@ -17,6 +17,7 @@
 // source: google/iam/admin/v1/iam.proto
 
 #include "google/cloud/iam/internal/iam_stub_factory.h"
+#include "google/cloud/iam/internal/iam_auth_decorator.h"
 #include "google/cloud/iam/internal/iam_logging_decorator.h"
 #include "google/cloud/iam/internal/iam_metadata_decorator.h"
 #include "google/cloud/iam/internal/iam_stub.h"
@@ -32,16 +33,27 @@ namespace cloud {
 namespace iam_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-std::shared_ptr<IAMStub> CreateDefaultIAMStub(Options const& options) {
-  auto channel = grpc::CreateCustomChannel(
-      options.get<EndpointOption>(), options.get<GrpcCredentialOption>(),
-      internal::MakeChannelArguments(options));
+std::shared_ptr<IAMStub> CreateDefaultIAMStub(google::cloud::CompletionQueue cq,
+                                              Options const& options) {
+  auto auth = [&] {
+    if (options.has<google::cloud::UnifiedCredentialsOption>()) {
+      return google::cloud::internal::CreateAuthenticationStrategy(
+          options.get<google::cloud::UnifiedCredentialsOption>(), std::move(cq),
+          options);
+    }
+    return google::cloud::internal::CreateAuthenticationStrategy(
+        options.get<google::cloud::GrpcCredentialOption>());
+  }();
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
   auto service_grpc_stub = google::iam::admin::v1::IAM::NewStub(channel);
   std::shared_ptr<IAMStub> stub =
       std::make_shared<DefaultIAMStub>(std::move(service_grpc_stub));
 
+  if (auth->RequiresConfigureContext()) {
+    stub = std::make_shared<IAMAuth>(std::move(auth), std::move(stub));
+  }
   stub = std::make_shared<IAMMetadata>(std::move(stub));
-
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<IAMLogging>(std::move(stub),
@@ -50,7 +62,6 @@ std::shared_ptr<IAMStub> CreateDefaultIAMStub(Options const& options) {
   }
   return stub;
 }
-
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace iam_internal
 }  // namespace cloud

@@ -142,9 +142,10 @@ std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     Options options) {
   options = iam_internal::IAMCredentialsDefaultOptions(std::move(options));
   auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
+  auto stub =
+      iam_internal::CreateDefaultIAMCredentialsStub(background->cq(), options);
   return std::make_shared<IAMCredentialsConnectionImpl>(
-      std::move(background),
-      iam_internal::CreateDefaultIAMCredentialsStub(options), options);
+      std::move(background), std::move(stub), options);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

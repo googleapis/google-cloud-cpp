@@ -595,10 +595,10 @@ std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
   options = golden_internal::GoldenThingAdminDefaultOptions(
       std::move(options));
   auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
+  auto stub = golden_internal::CreateDefaultGoldenThingAdminStub(
+    background->cq(), options);
   return std::make_shared<GoldenThingAdminConnectionImpl>(
-      std::move(background),
-      golden_internal::CreateDefaultGoldenThingAdminStub(options),
-      options);
+      std::move(background), std::move(stub), options);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

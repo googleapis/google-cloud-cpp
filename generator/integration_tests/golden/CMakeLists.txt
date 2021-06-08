@@ -77,6 +77,8 @@ add_library(
     golden_thing_admin_connection_idempotency_policy.cc
     golden_thing_admin_connection_idempotency_policy.h
     golden_thing_admin_options.h
+    internal/golden_kitchen_sink_auth_decorator.cc
+    internal/golden_kitchen_sink_auth_decorator.h
     internal/golden_kitchen_sink_logging_decorator.cc
     internal/golden_kitchen_sink_logging_decorator.h
     internal/golden_kitchen_sink_metadata_decorator.cc
@@ -87,6 +89,8 @@ add_library(
     internal/golden_kitchen_sink_stub.h
     internal/golden_kitchen_sink_stub_factory.cc
     internal/golden_kitchen_sink_stub_factory.h
+    internal/golden_thing_admin_auth_decorator.cc
+    internal/golden_thing_admin_auth_decorator.h
     internal/golden_thing_admin_logging_decorator.cc
     internal/golden_thing_admin_logging_decorator.h
     internal/golden_thing_admin_metadata_decorator.cc
