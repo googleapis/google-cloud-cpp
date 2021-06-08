@@ -28,8 +28,6 @@ inline namespace BIGTABLE_CLIENT_NS {
 // Forward declare some classes so we can be friends.
 class TableAdmin;
 namespace internal {
-class AsyncAwaitConsistency;
-class AsyncCheckConsistency;
 template <typename Client, typename Response>
 class AsyncLongrunningOperation;
 class LoggingAdminClient;
@@ -90,8 +88,6 @@ class AdminClient {
   // classes that do use them friends.
  protected:
   friend class TableAdmin;
-  friend class internal::AsyncAwaitConsistency;
-  friend class internal::AsyncCheckConsistency;
   template <typename Client, typename Response>
   friend class internal::AsyncLongrunningOperation;
   friend class internal::LoggingAdminClient;
