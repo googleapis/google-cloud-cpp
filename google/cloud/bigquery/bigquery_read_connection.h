@@ -71,12 +71,21 @@ class BigQueryReadConnection {
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
     Options options = {});
 
-std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
-    std::shared_ptr<bigquery_internal::BigQueryReadStub> stub,
-    Options options = {});
-
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace bigquery
+}  // namespace cloud
+}  // namespace google
+
+namespace google {
+namespace cloud {
+namespace bigquery_internal {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+
+std::shared_ptr<bigquery::BigQueryReadConnection> MakeBigQueryReadConnection(
+    std::shared_ptr<BigQueryReadStub> stub, Options options = {});
+
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace bigquery_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -106,12 +106,23 @@ class GoldenThingAdminConnection {
 std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
     Options options = {});
 
-std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
-    std::shared_ptr<golden_internal::GoldenThingAdminStub> stub,
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace golden
+}  // namespace cloud
+}  // namespace google
+
+namespace google {
+namespace cloud {
+namespace golden_internal {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+
+std::shared_ptr<golden::GoldenThingAdminConnection>
+MakeGoldenThingAdminConnection(
+    std::shared_ptr<GoldenThingAdminStub> stub,
     Options options = {});
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
-}  // namespace golden
+}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
 

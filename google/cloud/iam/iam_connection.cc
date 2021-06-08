@@ -658,14 +658,24 @@ std::shared_ptr<IAMConnection> MakeIAMConnection(Options options) {
       iam_internal::CreateDefaultIAMStub(options), options);
 }
 
-std::shared_ptr<IAMConnection> MakeIAMConnection(
-    std::shared_ptr<iam_internal::IAMStub> stub, Options options) {
-  options = iam_internal::IAMDefaultOptions(std::move(options));
-  return std::make_shared<IAMConnectionImpl>(std::move(stub),
-                                             std::move(options));
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace iam
+}  // namespace cloud
+}  // namespace google
+
+namespace google {
+namespace cloud {
+namespace iam_internal {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+
+std::shared_ptr<iam::IAMConnection> MakeIAMConnection(
+    std::shared_ptr<IAMStub> stub, Options options) {
+  options = IAMDefaultOptions(std::move(options));
+  return std::make_shared<iam::IAMConnectionImpl>(std::move(stub),
+                                                  std::move(options));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
-}  // namespace iam
+}  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

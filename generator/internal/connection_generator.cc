@@ -155,14 +155,18 @@ Status ConnectionGenerator::GenerateHeader() {
     "    Options options = {});\n\n");
   // clang-format on
 
+  HeaderCloseNamespaces();
+
+  HeaderOpenNamespaces(NamespaceType::kInternal);
   HeaderPrint(
       // clang-format off
-    "std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
-    "    std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub,\n"
-    "    Options options = {});\n\n");
+      "std::shared_ptr<$product_namespace$::$connection_class_name$>\n"
+      "Make$connection_class_name$(\n"
+      "    std::shared_ptr<$stub_class_name$> stub,\n"
+      "    Options options = {});\n\n");
   // clang-format on
-
   HeaderCloseNamespaces();
+
   // close header guard
   HeaderPrint(  // clang-format off
     "#endif  // $header_include_guard$\n");
@@ -529,13 +533,17 @@ Status ConnectionGenerator::GenerateCc() {
     "}\n\n");
   // clang-format on
 
+  CcCloseNamespaces();
+  CcOpenNamespaces(NamespaceType::kInternal);
+
   CcPrint(  // clang-format off
-    "std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
-    "    std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub,\n"
+    "std::shared_ptr<$product_namespace$::$connection_class_name$>\n"
+    "Make$connection_class_name$(\n"
+    "    std::shared_ptr<$stub_class_name$> stub,\n"
     "    Options options) {\n"
-    "  options = $product_internal_namespace$::$service_name$DefaultOptions(\n"
+    "  options = $service_name$DefaultOptions(\n"
     "      std::move(options));\n"
-    "  return std::make_shared<$connection_class_name$Impl>(\n"
+    "  return std::make_shared<$product_namespace$::$connection_class_name$Impl>(\n"
     "      std::move(stub), std::move(options));\n"
     "}\n\n");
   // clang-format on

@@ -66,12 +66,21 @@ class IAMCredentialsConnection {
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     Options options = {});
 
-std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
-    std::shared_ptr<iam_internal::IAMCredentialsStub> stub,
-    Options options = {});
-
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace iam
+}  // namespace cloud
+}  // namespace google
+
+namespace google {
+namespace cloud {
+namespace iam_internal {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+
+std::shared_ptr<iam::IAMCredentialsConnection> MakeIAMCredentialsConnection(
+    std::shared_ptr<IAMCredentialsStub> stub, Options options = {});
+
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -221,17 +221,28 @@ std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
       golden_internal::CreateDefaultGoldenKitchenSinkStub(options), options);
 }
 
-std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
-    std::shared_ptr<golden_internal::GoldenKitchenSinkStub> stub,
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace golden
+}  // namespace cloud
+}  // namespace google
+
+namespace google {
+namespace cloud {
+namespace golden_internal {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+
+std::shared_ptr<golden::GoldenKitchenSinkConnection>
+MakeGoldenKitchenSinkConnection(
+    std::shared_ptr<GoldenKitchenSinkStub> stub,
     Options options) {
-  options = golden_internal::GoldenKitchenSinkDefaultOptions(
+  options = GoldenKitchenSinkDefaultOptions(
       std::move(options));
-  return std::make_shared<GoldenKitchenSinkConnectionImpl>(
+  return std::make_shared<golden::GoldenKitchenSinkConnectionImpl>(
       std::move(stub), std::move(options));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
-}  // namespace golden
+}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
 
