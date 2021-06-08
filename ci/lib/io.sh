@@ -54,7 +54,11 @@ export CI_LIB_IO_FIRST_TIMESTAMP=${CI_LIB_IO_FIRST_TIMESTAMP:-$(date '+%s')}
 function io::internal::timestamp() {
   local now
   now=$(date '+%s')
-  echo "$(date -d "@${now}" -u '+%Y-%m-%dT%H:%M:%SZ')" \
+  local when=(-d "@${now}")
+  case "$(uname -s)" in
+  Darwin) when=(-r "${now}");;
+  esac
+  echo "$(date "${when[@]}" -u '+%Y-%m-%dT%H:%M:%SZ')" \
     "$(printf '(%+ds)' $((now - CI_LIB_IO_FIRST_TIMESTAMP)))"
 }
 
