@@ -17,6 +17,7 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/internal/golden_thing_admin_stub_factory.h"
+#include "generator/integration_tests/golden/internal/golden_thing_admin_auth_decorator.h"
 #include "generator/integration_tests/golden/internal/golden_thing_admin_logging_decorator.h"
 #include "generator/integration_tests/golden/internal/golden_thing_admin_metadata_decorator.h"
 #include "generator/integration_tests/golden/internal/golden_thing_admin_stub.h"
@@ -32,23 +33,32 @@ namespace cloud {
 namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
+
 std::shared_ptr<GoldenThingAdminStub>
-CreateDefaultGoldenThingAdminStub(Options const& options) {
-  auto channel = grpc::CreateCustomChannel(
-      options.get<EndpointOption>(),
-      options.get<GrpcCredentialOption>(),
-      internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::test::admin::database::v1::GoldenThingAdmin::NewStub(channel);
-  auto longrunning_grpc_stub =
-      google::longrunning::Operations::NewStub(channel);
-
+CreateDefaultGoldenThingAdminStub(
+    google::cloud::CompletionQueue cq, Options const& options) {
+  auto auth = [&] {
+    if (options.has<google::cloud::UnifiedCredentialsOption>()) {
+      return google::cloud::internal::CreateAuthenticationStrategy(
+          options.get<google::cloud::UnifiedCredentialsOption>(), std::move(cq),
+          options);
+    }
+    return google::cloud::internal::CreateAuthenticationStrategy(
+        options.get<google::cloud::GrpcCredentialOption>());
+  }();
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::test::admin::database::v1::GoldenThingAdmin::NewStub(channel);
   std::shared_ptr<GoldenThingAdminStub> stub =
-      std::make_shared<DefaultGoldenThingAdminStub>(
-          std::move(service_grpc_stub), std::move(longrunning_grpc_stub));
+    std::make_shared<DefaultGoldenThingAdminStub>(
+      std::move(service_grpc_stub),
+      google::longrunning::Operations::NewStub(channel));
 
+  if (auth->RequiresConfigureContext()) {
+    stub = std::make_shared<GoldenThingAdminAuth>(
+        std::move(auth), std::move(stub));
+  }
   stub = std::make_shared<GoldenThingAdminMetadata>(std::move(stub));
-
   if (internal::Contains(
       options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
@@ -59,7 +69,6 @@ CreateDefaultGoldenThingAdminStub(Options const& options) {
   }
   return stub;
 }
-
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud

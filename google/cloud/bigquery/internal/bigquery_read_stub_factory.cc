@@ -17,6 +17,7 @@
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
 #include "google/cloud/bigquery/internal/bigquery_read_stub_factory.h"
+#include "google/cloud/bigquery/internal/bigquery_read_auth_decorator.h"
 #include "google/cloud/bigquery/internal/bigquery_read_logging_decorator.h"
 #include "google/cloud/bigquery/internal/bigquery_read_metadata_decorator.h"
 #include "google/cloud/bigquery/internal/bigquery_read_stub.h"
@@ -33,17 +34,27 @@ namespace bigquery_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<BigQueryReadStub> CreateDefaultBigQueryReadStub(
-    Options const& options) {
-  auto channel = grpc::CreateCustomChannel(
-      options.get<EndpointOption>(), options.get<GrpcCredentialOption>(),
-      internal::MakeChannelArguments(options));
+    google::cloud::CompletionQueue cq, Options const& options) {
+  auto auth = [&] {
+    if (options.has<google::cloud::UnifiedCredentialsOption>()) {
+      return google::cloud::internal::CreateAuthenticationStrategy(
+          options.get<google::cloud::UnifiedCredentialsOption>(), std::move(cq),
+          options);
+    }
+    return google::cloud::internal::CreateAuthenticationStrategy(
+        options.get<google::cloud::GrpcCredentialOption>());
+  }();
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::bigquery::storage::v1::BigQueryRead::NewStub(channel);
   std::shared_ptr<BigQueryReadStub> stub =
       std::make_shared<DefaultBigQueryReadStub>(std::move(service_grpc_stub));
 
+  if (auth->RequiresConfigureContext()) {
+    stub = std::make_shared<BigQueryReadAuth>(std::move(auth), std::move(stub));
+  }
   stub = std::make_shared<BigQueryReadMetadata>(std::move(stub));
-
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<BigQueryReadLogging>(
@@ -52,7 +63,6 @@ std::shared_ptr<BigQueryReadStub> CreateDefaultBigQueryReadStub(
   }
   return stub;
 }
-
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace bigquery_internal
 }  // namespace cloud

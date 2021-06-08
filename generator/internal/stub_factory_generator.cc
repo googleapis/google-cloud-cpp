@@ -44,6 +44,9 @@ Status StubFactoryGenerator::GenerateHeader() {
 
   // includes
   HeaderLocalIncludes({vars("connection_header_path"), vars("stub_header_path"),
+                       "google/cloud/completion_queue.h",
+                       "google/cloud/credentials.h",
+                       "google/cloud/internal/unified_grpc_credentials.h",
                        "google/cloud/version.h"});
   HeaderSystemIncludes({"memory"});
   HeaderPrint("\n");
@@ -51,10 +54,10 @@ Status StubFactoryGenerator::GenerateHeader() {
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
-  HeaderPrint(  // clang-format off
-    "std::shared_ptr<$stub_class_name$>\n"
-    "CreateDefault$stub_class_name$(Options const& options);\n\n");
-  // clang-format on
+  HeaderPrint(R"""(
+std::shared_ptr<$stub_class_name$> CreateDefault$stub_class_name$(
+    google::cloud::CompletionQueue cq, Options const& options);
+)""");
 
   HeaderCloseNamespaces();
   // close header guard
@@ -73,7 +76,7 @@ Status StubFactoryGenerator::GenerateCc() {
   // clang-format on
 
   // includes
-  CcLocalIncludes({vars("stub_factory_header_path"),
+  CcLocalIncludes({vars("stub_factory_header_path"), vars("auth_header_path"),
                    vars("logging_header_path"), vars("metadata_header_path"),
                    vars("stub_header_path"), "google/cloud/common_options.h",
                    "google/cloud/grpc_options.h",
@@ -86,51 +89,53 @@ Status StubFactoryGenerator::GenerateCc() {
   if (!result.ok()) return result;
 
   // factory function implementation
-  CcPrint(  // clang-format off
-    "std::shared_ptr<$stub_class_name$>\n"
-    "CreateDefault$stub_class_name$(Options const& options) {\n"
-    "  auto channel = grpc::CreateCustomChannel(\n"
-    "      options.get<EndpointOption>(),\n"
-    "      options.get<GrpcCredentialOption>(),\n"
-    "      internal::MakeChannelArguments(options));\n"
-    "  auto service_grpc_stub =\n"
-    "      $grpc_stub_fqn$::NewStub(channel);\n");
-  if (HasLongrunningMethod()) {
-    CcPrint(  // clang-format off
-    "  auto longrunning_grpc_stub =\n"
-    "      google::longrunning::Operations::NewStub(channel);\n"
-    "\n");
-            // clang-format on
-  }
-  CcPrint(  // clang-format off
-    "  std::shared_ptr<$stub_class_name$> stub =\n"
-    "      std::make_shared<Default$stub_class_name$>(\n"
-    "          std::move(service_grpc_stub)");
-            // clang-format on
-  if (HasLongrunningMethod()) {
-    CcPrint(  // clang-format off
-    ", std::move(longrunning_grpc_stub));\n");
-              // clang-format on
+  CcPrint(R"""(
+std::shared_ptr<$stub_class_name$>
+CreateDefault$stub_class_name$(
+    google::cloud::CompletionQueue cq, Options const& options) {
+  auto auth = [&] {
+    if (options.has<google::cloud::UnifiedCredentialsOption>()) {
+      return google::cloud::internal::CreateAuthenticationStrategy(
+          options.get<google::cloud::UnifiedCredentialsOption>(), std::move(cq),
+          options);
+    }
+    return google::cloud::internal::CreateAuthenticationStrategy(
+        options.get<google::cloud::GrpcCredentialOption>());
+  }();
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = $grpc_stub_fqn$::NewStub(channel);)""");
+
+  if (!HasLongrunningMethod()) {
+    CcPrint(R"""(
+  std::shared_ptr<$stub_class_name$> stub =
+    std::make_shared<Default$stub_class_name$>(std::move(service_grpc_stub));
+)""");
   } else {
-    CcPrint(  // clang-format off
-    ");\n");
-    // clang-format on
+    CcPrint(R"""(
+  std::shared_ptr<$stub_class_name$> stub =
+    std::make_shared<Default$stub_class_name$>(
+      std::move(service_grpc_stub),
+      google::longrunning::Operations::NewStub(channel));
+)""");
   }
-  CcPrint(  // clang-format off
-    "\n"
-    "  stub = std::make_shared<$metadata_class_name$>(std::move(stub));\n"
-    "\n"
-    "  if (internal::Contains(\n"
-    "      options.get<TracingComponentsOption>(), \"rpc\")) {\n"
-    "    GCP_LOG(INFO) << \"Enabled logging for gRPC calls\";\n"
-    "    stub = std::make_shared<$logging_class_name$>(\n"
-    "        std::move(stub),\n"
-    "        options.get<GrpcTracingOptionsOption>(),\n"
-    "        options.get<TracingComponentsOption>());\n"
-    "  }\n"
-    "  return stub;\n"
-    "}\n\n");
-  // clang-format on
+  CcPrint(R"""(
+  if (auth->RequiresConfigureContext()) {
+    stub = std::make_shared<$auth_class_name$>(
+        std::move(auth), std::move(stub));
+  }
+  stub = std::make_shared<$metadata_class_name$>(std::move(stub));
+  if (internal::Contains(
+      options.get<TracingComponentsOption>(), "rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
+    stub = std::make_shared<$logging_class_name$>(
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
+        options.get<TracingComponentsOption>());
+  }
+  return stub;
+}
+)""");
 
   CcCloseNamespaces();
   return {};

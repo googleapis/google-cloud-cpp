@@ -60,9 +60,12 @@ class IamCredentialsIntegrationTest
 };
 
 Options TestFailureOptions() {
+  auto const expiration =
+      std::chrono::system_clock::now() + std::chrono::minutes(15);
   return Options{}
       .set<TracingComponentsOption>({"rpc"})
-      .set<EndpointOption>("localhost:1")
+      .set<UnifiedCredentialsOption>(
+          MakeAccessTokenCredentials("invalid-access-token", expiration))
       .set<IAMCredentialsRetryPolicyOption>(
           IAMCredentialsLimitedErrorCountRetryPolicy(1).clone())
       .set<IAMCredentialsBackoffPolicyOption>(
