@@ -56,7 +56,7 @@ function io::internal::timestamp() {
   now=$(date '+%s')
   local when=(-d "@${now}")
   case "$(uname -s)" in
-  Darwin) when=(-r "${now}");;
+  Darwin) when=(-r "${now}") ;;
   esac
   echo "$(date "${when[@]}" -u '+%Y-%m-%dT%H:%M:%SZ')" \
     "$(printf '(%+ds)' $((now - CI_LIB_IO_FIRST_TIMESTAMP)))"
