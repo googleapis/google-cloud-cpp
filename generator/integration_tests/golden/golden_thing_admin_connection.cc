@@ -20,6 +20,8 @@
 #include "generator/integration_tests/golden/golden_thing_admin_options.h"
 #include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.h"
 #include "generator/integration_tests/golden/internal/golden_thing_admin_stub_factory.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -174,9 +176,10 @@ namespace {
 class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
  public:
   GoldenThingAdminConnectionImpl(
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<golden_internal::GoldenThingAdminStub> stub,
       Options const& options)
-      : stub_(std::move(stub)),
+      : background_(std::move(background)), stub_(std::move(stub)),
         retry_policy_prototype_(options.get<GoldenThingAdminRetryPolicyOption>()->clone()),
         backoff_policy_prototype_(options.get<GoldenThingAdminBackoffPolicyOption>()->clone()),
         polling_policy_prototype_(options.get<GoldenThingAdminPollingPolicyOption>()->clone()),
@@ -578,6 +581,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
         golden_internal::GoldenThingAdminStub>(std::move(operation));
   }
 
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<golden_internal::GoldenThingAdminStub> stub_;
   std::unique_ptr<GoldenThingAdminRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
@@ -590,8 +594,11 @@ std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
     Options options) {
   options = golden_internal::GoldenThingAdminDefaultOptions(
       std::move(options));
+  auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
   return std::make_shared<GoldenThingAdminConnectionImpl>(
-      golden_internal::CreateDefaultGoldenThingAdminStub(options), options);
+      std::move(background),
+      golden_internal::CreateDefaultGoldenThingAdminStub(options),
+      options);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
@@ -606,11 +613,10 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<golden::GoldenThingAdminConnection>
 MakeGoldenThingAdminConnection(
-    std::shared_ptr<GoldenThingAdminStub> stub,
-    Options options) {
-  options = GoldenThingAdminDefaultOptions(
-      std::move(options));
+    std::shared_ptr<GoldenThingAdminStub> stub, Options options) {
+  options = GoldenThingAdminDefaultOptions(std::move(options));
   return std::make_shared<golden::GoldenThingAdminConnectionImpl>(
+      options.get<GrpcBackgroundThreadsFactoryOption>()(),
       std::move(stub), std::move(options));
 }
 

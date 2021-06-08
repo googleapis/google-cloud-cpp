@@ -20,6 +20,8 @@
 #include "google/cloud/iam/iam_options.h"
 #include "google/cloud/iam/internal/iam_option_defaults.h"
 #include "google/cloud/iam/internal/iam_stub_factory.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -209,9 +211,11 @@ StatusOr<google::iam::admin::v1::LintPolicyResponse> IAMConnection::LintPolicy(
 namespace {
 class IAMConnectionImpl : public IAMConnection {
  public:
-  IAMConnectionImpl(std::shared_ptr<iam_internal::IAMStub> stub,
-                    Options const& options)
-      : stub_(std::move(stub)),
+  IAMConnectionImpl(
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<iam_internal::IAMStub> stub, Options const& options)
+      : background_(std::move(background)),
+        stub_(std::move(stub)),
         retry_policy_prototype_(options.get<IAMRetryPolicyOption>()->clone()),
         backoff_policy_prototype_(
             options.get<IAMBackoffPolicyOption>()->clone()),
@@ -645,6 +649,7 @@ class IAMConnectionImpl : public IAMConnection {
   }
 
  private:
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<iam_internal::IAMStub> stub_;
   std::unique_ptr<IAMRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
@@ -654,8 +659,10 @@ class IAMConnectionImpl : public IAMConnection {
 
 std::shared_ptr<IAMConnection> MakeIAMConnection(Options options) {
   options = iam_internal::IAMDefaultOptions(std::move(options));
+  auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
   return std::make_shared<IAMConnectionImpl>(
-      iam_internal::CreateDefaultIAMStub(options), options);
+      std::move(background), iam_internal::CreateDefaultIAMStub(options),
+      options);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
@@ -671,8 +678,9 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 std::shared_ptr<iam::IAMConnection> MakeIAMConnection(
     std::shared_ptr<IAMStub> stub, Options options) {
   options = IAMDefaultOptions(std::move(options));
-  return std::make_shared<iam::IAMConnectionImpl>(std::move(stub),
-                                                  std::move(options));
+  return std::make_shared<iam::IAMConnectionImpl>(
+      options.get<GrpcBackgroundThreadsFactoryOption>()(), std::move(stub),
+      std::move(options));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

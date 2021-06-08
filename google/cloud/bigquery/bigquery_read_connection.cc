@@ -20,6 +20,8 @@
 #include "google/cloud/bigquery/bigquery_read_options.h"
 #include "google/cloud/bigquery/internal/bigquery_read_option_defaults.h"
 #include "google/cloud/bigquery/internal/bigquery_read_stub_factory.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
@@ -59,9 +61,11 @@ namespace {
 class BigQueryReadConnectionImpl : public BigQueryReadConnection {
  public:
   BigQueryReadConnectionImpl(
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<bigquery_internal::BigQueryReadStub> stub,
       Options const& options)
-      : stub_(std::move(stub)),
+      : background_(std::move(background)),
+        stub_(std::move(stub)),
         retry_policy_prototype_(
             options.get<BigQueryReadRetryPolicyOption>()->clone()),
         backoff_policy_prototype_(
@@ -130,6 +134,7 @@ class BigQueryReadConnectionImpl : public BigQueryReadConnection {
   }
 
  private:
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigquery_internal::BigQueryReadStub> stub_;
   std::unique_ptr<BigQueryReadRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
@@ -140,7 +145,9 @@ class BigQueryReadConnectionImpl : public BigQueryReadConnection {
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
     Options options) {
   options = bigquery_internal::BigQueryReadDefaultOptions(std::move(options));
+  auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
   return std::make_shared<BigQueryReadConnectionImpl>(
+      std::move(background),
       bigquery_internal::CreateDefaultBigQueryReadStub(options), options);
 }
 
@@ -158,7 +165,8 @@ std::shared_ptr<bigquery::BigQueryReadConnection> MakeBigQueryReadConnection(
     std::shared_ptr<BigQueryReadStub> stub, Options options) {
   options = BigQueryReadDefaultOptions(std::move(options));
   return std::make_shared<bigquery::BigQueryReadConnectionImpl>(
-      std::move(stub), std::move(options));
+      options.get<GrpcBackgroundThreadsFactoryOption>()(), std::move(stub),
+      std::move(options));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

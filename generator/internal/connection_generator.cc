@@ -186,6 +186,7 @@ Status ConnectionGenerator::GenerateCc() {
   CcLocalIncludes(
       {vars("connection_header_path"), vars("options_header_path"),
        vars("option_defaults_header_path"), vars("stub_factory_header_path"),
+       "google/cloud/background_threads.h", "google/cloud/grpc_options.h",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : "",
        HasLongrunningMethod() ? "google/cloud/internal/polling_loop.h" : "",
        HasStreamingReadMethod()
@@ -285,11 +286,12 @@ Status ConnectionGenerator::GenerateCc() {
        {"class $connection_class_name$Impl : public $connection_class_name$ {\n"
         " public:\n"
         "  $connection_class_name$Impl(\n"
+        "      std::unique_ptr<google::cloud::BackgroundThreads> background,\n"
         "      "
         "std::shared_ptr<$product_internal_namespace$::$stub_class_name$> "
         "stub,\n"
         "      Options const& options)\n"
-        "      : stub_(std::move(stub)),\n"
+        "      : background_(std::move(background)), stub_(std::move(stub)),\n"
         "        "
         "retry_policy_prototype_(options.get<$retry_policy_name$Option>()->"
         "clone()),\n"
@@ -512,7 +514,8 @@ Status ConnectionGenerator::GenerateCc() {
 
   CcPrint(
       {// clang-format off
-   {"  std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub_;\n"
+   {"  std::unique_ptr<google::cloud::BackgroundThreads> background_;\n"
+    "  std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub_;\n"
     "  std::unique_ptr<$retry_policy_name$ const> retry_policy_prototype_;\n"
     "  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;\n"},
    {[this]{return HasLongrunningMethod();},
@@ -521,32 +524,36 @@ Status ConnectionGenerator::GenerateCc() {
     "};\n"}});
   // clang-format on
 
-  CcPrint("}  // namespace\n\n");
+  CcPrint("}  // namespace\n");
 
-  CcPrint(  // clang-format off
-    "std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
-    "    Options options) {\n"
-    "  options = $product_internal_namespace$::$service_name$DefaultOptions(\n"
-    "      std::move(options));\n"
-    "  return std::make_shared<$connection_class_name$Impl>(\n"
-    "      $product_internal_namespace$::CreateDefault$stub_class_name$(options), options);\n"
-    "}\n\n");
-  // clang-format on
+  CcPrint(R"""(
+std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
+    Options options) {
+  options = $product_internal_namespace$::$service_name$DefaultOptions(
+      std::move(options));
+  auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
+  return std::make_shared<$connection_class_name$Impl>(
+      std::move(background),
+      $product_internal_namespace$::CreateDefault$stub_class_name$(options),
+      options);
+}
+
+)""");
 
   CcCloseNamespaces();
   CcOpenNamespaces(NamespaceType::kInternal);
 
-  CcPrint(  // clang-format off
-    "std::shared_ptr<$product_namespace$::$connection_class_name$>\n"
-    "Make$connection_class_name$(\n"
-    "    std::shared_ptr<$stub_class_name$> stub,\n"
-    "    Options options) {\n"
-    "  options = $service_name$DefaultOptions(\n"
-    "      std::move(options));\n"
-    "  return std::make_shared<$product_namespace$::$connection_class_name$Impl>(\n"
-    "      std::move(stub), std::move(options));\n"
-    "}\n\n");
-  // clang-format on
+  CcPrint(
+      R"""(std::shared_ptr<$product_namespace$::$connection_class_name$>
+Make$connection_class_name$(
+    std::shared_ptr<$stub_class_name$> stub, Options options) {
+  options = $service_name$DefaultOptions(std::move(options));
+  return std::make_shared<$product_namespace$::$connection_class_name$Impl>(
+      options.get<GrpcBackgroundThreadsFactoryOption>()(),
+      std::move(stub), std::move(options));
+}
+
+)""");
 
   CcCloseNamespaces();
   return {};

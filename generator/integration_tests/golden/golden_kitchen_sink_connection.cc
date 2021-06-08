@@ -20,6 +20,8 @@
 #include "generator/integration_tests/golden/golden_kitchen_sink_options.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_option_defaults.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub_factory.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -84,9 +86,10 @@ namespace {
 class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
  public:
   GoldenKitchenSinkConnectionImpl(
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<golden_internal::GoldenKitchenSinkStub> stub,
       Options const& options)
-      : stub_(std::move(stub)),
+      : background_(std::move(background)), stub_(std::move(stub)),
         retry_policy_prototype_(options.get<GoldenKitchenSinkRetryPolicyOption>()->clone()),
         backoff_policy_prototype_(options.get<GoldenKitchenSinkBackoffPolicyOption>()->clone()),
         idempotency_policy_(options.get<GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->clone()) {}
@@ -206,6 +209,7 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
 }
 
  private:
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<golden_internal::GoldenKitchenSinkStub> stub_;
   std::unique_ptr<GoldenKitchenSinkRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
@@ -217,8 +221,11 @@ std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
     Options options) {
   options = golden_internal::GoldenKitchenSinkDefaultOptions(
       std::move(options));
+  auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
   return std::make_shared<GoldenKitchenSinkConnectionImpl>(
-      golden_internal::CreateDefaultGoldenKitchenSinkStub(options), options);
+      std::move(background),
+      golden_internal::CreateDefaultGoldenKitchenSinkStub(options),
+      options);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
@@ -233,11 +240,10 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<golden::GoldenKitchenSinkConnection>
 MakeGoldenKitchenSinkConnection(
-    std::shared_ptr<GoldenKitchenSinkStub> stub,
-    Options options) {
-  options = GoldenKitchenSinkDefaultOptions(
-      std::move(options));
+    std::shared_ptr<GoldenKitchenSinkStub> stub, Options options) {
+  options = GoldenKitchenSinkDefaultOptions(std::move(options));
   return std::make_shared<golden::GoldenKitchenSinkConnectionImpl>(
+      options.get<GrpcBackgroundThreadsFactoryOption>()(),
       std::move(stub), std::move(options));
 }
 

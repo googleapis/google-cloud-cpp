@@ -20,6 +20,8 @@
 #include "google/cloud/logging/internal/logging_service_v2_option_defaults.h"
 #include "google/cloud/logging/internal/logging_service_v2_stub_factory.h"
 #include "google/cloud/logging/logging_service_v2_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -87,9 +89,11 @@ namespace {
 class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
  public:
   LoggingServiceV2ConnectionImpl(
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<logging_internal::LoggingServiceV2Stub> stub,
       Options const& options)
-      : stub_(std::move(stub)),
+      : background_(std::move(background)),
+        stub_(std::move(stub)),
         retry_policy_prototype_(
             options.get<LoggingServiceV2RetryPolicyOption>()->clone()),
         backoff_policy_prototype_(
@@ -226,6 +230,7 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
   }
 
  private:
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<logging_internal::LoggingServiceV2Stub> stub_;
   std::unique_ptr<LoggingServiceV2RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
@@ -238,7 +243,9 @@ std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
     Options options) {
   options =
       logging_internal::LoggingServiceV2DefaultOptions(std::move(options));
+  auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
   return std::make_shared<LoggingServiceV2ConnectionImpl>(
+      std::move(background),
       logging_internal::CreateDefaultLoggingServiceV2Stub(options), options);
 }
 
@@ -257,7 +264,8 @@ MakeLoggingServiceV2Connection(std::shared_ptr<LoggingServiceV2Stub> stub,
                                Options options) {
   options = LoggingServiceV2DefaultOptions(std::move(options));
   return std::make_shared<logging::LoggingServiceV2ConnectionImpl>(
-      std::move(stub), std::move(options));
+      options.get<GrpcBackgroundThreadsFactoryOption>()(), std::move(stub),
+      std::move(options));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

@@ -20,6 +20,8 @@
 #include "google/cloud/iam/iam_credentials_options.h"
 #include "google/cloud/iam/internal/iam_credentials_option_defaults.h"
 #include "google/cloud/iam/internal/iam_credentials_stub_factory.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
@@ -58,9 +60,11 @@ namespace {
 class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
  public:
   IAMCredentialsConnectionImpl(
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<iam_internal::IAMCredentialsStub> stub,
       Options const& options)
-      : stub_(std::move(stub)),
+      : background_(std::move(background)),
+        stub_(std::move(stub)),
         retry_policy_prototype_(
             options.get<IAMCredentialsRetryPolicyOption>()->clone()),
         backoff_policy_prototype_(
@@ -125,6 +129,7 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
   }
 
  private:
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<iam_internal::IAMCredentialsStub> stub_;
   std::unique_ptr<IAMCredentialsRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
@@ -136,7 +141,9 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     Options options) {
   options = iam_internal::IAMCredentialsDefaultOptions(std::move(options));
+  auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
   return std::make_shared<IAMCredentialsConnectionImpl>(
+      std::move(background),
       iam_internal::CreateDefaultIAMCredentialsStub(options), options);
 }
 
@@ -154,7 +161,8 @@ std::shared_ptr<iam::IAMCredentialsConnection> MakeIAMCredentialsConnection(
     std::shared_ptr<IAMCredentialsStub> stub, Options options) {
   options = IAMCredentialsDefaultOptions(std::move(options));
   return std::make_shared<iam::IAMCredentialsConnectionImpl>(
-      std::move(stub), std::move(options));
+      options.get<GrpcBackgroundThreadsFactoryOption>()(), std::move(stub),
+      std::move(options));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
