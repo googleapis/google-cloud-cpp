@@ -48,9 +48,18 @@ readonly IO_COLOR_GREEN
 readonly IO_COLOR_YELLOW
 readonly IO_RESET
 
+export CI_LIB_IO_FIRST_TIMESTAMP=${CI_LIB_IO_FIRST_TIMESTAMP:-$(date '+%s')}
+
 # Prints the current time as a string.
 function io::internal::timestamp() {
-  date -u "+%Y-%m-%dT%H:%M:%SZ"
+  local now
+  now=$(date '+%s')
+  local when=(-d "@${now}")
+  case "$(uname -s)" in
+  Darwin) when=(-r "${now}") ;;
+  esac
+  echo "$(date "${when[@]}" -u '+%Y-%m-%dT%H:%M:%SZ')" \
+    "$(printf '(%+ds)' $((now - CI_LIB_IO_FIRST_TIMESTAMP)))"
 }
 
 # Logs a message using the given terminal capability. The first argument

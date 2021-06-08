@@ -250,6 +250,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--env=USER=$(id -un)"
     "--env=TERM=$([[ -t 0 ]] && echo "${TERM:-dumb}" || echo dumb)"
     "--env=TZ=UTC0"
+    "--env=CI_LIB_IO_FIRST_TIMESTAMP=${CI_LIB_IO_FIRST_TIMESTAMP:-}"
     "--env=CODECOV_TOKEN=${CODECOV_TOKEN:-}"
     "--env=BRANCH_NAME=${BRANCH_NAME}"
     "--env=COMMIT_SHA=${COMMIT_SHA}"
