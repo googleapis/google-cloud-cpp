@@ -25,6 +25,12 @@ fi # include guard
 
 source module ci/lib/io.sh
 
+# Selects a default bazel version, though individual builds can override this.
+: "${USE_BAZEL_VERSION:="3.5.0"}"
+export USE_BAZEL_VERSION
+io::log "Using bazelisk version"
+bazelisk version
+
 io::log "Prefetching bazel deps..."
 # Bazel downloads all the dependencies of a project, as well as a number of
 # development tools during startup. In automated builds these downloads fail

@@ -65,5 +65,9 @@ ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
 # The Cloud Pub/Sub emulator needs Java :shrug:
 RUN apt update && (apt install -y openjdk-11-jre || apt install -y openjdk-9-jre)
 
-# Install Bazel because some of the builds need it.
-RUN /var/tmp/ci/install-bazel.sh
+# Normally we'd install this with `npm install -g @bazel/bazelisk`, but
+# installing npm on Bionic fails due to a conflicting dependency version with
+# some other installed package.
+RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.9.0/bazelisk-linux-amd64" && \
+    chmod +x /usr/bin/bazelisk && \
+    ln -s /usr/bin/bazelisk /usr/bin/bazel

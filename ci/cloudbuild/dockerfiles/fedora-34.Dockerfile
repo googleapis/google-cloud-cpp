@@ -23,7 +23,7 @@ RUN dnf makecache && \
         ccache clang clang-analyzer clang-tools-extra \
         cmake diffutils doxygen findutils gcc-c++ git \
         grpc-devel grpc-plugins lcov libcxx-devel libcxxabi-devel \
-        libasan libubsan libtsan libcurl-devel make ninja-build \
+        libasan libubsan libtsan libcurl-devel make ninja-build npm \
         openssl-devel patch pkgconfig protobuf-compiler python python3.8 \
         python-pip tar unzip w3m wget which zip zlib-devel
 
@@ -37,6 +37,8 @@ RUN echo 'root:' | chpasswd
 RUN dnf makecache && dnf install -y python3-devel
 RUN pip3 install --upgrade pip
 RUN pip3 install setuptools wheel
+
+RUN npm install -g @bazel/bazelisk
 
 # Install Abseil, remove the downloaded files and the temporary artifacts
 # after a successful build to keep the image smaller (and with fewer layers)
@@ -135,9 +137,6 @@ ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
 # The Cloud Pub/Sub emulator needs Java, and so does `bazel coverage` :shrug:
 # Bazel needs the '-devel' version with javac.
 RUN dnf makecache && dnf install -y java-latest-openjdk-devel
-
-# Install Bazel because some of the builds need it.
-RUN /var/tmp/ci/install-bazel.sh
 
 # Some of the above libraries may have installed in /usr/local, so make sure
 # those library directories will be found.

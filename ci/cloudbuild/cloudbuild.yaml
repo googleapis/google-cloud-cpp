@@ -114,6 +114,7 @@ steps:
       --bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp
       --key=${_TRIGGER_SOURCE}/${_DISTRO}-${_BUILD_NAME}/h
       --path=.ccache
+      --path=.cache/bazelisk
       --path=.cache/ccache
       --path=.cache/ctcache
       --path=.cache/vcpkg
