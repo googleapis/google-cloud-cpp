@@ -53,6 +53,7 @@ cmake_flags=(
 )
 
 io::log_h2 "Configure CMake"
+export NINJA_STATUS="T+%es [%f/%t] "
 cmake -GNinja "-H${SOURCE_DIR}" "-B${BINARY_DIR}" "${cmake_flags[@]}"
 
 io::log_h2 "Compiling with ${NCPU} cpus"

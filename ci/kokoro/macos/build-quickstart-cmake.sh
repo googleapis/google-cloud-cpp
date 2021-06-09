@@ -52,6 +52,7 @@ fi
 readonly run_quickstart
 
 cd "${PROJECT_ROOT}"
+export NINJA_STATUS="T+%es [%f/%t] "
 cmake_flags=(
   "-DCMAKE_TOOLCHAIN_FILE=${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake"
 )
