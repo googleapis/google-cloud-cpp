@@ -69,7 +69,9 @@
 
 **BREAKING CHANGES**:
 * Experimental functions matching `Async*` in `bigtable::TableAdmin` and
-  `bigtable::InstanceAdmin` have been removed from the public API.
+  `bigtable::InstanceAdmin` have been removed from the public API. See
+  [#5923](https://github.com/googleapis/google-cloud-cpp/issues/5923) for more
+  details.
 
 ## v1.28.0 - 2021-06
 
