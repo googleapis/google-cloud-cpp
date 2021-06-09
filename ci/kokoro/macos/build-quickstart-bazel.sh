@@ -20,10 +20,12 @@ source module /ci/etc/integration-tests-config.sh
 source module /ci/etc/quickstart-config.sh
 source module /ci/lib/io.sh
 
+# NOTE: In this file use the command `bazelisk` rather than bazel, because
+# Kokoro has both installed and we want to make sure to use the former.
 io::log_h2 "Using bazel version"
 : "${USE_BAZEL_VERSION:="3.5.0"}"
 export USE_BAZEL_VERSION
-bazel version
+bazelisk version
 
 bazel_args=(
   # On macOS gRPC does not compile correctly unless one defines this:
@@ -74,7 +76,7 @@ build_quickstart() {
       @remotejdk11_macos//:jdk
     )
     io::log_yellow "Fetching deps for ${library}'s quickstart [${repeat}/3]"
-    if bazel fetch ... "${external[@]}"; then
+    if bazelisk fetch ... "${external[@]}"; then
       break
     else
       io::log_yellow "bazel fetch failed with $?"
@@ -83,7 +85,7 @@ build_quickstart() {
   done
 
   io::log_h2 "Compiling ${library}'s quickstart"
-  bazel build "${bazel_args[@]}" ...
+  bazelisk build "${bazel_args[@]}" ...
 
   if [[ "${run_quickstart}" == "true" ]]; then
     echo
@@ -94,7 +96,7 @@ build_quickstart() {
     done < <(quickstart::arguments "${library}")
     env "GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_FILE}" \
       "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${CONFIG_DIR}/roots.pem" \
-      bazel run "${bazel_args[@]}" "--spawn_strategy=local" \
+      bazelisk run "${bazel_args[@]}" "--spawn_strategy=local" \
       :quickstart -- "${args[@]}"
   fi
 }
