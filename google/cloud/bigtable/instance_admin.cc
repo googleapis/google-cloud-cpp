@@ -632,8 +632,8 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::ProtoToWrapper(
         std::stringstream os;
         os << "IamBinding field \"" << field_desc->name()
            << "\" is unknown to Bigtable C++ client. Please use "
-              "GetNativeIamPolicy() and their respective "
-              "SetIamPolicy() overloads.";
+              "GetNativeIamPolicy() and its"
+              "SetIamPolicy() overload.";
         return Status(StatusCode::kUnimplemented, os.str());
       }
     }

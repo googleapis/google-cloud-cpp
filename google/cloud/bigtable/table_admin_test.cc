@@ -1197,8 +1197,8 @@ TEST_F(TableAdminTest, TestIamPermissionsRecoverableError) {
 }
 
 /**
- * @test Verify that `bigtagble::TableAdmin::AsyncWaitForConsistency` works as
- * expected, with multiple asynchronous calls.
+ * @test Verify that `bigtagble::TableAdmin::AsyncWaitForConsistencyImpl` works
+ * as expected, with multiple asynchronous calls.
  */
 TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
   TableAdminTester table_admin;
