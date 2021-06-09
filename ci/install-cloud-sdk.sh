@@ -16,7 +16,8 @@
 
 set -eu
 
-source "$(dirname "$0")/etc/install-config.sh"
+readonly GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION="328.0.0"
+readonly GOOGLE_CLOUD_CPP_SDK_SHA256="31f95d4e82bb65f756662667235a8a235a3f752894732b31cd491360c559e6ee"
 
 readonly SITE="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads"
 readonly TARBALL="google-cloud-sdk-${GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION}-linux-x86_64.tar.gz"

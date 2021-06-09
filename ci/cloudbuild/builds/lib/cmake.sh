@@ -24,6 +24,9 @@ fi # include guard
 
 source module ci/lib/io.sh
 
+io::log "Using CMake version"
+cmake --version
+
 # Adds an elapsed seconds counter at the beginning of the ninja output to help
 # us see where builds are taking the most time. See also
 # https://ninja-build.org/manual.html#_environment_variables

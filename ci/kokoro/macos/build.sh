@@ -94,8 +94,6 @@ printf "%10s %s\n" "mem:" "$(($(sysctl -n hw.memsize) / 1024 / 1024 / 1024)) GB"
 printf "%10s %s\n" "term:" "${TERM-}"
 printf "%10s %s\n" "bash:" "$(bash --version 2>&1 | head -1)"
 printf "%10s %s\n" "clang:" "$(clang --version 2>&1 | head -1)"
-printf "%10s %s\n" "cmake:" "$(cmake --version 2>&1 | head -1)"
-printf "%10s %s\n" "bazel:" "$(bazel --version 2>&1 | head -1)"
 printf "%10s %s\n" "brew:" "$(brew --version 2>&1 | head -1)"
 printf "%10s %s\n" "branch:" "${BRANCH}"
 

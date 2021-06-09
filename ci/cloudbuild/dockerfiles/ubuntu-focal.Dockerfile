@@ -65,6 +65,3 @@ ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
 # The Cloud Pub/Sub emulator needs Java :shrug:
 RUN apt update && (apt install -y openjdk-11-jre || apt install -y openjdk-9-jre)
-
-# Install Bazel because some of the builds need it.
-RUN /var/tmp/ci/install-bazel.sh

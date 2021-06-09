@@ -20,23 +20,16 @@ source module /ci/etc/integration-tests-config.sh
 source module /ci/etc/quickstart-config.sh
 source module /ci/lib/io.sh
 
-io::log_h2 "update or install Bazel"
-
-# macOS does not have sha256sum by default, but `shasum -a 256` does the same
-# thing:
-function sha256sum() { shasum -a 256 "$@"; }
-export -f sha256sum
-
-mkdir -p "cmake-out/download"
-(
-  cd "cmake-out/download"
-  "${PROJECT_ROOT}/ci/install-bazel.sh" >/dev/null
-)
-
-readonly BAZEL_BIN="$HOME/bin/bazel"
-io::log "Using Bazel in ${BAZEL_BIN}"
-"${BAZEL_BIN}" version
-"${BAZEL_BIN}" shutdown
+# NOTE: In this file use the command `bazelisk` rather than bazel, because
+# Kokoro has both installed and we want to make sure to use the former.
+io::log_h2 "Using bazel version"
+: "${USE_BAZEL_VERSION:="3.5.0"}"
+export USE_BAZEL_VERSION
+bazelisk version
+# Kokoro needs bazel to be shutdown here, otherwise it will hang. This shutdown
+# is different (because it's in a different WORKSPACE) than the shutdown below
+# that's done in each quickstart workspace.
+bazelisk shutdown
 
 bazel_args=(
   # On macOS gRPC does not compile correctly unless one defines this:
@@ -76,8 +69,6 @@ build_quickstart() {
 
   pushd "${PROJECT_ROOT}/google/cloud/${library}/quickstart" >/dev/null
   trap "popd >/dev/null" RETURN
-  io::log "capture bazel version"
-  ${BAZEL_BIN} version
   for repeat in 1 2 3; do
     # Additional dependencies, these are not downloaded by `bazel fetch ...`,
     # but are needed to compile the code
@@ -89,7 +80,7 @@ build_quickstart() {
       @remotejdk11_macos//:jdk
     )
     io::log_yellow "Fetching deps for ${library}'s quickstart [${repeat}/3]"
-    if "${BAZEL_BIN}" fetch ... "${external[@]}"; then
+    if bazelisk fetch ... "${external[@]}"; then
       break
     else
       io::log_yellow "bazel fetch failed with $?"
@@ -98,7 +89,7 @@ build_quickstart() {
   done
 
   io::log_h2 "Compiling ${library}'s quickstart"
-  "${BAZEL_BIN}" build "${bazel_args[@]}" ...
+  bazelisk build "${bazel_args[@]}" ...
 
   if [[ "${run_quickstart}" == "true" ]]; then
     echo
@@ -109,11 +100,12 @@ build_quickstart() {
     done < <(quickstart::arguments "${library}")
     env "GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_FILE}" \
       "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${CONFIG_DIR}/roots.pem" \
-      "${BAZEL_BIN}" run "${bazel_args[@]}" "--spawn_strategy=local" \
+      bazelisk run "${bazel_args[@]}" "--spawn_strategy=local" \
       :quickstart -- "${args[@]}"
   fi
 
-  "${BAZEL_BIN}" shutdown
+  # Kokoro needs bazel to be shutdown.
+  bazelisk shutdown
 }
 
 errors=""
@@ -133,5 +125,3 @@ else
   io::log_red "Build failed for ${errors}"
   exit 1
 fi
-
-exit 0

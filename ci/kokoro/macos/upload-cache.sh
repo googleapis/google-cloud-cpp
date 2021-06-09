@@ -44,6 +44,9 @@ maybe_dirs=(
 
   # This dir may contain arbitrary things that our scripts want to cache.
   "${HOME}/.cache/google-cloud-cpp"
+
+  # This dir contains bazel installations
+  "${HOME}/Library/Caches/bazelisk"
 )
 
 dirs=()
