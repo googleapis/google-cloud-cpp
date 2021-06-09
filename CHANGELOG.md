@@ -16,20 +16,6 @@
 </details>
 
 <details>
-<summary>2021-06-01: retiring experimental Bigtable Admin Async APIs</summary>
-
-* In 2021-06-01 (or shortly after) we are planning to remove all the functions
-  matching `Async*` in `bigtable::TableAdmin` and `bigtable::InstanceAdmin`.
-  These functions were already marked as **experimental**, they allow
-  applications to perform administrative operations in a non-blocking manner.
-  We do not think these functions are sufficiently useful to justify the
-  additional maintenance and API clutter. Starting with the v1.25.0 release,
-  and depending on your compiler settings, using these functions may issue a
-  deprecation warning at the call site. More information in [#5923].
-
-</details>
-
-<details>
 <summary>2022-02-15: retiring legacy targets and rules</summary>
 <br>
 
@@ -78,6 +64,14 @@
 </details>
 
 ## v1.29.0 - TBD
+
+### Bigtable:
+
+**BREAKING CHANGES**:
+* Experimental functions matching `Async*` in `bigtable::TableAdmin` and
+  `bigtable::InstanceAdmin` have been removed from the public API. See
+  [#5923](https://github.com/googleapis/google-cloud-cpp/issues/5923) for more
+  details.
 
 ## v1.28.0 - 2021-06
 

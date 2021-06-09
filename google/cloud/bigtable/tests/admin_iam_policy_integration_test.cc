@@ -18,8 +18,6 @@
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-// TODO(#5923) - remove after deprecation is completed
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {
@@ -52,79 +50,6 @@ class AdminIAMPolicyIntegrationTest
         admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
   }
 };
-
-TEST_F(AdminIAMPolicyIntegrationTest, AsyncSetGetTestIamAPIsTest) {
-  std::string const table_id = RandomTableId();
-
-  auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
-      "roles/bigtable.reader", {"serviceAccount:" + service_account_})});
-
-  TableConfig table_config({{"fam", GcRule::MaxNumVersions(5)},
-                            {"foo", GcRule::MaxAge(std::chrono::hours(24))}},
-                           {"a1000", "a2000", "b3000", "m5000"});
-
-  CompletionQueue cq;
-  std::thread pool([&cq] { cq.Run(); });
-
-  future<void> chain =
-      table_admin_->AsyncListTables(cq, btadmin::Table::NAME_ONLY)
-          .then([&](future<StatusOr<std::vector<btadmin::Table>>> fut) {
-            StatusOr<std::vector<btadmin::Table>> result = fut.get();
-            EXPECT_STATUS_OK(result);
-            EXPECT_THAT(TableNames(*result),
-                        Not(Contains(table_admin_->instance_name() +
-                                     "/tables/" + table_id)))
-                << "Table (" << table_id << ") already exists."
-                << " This is unexpected, as the table ids are"
-                << " generated at random.";
-            return table_admin_->AsyncCreateTable(cq, table_id, table_config);
-          })
-          .then([&](future<StatusOr<btadmin::Table>> fut) {
-            StatusOr<btadmin::Table> result = fut.get();
-            EXPECT_STATUS_OK(result);
-            EXPECT_THAT(result->name(), ::testing::HasSubstr(table_id));
-            return table_admin_->AsyncSetIamPolicy(cq, table_id, iam_policy);
-          })
-          .then([&](future<StatusOr<google::iam::v1::Policy>> fut) {
-            StatusOr<google::iam::v1::Policy> get_result = fut.get();
-            EXPECT_STATUS_OK(get_result);
-            return table_admin_->AsyncGetIamPolicy(cq, table_id);
-          })
-          .then([&](future<StatusOr<google::iam::v1::Policy>> fut) {
-            StatusOr<google::iam::v1::Policy> get_result = fut.get();
-            EXPECT_STATUS_OK(get_result);
-            return table_admin_->AsyncTestIamPermissions(
-                cq, table_id,
-                {"bigtable.tables.get", "bigtable.tables.readRows"});
-          })
-          .then([&](future<StatusOr<std::vector<std::string>>> fut) {
-            StatusOr<std::vector<std::string>> get_result = fut.get();
-            EXPECT_STATUS_OK(get_result);
-            EXPECT_EQ(2, get_result->size());
-            return table_admin_->AsyncDeleteTable(cq, table_id);
-          })
-          .then([&](future<Status> fut) {
-            Status delete_result = fut.get();
-            EXPECT_STATUS_OK(delete_result);
-            return table_admin_->AsyncListTables(cq, btadmin::Table::NAME_ONLY);
-          })
-          .then([&](future<StatusOr<std::vector<btadmin::Table>>> fut) {
-            StatusOr<std::vector<btadmin::Table>> result = fut.get();
-            EXPECT_STATUS_OK(result);
-            EXPECT_THAT(TableNames(*result),
-                        Not(Contains(table_admin_->instance_name() +
-                                     "/tables/" + table_id)))
-                << "Table (" << table_id << ") already exists."
-                << " This is unexpected, as the table ids are"
-                << " generated at random.";
-          });
-
-  chain.get();
-  SUCCEED();  // we expect that previous operations do not fail.
-
-  cq.Shutdown();
-  pool.join();
-}
 
 /// @test Verify that IAM Policy APIs work as expected.
 TEST_F(AdminIAMPolicyIntegrationTest, SetGetTestIamAPIsTest) {
