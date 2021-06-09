@@ -30,6 +30,9 @@ readonly BINARY_DIR="$2"
 NCPU="$(sysctl -n hw.logicalcpu)"
 readonly NCPU
 
+io::log "Using CMake version"
+cmake --version
+
 io::log_h2 "Update or install dependencies"
 brew list --versions openssl || brew install openssl
 brew list --versions ccache || brew install ccache

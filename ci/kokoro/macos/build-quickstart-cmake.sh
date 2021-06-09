@@ -20,6 +20,9 @@ source module /ci/lib/io.sh
 source module /ci/etc/integration-tests-config.sh
 source module /ci/etc/quickstart-config.sh
 
+io::log "Using CMake version"
+cmake --version
+
 io::log_h2 "Update or install dependencies"
 
 # vcpkg needs this

@@ -19,22 +19,9 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module /ci/etc/integration-tests-config.sh
 source module /ci/lib/io.sh
 
-io::log_h2 "update or install Bazel"
-
-# macOS does not have sha256sum by default, but `shasum -a 256` does the same
-# thing:
-function sha256sum() { shasum -a 256 "$@"; } && export -f sha256sum
-
-mkdir -p "cmake-out/download"
-(
-  cd "cmake-out/download"
-  "${PROJECT_ROOT}/ci/install-bazel.sh" >/dev/null
-)
-
-readonly BAZEL_BIN="$HOME/bin/bazel"
-io::log "Using Bazel in ${BAZEL_BIN}"
-"${BAZEL_BIN}" version
-"${BAZEL_BIN}" shutdown
+io::log_h2 "Using bazel version"
+: "${USE_BAZEL_VERSION:="3.5.0"}"
+bazel version
 
 bazel_args=(
   # On macOS gRPC does not compile correctly unless one defines this:
@@ -78,7 +65,7 @@ for repeat in 1 2 3; do
     @remotejdk11_macos//:jdk
   )
   io::log_yellow "Fetch bazel dependencies [${repeat}/3]"
-  if "${BAZEL_BIN}" fetch ... "${external[@]}"; then
+  if bazel fetch ... "${external[@]}"; then
     break
   else
     io::log_yellow "bazel fetch failed with $?"
@@ -88,11 +75,10 @@ done
 
 io::log_h2 "build and run unit tests"
 echo "bazel test " "${bazel_args[@]}"
-"${BAZEL_BIN}" test \
-  "${bazel_args[@]}" "--test_tag_filters=-integration-test" ...
+bazel test "${bazel_args[@]}" "--test_tag_filters=-integration-test" ...
 
 io::log_h2 "build all targets"
-"${BAZEL_BIN}" build "${bazel_args[@]}" ...
+bazel build "${bazel_args[@]}" ...
 
 should_run_integration_tests() {
   if [[ -r "${GOOGLE_APPLICATION_CREDENTIALS}" && -r \
@@ -159,11 +145,6 @@ if should_run_integration_tests; then
     "-//google/cloud/storage/tests:grpc_integration_test"
   )
 
-  "${BAZEL_BIN}" test \
-    "${bazel_args[@]}" \
-    "--test_tag_filters=integration-test" \
+  bazel test "${bazel_args[@]}" "--test_tag_filters=integration-test" \
     -- ... "${excluded_rules[@]}"
-
 fi
-
-"${BAZEL_BIN}" shutdown

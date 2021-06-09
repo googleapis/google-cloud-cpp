@@ -11,5 +11,3 @@
 
 # Don't ignore a few scripts that are invoked from within Dockerfiles.
 !/install-cloud-sdk.sh
-!/install-bazel.sh
-!/etc/install-config.sh
