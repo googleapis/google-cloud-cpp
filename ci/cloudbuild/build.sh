@@ -144,10 +144,8 @@ if [[ -n "${TRIGGER_FLAG}" ]]; then
     io::log_red "Cannot open ${trigger_file}"
     exit 1
   fi
-  build="$(grep _BUILD_NAME "${trigger_file}" | awk '{print $2}')"
-  distro="$(grep _DISTRO "${trigger_file}" | awk '{print $2}')"
-  test -z "${BUILD_NAME}" && BUILD_NAME="${build}"
-  test -z "${DISTRO_FLAG}" && DISTRO_FLAG="${distro}"
+  : "${BUILD_NAME:="$(grep _BUILD_NAME "${trigger_file}" | awk '{print $2}')"}"
+  : "${DISTRO_FLAG:="$(grep _DISTRO "${trigger_file}" | awk '{print $2}')"}"
 fi
 readonly BUILD_NAME
 readonly DISTRO_FLAG
@@ -161,9 +159,9 @@ fi
 # Sets some env vars that usually come from GCB, but need to be set explicitly
 # when doing --local or --docker builds. See also `cloudbuild.yaml` and
 # https://cloud.google.com/build/docs/configuring-builds/substitute-variable-values
-TRIGGER_TYPE="${TRIGGER_TYPE:-manual}"
-BRANCH_NAME="${BRANCH_NAME:-$(git branch --show-current)}"
-COMMIT_SHA="${COMMIT_SHA:-$(git rev-parse HEAD)}"
+: "${TRIGGER_TYPE:=manual}"
+: "${BRANCH_NAME:=$(git branch --show-current)}"
+: "${COMMIT_SHA:=$(git rev-parse HEAD)}"
 CODECOV_TOKEN="$(tr -d '[:space:]' <<<"${CODECOV_TOKEN:-}")"
 LOG_LINKER_PAT="$(tr -d '[:space:]' <<<"${LOG_LINKER_PAT:-}")"
 
