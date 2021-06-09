@@ -1976,7 +1976,9 @@ void CreateClientWithQueryOptions(std::string const& project_id,
   spanner::Client client(
       spanner::MakeConnection(db),
       spanner::ClientOptions().set_query_options(
-          spanner::QueryOptions().set_optimizer_version("1")));
+          spanner::QueryOptions()
+              .set_optimizer_version("1")
+              .set_optimizer_statistics_package("auto_20191128_14_47_22UTC")));
   //! [END spanner_create_client_with_query_options]
 }
 
@@ -1993,7 +1995,9 @@ void CreateClientWithQueryOptionsCommand(std::vector<std::string> argv) {
 void QueryWithQueryOptions(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
   auto sql = spanner::SqlStatement("SELECT SingerId, FirstName FROM Singers");
-  auto opts = spanner::QueryOptions().set_optimizer_version("1");
+  auto opts = spanner::QueryOptions()
+                  .set_optimizer_version("1")
+                  .set_optimizer_statistics_package("latest");
   auto rows = client.ExecuteQuery(std::move(sql), std::move(opts));
 
   using RowType = std::tuple<std::int64_t, std::string>;

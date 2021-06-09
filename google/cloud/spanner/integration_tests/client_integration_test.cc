@@ -907,7 +907,7 @@ TEST_F(ClientIntegrationTest, InformationSchema) {
 }
 
 /// @test Verify ability to enumerate SUPPORTED_OPTIMIZER_VERSIONS.
-TEST_F(ClientIntegrationTest, OptimizerStatisticsPackages) {
+TEST_F(ClientIntegrationTest, SupportedOptimizerVersions) {
   auto rows = client_->ExecuteQuery(SqlStatement(R"""(
         SELECT v.VERSION, v.RELEASE_DATE
         FROM SPANNER_SYS.SUPPORTED_OPTIMIZER_VERSIONS AS v
@@ -922,6 +922,26 @@ TEST_F(ClientIntegrationTest, OptimizerStatisticsPackages) {
     if (!row) break;
     EXPECT_GT(std::get<0>(*row), 0);
     EXPECT_GE(std::get<1>(*row), absl::CivilDay(1998, 9, 4));
+  }
+}
+
+/// @test Verify ability to enumerate SPANNER_STATISTICS.
+TEST_F(ClientIntegrationTest, SpannerStatistics) {
+  auto rows = client_->ExecuteQuery(SqlStatement(R"""(
+        SELECT s.SCHEMA_NAME, s.PACKAGE_NAME, s.ALLOW_GC
+        FROM INFORMATION_SCHEMA.SPANNER_STATISTICS AS s
+      )"""));
+  using RowType = std::tuple<std::string, std::string, bool>;
+  for (auto& row : StreamOf<RowType>(rows)) {
+    if (emulator_) {
+      EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
+    } else {
+      EXPECT_THAT(row, IsOk());
+    }
+    if (!row) break;
+    // When the backend starts delivering rows for the table, we can
+    // refine the column expectations beyond a non-empty package name.
+    EXPECT_NE(std::get<1>(*row), "");
   }
 }
 

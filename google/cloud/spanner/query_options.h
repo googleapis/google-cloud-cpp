@@ -31,6 +31,7 @@ inline namespace SPANNER_CLIENT_NS {
  * queries executes on the server.
  *
  * @see https://cloud.google.com/spanner/docs/reference/rest/v1/QueryOptions
+ * @see http://cloud/spanner/docs/query-optimizer/manage-query-optimizer
  */
 class QueryOptions {
  public:
@@ -55,6 +56,21 @@ class QueryOptions {
     return *this;
   }
 
+  /// Returns the optimizer statistics package
+  absl::optional<std::string> const& optimizer_statistics_package() const {
+    return optimizer_statistics_package_;
+  }
+
+  /**
+   * Sets the optimizer statistics package to the specified string. Setting to
+   * the empty string will use the database default.
+   */
+  QueryOptions& set_optimizer_statistics_package(
+      absl::optional<std::string> stats_package) {
+    optimizer_statistics_package_ = std::move(stats_package);
+    return *this;
+  }
+
   /// Returns the request priority.
   absl::optional<RequestPriority> const& request_priority() const {
     return request_priority_;
@@ -68,7 +84,8 @@ class QueryOptions {
 
   friend bool operator==(QueryOptions const& a, QueryOptions const& b) {
     return a.request_priority_ == b.request_priority_ &&
-           a.optimizer_version_ == b.optimizer_version_;
+           a.optimizer_version_ == b.optimizer_version_ &&
+           a.optimizer_statistics_package_ == b.optimizer_statistics_package_;
   }
 
   friend bool operator!=(QueryOptions const& a, QueryOptions const& b) {
@@ -77,6 +94,7 @@ class QueryOptions {
 
  private:
   absl::optional<std::string> optimizer_version_;
+  absl::optional<std::string> optimizer_statistics_package_;
   absl::optional<RequestPriority> request_priority_;
 };
 

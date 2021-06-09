@@ -32,10 +32,32 @@ TEST(QueryOptionsTest, Values) {
 
   copy.set_optimizer_version("");
   EXPECT_NE(copy, default_constructed);
+  EXPECT_EQ("", copy.optimizer_version().value());
+
   copy.set_optimizer_version("foo");
   EXPECT_NE(copy, default_constructed);
+  EXPECT_EQ("foo", copy.optimizer_version().value());
 
-  copy.set_optimizer_version(absl::optional<std::string>{});
+  copy.set_optimizer_version(absl::nullopt);
+  EXPECT_EQ(copy, default_constructed);
+}
+
+TEST(QueryOptionsTest, OptimizerStatisticsPackage) {
+  QueryOptions const default_constructed{};
+  EXPECT_FALSE(default_constructed.optimizer_statistics_package().has_value());
+
+  auto copy = default_constructed;
+  EXPECT_EQ(copy, default_constructed);
+
+  copy.set_optimizer_statistics_package("");
+  EXPECT_NE(copy, default_constructed);
+  EXPECT_EQ("", copy.optimizer_statistics_package().value());
+
+  copy.set_optimizer_statistics_package("foo");
+  EXPECT_NE(copy, default_constructed);
+  EXPECT_EQ("foo", copy.optimizer_statistics_package().value());
+
+  copy.set_optimizer_statistics_package(absl::nullopt);
   EXPECT_EQ(copy, default_constructed);
 
   copy.set_request_priority(RequestPriority::kLow);
