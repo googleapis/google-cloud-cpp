@@ -35,26 +35,38 @@ std::size_t const kMaxDataDebugSize = 48;
 
 extern "C" int CurlHandleDebugCallback(CURL*, curl_infotype type, char* data,
                                        std::size_t size, void* userptr) {
-  auto* debug_buffer = reinterpret_cast<std::string*>(userptr);
+  auto* debug_info = reinterpret_cast<CurlHandle::DebugInfo*>(userptr);
   switch (type) {
     case CURLINFO_TEXT:
-      *debug_buffer += "== curl(Info): " + std::string(data, size);
+      debug_info->buffer += "== curl(Info): " + std::string(data, size);
       break;
     case CURLINFO_HEADER_IN:
-      *debug_buffer += "<< curl(Recv Header): " + std::string(data, size);
+      debug_info->buffer += "<< curl(Recv Header): " + std::string(data, size);
       break;
     case CURLINFO_HEADER_OUT:
-      *debug_buffer += ">> curl(Send Header): " + std::string(data, size);
+      debug_info->buffer += ">> curl(Send Header): " + std::string(data, size);
       break;
     case CURLINFO_DATA_IN:
-      *debug_buffer += ">> curl(Recv Data): size=";
-      *debug_buffer += std::to_string(size) + "\n";
-      *debug_buffer += BinaryDataAsDebugString(data, size, kMaxDataDebugSize);
+      ++debug_info->recv_count;
+      if (size == 0) {
+        ++debug_info->recv_zero_count;
+      } else {
+        debug_info->buffer += ">> curl(Recv Data): size=";
+        debug_info->buffer += std::to_string(size) + "\n";
+        debug_info->buffer +=
+            BinaryDataAsDebugString(data, size, kMaxDataDebugSize);
+      }
       break;
     case CURLINFO_DATA_OUT:
-      *debug_buffer += ">> curl(Send Data): size=";
-      *debug_buffer += std::to_string(size) + "\n";
-      *debug_buffer += BinaryDataAsDebugString(data, size, kMaxDataDebugSize);
+      ++debug_info->send_count;
+      if (size == 0) {
+        ++debug_info->send_zero_count;
+      } else {
+        debug_info->buffer += ">> curl(Send Data): size=";
+        debug_info->buffer += std::to_string(size) + "\n";
+        debug_info->buffer +=
+            BinaryDataAsDebugString(data, size, kMaxDataDebugSize);
+      }
       break;
     case CURLINFO_SSL_DATA_IN:
     case CURLINFO_SSL_DATA_OUT:
@@ -136,7 +148,7 @@ void CurlHandle::ResetSocketCallback() {
 
 void CurlHandle::EnableLogging(bool enabled) {
   if (enabled) {
-    SetOption(CURLOPT_DEBUGDATA, &debug_buffer_);
+    SetOption(CURLOPT_DEBUGDATA, &debug_info_);
     SetOption(CURLOPT_DEBUGFUNCTION, &CurlHandleDebugCallback);
     SetOption(CURLOPT_VERBOSE, 1L);
   } else {
@@ -147,10 +159,13 @@ void CurlHandle::EnableLogging(bool enabled) {
 }
 
 void CurlHandle::FlushDebug(char const* where) {
-  if (!debug_buffer_.empty()) {
-    GCP_LOG(DEBUG) << where << ' ' << debug_buffer_;
-    debug_buffer_.clear();
-  }
+  if (debug_info_.buffer.empty()) return;
+  GCP_LOG(DEBUG) << where << " recv_count=" << debug_info_.recv_count << " ("
+                 << debug_info_.recv_zero_count
+                 << " with no data), send_count=" << debug_info_.send_count
+                 << " (" << debug_info_.send_zero_count << " with no data).";
+  GCP_LOG(DEBUG) << where << ' ' << debug_info_.buffer;
+  debug_info_ = DebugInfo{};
 }
 
 Status CurlHandle::AsStatus(CURLcode e, char const* where) {

@@ -109,6 +109,14 @@ class CurlHandle {
   /// Convert a CURLE_* error code to a google::cloud::Status().
   static Status AsStatus(CURLcode e, char const* where);
 
+  struct DebugInfo {
+    std::string buffer;
+    std::uint64_t recv_zero_count = 0;
+    std::uint64_t recv_count = 0;
+    std::uint64_t send_zero_count = 0;
+    std::uint64_t send_count = 0;
+  };
+
  private:
   explicit CurlHandle(CurlPtr ptr) : handle_(std::move(ptr)) {}
 
@@ -131,7 +139,7 @@ class CurlHandle {
   }
 
   CurlPtr handle_;
-  std::string debug_buffer_;
+  DebugInfo debug_info_;
   SocketOptions socket_options_;
 };
 
