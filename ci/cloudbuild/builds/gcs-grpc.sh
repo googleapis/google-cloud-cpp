@@ -23,13 +23,16 @@ source module ci/cloudbuild/builds/lib/integration.sh
 export CC=clang
 export CXX=clang++
 
-mapfile -t args < <(bazel::common_args)
-bazel test "${args[@]}" --test_tag_filters=-integration-test google/cloud/storage/...
+excluded_rules=(
+  "-//google/cloud/storage/examples:storage_service_account_samples"
+  "-//google/cloud/storage/tests:service_account_integration_test"
+  "-//google/cloud/storage/tests:grpc_integration_test"
+)
 
-mapfile -t integration_args < <(integration::bazel_args)
+mapfile -t args < <(bazel::common_args)
+# Run as many of the integration tests as possible using production and gRPC:
 # "media" says to use the hybrid gRPC/REST client. For more details see
 # https://github.com/googleapis/google-cloud-cpp/issues/6268
-GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=media # Uses the gRPC data plane
-io::log_h2 "Running Storage integration tests (with emulator)"
-google/cloud/storage/ci/run_integration_tests_emulator_bazel.sh \
-  bazel test "${args[@]}" "${integration_args[@]}"
+readonly GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=media
+mapfile -t integration_args < <(integration::bazel_args)
+bazel test "${args[@]}" "${integration_args[@]}" -- //google/cloud/storage/... "${excluded_rules[@]}"

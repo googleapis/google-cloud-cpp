@@ -75,6 +75,11 @@ int DefaultGrpcNumChannels() {
 
 Options DefaultOptionsGrpc(Options options) {
   options = DefaultOptionsWithCredentials(std::move(options));
+  if (!options.has<UnifiedCredentialsOption>() &&
+      !options.has<GrpcCredentialOption>()) {
+    options.set<UnifiedCredentialsOption>(
+        google::cloud::MakeGoogleDefaultCredentials());
+  }
   if (!options.has<EndpointOption>()) {
     options.set<EndpointOption>("storage.googleapis.com");
   }
@@ -106,10 +111,9 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
 
 std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     CompletionQueue cq, Options const& opts) {
-  if (opts.has<google::cloud::UnifiedCredentialsOption>()) {
+  if (opts.has<UnifiedCredentialsOption>()) {
     return google::cloud::internal::CreateAuthenticationStrategy(
-        opts.get<google::cloud::UnifiedCredentialsOption>(), std::move(cq),
-        opts);
+        opts.get<UnifiedCredentialsOption>(), std::move(cq), opts);
   }
   return google::cloud::internal::CreateAuthenticationStrategy(
       opts.get<google::cloud::GrpcCredentialOption>());
