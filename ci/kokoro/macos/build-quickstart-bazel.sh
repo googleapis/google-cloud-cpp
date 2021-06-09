@@ -26,6 +26,10 @@ io::log_h2 "Using bazel version"
 : "${USE_BAZEL_VERSION:="3.5.0"}"
 export USE_BAZEL_VERSION
 bazelisk version
+# Kokoro needs bazel to be shutdown here, otherwise it will hang. This shutdown
+# is different (because it's in a different WORKSPACE) than the shutdown below
+# that's done in each quickstart workspace.
+bazelisk shutdown
 
 bazel_args=(
   # On macOS gRPC does not compile correctly unless one defines this:
