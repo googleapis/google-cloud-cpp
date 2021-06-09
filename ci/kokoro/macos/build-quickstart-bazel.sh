@@ -99,6 +99,9 @@ build_quickstart() {
       bazelisk run "${bazel_args[@]}" "--spawn_strategy=local" \
       :quickstart -- "${args[@]}"
   fi
+
+  # Kokoro needs bazel to be shutdown.
+  bazelisk shutdown
 }
 
 errors=""
@@ -118,6 +121,3 @@ else
   io::log_red "Build failed for ${errors}"
   exit 1
 fi
-
-# Kokoro needs bazel to be shutdown.
-bazelisk shutdown
