@@ -106,9 +106,8 @@ brew list --versions --cask
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
 brew list --versions coreutils || brew install coreutils
-# We re-install google-cloud-sdk because the package is broken on some kokoro
-# machines, but we ignore errors here because maybe the local version works.
-brew reinstall google-cloud-sdk || true
+# Kokoro machines have an old and broken version of this SDK.
+brew upgrade google-cloud-sdk
 
 io::log_h1 "Starting Build: ${BUILD_NAME}"
 
