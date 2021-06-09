@@ -215,6 +215,7 @@ if (Integration-Tests-Enabled) {
         "-//google/cloud/storage/examples:storage_service_account_samples",
         "-//google/cloud/storage/tests:service_account_integration_test",
         "-//google/cloud/examples:grpc_credential_types",
+        "-//google/cloud/storage/tests:grpc_integration_test"
     )
     bazel $common_flags test $test_flags $integration_flags `
         "--test_tag_filters=integration-test" `
