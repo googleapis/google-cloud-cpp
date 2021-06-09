@@ -34,6 +34,12 @@ python3 -m pip install --quiet --user -r "${PROJECT_ROOT}/google/cloud/storage/e
 rm -f /dev/shm/roots.pem
 curl -sSL --retry 10 -o /dev/shm/roots.pem https://pki.google.com/roots.pem
 
+if [[ ! -r "${HOME}/.config/gcloud/application_default_credentials.json" ]]; then
+  io::log_red "WARNING: Integration tests may fail because of missing file:" \
+    "${HOME}/.config/gcloud/application_default_credentials.json"
+  io::log_red "Fix with: gcloud auth application-default login"
+fi
+
 # Outputs a list of Bazel arguments that should be used when running
 # integration tests. These do not include the common `bazel::common_args`.
 #
