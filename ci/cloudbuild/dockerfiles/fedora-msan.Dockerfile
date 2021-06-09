@@ -19,7 +19,7 @@ ARG NCPU=4
 # then compile our code.
 RUN dnf makecache && \
     dnf install -y ccache clang clang-tools-extra cmake findutils gcc-c++ \
-        git llvm llvm-devel make ninja-build npm openssl-devel patch python \
+        git llvm llvm-devel make ninja-build openssl-devel patch python \
         python3.8 python3-devel python3-lit python-pip tar unzip which wget xz
 
 # Sets root's password to the empty string to enable users to get a root shell
@@ -31,8 +31,6 @@ RUN echo 'root:' | chpasswd
 # Install the Python modules needed to run the storage emulator
 RUN pip3 install --upgrade pip
 RUN pip3 install setuptools wheel
-
-RUN npm install -g @bazel/bazelisk
 
 WORKDIR /var/tmp/build
 
@@ -62,3 +60,7 @@ ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
 # The Cloud Pub/Sub emulator needs Java :shrug:
 RUN dnf makecache && dnf install -y java-latest-openjdk
+
+RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.9.0/bazelisk-linux-amd64" && \
+    chmod +x /usr/bin/bazelisk && \
+    ln -s /usr/bin/bazelisk /usr/bin/bazel

@@ -23,7 +23,7 @@ RUN dnf makecache && \
         ccache clang clang-analyzer clang-tools-extra \
         cmake diffutils doxygen findutils gcc-c++ git \
         grpc-devel grpc-plugins lcov libcxx-devel libcxxabi-devel \
-        libasan libubsan libtsan libcurl-devel make ninja-build npm \
+        libasan libubsan libtsan libcurl-devel make ninja-build \
         openssl-devel patch pkgconfig protobuf-compiler python python3.8 \
         python-pip tar unzip w3m wget which zip zlib-devel
 
@@ -37,8 +37,6 @@ RUN echo 'root:' | chpasswd
 RUN dnf makecache && dnf install -y python3-devel
 RUN pip3 install --upgrade pip
 RUN pip3 install setuptools wheel
-
-RUN npm install -g @bazel/bazelisk
 
 # Install Abseil, remove the downloaded files and the temporary artifacts
 # after a successful build to keep the image smaller (and with fewer layers)
@@ -141,3 +139,7 @@ RUN dnf makecache && dnf install -y java-latest-openjdk-devel
 # Some of the above libraries may have installed in /usr/local, so make sure
 # those library directories will be found.
 RUN ldconfig /usr/local/lib*
+
+RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.9.0/bazelisk-linux-amd64" && \
+    chmod +x /usr/bin/bazelisk && \
+    ln -s /usr/bin/bazelisk /usr/bin/bazel
