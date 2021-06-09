@@ -164,8 +164,8 @@ std::shared_ptr<golden::GoldenThingAdminConnection> CreateTestingConnection(
   options.set<golden::GoldenThingAdminRetryPolicyOption>(retry.clone());
   options.set<golden::GoldenThingAdminBackoffPolicyOption>(backoff.clone());
   options.set<golden::GoldenThingAdminPollingPolicyOption>(polling.clone());
-  return golden::MakeGoldenThingAdminConnection(std::move(mock),
-                                                std::move(options));
+  return golden_internal::MakeGoldenThingAdminConnection(std::move(mock),
+                                                         std::move(options));
 }
 
 /// @test Verify that we can list databases in multiple pages.

@@ -74,12 +74,23 @@ class GoldenKitchenSinkConnection {
 std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
     Options options = {});
 
-std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
-    std::shared_ptr<golden_internal::GoldenKitchenSinkStub> stub,
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace golden
+}  // namespace cloud
+}  // namespace google
+
+namespace google {
+namespace cloud {
+namespace golden_internal {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+
+std::shared_ptr<golden::GoldenKitchenSinkConnection>
+MakeGoldenKitchenSinkConnection(
+    std::shared_ptr<GoldenKitchenSinkStub> stub,
     Options options = {});
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
-}  // namespace golden
+}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
 

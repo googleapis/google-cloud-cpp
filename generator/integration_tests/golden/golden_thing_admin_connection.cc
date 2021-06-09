@@ -594,17 +594,28 @@ std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
       golden_internal::CreateDefaultGoldenThingAdminStub(options), options);
 }
 
-std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
-    std::shared_ptr<golden_internal::GoldenThingAdminStub> stub,
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace golden
+}  // namespace cloud
+}  // namespace google
+
+namespace google {
+namespace cloud {
+namespace golden_internal {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+
+std::shared_ptr<golden::GoldenThingAdminConnection>
+MakeGoldenThingAdminConnection(
+    std::shared_ptr<GoldenThingAdminStub> stub,
     Options options) {
-  options = golden_internal::GoldenThingAdminDefaultOptions(
+  options = GoldenThingAdminDefaultOptions(
       std::move(options));
-  return std::make_shared<GoldenThingAdminConnectionImpl>(
+  return std::make_shared<golden::GoldenThingAdminConnectionImpl>(
       std::move(stub), std::move(options));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
-}  // namespace golden
+}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
 

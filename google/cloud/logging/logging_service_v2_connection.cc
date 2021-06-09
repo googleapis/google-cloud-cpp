@@ -242,16 +242,25 @@ std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
       logging_internal::CreateDefaultLoggingServiceV2Stub(options), options);
 }
 
-std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
-    std::shared_ptr<logging_internal::LoggingServiceV2Stub> stub,
-    Options options) {
-  options =
-      logging_internal::LoggingServiceV2DefaultOptions(std::move(options));
-  return std::make_shared<LoggingServiceV2ConnectionImpl>(std::move(stub),
-                                                          std::move(options));
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace logging
+}  // namespace cloud
+}  // namespace google
+
+namespace google {
+namespace cloud {
+namespace logging_internal {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+
+std::shared_ptr<logging::LoggingServiceV2Connection>
+MakeLoggingServiceV2Connection(std::shared_ptr<LoggingServiceV2Stub> stub,
+                               Options options) {
+  options = LoggingServiceV2DefaultOptions(std::move(options));
+  return std::make_shared<logging::LoggingServiceV2ConnectionImpl>(
+      std::move(stub), std::move(options));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
-}  // namespace logging
+}  // namespace logging_internal
 }  // namespace cloud
 }  // namespace google

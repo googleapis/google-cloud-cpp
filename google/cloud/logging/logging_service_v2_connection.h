@@ -69,12 +69,22 @@ class LoggingServiceV2Connection {
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
     Options options = {});
 
-std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
-    std::shared_ptr<logging_internal::LoggingServiceV2Stub> stub,
-    Options options = {});
-
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace logging
+}  // namespace cloud
+}  // namespace google
+
+namespace google {
+namespace cloud {
+namespace logging_internal {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+
+std::shared_ptr<logging::LoggingServiceV2Connection>
+MakeLoggingServiceV2Connection(std::shared_ptr<LoggingServiceV2Stub> stub,
+                               Options options = {});
+
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace logging_internal
 }  // namespace cloud
 }  // namespace google
 

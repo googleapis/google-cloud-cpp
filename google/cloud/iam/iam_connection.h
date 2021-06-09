@@ -137,11 +137,21 @@ class IAMConnection {
 
 std::shared_ptr<IAMConnection> MakeIAMConnection(Options options = {});
 
-std::shared_ptr<IAMConnection> MakeIAMConnection(
-    std::shared_ptr<iam_internal::IAMStub> stub, Options options = {});
-
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace iam
+}  // namespace cloud
+}  // namespace google
+
+namespace google {
+namespace cloud {
+namespace iam_internal {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+
+std::shared_ptr<iam::IAMConnection> MakeIAMConnection(
+    std::shared_ptr<IAMStub> stub, Options options = {});
+
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google
 

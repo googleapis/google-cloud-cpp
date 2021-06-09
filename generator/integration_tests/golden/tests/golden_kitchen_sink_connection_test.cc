@@ -98,8 +98,8 @@ std::shared_ptr<golden::GoldenKitchenSinkConnection> CreateTestingConnection(
   Options options;
   options.set<golden::GoldenKitchenSinkRetryPolicyOption>(retry.clone());
   options.set<golden::GoldenKitchenSinkBackoffPolicyOption>(backoff.clone());
-  return golden::MakeGoldenKitchenSinkConnection(std::move(mock),
-                                                 std::move(options));
+  return golden_internal::MakeGoldenKitchenSinkConnection(std::move(mock),
+                                                          std::move(options));
 }
 
 TEST(GoldenKitchenSinkConnectionTest, GenerateAccessTokenSuccess) {
