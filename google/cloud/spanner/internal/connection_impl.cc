@@ -551,6 +551,10 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     request.mutable_query_options()->set_optimizer_version(
         *params.query_options.optimizer_version());
   }
+  if (params.query_options.optimizer_statistics_package()) {
+    request.mutable_query_options()->set_optimizer_statistics_package(
+        *params.query_options.optimizer_statistics_package());
+  }
   request.mutable_request_options()->set_priority(
       ProtoRequestPriority(params.query_options.request_priority()));
 

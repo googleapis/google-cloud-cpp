@@ -51,6 +51,7 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
+// clang-format off
 /**
  * Performs database client operations on Spanner.
  *
@@ -105,15 +106,18 @@ inline namespace SPANNER_CLIENT_NS {
  * table shows the environment variables that may optionally be set and the
  * `QueryOptions` setting that they affect.
  *
- * Environment Variable         | QueryOptions setting
- * ---------------------------- | --------------------
- * `SPANNER_OPTIMIZER_VERSION`  | `QueryOptions::optimizer_version()`
+ * Environment Variable                   | QueryOptions setting
+ * -------------------------------------- | --------------------
+ * `SPANNER_OPTIMIZER_VERSION`            | `QueryOptions::optimizer_version()`
+ * `SPANNER_OPTIMIZER_STATISTICS_PACKAGE` | `QueryOptions::optimizer_statistics_package()`
  *
  * @see https://cloud.google.com/spanner/docs/reference/rest/v1/QueryOptions
+ * @see http://cloud/spanner/docs/query-optimizer/manage-query-optimizer
  *
  * [spanner-doc-link]:
  * https://cloud.google.com/spanner/docs/api-libraries-overview
  */
+// clang-format on
 class Client {
  public:
   /**

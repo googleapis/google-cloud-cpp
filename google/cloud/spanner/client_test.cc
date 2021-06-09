@@ -1044,17 +1044,25 @@ TEST(ClientTest, QueryOptionsOverlayPrecedence) {
   };
 
   auto constexpr kQueryOptionsField = &Connection::SqlParams::query_options;
-  auto constexpr kEnvName = "SPANNER_OPTIMIZER_VERSION";
   auto conn = std::make_shared<MockConnection>();
   for (auto const& level : levels) {
-    google::cloud::testing_util::ScopedEnvironment env(kEnvName, level.env);
-    auto client_qo = QueryOptions().set_optimizer_version(level.client);
+    google::cloud::testing_util::ScopedEnvironment opt_ver_env(
+        "SPANNER_OPTIMIZER_VERSION", level.env);
+    google::cloud::testing_util::ScopedEnvironment opt_stats_env(
+        "SPANNER_OPTIMIZER_STATISTICS_PACKAGE", level.env);
+    auto client_qo = QueryOptions()
+                         .set_optimizer_version(level.client)
+                         .set_optimizer_statistics_package(level.client);
     Client client(conn, ClientOptions().set_query_options(client_qo));
-    auto expected = QueryOptions().set_optimizer_version(level.expected);
+    auto expected = QueryOptions()
+                        .set_optimizer_version(level.expected)
+                        .set_optimizer_statistics_package(level.expected);
     EXPECT_CALL(*conn, ExecuteQuery(Field(kQueryOptionsField, Eq(expected))))
         .Times(AnyNumber());
 
-    auto const qo = QueryOptions().set_optimizer_version(level.function);
+    auto const qo = QueryOptions()
+                        .set_optimizer_version(level.function)
+                        .set_optimizer_statistics_package(level.function);
     auto const ro = Transaction::ReadOnlyOptions{};
     auto const su = Transaction::SingleUseOptions{ro};
 

@@ -311,6 +311,8 @@ QueryOptions Client::OverlayQueryOptions(QueryOptions const& preferred) {
   // GetEnv() is not super fast, so we look it up once and cache it.
   static auto const* const kOptimizerVersionEnvValue =
       new auto(google::cloud::internal::GetEnv("SPANNER_OPTIMIZER_VERSION"));
+  static auto const* const kOptimizerStatisticsPackageEnvValue = new auto(
+      google::cloud::internal::GetEnv("SPANNER_OPTIMIZER_STATISTICS_PACKAGE"));
 
   QueryOptions const& fallback = opts_.query_options();
   QueryOptions opts;
@@ -322,6 +324,17 @@ QueryOptions Client::OverlayQueryOptions(QueryOptions const& preferred) {
     opts.set_optimizer_version(fallback.optimizer_version());
   } else if (kOptimizerVersionEnvValue->has_value()) {
     opts.set_optimizer_version(*kOptimizerVersionEnvValue);
+  }
+
+  // Choose the `optimizer_statistics_package` option.
+  if (preferred.optimizer_statistics_package().has_value()) {
+    opts.set_optimizer_statistics_package(
+        preferred.optimizer_statistics_package());
+  } else if (fallback.optimizer_statistics_package().has_value()) {
+    opts.set_optimizer_statistics_package(
+        fallback.optimizer_statistics_package());
+  } else if (kOptimizerStatisticsPackageEnvValue->has_value()) {
+    opts.set_optimizer_statistics_package(*kOptimizerVersionEnvValue);
   }
 
   return opts;
