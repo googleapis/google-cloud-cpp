@@ -18,6 +18,7 @@
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -28,6 +29,7 @@ namespace {
 
 using ::google::cloud::storage::internal::ClientImplDetails;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Return;
 
 class ObservableRetryPolicy : public LimitedErrorCountRetryPolicy {
@@ -132,10 +134,13 @@ TEST_F(ClientTest, OverrideBothPolicies) {
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
 TEST_F(ClientTest, DefaultDecorators) {
+  ScopedEnvironment disable_grpc("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   // Create a client, use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
-  auto tested = Client(
-      Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials()));
+  auto tested =
+      Client(Options{}
+                 .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+                 .set<TracingComponentsOption>({}));
 
   EXPECT_TRUE(ClientImplDetails::GetRawClient(tested) != nullptr);
   auto* retry = dynamic_cast<internal::RetryClient*>(

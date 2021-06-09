@@ -35,5 +35,4 @@ cmake --build cmake-out --target install
 
 # Tests the installed artifacts by building and running the quickstarts.
 quickstart::build_gcs_grpc_quickstart "${INSTALL_PREFIX}"
-# TODO(#6062) - GCS+gRPC integration tests are currently disabled
-# quickstart::run_gcs_grpc_quickstart "${INSTALL_PREFIX}"
+quickstart::run_gcs_grpc_quickstart "${INSTALL_PREFIX}"
