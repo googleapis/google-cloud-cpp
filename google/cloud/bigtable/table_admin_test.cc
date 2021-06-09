@@ -28,13 +28,41 @@
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
-// TODO(#5923) - remove after deprecation is completed
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+
+class TableAdminTester {
+ public:
+  TableAdminTester() = default;
+
+  void SetTableAdmin(std::unique_ptr<TableAdmin> table_admin) {
+    table_admin_ = std::move(table_admin);
+  }
+
+  future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncCreateBackupImpl(
+      CompletionQueue& cq, TableAdmin::CreateBackupParams const& params) {
+    return table_admin_->AsyncCreateBackupImpl(cq, params);
+  };
+
+  future<StatusOr<google::bigtable::admin::v2::Table>> AsyncRestoreTableImpl(
+      CompletionQueue& cq, TableAdmin::RestoreTableParams const& params) {
+    return table_admin_->AsyncRestoreTableImpl(cq, params);
+  }
+
+  future<StatusOr<Consistency>> AsyncWaitForConsistencyImpl(
+      CompletionQueue& cq, std::string const& table_id,
+      std::string const& consistency_token) {
+    return table_admin_->AsyncWaitForConsistencyImpl(cq, table_id,
+                                                     consistency_token);
+  }
+
+ private:
+  std::unique_ptr<TableAdmin> table_admin_;
+};
+
 namespace {
 
 namespace btadmin = ::google::bigtable::admin::v2;
@@ -56,19 +84,9 @@ using MockAdminClient = ::google::cloud::bigtable::testing::MockAdminClient;
 using MockAsyncCheckConsistencyResponse =
     ::google::cloud::testing_util::MockAsyncResponseReader<
         btadmin::CheckConsistencyResponse>;
-using MockAsyncIamPolicyReader =
-    ::google::cloud::testing_util::MockAsyncResponseReader<
-        ::google::iam::v1::Policy>;
-using MockAsyncSetIamPolicyReader =
-    ::google::cloud::testing_util::MockAsyncResponseReader<
-        ::google::iam::v1::Policy>;
-using MockAsyncTestIamPermissionsReader =
-    ::google::cloud::testing_util::MockAsyncResponseReader<
-        ::google::iam::v1::TestIamPermissionsResponse>;
 
 std::string const kProjectId = "the-project";
 std::string const kInstanceId = "the-instance";
-std::string const kClusterId = "the-cluster";
 
 /// A fixture for the bigtable::TableAdmin tests.
 class TableAdminTest : public ::testing::Test {
@@ -231,8 +249,6 @@ struct MockRpcFactory {
         });
   }
 };
-
-}  // anonymous namespace
 
 /// @test Verify basic functionality in the `bigtable::TableAdmin` class.
 TEST_F(TableAdminTest, Default) {
@@ -1095,7 +1111,7 @@ TEST_F(TableAdminTest, TestIamPermissions) {
   EXPECT_EQ(2, permission_set->size());
 }
 
-TEST_F(TableAdminTest, TestIamPermissionsiForBackup) {
+TEST_F(TableAdminTest, TestIamPermissionsForBackup) {
   namespace iamproto = ::google::iam::v1;
   TableAdmin tested(client_, "the-instance");
   std::string const& backup_id = "the-backup";
@@ -1185,7 +1201,9 @@ TEST_F(TableAdminTest, TestIamPermissionsRecoverableError) {
  * expected, with multiple asynchronous calls.
  */
 TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
-  TableAdmin tested(client_, "test-instance");
+  TableAdminTester table_admin;
+  table_admin.SetTableAdmin(
+      absl::make_unique<TableAdmin>(client_, "test-instance"));
 
   auto r1 = absl::make_unique<MockAsyncCheckConsistencyResponse>();
   EXPECT_CALL(*r1, Finish)
@@ -1238,7 +1256,8 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
   CompletionQueue cq(cq_impl);
 
   google::cloud::future<google::cloud::StatusOr<Consistency>> result =
-      tested.AsyncWaitForConsistency(cq, "test-table", "test-async-token");
+      table_admin.AsyncWaitForConsistencyImpl(cq, "test-table",
+                                              "test-async-token");
 
   // The future is not ready yet.
   auto future_status = result.wait_for(0_ms);
@@ -1280,11 +1299,13 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
 }
 
 /**
- * @test Verify that `bigtable::TableAdmin::AsyncWaitForConsistency` makes only
- * one RPC attempt and reports errors on failure.
+ * @test Verify that `bigtable::TableAdmin::AsyncWaitForConsistencyImpl` makes
+ * only one RPC attempt and reports errors on failure.
  */
 TEST_F(TableAdminTest, AsyncWaitForConsistencyFailure) {
-  TableAdmin tested(client_, "test-instance");
+  TableAdminTester table_admin;
+  table_admin.SetTableAdmin(
+      absl::make_unique<TableAdmin>(client_, "test-instance"));
   auto reader = absl::make_unique<MockAsyncCheckConsistencyResponse>();
   EXPECT_CALL(*reader, Finish)
       .WillOnce([](btadmin::CheckConsistencyResponse* response,
@@ -1313,7 +1334,8 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencyFailure) {
   CompletionQueue cq(cq_impl);
 
   google::cloud::future<google::cloud::StatusOr<Consistency>> result =
-      tested.AsyncWaitForConsistency(cq, "test-table", "test-async-token");
+      table_admin.AsyncWaitForConsistencyImpl(cq, "test-table",
+                                              "test-async-token");
 
   // The future is not ready yet.
   auto future_status = result.wait_for(0_ms);
@@ -1337,7 +1359,8 @@ class ValidContextMdAsyncTest : public ::testing::Test {
         client_(new MockAdminClient) {
     EXPECT_CALL(*client_, project())
         .WillRepeatedly(::testing::ReturnRef(kProjectId));
-    table_admin_ = absl::make_unique<TableAdmin>(client_, kInstanceId);
+    table_admin_.SetTableAdmin(
+        absl::make_unique<TableAdmin>(client_, kInstanceId));
   }
 
  protected:
@@ -1351,47 +1374,11 @@ class ValidContextMdAsyncTest : public ::testing::Test {
     EXPECT_THAT(res, StatusIs(StatusCode::kPermissionDenied));
   }
 
-  void FinishTest(google::cloud::future<google::cloud::Status> res_future) {
-    EXPECT_EQ(1U, cq_impl_->size());
-    cq_impl_->SimulateCompletion(true);
-    EXPECT_EQ(0U, cq_impl_->size());
-    auto res = res_future.get();
-    EXPECT_THAT(res, StatusIs(StatusCode::kPermissionDenied));
-  }
-
   std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   CompletionQueue cq_;
   std::shared_ptr<MockAdminClient> client_;
-  std::unique_ptr<TableAdmin> table_admin_;
+  TableAdminTester table_admin_;
 };
-
-TEST_F(ValidContextMdAsyncTest, AsyncCreateTable) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
-      btadmin::CreateTableRequest, btadmin::Table>
-      rpc_factory;
-  EXPECT_CALL(*client_, AsyncCreateTable)
-      .WillOnce(rpc_factory.Create(
-          R"pb(
-            parent: "projects/the-project/instances/the-instance"
-            table_id: "the-table"
-            table: {}
-          )pb",
-          "google.bigtable.admin.v2.BigtableTableAdmin.CreateTable"));
-  FinishTest(table_admin_->AsyncCreateTable(cq_, "the-table", TableConfig()));
-}
-
-TEST_F(ValidContextMdAsyncTest, AsyncDeleteTable) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
-      btadmin::DeleteTableRequest, google::protobuf::Empty>
-      rpc_factory;
-  EXPECT_CALL(*client_, AsyncDeleteTable)
-      .WillOnce(rpc_factory.Create(
-          R"pb(
-            name: "projects/the-project/instances/the-instance/tables/the-table"
-          )pb",
-          "google.bigtable.admin.v2.BigtableTableAdmin.DeleteTable"));
-  FinishTest(table_admin_->AsyncDeleteTable(cq_, "the-table"));
-}
 
 TEST_F(ValidContextMdAsyncTest, AsyncCreateBackup) {
   ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
@@ -1414,7 +1401,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateBackup) {
   TableAdmin::CreateBackupParams backup_config(
       "the-cluster", "the-backup", "the-table",
       google::cloud::internal::ToChronoTimePoint(expire_time));
-  FinishTest(table_admin_->AsyncCreateBackup(cq_, backup_config));
+  FinishTest(table_admin_.AsyncCreateBackupImpl(cq_, backup_config));
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncRestoreTable) {
@@ -1431,337 +1418,10 @@ TEST_F(ValidContextMdAsyncTest, AsyncRestoreTable) {
           "google.bigtable.admin.v2.BigtableTableAdmin.RestoreTable"));
   bigtable::TableAdmin::RestoreTableParams params("restored-table",
                                                   "the-cluster", "the-backup");
-  FinishTest(table_admin_->AsyncRestoreTable(cq_, std::move(params)));
+  FinishTest(table_admin_.AsyncRestoreTableImpl(cq_, std::move(params)));
 }
 
-TEST_F(ValidContextMdAsyncTest, AsyncDropAllRows) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
-      btadmin::DropRowRangeRequest, google::protobuf::Empty>
-      rpc_factory;
-  EXPECT_CALL(*client_, AsyncDropRowRange)
-      .WillOnce(rpc_factory.Create(
-          R"pb(
-            name: "projects/the-project/instances/the-instance/tables/the-table"
-            delete_all_data_from_table: true
-          )pb",
-          "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange"));
-  FinishTest(table_admin_->AsyncDropAllRows(cq_, "the-table"));
-}
-
-TEST_F(ValidContextMdAsyncTest, AsyncDropRowsByPrefix) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
-      btadmin::DropRowRangeRequest, google::protobuf::Empty>
-      rpc_factory;
-  EXPECT_CALL(*client_, AsyncDropRowRange)
-      .WillOnce(rpc_factory.Create(
-          R"pb(
-            name: "projects/the-project/instances/the-instance/tables/the-table"
-            row_key_prefix: "prefix"
-          )pb",
-          "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange"));
-  FinishTest(table_admin_->AsyncDropRowsByPrefix(cq_, "the-table", "prefix"));
-}
-
-TEST_F(ValidContextMdAsyncTest, AsyncGenerateConsistencyToken) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
-      btadmin::GenerateConsistencyTokenRequest,
-      btadmin::GenerateConsistencyTokenResponse>
-      rpc_factory;
-  EXPECT_CALL(*client_, AsyncGenerateConsistencyToken)
-      .WillOnce(rpc_factory.Create(
-          R"pb(
-            name: "projects/the-project/instances/the-instance/tables/the-table"
-          )pb",
-          "google.bigtable.admin.v2.BigtableTableAdmin."
-          "GenerateConsistencyToken"));
-  FinishTest(table_admin_->AsyncGenerateConsistencyToken(cq_, "the-table"));
-}
-
-TEST_F(ValidContextMdAsyncTest, AsyncListTables) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
-      btadmin::ListTablesRequest, btadmin::ListTablesResponse>
-      rpc_factory;
-  EXPECT_CALL(*client_, AsyncListTables)
-      .WillOnce(rpc_factory.Create(
-          R"pb(
-            parent: "projects/the-project/instances/the-instance"
-            view: SCHEMA_VIEW
-          )pb",
-          "google.bigtable.admin.v2.BigtableTableAdmin.ListTables"));
-  FinishTest(table_admin_->AsyncListTables(cq_, btadmin::Table::SCHEMA_VIEW));
-}
-
-TEST_F(ValidContextMdAsyncTest, AsyncModifyColumnFamilies) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
-      btadmin::ModifyColumnFamiliesRequest, btadmin::Table>
-      rpc_factory;
-  EXPECT_CALL(*client_, AsyncModifyColumnFamilies)
-      .WillOnce(rpc_factory.Create(
-          R"pb(
-            name: "projects/the-project/instances/the-instance/tables/the-table"
-          )pb",
-          "google.bigtable.admin.v2.BigtableTableAdmin.ModifyColumnFamilies"));
-  FinishTest(table_admin_->AsyncModifyColumnFamilies(cq_, "the-table", {}));
-}
-
-class AsyncGetIamPolicyTest : public ::testing::Test {
- public:
-  AsyncGetIamPolicyTest()
-      : cq_impl_(new FakeCompletionQueueImpl),
-        cq_(cq_impl_),
-        client_(new MockAdminClient),
-        reader_(new MockAsyncIamPolicyReader) {
-    EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
-    EXPECT_CALL(*client_, AsyncGetIamPolicy)
-        .WillOnce([this](grpc::ClientContext* context,
-                         ::google::iam::v1::GetIamPolicyRequest const& request,
-                         grpc::CompletionQueue*) {
-          EXPECT_STATUS_OK(IsContextMDValid(
-              *context,
-              "google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy",
-              google::cloud::internal::ApiClientHeader()));
-          EXPECT_EQ(
-              "projects/the-project/instances/the-instance/tables/the-table",
-              request.resource());
-          // This is safe, see comments in MockAsyncResponseReader.
-          return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-              ::google::iam::v1::Policy>>(reader_.get());
-        });
-  }
-
- protected:
-  void Start() {
-    TableAdmin table_admin(client_, "the-instance");
-    user_future_ = table_admin.AsyncGetIamPolicy(cq_, "the-table");
-  }
-
-  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
-  CompletionQueue cq_;
-  std::shared_ptr<MockAdminClient> client_;
-  google::cloud::future<google::cloud::StatusOr<google::iam::v1::Policy>>
-      user_future_;
-  std::unique_ptr<MockAsyncIamPolicyReader> reader_;
-};
-
-/// @test Verify that AsyncGetIamPolicy works in simple case.
-TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicy) {
-  namespace iamproto = ::google::iam::v1;
-  bigtable::TableAdmin tested(client_, "the-instance");
-
-  EXPECT_CALL(*reader_, Finish)
-      .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
-        EXPECT_NE(nullptr, response);
-        response->set_version(3);
-        response->set_etag("random-tag");
-        *status = grpc::Status::OK;
-      });
-
-  Start();
-  EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);
-  auto policy = user_future_.get();
-  ASSERT_STATUS_OK(policy);
-  EXPECT_EQ(3, policy->version());
-  EXPECT_EQ("random-tag", policy->etag());
-}
-
-/// @test Test unrecoverable errors for TableAdmin::AsyncGetIamPolicy.
-TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicyUnrecoverableError) {
-  namespace iamproto = ::google::iam::v1;
-  bigtable::TableAdmin tested(client_, "the-instance");
-
-  EXPECT_CALL(*reader_, Finish)
-      .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
-        EXPECT_NE(nullptr, response);
-        *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
-      });
-
-  Start();
-  EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);
-
-  auto policy = user_future_.get();
-  ASSERT_THAT(policy, StatusIs(StatusCode::kPermissionDenied));
-}
-
-class AsyncSetIamPolicyTest : public ::testing::Test {
- public:
-  AsyncSetIamPolicyTest()
-      : cq_impl_(new FakeCompletionQueueImpl),
-        cq_(cq_impl_),
-        client_(new MockAdminClient),
-        reader_(new MockAsyncSetIamPolicyReader) {
-    EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
-    EXPECT_CALL(*client_, AsyncSetIamPolicy)
-        .WillOnce([this](grpc::ClientContext* context,
-                         ::google::iam::v1::SetIamPolicyRequest const& request,
-                         grpc::CompletionQueue*) {
-          EXPECT_STATUS_OK(IsContextMDValid(
-              *context,
-              "google.bigtable.admin.v2.BigtableTableAdmin.SetIamPolicy",
-              google::cloud::internal::ApiClientHeader()));
-          EXPECT_EQ(
-              "projects/the-project/instances/the-instance/tables/the-table",
-              request.resource());
-          // This is safe, see comments in MockAsyncResponseReader.
-          return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-              ::google::iam::v1::Policy>>(reader_.get());
-        });
-  }
-
- protected:
-  void Start() {
-    TableAdmin table_admin(client_, "the-instance");
-    user_future_ = table_admin.AsyncSetIamPolicy(
-        cq_, "the-table",
-        IamPolicy({IamBinding("writer", {"abc@gmail.com", "xyz@gmail.com"})},
-                  "test-tag", 0));
-  }
-
-  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
-  CompletionQueue cq_;
-  std::shared_ptr<MockAdminClient> client_;
-  google::cloud::future<google::cloud::StatusOr<google::iam::v1::Policy>>
-      user_future_;
-  std::unique_ptr<MockAsyncSetIamPolicyReader> reader_;
-};
-
-/// @test Verify that AsyncSetIamPolicy works in simple case.
-TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicy) {
-  namespace iamproto = ::google::iam::v1;
-  bigtable::TableAdmin tested(client_, "the-instance");
-
-  EXPECT_CALL(*reader_, Finish)
-      .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
-        EXPECT_NE(nullptr, response);
-
-        auto& new_binding = *response->add_bindings();
-        new_binding.set_role("writer");
-        new_binding.add_members("abc@gmail.com");
-        new_binding.add_members("xyz@gmail.com");
-        response->set_etag("test-tag");
-        *status = grpc::Status::OK;
-      });
-
-  Start();
-  EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);
-  auto policy = user_future_.get();
-  ASSERT_STATUS_OK(policy);
-
-  EXPECT_EQ(1, policy->bindings().size());
-  EXPECT_EQ("test-tag", policy->etag());
-}
-
-/// @test Test unrecoverable errors for TableAdmin::AsyncSetIamPolicy.
-TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicyUnrecoverableError) {
-  namespace iamproto = ::google::iam::v1;
-  TableAdmin tested(client_, "the-instance");
-
-  EXPECT_CALL(*reader_, Finish)
-      .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
-        EXPECT_NE(nullptr, response);
-        *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
-      });
-
-  Start();
-  EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);
-
-  auto policy = user_future_.get();
-  ASSERT_THAT(policy, StatusIs(StatusCode::kPermissionDenied));
-}
-
-class AsyncTestIamPermissionsTest : public ::testing::Test {
- public:
-  AsyncTestIamPermissionsTest()
-      : cq_impl_(new FakeCompletionQueueImpl),
-        cq_(cq_impl_),
-        client_(new MockAdminClient),
-        reader_(new MockAsyncTestIamPermissionsReader) {
-    EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
-    EXPECT_CALL(*client_, AsyncTestIamPermissions)
-        .WillOnce([this](grpc::ClientContext* context,
-                         ::google::iam::v1::TestIamPermissionsRequest const&
-                             request,
-                         grpc::CompletionQueue*) {
-          EXPECT_STATUS_OK(
-              IsContextMDValid(*context,
-                               "google.bigtable.admin.v2.BigtableTableAdmin."
-                               "TestIamPermissions",
-                               google::cloud::internal::ApiClientHeader()));
-          EXPECT_EQ(
-              "projects/the-project/instances/the-instance/tables/the-table",
-              request.resource());
-          // This is safe, see comments in MockAsyncResponseReader.
-          return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-              ::google::iam::v1::TestIamPermissionsResponse>>(reader_.get());
-        });
-  }
-
- protected:
-  void Start(std::vector<std::string> const& permissions) {
-    TableAdmin table_admin(client_, "the-instance");
-    user_future_ =
-        table_admin.AsyncTestIamPermissions(cq_, "the-table", permissions);
-  }
-
-  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
-  CompletionQueue cq_;
-  std::shared_ptr<MockAdminClient> client_;
-  google::cloud::future<google::cloud::StatusOr<std::vector<std::string>>>
-      user_future_;
-  std::unique_ptr<MockAsyncTestIamPermissionsReader> reader_;
-};
-
-/// @test Verify that AsyncTestIamPermissions works in simple case.
-TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissions) {
-  namespace iamproto = ::google::iam::v1;
-  TableAdmin tested(client_, "the-instance");
-
-  EXPECT_CALL(*reader_, Finish)
-      .WillOnce([](iamproto::TestIamPermissionsResponse* response,
-                   grpc::Status* status, void*) {
-        EXPECT_NE(nullptr, response);
-        response->add_permissions("writer");
-        response->add_permissions("reader");
-        *status = grpc::Status::OK;
-      });
-
-  Start({"reader", "writer", "owner"});
-  EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);
-  auto permission_set = user_future_.get();
-  ASSERT_STATUS_OK(permission_set);
-  EXPECT_EQ(2, permission_set->size());
-}
-
-/// @test Test unrecoverable errors for TableAdmin::AsyncTestIamPermissions.
-TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissionsUnrecoverableError) {
-  namespace iamproto = ::google::iam::v1;
-  TableAdmin tested(client_, "the-instance");
-
-  EXPECT_CALL(*reader_, Finish)
-      .WillOnce([](iamproto::TestIamPermissionsResponse* response,
-                   grpc::Status* status, void*) {
-        EXPECT_NE(nullptr, response);
-        *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
-      });
-
-  Start({"reader", "writer", "owner"});
-  EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(true);
-
-  auto permission_set = user_future_.get();
-  ASSERT_THAT(permission_set, StatusIs(StatusCode::kPermissionDenied));
-}
-
+}  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud

@@ -245,44 +245,6 @@ class TableAdmin {
       std::string table_id, TableConfig config);
 
   /**
-   * Sends an asynchronous request to create a new table in the instance.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param table_id the name of the table relative to the instance managed by
-   *     this object.  The full table name is
-   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
-   *     where PROJECT_ID is obtained from the associated AdminClient and
-   *     INSTANCE_ID is the instance_id() of this object.
-   * @param config the initial schema for the table.
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   *
-   * @return a future that will be satisfied when the request succeeds or the
-   *   retry policy expires.  In the first case, the future will contain the
-   *   response from the service. In the second the future is satisfied with
-   *   an exception. Note that the service only fills out the `table_name` field
-   *   for this request.
-   *
-   * @par Idempotency
-   * This operation is always treated as non-idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #CreateTable()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<StatusOr<google::bigtable::admin::v2::Table>> AsyncCreateTable(
-      CompletionQueue& cq, std::string table_id, TableConfig config);
-
-  /**
    * Return all the tables in the instance.
    *
    * @param view define what information about the tables is retrieved.
@@ -304,43 +266,6 @@ class TableAdmin {
    */
   StatusOr<std::vector<::google::bigtable::admin::v2::Table>> ListTables(
       ::google::bigtable::admin::v2::Table::View view);
-
-  /**
-   * Sends an asynchronous request to get all the tables in the instance.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param view describes how much information to get about the name.
-   *   - VIEW_UNSPECIFIED: equivalent to VIEW_SCHEMA.
-   *   - NAME: return only the name of the table.
-   *   - VIEW_SCHEMA: return the name and the schema.
-   *   - FULL: return all the information about the table.
-   *
-   * @return a future that will be satisfied when the request succeeds or the
-   *   retry policy expires. In the first case, the future will contain the
-   *   response from the service. In the second the future is satisfied with
-   *   an exception.
-   *
-   * @par Idempotency
-   * This operation is read-only and therefore it is always idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #ListTables()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<StatusOr<std::vector<::google::bigtable::admin::v2::Table>>>
-  AsyncListTables(CompletionQueue& cq,
-                  google::bigtable::admin::v2::Table::View view);
 
   /**
    * Get information about a single table.
@@ -370,46 +295,6 @@ class TableAdmin {
       std::string const& table_id, TableView view = SCHEMA_VIEW);
 
   /**
-   * Sends an asynchronous request to get information about an existing table.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param table_id the id of the table within the instance associated with
-   *     this object. The full name of the table is
-   *     `this->instance_name() + "/tables/" + table_id`
-   * @param view describes how much information to get about the name.
-   *   - VIEW_UNSPECIFIED: equivalent to VIEW_SCHEMA.
-   *   - NAME: return only the name of the table.
-   *   - VIEW_SCHEMA: return the name and the schema.
-   *   - FULL: return all the information about the table.
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   *
-   * @return a future that will be satisfied when the request succeeds or the
-   *   retry policy expires. In the first case, the future will contain the
-   *   response from the service. In the second the future is satisfied with
-   *   an exception.
-   *
-   * @par Idempotency
-   * This operation is read-only and therefore it is always idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #GetTable()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<StatusOr<google::bigtable::admin::v2::Table>> AsyncGetTable(
-      CompletionQueue& cq, std::string const& table_id,
-      google::bigtable::admin::v2::Table::View view);
-
-  /**
    * Delete a table.
    *
    * @param table_id the id of the table within the instance associated with
@@ -432,38 +317,7 @@ class TableAdmin {
   Status DeleteTable(std::string const& table_id);
 
   /**
-   * Start a request to asynchronously delete a table.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param table_id the id of the table within the instance associated with
-   *     this object. The full name of the table is
-   *     `this->instance_name() + "/tables/" + table_id`
-   *
-   * @return status of the operation.
-   *
-   * @par Idempotency
-   * This operation is always treated as non-idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #DeleteTable()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<Status> AsyncDeleteTable(CompletionQueue& cq,
-                                  std::string const& table_id);
-
-  /**
-   * Parameters for `CreateBackup` and `AsyncCreateBackup`.
+   * Parameters for `CreateBackup`.
    *
    * @param cluster_id the name of the cluster relative to the instance managed
    *     by the `TableAdmin` object. The full cluster name is
@@ -522,39 +376,6 @@ class TableAdmin {
       CreateBackupParams const& params);
 
   /**
-   * Sends an asynchronous request to create a new backup of a table in the
-   * instance.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param params instance of `CreateBackupParams`.
-   *
-   * @return a future that will be satisfied when the request succeeds or the
-   *   retry policy expires. In the first case, the future will contain the
-   *   response from the service. In the second case, the future is satisfied
-   *   with an exception.
-   *
-   * @par Idempotency
-   * This operation is always treated as non-idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #CreateBackup()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncCreateBackup(
-      CompletionQueue& cq, CreateBackupParams const& params);
-
-  /**
    * Get information about a single backup.
    *
    * @param cluster_id the name of the cluster relative to the instance managed
@@ -584,49 +405,7 @@ class TableAdmin {
       std::string const& cluster_id, std::string const& backup_id);
 
   /**
-   * Sends an asynchronous request to get information about a single backup.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param cluster_id the name of the cluster relative to the instance managed
-   *     by the `TableAdmin` object. The full cluster name is
-   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
-   *     where PROJECT_ID is obtained from the associated AdminClient and
-   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
-   * @param backup_id the name of the backup relative to the cluster specified.
-   *     The full backup name is
-   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<CLUSTER_ID>/backups/<backup_id>`
-   *     where PROJECT_ID is obtained from the associated AdminClient,
-   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object, and
-   *     CLUSTER_ID is the cluster_id previously specified.
-   * @return a future that will be satisfied when the request succeeds or the
-   *   retry policy expires. In the first case, the future will contain the
-   *   response from the service. In the second case, the future is satisfied
-   *   with an exception.
-   *
-   * @par Idempotency
-   * This operation is read-only and therefore it is always idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #GetBackup()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncGetBackup(
-      CompletionQueue& cq, std::string const& cluster_id,
-      std::string const& backup_id);
-
-  /**
-   * Parameters for `UpdateBackup` and `AsyncUpdateBackup`.
+   * Parameters for `UpdateBackup`.
    *
    * @param cluster_id the name of the cluster relative to the instance managed
    *     by the `TableAdmin` object. The full cluster name is
@@ -677,39 +456,6 @@ class TableAdmin {
       UpdateBackupParams const& params);
 
   /**
-   * Sends an asynchronous request to update a backup of a table in the
-   * instance.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param params instance of `UpdateBackupParams`.
-   *
-   * @return a future that will be satisfied when the request succeeds or the
-   *   retry policy expires. In the first case, the future will contain the
-   *   response from the service. In the second case, the future is satisfied
-   *   with an exception.
-   *
-   * @par Idempotency
-   * This operation is always treated as non-idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #UpdateBackup()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncUpdateBackup(
-      CompletionQueue& cq, UpdateBackupParams const& params);
-
-  /**
    * Delete a backup.
    *
    * @param cluster_id the name of the cluster relative to the instance managed
@@ -757,81 +503,7 @@ class TableAdmin {
   Status DeleteBackup(google::bigtable::admin::v2::Backup const& backup);
 
   /**
-   * Sends an asynchronous request to delete a backup.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param cluster_id the name of the cluster relative to the instance managed
-   *     by the `TableAdmin` object. The full cluster name is
-   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
-   *     where PROJECT_ID is obtained from the associated AdminClient and
-   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
-   * @param backup_id the name of the backup relative to the cluster specified.
-   *     The full backup name is
-   *    `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<CLUSTER_ID>/backups/<backup_id>`
-   *     where PROJECT_ID is obtained from the associated AdminClient,
-   *     INSTANCE_ID is the instance_id() of the `TableAdmin` object, and
-   *     CLUSTER_ID is the cluster_id previously specified.
-   * @return a future that will be satisfied when the request succeeds or the
-   *   retry policy expires. In the first case, the future will contain the
-   *   response from the service. In the second case, the future is satisfied
-   *   with an exception.
-   *
-   * @par Idempotency
-   * This operation is always treated as non-idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #DeleteBackup()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<Status> AsyncDeleteBackup(CompletionQueue& cq,
-                                   std::string const& cluster_id,
-                                   std::string const& backup_id);
-
-  /**
-   * Sends an asynchronous request to delete a backup.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param backup typically returned by a call to `GetBackup` or `ListBackups`.
-   *
-   * @return a future that will be satisfied when the request succeeds or the
-   *   retry policy expires. In the first case, the future will contain the
-   *   response from the service. In the second case, the future is satisfied
-   *   with an exception.
-   *
-   * @par Idempotency
-   * This operation is always treated as non-idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #DeleteBackup()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<Status> AsyncDeleteBackup(
-      CompletionQueue& cq, google::bigtable::admin::v2::Backup const& backup);
-
-  /**
-   * Parameters for `ListBackups` and `AsyncListBackups`.
+   * Parameters for `ListBackups`.
    */
   struct ListBackupsParams {
     ListBackupsParams() = default;
@@ -950,39 +622,7 @@ class TableAdmin {
       ListBackupsParams const& params);
 
   /**
-   * Sends an asynchronous request to retrieve a list of backups.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param params instance of `ListBackupsParams`.
-   *
-   * @return a future that will be satisfied when the request succeeds or the
-   *   retry policy expires. In the first case, the future will contain the
-   *   response from the service. In the second case, the future is satisfied
-   *   with an exception.
-   *
-   * @par Idempotency
-   * This operation is read-only and therefore it is always idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #ListBackups()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<StatusOr<std::vector<google::bigtable::admin::v2::Backup>>>
-  AsyncListBackups(CompletionQueue& cq, ListBackupsParams const& params);
-
-  /**
-   * Parameters for `RestoreTable` and `AsyncRestoreTable`.
+   * Parameters for `RestoreTable`.
    *
    * @param table_id the name of the table relative to the instance managed by
    *     this object. The full table name is
@@ -1019,7 +659,7 @@ class TableAdmin {
   };
 
   /**
-   * Parameters for `RestoreTable` and `AsyncRestoreTable`.
+   * Parameters for `RestoreTable`.
    *
    * @param table_id the name of the table relative to the instance managed by
    *     this object. The full table name is
@@ -1053,42 +693,9 @@ class TableAdmin {
       RestoreTableParams const& params);
 
   /**
-   * Sends an asynchronous request to restore a backup into a new table in the
-   * instance.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param params instance of `RestoreTableParams`.
-   *
-   * @return a future that will be satisfied when the request succeeds or the
-   *   retry policy expires. In the first case, the future will contain the
-   *   response from the service. In the second case, the future is satisfied
-   *   with an exception.
-   *
-   * @par Idempotency
-   * This operation is always treated as non-idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #RestoreTable()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<StatusOr<google::bigtable::admin::v2::Table>> AsyncRestoreTable(
-      CompletionQueue& cq, RestoreTableParams const& params);
-
-  /**
    * Restore a backup into a new table in the instance.
    *
-   * @param params instance of `RestoreTableParams`.
+   * @param params instance of `RestoreTableFromInstanceParams`.
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
@@ -1103,39 +710,6 @@ class TableAdmin {
    */
   StatusOr<google::bigtable::admin::v2::Table> RestoreTable(
       RestoreTableFromInstanceParams params);
-
-  /**
-   * Sends an asynchronous request to restore a backup into a new table in the
-   * instance.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param params instance of `RestoreTableParams`.
-   *
-   * @return a future that will be satisfied when the request succeeds or the
-   *   retry policy expires. In the first case, the future will contain the
-   *   response from the service. In the second case, the future is satisfied
-   *   with an exception.
-   *
-   * @par Idempotency
-   * This operation is always treated as non-idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #RestoreTable()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<StatusOr<google::bigtable::admin::v2::Table>> AsyncRestoreTable(
-      CompletionQueue& cq, RestoreTableFromInstanceParams params);
 
   /**
    * Modify the schema for an existing table.
@@ -1161,41 +735,6 @@ class TableAdmin {
       std::vector<ColumnFamilyModification> modifications);
 
   /**
-   * Make an asynchronous request to modify the column families of a table.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param table_id the name of the table relative to the instance managed by
-   *     this object.  The full table name is
-   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
-   *     where PROJECT_ID is obtained from the associated AdminClient and
-   *     INSTANCE_ID is the instance_id() of this object.
-   * @param modifications the list of modifications to the schema.
-   * @return the information about table or status.
-   *
-   * @par Idempotency
-   * This operation is always treated as non-idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #ModifyColumnFamilies()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<StatusOr<::google::bigtable::admin::v2::Table>>
-  AsyncModifyColumnFamilies(
-      CompletionQueue& cq, std::string const& table_id,
-      std::vector<ColumnFamilyModification> modifications);
-
-  /**
    * Delete all the rows that start with a given prefix.
    *
    * @param table_id the id of the table within the instance associated with
@@ -1218,39 +757,6 @@ class TableAdmin {
                           std::string row_key_prefix);
 
   /**
-   * Make an asynchronous request to delete all the rows that start with a given
-   * prefix.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param table_id the id of the table within the instance associated with
-   *     this object. The full name of the table is
-   *     `this->instance_name() + "/tables/" + table_id`
-   * @param row_key_prefix drop any rows that start with this prefix.
-   * @return status of the operation.
-   *
-   * @par Idempotency
-   * This operation is always treated as non-idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #DropRowsByPrefix()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<Status> AsyncDropRowsByPrefix(CompletionQueue& cq,
-                                       std::string const& table_id,
-                                       std::string row_key_prefix);
-
-  /**
    * Generates consistency token for a table.
    *
    * @param table_id the id of the table for which we want to generate
@@ -1269,36 +775,6 @@ class TableAdmin {
    * @snippet table_admin_snippets.cc generate consistency token
    */
   StatusOr<std::string> GenerateConsistencyToken(std::string const& table_id);
-
-  /**
-   * Make an asynchronous request to generates consistency token for a table.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param table_id the id of the table within the instance associated with
-   *     this object. The full name of the table is
-   *     `this->instance_name() + "/tables/" + table_id`
-   * @return consistency token or status of the operation.
-   *
-   * @par Idempotency
-   * This operation is read-only and therefore it is always idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #AsyncGenerateConsistencyToken()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<StatusOr<std::string>> AsyncGenerateConsistencyToken(
-      CompletionQueue& cq, std::string const& table_id);
 
   /**
    * Checks consistency of a table.
@@ -1323,37 +799,6 @@ class TableAdmin {
                                          std::string const& consistency_token);
 
   /**
-   * Make an asynchronous request to check consistency of a table.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param table_id  the id of the table for which we want to check
-   *     consistency.
-   * @param consistency_token the consistency token of the table.
-   * @return consistency status or status of the operation.
-   *
-   * @par Idempotency
-   * This operation is read-only and therefore it is always idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #CheckConsistency()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<StatusOr<Consistency>> AsyncCheckConsistency(
-      CompletionQueue& cq, std::string const& table_id,
-      std::string const& consistency_token);
-
-  /**
    * Checks consistency of a table with multiple calls using a separate thread
    *
    * @param table_id the id of the table for which we want to check
@@ -1376,37 +821,6 @@ class TableAdmin {
       std::string const& table_id, std::string const& consistency_token);
 
   /**
-   * Asynchronously wait until a table is consistent with the given @p token.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param table_id the id of the table for which we want to check
-   *     consistency.
-   * @param consistency_token the consistency token of the table.
-   * @return the consistency status for the table.
-   *
-   * @par Idempotency
-   * This operation is read-only and therefore it is always idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #WaitForConsistency()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  google::cloud::future<StatusOr<Consistency>> AsyncWaitForConsistency(
-      CompletionQueue& cq, std::string const& table_id,
-      std::string const& consistency_token);
-
-  /**
    * Delete all the rows in a table.
    *
    * @param table_id the id of the table within the instance associated with
@@ -1425,35 +839,6 @@ class TableAdmin {
    * @snippet table_admin_snippets.cc drop all rows
    */
   Status DropAllRows(std::string const& table_id);
-
-  /**
-   * Make an asynchronous request to delete all the rows in a table.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param table_id the id of the table within the instance associated with
-   *     this object. The full name of the table is
-   *     `this->instance_name() + "/tables/" + table_id`
-   *
-   * @par Idempotency
-   * This operation is always treated as non-idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #DropAllRows()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<Status> AsyncDropAllRows(CompletionQueue& cq,
-                                  std::string const& table_id);
 
   /**
    * Gets the policy for @p table_id.
@@ -1496,31 +881,6 @@ class TableAdmin {
    */
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& cluster_id,
                                                  std::string const& backup_id);
-
-  /**
-   * Asynchronously gets the IAM policy for @p table_id.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param table_id the instance to query.
-   * @return a future satisfied when either (a) the policy is fetched or (b)
-   *     a non-retryable error occurs or (c) retry policy has been exhausted.
-   *
-   * @par Idempotency
-   * This operation is read-only and therefore it is always idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #GetIamPolicy()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<StatusOr<google::iam::v1::Policy>> AsyncGetIamPolicy(
-      CompletionQueue& cq, std::string const& table_id);
 
   /**
    * Sets the IAM policy for a table.
@@ -1582,37 +942,6 @@ class TableAdmin {
       google::iam::v1::Policy const& iam_policy);
 
   /**
-   * Asynchronously sets the IAM policy for a table.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param table_id which instance to set the IAM policy for.
-   * @param iam_policy google::iam::v1::Policy object containing role and
-   * members.
-   * @return a future satisfied when either (a) the policy is created or (b)
-   *     a non-retryable error occurs or (c) retry policy has been
-   *     exhausted.
-   *
-   * @warning ETags are currently not used by Cloud Bigtable.
-   *
-   * @par Idempotency
-   * This operation is always treated as non-idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #SetIamPolicy()
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<StatusOr<google::iam::v1::Policy>> AsyncSetIamPolicy(
-      CompletionQueue& cq, std::string const& table_id,
-      google::iam::v1::Policy const& iam_policy);
-
-  /**
    * Returns a permission set that the caller has on the specified table.
    *
    * @param table_id the ID of the table to query.
@@ -1660,35 +989,6 @@ class TableAdmin {
       std::string const& cluster_id, std::string const& backup_id,
       std::vector<std::string> const& permissions);
 
-  /**
-   * Asynchronously obtains a permission set that the caller has on the
-   * specified table.
-   *
-   * @par Idempotency
-   * This operation is read-only and therefore it is always idempotent.
-   *
-   * @param cq the completion queue that will execute the asynchronous calls,
-   *     the application must ensure that one or more threads are blocked on
-   *     `cq.Run()`.
-   * @param table_id the ID of the table to query.
-   * @param permissions set of permissions to check for the resource.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #TestIamPermissions()
-   *
-   * @see https://cloud.google.com/bigtable/docs/access-control for a list of
-   *     valid permissions on Google Cloud Bigtable.
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
-  future<StatusOr<std::vector<std::string>>> AsyncTestIamPermissions(
-      CompletionQueue& cq, std::string const& table_id,
-      std::vector<std::string> const& permissions);
-
   /// Return the fully qualified name of a table in this object's instance.
   std::string TableName(std::string const& table_id) const {
     return google::cloud::bigtable::TableName(project(), instance_id(),
@@ -1709,6 +1009,8 @@ class TableAdmin {
   }
 
  private:
+  friend class TableAdminTester;
+
   //@{
   /// @name Helper functions to implement constructors with changed policies.
   void ChangePolicy(RPCRetryPolicy const& policy) {
@@ -1749,6 +1051,23 @@ class TableAdmin {
 
   /// Compute the fully qualified instance name.
   std::string InstanceName() const;
+
+  future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncCreateBackupImpl(
+      CompletionQueue& cq, CreateBackupParams const& params);
+
+  future<StatusOr<google::bigtable::admin::v2::Table>> AsyncRestoreTableImpl(
+      CompletionQueue& cq, RestoreTableParams const& params);
+
+  future<StatusOr<google::bigtable::admin::v2::Table>> AsyncRestoreTableImpl(
+      CompletionQueue& cq, RestoreTableFromInstanceParams params);
+
+  future<StatusOr<Consistency>> AsyncCheckConsistency(
+      CompletionQueue& cq, std::string const& table_id,
+      std::string const& consistency_token);
+
+  future<StatusOr<Consistency>> AsyncWaitForConsistencyImpl(
+      CompletionQueue& cq, std::string const& table_id,
+      std::string const& consistency_token);
 
   std::shared_ptr<AdminClient> client_;
   std::string instance_id_;

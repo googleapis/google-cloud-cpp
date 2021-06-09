@@ -222,9 +222,6 @@ if (BUILD_TESTING)
         # cmake-format: sort
         admin_client_test.cc
         app_profile_config_test.cc
-        async_list_app_profiles_test.cc
-        async_list_clusters_test.cc
-        async_list_instances_test.cc
         async_read_stream_test.cc
         async_row_reader_test.cc
         bigtable_version_test.cc
