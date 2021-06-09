@@ -119,4 +119,5 @@ else
   exit 1
 fi
 
-exit 0
+# Kokoro needs bazel to be shutdown.
+bazelisk shutdown

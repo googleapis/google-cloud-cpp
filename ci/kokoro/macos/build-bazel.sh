@@ -151,3 +151,6 @@ if should_run_integration_tests; then
   bazelisk test "${bazel_args[@]}" "--test_tag_filters=integration-test" \
     -- ... "${excluded_rules[@]}"
 fi
+
+# Kokoro needs bazel to be shutdown.
+bazelisk shutdown
