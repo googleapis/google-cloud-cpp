@@ -39,11 +39,12 @@ if (-not (Test-Path $bazel_root)) {
 $common_flags = @("--output_user_root=${bazel_root}")
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Capture Bazel information for troubleshooting"
-bazel $common_flags version
+$Env:USE_BAZEL_VERSION="4.0.0"
+bazelisk $common_flags version
 
 # Shutdown the Bazel server to release any locks
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
-bazel $common_flags shutdown
+bazelisk $common_flags shutdown
 
 $download_dir = "T:\tmp"
 if (Test-Path env:TEMP) {
@@ -109,7 +110,7 @@ ForEach($_ in (1, 2, 3)) {
         "@go_sdk//...",
         "@remotejdk11_win//:jdk"
     )
-    bazel $common_flags fetch ${external} ...
+    bazelisk $common_flags fetch ${external} ...
     if ($LastExitCode -eq 0) {
         break
     }
@@ -122,7 +123,7 @@ $test_flags = $build_flags
 $test_flags += @("--test_output=errors", "--verbose_failures=true")
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling and running unit tests"
-bazel $common_flags test $test_flags --test_tag_filters=-integration-test ...
+bazelisk $common_flags test $test_flags --test_tag_filters=-integration-test ...
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "bazel test failed with exit code ${LastExitCode}."
     Exit ${LastExitCode}
@@ -130,7 +131,7 @@ if ($LastExitCode) {
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling extra programs"
 Write-Host -ForegroundColor Yellow bazel $common_flags build $build_flags ...
-bazel $common_flags build $build_flags ...
+bazelisk $common_flags build $build_flags ...
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "bazel test failed with exit code ${LastExitCode}."
     Exit ${LastExitCode}
@@ -217,7 +218,7 @@ if (Integration-Tests-Enabled) {
         "-//google/cloud/examples:grpc_credential_types",
         "-//google/cloud/storage/tests:grpc_integration_test"
     )
-    bazel $common_flags test $test_flags $integration_flags `
+    bazelisk $common_flags test $test_flags $integration_flags `
         "--test_tag_filters=integration-test" `
         -- ... $excluded_rules
     if ($LastExitCode) {
@@ -228,8 +229,8 @@ if (Integration-Tests-Enabled) {
 
 # Shutdown the Bazel server to release any locks
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
-bazel $common_flags shutdown
-bazel shutdown
+bazelisk $common_flags shutdown
+bazelisk shutdown
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
 Get-CimInstance -Class CIM_LogicalDisk | `
