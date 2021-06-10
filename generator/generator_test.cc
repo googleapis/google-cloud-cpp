@@ -142,7 +142,7 @@ TEST_F(GeneratorTest, BadCommandLineArgs) {
 }
 
 TEST_F(GeneratorTest, GenerateServicesSuccess) {
-  int constexpr kNumMockOutputStreams = 18;
+  int constexpr kNumMockOutputStreams = 20;
   std::vector<std::unique_ptr<generator_testing::MockZeroCopyOutputStream>>
       mock_outputs(kNumMockOutputStreams);
   for (auto& output : mock_outputs) {
@@ -167,8 +167,9 @@ TEST_F(GeneratorTest, GenerateServicesSuccess) {
   Generator generator;
   auto result = generator.Generate(
       service_file_descriptor,
-      {"product_path=google/cloud/"
-       "foo,googleapis_commit_hash=59f97e6044a1275f83427ab7962a154c00d915b5"},
+      {"product_path=google/cloud/foo"
+       ",with_auth_decorator=true"
+       ",googleapis_commit_hash=59f97e6044a1275f83427ab7962a154c00d915b5"},
       context_.get(), &actual_error);
   EXPECT_TRUE(result);
   EXPECT_TRUE(actual_error.empty());

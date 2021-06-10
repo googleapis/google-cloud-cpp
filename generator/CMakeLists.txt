@@ -26,6 +26,8 @@ add_library(
     google_cloud_cpp_generator # cmake-format: sort
     generator.cc
     generator.h
+    internal/auth_decorator_generator.cc
+    internal/auth_decorator_generator.h
     internal/client_generator.cc
     internal/client_generator.h
     internal/codegen_utils.cc
