@@ -22,6 +22,7 @@ ARG NCPU=4
 
 # ```bash
 RUN dnf makecache && \
+    dnf update -y && \
     dnf install -y epel-release && \
     dnf makecache && \
     dnf install -y ccache cmake gcc-c++ git make openssl-devel patch pkgconfig \
