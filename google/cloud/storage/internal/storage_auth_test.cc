@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/storage_auth.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
+#include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -26,21 +27,11 @@ namespace {
 
 using ::google::cloud::internal::GrpcAuthenticationStrategy;
 using ::google::cloud::storage::testing::MockStorageStub;
+using ::google::cloud::testing_util::MockAuthenticationStrategy;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::IsNull;
 using ::testing::Not;
 using ::testing::Return;
-
-class MockAuthenticationStrategy : public GrpcAuthenticationStrategy {
- public:
-  MOCK_METHOD(std::shared_ptr<grpc::Channel>, CreateChannel,
-              (std::string const&, grpc::ChannelArguments const&), (override));
-  MOCK_METHOD(bool, RequiresConfigureContext, (), (const, override));
-  MOCK_METHOD(Status, ConfigureContext, (grpc::ClientContext&), (override));
-  MOCK_METHOD(future<StatusOr<std::unique_ptr<grpc::ClientContext>>>,
-              AsyncConfigureContext, (std::unique_ptr<grpc::ClientContext>),
-              (override));
-};
 
 std::shared_ptr<GrpcAuthenticationStrategy> MakeMockAuth() {
   auto auth = std::make_shared<MockAuthenticationStrategy>();
