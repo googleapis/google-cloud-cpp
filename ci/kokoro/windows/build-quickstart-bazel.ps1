@@ -37,12 +37,13 @@ if (-not (Test-Path $bazel_root)) {
 $common_flags = @("--output_user_root=${bazel_root}")
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Capture Bazel information for troubleshooting"
-bazel $common_flags version
+$Env:USE_BAZEL_VERSION="4.0.0"
+bazelisk $common_flags version
 
 # Shutdown the Bazel server to release any locks
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
     "Shutting down Bazel server"
-bazel $common_flags shutdown
+bazelisk $common_flags shutdown
 
 $download_dir = "T:\tmp"
 if (Test-Path env:TEMP) {
@@ -126,7 +127,7 @@ ForEach($library in ("bigtable", "storage", "spanner", "pubsub")) {
         )
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
             "Fetch dependencies for ${library} [$_]"
-        bazel $common_flags fetch $build_flags ... $external
+        bazelisk $common_flags fetch $build_flags ... $external
         if ($LastExitCode -eq 0) {
             break
         }
@@ -135,7 +136,7 @@ ForEach($library in ("bigtable", "storage", "spanner", "pubsub")) {
 
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
         "Compiling quickstart for ${library}"
-    bazel $common_flags build $build_flags ...
+    bazelisk $common_flags build $build_flags ...
     if ($LastExitCode) {
         Write-Host -ForegroundColor Red `
             "bazel test failed with exit code ${LastExitCode}."
@@ -145,7 +146,7 @@ ForEach($library in ("bigtable", "storage", "spanner", "pubsub")) {
     if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "true")) {
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
             "Running quickstart for ${library}"
-        bazel $common_flags run "--spawn_strategy=local" `
+        bazelisk $common_flags run "--spawn_strategy=local" `
             ":quickstart" -- $quickstart_args[${library}]
         if ($LastExitCode) {
             Write-Host -ForegroundColor Red `
@@ -157,13 +158,13 @@ ForEach($library in ("bigtable", "storage", "spanner", "pubsub")) {
     # Need to free up the open files or the caching below fails.
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
         "Shutting down Bazel for ${library}"
-    bazel $common_flags shutdown
+    bazelisk $common_flags shutdown
 }
 Set-Location "${project_root}"
 
 # Shutdown the Bazel server to release any locks
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
-bazel $common_flags shutdown
-bazel shutdown
+bazelisk $common_flags shutdown
+bazelisk shutdown
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DONE"
