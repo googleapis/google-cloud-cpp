@@ -70,6 +70,11 @@
 #   Runs the checkers in your local docker
 #   NOTE: This is a good way to format your code and check for style issues.
 #   $ build.sh -t checkers-pr --docker
+#
+# Note: Builds with the `--docker` flag inherit some (but not all) environment
+# variables from the calling process, such as USE_BAZEL_VERSION
+# (https://github.com/bazelbuild/bazelisk), CODECOV_TOKEN
+# (https://codecov.io/), and every variable starting with GOOGLE_CLOUD_.
 
 set -euo pipefail
 
@@ -251,6 +256,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--env=BRANCH_NAME=${BRANCH_NAME}"
     "--env=COMMIT_SHA=${COMMIT_SHA}"
     "--env=TRIGGER_TYPE=${TRIGGER_TYPE:-}"
+    "--env=USE_BAZEL_VERSION=${USE_BAZEL_VERSION:-}"
     # Mounts an empty volume over "build-out" to isolate builds from each
     # other. Doesn't affect GCB builds, but it helps our local docker builds.
     "--volume=/workspace/build-out"
