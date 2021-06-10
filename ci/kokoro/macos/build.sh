@@ -17,15 +17,14 @@
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
-source module /ci/etc/repo-config.sh
-source module /ci/lib/io.sh
+source module ci/etc/repo-config.sh
+source module ci/lib/io.sh
 
-export BAZEL_CONFIG=""
-export RUN_INTEGRATION_TESTS="no"
-export BUILD_TOOL="CMake"
+cd "${PROJECT_ROOT}"
 
 # TODO(#4896): Enable generator integration tests for macos.
 export GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS="no"
+export RUN_INTEGRATION_TESTS="no"
 
 BRANCH="${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-main}"
 readonly BRANCH
@@ -58,28 +57,6 @@ else
   exit 1
 fi
 
-driver_script="ci/kokoro/macos/build-bazel.sh"
-script_flags=()
-if [[ "${BUILD_NAME}" == "bazel" ]]; then
-  export BUILD_TOOL="Bazel"
-  driver_script="ci/kokoro/macos/build-bazel.sh"
-elif [[ "${BUILD_NAME}" == "cmake-super" ]]; then
-  driver_script="ci/kokoro/macos/build-cmake.sh"
-  script_flags+=("super" "cmake-out/macos")
-elif [[ "${BUILD_NAME}" == "quickstart-cmake" ]]; then
-  driver_script="ci/kokoro/macos/build-quickstart-cmake.sh"
-elif [[ "${BUILD_NAME}" == "quickstart-bazel" ]]; then
-  export BUILD_TOOL="Bazel"
-  driver_script="ci/kokoro/macos/build-quickstart-bazel.sh"
-else
-  io::log_red "unknown BUILD_NAME (${BUILD_NAME})."
-  exit 1
-fi
-
-cd "${PROJECT_ROOT}"
-NCPU="$(sysctl -n hw.logicalcpu)"
-readonly NCPU
-
 function google_time() {
   curl -sI google.com | tr -d '\r' | sed -n 's/Date: \(.*\)/\1/p'
 }
@@ -89,7 +66,7 @@ printf "%10s %s\n" "google:" "$(google_time)"
 printf "%10s %s\n" "kernel:" "$(uname -v)"
 printf "%10s %s\n" "os:" "$(sw_vers | xargs)"
 printf "%10s %s\n" "arch:" "$(arch)"
-printf "%10s %s\n" "cpus:" "${NCPU}"
+printf "%10s %s\n" "cpus:" "$(sysctl -n hw.logicalcpu)"
 printf "%10s %s\n" "mem:" "$(($(sysctl -n hw.memsize) / 1024 / 1024 / 1024)) GB"
 printf "%10s %s\n" "term:" "${TERM-}"
 printf "%10s %s\n" "bash:" "$(bash --version 2>&1 | head -1)"
@@ -98,11 +75,10 @@ printf "%10s %s\n" "brew:" "$(brew --version 2>&1 | head -1)"
 printf "%10s %s\n" "branch:" "${BRANCH}"
 
 io::log_h2 "Brew packages"
-brew list --versions --formula
-brew list --versions --cask
-
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
+brew list --versions --formula
+brew list --versions --cask
 brew list --versions coreutils || brew install coreutils
 # We re-install google-cloud-sdk because the package is broken on some kokoro
 # machines, but we ignore errors here because maybe the local version works.
@@ -110,11 +86,7 @@ if [[ "${RUNNING_CI:-}" = "yes" ]]; then
   brew reinstall google-cloud-sdk || true
 fi
 
-io::log_h1 "Starting Build: ${BUILD_NAME}"
-
-KOKORO_GFILE_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
-readonly KOKORO_GFILE_DIR
-
+readonly KOKORO_GFILE_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
 # We need this environment variable because on macOS gRPC crashes if it cannot
 # find the credentials, even if you do not use them. Some of the unit tests do
 # exactly that.
@@ -132,20 +104,15 @@ rm -f "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
 curl -sSL --retry 10 -o "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}" \
   https://pki.google.com/roots.pem
 
-CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
-readonly CACHE_BUCKET
-CACHE_FOLDER="${CACHE_BUCKET}/build-cache/${GOOGLE_CLOUD_CPP_REPOSITORY}"
-CACHE_FOLDER="${CACHE_FOLDER}/${BRANCH}"
-readonly CACHE_FOLDER
-CACHE_NAME="cache-macos-${BUILD_NAME}"
-readonly CACHE_NAME
-
 io::log_h1 "Downloading cache"
+readonly CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
+readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/${GOOGLE_CLOUD_CPP_REPOSITORY}/${BRANCH}"
+readonly CACHE_NAME="cache-macos-${BUILD_NAME}"
 gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
   "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 
-io::log_h1 "Running build script: ${driver_script}"
-if "${driver_script}" "${script_flags[@]+"${script_flags[@]}"}"; then
+io::log_h1 "Starting Build: ${BUILD_NAME}"
+if "ci/kokoro/macos/builds/${BUILD_NAME}.sh"; then
   io::log_green "build script was successful."
 else
   io::log_red "build script reported errors."
@@ -166,5 +133,3 @@ if [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; the
 else
   io::log_yellow "Not a CI build; skipping artifact cleanup"
 fi
-
-exit 0

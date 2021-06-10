@@ -15,17 +15,12 @@
 
 set -eu
 
-source "$(dirname "$0")/../../lib/init.sh"
-source module /ci/etc/integration-tests-config.sh
-source module /ci/lib/io.sh
+source "$(dirname "$0")/../../../lib/init.sh"
+source module ci/etc/integration-tests-config.sh
+source module ci/lib/io.sh
 
-if [[ $# -ne 2 ]]; then
-  echo "Usage: $(basename "$0")  <source-directory> <binary-directory>"
-  exit 1
-fi
-
-readonly SOURCE_DIR="$1"
-readonly BINARY_DIR="$2"
+readonly SOURCE_DIR="super"
+readonly BINARY_DIR="cmake-out/macos"
 
 NCPU="$(sysctl -n hw.logicalcpu)"
 readonly NCPU
@@ -42,8 +37,6 @@ brew list --versions ninja || brew install ninja
 io::log_h2 "ccache stats"
 ccache --show-stats
 ccache --zero-stats
-
-cd "${PROJECT_ROOT}"
 
 # Sets OPENSSL_ROOT_DIR to its install path from homebrew.
 homebrew_prefix="$(brew --prefix)"
@@ -121,4 +114,3 @@ ccache --show-stats
 ccache --zero-stats
 
 io::log_green "Build finished successfully"
-exit 0

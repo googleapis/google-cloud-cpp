@@ -16,11 +16,11 @@
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
-source module /ci/etc/integration-tests-config.sh
-source module /ci/etc/quickstart-config.sh
-source module /ci/kokoro/lib/gcloud.sh
-source module /ci/kokoro/lib/cache.sh
-source module /ci/lib/io.sh
+source module ci/etc/integration-tests-config.sh
+source module ci/etc/quickstart-config.sh
+source module ci/kokoro/lib/gcloud.sh
+source module ci/kokoro/lib/cache.sh
+source module ci/lib/io.sh
 
 if [[ $# != 2 ]]; then
   echo "Usage: $(basename "$0") <cache-folder> <cache-name>"

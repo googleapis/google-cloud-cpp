@@ -36,10 +36,6 @@ cache_download_enabled() {
     return 1
   fi
 
-  if [[ "${KOKORO_JOB_TYPE:-}" = "CONTINUOUS_INTEGRATION" && "${BUILD_TOOL:-}" = "Bazel" ]]; then
-    io::log "Cache not downloaded as this is a full CI build for Bazel."
-    return 1
-  fi
   return 0
 }
 

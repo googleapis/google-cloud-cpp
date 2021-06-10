@@ -15,16 +15,15 @@
 
 set -eu
 
-source "$(dirname "$0")/../../lib/init.sh"
-source module /ci/lib/io.sh
-source module /ci/etc/integration-tests-config.sh
-source module /ci/etc/quickstart-config.sh
+source "$(dirname "$0")/../../../lib/init.sh"
+source module ci/lib/io.sh
+source module ci/etc/integration-tests-config.sh
+source module ci/etc/quickstart-config.sh
 
 io::log_h2 "Using CMake version"
 cmake --version
 
 io::log_h2 "Update or install dependencies"
-
 # vcpkg needs this
 brew list --versions pkg-config || brew install pkg-config
 
@@ -54,7 +53,6 @@ if [[ -r "${CREDENTIALS_FILE}" ]]; then
 fi
 readonly run_quickstart
 
-cd "${PROJECT_ROOT}"
 export NINJA_STATUS="T+%es [%f/%t] "
 cmake_flags=(
   "-DCMAKE_TOOLCHAIN_FILE=${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake"
@@ -107,5 +105,3 @@ else
   io::log_red "Build failed for ${errors}"
   exit 1
 fi
-
-exit 0

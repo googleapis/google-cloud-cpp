@@ -15,10 +15,10 @@
 
 set -eu
 
-source "$(dirname "$0")/../../lib/init.sh"
-source module /ci/etc/integration-tests-config.sh
-source module /ci/etc/quickstart-config.sh
-source module /ci/lib/io.sh
+source "$(dirname "$0")/../../../lib/init.sh"
+source module ci/etc/integration-tests-config.sh
+source module ci/etc/quickstart-config.sh
+source module ci/lib/io.sh
 
 # NOTE: In this file use the command `bazelisk` rather than bazel, because
 # Kokoro has both installed and we want to make sure to use the former.
@@ -61,8 +61,6 @@ if [[ -r "${CREDENTIALS_FILE}" ]]; then
   fi
 fi
 readonly run_quickstart
-
-cd "${PROJECT_ROOT}"
 
 build_quickstart() {
   local -r library="$1"
