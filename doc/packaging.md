@@ -1222,6 +1222,7 @@ library (required by gRPC):
 
 ```bash
 sudo dnf makecache && \
+sudo dnf update -y && \
 sudo dnf install -y epel-release && \
 sudo dnf makecache && \
 sudo dnf install -y ccache cmake gcc-c++ git make openssl-devel patch pkgconfig \
