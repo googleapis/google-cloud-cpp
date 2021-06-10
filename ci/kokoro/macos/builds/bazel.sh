@@ -15,9 +15,9 @@
 
 set -eu
 
-source "$(dirname "$0")/../../lib/init.sh"
-source module /ci/etc/integration-tests-config.sh
-source module /ci/lib/io.sh
+source "$(dirname "$0")/../../../lib/init.sh"
+source module ci/etc/integration-tests-config.sh
+source module ci/lib/io.sh
 
 # NOTE: In this file use the command `bazelisk` rather than bazel, because
 # Kokoro has both installed and we want to make sure to use the former.
@@ -35,10 +35,8 @@ bazel_args=(
   "--action_env=GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}"
   "--test_output=errors"
   "--verbose_failures=true"
-  "--keep_going")
-if [[ -n "${BAZEL_CONFIG}" ]]; then
-  bazel_args+=("--config" "${BAZEL_CONFIG}")
-fi
+  "--keep_going"
+)
 
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
 readonly TEST_KEY_FILE_JSON="${CONFIG_DIR}/kokoro-run-key.json"
