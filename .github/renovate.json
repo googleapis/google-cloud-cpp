@@ -11,7 +11,8 @@
         ".*doc/packaging\\.md$"
       ],
       "matchStrings": [
-        "https://github\\.com/(?<depName>.*?)/archive/(?<currentValue>.*?)\\.tar\\.gz"
+        "https://github\\.com/(?<depName>.*?)/archive/(?<currentValue>.*?)\\.tar\\.gz",
+        "https://github\\.com/(?<depName>.*?)/releases/download/(?<currentValue>[^/]+)/bazelisk-linux-amd64"
       ],
       "datasourceTemplate": "github-releases"
     }
