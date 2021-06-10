@@ -98,7 +98,9 @@ add_library(
     internal/golden_thing_admin_stub_factory.cc
     internal/golden_thing_admin_stub_factory.h
     mocks/mock_golden_kitchen_sink_connection.h
+    mocks/mock_golden_kitchen_sink_stub.h
     mocks/mock_golden_thing_admin_connection.h
+    mocks/mock_golden_thing_admin_stub.h
     retry_traits.h
     streaming.cc)
 
