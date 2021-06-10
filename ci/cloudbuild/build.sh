@@ -251,6 +251,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--env=BRANCH_NAME=${BRANCH_NAME}"
     "--env=COMMIT_SHA=${COMMIT_SHA}"
     "--env=TRIGGER_TYPE=${TRIGGER_TYPE:-}"
+    "--env=USE_BAZEL_VERSION=${USE_BAZEL_VERSION:-}"
     # Mounts an empty volume over "build-out" to isolate builds from each
     # other. Doesn't affect GCB builds, but it helps our local docker builds.
     "--volume=/workspace/build-out"
