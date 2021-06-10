@@ -126,7 +126,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, ListLogs) {
 // This test is fairly different because we need to return a streaming RPC.
 TEST(GoldenKitchenSinkAuthDecoratorTest, TailLogEntries) {
   using ResponseType =
-  google::test::admin::database::v1::TailLogEntriesResponse;
+      google::test::admin::database::v1::TailLogEntriesResponse;
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   EXPECT_CALL(*mock, TailLogEntries)
       .WillOnce([](::testing::Unused, ::testing::Unused) {
@@ -137,7 +137,8 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, TailLogEntries) {
   auto under_test = GoldenKitchenSinkAuth(MakeMockAuth(), mock);
   ::google::test::admin::database::v1::TailLogEntriesRequest request;
   grpc::ClientContext ctx;
-  auto auth_failure = under_test.TailLogEntries(absl::make_unique<grpc::ClientContext>(), request);
+  auto auth_failure = under_test.TailLogEntries(
+      absl::make_unique<grpc::ClientContext>(), request);
   auto v = auth_failure->Read();
   ASSERT_TRUE(absl::holds_alternative<Status>(v));
   EXPECT_THAT(absl::get<Status>(v), StatusIs(StatusCode::kInvalidArgument));
