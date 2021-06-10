@@ -32,8 +32,10 @@ fi
 io::log_h2 "Authenticating"
 gh auth login --with-token <<<"${LOG_LINKER_PAT}"
 
-console_link="https://console.cloud.google.com/cloud-build/builds;region=us-east1?project=cloud-cpp-testing-resources&query=tags%3D%22${PR_NUMBER}%22"
 storage_link="https://storage.googleapis.com/cloud-cpp-community-publiclogs/logs/google-cloud-cpp/${PR_NUMBER}/${COMMIT_SHA}/index.html"
+console_link="https://console.cloud.google.com/cloud-build/builds;region=us-east1?project=cloud-cpp-testing-resources&query=tags%3D%22${PR_NUMBER}%22"
+fusion_link="http://fusion2/invocations;query=label:google-cloud-cpp%20GITHUB_PULL_REQUEST_NUMBER:${PR_NUMBER}"
+
 body="$(
   cat <<EOF
 **Google Cloud Build Logs**
@@ -41,6 +43,7 @@ For commit: \`${COMMIT_SHA}\`
 
 * [Public Access Build Logs](${storage_link})
 * [Cloud Build Console](${console_link}) (requires auth)
+* [Kokoro Logs](${fusion_link}) (requires auth)
 
 :information_source: NOTE: Kokoro logs are linked from "Details" below.
 EOF
