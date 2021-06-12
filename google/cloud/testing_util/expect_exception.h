@@ -75,6 +75,7 @@ void ExpectException(
     std::function<void(ExpectedException const& ex)> const& validator,
     char const* expected_message) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // NOLINTNEXTLINE(misc-throw-by-value-catch-by-reference)
   EXPECT_THROW(
       try { expression(); } catch (ExpectedException const& ex) {
         validator(ex);
