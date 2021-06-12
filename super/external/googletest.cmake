@@ -20,9 +20,9 @@ if (NOT TARGET googletest-project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
     set(GOOGLE_CLOUD_CPP_GOOGLETEST_URL
-        "https://github.com/google/googletest/archive/release-1.10.0.tar.gz")
+        "https://github.com/google/googletest/archive/release-1.11.0.tar.gz")
     set(GOOGLE_CLOUD_CPP_GOOGLETEST_SHA256
-        "9dc9157a9a1551ec7a7e43daea9a694a0bb5fb8bec81235d8a1e6ef64c716dcb")
+        "b4870bf121ff7795ba20d20bcdd8627b8e088f2d1dab299a031c1034eddc93d5")
 
     set_external_project_build_parallel_level(PARALLEL)
     set_external_project_vars()

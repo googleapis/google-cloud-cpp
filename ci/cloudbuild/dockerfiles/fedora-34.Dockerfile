@@ -56,7 +56,7 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
 # Install googletest, remove the downloaded files and the temporary artifacts
 # after a successful build to keep the image smaller (and with fewer layers)
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/google/googletest/archive/release-1.10.0.tar.gz | \
+RUN curl -sSL https://github.com/google/googletest/archive/release-1.11.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \

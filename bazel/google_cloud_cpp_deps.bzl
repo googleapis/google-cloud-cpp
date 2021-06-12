@@ -52,11 +52,11 @@ def google_cloud_cpp_deps():
     if "com_google_googletest" not in native.existing_rules():
         http_archive(
             name = "com_google_googletest",
-            strip_prefix = "googletest-release-1.10.0",
+            strip_prefix = "googletest-release-1.11.0",
             urls = [
-                "https://github.com/google/googletest/archive/release-1.10.0.tar.gz",
+                "https://github.com/google/googletest/archive/release-1.11.0.tar.gz",
             ],
-            sha256 = "9dc9157a9a1551ec7a7e43daea9a694a0bb5fb8bec81235d8a1e6ef64c716dcb",
+            sha256 = "b4870bf121ff7795ba20d20bcdd8627b8e088f2d1dab299a031c1034eddc93d5",
         )
 
     # Load a version of benchmark that we know works.
