@@ -31,6 +31,7 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::AnyOf;
 using ::testing::UnorderedElementsAre;
 using ::testing::UnorderedElementsAreArray;
 
@@ -934,7 +935,8 @@ TEST_F(ClientIntegrationTest, SpannerStatistics) {
   using RowType = std::tuple<std::string, std::string, bool>;
   for (auto& row : StreamOf<RowType>(rows)) {
     if (emulator_) {
-      EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
+      EXPECT_THAT(row, StatusIs(AnyOf(StatusCode::kInvalidArgument,
+                                      StatusCode::kUnimplemented)));
     } else {
       EXPECT_THAT(row, IsOk());
     }
