@@ -29,7 +29,7 @@ namespace {
 using ::testing::HasSubstr;
 
 // When running on the internal Google CI systems we cannot write to the local
-// directory, GTest has a good temporary directory in that case.
+// directory, but GTest has a good temporary directory in that case.
 std::string CreateRandomFileName(
     std::string const& tmp = ::testing::TempDir()) {
   static DefaultPRNG generator = MakeDefaultPRNG();
