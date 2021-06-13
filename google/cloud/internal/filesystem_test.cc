@@ -28,12 +28,13 @@ namespace internal {
 namespace {
 using ::testing::HasSubstr;
 
-std::string CreateRandomFileName() {
+// When running on the internal Google CI systems we cannot write to the local
+// directory, GTest has a good temporary directory in that case.
+std::string CreateRandomFileName(
+    std::string const& tmp = ::testing::TempDir()) {
   static DefaultPRNG generator = MakeDefaultPRNG();
-  // When running on the internal Google CI systems we cannot write to the local
-  // directory, GTest has a good temporary directory in that case.
-  return ::testing::TempDir() +
-         Sample(generator, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  return PathAppend(
+      tmp, Sample(generator, 8, "abcdefghijklmnopqrstuvwxyz0123456789"));
 }
 
 TEST(FilesystemTest, PermissionsOperatorBitand) {
@@ -151,11 +152,14 @@ TEST(FilesystemTest, StatusRegular) {
 
 TEST(FilesystemTest, StatusSocket) {
 #if GTEST_OS_LINUX
-  auto file_name = CreateRandomFileName();
+  auto const file_name = CreateRandomFileName();
+  // With Bazel and gtest >= 1.11 the default temp directory is too long.
+  sockaddr_un address{};
+  if (file_name.size() >= sizeof(address.sun_path)) GTEST_SKIP();
+
   int fd = socket(AF_UNIX, SOCK_SEQPACKET, 0);
   ASSERT_NE(-1, fd);
 
-  sockaddr_un address{};
   address.sun_family = AF_UNIX;
   strncpy(address.sun_path, file_name.c_str(), sizeof(address.sun_path) - 1);
   int r = bind(fd, reinterpret_cast<sockaddr*>(&address), sizeof(address));
@@ -316,6 +320,39 @@ TEST(FilesystemTest, FileSizeNotFoundDoesThrow) {
 #else
   EXPECT_DEATH_IF_SUPPORTED(file_size(path), "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST(FilesystemTest, PathAppend) {
+  struct TestCase {
+    std::string dir;
+    std::string path;
+    std::string expected;
+  } cases[] = {
+#if _WIN32
+    {"\\tmp", "path", "\\tmp\\path"},
+    {"\\tmp", "\\path", "\\tmp\\path"},
+    {"\\tmp\\", "path", "\\tmp\\path"},
+    {"\\tmp\\", "\\path", "\\tmp\\path"},
+    {"", "path", "path"},
+    {"\\", "path", "\\path"},
+    {"\\tmp", "", "\\tmp"},
+    {"\\tmp\\", "", "\\tmp\\"},
+#else
+    {"/tmp", "path", "/tmp/path"},
+    {"/tmp", "/path", "/tmp/path"},
+    {"/tmp/", "path", "/tmp/path"},
+    {"/tmp/", "/path", "/tmp/path"},
+    {"", "path", "path"},
+    {"/", "path", "/path"},
+    {"/tmp", "", "/tmp"},
+    {"/tmp/", "", "/tmp/"},
+#endif  // _WIN32
+  };
+  for (auto const& test : cases) {
+    SCOPED_TRACE("Testing dir=<" + test.dir + "> path=<" + test.path + ">");
+    auto const actual = PathAppend(test.dir, test.path);
+    EXPECT_EQ(test.expected, actual);
+  }
 }
 
 }  // namespace

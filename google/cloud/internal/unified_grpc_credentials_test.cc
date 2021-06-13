@@ -16,6 +16,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -92,8 +93,9 @@ std::string CreateRandomFileName() {
   static DefaultPRNG generator = MakeDefaultPRNG();
   // When running on the internal Google CI systems we cannot write to the local
   // directory, GTest has a good temporary directory in that case.
-  return ::testing::TempDir() +
-         Sample(generator, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  return google::cloud::internal::PathAppend(
+      ::testing::TempDir(),
+      Sample(generator, 8, "abcdefghijklmnopqrstuvwxyz0123456789"));
 }
 
 TEST(UnifiedGrpcCredentialsTest, LoadCAInfoNotExist) {

@@ -19,6 +19,7 @@
 #include "google/cloud/storage/testing/mock_fake_clock.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include "google/cloud/storage/testing/write_base64.h"
+#include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -99,9 +100,10 @@ class ServiceAccountCredentialsTest : public ::testing::Test {
   std::string CreateRandomFileName() {
     // When running on the internal Google CI systems we cannot write to the
     // local directory, GTest has a good temporary directory in that case.
-    return ::testing::TempDir() +
-           google::cloud::internal::Sample(
-               generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+    return google::cloud::internal::PathAppend(
+        ::testing::TempDir(),
+        google::cloud::internal::Sample(
+            generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789"));
   }
 
   google::cloud::internal::DefaultPRNG generator_ =
@@ -638,7 +640,8 @@ TEST_F(ServiceAccountCredentialsTest, ParseP12MissingKey) {
 }
 
 TEST_F(ServiceAccountCredentialsTest, ParseP12MissingCerts) {
-  std::string filename = ::testing::TempDir() + CreateRandomFileName() + ".p12";
+  std::string filename = google::cloud::internal::PathAppend(
+      ::testing::TempDir(), CreateRandomFileName() + ".p12");
   WriteBase64AsBinary(filename, kP12KeyFileMissingCerts);
   auto info = ParseServiceAccountP12File(filename);
   EXPECT_THAT(info, Not(IsOk()));

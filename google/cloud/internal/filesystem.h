@@ -167,6 +167,9 @@ inline bool is_other(file_status s) noexcept {
 std::uintmax_t file_size(std::string const& path);
 std::uintmax_t file_size(std::string const& path, std::error_code& ec) noexcept;
 
+/// Append @p path (which may have subdirectories) to @p directory
+std::string PathAppend(std::string const& directory, std::string const& path);
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

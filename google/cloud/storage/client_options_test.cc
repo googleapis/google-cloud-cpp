@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -43,10 +44,11 @@ class ClientOptionsTest : public ::testing::Test {
   std::string CreateRandomFileName() {
     // When running on the internal Google CI systems we cannot write to the
     // local directory. GTest has a good temporary directory in that case.
-    return ::testing::TempDir() +
-           google::cloud::internal::Sample(
-               generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789") +
-           ".json";
+    return google::cloud::internal::PathAppend(
+        ::testing::TempDir(),
+        google::cloud::internal::Sample(
+            generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789") +
+            ".json");
   }
 
  protected:

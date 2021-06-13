@@ -91,6 +91,9 @@ class GeneratorIntegrationTest
     output_path_ = google::cloud::internal::GetEnv(
                        "GOOGLE_CLOUD_CPP_GENERATOR_OUTPUT_PATH")
                        .value_or(::testing::TempDir());
+    if (output_path_.empty() || output_path_.back() != '/') {
+      output_path_ += '/';
+    }
 
     google::cloud::generator::Generator generator;
     google::protobuf::compiler::CommandLineInterface cli;
