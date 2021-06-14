@@ -108,10 +108,10 @@ def google_cloud_cpp_deps():
             name = "boringssl",
             # Use github mirror instead of https://boringssl.googlesource.com/boringssl
             # to obtain a boringssl archive with consistent sha256
-            sha256 = "f0f433106f98f6f50ed6bbc2169f7c42dd73d13d0f09d431082519b5649903a6",
-            strip_prefix = "boringssl-56eb68f64215738552be452e311da12047934ab4",
+            sha256 = "5020999ac6c3317c80adf8cac7083c87509e346a49e0903c219b26d5dbb40eba",
+            strip_prefix = "boringssl-83a49939abb5a15508548ed1d33af8128d70cab5",
             urls = [
-                "https://github.com/google/boringssl/archive/56eb68f64215738552be452e311da12047934ab4.tar.gz",
+                "https://github.com/google/boringssl/archive/83a49939abb5a15508548ed1d33af8128d70cab5.tar.gz",
             ],
         )
 
