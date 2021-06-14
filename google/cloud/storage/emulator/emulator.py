@@ -561,7 +561,7 @@ def objects_copy(src_bucket_name, src_object_name, dst_bucket_name, dst_object_n
         flask.request, dst_metadata, dst_media, dst_bucket, True, None, dst_rest_only
     )
     db.insert_object(flask.request, dst_bucket_name, dst_object, None)
-    if len(flask.request.data):
+    if flask.request.data:
         dst_object.patch(flask.request, None)
     dst_object.metadata.metageneration = 1
     dst_object.metadata.updated.FromDatetime(
@@ -626,7 +626,7 @@ def objects_rewrite(src_bucket_name, src_object_name, dst_bucket_name, dst_objec
             dst_rest_only,
         )
         db.insert_object(flask.request, dst_bucket_name, dst_object, None)
-        if len(flask.request.data):
+        if flask.request.data:
             dst_object.patch(rewrite.request, None)
         dst_object.metadata.metageneration = 1
         dst_object.metadata.updated.FromDatetime(
