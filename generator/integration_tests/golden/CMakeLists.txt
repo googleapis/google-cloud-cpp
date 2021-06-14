@@ -77,6 +77,8 @@ add_library(
     golden_thing_admin_connection_idempotency_policy.cc
     golden_thing_admin_connection_idempotency_policy.h
     golden_thing_admin_options.h
+    internal/golden_kitchen_sink_auth_decorator.cc
+    internal/golden_kitchen_sink_auth_decorator.h
     internal/golden_kitchen_sink_logging_decorator.cc
     internal/golden_kitchen_sink_logging_decorator.h
     internal/golden_kitchen_sink_metadata_decorator.cc
@@ -87,6 +89,8 @@ add_library(
     internal/golden_kitchen_sink_stub.h
     internal/golden_kitchen_sink_stub_factory.cc
     internal/golden_kitchen_sink_stub_factory.h
+    internal/golden_thing_admin_auth_decorator.cc
+    internal/golden_thing_admin_auth_decorator.h
     internal/golden_thing_admin_logging_decorator.cc
     internal/golden_thing_admin_logging_decorator.h
     internal/golden_thing_admin_metadata_decorator.cc
@@ -130,6 +134,7 @@ function (google_cloud_cpp_generator_define_golden_tests)
 
     set(google_cloud_cpp_generator_golden_tests
         # cmake-format: sort
+        tests/golden_kitchen_sink_auth_decorator_test.cc
         tests/golden_kitchen_sink_client_test.cc
         tests/golden_kitchen_sink_connection_test.cc
         tests/golden_kitchen_sink_idempotency_policy_test.cc
@@ -138,6 +143,7 @@ function (google_cloud_cpp_generator_define_golden_tests)
         tests/golden_kitchen_sink_option_defaults_test.cc
         tests/golden_kitchen_sink_stub_factory_test.cc
         tests/golden_kitchen_sink_stub_test.cc
+        tests/golden_thing_admin_auth_decorator_test.cc
         tests/golden_thing_admin_client_test.cc
         tests/golden_thing_admin_connection_test.cc
         tests/golden_thing_admin_idempotency_policy_test.cc
