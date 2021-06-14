@@ -149,8 +149,7 @@ function integration::bazel_with_emulators() {
     # BigQuery integration tests
     "google/cloud/bigquery/..."
     # IAM and IAM Credentials integration tests
-    # TODO(#6724): Re-enable these ones they are not so flaky
-    # "google/cloud/iam/..."
+    "google/cloud/iam/..."
     # Logging integration tests
     "google/cloud/logging/..."
   )
