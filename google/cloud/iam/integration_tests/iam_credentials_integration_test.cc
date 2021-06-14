@@ -59,7 +59,7 @@ class IamCredentialsIntegrationTest
   testing_util::ScopedLog log_;
 };
 
-TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenSuccess) {
+TEST_F(IamCredentialsIntegrationTest, DISABLED_GenerateAccessTokenSuccess) {
   google::protobuf::Duration lifetime;
   lifetime.set_seconds(3600);
   auto client = IAMCredentialsClient(MakeIAMCredentialsConnection());
@@ -82,7 +82,7 @@ TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateAccessToken")));
 }
 
-TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenSuccess) {
+TEST_F(IamCredentialsIntegrationTest, DISABLED_GenerateIdTokenSuccess) {
   options_.set<IAMCredentialsRetryPolicyOption>(
       std::unique_ptr<IAMCredentialsRetryPolicy>(
           new IAMCredentialsLimitedTimeRetryPolicy(std::chrono::minutes(30))));
@@ -154,7 +154,8 @@ TEST_F(IamCredentialsIntegrationTest, SignJwtFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("SignJwt")));
 }
 
-TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenProtoRequestSuccess) {
+TEST_F(IamCredentialsIntegrationTest,
+       DISABLED_GenerateAccessTokenProtoRequestSuccess) {
   ::google::iam::credentials::v1::GenerateAccessTokenRequest request;
   request.set_name("projects/-/serviceAccounts/" + iam_service_account_);
   *request.add_scope() = "https://www.googleapis.com/auth/spanner.admin";
@@ -176,7 +177,8 @@ TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenProtoRequestFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateAccessToken")));
 }
 
-TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenProtoRequestSuccess) {
+TEST_F(IamCredentialsIntegrationTest,
+       DISABLED_GenerateIdTokenProtoRequestSuccess) {
   ::google::iam::credentials::v1::GenerateIdTokenRequest request;
   request.set_name("projects/-/serviceAccounts/" + iam_service_account_);
   request.set_audience("https://www.googleapis.com/auth/spanner.admin");
