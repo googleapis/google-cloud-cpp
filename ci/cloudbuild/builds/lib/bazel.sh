@@ -56,6 +56,7 @@ function bazel::common_args() {
     "--verbose_failures=true"
     "--keep_going"
     "--experimental_convenience_symlinks=ignore"
+    "--cache_test_results=$([ "${TRIGGER_TYPE}" = ci ] && echo no || echo yes)"
   )
   if [[ -n "${BAZEL_REMOTE_CACHE:-}" ]]; then
     args+=("--remote_cache=${BAZEL_REMOTE_CACHE}")
