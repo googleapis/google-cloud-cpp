@@ -63,11 +63,11 @@ def google_cloud_cpp_deps():
     if "com_google_benchmark" not in native.existing_rules():
         http_archive(
             name = "com_google_benchmark",
-            strip_prefix = "benchmark-1.5.4",
+            strip_prefix = "benchmark-1.5.5",
             urls = [
-                "https://github.com/google/benchmark/archive/v1.5.4.tar.gz",
+                "https://github.com/google/benchmark/archive/v1.5.5.tar.gz",
             ],
-            sha256 = "e3adf8c98bb38a198822725c0fc6c0ae4711f16fbbf6aeb311d5ad11e5a081b5",
+            sha256 = "3bff5f237c317ddfd8d5a9b96b3eede7c0802e799db520d38ce756a2a46a18a0",
         )
 
     # Load the googleapis dependency.
