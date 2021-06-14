@@ -140,16 +140,22 @@ function integration::bazel_with_emulators() {
   local verb="$1"
   local args=("${@:2}")
 
-  io::log_h2 "Running gRPC Utils integration tests"
-  bazel "${verb}" "${args[@]}" --test_tag_filters=integration-test \
-    google/cloud:all
+  production_integration_tests=(
+    # gRPC Utils integration tests
+    "google/cloud:all"
+    # Generator integration tests
+    "generator/..."
+    # BigQuery integration tests
+    "google/cloud/bigquery/..."
+    # IAM and IAM Credentials integration tests
+    "google/cloud/iam/..."
+    # Logging integration tests
+    "google/cloud/logging/..."
+  )
 
-  io::log_h2 "Running Generator integration tests (with emulator)"
-  bazel "${verb}" "${args[@]}" --test_tag_filters=integration-test generator/...
-
-  io::log_h2 "Running IAM Credentials integration tests"
+  io::log_h2 "Running integration tests that require production access"
   bazel "${verb}" "${args[@]}" --test_tag_filters=integration-test \
-    google/cloud/iam/...
+    "${production_integration_tests[@]}"
 
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"
   "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
