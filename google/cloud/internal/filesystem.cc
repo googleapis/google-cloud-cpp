@@ -171,17 +171,19 @@ std::uintmax_t file_size(std::string const& path,
 }
 
 std::string PathAppend(std::string const& directory, std::string const& path) {
+  auto is_separator = [](char c) {
 #if _WIN32
-  auto constexpr kSeparator = '\\';
+    return c == '\\' || c == '/';
 #else
-  auto constexpr kSeparator = '/';
+    return c == '/';
 #endif
+  };
   if (path.empty()) return directory;
   if (directory.empty()) return path;
-  if (directory.back() != kSeparator && path.front() != kSeparator) {
-    return directory + kSeparator + path;
+  if (!is_separator(directory.back()) && !is_separator(path.front())) {
+    return directory + '/' + path;
   }
-  if (directory.back() != kSeparator || path.front() != kSeparator) {
+  if (!is_separator(directory.back()) || !is_separator(path.front())) {
     return directory + path;
   }
   auto r = directory;
