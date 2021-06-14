@@ -364,7 +364,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/google/protobuf/archive/v3.17.2.tar.gz | \
+curl -sSL https://github.com/google/protobuf/archive/v3.17.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -515,7 +515,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/google/protobuf/archive/v3.17.2.tar.gz | \
+curl -sSL https://github.com/google/protobuf/archive/v3.17.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -651,7 +651,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/google/protobuf/archive/v3.17.2.tar.gz | \
+curl -sSL https://github.com/google/protobuf/archive/v3.17.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -804,7 +804,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/google/protobuf/archive/v3.17.2.tar.gz | \
+curl -sSL https://github.com/google/protobuf/archive/v3.17.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1083,7 +1083,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/google/protobuf/archive/v3.17.2.tar.gz | \
+curl -sSL https://github.com/google/protobuf/archive/v3.17.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1268,7 +1268,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/google/protobuf/archive/v3.17.2.tar.gz | \
+curl -sSL https://github.com/google/protobuf/archive/v3.17.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1429,7 +1429,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/google/protobuf/archive/v3.17.2.tar.gz | \
+curl -sSL https://github.com/google/protobuf/archive/v3.17.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
