@@ -543,8 +543,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   QueryGrantableRoles(
       {absl::StrCat("//iam.googleapis.com/projects/", project_id,
                     "/serviceAccounts/", service_account_id)});
-  DisableServiceAccount({service_account_name});
-  EnableServiceAccount({service_account_name});
   SetIamPolicy({service_account_name});
   ListRoles({absl::StrCat("projects/", project_id)});
   QueryTestablePermissions(
@@ -564,6 +562,8 @@ void AutoRun(std::vector<std::string> const& argv) {
       std::this_thread::sleep_for(std::chrono::seconds(61));
       PatchServiceAccount({sample_service_account_name, "New Name"});
     }
+    DisableServiceAccount({sample_service_account_name});
+    EnableServiceAccount({sample_service_account_name});
     DeleteServiceAccount({sample_service_account_name});
 
     auto sample_service_account_key_name =

@@ -68,6 +68,7 @@ function integration::bazel_args() {
     "--test_env=GOOGLE_CLOUD_CPP_GENERATOR_CODE_PATH=/workspace"
 
     # IAM
+    "--test_env=GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_TEST_SERVICE_ACCOUNT}"
     "--test_env=GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT}"
     "--test_env=GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT}"
     "--test_env=GOOGLE_CLOUD_CPP_IAM_QUOTA_LIMITED_INTEGRATION_TESTS=${GOOGLE_CLOUD_CPP_IAM_QUOTA_LIMITED_INTEGRATION_TESTS:-}"
@@ -146,8 +147,7 @@ function integration::bazel_with_emulators() {
     # Generator integration tests
     "generator/..."
     # BigQuery integration tests
-    # TODO(#6772) - enable BigQuery builds
-    #   "google/cloud/bigquery/..."
+    "google/cloud/bigquery/..."
     # IAM and IAM Credentials integration tests
     "google/cloud/iam/..."
     # Logging integration tests
