@@ -2,7 +2,7 @@
   "extends": [
     "config:base",
     "docker:disable",
-    "schedule:earlyMondays"
+    "schedule:weekdays"
   ],
   "regexManagers": [
     {
@@ -17,5 +17,5 @@
       "datasourceTemplate": "github-releases"
     }
   ],
-  "ignoreDeps": [ "com_google_googleapis" ]
+  "ignoreDeps": [ "boringssl", "com_google_googleapis" ]
 }
