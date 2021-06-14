@@ -39,9 +39,10 @@ class IamCredentialsIntegrationTest
  protected:
   void SetUp() override {
     options_.set<TracingComponentsOption>({"rpc"});
-    iam_service_account_ = google::cloud::internal::GetEnv(
-                               "GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT")
-                               .value_or("");
+    iam_service_account_ =
+        google::cloud::internal::GetEnv(
+            "GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_TEST_SERVICE_ACCOUNT")
+            .value_or("");
     invalid_iam_service_account_ =
         google::cloud::internal::GetEnv(
             "GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT")
@@ -59,14 +60,14 @@ class IamCredentialsIntegrationTest
   testing_util::ScopedLog log_;
 };
 
-TEST_F(IamCredentialsIntegrationTest, DISABLED_GenerateAccessTokenSuccess) {
+TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenSuccess) {
   google::protobuf::Duration lifetime;
   lifetime.set_seconds(3600);
   auto client = IAMCredentialsClient(MakeIAMCredentialsConnection());
   auto response = client.GenerateAccessToken(
       "projects/-/serviceAccounts/" + iam_service_account_, {},
       {"https://www.googleapis.com/auth/spanner.admin"}, lifetime);
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_FALSE(response->access_token().empty());
 }
 
@@ -82,7 +83,7 @@ TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateAccessToken")));
 }
 
-TEST_F(IamCredentialsIntegrationTest, DISABLED_GenerateIdTokenSuccess) {
+TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenSuccess) {
   options_.set<IAMCredentialsRetryPolicyOption>(
       std::unique_ptr<IAMCredentialsRetryPolicy>(
           new IAMCredentialsLimitedTimeRetryPolicy(std::chrono::minutes(30))));
@@ -93,7 +94,7 @@ TEST_F(IamCredentialsIntegrationTest, DISABLED_GenerateIdTokenSuccess) {
   auto response = client.GenerateIdToken(
       "projects/-/serviceAccounts/" + iam_service_account_, {},
       {"https://www.googleapis.com/auth/spanner.admin"}, true);
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_FALSE(response->token().empty());
 }
 
@@ -106,7 +107,7 @@ TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateIdToken")));
 }
 
-TEST_F(IamCredentialsIntegrationTest, DISABLED_SignBlobSuccess) {
+TEST_F(IamCredentialsIntegrationTest, SignBlobSuccess) {
   std::string payload = "somebytes";
   options_.set<IAMCredentialsRetryPolicyOption>(
       std::unique_ptr<IAMCredentialsRetryPolicy>(
@@ -117,7 +118,7 @@ TEST_F(IamCredentialsIntegrationTest, DISABLED_SignBlobSuccess) {
   auto client = IAMCredentialsClient(MakeIAMCredentialsConnection(options_));
   auto response = client.SignBlob(
       "projects/-/serviceAccounts/" + iam_service_account_, {}, payload);
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_FALSE(response->key_id().empty());
   EXPECT_FALSE(response->signed_blob().empty());
 }
@@ -133,12 +134,12 @@ TEST_F(IamCredentialsIntegrationTest, SignBlobFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("SignBlob")));
 }
 
-TEST_F(IamCredentialsIntegrationTest, DISABLED_SignJwtSuccess) {
+TEST_F(IamCredentialsIntegrationTest, SignJwtSuccess) {
   std::string payload = R"({"some": "json"})";
   auto client = IAMCredentialsClient(MakeIAMCredentialsConnection());
   auto response = client.SignJwt(
       "projects/-/serviceAccounts/" + iam_service_account_, {}, payload);
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_FALSE(response->key_id().empty());
   EXPECT_FALSE(response->signed_jwt().empty());
 }
@@ -154,8 +155,7 @@ TEST_F(IamCredentialsIntegrationTest, SignJwtFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("SignJwt")));
 }
 
-TEST_F(IamCredentialsIntegrationTest,
-       DISABLED_GenerateAccessTokenProtoRequestSuccess) {
+TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenProtoRequestSuccess) {
   ::google::iam::credentials::v1::GenerateAccessTokenRequest request;
   request.set_name("projects/-/serviceAccounts/" + iam_service_account_);
   *request.add_scope() = "https://www.googleapis.com/auth/spanner.admin";
@@ -164,7 +164,7 @@ TEST_F(IamCredentialsIntegrationTest,
   *request.mutable_lifetime() = lifetime;
   auto client = IAMCredentialsClient(MakeIAMCredentialsConnection());
   auto response = client.GenerateAccessToken(request);
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_FALSE(response->access_token().empty());
 }
 
@@ -177,14 +177,13 @@ TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenProtoRequestFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateAccessToken")));
 }
 
-TEST_F(IamCredentialsIntegrationTest,
-       DISABLED_GenerateIdTokenProtoRequestSuccess) {
+TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenProtoRequestSuccess) {
   ::google::iam::credentials::v1::GenerateIdTokenRequest request;
   request.set_name("projects/-/serviceAccounts/" + iam_service_account_);
   request.set_audience("https://www.googleapis.com/auth/spanner.admin");
   auto client = IAMCredentialsClient(MakeIAMCredentialsConnection());
   auto response = client.GenerateIdToken(request);
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_FALSE(response->token().empty());
 }
 
@@ -197,13 +196,13 @@ TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenProtoRequestFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateIdToken")));
 }
 
-TEST_F(IamCredentialsIntegrationTest, DISABLED_SignBlobProtoRequestSuccess) {
+TEST_F(IamCredentialsIntegrationTest, SignBlobProtoRequestSuccess) {
   ::google::iam::credentials::v1::SignBlobRequest request;
   request.set_name("projects/-/serviceAccounts/" + iam_service_account_);
   request.set_payload("somebytes");
   auto client = IAMCredentialsClient(MakeIAMCredentialsConnection());
   auto response = client.SignBlob(request);
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_FALSE(response->key_id().empty());
   EXPECT_FALSE(response->signed_blob().empty());
 }
@@ -217,13 +216,13 @@ TEST_F(IamCredentialsIntegrationTest, SignBlobProtoRequestFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("SignBlob")));
 }
 
-TEST_F(IamCredentialsIntegrationTest, DISABLED_SignJwtProtoRequestSuccess) {
+TEST_F(IamCredentialsIntegrationTest, SignJwtProtoRequestSuccess) {
   ::google::iam::credentials::v1::SignJwtRequest request;
   request.set_name("projects/-/serviceAccounts/" + iam_service_account_);
   request.set_payload(R"({"some": "json"})");
   auto client = IAMCredentialsClient(MakeIAMCredentialsConnection());
   auto response = client.SignJwt(request);
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_FALSE(response->key_id().empty());
   EXPECT_FALSE(response->signed_jwt().empty());
 }
