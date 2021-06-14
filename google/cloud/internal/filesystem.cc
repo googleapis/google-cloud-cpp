@@ -170,6 +170,28 @@ std::uintmax_t file_size(std::string const& path,
   return static_cast<std::uintmax_t>(stat.st_size);
 }
 
+std::string PathAppend(std::string const& directory, std::string const& path) {
+#if _WIN32
+  auto constexpr kSeparator = '\\';
+  auto is_separator = [](char c) { return c == '\\' || c == '/'; };
+#else
+  auto constexpr kSeparator = '/';
+  auto is_separator = [](char c) { return c == '/'; };
+#endif
+  if (path.empty()) return directory;
+  if (directory.empty()) return path;
+  if (!is_separator(directory.back()) && !is_separator(path.front())) {
+    return directory + kSeparator + path;
+  }
+  if (!is_separator(directory.back()) || !is_separator(path.front())) {
+    return directory + path;
+  }
+  auto r = directory;
+  r.pop_back();
+  r += path;
+  return r;
+}
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

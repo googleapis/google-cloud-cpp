@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/unified_rest_credentials.h"
 #include "google/cloud/storage/testing/constants.h"
+#include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -42,10 +43,11 @@ class UnifiedRestCredentialsTest : public ::testing::Test {
   UnifiedRestCredentialsTest() : generator_(std::random_device{}()) {}
 
   std::string TempKeyFileName() {
-    return ::testing::TempDir() +
-           ::google::cloud::internal::Sample(
-               generator_, 16, "abcdefghijlkmnopqrstuvwxyz0123456789") +
-           ".json";
+    return google::cloud::internal::PathAppend(
+        ::testing::TempDir(),
+        ::google::cloud::internal::Sample(
+            generator_, 16, "abcdefghijlkmnopqrstuvwxyz0123456789") +
+            ".json");
   }
 
  private:

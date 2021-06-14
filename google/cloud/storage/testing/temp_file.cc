@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/testing/temp_file.h"
 #include "google/cloud/storage/testing/random_names.h"
+#include "google/cloud/internal/filesystem.h"
 #include <gmock/gmock.h>
 #include <cstdio>
 #include <fstream>
@@ -26,7 +27,8 @@ namespace testing {
 TempFile::TempFile(std::string const& content) {
   static auto generator =
       google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto name = ::testing::TempDir() + MakeRandomFileName(generator);
+  auto name = google::cloud::internal::PathAppend(
+      ::testing::TempDir(), MakeRandomFileName(generator));
   std::ofstream f(name, std::ios::binary | std::ios::trunc);
   assert(f.good());
   f.write(content.data(), static_cast<std::streamsize>(content.size()));
