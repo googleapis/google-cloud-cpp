@@ -146,8 +146,7 @@ function integration::bazel_with_emulators() {
     # Generator integration tests
     "generator/..."
     # BigQuery integration tests
-    # TODO(#6772) - enable BigQuery builds
-    #   "google/cloud/bigquery/..."
+    "google/cloud/bigquery/..."
     # IAM and IAM Credentials integration tests
     "google/cloud/iam/..."
     # Logging integration tests
