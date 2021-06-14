@@ -32,7 +32,7 @@ MATCHER_P(
   // The status field is the 10th value.
   std::size_t pos = 0;
   for (int i = 0; i < 9; ++i) {
-    pos = arg.find(",", pos);
+    pos = arg.find(',', pos);
     if (pos == std::string::npos) {
       *result_listener << "Couldn't find status field: " << arg;
       return false;
