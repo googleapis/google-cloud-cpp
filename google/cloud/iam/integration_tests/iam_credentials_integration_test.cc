@@ -106,7 +106,7 @@ TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateIdToken")));
 }
 
-TEST_F(IamCredentialsIntegrationTest, SignBlobSuccess) {
+TEST_F(IamCredentialsIntegrationTest, DISABLED_SignBlobSuccess) {
   std::string payload = "somebytes";
   options_.set<IAMCredentialsRetryPolicyOption>(
       std::unique_ptr<IAMCredentialsRetryPolicy>(
@@ -133,7 +133,7 @@ TEST_F(IamCredentialsIntegrationTest, SignBlobFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("SignBlob")));
 }
 
-TEST_F(IamCredentialsIntegrationTest, SignJwtSuccess) {
+TEST_F(IamCredentialsIntegrationTest, DISABLED_SignJwtSuccess) {
   std::string payload = R"({"some": "json"})";
   auto client = IAMCredentialsClient(MakeIAMCredentialsConnection());
   auto response = client.SignJwt(
@@ -195,7 +195,7 @@ TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenProtoRequestFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateIdToken")));
 }
 
-TEST_F(IamCredentialsIntegrationTest, SignBlobProtoRequestSuccess) {
+TEST_F(IamCredentialsIntegrationTest, DISABLED_SignBlobProtoRequestSuccess) {
   ::google::iam::credentials::v1::SignBlobRequest request;
   request.set_name("projects/-/serviceAccounts/" + iam_service_account_);
   request.set_payload("somebytes");
@@ -215,7 +215,7 @@ TEST_F(IamCredentialsIntegrationTest, SignBlobProtoRequestFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("SignBlob")));
 }
 
-TEST_F(IamCredentialsIntegrationTest, SignJwtProtoRequestSuccess) {
+TEST_F(IamCredentialsIntegrationTest, DISABLED_SignJwtProtoRequestSuccess) {
   ::google::iam::credentials::v1::SignJwtRequest request;
   request.set_name("projects/-/serviceAccounts/" + iam_service_account_);
   request.set_payload(R"({"some": "json"})");
