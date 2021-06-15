@@ -387,11 +387,11 @@ def handle_retry_test_instruction(database, request, method):
         database.dequeue_next_instruction(test_id, method)
         items = list(error_code_matches.groups())
         error_code = items[0]
+        error_message = {
+            "error": {"message": "Retry Test: Caused a {}".format(error_code)}
+        }
         utils.error.generic(
-            "Retry Test: Caused a {}".format(error_code),
-            rest_code=error_code,
-            grpc_code=None,
-            context=None,
+            msg=error_message, rest_code=error_code, grpc_code=None, context=None
         )
     retry_connection_matches = utils.common.retry_return_error_connection.match(
         next_instruction
