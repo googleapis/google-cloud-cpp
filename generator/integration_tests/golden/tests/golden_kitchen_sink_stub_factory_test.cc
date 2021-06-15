@@ -15,6 +15,7 @@
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub_factory.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -24,21 +25,21 @@ namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
+using ::google::test::admin::database::v1::GenerateIdTokenRequest;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
+using ::testing::IsNull;
 
 class GoldenKitchenSinkStubFactoryTest : public ::testing::Test {
  protected:
-  static Status TransientError() {
-    return Status(StatusCode::kUnavailable, "try-again");
-  }
-
   testing_util::ScopedLog log_;
 };
 
 TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithoutLogging) {
   auto default_stub = CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, {});
   auto const log_lines = log_.ExtractLines();
-  EXPECT_EQ(log_lines.size(), 0);
+  EXPECT_THAT(log_lines, IsEmpty());
 }
 
 TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithLogging) {
@@ -48,6 +49,21 @@ TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithLogging) {
       CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Enabled logging for gRPC calls")));
+}
+
+TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithAuth) {
+  Options options;
+  options.set<EndpointOption>("localhost:1")
+      .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
+          "invalid-access-token",
+          std::chrono::system_clock::now() + std::chrono::minutes(15)));
+  auto default_stub =
+      CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, options);
+  grpc::ClientContext context;
+  auto response =
+      default_stub->GenerateIdToken(context, GenerateIdTokenRequest{});
+  EXPECT_THAT(response, Not(IsOk()));
+  EXPECT_THAT(context.credentials(), Not(IsNull()));
 }
 
 }  // namespace
