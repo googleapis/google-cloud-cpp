@@ -74,6 +74,7 @@ load(":google_cloud_cpp_generator_integration_tests.bzl", "google_cloud_cpp_gene
     ],
     tags = [
         "integration-test",
+        "no-msan",
     ],
     deps = [
         "//generator:google_cloud_cpp_generator",
