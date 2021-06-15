@@ -19,10 +19,10 @@ cmake_minimum_required(VERSION 3.5)
 # Give application developers a hook to configure the version and hash
 # downloaded from GitHub.
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
-    "https://github.com/googleapis/googleapis/archive/6ce40ff8faf68226782f507ca6b2d497a77044de.tar.gz"
+    "https://github.com/googleapis/googleapis/archive/d8698715e4f5b7c45505dadd679255987c260180.tar.gz"
 )
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
-    "6762083f829f998c3971efa2ba858c21d4ac4ba77feb9650bad7d358e3add2a5")
+    "ee3359cfe0b5bb1507e785aa2c2f25d7e1c4756f8fbcd369a54d8a5d7182cf58")
 
 set(EXTERNAL_GOOGLEAPIS_SOURCE
     "${CMAKE_BINARY_DIR}/external/googleapis/src/googleapis_download")
@@ -75,6 +75,7 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/cloud/dialogflow/v2beta1/audio_config.proto"
     "google/cloud/dialogflow/v2beta1/context.proto"
     "google/cloud/dialogflow/v2beta1/document.proto"
+    "google/cloud/dialogflow/v2beta1/fulfillment.proto"
     "google/cloud/dialogflow/v2beta1/entity_type.proto"
     "google/cloud/dialogflow/v2beta1/environment.proto"
     "google/cloud/dialogflow/v2beta1/gcs.proto"
@@ -87,6 +88,7 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/cloud/dialogflow/v2/agent.proto"
     "google/cloud/dialogflow/v2/audio_config.proto"
     "google/cloud/dialogflow/v2/context.proto"
+    "google/cloud/dialogflow/v2/fulfillment.proto"
     "google/cloud/dialogflow/v2/entity_type.proto"
     "google/cloud/dialogflow/v2/environment.proto"
     "google/cloud/dialogflow/v2/intent.proto"
@@ -124,6 +126,7 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/spanner/admin/database/v1/common.proto"
     "google/spanner/admin/database/v1/spanner_database_admin.proto"
     "google/spanner/admin/instance/v1/spanner_instance_admin.proto"
+    "google/spanner/v1/commit_response.proto"
     "google/spanner/v1/keys.proto"
     "google/spanner/v1/mutation.proto"
     "google/spanner/v1/query_plan.proto"
@@ -421,6 +424,7 @@ if (NOT (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
         "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/agent.proto"
         "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/audio_config.proto"
         "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/context.proto"
+        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/fulfillment.proto"
         "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/entity_type.proto"
         "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/environment.proto"
         "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/intent.proto"
@@ -448,6 +452,7 @@ if (NOT (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
         "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/audio_config.proto"
         "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/context.proto"
         "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/document.proto"
+        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/fulfillment.proto"
         "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/entity_type.proto"
         "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/environment.proto"
         "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/gcs.proto"
@@ -616,6 +621,7 @@ google_cloud_cpp_grpcpp_library(
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/admin/database/v1/common.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/admin/database/v1/spanner_database_admin.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/admin/instance/v1/spanner_instance_admin.proto"
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/v1/commit_response.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/v1/keys.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/v1/mutation.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/v1/query_plan.proto"

@@ -37,22 +37,28 @@ using ::testing::HasSubstr;
 class LoggingIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
  protected:
-  void SetUp() override {
-    options_.set<TracingComponentsOption>({"rpc"});
-    retry_policy_ =
-        absl::make_unique<LoggingServiceV2LimitedErrorCountRetryPolicy>(1);
-    backoff_policy_ = absl::make_unique<ExponentialBackoffPolicy>(
-        std::chrono::seconds(1), std::chrono::seconds(1), 2.0);
-  }
-  Options options_;
-  std::unique_ptr<LoggingServiceV2RetryPolicy> retry_policy_;
-  std::unique_ptr<BackoffPolicy> backoff_policy_;
   testing_util::ScopedLog log_;
 };
 
+Options TestFailureOptions() {
+  return Options{}
+      .set<TracingComponentsOption>({"rpc"})
+      .set<EndpointOption>("localhost:1")
+      .set<LoggingServiceV2RetryPolicyOption>(
+          LoggingServiceV2LimitedErrorCountRetryPolicy(1).clone())
+      .set<LoggingServiceV2BackoffPolicyOption>(
+          ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                   std::chrono::seconds(1), 2.0)
+              .clone());
+}
+
+Options TestSuccessOptions() {
+  return Options{}.set<TracingComponentsOption>({"rpc"});
+}
+
 TEST_F(LoggingIntegrationTest, DeleteLogFailure) {
-  auto client =
-      LoggingServiceV2Client(MakeLoggingServiceV2Connection(options_));
+  auto client = LoggingServiceV2Client(
+      MakeLoggingServiceV2Connection(TestFailureOptions()));
   ::google::logging::v2::DeleteLogRequest request;
   auto response = client.DeleteLog(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -61,8 +67,8 @@ TEST_F(LoggingIntegrationTest, DeleteLogFailure) {
 }
 
 TEST_F(LoggingIntegrationTest, WriteLogEntries) {
-  auto client =
-      LoggingServiceV2Client(MakeLoggingServiceV2Connection(options_));
+  auto client = LoggingServiceV2Client(
+      MakeLoggingServiceV2Connection(TestSuccessOptions()));
   ::google::logging::v2::WriteLogEntriesRequest request;
   auto response = client.WriteLogEntries(request);
   EXPECT_THAT(response, IsOk());
@@ -71,11 +77,8 @@ TEST_F(LoggingIntegrationTest, WriteLogEntries) {
 }
 
 TEST_F(LoggingIntegrationTest, ListLogEntriesFailure) {
-  options_.set<EndpointOption>("localhost:1");
-  options_.set<LoggingServiceV2RetryPolicyOption>(retry_policy_->clone());
-  options_.set<LoggingServiceV2BackoffPolicyOption>(backoff_policy_->clone());
-  auto client =
-      LoggingServiceV2Client(MakeLoggingServiceV2Connection(options_));
+  auto client = LoggingServiceV2Client(
+      MakeLoggingServiceV2Connection(TestFailureOptions()));
   ::google::logging::v2::ListLogEntriesRequest request;
   auto range = client.ListLogEntries(request);
   auto begin = range.begin();
@@ -86,10 +89,8 @@ TEST_F(LoggingIntegrationTest, ListLogEntriesFailure) {
 }
 
 TEST_F(LoggingIntegrationTest, ListMonitoredResourceDescriptors) {
-  options_.set<LoggingServiceV2RetryPolicyOption>(retry_policy_->clone());
-  options_.set<LoggingServiceV2BackoffPolicyOption>(backoff_policy_->clone());
-  auto client =
-      LoggingServiceV2Client(MakeLoggingServiceV2Connection(options_));
+  auto client = LoggingServiceV2Client(
+      MakeLoggingServiceV2Connection(TestSuccessOptions()));
   ::google::logging::v2::ListMonitoredResourceDescriptorsRequest request;
   auto range = client.ListMonitoredResourceDescriptors(request);
   auto begin = range.begin();
@@ -101,15 +102,13 @@ TEST_F(LoggingIntegrationTest, ListMonitoredResourceDescriptors) {
 }
 
 TEST_F(LoggingIntegrationTest, ListLogsFailure) {
-  options_.set<LoggingServiceV2RetryPolicyOption>(retry_policy_->clone());
-  options_.set<LoggingServiceV2BackoffPolicyOption>(backoff_policy_->clone());
-  auto client =
-      LoggingServiceV2Client(MakeLoggingServiceV2Connection(options_));
+  auto client = LoggingServiceV2Client(
+      MakeLoggingServiceV2Connection(TestFailureOptions()));
   ::google::logging::v2::ListLogsRequest request;
   auto range = client.ListLogs(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_THAT(*begin, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(*begin, Not(IsOk()));
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListLogs")));
 }
