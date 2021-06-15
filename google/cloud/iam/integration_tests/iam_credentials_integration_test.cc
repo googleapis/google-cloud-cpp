@@ -38,7 +38,6 @@ class IamCredentialsIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   void SetUp() override {
-    options_.set<TracingComponentsOption>({"rpc"});
     iam_service_account_ =
         google::cloud::internal::GetEnv(
             "GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_TEST_SERVICE_ACCOUNT")
@@ -51,14 +50,26 @@ class IamCredentialsIntegrationTest
     ASSERT_FALSE(iam_service_account_.empty());
     ASSERT_FALSE(invalid_iam_service_account_.empty());
   }
+
   std::vector<std::string> ClearLogLines() { return log_.ExtractLines(); }
-  Options options_;
   std::string iam_service_account_;
   std::string invalid_iam_service_account_;
 
  private:
   testing_util::ScopedLog log_;
 };
+
+Options TestFailureOptions() {
+  return Options{}
+      .set<TracingComponentsOption>({"rpc"})
+      .set<EndpointOption>("localhost:1")
+      .set<IAMCredentialsRetryPolicyOption>(
+          IAMCredentialsLimitedErrorCountRetryPolicy(1).clone())
+      .set<IAMCredentialsBackoffPolicyOption>(
+          ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                   std::chrono::seconds(1), 2.0)
+              .clone());
+}
 
 TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenSuccess) {
   google::protobuf::Duration lifetime;
@@ -74,7 +85,8 @@ TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenSuccess) {
 TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenFailure) {
   google::protobuf::Duration lifetime;
   lifetime.set_seconds(3600);
-  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection(options_));
+  auto client =
+      IAMCredentialsClient(MakeIAMCredentialsConnection(TestFailureOptions()));
   auto response = client.GenerateAccessToken(
       "projects/-/serviceAccounts/" + invalid_iam_service_account_, {},
       {"https://www.googleapis.com/auth/spanner.admin"}, lifetime);
@@ -84,13 +96,7 @@ TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenFailure) {
 }
 
 TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenSuccess) {
-  options_.set<IAMCredentialsRetryPolicyOption>(
-      std::unique_ptr<IAMCredentialsRetryPolicy>(
-          new IAMCredentialsLimitedTimeRetryPolicy(std::chrono::minutes(30))));
-  options_.set<IAMCredentialsBackoffPolicyOption>(
-      std::unique_ptr<BackoffPolicy>(new ExponentialBackoffPolicy(
-          std::chrono::seconds(1), std::chrono::minutes(5), 2.0)));
-  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection(options_));
+  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection());
   auto response = client.GenerateIdToken(
       "projects/-/serviceAccounts/" + iam_service_account_, {},
       {"https://www.googleapis.com/auth/spanner.admin"}, true);
@@ -99,7 +105,8 @@ TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenSuccess) {
 }
 
 TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenFailure) {
-  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection(options_));
+  auto client =
+      IAMCredentialsClient(MakeIAMCredentialsConnection(TestFailureOptions()));
   auto response = client.GenerateIdToken(
       "projects/-/serviceAccounts/" + iam_service_account_, {}, {""}, false);
   EXPECT_THAT(response, Not(IsOk()));
@@ -109,13 +116,7 @@ TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenFailure) {
 
 TEST_F(IamCredentialsIntegrationTest, SignBlobSuccess) {
   std::string payload = "somebytes";
-  options_.set<IAMCredentialsRetryPolicyOption>(
-      std::unique_ptr<IAMCredentialsRetryPolicy>(
-          new IAMCredentialsLimitedTimeRetryPolicy(std::chrono::minutes(30))));
-  options_.set<IAMCredentialsBackoffPolicyOption>(
-      std::unique_ptr<BackoffPolicy>(new ExponentialBackoffPolicy(
-          std::chrono::seconds(1), std::chrono::minutes(5), 2.0)));
-  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection(options_));
+  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection());
   auto response = client.SignBlob(
       "projects/-/serviceAccounts/" + iam_service_account_, {}, payload);
   ASSERT_STATUS_OK(response);
@@ -125,7 +126,8 @@ TEST_F(IamCredentialsIntegrationTest, SignBlobSuccess) {
 
 TEST_F(IamCredentialsIntegrationTest, SignBlobFailure) {
   std::string payload = "somebytes";
-  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection(options_));
+  auto client =
+      IAMCredentialsClient(MakeIAMCredentialsConnection(TestFailureOptions()));
   auto response = client.SignBlob(
       "projects/-/serviceAccounts/" + invalid_iam_service_account_, {},
       payload);
@@ -146,7 +148,8 @@ TEST_F(IamCredentialsIntegrationTest, SignJwtSuccess) {
 
 TEST_F(IamCredentialsIntegrationTest, SignJwtFailure) {
   std::string payload = R"({"some": "json"})";
-  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection(options_));
+  auto client =
+      IAMCredentialsClient(MakeIAMCredentialsConnection(TestFailureOptions()));
   auto response = client.SignJwt(
       "projects/-/serviceAccounts/" + invalid_iam_service_account_, {},
       payload);
@@ -170,7 +173,8 @@ TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenProtoRequestSuccess) {
 
 TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenProtoRequestFailure) {
   ::google::iam::credentials::v1::GenerateAccessTokenRequest request;
-  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection(options_));
+  auto client =
+      IAMCredentialsClient(MakeIAMCredentialsConnection(TestFailureOptions()));
   auto response = client.GenerateAccessToken(request);
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
@@ -189,7 +193,8 @@ TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenProtoRequestSuccess) {
 
 TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenProtoRequestFailure) {
   ::google::iam::credentials::v1::GenerateIdTokenRequest request;
-  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection(options_));
+  auto client =
+      IAMCredentialsClient(MakeIAMCredentialsConnection(TestFailureOptions()));
   auto response = client.GenerateIdToken(request);
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
@@ -209,7 +214,8 @@ TEST_F(IamCredentialsIntegrationTest, SignBlobProtoRequestSuccess) {
 
 TEST_F(IamCredentialsIntegrationTest, SignBlobProtoRequestFailure) {
   ::google::iam::credentials::v1::SignBlobRequest request;
-  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection(options_));
+  auto client =
+      IAMCredentialsClient(MakeIAMCredentialsConnection(TestFailureOptions()));
   auto response = client.SignBlob(request);
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
@@ -229,7 +235,8 @@ TEST_F(IamCredentialsIntegrationTest, SignJwtProtoRequestSuccess) {
 
 TEST_F(IamCredentialsIntegrationTest, SignJwtProtoRequestFailure) {
   ::google::iam::credentials::v1::SignJwtRequest request;
-  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection(options_));
+  auto client =
+      IAMCredentialsClient(MakeIAMCredentialsConnection(TestFailureOptions()));
   auto response = client.SignJwt(request);
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
