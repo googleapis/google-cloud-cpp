@@ -1431,6 +1431,45 @@ void PublisherConcurrencyControl(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1));
 }
 
+void PublisherFlowControl(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 2) {
+    throw examples::Usage{"publisher-flow-control <project-id> <topic-id>"};
+  }
+  //! [START pubsub_publisher_flow_control]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](std::string project_id, std::string topic_id) {
+    auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
+    // Configure the publisher to block if either (1) 100 or more messages, or
+    // (2) messages with 100MiB worth of data have not been acknowledged by the
+    // service. By default the publisher never blocks, and its capacity is only
+    // limited by the system's memory.
+    auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
+        std::move(topic), pubsub::PublisherOptions{}
+                              .set_maximum_pending_messages(100)
+                              .set_maximum_pending_bytes(100 * 1024 * 1024L)
+                              .set_full_publisher_blocks()));
+
+    std::vector<future<void>> ids;
+    for (char const* data : {"a", "b", "c"}) {
+      ids.push_back(
+          publisher.Publish(pubsub::MessageBuilder().SetData(data).Build())
+              .then([data](future<StatusOr<std::string>> f) {
+                auto s = f.get();
+                if (!s) return;
+                std::cout << "Sent '" << data << "' (" << *s << ")\n";
+              }));
+    }
+    publisher.Flush();
+    // Block until they are actually sent.
+    for (auto& id : ids) id.get();
+  }
+  //! [END pubsub_publisher_flow_control]
+  (argv.at(0), argv.at(1));
+}
+
 void PublisherRetrySettings(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   if (argv.size() != 2) {
@@ -2098,6 +2137,9 @@ void AutoRun(std::vector<std::string> const& argv) {
             << std::endl;
   PublisherConcurrencyControl({project_id, topic_id});
 
+  std::cout << "\nRunning the PublisherFlowControl() sample" << std::endl;
+  PublisherFlowControl({project_id, topic_id});
+
   std::cout << "\nRunning the PublisherRetrySettings() sample" << std::endl;
   PublisherRetrySettings({project_id, topic_id});
 
@@ -2309,6 +2351,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                               ReceiveDeadLetterDeliveryAttempt),
       {"custom-thread-pool-publisher", CustomThreadPoolPublisher},
       {"publisher-concurrency-control", PublisherConcurrencyControl},
+      {"publisher-flow-control", PublisherFlowControl},
       {"publisher-retry-settings", PublisherRetrySettings},
       {"publisher-disable-retry", PublisherDisableRetries},
       {"custom-batch-publisher", CustomBatchPublisher},
