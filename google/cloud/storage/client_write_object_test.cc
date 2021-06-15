@@ -41,8 +41,7 @@ using ::testing::ReturnRef;
 using ms = std::chrono::milliseconds;
 
 /**
- * Test the functions in Storage::Client related to writing objects.'Objects:
- * *'.
+ * Test the functions in Storage::Client related to writing objects.
  */
 class WriteObjectTest
     : public ::google::cloud::storage::testing::ClientUnitTest {};
@@ -118,6 +117,48 @@ TEST_F(WriteObjectTest, WriteObjectPermanentFailure) {
   EXPECT_THAT(stream.metadata(), StatusIs(PermanentError().code()));
 }
 
+TEST_F(WriteObjectTest, WriteObjectErrorInChunk) {
+  auto const session_id = std::string{"test-session-id"};
+  EXPECT_CALL(*mock_, CreateResumableSession)
+      .WillOnce([&](internal::ResumableUploadRequest const& request) {
+        EXPECT_EQ("test-bucket-name", request.bucket_name());
+        EXPECT_EQ("test-object-name", request.object_name());
+
+        auto mock = absl::make_unique<testing::MockResumableUploadSession>();
+        using internal::ResumableUploadResponse;
+        EXPECT_CALL(*mock, done()).WillRepeatedly(Return(false));
+        EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
+        EXPECT_CALL(*mock, UploadChunk)
+            .WillOnce(Return(Status(StatusCode::kDataLoss, "ooops")));
+        EXPECT_CALL(*mock, session_id()).WillRepeatedly(ReturnRef(session_id));
+        // The call to Close() below should have no effect and no "final" chunk
+        // should be uplaoded.
+        EXPECT_CALL(*mock, UploadFinalChunk).Times(0);
+
+        return make_status_or(
+            std::unique_ptr<internal::ResumableUploadSession>(std::move(mock)));
+      });
+  auto constexpr kQuantum = internal::UploadChunkRequest::kChunkSizeQuantum;
+  client_options_.SetUploadBufferSize(kQuantum);
+  auto client = ClientForMock();
+  auto stream = client.WriteObject("test-bucket-name", "test-object-name",
+                                   IfGenerationMatch(0));
+  auto const data = std::string(2 * kQuantum, 'A');
+  auto const size = static_cast<std::streamsize>(data.size());
+  // The stream is set up to flush for buffers of `data`'s size. This triggers
+  // the UploadChunk() mock, which returns an error. Because this is a permanent
+  // error, no further upload attempts are made.
+  stream.write(data.data(), size);
+  EXPECT_TRUE(stream.bad());
+  EXPECT_THAT(stream.last_status(), StatusIs(StatusCode::kDataLoss));
+  stream.write(data.data(), size);
+  EXPECT_TRUE(stream.bad());
+  EXPECT_THAT(stream.last_status(), StatusIs(StatusCode::kDataLoss));
+  EXPECT_THAT(stream.metadata(), StatusIs(StatusCode::kUnknown));
+  stream.Close();
+  EXPECT_THAT(stream.metadata(), StatusIs(StatusCode::kDataLoss));
+}
+
 TEST_F(WriteObjectTest, WriteObjectPermanentSessionFailurePropagates) {
   auto* mock_session = new testing::MockResumableUploadSession;
   auto returner = [mock_session](internal::ResumableUploadRequest const&) {
@@ -152,19 +193,6 @@ class MockFilebuf : public std::filebuf {
     SeekoffEvent(off);
     return std::filebuf::seekoff(off, way, which);
   }
-};
-
-class MockFilebufStream : public std::ifstream {
- public:
-  explicit MockFilebufStream(std::string const& s) {
-    buf_.open(s.c_str(), std::ios_base::in);
-    init(&buf_);
-    clear();
-    std::cout << "OPEN? " << buf_.is_open() << std::endl;
-  }
-
- private:
-  MockFilebuf buf_;
 };
 
 TEST_F(WriteObjectTest, UploadStreamResumable) {
