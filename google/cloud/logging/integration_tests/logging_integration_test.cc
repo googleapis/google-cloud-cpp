@@ -30,7 +30,6 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
-using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 
@@ -41,9 +40,12 @@ class LoggingIntegrationTest
 };
 
 Options TestFailureOptions() {
+  auto const expiration =
+      std::chrono::system_clock::now() + std::chrono::minutes(15);
   return Options{}
       .set<TracingComponentsOption>({"rpc"})
-      .set<EndpointOption>("localhost:1")
+      .set<UnifiedCredentialsOption>(
+          MakeAccessTokenCredentials("invalid-access-token", expiration))
       .set<LoggingServiceV2RetryPolicyOption>(
           LoggingServiceV2LimitedErrorCountRetryPolicy(1).clone())
       .set<LoggingServiceV2BackoffPolicyOption>(
@@ -83,7 +85,7 @@ TEST_F(LoggingIntegrationTest, ListLogEntriesFailure) {
   auto range = client.ListLogEntries(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_THAT(*begin, StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(*begin, Not(IsOk()));
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListLogEntries")));
 }

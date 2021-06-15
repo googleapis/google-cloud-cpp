@@ -168,7 +168,6 @@ TEST_F(GeneratorTest, GenerateServicesSuccess) {
   auto result = generator.Generate(
       service_file_descriptor,
       {"product_path=google/cloud/foo"
-       ",with_auth_decorator=true"
        ",googleapis_commit_hash=59f97e6044a1275f83427ab7962a154c00d915b5"},
       context_.get(), &actual_error);
   EXPECT_TRUE(result);

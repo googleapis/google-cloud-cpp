@@ -146,9 +146,10 @@ std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
     Options options) {
   options = bigquery_internal::BigQueryReadDefaultOptions(std::move(options));
   auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
-  return std::make_shared<BigQueryReadConnectionImpl>(
-      std::move(background),
-      bigquery_internal::CreateDefaultBigQueryReadStub(options), options);
+  auto stub = bigquery_internal::CreateDefaultBigQueryReadStub(background->cq(),
+                                                               options);
+  return std::make_shared<BigQueryReadConnectionImpl>(std::move(background),
+                                                      std::move(stub), options);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

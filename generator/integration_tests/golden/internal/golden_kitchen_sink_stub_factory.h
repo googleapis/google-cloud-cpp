@@ -20,6 +20,9 @@
 
 #include "generator/integration_tests/golden/golden_kitchen_sink_connection.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -28,9 +31,9 @@ namespace cloud {
 namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-std::shared_ptr<GoldenKitchenSinkStub>
-CreateDefaultGoldenKitchenSinkStub(Options const& options);
 
+std::shared_ptr<GoldenKitchenSinkStub> CreateDefaultGoldenKitchenSinkStub(
+    google::cloud::CompletionQueue cq, Options const& options);
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud
