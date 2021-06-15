@@ -160,7 +160,6 @@ def bucket_list():
     fields = flask.request.args.get("fields", None)
     response = {
         "kind": "storage#buckets",
-        "nextPageToken": "",
         "items": [
             bucket.rest() for bucket in db.list_bucket(flask.request, project, None)
         ],
@@ -447,7 +446,6 @@ def object_list(bucket_name):
     items, prefixes, rest_onlys = db.list_object(flask.request, bucket_name, None)
     response = {
         "kind": "storage#objects",
-        "nextPageToken": "",
         "items": [
             gcs_type.object.Object.rest(blob, rest_only)
             for blob, rest_only in zip(items, rest_onlys)
