@@ -532,10 +532,10 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
   options = $product_internal_namespace$::$service_name$DefaultOptions(
       std::move(options));
   auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
+  auto stub = $product_internal_namespace$::CreateDefault$stub_class_name$(
+    background->cq(), options);
   return std::make_shared<$connection_class_name$Impl>(
-      std::move(background),
-      $product_internal_namespace$::CreateDefault$stub_class_name$(options),
-      options);
+      std::move(background), std::move(stub), options);
 }
 
 )""");

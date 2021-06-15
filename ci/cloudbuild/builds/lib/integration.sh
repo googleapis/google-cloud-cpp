@@ -154,8 +154,13 @@ function integration::bazel_with_emulators() {
     "google/cloud/logging/..."
   )
 
+  tag_filters="integration-test"
+  if echo "${args[@]}" | grep -w -q -- "--config=msan"; then
+    tag_filters="integration-test,-no-msan"
+  fi
+
   io::log_h2 "Running integration tests that require production access"
-  bazel "${verb}" "${args[@]}" --test_tag_filters=integration-test \
+  bazel "${verb}" "${args[@]}" --test_tag_filters="${tag_filters}" \
     "${production_integration_tests[@]}"
 
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"

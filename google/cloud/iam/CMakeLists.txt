@@ -43,6 +43,10 @@ add_library(
     iam_credentials_connection_idempotency_policy.h
     iam_credentials_options.h
     iam_options.h
+    internal/iam_auth_decorator.cc
+    internal/iam_auth_decorator.h
+    internal/iam_credentials_auth_decorator.cc
+    internal/iam_credentials_auth_decorator.h
     internal/iam_credentials_logging_decorator.cc
     internal/iam_credentials_logging_decorator.h
     internal/iam_credentials_metadata_decorator.cc

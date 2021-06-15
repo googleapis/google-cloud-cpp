@@ -103,7 +103,7 @@ file_type ExtractFileType(os_stat_type const& s) {
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 file_status status(std::string const& path, std::error_code& ec) noexcept {
-  os_stat_type stat;
+  os_stat_type stat{};
   ec.clear();
 #if _WIN32
   int r = ::_stat(path.c_str(), &stat);
@@ -149,7 +149,7 @@ std::uintmax_t file_size(std::string const& path) {
 // NOLINTNEXTLINE(readability-identifier-naming)
 std::uintmax_t file_size(std::string const& path,
                          std::error_code& ec) noexcept {
-  os_stat_type stat;
+  os_stat_type stat{};
   ec.clear();
 #if _WIN32
   int r = ::_stat(path.c_str(), &stat);

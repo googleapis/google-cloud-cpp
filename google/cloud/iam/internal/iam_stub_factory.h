@@ -20,6 +20,9 @@
 
 #include "google/cloud/iam/iam_connection.h"
 #include "google/cloud/iam/internal/iam_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -28,8 +31,8 @@ namespace cloud {
 namespace iam_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-std::shared_ptr<IAMStub> CreateDefaultIAMStub(Options const& options);
-
+std::shared_ptr<IAMStub> CreateDefaultIAMStub(google::cloud::CompletionQueue cq,
+                                              Options const& options);
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace iam_internal
 }  // namespace cloud

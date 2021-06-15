@@ -38,7 +38,6 @@ class BigQueryReadIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   void SetUp() override {
-    options_.set<TracingComponentsOption>({"rpc"});
     retry_policy_ =
         absl::make_unique<BigQueryReadLimitedErrorCountRetryPolicy>(1);
     backoff_policy_ = absl::make_unique<ExponentialBackoffPolicy>(
@@ -47,7 +46,6 @@ class BigQueryReadIntegrationTest
   }
 
   std::vector<std::string> ClearLogLines() { return log_.ExtractLines(); }
-  Options options_;
   std::unique_ptr<BigQueryReadRetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
   std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy> idempotency_policy_;
@@ -55,6 +53,19 @@ class BigQueryReadIntegrationTest
  private:
   testing_util::ScopedLog log_;
 };
+
+Options TestSuccessOptions() {
+  return Options{}.set<TracingComponentsOption>({"rpc", "rpc-streams"});
+}
+
+Options TestFailureOptions() {
+  auto const expiration =
+      std::chrono::system_clock::now() + std::chrono::minutes(15);
+  return Options{}
+      .set<TracingComponentsOption>({"rpc", "rpc-streams"})
+      .set<UnifiedCredentialsOption>(
+          MakeAccessTokenCredentials("invalid-access-token", expiration));
+}
 
 std::int64_t CountRowsFromStream(
     StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>&
@@ -69,7 +80,8 @@ std::int64_t CountRowsFromStream(
 }
 
 TEST_F(BigQueryReadIntegrationTest, CreateReadSessionFailure) {
-  auto client = BigQueryReadClient(MakeBigQueryReadConnection(options_));
+  auto client =
+      BigQueryReadClient(MakeBigQueryReadConnection(TestFailureOptions()));
   auto response = client.CreateReadSession({}, {}, {});
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
@@ -77,7 +89,8 @@ TEST_F(BigQueryReadIntegrationTest, CreateReadSessionFailure) {
 }
 
 TEST_F(BigQueryReadIntegrationTest, CreateReadSessionProtoFailure) {
-  auto client = BigQueryReadClient(MakeBigQueryReadConnection(options_));
+  auto client =
+      BigQueryReadClient(MakeBigQueryReadConnection(TestFailureOptions()));
   ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest request;
   auto response = client.CreateReadSession(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -86,8 +99,8 @@ TEST_F(BigQueryReadIntegrationTest, CreateReadSessionProtoFailure) {
 }
 
 TEST_F(BigQueryReadIntegrationTest, ReadRowsFailure) {
-  options_.set<TracingComponentsOption>({"rpc", "rpc-streams"});
-  auto client = BigQueryReadClient(MakeBigQueryReadConnection(options_));
+  auto client =
+      BigQueryReadClient(MakeBigQueryReadConnection(TestFailureOptions()));
   auto response = client.ReadRows({}, {});
   auto begin = response.begin();
   EXPECT_FALSE(begin == response.end());
@@ -96,7 +109,8 @@ TEST_F(BigQueryReadIntegrationTest, ReadRowsFailure) {
 }
 
 TEST_F(BigQueryReadIntegrationTest, ReadRowsProtoFailure) {
-  auto client = BigQueryReadClient(MakeBigQueryReadConnection(options_));
+  auto client =
+      BigQueryReadClient(MakeBigQueryReadConnection(TestFailureOptions()));
   ::google::cloud::bigquery::storage::v1::ReadRowsRequest request;
   auto response = client.ReadRows(request);
   auto begin = response.begin();
@@ -106,7 +120,8 @@ TEST_F(BigQueryReadIntegrationTest, ReadRowsProtoFailure) {
 }
 
 TEST_F(BigQueryReadIntegrationTest, SplitReadStreamProtoFailure) {
-  auto client = BigQueryReadClient(MakeBigQueryReadConnection(options_));
+  auto client =
+      BigQueryReadClient(MakeBigQueryReadConnection(TestFailureOptions()));
   ::google::cloud::bigquery::storage::v1::SplitReadStreamRequest request;
   auto response = client.SplitReadStream(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -115,7 +130,8 @@ TEST_F(BigQueryReadIntegrationTest, SplitReadStreamProtoFailure) {
 }
 
 TEST_F(BigQueryReadIntegrationTest, CreateReadSessionSuccess) {
-  auto client = BigQueryReadClient(MakeBigQueryReadConnection(options_));
+  auto client =
+      BigQueryReadClient(MakeBigQueryReadConnection(TestSuccessOptions()));
   ::google::cloud::bigquery::storage::v1::ReadSession read_session;
   read_session.set_data_format(
       google::cloud::bigquery::storage::v1::DataFormat::AVRO);
@@ -130,7 +146,8 @@ TEST_F(BigQueryReadIntegrationTest, CreateReadSessionSuccess) {
 }
 
 TEST_F(BigQueryReadIntegrationTest, CreateReadSessionProtoSuccess) {
-  auto client = BigQueryReadClient(MakeBigQueryReadConnection(options_));
+  auto client =
+      BigQueryReadClient(MakeBigQueryReadConnection(TestSuccessOptions()));
   ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest request;
   request.set_parent("projects/cloud-cpp-testing-resources");
   ::google::cloud::bigquery::storage::v1::ReadSession read_session;
@@ -146,8 +163,8 @@ TEST_F(BigQueryReadIntegrationTest, CreateReadSessionProtoSuccess) {
 }
 
 TEST_F(BigQueryReadIntegrationTest, ReadRowsSuccess) {
-  options_.set<TracingComponentsOption>({"rpc", "rpc-streams"});
-  auto client = BigQueryReadClient(MakeBigQueryReadConnection(options_));
+  auto client =
+      BigQueryReadClient(MakeBigQueryReadConnection(TestSuccessOptions()));
   ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest
       session_request;
   session_request.set_parent("projects/cloud-cpp-testing-resources");
@@ -171,8 +188,8 @@ TEST_F(BigQueryReadIntegrationTest, ReadRowsSuccess) {
 }
 
 TEST_F(BigQueryReadIntegrationTest, ReadRowsProtoSuccess) {
-  options_.set<TracingComponentsOption>({"rpc", "rpc-streams"});
-  auto client = BigQueryReadClient(MakeBigQueryReadConnection(options_));
+  auto client =
+      BigQueryReadClient(MakeBigQueryReadConnection(TestSuccessOptions()));
   ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest
       session_request;
   session_request.set_parent("projects/cloud-cpp-testing-resources");
@@ -199,7 +216,8 @@ TEST_F(BigQueryReadIntegrationTest, ReadRowsProtoSuccess) {
 }
 
 TEST_F(BigQueryReadIntegrationTest, SplitReadStreamProtoSuccess) {
-  auto client = BigQueryReadClient(MakeBigQueryReadConnection(options_));
+  auto client =
+      BigQueryReadClient(MakeBigQueryReadConnection(TestSuccessOptions()));
 
   // Create ReadSession with exactly 1 stream.
   ::google::cloud::bigquery::storage::v1::ReadSession read_session;

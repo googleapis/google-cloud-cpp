@@ -15,6 +15,7 @@
 #include "generator/integration_tests/golden/internal/golden_thing_admin_stub_factory.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -24,7 +25,11 @@ namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
+using ::google::longrunning::CancelOperationRequest;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
+using ::testing::IsNull;
 
 class GoldenStubFactoryTest : public ::testing::Test {
  protected:
@@ -36,17 +41,33 @@ class GoldenStubFactoryTest : public ::testing::Test {
 };
 
 TEST_F(GoldenStubFactoryTest, DefaultStubWithoutLogging) {
-  auto default_stub = CreateDefaultGoldenThingAdminStub({});
+  auto default_stub = CreateDefaultGoldenThingAdminStub(CompletionQueue{}, {});
   auto const log_lines = log_.ExtractLines();
-  EXPECT_EQ(log_lines.size(), 0);
+  EXPECT_THAT(log_lines, IsEmpty());
 }
 
 TEST_F(GoldenStubFactoryTest, DefaultStubWithLogging) {
   Options options;
   options.set<TracingComponentsOption>({"rpc"});
-  auto default_stub = CreateDefaultGoldenThingAdminStub(options);
+  auto default_stub =
+      CreateDefaultGoldenThingAdminStub(CompletionQueue{}, options);
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Enabled logging for gRPC calls")));
+}
+
+TEST_F(GoldenStubFactoryTest, DefaultStubWithAuth) {
+  Options options;
+  options.set<EndpointOption>("localhost:1")
+      .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
+          "invalid-access-token",
+          std::chrono::system_clock::now() + std::chrono::minutes(15)));
+  auto default_stub =
+      CreateDefaultGoldenThingAdminStub(CompletionQueue{}, options);
+  grpc::ClientContext context;
+  auto response =
+      default_stub->CancelOperation(context, CancelOperationRequest{});
+  EXPECT_THAT(response, Not(IsOk()));
+  EXPECT_THAT(context.credentials(), Not(IsNull()));
 }
 
 }  // namespace

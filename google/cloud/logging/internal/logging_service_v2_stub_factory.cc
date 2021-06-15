@@ -17,6 +17,7 @@
 // source: google/logging/v2/logging.proto
 
 #include "google/cloud/logging/internal/logging_service_v2_stub_factory.h"
+#include "google/cloud/logging/internal/logging_service_v2_auth_decorator.h"
 #include "google/cloud/logging/internal/logging_service_v2_logging_decorator.h"
 #include "google/cloud/logging/internal/logging_service_v2_metadata_decorator.h"
 #include "google/cloud/logging/internal/logging_service_v2_stub.h"
@@ -33,18 +34,29 @@ namespace logging_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<LoggingServiceV2Stub> CreateDefaultLoggingServiceV2Stub(
-    Options const& options) {
-  auto channel = grpc::CreateCustomChannel(
-      options.get<EndpointOption>(), options.get<GrpcCredentialOption>(),
-      internal::MakeChannelArguments(options));
+    google::cloud::CompletionQueue cq, Options const& options) {
+  auto auth = [&] {
+    if (options.has<google::cloud::UnifiedCredentialsOption>()) {
+      return google::cloud::internal::CreateAuthenticationStrategy(
+          options.get<google::cloud::UnifiedCredentialsOption>(), std::move(cq),
+          options);
+    }
+    return google::cloud::internal::CreateAuthenticationStrategy(
+        options.get<google::cloud::GrpcCredentialOption>());
+  }();
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::logging::v2::LoggingServiceV2::NewStub(channel);
   std::shared_ptr<LoggingServiceV2Stub> stub =
       std::make_shared<DefaultLoggingServiceV2Stub>(
           std::move(service_grpc_stub));
 
+  if (auth->RequiresConfigureContext()) {
+    stub = std::make_shared<LoggingServiceV2Auth>(std::move(auth),
+                                                  std::move(stub));
+  }
   stub = std::make_shared<LoggingServiceV2Metadata>(std::move(stub));
-
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<LoggingServiceV2Logging>(
@@ -53,7 +65,6 @@ std::shared_ptr<LoggingServiceV2Stub> CreateDefaultLoggingServiceV2Stub(
   }
   return stub;
 }
-
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace logging_internal
 }  // namespace cloud

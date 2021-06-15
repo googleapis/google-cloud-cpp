@@ -15,6 +15,7 @@
 #include "google/cloud/iam/iam_client.h"
 #include "google/cloud/iam/iam_options.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/getenv.h"
@@ -76,9 +77,12 @@ class IamIntegrationTest
 };
 
 Options TestFailureOptions() {
+  auto const expiration =
+      std::chrono::system_clock::now() + std::chrono::minutes(15);
   return Options{}
       .set<TracingComponentsOption>({"rpc"})
-      .set<EndpointOption>("localhost:1")
+      .set<UnifiedCredentialsOption>(
+          MakeAccessTokenCredentials("invalid-access-token", expiration))
       .set<IAMRetryPolicyOption>(IAMLimitedErrorCountRetryPolicy(1).clone())
       .set<IAMBackoffPolicyOption>(
           ExponentialBackoffPolicy(std::chrono::seconds(1),
