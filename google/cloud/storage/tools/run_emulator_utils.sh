@@ -89,7 +89,7 @@ start_emulator() {
 
   delay=1
   connected=no
-  for attempt in $(seq 1 8); do
+  for _ in $(seq 1 8); do
     if curl "${HTTPBIN_ENDPOINT}/get" >/dev/null 2>&1; then
       connected=yes
       break
