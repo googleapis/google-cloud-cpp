@@ -34,7 +34,9 @@ namespace {
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::ElementsAre;
+using ::testing::AnyOf;
+using ::testing::AtLeast;
+using ::testing::Contains;
 using ::testing::HasSubstr;
 
 google::pubsub::v1::PublishResponse MakeResponse(
@@ -52,7 +54,8 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
 
   AsyncSequencer<void> async;
   EXPECT_CALL(*mock, AsyncPublish)
-      .WillOnce([&](google::pubsub::v1::PublishRequest const& request) {
+      .Times(AtLeast(1))
+      .WillRepeatedly([&](google::pubsub::v1::PublishRequest const& request) {
         return async.PushBack().then([topic, request](future<void>) {
           EXPECT_EQ(topic.FullName(), request.topic());
           std::vector<std::string> data;
@@ -61,10 +64,12 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
                          [](google::pubsub::v1::PubsubMessage const& m) {
                            return std::string(m.data());
                          });
-          EXPECT_THAT(data, ElementsAre("test-data-0", "test-data-1"));
+          EXPECT_THAT(data,
+                      AnyOf(Contains("test-data-0"), Contains("test-data-1")));
           google::pubsub::v1::PublishResponse response;
-          response.add_message_ids("test-message-id-0");
-          response.add_message_ids("test-message-id-1");
+          for (auto& m : data) {
+            response.add_message_ids("id-for-" + m);
+          }
           return make_status_or(response);
         });
       });
@@ -89,7 +94,7 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
           .then([&](future<StatusOr<std::string>> f) {
             auto r = f.get();
             ASSERT_STATUS_OK(r);
-            EXPECT_EQ("test-message-id-0", *r);
+            EXPECT_EQ("id-for-test-data-0", *r);
             EXPECT_NE(main_thread, std::this_thread::get_id());
           }));
   published.push_back(
@@ -98,7 +103,7 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
           .then([&](future<StatusOr<std::string>> f) {
             auto r = f.get();
             ASSERT_STATUS_OK(r);
-            EXPECT_EQ("test-message-id-1", *r);
+            EXPECT_EQ("id-for-test-data-1", *r);
             EXPECT_NE(main_thread, std::this_thread::get_id());
           }));
   publisher->Flush({});
