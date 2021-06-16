@@ -23,11 +23,13 @@ cc_library(
     srcs = google_cloud_cpp_iam_srcs,
     hdrs = google_cloud_cpp_iam_hdrs,
     visibility = ["//:__pkg__"],
+    # Do not sort: grpc++ must come last
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_googleapis//google/iam/admin/v1:admin_cc_grpc",
         "@com_google_googleapis//google/iam/credentials/v1:credentials_cc_grpc",
+        "@com_github_grpc_grpc//:grpc++",
     ],
 )
 

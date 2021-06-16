@@ -111,6 +111,7 @@ $quickstart_args=@{
     "bigtable"=@("${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}", "quickstart")
     "spanner"=@("${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}", "quickstart-db")
     "pubsub"=@("${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}")
+    "iam"=@("${env:GOOGLE_CLOUD_PROJECT}")
 }
 
 ForEach($library in ("bigtable", "storage", "spanner", "pubsub")) {
