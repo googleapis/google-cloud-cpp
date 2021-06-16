@@ -27,7 +27,7 @@ fi
 # Configure run_emulators_utils.sh to find the instance admin emulator.
 BAZEL_BIN="$1"
 shift
-BAZEL_VERB="$1"
+# ignore BAZEL_VERB="$1"
 shift
 
 bazel_test_args=("$@")
@@ -43,7 +43,7 @@ popd >/dev/null
 
 # Run the unittests of the emulator before running integration tests.
 # TODO(#6641): Remove the --flaky_test_attempts flag once the flakiness is fixed.
-"${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
+"${BAZEL_BIN}" test "${bazel_test_args[@]}" \
   "--flaky_test_attempts=5" \
   "--test_env=CLOUD_STORAGE_EMULATOR_ENDPOINT=${CLOUD_STORAGE_EMULATOR_ENDPOINT}" \
   -- "//google/cloud/storage/emulator:test_utils" "//google/cloud/storage/emulator:test_gcs"
