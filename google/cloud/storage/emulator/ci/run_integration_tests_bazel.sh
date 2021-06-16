@@ -27,8 +27,6 @@ fi
 # Configure run_emulators_utils.sh to find the instance admin emulator.
 BAZEL_BIN="$1"
 shift
-# ignore BAZEL_VERB="$1"
-shift
 
 bazel_test_args=("$@")
 

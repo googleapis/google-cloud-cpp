@@ -169,7 +169,7 @@ function integration::bazel_with_emulators() {
 
   io::log_h2 "Running Storage Emulator integration tests"
   "google/cloud/storage/emulator/ci/run_integration_tests_bazel.sh" \
-    bazel "${verb}" "${args[@]}"
+    bazel "${args[@]}"
 
   io::log_h2 "Running Storage integration tests (with emulator)"
   "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
