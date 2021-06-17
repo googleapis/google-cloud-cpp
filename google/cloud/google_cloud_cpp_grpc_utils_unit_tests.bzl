@@ -22,6 +22,8 @@ google_cloud_cpp_grpc_utils_unit_tests = [
     "grpc_error_delegate_test.cc",
     "grpc_options_test.cc",
     "internal/async_connection_ready_test.cc",
+    "internal/async_long_running_test.cc",
+    "internal/async_polling_loop_test.cc",
     "internal/async_read_write_stream_impl_test.cc",
     "internal/async_retry_loop_test.cc",
     "internal/async_retry_unary_rpc_test.cc",
