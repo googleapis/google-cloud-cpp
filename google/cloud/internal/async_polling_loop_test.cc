@@ -44,11 +44,6 @@ class MockStub {
               (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                google::longrunning::GetOperationRequest const&),
               ());
-
-  MOCK_METHOD(future<Status>, AsyncCancelOperation,
-              (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-               google::longrunning::CancelOperationRequest const&),
-              ());
 };
 
 class MockPollingPolicy : public PollingPolicy {
@@ -66,15 +61,6 @@ AsyncPollLongRunningOperation MakePoll(std::shared_ptr<MockStub> const& mock) {
       };
 }
 
-AsyncCancelLongRunningOperation MakeCancel(
-    std::shared_ptr<MockStub> const& mock) {
-  return
-      [mock](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
-        return mock->AsyncCancelOperation(cq, std::move(context), request);
-      };
-}
-
 TEST(AsyncPollingLoopTest, ImmediateSuccess) {
   Instance expected;
   expected.set_name("test-instance-name");
@@ -85,14 +71,13 @@ TEST(AsyncPollingLoopTest, ImmediateSuccess) {
 
   auto mock = std::make_shared<MockStub>();
   EXPECT_CALL(*mock, AsyncGetOperation).Times(0);
-  EXPECT_CALL(*mock, AsyncCancelOperation).Times(0);
   auto policy = absl::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure).Times(0);
   EXPECT_CALL(*policy, WaitPeriod).Times(0);
   CompletionQueue cq;
-  auto actual = AsyncPollingLoop(cq, op, MakePoll(mock), MakeCancel(mock),
-                                 std::move(policy), "test-function")
+  auto actual = AsyncPollingLoop(cq, op, MakePoll(mock), std::move(policy),
+                                 "test-function")
                     .get();
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(op));
@@ -121,16 +106,14 @@ TEST(AsyncPollingLoopTest, PollThenSuccess) {
                     google::longrunning::GetOperationRequest const&) {
         return make_ready_future(make_status_or(expected));
       });
-  EXPECT_CALL(*mock, AsyncCancelOperation).Times(0);
   auto policy = absl::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure).Times(0);
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  auto actual =
-      AsyncPollingLoop(cq, starting_op, MakePoll(mock), MakeCancel(mock),
-                       std::move(policy), "test-function")
-          .get();
+  auto actual = AsyncPollingLoop(cq, starting_op, MakePoll(mock),
+                                 std::move(policy), "test-function")
+                    .get();
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -150,16 +133,14 @@ TEST(AsyncPollingLoopTest, PollThenTimerError) {
 
   auto mock = std::make_shared<MockStub>();
   EXPECT_CALL(*mock, AsyncGetOperation).Times(0);
-  EXPECT_CALL(*mock, AsyncCancelOperation).Times(0);
   auto policy = absl::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure).Times(0);
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  auto actual =
-      AsyncPollingLoop(cq, starting_op, MakePoll(mock), MakeCancel(mock),
-                       std::move(policy), "test-function")
-          .get();
+  auto actual = AsyncPollingLoop(cq, starting_op, MakePoll(mock),
+                                 std::move(policy), "test-function")
+                    .get();
   ASSERT_THAT(actual,
               StatusIs(StatusCode::kCancelled, HasSubstr("cq shutdown")));
 }
@@ -200,16 +181,14 @@ TEST(AsyncPollingLoopTest, PollThenEventualSuccess) {
                     google::longrunning::GetOperationRequest const&) {
         return make_ready_future(make_status_or(expected));
       });
-  EXPECT_CALL(*mock, AsyncCancelOperation).Times(0);
   auto policy = absl::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure).WillRepeatedly(Return(true));
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  auto actual =
-      AsyncPollingLoop(cq, starting_op, MakePoll(mock), MakeCancel(mock),
-                       std::move(policy), "test-function")
-          .get();
+  auto actual = AsyncPollingLoop(cq, starting_op, MakePoll(mock),
+                                 std::move(policy), "test-function")
+                    .get();
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -239,7 +218,6 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicy) {
                           google::longrunning::GetOperationRequest const&) {
         return make_ready_future(make_status_or(starting_op));
       });
-  EXPECT_CALL(*mock, AsyncCancelOperation).Times(0);
   auto policy = absl::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure)
@@ -248,12 +226,52 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicy) {
       .WillOnce(Return(false));
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  auto actual =
-      AsyncPollingLoop(cq, starting_op, MakePoll(mock), MakeCancel(mock),
-                       std::move(policy), "test-function")
-          .get();
+  auto actual = AsyncPollingLoop(cq, starting_op, MakePoll(mock),
+                                 std::move(policy), "test-function")
+                    .get();
   ASSERT_THAT(actual, StatusIs(Not(Eq(StatusCode::kOk)),
                                HasSubstr("exhausted polling policy")));
+}
+
+TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicyWithFailure) {
+  Instance instance;
+  instance.set_name("test-instance-name");
+  google::longrunning::Operation starting_op;
+  starting_op.set_name("test-op-name");
+  google::longrunning::Operation expected = starting_op;
+  expected.set_done(true);
+  expected.mutable_metadata()->PackFrom(instance);
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillRepeatedly([](std::chrono::nanoseconds) {
+        return make_ready_future(
+            make_status_or(std::chrono::system_clock::now()));
+      });
+  CompletionQueue cq(mock_cq);
+
+  auto mock = std::make_shared<MockStub>();
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .Times(AtLeast(2))
+      .WillRepeatedly([&](CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::longrunning::GetOperationRequest const&) {
+        return make_ready_future(
+            StatusOr<Operation>(Status{StatusCode::kUnavailable, "try-again"}));
+      });
+  auto policy = absl::make_unique<MockPollingPolicy>();
+  EXPECT_CALL(*policy, clone()).Times(0);
+  EXPECT_CALL(*policy, OnFailure)
+      .WillOnce(Return(true))
+      .WillOnce(Return(true))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*policy, WaitPeriod)
+      .WillRepeatedly(Return(std::chrono::milliseconds(1)));
+  auto actual = AsyncPollingLoop(cq, starting_op, MakePoll(mock),
+                                 std::move(policy), "test-function")
+                    .get();
+  ASSERT_THAT(actual,
+              StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
 }
 
 }  // namespace

@@ -93,11 +93,6 @@ StatusOr<ReturnType> ExtractLongRunningResult(
  *     google::cloud::CompletionQueue& cq,
  *     std::unique_ptr<grpc::ClientContext> context,
  *     google::longrunning::GetOperationRequest const& request) = 0;
- *
- *   virtual future<Status> AsyncGetOperation(
- *     google::cloud::CompletionQueue& cq,
- *     std::unique_ptr<grpc::ClientContext> context,
- *     google::longrunning::CancelOperationRequest const& request) = 0;
  * };
  * @endcode
  *
@@ -115,9 +110,6 @@ StatusOr<ReturnType> ExtractLongRunningResult(
  *       },
  *       [stub = stub_](auto& cq, auto context, auto const& request) {
  *         return stub->AsyncGetOperation(cq, std::move(context), request);
- *       },
- *       [stub = stub_](auto& cq, auto context, auto const& request) {
- *         return stub->AsyncCancelOperation(cq, std::move(context), request);
  *       },
  *       retry_policy_->clone(), backoff_policy_->clone(),
  *       IdempotencyPolicy::kIdempotent,
@@ -139,7 +131,6 @@ template <typename ReturnType, typename RequestType, typename StartFunctor,
 future<StatusOr<ReturnType>> AsyncLongRunningOperation(
     google::cloud::CompletionQueue cq, RequestType&& request,
     StartFunctor&& start, AsyncPollLongRunningOperation poll,
-    AsyncCancelLongRunningOperation cancel,
     std::unique_ptr<RetryPolicyType> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy, Idempotency idempotent,
     std::unique_ptr<PollingPolicy> polling_policy, char const* location) {
@@ -150,7 +141,6 @@ future<StatusOr<ReturnType>> AsyncLongRunningOperation(
   struct MoveCapture {
     google::cloud::CompletionQueue cq;
     AsyncPollLongRunningOperation poll;
-    AsyncCancelLongRunningOperation cancel;
     std::unique_ptr<PollingPolicy> polling_policy;
     std::string location;
 
@@ -162,17 +152,16 @@ future<StatusOr<ReturnType>> AsyncLongRunningOperation(
       }
       auto loc = this->location;
       return AsyncPollingLoop(std::move(cq), *std::move(op), std::move(poll),
-                              std::move(cancel), std::move(polling_policy),
-                              std::move(location))
+                              std::move(polling_policy), std::move(location))
           .then([loc](future<StatusOr<google::longrunning::Operation>> g) {
             return ExtractLongRunningResult<ReturnType>(g.get(), loc);
           });
     }
   };
 
-  return operation.then(
-      MoveCapture{std::move(cq), std::move(poll), std::move(cancel),
-                  std::move(polling_policy), std::string{location}});
+  return operation.then(MoveCapture{std::move(cq), std::move(poll),
+                                    std::move(polling_policy),
+                                    std::string{location}});
 }
 
 }  // namespace internal

@@ -44,10 +44,6 @@ class MockStub {
               (CompletionQueue & cq, std::unique_ptr<grpc::ClientContext>,
                google::longrunning::GetOperationRequest const&),
               ());
-  MOCK_METHOD(future<Status>, AsyncCancelOperation,
-              (CompletionQueue & cq, std::unique_ptr<grpc::ClientContext>,
-               google::longrunning::CancelOperationRequest const&),
-              ());
 };
 
 class MockPollingPolicy : public PollingPolicy {
@@ -144,7 +140,6 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccess) {
                     google::longrunning::GetOperationRequest const&) {
         return make_ready_future(make_status_or(done_op));
       });
-  EXPECT_CALL(*mock, AsyncCancelOperation).Times(0);
   auto policy = absl::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure).Times(0);
@@ -165,11 +160,6 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccess) {
                  std::unique_ptr<grpc::ClientContext> context,
                  google::longrunning::GetOperationRequest const& request) {
             return mock->AsyncGetOperation(cq, std::move(context), request);
-          },
-          [mock](CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 google::longrunning::CancelOperationRequest const& request) {
-            return mock->AsyncCancelOperation(cq, std::move(context), request);
           },
           TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
           std::move(policy), "test-function")

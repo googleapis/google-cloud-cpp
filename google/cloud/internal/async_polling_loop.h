@@ -34,10 +34,6 @@ using AsyncPollLongRunningOperation =
         CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
         google::longrunning::GetOperationRequest const&)>;
 
-using AsyncCancelLongRunningOperation = std::function<future<Status>(
-    CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-    google::longrunning::CancelOperationRequest const&)>;
-
 /**
  * Runs an asynchronous polling loop for a long-running operation.
  *
@@ -77,11 +73,6 @@ using AsyncCancelLongRunningOperation = std::function<future<Status>(
  *     google::cloud::CompletionQueue& cq,
  *     std::unique_ptr<grpc::ClientContext> context,
  *     google::longrunning::GetOperationRequest const& request) = 0;
- *
- *   virtual future<Status> AsyncGetOperation(
- *     google::cloud::CompletionQueue& cq,
- *     std::unique_ptr<grpc::ClientContext> context,
- *     google::longrunning::CancelOperationRequest const& request) = 0;
  * };
  * @endcode
  *
@@ -105,11 +96,6 @@ using AsyncCancelLongRunningOperation = std::function<future<Status>(
  *             r.set_name(op.name());
  *             return stub->AsyncGetOperation(cq, std::move(context), r);
  *           },
- *           [stub](auto cq, auto context, auto const& op) {
- *             google::longrunning::CancelOperationRequest r;
- *             r.set_name(op.name());
- *             return stub->AsyncCancelOperation(cq, std::move(context), r);
- *           },
  *           polling_policy_->clone(), loc);
  *        });
  *   }
@@ -124,7 +110,7 @@ using AsyncCancelLongRunningOperation = std::function<future<Status>(
  */
 future<StatusOr<google::longrunning::Operation>> AsyncPollingLoop(
     google::cloud::CompletionQueue cq, google::longrunning::Operation op,
-    AsyncPollLongRunningOperation poll, AsyncCancelLongRunningOperation cancel,
+    AsyncPollLongRunningOperation poll,
     std::unique_ptr<PollingPolicy> polling_policy, std::string location);
 
 }  // namespace internal

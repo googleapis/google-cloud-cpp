@@ -25,22 +25,16 @@ class AsyncPollingLoopImpl
   AsyncPollingLoopImpl(google::cloud::CompletionQueue cq,
                        google::longrunning::Operation op,
                        AsyncPollLongRunningOperation poll,
-                       AsyncCancelLongRunningOperation cancel,
                        std::unique_ptr<PollingPolicy> polling_policy,
                        std::string location)
       : cq_(std::move(cq)),
         op_(std::move(op)),
         poll_(std::move(poll)),
-        cancel_(std::move(cancel)),
         polling_policy_(std::move(polling_policy)),
-        location_(std::move(location)),
-        promise_(null_promise_t{}) {}
+        location_(std::move(location)) {}
 
   future<StatusOr<google::longrunning::Operation>> Start() {
     auto w = WeakFromThis();
-    promise_ = promise<StatusOr<google::longrunning::Operation>>([w] {
-      if (auto self = w.lock()) self->DoCancel();
-    });
     if (op_.done()) {
       promise_.set_value(std::move(op_));
       return promise_.get_future();
@@ -52,13 +46,6 @@ class AsyncPollingLoopImpl
  private:
   std::weak_ptr<AsyncPollingLoopImpl> WeakFromThis() {
     return shared_from_this();
-  }
-
-  void DoCancel() {
-    if (op_.name().empty()) return;
-    google::longrunning::CancelOperationRequest request;
-    request.set_name(op_.name());
-    cancel_(cq_, absl::make_unique<grpc::ClientContext>(), request);
   }
 
   using TimerResult = future<StatusOr<std::chrono::system_clock::time_point>>;
@@ -107,7 +94,6 @@ class AsyncPollingLoopImpl
   google::cloud::CompletionQueue cq_;
   google::longrunning::Operation op_;
   AsyncPollLongRunningOperation poll_;
-  AsyncCancelLongRunningOperation cancel_;
   std::unique_ptr<PollingPolicy> polling_policy_;
   std::string location_;
   promise<StatusOr<google::longrunning::Operation>> promise_;
@@ -115,11 +101,11 @@ class AsyncPollingLoopImpl
 
 future<StatusOr<google::longrunning::Operation>> AsyncPollingLoop(
     google::cloud::CompletionQueue cq, google::longrunning::Operation op,
-    AsyncPollLongRunningOperation poll, AsyncCancelLongRunningOperation cancel,
+    AsyncPollLongRunningOperation poll,
     std::unique_ptr<PollingPolicy> polling_policy, std::string location) {
   auto loop = std::make_shared<AsyncPollingLoopImpl>(
-      std::move(cq), std::move(op), std::move(poll), std::move(cancel),
-      std::move(polling_policy), std::move(location));
+      std::move(cq), std::move(op), std::move(poll), std::move(polling_policy),
+      std::move(location));
   return loop->Start();
 }
 
