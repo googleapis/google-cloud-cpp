@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_LONG_RUNNING_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_LONG_RUNNING_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_LONG_RUNNING_OPERATION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_LONG_RUNNING_OPERATION_H
 
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/completion_queue.h"
@@ -104,7 +104,7 @@ StatusOr<ReturnType> ExtractLongRunningResult(
  *  public:
  *   // Using C++14 for exposition purposes. The implementation supports C++11.
  *   future<StatusOr<FooResponse>> Foo(FooRequest const& request) override {
- *     return google::cloud::internal::AsyncLongRunningLoop(
+ *     return google::cloud::internal::AsyncLongRunningOperation(
  *       cq_, request,
  *       [stub = stub_](auto& cq, auto context, auto const& request) {
  *         return stub->AsyncFoo(cq, std::move(context), request);
@@ -170,4 +170,4 @@ future<StatusOr<ReturnType>> AsyncLongRunningOperation(
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_LONG_RUNNING_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_LONG_RUNNING_OPERATION_H

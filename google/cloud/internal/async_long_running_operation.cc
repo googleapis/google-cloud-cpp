@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/async_long_running.h"
+#include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/grpc_error_delegate.h"
 
 namespace google {
