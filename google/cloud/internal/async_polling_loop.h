@@ -23,6 +23,7 @@
 #include <google/longrunning/operations.pb.h>
 #include <functional>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -51,8 +52,11 @@ using AsyncPollLongRunningOperation =
  * as configured by the polling policy and tries again later. The polling policy
  * can stop the loop too.
  *
- * The function returns a `future<>` that is satisfied when the loop stops.When
- * the loop stops it satisfies the `future<StatusOr<>>` returned
+ * The function returns a `future<>` that is satisfied when the loop stops. In
+ * short, the returned future is satisfied under any of these conditions (a) the
+ * polling policy is exhausted before it is known if the operation completed
+ * successfully, or (b) the operation completes, and this is known because a
+ * `GetOperation()` request returns the operation result.
  *
  * The promise can complete with an error, which is represented by a
  * `google::cloud::Status` object, or with success and some `ReturnType` value.
@@ -63,8 +67,8 @@ using AsyncPollLongRunningOperation =
  * requires a retry loop, which is handled by this function too.
  *
  * Typically, library developers would use the function via
- * `AsyncLongRunningOperation`. But as a stand-alone function it can be used in
- * this context, first assume there is a `*Stub` class as follows:
+ * `AsyncLongRunningOperation`, but as a stand-alone function it can be used in
+ * this context. First assume there is a `*Stub` class as follows:
  *
  * @code
  * class BarStub {
@@ -81,7 +85,7 @@ using AsyncPollLongRunningOperation =
  * @code
  * class BarConnectionImpl : public BarConnection {
  *  public:
- *   // Using C++14 for exposition purposes, the implementation supports C++11
+ *   // Using C++14 for exposition purposes. The implementation supports C++11.
  *   future<StatusOr<FooResponse>> Foo(FooRequest const& request) override {
  *     using google::longrunning::Operation;
  *     future<StatusOr<Operation>> op = AsyncStart();

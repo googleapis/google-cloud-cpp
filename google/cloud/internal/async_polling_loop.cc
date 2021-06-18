@@ -34,12 +34,11 @@ class AsyncPollingLoopImpl
         location_(std::move(location)) {}
 
   future<StatusOr<google::longrunning::Operation>> Start() {
-    auto w = WeakFromThis();
     if (op_.done()) {
       promise_.set_value(std::move(op_));
-      return promise_.get_future();
+    } else {
+      Wait();
     }
-    Wait();
     return promise_.get_future();
   }
 

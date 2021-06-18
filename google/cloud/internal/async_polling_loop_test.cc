@@ -141,7 +141,7 @@ TEST(AsyncPollingLoopTest, PollThenTimerError) {
   auto actual = AsyncPollingLoop(cq, starting_op, MakePoll(mock),
                                  std::move(policy), "test-function")
                     .get();
-  ASSERT_THAT(actual,
+  EXPECT_THAT(actual,
               StatusIs(StatusCode::kCancelled, HasSubstr("cq shutdown")));
 }
 
@@ -229,7 +229,7 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicy) {
   auto actual = AsyncPollingLoop(cq, starting_op, MakePoll(mock),
                                  std::move(policy), "test-function")
                     .get();
-  ASSERT_THAT(actual, StatusIs(Not(Eq(StatusCode::kOk)),
+  EXPECT_THAT(actual, StatusIs(Not(Eq(StatusCode::kOk)),
                                HasSubstr("exhausted polling policy")));
 }
 

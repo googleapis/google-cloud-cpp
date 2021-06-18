@@ -32,6 +32,7 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::longrunning::Operation;
+using ::testing::HasSubstr;
 using ::testing::Return;
 
 class MockStub {
@@ -86,7 +87,8 @@ TEST(AsyncLongRunningTest, ExtractValueDoneWithError) {
   op.mutable_error()->set_code(grpc::StatusCode::PERMISSION_DENIED);
   op.mutable_error()->set_message("uh-oh");
   auto const actual = ExtractLongRunningResult<Instance>(op, "test-function");
-  EXPECT_THAT(actual, StatusIs(StatusCode::kPermissionDenied));
+  EXPECT_THAT(actual,
+              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
 }
 
 TEST(AsyncLongRunningTest, ExtractValueDoneWithoutResult) {

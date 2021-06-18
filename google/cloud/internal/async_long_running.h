@@ -28,6 +28,7 @@
 #include <grpcpp/grpcpp.h>
 #include <functional>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -69,7 +70,7 @@ StatusOr<ReturnType> ExtractLongRunningResult(
  * library) should periodically poll this object until it is "done".
  *
  * In the C++ client libraries we represent these long-running operations by
- * a member function that returns `future<StatusOr<ReturnType>>` this function
+ * a member function that returns `future<StatusOr<ReturnType>>`. This function
  * is a helper to implement these member functions. It first starts the
  * operation using an asynchronous retry loop, and then starts an asynchronous
  * loop to poll the operation until it completes.
@@ -101,7 +102,7 @@ StatusOr<ReturnType> ExtractLongRunningResult(
  * @code
  * class BarConnectionImpl : public BarConnection {
  *  public:
- *   // Using C++14 for exposition purposes, the implementation supports C++11
+ *   // Using C++14 for exposition purposes. The implementation supports C++11.
  *   future<StatusOr<FooResponse>> Foo(FooRequest const& request) override {
  *     return google::cloud::internal::AsyncLongRunningLoop(
  *       cq_, request,
