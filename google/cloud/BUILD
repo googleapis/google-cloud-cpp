@@ -98,6 +98,7 @@ cc_library(
         "@com_google_absl//absl/time",
         "@com_google_googleapis//:googleapis_system_includes",
         "@com_google_googleapis//google/iam/credentials/v1:credentials_cc_grpc",
+        "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
         "@com_google_googleapis//google/rpc:status_cc_proto",
     ],
 )
