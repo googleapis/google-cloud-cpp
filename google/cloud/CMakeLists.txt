@@ -439,6 +439,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                absl::memory
                absl::time
                google-cloud-cpp::iam_protos
+               google-cloud-cpp::longrunning_operations_protos
                google-cloud-cpp::rpc_status_protos
                google-cloud-cpp::common
                gRPC::grpc++
@@ -617,7 +618,9 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
         "Provides gRPC Utilities for the Google Cloud C++ Client Library.")
     string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
-                  "google_cloud_cpp_common google_cloud_cpp_iam_protos")
+                  "google_cloud_cpp_common" " google_cloud_cpp_iam_protos"
+            " google_cloud_cpp_longrunning_operations_protos"
+            " google_cloud_cpp_rpc_status_protos")
     string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_grpc_utils")
 
     # Create and install the pkg-config files.
