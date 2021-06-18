@@ -126,8 +126,8 @@ TEST_F(ThreadIntegrationTest, Unshared) {
                                      bucket_name, g, LoremIpsum());
                  });
   for (auto& t : tasks) t.get();
-  // Verify at least 1/2 of the objects was successfully created, note that with
-  // the default policies an object may be successfully created, but
+  // Verify at least 1/2 of the objects were successfully created, note that
+  // with the default policies an object may be successfully created, but
   // `InsertObject()` returns an error due to retries.
   std::size_t found = 0;
   for (auto& o : client->ListObjects(bucket_name)) {
