@@ -29,18 +29,18 @@ Status ExtractOperationResultImpl(
   if (op->has_error()) return MakeStatusFromRpcError(op->error());
   if (!op->has_metadata()) {
     return Status(StatusCode::kInternal,
-                  std::string(location) +
-                      "() cannot extract value from operation "
-                      "without error or metadata, name=" +
+                  location +
+                      "() cannot extract value from operation without error or "
+                      "metadata, name=" +
                       op->name());
   }
   google::protobuf::Any const& any = op->metadata();
   if (!validate_any(any)) {
-    return Status(StatusCode::kInternal,
-                  std::string(location) +
-                      "() operation completed "
-                      "with an invalid metadata type, name=" +
-                      op->name());
+    return Status(
+        StatusCode::kInternal,
+        location +
+            "() operation completed with an invalid metadata type, name=" +
+            op->name());
   }
   any.UnpackTo(&result);
   return Status{};
