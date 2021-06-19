@@ -53,6 +53,11 @@ function spanner_emulator::start() {
     return 1
   fi
 
+  local emulator_port=0
+  if [[ $# -ge 1 ]]; then
+    emulator_port=$1
+  fi
+
   # We cannot use `gcloud beta emulators spanner start` because there is no way
   # to kill the emulator at the end using that command.
   readonly SPANNER_EMULATOR_CMD="${CLOUD_SDK_LOCATION}/bin/cloud_spanner_emulator/emulator_main"
@@ -63,10 +68,10 @@ function spanner_emulator::start() {
 
   # The tests typically run in a Docker container, where the ports are largely
   # free; when using in manual tests, you can set EMULATOR_PORT.
-  "${SPANNER_EMULATOR_CMD}" --host_port localhost:0 >emulator.log 2>&1 </dev/null &
+  "${SPANNER_EMULATOR_CMD}" --host_port "localhost:${emulator_port}" >emulator.log 2>&1 </dev/null &
   SPANNER_EMULATOR_PID=$!
 
-  local -r emulator_port="$(spanner_emulator::internal::read_emulator_port emulator.log)"
+  emulator_port="$(spanner_emulator::internal::read_emulator_port emulator.log)"
   if [[ "${emulator_port}" = "0" ]]; then
     echo "Cannot determine Cloud Spanner emulator port." >&2
     spanner_emulator::kill
