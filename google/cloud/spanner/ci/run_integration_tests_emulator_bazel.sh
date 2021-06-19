@@ -37,7 +37,7 @@ bazel_test_args=("$@")
 pushd "${HOME}" >/dev/null
 spanner_emulator::start
 popd
-trap pubsub_emulator::kill EXIT
+trap spanner_emulator::kill EXIT
 
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   --test_env="SPANNER_EMULATOR_HOST=${SPANNER_EMULATOR_HOST}" \
