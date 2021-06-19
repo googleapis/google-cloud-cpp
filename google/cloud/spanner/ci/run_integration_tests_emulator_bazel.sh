@@ -45,5 +45,6 @@ trap spanner_emulator::kill EXIT
   --test_env="GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG=lastN,100,WARNING" \
   --test_env="GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc-streams" \
   --test_env="GOOGLE_CLOUD_CPP_TRACING_OPTIONS=truncate_string_field_longer_than=512" \
+  --test_env="GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=instance,backup" \
   --test_tag_filters="integration-test" -- \
   "//google/cloud/spanner/...:all"
