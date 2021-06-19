@@ -48,10 +48,13 @@ Status StubGenerator::GenerateHeader() {
   // clang-format on
 
   // includes
-  HeaderLocalIncludes({HasStreamingReadMethod()
-                           ? "google/cloud/internal/streaming_read_rpc.h"
-                           : "",
-                       "google/cloud/status_or.h", "google/cloud/version.h"});
+  HeaderLocalIncludes(
+      {HasLongrunningMethod() ? "google/cloud/completion_queue.h" : "",
+       HasLongrunningMethod() ? "google/cloud/future.h" : "",
+       "google/cloud/status_or.h",
+       HasStreamingReadMethod() ? "google/cloud/internal/streaming_read_rpc.h"
+                                : "",
+       "google/cloud/version.h"});
   HeaderSystemIncludes(
       {vars("proto_grpc_header_path"),
        HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
@@ -81,7 +84,15 @@ Status StubGenerator::GenerateHeader() {
     "    $request_type$ const& request) = 0;\n"
                // clang-format on
                "\n"}},
-             IsNonStreaming),
+             And(IsNonStreaming, Not(IsLongrunningOperation))),
+         MethodPattern({{R"""(
+  virtual future<StatusOr<google::longrunning::Operation>> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      $request_type$ const& request) = 0;
+
+)"""}},
+                       IsLongrunningOperation),
          MethodPattern(
              {// clang-format off
    {"  virtual std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
@@ -96,18 +107,17 @@ Status StubGenerator::GenerateHeader() {
 
   // long running operation support methods
   if (HasLongrunningMethod()) {
-    HeaderPrint(  // clang-format off
-    "  /// Poll a long-running operation.\n"
-    "  virtual StatusOr<google::longrunning::Operation> GetOperation(\n"
-    "      grpc::ClientContext& client_context,\n"
-    "      google::longrunning::GetOperationRequest const& request) = 0;\n"
-    "\n"
-    "  /// Cancel a long-running operation.\n"
-    "  virtual Status CancelOperation(\n"
-    "      grpc::ClientContext& client_context,\n"
-    "      google::longrunning::CancelOperationRequest const& request) = 0;\n"
-    "\n");
-    // clang-format on
+    HeaderPrint(R"""(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
+  virtual future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::longrunning::CancelOperationRequest const& request) = 0;
+)""");
   }
   // close abstract interface Stub base class
   HeaderPrint(  // clang-format off
@@ -148,7 +158,14 @@ Status StubGenerator::GenerateHeader() {
     "    $request_type$ const& request) override;\n"
     "\n"}},
                        // clang-format on
-                       IsNonStreaming),
+                       And(IsNonStreaming, Not(IsLongrunningOperation))),
+         MethodPattern({{R"""(
+  future<StatusOr<google::longrunning::Operation>> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      $request_type$ const& request) override;
+)"""}},
+                       IsLongrunningOperation),
          MethodPattern(
              {// clang-format off
    {"  std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
@@ -163,18 +180,17 @@ Status StubGenerator::GenerateHeader() {
 
   if (HasLongrunningMethod()) {
     // long running operation support methods
-    HeaderPrint(  // clang-format off
-    "  /// Poll a long-running operation.\n"
-    "  StatusOr<google::longrunning::Operation> GetOperation(\n"
-    "      grpc::ClientContext& client_context,\n"
-    "      google::longrunning::GetOperationRequest const& request) override;\n"
-    "\n"
-    "  /// Cancel a long-running operation.\n"
-    "  Status CancelOperation(\n"
-    "      grpc::ClientContext& client_context,\n"
-    "      google::longrunning::CancelOperationRequest const& request) override;\n"
-    "\n");
-    // clang-format on
+    HeaderPrint(R"""(
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::longrunning::CancelOperationRequest const& request) override;
+)""");
   }
 
   // private members and close default stub class definition
@@ -249,7 +265,23 @@ Status StubGenerator::GenerateCc() {
    {"}\n"
     "\n"}},
              // clang-format on
-             IsNonStreaming),
+             And(IsNonStreaming, Not(IsLongrunningOperation))),
+         MethodPattern({{R"""(
+future<StatusOr<google::longrunning::Operation>>
+Default$stub_class_name$::Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      $request_type$ const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             $request_type$ const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->Async$method_name$(context, request, cq);
+      },
+      request, std::move(context));
+}
+)"""}},
+                       IsLongrunningOperation),
          MethodPattern(
              {// clang-format off
    {"std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
@@ -267,34 +299,37 @@ Status StubGenerator::GenerateCc() {
   }
 
   if (HasLongrunningMethod()) {
-    // long running operation support methods
-    CcPrint(  // clang-format off
-    "/// Poll a long-running operation.\n"
-    "StatusOr<google::longrunning::Operation>\n"
-    "Default$stub_class_name$::GetOperation(\n"
-    "    grpc::ClientContext& client_context,\n"
-    "    google::longrunning::GetOperationRequest const& request) {\n"
-    "  google::longrunning::Operation response;\n"
-    "  grpc::Status status =\n"
-    "      operations_->GetOperation(&client_context, request, &response);\n"
-    "  if (!status.ok()) {\n"
-    "    return google::cloud::MakeStatusFromRpcError(status);\n"
-    "  }\n"
-    "  return response;\n"
-    "}\n"
-    "/// Cancel a long-running operation.\n"
-    "Status Default$stub_class_name$::CancelOperation(\n"
-    "    grpc::ClientContext& client_context,\n"
-    "    google::longrunning::CancelOperationRequest const& request) {\n"
-    "  google::protobuf::Empty response;\n"
-    "  grpc::Status status =\n"
-    "      operations_->CancelOperation(&client_context, request, &response);\n"
-    "  if (!status.ok()) {\n"
-    "    return google::cloud::MakeStatusFromRpcError(status);\n"
-    "  }\n"
-    "  return google::cloud::Status();\n"
-    "}\n");
-    // clang-format on
+    CcPrint(R"""(future<StatusOr<google::longrunning::Operation>>
+Default$stub_class_name$::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::longrunning::GetOperationRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::longrunning::GetOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_->AsyncGetOperation(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<Status> Default$stub_class_name$::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::longrunning::CancelOperationRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
+      .then([](future<StatusOr<google::protobuf::Empty>> f) {
+        return f.get().status();
+      });
+}
+
+)""");
   }
 
   CcCloseNamespaces();

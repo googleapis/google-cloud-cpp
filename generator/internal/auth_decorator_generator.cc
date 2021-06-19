@@ -66,47 +66,52 @@ class $auth_class_name$ : public $stub_class_name$ {
   $auth_class_name$(
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<$stub_class_name$> child);
-
 )""");
 
   for (auto const& method : methods()) {
-    HeaderPrintMethod(method,
-                      {MethodPattern({{IsResponseTypeEmpty,
-                                       R"""(
+    HeaderPrintMethod(
+        method,
+        {MethodPattern({{IsResponseTypeEmpty,
+                         R"""(
   Status $method_name$(
       grpc::ClientContext& context,
       $request_type$ const& request) override;
 )""",
-                                       R"""(
+                         R"""(
   StatusOr<$response_type$> $method_name$(
       grpc::ClientContext& context,
       $request_type$ const& request) override;
-)"""
-                                       "  \n"},
-                                      {""}},
-                                     IsNonStreaming),
-                       MethodPattern({{R"""(
+)"""},
+                        {""}},
+                       And(IsNonStreaming, Not(IsLongrunningOperation))),
+         MethodPattern({{R"""(
+  future<StatusOr<google::longrunning::Operation>> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      $request_type$ const& request) override;
+)"""}},
+                       IsLongrunningOperation),
+         MethodPattern({{R"""(
   std::unique_ptr<internal::StreamingReadRpc<$response_type$>>
   $method_name$(
       std::unique_ptr<grpc::ClientContext> context,
       $request_type$ const& request) override;
 )"""}},
-                                     IsStreamingRead)},
-                      __FILE__, __LINE__);
+                       IsStreamingRead)},
+        __FILE__, __LINE__);
   }
 
   if (HasLongrunningMethod()) {
     HeaderPrint(R"""(
-    /// Poll a long-running operation.
-    StatusOr<google::longrunning::Operation> GetOperation(
-        grpc::ClientContext& context,
-        google::longrunning::GetOperationRequest const& request) override;
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::longrunning::GetOperationRequest const& request) override;
 
-    /// Cancel a long-running operation.
-    Status CancelOperation(
-        grpc::ClientContext& context,
-        google::longrunning::CancelOperationRequest const& request) override;
-)""");
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::longrunning::CancelOperationRequest const& request) override;)""");
   }
 
   HeaderPrint(R"""(
@@ -150,13 +155,14 @@ $auth_class_name$::$auth_class_name$(
 
   // Auth decorator class member methods
   for (auto const& method : methods()) {
-    CcPrintMethod(method,
-                  {MethodPattern({{IsResponseTypeEmpty,
-                                   R"""(
+    CcPrintMethod(
+        method,
+        {MethodPattern({{IsResponseTypeEmpty,
+                         R"""(
 Status $auth_class_name$::$method_name$()""",
-                                   R"""(
+                         R"""(
 StatusOr<$response_type$> $auth_class_name$::$method_name$()"""},
-                                  {R"""(
+                        {R"""(
     grpc::ClientContext& context,
     $request_type$ const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -164,8 +170,28 @@ StatusOr<$response_type$> $auth_class_name$::$method_name$()"""},
   return child_->$method_name$(context, request);
 }
 )"""}},
-                                 IsNonStreaming),
-                   MethodPattern({{R"""(
+                       And(IsNonStreaming, Not(IsLongrunningOperation))),
+         MethodPattern({{R"""(
+future<StatusOr<google::longrunning::Operation>>
+$auth_class_name$::Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      $request_type$ const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto child = child_;
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child, request](
+          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->Async$method_name$(cq, *std::move(context), request);
+      });
+}
+)"""}},
+                       IsLongrunningOperation),
+         MethodPattern({{R"""(
 std::unique_ptr<internal::StreamingReadRpc<$response_type$>>
 $auth_class_name$::$method_name$(
    std::unique_ptr<grpc::ClientContext> context,
@@ -177,27 +203,43 @@ $auth_class_name$::$method_name$(
   return child_->$method_name$(std::move(context), request);
 }
 )"""}},
-                                 IsStreamingRead)},
-                  __FILE__, __LINE__);
+                       IsStreamingRead)},
+        __FILE__, __LINE__);
   }
 
   // long running operation support methods
   if (HasLongrunningMethod()) {
     CcPrint(R"""(
-StatusOr<google::longrunning::Operation> $auth_class_name$::GetOperation(
-    grpc::ClientContext& context,
+future<StatusOr<google::longrunning::Operation>>
+$auth_class_name$::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->GetOperation(context, request);
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto child = child_;
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child, request](
+          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncGetOperation(cq, *std::move(context), request);
+      });
 }
 
-Status $auth_class_name$::CancelOperation(
-    grpc::ClientContext& context,
+future<Status> $auth_class_name$::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->CancelOperation(context, request);
+  auto child = child_;
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child, request](
+          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+        auto context = f.get();
+        if (!context) return make_ready_future(std::move(context).status());
+        return child->AsyncCancelOperation(cq, *std::move(context), request);
+      });
 }
 )""");
   }

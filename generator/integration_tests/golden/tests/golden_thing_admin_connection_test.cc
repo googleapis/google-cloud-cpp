@@ -14,6 +14,7 @@
 
 #include "generator/integration_tests/golden/golden_thing_admin_connection.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/golden_thing_admin_options.h"
@@ -29,11 +30,12 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 using ::google::cloud::golden_internal::MockGoldenThingAdminStub;
+using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::AtLeast;
 using ::testing::ElementsAre;
-using ::testing::Mock;
 using ::testing::Return;
 
 std::shared_ptr<golden::GoldenThingAdminConnection> CreateTestingConnection(
@@ -53,6 +55,13 @@ std::shared_ptr<golden::GoldenThingAdminConnection> CreateTestingConnection(
   options.set<golden::GoldenThingAdminPollingPolicyOption>(polling.clone());
   return golden_internal::MakeGoldenThingAdminConnection(std::move(mock),
                                                          std::move(options));
+}
+
+google::longrunning::Operation CreateStartingOperation() {
+  google::longrunning::Operation op;
+  op.set_name("test-operation-name");
+  op.set_done(false);
+  return op;
 }
 
 /// @test Verify that we can list databases in multiple pages.
@@ -145,18 +154,19 @@ TEST(GoldenThingAdminClientTest, ListDatabasesTooManyFailures) {
 }
 
 /// @test Verify that successful case works.
-TEST(GoldenConnectionTest, CreateDatabaseSuccess) {
+TEST(GoldenThingAdminClientTest, CreateDatabaseSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, CreateDatabase)
-      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
-                                             CreateDatabaseRequest const&) {
+  EXPECT_CALL(*mock, AsyncCreateDatabase)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   ::google::test::admin::database::v1::
+                       CreateDatabaseRequest const&) {
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
-        return make_status_or(op);
+        return make_ready_future(make_status_or(op));
       });
-  EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([](grpc::ClientContext&,
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
@@ -165,61 +175,51 @@ TEST(GoldenConnectionTest, CreateDatabaseSuccess) {
         ::google::test::admin::database::v1::Database database;
         database.set_name("test-database");
         op.mutable_response()->PackFrom(database);
-        return make_status_or(op);
+        return make_ready_future(make_status_or(op));
       });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::CreateDatabaseRequest dbase;
   auto fut = conn->CreateDatabase(dbase);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto db = fut.get();
-  EXPECT_STATUS_OK(db);
+  ASSERT_STATUS_OK(db);
   EXPECT_EQ("test-database", db->name());
 }
 
-/// @test Verify that a permanent error in CreateDatabase is immediately
-/// reported.
-TEST(GoldenConnectionTest, HandleCreateDatabaseError) {
+TEST(GoldenThingAdminClientTest, CreateDatabaseCancel) {
+  auto const op = CreateStartingOperation();
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, CreateDatabase)
-      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
-                                             CreateDatabaseRequest const&) {
-        return StatusOr<google::longrunning::Operation>(
-            Status(StatusCode::kPermissionDenied, "uh-oh"));
+  EXPECT_CALL(*mock, AsyncCreateDatabase)
+      .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                    ::google::test::admin::database::v1::
+                        CreateDatabaseRequest const&) {
+        return make_ready_future(make_status_or(op));
       });
-  auto conn = CreateTestingConnection(std::move(mock));
-  ::google::test::admin::database::v1::CreateDatabaseRequest dbase;
-  auto fut = conn->CreateDatabase(dbase);
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
-  auto db = fut.get();
-  EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
-}
 
-/// @test Verify that errors in the polling loop are reported.
-TEST(GoldenThingAdminClientTest, CreateDatabaseErrorInPoll) {
-  auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, CreateDatabase)
-      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
-                                             CreateDatabaseRequest const&) {
-        google::longrunning::Operation op;
-        op.set_name("test-operation-name");
-        op.set_done(false);
-        return make_status_or(std::move(op));
-      });
-  EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([](grpc::ClientContext&,
-                   google::longrunning::GetOperationRequest const& r) {
+  AsyncSequencer<StatusOr<google::longrunning::Operation>> get;
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .Times(AtLeast(1))
+      .WillRepeatedly([&](CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
-        google::longrunning::Operation op;
-        op.set_done(true);
-        op.mutable_error()->set_code(
-            static_cast<int>(grpc::StatusCode::PERMISSION_DENIED));
-        op.mutable_error()->set_message("uh-oh");
-        return op;
+        return get.PushBack();
+      });
+  EXPECT_CALL(*mock, AsyncCancelOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   google::longrunning::CancelOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        return make_ready_future(Status{});
       });
   auto conn = CreateTestingConnection(std::move(mock));
-  ::google::test::admin::database::v1::CreateDatabaseRequest dbase;
-  auto db = conn->CreateDatabase(dbase).get();
-  EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
+  ::google::test::admin::database::v1::CreateDatabaseRequest request;
+  auto fut = conn->CreateDatabase(request);
+  get.PopFront().set_value(op);
+  auto g = get.PopFront();
+  fut.cancel();
+  g.set_value(op);
+  auto db = fut.get();
+  EXPECT_THAT(db, StatusIs(StatusCode::kCancelled));
 }
 
 /// @test Verify that the successful case works.
@@ -282,18 +282,19 @@ TEST(GoldenThingAdminClientTest, GetDatabaseTooManyTransients) {
 /// @test Verify that successful case works.
 TEST(GoldenThingAdminClientTest, UpdateDatabaseDdlSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, UpdateDatabaseDdl)
-      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
-                                             UpdateDatabaseDdlRequest const&) {
+  EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   ::google::test::admin::database::v1::
+                       UpdateDatabaseDdlRequest const&) {
         ::google::test::admin::database::v1::UpdateDatabaseDdlMetadata metadata;
         metadata.set_database("test-database");
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
-        return make_status_or(op);
+        return make_ready_future(make_status_or(op));
       });
-  EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([](grpc::ClientContext&,
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
@@ -302,7 +303,7 @@ TEST(GoldenThingAdminClientTest, UpdateDatabaseDdlSuccess) {
         ::google::test::admin::database::v1::UpdateDatabaseDdlMetadata metadata;
         metadata.set_database("test-database");
         op.mutable_metadata()->PackFrom(metadata);
-        return make_status_or(op);
+        return make_ready_future(make_status_or(op));
       });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
@@ -313,62 +314,44 @@ TEST(GoldenThingAdminClientTest, UpdateDatabaseDdlSuccess) {
   auto fut = conn->UpdateDatabaseDdl(request);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto metadata = fut.get();
-  EXPECT_STATUS_OK(metadata);
+  ASSERT_STATUS_OK(metadata);
   EXPECT_EQ("test-database", metadata->database());
 }
 
-/// @test Verify that a permanent error in UpdateDatabase is immediately
-/// reported.
-TEST(GoldenThingAdminClientTest, UpdateDatabaseDdlErrorInPoll) {
+TEST(GoldenThingAdminClientTest, UpdateDatabaseDdlCancel) {
+  auto const op = CreateStartingOperation();
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, UpdateDatabaseDdl)
-      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
-                                             UpdateDatabaseDdlRequest const&) {
-        return StatusOr<google::longrunning::Operation>(
-            Status(StatusCode::kPermissionDenied, "uh-oh"));
+  EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl)
+      .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                    ::google::test::admin::database::v1::
+                    UpdateDatabaseDdlRequest const&) {
+        return make_ready_future(make_status_or(op));
       });
-  auto conn = CreateTestingConnection(std::move(mock));
-  ::google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
-  request.set_database(
-      "projects/test-project/instances/test-instance/databases/test-database");
-  *request.add_statements() =
-      "ALTER TABLE Albums ADD COLUMN MarketingBudget INT64";
-  auto fut = conn->UpdateDatabaseDdl(request);
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
-  auto db = fut.get();
-  EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
-}
 
-/// @test Verify that errors in the polling loop are reported.
-TEST(GoldenThingAdminClientTest, UpdateDatabaseDdlGetOperationError) {
-  auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, UpdateDatabaseDdl)
-      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
-                                             UpdateDatabaseDdlRequest const&) {
-        google::longrunning::Operation op;
-        op.set_name("test-operation-name");
-        op.set_done(false);
-        return make_status_or(std::move(op));
-      });
-  EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([](grpc::ClientContext&,
-                   google::longrunning::GetOperationRequest const& r) {
+  AsyncSequencer<StatusOr<google::longrunning::Operation>> get;
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .Times(AtLeast(1))
+      .WillRepeatedly([&](CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
-        google::longrunning::Operation op;
-        op.set_done(true);
-        op.mutable_error()->set_code(
-            static_cast<int>(grpc::StatusCode::PERMISSION_DENIED));
-        op.mutable_error()->set_message("uh-oh");
-        return op;
+        return get.PushBack();
+      });
+  EXPECT_CALL(*mock, AsyncCancelOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   google::longrunning::CancelOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        return make_ready_future(Status{});
       });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
-  request.set_database(
-      "projects/test-project/instances/test-instance/databases/test-database");
-  *request.add_statements() =
-      "ALTER TABLE Albums ADD COLUMN MarketingBudget INT64";
-  auto db = conn->UpdateDatabaseDdl(request).get();
-  EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
+  auto fut = conn->UpdateDatabaseDdl(request);
+  get.PopFront().set_value(op);
+  auto g = get.PopFront();
+  fut.cancel();
+  g.set_value(op);
+  auto db = fut.get();
+  EXPECT_THAT(db, StatusIs(StatusCode::kCancelled));
 }
 
 /// @test Verify that the successful case works.
@@ -640,17 +623,17 @@ TEST(GoldenThingAdminClientTest, TestIamPermissionsTooManyTransients) {
 /// @test Verify that successful case works.
 TEST(GoldenThingAdminClientTest, CreateBackupSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, CreateBackup)
+  EXPECT_CALL(*mock, AsyncCreateBackup)
       .WillOnce(
-          [](grpc::ClientContext&,
+          [](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
              ::google::test::admin::database::v1::CreateBackupRequest const&) {
             google::longrunning::Operation op;
             op.set_name("test-operation-name");
             op.set_done(false);
-            return make_status_or(op);
+            return make_ready_future(make_status_or(op));
           });
-  EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([](grpc::ClientContext&,
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
@@ -659,7 +642,7 @@ TEST(GoldenThingAdminClientTest, CreateBackupSuccess) {
         ::google::test::admin::database::v1::Backup backup;
         backup.set_name("test-backup");
         op.mutable_response()->PackFrom(backup);
-        return make_status_or(op);
+        return make_ready_future(make_status_or(op));
       });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::CreateBackupRequest request;
@@ -669,90 +652,44 @@ TEST(GoldenThingAdminClientTest, CreateBackupSuccess) {
   auto fut = conn->CreateBackup(request);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto backup = fut.get();
-  EXPECT_STATUS_OK(backup);
+  ASSERT_STATUS_OK(backup);
   EXPECT_EQ("test-backup", backup->name());
 }
 
-/// @test Verify cancellation.
 TEST(GoldenThingAdminClientTest, CreateBackupCancel) {
+  auto const op = CreateStartingOperation();
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  // Suppress a false leak.
-  // TODO(#4038): After we fix the issue #4038, we won't need to use
-  // `AllowLeak()` any more.
-  Mock::AllowLeak(mock.get());
-  promise<void> p;
-  EXPECT_CALL(*mock, CreateBackup)
-      .WillOnce(
-          [](grpc::ClientContext&,
-             ::google::test::admin::database::v1::CreateBackupRequest const&) {
-            google::longrunning::Operation op;
-            op.set_name("test-operation-name");
-            op.set_done(false);
-            return make_status_or(op);
-          });
-  EXPECT_CALL(*mock, CancelOperation)
-      .WillOnce([](grpc::ClientContext&,
+  EXPECT_CALL(*mock, AsyncCreateBackup)
+      .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                    ::google::test::admin::database::v1::
+                    CreateBackupRequest const&) {
+        return make_ready_future(make_status_or(op));
+      });
+
+  AsyncSequencer<StatusOr<google::longrunning::Operation>> get;
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .Times(AtLeast(1))
+      .WillRepeatedly([&](CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        return get.PushBack();
+      });
+  EXPECT_CALL(*mock, AsyncCancelOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    google::longrunning::CancelOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
-        return google::cloud::Status();
-      });
-  EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([&p](grpc::ClientContext&,
-                     google::longrunning::GetOperationRequest const& r) {
-        EXPECT_EQ("test-operation-name", r.name());
-        google::longrunning::Operation op;
-        op.set_name(r.name());
-        op.set_done(false);
-        // wait for `cancel` call in the main thread.
-        p.get_future().get();
-        return make_status_or(op);
-      })
-      .WillOnce([](grpc::ClientContext&,
-                   google::longrunning::GetOperationRequest const& r) {
-        EXPECT_EQ("test-operation-name", r.name());
-        google::longrunning::Operation op;
-        op.set_name(r.name());
-        op.set_done(true);
-        ::google::test::admin::database::v1::Backup backup;
-        backup.set_name("test-backup");
-        op.mutable_response()->PackFrom(backup);
-        return make_status_or(op);
+        return make_ready_future(Status{});
       });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::CreateBackupRequest request;
-  request.set_parent("projects/test-project/instances/test-instance");
-  request.set_backup_id("test-backup");
-  request.mutable_backup()->set_name("test-backup");
   auto fut = conn->CreateBackup(request);
+  get.PopFront().set_value(op);
+  auto g = get.PopFront();
   fut.cancel();
-  p.set_value();
-  auto backup = fut.get();
-  EXPECT_STATUS_OK(backup);
-  EXPECT_EQ("test-backup", backup->name());
-  // Explicitly verify the expectations in the mock.
-  EXPECT_TRUE(Mock::VerifyAndClearExpectations(mock.get()));
-}
-
-/// @test Verify that a permanent error in CreateBackup is immediately
-/// reported.
-TEST(GoldenThingAdminClientTest, HandleCreateBackupError) {
-  auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, CreateBackup)
-      .WillOnce(
-          [](grpc::ClientContext&,
-             ::google::test::admin::database::v1::CreateBackupRequest const&) {
-            return StatusOr<google::longrunning::Operation>(
-                Status(StatusCode::kPermissionDenied, "uh-oh"));
-          });
-  auto conn = CreateTestingConnection(std::move(mock));
-  ::google::test::admin::database::v1::CreateBackupRequest request;
-  request.set_parent("projects/test-project/instances/test-instance");
-  request.set_backup_id("test-backup");
-  request.mutable_backup()->set_name("test-backup");
-  auto fut = conn->CreateBackup(request);
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
-  auto backup = fut.get();
-  EXPECT_EQ(StatusCode::kPermissionDenied, backup.status().code());
+  g.set_value(op);
+  auto db = fut.get();
+  EXPECT_THAT(db, StatusIs(StatusCode::kCancelled));
 }
 
 /// @test Verify that the successful case works.
@@ -990,16 +927,17 @@ TEST(GoldenThingAdminClientTest, ListBackupsTooManyFailures) {
 /// @test Verify that successful case works.
 TEST(GoldenThingAdminClientTest, RestoreDatabaseSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, RestoreDatabase)
-      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
-                                             RestoreDatabaseRequest const&) {
+  EXPECT_CALL(*mock, AsyncRestoreDatabase)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   ::google::test::admin::database::v1::
+                       RestoreDatabaseRequest const&) {
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
-        return make_status_or(op);
+        return make_ready_future(make_status_or(op));
       });
-  EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([](grpc::ClientContext&,
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
@@ -1008,7 +946,7 @@ TEST(GoldenThingAdminClientTest, RestoreDatabaseSuccess) {
         ::google::test::admin::database::v1::Database database;
         database.set_name("test-database");
         op.mutable_response()->PackFrom(database);
-        return make_status_or(op);
+        return make_ready_future(make_status_or(op));
       });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::RestoreDatabaseRequest request;
@@ -1020,31 +958,44 @@ TEST(GoldenThingAdminClientTest, RestoreDatabaseSuccess) {
   auto fut = conn->RestoreDatabase(request);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto db = fut.get();
-  EXPECT_STATUS_OK(db);
+  ASSERT_STATUS_OK(db);
   EXPECT_EQ("test-database", db->name());
 }
 
-/// @test Verify that a permanent error in RestoreDatabase is immediately
-/// reported.
-TEST(GoldenThingAdminClientTest, HandleRestoreDatabaseError) {
+TEST(GoldenThingAdminClientTest, RestoreBackupCancel) {
+  auto const op = CreateStartingOperation();
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, RestoreDatabase)
-      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
-                                             RestoreDatabaseRequest const&) {
-        return StatusOr<google::longrunning::Operation>(
-            Status(StatusCode::kPermissionDenied, "uh-oh"));
+  EXPECT_CALL(*mock, AsyncRestoreDatabase)
+      .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                    ::google::test::admin::database::v1::
+                    RestoreDatabaseRequest const&) {
+        return make_ready_future(make_status_or(op));
+      });
+
+  AsyncSequencer<StatusOr<google::longrunning::Operation>> get;
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .Times(AtLeast(1))
+      .WillRepeatedly([&](CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        return get.PushBack();
+      });
+  EXPECT_CALL(*mock, AsyncCancelOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   google::longrunning::CancelOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        return make_ready_future(Status{});
       });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::RestoreDatabaseRequest request;
-  request.set_parent("projects/test-project/instances/test-instance");
-  request.set_database_id(
-      "projects/test-project/instances/test-instance/databases/test-database");
-  request.set_backup(
-      "projects/test-project/instances/test-instance/backups/test-backup");
   auto fut = conn->RestoreDatabase(request);
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  get.PopFront().set_value(op);
+  auto g = get.PopFront();
+  fut.cancel();
+  g.set_value(op);
   auto db = fut.get();
-  EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
+  EXPECT_THAT(db, StatusIs(StatusCode::kCancelled));
 }
 
 /// @test Verify that we can list database operations in multiple pages.

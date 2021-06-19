@@ -41,26 +41,23 @@ class GoldenThingAdminAuth : public GoldenThingAdminStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<GoldenThingAdminStub> child);
 
-
   StatusOr<google::test::admin::database::v1::ListDatabasesResponse> ListDatabases(
       grpc::ClientContext& context,
       google::test::admin::database::v1::ListDatabasesRequest const& request) override;
 
-
-  StatusOr<google::longrunning::Operation> CreateDatabase(
-      grpc::ClientContext& context,
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
-
 
   StatusOr<google::test::admin::database::v1::Database> GetDatabase(
       grpc::ClientContext& context,
       google::test::admin::database::v1::GetDatabaseRequest const& request) override;
 
-
-  StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
-      grpc::ClientContext& context,
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
-
 
   Status DropDatabase(
       grpc::ClientContext& context,
@@ -70,36 +67,30 @@ class GoldenThingAdminAuth : public GoldenThingAdminStub {
       grpc::ClientContext& context,
       google::test::admin::database::v1::GetDatabaseDdlRequest const& request) override;
 
-
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       grpc::ClientContext& context,
       google::iam::v1::SetIamPolicyRequest const& request) override;
-
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
-
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-
-  StatusOr<google::longrunning::Operation> CreateBackup(
-      grpc::ClientContext& context,
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
       google::test::admin::database::v1::CreateBackupRequest const& request) override;
-
 
   StatusOr<google::test::admin::database::v1::Backup> GetBackup(
       grpc::ClientContext& context,
       google::test::admin::database::v1::GetBackupRequest const& request) override;
 
-
   StatusOr<google::test::admin::database::v1::Backup> UpdateBackup(
       grpc::ClientContext& context,
       google::test::admin::database::v1::UpdateBackupRequest const& request) override;
-
 
   Status DeleteBackup(
       grpc::ClientContext& context,
@@ -109,32 +100,28 @@ class GoldenThingAdminAuth : public GoldenThingAdminStub {
       grpc::ClientContext& context,
       google::test::admin::database::v1::ListBackupsRequest const& request) override;
 
-
-  StatusOr<google::longrunning::Operation> RestoreDatabase(
-      grpc::ClientContext& context,
+  future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
-
 
   StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
       grpc::ClientContext& context,
       google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) override;
 
-
   StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse> ListBackupOperations(
       grpc::ClientContext& context,
       google::test::admin::database::v1::ListBackupOperationsRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::longrunning::GetOperationRequest const& request) override;
 
-    /// Poll a long-running operation.
-    StatusOr<google::longrunning::Operation> GetOperation(
-        grpc::ClientContext& context,
-        google::longrunning::GetOperationRequest const& request) override;
-
-    /// Cancel a long-running operation.
-    Status CancelOperation(
-        grpc::ClientContext& context,
-        google::longrunning::CancelOperationRequest const& request) override;
-
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::longrunning::CancelOperationRequest const& request) override;
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<GoldenThingAdminStub> child_;
