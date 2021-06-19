@@ -175,9 +175,9 @@ function integration::bazel_with_emulators() {
   "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}"
 
-  io::log_h2 "Running Spanner integration tests"
-  bazel "${verb}" "${args[@]}" --test_tag_filters=integration-test \
-    google/cloud/spanner/...
+  io::log_h2 "Running Spanner integration tests (with emulator)"
+  "google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
+    bazel "${verb}" "${args[@]}"
 
   # We retry these tests because the emulator crashes due to #441.
   io::log_h2 "Running Bigtable integration tests (with emulator)"
