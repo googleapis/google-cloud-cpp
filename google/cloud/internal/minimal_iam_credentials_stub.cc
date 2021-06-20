@@ -42,19 +42,22 @@ class MinimalIamCredentialsImpl : public MinimalIamCredentialsStub {
   future<StatusOr<GenerateAccessTokenResponse>> AsyncGenerateAccessToken(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       GenerateAccessTokenRequest const& request) override {
-    // TODO(#6310) - use AsyncConfigureContext here ...
-    auto status = auth_strategy_->ConfigureContext(*context);
-    if (!status.ok()) {
-      return make_ready_future(
-          StatusOr<GenerateAccessTokenResponse>(std::move(status)));
-    }
-    return cq.MakeUnaryRpc(
-        [this](grpc::ClientContext* context,
-               GenerateAccessTokenRequest const& request,
-               grpc::CompletionQueue* cq) {
-          return impl_->AsyncGenerateAccessToken(context, request, cq);
-        },
-        request, std::move(context));
+    using ResultType = StatusOr<GenerateAccessTokenResponse>;
+    auto impl = impl_;
+    auto async_call = [impl](grpc::ClientContext* context,
+                             GenerateAccessTokenRequest const& request,
+                             grpc::CompletionQueue* cq) {
+      return impl->AsyncGenerateAccessToken(context, request, cq);
+    };
+    return auth_strategy_->AsyncConfigureContext(std::move(context))
+        .then([cq, async_call,
+               request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                            f) mutable -> future<ResultType> {
+          auto context = f.get();
+          if (!context)
+            return make_ready_future(ResultType(std::move(context).status()));
+          return cq.MakeUnaryRpc(async_call, request, *std::move(context));
+        });
   }
 
  private:
