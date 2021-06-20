@@ -46,6 +46,11 @@ class MockStub {
               (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                google::longrunning::GetOperationRequest const&),
               ());
+
+  MOCK_METHOD(future<Status>, AsyncCancelOperation,
+              (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+               google::longrunning::CancelOperationRequest const&),
+              ());
 };
 
 class MockPollingPolicy : public PollingPolicy {
@@ -60,6 +65,15 @@ AsyncPollLongRunningOperation MakePoll(std::shared_ptr<MockStub> const& mock) {
       [mock](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return mock->AsyncGetOperation(cq, std::move(context), request);
+      };
+}
+
+AsyncCancelLongRunningOperation MakeCancel(
+    std::shared_ptr<MockStub> const& mock) {
+  return
+      [mock](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return mock->AsyncCancelOperation(cq, std::move(context), request);
       };
 }
 
@@ -78,8 +92,9 @@ TEST(AsyncPollingLoopTest, ImmediateSuccess) {
   EXPECT_CALL(*policy, OnFailure).Times(0);
   EXPECT_CALL(*policy, WaitPeriod).Times(0);
   CompletionQueue cq;
-  auto actual = AsyncPollingLoop(cq, op, MakePoll(mock), std::move(policy),
-                                 "test-function")
+  auto actual = AsyncPollingLoop(cq, make_ready_future(make_status_or(op)),
+                                 MakePoll(mock), MakeCancel(mock),
+                                 std::move(policy), "test-function")
                     .get();
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(op));
@@ -113,9 +128,11 @@ TEST(AsyncPollingLoopTest, PollThenSuccess) {
   EXPECT_CALL(*policy, OnFailure).Times(0);
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  auto actual = AsyncPollingLoop(cq, starting_op, MakePoll(mock),
-                                 std::move(policy), "test-function")
-                    .get();
+  auto actual =
+      AsyncPollingLoop(cq, make_ready_future(make_status_or(starting_op)),
+                       MakePoll(mock), MakeCancel(mock), std::move(policy),
+                       "test-function")
+          .get();
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -140,9 +157,11 @@ TEST(AsyncPollingLoopTest, PollThenTimerError) {
   EXPECT_CALL(*policy, OnFailure).Times(0);
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  auto actual = AsyncPollingLoop(cq, starting_op, MakePoll(mock),
-                                 std::move(policy), "test-function")
-                    .get();
+  auto actual =
+      AsyncPollingLoop(cq, make_ready_future(make_status_or(starting_op)),
+                       MakePoll(mock), MakeCancel(mock), std::move(policy),
+                       "test-function")
+          .get();
   EXPECT_THAT(actual,
               StatusIs(StatusCode::kCancelled, HasSubstr("cq shutdown")));
 }
@@ -188,9 +207,11 @@ TEST(AsyncPollingLoopTest, PollThenEventualSuccess) {
   EXPECT_CALL(*policy, OnFailure).WillRepeatedly(Return(true));
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  auto actual = AsyncPollingLoop(cq, starting_op, MakePoll(mock),
-                                 std::move(policy), "test-function")
-                    .get();
+  auto actual =
+      AsyncPollingLoop(cq, make_ready_future(make_status_or(starting_op)),
+                       MakePoll(mock), MakeCancel(mock), std::move(policy),
+                       "test-function")
+          .get();
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -228,11 +249,15 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicy) {
       .WillOnce(Return(false));
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  auto actual = AsyncPollingLoop(cq, starting_op, MakePoll(mock),
-                                 std::move(policy), "test-function")
-                    .get();
-  EXPECT_THAT(actual, StatusIs(Not(Eq(StatusCode::kOk)),
-                               HasSubstr("exhausted polling policy")));
+  auto actual =
+      AsyncPollingLoop(cq, make_ready_future(make_status_or(starting_op)),
+                       MakePoll(mock), MakeCancel(mock), std::move(policy),
+                       "test-function")
+          .get();
+  EXPECT_THAT(actual,
+              StatusIs(Not(Eq(StatusCode::kOk)),
+                       AllOf(HasSubstr("test-function"),
+                             HasSubstr("terminated by polling policy"))));
 }
 
 TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicyWithFailure) {
@@ -269,9 +294,11 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicyWithFailure) {
       .WillOnce(Return(false));
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  auto actual = AsyncPollingLoop(cq, starting_op, MakePoll(mock),
-                                 std::move(policy), "test-function")
-                    .get();
+  auto actual =
+      AsyncPollingLoop(cq, make_ready_future(make_status_or(starting_op)),
+                       MakePoll(mock), MakeCancel(mock), std::move(policy),
+                       "test-function")
+          .get();
   ASSERT_THAT(actual,
               StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
 }
@@ -309,8 +336,9 @@ TEST(AsyncPollingLoopTest, PollLifetime) {
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
 
-  auto pending = AsyncPollingLoop(cq, starting_op, MakePoll(mock),
-                                  std::move(policy), "test-function");
+  auto pending = AsyncPollingLoop(
+      cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
+      MakeCancel(mock), std::move(policy), "test-function");
 
   for (int i = 0; i != 3; ++i) {
     timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
@@ -321,6 +349,113 @@ TEST(AsyncPollingLoopTest, PollLifetime) {
   auto actual = pending.get();
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
+TEST(AsyncPollingLoopTest, PollThenCancelDuringTimer) {
+  Instance instance;
+  instance.set_name("test-instance-name");
+  google::longrunning::Operation starting_op;
+  starting_op.set_name("test-op-name");
+  google::longrunning::Operation expected = starting_op;
+  expected.set_done(true);
+  expected.mutable_metadata()->PackFrom(instance);
+
+  using TimerType = StatusOr<std::chrono::system_clock::time_point>;
+  AsyncSequencer<TimerType> timer_sequencer;
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .Times(AtLeast(1))
+      .WillRepeatedly(
+          [&](std::chrono::nanoseconds) { return timer_sequencer.PushBack(); });
+  CompletionQueue cq(mock_cq);
+
+  AsyncSequencer<StatusOr<Operation>> get_sequencer;
+  auto mock = std::make_shared<MockStub>();
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .Times(AtLeast(1))
+      .WillRepeatedly([&](CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::longrunning::GetOperationRequest const&) {
+        return get_sequencer.PushBack();
+      });
+  EXPECT_CALL(*mock, AsyncCancelOperation)
+      .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                    google::longrunning::CancelOperationRequest const&) {
+        return make_ready_future(Status{});
+      });
+  auto policy = absl::make_unique<MockPollingPolicy>();
+  EXPECT_CALL(*policy, clone()).Times(0);
+  EXPECT_CALL(*policy, OnFailure).WillRepeatedly(Return(true));
+  EXPECT_CALL(*policy, WaitPeriod)
+      .WillRepeatedly(Return(std::chrono::milliseconds(1)));
+
+  auto pending = AsyncPollingLoop(
+      cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
+      MakeCancel(mock), std::move(policy), "test-function");
+
+  timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
+  get_sequencer.PopFront().set_value(starting_op);
+  pending.cancel();
+  timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
+
+  auto actual = pending.get();
+  EXPECT_THAT(actual, StatusIs(Not(Eq(StatusCode::kOk)),
+                               AllOf(HasSubstr("test-function"),
+                                     HasSubstr("terminated via cancel"))));
+}
+
+TEST(AsyncPollingLoopTest, PollThenCancelDuringPoll) {
+  Instance instance;
+  instance.set_name("test-instance-name");
+  google::longrunning::Operation starting_op;
+  starting_op.set_name("test-op-name");
+  google::longrunning::Operation expected = starting_op;
+  expected.set_done(true);
+  expected.mutable_metadata()->PackFrom(instance);
+
+  using TimerType = StatusOr<std::chrono::system_clock::time_point>;
+  AsyncSequencer<TimerType> timer_sequencer;
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .Times(AtLeast(1))
+      .WillRepeatedly(
+          [&](std::chrono::nanoseconds) { return timer_sequencer.PushBack(); });
+  CompletionQueue cq(mock_cq);
+
+  AsyncSequencer<StatusOr<Operation>> get_sequencer;
+  auto mock = std::make_shared<MockStub>();
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .Times(AtLeast(1))
+      .WillRepeatedly([&](CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::longrunning::GetOperationRequest const&) {
+        return get_sequencer.PushBack();
+      });
+  EXPECT_CALL(*mock, AsyncCancelOperation)
+      .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                    google::longrunning::CancelOperationRequest const&) {
+        return make_ready_future(Status{});
+      });
+  auto policy = absl::make_unique<MockPollingPolicy>();
+  EXPECT_CALL(*policy, clone()).Times(0);
+  EXPECT_CALL(*policy, OnFailure).WillRepeatedly(Return(true));
+  EXPECT_CALL(*policy, WaitPeriod)
+      .WillRepeatedly(Return(std::chrono::milliseconds(1)));
+
+  auto pending = AsyncPollingLoop(
+      cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
+      MakeCancel(mock), std::move(policy), "test-function");
+
+  timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
+  get_sequencer.PopFront().set_value(starting_op);
+  timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
+  pending.cancel();
+  get_sequencer.PopFront().set_value(starting_op);
+
+  auto actual = pending.get();
+  EXPECT_THAT(actual, StatusIs(Not(Eq(StatusCode::kOk)),
+                               AllOf(HasSubstr("test-function"),
+                                     HasSubstr("terminated via cancel"))));
 }
 
 }  // namespace

@@ -35,6 +35,10 @@ using AsyncPollLongRunningOperation =
         CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
         google::longrunning::GetOperationRequest const&)>;
 
+using AsyncCancelLongRunningOperation = std::function<future<Status>(
+    CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+    google::longrunning::CancelOperationRequest const&)>;
+
 /**
  * Runs an asynchronous polling loop for a long-running operation.
  *
@@ -77,6 +81,10 @@ using AsyncPollLongRunningOperation =
  *     google::cloud::CompletionQueue& cq,
  *     std::unique_ptr<grpc::ClientContext> context,
  *     google::longrunning::GetOperationRequest const& request) = 0;
+ *   virtual future<Status> AsyncCancelOperation(
+ *     google::cloud::CompletionQueue& cq,
+ *     std::unique_ptr<grpc::ClientContext> context,
+ *     google::longrunning::CancelOperationRequest const& request) = 0;
  * };
  * @endcode
  *
@@ -95,10 +103,11 @@ using AsyncPollLongRunningOperation =
  *       if (!op) return make_ready_future(op);
  *       return AsyncPollingLoop(
  *           std::move(cq), *std::move(op),
- *           [stub](auto cq, auto context, auto const& op) {
- *             google::longrunning::GetOperationRequest r;
- *             r.set_name(op.name());
+ *           [stub](auto cq, auto context, auto const& r) {
  *             return stub->AsyncGetOperation(cq, std::move(context), r);
+ *           },
+ *           [stub](auto cq, auto context, auto const& r) {
+ *             return stub->AsyncCancelOperation(cq, std::move(context), r);
  *           },
  *           polling_policy_->clone(), loc);
  *        });
@@ -113,8 +122,9 @@ using AsyncPollLongRunningOperation =
  * [aip/151]: https://google.aip.dev/151
  */
 future<StatusOr<google::longrunning::Operation>> AsyncPollingLoop(
-    google::cloud::CompletionQueue cq, google::longrunning::Operation op,
-    AsyncPollLongRunningOperation poll,
+    google::cloud::CompletionQueue cq,
+    future<StatusOr<google::longrunning::Operation>> op,
+    AsyncPollLongRunningOperation poll, AsyncCancelLongRunningOperation cancel,
     std::unique_ptr<PollingPolicy> polling_policy, std::string location);
 
 }  // namespace internal

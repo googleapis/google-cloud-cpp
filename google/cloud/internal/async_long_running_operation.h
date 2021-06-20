@@ -74,6 +74,10 @@ using LongRunningOperationValueExtractor = std::function<StatusOr<ReturnType>(
  *     google::cloud::CompletionQueue& cq,
  *     std::unique_ptr<grpc::ClientContext> context,
  *     google::longrunning::GetOperationRequest const& request) = 0;
+ *   virtual future<Status> AsyncCancelOperation(
+ *     google::cloud::CompletionQueue& cq,
+ *     std::unique_ptr<grpc::ClientContext> context,
+ *     google::longrunning::CancelOperationRequest const& request) = 0;
  * };
  * @endcode
  *
@@ -91,6 +95,9 @@ using LongRunningOperationValueExtractor = std::function<StatusOr<ReturnType>(
  *       },
  *       [stub = stub_](auto& cq, auto context, auto const& request) {
  *         return stub->AsyncGetOperation(cq, std::move(context), request);
+ *       },
+ *       [stub](auto cq, auto context, auto const& r) {
+ *         return stub->AsyncCancelOperation(cq, std::move(context), r);
  *       },
  *       retry_policy_->clone(), backoff_policy_->clone(),
  *       IdempotencyPolicy::kIdempotent,
@@ -112,6 +119,7 @@ template <typename ReturnType, typename RequestType, typename StartFunctor,
 future<StatusOr<ReturnType>> AsyncLongRunningOperation(
     google::cloud::CompletionQueue cq, RequestType&& request,
     StartFunctor&& start, AsyncPollLongRunningOperation poll,
+    AsyncCancelLongRunningOperation cancel,
     LongRunningOperationValueExtractor<ReturnType> value_extractor,
     std::unique_ptr<RetryPolicyType> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy, Idempotency idempotent,
@@ -124,19 +132,17 @@ future<StatusOr<ReturnType>> AsyncLongRunningOperation(
   struct MoveCapture {
     google::cloud::CompletionQueue cq;
     AsyncPollLongRunningOperation poll;
+    AsyncCancelLongRunningOperation cancel;
     LongRunningOperationValueExtractor<ReturnType> value_extractor;
     std::unique_ptr<PollingPolicy> polling_policy;
     std::string location;
 
     future<StatusOr<ReturnType>> operator()(future<StatusOr<Operation>> f) {
-      auto op = f.get();
-      if (!op) {
-        return make_ready_future(StatusOr<ReturnType>(std::move(op).status()));
-      }
-      auto loc = std::move(location);
+      auto loc = this->location;
       auto extractor = std::move(value_extractor);
-      return AsyncPollingLoop(std::move(cq), *std::move(op), std::move(poll),
-                              std::move(polling_policy), std::move(location))
+      return AsyncPollingLoop(std::move(cq), std::move(f), std::move(poll),
+                              std::move(cancel), std::move(polling_policy),
+                              std::move(location))
           .then([extractor, loc](future<StatusOr<Operation>> g) {
             return extractor(g.get(), loc);
           });
@@ -144,8 +150,9 @@ future<StatusOr<ReturnType>> AsyncLongRunningOperation(
   };
 
   return operation.then(
-      MoveCapture{std::move(cq), std::move(poll), std::move(value_extractor),
-                  std::move(polling_policy), std::string{location}});
+      MoveCapture{std::move(cq), std::move(poll), std::move(cancel),
+                  std::move(value_extractor), std::move(polling_policy),
+                  std::string{location}});
 }
 
 }  // namespace internal
