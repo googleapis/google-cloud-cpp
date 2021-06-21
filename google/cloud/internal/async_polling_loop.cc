@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_polling_loop.h"
+#include <atomic>
 
 namespace google {
 namespace cloud {
@@ -127,7 +128,7 @@ class AsyncPollingLoopImpl
   google::longrunning::Operation op_;
   AsyncPollLongRunningOperation poll_;
   AsyncCancelLongRunningOperation cancel_;
-  // This is the only member variable in the accessed concurrently. All other
+  // This is the only member variable that is accessed concurrently. All other
   // member variables are changed and used in `On*()` functions, which are
   // synchronized by virtue of being called from the CompletionQueue one at a
   // time.
