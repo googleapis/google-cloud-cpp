@@ -31,7 +31,7 @@ brew list --versions pkg-config || brew install pkg-config
 vcpkg_dir="${HOME}/vcpkg-quickstart"
 mkdir -p "${vcpkg_dir}"
 io::log "Downloading vcpkg into ${vcpkg_dir}..."
-curl -sSL "https://github.com/microsoft/vcpkg/archive/2021.05.12.tar.gz" |
+curl -sSL "https://github.com/microsoft/vcpkg/archive/6e024e744e7717c06ddacd5089401109c6298553.tar.gz" |
   tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
 (
   cd "${vcpkg_dir}"
