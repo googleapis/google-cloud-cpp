@@ -162,7 +162,7 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 
 <!-- END bigtable_hw_install -->
 
-[bazel-install]: https://docs.bazel.build/versions/master/install.html
+[bazel-install]: https://docs.bazel.build/versions/main/install.html
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake

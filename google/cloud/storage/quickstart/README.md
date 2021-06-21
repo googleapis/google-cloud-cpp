@@ -136,7 +136,7 @@ to use it via:
 bazel --output_user_root=c:\b build ...
 ```
 
-[bazel-install]: https://docs.bazel.build/versions/master/install.html
+[bazel-install]: https://docs.bazel.build/versions/main/install.html
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
 [cmake-download-link]: https://cmake.org/download/

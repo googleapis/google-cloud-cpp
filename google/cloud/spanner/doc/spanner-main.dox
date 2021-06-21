@@ -160,7 +160,7 @@ period between retries.
 [authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
 [gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
-[quickstart-link]:  https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/spanner/quickstart
-[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/status_or.h
+[quickstart-link]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/spanner/quickstart
+[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
 
 */

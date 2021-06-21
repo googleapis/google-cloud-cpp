@@ -104,10 +104,10 @@ which should give you a taste of the Cloud Bigtable C++ client library API.
 [user-account]: https://cloud.google.com/docs/authentication/
 
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
-[workspace-definition-link]: https://docs.bazel.build/versions/master/build-ref.html#packages_targets
+[workspace-definition-link]: https://docs.bazel.build/versions/main/build-ref.html#packages_targets
 
 <!-- The ugly %2E disables auto-linking in Doxygen -->
-[github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/master/README%2Emd
-[github-install]: https://github.com/googleapis/google-cloud-cpp/blob/master/INSTALL%2Emd
+[github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/main/README%2Emd
+[github-install]: https://github.com/googleapis/google-cloud-cpp/blob/main/INSTALL%2Emd
 
 */

@@ -158,7 +158,7 @@ trust store for SSL certificates, you can download and configure this using:
 set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
-[bazel-install]: https://docs.bazel.build/versions/master/install.html
+[bazel-install]: https://docs.bazel.build/versions/main/install.html
 [pubsub-quickstart-link]: https://cloud.google.com/pubsub/docs/quickstart-console
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [choco-cmake-link]: https://chocolatey.org/packages/cmake

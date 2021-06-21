@@ -63,7 +63,7 @@ if ((Test-Path env:KOKORO_GFILE_DIR) -and
     Write-Host -ForegroundColor Yellow "Using bazel remote cache: ${BAZEL_CACHE}/windows/${BuildName}"
     $build_flags += @("--remote_cache=${BAZEL_CACHE}/windows/${BuildName}")
     $build_flags += @("--google_credentials=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")
-    # See https://docs.bazel.build/versions/master/remote-caching.html#known-issues
+    # See https://docs.bazel.build/versions/main/remote-caching.html#known-issues
     # and https://github.com/bazelbuild/bazel/issues/3360
     $build_flags += @("--experimental_guard_against_concurrent_changes")
 }

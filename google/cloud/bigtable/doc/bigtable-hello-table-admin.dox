@@ -19,7 +19,7 @@ To run the example program, follow the [instructions][github-examples] for the
 example on GitHub.
 
 [reference-link]: https://googleapis.github.io/google-cloud-cpp
-[github-examples]: https://github.com/googleapis/google-cloud-cpp/tree/master/google/cloud/bigtable/examples/
+[github-examples]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/bigtable/examples/
 
 ## Include the Necessary Headers
 

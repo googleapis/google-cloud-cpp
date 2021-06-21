@@ -120,7 +120,7 @@ there is no value.
 [concepts-link]: https://cloud.google.com/pubsub/docs/concepts 'Pub/Sub Concepts'
 [gcloud-authorizing]: https://cloud.google.com/sdk/docs/authorizing 'Authorizing Cloud SDK tools'
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
-[quickstart-link]:  https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/pubsub/quickstart
-[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/status_or.h
+[quickstart-link]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/quickstart
+[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
 
 */

@@ -73,7 +73,7 @@ function bazel::common_args() {
   if [[ -n "${BAZEL_REMOTE_CACHE:-}" ]]; then
     args+=("--remote_cache=${BAZEL_REMOTE_CACHE}")
     args+=("--google_default_credentials")
-    # See https://docs.bazel.build/versions/master/remote-caching.html#known-issues
+    # See https://docs.bazel.build/versions/main/remote-caching.html#known-issues
     # and https://github.com/bazelbuild/bazel/issues/3360
     args+=("--experimental_guard_against_concurrent_changes")
   fi
