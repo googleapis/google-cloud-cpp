@@ -30,9 +30,7 @@ using ::google::bigtable::admin::v2::Instance;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
-using ::google::cloud::testing_util::StatusIs;
 using ::google::longrunning::Operation;
-using ::testing::HasSubstr;
 using ::testing::Return;
 
 class MockStub {
@@ -68,50 +66,6 @@ std::unique_ptr<RetryPolicy> TestRetryPolicy() {
 std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
   using us = std::chrono::microseconds;
   return ExponentialBackoffPolicy(us(100), us(100), 2.0).clone();
-}
-
-TEST(AsyncLongRunningTest, ExtractValueDoneWithSuccess) {
-  Instance expected;
-  expected.set_name("test-instance-admin");
-  google::longrunning::Operation op;
-  op.set_done(true);
-  op.mutable_metadata()->PackFrom(expected);
-  auto const actual = ExtractLongRunningResult<Instance>(op, "test-function");
-  ASSERT_STATUS_OK(actual);
-  EXPECT_THAT(*actual, IsProtoEqual(expected));
-}
-
-TEST(AsyncLongRunningTest, ExtractValueDoneWithError) {
-  google::longrunning::Operation op;
-  op.set_done(true);
-  op.mutable_error()->set_code(grpc::StatusCode::PERMISSION_DENIED);
-  op.mutable_error()->set_message("uh-oh");
-  auto const actual = ExtractLongRunningResult<Instance>(op, "test-function");
-  EXPECT_THAT(actual,
-              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
-}
-
-TEST(AsyncLongRunningTest, ExtractValueDoneWithoutResult) {
-  google::longrunning::Operation op;
-  op.set_done(true);
-  auto const actual = ExtractLongRunningResult<Instance>(op, "test-function");
-  EXPECT_THAT(actual, StatusIs(StatusCode::kInternal));
-}
-
-TEST(AsyncLongRunningTest, ExtractValueDoneWithInvalidContent) {
-  google::longrunning::Operation op;
-  op.set_done(true);
-  op.mutable_metadata()->PackFrom(google::protobuf::Empty{});
-  auto const actual = ExtractLongRunningResult<Instance>(op, "test-function");
-  EXPECT_THAT(actual, StatusIs(StatusCode::kInternal));
-}
-
-TEST(AsyncLongRunningTest, ExtractValueError) {
-  auto const expected = Status{StatusCode::kPermissionDenied, "uh-oh"};
-  auto const actual =
-      ExtractLongRunningResult<Instance>(expected, "test-function");
-  ASSERT_THAT(actual, Not(IsOk()));
-  EXPECT_EQ(expected, actual.status());
 }
 
 TEST(AsyncLongRunningTest, RequestPollThenSuccess) {
