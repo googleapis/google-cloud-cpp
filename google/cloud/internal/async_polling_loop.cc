@@ -50,23 +50,21 @@ class AsyncPollingLoopImpl
   using TimerResult = future<StatusOr<std::chrono::system_clock::time_point>>;
 
   void Wait() {
-    auto w = WeakFromThis();
+    auto self = shared_from_this();
     cq_.MakeRelativeTimer(polling_policy_->WaitPeriod())
-        .then([w](TimerResult f) {
-          if (auto self = w.lock()) self->OnTimer(std::move(f));
-        });
+        .then([self](TimerResult f) { self->OnTimer(std::move(f)); });
   }
 
   void OnTimer(TimerResult f) {
     auto t = f.get();
     if (!t) return promise_.set_value(std::move(t).status());
 
-    auto w = WeakFromThis();
+    auto self = shared_from_this();
     google::longrunning::GetOperationRequest request;
     request.set_name(op_.name());
     poll_(cq_, absl::make_unique<grpc::ClientContext>(), request)
-        .then([w](future<StatusOr<google::longrunning::Operation>> g) {
-          if (auto self = w.lock()) self->OnPoll(std::move(g));
+        .then([self](future<StatusOr<google::longrunning::Operation>> g) {
+          self->OnPoll(std::move(g));
         });
   }
 

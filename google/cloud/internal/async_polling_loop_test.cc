@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_polling_loop.h"
+#include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -27,6 +28,7 @@ namespace internal {
 namespace {
 
 using ::google::bigtable::admin::v2::Instance;
+using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
@@ -272,6 +274,53 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicyWithFailure) {
                     .get();
   ASSERT_THAT(actual,
               StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
+}
+
+TEST(AsyncPollingLoopTest, PollLifetime) {
+  Instance instance;
+  instance.set_name("test-instance-name");
+  google::longrunning::Operation starting_op;
+  starting_op.set_name("test-op-name");
+  google::longrunning::Operation expected = starting_op;
+  expected.set_done(true);
+  expected.mutable_metadata()->PackFrom(instance);
+
+  using TimerType = StatusOr<std::chrono::system_clock::time_point>;
+  AsyncSequencer<TimerType> timer_sequencer;
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .Times(4)
+      .WillRepeatedly(
+          [&](std::chrono::nanoseconds) { return timer_sequencer.PushBack(); });
+  CompletionQueue cq(mock_cq);
+
+  AsyncSequencer<StatusOr<Operation>> get_sequencer;
+  auto mock = std::make_shared<MockStub>();
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .Times(4)
+      .WillRepeatedly([&](CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::longrunning::GetOperationRequest const&) {
+        return get_sequencer.PushBack();
+      });
+  auto policy = absl::make_unique<MockPollingPolicy>();
+  EXPECT_CALL(*policy, clone()).Times(0);
+  EXPECT_CALL(*policy, OnFailure).WillRepeatedly(Return(true));
+  EXPECT_CALL(*policy, WaitPeriod)
+      .WillRepeatedly(Return(std::chrono::milliseconds(1)));
+
+  auto pending = AsyncPollingLoop(cq, starting_op, MakePoll(mock),
+                                  std::move(policy), "test-function");
+
+  for (int i = 0; i != 3; ++i) {
+    timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
+    get_sequencer.PopFront().set_value(starting_op);
+  }
+  timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
+  get_sequencer.PopFront().set_value(expected);
+  auto actual = pending.get();
+  ASSERT_THAT(actual, IsOk());
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
 
 }  // namespace
