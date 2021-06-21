@@ -58,6 +58,6 @@ Running the command without options will list the available samples:
 bazel run //google/cloud/spanner/samples:samples
 ```
 
-[bazel-install]: https://docs.bazel.build/versions/master/install.html
+[bazel-install]: https://docs.bazel.build/versions/main/install.html
 [spanner-quickstart-link]: https://cloud.google.com/spanner/docs/quickstart-console
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
