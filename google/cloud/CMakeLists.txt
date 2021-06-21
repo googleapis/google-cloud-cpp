@@ -390,7 +390,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         grpc_utils/version.h
         internal/async_connection_ready.cc
         internal/async_connection_ready.h
-        internal/async_long_running_operation.cc
         internal/async_long_running_operation.h
         internal/async_polling_loop.cc
         internal/async_polling_loop.h
@@ -404,6 +403,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/completion_queue_impl.h
         internal/default_completion_queue_impl.cc
         internal/default_completion_queue_impl.h
+        internal/extract_long_running_result.cc
+        internal/extract_long_running_result.h
         internal/grpc_access_token_authentication.cc
         internal/grpc_access_token_authentication.h
         internal/grpc_async_access_token_cache.cc
@@ -535,6 +536,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/async_retry_loop_test.cc
             internal/async_retry_unary_rpc_test.cc
             internal/background_threads_impl_test.cc
+            internal/extract_long_running_result_test.cc
             internal/grpc_access_token_authentication_test.cc
             internal/grpc_async_access_token_cache_test.cc
             internal/grpc_channel_credentials_authentication_test.cc

@@ -20,6 +20,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_polling_loop.h"
 #include "google/cloud/internal/async_retry_loop.h"
+#include "google/cloud/internal/extract_long_running_result.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -34,31 +35,6 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
-
-/// Extracts the value (or error) from a completed long-running operation
-Status ExtractOperationResultImpl(
-    StatusOr<google::longrunning::Operation> op,
-    google::protobuf::Message& result,
-    absl::FunctionRef<bool(google::protobuf::Any const&)> validate_any,
-    std::string const& location);
-
-/**
- * Extracts the value from a completed long-running operation.
- *
- * This helper is used in `AsyncLongRunningOperation()` to extract the value (or
- * error) from a completed long-running operation.
- */
-template <typename ReturnType>
-StatusOr<ReturnType> ExtractLongRunningResult(
-    StatusOr<google::longrunning::Operation> op, std::string const& location) {
-  ReturnType result;
-  auto status = ExtractOperationResultImpl(
-      std::move(op), result,
-      [](google::protobuf::Any const& any) { return any.Is<ReturnType>(); },
-      location);
-  if (!status.ok()) return status;
-  return result;
-}
 
 /**
  * Asynchronously starts and polls a long-running operation.
