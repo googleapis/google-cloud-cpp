@@ -28,7 +28,14 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 /// Extracts the value (or error) from a completed long-running operation
-Status ExtractOperationResultImpl(
+Status ExtractOperationResultMetadataImpl(
+    StatusOr<google::longrunning::Operation> op,
+    google::protobuf::Message& result,
+    absl::FunctionRef<bool(google::protobuf::Any const&)> validate_any,
+    std::string const& location);
+
+/// Extracts the value (or error) from a completed long-running operation
+Status ExtractOperationResultResponseImpl(
     StatusOr<google::longrunning::Operation> op,
     google::protobuf::Message& result,
     absl::FunctionRef<bool(google::protobuf::Any const&)> validate_any,
@@ -41,10 +48,28 @@ Status ExtractOperationResultImpl(
  * error) from a completed long-running operation.
  */
 template <typename ReturnType>
-StatusOr<ReturnType> ExtractLongRunningResult(
+StatusOr<ReturnType> ExtractLongRunningResultMetadata(
     StatusOr<google::longrunning::Operation> op, std::string const& location) {
   ReturnType result;
-  auto status = ExtractOperationResultImpl(
+  auto status = ExtractOperationResultMetadataImpl(
+      std::move(op), result,
+      [](google::protobuf::Any const& any) { return any.Is<ReturnType>(); },
+      location);
+  if (!status.ok()) return status;
+  return result;
+}
+
+/**
+ * Extracts the value from a completed long-running operation.
+ *
+ * This helper is used in `AsyncLongRunningOperation()` to extract the value (or
+ * error) from a completed long-running operation.
+ */
+template <typename ReturnType>
+StatusOr<ReturnType> ExtractLongRunningResultResponse(
+    StatusOr<google::longrunning::Operation> op, std::string const& location) {
+  ReturnType result;
+  auto status = ExtractOperationResultResponseImpl(
       std::move(op), result,
       [](google::protobuf::Any const& any) { return any.Is<ReturnType>(); },
       location);
