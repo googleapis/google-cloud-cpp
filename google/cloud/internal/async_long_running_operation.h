@@ -36,6 +36,10 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
+template <typename ReturnType>
+using LongRunningOperationValueExtractor = std::function<StatusOr<ReturnType>(
+    StatusOr<google::longrunning::Operation>, std::string const&)>;
+
 /**
  * Asynchronously starts and polls a long-running operation.
  *
@@ -108,9 +112,11 @@ template <typename ReturnType, typename RequestType, typename StartFunctor,
 future<StatusOr<ReturnType>> AsyncLongRunningOperation(
     google::cloud::CompletionQueue cq, RequestType&& request,
     StartFunctor&& start, AsyncPollLongRunningOperation poll,
+    LongRunningOperationValueExtractor<ReturnType> value_extractor,
     std::unique_ptr<RetryPolicyType> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy, Idempotency idempotent,
     std::unique_ptr<PollingPolicy> polling_policy, char const* location) {
+  using ::google::longrunning::Operation;
   auto operation =
       AsyncRetryLoop(std::move(retry_policy), std::move(backoff_policy),
                      idempotent, cq, std::forward<StartFunctor>(start),
@@ -118,27 +124,28 @@ future<StatusOr<ReturnType>> AsyncLongRunningOperation(
   struct MoveCapture {
     google::cloud::CompletionQueue cq;
     AsyncPollLongRunningOperation poll;
+    LongRunningOperationValueExtractor<ReturnType> value_extractor;
     std::unique_ptr<PollingPolicy> polling_policy;
     std::string location;
 
-    future<StatusOr<ReturnType>> operator()(
-        future<StatusOr<google::longrunning::Operation>> f) {
+    future<StatusOr<ReturnType>> operator()(future<StatusOr<Operation>> f) {
       auto op = f.get();
       if (!op) {
         return make_ready_future(StatusOr<ReturnType>(std::move(op).status()));
       }
-      auto loc = this->location;
+      auto loc = std::move(location);
+      auto extractor = std::move(value_extractor);
       return AsyncPollingLoop(std::move(cq), *std::move(op), std::move(poll),
                               std::move(polling_policy), std::move(location))
-          .then([loc](future<StatusOr<google::longrunning::Operation>> g) {
-            return ExtractLongRunningResult<ReturnType>(g.get(), loc);
+          .then([extractor, loc](future<StatusOr<Operation>> g) {
+            return extractor(g.get(), loc);
           });
     }
   };
 
-  return operation.then(MoveCapture{std::move(cq), std::move(poll),
-                                    std::move(polling_policy),
-                                    std::string{location}});
+  return operation.then(
+      MoveCapture{std::move(cq), std::move(poll), std::move(value_extractor),
+                  std::move(polling_policy), std::string{location}});
 }
 
 }  // namespace internal
