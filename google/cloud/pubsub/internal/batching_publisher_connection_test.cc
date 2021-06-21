@@ -37,6 +37,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::AtLeast;
 using ::testing::Contains;
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 
 google::pubsub::v1::PublishResponse MakeResponse(
@@ -46,6 +47,15 @@ google::pubsub::v1::PublishResponse MakeResponse(
     response.add_message_ids("id-" + m.message_id());
   }
   return response;
+}
+
+std::vector<std::string> MessagesData(
+    google::pubsub::v1::PublishRequest const& request) {
+  std::vector<std::string> data(request.messages_size());
+  std::transform(
+      request.messages().begin(), request.messages().end(), data.begin(),
+      [](google::pubsub::v1::PubsubMessage const& m) { return m.data(); });
+  return data;
 }
 
 TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
@@ -58,16 +68,11 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
       .WillRepeatedly([&](google::pubsub::v1::PublishRequest const& request) {
         return async.PushBack().then([topic, request](future<void>) {
           EXPECT_EQ(topic.FullName(), request.topic());
-          std::vector<std::string> data;
-          std::transform(request.messages().begin(), request.messages().end(),
-                         std::back_inserter(data),
-                         [](google::pubsub::v1::PubsubMessage const& m) {
-                           return std::string(m.data());
-                         });
+          auto const data = MessagesData(request);
           EXPECT_THAT(data,
                       AnyOf(Contains("test-data-0"), Contains("test-data-1")));
           google::pubsub::v1::PublishResponse response;
-          for (auto& m : data) {
+          for (auto const& m : data) {
             response.add_message_ids("id-for-" + m);
           }
           return make_status_or(response);
@@ -120,9 +125,8 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([&](google::pubsub::v1::PublishRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic());
-        EXPECT_EQ(2, request.messages_size());
-        EXPECT_EQ("test-data-0", request.messages(0).data());
-        EXPECT_EQ("test-data-1", request.messages(1).data());
+        auto const data = MessagesData(request);
+        EXPECT_THAT(data, ElementsAre("test-data-0", "test-data-1"));
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
         response.add_message_ids("test-message-id-1");
@@ -172,9 +176,8 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([&](google::pubsub::v1::PublishRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic());
-        EXPECT_EQ(2, request.messages_size());
-        EXPECT_EQ("test-data-0", request.messages(0).data());
-        EXPECT_EQ("test-data-1", request.messages(1).data());
+        auto const data = MessagesData(request);
+        EXPECT_THAT(data, ElementsAre("test-data-0", "test-data-1"));
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
         response.add_message_ids("test-message-id-1");
@@ -226,10 +229,9 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSizeLargeMessageBreak) {
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([&](google::pubsub::v1::PublishRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic());
-        EXPECT_EQ(3, request.messages_size());
-        EXPECT_EQ(single_payload, request.messages(0).data());
-        EXPECT_EQ(single_payload, request.messages(1).data());
-        EXPECT_EQ(single_payload, request.messages(2).data());
+        auto const data = MessagesData(request);
+        EXPECT_THAT(
+            data, ElementsAre(single_payload, single_payload, single_payload));
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
         response.add_message_ids("test-message-id-1");
@@ -238,8 +240,8 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSizeLargeMessageBreak) {
       })
       .WillOnce([&](google::pubsub::v1::PublishRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic());
-        EXPECT_EQ(1, request.messages_size());
-        EXPECT_EQ(double_payload, request.messages(0).data());
+        auto const data = MessagesData(request);
+        EXPECT_THAT(data, ElementsAre(double_payload));
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-3");
         return make_ready_future(make_status_or(response));
@@ -297,35 +299,35 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSizeOversizedSingleton) {
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([&](google::pubsub::v1::PublishRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic());
-        EXPECT_EQ(3, request.messages_size());
-        EXPECT_EQ(single_payload, request.messages(0).data());
-        EXPECT_EQ(single_payload, request.messages(1).data());
-        EXPECT_EQ(single_payload, request.messages(2).data());
+        auto const actual = MessagesData(request);
+        EXPECT_THAT(actual, ElementsAre(single_payload, single_payload,
+                                        single_payload));
         return generate_acks(request);
       })
       .WillOnce([&](google::pubsub::v1::PublishRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic());
-        EXPECT_EQ(1, request.messages_size());
-        EXPECT_EQ(oversized_payload, request.messages(0).data());
+        auto const actual = MessagesData(request);
+        EXPECT_THAT(actual, ElementsAre(oversized_payload));
         return generate_acks(request);
       })
       .WillOnce([&](google::pubsub::v1::PublishRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic());
-        EXPECT_EQ(3, request.messages_size());
-        EXPECT_EQ(single_payload, request.messages(0).data());
-        EXPECT_EQ(single_payload, request.messages(1).data());
-        EXPECT_EQ(single_payload, request.messages(2).data());
+        auto const actual = MessagesData(request);
+        EXPECT_THAT(actual, ElementsAre(single_payload, single_payload,
+                                        single_payload));
         return generate_acks(request);
       });
 
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
+  // Start with an inactive message queue, to avoid flakes due to scheduling
+  // problems.
+  CompletionQueue cq;
   auto const ordering_key = std::string{};
   auto publisher = BatchingPublisherConnection::Create(
       topic,
       pubsub::PublisherOptions{}
           .set_maximum_batch_message_count(100)
           .set_maximum_batch_bytes(kBatchLimit),
-      ordering_key, mock, background.cq());
+      ordering_key, mock, cq);
   std::vector<future<Status>> results;
   auto publish_single = [&] {
     results.push_back(
@@ -349,7 +351,11 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSizeOversizedSingleton) {
           }));
   for (int i = 0; i != 3; ++i) publish_single();
   publisher->Flush({});
+
+  std::thread t{[](CompletionQueue cq) { cq.Run(); }, cq};
   for (auto& r : results) EXPECT_STATUS_OK(r.get());
+  cq.Shutdown();
+  t.join();
 }
 
 TEST(BatchingPublisherConnectionTest, BatchTorture) {
@@ -474,9 +480,8 @@ TEST(BatchingPublisherConnectionTest, BatchByFlush) {
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([&](google::pubsub::v1::PublishRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic());
-        EXPECT_EQ(2, request.messages_size());
-        EXPECT_EQ("test-data-0", request.messages(0).data());
-        EXPECT_EQ("test-data-1", request.messages(1).data());
+        auto const data = MessagesData(request);
+        EXPECT_THAT(data, ElementsAre("test-data-0", "test-data-1"));
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
         response.add_message_ids("test-message-id-1");
@@ -491,14 +496,19 @@ TEST(BatchingPublisherConnectionTest, BatchByFlush) {
         return make_ready_future(make_status_or(response));
       });
 
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
+  // We use an explicit CQ, that is not initially serviced by any thread, to
+  // delay any activity until we call `Run()` below. This avoids race conditions
+  // in the test.
+  CompletionQueue cq;
   auto const ordering_key = std::string{};
   auto publisher = BatchingPublisherConnection::Create(
       topic,
+      // Set the batching constraints to be so generous that they are *not*
+      // triggered
       pubsub::PublisherOptions{}
           .set_maximum_hold_time(std::chrono::milliseconds(5))
           .set_maximum_batch_message_count(4),
-      ordering_key, mock, background.cq());
+      ordering_key, mock, cq);
 
   std::vector<future<void>> results;
   for (auto i : {0, 1}) {
@@ -518,6 +528,10 @@ TEST(BatchingPublisherConnectionTest, BatchByFlush) {
   // flush cannot be explained by a timer, and the message count is too low.
   publisher->Flush({});
 
+  // Now that the two messages are queued, we can activate the completion queue.
+  // It should flush the messages in about 5ms.
+  std::thread t{[](CompletionQueue cq) { cq.Run(); }, cq};
+
   for (auto i : {2, 3, 4}) {
     auto data = std::string{"test-data-"} + std::to_string(i);
     results.push_back(
@@ -530,6 +544,9 @@ TEST(BatchingPublisherConnectionTest, BatchByFlush) {
   }
 
   for (auto& r : results) r.get();
+
+  cq.Shutdown();
+  t.join();
 }
 
 TEST(BatchingPublisherConnectionTest, HandleError) {
