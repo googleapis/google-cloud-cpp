@@ -16,6 +16,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "generator/integration_tests/golden/mocks/mock_golden_thing_admin_stub.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -25,150 +26,21 @@ namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
+using ::google::cloud::golden_internal::MockGoldenThingAdminStub;
 using ::google::cloud::testing_util::IsContextMDValid;
-
-class MockGoldenStub
-    : public google::cloud::golden_internal::GoldenThingAdminStub {
- public:
-  ~MockGoldenStub() override = default;
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::ListDatabasesResponse>,
-      ListDatabases,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListDatabasesRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(StatusOr<::google::longrunning::Operation>, CreateDatabase,
-              (grpc::ClientContext & context,
-               ::google::test::admin::database::v1::CreateDatabaseRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::Database>, GetDatabase,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GetDatabaseRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<::google::longrunning::Operation>, UpdateDatabaseDdl,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DropDatabase,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::DropDatabaseRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>,
-      GetDatabaseDdl,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GetDatabaseDdlRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(StatusOr<::google::iam::v1::Policy>, SetIamPolicy,
-              (grpc::ClientContext & context,
-               ::google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<::google::iam::v1::Policy>, GetIamPolicy,
-              (grpc::ClientContext & context,
-               ::google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<::google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (grpc::ClientContext & context,
-               ::google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<::google::longrunning::Operation>, CreateBackup,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::CreateBackupRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::Backup>, GetBackup,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GetBackupRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::Backup>, UpdateBackup,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::UpdateBackupRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteBackup,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::DeleteBackupRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::ListBackupsResponse>,
-      ListBackups,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListBackupsRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<::google::longrunning::Operation>, RestoreDatabase,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::RestoreDatabaseRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<
-          ::google::test::admin::database::v1::ListDatabaseOperationsResponse>,
-      ListDatabaseOperations,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListDatabaseOperationsRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<
-          ::google::test::admin::database::v1::ListBackupOperationsResponse>,
-      ListBackupOperations,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListBackupOperationsRequest const&
-           request),
-      (override));
-
-  /// Poll a long-running operation.
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (grpc::ClientContext & client_context,
-               google::longrunning::GetOperationRequest const& request),
-              (override));
-
-  /// Cancel a long-running operation.
-  MOCK_METHOD(Status, CancelOperation,
-              (grpc::ClientContext & client_context,
-               google::longrunning::CancelOperationRequest const& request),
-              (override));
-};
 
 class MetadataDecoratorTest : public ::testing::Test {
  protected:
   void SetUp() override {
     expected_api_client_header_ = google::cloud::internal::ApiClientHeader();
-    mock_ = std::make_shared<MockGoldenStub>();
+    mock_ = std::make_shared<MockGoldenThingAdminStub>();
   }
 
   static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
-  std::shared_ptr<MockGoldenStub> mock_;
+  std::shared_ptr<MockGoldenThingAdminStub> mock_;
   std::string expected_api_client_header_;
 };
 

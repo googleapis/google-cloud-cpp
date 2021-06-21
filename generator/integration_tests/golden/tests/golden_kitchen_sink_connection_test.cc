@@ -17,7 +17,7 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/golden_kitchen_sink_options.h"
-#include <google/protobuf/text_format.h>
+#include "generator/integration_tests/golden/mocks/mock_golden_kitchen_sink_stub.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -27,62 +27,11 @@ namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
-using ::google::cloud::testing_util::IsProtoEqual;
-using ::google::protobuf::TextFormat;
+using ::google::cloud::golden_internal::MockGoldenKitchenSinkStub;
 using ::testing::AtLeast;
 using ::testing::ByMove;
 using ::testing::ElementsAre;
-using ::testing::Mock;
 using ::testing::Return;
-
-class MockGoldenKitchenSinkStub
-    : public google::cloud::golden_internal::GoldenKitchenSinkStub {
- public:
-  ~MockGoldenKitchenSinkStub() override = default;
-  MOCK_METHOD(
-      StatusOr<
-          ::google::test::admin::database::v1::GenerateAccessTokenResponse>,
-      GenerateAccessToken,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GenerateAccessTokenRequest const&
-           request),
-      (override));
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>,
-      GenerateIdToken,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GenerateIdTokenRequest const&
-           request),
-      (override));
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>,
-      WriteLogEntries,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::WriteLogEntriesRequest const&
-           request),
-      (override));
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::ListLogsResponse>, ListLogs,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListLogsRequest const& request),
-      (override));
-  MOCK_METHOD(
-      (std::unique_ptr<internal::StreamingReadRpc<
-           ::google::test::admin::database::v1::TailLogEntriesResponse>>),
-      TailLogEntries,
-      (std::unique_ptr<grpc::ClientContext> context,
-       ::google::test::admin::database::v1::TailLogEntriesRequest const&
-           request),
-      (override));
-  MOCK_METHOD(
-      StatusOr<
-          ::google::test::admin::database::v1::ListServiceAccountKeysResponse>,
-      ListServiceAccountKeys,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListServiceAccountKeysRequest const&
-           request),
-      (override));
-};
 
 std::shared_ptr<golden::GoldenKitchenSinkConnection> CreateTestingConnection(
     std::shared_ptr<golden_internal::GoldenKitchenSinkStub> mock) {

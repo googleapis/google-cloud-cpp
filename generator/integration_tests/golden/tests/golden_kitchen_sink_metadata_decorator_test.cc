@@ -16,6 +16,8 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "absl/memory/memory.h"
+#include "generator/integration_tests/golden/mocks/mock_golden_kitchen_sink_stub.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -25,69 +27,19 @@ namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
+using ::google::cloud::golden_internal::MockGoldenKitchenSinkStub;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsOk;
+using ::google::test::admin::database::v1::TailLogEntriesRequest;
+using ::google::test::admin::database::v1::TailLogEntriesResponse;
 using ::testing::Not;
 using ::testing::Return;
-
-class MockGoldenKitchenSinkStub
-    : public google::cloud::golden_internal::GoldenKitchenSinkStub {
- public:
-  ~MockGoldenKitchenSinkStub() override = default;
-  MOCK_METHOD(
-      StatusOr<
-          ::google::test::admin::database::v1::GenerateAccessTokenResponse>,
-      GenerateAccessToken,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GenerateAccessTokenRequest const&
-           request),
-      (override));
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>,
-      GenerateIdToken,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GenerateIdTokenRequest const&
-           request),
-      (override));
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>,
-      WriteLogEntries,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::WriteLogEntriesRequest const&
-           request),
-      (override));
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::ListLogsResponse>, ListLogs,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListLogsRequest const& request),
-      (override));
-  MOCK_METHOD(
-      (std::unique_ptr<internal::StreamingReadRpc<
-           ::google::test::admin::database::v1::TailLogEntriesResponse>>),
-      TailLogEntries,
-      (std::unique_ptr<grpc::ClientContext> context,
-       ::google::test::admin::database::v1::TailLogEntriesRequest const&
-           request),
-      (override));
-  MOCK_METHOD(
-      StatusOr<
-          ::google::test::admin::database::v1::ListServiceAccountKeysResponse>,
-      ListServiceAccountKeys,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListServiceAccountKeysRequest const&
-           request),
-      (override));
-};
 
 class MetadataDecoratorTest : public ::testing::Test {
  protected:
   void SetUp() override {
     expected_api_client_header_ = google::cloud::internal::ApiClientHeader();
     mock_ = std::make_shared<MockGoldenKitchenSinkStub>();
-  }
-
-  static grpc::Status GrpcTransientError() {
-    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   }
 
   static Status TransientError() {
@@ -178,35 +130,31 @@ TEST_F(MetadataDecoratorTest, ListLogs) {
 }
 
 class MockTailLogEntriesStreamingReadRpc
-    : public internal::StreamingReadRpc<
-          google::test::admin::database::v1::TailLogEntriesResponse> {
+    : public internal::StreamingReadRpc<TailLogEntriesResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(
-      (absl::variant<
-          Status, google::test::admin::database::v1::TailLogEntriesResponse>),
-      Read, (), (override));
+  MOCK_METHOD((absl::variant<Status, TailLogEntriesResponse>), Read, (),
+              (override));
 };
 
 TEST_F(MetadataDecoratorTest, TailLogEntries) {
-  auto mock_response = new MockTailLogEntriesStreamingReadRpc;
-  EXPECT_CALL(*mock_response, Read)
-      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   EXPECT_CALL(*mock_, TailLogEntries)
-      .WillOnce([mock_response, this](
-                    std::unique_ptr<grpc::ClientContext> context,
-                    google::test::admin::database::v1::
-                        TailLogEntriesRequest const&) {
+      .WillOnce([this](std::unique_ptr<grpc::ClientContext> context,
+                       TailLogEntriesRequest const&) {
+        auto mock_response =
+            absl::make_unique<MockTailLogEntriesStreamingReadRpc>();
+        EXPECT_CALL(*mock_response, Read)
+            .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.test.admin.database.v1.GoldenKitchenSink.TailLogEntries",
             expected_api_client_header_));
-        return std::unique_ptr<internal::StreamingReadRpc<
-            ::google::test::admin::database::v1::TailLogEntriesResponse>>(
-            mock_response);
+        return std::unique_ptr<
+            internal::StreamingReadRpc<TailLogEntriesResponse>>(
+            std::move(mock_response));
       });
   GoldenKitchenSinkMetadata stub(mock_);
-  google::test::admin::database::v1::TailLogEntriesRequest request;
+  TailLogEntriesRequest request;
   auto response =
       stub.TailLogEntries(absl::make_unique<grpc::ClientContext>(), request);
   EXPECT_THAT(absl::get<Status>(response->Read()), Not(IsOk()));
