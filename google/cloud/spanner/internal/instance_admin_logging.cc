@@ -34,24 +34,28 @@ StatusOr<gcsa::Instance> InstanceAdminLogging::GetInstance(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> InstanceAdminLogging::CreateInstance(
-    grpc::ClientContext& context, gcsa::CreateInstanceRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+InstanceAdminLogging::AsyncCreateInstance(
+    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    gcsa::CreateInstanceRequest const& request) {
   return LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
              gcsa::CreateInstanceRequest const& request) {
-        return child_->CreateInstance(context, request);
+        return child_->AsyncCreateInstance(cq, std::move(context), request);
       },
-      context, request, __func__, tracing_options_);
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> InstanceAdminLogging::UpdateInstance(
-    grpc::ClientContext& context, gcsa::UpdateInstanceRequest const& request) {
-  return LogWrapper(
-      [this](grpc::ClientContext& context,
+future<StatusOr<google::longrunning::Operation>>
+InstanceAdminLogging::AsyncUpdateInstance(
+    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    gcsa::UpdateInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
              gcsa::UpdateInstanceRequest const& request) {
-        return child_->UpdateInstance(context, request);
+        return child_->AsyncUpdateInstance(cq, std::move(context), request);
       },
-      context, request, __func__, tracing_options_);
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
 Status InstanceAdminLogging::DeleteInstance(
@@ -131,15 +135,27 @@ InstanceAdminLogging::TestIamPermissions(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> InstanceAdminLogging::GetOperation(
-    grpc::ClientContext& context,
+future<StatusOr<google::longrunning::Operation>>
+InstanceAdminLogging::AsyncGetOperation(
+    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  return LogWrapper(
-      [this](grpc::ClientContext& context,
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->GetOperation(context, request);
+        return child_->AsyncGetOperation(cq, std::move(context), request);
       },
-      context, request, __func__, tracing_options_);
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<Status> InstanceAdminLogging::AsyncCancelOperation(
+    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    google::longrunning::CancelOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
 }  // namespace SPANNER_CLIENT_NS

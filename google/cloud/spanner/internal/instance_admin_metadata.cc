@@ -34,16 +34,20 @@ StatusOr<gcsa::Instance> InstanceAdminMetadata::GetInstance(
   return child_->GetInstance(context, request);
 }
 
-StatusOr<google::longrunning::Operation> InstanceAdminMetadata::CreateInstance(
-    grpc::ClientContext& context, gcsa::CreateInstanceRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
-  return child_->CreateInstance(context, request);
+future<StatusOr<google::longrunning::Operation>>
+InstanceAdminMetadata::AsyncCreateInstance(
+    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    gcsa::CreateInstanceRequest const& request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncCreateInstance(cq, std::move(context), request);
 }
 
-StatusOr<google::longrunning::Operation> InstanceAdminMetadata::UpdateInstance(
-    grpc::ClientContext& context, gcsa::UpdateInstanceRequest const& request) {
-  SetMetadata(context, "instance.name=" + request.instance().name());
-  return child_->UpdateInstance(context, request);
+future<StatusOr<google::longrunning::Operation>>
+InstanceAdminMetadata::AsyncUpdateInstance(
+    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    gcsa::UpdateInstanceRequest const& request) {
+  SetMetadata(*context, "instance.name=" + request.instance().name());
+  return child_->AsyncUpdateInstance(cq, std::move(context), request);
 }
 
 Status InstanceAdminMetadata::DeleteInstance(
@@ -95,11 +99,19 @@ InstanceAdminMetadata::TestIamPermissions(
   return child_->TestIamPermissions(context, request);
 }
 
-StatusOr<google::longrunning::Operation> InstanceAdminMetadata::GetOperation(
-    grpc::ClientContext& context,
+future<StatusOr<google::longrunning::Operation>>
+InstanceAdminMetadata::AsyncGetOperation(
+    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
-  return child_->GetOperation(context, request);
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncGetOperation(cq, std::move(context), request);
+}
+
+future<Status> InstanceAdminMetadata::AsyncCancelOperation(
+    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void InstanceAdminMetadata::SetMetadata(grpc::ClientContext& context,

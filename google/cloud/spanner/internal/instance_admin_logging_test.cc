@@ -61,13 +61,20 @@ TEST_F(InstanceAdminLoggingTest, GetInstance) {
 }
 
 TEST_F(InstanceAdminLoggingTest, CreateInstance) {
-  EXPECT_CALL(*mock_, CreateInstance).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, AsyncCreateInstance)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   gcsa::CreateInstanceRequest const&) {
+        return make_ready_future(
+            StatusOr<google::longrunning::Operation>(TransientError()));
+      });
 
   InstanceAdminLogging stub(mock_, TracingOptions{});
 
-  grpc::ClientContext context;
-  auto response = stub.CreateInstance(context, gcsa::CreateInstanceRequest{});
-  EXPECT_EQ(TransientError(), response.status());
+  CompletionQueue cq;
+  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
+  auto response = stub.AsyncCreateInstance(cq, std::move(context),
+                                           gcsa::CreateInstanceRequest{});
+  EXPECT_EQ(TransientError(), response.get().status());
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("CreateInstance")));
@@ -75,13 +82,20 @@ TEST_F(InstanceAdminLoggingTest, CreateInstance) {
 }
 
 TEST_F(InstanceAdminLoggingTest, UpdateInstance) {
-  EXPECT_CALL(*mock_, UpdateInstance).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, AsyncUpdateInstance)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   gcsa::UpdateInstanceRequest const&) {
+        return make_ready_future(
+            StatusOr<google::longrunning::Operation>(TransientError()));
+      });
 
   InstanceAdminLogging stub(mock_, TracingOptions{});
 
-  grpc::ClientContext context;
-  auto response = stub.UpdateInstance(context, gcsa::UpdateInstanceRequest{});
-  EXPECT_EQ(TransientError(), response.status());
+  CompletionQueue cq;
+  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
+  auto response = stub.AsyncUpdateInstance(cq, std::move(context),
+                                           gcsa::UpdateInstanceRequest{});
+  EXPECT_EQ(TransientError(), response.get().status());
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("UpdateInstance")));

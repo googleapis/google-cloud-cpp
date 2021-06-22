@@ -43,13 +43,13 @@ class InstanceAdminMetadata : public InstanceAdminStub {
       grpc::ClientContext&,
       google::spanner::admin::instance::v1::GetInstanceRequest const&) override;
 
-  StatusOr<google::longrunning::Operation> CreateInstance(
-      grpc::ClientContext&,
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
       google::spanner::admin::instance::v1::CreateInstanceRequest const&)
       override;
 
-  StatusOr<google::longrunning::Operation> UpdateInstance(
-      grpc::ClientContext&,
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&)
       override;
 
@@ -88,9 +88,13 @@ class InstanceAdminMetadata : public InstanceAdminStub {
       grpc::ClientContext&,
       google::iam::v1::TestIamPermissionsRequest const&) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      google::longrunning::GetOperationRequest const& request) override;
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      google::longrunning::GetOperationRequest const&) override;
+
+  future<Status> AsyncCancelOperation(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      google::longrunning::CancelOperationRequest const&) override;
   //@}
 
  private:

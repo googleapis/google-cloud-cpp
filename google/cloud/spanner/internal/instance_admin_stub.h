@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -39,12 +40,12 @@ class InstanceAdminStub {
       grpc::ClientContext&,
       google::spanner::admin::instance::v1::GetInstanceRequest const&) = 0;
 
-  virtual StatusOr<google::longrunning::Operation> CreateInstance(
-      grpc::ClientContext&,
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
       google::spanner::admin::instance::v1::CreateInstanceRequest const&) = 0;
 
-  virtual StatusOr<google::longrunning::Operation> UpdateInstance(
-      grpc::ClientContext&,
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&) = 0;
 
   virtual Status DeleteInstance(
@@ -76,9 +77,14 @@ class InstanceAdminStub {
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(grpc::ClientContext&,
                      google::iam::v1::TestIamPermissionsRequest const&) = 0;
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& client_context,
-      google::longrunning::GetOperationRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      google::longrunning::GetOperationRequest const&) = 0;
+
+  virtual future<Status> AsyncCancelOperation(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      google::longrunning::CancelOperationRequest const&) = 0;
 };
 
 /**
