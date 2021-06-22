@@ -713,7 +713,7 @@ void ConfigureConnectionPoolSize(std::vector<std::string> const& argv) {
   namespace cbt = google::cloud::bigtable;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& table_id) {
-    auto constexpr kPoolSize = 250;
+    auto constexpr kPoolSize = 10;
     auto table = cbt::Table(
         cbt::CreateDefaultDataClient(
             project_id, instance_id,
