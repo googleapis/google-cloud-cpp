@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_long_running_operation.h"
+#include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -27,10 +28,13 @@ namespace {
 
 using ::google::bigtable::admin::v2::CreateInstanceRequest;
 using ::google::bigtable::admin::v2::Instance;
+using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::longrunning::Operation;
+using ::testing::AtLeast;
 using ::testing::Return;
 
 class MockStub {
@@ -72,6 +76,32 @@ std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
   return ExponentialBackoffPolicy(us(100), us(100), 2.0).clone();
 }
 
+using StartOperation =
+    std::function<future<StatusOr<google::longrunning::Operation>>(
+        CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+        CreateInstanceRequest const&)>;
+
+StartOperation MakeStart(std::shared_ptr<MockStub> const& m) {
+  return [m](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+             CreateInstanceRequest const& request) {
+    return m->AsyncCreateInstance(cq, std::move(context), request);
+  };
+}
+
+AsyncPollLongRunningOperation MakePoll(std::shared_ptr<MockStub> const& m) {
+  return [m](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+    return m->AsyncGetOperation(cq, std::move(context), request);
+  };
+}
+
+AsyncCancelLongRunningOperation MakeCancel(std::shared_ptr<MockStub> const& m) {
+  return [m](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+    return m->AsyncCancelOperation(cq, std::move(context), request);
+  };
+}
+
 TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
   Instance expected;
   expected.set_name("test-instance-name");
@@ -110,25 +140,10 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
   request.set_instance_id("test-instance-id");
   auto actual =
       AsyncLongRunningOperation<Instance>(
-          cq, std::move(request),
-          [mock](CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 CreateInstanceRequest const& request) {
-            return mock->AsyncCreateInstance(cq, std::move(context), request);
-          },
-          [mock](CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 google::longrunning::GetOperationRequest const& request) {
-            return mock->AsyncGetOperation(cq, std::move(context), request);
-          },
-          [mock](CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 google::longrunning::CancelOperationRequest const& request) {
-            return mock->AsyncCancelOperation(cq, std::move(context), request);
-          },
-          &ExtractLongRunningResultMetadata<Instance>, TestRetryPolicy(),
-          TestBackoffPolicy(), Idempotency::kIdempotent, std::move(policy),
-          "test-function")
+          cq, std::move(request), MakeStart(mock), MakePoll(mock),
+          MakeCancel(mock), &ExtractLongRunningResultMetadata<Instance>,
+          TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+          std::move(policy), "test-function")
           .get();
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(expected));
@@ -172,28 +187,72 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessResponse) {
   request.set_instance_id("test-instance-id");
   auto actual =
       AsyncLongRunningOperation<Instance>(
-          cq, std::move(request),
-          [mock](CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 CreateInstanceRequest const& request) {
-            return mock->AsyncCreateInstance(cq, std::move(context), request);
-          },
-          [mock](CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 google::longrunning::GetOperationRequest const& request) {
-            return mock->AsyncGetOperation(cq, std::move(context), request);
-          },
-          [mock](CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 google::longrunning::CancelOperationRequest const& request) {
-            return mock->AsyncCancelOperation(cq, std::move(context), request);
-          },
-          &ExtractLongRunningResultResponse<Instance>, TestRetryPolicy(),
-          TestBackoffPolicy(), Idempotency::kIdempotent, std::move(policy),
-          "test-function")
+          cq, std::move(request), MakeStart(mock), MakePoll(mock),
+          MakeCancel(mock), &ExtractLongRunningResultResponse<Instance>,
+          TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+          std::move(policy), "test-function")
           .get();
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
+TEST(AsyncLongRunningTest, RequestPollThenCancel) {
+  Instance expected;
+  expected.set_name("test-instance-name");
+  google::longrunning::Operation starting_op;
+  starting_op.set_name("test-op-name");
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  AsyncSequencer<void> timer;
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillRepeatedly([&timer](std::chrono::nanoseconds) {
+        return timer.PushBack().then([](future<void>) {
+          return make_status_or(std::chrono::system_clock::now());
+        });
+      });
+  CompletionQueue cq(mock_cq);
+
+  auto mock = std::make_shared<MockStub>();
+  EXPECT_CALL(*mock, AsyncCreateInstance)
+      .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                    CreateInstanceRequest const&) {
+        return make_ready_future(make_status_or(starting_op));
+      });
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .Times(AtLeast(1))
+      .WillRepeatedly([&](CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::longrunning::GetOperationRequest const&) {
+        return make_ready_future(make_status_or(starting_op));
+      });
+  EXPECT_CALL(*mock, AsyncCancelOperation)
+      .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                    google::longrunning::CancelOperationRequest const&) {
+        return make_ready_future(Status{});
+      });
+  auto policy = absl::make_unique<MockPollingPolicy>();
+  EXPECT_CALL(*policy, clone()).Times(0);
+  EXPECT_CALL(*policy, OnFailure).WillRepeatedly(Return(true));
+  EXPECT_CALL(*policy, WaitPeriod)
+      .WillRepeatedly(Return(std::chrono::milliseconds(1)));
+  CreateInstanceRequest request;
+  request.set_parent("test-parent");
+  request.set_instance_id("test-instance-id");
+  auto pending = AsyncLongRunningOperation<Instance>(
+      cq, std::move(request), MakeStart(mock), MakePoll(mock), MakeCancel(mock),
+      &ExtractLongRunningResultMetadata<Instance>, TestRetryPolicy(),
+      TestBackoffPolicy(), Idempotency::kIdempotent, std::move(policy),
+      "test-function");
+
+  // Wait until the polling loop is backing off for a second time.
+  timer.PopFront().set_value();
+  auto t = timer.PopFront();
+  // cancel the long running operation
+  pending.cancel();
+  // release timer
+  t.set_value();
+  auto actual = pending.get();
+  EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled));
 }
 
 }  // namespace

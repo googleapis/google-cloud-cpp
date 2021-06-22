@@ -129,30 +129,13 @@ future<StatusOr<ReturnType>> AsyncLongRunningOperation(
       AsyncRetryLoop(std::move(retry_policy), std::move(backoff_policy),
                      idempotent, cq, std::forward<StartFunctor>(start),
                      std::forward<RequestType>(request), location);
-  struct MoveCapture {
-    google::cloud::CompletionQueue cq;
-    AsyncPollLongRunningOperation poll;
-    AsyncCancelLongRunningOperation cancel;
-    LongRunningOperationValueExtractor<ReturnType> value_extractor;
-    std::unique_ptr<PollingPolicy> polling_policy;
-    std::string location;
-
-    future<StatusOr<ReturnType>> operator()(future<StatusOr<Operation>> f) {
-      auto loc = this->location;
-      auto extractor = std::move(value_extractor);
-      return AsyncPollingLoop(std::move(cq), std::move(f), std::move(poll),
-                              std::move(cancel), std::move(polling_policy),
-                              std::move(location))
-          .then([extractor, loc](future<StatusOr<Operation>> g) {
-            return extractor(g.get(), loc);
-          });
-    }
-  };
-
-  return operation.then(
-      MoveCapture{std::move(cq), std::move(poll), std::move(cancel),
-                  std::move(value_extractor), std::move(polling_policy),
-                  std::string{location}});
+  auto loc = std::string{location};
+  return AsyncPollingLoop(std::move(cq), std::move(operation), std::move(poll),
+                          std::move(cancel), std::move(polling_policy),
+                          std::move(location))
+      .then([value_extractor, loc](future<StatusOr<Operation>> g) {
+        return value_extractor(g.get(), loc);
+      });
 }
 
 }  // namespace internal

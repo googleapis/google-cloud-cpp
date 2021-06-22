@@ -395,8 +395,9 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringTimer) {
 
   timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
   get_sequencer.PopFront().set_value(starting_op);
+  auto t = timer_sequencer.PopFront();
   pending.cancel();
-  timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
+  t.set_value(std::chrono::system_clock::now());
 
   auto actual = pending.get();
   EXPECT_THAT(actual, StatusIs(Not(Eq(StatusCode::kOk)),
@@ -449,8 +450,9 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringPoll) {
   timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
   get_sequencer.PopFront().set_value(starting_op);
   timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
+  auto g = get_sequencer.PopFront();
   pending.cancel();
-  get_sequencer.PopFront().set_value(starting_op);
+  g.set_value(starting_op);
 
   auto actual = pending.get();
   EXPECT_THAT(actual, StatusIs(Not(Eq(StatusCode::kOk)),
