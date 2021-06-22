@@ -37,11 +37,14 @@ using ObjectListObjectsVersionsIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 
 TEST_F(ObjectListObjectsVersionsIntegrationTest, ListObjectsVersions) {
+  auto bucket_client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(bucket_client);
+
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = MakeRandomBucketName();
-  auto create = client->CreateBucketForProject(
+  auto create = bucket_client->CreateBucketForProject(
       bucket_name, project_id_,
       BucketMetadata{}.set_versioning(BucketVersioning{true}));
   ASSERT_STATUS_OK(create) << bucket_name;
@@ -78,7 +81,7 @@ TEST_F(ObjectListObjectsVersionsIntegrationTest, ListObjectsVersions) {
                                Generation(o->generation()));
   }
 
-  auto status = client->DeleteBucket(bucket_name);
+  auto status = bucket_client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
 }
 

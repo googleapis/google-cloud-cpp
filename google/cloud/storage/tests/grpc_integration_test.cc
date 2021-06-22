@@ -397,12 +397,15 @@ TEST_P(GrpcIntegrationTest, NativeIamCRUD) {
 }
 
 TEST_P(GrpcIntegrationTest, WriteResume) {
+  auto bucket_client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(bucket_client);
+
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
-  auto bucket_metadata = client->CreateBucketForProject(
+  auto bucket_metadata = bucket_client->CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
   ASSERT_STATUS_OK(bucket_metadata);
 
@@ -438,7 +441,7 @@ TEST_P(GrpcIntegrationTest, WriteResume) {
   auto status = client->DeleteObject(bucket_name, object_name);
   EXPECT_STATUS_OK(status);
 
-  auto delete_bucket_status = client->DeleteBucket(bucket_name);
+  auto delete_bucket_status = bucket_client->DeleteBucket(bucket_name);
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 
