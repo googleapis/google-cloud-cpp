@@ -18,6 +18,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_GOLDEN_THING_ADMIN_STUB_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_GOLDEN_THING_ADMIN_STUB_H
 
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <generator/integration_tests/test.grpc.pb.h>
@@ -37,17 +39,21 @@ class GoldenThingAdminStub {
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListDatabasesRequest const& request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation> CreateDatabase(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::CreateDatabaseRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::CreateDatabaseRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::Database> GetDatabase(
     grpc::ClientContext& context,
     google::test::admin::database::v1::GetDatabaseRequest const& request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) = 0;
 
   virtual Status DropDatabase(
     grpc::ClientContext& context,
@@ -69,9 +75,11 @@ class GoldenThingAdminStub {
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation> CreateBackup(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::CreateBackupRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::CreateBackupRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::Backup> GetBackup(
     grpc::ClientContext& context,
@@ -89,9 +97,11 @@ class GoldenThingAdminStub {
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListBackupsRequest const& request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation> RestoreDatabase(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::RestoreDatabaseRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
     grpc::ClientContext& context,
@@ -101,16 +111,16 @@ class GoldenThingAdminStub {
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListBackupOperationsRequest const& request) = 0;
 
-  /// Poll a long-running operation.
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& client_context,
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) = 0;
 
-  /// Cancel a long-running operation.
-  virtual Status CancelOperation(
-      grpc::ClientContext& client_context,
+  virtual future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) = 0;
-
 };
 
 class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
@@ -126,21 +136,21 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
     grpc::ClientContext& client_context,
     google::test::admin::database::v1::ListDatabasesRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateDatabase(
-    grpc::ClientContext& client_context,
-    google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
   StatusOr<google::test::admin::database::v1::Database>
   GetDatabase(
     grpc::ClientContext& client_context,
     google::test::admin::database::v1::GetDatabaseRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateDatabaseDdl(
-    grpc::ClientContext& client_context,
-    google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
   Status
   DropDatabase(
     grpc::ClientContext& client_context,
@@ -166,11 +176,11 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
     grpc::ClientContext& client_context,
     google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateBackup(
-    grpc::ClientContext& client_context,
-    google::test::admin::database::v1::CreateBackupRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::CreateBackupRequest const& request) override;
   StatusOr<google::test::admin::database::v1::Backup>
   GetBackup(
     grpc::ClientContext& client_context,
@@ -191,11 +201,11 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
     grpc::ClientContext& client_context,
     google::test::admin::database::v1::ListBackupsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  RestoreDatabase(
-    grpc::ClientContext& client_context,
-    google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
   StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
   ListDatabaseOperations(
     grpc::ClientContext& client_context,
@@ -206,16 +216,16 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
     grpc::ClientContext& client_context,
     google::test::admin::database::v1::ListBackupOperationsRequest const& request) override;
 
-  /// Poll a long-running operation.
-  StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& client_context,
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
-  /// Cancel a long-running operation.
-  Status CancelOperation(
-      grpc::ClientContext& client_context,
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
-
  private:
   std::unique_ptr<google::test::admin::database::v1::GoldenThingAdmin::StubInterface> grpc_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;

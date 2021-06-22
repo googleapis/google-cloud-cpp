@@ -303,10 +303,11 @@ file a [GitHub issue][github-issue].
 
 ## Contact us
 
-If you have questions or comments, or want to file bugs or request feature,
-please do so using GitHub's normal Issues mechanism: [Contact Us][github-issue]
+* [GitHub Discussions] -- For questions and general comments
+* [GitHub Issues] -- For reporting bugs and feature requests
 
-[github-issue]: https://github.com/googleapis/google-cloud-cpp/issues/new/choose
+[GitHub Discussions]: https://github.com/googleapis/google-cloud-cpp/discussions
+[GitHub Issues]: https://github.com/googleapis/google-cloud-cpp/issues
 
 ## Contributing changes
 

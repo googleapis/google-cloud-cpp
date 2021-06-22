@@ -33,6 +33,7 @@ namespace generator_internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::testing::ElementsAreArray;
 
 StatusOr<std::vector<std::string>> ReadFile(std::string const& filepath) {
   std::string line;
@@ -151,9 +152,8 @@ TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {
 
   EXPECT_THAT(generated_file, IsOk());
   EXPECT_EQ(golden_file->size(), generated_file->size());
-  for (unsigned int i = 0; i < golden_file->size(); ++i) {
-    EXPECT_EQ((*golden_file)[i], (*generated_file)[i]);
-  }
+  EXPECT_THAT(*golden_file,
+              ElementsAreArray(generated_file->begin(), generated_file->end()));
 }
 
 INSTANTIATE_TEST_SUITE_P(

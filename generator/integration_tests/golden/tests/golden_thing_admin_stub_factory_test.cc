@@ -26,7 +26,7 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
-using ::google::longrunning::CancelOperationRequest;
+using ::google::test::admin::database::v1::GetBackupRequest;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::IsNull;
@@ -64,8 +64,7 @@ TEST_F(GoldenStubFactoryTest, DefaultStubWithAuth) {
   auto default_stub =
       CreateDefaultGoldenThingAdminStub(CompletionQueue{}, options);
   grpc::ClientContext context;
-  auto response =
-      default_stub->CancelOperation(context, CancelOperationRequest{});
+  auto response = default_stub->GetBackup(context, GetBackupRequest{});
   EXPECT_THAT(response, Not(IsOk()));
   EXPECT_THAT(context.credentials(), Not(IsNull()));
 }

@@ -390,6 +390,9 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         grpc_utils/version.h
         internal/async_connection_ready.cc
         internal/async_connection_ready.h
+        internal/async_long_running_operation.h
+        internal/async_polling_loop.cc
+        internal/async_polling_loop.h
         internal/async_read_stream_impl.h
         internal/async_read_write_stream_impl.h
         internal/async_retry_loop.h
@@ -400,6 +403,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/completion_queue_impl.h
         internal/default_completion_queue_impl.cc
         internal/default_completion_queue_impl.h
+        internal/extract_long_running_result.cc
+        internal/extract_long_running_result.h
         internal/grpc_access_token_authentication.cc
         internal/grpc_access_token_authentication.h
         internal/grpc_async_access_token_cache.cc
@@ -435,6 +440,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                absl::memory
                absl::time
                google-cloud-cpp::iam_protos
+               google-cloud-cpp::longrunning_operations_protos
                google-cloud-cpp::rpc_status_protos
                google-cloud-cpp::common
                gRPC::grpc++
@@ -524,10 +530,13 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             grpc_error_delegate_test.cc
             grpc_options_test.cc
             internal/async_connection_ready_test.cc
+            internal/async_long_running_operation_test.cc
+            internal/async_polling_loop_test.cc
             internal/async_read_write_stream_impl_test.cc
             internal/async_retry_loop_test.cc
             internal/async_retry_unary_rpc_test.cc
             internal/background_threads_impl_test.cc
+            internal/extract_long_running_result_test.cc
             internal/grpc_access_token_authentication_test.cc
             internal/grpc_async_access_token_cache_test.cc
             internal/grpc_channel_credentials_authentication_test.cc
@@ -610,8 +619,12 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         "gRPC Utilities for the Google Cloud C++ Client Library")
     set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
         "Provides gRPC Utilities for the Google Cloud C++ Client Library.")
-    string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
-                  "google_cloud_cpp_common google_cloud_cpp_iam_protos")
+    string(
+        CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
+               "google_cloud_cpp_common"
+               " google_cloud_cpp_iam_protos"
+               " google_cloud_cpp_longrunning_operations_protos"
+               " google_cloud_cpp_rpc_status_protos")
     string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_grpc_utils")
 
     # Create and install the pkg-config files.

@@ -188,7 +188,9 @@ Status ConnectionGenerator::GenerateCc() {
        vars("option_defaults_header_path"), vars("stub_factory_header_path"),
        "google/cloud/background_threads.h", "google/cloud/grpc_options.h",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : "",
-       HasLongrunningMethod() ? "google/cloud/internal/polling_loop.h" : "",
+       HasLongrunningMethod()
+           ? "google/cloud/internal/async_long_running_operation.h"
+           : "",
        HasStreamingReadMethod()
            ? "google/cloud/internal/resumable_streaming_read_rpc.h"
            : "",
@@ -336,31 +338,46 @@ Status ConnectionGenerator::GenerateCc() {
              All(IsNonStreaming, Not(IsLongrunningOperation),
                  Not(IsPaginated))),
          MethodPattern(
-             {
-                 {IsResponseTypeEmpty,
-                  // clang-format off
-    "  future<Status>\n",
-    "  future<StatusOr<$longrunning_deduced_response_type$>>\n"},
-   {"  $method_name$(\n"
-    "      $request_type$ const& request) override {\n"
-    "    auto operation = google::cloud::internal::RetryLoop(\n"
-    "        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),\n"
-    "        idempotency_policy_->$method_name$(request),\n"
-    "        [this](grpc::ClientContext& context,\n"
-    "               $request_type$ const& request) {\n"
-    "          return stub_->$method_name$(context, request);\n"
-    "        },\n"
-    "        request, __func__);\n"
-    "    if (!operation) {\n"
-    "      return google::cloud::make_ready_future(\n"
-    "          StatusOr<$longrunning_deduced_response_type$>(operation.status()));\n"
-    "    }\n"
-    "\n"
-    "    return Await$method_name$(*std::move(operation));\n"
-    "}\n"
-    "\n",}
-                 // clang-format on
-             },
+             {{IsResponseTypeEmpty, "  future<Status>",
+               "  future<StatusOr<$longrunning_deduced_response_type$>>"},
+              {R"""(
+  $method_name$($request_type$ const& request) override {
+    auto stub = stub_;
+    return google::cloud::internal::AsyncLongRunningOperation<$longrunning_deduced_response_type$>(
+          background_->cq(), request,
+          [stub](google::cloud::CompletionQueue& cq,
+                 std::unique_ptr<grpc::ClientContext> context,
+                 $request_type$ const& request) {
+            return stub->Async$method_name$(cq, std::move(context), request);
+          },
+          [stub](google::cloud::CompletionQueue& cq,
+                 std::unique_ptr<grpc::ClientContext> context,
+                 google::longrunning::GetOperationRequest const& request) {
+            return stub->AsyncGetOperation(cq, std::move(context), request);
+          },
+          [stub](google::cloud::CompletionQueue& cq,
+                 std::unique_ptr<grpc::ClientContext> context,
+                 google::longrunning::CancelOperationRequest const& request) {
+            return stub->AsyncCancelOperation(cq, std::move(context), request);
+          },)"""},
+              {IsLongrunningMetadataTypeUsedAsResponse,
+               R"""(
+          &google::cloud::internal::ExtractLongRunningResultMetadata<$longrunning_deduced_response_type$>,)""",
+               R"""(
+          &google::cloud::internal::ExtractLongRunningResultResponse<$longrunning_deduced_response_type$>,)"""},
+              {R"""(
+          retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+          idempotency_policy_->$method_name$(request),
+          polling_policy_prototype_->clone(), __func__))"""},
+              {IsResponseTypeEmpty, R"""(
+          .then([](future<StatusOr<google::protobuf::Empty>> f) {
+            return f.get().status();
+          });)""",
+               ";"},
+              {R"""(
+  }
+
+)"""}},
              All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),
          MethodPattern(
              {
@@ -440,77 +457,6 @@ Status ConnectionGenerator::GenerateCc() {
   CcPrint(  // clang-format off
     " private:\n");
   // clang-format on
-
-  if (HasLongrunningMethod()) {
-    // TODO(#4038) - use the (implicit) completion queue to run this loop, and
-    // once using a completion queue, consider changing to AsyncCancelOperation.
-    CcPrint(  // clang-format off
-    "  template <typename MethodResponse, template<typename> class Extractor,\n"
-    "    typename Stub>\n"
-    "  future<StatusOr<MethodResponse>>\n"
-    "  AwaitLongrunningOperation(google::longrunning::Operation operation) {  // NOLINT\n"
-    "    using ResponseExtractor = Extractor<MethodResponse>;\n"
-    "    std::weak_ptr<Stub> cancel_stub(stub_);\n"
-    "    promise<typename ResponseExtractor::ReturnType> pr(\n"
-    "        [cancel_stub, operation]() {\n"
-    "          grpc::ClientContext context;\n"
-    "          context.set_deadline(std::chrono::system_clock::now() +\n"
-    "            std::chrono::seconds(60));\n"
-    "          google::longrunning::CancelOperationRequest request;\n"
-    "          request.set_name(operation.name());\n"
-    "          if (auto ptr = cancel_stub.lock()) {\n"
-    "            ptr->CancelOperation(context, request);\n"
-    "          }\n"
-    "    });\n"
-    "    auto f = pr.get_future();\n"
-    "    std::thread t(\n"
-    "        [](std::shared_ptr<Stub> stub,\n"
-    "           google::longrunning::Operation operation,\n"
-    "           std::unique_ptr<PollingPolicy> polling_policy,\n"
-    "           google::cloud::promise<typename ResponseExtractor::ReturnType> promise,\n"
-    "           char const* location) mutable {\n"
-    "          auto result = google::cloud::internal::PollingLoop<ResponseExtractor>(\n"
-    "              std::move(polling_policy),\n"
-    "              [stub](grpc::ClientContext& context,\n"
-    "                     google::longrunning::GetOperationRequest const& request) {\n"
-    "                return stub->GetOperation(context, request);\n"
-    "              },\n"
-    "              std::move(operation), location);\n"
-    "          stub.reset();\n"
-    "          promise.set_value(std::move(result));\n"
-    "        },\n"
-    "        stub_, std::move(operation), polling_policy_prototype_->clone(),\n"
-    "        std::move(pr), __func__);\n"
-    "    t.detach();\n"
-    "    return f;\n"
-    "  }\n\n"
-    );
-    // clang-format on
-  }
-
-  for (auto const& method : methods()) {
-    CcPrintMethod(
-        method,
-        {MethodPattern(
-            {
-                {IsResponseTypeEmpty,
-                 // clang-format off
-    "  future<Status>\n",
-    "  future<StatusOr<$longrunning_deduced_response_type$>>\n"},
-   {"  Await$method_name$(\n"
-    "      google::longrunning::Operation operation) {\n"
-    "    return AwaitLongrunningOperation<\n"
-    "        $longrunning_deduced_response_type$,\n"},
-   {IsLongrunningMetadataTypeUsedAsResponse,
-    "        google::cloud::internal::PollingLoopMetadataExtractor,\n",
-    "        google::cloud::internal::PollingLoopResponseExtractor,\n"},
-   {"        golden_internal::$stub_class_name$>(std::move(operation));\n"
-    "  }\n\n"}
-                // clang-format on
-            },
-            All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated)))},
-        __FILE__, __LINE__);
-  }
 
   CcPrint(
       {// clang-format off

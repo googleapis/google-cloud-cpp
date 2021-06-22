@@ -93,7 +93,7 @@ be even simpler:
 
 ### Error Handling
 
-[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/status_or.h
+[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
 
 This library never throws exceptions to signal error. In general, the library
 returns a [`StatusOr<T>`][status-or-header] if an error is possible. Some
@@ -207,7 +207,7 @@ good places to continue learning about the library.
 [project-definition-link]: https://cloud.google.com/storage/docs/projects 'Project Definition in GCS'
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
-[github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/storage/README%2Emd
-[github-install]: https://github.com/googleapis/google-cloud-cpp/blob/master/INSTALL%2Emd
+[github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README%2Emd
+[github-install]: https://github.com/googleapis/google-cloud-cpp/blob/main/INSTALL%2Emd
 
 */

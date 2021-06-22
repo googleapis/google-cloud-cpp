@@ -26,9 +26,11 @@ namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
+using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
+using ::testing::Unused;
 
 class LoggingDecoratorTest : public ::testing::Test {
  protected:
@@ -38,6 +40,12 @@ class LoggingDecoratorTest : public ::testing::Test {
 
   static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
+  }
+
+  static future<StatusOr<google::longrunning::Operation>>
+  LongrunningTransientError(Unused, Unused, Unused) {
+    return make_ready_future(
+        StatusOr<google::longrunning::Operation>(TransientError()));
   }
 
   std::shared_ptr<MockGoldenThingAdminStub> mock_;
@@ -89,13 +97,14 @@ TEST_F(LoggingDecoratorTest, ListDatabases) {
 }
 
 TEST_F(LoggingDecoratorTest, CreateDatabase) {
-  EXPECT_CALL(*mock_, CreateDatabase).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, AsyncCreateDatabase).WillOnce(LongrunningTransientError);
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
-  grpc::ClientContext context;
-  auto status = stub.CreateDatabase(
-      context, google::test::admin::database::v1::CreateDatabaseRequest());
-  EXPECT_EQ(TransientError(), status.status());
+  CompletionQueue cq;
+  auto status = stub.AsyncCreateDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(),
+      google::test::admin::database::v1::CreateDatabaseRequest());
+  EXPECT_EQ(TransientError(), status.get().status());
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("CreateDatabase")));
@@ -103,13 +112,15 @@ TEST_F(LoggingDecoratorTest, CreateDatabase) {
 }
 
 TEST_F(LoggingDecoratorTest, UpdateDatabaseDdl) {
-  EXPECT_CALL(*mock_, UpdateDatabaseDdl).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, AsyncUpdateDatabaseDdl)
+      .WillOnce(LongrunningTransientError);
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
-  grpc::ClientContext context;
-  auto status = stub.UpdateDatabaseDdl(
-      context, google::test::admin::database::v1::UpdateDatabaseDdlRequest());
-  EXPECT_EQ(TransientError(), status.status());
+  CompletionQueue cq;
+  auto status = stub.AsyncUpdateDatabaseDdl(
+      cq, absl::make_unique<grpc::ClientContext>(),
+      google::test::admin::database::v1::UpdateDatabaseDdlRequest());
+  EXPECT_EQ(TransientError(), status.get().status());
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("UpdateDatabaseDdl")));
@@ -187,13 +198,14 @@ TEST_F(LoggingDecoratorTest, TestIamPermissions) {
 }
 
 TEST_F(LoggingDecoratorTest, CreateBackup) {
-  EXPECT_CALL(*mock_, CreateBackup).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, AsyncCreateBackup).WillOnce(LongrunningTransientError);
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
-  grpc::ClientContext context;
-  auto status = stub.CreateBackup(
-      context, google::test::admin::database::v1::CreateBackupRequest());
-  EXPECT_EQ(TransientError(), status.status());
+  CompletionQueue cq;
+  auto status = stub.AsyncCreateBackup(
+      cq, absl::make_unique<grpc::ClientContext>(),
+      google::test::admin::database::v1::CreateBackupRequest());
+  EXPECT_EQ(TransientError(), status.get().status());
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("CreateBackup")));
@@ -257,13 +269,14 @@ TEST_F(LoggingDecoratorTest, ListBackups) {
 }
 
 TEST_F(LoggingDecoratorTest, RestoreDatabase) {
-  EXPECT_CALL(*mock_, RestoreDatabase).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, AsyncRestoreDatabase).WillOnce(LongrunningTransientError);
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
-  grpc::ClientContext context;
-  auto status = stub.RestoreDatabase(
-      context, google::test::admin::database::v1::RestoreDatabaseRequest());
-  EXPECT_EQ(TransientError(), status.status());
+  CompletionQueue cq;
+  auto status = stub.AsyncRestoreDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(),
+      google::test::admin::database::v1::RestoreDatabaseRequest());
+  EXPECT_EQ(TransientError(), status.get().status());
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("RestoreDatabase")));
@@ -302,13 +315,14 @@ TEST_F(LoggingDecoratorTest, ListBackupOperations) {
 }
 
 TEST_F(LoggingDecoratorTest, GetOperation) {
-  EXPECT_CALL(*mock_, GetOperation).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, AsyncGetOperation).WillOnce(LongrunningTransientError);
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
-  grpc::ClientContext context;
+  CompletionQueue cq;
   auto status =
-      stub.GetOperation(context, google::longrunning::GetOperationRequest());
-  EXPECT_EQ(TransientError(), status.status());
+      stub.AsyncGetOperation(cq, absl::make_unique<grpc::ClientContext>(),
+                             google::longrunning::GetOperationRequest());
+  EXPECT_EQ(TransientError(), status.get().status());
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetOperation")));
@@ -316,13 +330,15 @@ TEST_F(LoggingDecoratorTest, GetOperation) {
 }
 
 TEST_F(LoggingDecoratorTest, CancelOperation) {
-  EXPECT_CALL(*mock_, CancelOperation).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, AsyncCancelOperation)
+      .WillOnce(Return(ByMove(make_ready_future(TransientError()))));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
-  grpc::ClientContext context;
-  auto status = stub.CancelOperation(
-      context, google::longrunning::CancelOperationRequest());
-  EXPECT_EQ(TransientError(), status);
+  CompletionQueue cq;
+  auto status =
+      stub.AsyncCancelOperation(cq, absl::make_unique<grpc::ClientContext>(),
+                                google::longrunning::CancelOperationRequest());
+  EXPECT_EQ(TransientError(), status.get());
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("CancelOperation")));

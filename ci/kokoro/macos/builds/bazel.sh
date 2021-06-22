@@ -50,7 +50,7 @@ if [[ -r "${TEST_KEY_FILE_JSON}" ]]; then
   io::log "Using bazel remote cache: ${BAZEL_CACHE}/macos/${BUILD_NAME:-}"
   bazel_args+=("--remote_cache=${BAZEL_CACHE}/macos/${BUILD_NAME:-}")
   bazel_args+=("--google_credentials=${TEST_KEY_FILE_JSON}")
-  # See https://docs.bazel.build/versions/master/remote-caching.html#known-issues
+  # See https://docs.bazel.build/versions/main/remote-caching.html#known-issues
   # and https://github.com/bazelbuild/bazel/issues/3360
   bazel_args+=("--experimental_guard_against_concurrent_changes")
 fi

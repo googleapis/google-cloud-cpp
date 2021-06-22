@@ -81,7 +81,14 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
     "    $request_type$ const& request) override;\n"
                          // clang-format on
                          "\n"}},
-                       IsNonStreaming),
+                       And(IsNonStreaming, Not(IsLongrunningOperation))),
+         MethodPattern({{R"""(
+  future<StatusOr<google::longrunning::Operation>> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      $request_type$ const& request) override;
+)"""}},
+                       IsLongrunningOperation),
          MethodPattern(
              {// clang-format off
    {"  std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
@@ -95,20 +102,17 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
   }
 
   if (HasLongrunningMethod()) {
-    HeaderPrint(  // clang-format off
-    "  /// Poll a long-running operation.\n"
-    "  StatusOr<google::longrunning::Operation> GetOperation(\n"
-    "      grpc::ClientContext& context,\n"
-    "      google::longrunning::GetOperationRequest const& request) "
-    "override;\n"
-    "\n"
-    "  /// Cancel a long-running operation.\n"
-    "  Status CancelOperation(\n"
-    "      grpc::ClientContext& context,\n"
-    "      google::longrunning::CancelOperationRequest const& request) "
-    "override;\n"
-    "\n");
-    // clang-format on
+    HeaderPrint(R"""(
+future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::longrunning::GetOperationRequest const& request) override;
+
+future<Status> AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::longrunning::CancelOperationRequest const& request) override;
+)""");
   }
 
   HeaderPrint(  // clang-format off
@@ -182,7 +186,23 @@ Status LoggingDecoratorGenerator::GenerateCc() {
     "}\n"
     "\n"}},
              // clang-format on
-             IsNonStreaming),
+             And(IsNonStreaming, Not(IsLongrunningOperation))),
+         MethodPattern({{R"""(
+future<StatusOr<google::longrunning::Operation>>
+$logging_class_name$::Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      $request_type$ const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             $request_type$ const& request) {
+        return child_->Async$method_name$(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+)"""}},
+                       IsLongrunningOperation),
          MethodPattern(
              {// clang-format off}
               {"std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
@@ -216,30 +236,34 @@ Status LoggingDecoratorGenerator::GenerateCc() {
 
   // long running operation support methods
   if (HasLongrunningMethod()) {
-    CcPrint(  // clang-format off
-    "StatusOr<google::longrunning::Operation> $logging_class_name$::GetOperation(\n"
-    "    grpc::ClientContext& context,\n"
-    "    google::longrunning::GetOperationRequest const& request) {\n"
-    "  return google::cloud::internal::LogWrapper(\n"
-    "      [this](grpc::ClientContext& context,\n"
-    "             google::longrunning::GetOperationRequest const& request) {\n"
-    "        return child_->GetOperation(context, request);\n"
-    "      },\n"
-    "      context, request, __func__, tracing_options_);\n"
-    "}\n"
-    "\n"
-    "Status $logging_class_name$::CancelOperation(\n"
-    "    grpc::ClientContext& context,\n"
-    "    google::longrunning::CancelOperationRequest const& request) {\n"
-    "  return google::cloud::internal::LogWrapper(\n"
-    "      [this](grpc::ClientContext& context,\n"
-    "             google::longrunning::CancelOperationRequest const& request) {\n"
-    "        return child_->CancelOperation(context, request);\n"
-    "      },\n"
-    "      context, request, __func__, tracing_options_);\n"
-    "}\n"
-              // clang-format on
-    );
+    CcPrint(R"""(
+future<StatusOr<google::longrunning::Operation>>
+$logging_class_name$::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::longrunning::GetOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<Status> $logging_class_name$::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::longrunning::CancelOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+)""");
   }
 
   CcCloseNamespaces();

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_POLLING_LOOP_H
 
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/extract_long_running_result.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -36,27 +37,10 @@ namespace internal {
 template <typename ResultType>
 struct PollingLoopResponseExtractor {
   using ReturnType = StatusOr<ResultType>;
-
-  static ReturnType Extract(google::longrunning::Operation const& operation,
+  static ReturnType Extract(google::longrunning::Operation operation,
                             char const* location) {
-    if (!operation.has_response()) {
-      return Status(StatusCode::kInternal,
-                    std::string(location) +
-                        "() operation completed "
-                        "without error or response, name=" +
-                        operation.name());
-    }
-    google::protobuf::Any const& any = operation.response();
-    if (!any.Is<ResultType>()) {
-      return Status(StatusCode::kInternal,
-                    std::string(location) +
-                        "() operation completed "
-                        "with an invalid response type, name=" +
-                        operation.name());
-    }
-    ResultType result;
-    any.UnpackTo(&result);
-    return result;
+    return ExtractLongRunningResultResponse<ResultType>(std::move(operation),
+                                                        location);
   }
 };
 
@@ -66,27 +50,10 @@ struct PollingLoopResponseExtractor {
 template <typename ResultType>
 struct PollingLoopMetadataExtractor {
   using ReturnType = StatusOr<ResultType>;
-
-  static ReturnType Extract(google::longrunning::Operation const& operation,
+  static ReturnType Extract(google::longrunning::Operation operation,
                             char const* location) {
-    if (!operation.has_metadata()) {
-      return Status(StatusCode::kInternal,
-                    std::string(location) +
-                        "() operation completed "
-                        "without error or metadata, name=" +
-                        operation.name());
-    }
-    google::protobuf::Any const& any = operation.metadata();
-    if (!any.Is<ResultType>()) {
-      return Status(StatusCode::kInternal,
-                    std::string(location) +
-                        "() operation completed "
-                        "with an invalid metadata type, name=" +
-                        operation.name());
-    }
-    ResultType result;
-    any.UnpackTo(&result);
-    return result;
+    return ExtractLongRunningResultMetadata<ResultType>(std::move(operation),
+                                                        location);
   }
 };
 
@@ -154,11 +121,7 @@ typename ValueExtractor::ReturnType PollingLoopImpl(
     }
   }
 
-  if (operation.has_error()) {
-    // The long running operation failed, return the error to the caller.
-    return google::cloud::MakeStatusFromRpcError(operation.error());
-  }
-  return ValueExtractor::Extract(operation, location);
+  return ValueExtractor::Extract(std::move(operation), location);
 }
 
 /// @copydoc RetryLoopImpl

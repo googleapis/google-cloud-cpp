@@ -30,6 +30,10 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 using ObjectNameList = std::vector<std::string>;
 
+// This is basically a smoke test, if the test does not crash it was
+// successful. Its main value is when running with the *Sanitizers.
+// Synchronization and memory management problems are often revealed by this
+// type of test.
 class ThreadIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  public:
@@ -40,9 +44,8 @@ class ThreadIntegrationTest
     StatusOr<Client> client = MakeIntegrationTestClient();
     ASSERT_STATUS_OK(client);
     for (auto const& object_name : group) {
-      StatusOr<ObjectMetadata> meta = client->InsertObject(
-          bucket_name, object_name, contents, IfGenerationMatch(0));
-      ASSERT_STATUS_OK(meta);
+      (void)client->InsertObject(bucket_name, object_name, contents,
+                                 IfGenerationMatch(0));
     }
   }
 
@@ -76,27 +79,11 @@ class ThreadIntegrationTest
  */
 std::vector<ObjectNameList> DivideIntoEqualSizedGroups(
     ObjectNameList const& source, unsigned int count) {
-  std::vector<ObjectNameList> groups;
-  groups.reserve(count);
-  auto div = source.size() / count;
-  auto rem = source.size() % count;
-  // begin points to the beginning of the next chunk, it is incremented inside
-  // the loop by the number of elements.
-  std::size_t size;
-  for (auto begin = source.begin(); begin != source.end(); begin += size) {
-    size = div;
-    if (rem != 0) {
-      size++;
-      rem--;
-    }
-    auto remaining =
-        static_cast<std::size_t>(std::distance(begin, source.end()));
-    if (remaining < size) {
-      size = remaining;
-    }
-    auto end = begin;
-    std::advance(end, size);
-    groups.emplace_back(ObjectNameList(begin, end));
+  std::vector<ObjectNameList> groups(count);
+  std::size_t index = 0;
+  for (auto const& name : source) {
+    auto group_id = index % count;
+    groups[group_id].push_back(name);
   }
   return groups;
 }
@@ -122,44 +109,42 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   ASSERT_STATUS_OK(meta);
   EXPECT_EQ(bucket_name, meta->name());
 
-  constexpr int kObjectCount = 2000;
-  std::vector<std::string> objects;
-  objects.reserve(kObjectCount);
-  std::generate_n(std::back_inserter(objects), kObjectCount,
-                  [this] { return MakeRandomObjectName(); });
+  auto constexpr kObjectCount = 2000;
+  std::vector<std::string> objects(kObjectCount);
+  std::generate(objects.begin(), objects.end(),
+                [this] { return MakeRandomObjectName(); });
 
-  unsigned int thread_count = std::thread::hardware_concurrency();
-  if (thread_count == 0) {
-    thread_count = 4;
-  }
+  auto thread_count = std::thread::hardware_concurrency();
+  if (thread_count == 0) thread_count = 4;
 
-  auto groups = DivideIntoEqualSizedGroups(objects, thread_count);
-  std::vector<std::future<void>> tasks;
-  tasks.reserve(groups.size());
-  for (auto const& g : groups) {
-    tasks.emplace_back(std::async(std::launch::async,
-                                  &ThreadIntegrationTest::CreateObjects,
-                                  bucket_name, g, LoremIpsum()));
+  auto const groups = DivideIntoEqualSizedGroups(objects, thread_count);
+  std::vector<std::future<void>> tasks(groups.size());
+  std::transform(groups.begin(), groups.end(), tasks.begin(),
+                 [&](ObjectNameList const& g) {
+                   return std::async(std::launch::async,
+                                     &ThreadIntegrationTest::CreateObjects,
+                                     bucket_name, g, LoremIpsum());
+                 });
+  for (auto& t : tasks) t.get();
+  // Verify at least 1/2 of the objects were successfully created, note that
+  // with the default policies an object may be successfully created, but
+  // `InsertObject()` returns an error due to retries.
+  std::size_t found = 0;
+  for (auto& o : client->ListObjects(bucket_name)) {
+    if (!o.ok()) break;
+    ++found;
   }
-  for (auto& t : tasks) {
-    t.get();
-  }
-
-  tasks.clear();
-  tasks.reserve(groups.size());
-  for (auto const& g : groups) {
-    tasks.emplace_back(std::async(std::launch::async,
-                                  &ThreadIntegrationTest::DeleteObjects,
-                                  bucket_name, g));
-  }
-  for (auto& t : tasks) {
-    t.get();
-  }
+  EXPECT_GE(found, kObjectCount / 2);
+  std::transform(groups.begin(), groups.end(), tasks.begin(),
+                 [&](ObjectNameList const& g) {
+                   return std::async(std::launch::async,
+                                     &ThreadIntegrationTest::DeleteObjects,
+                                     bucket_name, g);
+                 });
+  for (auto& t : tasks) t.get();
 
   auto delete_status = bucket_client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(delete_status);
-  // This is basically a smoke test, if the test does not crash it was
-  // successful.
 }
 
 class CaptureSendHeaderBackend : public LogBackend {
