@@ -1,208 +1,143 @@
-# Cloud Bigtable C++ Client Quick Start Code Samples
-
-This directory contains minimal examples to get started quickly, and are
-referenced from the Doxygen landing page as "Hello World".
-
 ## Table of Contents
 
 - [Before you begin](#before-you-begin)
-  - [Compile the Examples](#compile-the-examples)
-  - [Run the Examples](#run-the-examples)
+  - [Set Up Project](#set-up-project)
+  - [Compile Examples](#compile-examples)
+  - [Configure Environment](#configure-environment)
 - [Samples](#samples)
   - [Hello World](#hello-world)
   - [Administer Instances](#administer-instances)
   - [Administer Tables](#administer-tables)
   - [Reading and Writing Operations](#reading-and-writing-operations)
+  - [Credentials](#credentials)
 
 ## Before you begin
 
-### Compile the Examples
+### Set Up Project
 
-<!-- START bigtable_hw_install -->
+You will need a Google Cloud Platform (GCP) Project with billing and the
+Bigtable Admin API enabled. The
+[Cloud Bigtable quickstart](https://cloud.google.com/bigtable/docs/quickstart-cbt)
+covers the necessary steps in detail. Make a note of the GCP Project ID,
+Instance ID, and Table ID as you will need them below.
+
+### Compile Examples
 
 These examples are compiled as part of the build for the Cloud Bigtable C++
 Client.  The instructions on how to compile the code are in the
-[top-level README](../../README.md) file.
+[top-level README](/README.md) file. The Bigtable client library
+[quickstart](../quickstart/README.md) may also be relevant.
 
-<!-- END bigtable_hw_install -->
+### Configure Environment
 
-### Run the Examples
-
-You first need to create a production instance, the easiest way is to
-follow the
-[instructions](https://cloud.google.com/bigtable/docs/creating-instance)
-on the Cloud Bigtable site.
-
-#### Configure gRPC Root Certificates
-
-On some platforms (notably macOS and Windows) you may need to configure gRPC to
-accept the Google server certificates. gRPC expects to find a
-[PEM](https://en.wikipedia.org/wiki/Privacy-enhanced_Electronic_Mail) file
-with the list of trusted root certificates in `/usr/share/grpc/roots.pem`
-(or `${PREFIX}/share/grpc/roots.pem` if you installed gRPC with a different
-`PREFIX`, e.g. `/usr/local`).  If your system does not have this file installed
-you need to set the `GRPC_DEFAULT_SSL_ROOTS_FILE_PATH` to the location of this
-file.
-
-This file is included with the gRPC source. You can download it using:
+On Windows and macOS, gRPC [requires][grpc-roots-pem-bug] an environment variable
+to find the root of trust for SSL. On macOS use:
 
 ```console
-$ wget https://pki.google.com/roots.pem
-$ GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=$PWD/roots.pem
-$ export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH
+curl -Lo roots.pem https://pki.google.com/roots.pem
+export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="$PWD/roots.pem"
 ```
 
-#### Authenticate with Google Cloud Platform
-
-You may need to authenticate with Google Cloud Platform. The Google Cloud SDK
-offers a simple way to do so:
+While on Windows use:
 
 ```console
-$ gcloud auth login
+@powershell -NoProfile -ExecutionPolicy unrestricted -Command ^
+    (new-object System.Net.WebClient).Downloadfile( ^
+        'https://pki.google.com/roots.pem', 'roots.pem')
+set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
-## Samples
+# Samples
 
-### Hello world
+## Hello World
 
 View the [Hello World][hello_world_code] example to see sample usage of the
-Bigtable client library.
+Bigtable client library. More details on this sample code can be found
+[here](https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-hello-world.html).
 
-#### Usage
+### Running Hello World
 
 ```console
-$ ./bigtable_hello_world
-Usage: bigtable_hello_world <project_id> <instance_id> <table_id>
+$ ./bigtable_hello_world hello-world <project_id> <instance_id> <table_id>
 ```
 
-#### Run Hello world
+## Administer Instances
 
-After configuring gRPC, you can run the examples using:
+### Hello World - `InstanceAdmin`
+
+View the [Hello Instance Admin][instance_admin_code] example to see sample usage of instance
+administration of the Bigtable client library. More details on this sample code can be found
+[here](https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-hello-instance-admin.html).
+
+### Running `InstanceAdmin` Samples
+
+| Target                               | Description                         |
+| ------------------------------------ | ----------------------------------- |
+| `./bigtable_hello_instance_admin`    | Demonstration of basic operations   |
+| `./bigtable_hello_app_profile`       | Demonstration of basic operations using [App Profile](https://cloud.google.com/bigtable/docs/app-profiles) |
+| `./bigtable_instance_admin_snippets` | Collection of individual operations |
+
+Run the above targets with the `--help` flag to display the available commands and their usage.
+Here is an example of one such command which will create an instance.
 
 ```console
-$ export PROJECT_ID=... # Your Google Cloud Platform project ID
-$ export INSTANCE_ID=... # Your Cloud Bigtable instance ID
-$ ./bigtable_hello_world ${PROJECT_ID} ${INSTANCE_ID} example-table
+$ ./bigtable_instance_admin_snippets create-instance <project-id> <instance-id> <zone-id>
 ```
 
-### Administer Instances
+## Administer Tables
 
-View the [example][instance_admin_code] to see sample usage of instance
-administration of the Bigtable client library.
+### Hello World - `TableAdmin`
 
-#### Usage
+View the [Hello Table Admin][table_admin_code] example to see sample usage of table
+administration of the Bigtable client library. More details on this sample code can be found [here](https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-hello-table-admin.html).
 
+### Running `TableAdmin` Samples
+
+| Target                                   | Description                         |
+| ---------------------------------------- | ----------------------------------- |
+| `./bigtable_hello_table_admin`           | Demonstration of basic operations   |
+| `./table_admin_snippets`                 | Collection of individual operations |
+| `./bigtable_table_admin_backup_snippets` | Collection of [Backup](https://cloud.google.com/bigtable/docs/backups) operations |
+
+Run the above targets with the `--help` flag to display the available commands and their usage.
+Here is an example of one such command which will create a table.
 ```console
-$ ./bigtable_samples_instance_admin
-
-Usage: bigtable_samples_instance_admin <command> <project_id> [arguments]
-
-Examples:
-  bigtable_samples_instance_admin run my-project my-instance my-cluster us-central1-f
-  bigtable_samples_instance_admin create-dev-instance my-project my-instance us-central1-f
-  bigtable_samples_instance_admin delete-instance my-project my-instance
-  bigtable_samples_instance_admin create-cluster my-project my-instance my-cluster us-central1-a
-  bigtable_samples_instance_admin delete-cluster my-project my-instance my-cluster
+$ ./table_admin_snippets create-table <project-id> <instance-id> <table-id>
 ```
 
-**Note:** In the `create-cluster` line, a different zone is chosen as an instance's clusters must be placed in unique zones that are within the same region. See the [documentation](https://cloud.google.com/bigtable/docs/replication-overview#how-it-works) for more details.
+## Reading and Writing Data Operations
 
-#### Run instance admin samples
+| Target                   | Description                                      |
+| ------------------------ | ------------------------------------------------ |
+| `./read_snippets`        | Collection of synchronous read operations        |
+| `./data_snippets`        | Collection of other synchronous table operations |
+| `./data_async_snippets`  | Collection of asynchronous table operations      |
+| `./data_filter_snippets` | Collection of operations using [Filters](https://cloud.google.com/bigtable/docs/filters)|
 
-After configuring gRPC, you can run the examples using:
+The above samples demonstrate individual data operations. Running the targets with
+the `--help` flag will display the available commands and their usage. Here is an example of one
+such command which will read a row from a table.
 
 ```console
-$ export PROJECT_ID=... # Your Google Cloud Platform project ID
-$ export INSTANCE_ID=... # Your Cloud Bigtable instance ID
-$ export CLUSTER_ID=... # Your Cloud Bigtable cluster ID
-$ export ZONE=... # Name of the zone where the example will create a new instance
-$ ./bigtable_samples_instance_admin run ${PROJECT_ID} ${INSTANCE_ID} ${CLUSTER_ID} ${ZONE}
+$ ./read_snippets read-row <project-id> <instance-id> <table-id> <row-key>
+```
+
+## Credentials
+
+The following samples demonstrate use of [Authentication](https://cloud.google.com/bigtable/docs/authentication) and [Access Control]((https://cloud.google.com/bigtable/docs/access-control)) for Bigtable. More details on the samples can be found [here](https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-samples-grpc-credentials.html).
+
+| Target                              | Description                            |
+| ----------------------------------- | -------------------------------------- |
+| `./table_admin_iam_policy_snippets` | Examples to interact with IAM policies |
+| `./bigtable_grpc_credentials`       | Examples of other types of credentials |
+
+ Running the targets with the `--help` flag will display the available commands and their usage. Here is an example of one such command which will output the IAM Policy for a given table.
+
+```console
+$ ./table_admin_iam_policy_snippets get-iam-policy <project-id> <instance-id> <table-id>
 ```
 
 [hello_world_code]: bigtable_hello_world.cc
 [instance_admin_code]: bigtable_hello_instance_admin.cc
-
-### Administer Tables
-
-This sample showcases the basic table / column family operations:
-
-- Create a table
-- List tables in the current project
-- Retrieve table metadata
-- List table column families and GC rules
-- Update a column family GC rule
-- Delete all the rows
-- Delete a table
-
-#### Usage
-
-```console
-$ ./bigtable_samples
-
-Usage: bigtable_samples <command> <project_id> <instance_id> <table_id> [arguments]
-
-Examples:
-  bigtable_samples run my-project my-instance my-table
-  table_admin_snippets create-table my-project my-instance my-table
-  table_admin_snippets list-tables my-project my-instance
-  table_admin_snippets get-table my-project my-instance my-table
-  table_admin_snippets modify-table my-project my-instance my-table
-  table_admin_snippets drop-all-rows my-project my-instance my-table
-  table_admin_snippets delete-table my-project my-instance my-table
-```
-#### Run admin table samples
-After configuring gRPC, you can run the examples using:
-
-```console
-$ export PROJECT_ID=... # Your Google Cloud Platform project ID
-$ export INSTANCE_ID=... # Cloud Bigtable instance ID
-$ export TABLE_ID=... # Cloud Bigtable table ID
-$ ./bigtable_samples run ${PROJECT_ID} ${INSTANCE_ID} ${TABLE_ID}
-```
-
-### Reading and Writing Operations
-
-This sample showcases reading and writing operations:
-
-- Use Apply to write a single row
-- Use BulkApply to write several rows in an operation
-- Use ReadRow to read a single row
-- Use ReadRows to read several rows in a range
-- Use ReadRows to read 'N' rows in a range
-- Use CheckAndMutate to modify value
-- Use ReadModifyWrite to increament a value and append a string to a value
-- Use SampleRows to fetch some sample rows
-
-
-#### Usage
-
-```console
-$ ./data_snippets
-
-Usage: data_snippets <command> <project_id> <instance_id> <table_id> [arguments]
-
-Examples:
-  data_snippets apply my-project my-instance my-table
-  data_snippets bulk-apply my-project my-instance my-table
-  data_snippets read-row my-project my-instance
-  data_snippets read-rows my-project my-instance my-table
-  data_snippets read-rows-with-limit my-project my-instance my-table
-  data_snippets check-and-mutate my-project my-instance my-table
-  data_snippets read-modify-write my-project my-instance my-table
-  data_snippets sample-rows my-project my-instance my-table
-```
-
-#### Run reading and writing samples
-After configuring gRPC, you can run the examples using:
-
-```console
-$ export PROJECT_ID=... # Your Google Cloud Platform project ID
-$ export INSTANCE_ID=... # Cloud Bigtable instance ID
-$ export TABLE_ID=... # Cloud Bigtable table ID
-$ ./data_snippets apply ${PROJECT_ID} ${INSTANCE_ID} ${TABLE_ID}
-```
-
-[hello_world_code]: bigtable_hello_world.cc
-[instance_admin_code]: bigtable_instance_admin_snippets.cc
-[table_admin_code]: table_admin_snippets.cc
-[data_snippets]: data_snippets.cc
+[table_admin_code]: bigtable_hello_table_admin.cc
+[grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
