@@ -64,12 +64,10 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
       CreateInstanceParams p) override {
     auto stub = stub_;
     return google::cloud::internal::AsyncLongRunningOperation<gcsa::Instance>(
-        background_threads_->cq(), p.request,
-        [stub](
-            google::cloud::CompletionQueue& cq,
-            std::unique_ptr<grpc::ClientContext> context,
-            google::spanner::admin::instance::v1::CreateInstanceRequest const&
-                request) {
+        background_threads_->cq(), std::move(p.request),
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               gcsa::CreateInstanceRequest const& request) {
           return stub->AsyncCreateInstance(cq, std::move(context), request);
         },
         [stub](google::cloud::CompletionQueue& cq,
@@ -93,12 +91,10 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
       UpdateInstanceParams p) override {
     auto stub = stub_;
     return google::cloud::internal::AsyncLongRunningOperation<gcsa::Instance>(
-        background_threads_->cq(), p.request,
-        [stub](
-            google::cloud::CompletionQueue& cq,
-            std::unique_ptr<grpc::ClientContext> context,
-            google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-                request) {
+        background_threads_->cq(), std::move(p.request),
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               gcsa::UpdateInstanceRequest const& request) {
           return stub->AsyncUpdateInstance(cq, std::move(context), request);
         },
         [stub](google::cloud::CompletionQueue& cq,
