@@ -112,45 +112,51 @@ TEST_F(InstanceAdminMetadataTest, ListInstanceConfigs) {
 }
 
 TEST_F(InstanceAdminMetadataTest, CreateInstance) {
-  EXPECT_CALL(*mock_, CreateInstance)
-      .WillOnce([this](grpc::ClientContext& context,
+  EXPECT_CALL(*mock_, AsyncCreateInstance)
+      .WillOnce([this](CompletionQueue&,
+                       std::unique_ptr<grpc::ClientContext> context,
                        gcsa::CreateInstanceRequest const&) {
         EXPECT_STATUS_OK(
-            IsContextMDValid(context,
+            IsContextMDValid(*context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
                              "CreateInstance",
                              expected_api_client_header_));
-        return TransientError();
+        return make_ready_future(
+            StatusOr<google::longrunning::Operation>(TransientError()));
       });
 
   InstanceAdminMetadata stub(mock_);
-  grpc::ClientContext context;
+  CompletionQueue cq;
+  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
   gcsa::CreateInstanceRequest request;
   request.set_parent("projects/test-project-id");
   request.set_instance_id("test-instance-id");
-  auto response = stub.CreateInstance(context, request);
-  EXPECT_EQ(TransientError(), response.status());
+  auto response = stub.AsyncCreateInstance(cq, std::move(context), request);
+  EXPECT_EQ(TransientError(), response.get().status());
 }
 
 TEST_F(InstanceAdminMetadataTest, UpdateInstance) {
-  EXPECT_CALL(*mock_, UpdateInstance)
-      .WillOnce([this](grpc::ClientContext& context,
+  EXPECT_CALL(*mock_, AsyncUpdateInstance)
+      .WillOnce([this](CompletionQueue&,
+                       std::unique_ptr<grpc::ClientContext> context,
                        gcsa::UpdateInstanceRequest const&) {
         EXPECT_STATUS_OK(
-            IsContextMDValid(context,
+            IsContextMDValid(*context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
                              "UpdateInstance",
                              expected_api_client_header_));
-        return TransientError();
+        return make_ready_future(
+            StatusOr<google::longrunning::Operation>(TransientError()));
       });
 
   InstanceAdminMetadata stub(mock_);
-  grpc::ClientContext context;
+  CompletionQueue cq;
+  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
   gcsa::UpdateInstanceRequest request;
   request.mutable_instance()->set_name(
       "projects/test-project-id/instances/test-instance-id");
-  auto response = stub.UpdateInstance(context, request);
-  EXPECT_EQ(TransientError(), response.status());
+  auto response = stub.AsyncUpdateInstance(cq, std::move(context), request);
+  EXPECT_EQ(TransientError(), response.get().status());
 }
 
 TEST_F(InstanceAdminMetadataTest, DeleteInstance) {

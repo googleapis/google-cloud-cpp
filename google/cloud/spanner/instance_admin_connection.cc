@@ -16,7 +16,7 @@
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/options.h"
-#include "google/cloud/internal/polling_loop.h"
+#include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <grpcpp/grpcpp.h>
 #include <chrono>
@@ -62,38 +62,59 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
 
   future<StatusOr<gcsa::Instance>> CreateInstance(
       CreateInstanceParams p) override {
-    auto operation = RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        Idempotency::kNonIdempotent,
-        [this](grpc::ClientContext& context,
-               gcsa::CreateInstanceRequest const& request) {
-          return stub_->CreateInstance(context, request);
+    auto stub = stub_;
+    return google::cloud::internal::AsyncLongRunningOperation<gcsa::Instance>(
+        background_threads_->cq(), p.request,
+        [stub](
+            google::cloud::CompletionQueue& cq,
+            std::unique_ptr<grpc::ClientContext> context,
+            google::spanner::admin::instance::v1::CreateInstanceRequest const&
+                request) {
+          return stub->AsyncCreateInstance(cq, std::move(context), request);
         },
-        p.request, __func__);
-    if (!operation) {
-      return google::cloud::make_ready_future(
-          StatusOr<gcsa::Instance>(operation.status()));
-    }
-
-    return AwaitCreateOrUpdateInstance(*std::move(operation));
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::GetOperationRequest const& request) {
+          return stub->AsyncGetOperation(cq, std::move(context), request);
+        },
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::CancelOperationRequest const& request) {
+          return stub->AsyncCancelOperation(cq, std::move(context), request);
+        },
+        &google::cloud::internal::ExtractLongRunningResultResponse<
+            gcsa::Instance>,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        Idempotency::kNonIdempotent, polling_policy_prototype_->clone(),
+        __func__);
   }
 
   future<StatusOr<gcsa::Instance>> UpdateInstance(
       UpdateInstanceParams p) override {
-    auto operation = RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        Idempotency::kIdempotent,
-        [this](grpc::ClientContext& context,
-               gcsa::UpdateInstanceRequest const& request) {
-          return stub_->UpdateInstance(context, request);
+    auto stub = stub_;
+    return google::cloud::internal::AsyncLongRunningOperation<gcsa::Instance>(
+        background_threads_->cq(), p.request,
+        [stub](
+            google::cloud::CompletionQueue& cq,
+            std::unique_ptr<grpc::ClientContext> context,
+            google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+                request) {
+          return stub->AsyncUpdateInstance(cq, std::move(context), request);
         },
-        p.request, __func__);
-    if (!operation) {
-      return google::cloud::make_ready_future(
-          StatusOr<gcsa::Instance>(operation.status()));
-    }
-
-    return AwaitCreateOrUpdateInstance(*std::move(operation));
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::GetOperationRequest const& request) {
+          return stub->AsyncGetOperation(cq, std::move(context), request);
+        },
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::CancelOperationRequest const& request) {
+          return stub->AsyncCancelOperation(cq, std::move(context), request);
+        },
+        &google::cloud::internal::ExtractLongRunningResultResponse<
+            gcsa::Instance>,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        Idempotency::kIdempotent, polling_policy_prototype_->clone(), __func__);
   }
 
   Status DeleteInstance(DeleteInstanceParams p) override {
@@ -238,40 +259,6 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
   }
 
  private:
-  future<StatusOr<gcsa::Instance>> AwaitCreateOrUpdateInstance(
-      google::longrunning::Operation operation) {
-    promise<StatusOr<gcsa::Instance>> pr;
-    auto f = pr.get_future();
-
-    // TODO(#4038) - use background_threads_->cq() to run this loop.
-    std::thread t(
-        [](std::shared_ptr<spanner_internal::InstanceAdminStub> stub,
-           google::longrunning::Operation operation,
-           std::unique_ptr<PollingPolicy> polling_policy,
-           google::cloud::promise<StatusOr<gcsa::Instance>> promise,
-           char const* location) mutable {
-          auto result = google::cloud::internal::PollingLoop<
-              google::cloud::internal::PollingLoopResponseExtractor<
-                  gcsa::Instance>>(
-              std::move(polling_policy),
-              [stub](grpc::ClientContext& context,
-                     google::longrunning::GetOperationRequest const& request) {
-                return stub->GetOperation(context, request);
-              },
-              std::move(operation), location);
-
-          // Drop our reference to stub; ideally we'd have std::moved into the
-          // lambda. Doing this also prevents a false leak from being reported
-          // when using googlemock.
-          stub.reset();
-          promise.set_value(std::move(result));
-        },
-        stub_, std::move(operation), polling_policy_prototype_->clone(),
-        std::move(pr), __func__);
-    t.detach();
-
-    return f;
-  }
   std::shared_ptr<spanner_internal::InstanceAdminStub> stub_;
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;

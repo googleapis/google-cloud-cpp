@@ -37,8 +37,9 @@ InstanceAdminStub::~InstanceAdminStub() = default;
 class DefaultInstanceAdminStub : public InstanceAdminStub {
  public:
   DefaultInstanceAdminStub(
-      std::unique_ptr<gcsa::InstanceAdmin::Stub> instance_admin,
-      std::unique_ptr<google::longrunning::Operations::Stub> operations)
+      std::unique_ptr<gcsa::InstanceAdmin::StubInterface> instance_admin,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations)
       : instance_admin_(std::move(instance_admin)),
         operations_(std::move(operations)) {}
 
@@ -55,28 +56,28 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     return response;
   }
 
-  StatusOr<google::longrunning::Operation> CreateInstance(
-      grpc::ClientContext& context,
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
+      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       gcsa::CreateInstanceRequest const& request) override {
-    google::longrunning::Operation response;
-    grpc::Status status =
-        instance_admin_->CreateInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    return cq.MakeUnaryRpc(
+        [this](grpc::ClientContext* context,
+               gcsa::CreateInstanceRequest const& request,
+               grpc::CompletionQueue* cq) {
+          return instance_admin_->AsyncCreateInstance(context, request, cq);
+        },
+        request, std::move(context));
   }
 
-  StatusOr<google::longrunning::Operation> UpdateInstance(
-      grpc::ClientContext& context,
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
+      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       gcsa::UpdateInstanceRequest const& request) override {
-    google::longrunning::Operation response;
-    grpc::Status status =
-        instance_admin_->UpdateInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    return cq.MakeUnaryRpc(
+        [this](grpc::ClientContext* context,
+               gcsa::UpdateInstanceRequest const& request,
+               grpc::CompletionQueue* cq) {
+          return instance_admin_->AsyncUpdateInstance(context, request, cq);
+        },
+        request, std::move(context));
   }
 
   Status DeleteInstance(grpc::ClientContext& context,
@@ -159,21 +160,37 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     return response;
   }
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& client_context,
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override {
-    google::longrunning::Operation response;
-    grpc::Status status =
-        operations_->GetOperation(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    return cq.MakeUnaryRpc(
+        [this](grpc::ClientContext* context,
+               google::longrunning::GetOperationRequest const& request,
+               grpc::CompletionQueue* cq) {
+          return operations_->AsyncGetOperation(context, request, cq);
+        },
+        request, std::move(context));
+  }
+
+  future<Status> AsyncCancelOperation(
+      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      google::longrunning::CancelOperationRequest const& request) override {
+    return cq
+        .MakeUnaryRpc(
+            [this](grpc::ClientContext* context,
+                   google::longrunning::CancelOperationRequest const& request,
+                   grpc::CompletionQueue* cq) {
+              return operations_->AsyncCancelOperation(context, request, cq);
+            },
+            request, std::move(context))
+        .then([](future<StatusOr<google::protobuf::Empty>> f) {
+          return f.get().status();
+        });
   }
 
  private:
-  std::unique_ptr<gcsa::InstanceAdmin::Stub> instance_admin_;
-  std::unique_ptr<google::longrunning::Operations::Stub> operations_;
+  std::unique_ptr<gcsa::InstanceAdmin::StubInterface> instance_admin_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
 std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
