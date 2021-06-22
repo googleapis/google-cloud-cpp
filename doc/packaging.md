@@ -1214,7 +1214,7 @@ cmake --build cmake-out --target install
 </details>
 
 <details>
-<summary>CentOS (8)</summary>
+<summary>Rocky Linux (8)</summary>
 <br>
 
 Install the minimal development tools, libcurl, OpenSSL, and the c-ares
@@ -1230,9 +1230,9 @@ sudo dnf install -y ccache cmake gcc-c++ git make openssl-devel patch pkgconfig 
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
-default CentOS-8 does not search for shared libraries in these directories,
-there are multiple ways to solve this problem, the following steps are one
-solution:
+default Rocky Linux 8 does not search for shared libraries in these
+directories, there are multiple ways to solve this problem, the following
+steps are one solution:
 
 ```bash
 (echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
