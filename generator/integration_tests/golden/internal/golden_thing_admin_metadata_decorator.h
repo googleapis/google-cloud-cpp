@@ -38,18 +38,20 @@ class GoldenThingAdminMetadata : public GoldenThingAdminStub {
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListDatabasesRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateDatabase(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
   StatusOr<google::test::admin::database::v1::Database> GetDatabase(
     grpc::ClientContext& context,
     google::test::admin::database::v1::GetDatabaseRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
   Status DropDatabase(
     grpc::ClientContext& context,
     google::test::admin::database::v1::DropDatabaseRequest const& request) override;
@@ -70,10 +72,11 @@ class GoldenThingAdminMetadata : public GoldenThingAdminStub {
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateBackup(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::CreateBackupRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::CreateBackupRequest const& request) override;
   StatusOr<google::test::admin::database::v1::Backup> GetBackup(
     grpc::ClientContext& context,
     google::test::admin::database::v1::GetBackupRequest const& request) override;
@@ -90,10 +93,11 @@ class GoldenThingAdminMetadata : public GoldenThingAdminStub {
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListBackupsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> RestoreDatabase(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
   StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) override;
@@ -102,16 +106,16 @@ class GoldenThingAdminMetadata : public GoldenThingAdminStub {
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListBackupOperationsRequest const& request) override;
 
-  /// Poll a long-running operation.
-  StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
-  /// Cancel a long-running operation.
-  Status CancelOperation(
-      grpc::ClientContext& context,
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
-
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);

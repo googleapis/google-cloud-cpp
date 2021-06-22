@@ -35,8 +35,9 @@ class MockGoldenThingAdminStub
        ::google::test::admin::database::v1::ListDatabasesRequest const&),
       (override));
   MOCK_METHOD(
-      StatusOr<::google::longrunning::Operation>, CreateDatabase,
-      (grpc::ClientContext&,
+      future<StatusOr<::google::longrunning::Operation>>, AsyncCreateDatabase,
+      (google::cloud::CompletionQueue&,
+       std::unique_ptr<grpc::ClientContext>,
        ::google::test::admin::database::v1::CreateDatabaseRequest const&),
       (override));
   MOCK_METHOD(StatusOr<::google::test::admin::database::v1::Database>,
@@ -45,8 +46,9 @@ class MockGoldenThingAdminStub
                ::google::test::admin::database::v1::GetDatabaseRequest const&),
               (override));
   MOCK_METHOD(
-      StatusOr<::google::longrunning::Operation>, UpdateDatabaseDdl,
-      (grpc::ClientContext&,
+      future<StatusOr<::google::longrunning::Operation>>, AsyncUpdateDatabaseDdl,
+      (google::cloud::CompletionQueue&,
+          std::unique_ptr<grpc::ClientContext>,
        ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const&),
       (override));
   MOCK_METHOD(Status, DropDatabase,
@@ -72,8 +74,9 @@ class MockGoldenThingAdminStub
               (grpc::ClientContext&,
                ::google::iam::v1::TestIamPermissionsRequest const&),
               (override));
-  MOCK_METHOD(StatusOr<::google::longrunning::Operation>, CreateBackup,
-              (grpc::ClientContext&,
+  MOCK_METHOD(future<StatusOr<::google::longrunning::Operation>>, AsyncCreateBackup,
+              (google::cloud::CompletionQueue&,
+                  std::unique_ptr<grpc::ClientContext>,
                ::google::test::admin::database::v1::CreateBackupRequest const&),
               (override));
   MOCK_METHOD(StatusOr<::google::test::admin::database::v1::Backup>, GetBackup,
@@ -96,8 +99,9 @@ class MockGoldenThingAdminStub
        ::google::test::admin::database::v1::ListBackupsRequest const&),
       (override));
   MOCK_METHOD(
-      StatusOr<::google::longrunning::Operation>, RestoreDatabase,
-      (grpc::ClientContext&,
+      future<StatusOr<::google::longrunning::Operation>>, AsyncRestoreDatabase,
+      (google::cloud::CompletionQueue&,
+          std::unique_ptr<grpc::ClientContext>,
        ::google::test::admin::database::v1::RestoreDatabaseRequest const&),
       (override));
   MOCK_METHOD(
@@ -115,13 +119,17 @@ class MockGoldenThingAdminStub
       (grpc::ClientContext&,
        ::google::test::admin::database::v1::ListBackupOperationsRequest const&),
       (override));
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (grpc::ClientContext&,
+
+  MOCK_METHOD(future<StatusOr<google::longrunning::Operation>>, AsyncGetOperation,
+              (google::cloud::CompletionQueue&,
+                  std::unique_ptr<grpc::ClientContext>,
                google::longrunning::GetOperationRequest const&),
               (override));
-  MOCK_METHOD(Status, CancelOperation,
-              (grpc::ClientContext&,
-               google::longrunning::CancelOperationRequest const&),
+
+  MOCK_METHOD(future<Status>, AsyncCancelOperation,
+              (google::cloud::CompletionQueue&,
+                  std::unique_ptr<grpc::ClientContext>,
+                  google::longrunning::CancelOperationRequest const&),
               (override));
 };
 

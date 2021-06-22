@@ -40,26 +40,21 @@ class GoldenKitchenSinkAuth : public GoldenKitchenSinkStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<GoldenKitchenSinkStub> child);
 
-
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
       grpc::ClientContext& context,
       google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
-
 
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse> GenerateIdToken(
       grpc::ClientContext& context,
       google::test::admin::database::v1::GenerateIdTokenRequest const& request) override;
 
-
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse> WriteLogEntries(
       grpc::ClientContext& context,
       google::test::admin::database::v1::WriteLogEntriesRequest const& request) override;
 
-
   StatusOr<google::test::admin::database::v1::ListLogsResponse> ListLogs(
       grpc::ClientContext& context,
       google::test::admin::database::v1::ListLogsRequest const& request) override;
-
 
   std::unique_ptr<internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
   TailLogEntries(
@@ -69,7 +64,6 @@ class GoldenKitchenSinkAuth : public GoldenKitchenSinkStub {
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
       grpc::ClientContext& context,
       google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
-
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

@@ -28,7 +28,26 @@ namespace {
 using ::google::cloud::internal::GrpcAuthenticationStrategy;
 using ::google::cloud::testing_util::MockAuthenticationStrategy;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::ByMove;
 using ::testing::IsNull;
+using ::testing::Return;
+using ::testing::Unused;
+
+std::shared_ptr<GrpcAuthenticationStrategy> MakeAsyncMockAuth() {
+  using ReturnType = StatusOr<std::unique_ptr<grpc::ClientContext>>;
+  auto auth = std::make_shared<MockAuthenticationStrategy>();
+  EXPECT_CALL(*auth, AsyncConfigureContext)
+      .WillOnce([](std::unique_ptr<grpc::ClientContext>) {
+        return make_ready_future(ReturnType(
+            Status(StatusCode::kInvalidArgument, "cannot-set-credentials")));
+      })
+      .WillOnce([](std::unique_ptr<grpc::ClientContext> context) {
+        context->set_credentials(
+            grpc::AccessTokenCredentials("test-only-invalid"));
+        return make_ready_future(make_status_or(std::move(context)));
+      });
+  return auth;
+}
 
 std::shared_ptr<GrpcAuthenticationStrategy> MakeMockAuth() {
   auto auth = std::make_shared<MockAuthenticationStrategy>();
@@ -44,6 +63,13 @@ std::shared_ptr<GrpcAuthenticationStrategy> MakeMockAuth() {
   return auth;
 }
 
+future<StatusOr<google::longrunning::Operation>> LongrunningError(Unused,
+                                                                  Unused,
+                                                                  Unused) {
+  return make_ready_future(StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kPermissionDenied, "uh-oh")));
+}
+
 // The general pattern of these test is to make two requests, both of which
 // return an error. The first one because the auth strategy fails, the second
 // because the operation in the mock stub fails.
@@ -51,8 +77,7 @@ std::shared_ptr<GrpcAuthenticationStrategy> MakeMockAuth() {
 TEST(GoldenThingAdminAuthDecoratorTest, ListDatabases) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListDatabases)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
   google::test::admin::database::v1::ListDatabasesRequest request;
@@ -66,29 +91,26 @@ TEST(GoldenThingAdminAuthDecoratorTest, ListDatabases) {
   EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, CreateDatabase) {
+TEST(GoldenThingAdminAuthDecoratorTest, AsyncCreateDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, CreateDatabase)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+  EXPECT_CALL(*mock, AsyncCreateDatabase).WillOnce(LongrunningError);
 
-  auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
+  auto under_test = GoldenThingAdminAuth(MakeAsyncMockAuth(), mock);
   google::test::admin::database::v1::CreateDatabaseRequest request;
-  grpc::ClientContext ctx;
-  auto auth_failure = under_test.CreateDatabase(ctx, request);
-  EXPECT_THAT(ctx.credentials(), IsNull());
-  EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
+  CompletionQueue cq;
+  auto auth_failure = under_test.AsyncCreateDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
-  auto auth_success = under_test.CreateDatabase(ctx, request);
-  EXPECT_THAT(ctx.credentials(), Not(IsNull()));
-  EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
+  auto auth_success = under_test.AsyncCreateDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(GoldenThingAdminAuthDecoratorTest, GetDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetDatabase)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
   google::test::admin::database::v1::GetDatabaseRequest request;
@@ -102,29 +124,26 @@ TEST(GoldenThingAdminAuthDecoratorTest, GetDatabase) {
   EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, UpdateDatabaseDdl) {
+TEST(GoldenThingAdminAuthDecoratorTest, AsyncUpdateDatabaseDdl) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, UpdateDatabaseDdl)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+  EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl).WillOnce(LongrunningError);
 
-  auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
+  auto under_test = GoldenThingAdminAuth(MakeAsyncMockAuth(), mock);
   google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
-  grpc::ClientContext ctx;
-  auto auth_failure = under_test.UpdateDatabaseDdl(ctx, request);
-  EXPECT_THAT(ctx.credentials(), IsNull());
-  EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
+  CompletionQueue cq;
+  auto auth_failure = under_test.AsyncUpdateDatabaseDdl(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
-  auto auth_success = under_test.UpdateDatabaseDdl(ctx, request);
-  EXPECT_THAT(ctx.credentials(), Not(IsNull()));
-  EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
+  auto auth_success = under_test.AsyncUpdateDatabaseDdl(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(GoldenThingAdminAuthDecoratorTest, DropDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, DropDatabase)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
   google::test::admin::database::v1::DropDatabaseRequest request;
@@ -141,8 +160,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, DropDatabase) {
 TEST(GoldenThingAdminAuthDecoratorTest, GetDatabaseDdl) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetDatabaseDdl)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
   google::test::admin::database::v1::GetDatabaseDdlRequest request;
@@ -159,8 +177,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, GetDatabaseDdl) {
 TEST(GoldenThingAdminAuthDecoratorTest, SetIamPolicy) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, SetIamPolicy)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
   google::iam::v1::SetIamPolicyRequest request;
@@ -177,8 +194,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, SetIamPolicy) {
 TEST(GoldenThingAdminAuthDecoratorTest, GetIamPolicy) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetIamPolicy)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
   google::iam::v1::GetIamPolicyRequest request;
@@ -195,8 +211,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, GetIamPolicy) {
 TEST(GoldenThingAdminAuthDecoratorTest, TestIamPermissions) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, TestIamPermissions)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
   google::iam::v1::TestIamPermissionsRequest request;
@@ -210,29 +225,26 @@ TEST(GoldenThingAdminAuthDecoratorTest, TestIamPermissions) {
   EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, CreateBackup) {
+TEST(GoldenThingAdminAuthDecoratorTest, AsyncCreateBackup) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, CreateBackup)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+  EXPECT_CALL(*mock, AsyncCreateBackup).WillOnce(LongrunningError);
 
-  auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
+  auto under_test = GoldenThingAdminAuth(MakeAsyncMockAuth(), mock);
   google::test::admin::database::v1::CreateBackupRequest request;
-  grpc::ClientContext ctx;
-  auto auth_failure = under_test.CreateBackup(ctx, request);
-  EXPECT_THAT(ctx.credentials(), IsNull());
-  EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
+  CompletionQueue cq;
+  auto auth_failure = under_test.AsyncCreateBackup(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
-  auto auth_success = under_test.CreateBackup(ctx, request);
-  EXPECT_THAT(ctx.credentials(), Not(IsNull()));
-  EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
+  auto auth_success = under_test.AsyncCreateBackup(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(GoldenThingAdminAuthDecoratorTest, GetBackup) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetBackup)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
   google::test::admin::database::v1::GetBackupRequest request;
@@ -249,8 +261,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, GetBackup) {
 TEST(GoldenThingAdminAuthDecoratorTest, UpdateBackup) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, UpdateBackup)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
   google::test::admin::database::v1::UpdateBackupRequest request;
@@ -267,8 +278,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, UpdateBackup) {
 TEST(GoldenThingAdminAuthDecoratorTest, DeleteBackup) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, DeleteBackup)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
   google::test::admin::database::v1::DeleteBackupRequest request;
@@ -285,8 +295,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, DeleteBackup) {
 TEST(GoldenThingAdminAuthDecoratorTest, ListBackups) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListBackups)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
   google::test::admin::database::v1::ListBackupsRequest request;
@@ -300,29 +309,26 @@ TEST(GoldenThingAdminAuthDecoratorTest, ListBackups) {
   EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, RestoreDatabase) {
+TEST(GoldenThingAdminAuthDecoratorTest, AsyncRestoreDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, RestoreDatabase)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+  EXPECT_CALL(*mock, AsyncRestoreDatabase).WillOnce(LongrunningError);
 
-  auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
+  auto under_test = GoldenThingAdminAuth(MakeAsyncMockAuth(), mock);
   google::test::admin::database::v1::RestoreDatabaseRequest request;
-  grpc::ClientContext ctx;
-  auto auth_failure = under_test.RestoreDatabase(ctx, request);
-  EXPECT_THAT(ctx.credentials(), IsNull());
-  EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
+  CompletionQueue cq;
+  auto auth_failure = under_test.AsyncRestoreDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
-  auto auth_success = under_test.RestoreDatabase(ctx, request);
-  EXPECT_THAT(ctx.credentials(), Not(IsNull()));
-  EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
+  auto auth_success = under_test.AsyncRestoreDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(GoldenThingAdminAuthDecoratorTest, ListDatabaseOperations) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListDatabaseOperations)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
   google::test::admin::database::v1::ListDatabaseOperationsRequest request;
@@ -339,8 +345,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, ListDatabaseOperations) {
 TEST(GoldenThingAdminAuthDecoratorTest, ListBackupOperations) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListBackupOperations)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
   google::test::admin::database::v1::ListBackupOperationsRequest request;
@@ -354,40 +359,38 @@ TEST(GoldenThingAdminAuthDecoratorTest, ListBackupOperations) {
   EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, GetOperation) {
+TEST(GoldenThingAdminAuthDecoratorTest, AsyncGetOperation) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, GetOperation)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+  EXPECT_CALL(*mock, AsyncGetOperation).WillOnce(LongrunningError);
 
-  auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
+  auto under_test = GoldenThingAdminAuth(MakeAsyncMockAuth(), mock);
   google::longrunning::GetOperationRequest request;
-  grpc::ClientContext ctx;
-  auto auth_failure = under_test.GetOperation(ctx, request);
-  EXPECT_THAT(ctx.credentials(), IsNull());
-  EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
+  CompletionQueue cq;
+  auto auth_failure = under_test.AsyncGetOperation(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
-  auto auth_success = under_test.GetOperation(ctx, request);
-  EXPECT_THAT(ctx.credentials(), Not(IsNull()));
-  EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
+  auto auth_success = under_test.AsyncGetOperation(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, CancelOperation) {
+TEST(GoldenThingAdminAuthDecoratorTest, AsyncCancelOperation) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, CancelOperation)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+  EXPECT_CALL(*mock, AsyncCancelOperation)
+      .WillOnce(Return(ByMove(
+          make_ready_future(Status{StatusCode::kPermissionDenied, "uh-oh"}))));
 
-  auto under_test = GoldenThingAdminAuth(MakeMockAuth(), mock);
+  auto under_test = GoldenThingAdminAuth(MakeAsyncMockAuth(), mock);
   google::longrunning::CancelOperationRequest request;
-  grpc::ClientContext ctx;
-  auto auth_failure = under_test.CancelOperation(ctx, request);
-  EXPECT_THAT(ctx.credentials(), IsNull());
-  EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
+  CompletionQueue cq;
+  auto auth_failure = under_test.AsyncCancelOperation(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
-  auto auth_success = under_test.CancelOperation(ctx, request);
-  EXPECT_THAT(ctx.credentials(), Not(IsNull()));
-  EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
+  auto auth_success = under_test.AsyncCancelOperation(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
 }  // namespace

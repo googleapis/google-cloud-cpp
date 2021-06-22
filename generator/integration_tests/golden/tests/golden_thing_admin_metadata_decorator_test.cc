@@ -40,6 +40,12 @@ class MetadataDecoratorTest : public ::testing::Test {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
+  static future<StatusOr<google::longrunning::Operation>>
+  LongrunningTransientError() {
+    return make_ready_future(
+        StatusOr<google::longrunning::Operation>(TransientError()));
+  }
+
   std::shared_ptr<MockGoldenThingAdminStub> mock_;
   std::string expected_api_client_header_;
 };
@@ -87,45 +93,49 @@ TEST_F(MetadataDecoratorTest, ListDatabases) {
 }
 
 TEST_F(MetadataDecoratorTest, CreateDatabase) {
-  EXPECT_CALL(*mock_, CreateDatabase)
+  EXPECT_CALL(*mock_, AsyncCreateDatabase)
       .WillOnce(
           [this](
-              grpc::ClientContext& context,
+              google::cloud::CompletionQueue&,
+              std::unique_ptr<grpc::ClientContext> context,
               google::test::admin::database::v1::CreateDatabaseRequest const&) {
-            EXPECT_STATUS_OK(IsContextMDValid(context,
+            EXPECT_STATUS_OK(IsContextMDValid(*context,
                                               "google.test.admin.database.v1."
                                               "GoldenThingAdmin.CreateDatabase",
                                               expected_api_client_header_));
-            return TransientError();
+            return LongrunningTransientError();
           });
 
   GoldenThingAdminMetadata stub(mock_);
-  grpc::ClientContext context;
+  CompletionQueue cq;
   google::test::admin::database::v1::CreateDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status = stub.CreateDatabase(context, request);
-  EXPECT_EQ(TransientError(), status.status());
+  auto status = stub.AsyncCreateDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_EQ(TransientError(), status.get().status());
 }
 
 TEST_F(MetadataDecoratorTest, UpdateDatabaseDdl) {
-  EXPECT_CALL(*mock_, UpdateDatabaseDdl)
-      .WillOnce([this](grpc::ClientContext& context,
+  EXPECT_CALL(*mock_, AsyncUpdateDatabaseDdl)
+      .WillOnce([this](google::cloud::CompletionQueue&,
+                       std::unique_ptr<grpc::ClientContext> context,
                        google::test::admin::database::v1::
                            UpdateDatabaseDdlRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(context,
+        EXPECT_STATUS_OK(IsContextMDValid(*context,
                                           "google.test.admin.database.v1."
                                           "GoldenThingAdmin.UpdateDatabaseDdl",
                                           expected_api_client_header_));
-        return TransientError();
+        return LongrunningTransientError();
       });
 
   GoldenThingAdminMetadata stub(mock_);
-  grpc::ClientContext context;
+  CompletionQueue cq;
   google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   request.set_database(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.UpdateDatabaseDdl(context, request);
-  EXPECT_EQ(TransientError(), status.status());
+  auto status = stub.AsyncUpdateDatabaseDdl(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_EQ(TransientError(), status.get().status());
 }
 
 TEST_F(MetadataDecoratorTest, DropDatabase) {
@@ -233,24 +243,26 @@ TEST_F(MetadataDecoratorTest, TestIamPermissions) {
 }
 
 TEST_F(MetadataDecoratorTest, CreateBackup) {
-  EXPECT_CALL(*mock_, CreateBackup)
+  EXPECT_CALL(*mock_, AsyncCreateBackup)
       .WillOnce(
           [this](
-              grpc::ClientContext& context,
+              google::cloud::CompletionQueue&,
+              std::unique_ptr<grpc::ClientContext> context,
               google::test::admin::database::v1::CreateBackupRequest const&) {
             EXPECT_STATUS_OK(IsContextMDValid(
-                context,
+                *context,
                 "google.test.admin.database.v1.GoldenThingAdmin.CreateBackup",
                 expected_api_client_header_));
-            return TransientError();
+            return LongrunningTransientError();
           });
 
   GoldenThingAdminMetadata stub(mock_);
-  grpc::ClientContext context;
+  CompletionQueue cq;
   google::test::admin::database::v1::CreateBackupRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status = stub.CreateBackup(context, request);
-  EXPECT_EQ(TransientError(), status.status());
+  auto status = stub.AsyncCreateBackup(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_EQ(TransientError(), status.get().status());
 }
 
 TEST_F(MetadataDecoratorTest, GetBackup) {
@@ -339,23 +351,25 @@ TEST_F(MetadataDecoratorTest, ListBackups) {
 }
 
 TEST_F(MetadataDecoratorTest, RestoreDatabase) {
-  EXPECT_CALL(*mock_, RestoreDatabase)
-      .WillOnce([this](grpc::ClientContext& context,
+  EXPECT_CALL(*mock_, AsyncRestoreDatabase)
+      .WillOnce([this](google::cloud::CompletionQueue&,
+                       std::unique_ptr<grpc::ClientContext> context,
                        google::test::admin::database::v1::
                            RestoreDatabaseRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(
-            context,
+            *context,
             "google.test.admin.database.v1.GoldenThingAdmin.RestoreDatabase",
             expected_api_client_header_));
-        return TransientError();
+        return LongrunningTransientError();
       });
 
   GoldenThingAdminMetadata stub(mock_);
-  grpc::ClientContext context;
+  CompletionQueue cq;
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status = stub.RestoreDatabase(context, request);
-  EXPECT_EQ(TransientError(), status.status());
+  auto status = stub.AsyncRestoreDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_EQ(TransientError(), status.get().status());
 }
 
 TEST_F(MetadataDecoratorTest, ListDatabaseOperations) {
@@ -401,39 +415,43 @@ TEST_F(MetadataDecoratorTest, ListBackupOperations) {
 }
 
 TEST_F(MetadataDecoratorTest, GetOperation) {
-  EXPECT_CALL(*mock_, GetOperation)
-      .WillOnce([this](grpc::ClientContext& context,
+  EXPECT_CALL(*mock_, AsyncGetOperation)
+      .WillOnce([this](google::cloud::CompletionQueue&,
+                       std::unique_ptr<grpc::ClientContext> context,
                        google::longrunning::GetOperationRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(
-            context, "google.longrunning.Operations.GetOperation",
+            *context, "google.longrunning.Operations.GetOperation",
             expected_api_client_header_));
-        return TransientError();
+        return LongrunningTransientError();
       });
 
   GoldenThingAdminMetadata stub(mock_);
-  grpc::ClientContext context;
+  CompletionQueue cq;
   google::longrunning::GetOperationRequest request;
   request.set_name("operations/my_operation");
-  auto status = stub.GetOperation(context, request);
-  EXPECT_EQ(TransientError(), status.status());
+  auto status = stub.AsyncGetOperation(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_EQ(TransientError(), status.get().status());
 }
 
 TEST_F(MetadataDecoratorTest, CancelOperation) {
-  EXPECT_CALL(*mock_, CancelOperation)
-      .WillOnce([this](grpc::ClientContext& context,
+  EXPECT_CALL(*mock_, AsyncCancelOperation)
+      .WillOnce([this](google::cloud::CompletionQueue&,
+                       std::unique_ptr<grpc::ClientContext> context,
                        google::longrunning::CancelOperationRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(
-            context, "google.longrunning.Operations.CancelOperation",
+            *context, "google.longrunning.Operations.CancelOperation",
             expected_api_client_header_));
-        return TransientError();
+        return make_ready_future(TransientError());
       });
 
   GoldenThingAdminMetadata stub(mock_);
-  grpc::ClientContext context;
+  CompletionQueue cq;
   google::longrunning::CancelOperationRequest request;
   request.set_name("operations/my_operation");
-  auto status = stub.CancelOperation(context, request);
-  EXPECT_EQ(TransientError(), status);
+  auto status = stub.AsyncCancelOperation(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_EQ(TransientError(), status.get());
 }
 
 }  // namespace
