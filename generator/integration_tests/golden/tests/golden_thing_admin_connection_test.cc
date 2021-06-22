@@ -324,7 +324,7 @@ TEST(GoldenThingAdminClientTest, UpdateDatabaseDdlCancel) {
   EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     ::google::test::admin::database::v1::
-                    UpdateDatabaseDdlRequest const&) {
+                        UpdateDatabaseDdlRequest const&) {
         return make_ready_future(make_status_or(op));
       });
 
@@ -660,11 +660,11 @@ TEST(GoldenThingAdminClientTest, CreateBackupCancel) {
   auto const op = CreateStartingOperation();
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncCreateBackup)
-      .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                    ::google::test::admin::database::v1::
-                    CreateBackupRequest const&) {
-        return make_ready_future(make_status_or(op));
-      });
+      .WillOnce(
+          [&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+              ::google::test::admin::database::v1::CreateBackupRequest const&) {
+            return make_ready_future(make_status_or(op));
+          });
 
   AsyncSequencer<StatusOr<google::longrunning::Operation>> get;
   EXPECT_CALL(*mock, AsyncGetOperation)
@@ -968,7 +968,7 @@ TEST(GoldenThingAdminClientTest, RestoreBackupCancel) {
   EXPECT_CALL(*mock, AsyncRestoreDatabase)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     ::google::test::admin::database::v1::
-                    RestoreDatabaseRequest const&) {
+                        RestoreDatabaseRequest const&) {
         return make_ready_future(make_status_or(op));
       });
 
