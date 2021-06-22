@@ -30,9 +30,9 @@ RUN dnf makecache && \
 # ```
 
 # The following steps will install libraries and tools in `/usr/local`. By
-# default CentOS-8 does not search for shared libraries in these directories,
-# there are multiple ways to solve this problem, the following steps are one
-# solution:
+# default Rocky Linux 8 does not search for shared libraries in these
+# directories, there are multiple ways to solve this problem, the following
+# steps are one solution:
 
 # ```bash
 RUN (echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
