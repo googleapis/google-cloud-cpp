@@ -458,7 +458,7 @@ TEST_F(BucketIntegrationTest, GetMetadataFields) {
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatchSuccess) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = MakeRandomBucketName();
@@ -483,7 +483,7 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatchSuccess) {
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatchFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = MakeRandomBucketName();
@@ -873,7 +873,7 @@ TEST_F(BucketIntegrationTest, ListFailure) {
 }
 
 TEST_F(BucketIntegrationTest, CreateFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Try to create an invalid bucket (the name should not start with an
@@ -1110,7 +1110,7 @@ TEST_F(BucketIntegrationTest, DeleteDefaultAccessControlFailure) {
 
 TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
