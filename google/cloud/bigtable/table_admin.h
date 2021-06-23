@@ -876,8 +876,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * TODO(#5931) - example is missing:
-   *     snippet table_admin_iam_policy_snippets.cc get iam policy backup
+   * @snippet bigtable_table_admin_backup_snippets.cc get backup iam policy
    */
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& cluster_id,
                                                  std::string const& backup_id);
@@ -885,9 +884,9 @@ class TableAdmin {
   /**
    * Sets the IAM policy for a table.
    *
-   * This is the preferred way to the overload for `IamBindings`. This is more
-   * closely coupled to the underlying protocol, enable more actions and is more
-   * likely to tolerate future protocol changes.
+   * This is the preferred way to overload `IamBindings`. This is more closely
+   * coupled to the underlying protocol, enable more actions and is more likely
+   * to tolerate future protocol changes.
    *
    * @param table_id which table to set the IAM policy for.
    * @param iam_policy google::iam::v1::Policy object containing role and
@@ -913,9 +912,9 @@ class TableAdmin {
   /**
    * Sets the IAM policy for a backup.
    *
-   * This is the preferred way to the overload for `IamBindings`. This is more
-   * closely coupled to the underlying protocol, enable more actions and is more
-   * likely to tolerate future protocol changes.
+   * This is the preferred way to overload `IamBindings`. This is more closely
+   * coupled to the underlying protocol, enable more actions and is more likely
+   * to tolerate future protocol changes.
    *
    * @param cluster_id which is the cluster containing the backup.
    * @param backup_id which backup to set the IAM policy for.
@@ -934,8 +933,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * TODO(#5931) - example is missing:
-   *     snippet table_admin_iam_policy_snippets.cc set iam policy backup
+   * @snippet bigtable_table_admin_backup_snippets.cc set backup iam policy
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& cluster_id, std::string const& backup_id,

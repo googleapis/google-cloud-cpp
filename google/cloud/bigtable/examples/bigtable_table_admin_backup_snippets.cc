@@ -166,6 +166,59 @@ void RestoreTableFromInstance(google::cloud::bigtable::TableAdmin const& admin,
   (admin, argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
+void GetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
+                  std::vector<std::string> const& argv) {
+  //! [get backup iam policy]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, std::string const& cluster_id,
+     std::string const& backup_id) {
+    StatusOr<google::iam::v1::Policy> policy =
+        admin.GetIamPolicy(cluster_id, backup_id);
+    if (!policy) throw std::runtime_error(policy.status().message());
+    std::cout << "The IAM Policy for "
+              << admin.BackupName(cluster_id, backup_id) << " is\n"
+              << policy->DebugString() << "\n";
+  }
+  //! [get backup iam policy]
+  (admin, argv.at(0), argv.at(1));
+}
+
+void SetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
+                  std::vector<std::string> const& argv) {
+  //! [set backup iam policy]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, std::string const& cluster_id,
+     std::string const& backup_id, std::string const& role,
+     std::string const& member) {
+    StatusOr<google::iam::v1::Policy> current =
+        admin.GetIamPolicy(cluster_id, backup_id);
+    if (!current) throw std::runtime_error(current.status().message());
+    // This example adds the member to all existing bindings for that role. If
+    // there are no such bindings, it adds a new one. This might not be what the
+    // user wants, e.g. in case of conditional bindings.
+    size_t num_added = 0;
+    for (auto& binding : *current->mutable_bindings()) {
+      if (binding.role() == role) {
+        binding.add_members(member);
+        ++num_added;
+      }
+    }
+    if (num_added == 0) {
+      *current->add_bindings() = cbt::IamBinding(role, {member});
+    }
+    StatusOr<google::iam::v1::Policy> policy =
+        admin.SetIamPolicy(cluster_id, backup_id, *current);
+    if (!policy) throw std::runtime_error(policy.status().message());
+    std::cout << "The IAM Policy for "
+              << admin.BackupName(cluster_id, backup_id) << " is\n"
+              << policy->DebugString() << "\n";
+  }
+  //! [set backup iam policy]
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+}
+
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
   namespace cbt = google::cloud::bigtable;
@@ -234,6 +287,13 @@ void RunAll(std::vector<std::string> const& argv) {
   UpdateBackup(admin, {cluster_id, backup_id_1,
                        absl::FormatTime(absl::Now() + absl::Hours(24))});
 
+  std::cout << "\nRunning SetIamPolicy() example" << std::endl;
+  SetIamPolicy(admin, {cluster_id, backup_id_1, "roles/bigtable.user",
+                       "serviceAccount:" + service_account});
+
+  std::cout << "\nRunning GetIamPolicy() example" << std::endl;
+  GetIamPolicy(admin, {cluster_id, backup_id_1});
+
   (void)admin.DeleteTable(table_id_1);
 
   std::cout << "\nRunning RestoreTable() example" << std::endl;
@@ -278,6 +338,11 @@ int main(int argc, char* argv[]) {
           "restore-table-from-instance",
           {"<table-id>", "<other-instance-id>", "<cluster-id>", "<backup-id>"},
           RestoreTableFromInstance),
+      examples::MakeCommandEntry("get-iam-policy",
+                                 {"<cluster-id>", "<backup_id>"}, GetIamPolicy),
+      examples::MakeCommandEntry(
+          "set-iam-policy",
+          {"<cluster-id>", "<backup_id>", "<role>", "<member>"}, SetIamPolicy),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);
