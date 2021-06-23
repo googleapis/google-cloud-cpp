@@ -176,8 +176,7 @@ void GetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
     StatusOr<google::iam::v1::Policy> policy =
         admin.GetIamPolicy(cluster_id, backup_id);
     if (!policy) throw std::runtime_error(policy.status().message());
-    std::cout << "The IAM Policy is:\n"
-              << policy->DebugString() << "\n";
+    std::cout << "The IAM Policy is:\n" << policy->DebugString() << "\n";
   }
   //! [get backup iam policy]
   (admin, argv.at(0), argv.at(1));
@@ -210,8 +209,7 @@ void SetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
     StatusOr<google::iam::v1::Policy> policy =
         admin.SetIamPolicy(cluster_id, backup_id, *current);
     if (!policy) throw std::runtime_error(policy.status().message());
-    std::cout << "The IAM Policy is:\n"
-              << policy->DebugString() << "\n";
+    std::cout << "The IAM Policy is:\n" << policy->DebugString() << "\n";
   }
   //! [set backup iam policy]
   (std::move(admin), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
