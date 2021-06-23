@@ -29,8 +29,8 @@ class MockDatabaseAdminStub
     : public google::cloud::spanner_internal::DatabaseAdminStub {
  public:
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateDatabase,
-      (grpc::ClientContext&,
+      future<StatusOr<google::longrunning::Operation>>, AsyncCreateDatabase,
+      (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
        google::spanner::admin::database::v1::CreateDatabaseRequest const&),
       (override));
 
@@ -48,8 +48,8 @@ class MockDatabaseAdminStub
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateDatabase,
-      (grpc::ClientContext&,
+      future<StatusOr<google::longrunning::Operation>>, AsyncUpdateDatabaseDdl,
+      (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
        google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&),
       (override));
 
@@ -67,8 +67,8 @@ class MockDatabaseAdminStub
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RestoreDatabase,
-      (grpc::ClientContext&,
+      future<StatusOr<google::longrunning::Operation>>, AsyncRestoreDatabase,
+      (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
        google::spanner::admin::database::v1::RestoreDatabaseRequest const&),
       (override));
 
@@ -89,8 +89,8 @@ class MockDatabaseAdminStub
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateBackup,
-      (grpc::ClientContext&,
+      future<StatusOr<google::longrunning::Operation>>, AsyncCreateBackup,
+      (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
        google::spanner::admin::database::v1::CreateBackupRequest const&),
       (override));
 
@@ -134,13 +134,14 @@ class MockDatabaseAdminStub
                                  ListDatabaseOperationsRequest const&),
       (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (grpc::ClientContext&,
+  MOCK_METHOD(future<StatusOr<google::longrunning::Operation>>,
+              AsyncGetOperation,
+              (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                google::longrunning::GetOperationRequest const&),
               (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (grpc::ClientContext&,
+  MOCK_METHOD(future<Status>, AsyncCancelOperation,
+              (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                google::longrunning::CancelOperationRequest const&),
               (override));
 };

@@ -45,10 +45,10 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
    * Run the logging loop (if appropriate) for the child DatabaseAdminStub.
    */
   ///
-  StatusOr<google::longrunning::Operation> CreateDatabase(
-      grpc::ClientContext& context,
-      google::spanner::admin::database::v1::CreateDatabaseRequest const&
-          request) override;
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      google::spanner::admin::database::v1::CreateDatabaseRequest const&)
+      override;
 
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       grpc::ClientContext&,
@@ -60,10 +60,10 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
       google::spanner::admin::database::v1::GetDatabaseDdlRequest const&)
       override;
 
-  StatusOr<google::longrunning::Operation> UpdateDatabase(
-      grpc::ClientContext& context,
-      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
-          request) override;
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&)
+      override;
 
   Status DropDatabase(
       grpc::ClientContext& context,
@@ -76,10 +76,10 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
       google::spanner::admin::database::v1::ListDatabasesRequest const&)
       override;
 
-  StatusOr<google::longrunning::Operation> RestoreDatabase(
-      grpc::ClientContext& context,
-      google::spanner::admin::database::v1::RestoreDatabaseRequest const&
-          request) override;
+  future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      google::spanner::admin::database::v1::RestoreDatabaseRequest const&)
+      override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext& context,
@@ -93,9 +93,9 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
       grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateBackup(
-      grpc::ClientContext& context,
-      google::spanner::admin::database::v1::CreateBackupRequest const& request)
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      google::spanner::admin::database::v1::CreateBackupRequest const&)
       override;
 
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
@@ -129,13 +129,13 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
                          google::spanner::admin::database::v1::
                              ListDatabaseOperationsRequest const&) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      google::longrunning::GetOperationRequest const& request) override;
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      google::longrunning::GetOperationRequest const&) override;
 
-  Status CancelOperation(
-      grpc::ClientContext& context,
-      google::longrunning::CancelOperationRequest const& request) override;
+  future<Status> AsyncCancelOperation(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      google::longrunning::CancelOperationRequest const&) override;
   //@}
 
  private:

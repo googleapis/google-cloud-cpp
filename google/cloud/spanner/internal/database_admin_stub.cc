@@ -33,23 +33,24 @@ DatabaseAdminStub::~DatabaseAdminStub() = default;
 class DefaultDatabaseAdminStub : public DatabaseAdminStub {
  public:
   DefaultDatabaseAdminStub(
-      std::unique_ptr<gcsa::DatabaseAdmin::Stub> database_admin,
-      std::unique_ptr<google::longrunning::Operations::Stub> operations)
+      std::unique_ptr<gcsa::DatabaseAdmin::StubInterface> database_admin,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations)
       : database_admin_(std::move(database_admin)),
         operations_(std::move(operations)) {}
 
   ~DefaultDatabaseAdminStub() override = default;
 
-  StatusOr<google::longrunning::Operation> CreateDatabase(
-      grpc::ClientContext& client_context,
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
+      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       gcsa::CreateDatabaseRequest const& request) override {
-    google::longrunning::Operation response;
-    grpc::Status status =
-        database_admin_->CreateDatabase(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    return cq.MakeUnaryRpc(
+        [this](grpc::ClientContext* context,
+               gcsa::CreateDatabaseRequest const& request,
+               grpc::CompletionQueue* cq) {
+          return database_admin_->AsyncCreateDatabase(context, request, cq);
+        },
+        request, std::move(context));
   }
 
   StatusOr<gcsa::Database> GetDatabase(
@@ -76,17 +77,16 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return response;
   }
 
-  StatusOr<google::longrunning::Operation> UpdateDatabase(
-      grpc::ClientContext& context,
-      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
-          request) override {
-    google::longrunning::Operation response;
-    grpc::Status status =
-        database_admin_->UpdateDatabaseDdl(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
+      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      gcsa::UpdateDatabaseDdlRequest const& request) override {
+    return cq.MakeUnaryRpc(
+        [this](grpc::ClientContext* context,
+               gcsa::UpdateDatabaseDdlRequest const& request,
+               grpc::CompletionQueue* cq) {
+          return database_admin_->AsyncUpdateDatabaseDdl(context, request, cq);
+        },
+        request, std::move(context));
   }
 
   Status DropDatabase(grpc::ClientContext& client_context,
@@ -112,16 +112,16 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return response;
   }
 
-  StatusOr<google::longrunning::Operation> RestoreDatabase(
-      grpc::ClientContext& client_context,
+  future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
+      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       gcsa::RestoreDatabaseRequest const& request) override {
-    google::longrunning::Operation response;
-    grpc::Status status =
-        database_admin_->RestoreDatabase(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    return cq.MakeUnaryRpc(
+        [this](grpc::ClientContext* context,
+               gcsa::RestoreDatabaseRequest const& request,
+               grpc::CompletionQueue* cq) {
+          return database_admin_->AsyncRestoreDatabase(context, request, cq);
+        },
+        request, std::move(context));
   }
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
@@ -160,17 +160,16 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return response;
   }
 
-  StatusOr<google::longrunning::Operation> CreateBackup(
-      grpc::ClientContext& client_context,
-      google::spanner::admin::database::v1::CreateBackupRequest const& request)
-      override {
-    google::longrunning::Operation response;
-    auto status =
-        database_admin_->CreateBackup(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
+      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      gcsa::CreateBackupRequest const& request) override {
+    return cq.MakeUnaryRpc(
+        [this](grpc::ClientContext* context,
+               gcsa::CreateBackupRequest const& request,
+               grpc::CompletionQueue* cq) {
+          return database_admin_->AsyncCreateBackup(context, request, cq);
+        },
+        request, std::move(context));
   }
 
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
@@ -246,33 +245,37 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return response;
   }
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& client_context,
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override {
-    google::longrunning::Operation response;
-    grpc::Status status =
-        operations_->GetOperation(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    return cq.MakeUnaryRpc(
+        [this](grpc::ClientContext* context,
+               google::longrunning::GetOperationRequest const& request,
+               grpc::CompletionQueue* cq) {
+          return operations_->AsyncGetOperation(context, request, cq);
+        },
+        request, std::move(context));
   }
 
-  Status CancelOperation(
-      grpc::ClientContext& client_context,
+  future<Status> AsyncCancelOperation(
+      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override {
-    google::protobuf::Empty response;
-    grpc::Status status =
-        operations_->CancelOperation(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+    return cq
+        .MakeUnaryRpc(
+            [this](grpc::ClientContext* context,
+                   google::longrunning::CancelOperationRequest const& request,
+                   grpc::CompletionQueue* cq) {
+              return operations_->AsyncCancelOperation(context, request, cq);
+            },
+            request, std::move(context))
+        .then([](future<StatusOr<google::protobuf::Empty>> f) {
+          return f.get().status();
+        });
   }
 
  private:
-  std::unique_ptr<gcsa::DatabaseAdmin::Stub> database_admin_;
-  std::unique_ptr<google::longrunning::Operations::Stub> operations_;
+  std::unique_ptr<gcsa::DatabaseAdmin::StubInterface> database_admin_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
 std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(

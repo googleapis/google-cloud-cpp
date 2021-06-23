@@ -24,14 +24,16 @@ inline namespace SPANNER_CLIENT_NS {
 namespace gcsa = ::google::spanner::admin::database::v1;
 using ::google::cloud::internal::LogWrapper;
 
-StatusOr<google::longrunning::Operation> DatabaseAdminLogging::CreateDatabase(
-    grpc::ClientContext& context, gcsa::CreateDatabaseRequest const& request) {
-  return LogWrapper(
-      [this](grpc::ClientContext& context,
+future<StatusOr<google::longrunning::Operation>>
+DatabaseAdminLogging::AsyncCreateDatabase(
+    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    gcsa::CreateDatabaseRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
              gcsa::CreateDatabaseRequest const& request) {
-        return child_->CreateDatabase(context, request);
+        return child_->AsyncCreateDatabase(cq, std::move(context), request);
       },
-      context, request, __func__, tracing_options_);
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
 StatusOr<gcsa::Database> DatabaseAdminLogging::GetDatabase(
@@ -54,16 +56,16 @@ StatusOr<gcsa::GetDatabaseDdlResponse> DatabaseAdminLogging::GetDatabaseDdl(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> DatabaseAdminLogging::UpdateDatabase(
-    grpc::ClientContext& context,
-    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
-        request) {
-  return LogWrapper(
-      [this](grpc::ClientContext& context,
+future<StatusOr<google::longrunning::Operation>>
+DatabaseAdminLogging::AsyncUpdateDatabaseDdl(
+    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    gcsa::UpdateDatabaseDdlRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
              gcsa::UpdateDatabaseDdlRequest const& request) {
-        return child_->UpdateDatabase(context, request);
+        return child_->AsyncUpdateDatabaseDdl(cq, std::move(context), request);
       },
-      context, request, __func__, tracing_options_);
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
 Status DatabaseAdminLogging::DropDatabase(
@@ -88,14 +90,16 @@ DatabaseAdminLogging::ListDatabases(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> DatabaseAdminLogging::RestoreDatabase(
-    grpc::ClientContext& context, gcsa::RestoreDatabaseRequest const& request) {
-  return LogWrapper(
-      [this](grpc::ClientContext& context,
+future<StatusOr<google::longrunning::Operation>>
+DatabaseAdminLogging::AsyncRestoreDatabase(
+    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    gcsa::RestoreDatabaseRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
              gcsa::RestoreDatabaseRequest const& request) {
-        return child_->RestoreDatabase(context, request);
+        return child_->AsyncRestoreDatabase(cq, std::move(context), request);
       },
-      context, request, __func__, tracing_options_);
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminLogging::GetIamPolicy(
@@ -132,14 +136,16 @@ DatabaseAdminLogging::TestIamPermissions(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> DatabaseAdminLogging::CreateBackup(
-    grpc::ClientContext& context, gcsa::CreateBackupRequest const& request) {
-  return LogWrapper(
-      [this](grpc::ClientContext& context,
+future<StatusOr<google::longrunning::Operation>>
+DatabaseAdminLogging::AsyncCreateBackup(
+    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    gcsa::CreateBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
              gcsa::CreateBackupRequest const& request) {
-        return child_->CreateBackup(context, request);
+        return child_->AsyncCreateBackup(cq, std::move(context), request);
       },
-      context, request, __func__, tracing_options_);
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
 StatusOr<gcsa::Backup> DatabaseAdminLogging::GetBackup(
@@ -212,26 +218,27 @@ DatabaseAdminLogging::ListDatabaseOperations(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> DatabaseAdminLogging::GetOperation(
-    grpc::ClientContext& context,
+future<StatusOr<google::longrunning::Operation>>
+DatabaseAdminLogging::AsyncGetOperation(
+    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  return LogWrapper(
-      [this](grpc::ClientContext& context,
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->GetOperation(context, request);
+        return child_->AsyncGetOperation(cq, std::move(context), request);
       },
-      context, request, __func__, tracing_options_);
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
-Status DatabaseAdminLogging::CancelOperation(
-    grpc::ClientContext& context,
+future<Status> DatabaseAdminLogging::AsyncCancelOperation(
+    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  return LogWrapper(
-      [this](grpc::ClientContext& context,
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->CancelOperation(context, request);
+        return child_->AsyncCancelOperation(cq, std::move(context), request);
       },
-      context, request, __func__, tracing_options_);
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
 }  // namespace SPANNER_CLIENT_NS

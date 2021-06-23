@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,10 +36,9 @@ class DatabaseAdminStub {
   virtual ~DatabaseAdminStub() = 0;
 
   /// Start the long-running operation to create a new Cloud Spanner database.
-  virtual StatusOr<google::longrunning::Operation> CreateDatabase(
-      grpc::ClientContext& client_context,
-      google::spanner::admin::database::v1::CreateDatabaseRequest const&
-          request) = 0;
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      google::spanner::admin::database::v1::CreateDatabaseRequest const&) = 0;
 
   /// Fetch the metadata for a particular database.
   virtual StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
@@ -52,9 +52,10 @@ class DatabaseAdminStub {
       google::spanner::admin::database::v1::GetDatabaseDdlRequest const&) = 0;
 
   /// Start a database update, using a sequence of DDL statements.
-  virtual StatusOr<google::longrunning::Operation> UpdateDatabase(
-      grpc::ClientContext&, google::spanner::admin::database::v1::
-                                UpdateDatabaseDdlRequest const&) = 0;
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateDatabaseDdl(CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                         google::spanner::admin::database::v1::
+                             UpdateDatabaseDdlRequest const&) = 0;
 
   /// Drop an existing Cloud Spanner database.
   virtual Status DropDatabase(
@@ -70,10 +71,9 @@ class DatabaseAdminStub {
 
   /// Start the long-running operation to restore a database from a given
   /// backup.
-  virtual StatusOr<google::longrunning::Operation> RestoreDatabase(
-      grpc::ClientContext& client_context,
-      google::spanner::admin::database::v1::RestoreDatabaseRequest const&
-          request) = 0;
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      google::spanner::admin::database::v1::RestoreDatabaseRequest const&) = 0;
 
   /// Fetch the IAM policy for a particular database.
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
@@ -89,10 +89,9 @@ class DatabaseAdminStub {
                      google::iam::v1::TestIamPermissionsRequest const&) = 0;
 
   /// Start the long-running operation to create a new Cloud Spanner backup.
-  virtual StatusOr<google::longrunning::Operation> CreateBackup(
-      grpc::ClientContext& client_context,
-      google::spanner::admin::database::v1::CreateBackupRequest const&
-          request) = 0;
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      google::spanner::admin::database::v1::CreateBackupRequest const&) = 0;
 
   /// Get metadata on a pending or completed Backup.
   virtual StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
@@ -133,14 +132,14 @@ class DatabaseAdminStub {
                              ListDatabaseOperationsRequest const&) = 0;
 
   /// Poll a long-running operation.
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& client_context,
-      google::longrunning::GetOperationRequest const& request) = 0;
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      google::longrunning::GetOperationRequest const&) = 0;
 
   /// Cancel a long-running operation.
-  virtual Status CancelOperation(
-      grpc::ClientContext& client_context,
-      google::longrunning::CancelOperationRequest const& request) = 0;
+  virtual future<Status> AsyncCancelOperation(
+      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      google::longrunning::CancelOperationRequest const&) = 0;
 };
 
 /**
