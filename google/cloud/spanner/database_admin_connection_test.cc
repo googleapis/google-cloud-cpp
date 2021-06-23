@@ -40,7 +40,6 @@ using ::google::protobuf::TextFormat;
 using ::testing::AtLeast;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
-using ::testing::Mock;
 using ::testing::Return;
 namespace gcsa = ::google::spanner::admin::database::v1;
 
@@ -66,35 +65,34 @@ TEST(DatabaseAdminConnectionTest, CreateDatabaseSuccess) {
   std::string const database_name =
       "projects/test-project/instances/test-instance/databases/test-database";
 
-  EXPECT_CALL(*mock, CreateDatabase)
-      .WillOnce(
-          [](grpc::ClientContext&, gcsa::CreateDatabaseRequest const& request) {
-            EXPECT_FALSE(request.has_encryption_config());
-            google::longrunning::Operation op;
-            op.set_name("test-operation-name");
-            op.set_done(false);
-            return make_status_or(op);
-          });
-  EXPECT_CALL(*mock, GetOperation)
-      .WillOnce(
-          [&database_name](grpc::ClientContext&,
-                           google::longrunning::GetOperationRequest const& r) {
-            EXPECT_EQ("test-operation-name", r.name());
-            google::longrunning::Operation op;
-            op.set_name(r.name());
-            op.set_done(true);
-            gcsa::Database response;
-            response.set_name(database_name);
-            response.set_state(gcsa::Database::READY);
-            op.mutable_response()->PackFrom(response);
-            return make_status_or(op);
-          });
+  EXPECT_CALL(*mock, AsyncCreateDatabase)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   gcsa::CreateDatabaseRequest const& request) {
+        EXPECT_FALSE(request.has_encryption_config());
+        google::longrunning::Operation op;
+        op.set_name("test-operation-name");
+        op.set_done(false);
+        return make_ready_future(make_status_or(std::move(op)));
+      });
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([&database_name](
+                    CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                    google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        google::longrunning::Operation op;
+        op.set_name(r.name());
+        op.set_done(true);
+        gcsa::Database response;
+        response.set_name(database_name);
+        response.set_state(gcsa::Database::READY);
+        op.mutable_response()->PackFrom(response);
+        return make_ready_future(make_status_or(std::move(op)));
+      });
 
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-database");
   EXPECT_EQ(dbase.FullName(), database_name);
   auto fut = conn->CreateDatabase({dbase, {}, {}});
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto response = fut.get();
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->name(), database_name);
@@ -108,8 +106,8 @@ TEST(DatabaseAdminClientTest, CreateDatabaseWithEncryption) {
   std::string const database_name =
       "projects/test-project/instances/test-instance/databases/test-database";
 
-  EXPECT_CALL(*mock, CreateDatabase)
-      .WillOnce([](grpc::ClientContext&,
+  EXPECT_CALL(*mock, AsyncCreateDatabase)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    gcsa::CreateDatabaseRequest const& request) {
         EXPECT_TRUE(request.has_encryption_config());
         if (request.has_encryption_config()) {
@@ -120,25 +118,25 @@ TEST(DatabaseAdminClientTest, CreateDatabaseWithEncryption) {
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
-        return make_status_or(op);
+        return make_ready_future(make_status_or(std::move(op)));
       });
-  EXPECT_CALL(*mock, GetOperation)
-      .WillOnce(
-          [&database_name](grpc::ClientContext&,
-                           google::longrunning::GetOperationRequest const& r) {
-            EXPECT_EQ("test-operation-name", r.name());
-            google::longrunning::Operation op;
-            op.set_name(r.name());
-            op.set_done(true);
-            gcsa::Database response;
-            response.set_name(database_name);
-            response.set_state(gcsa::Database::READY);
-            response.mutable_encryption_config()->set_kms_key_name(
-                "projects/test-project/locations/some-location/keyRings/"
-                "a-key-ring/cryptoKeys/some-key-name");
-            op.mutable_response()->PackFrom(response);
-            return make_status_or(op);
-          });
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([&database_name](
+                    CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                    google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        google::longrunning::Operation op;
+        op.set_name(r.name());
+        op.set_done(true);
+        gcsa::Database response;
+        response.set_name(database_name);
+        response.set_state(gcsa::Database::READY);
+        response.mutable_encryption_config()->set_kms_key_name(
+            "projects/test-project/locations/some-location/keyRings/"
+            "a-key-ring/cryptoKeys/some-key-name");
+        op.mutable_response()->PackFrom(response);
+        return make_ready_future(make_status_or(std::move(op)));
+      });
 
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-database");
@@ -147,7 +145,6 @@ TEST(DatabaseAdminClientTest, CreateDatabaseWithEncryption) {
                             "a-key-name");
   auto fut = conn->CreateDatabase(
       {dbase, {}, CustomerManagedEncryption(std::move(encryption_key))});
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto response = fut.get();
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->name(), database_name);
@@ -166,16 +163,16 @@ TEST(DatabaseAdminClientTest, CreateDatabaseWithEncryption) {
 TEST(DatabaseAdminConnectionTest, HandleCreateDatabaseError) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
-  EXPECT_CALL(*mock, CreateDatabase)
-      .WillOnce([](grpc::ClientContext&, gcsa::CreateDatabaseRequest const&) {
-        return StatusOr<google::longrunning::Operation>(
-            Status(StatusCode::kPermissionDenied, "uh-oh"));
+  EXPECT_CALL(*mock, AsyncCreateDatabase)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   gcsa::CreateDatabaseRequest const&) {
+        return make_ready_future(StatusOr<google::longrunning::Operation>(
+            Status(StatusCode::kPermissionDenied, "uh-oh")));
       });
 
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-database");
   auto fut = conn->CreateDatabase({dbase, {}, {}});
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto response = fut.get();
   EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
 }
@@ -322,16 +319,16 @@ TEST(DatabaseAdminConnectionTest, GetDatabaseDdlTooManyTransients) {
 TEST(DatabaseAdminConnectionTest, UpdateDatabaseSuccess) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
-  EXPECT_CALL(*mock, UpdateDatabase)
-      .WillOnce(
-          [](grpc::ClientContext&, gcsa::UpdateDatabaseDdlRequest const&) {
-            google::longrunning::Operation op;
-            op.set_name("test-operation-name");
-            op.set_done(false);
-            return make_status_or(op);
-          });
-  EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([](grpc::ClientContext&,
+  EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   gcsa::UpdateDatabaseDdlRequest const&) {
+        google::longrunning::Operation op;
+        op.set_name("test-operation-name");
+        op.set_done(false);
+        return make_ready_future(make_status_or(std::move(op)));
+      });
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
@@ -340,14 +337,13 @@ TEST(DatabaseAdminConnectionTest, UpdateDatabaseSuccess) {
         gcsa::UpdateDatabaseDdlMetadata metadata;
         metadata.set_database("test-database");
         op.mutable_metadata()->PackFrom(metadata);
-        return make_status_or(op);
+        return make_ready_future(make_status_or(std::move(op)));
       });
 
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-database");
   auto fut = conn->UpdateDatabase(
       {dbase, {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"}});
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto response = fut.get();
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->database(), "test-database");
@@ -358,18 +354,17 @@ TEST(DatabaseAdminConnectionTest, UpdateDatabaseSuccess) {
 TEST(DatabaseAdminConnectionTest, UpdateDatabaseErrorInPoll) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
-  EXPECT_CALL(*mock, UpdateDatabase)
-      .WillOnce(
-          [](grpc::ClientContext&, gcsa::UpdateDatabaseDdlRequest const&) {
-            return StatusOr<google::longrunning::Operation>(
-                Status(StatusCode::kPermissionDenied, "uh-oh"));
-          });
+  EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   gcsa::UpdateDatabaseDdlRequest const&) {
+        return make_ready_future(StatusOr<google::longrunning::Operation>(
+            Status(StatusCode::kPermissionDenied, "uh-oh")));
+      });
 
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-database");
   auto fut = conn->UpdateDatabase(
       {dbase, {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"}});
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto response = fut.get();
   EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
 }
@@ -378,15 +373,16 @@ TEST(DatabaseAdminConnectionTest, UpdateDatabaseErrorInPoll) {
 TEST(DatabaseAdminConnectionTest, CreateDatabaseErrorInPoll) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
-  EXPECT_CALL(*mock, CreateDatabase)
-      .WillOnce([](grpc::ClientContext&, gcsa::CreateDatabaseRequest const&) {
+  EXPECT_CALL(*mock, AsyncCreateDatabase)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   gcsa::CreateDatabaseRequest const&) {
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
-        return make_status_or(std::move(op));
+        return make_ready_future(make_status_or(std::move(op)));
       });
-  EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([](grpc::ClientContext&,
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
@@ -394,7 +390,7 @@ TEST(DatabaseAdminConnectionTest, CreateDatabaseErrorInPoll) {
         op.mutable_error()->set_code(
             static_cast<int>(grpc::StatusCode::PERMISSION_DENIED));
         op.mutable_error()->set_message("uh-oh");
-        return op;
+        return make_ready_future(make_status_or(std::move(op)));
       });
 
   auto conn = CreateTestingConnection(std::move(mock));
@@ -407,16 +403,16 @@ TEST(DatabaseAdminConnectionTest, CreateDatabaseErrorInPoll) {
 TEST(DatabaseAdminConnectionTest, UpdateDatabaseGetOperationError) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
-  EXPECT_CALL(*mock, UpdateDatabase)
-      .WillOnce(
-          [](grpc::ClientContext&, gcsa::UpdateDatabaseDdlRequest const&) {
-            google::longrunning::Operation op;
-            op.set_name("test-operation-name");
-            op.set_done(false);
-            return make_status_or(std::move(op));
-          });
-  EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([](grpc::ClientContext&,
+  EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   gcsa::UpdateDatabaseDdlRequest const&) {
+        google::longrunning::Operation op;
+        op.set_name("test-operation-name");
+        op.set_done(false);
+        return make_ready_future(make_status_or(std::move(op)));
+      });
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
@@ -424,7 +420,7 @@ TEST(DatabaseAdminConnectionTest, UpdateDatabaseGetOperationError) {
         op.mutable_error()->set_code(
             static_cast<int>(grpc::StatusCode::PERMISSION_DENIED));
         op.mutable_error()->set_message("uh-oh");
-        return op;
+        return make_ready_future(make_status_or(std::move(op)));
       });
 
   auto conn = CreateTestingConnection(std::move(mock));
@@ -524,37 +520,36 @@ TEST(DatabaseAdminConnectionTest, RestoreDatabaseSuccess) {
   std::string const database_name =
       "projects/test-project/instances/test-instance/databases/test-database";
 
-  EXPECT_CALL(*mock, RestoreDatabase)
-      .WillOnce([](grpc::ClientContext&,
+  EXPECT_CALL(*mock, AsyncRestoreDatabase)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    gcsa::RestoreDatabaseRequest const& request) {
         EXPECT_EQ(request.database_id(), "test-database");
         EXPECT_FALSE(request.has_encryption_config());
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
-        return make_status_or(op);
+        return make_ready_future(make_status_or(std::move(op)));
       });
-  EXPECT_CALL(*mock, GetOperation)
-      .WillOnce(
-          [&database_name](grpc::ClientContext&,
-                           google::longrunning::GetOperationRequest const& r) {
-            EXPECT_EQ("test-operation-name", r.name());
-            google::longrunning::Operation op;
-            op.set_name(r.name());
-            op.set_done(true);
-            gcsa::Database response;
-            response.set_name(database_name);
-            response.set_state(gcsa::Database::READY);
-            op.mutable_response()->PackFrom(response);
-            return make_status_or(op);
-          });
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([&database_name](
+                    CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                    google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        google::longrunning::Operation op;
+        op.set_name(r.name());
+        op.set_done(true);
+        gcsa::Database response;
+        response.set_name(database_name);
+        response.set_state(gcsa::Database::READY);
+        op.mutable_response()->PackFrom(response);
+        return make_ready_future(make_status_or(std::move(op)));
+      });
 
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-database");
   EXPECT_EQ(dbase.FullName(), database_name);
   Backup backup(Instance("test-project", "test-instance"), "test-backup");
   auto fut = conn->RestoreDatabase({dbase, backup.FullName(), {}});
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto response = fut.get();
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->name(), database_name);
@@ -568,8 +563,8 @@ TEST(DatabaseAdminClientTest, RestoreDatabaseWithEncryption) {
   std::string const database_name =
       "projects/test-project/instances/test-instance/databases/test-database";
 
-  EXPECT_CALL(*mock, RestoreDatabase)
-      .WillOnce([](grpc::ClientContext&,
+  EXPECT_CALL(*mock, AsyncRestoreDatabase)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    gcsa::RestoreDatabaseRequest const& request) {
         EXPECT_EQ(request.database_id(), "test-database");
         EXPECT_TRUE(request.has_encryption_config());
@@ -584,25 +579,25 @@ TEST(DatabaseAdminClientTest, RestoreDatabaseWithEncryption) {
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
-        return make_status_or(op);
+        return make_ready_future(make_status_or(std::move(op)));
       });
-  EXPECT_CALL(*mock, GetOperation)
-      .WillOnce(
-          [&database_name](grpc::ClientContext&,
-                           google::longrunning::GetOperationRequest const& r) {
-            EXPECT_EQ("test-operation-name", r.name());
-            google::longrunning::Operation op;
-            op.set_name(r.name());
-            op.set_done(true);
-            gcsa::Database response;
-            response.set_name(database_name);
-            response.set_state(gcsa::Database::READY);
-            response.mutable_encryption_config()->set_kms_key_name(
-                "projects/test-project/locations/some-location/keyRings/"
-                "a-key-ring/cryptoKeys/restore-key-name");
-            op.mutable_response()->PackFrom(response);
-            return make_status_or(op);
-          });
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([&database_name](
+                    CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                    google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        google::longrunning::Operation op;
+        op.set_name(r.name());
+        op.set_done(true);
+        gcsa::Database response;
+        response.set_name(database_name);
+        response.set_state(gcsa::Database::READY);
+        response.mutable_encryption_config()->set_kms_key_name(
+            "projects/test-project/locations/some-location/keyRings/"
+            "a-key-ring/cryptoKeys/restore-key-name");
+        op.mutable_response()->PackFrom(response);
+        return make_ready_future(make_status_or(std::move(op)));
+      });
 
   auto conn = CreateTestingConnection(std::move(mock));
   Instance instance("test-project", "test-instance");
@@ -613,7 +608,6 @@ TEST(DatabaseAdminClientTest, RestoreDatabaseWithEncryption) {
   auto fut = conn->RestoreDatabase(
       {dbase, backup.FullName(),
        CustomerManagedEncryption(std::move(encryption_key))});
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto response = fut.get();
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->name(), database_name);
@@ -632,17 +626,17 @@ TEST(DatabaseAdminClientTest, RestoreDatabaseWithEncryption) {
 TEST(DatabaseAdminConnectionTest, HandleRestoreDatabaseError) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
-  EXPECT_CALL(*mock, RestoreDatabase)
-      .WillOnce([](grpc::ClientContext&, gcsa::RestoreDatabaseRequest const&) {
-        return StatusOr<google::longrunning::Operation>(
-            Status(StatusCode::kPermissionDenied, "uh-oh"));
+  EXPECT_CALL(*mock, AsyncRestoreDatabase)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   gcsa::RestoreDatabaseRequest const&) {
+        return make_ready_future(StatusOr<google::longrunning::Operation>(
+            Status(StatusCode::kPermissionDenied, "uh-oh")));
       });
 
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-database");
   Backup backup(Instance("test-project", "test-instance"), "test-backup");
   auto fut = conn->RestoreDatabase({dbase, backup.FullName(), {}});
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto response = fut.get();
   EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
 }
@@ -856,9 +850,9 @@ TEST(DatabaseAdminConnectionTest, CreateBackupSuccess) {
   auto expire_time = MakeTimestamp(now + absl::Hours(7)).value();
   auto version_time = MakeTimestamp(now - absl::Hours(7)).value();
 
-  EXPECT_CALL(*mock, CreateBackup)
+  EXPECT_CALL(*mock, AsyncCreateBackup)
       .WillOnce([&dbase, &expire_time, &version_time](
-                    grpc::ClientContext&,
+                    CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     gcsa::CreateBackupRequest const& request) {
         EXPECT_EQ(request.parent(), dbase.instance().FullName());
         EXPECT_EQ(request.backup_id(), "test-backup");
@@ -869,11 +863,11 @@ TEST(DatabaseAdminConnectionTest, CreateBackupSuccess) {
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
-        return make_status_or(op);
+        return make_ready_future(make_status_or(std::move(op)));
       });
-  EXPECT_CALL(*mock, GetOperation)
+  EXPECT_CALL(*mock, AsyncGetOperation)
       .WillOnce([&expire_time, &version_time](
-                    grpc::ClientContext&,
+                    CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
@@ -891,13 +885,12 @@ TEST(DatabaseAdminConnectionTest, CreateBackupSuccess) {
                                               .get<protobuf::Timestamp>()
                                               .value();
         op.mutable_response()->PackFrom(response);
-        return make_status_or(op);
+        return make_ready_future(make_status_or(std::move(op)));
       });
 
   auto conn = CreateTestingConnection(std::move(mock));
   auto fut = conn->CreateBackup(
       {dbase, "test-backup", {}, expire_time, version_time, {}});
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto response = fut.get();
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->name(), "test-backup");
@@ -911,14 +904,10 @@ TEST(DatabaseAdminConnectionTest, CreateBackupSuccess) {
 /// @test Verify that using an encryption key works.
 TEST(DatabaseAdminClientTest, CreateBackupWithEncryption) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
-  // Suppress a false leak.
-  // TODO(#4038): After we fix the issue #4038, we won't need to use
-  // `AllowLeak()` any more.
-  Mock::AllowLeak(mock.get());
   Database dbase("test-project", "test-instance", "test-database");
 
-  EXPECT_CALL(*mock, CreateBackup)
-      .WillOnce([&dbase](grpc::ClientContext&,
+  EXPECT_CALL(*mock, AsyncCreateBackup)
+      .WillOnce([&dbase](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                          gcsa::CreateBackupRequest const& request) {
         EXPECT_EQ(request.parent(), dbase.instance().FullName());
         EXPECT_EQ(request.backup_id(), "test-backup");
@@ -933,10 +922,10 @@ TEST(DatabaseAdminClientTest, CreateBackupWithEncryption) {
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
-        return make_status_or(op);
+        return make_ready_future(make_status_or(std::move(op)));
       });
-  EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([](grpc::ClientContext&,
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
@@ -948,13 +937,12 @@ TEST(DatabaseAdminClientTest, CreateBackupWithEncryption) {
         response.mutable_encryption_info()->set_encryption_type(
             gcsa::EncryptionInfo::GOOGLE_DEFAULT_ENCRYPTION);
         op.mutable_response()->PackFrom(response);
-        return make_status_or(op);
+        return make_ready_future(make_status_or(std::move(op)));
       });
 
   auto conn = CreateTestingConnection(std::move(mock));
   auto fut = conn->CreateBackup(
       {dbase, "test-backup", {}, {}, absl::nullopt, GoogleEncryption()});
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto response = fut.get();
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->name(), "test-backup");
@@ -970,59 +958,49 @@ TEST(DatabaseAdminClientTest, CreateBackupWithEncryption) {
 /// @test Verify cancellation.
 TEST(DatabaseAdminConnectionTest, CreateBackupCancel) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
-  // Suppress a false leak.
-  // TODO(#4038): After we fix the issue #4038, we won't need to use
-  // `AllowLeak()` any more.
-  Mock::AllowLeak(mock.get());
   promise<void> p;
 
-  EXPECT_CALL(*mock, CreateBackup)
-      .WillOnce([](grpc::ClientContext&, gcsa::CreateBackupRequest const&) {
+  EXPECT_CALL(*mock, AsyncCreateBackup)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   gcsa::CreateBackupRequest const&) {
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
-        return make_status_or(op);
+        return make_ready_future(make_status_or(std::move(op)));
       });
-  EXPECT_CALL(*mock, CancelOperation)
-      .WillOnce([](grpc::ClientContext&,
+  EXPECT_CALL(*mock, AsyncCancelOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    google::longrunning::CancelOperationRequest const& request) {
         EXPECT_EQ("test-operation-name", request.name());
-        return google::cloud::Status();
+        return make_ready_future(Status());
       });
-  EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([&p](grpc::ClientContext&,
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([&p](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                      google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
         op.set_name(r.name());
         op.set_done(false);
-        // wait for `cancel` call in the main thread.
-        p.get_future().get();
-        return make_status_or(op);
+        p.set_value();  // enable `cancel()` call in the main thread.
+        return make_ready_future(make_status_or(std::move(op)));
       })
-      .WillOnce([](grpc::ClientContext&,
-                   google::longrunning::GetOperationRequest const& r) {
+      .WillRepeatedly([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                         google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
         op.set_name(r.name());
-        op.set_done(true);
-        gcsa::Backup backup;
-        backup.set_name("test-backup");
-        op.mutable_response()->PackFrom(backup);
-        return make_status_or(op);
+        op.set_done(false);
+        return make_ready_future(make_status_or(std::move(op)));
       });
 
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-database");
   auto fut =
       conn->CreateBackup({dbase, "test-backup", {}, {}, absl::nullopt, {}});
+  p.get_future().get();  // await first poll before `cancel()`
   fut.cancel();
-  p.set_value();
   auto backup = fut.get();
-  EXPECT_STATUS_OK(backup);
-  EXPECT_EQ("test-backup", backup->name());
-  // Explicitly verify the expectations in the mock.
-  EXPECT_TRUE(Mock::VerifyAndClearExpectations(mock.get()));
+  EXPECT_THAT(backup, StatusIs(StatusCode::kCancelled));
 }
 
 /// @test Verify that a permanent error in CreateBackup is immediately
@@ -1030,17 +1008,17 @@ TEST(DatabaseAdminConnectionTest, CreateBackupCancel) {
 TEST(DatabaseAdminConnectionTest, HandleCreateBackupError) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
-  EXPECT_CALL(*mock, CreateBackup)
-      .WillOnce([](grpc::ClientContext&, gcsa::CreateBackupRequest const&) {
-        return StatusOr<google::longrunning::Operation>(
-            Status(StatusCode::kPermissionDenied, "uh-oh"));
+  EXPECT_CALL(*mock, AsyncCreateBackup)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   gcsa::CreateBackupRequest const&) {
+        return make_ready_future(StatusOr<google::longrunning::Operation>(
+            Status(StatusCode::kPermissionDenied, "uh-oh")));
       });
 
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-database");
   auto fut =
       conn->CreateBackup({dbase, "test-backup", {}, {}, absl::nullopt, {}});
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto backup = fut.get();
   EXPECT_THAT(backup, StatusIs(StatusCode::kPermissionDenied));
 }

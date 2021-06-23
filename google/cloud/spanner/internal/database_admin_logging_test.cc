@@ -47,13 +47,20 @@ class DatabaseAdminLoggingTest : public ::testing::Test {
 };
 
 TEST_F(DatabaseAdminLoggingTest, CreateDatabase) {
-  EXPECT_CALL(*mock_, CreateDatabase).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, AsyncCreateDatabase)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   gcsa::CreateDatabaseRequest const&) {
+        return make_ready_future(
+            StatusOr<google::longrunning::Operation>(TransientError()));
+      });
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
-  grpc::ClientContext context;
-  auto status = stub.CreateDatabase(context, gcsa::CreateDatabaseRequest{});
-  EXPECT_EQ(TransientError(), status.status());
+  CompletionQueue cq;
+  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
+  auto response = stub.AsyncCreateDatabase(cq, std::move(context),
+                                           gcsa::CreateDatabaseRequest{});
+  EXPECT_EQ(TransientError(), response.get().status());
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("CreateDatabase")));
@@ -89,13 +96,20 @@ TEST_F(DatabaseAdminLoggingTest, GetDatabaseDdl) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, UpdateDatabase) {
-  EXPECT_CALL(*mock_, UpdateDatabase).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, AsyncUpdateDatabaseDdl)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   gcsa::UpdateDatabaseDdlRequest const&) {
+        return make_ready_future(
+            StatusOr<google::longrunning::Operation>(TransientError()));
+      });
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
-  grpc::ClientContext context;
-  auto status = stub.UpdateDatabase(context, gcsa::UpdateDatabaseDdlRequest{});
-  EXPECT_EQ(TransientError(), status.status());
+  CompletionQueue cq;
+  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
+  auto response = stub.AsyncUpdateDatabaseDdl(cq, std::move(context),
+                                              gcsa::UpdateDatabaseDdlRequest{});
+  EXPECT_EQ(TransientError(), response.get().status());
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("UpdateDatabase")));
@@ -131,13 +145,20 @@ TEST_F(DatabaseAdminLoggingTest, ListDatabases) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, RestoreDatabase) {
-  EXPECT_CALL(*mock_, RestoreDatabase).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, AsyncRestoreDatabase)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   gcsa::RestoreDatabaseRequest const&) {
+        return make_ready_future(
+            StatusOr<google::longrunning::Operation>(TransientError()));
+      });
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
-  grpc::ClientContext context;
-  auto status = stub.RestoreDatabase(context, gcsa::RestoreDatabaseRequest{});
-  EXPECT_EQ(TransientError(), status.status());
+  CompletionQueue cq;
+  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
+  auto response = stub.AsyncRestoreDatabase(cq, std::move(context),
+                                            gcsa::RestoreDatabaseRequest{});
+  EXPECT_EQ(TransientError(), response.get().status());
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("RestoreDatabase")));
@@ -190,13 +211,20 @@ TEST_F(DatabaseAdminLoggingTest, TestIamPermissions) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, CreateBackup) {
-  EXPECT_CALL(*mock_, CreateBackup).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, AsyncCreateBackup)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   gcsa::CreateBackupRequest const&) {
+        return make_ready_future(
+            StatusOr<google::longrunning::Operation>(TransientError()));
+      });
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
-  grpc::ClientContext context;
-  auto status = stub.CreateBackup(context, gcsa::CreateBackupRequest{});
-  EXPECT_EQ(TransientError(), status.status());
+  CompletionQueue cq;
+  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
+  auto response = stub.AsyncCreateBackup(cq, std::move(context),
+                                         gcsa::CreateBackupRequest{});
+  EXPECT_EQ(TransientError(), response.get().status());
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("CreateBackup")));
@@ -291,14 +319,20 @@ TEST_F(DatabaseAdminLoggingTest, ListDatabaseOperations) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, GetOperation) {
-  EXPECT_CALL(*mock_, GetOperation).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, AsyncGetOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   google::longrunning::GetOperationRequest const&) {
+        return make_ready_future(
+            StatusOr<google::longrunning::Operation>(TransientError()));
+      });
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
-  grpc::ClientContext context;
-  auto status =
-      stub.GetOperation(context, google::longrunning::GetOperationRequest{});
-  EXPECT_EQ(TransientError(), status.status());
+  CompletionQueue cq;
+  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
+  auto response = stub.AsyncGetOperation(
+      cq, std::move(context), google::longrunning::GetOperationRequest{});
+  EXPECT_EQ(TransientError(), response.get().status());
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetOperation")));
@@ -306,14 +340,19 @@ TEST_F(DatabaseAdminLoggingTest, GetOperation) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, CancelOperation) {
-  EXPECT_CALL(*mock_, CancelOperation).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, AsyncCancelOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   google::longrunning::CancelOperationRequest const&) {
+        return make_ready_future(TransientError());
+      });
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
-  grpc::ClientContext context;
-  auto status = stub.CancelOperation(
-      context, google::longrunning::CancelOperationRequest{});
-  EXPECT_EQ(TransientError(), status);
+  CompletionQueue cq;
+  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
+  auto status = stub.AsyncCancelOperation(
+      cq, std::move(context), google::longrunning::CancelOperationRequest{});
+  EXPECT_EQ(TransientError(), status.get());
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("CancelOperation")));

@@ -18,7 +18,7 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/polling_loop.h"
+#include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/options.h"
 #include <grpcpp/grpcpp.h>
@@ -32,9 +32,6 @@ inline namespace SPANNER_CLIENT_NS {
 namespace gcsa = ::google::spanner::admin::database::v1;
 
 using google::cloud::internal::Idempotency;
-using google::cloud::internal::PollingLoop;
-using google::cloud::internal::PollingLoopMetadataExtractor;
-using google::cloud::internal::PollingLoopResponseExtractor;
 using google::cloud::internal::RetryLoop;
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
@@ -155,21 +152,29 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     for (auto& s : p.extra_statements) {
       *request.add_extra_statements() = std::move(s);
     }
-
-    auto operation = RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        Idempotency::kNonIdempotent,
-        [this](grpc::ClientContext& context,
+    auto stub = stub_;
+    return google::cloud::internal::AsyncLongRunningOperation<gcsa::Database>(
+        background_threads_->cq(), std::move(request),
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
                gcsa::CreateDatabaseRequest const& request) {
-          return stub_->CreateDatabase(context, request);
+          return stub->AsyncCreateDatabase(cq, std::move(context), request);
         },
-        request, __func__);
-    if (!operation) {
-      return google::cloud::make_ready_future(
-          StatusOr<gcsa::Database>(operation.status()));
-    }
-
-    return AwaitDatabase(*std::move(operation));
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::GetOperationRequest const& request) {
+          return stub->AsyncGetOperation(cq, std::move(context), request);
+        },
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::CancelOperationRequest const& request) {
+          return stub->AsyncCancelOperation(cq, std::move(context), request);
+        },
+        &google::cloud::internal::ExtractLongRunningResultResponse<
+            gcsa::Database>,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        Idempotency::kNonIdempotent, polling_policy_prototype_->clone(),
+        __func__);
   }
 
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
@@ -208,20 +213,30 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     for (auto& s : p.statements) {
       *request.add_statements() = std::move(s);
     }
-    auto operation = RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        Idempotency::kNonIdempotent,
-        [this](grpc::ClientContext& context,
+    auto stub = stub_;
+    return google::cloud::internal::AsyncLongRunningOperation<
+        gcsa::UpdateDatabaseDdlMetadata>(
+        background_threads_->cq(), std::move(request),
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
                gcsa::UpdateDatabaseDdlRequest const& request) {
-          return stub_->UpdateDatabase(context, request);
+          return stub->AsyncUpdateDatabaseDdl(cq, std::move(context), request);
         },
-        request, __func__);
-    if (!operation) {
-      return google::cloud::make_ready_future(
-          StatusOr<gcsa::UpdateDatabaseDdlMetadata>(operation.status()));
-    }
-
-    return AwaitUpdateDatabase(*std::move(operation));
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::GetOperationRequest const& request) {
+          return stub->AsyncGetOperation(cq, std::move(context), request);
+        },
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::CancelOperationRequest const& request) {
+          return stub->AsyncCancelOperation(cq, std::move(context), request);
+        },
+        &google::cloud::internal::ExtractLongRunningResultMetadata<
+            gcsa::UpdateDatabaseDdlMetadata>,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        Idempotency::kNonIdempotent, polling_policy_prototype_->clone(),
+        __func__);
   }
 
   Status DropDatabase(DropDatabaseParams p) override {
@@ -297,20 +312,29 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       gcsa::RestoreDatabaseRequest& request_;
     };
     absl::visit(EncryptionVisitor(request), p.encryption_config);
-    auto operation = RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        Idempotency::kNonIdempotent,
-        [this](grpc::ClientContext& context,
+    auto stub = stub_;
+    return google::cloud::internal::AsyncLongRunningOperation<gcsa::Database>(
+        background_threads_->cq(), std::move(request),
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
                gcsa::RestoreDatabaseRequest const& request) {
-          return stub_->RestoreDatabase(context, request);
+          return stub->AsyncRestoreDatabase(cq, std::move(context), request);
         },
-        request, __func__);
-    if (!operation) {
-      return google::cloud::make_ready_future(
-          StatusOr<gcsa::Database>(operation.status()));
-    }
-
-    return AwaitDatabase(*std::move(operation));
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::GetOperationRequest const& request) {
+          return stub->AsyncGetOperation(cq, std::move(context), request);
+        },
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::CancelOperationRequest const& request) {
+          return stub->AsyncCancelOperation(cq, std::move(context), request);
+        },
+        &google::cloud::internal::ExtractLongRunningResultResponse<
+            gcsa::Database>,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        Idempotency::kNonIdempotent, polling_policy_prototype_->clone(),
+        __func__);
   }
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
@@ -396,20 +420,29 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       gcsa::CreateBackupRequest& request_;
     };
     absl::visit(EncryptionVisitor(request), p.encryption_config);
-    auto operation = RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        Idempotency::kNonIdempotent,
-        [this](grpc::ClientContext& context,
+    auto stub = stub_;
+    return google::cloud::internal::AsyncLongRunningOperation<gcsa::Backup>(
+        background_threads_->cq(), std::move(request),
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
                gcsa::CreateBackupRequest const& request) {
-          return stub_->CreateBackup(context, request);
+          return stub->AsyncCreateBackup(cq, std::move(context), request);
         },
-        request, __func__);
-    if (!operation) {
-      return google::cloud::make_ready_future(
-          StatusOr<gcsa::Backup>(operation.status()));
-    }
-
-    return AwaitCreateBackup(*std::move(operation));
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::GetOperationRequest const& request) {
+          return stub->AsyncGetOperation(cq, std::move(context), request);
+        },
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::CancelOperationRequest const& request) {
+          return stub->AsyncCancelOperation(cq, std::move(context), request);
+        },
+        &google::cloud::internal::ExtractLongRunningResultResponse<
+            gcsa::Backup>,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        Idempotency::kNonIdempotent, polling_policy_prototype_->clone(),
+        __func__);
   }
 
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
@@ -557,117 +590,6 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
   }
 
  private:
-  future<StatusOr<gcsa::Database>> AwaitDatabase(
-      google::longrunning::Operation operation) {
-    promise<StatusOr<gcsa::Database>> pr;
-    auto f = pr.get_future();
-
-    // TODO(#4038) - use background_threads_->cq() to run this loop.
-    std::thread t(
-        [](std::shared_ptr<spanner_internal::DatabaseAdminStub> stub,
-           google::longrunning::Operation operation,
-           std::unique_ptr<PollingPolicy> polling_policy,
-           google::cloud::promise<StatusOr<gcsa::Database>> promise,
-           char const* location) mutable {
-          auto result =
-              PollingLoop<PollingLoopResponseExtractor<gcsa::Database>>(
-                  std::move(polling_policy),
-                  [stub](
-                      grpc::ClientContext& context,
-                      google::longrunning::GetOperationRequest const& request) {
-                    return stub->GetOperation(context, request);
-                  },
-                  std::move(operation), location);
-
-          // Drop our reference to stub; ideally we'd have std::moved into the
-          // lambda. Doing this also prevents a false leak from being reported
-          // when using googlemock.
-          stub.reset();
-          promise.set_value(std::move(result));
-        },
-        stub_, std::move(operation), polling_policy_prototype_->clone(),
-        std::move(pr), __func__);
-    t.detach();
-
-    return f;
-  }
-
-  future<StatusOr<gcsa::UpdateDatabaseDdlMetadata>> AwaitUpdateDatabase(
-      google::longrunning::Operation operation) {
-    promise<StatusOr<gcsa::UpdateDatabaseDdlMetadata>> pr;
-    auto f = pr.get_future();
-
-    // TODO(#4038) - use background_threads_->cq() to run this loop.
-    std::thread t(
-        [](std::shared_ptr<spanner_internal::DatabaseAdminStub> stub,
-           google::longrunning::Operation operation,
-           std::unique_ptr<PollingPolicy> polling_policy,
-           promise<StatusOr<gcsa::UpdateDatabaseDdlMetadata>> promise,
-           char const* location) mutable {
-          auto result = PollingLoop<
-              PollingLoopMetadataExtractor<gcsa::UpdateDatabaseDdlMetadata>>(
-              std::move(polling_policy),
-              [stub](grpc::ClientContext& context,
-                     google::longrunning::GetOperationRequest const& request) {
-                return stub->GetOperation(context, request);
-              },
-              std::move(operation), location);
-
-          // Drop our reference to stub; ideally we'd have std::moved into the
-          // lambda. Doing this also prevents a false leak from being reported
-          // when using googlemock.
-          stub.reset();
-          promise.set_value(std::move(result));
-        },
-        stub_, std::move(operation), polling_policy_prototype_->clone(),
-        std::move(pr), __func__);
-    t.detach();
-
-    return f;
-  }
-
-  future<StatusOr<gcsa::Backup>> AwaitCreateBackup(
-      google::longrunning::Operation operation) {
-    // Create a local copy of stub because `this` might get out of scope when
-    // the callback will be called.
-    std::shared_ptr<spanner_internal::DatabaseAdminStub> cancel_stub(stub_);
-    // Create a promise with a cancellation callback.
-    promise<StatusOr<gcsa::Backup>> pr([cancel_stub, operation]() {
-      grpc::ClientContext context;
-      google::longrunning::CancelOperationRequest request;
-      request.set_name(operation.name());
-      cancel_stub->CancelOperation(context, request);
-    });
-    auto f = pr.get_future();
-
-    // TODO(#4038) - use background_threads_->cq() to run this loop.
-    std::thread t(
-        [](std::shared_ptr<spanner_internal::DatabaseAdminStub> stub,
-           google::longrunning::Operation operation,
-           std::unique_ptr<PollingPolicy> polling_policy,
-           google::cloud::promise<StatusOr<gcsa::Backup>> promise,
-           char const* location) mutable {
-          auto result = PollingLoop<PollingLoopResponseExtractor<gcsa::Backup>>(
-              std::move(polling_policy),
-              [stub](grpc::ClientContext& context,
-                     google::longrunning::GetOperationRequest const& request) {
-                return stub->GetOperation(context, request);
-              },
-              std::move(operation), location);
-
-          // Drop our reference to stub; ideally we'd have std::moved into the
-          // lambda. Doing this also prevents a false leak from being reported
-          // when using googlemock.
-          stub.reset();
-          promise.set_value(std::move(result));
-        },
-        stub_, std::move(operation), polling_policy_prototype_->clone(),
-        std::move(pr), __func__);
-    t.detach();
-
-    return f;
-  }
-
   std::shared_ptr<spanner_internal::DatabaseAdminStub> stub_;
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
