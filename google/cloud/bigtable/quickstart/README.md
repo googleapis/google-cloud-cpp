@@ -52,8 +52,6 @@ SDK](https://cloud.google.com/sdk/). For more information about *Application
 Default Credentials*, see
 https://cloud.google.com/docs/authentication/production
 
-<!-- START bigtable_hw_install -->
-
 ## Using with Bazel
 
 > :warning: If you are using Windows or macOS there are additional instructions
@@ -159,8 +157,6 @@ trust store for SSL certificates, you can download and configure this using:
         'https://pki.google.com/roots.pem', 'roots.pem')
 set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
-
-<!-- END bigtable_hw_install -->
 
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
