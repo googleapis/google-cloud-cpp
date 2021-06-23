@@ -241,7 +241,7 @@ DOCKER_DISTROS=(
   "demo-ubuntu-xenial.Dockerfile,Ubuntu (16.04 LTS - Xenial Xerus)"
   "demo-debian-buster.Dockerfile,Debian (Buster)"
   "demo-debian-stretch.Dockerfile,Debian (Stretch)"
-  "demo-centos-8.Dockerfile,CentOS (8)"
+  "demo-rockylinux-8.Dockerfile,Rocky Linux (8)"
   "demo-centos-7.Dockerfile,CentOS (7)"
 )
 for distro in "${DOCKER_DISTROS[@]}"; do
