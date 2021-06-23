@@ -16,7 +16,6 @@
 set -eu
 
 source "$(dirname "$0")/../../../../../ci/lib/init.sh"
-source module /ci/etc/integration-tests-config.sh
 source module /google/cloud/storage/tools/run_emulator_utils.sh
 
 if [[ $# -lt 1 ]]; then

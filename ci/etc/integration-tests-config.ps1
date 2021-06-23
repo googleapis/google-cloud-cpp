@@ -16,6 +16,11 @@
 # Common configuration parameters.
 #
 $env:GOOGLE_CLOUD_PROJECT="cloud-cpp-testing-resources"
+$env:GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES="yes"
+$env:GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG="lastN,100,WARNING"
+$env:GOOGLE_CLOUD_CPP_ENABLE_TRACING="rpc,rpc-streams"
+$env:GOOGLE_CLOUD_CPP_TRACING_OPTIONS="truncate_string_field_longer_than=512"
+$env:CLOUD_STORAGE_ENABLE_TRACING="raw-client"
 
 # Cloud Bigtable configuration parameters
 $env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID="test-instance"
