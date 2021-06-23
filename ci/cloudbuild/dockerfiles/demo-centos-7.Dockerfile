@@ -28,8 +28,7 @@ RUN yum install -y centos-release-scl yum-utils
 RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
 RUN yum makecache && \
     yum install -y automake ccache cmake3 curl-devel devtoolset-7 gcc gcc-c++ \
-        git libtool make openssl-devel patch pkgconfig re2-devel tar wget \
-        which zlib-devel
+        git libtool make openssl-devel patch re2-devel tar wget which zlib-devel
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 # ```
 
@@ -53,6 +52,22 @@ ENV LD_LIBRARY_PATH /opt/rh/devtoolset-7/root/usr/lib64:/opt/rh/devtoolset-7/roo
 # scl enable devtoolset-7 bash
 # ```
 
+# CentOS-7 ships with `pkg-config` 0.27.1, which has a
+# [bug](https://bugs.freedesktop.org/show_bug.cgi?id=54716) that can make
+# invocations take extremely long to complete. If you plan to use `pkg-config`
+# with any of the installed artifacts, you'll want to upgrade it to something
+# newer. If not, `yum install pkgconfig` should work instead.
+
+# ```bash
+WORKDIR /var/tmp/build/pkg-config-cpp
+RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    ./configure --with-internal-glib && \
+    make -j ${NCPU:-4} && \
+    make install && \
+    ldconfig
+# ```
+
 # The following steps will install libraries and tools in `/usr/local`. By
 # default CentOS-7 does not search for shared libraries in these directories,
 # there are multiple ways to solve this problem, the following steps are one
@@ -61,7 +76,7 @@ ENV LD_LIBRARY_PATH /opt/rh/devtoolset-7/root/usr/lib64:/opt/rh/devtoolset-7/roo
 # ```bash
 RUN (echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
     tee /etc/ld.so.conf.d/usrlocal.conf
-ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
+ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig:/usr/lib64/pkgconfig
 ENV PATH=/usr/local/bin:${PATH}
 # ```
 
