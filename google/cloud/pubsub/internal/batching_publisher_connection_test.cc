@@ -52,9 +52,10 @@ google::pubsub::v1::PublishResponse MakeResponse(
 std::vector<std::string> MessagesData(
     google::pubsub::v1::PublishRequest const& request) {
   std::vector<std::string> data(request.messages_size());
-  std::transform(
-      request.messages().begin(), request.messages().end(), data.begin(),
-      [](google::pubsub::v1::PubsubMessage const& m) { return m.data(); });
+  std::transform(request.messages().begin(), request.messages().end(),
+                 data.begin(), [](google::pubsub::v1::PubsubMessage const& m) {
+                   return std::string(m.data());
+                 });
   return data;
 }
 
