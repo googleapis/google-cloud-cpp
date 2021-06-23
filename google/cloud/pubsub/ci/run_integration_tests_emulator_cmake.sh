@@ -32,13 +32,6 @@ readonly BINARY_DIR
 shift
 ctest_args=("$@")
 
-# Use the same configuration parameters as we use for testing against
-# production. Easier to maintain just one copy.
-export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes
-export GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG="lastN,100,WARNING"
-export GOOGLE_CLOUD_CPP_ENABLE_TRACING="rpc,rpc-streams"
-export GOOGLE_CLOUD_CPP_TRACING_OPTIONS="truncate_string_field_longer_than=512"
-
 cd "${BINARY_DIR}"
 # Start the emulator and arranges to kill it
 pubsub_emulator::start

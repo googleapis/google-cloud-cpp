@@ -16,7 +16,6 @@
 set -eu
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
-source module /ci/etc/integration-tests-config.sh
 source module /google/cloud/storage/tools/run_emulator_utils.sh
 
 if [[ $# -lt 1 ]]; then
@@ -89,13 +88,8 @@ emulator_args=(
   "--test_env=CLOUD_STORAGE_EMULATOR_ENDPOINT=${CLOUD_STORAGE_EMULATOR_ENDPOINT}"
   "--test_env=CLOUD_STORAGE_GRPC_ENDPOINT=${CLOUD_STORAGE_GRPC_ENDPOINT}"
   "--test_env=HTTPBIN_ENDPOINT=${HTTPBIN_ENDPOINT}"
-  "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=fake-service-account-sign@example.com"
-  "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
-  "--test_env=GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG=lastN,100,WARNING"
-  "--test_env=GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc-streams"
-  "--test_env=GOOGLE_CLOUD_CPP_TRACING_OPTIONS=truncate_string_field_longer_than=512"
-  "--test_env=CLOUD_STORAGE_ENABLE_TRACING=raw-client"
   "--test_env=EMULATOR_SHA=${EMULATOR_SHA}"
+  "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=fake-service-account-sign@example.com"
 )
 
 # We need to forward some environment variables suitable for running against

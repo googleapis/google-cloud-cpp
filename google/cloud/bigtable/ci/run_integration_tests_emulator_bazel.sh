@@ -16,7 +16,6 @@
 set -eu
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
-source module /ci/etc/integration-tests-config.sh
 
 if [[ $# -lt 1 ]]; then
   echo "Usage: $(basename "$0") <bazel-program> [bazel-test-args]"
@@ -65,11 +64,6 @@ done
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   --test_env="BIGTABLE_EMULATOR_HOST=${BIGTABLE_EMULATOR_HOST}" \
   --test_env="BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}" \
-  --test_env="ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=yes" \
-  --test_env="GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes" \
-  --test_env="GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG=lastN,100,WARNING" \
-  --test_env="GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc-streams" \
-  --test_env="GOOGLE_CLOUD_CPP_TRACING_OPTIONS=truncate_string_field_longer_than=512" \
   --test_tag_filters="integration-test" -- \
   "//google/cloud/bigtable/..." \
   "${excluded_targets[@]}"
