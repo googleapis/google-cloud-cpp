@@ -257,54 +257,54 @@ void RunAll(std::vector<std::string> const& argv) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   // This table is actually created and used to test the positive case (e.g.
   // GetTable() and "table does exist")
-  auto table_id_1 = google::cloud::bigtable::testing::RandomTableId(generator);
+  auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
 
-  auto table_1 = admin.CreateTable(
-      table_id_1, cbt::TableConfig(
-                      {
-                          {"fam", cbt::GcRule::MaxNumVersions(10)},
-                          {"foo", cbt::GcRule::MaxNumVersions(3)},
-                      },
-                      {}));
-  if (!table_1) throw std::runtime_error(table_1.status().message());
+  auto table = admin.CreateTable(
+      table_id, cbt::TableConfig(
+                    {
+                        {"fam", cbt::GcRule::MaxNumVersions(10)},
+                        {"foo", cbt::GcRule::MaxNumVersions(3)},
+                    },
+                    {}));
+  if (!table) throw std::runtime_error(table.status().message());
 
   std::cout << "\nRunning CreateBackup() example" << std::endl;
-  auto backup_id_1 = google::cloud::bigtable::testing::RandomTableId(generator);
-  CreateBackup(admin, {table_id_1, cluster_id, backup_id_1,
+  auto backup_id = google::cloud::bigtable::testing::RandomTableId(generator);
+  CreateBackup(admin, {table_id, cluster_id, backup_id,
                        absl::FormatTime(absl::Now() + absl::Hours(12))});
 
   std::cout << "\nRunning ListBackups() example" << std::endl;
   ListBackups(admin, {"-", {}, {}});
 
   std::cout << "\nRunning GetBackup() example" << std::endl;
-  GetBackup(admin, {cluster_id, backup_id_1});
+  GetBackup(admin, {cluster_id, backup_id});
 
   std::cout << "\nRunning UpdateBackup() example" << std::endl;
-  UpdateBackup(admin, {cluster_id, backup_id_1,
+  UpdateBackup(admin, {cluster_id, backup_id,
                        absl::FormatTime(absl::Now() + absl::Hours(24))});
 
   std::cout << "\nRunning SetIamPolicy() example" << std::endl;
-  SetIamPolicy(admin, {cluster_id, backup_id_1, "roles/bigtable.user",
+  SetIamPolicy(admin, {cluster_id, backup_id, "roles/bigtable.user",
                        "serviceAccount:" + service_account});
 
   std::cout << "\nRunning GetIamPolicy() example" << std::endl;
-  GetIamPolicy(admin, {cluster_id, backup_id_1});
+  GetIamPolicy(admin, {cluster_id, backup_id});
 
-  (void)admin.DeleteTable(table_id_1);
-
-  std::cout << "\nRunning RestoreTable() example" << std::endl;
-  RestoreTable(admin, {table_id_1, cluster_id, backup_id_1});
-
-  (void)admin.DeleteTable(table_id_1);
+  (void)admin.DeleteTable(table_id);
 
   std::cout << "\nRunning RestoreTable() example" << std::endl;
+  RestoreTable(admin, {table_id, cluster_id, backup_id});
+
+  (void)admin.DeleteTable(table_id);
+
+  std::cout << "\nRunning RestoreTableFromInstance() example" << std::endl;
   RestoreTableFromInstance(admin,
-                           {table_id_1, instance_id, cluster_id, backup_id_1});
+                           {table_id, instance_id, cluster_id, backup_id});
 
   std::cout << "\nRunning DeleteBackup() example" << std::endl;
-  DeleteBackup(admin, {cluster_id, backup_id_1});
+  DeleteBackup(admin, {cluster_id, backup_id});
 
-  (void)admin.DeleteTable(table_id_1);
+  (void)admin.DeleteTable(table_id);
 }
 
 }  // anonymous namespace

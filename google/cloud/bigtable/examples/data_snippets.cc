@@ -31,14 +31,14 @@ namespace {
 using google::cloud::bigtable::examples::Usage;
 
 void Apply(google::cloud::bigtable::Table table,
-           std::vector<std::string> const&) {
+           std::vector<std::string> const& argv) {
   //! [apply]
   namespace cbt = google::cloud::bigtable;
-  [](cbt::Table table) {
+  [](cbt::Table table, std::string const& row_key) {
     auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::system_clock::now().time_since_epoch());
 
-    cbt::SingleRowMutation mutation("test-key-for-apply");
+    cbt::SingleRowMutation mutation(row_key);
     mutation.emplace_back(
         cbt::SetCell("fam", "column0", timestamp, "value for column0"));
     mutation.emplace_back(
@@ -47,7 +47,7 @@ void Apply(google::cloud::bigtable::Table table,
     if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [apply]
-  (std::move(table));
+  (std::move(table), argv.at(0));
 }
 
 void ApplyRelaxedIdempotency(google::cloud::bigtable::Table const& table,
@@ -340,14 +340,14 @@ void MutateDeleteColumns(std::vector<std::string> const& argv) {
     // command-line.
     throw Usage{
         "mutate-delete-columns <project-id> <instance-id>"
-        " <table-id> key family:column [family:column]"};
+        " <table-id> <row-key> <family:column> [<family:column>...]"};
   }
 
   auto it = argv.cbegin();
   auto const project_id = *it++;
   auto const instance_id = *it++;
   auto const table_id = *it++;
-  auto const key = *it++;
+  auto const row_key = *it++;
   std::vector<std::pair<std::string, std::string>> columns;
   for (; it != argv.cend(); ++it) {
     auto pos = it->find_first_of(':');
@@ -378,7 +378,7 @@ void MutateDeleteColumns(std::vector<std::string> const& argv) {
     std::cout << "Columns successfully deleted from row\n";
   }
   // [END bigtable_mutate_delete_columns]
-  (std::move(table), key, std::move(columns));
+  (std::move(table), row_key, std::move(columns));
 }
 
 void MutateDeleteRows(google::cloud::bigtable::Table table,
@@ -412,7 +412,7 @@ void MutateDeleteRowsCommand(std::vector<std::string> const& argv) {
     // command-line.
     throw Usage{
         "mutate-delete-rows <project-id> <instance-id>"
-        " <table-id> row-key [row-key...]"};
+        " <table-id> <row-key> [<row-key>...]"};
   }
   auto it = argv.cbegin();
   auto const project_id = *it++;
@@ -443,11 +443,14 @@ void MutateInsertUpdateRows(google::cloud::bigtable::Table table,
   auto parse = [](std::string const& mut) {
     std::vector<std::string> const tokens =
         absl::StrSplit(mut, absl::ByAnyChar(":="));
+    if (tokens.size() != 3U)
+      throw std::runtime_error("Invalid argument (" + mut +
+                               ") should be in family:column=value format");
     return InsertOrUpdate{tokens[0], tokens[1], tokens[2]};
   };
 
   auto it = argv.cbegin();
-  auto const key = *it++;
+  auto const row_key = *it++;
   std::vector<InsertOrUpdate> mutations;
   for (; it != argv.cend(); ++it) {
     mutations.emplace_back(parse(*it));
@@ -467,7 +470,7 @@ void MutateInsertUpdateRows(google::cloud::bigtable::Table table,
     std::cout << "Row successfully updated\n";
   }
   // [END bigtable_insert_update_rows]
-  (std::move(table), key, std::move(mutations));
+  (std::move(table), row_key, std::move(mutations));
 }
 
 void MutateInsertUpdateRowsCommand(std::vector<std::string> const& argv) {
@@ -476,7 +479,8 @@ void MutateInsertUpdateRowsCommand(std::vector<std::string> const& argv) {
     // command-line.
     throw Usage{
         "mutate-insert-update-rows <project-id> <instance-id>"
-        " <table-id> key family:column=value [family:column=value...]"};
+        " <table-id> <row-key> <family:column=value> "
+        "[<family:column=value>...]"};
   }
 
   auto it = argv.cbegin();
@@ -832,7 +836,7 @@ void RunDataExamples(google::cloud::bigtable::TableAdmin admin,
   std::cout << "\nPreparing data for multiple examples" << std::endl;
   InsertTestData(table, {});
   std::cout << "Running Apply() example" << std::endl;
-  Apply(table, {});
+  Apply(table, {"test-key-for-apply"});
   std::cout << "Running Apply() with relaxed idempotency example" << std::endl;
   ApplyRelaxedIdempotency(table, {"apply-relaxed-idempotency"});
   std::cout << "Running Apply() with custom retry example" << std::endl;
@@ -936,7 +940,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
 
   using google::cloud::bigtable::examples::MakeCommandEntry;
   google::cloud::bigtable::examples::Commands commands = {
-      MakeCommandEntry("apply", {}, Apply),
+      MakeCommandEntry("apply", {"<row-key>"}, Apply),
       MakeCommandEntry("apply-relaxed-idempotency", {"<row-key>"},
                        ApplyRelaxedIdempotency),
       MakeCommandEntry("apply-custom-retry", {"<row-key>"}, ApplyCustomRetry),
@@ -957,7 +961,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       {"mutate-delete-rows", MutateDeleteRowsCommand},
       {"mutate-insert-update-rows", MutateInsertUpdateRowsCommand},
       MakeCommandEntry("rename-column",
-                       {"<key> <family> <old-name> <new-name>"}, RenameColumn),
+                       {"<row-key> <family> <old-name> <new-name>"},
+                       RenameColumn),
       MakeCommandEntry("insert-test-data", {}, InsertTestData),
       MakeCommandEntry("populate-table-hierarchy", {}, PopulateTableHierarchy),
       MakeCommandEntry("write-simple", {}, WriteSimple),

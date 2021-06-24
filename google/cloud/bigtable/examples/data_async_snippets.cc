@@ -405,7 +405,8 @@ int main(int argc, char* argv[]) {
       MakeCommandEntry("async-read-row", {"<row-key>"}, AsyncReadRow),
       MakeCommandEntry("async-check-and-mutate", {"<row-key>"},
                        AsyncCheckAndMutate),
-      MakeCommandEntry("async-read-modify-write", {}, AsyncReadModifyWrite),
+      MakeCommandEntry("async-read-modify-write", {"<row-key>"},
+                       AsyncReadModifyWrite),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);

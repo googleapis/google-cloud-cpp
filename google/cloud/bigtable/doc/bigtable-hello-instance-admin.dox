@@ -45,7 +45,7 @@ the *IAM permissions* in a Cloud Bigtable instance:
 @see https://cloud.google.com/bigtable/docs/app-profiles for more information
     about Cloud Bigtable application profiles.
 @see https://cloud.google.com/bigtable/docs/access-control for more information
-    access controls via IAM permissions on Cloud Bigtable.
+    about access controls via IAM permissions on Cloud Bigtable.
 
 ## Check if an Instance already exists
 

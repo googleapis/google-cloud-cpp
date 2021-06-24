@@ -50,7 +50,7 @@ void SetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
     StatusOr<google::iam::v1::Policy> current = admin.GetIamPolicy(table_id);
     if (!current) throw std::runtime_error(current.status().message());
     // This example adds the member to all existing bindings for that role. If
-    // there are no such bindgs, it adds a new one. This might not be what the
+    // there are no such bindings, it adds a new one. This might not be what the
     // user wants, e.g. in case of conditional bindings.
     size_t num_added = 0;
     for (auto& binding : *current->mutable_bindings()) {
@@ -76,7 +76,7 @@ void TestIamPermissions(std::vector<std::string> const& argv) {
   if (argv.size() < 4) {
     throw Usage{
         "test-iam-permissions <project-id> <instance-id> <resource-id>"
-        " <permission> [permission ...]"};
+        " <permission> [<permission>...]"};
   }
 
   auto it = argv.cbegin();
