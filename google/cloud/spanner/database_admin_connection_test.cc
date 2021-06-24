@@ -37,7 +37,9 @@ using ::google::cloud::spanner_testing::MockDatabaseAdminStub;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
+using ::testing::AnyOf;
 using ::testing::AtLeast;
+using ::testing::AtMost;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::Return;
@@ -969,11 +971,13 @@ TEST(DatabaseAdminConnectionTest, CreateBackupCancel) {
         return make_ready_future(make_status_or(std::move(op)));
       });
   EXPECT_CALL(*mock, AsyncCancelOperation)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   google::longrunning::CancelOperationRequest const& request) {
-        EXPECT_EQ("test-operation-name", request.name());
-        return make_ready_future(Status());
-      });
+      .Times(AtMost(1))
+      .WillRepeatedly(
+          [](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+             google::longrunning::CancelOperationRequest const& request) {
+            EXPECT_EQ("test-operation-name", request.name());
+            return make_ready_future(Status());
+          });
   EXPECT_CALL(*mock, AsyncGetOperation)
       .WillOnce([&p](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                      google::longrunning::GetOperationRequest const& r) {
@@ -1000,7 +1004,8 @@ TEST(DatabaseAdminConnectionTest, CreateBackupCancel) {
   p.get_future().get();  // await first poll before `cancel()`
   fut.cancel();
   auto backup = fut.get();
-  EXPECT_THAT(backup, StatusIs(StatusCode::kCancelled));
+  EXPECT_THAT(backup, StatusIs(AnyOf(StatusCode::kCancelled,
+                                     StatusCode::kDeadlineExceeded)));
 }
 
 /// @test Verify that a permanent error in CreateBackup is immediately

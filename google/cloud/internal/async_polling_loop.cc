@@ -13,7 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_polling_loop.h"
-#include <atomic>
+#include <mutex>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -33,10 +34,10 @@ class AsyncPollingLoopImpl
       : cq_(std::move(cq)),
         poll_(std::move(poll)),
         cancel_(std::move(cancel)),
-        canceled_(false),
         polling_policy_(std::move(polling_policy)),
         location_(std::move(location)),
-        promise_(null_promise_t{}) {}
+        promise_(null_promise_t{}),
+        canceled_(false) {}
 
   future<StatusOr<Operation>> Start(future<StatusOr<Operation>> op) {
     auto self = shared_from_this();
@@ -56,9 +57,13 @@ class AsyncPollingLoopImpl
   }
 
   void DoCancel() {
-    if (op_.name().empty()) return;
     google::longrunning::CancelOperationRequest request;
-    request.set_name(op_.name());
+    {
+      std::unique_lock<std::mutex> lk(mu_);
+      canceled_ = true;
+      if (op_name_.empty()) return;
+      request.set_name(op_name_);
+    }
     // Cancels are best effort, so we use weak pointers.
     auto w = WeakFromThis();
     cancel_(cq_, absl::make_unique<grpc::ClientContext>(), request)
@@ -69,12 +74,16 @@ class AsyncPollingLoopImpl
 
   void OnCancel(Status const& status) {
     if (!status.ok()) return;
-    canceled_.store(true);
+    std::unique_lock<std::mutex> lk(mu_);
+    canceled_ = true;
   }
 
   void OnStart(StatusOr<Operation> op) {
     if (!op || op->done()) return promise_.set_value(std::move(op));
-    op_ = *std::move(op);
+    {
+      std::unique_lock<std::mutex> lk(mu_);
+      op_name_ = std::move(op)->name();
+    }
     Wait();
   }
 
@@ -85,7 +94,10 @@ class AsyncPollingLoopImpl
   }
 
   void Wait() {
-    if (canceled_.load()) return Cancelled();
+    {
+      std::unique_lock<std::mutex> lk(mu_);
+      if (canceled_) return Cancelled();
+    }
     auto self = shared_from_this();
     cq_.MakeRelativeTimer(polling_policy_->WaitPeriod())
         .then([self](TimerResult f) { self->OnTimer(std::move(f)); });
@@ -94,11 +106,17 @@ class AsyncPollingLoopImpl
   void OnTimer(TimerResult f) {
     auto t = f.get();
     if (!t) return promise_.set_value(std::move(t).status());
-    if (canceled_.load()) return Cancelled();
+    {
+      std::unique_lock<std::mutex> lk(mu_);
+      if (canceled_) return Cancelled();
+    }
 
     auto self = shared_from_this();
     google::longrunning::GetOperationRequest request;
-    request.set_name(op_.name());
+    {
+      std::unique_lock<std::mutex> lk(mu_);
+      request.set_name(op_name_);
+    }
     poll_(cq_, absl::make_unique<grpc::ClientContext>(), request)
         .then([self](future<StatusOr<Operation>> g) {
           self->OnPoll(std::move(g));
@@ -120,22 +138,28 @@ class AsyncPollingLoopImpl
       }
       return promise_.set_value(std::move(op).status());
     }
-    if (op) op->Swap(&op_);
+    if (op) {
+      std::unique_lock<std::mutex> lk(mu_);
+      op_name_ = std::move(op)->name();
+    }
     Wait();
   }
 
+  // These member variables are initialized in the constructor or from
+  // `Start()`, and then only used from the `On*()` callbacks, which are
+  // serialized, so they need no external synchronization.
   google::cloud::CompletionQueue cq_;
-  google::longrunning::Operation op_;
   AsyncPollLongRunningOperation poll_;
   AsyncCancelLongRunningOperation cancel_;
-  // This is the only member variable that is accessed concurrently. All other
-  // member variables are changed and used in `On*()` functions, which are
-  // synchronized by virtue of being called from the CompletionQueue one at a
-  // time.
-  std::atomic<bool> canceled_;
   std::unique_ptr<PollingPolicy> polling_policy_;
   std::string location_;
   promise<StatusOr<Operation>> promise_;
+
+  // `canceled_` and `op_name_`, in contrast, are also used from `DoCancel()`,
+  // which is called asynchronously, so they require synchronization.
+  std::mutex mu_;
+  bool canceled_;        // GUARDED_BY(mu_)
+  std::string op_name_;  // GUARDED_BY(mu_)
 };
 
 future<StatusOr<Operation>> AsyncPollingLoop(
