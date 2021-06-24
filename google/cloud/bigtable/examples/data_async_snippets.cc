@@ -144,13 +144,13 @@ void AsyncReadRows(google::cloud::bigtable::Table table,
 }
 
 void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
-                            std::vector<std::string> const&) {
+                            std::vector<std::string> const& argv) {
   //! [async read rows with limit]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::make_ready_future;
   using google::cloud::promise;
   using google::cloud::Status;
-  [](cbt::Table table) {
+  [](cbt::Table table, std::int64_t const& limit) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000010", "key-000020");
     // Filter the results, only include values from the "col0" column in the
@@ -174,12 +174,12 @@ void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
         [&stream_status_promise](Status const& stream_status) {
           stream_status_promise.set_value(stream_status);
         },
-        range, filter);
+        range, limit, filter);
     Status stream_status = stream_status_promise.get_future().get();
     if (!stream_status.ok()) throw std::runtime_error(stream_status.message());
   }
   //! [async read rows with limit]
-  (std::move(table));
+  (std::move(table), std::stoll(argv.at(0)));
 }
 
 void AsyncReadRow(google::cloud::bigtable::Table table,
@@ -365,8 +365,8 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning the AsyncReadRows() example" << std::endl;
   AsyncReadRows(table, {});
 
-  std::cout << "\nRunning the AsyncReadRows() example" << std::endl;
-  AsyncReadRowsWithLimit(table, {});
+  std::cout << "\nRunning the AsyncReadRowsWithLimit() example" << std::endl;
+  AsyncReadRowsWithLimit(table, {"5"});
 
   std::cout << "\nRunning the AsyncReadRow() example [1]" << std::endl;
   AsyncReadRow(table, {"row-0001"});
@@ -400,7 +400,7 @@ int main(int argc, char* argv[]) {
       MakeCommandEntry("async-bulk-apply", {}, AsyncBulkApply),
       MakeCommandEntry("async-sample-rows", {}, AsyncSampleRows),
       MakeCommandEntry("async-read-rows", {}, AsyncReadRows),
-      MakeCommandEntry("async-read-rows-with-limit", {},
+      MakeCommandEntry("async-read-rows-with-limit", {"<limit>"},
                        AsyncReadRowsWithLimit),
       MakeCommandEntry("async-read-row", {"<row-key>"}, AsyncReadRow),
       MakeCommandEntry("async-check-and-mutate", {"<row-key>"},

@@ -107,11 +107,11 @@ void PrepareReadSamples(google::cloud::bigtable::Table table) {
 }
 
 void ReadRowsWithLimit(google::cloud::bigtable::Table table,
-                       std::vector<std::string> const&) {
+                       std::vector<std::string> const& argv) {
   //! [read rows with limit]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
-  [](cbt::Table table) {
+  [](cbt::Table table, std::int64_t limit) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("phone#4c410523#20190501",
                                       "phone#4c410523#20190502");
@@ -121,8 +121,8 @@ void ReadRowsWithLimit(google::cloud::bigtable::Table table,
         cbt::Filter::ColumnRangeClosed("stats_summary", "connected_wifi",
                                        "connected_wifi"),
         cbt::Filter::Latest(1));
-    // Read and print the first 5 rows in the range.
-    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, 5, filter)) {
+    // Read and print the first rows in the range, within the row limit.
+    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, limit, filter)) {
       if (!row) throw std::runtime_error(row.status().message());
       if (row->cells().size() != 1) {
         std::ostringstream os;
@@ -134,14 +134,14 @@ void ReadRowsWithLimit(google::cloud::bigtable::Table table,
     }
   }
   //! [read rows with limit]
-  (std::move(table));
+  (std::move(table), std::stoll(argv.at(0)));
 }
 
 void ReadKeysSet(std::vector<std::string> argv) {
   if (argv.size() < 4) {
     throw Usage{
         "read-keys-set <project-id> <instance-id> <table-id>"
-        " key1 [key2 ...]"};
+        " <key1> [<key2>...]"};
   }
 
   google::cloud::bigtable::Table table(
@@ -393,7 +393,7 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "Running ReadFilter" << std::endl;
   ReadFilter(table, {});
   std::cout << "Running ReadRowsWithLimit() example" << std::endl;
-  ReadRowsWithLimit(table, {});
+  ReadRowsWithLimit(table, {"5"});
 
   std::cout << "Running ReadKeySet() example" << std::endl;
   ReadKeysSet({table.project_id(), table.instance_id(), table.table_id(),
@@ -414,7 +414,7 @@ int main(int argc, char* argv[]) {
       MakeCommandEntry("read-row", {"<row-key>"}, ReadRow),
       MakeCommandEntry("read-row-partial", {}, ReadRowPartial),
       MakeCommandEntry("read-rows", {}, ReadRows),
-      MakeCommandEntry("read-rows-with-limit", {}, ReadRowsWithLimit),
+      MakeCommandEntry("read-rows-with-limit", {"<limit>"}, ReadRowsWithLimit),
       {"read-keys-set", ReadKeysSet},
       MakeCommandEntry("read-row-range", {}, ReadRowRange),
       MakeCommandEntry("read-row-ranges", {}, ReadRowRanges),
