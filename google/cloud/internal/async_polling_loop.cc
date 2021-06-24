@@ -82,6 +82,7 @@ class AsyncPollingLoopImpl
     if (!op || op->done()) return promise_.set_value(std::move(op));
     {
       std::unique_lock<std::mutex> lk(mu_);
+      if (canceled_) return Cancelled();
       op_name_ = std::move(op)->name();
     }
     Wait();
@@ -94,10 +95,6 @@ class AsyncPollingLoopImpl
   }
 
   void Wait() {
-    {
-      std::unique_lock<std::mutex> lk(mu_);
-      if (canceled_) return Cancelled();
-    }
     auto self = shared_from_this();
     cq_.MakeRelativeTimer(polling_policy_->WaitPeriod())
         .then([self](TimerResult f) { self->OnTimer(std::move(f)); });
@@ -106,17 +103,13 @@ class AsyncPollingLoopImpl
   void OnTimer(TimerResult f) {
     auto t = f.get();
     if (!t) return promise_.set_value(std::move(t).status());
-    {
-      std::unique_lock<std::mutex> lk(mu_);
-      if (canceled_) return Cancelled();
-    }
-
-    auto self = shared_from_this();
     google::longrunning::GetOperationRequest request;
     {
       std::unique_lock<std::mutex> lk(mu_);
+      if (canceled_) return Cancelled();
       request.set_name(op_name_);
     }
+    auto self = shared_from_this();
     poll_(cq_, absl::make_unique<grpc::ClientContext>(), request)
         .then([self](future<StatusOr<Operation>> g) {
           self->OnPoll(std::move(g));
@@ -140,6 +133,7 @@ class AsyncPollingLoopImpl
     }
     if (op) {
       std::unique_lock<std::mutex> lk(mu_);
+      if (canceled_) return Cancelled();
       op_name_ = std::move(op)->name();
     }
     Wait();
