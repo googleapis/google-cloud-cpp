@@ -72,9 +72,9 @@ TEST_F(InstanceAdminLoggingTest, CreateInstance) {
   InstanceAdminLogging stub(mock_, TracingOptions{});
 
   CompletionQueue cq;
-  auto context = absl::make_unique<grpc::ClientContext>();
-  auto response = stub.AsyncCreateInstance(cq, std::move(context),
-                                           gcsa::CreateInstanceRequest{});
+  auto response =
+      stub.AsyncCreateInstance(cq, absl::make_unique<grpc::ClientContext>(),
+                               gcsa::CreateInstanceRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
 
   auto const log_lines = log_.ExtractLines();
@@ -93,9 +93,9 @@ TEST_F(InstanceAdminLoggingTest, UpdateInstance) {
   InstanceAdminLogging stub(mock_, TracingOptions{});
 
   CompletionQueue cq;
-  auto context = absl::make_unique<grpc::ClientContext>();
-  auto response = stub.AsyncUpdateInstance(cq, std::move(context),
-                                           gcsa::UpdateInstanceRequest{});
+  auto response =
+      stub.AsyncUpdateInstance(cq, absl::make_unique<grpc::ClientContext>(),
+                               gcsa::UpdateInstanceRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
 
   auto const log_lines = log_.ExtractLines();
