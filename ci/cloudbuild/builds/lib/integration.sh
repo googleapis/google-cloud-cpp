@@ -182,11 +182,7 @@ function integration::bazel_with_emulators() {
 
   # We retry these tests because the emulator crashes due to #441.
   io::log_h2 "Running Bigtable integration tests (with emulator)"
-  env \
-    CBT=/usr/local/google-cloud-sdk/bin/cbt \
-    CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
-    GOPATH="${GOPATH:-}" \
-    ci/retry-command.sh 3 0 \
+  ci/retry-command.sh 3 0 \
     "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}"
 
@@ -263,10 +259,7 @@ function integration::ctest_with_emulators() {
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 
   io::log_h2 "Running Bigtable integration tests (with emulator)"
-  env CBT=/usr/local/google-cloud-sdk/bin/cbt \
-    CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
-    GOPATH="${GOPATH:-}" \
-    ci/retry-command.sh 3 0 \
+  ci/retry-command.sh 3 0 \
     "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 }
