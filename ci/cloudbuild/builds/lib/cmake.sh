@@ -32,6 +32,9 @@ cmake --version
 # https://ninja-build.org/manual.html#_environment_variables
 export NINJA_STATUS="T+%es [%f/%t] "
 
+# Tells ctest to print the output of failed tests.
+export CTEST_OUTPUT_ON_FAILURE=1
+
 # This block is run the first (and only) time this script is sourced. It first
 # clears the ccache stats. Then it registers an exit handler that will display
 # the ccache stats when the calling script exits.
