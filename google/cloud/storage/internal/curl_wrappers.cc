@@ -245,44 +245,6 @@ void CurlInitializeOnce(Options const& options) {
                  options.get<EnableCurlSigpipeHandlerOption>());
 }
 
-std::string ExtractUrlHostpart(std::string url) {
-  auto constexpr kDefaultHost = "storage.googleapis.com";
-  // Yikes, we need to manually extract the "host part", this is notoriously
-  // hard to do correctly.
-  //
-  // We are not going to try to fully validate URLs, for example, we will ignore
-  // `userinfo` because those do not appear in any production or test workload
-  // for GCS.
-  //
-  // If we get an invalid-looking URL we simply return an empty string, this is
-  // only used in the CurlClient to generate the `Host: ` header. For invalid
-  // URLs the CurlClient won't work in any case.
-  //
-  // Likewise, this implementation is not super efficient. It does not need to
-  // be as it is used a handful of times when the CurlClient is created.
-  for (std::string scheme_prefix : {"https://", "http://"}) {
-    auto p = url.rfind(scheme_prefix, 0);
-    if (p == 0) {
-      url.erase(0, scheme_prefix.size());
-      break;
-    }
-  }
-  if (url.empty()) return url;
-  if (url[0] == '[') {
-    auto p = url.find(']');
-    if (p == std::string::npos) return {};
-    return url.substr(1, p - 1);
-  }
-  auto p = url.find('/');
-  if (p != std::string::npos) {
-    url = url.substr(0, p);
-  }
-  p = url.rfind(':');
-  if (p == std::string::npos) return url;
-  url = url.substr(0, p);
-  return !url.empty() ? url : kDefaultHost;
-}
-
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

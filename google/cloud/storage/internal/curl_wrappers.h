@@ -65,9 +65,6 @@ std::string CurlSslLibraryId();
 /// Determines if the SSL library requires locking.
 bool SslLibraryNeedsLocking(std::string const& curl_ssl_id);
 
-/// Return the Host portion of a URL.
-std::string ExtractUrlHostpart(std::string url);
-
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

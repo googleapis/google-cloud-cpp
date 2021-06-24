@@ -52,7 +52,6 @@ storage_client_unit_tests = [
     "internal/curl_wrappers_locking_already_present_test.cc",
     "internal/curl_wrappers_locking_disabled_test.cc",
     "internal/curl_wrappers_locking_enabled_test.cc",
-    "internal/curl_wrappers_test.cc",
     "internal/default_object_acl_requests_test.cc",
     "internal/generate_message_boundary_test.cc",
     "internal/generic_request_test.cc",

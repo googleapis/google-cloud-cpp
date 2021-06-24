@@ -16,6 +16,7 @@
 
 set(storage_client_integration_tests
     # cmake-format : sort
+    alternative_endpoint_integration_test.cc
     bucket_integration_test.cc
     create_client_integration_test.cc
     curl_download_request_integration_test.cc
@@ -97,6 +98,7 @@ endforeach ()
 foreach (
     fname
     # cmake-format: sort
+    alternative_endpoint_integration_test.cc
     key_file_integration_test.cc
     minimal_iam_credentials_rest_integration_test.cc
     signed_url_integration_test.cc

@@ -24,11 +24,11 @@
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/internal/object_streambuf.h"
 #include "google/cloud/storage/internal/service_account_parser.h"
-#include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/terminate_handler.h"
 #include "absl/memory/memory.h"
+#include "absl/strings/match.h"
 #include <sstream>
 
 namespace google {
@@ -104,8 +104,22 @@ bool XmlEnabled() {
 
 }  // namespace
 
+std::string HostHeader(Options const& options, char const* service) {
+  // This function returns an empty string if In most cases libcurl will fill
+  // out the correct `Host: ` header based on the URL.  The main exception is
+  // `https://restricted.googleapis.com` Hard-code the Host header. Applications
+  // using `VPC-SC` (or a proxy) would target `restricted.googleapis.com`, but
+  // we need to tell the proxy what is the actual host to hit in the production
+  // environment.
+  auto const& endpoint = options.get<RestEndpointOption>();
+  if (absl::StrContains(endpoint, "googleapis.com")) {
+    return absl::StrCat("Host: ", service, ".googleapis.com");
+  }
+  return {};
+}
+
 Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
-                                      char const* method) {
+                                      char const* method, char const* service) {
   auto auth_header =
       opts_.get<Oauth2CredentialsOption>()->AuthorizationHeader();
   if (!auth_header.ok()) {
@@ -114,6 +128,7 @@ Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
   builder.SetMethod(method)
       .ApplyClientOptions(opts_)
       .AddHeader(auth_header.value())
+      .AddHeader(HostHeader(opts_, service))
       .AddHeader(x_goog_api_client_header_);
   return Status();
 }
@@ -138,7 +153,6 @@ Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
   if (!status.ok()) {
     return status;
   }
-  builder.AddHeader("Host: " + storage_host_);
   request.AddOptionsToHttpRequest(builder);
   SetupBuilderUserIp(builder, request);
   return Status();
@@ -246,10 +260,8 @@ CurlClient::CurlClient(google::cloud::Options options)
           MakeBackwardsCompatibleClientOptions(opts_)),
       x_goog_api_client_header_("x-goog-api-client: " + x_goog_api_client()),
       storage_endpoint_(JsonEndpoint(opts_)),
-      storage_host_(ExtractUrlHostpart(storage_endpoint_)),
       upload_endpoint_(JsonUploadEndpoint(opts_)),
       xml_endpoint_(XmlEndpoint(opts_)),
-      xml_host_(ExtractUrlHostpart(xml_endpoint_)),
       iam_endpoint_(IamEndpoint(opts_)),
       xml_enabled_(XmlEnabled()),
       generator_(google::cloud::internal::MakeDefaultPRNG()),
@@ -1107,7 +1119,7 @@ StatusOr<SignBlobResponse> CurlClient::SignBlob(
   CurlRequestBuilder builder(iam_endpoint_ + "/projects/-/serviceAccounts/" +
                                  request.service_account() + ":signBlob",
                              storage_factory_);
-  auto status = SetupBuilderCommon(builder, "POST");
+  auto status = SetupBuilderCommon(builder, "POST", "iamcredentials");
   if (!status.ok()) {
     return status;
   }
@@ -1185,7 +1197,6 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
   if (!status.ok()) {
     return status;
   }
-  builder.AddHeader("Host: " + xml_host_);
 
   //
   // Apply the options from InsertObjectMediaRequest that are set, translating
@@ -1270,7 +1281,6 @@ StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObjectXml(
   if (!status.ok()) {
     return status;
   }
-  builder.AddHeader("Host: " + xml_host_);
 
   //
   // Apply the options from ReadObjectMediaRequest that are set, translating

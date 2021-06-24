@@ -47,6 +47,7 @@ production_only_targets=(
   "//google/cloud/storage/examples:storage_policy_doc_samples"
   "//google/cloud/storage/examples:storage_signed_url_v2_samples"
   "//google/cloud/storage/examples:storage_signed_url_v4_samples"
+  "//google/cloud/storage/tests:alternative_endpoint_integration_test"
   "//google/cloud/storage/tests:key_file_integration_test"
   "//google/cloud/storage/tests:minimal_iam_credentials_rest_integration_test"
   "//google/cloud/storage/tests:signed_url_integration_test"
