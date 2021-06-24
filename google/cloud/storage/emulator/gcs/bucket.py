@@ -244,6 +244,7 @@ class Bucket:
                 data = data["iam_request"]["policy"]
             data.pop("kind", None)
             data.pop("etag", None)
+            data.pop("resourceId", None)
             policy = json_format.ParseDict(data, policy_pb2.Policy())
         self.iam_policy = policy
         self.iam_policy.etag = datetime.datetime.now().isoformat().encode("utf-8")
