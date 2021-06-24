@@ -60,7 +60,6 @@ class AsyncPollingLoopImpl
     google::longrunning::CancelOperationRequest request;
     {
       std::unique_lock<std::mutex> lk(mu_);
-      canceled_ = true;
       if (op_name_.empty()) return;
       request.set_name(op_name_);
     }
@@ -83,7 +82,7 @@ class AsyncPollingLoopImpl
     {
       std::unique_lock<std::mutex> lk(mu_);
       if (canceled_) return Cancelled();
-      op_name_ = std::move(op)->name();
+      op_name_ = std::move(*op->mutable_name());
     }
     Wait();
   }
@@ -134,7 +133,7 @@ class AsyncPollingLoopImpl
     if (op) {
       std::unique_lock<std::mutex> lk(mu_);
       if (canceled_) return Cancelled();
-      op_name_ = std::move(op)->name();
+      op_name_ = std::move(*op->mutable_name());
     }
     Wait();
   }
