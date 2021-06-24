@@ -19,10 +19,10 @@ cmake_minimum_required(VERSION 3.5)
 # Give application developers a hook to configure the version and hash
 # downloaded from GitHub.
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
-    "https://github.com/googleapis/googleapis/archive/d8698715e4f5b7c45505dadd679255987c260180.tar.gz"
+    "https://github.com/googleapis/googleapis/archive/fb5c4fbc1ded09e6958d6be7ca36a9221dc7e52f.tar.gz"
 )
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
-    "ee3359cfe0b5bb1507e785aa2c2f25d7e1c4756f8fbcd369a54d8a5d7182cf58")
+    "cd30d3732eaf94beef4fd184eb6a890ce4f2e9f2ce8a69c393a8f2c1642f9eea")
 
 set(EXTERNAL_GOOGLEAPIS_SOURCE
     "${CMAKE_BINARY_DIR}/external/googleapis/src/googleapis_download")
