@@ -18,6 +18,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 
@@ -57,7 +58,7 @@ TEST_F(DatabaseAdminLoggingTest, CreateDatabase) {
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto response = stub.AsyncCreateDatabase(cq, std::move(context),
                                            gcsa::CreateDatabaseRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
@@ -106,7 +107,7 @@ TEST_F(DatabaseAdminLoggingTest, UpdateDatabase) {
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto response = stub.AsyncUpdateDatabaseDdl(cq, std::move(context),
                                               gcsa::UpdateDatabaseDdlRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
@@ -155,7 +156,7 @@ TEST_F(DatabaseAdminLoggingTest, RestoreDatabase) {
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto response = stub.AsyncRestoreDatabase(cq, std::move(context),
                                             gcsa::RestoreDatabaseRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
@@ -221,7 +222,7 @@ TEST_F(DatabaseAdminLoggingTest, CreateBackup) {
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto response = stub.AsyncCreateBackup(cq, std::move(context),
                                          gcsa::CreateBackupRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
@@ -329,7 +330,7 @@ TEST_F(DatabaseAdminLoggingTest, GetOperation) {
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto response = stub.AsyncGetOperation(
       cq, std::move(context), google::longrunning::GetOperationRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
@@ -349,7 +350,7 @@ TEST_F(DatabaseAdminLoggingTest, CancelOperation) {
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto status = stub.AsyncCancelOperation(
       cq, std::move(context), google::longrunning::CancelOperationRequest{});
   EXPECT_EQ(TransientError(), status.get());
