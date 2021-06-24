@@ -226,6 +226,9 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSizeLargeMessageBreak) {
   auto const single_payload = std::string(kSinglePayload, 'A');
   auto const double_payload = std::string(2 * kSinglePayload, 'B');
 
+  // If a message is too large to fit with the existing (but unsent) batch the
+  // publisher should first flush the existing batch and then send the full
+  // message.
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([&](google::pubsub::v1::PublishRequest const& request) {
@@ -248,14 +251,14 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSizeLargeMessageBreak) {
         return make_ready_future(make_status_or(response));
       });
 
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
+  CompletionQueue cq;
   auto const ordering_key = std::string{};
   auto publisher = BatchingPublisherConnection::Create(
       topic,
       pubsub::PublisherOptions{}
           .set_maximum_batch_message_count(100)
           .set_maximum_batch_bytes(kBatchLimit),
-      ordering_key, mock, background.cq());
+      ordering_key, mock, cq);
   std::vector<future<Status>> results;
   for (int i = 0; i != 3; ++i) {
     results.push_back(
@@ -266,8 +269,8 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSizeLargeMessageBreak) {
               return f.get().status();
             }));
   }
-  // This will exceed the maximum size, it should flush the previously held
-  // messages.
+  // This will exceed the maximum size, and it should first flush the previously
+  // held messages.
   results.push_back(
       publisher
           ->Publish({pubsub::MessageBuilder{}.SetData(double_payload).Build()})
@@ -275,7 +278,11 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSizeLargeMessageBreak) {
             return f.get().status();
           }));
   publisher->Flush({});
+
+  std::thread t{[](CompletionQueue cq) { cq.Run(); }, cq};
   for (auto& r : results) EXPECT_STATUS_OK(r.get());
+  cq.Shutdown();
+  t.join();
 }
 
 TEST(BatchingPublisherConnectionTest, BatchByMessageSizeOversizedSingleton) {
