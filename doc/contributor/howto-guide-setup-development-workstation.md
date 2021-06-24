@@ -150,8 +150,8 @@ env -C cmake-out/home \
 
 ### Installing Docker
 
-You may want to [install Docker](https://docs.docker.com/engine/installation/),
-this will allow you to [use the build scripts](howto-guide-running-ci-builds-locally.md)
+You may want to [install Docker](https://docs.docker.com/engine/installation/).
+This will allow you to [use the build scripts](howto-guide-running-ci-builds-locally.md)
 to test on multiple platforms.
 
 Once Docker is installed, to avoid needing to prepend `sudo` to Docker
