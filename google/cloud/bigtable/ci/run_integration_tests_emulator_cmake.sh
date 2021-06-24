@@ -38,7 +38,7 @@ source module /google/cloud/bigtable/tools/run_emulator_utils.sh
 export ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
 
 cd "${BINARY_DIR}"
-start_emulators
+start_emulators 8480 8490
 
 ctest -R "^bigtable_" "${ctest_args[@]}"
 exit_status=$?
