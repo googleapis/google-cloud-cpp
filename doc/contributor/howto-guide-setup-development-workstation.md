@@ -126,7 +126,7 @@ alternatives.
 ### Clone and compile `google-cloud-cpp`
 
 You may need to clone and compile the code as described
-[here](howto-guide-setup-cmake-environment.md)
+[here](howto-guide-setup-cmake-environment.md).
 
 Run the tests using:
 
@@ -150,9 +150,9 @@ env -C cmake-out/home \
 
 ### Installing Docker
 
-You may want to [install Docker](https://docs.docker.com/engine/installation/),
-this will allow you to use the build scripts to test on multiple platforms,
-as described in [CONTRIBUTING.md](../../CONTRIBUTING.md).
+You may want to [install Docker](https://docs.docker.com/engine/installation/).
+This will allow you to [use the build scripts](howto-guide-running-ci-builds-locally.md)
+to test on multiple platforms.
 
 Once Docker is installed, to avoid needing to prepend `sudo` to Docker
 invocations, add yourself to the Docker group:

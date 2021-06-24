@@ -170,3 +170,6 @@ gcloud projects add-iam-policy-binding "${GOOGLE_CLOUD_PROJECT}" \
     --member="serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com" \
     --role="roles/run.viewer"
 ```
+
+[docker]: https://docs.docker.com/engine/install/
+[pack-install]: https://buildpacks.io/docs/tools/pack/
