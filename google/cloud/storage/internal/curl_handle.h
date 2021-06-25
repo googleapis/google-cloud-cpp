@@ -43,7 +43,13 @@ class CurlHandle {
   CurlHandle(CurlHandle const&) = delete;
   CurlHandle& operator=(CurlHandle const&) = delete;
 
-  // Allow moves, they immediately disable callbacks.
+  // Allow moves, some care is needed to guarantee the pointers passed to the
+  // libcurl C callbacks (`debug`, and `socket`) are stable.
+  // * For the `debug` callback (used rarely), we use a `std::shared_ptr<>`.
+  // * For the `socket` callback, the only classes that use it are
+  //   `CurlDownloadRequest` and `CurlRequest`.  These classes guarantee the
+  //   object is not move-constructed-from or move-assigned-from once the
+  //   callback is set up.
   CurlHandle(CurlHandle&&) = default;
   CurlHandle& operator=(CurlHandle&&) = default;
 
@@ -139,7 +145,7 @@ class CurlHandle {
   }
 
   CurlPtr handle_;
-  DebugInfo debug_info_;
+  std::shared_ptr<DebugInfo> debug_info_;
   SocketOptions socket_options_;
 };
 

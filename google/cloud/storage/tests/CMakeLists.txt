@@ -52,6 +52,7 @@ set(storage_client_integration_tests
     small_reads_integration_test.cc
     storage_include_test.cc
     thread_integration_test.cc
+    tracing_integration_test.cc
     unified_credentials_integration_test.cc)
 
 # Signed URL conformance tests are parsed using protos. In order to simplify the
