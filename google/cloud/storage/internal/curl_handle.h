@@ -47,7 +47,7 @@ class CurlHandle {
   // libcurl C callbacks (`debug`, and `socket`) are stable.
   // * For the `debug` callback (used rarely), we use a `std::shared_ptr<>`.
   // * For the `socket` callback, the only classes that use it are
-  //   `CurlDownloadRequest` and `CurlRequest`, those classes guarantee the
+  //   `CurlDownloadRequest` and `CurlRequest`.  These classes guarantee the
   //   object is not move-constructed-from or move-assigned-from once the
   //   callback is set up.
   CurlHandle(CurlHandle&&) = default;
