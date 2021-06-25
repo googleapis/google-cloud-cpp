@@ -43,12 +43,13 @@ class CurlHandle {
   CurlHandle(CurlHandle const&) = delete;
   CurlHandle& operator=(CurlHandle const&) = delete;
 
-  // Allow moves, some care is needed to guarantee the
-  // pointers passed to the C callbacks are stable. For
-  // the debug callback (used rarely), we use a
-  // `std::shared_ptr<>`. For other callbacks they callback
-  // is set up only once the object is stable and won't move
-  // for the lifetime of the callback.
+  // Allow moves, some care is needed to guarantee the pointers passed to the
+  // libcurl C callbacks (`debug`, and `socket`) are stable.
+  // * For the `debug` callback (used rarely), we use a `std::shared_ptr<>`.
+  // * For the `socket` callback, the only classes that use it are
+  //   `CurlDownloadRequest` and `CurlRequest`, those classes guarantee the
+  //   object is not move-constructed-from or move-assigned-from once the
+  //   callback is set up.
   CurlHandle(CurlHandle&&) = default;
   CurlHandle& operator=(CurlHandle&&) = default;
 
