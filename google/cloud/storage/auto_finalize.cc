@@ -21,7 +21,6 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 
 std::ostream& operator<<(std::ostream& os, AutoFinalize const& rhs) {
-  if (!rhs.has_value()) return os << AutoFinalize::name() << "=<not-set>";
   auto const* value =
       (rhs.value() == AutoFinalizeConfig::kEnabled) ? "enabled" : "disabled";
   return os << AutoFinalize::name() << "=" << value;

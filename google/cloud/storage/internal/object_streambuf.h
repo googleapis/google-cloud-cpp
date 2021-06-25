@@ -150,8 +150,8 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
    *
    * Called by the ObjectWriteStream destructor, some applications prefer to
    * explicitly finalize an upload. For example, they may start an upload,
-   * checkpoint the upload id, then upload in chunks and may want *not* finalize
-   * the upload in the presence of exceptions that destroy any
+   * checkpoint the upload id, then upload in chunks and may *not* want to
+   * finalize the upload in the presence of exceptions that destroy any
    * ObjectWriteStream.
    */
   void AutoFlushFinal();

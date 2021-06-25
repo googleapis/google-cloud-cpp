@@ -32,14 +32,14 @@ enum class AutoFinalizeConfig {
 /**
  * Control whether upload streams auto-finalize on destruction.
  *
- * Some applications need to disable auto-finalization of resumable uploads,
- * this option (or rather the `AutoFinalizeDisabled()` helper) configures
+ * Some applications need to disable auto-finalization of resumable uploads.
+ * This option (or rather the `AutoFinalizeDisabled()` helper) configures
  * whether ObjectWriteStream objects finalize an upload when the object is
  * destructed.
  */
 struct AutoFinalize
     : public internal::ComplexOption<AutoFinalize, AutoFinalizeConfig> {
-  using ComplexOption::ComplexOption;
+  explicit AutoFinalize(AutoFinalizeConfig value) : ComplexOption(value) {}
   AutoFinalize() : ComplexOption(AutoFinalizeConfig::kEnabled) {}
 
   static char const* name() { return "auto-finalize"; }
