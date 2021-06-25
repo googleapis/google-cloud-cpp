@@ -17,6 +17,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 
@@ -63,12 +64,12 @@ TEST_F(DatabaseAdminMetadataTest, CreateDatabase) {
 
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
   gcsa::CreateDatabaseRequest request;
   request.set_parent(
       "projects/test-project-id/"
       "instances/test-instance-id");
-  auto response = stub.AsyncCreateDatabase(cq, std::move(context), request);
+  auto response = stub.AsyncCreateDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
 }
 
@@ -88,13 +89,13 @@ TEST_F(DatabaseAdminMetadataTest, UpdateDatabase) {
 
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
   gcsa::UpdateDatabaseDdlRequest request;
   request.set_database(
       "projects/test-project-id/"
       "instances/test-instance-id/"
       "databases/test-database");
-  auto response = stub.AsyncUpdateDatabaseDdl(cq, std::move(context), request);
+  auto response = stub.AsyncUpdateDatabaseDdl(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
 }
 
@@ -159,12 +160,12 @@ TEST_F(DatabaseAdminMetadataTest, RestoreDatabase) {
 
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
   gcsa::RestoreDatabaseRequest request;
   request.set_parent(
       "projects/test-project-id/"
       "instances/test-instance-id");
-  auto response = stub.AsyncRestoreDatabase(cq, std::move(context), request);
+  auto response = stub.AsyncRestoreDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
 }
 
@@ -259,12 +260,12 @@ TEST_F(DatabaseAdminMetadataTest, CreateBackup) {
 
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
   gcsa::CreateBackupRequest request;
   request.set_parent(
       "projects/test-project-id/"
       "instances/test-instance-id");
-  auto response = stub.AsyncCreateBackup(cq, std::move(context), request);
+  auto response = stub.AsyncCreateBackup(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
 }
 
@@ -417,10 +418,10 @@ TEST_F(DatabaseAdminMetadataTest, GetOperation) {
 
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
   google::longrunning::GetOperationRequest request;
   request.set_name("operations/fake-operation-name");
-  auto response = stub.AsyncGetOperation(cq, std::move(context), request);
+  auto response = stub.AsyncGetOperation(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
 }
 
@@ -437,10 +438,10 @@ TEST_F(DatabaseAdminMetadataTest, CancelOperation) {
 
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
   google::longrunning::CancelOperationRequest request;
   request.set_name("operations/fake-operation-name");
-  auto status = stub.AsyncCancelOperation(cq, std::move(context), request);
+  auto status = stub.AsyncCancelOperation(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), status.get());
 }
 

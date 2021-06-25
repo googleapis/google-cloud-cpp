@@ -84,7 +84,6 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
   Status finish_status(StatusCode::kCancelled, "cancelled");
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(finish_status));
   // The first call to NextRow() yields a row but the second gives an error.
-  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
   EXPECT_THAT((*reader)->NextRow(),
@@ -102,7 +101,6 @@ TEST(PartialResultSetSourceTest, MissingMetadata) {
   // The destructor should try to cancel the RPC to avoid deadlocks.
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(1);
 
-  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_THAT(reader, StatusIs(StatusCode::kInternal,
                                "response contained no metadata"));
@@ -122,7 +120,6 @@ TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
       .WillOnce(Return(absl::optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
-  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
   EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner::Row{}));
@@ -144,7 +141,6 @@ TEST(PartialResultSetSourceTest, MissingRowTypeWithData) {
   // The destructor should try to cancel the RPC to avoid deadlocks.
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(1);
 
-  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
   StatusOr<spanner::Row> row = (*reader)->NextRow();
@@ -198,7 +194,6 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
       .WillOnce(Return(absl::optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
-  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -321,7 +316,6 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
       .WillOnce(Return(absl::optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
-  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -377,7 +371,6 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
       .WillOnce(Return(absl::optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
-  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -441,7 +434,6 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
       .WillOnce(Return(absl::optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
-  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -490,7 +482,6 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoValue) {
   // The destructor should try to cancel the RPC to avoid deadlocks.
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(1);
 
-  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -534,7 +525,6 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
   // The destructor should try to cancel the RPC to avoid deadlocks.
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(1);
 
-  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -577,7 +567,6 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
       .WillOnce(Return(absl::optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
-  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -625,7 +614,6 @@ TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
   // The destructor should try to cancel the RPC to avoid deadlocks.
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(1);
 
-  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -698,7 +686,6 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
       .WillOnce(Return(absl::optional<spanner_proto::PartialResultSet>{}));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
 
-  auto context = absl::make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetSource::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 

@@ -17,6 +17,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 
@@ -127,11 +128,11 @@ TEST_F(InstanceAdminMetadataTest, CreateInstance) {
 
   InstanceAdminMetadata stub(mock_);
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
   gcsa::CreateInstanceRequest request;
   request.set_parent("projects/test-project-id");
   request.set_instance_id("test-instance-id");
-  auto response = stub.AsyncCreateInstance(cq, std::move(context), request);
+  auto response = stub.AsyncCreateInstance(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
 }
 
@@ -151,11 +152,11 @@ TEST_F(InstanceAdminMetadataTest, UpdateInstance) {
 
   InstanceAdminMetadata stub(mock_);
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
   gcsa::UpdateInstanceRequest request;
   request.mutable_instance()->set_name(
       "projects/test-project-id/instances/test-instance-id");
-  auto response = stub.AsyncUpdateInstance(cq, std::move(context), request);
+  auto response = stub.AsyncUpdateInstance(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
 }
 

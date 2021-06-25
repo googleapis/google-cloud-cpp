@@ -18,6 +18,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 
@@ -71,9 +72,9 @@ TEST_F(InstanceAdminLoggingTest, CreateInstance) {
   InstanceAdminLogging stub(mock_, TracingOptions{});
 
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
-  auto response = stub.AsyncCreateInstance(cq, std::move(context),
-                                           gcsa::CreateInstanceRequest{});
+  auto response =
+      stub.AsyncCreateInstance(cq, absl::make_unique<grpc::ClientContext>(),
+                               gcsa::CreateInstanceRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
 
   auto const log_lines = log_.ExtractLines();
@@ -92,9 +93,9 @@ TEST_F(InstanceAdminLoggingTest, UpdateInstance) {
   InstanceAdminLogging stub(mock_, TracingOptions{});
 
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context(new grpc::ClientContext);
-  auto response = stub.AsyncUpdateInstance(cq, std::move(context),
-                                           gcsa::UpdateInstanceRequest{});
+  auto response =
+      stub.AsyncUpdateInstance(cq, absl::make_unique<grpc::ClientContext>(),
+                               gcsa::UpdateInstanceRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
 
   auto const log_lines = log_.ExtractLines();
