@@ -105,12 +105,13 @@ bool XmlEnabled() {
 }  // namespace
 
 std::string HostHeader(Options const& options, char const* service) {
-  // This function returns an empty string if In most cases libcurl will fill
-  // out the correct `Host: ` header based on the URL.  The main exception is
-  // `https://restricted.googleapis.com` Hard-code the Host header. Applications
-  // using `VPC-SC` (or a proxy) would target `restricted.googleapis.com`, but
-  // we need to tell the proxy what is the actual host to hit in the production
-  // environment.
+  // If this function returns an empty string libcurl will fill out the `Host: `
+  // header based on the URL. In most cases this is the correct value. The main
+  // exception are applications using `VPC-SC`:
+  //     https://cloud.google.com/vpc/docs/configure-private-google-access
+  // In those cases the application would target an URL like
+  // `https://restricted.googleapis.com`, or `https://private.googleapis.com`,
+  // or their own proxy, and need to provide the target's service host.
   auto const& endpoint = options.get<RestEndpointOption>();
   if (absl::StrContains(endpoint, "googleapis.com")) {
     return absl::StrCat("Host: ", service, ".googleapis.com");

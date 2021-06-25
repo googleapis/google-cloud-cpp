@@ -32,7 +32,7 @@ namespace internal {
 class CurlRequestBuilder;
 
 /**
- * Computes the `Host: ` header given the options.
+ * Computes the `Host: ` header given the options and service.
  *
  * Returns an empty string when the `libcurl` default is appropriate, and the
  * full header in other cases.  The most common case where the default is not
