@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_REQUESTS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_REQUESTS_H
 
+#include "google/cloud/storage/auto_finalize.h"
 #include "google/cloud/storage/download_options.h"
 #include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/internal/const_buffer.h"
@@ -346,7 +347,7 @@ class ResumableUploadRequest
           IfMetagenerationMatch, IfMetagenerationNotMatch, KmsKeyName,
           MD5HashValue, PredefinedAcl, Projection, UseResumableUploadSession,
           UserProject, UploadFromOffset, UploadLimit, WithObjectMetadata,
-          UploadContentLength> {
+          UploadContentLength, AutoFinalize> {
  public:
   ResumableUploadRequest() = default;
 

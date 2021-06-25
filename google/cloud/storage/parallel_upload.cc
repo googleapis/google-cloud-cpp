@@ -31,7 +31,8 @@ class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
       std::size_t max_buffer_size,
       std::unique_ptr<HashValidator> hash_validator)
       : ObjectWriteStreambuf(std::move(upload_session), max_buffer_size,
-                             std::move(hash_validator)),
+                             std::move(hash_validator),
+                             AutoFinalizeConfig::kEnabled),
         state_(std::move(state)),
         stream_idx_(stream_idx) {}
 

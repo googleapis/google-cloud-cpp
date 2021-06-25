@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_STREAMBUF_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_STREAMBUF_H
 
+#include "google/cloud/storage/auto_finalize.h"
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/internal/object_read_source.h"
@@ -32,6 +33,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 class ObjectMetadata;
+class ObjectWriteStream;
 namespace internal {
 /**
  * Defines a compilation barrier for libcurl.
@@ -103,7 +105,8 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
 
   ObjectWriteStreambuf(std::unique_ptr<ResumableUploadSession> upload_session,
                        std::size_t max_buffer_size,
-                       std::unique_ptr<HashValidator> hash_validator);
+                       std::unique_ptr<HashValidator> hash_validator,
+                       AutoFinalizeConfig auto_finalize);
 
   ~ObjectWriteStreambuf() override = default;
 
@@ -141,6 +144,18 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   int_type overflow(int_type ch) override;
 
  private:
+  friend class google::cloud::storage::ObjectWriteStream;
+  /**
+   * Automatically finalize the upload unless configured to not do so.
+   *
+   * Called by the ObjectWriteStream destructor, some applications prefer to
+   * explicitly finalize an upload. For example, they may start an upload,
+   * checkpoint the upload id, then upload in chunks and may want *not* finalize
+   * the upload in the presence of exceptions that destroy any
+   * ObjectWriteStream.
+   */
+  void AutoFlushFinal();
+
   /// Flush any data if possible.
   void Flush();
 
@@ -159,6 +174,8 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   std::size_t max_buffer_size_;
 
   std::unique_ptr<HashValidator> hash_validator_;
+  AutoFinalizeConfig auto_finalize_ = AutoFinalizeConfig::kDisabled;
+
   HashValidator::Result hash_validator_result_;
 
   StatusOr<ResumableUploadResponse> last_response_;

@@ -246,10 +246,12 @@ void ObjectReadStreambuf::SetEmptyRegion() {
 
 ObjectWriteStreambuf::ObjectWriteStreambuf(
     std::unique_ptr<ResumableUploadSession> upload_session,
-    std::size_t max_buffer_size, std::unique_ptr<HashValidator> hash_validator)
+    std::size_t max_buffer_size, std::unique_ptr<HashValidator> hash_validator,
+    AutoFinalizeConfig auto_finalize)
     : upload_session_(std::move(upload_session)),
       max_buffer_size_(UploadChunkRequest::RoundUpToQuantum(max_buffer_size)),
       hash_validator_(std::move(hash_validator)),
+      auto_finalize_(auto_finalize),
       last_response_(ResumableUploadResponse{
           {}, 0, {}, ResumableUploadResponse::kInProgress, {}}) {
   current_ios_buffer_.resize(max_buffer_size_);
@@ -280,6 +282,11 @@ ObjectReadStreambuf::pos_type ObjectReadStreambuf::seekoff(
     return source_pos_ - in_avail();
   }
   return -1;
+}
+
+void ObjectWriteStreambuf::AutoFlushFinal() {
+  if (auto_finalize_ != AutoFinalizeConfig::kEnabled) return;
+  Close();
 }
 
 StatusOr<ResumableUploadResponse> ObjectWriteStreambuf::Close() {

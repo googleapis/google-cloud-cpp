@@ -22,24 +22,46 @@
 #include <thread>
 
 namespace {
-void StartResumableUpload(google::cloud::storage::Client client,
-                          std::vector<std::string> const& argv) {
+std::string StartResumableUpload(google::cloud::storage::Client client,
+                                 std::vector<std::string> const& argv) {
   //! [start resumable upload]
   namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string const& bucket_name,
-     std::string const& object_name) {
+  return [](gcs::Client client, std::string const& bucket_name,
+            std::string const& object_name) {
+    gcs::ObjectWriteStream stream = client.WriteObject(
+        bucket_name, object_name, gcs::NewResumableUploadSession(),
+        gcs::AutoFinalizeDisabled());
+    auto session_id = stream.resumable_session_id();
+    std::cout << "Created resumable upload: " << session_id << "\n";
+    // Because this stream was created with `AutoFinalizeDisabled()` its
+    // destructor will *not* finalize the upload, allowing a separate process or
+    // function to resume and continue the upload.
+    stream << "This data will not get uploaded, it is too small\n";
+    return session_id;
+  }
+  //! [start resumable upload]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
+std::string SuspendResumableUpload(google::cloud::storage::Client client,
+                                   std::vector<std::string> const& argv) {
+  //! [suspend resumable upload]
+  namespace gcs = google::cloud::storage;
+  return [](gcs::Client client, std::string const& bucket_name,
+            std::string const& object_name) {
     gcs::ObjectWriteStream stream = client.WriteObject(
         bucket_name, object_name, gcs::NewResumableUploadSession());
-    std::cout << "Created resumable upload: " << stream.resumable_session_id()
-              << "\n";
+    auto session_id = stream.resumable_session_id();
+    std::cout << "Created resumable upload: " << session_id << "\n";
     // As it is customary in C++, the destructor automatically closes the
     // stream, that would finish the upload and create the object. For this
     // example we want to restore the session as-if the application had crashed,
     // where no destructors get called.
     stream << "This data will not get uploaded, it is too small\n";
     std::move(stream).Suspend();
+    return session_id;
   }
-  //! [start resumable upload]
+  //! [suspend resumable upload]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
@@ -128,19 +150,18 @@ void RunAll(std::vector<std::string> const& argv) {
   auto client = gcs::Client();
 
   std::cout << "\nRunning StartResumableUpload() example" << std::endl;
-  StartResumableUpload(client, {bucket_name, object_name});
+  auto const start_id =
+      StartResumableUpload(client, {bucket_name, object_name});
 
-  std::cout << "\nCreating and capturing new resumable session id" << std::endl;
-  auto session_id = [&] {
-    auto stream = client.WriteObject(bucket_name, object_name,
-                                     gcs::NewResumableUploadSession());
-    auto id = stream.resumable_session_id();
-    std::move(stream).Suspend();
-    return id;
-  }();
+  std::cout << "\nRunning ResumeResumableUpload() example [1]" << std::endl;
+  ResumeResumableUpload(client, {bucket_name, object_name, start_id});
 
-  std::cout << "\nRunning ResumeResumableUpload() example" << std::endl;
-  ResumeResumableUpload(client, {bucket_name, object_name, session_id});
+  std::cout << "\nRunning SuspendResumableUpload() example" << std::endl;
+  auto const suspend_id =
+      SuspendResumableUpload(client, {bucket_name, object_name});
+
+  std::cout << "\nRunning ResumeResumableUpload() example [2]" << std::endl;
+  ResumeResumableUpload(client, {bucket_name, object_name, suspend_id});
 
   std::cout << "\nRunning DeleteResumableUpload() example" << std::endl;
   DeleteResumableUpload(client, {bucket_name, object_name});
@@ -161,6 +182,7 @@ int main(int argc, char* argv[]) {
 
   examples::Example example({
       make_entry("start-resumable-upload", {}, StartResumableUpload),
+      make_entry("suspend-resumable-upload", {}, SuspendResumableUpload),
       make_entry("resume-resumable-upload", {"<session-id>"},
                  ResumeResumableUpload),
       make_entry("delete-resumable-upload", {}, DeleteResumableUpload),
