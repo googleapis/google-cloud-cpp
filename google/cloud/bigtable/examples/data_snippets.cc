@@ -135,37 +135,6 @@ void BulkApply(google::cloud::bigtable::Table table,
   (std::move(table));
 }
 
-void ReadRow(google::cloud::bigtable::Table table,
-             std::vector<std::string> const& argv) {
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
-  [](google::cloud::bigtable::Table table, std::string const& row_key) {
-    // Filter the results, only include the latest value on each cell.
-    cbt::Filter filter = cbt::Filter::Latest(1);
-    // Read a row, this returns a tuple (bool, row)
-    StatusOr<std::pair<bool, cbt::Row>> tuple =
-        table.ReadRow(row_key, std::move(filter));
-    if (!tuple) throw std::runtime_error(tuple.status().message());
-    if (!tuple->first) {
-      std::cout << "Row " << row_key << " not found\n";
-      return;
-    }
-    std::cout << "key: " << tuple->second.row_key() << "\n";
-    for (auto const& cell : tuple->second.cells()) {
-      std::cout << "    " << cell.family_name() << ":"
-                << cell.column_qualifier() << " = <";
-      if (cell.column_qualifier() == "counter") {
-        // This example uses "counter" to store 64-bit numbers in big-endian
-        // format, extract them as follows:
-        std::cout << cell.decode_big_endian_integer<std::int64_t>().value();
-      } else {
-        std::cout << cell.value();
-      }
-      std::cout << ">\n";
-    }
-  }(std::move(table), argv.at(0));
-}
-
 void CheckAndMutate(google::cloud::bigtable::Table table,
                     std::vector<std::string> const& argv) {
   //! [check and mutate]
@@ -242,7 +211,20 @@ void ReadModifyWrite(google::cloud::bigtable::Table table,
       std::cout << "Failed to append row: " << row.status().message() << "\n";
       return;
     }
+    // Print the contents of the row
     std::cout << row->row_key() << "\n";
+    for (auto const& cell : row->cells()) {
+      std::cout << "    " << cell.family_name() << ":"
+                << cell.column_qualifier() << " = <";
+      if (cell.column_qualifier() == "counter") {
+        // This example uses "counter" to store 64-bit numbers in big-endian
+        // format, extract them as follows:
+        std::cout << cell.decode_big_endian_integer<std::int64_t>().value();
+      } else {
+        std::cout << cell.value();
+      }
+      std::cout << ">\n";
+    }
   }
   //! [read modify write]
   (std::move(table), argv.at(0));
@@ -874,30 +856,12 @@ void RunDataExamples(google::cloud::bigtable::TableAdmin admin,
       table, {"check-and-mutate-row-not-present", "fam:unused=unused-value"});
   CheckAndMutateNotPresent(table, {"check-and-mutate-row-not-present"});
 
-  auto random_key_suffix = [&generator] {
-    return google::cloud::internal::Sample(
-        generator, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
-  };
-
-  // TODO(#3523) why do we need to run this twice?
-  std::cout << "\nPopulating data for CheckAndMutate() example" << std::endl;
-  auto read_row_key = "read-row-" + random_key_suffix();
-  ReadRow(table, {read_row_key});
-  MutateInsertUpdateRows(table, {read_row_key, "fam:flip-flop:on"});
-  ReadRow(table, {read_row_key});
-  CheckAndMutate(table, {read_row_key});
-  ReadRow(table, {read_row_key});
-  CheckAndMutate(table, {read_row_key});
-  ReadRow(table, {read_row_key});
-
-  std::cout << "\nPopulating data for ReadModifyWrite() example" << std::endl;
-  auto read_modify_write_key = "read-modify-write-" + random_key_suffix();
-  ReadModifyWrite(table, {read_modify_write_key});
-  ReadRow(table, {read_modify_write_key});
-  ReadModifyWrite(table, {read_modify_write_key});
-  ReadRow(table, {read_modify_write_key});
-  ReadModifyWrite(table, {read_modify_write_key});
-  ReadRow(table, {read_modify_write_key});
+  std::cout << "Running ReadModifyWrite() example [1]" << std::endl;
+  ReadModifyWrite(table, {"read-modify-write"});
+  std::cout << "Running ReadModifyWrite() example [2]" << std::endl;
+  ReadModifyWrite(table, {"read-modify-write"});
+  std::cout << "Running ReadModifyWrite() example [3]" << std::endl;
+  ReadModifyWrite(table, {"read-modify-write"});
 
   admin.DeleteTable(table_id);
 }

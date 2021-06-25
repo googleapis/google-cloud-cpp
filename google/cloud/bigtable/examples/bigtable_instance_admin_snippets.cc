@@ -351,68 +351,6 @@ void DeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
   (std::move(instance_admin), argv.at(0), argv.at(1));
 }
 
-void RunInstanceOperations(
-    google::cloud::bigtable::InstanceAdmin instance_admin,
-    std::vector<std::string> const& argv) {
-  //! [run instance operations]
-  namespace cbt = google::cloud::bigtable;
-  [](cbt::InstanceAdmin instance_admin, std::string const& instance_id,
-     std::string const& cluster_id, std::string const& zone) {
-    std::string display_name("Put description here");
-    auto cluster_config = cbt::ClusterConfig(zone, 3, cbt::ClusterConfig::HDD);
-    cbt::InstanceConfig config(instance_id, display_name,
-                               {{cluster_id, cluster_config}});
-    config.set_type(cbt::InstanceConfig::PRODUCTION);
-
-    std::cout << "\nCreating a PRODUCTION Instance: ";
-    auto future = instance_admin.CreateInstance(config).get();
-    std::cout << " Done\n";
-
-    std::cout << "\nListing Instances:\n";
-    auto instances = instance_admin.ListInstances();
-    if (!instances) throw std::runtime_error(instances.status().message());
-    for (auto const& instance : instances->instances) {
-      std::cout << instance.name() << "\n";
-    }
-    if (!instances->failed_locations.empty()) {
-      std::cout << "The Cloud Bigtable service reports that the following "
-                   "locations are temporarily unavailable and no information "
-                   "about instances in these locations can be obtained:\n";
-      for (auto const& failed_location : instances->failed_locations) {
-        std::cout << failed_location << "\n";
-      }
-    }
-
-    std::cout << "\nGet Instance:\n";
-    auto instance = instance_admin.GetInstance(instance_id);
-    if (!instance) throw std::runtime_error(instance.status().message());
-    std::cout << "GetInstance details :\n" << instance->DebugString();
-
-    std::cout << "\nListing Clusters:\n";
-    auto clusters = instance_admin.ListClusters(instance_id);
-    if (!clusters) throw std::runtime_error(clusters.status().message());
-    std::cout << "Cluster Name List:\n";
-    for (auto const& cluster : clusters->clusters) {
-      std::cout << "Cluster Name: " << cluster.name() << "\n";
-    }
-    if (!clusters->failed_locations.empty()) {
-      std::cout << "The Cloud Bigtable service reports that the following "
-                   "locations are temporarily unavailable and no information "
-                   "about clusters in these locations can be obtained:\n";
-      for (auto const& failed_location : clusters->failed_locations) {
-        std::cout << failed_location << "\n";
-      }
-    }
-
-    std::cout << "\nDeleting Instance: ";
-    google::cloud::Status status = instance_admin.DeleteInstance(instance_id);
-    if (!status.ok()) throw std::runtime_error(status.message());
-    std::cout << " Done\n";
-  }
-  //! [run instance operations]
-  (std::move(instance_admin), argv.at(0), argv.at(1), argv.at(2));
-}
-
 void CreateAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
                       std::vector<std::string> const& argv) {
   //! [create app profile] [START bigtable_create_app_profile]
@@ -724,17 +662,6 @@ void RunAll(std::vector<std::string> const& argv) {
     (void)admin.DeleteInstance(id);
   }
 
-  // Run the legacy "run instance operations" example using a different instance
-  // id
-  {
-    auto const id =
-        google::cloud::bigtable::testing::RandomInstanceId(generator);
-    auto const cluster_id =
-        google::cloud::bigtable::testing::RandomClusterId(generator);
-    std::cout << "\nRunning RunInstanceOperations() example" << std::endl;
-    RunInstanceOperations(admin, {id, cluster_id, zone_a});
-  }
-
   auto const instance_id =
       google::cloud::bigtable::testing::RandomInstanceId(generator);
 
@@ -865,9 +792,6 @@ int main(int argc, char* argv[]) {
                                  {"<instance-id>", "<cluster-id>"}, GetCluster),
       examples::MakeCommandEntry(
           "delete-cluster", {"<instance-id>", "<cluster-id>"}, DeleteCluster),
-      examples::MakeCommandEntry("run",
-                                 {"<instance-id>", "<cluster-id>", "<zone>"},
-                                 RunInstanceOperations),
       examples::MakeCommandEntry("create-app-profile",
                                  {"<instance-id>", "<profile-id>"},
                                  CreateAppProfile),
