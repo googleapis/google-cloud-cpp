@@ -856,7 +856,7 @@ void RunDataExamples(google::cloud::bigtable::TableAdmin admin,
       table, {"check-and-mutate-row-not-present", "fam:unused=unused-value"});
   CheckAndMutateNotPresent(table, {"check-and-mutate-row-not-present"});
 
-  std::cout << "Running ReadModifyWrite() example [1]" << std::endl;
+  std::cout << "\nRunning ReadModifyWrite() example [1]" << std::endl;
   ReadModifyWrite(table, {"read-modify-write"});
   std::cout << "Running ReadModifyWrite() example [2]" << std::endl;
   ReadModifyWrite(table, {"read-modify-write"});
