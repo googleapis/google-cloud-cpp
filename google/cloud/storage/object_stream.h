@@ -408,6 +408,8 @@ class ObjectWriteStream : public std::basic_ostream<char> {
    * function results in undefined behavior. Applications should copy any
    * necessary state (such as the value `resumable_session_id()`) before calling
    * this function.
+   *
+   * @snippet storage_object_resumable_write_samples.cc suspend resumable upload
    */
   void Suspend() &&;
 

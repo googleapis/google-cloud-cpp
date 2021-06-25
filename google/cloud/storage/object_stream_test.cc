@@ -42,7 +42,8 @@ ObjectWriteStream CreateWriter() {
   auto validator = absl::make_unique<internal::NullHashValidator>();
 
   ObjectWriteStream writer(absl::make_unique<internal::ObjectWriteStreambuf>(
-      std::move(session), 0, std::move(validator)));
+      std::move(session), 0, std::move(validator),
+      AutoFinalizeConfig::kEnabled));
   writer.setstate(std::ios::badbit | std::ios::eofbit);
   writer.Close();
   return writer;

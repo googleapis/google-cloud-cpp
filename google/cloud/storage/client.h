@@ -1202,7 +1202,7 @@ class Client {
    *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
    *   `MD5HashValue`, `PredefinedAcl`, `Projection`,
    *   `UseResumableUploadSession`, `UserProject`, `WithObjectMetadata` and
-   *   `UploadContentLength`.
+   *   `UploadContentLength`, `AutoFinalize`.
    *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this

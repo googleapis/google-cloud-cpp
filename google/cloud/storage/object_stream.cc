@@ -61,25 +61,19 @@ ObjectWriteStream::ObjectWriteStream(
   init(buf_.get());
   // If buf_ is already closed, update internal state to represent
   // the fact that no more bytes can be uploaded to this object.
-  if (!buf_->IsOpen()) {
-    CloseBuf();
-  }
+  if (buf_ && !buf_->IsOpen()) CloseBuf();
 }
 
 ObjectWriteStream::~ObjectWriteStream() {
-  if (!IsOpen()) {
-    return;
-  }
+  if (!IsOpen()) return;
   // Disable exceptions, even if the application had enabled exceptions the
   // destructor is supposed to mask them.
   exceptions(std::ios_base::goodbit);
-  Close();
+  buf_->AutoFlushFinal();
 }
 
 void ObjectWriteStream::Close() {
-  if (!buf_) {
-    return;
-  }
+  if (!buf_) return;
   CloseBuf();
 }
 

@@ -56,7 +56,7 @@ class ObjectWriteStreambufIntegrationTest
         internal::ClientImplDetails::GetRawClient(*client)
             ->client_options()
             .upload_buffer_size(),
-        absl::make_unique<NullHashValidator>()));
+        absl::make_unique<NullHashValidator>(), AutoFinalizeConfig::kEnabled));
 
     std::ostringstream expected_stream;
     WriteRandomLines(writer, expected_stream, line_count, line_size);

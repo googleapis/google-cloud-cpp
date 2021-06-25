@@ -57,6 +57,8 @@ find_package(ZLIB REQUIRED)
 # the client library
 add_library(
     google_cloud_cpp_storage # cmake-format: sort
+    auto_finalize.cc
+    auto_finalize.h
     bucket_access_control.cc
     bucket_access_control.h
     bucket_metadata.cc
@@ -453,6 +455,7 @@ if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
     set(storage_client_unit_tests
         # cmake-format: sort
+        auto_finalize_test.cc
         bucket_access_control_test.cc
         bucket_metadata_test.cc
         bucket_test.cc

@@ -17,6 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 storage_client_unit_tests = [
+    "auto_finalize_test.cc",
     "bucket_access_control_test.cc",
     "bucket_metadata_test.cc",
     "bucket_test.cc",

@@ -17,6 +17,7 @@
 """Automatically generated source lists for google_cloud_cpp_storage - DO NOT EDIT."""
 
 google_cloud_cpp_storage_hdrs = [
+    "auto_finalize.h",
     "bucket_access_control.h",
     "bucket_metadata.h",
     "client.h",
@@ -128,6 +129,7 @@ google_cloud_cpp_storage_hdrs = [
 ]
 
 google_cloud_cpp_storage_srcs = [
+    "auto_finalize.cc",
     "bucket_access_control.cc",
     "bucket_metadata.cc",
     "client.cc",
