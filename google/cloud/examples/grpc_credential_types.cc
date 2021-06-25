@@ -98,6 +98,13 @@ google::iam::credentials::v1::GenerateAccessTokenResponse UseAccessToken(
         /*scope=*/{"https://www.googleapis.com/auth/cloud-platform"}, duration);
     if (!token) throw std::runtime_error(token.status().message());
 
+    auto const expiration =
+        std::chrono::system_clock::from_time_t(token->expire_time().seconds());
+    std::cout << "Fetched token starting with "
+              << token->access_token().substr(0, 8)
+              << ", which will expire around " << absl::FromChrono(expiration)
+              << std::endl;
+
     namespace spanner = google::cloud::spanner;
     auto credentials = grpc::CompositeChannelCredentials(
         grpc::SslCredentials({}),
@@ -124,7 +131,7 @@ void UseAccessTokenUntilExpired(google::cloud::iam::IAMCredentialsClient client,
   auto const deadline = expiration + 4 * kTokenValidationPeriod;
   std::cout << "Running until " << absl::FromChrono(deadline)
             << ". This is past the access token expiration time ("
-            << absl::FromChrono(expiration) << ")\n";
+            << absl::FromChrono(expiration) << ")" << std::endl;
 
   auto iteration = [=](bool expired) {
     namespace spanner = google::cloud::spanner;
@@ -254,8 +261,15 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   auto client = google::cloud::iam::IAMCredentialsClient(
       google::cloud::iam::MakeIAMCredentialsConnection(
-          google::cloud::Options{}.set<google::cloud::TracingComponentsOption>(
-              DefaultTracingComponents())));
+          google::cloud::Options{}
+              .set<google::cloud::TracingComponentsOption>(
+                  DefaultTracingComponents())
+              .set<google::cloud::GrpcTracingOptionsOption>(
+                  // There are some credentials returned by RPCs. On an error
+                  // these are printed. This truncates them, making the output
+                  // safe, and yet useful for debugging.
+                  google::cloud::TracingOptions{}.SetOptions(
+                      "truncate_string_field_longer_than=32"))));
 
   std::cout << "\nRunning UseAccessToken() example" << std::endl;
   UseAccessToken(client, {test_iam_service_account, project_id});
