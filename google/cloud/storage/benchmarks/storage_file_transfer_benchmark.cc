@@ -90,8 +90,8 @@ int main(int argc, char* argv[]) {
                         gcs::BucketMetadata()
                             .set_storage_class(gcs::storage_class::Standard())
                             .set_location(options->region),
-                        gcs::PredefinedAcl("private"),
-                        gcs::PredefinedDefaultObjectAcl("projectPrivate"),
+                        gcs::PredefinedAcl::ProjectPrivate(),
+                        gcs::PredefinedDefaultObjectAcl::ProjectPrivate(),
                         gcs::Projection("full"))
           .value();
   std::cout << "# Running test on bucket: " << meta.name() << "\n";

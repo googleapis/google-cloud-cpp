@@ -184,8 +184,8 @@ int main(int argc, char* argv[]) {
                           gcs::BucketMetadata()
                               .set_storage_class(gcs::storage_class::Standard())
                               .set_location(options->region),
-                          gcs::PredefinedAcl("private"),
-                          gcs::PredefinedDefaultObjectAcl("projectPrivate"),
+                          gcs::PredefinedAcl::ProjectPrivate(),
+                          gcs::PredefinedDefaultObjectAcl::ProjectPrivate(),
                           gcs::Projection("full"));
   if (!meta) {
     std::cerr << "Error creating bucket: " << meta.status() << "\n";
