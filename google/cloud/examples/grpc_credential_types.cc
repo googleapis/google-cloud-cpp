@@ -266,7 +266,7 @@ void AutoRun(std::vector<std::string> const& argv) {
                   DefaultTracingComponents())
               .set<google::cloud::GrpcTracingOptionsOption>(
                   // There are some credentials returned by RPCs. On an error
-                  // these are printed, this truncates them, making the output
+                  // these are printed. This truncates them, making the output
                   // safe, and yet useful for debugging.
                   google::cloud::TracingOptions{}.SetOptions(
                       "truncate_string_field_longer_than=32"))));
