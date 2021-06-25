@@ -43,7 +43,12 @@ class CurlHandle {
   CurlHandle(CurlHandle const&) = delete;
   CurlHandle& operator=(CurlHandle const&) = delete;
 
-  // Allow moves, they immediately disable callbacks.
+  // Allow moves, some care is needed to guarantee the
+  // pointers passed to the C callbacks are stable. For
+  // the debug callback (used rarely), we use a
+  // `std::shared_ptr<>`. For other callbacks they callback
+  // is set up only once the object is stable and won't move
+  // for the lifetime of the callback.
   CurlHandle(CurlHandle&&) = default;
   CurlHandle& operator=(CurlHandle&&) = default;
 
@@ -139,7 +144,7 @@ class CurlHandle {
   }
 
   CurlPtr handle_;
-  DebugInfo debug_info_;
+  std::shared_ptr<DebugInfo> debug_info_;
   SocketOptions socket_options_;
 };
 

@@ -148,7 +148,8 @@ void CurlHandle::ResetSocketCallback() {
 
 void CurlHandle::EnableLogging(bool enabled) {
   if (enabled) {
-    SetOption(CURLOPT_DEBUGDATA, &debug_info_);
+    debug_info_ = std::make_shared<DebugInfo>();
+    SetOption(CURLOPT_DEBUGDATA, debug_info_.get());
     SetOption(CURLOPT_DEBUGFUNCTION, &CurlHandleDebugCallback);
     SetOption(CURLOPT_VERBOSE, 1L);
   } else {
@@ -159,13 +160,13 @@ void CurlHandle::EnableLogging(bool enabled) {
 }
 
 void CurlHandle::FlushDebug(char const* where) {
-  if (debug_info_.buffer.empty()) return;
-  GCP_LOG(DEBUG) << where << " recv_count=" << debug_info_.recv_count << " ("
-                 << debug_info_.recv_zero_count
-                 << " with no data), send_count=" << debug_info_.send_count
-                 << " (" << debug_info_.send_zero_count << " with no data).";
-  GCP_LOG(DEBUG) << where << ' ' << debug_info_.buffer;
-  debug_info_ = DebugInfo{};
+  if (!debug_info_ || debug_info_->buffer.empty()) return;
+  GCP_LOG(DEBUG) << where << " recv_count=" << debug_info_->recv_count << " ("
+                 << debug_info_->recv_zero_count
+                 << " with no data), send_count=" << debug_info_->send_count
+                 << " (" << debug_info_->send_zero_count << " with no data).";
+  GCP_LOG(DEBUG) << where << ' ' << debug_info_->buffer;
+  *debug_info_ = DebugInfo{};
 }
 
 Status CurlHandle::AsStatus(CURLcode e, char const* where) {
