@@ -98,6 +98,45 @@ class CurlClientTest : public ::testing::Test,
   testing_util::ScopedEnvironment endpoint_;
 };
 
+TEST(CurlClientStandaloneFunctions, HostHeader) {
+  struct Test {
+    std::string endpoint;
+    std::string service;
+    std::string expected;
+  } cases[] = {
+      {"https://storage.googleapis.com", "storage",
+       "Host: storage.googleapis.com"},
+      {"https://storage.googleapis.com:443", "storage",
+       "Host: storage.googleapis.com"},
+      {"https://restricted.googleapis.com", "storage",
+       "Host: storage.googleapis.com"},
+      {"https://private.googleapis.com", "storage",
+       "Host: storage.googleapis.com"},
+      {"https://restricted.googleapis.com", "iamcredentials",
+       "Host: iamcredentials.googleapis.com"},
+      {"https://private.googleapis.com", "iamcredentials",
+       "Host: iamcredentials.googleapis.com"},
+      {"http://localhost:8080", "", ""},
+      {"http://[::1]", "", ""},
+      {"http://[::1]/", "", ""},
+      {"http://[::1]/foo/bar", "", ""},
+      {"http://[::1]:8080/", "", ""},
+      {"http://[::1]:8080/foo/bar", "", ""},
+      {"http://localhost:8080", "", ""},
+      {"https://storage-download.127.0.0.1.nip.io/xmlapi/", "", ""},
+      {"https://gcs.127.0.0.1.nip.io/storage/v1/", "", ""},
+      {"https://gcs.127.0.0.1.nip.io:4443/upload/storage/v1/", "", ""},
+      {"https://gcs.127.0.0.1.nip.io:4443/upload/storage/v1/", "", ""},
+  };
+
+  for (auto const& test : cases) {
+    SCOPED_TRACE("Testing for " + test.endpoint + ", " + test.service);
+    auto const actual = HostHeader(
+        Options{}.set<RestEndpointOption>(test.endpoint), test.service.c_str());
+    EXPECT_EQ(test.expected, actual);
+  }
+}
+
 TEST_P(CurlClientTest, UploadChunk) {
   // Use an invalid port (0) to force a libcurl failure
   auto actual = client_
