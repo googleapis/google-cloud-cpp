@@ -58,7 +58,6 @@ TEST(GrpcClientFromProto, ObjectSimple) {
     content_encoding: "test-content-encoding"
     content_disposition: "test-content-disposition"
     cache_control: "test-cache-control"
-# TODO(#4217) - convert acl() field.
     content_language: "test-content-language"
     metageneration: 42
     time_deleted: {
