@@ -53,6 +53,10 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        [&options](std::string const& val) {
          options.thread_count = std::stoi(val);
        }},
+      {"--client-per-thread", "use a separate client on each thread",
+       [&options](std::string const& val) {
+         options.client_per_thread = ParseBoolean(val).value_or(false);
+       }},
       {"--minimum-object-size", "configure the minimum object size",
        [&options](std::string const& val) {
          options.minimum_object_size = ParseSize(val);
@@ -207,6 +211,13 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
     std::ostringstream os;
     os << "Invalid range for sample range [" << options.minimum_sample_count
        << ',' << options.maximum_sample_count << "]";
+    return make_status(os);
+  }
+
+  if (options.thread_count <= 0) {
+    std::ostringstream os;
+    os << "Invalid --thread-count value (" << options.thread_count
+       << "), must be > 0";
     return make_status(os);
   }
 
