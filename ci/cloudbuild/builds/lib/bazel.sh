@@ -59,7 +59,7 @@ function bazel::common_args() {
       echo no
       ;;
     *)
-      echo yes
+      echo auto
       ;;
     esac
   }
