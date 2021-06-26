@@ -90,7 +90,6 @@ TEST_F(AutoFinalizeIntegrationTest, ExplicitlyEnabled) {
 
 TEST_F(AutoFinalizeIntegrationTest, Disabled) {
   // TODO(#6875) - enable this test once GCS+gRPC supports resuming uploads.
-  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -122,6 +121,7 @@ TEST_F(AutoFinalizeIntegrationTest, Disabled) {
     os.write(expected_text.data() + from, kQuantum);
     os << std::flush;
     EXPECT_TRUE(os.good());
+    EXPECT_THAT(os.last_status(), IsOk());
   }
   auto os =
       client->WriteObject(bucket_name(), object_name, AutoFinalizeDisabled(),
