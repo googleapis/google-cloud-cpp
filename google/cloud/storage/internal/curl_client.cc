@@ -583,6 +583,8 @@ StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObject(
     ReadObjectRangeRequest const& request) {
   if (xml_enabled_ && !request.HasOption<IfMetagenerationNotMatch>() &&
       !request.HasOption<IfGenerationNotMatch>() &&
+      !request.HasOption<IfMetagenerationMatch>() &&
+      !request.HasOption<IfGenerationMatch>() &&
       !request.HasOption<QuotaUser>() && !request.HasOption<UserIp>()) {
     return ReadObjectXml(request);
   }
@@ -1289,18 +1291,8 @@ StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObjectXml(
   //
   builder.AddOption(request.GetOption<EncryptionKey>());
   builder.AddOption(request.GetOption<Generation>());
-  if (request.HasOption<IfGenerationMatch>()) {
-    builder.AddHeader(
-        "x-goog-if-generation-match: " +
-        std::to_string(request.GetOption<IfGenerationMatch>().value()));
-  }
-  // IfGenerationNotMatch cannot be set, checked by the caller.
-  if (request.HasOption<IfMetagenerationMatch>()) {
-    builder.AddHeader(
-        "x-goog-if-meta-generation-match: " +
-        std::to_string(request.GetOption<IfMetagenerationMatch>().value()));
-  }
-  // IfMetagenerationNotMatch cannot be set, checked by the caller.
+  // None of the IfGeneration*Match nor IfMetageneration*Match can be set. This
+  // is checked by the caller (in this class).
   builder.AddOption(request.GetOption<UserProject>());
 
   //
