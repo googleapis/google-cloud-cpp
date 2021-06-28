@@ -203,9 +203,6 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteNotChunked) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
-  // TODO(#5460) remove this when the underlying issue is resolved.
-  if (UsingGrpc()) GTEST_SKIP();
-
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
