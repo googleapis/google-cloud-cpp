@@ -412,9 +412,6 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromSpill) {
 
 /// @test Read the last chunk of an object by setting ReadLast option.
 TEST_F(ObjectMediaIntegrationTest, ReadLastChunkReadLast) {
-  // TODO(#4233) - disabled because GCS will change behavior without notice
-  //   the test passes today, but soon it will break as GCS is fixed.
-  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
