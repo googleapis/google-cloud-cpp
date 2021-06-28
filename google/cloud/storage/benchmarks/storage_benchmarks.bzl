@@ -19,6 +19,7 @@
 storage_benchmarks_hdrs = [
     "benchmark_utils.h",
     "bounded_queue.h",
+    "create_dataset_options.h",
     "throughput_experiment.h",
     "throughput_options.h",
     "throughput_result.h",
@@ -26,6 +27,7 @@ storage_benchmarks_hdrs = [
 
 storage_benchmarks_srcs = [
     "benchmark_utils.cc",
+    "create_dataset_options.cc",
     "throughput_experiment.cc",
     "throughput_options.cc",
     "throughput_result.cc",

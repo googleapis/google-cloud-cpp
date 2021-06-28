@@ -22,6 +22,8 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         benchmark_utils.cc
         benchmark_utils.h
         bounded_queue.h
+        create_dataset_options.cc
+        create_dataset_options.h
         throughput_experiment.cc
         throughput_experiment.h
         throughput_options.cc
@@ -43,6 +45,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     set(storage_benchmark_programs
         # cmake-format: sort
         ${storage_benchmark_programs_production}
+        create_dataset.cc
         storage_file_transfer_benchmark.cc
         storage_parallel_uploads_benchmark.cc
         storage_shard_throughput_benchmark.cc
@@ -81,8 +84,11 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     # List the unit tests, then setup the targets and dependencies.
     set(storage_benchmarks_unit_tests
         # cmake-format: sort
-        benchmark_make_random_test.cc benchmark_parser_test.cc
-        throughput_options_test.cc throughput_result_test.cc)
+        benchmark_make_random_test.cc
+        benchmark_parser_test.cc
+        create_dataset_options_test.cc
+        throughput_options_test.cc
+        throughput_result_test.cc)
 
     foreach (fname ${storage_benchmarks_unit_tests})
         google_cloud_cpp_add_executable(target "storage_benchmarks" "${fname}")
