@@ -122,6 +122,9 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
       c.uniform_bucket_level_access =
           ParseUniformBucketLevelAccess(config["uniformBucketLevelAccess"]);
     }
+    if (config.count("publicAccessPrevention") != 0) {
+      c.public_access_prevention = config.value("publicAccessPrevention", "");
+    }
     result.iam_configuration_ = c;
   }
 
@@ -257,6 +260,10 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
       // The lockedTime field is not mutable and should not be set by the client
       // the server will provide a value.
       c["uniformBucketLevelAccess"] = std::move(ubla);
+    }
+    if (meta.iam_configuration().public_access_prevention.has_value()) {
+      c["publicAccessPrevention"] =
+          *meta.iam_configuration().public_access_prevention;
     }
     metadata_as_json["iamConfiguration"] = std::move(c);
   }
