@@ -89,7 +89,6 @@ TEST_F(AutoFinalizeIntegrationTest, ExplicitlyEnabled) {
 }
 
 TEST_F(AutoFinalizeIntegrationTest, Disabled) {
-  // TODO(#6875) - enable this test once GCS+gRPC supports resuming uploads.
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
