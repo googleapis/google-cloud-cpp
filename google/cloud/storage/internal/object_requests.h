@@ -336,7 +336,7 @@ class ResumableUploadRequest
           IfMetagenerationMatch, IfMetagenerationNotMatch, KmsKeyName,
           MD5HashValue, PredefinedAcl, Projection, UseResumableUploadSession,
           UserProject, UploadFromOffset, UploadLimit, WithObjectMetadata,
-          UploadContentLength, AutoFinalize> {
+          UploadContentLength, AutoFinalize, UploadBufferSize> {
  public:
   ResumableUploadRequest() = default;
 
