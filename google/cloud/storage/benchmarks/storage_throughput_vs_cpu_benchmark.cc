@@ -17,6 +17,7 @@
 #include "google/cloud/storage/benchmarks/throughput_options.h"
 #include "google/cloud/storage/benchmarks/throughput_result.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/format_time_point.h"
@@ -103,12 +104,15 @@ this program.
 using TestResults = std::vector<ThroughputResult>;
 
 TestResults RunThread(ThroughputOptions const& ThroughputOptions,
+                      gcs::Client rest_client, gcs::Client grpc_client,
                       std::string const& bucket_name, int thread_id);
 void PrintResults(TestResults const& results);
 
 google::cloud::StatusOr<ThroughputOptions> ParseArgs(int argc, char* argv[]);
 
 }  // namespace
+
+using ::google::cloud::storage_experimental::DefaultGrpcClient;
 
 int main(int argc, char* argv[]) {
   google::cloud::StatusOr<ThroughputOptions> options = ParseArgs(argc, argv);
@@ -117,8 +121,14 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  auto client = gcs::Client(
-      google::cloud::Options{}.set<gcs::ProjectIdOption>(options->project_id));
+  auto client_options =
+      google::cloud::Options{}.set<gcs::ProjectIdOption>(options->project_id);
+  auto rest_client = gcs::Client(client_options);
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  auto grpc_client = DefaultGrpcClient(client_options);
+#else
+  auto grpc_client = rest_client;
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto bucket_name = gcs_bm::MakeRandomBucketName(generator);
@@ -179,14 +189,14 @@ int main(int argc, char* argv[]) {
   // Make the output generated so far immediately visible, helps with debugging.
   std::cout << std::flush;
 
-  auto meta =
-      client.CreateBucket(bucket_name,
-                          gcs::BucketMetadata()
-                              .set_storage_class(gcs::storage_class::Standard())
-                              .set_location(options->region),
-                          gcs::PredefinedAcl::ProjectPrivate(),
-                          gcs::PredefinedDefaultObjectAcl::ProjectPrivate(),
-                          gcs::Projection("full"));
+  auto meta = rest_client.CreateBucket(
+      bucket_name,
+      gcs::BucketMetadata()
+          .set_storage_class(gcs::storage_class::Standard())
+          .set_location(options->region),
+      gcs::PredefinedAcl::ProjectPrivate(),
+      gcs::PredefinedDefaultObjectAcl::ProjectPrivate(),
+      gcs::Projection("full"));
   if (!meta) {
     std::cerr << "Error creating bucket: " << meta.status() << "\n";
     return 1;
@@ -195,15 +205,15 @@ int main(int argc, char* argv[]) {
   gcs_bm::PrintThroughputResultHeader(std::cout);
   std::vector<std::future<TestResults>> tasks;
   for (int i = 0; i != options->thread_count; ++i) {
-    tasks.emplace_back(
-        std::async(std::launch::async, RunThread, *options, bucket_name, i));
+    tasks.emplace_back(std::async(std::launch::async, RunThread, *options,
+                                  rest_client, grpc_client, bucket_name, i));
   }
   for (auto& f : tasks) {
     PrintResults(f.get());
   }
 
-  gcs_bm::DeleteAllObjects(client, bucket_name, options->thread_count);
-  auto status = client.DeleteBucket(bucket_name);
+  gcs_bm::DeleteAllObjects(rest_client, bucket_name, options->thread_count);
+  auto status = rest_client.DeleteBucket(bucket_name);
   if (!status.ok()) {
     std::cerr << "# Error deleting bucket, status=" << status << "\n";
     return 1;
@@ -222,8 +232,9 @@ void PrintResults(TestResults const& results) {
   std::cout << std::flush;
 }
 
-TestResults RunThread(ThroughputOptions const& options,
-                      std::string const& bucket_name, int thread_id) {
+TestResults RunThread(ThroughputOptions const& options, gcs::Client rest_client,
+                      gcs::Client grpc_client, std::string const& bucket_name,
+                      int thread_id) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
 
   google::cloud::StatusOr<gcs::ClientOptions> client_options =
@@ -236,16 +247,16 @@ TestResults RunThread(ThroughputOptions const& options,
   auto const upload_buffer_size = client_options->upload_buffer_size();
   auto const download_buffer_size = client_options->download_buffer_size();
 
-  auto rest_client = gcs::Client();
-
-  auto uploaders = gcs_bm::CreateUploadExperiments(options, {});
+  auto uploaders =
+      gcs_bm::CreateUploadExperiments(options, rest_client, grpc_client, {});
   if (uploaders.empty()) {
     // This is possible if only gRPC is requested but the benchmark was compiled
     // without gRPC support.
     std::cout << "# None of the APIs configured are available\n";
     return {};
   }
-  auto downloaders = gcs_bm::CreateDownloadExperiments(options, {}, thread_id);
+  auto downloaders = gcs_bm::CreateDownloadExperiments(
+      options, rest_client, std::move(grpc_client), {}, thread_id);
   if (downloaders.empty()) {
     // This is possible if only gRPC is requested but the benchmark was compiled
     // without gRPC support.

@@ -46,6 +46,7 @@ TEST(ThroughputOptions, Basic) {
       "--enabled-apis=JSON,GRPC,XML",
       "--enabled-crc32c=enabled",
       "--enabled-md5=disabled",
+      "--client-per-thread=false",
   });
   ASSERT_STATUS_OK(options);
   EXPECT_EQ("test-project", options->project_id);
@@ -160,6 +161,16 @@ TEST(ThroughputOptions, Validate) {
       "--region=r",
       "--minimum-sample-count=8",
       "--maximum-sample-count=4",
+  }));
+  EXPECT_FALSE(ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--thread-count=0",
+  }));
+  EXPECT_FALSE(ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--thread-count=-2",
   }));
 }
 
