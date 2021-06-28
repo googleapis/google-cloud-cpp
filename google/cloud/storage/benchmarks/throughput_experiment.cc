@@ -339,6 +339,8 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
   if (options.client_per_thread) {
     grpc_client = DefaultGrpcClient(client_options);
   }
+#else
+  if (options.client_per_thread) grpc_client = gcs::Client(client_options);
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
   std::vector<std::unique_ptr<ThroughputExperiment>> result;
