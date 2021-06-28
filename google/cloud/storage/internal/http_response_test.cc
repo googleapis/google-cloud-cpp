@@ -49,6 +49,8 @@ TEST(HttpResponseTest, AsStatus) {
   EXPECT_STATUS_OK(AsStatus(HttpResponse{299, "success", {}}));
   EXPECT_THAT(AsStatus(HttpResponse{300, "libcurl should handle this", {}}),
               StatusIs(StatusCode::kUnknown));
+  EXPECT_THAT(AsStatus(HttpResponse{304, "nothing changed", {}}),
+              StatusIs(StatusCode::kFailedPrecondition));
   EXPECT_THAT(AsStatus(HttpResponse{308, "pending", {}}),
               StatusIs(StatusCode::kFailedPrecondition));
   EXPECT_THAT(AsStatus(HttpResponse{400, "invalid something", {}}),

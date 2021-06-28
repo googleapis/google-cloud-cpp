@@ -34,6 +34,7 @@ storage_examples = [
     "storage_object_csek_samples.cc",
     "storage_object_file_transfer_samples.cc",
     "storage_object_hold_samples.cc",
+    "storage_object_preconditions_samples.cc",
     "storage_object_resumable_write_samples.cc",
     "storage_object_rewrite_samples.cc",
     "storage_object_samples.cc",
