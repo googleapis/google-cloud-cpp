@@ -46,10 +46,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadChunk(
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadFinalChunk(
     ConstBufferSequence const& payload, std::uint64_t) {
-  auto initial = UploadGeneric(payload, true);
-  if (!initial) return initial;
-
-  return HandleStreamClosed();
+  return UploadGeneric(payload, true);
 }
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::ResetSession() {
@@ -59,11 +56,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::ResetSession() {
   if (!last_response_) return last_response_;
 
   done_ = (last_response_->upload_state == ResumableUploadResponse::kDone);
-  if (last_response_->last_committed_byte == 0) {
-    next_expected_ = 0;
-  } else {
-    next_expected_ = last_response_->last_committed_byte + 1;
-  }
+  next_expected_ = last_response_->last_committed_byte;
   return last_response_;
 }
 
@@ -84,7 +77,9 @@ GrpcResumableUploadSession::last_response() const {
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
     ConstBufferSequence buffers, bool final_chunk) {
-  CreateUploadWriter();
+  // TODO(#4216) - set the timeout
+  auto context = absl::make_unique<grpc::ClientContext>();
+  auto writer = client_->CreateUploadWriter(std::move(context));
 
   std::size_t const maximum_chunk_size =
       google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
@@ -117,7 +112,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
       options.set_last_message();
     }
 
-    if (!upload_writer_->Write(request, options)) return false;
+    if (!writer->Write(request, options)) return false;
     // After the first message, clear the object specification and checksums,
     // there is no need to resend it.
     request.clear_insert_object_spec();
@@ -125,6 +120,24 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
 
     next_expected_ += n;
     return true;
+  };
+
+  auto close_writer = [&] {
+    auto result = writer->Close();
+    writer.reset();
+    if (!result) {
+      last_response_ = std::move(result).status();
+      return last_response_;
+    }
+    done_ = final_chunk;
+    last_response_ = ResumableUploadResponse{
+        {},
+        next_expected_ - 1,
+        GrpcClient::FromProto(*std::move(result)),
+        final_chunk ? ResumableUploadResponse::kDone
+                    : ResumableUploadResponse::kInProgress,
+        {}};
+    return last_response_;
   };
 
   do {
@@ -139,36 +152,10 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
     }
     PopFrontBytes(buffers, consumed);
 
-    if (!flush_chunk(!buffers.empty())) return HandleStreamClosed();
+    if (!flush_chunk(!buffers.empty())) return close_writer();
   } while (!buffers.empty());
 
-  return ResumableUploadResponse{
-      {}, next_expected_ - 1, {}, ResumableUploadResponse::kInProgress, {}};
-}
-
-void GrpcResumableUploadSession::CreateUploadWriter() {
-  if (upload_writer_) return;
-  // TODO(#4216) - set the timeout
-  auto context = absl::make_unique<grpc::ClientContext>();
-  upload_writer_ = client_->CreateUploadWriter(std::move(context));
-}
-
-StatusOr<ResumableUploadResponse>
-GrpcResumableUploadSession::HandleStreamClosed() {
-  auto result = upload_writer_->Close();
-  upload_writer_ = nullptr;
-  if (!result) {
-    last_response_ = std::move(result).status();
-    return last_response_;
-  }
-  done_ = true;
-  last_response_ =
-      ResumableUploadResponse{{},
-                              next_expected_ - 1,
-                              GrpcClient::FromProto(*std::move(result)),
-                              ResumableUploadResponse::kDone,
-                              {}};
-  return last_response_;
+  return close_writer();
 }
 
 }  // namespace internal

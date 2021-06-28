@@ -25,7 +25,6 @@
 #include <crc32c/crc32c.h>
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
-#include <algorithm>
 #include <vector>
 
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
@@ -71,6 +70,28 @@ class GrpcIntegrationTest
     ASSERT_FALSE(topic_name_.empty())
         << "GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME is not set";
   }
+
+  void TearDown() override {
+    auto client = MakeIntegrationTestClient();
+    if (!client) return;
+    for (auto& o : objects_to_delete_) {
+      (void)client->DeleteObject(o.bucket(), o.name(),
+                                 Generation(o.generation()));
+    }
+    auto bucket_client = MakeBucketIntegrationTestClient();
+    if (!bucket_client) return;
+    for (auto& b : buckets_to_delete_) {
+      (void)bucket_client->DeleteBucket(b.name());
+    }
+  }
+
+  void ScheduleForDelete(ObjectMetadata meta) {
+    objects_to_delete_.push_back(std::move(meta));
+  }
+  void ScheduleForDelete(BucketMetadata meta) {
+    buckets_to_delete_.push_back(std::move(meta));
+  }
+
   std::string project_id() const { return project_id_; }
   std::string topic_name() const { return topic_name_; }
 
@@ -80,6 +101,9 @@ class GrpcIntegrationTest
   }
 
  private:
+  std::vector<ObjectMetadata> objects_to_delete_;
+  std::vector<BucketMetadata> buckets_to_delete_;
+
   std::string project_id_;
   std::string topic_name_;
   testing_util::ScopedEnvironment grpc_config_;
@@ -491,6 +515,7 @@ TEST_P(GrpcIntegrationTest, StreamLargeChunks) {
   auto bucket_metadata = bucket_client->CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
   ASSERT_STATUS_OK(bucket_metadata);
+  ScheduleForDelete(*std::move(bucket_metadata));
 
   // Insert an object in chunks larger than 4 MiB each.
   auto const desired_size = 8 * 1024 * 1024L;
@@ -503,15 +528,10 @@ TEST_P(GrpcIntegrationTest, StreamLargeChunks) {
   EXPECT_TRUE(stream.good());
   stream.Close();
   EXPECT_FALSE(stream.bad());
-  EXPECT_STATUS_OK(stream.metadata());
+  ASSERT_STATUS_OK(stream.metadata());
+  ScheduleForDelete(stream.metadata().value());
 
   EXPECT_EQ(2 * desired_size, stream.metadata()->size());
-
-  auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_STATUS_OK(status);
-
-  auto delete_bucket_status = bucket_client->DeleteBucket(bucket_name);
-  EXPECT_STATUS_OK(delete_bucket_status);
 }
 
 INSTANTIATE_TEST_SUITE_P(GrpcIntegrationMediaTest, GrpcIntegrationTest,

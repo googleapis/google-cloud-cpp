@@ -58,14 +58,9 @@ class GrpcResumableUploadSession : public ResumableUploadSession {
   StatusOr<ResumableUploadResponse> UploadGeneric(ConstBufferSequence buffers,
                                                   bool final_chunk);
 
-  void CreateUploadWriter();
-
-  StatusOr<ResumableUploadResponse> HandleStreamClosed();
-
   std::shared_ptr<GrpcClient> client_;
   ResumableUploadSessionGrpcParams session_id_params_;
   std::string session_url_;
-  std::unique_ptr<GrpcClient::InsertStream> upload_writer_;
 
   std::uint64_t next_expected_ = 0;
   bool done_ = false;

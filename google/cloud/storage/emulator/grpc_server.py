@@ -162,8 +162,8 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
 
     # === OBJECT === #
 
-    def InsertObject(self, request_iterator, context):
-        db.insert_test_bucket(context)
+    def handle_insert_object_streaming_rpc(self, request_iterator, context):
+        """Process an InsertObject streaming RPC, returning the upload object associated with it."""
         upload, is_resumable = None, False
         for request in request_iterator:
             first_message = request.WhichOneof("first_message")
@@ -210,11 +210,22 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
             if request.finish_write:
                 upload.complete = True
                 break
+        return upload, is_resumable
+
+    def InsertObject(self, request_iterator, context):
+        db.insert_test_bucket(context)
+        upload, is_resumable = self.handle_insert_object_streaming_rpc(
+            request_iterator, context
+        )
+        if upload is None:
+            return utils.error.missing(
+                "missing initial upload_id or insert_object_spec", context
+            )
         if not upload.complete:
             if not is_resumable:
                 utils.error.missing("finish_write in request", context)
             else:
-                return
+                return resources_pb2.Object()
         blob, _ = gcs_type.object.Object.init(
             upload.request, upload.metadata, upload.media, upload.bucket, False, context
         )
