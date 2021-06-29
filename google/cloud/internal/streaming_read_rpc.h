@@ -21,12 +21,21 @@
 #include "absl/types/variant.h"
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/support/sync_stream.h>
+#include <map>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
+
+/// A simple representation of request metadata.
+using StreamingRpcMetadata = std::multimap<std::string, std::string>;
+
+/// Return interesting bits of metadata stored in the client context.
+StreamingRpcMetadata GetRequestMetadataFromContext(
+    grpc::ClientContext const& context);
 
 /**
  * Defines the interface for wrappers around gRPC streaming read RPCs.
@@ -50,6 +59,15 @@ class StreamingReadRpc {
 
   /// Return the next element, or the final RPC status.
   virtual absl::variant<Status, ResponseType> Read() = 0;
+
+  /**
+   * Return the request metadata.
+   *
+   * Request metadata is useful for troubleshooting, but may be relatively
+   * expensive to extract.  Library developers should avoid this function in
+   * the critical path.
+   */
+  virtual StreamingRpcMetadata GetRequestMetadata() const = 0;
 };
 
 /// Report the errors in a standalone function to minimize includes
@@ -87,6 +105,11 @@ class StreamingReadRpcImpl : public StreamingReadRpc<ResponseType> {
     return Finish();
   }
 
+  StreamingRpcMetadata GetRequestMetadata() const override {
+    if (!context_) return {};
+    return GetRequestMetadataFromContext(*context_);
+  }
+
  private:
   Status Finish() {
     auto status = MakeStatusFromRpcError(stream_->Finish());
@@ -118,6 +141,8 @@ class StreamingReadRpcError : public StreamingReadRpc<ResponseType> {
   void Cancel() override {}
 
   absl::variant<Status, ResponseType> Read() override { return status_; }
+
+  StreamingRpcMetadata GetRequestMetadata() const override { return {}; }
 
  private:
   Status status_;

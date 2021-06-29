@@ -39,6 +39,7 @@ class MockStreamingReadRpc : public StreamingReadRpc<ResponseType> {
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD((absl::variant<Status, google::protobuf::Duration>), Read, (),
               (override));
+  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
 class StreamingReadRpcLoggingTest : public ::testing::Test {
@@ -98,6 +99,22 @@ TEST_F(StreamingReadRpcLoggingTest, Read) {
       log_lines,
       Contains(HasSubstr(StatusCodeToString(StatusCode::kInvalidArgument))));
   EXPECT_THAT(log_lines, Contains(HasSubstr("Invalid argument.")));
+}
+
+TEST_F(StreamingReadRpcLoggingTest, FormatMetadata) {
+  struct Test {
+    StreamingRpcMetadata metadata;
+    std::string expected;
+  } cases[] = {
+      {{}, ""},
+      {{{"a", "b"}}, "{a: b}"},
+      {{{"a", "b"}, {"k", "v"}}, "{a: b}, {k: v}"},
+  };
+  for (auto const& test : cases) {
+    SCOPED_TRACE("Testing for <" + test.expected + ">");
+    auto const actual = FormatMetadata(test.metadata);
+    EXPECT_EQ(test.expected, actual);
+  }
 }
 
 }  // namespace

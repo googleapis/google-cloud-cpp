@@ -77,6 +77,7 @@ google_cloud_cpp_grpc_utils_srcs = [
     "internal/minimal_iam_credentials_stub.cc",
     "internal/retry_loop_helpers.cc",
     "internal/streaming_read_rpc.cc",
+    "internal/streaming_read_rpc_logging.cc",
     "internal/streaming_write_rpc.cc",
     "internal/time_utils.cc",
     "internal/unified_grpc_credentials.cc",

@@ -71,8 +71,9 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
     HeadersMap operator()(Status s) {
       // A status, whether success or failure, closes the stream.
       self.status_ = std::move(s);
+      auto metadata = self.stream_->GetRequestMetadata();
       self.stream_ = nullptr;
-      return {};
+      return metadata;
     }
     HeadersMap operator()(
         google::storage::v1::GetObjectMediaResponse response) {

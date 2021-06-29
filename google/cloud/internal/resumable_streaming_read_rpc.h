@@ -127,6 +127,10 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
     return last_status;
   }
 
+  StreamingRpcMetadata GetRequestMetadata() const override {
+    return impl_ ? impl_->GetRequestMetadata() : StreamingRpcMetadata{};
+  }
+
  private:
   std::unique_ptr<RetryPolicy const> const retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> const backoff_policy_prototype_;

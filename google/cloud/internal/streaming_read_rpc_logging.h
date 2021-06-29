@@ -32,6 +32,7 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
+std::string FormatMetadata(StreamingRpcMetadata const& metadata);
 
 /**
  * Logging decorator for StreamingReadRpc.
@@ -60,6 +61,12 @@ class StreamingReadRpcLogging : public StreamingReadRpc<ResponseType> {
     GCP_LOG(DEBUG) << prefix << "() >> "
                    << absl::visit(ResultVisitor(tracing_options_), result);
     return result;
+  }
+  StreamingRpcMetadata GetRequestMetadata() const override {
+    auto metadata = reader_->GetRequestMetadata();
+    GCP_LOG(DEBUG) << __func__ << "() >> metadata={" << FormatMetadata(metadata)
+                   << "}";
+    return metadata;
   }
 
  private:
