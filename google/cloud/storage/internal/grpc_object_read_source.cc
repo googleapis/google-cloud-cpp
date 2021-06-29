@@ -24,7 +24,9 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+
 using HeadersMap = std::multimap<std::string, std::string>;
+
 HeadersMap MakeHeadersFromChecksums(
     google::storage::v1::ObjectChecksums const& checksums) {
   HeadersMap headers;
@@ -82,7 +84,9 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
                 std::move(
                     *response.mutable_checksummed_data()->mutable_content())));
       }
+      if (self.checksumms_known_) return {};
       if (!response.has_object_checksums()) return {};
+      self.checksumms_known_ = true;
       return MakeHeadersFromChecksums(response.object_checksums());
     }
   };

@@ -65,6 +65,8 @@ class GrpcObjectReadSource : public ObjectReadSource {
 
   // The status of the request.
   google::cloud::Status status_;
+
+  bool checksumms_known_ = false;
 };
 
 }  // namespace internal
