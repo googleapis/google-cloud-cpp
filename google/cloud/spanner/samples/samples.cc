@@ -3460,6 +3460,9 @@ void RunAllSlowInstanceTests(
     std::cout
         << "\nRunning spanner_create_instance_with_processing_units sample"
         << std::endl;
+    // TODO(#6894): Change "regional-us-central1" to `config` when low-cost
+    // instances are generally available (well, at least in the regions that
+    // `PickConfig()` might return).
     CreateInstanceWithProcessingUnits(
         instance_admin_client, project_id, crud_instance_id,
         "Test Low-Cost Instance", "regional-us-central1");
