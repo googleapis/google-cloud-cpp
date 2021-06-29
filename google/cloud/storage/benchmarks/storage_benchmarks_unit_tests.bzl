@@ -19,6 +19,7 @@
 storage_benchmarks_unit_tests = [
     "benchmark_make_random_test.cc",
     "benchmark_parser_test.cc",
+    "create_dataset_options_test.cc",
     "throughput_options_test.cc",
     "throughput_result_test.cc",
 ]

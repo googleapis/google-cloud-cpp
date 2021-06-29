@@ -28,6 +28,13 @@ namespace storage_benchmarks {
 
 void DeleteAllObjects(google::cloud::storage::Client client,
                       std::string const& bucket_name, int thread_count) {
+  return DeleteAllObjects(std::move(client), bucket_name,
+                          google::cloud::storage::Prefix(), thread_count);
+}
+
+void DeleteAllObjects(google::cloud::storage::Client client,
+                      std::string const& bucket_name,
+                      google::cloud::storage::Prefix prefix, int thread_count) {
   using WorkQueue = BoundedQueue<google::cloud::storage::ObjectMetadata>;
   using std::chrono::duration_cast;
   using std::chrono::milliseconds;
@@ -52,7 +59,8 @@ void DeleteAllObjects(google::cloud::storage::Client client,
                           std::ref(work_queue));
       });
 
-  for (auto& o : client.ListObjects(bucket_name, gcs::Versions(true))) {
+  for (auto& o : client.ListObjects(bucket_name, gcs::Versions(true),
+                                    std::move(prefix))) {
     if (!o) break;
     work_queue.Push(*std::move(o));
   }
