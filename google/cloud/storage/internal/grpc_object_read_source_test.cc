@@ -200,10 +200,16 @@ TEST(GrpcObjectReadSource, PreserveChecksums) {
             GrpcClient::Crc32cToProto(expected_crc32c));
         return response;
       })
-      .WillOnce([]() {
+      .WillOnce([&] {
         storage_proto::GetObjectMediaResponse response;
         response.mutable_checksummed_data()->set_content(
             " fox jumps over the lazy dog");
+        // The headers may be included more than once in the stream,
+        // `GrpcObjectReadSource` should return them only once.
+        response.mutable_object_checksums()->set_md5_hash(
+            GrpcClient::MD5ToProto(expected_md5));
+        response.mutable_object_checksums()->mutable_crc32c()->set_value(
+            GrpcClient::Crc32cToProto(expected_crc32c));
         return response;
       })
       .WillOnce(Return(Status{}));
