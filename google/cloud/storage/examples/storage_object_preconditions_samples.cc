@@ -51,18 +51,13 @@ void ReadObjectIfGenerationMatch(google::cloud::storage::Client client,
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::int64_t generation) {
-    auto reader = client.ReadObject(bucket_name, object_name,
-                                    gcs::IfGenerationMatch(generation));
+    auto is = client.ReadObject(bucket_name, object_name,
+                                gcs::IfGenerationMatch(generation));
     std::string line;
-    while (std::getline(reader, line)) {
+    while (std::getline(is, line)) {
       std::cout << line << "\n";
     }
-    reader.Close();
-    if (!reader.status().ok()) {
-      std::ostringstream os;
-      os << reader.status();
-      throw std::runtime_error(std::move(os).str());
-    }
+    if (!is.status().ok()) throw std::runtime_error(is.status().message());
   }
   //! [read-object-if-generation-match]
   (std::move(client), argv.at(0), argv.at(1), std::stoll(argv.at(2)));
@@ -75,18 +70,13 @@ void ReadObjectIfMetagenerationMatch(google::cloud::storage::Client client,
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::int64_t metageneration) {
-    auto reader = client.ReadObject(bucket_name, object_name,
-                                    gcs::IfMetagenerationMatch(metageneration));
+    auto is = client.ReadObject(bucket_name, object_name,
+                                gcs::IfMetagenerationMatch(metageneration));
     std::string line;
-    while (std::getline(reader, line)) {
+    while (std::getline(is, line)) {
       std::cout << line << "\n";
     }
-    reader.Close();
-    if (!reader.status().ok()) {
-      std::ostringstream os;
-      os << reader.status();
-      throw std::runtime_error(std::move(os).str());
-    }
+    if (!is.status().ok()) throw std::runtime_error(is.status().message());
   }
   //! [read-object-if-metageneration-match]
   (std::move(client), argv.at(0), argv.at(1), std::stoll(argv.at(2)));
@@ -99,18 +89,13 @@ void ReadObjectIfGenerationNotMatch(google::cloud::storage::Client client,
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::int64_t generation) {
-    auto reader = client.ReadObject(bucket_name, object_name,
-                                    gcs::IfGenerationNotMatch(generation));
+    auto is = client.ReadObject(bucket_name, object_name,
+                                gcs::IfGenerationNotMatch(generation));
     std::string line;
-    while (std::getline(reader, line)) {
+    while (std::getline(is, line)) {
       std::cout << line << "\n";
     }
-    reader.Close();
-    if (!reader.status().ok()) {
-      std::ostringstream os;
-      os << reader.status();
-      throw std::runtime_error(std::move(os).str());
-    }
+    if (!is.status().ok()) throw std::runtime_error(is.status().message());
   }
   //! [read-object-if-generation-not-match]
   (std::move(client), argv.at(0), argv.at(1), std::stoll(argv.at(2)));
@@ -123,19 +108,13 @@ void ReadObjectIfMetagenerationNotMatch(google::cloud::storage::Client client,
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::int64_t metageneration) {
-    auto reader =
-        client.ReadObject(bucket_name, object_name,
-                          gcs::IfMetagenerationNotMatch(metageneration));
+    auto is = client.ReadObject(bucket_name, object_name,
+                                gcs::IfMetagenerationNotMatch(metageneration));
     std::string line;
-    while (std::getline(reader, line)) {
+    while (std::getline(is, line)) {
       std::cout << line << "\n";
     }
-    reader.Close();
-    if (!reader.status().ok()) {
-      std::ostringstream os;
-      os << reader.status();
-      throw std::runtime_error(std::move(os).str());
-    }
+    if (!is.status().ok()) throw std::runtime_error(is.status().message());
   }
   //! [read-object-if-metageneration-not-match]
   (std::move(client), argv.at(0), argv.at(1), std::stoll(argv.at(2)));
