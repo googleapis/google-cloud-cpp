@@ -94,7 +94,7 @@ int main(int argc, char* argv[]) {
     std::cerr << options.status() << "\n";
     return 1;
   }
-  if (options->exit_after_parse) return options->exit_after_parse.value();
+  if (options->exit_after_parse) return 1;
 
   auto d = std::div(options->object_count, options->thread_count);
   std::vector<std::int64_t> counts(options->thread_count, d.quot);

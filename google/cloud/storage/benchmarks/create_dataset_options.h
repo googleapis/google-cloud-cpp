@@ -32,7 +32,7 @@ struct CreateDatasetOptions {
   std::int64_t minimum_object_size = 256 * kMiB;
   std::int64_t maximum_object_size = 256 * kMiB;
   int thread_count = 1;
-  absl::optional<int> exit_after_parse;
+  bool exit_after_parse = false;
 };
 
 google::cloud::StatusOr<CreateDatasetOptions> ParseCreateDatasetOptions(

@@ -33,7 +33,7 @@ TEST(ThroughputOptions, Basic) {
       "--thread-count=42",
   });
   ASSERT_STATUS_OK(options);
-  EXPECT_FALSE(options->exit_after_parse.has_value());
+  EXPECT_FALSE(options->exit_after_parse);
   EXPECT_EQ("test-bucket-name", options->bucket_name);
   EXPECT_EQ("test/object/prefix/", options->object_prefix);
   EXPECT_EQ(7, options->object_count);
@@ -46,14 +46,14 @@ TEST(ThroughputOptions, Description) {
   auto options =
       ParseCreateDatasetOptions({"self-test", "--description", "fake-bucket"});
   EXPECT_STATUS_OK(options);
-  EXPECT_EQ(options->exit_after_parse.value_or(-1), 0);
+  EXPECT_TRUE(options->exit_after_parse);
 }
 
 TEST(ThroughputOptions, Help) {
   auto options =
       ParseCreateDatasetOptions({"self-test", "--help", "fake-bucket"});
   EXPECT_STATUS_OK(options);
-  EXPECT_EQ(options->exit_after_parse.value_or(-1), 0);
+  EXPECT_TRUE(options->exit_after_parse);
 }
 
 TEST(ThroughputOptions, Validate) {

@@ -61,12 +61,12 @@ google::cloud::StatusOr<CreateDatasetOptions> ParseCreateDatasetOptions(
   auto unparsed = OptionsParse(desc, argv);
   if (wants_help) {
     std::cout << usage << "\n";
-    options.exit_after_parse = 0;
+    options.exit_after_parse = true;
   }
 
   if (wants_description) {
     std::cout << kDescription << "\n";
-    options.exit_after_parse = 0;
+    options.exit_after_parse = true;
   }
 
   if (unparsed.size() > 2) {
