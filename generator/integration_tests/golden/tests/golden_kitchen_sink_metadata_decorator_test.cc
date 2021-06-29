@@ -28,6 +28,7 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 using ::google::cloud::golden_internal::MockGoldenKitchenSinkStub;
+using ::google::cloud::golden_internal::MockTailLogEntriesStreamingReadRpc;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsOk;
 using ::google::test::admin::database::v1::TailLogEntriesRequest;
@@ -128,14 +129,6 @@ TEST_F(MetadataDecoratorTest, ListLogs) {
   auto status = stub.ListLogs(context, request);
   EXPECT_EQ(TransientError(), status.status());
 }
-
-class MockTailLogEntriesStreamingReadRpc
-    : public internal::StreamingReadRpc<TailLogEntriesResponse> {
- public:
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD((absl::variant<Status, TailLogEntriesResponse>), Read, (),
-              (override));
-};
 
 TEST_F(MetadataDecoratorTest, TailLogEntries) {
   EXPECT_CALL(*mock_, TailLogEntries)

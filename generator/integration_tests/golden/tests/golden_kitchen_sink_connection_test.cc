@@ -28,6 +28,7 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 using ::google::cloud::golden_internal::MockGoldenKitchenSinkStub;
+using ::google::cloud::golden_internal::MockTailLogEntriesStreamingReadRpc;
 using ::testing::AtLeast;
 using ::testing::ByMove;
 using ::testing::ElementsAre;
@@ -236,16 +237,7 @@ TEST(GoldenKitchenSinkConnectionTest, ListLogsTooManyTransients) {
   EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
 }
 
-class MockTailLogEntriesStreamingReadRpc
-    : public internal::StreamingReadRpc<
-          google::test::admin::database::v1::TailLogEntriesResponse> {
- public:
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(
-      (absl::variant<
-          Status, google::test::admin::database::v1::TailLogEntriesResponse>),
-      Read, (), (override));
-};
+using ::google::test::admin::database::v1::TailLogEntriesResponse;
 
 std::unique_ptr<MockTailLogEntriesStreamingReadRpc> MakeFailingReader(
     Status status) {

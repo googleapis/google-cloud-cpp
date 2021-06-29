@@ -67,6 +67,14 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
       (override));
 };
 
+class MockTailLogEntriesStreamingReadRpc
+    : public internal::StreamingReadRpc<::google::test::admin::database::v1::TailLogEntriesResponse> {
+public:
+  MOCK_METHOD(void, Cancel, (), (override));
+  MOCK_METHOD((absl::variant<Status, ::google::test::admin::database::v1::TailLogEntriesResponse>), Read, (),
+  (override));
+};
+
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud
