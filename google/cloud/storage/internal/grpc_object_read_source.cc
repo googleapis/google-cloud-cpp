@@ -84,9 +84,9 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
                 std::move(
                     *response.mutable_checksummed_data()->mutable_content())));
       }
-      if (self.checksumms_known_) return {};
+      if (self.checksums_known_) return {};
       if (!response.has_object_checksums()) return {};
-      self.checksumms_known_ = true;
+      self.checksums_known_ = true;
       return MakeHeadersFromChecksums(response.object_checksums());
     }
   };

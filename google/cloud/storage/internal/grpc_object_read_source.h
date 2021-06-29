@@ -66,7 +66,9 @@ class GrpcObjectReadSource : public ObjectReadSource {
   // The status of the request.
   google::cloud::Status status_;
 
-  bool checksumms_known_ = false;
+  // If set the checksums for the object are known and `Read()` does not need
+  // to return them, even if present in the response.
+  bool checksums_known_ = false;
 };
 
 }  // namespace internal
