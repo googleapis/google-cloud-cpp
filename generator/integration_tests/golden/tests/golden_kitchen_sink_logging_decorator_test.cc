@@ -27,6 +27,7 @@ namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
+using ::google::cloud::golden_internal::MockTailLogEntriesStreamingReadRpc;
 using ::google::cloud::testing_util::IsOk;
 using ::testing::ByMove;
 using ::testing::Contains;
@@ -150,17 +151,6 @@ TEST_F(LoggingDecoratorTest, ListLogsError) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListLogs")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
-
-class MockTailLogEntriesStreamingReadRpc
-    : public internal::StreamingReadRpc<
-          google::test::admin::database::v1::TailLogEntriesResponse> {
- public:
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(
-      (absl::variant<
-          Status, google::test::admin::database::v1::TailLogEntriesResponse>),
-      Read, (), (override));
-};
 
 TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
   auto mock_response = new MockTailLogEntriesStreamingReadRpc;
