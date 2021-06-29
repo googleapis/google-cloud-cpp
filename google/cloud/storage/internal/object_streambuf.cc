@@ -15,9 +15,9 @@
 #include "google/cloud/storage/internal/object_streambuf.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/object_stream.h"
-#include "google/cloud/log.h"
 #include "absl/memory/memory.h"
 #include <cstring>
+#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -125,8 +125,6 @@ ObjectReadStreambuf::int_type ObjectReadStreambuf::underflow() {
 }
 
 std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
-  GCP_LOG(INFO) << __func__ << "(): count=" << count
-                << ", in_avail=" << in_avail() << ", status=" << status_;
   // This function optimizes stream.read(), the data is copied directly from the
   // data source (typically libcurl) into a buffer provided by the application.
   std::streamsize offset = 0;
@@ -183,8 +181,6 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
   gbump(static_cast<int>(from_internal));
   offset += from_internal;
   if (offset >= count) {
-    GCP_LOG(INFO) << __func__ << "(): count=" << count
-                  << ", in_avail=" << in_avail() << ", offset=" << offset;
     return run_validator_if_closed(Status());
   }
 
@@ -193,15 +189,8 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
   // If there was an error set the internal state, but we still return the
   // number of bytes.
   if (!read_result) {
-    GCP_LOG(INFO) << __func__ << "(): count=" << count
-                  << ", in_avail=" << in_avail() << ", offset=" << offset
-                  << ", status=" << read_result.status();
     return run_validator_if_closed(std::move(read_result).status());
   }
-  GCP_LOG(INFO) << __func__ << "(): count=" << count
-                << ", in_avail=" << in_avail() << ", offset=" << offset
-                << ", read_result->bytes_received="
-                << read_result->bytes_received;
 
   hash_validator_->Update(s + offset, read_result->bytes_received);
   offset += read_result->bytes_received;
