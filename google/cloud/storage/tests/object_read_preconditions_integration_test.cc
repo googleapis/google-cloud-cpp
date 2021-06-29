@@ -219,7 +219,7 @@ TEST_P(ObjectReadPreconditionsIntegrationTest,
 
 INSTANTIATE_TEST_SUITE_P(XmlDisabled, ObjectReadPreconditionsIntegrationTest,
                          ::testing::Values(TestParam{"disable-xml"}));
-//INSTANTIATE_TEST_SUITE_P(XmlEnabled, ObjectReadPreconditionsIntegrationTest,
+// INSTANTIATE_TEST_SUITE_P(XmlEnabled, ObjectReadPreconditionsIntegrationTest,
 //                         ::testing::Values(TestParam{absl::nullopt}));
 
 }  // namespace
