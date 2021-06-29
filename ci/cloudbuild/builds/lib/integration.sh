@@ -41,7 +41,7 @@ curl -sSL --retry 10 -o /dev/shm/roots.pem https://pki.google.com/roots.pem
 #
 #   mapfile -t args < <(bazel::common_args)
 #   mapfile -t integration_args < <(integration::bazel_args)
-#   integration::bazel_with_emulators test "${args[@]}" "${integration_args}"
+#   integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
 #
 function integration::bazel_args() {
   declare -a args
@@ -134,7 +134,7 @@ function integration::bazel_args() {
 #
 #   mapfile -t args < <(bazel::common_args)
 #   mapfile -t integration_args < <(integration::bazel_args)
-#   integration::bazel_with_emulators test "${args[@]}" "${integration_args}"
+#   integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
 #
 function integration::bazel_with_emulators() {
   readonly EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
@@ -218,6 +218,22 @@ function integration::bazel_with_emulators() {
     "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_GRPC_URL=${hello_world_grpc}" \
     "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT}" \
     //google/cloud/examples/...
+}
+
+# Runs integration tests with bazel, like above, but without using emulators.
+function integration::bazel_without_emulators() {
+  if [[ $# == 0 ]]; then
+    io::log_red "error: bazel verb required"
+    return 1
+  fi
+
+  local verb="$1"
+  local args=("${@:2}")
+
+  io::log_h2 "Running Spanner integration tests"
+  bazel "${verb}" "${args[@]}" \
+    --test_tag_filters="integration-test" -- \
+    "//google/cloud/spanner/...:all"
 }
 
 # Runs integration tests with CTest using emulators. This function requires a
