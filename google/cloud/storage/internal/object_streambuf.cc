@@ -17,6 +17,7 @@
 #include "google/cloud/storage/object_stream.h"
 #include "absl/memory/memory.h"
 #include <cstring>
+#include <iterator>
 #include <sstream>
 
 namespace google {
@@ -68,9 +69,11 @@ StatusOr<ObjectReadStreambuf::int_type> ObjectReadStreambuf::Peek() {
   // assert(n <= current_ios_buffer_.size())
   current_ios_buffer_.resize(read_result->bytes_received);
 
-  for (auto const& kv : read_result->response.headers) {
+  auto hint = headers_.end();
+  for (auto& kv : read_result->response.headers) {
     hash_validator_->ProcessHeader(kv.first, kv.second);
-    headers_.emplace(kv.first, kv.second);
+    hint =
+        std::next(headers_.emplace_hint(hint, kv.first, std::move(kv.second)));
   }
   if (read_result->response.status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(read_result->response);
