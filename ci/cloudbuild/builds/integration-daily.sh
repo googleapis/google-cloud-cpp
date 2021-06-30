@@ -23,7 +23,7 @@
 # `ci/cloudbuild/triggers` directory. "Manual" triggers exist only within the
 # GCB UI at the time of this writing. Users with the appropriate access can run
 # this build by hand with:
-#   `ci/cloudbuild/build.sh --distro fedora integration-daily --project cloud-cpp-testing-resources`
+#   `ci/cloudbuild/build.sh --distro fedora-34 integration-daily --project cloud-cpp-testing-resources`
 
 set -eu
 
@@ -44,3 +44,7 @@ export GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance,backup"
 export GOOGLE_CLOUD_CPP_IAM_QUOTA_LIMITED_INTEGRATION_TESTS="yes"
 mapfile -t integration_args < <(integration::bazel_args)
 integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
+
+io::log_h2 "Running Spanner integration tests (against prod)"
+bazel test "${args[@]}" "${integration_args[@]}" \
+  --test_tag_filters="integration-test" google/cloud/spanner/...

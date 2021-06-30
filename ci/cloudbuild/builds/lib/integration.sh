@@ -41,7 +41,7 @@ curl -sSL --retry 10 -o /dev/shm/roots.pem https://pki.google.com/roots.pem
 #
 #   mapfile -t args < <(bazel::common_args)
 #   mapfile -t integration_args < <(integration::bazel_args)
-#   integration::bazel_with_emulators test "${args[@]}" "${integration_args}"
+#   integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
 #
 function integration::bazel_args() {
   declare -a args
@@ -134,7 +134,7 @@ function integration::bazel_args() {
 #
 #   mapfile -t args < <(bazel::common_args)
 #   mapfile -t integration_args < <(integration::bazel_args)
-#   integration::bazel_with_emulators test "${args[@]}" "${integration_args}"
+#   integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
 #
 function integration::bazel_with_emulators() {
   readonly EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
