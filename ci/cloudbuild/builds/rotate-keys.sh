@@ -99,6 +99,6 @@ args=(
 )
 for old_key in $(gcloud iam service-accounts keys list "${args[@]}"); do
   io::log "Deleting key: ${old_key}"
-  gcloud iam service-accounts keys delete "${old_key}" --account="${account}"
+  gcloud iam service-accounts keys delete "${old_key}" --iam-account="${account}"
 done
 echo
