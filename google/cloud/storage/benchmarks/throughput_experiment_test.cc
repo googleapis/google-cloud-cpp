@@ -23,6 +23,9 @@ namespace cloud {
 namespace storage_benchmarks {
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::AnyOf;
+
 class ThroughputExperimentIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
       public ::testing::WithParamInterface<ApiName> {
@@ -64,11 +67,10 @@ TEST_P(ThroughputExperimentIntegrationTest, Upload) {
                                       /*enable_crc32c=*/false,
                                       /*enable_md5=*/false};
     auto result = e->Run(bucket_name_, object_name, config);
-    EXPECT_STATUS_OK(result.status);
-    if (result.status.ok()) {
-      auto status = client->DeleteObject(bucket_name_, object_name);
-      EXPECT_STATUS_OK(status);
-    }
+    ASSERT_STATUS_OK(result.status);
+    auto status = client->DeleteObject(bucket_name_, object_name);
+    EXPECT_THAT(status,
+                StatusIs(AnyOf(StatusCode::kOk, StatusCode::kNotFound)));
   }
 }
 
@@ -108,7 +110,8 @@ TEST_P(ThroughputExperimentIntegrationTest, Download) {
     (void)e->Run(bucket_name_, object_name, config);
 
     auto status = client->DeleteObject(bucket_name_, object_name);
-    EXPECT_STATUS_OK(status);
+    EXPECT_THAT(status,
+                StatusIs(AnyOf(StatusCode::kOk, StatusCode::kNotFound)));
   }
 }
 
