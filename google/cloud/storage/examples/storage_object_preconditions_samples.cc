@@ -26,7 +26,7 @@ namespace {
 
 void InsertOnlyIfDoesNotExists(google::cloud::storage::Client client,
                                std::vector<std::string> const& argv) {
-  //! [insert only if does not exists]
+  //! [insert-only-if-does-not-exists]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
@@ -39,7 +39,7 @@ void InsertOnlyIfDoesNotExists(google::cloud::storage::Client client,
     std::cout << "The object " << metadata->name() << " was created in bucket "
               << metadata->bucket() << "\nFull metadata: " << *metadata << "\n";
   }
-  //! [insert only if does not exists]
+  //! [insert-only-if-does-not-exists]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
@@ -136,7 +136,7 @@ void RunAll(std::vector<std::string> const& argv) {
   std::string const object_media("The quick brown fox jumps over the lazy dog");
   auto const object_name = examples::MakeRandomObjectName(generator, "object-");
 
-  std::cout << "\nRunning InsertOnlyIfDoesNotExists() example [1]" << std::endl;
+  std::cout << "\nRunning InsertOnlyIfDoesNotExists() example" << std::endl;
   InsertOnlyIfDoesNotExists(client, {bucket_name, object_name, object_media});
 
   std::cout << "\nRunning ReadObjectIfGenerationMatch() example" << std::endl;

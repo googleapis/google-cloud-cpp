@@ -47,7 +47,7 @@ enum HttpStatusCode {
   // The libcurl library handles (most) redirects, so anything above 300 is
   // actually an error.
   kMinNotSuccess = 300,
-  // This is returned in some download requests instead of 412
+  // This is returned in some download requests instead of 412.
   kNotModified = 304,
 
   kBadRequest = 400,
