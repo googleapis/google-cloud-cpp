@@ -30,6 +30,7 @@ namespace {
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::AnyOf;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
@@ -129,7 +130,12 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
   auto reader = client->ReadObject(bucket_name(), object_name,
                                    IfGenerationNotMatch(meta->generation()));
   reader.Close();
-  EXPECT_THAT(reader.status(), StatusIs(StatusCode::kFailedPrecondition));
+  // GCS returns different error codes depending on the API used by the client
+  // library. This is a bit terrible, but in this context we just want to verify
+  // that (a) the pre-condition was set, and (b) it prevented the action from
+  // taking place.
+  EXPECT_THAT(reader.status(), StatusIs(AnyOf(StatusCode::kFailedPrecondition,
+                                              StatusCode::kAborted)));
 
   (void)client->DeleteObject(bucket_name(), object_name,
                              Generation(meta->generation()));
@@ -211,7 +217,12 @@ TEST_P(ObjectReadPreconditionsIntegrationTest,
       client->ReadObject(bucket_name(), object_name,
                          IfMetagenerationNotMatch(meta->metageneration()));
   reader.Close();
-  EXPECT_THAT(reader.status(), StatusIs(StatusCode::kFailedPrecondition));
+  // GCS returns different error codes depending on the API used by the client
+  // library. This is a bit terrible, but in this context we just want to verify
+  // that (a) the pre-condition was set, and (b) it prevented the action from
+  // taking place.
+  EXPECT_THAT(reader.status(), StatusIs(AnyOf(StatusCode::kFailedPrecondition,
+                                              StatusCode::kAborted)));
 
   (void)client->DeleteObject(bucket_name(), object_name,
                              Generation(meta->generation()));
