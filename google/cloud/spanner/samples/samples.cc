@@ -86,19 +86,56 @@ void CreateInstance(google::cloud::spanner::InstanceAdminClient client,
                   .Build())
           .get();
   if (!instance) throw std::runtime_error(instance.status().message());
-  std::cout << "Created instance [" << in << "]\n";
+  std::cout << "Created instance [" << in << "]:\n" << instance->DebugString();
 }
 //! [END spanner_create_instance] [create-instance]
 
+// [START spanner_create_instance_with_processing_units]
+void CreateInstanceWithProcessingUnits(
+    google::cloud::spanner::InstanceAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& display_name, std::string const& config) {
+  namespace spanner = google::cloud::spanner;
+  spanner::Instance in(project_id, instance_id);
+
+  std::string instance_config =
+      "projects/" + project_id + "/instanceConfigs/" + config;
+  auto instance =
+      client
+          .CreateInstance(
+              spanner::CreateInstanceRequestBuilder(in, instance_config)
+                  .SetDisplayName(display_name)
+                  .SetProcessingUnits(500)
+                  .SetLabels({{"cloud_spanner_samples", "true"}})
+                  .Build())
+          .get();
+  if (!instance) throw std::runtime_error(instance.status().message());
+  std::cout << "Created instance [" << in << "]:\n" << instance->DebugString();
+
+  instance = client.GetInstance(in);
+  if (!instance) throw std::runtime_error(instance.status().message());
+  std::cout << "Instance " << in << " has " << instance->processing_units()
+            << " processing units.\n";
+}
+// [END spanner_create_instance_with_processing_units]
+
 void CreateInstanceCommand(std::vector<std::string> argv) {
+  bool low_cost = !argv.empty() && argv.front() == "--low-cost";
+  if (low_cost) argv.erase(argv.begin());
   if (argv.size() != 3 && argv.size() != 4) {
     throw std::runtime_error(
-        "create-instance <project-id> <instance-id> <display_name> [config]");
+        "create-instance [--low-cost] <project-id> <instance-id>"
+        " <display_name> [config]");
   }
   google::cloud::spanner::InstanceAdminClient client(
       google::cloud::spanner::MakeInstanceAdminConnection());
   std::string config = argv.size() == 4 ? argv[3] : "regional-us-central1";
-  CreateInstance(std::move(client), argv[0], argv[1], argv[2], config);
+  if (low_cost) {
+    CreateInstanceWithProcessingUnits(std::move(client), argv[0], argv[1],
+                                      argv[2], config);
+  } else {
+    CreateInstance(std::move(client), argv[0], argv[1], argv[2], config);
+  }
 }
 
 //! [update-instance]
@@ -3418,6 +3455,21 @@ void RunAllSlowInstanceTests(
 
   std::cout << "\nRunning delete-instance sample" << std::endl;
   DeleteInstance(instance_admin_client, project_id, crud_instance_id);
+
+  if (!emulator) {
+    std::cout
+        << "\nRunning spanner_create_instance_with_processing_units sample"
+        << std::endl;
+    // TODO(#6894): Change "regional-us-central1" to `config` when low-cost
+    // instances are generally available (well, at least in the regions that
+    // `PickConfig()` might return).
+    CreateInstanceWithProcessingUnits(
+        instance_admin_client, project_id, crud_instance_id,
+        "Test Low-Cost Instance", "regional-us-central1");
+
+    std::cout << "\nRunning delete-instance sample" << std::endl;
+    DeleteInstance(instance_admin_client, project_id, crud_instance_id);
+  }
 }
 
 void RunAll(bool emulator) {
