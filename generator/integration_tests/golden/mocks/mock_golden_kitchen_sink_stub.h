@@ -73,6 +73,8 @@ public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD((absl::variant<Status, ::google::test::admin::database::v1::TailLogEntriesResponse>), Read, (),
   (override));
+  MOCK_METHOD(internal::StreamingRpcMetadata, GetRequestMetadata, (),
+  (const, override));
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

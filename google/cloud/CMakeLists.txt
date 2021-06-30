@@ -427,6 +427,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/setup_context.h
         internal/streaming_read_rpc.cc
         internal/streaming_read_rpc.h
+        internal/streaming_read_rpc_logging.cc
         internal/streaming_read_rpc_logging.h
         internal/streaming_write_rpc.cc
         internal/streaming_write_rpc.h
