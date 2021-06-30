@@ -64,11 +64,9 @@ TEST_P(ThroughputExperimentIntegrationTest, Upload) {
                                       /*enable_crc32c=*/false,
                                       /*enable_md5=*/false};
     auto result = e->Run(bucket_name_, object_name, config);
-    EXPECT_STATUS_OK(result.status);
-    if (result.status.ok()) {
-      auto status = client->DeleteObject(bucket_name_, object_name);
-      EXPECT_STATUS_OK(status);
-    }
+    ASSERT_STATUS_OK(result.status);
+    // This is not checked as it is just for cleanup.
+    (void)client->DeleteObject(bucket_name_, object_name);
   }
 }
 
@@ -106,9 +104,8 @@ TEST_P(ThroughputExperimentIntegrationTest, Download) {
     // With the raw protocols this might fail, that is fine, we just want the
     // code to not crash and return the result (including failures).
     (void)e->Run(bucket_name_, object_name, config);
-
-    auto status = client->DeleteObject(bucket_name_, object_name);
-    EXPECT_STATUS_OK(status);
+    // This is not checked as it is just for cleanup.
+    (void)client->DeleteObject(bucket_name_, object_name);
   }
 }
 
