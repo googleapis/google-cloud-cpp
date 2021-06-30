@@ -35,6 +35,7 @@ set(storage_client_integration_tests
     object_file_multi_threaded_test.cc
     object_hash_integration_test.cc
     object_insert_integration_test.cc
+    object_insert_preconditions_integration_test.cc
     object_integration_test.cc
     object_list_objects_versions_integration_test.cc
     object_media_integration_test.cc

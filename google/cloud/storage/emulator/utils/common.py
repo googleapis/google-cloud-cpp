@@ -92,7 +92,7 @@ class FakeRequest(types.SimpleNamespace):
     def xml_headers_to_json_args(cls, headers):
         field_map = {
             "x-goog-if-generation-match": "ifGenerationMatch",
-            "x-goog-if-meta-generation-match": "ifMetagenerationMatch",
+            "x-goog-if-metageneration-match": "ifMetagenerationMatch",
             "x-goog-acl": "predefinedAcl",
         }
         args = {}
