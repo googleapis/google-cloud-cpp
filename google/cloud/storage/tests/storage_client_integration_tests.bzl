@@ -47,6 +47,7 @@ storage_client_integration_tests = [
     "object_resumable_parallel_upload_integration_test.cc",
     "object_resumable_write_integration_test.cc",
     "object_rewrite_integration_test.cc",
+    "object_write_preconditions_integration_test.cc",
     "object_write_streambuf_integration_test.cc",
     "service_account_integration_test.cc",
     "signed_url_conformance_test.cc",
