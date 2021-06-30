@@ -1222,7 +1222,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
   // IfGenerationNotMatch cannot be set, checked by the caller.
   if (request.HasOption<IfMetagenerationMatch>()) {
     builder.AddHeader(
-        "x-goog-if-meta-generation-match: " +
+        "x-goog-if-metageneration-match: " +
         std::to_string(request.GetOption<IfMetagenerationMatch>().value()));
   }
   // IfMetagenerationNotMatch cannot be set, checked by the caller.
