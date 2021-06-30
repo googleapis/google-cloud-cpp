@@ -112,7 +112,6 @@ add_library(
     mutations.h
     numeric.cc
     numeric.h
-    options.cc
     options.h
     partition_options.cc
     partition_options.h
