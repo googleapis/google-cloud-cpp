@@ -67,7 +67,7 @@ TEST_F(ObjectReadHeadersIntegrationTest, SmokeTest) {
   EXPECT_THAT(is.status(), IsOk());
 
   // The headers returned by the service depend on the API. This is not an
-  // implementation detail we want to hide, one of the uses of these headers
+  // implementation detail we want to hide, as one of the uses of these headers
   // is to help in troubleshooting by exposing API-specific information.
   auto keys = [](HeadersMap const& headers) {
     std::vector<std::string> keys(headers.size());
@@ -80,7 +80,6 @@ TEST_F(ObjectReadHeadersIntegrationTest, SmokeTest) {
                 IsSupersetOf({":grpc-context-peer", "x-goog-hash"}));
   } else if (UsingEmulator()) {
     EXPECT_THAT(keys(is.headers()), IsSupersetOf({"x-goog-hash"}));
-
   } else {
     EXPECT_THAT(keys(is.headers()),
                 IsSupersetOf({"x-guploader-uploadid", "x-goog-hash",

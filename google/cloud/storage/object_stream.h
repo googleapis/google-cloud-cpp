@@ -153,7 +153,7 @@ class ObjectReadStream : public std::basic_istream<char> {
   std::string const& computed_hash() const { return buf_->computed_hash(); }
 
   /**
-   * The headers (in any) returned by the service, for debugging only.
+   * The headers (in any) returned by the service. For debugging only.
    *
    * @warning the contents of these headers may change without notice. Unless
    *     documented in the API, headers may be removed or added by the service.
@@ -384,7 +384,7 @@ class ObjectWriteStream : public std::basic_ostream<char> {
   std::string const& computed_hash() const { return buf_->computed_hash(); }
 
   /**
-   * The headers (in any) returned by the service, for debugging only.
+   * The headers (in any) returned by the service. For debugging only.
    *
    * @warning the contents of these headers may change without notice. Unless
    *     documented in the API, headers may be removed or added by the service.

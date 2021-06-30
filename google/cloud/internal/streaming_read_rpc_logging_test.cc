@@ -111,7 +111,6 @@ TEST_F(StreamingReadRpcLoggingTest, FormatMetadata) {
       {{{"a", "b"}, {"k", "v"}}, "{a: b}, {k: v}"},
   };
   for (auto const& test : cases) {
-    SCOPED_TRACE("Testing for <" + test.expected + ">");
     auto const actual = FormatMetadata(test.metadata);
     EXPECT_EQ(test.expected, actual);
   }
