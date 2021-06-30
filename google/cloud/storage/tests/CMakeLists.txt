@@ -41,6 +41,7 @@ set(storage_client_integration_tests
     object_parallel_upload_integration_test.cc
     object_plenty_clients_serially_integration_test.cc
     object_plenty_clients_simultaneously_integration_test.cc
+    object_read_preconditions_integration_test.cc
     object_read_range_integration_test.cc
     object_resumable_parallel_upload_integration_test.cc
     object_resumable_write_integration_test.cc

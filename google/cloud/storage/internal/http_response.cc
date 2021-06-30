@@ -52,13 +52,20 @@ Status AsStatus(HttpResponse const& http_response) {
     // handle, i.e., the mapping depends on the operation.
     return Status(StatusCode::kFailedPrecondition, http_response.payload);
   }
+  if (http_response.status_code == HttpStatusCode::kNotModified) {
+    // 304 - Not Modified: evidently GCS returns 304 for some failed
+    // pre-conditions. It is somewhat strange that it also returns this error
+    // code for downloads, which is always read-only and was not going to modify
+    // anything. In any case, it seems too confusing to return anything other
+    // than kFailedPrecondition here.
+    return Status(StatusCode::kFailedPrecondition, http_response.payload);
+  }
   if (HttpStatusCode::kMinRedirects <= http_response.status_code &&
       http_response.status_code < HttpStatusCode::kMinRequestErrors) {
     // The 300s should be handled by libcurl, we should not get them, according
     // to the Google Cloud Storage documentation these are:
     // 302 - Found
     // 303 - See Other
-    // 304 - Not Modified
     // 307 - Temporary Redirect
     return Status(StatusCode::kUnknown, http_response.payload);
   }
