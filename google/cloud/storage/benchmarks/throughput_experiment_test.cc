@@ -23,6 +23,9 @@ namespace cloud {
 namespace storage_benchmarks {
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::AnyOf;
+
 class ThroughputExperimentIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
       public ::testing::WithParamInterface<ApiName> {
@@ -65,8 +68,9 @@ TEST_P(ThroughputExperimentIntegrationTest, Upload) {
                                       /*enable_md5=*/false};
     auto result = e->Run(bucket_name_, object_name, config);
     ASSERT_STATUS_OK(result.status);
-    // This is not checked as it is just for cleanup.
-    (void)client->DeleteObject(bucket_name_, object_name);
+    auto status = client->DeleteObject(bucket_name_, object_name);
+    EXPECT_THAT(status,
+                StatusIs(AnyOf(StatusCode::kOk, StatusCode::kNotFound)));
   }
 }
 
@@ -104,8 +108,10 @@ TEST_P(ThroughputExperimentIntegrationTest, Download) {
     // With the raw protocols this might fail, that is fine, we just want the
     // code to not crash and return the result (including failures).
     (void)e->Run(bucket_name_, object_name, config);
-    // This is not checked as it is just for cleanup.
-    (void)client->DeleteObject(bucket_name_, object_name);
+
+    auto status = client->DeleteObject(bucket_name_, object_name);
+    EXPECT_THAT(status,
+                StatusIs(AnyOf(StatusCode::kOk, StatusCode::kNotFound)));
   }
 }
 
