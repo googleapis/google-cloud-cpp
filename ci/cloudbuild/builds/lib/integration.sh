@@ -220,22 +220,6 @@ function integration::bazel_with_emulators() {
     //google/cloud/examples/...
 }
 
-# Runs integration tests with bazel, like above, but without using emulators.
-function integration::bazel_without_emulators() {
-  if [[ $# == 0 ]]; then
-    io::log_red "error: bazel verb required"
-    return 1
-  fi
-
-  local verb="$1"
-  local args=("${@:2}")
-
-  io::log_h2 "Running Spanner integration tests"
-  bazel "${verb}" "${args[@]}" \
-    --test_tag_filters="integration-test" -- \
-    "//google/cloud/spanner/...:all"
-}
-
 # Runs integration tests with CTest using emulators. This function requires a
 # first argument that is the "cmake-out" directory where the tests live.
 #
