@@ -63,7 +63,9 @@
   the call site. See [#5929] for more details.
 </details>
 
-## v1.29.0 - TBD
+## v1.30.0 - TBD
+
+## v1.29.0 - 2021-07
 
 ### Bigtable:
 
