@@ -95,11 +95,14 @@ In general, do not create the release branch before this PR is *merged*. We want
 to create the release from a stable point in the default branch (`main`), and
 we want this point to include the updated release notes and API baselines.
 There may be exceptions to this guideline, you are encouraged to use your own
-judgement.
+judgment.
 
 ## Creating the release
 
 > :warning: the `release.sh` script was broken as of 2021-07.
+> See [#6682] for details
+
+[#6682]: https://github.com/googleapis/google-cloud-cpp/issues/6682
 
 We next need to create the release tag, the release branch, and create the
 release in the GitHub UI. We use a script ([`release/release.sh`]) to automate
@@ -113,7 +116,7 @@ First run the following command -- which will *NOT* make any changes to any
 repos -- and verify that the output and *version numbers* look correct.
 
 ```bash
-$ `release/release.sh googleapis/google-cloud-cpp`
+$ release/release.sh googleapis/google-cloud-cpp
 ```
 
 If the output from the previous command looks OK, rerun the command with the
@@ -175,8 +178,10 @@ Please note that we use more strict settings for release branches than for
   * The `Require branches to be up to date before merging` sub-option
     is set. This prevents two merges that do not conflict, but nevertheless
     break if both are pushed, to actually merge.
-  * _At a minimum_ the `cla/google`, `asan-pr`, and `clang-tidy-pr` checks are
-    required to pass, but more may be selected.
+  * _At a minimum_ the `cla/google`, `asan-pr`, and `clang-tidy-pr` checks should
+    be marked as "required". You may consider adding additional builds if it
+    would prevent embarrassing failures, but consider the tradeoff of merges
+    blocked by flaky builds.
 
 * The `Include administrators` checkbox is turned on, we want to stop ourselves
   from making mistakes.
