@@ -83,6 +83,7 @@ TEST_P(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
       bucket_name_, object_name, expected, IfGenerationMatch(0),
       DisableCrc32cChecksum(true), DisableMD5Hash(true));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
@@ -90,9 +91,6 @@ TEST_P(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, XmlInsertWithNonUrlSafeName) {
@@ -107,6 +105,7 @@ TEST_P(ObjectInsertIntegrationTest, XmlInsertWithNonUrlSafeName) {
   StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name_, object_name, expected, IfGenerationMatch(0), Fields(""));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
@@ -114,9 +113,6 @@ TEST_P(ObjectInsertIntegrationTest, XmlInsertWithNonUrlSafeName) {
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
@@ -131,6 +127,7 @@ TEST_P(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
   StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name_, object_name, expected, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
@@ -138,9 +135,6 @@ TEST_P(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertWithMD5) {
@@ -156,6 +150,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithMD5) {
       bucket_name_, object_name, expected, IfGenerationMatch(0),
       MD5HashValue("96HF9K981B+JfoQuTVnyCg=="));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
@@ -163,9 +158,6 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithMD5) {
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
@@ -181,6 +173,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
       bucket_name_, object_name, expected, IfGenerationMatch(0),
       MD5HashValue(ComputeMD5Hash(expected)));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
@@ -188,9 +181,6 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
@@ -206,6 +196,7 @@ TEST_P(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
       bucket_name_, object_name, expected, IfGenerationMatch(0), Fields(""),
       MD5HashValue("96HF9K981B+JfoQuTVnyCg=="));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
@@ -213,9 +204,6 @@ TEST_P(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertWithMetadata) {
@@ -233,6 +221,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithMetadata) {
                              .upsert_metadata("test-key", "test-value")
                              .set_content_type("text/plain")));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
   EXPECT_TRUE(meta->has_metadata("test-key"));
@@ -243,9 +232,6 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithMetadata) {
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
@@ -258,14 +244,13 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
       bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
       PredefinedAcl::AuthenticatedRead(), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
   EXPECT_LT(0, CountMatchingEntities(meta->acl(),
                                      ObjectAccessControl()
                                          .set_entity("allAuthenticatedUsers")
                                          .set_role("READER")))
       << *meta;
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
@@ -284,13 +269,12 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
       bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
       PredefinedAcl::BucketOwnerFullControl(), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
   EXPECT_LT(0, CountMatchingEntities(
                    meta->acl(),
                    ObjectAccessControl().set_entity(owner).set_role("OWNER")))
       << *meta;
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
@@ -309,14 +293,12 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
       bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
       PredefinedAcl::BucketOwnerRead(), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   EXPECT_LT(0, CountMatchingEntities(
                    meta->acl(),
                    ObjectAccessControl().set_entity(owner).set_role("READER")))
       << *meta;
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
@@ -329,6 +311,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
       bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
       PredefinedAcl::Private(), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   ASSERT_TRUE(meta->has_owner());
   EXPECT_LT(0, CountMatchingEntities(meta->acl(),
@@ -336,9 +319,6 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
                                          .set_entity(meta->owner().entity)
                                          .set_role("OWNER")))
       << *meta;
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclProjectPrivate) {
@@ -351,15 +331,14 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclProjectPrivate) {
       bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
       PredefinedAcl::ProjectPrivate(), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
   ASSERT_TRUE(meta->has_owner());
   EXPECT_LT(0, CountMatchingEntities(meta->acl(),
                                      ObjectAccessControl()
                                          .set_entity(meta->owner().entity)
                                          .set_role("OWNER")))
       << *meta;
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
@@ -372,14 +351,13 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
       bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
       PredefinedAcl::PublicRead(), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
   EXPECT_LT(
       0, CountMatchingEntities(
              meta->acl(),
              ObjectAccessControl().set_entity("allUsers").set_role("READER")))
       << *meta;
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclAuthenticatedRead) {
@@ -396,14 +374,13 @@ TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclAuthenticatedRead) {
   StatusOr<ObjectMetadata> meta =
       client->GetObjectMetadata(bucket_name_, object_name, Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
   EXPECT_LT(0, CountMatchingEntities(meta->acl(),
                                      ObjectAccessControl()
                                          .set_entity("allAuthenticatedUsers")
                                          .set_role("READER")))
       << *meta;
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest,
@@ -427,13 +404,12 @@ TEST_P(ObjectInsertIntegrationTest,
   StatusOr<ObjectMetadata> meta =
       client->GetObjectMetadata(bucket_name_, object_name, Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
   EXPECT_LT(0, CountMatchingEntities(
                    meta->acl(),
                    ObjectAccessControl().set_entity(owner).set_role("OWNER")))
       << *meta;
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerRead) {
@@ -456,13 +432,12 @@ TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerRead) {
   StatusOr<ObjectMetadata> meta =
       client->GetObjectMetadata(bucket_name_, object_name, Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
   EXPECT_LT(0, CountMatchingEntities(
                    meta->acl(),
                    ObjectAccessControl().set_entity(owner).set_role("READER")))
       << *meta;
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPrivate) {
@@ -479,15 +454,14 @@ TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPrivate) {
   StatusOr<ObjectMetadata> meta =
       client->GetObjectMetadata(bucket_name_, object_name, Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
   ASSERT_TRUE(meta->has_owner());
   EXPECT_LT(0, CountMatchingEntities(meta->acl(),
                                      ObjectAccessControl()
                                          .set_entity(meta->owner().entity)
                                          .set_role("OWNER")))
       << *meta;
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclProjectPrivate) {
@@ -504,15 +478,14 @@ TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclProjectPrivate) {
   StatusOr<ObjectMetadata> meta =
       client->GetObjectMetadata(bucket_name_, object_name, Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
   ASSERT_TRUE(meta->has_owner());
   EXPECT_LT(0, CountMatchingEntities(meta->acl(),
                                      ObjectAccessControl()
                                          .set_entity(meta->owner().entity)
                                          .set_role("OWNER")))
       << *meta;
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPublicRead) {
@@ -529,14 +502,13 @@ TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPublicRead) {
   StatusOr<ObjectMetadata> meta =
       client->GetObjectMetadata(bucket_name_, object_name, Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
   EXPECT_LT(
       0, CountMatchingEntities(
              meta->acl(),
              ObjectAccessControl().set_entity("allUsers").set_role("READER")))
       << *meta;
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 /**
@@ -557,14 +529,12 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
       client.InsertObject(bucket_name_, object_name, LoremIpsum(),
                           IfGenerationMatch(0), QuotaUser("test-quota-user"));
   ASSERT_STATUS_OK(insert_meta);
+  ScheduleForDelete(*insert_meta);
 
   EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr(" POST "),
                              HasSubstr("/b/" + bucket_name_ + "/o"),
                              HasSubstr("quotaUser=test-quota-user"))));
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 /**
@@ -585,14 +555,12 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithUserIp) {
       client.InsertObject(bucket_name_, object_name, LoremIpsum(),
                           IfGenerationMatch(0), UserIp("127.0.0.1"));
   ASSERT_STATUS_OK(insert_meta);
+  ScheduleForDelete(*insert_meta);
 
   EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr(" POST "),
                              HasSubstr("/b/" + bucket_name_ + "/o"),
                              HasSubstr("userIp=127.0.0.1"))));
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 /**
@@ -616,8 +584,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
     auto insert =
         client.InsertObject(bucket_name_, seed_object_name, LoremIpsum());
     ASSERT_STATUS_OK(insert);
-    auto status = client.DeleteObject(bucket_name_, seed_object_name);
-    ASSERT_STATUS_OK(status);
+    ScheduleForDelete(*insert);
   }
 
   testing_util::ScopedLog log;
@@ -625,14 +592,12 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
       client.InsertObject(bucket_name_, object_name, LoremIpsum(),
                           IfGenerationMatch(0), UserIp(""));
   ASSERT_STATUS_OK(insert_meta);
+  ScheduleForDelete(*insert_meta);
 
   EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr(" POST "),
                              HasSubstr("/b/" + bucket_name_ + "/o"),
                              HasSubstr("userIp="))));
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertWithContentType) {
@@ -646,11 +611,9 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithContentType) {
       client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), ContentType("text/plain"));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   EXPECT_EQ("text/plain", meta->content_type());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertFailure) {
@@ -665,6 +628,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertFailure) {
   StatusOr<ObjectMetadata> insert = client->InsertObject(
       bucket_name_, object_name, expected, IfGenerationMatch(0));
   ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
   EXPECT_EQ(object_name, insert->name());
   EXPECT_EQ(bucket_name_, insert->bucket());
 
@@ -672,9 +636,6 @@ TEST_P(ObjectInsertIntegrationTest, InsertFailure) {
   StatusOr<ObjectMetadata> failure = client->InsertObject(
       bucket_name_, object_name, expected, IfGenerationMatch(0));
   EXPECT_THAT(failure, Not(IsOk())) << "metadata=" << failure.value();
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertXmlFailure) {
@@ -689,6 +650,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertXmlFailure) {
   StatusOr<ObjectMetadata> insert = client->InsertObject(
       bucket_name_, object_name, expected, Fields(""), IfGenerationMatch(0));
   ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
 
   EXPECT_EQ(object_name, insert->name());
   EXPECT_EQ(bucket_name_, insert->bucket());
@@ -697,9 +659,6 @@ TEST_P(ObjectInsertIntegrationTest, InsertXmlFailure) {
   StatusOr<ObjectMetadata> failure = client->InsertObject(
       bucket_name_, object_name, expected, Fields(""), IfGenerationMatch(0));
   EXPECT_THAT(failure, Not(IsOk())) << "metadata=" << failure.value();
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 INSTANTIATE_TEST_SUITE_P(

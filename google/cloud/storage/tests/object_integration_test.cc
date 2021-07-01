@@ -59,6 +59,7 @@ TEST_F(ObjectIntegrationTest, FullPatch) {
       client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection("full"));
   ASSERT_STATUS_OK(original);
+  ScheduleForDelete(*original);
 
   ObjectMetadata desired = *original;
   desired.mutable_acl().push_back(ObjectAccessControl()
@@ -115,9 +116,6 @@ TEST_F(ObjectIntegrationTest, FullPatch) {
   EXPECT_EQ(desired.content_language(), patched->content_language());
   EXPECT_EQ(desired.content_type(), patched->content_type());
   EXPECT_EQ(desired.metadata(), patched->metadata());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsDelimiter) {
@@ -125,26 +123,14 @@ TEST_F(ObjectIntegrationTest, ListObjectsDelimiter) {
   ASSERT_STATUS_OK(client);
 
   auto object_prefix = MakeRandomObjectName();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/foo", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/foo/bar", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/foo/baz", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/qux/quux", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/something", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
+  for (auto const* suffix :
+       {"/foo", "/foo/bar", "/foo/baz", "/qux/quux", "/something"}) {
+    auto meta =
+        client->InsertObject(bucket_name_, object_prefix + suffix, LoremIpsum(),
+                             storage::IfGenerationMatch(0));
+    ASSERT_STATUS_OK(meta);
+    ScheduleForDelete(*meta);
+  }
 
   ListObjectsReader reader = client->ListObjects(
       bucket_name_, Prefix(object_prefix + "/"), Delimiter("/"));
@@ -157,10 +143,6 @@ TEST_F(ObjectIntegrationTest, ListObjectsDelimiter) {
   EXPECT_THAT(actual, UnorderedElementsAre(object_prefix + "/foo",
                                            object_prefix + "/something"));
   reader = client->ListObjects(bucket_name_, Prefix(object_prefix));
-  for (auto& meta : reader) {
-    ASSERT_STATUS_OK(meta);
-    client->DeleteObject(bucket_name_, meta->name());
-  }
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsAndPrefixes) {
@@ -168,26 +150,14 @@ TEST_F(ObjectIntegrationTest, ListObjectsAndPrefixes) {
   ASSERT_STATUS_OK(client);
 
   auto object_prefix = MakeRandomObjectName();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/foo", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/foo/bar", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/foo/baz", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/qux/quux", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/something", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
+  for (auto const* suffix :
+       {"/foo", "/foo/bar", "/foo/baz", "/qux/quux", "/something"}) {
+    auto meta =
+        client->InsertObject(bucket_name_, object_prefix + suffix, LoremIpsum(),
+                             storage::IfGenerationMatch(0));
+    ASSERT_STATUS_OK(meta);
+    ScheduleForDelete(*meta);
+  }
 
   ListObjectsAndPrefixesReader reader = client->ListObjectsAndPrefixes(
       bucket_name_, Prefix(object_prefix + "/"), Delimiter("/"));
@@ -207,12 +177,6 @@ TEST_F(ObjectIntegrationTest, ListObjectsAndPrefixes) {
                                              object_prefix + "/foo/"));
   EXPECT_THAT(objects, UnorderedElementsAre(object_prefix + "/something",
                                             object_prefix + "/foo"));
-  ListObjectsReader delete_reader =
-      client->ListObjects(bucket_name_, Prefix(object_prefix));
-  for (auto& meta : delete_reader) {
-    ASSERT_STATUS_OK(meta);
-    client->DeleteObject(bucket_name_, meta->name());
-  }
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsStartEndOffset) {
@@ -220,26 +184,14 @@ TEST_F(ObjectIntegrationTest, ListObjectsStartEndOffset) {
   ASSERT_STATUS_OK(client);
 
   auto object_prefix = MakeRandomObjectName();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/foo", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/foo/bar", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/foo/baz", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/qux/quux", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/something", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
+  for (auto const* suffix :
+       {"/foo", "/foo/bar", "/foo/baz", "/qux/quux", "/something"}) {
+    auto meta =
+        client->InsertObject(bucket_name_, object_prefix + suffix, LoremIpsum(),
+                             storage::IfGenerationMatch(0));
+    ASSERT_STATUS_OK(meta);
+    ScheduleForDelete(*meta);
+  }
 
   ListObjectsAndPrefixesReader reader = client->ListObjectsAndPrefixes(
       bucket_name_, Prefix(object_prefix + "/"), Delimiter("/"),
@@ -258,12 +210,6 @@ TEST_F(ObjectIntegrationTest, ListObjectsStartEndOffset) {
   }
   EXPECT_THAT(prefixes, UnorderedElementsAre(object_prefix + "/foo/"));
   EXPECT_THAT(objects, UnorderedElementsAre(object_prefix + "/foo"));
-  ListObjectsReader delete_reader =
-      client->ListObjects(bucket_name_, Prefix(object_prefix));
-  for (auto& meta : delete_reader) {
-    ASSERT_STATUS_OK(meta);
-    client->DeleteObject(bucket_name_, meta->name());
-  }
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsIncludeTrailingDelimiter) {
@@ -271,30 +217,14 @@ TEST_F(ObjectIntegrationTest, ListObjectsIncludeTrailingDelimiter) {
   ASSERT_STATUS_OK(client);
 
   auto object_prefix = MakeRandomObjectName();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/foo", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/foo/", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/foo/bar", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/something", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/something/", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
-  client
-      ->InsertObject(bucket_name_, object_prefix + "/qux/", LoremIpsum(),
-                     storage::IfGenerationMatch(0))
-      .value();
+  for (auto const* suffix : {"/foo", "/foo/", "/foo/bar", "/foo/baz", "/qux/",
+                             "/qux/quux", "/something", "/something/"}) {
+    auto meta =
+        client->InsertObject(bucket_name_, object_prefix + suffix, LoremIpsum(),
+                             storage::IfGenerationMatch(0));
+    ASSERT_STATUS_OK(meta);
+    ScheduleForDelete(*meta);
+  }
 
   ListObjectsAndPrefixesReader reader = client->ListObjectsAndPrefixes(
       bucket_name_, Prefix(object_prefix + "/"), Delimiter("/"),
@@ -319,12 +249,6 @@ TEST_F(ObjectIntegrationTest, ListObjectsIncludeTrailingDelimiter) {
                                             object_prefix + "/something",
                                             object_prefix + "/something/",
                                             object_prefix + "/qux/"));
-  ListObjectsReader delete_reader =
-      client->ListObjects(bucket_name_, Prefix(object_prefix));
-  for (auto& meta : delete_reader) {
-    ASSERT_STATUS_OK(meta);
-    client->DeleteObject(bucket_name_, meta->name());
-  }
 }
 
 TEST_F(ObjectIntegrationTest, BasicReadWrite) {
@@ -339,6 +263,7 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name_, object_name, expected, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
@@ -347,9 +272,6 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectIntegrationTest, BasicReadWriteBinary) {
@@ -374,6 +296,7 @@ TEST_F(ObjectIntegrationTest, BasicReadWriteBinary) {
   StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name_, object_name, expected, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
@@ -382,9 +305,6 @@ TEST_F(ObjectIntegrationTest, BasicReadWriteBinary) {
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectIntegrationTest, EncryptedReadWrite) {
@@ -401,6 +321,7 @@ TEST_F(ObjectIntegrationTest, EncryptedReadWrite) {
       client->InsertObject(bucket_name_, object_name, expected,
                            IfGenerationMatch(0), EncryptionKey(key));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
@@ -413,9 +334,6 @@ TEST_F(ObjectIntegrationTest, EncryptedReadWrite) {
       client->ReadObject(bucket_name_, object_name, EncryptionKey(key));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectIntegrationTest, ReadNotFound) {
@@ -449,6 +367,7 @@ TEST_F(ObjectIntegrationTest, StreamingWrite) {
 
   os.Close();
   ObjectMetadata meta = os.metadata().value();
+  ScheduleForDelete(meta);
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name_, meta.bucket());
   auto expected_str = expected.str();
@@ -460,9 +379,6 @@ TEST_F(ObjectIntegrationTest, StreamingWrite) {
   ASSERT_FALSE(actual.empty());
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
   EXPECT_EQ(expected_str, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectIntegrationTest, StreamingResumableWriteSizeMismatch) {
@@ -526,6 +442,7 @@ TEST_F(ObjectIntegrationTest, StreamingWriteEmpty) {
   os.Close();
   ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
+  ScheduleForDelete(meta);
   ASSERT_EQ(object_name, meta.name());
   ASSERT_EQ(bucket_name_, meta.bucket());
   ASSERT_EQ(0U, meta.size());
@@ -534,9 +451,6 @@ TEST_F(ObjectIntegrationTest, StreamingWriteEmpty) {
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_TRUE(actual.empty());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
@@ -559,6 +473,7 @@ TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
 
   os.Close();
   ObjectMetadata meta = os.metadata().value();
+  ScheduleForDelete(meta);
   // When asking for an empty list of fields we should not expect any values:
   EXPECT_TRUE(meta.bucket().empty());
   EXPECT_TRUE(meta.name().empty());
@@ -570,9 +485,6 @@ TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
   auto expected_str = expected.str();
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
   EXPECT_EQ(expected_str, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectIntegrationTest, XmlReadWrite) {
@@ -587,6 +499,7 @@ TEST_F(ObjectIntegrationTest, XmlReadWrite) {
   StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name_, object_name, expected, IfGenerationMatch(0), Fields(""));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
@@ -595,9 +508,6 @@ TEST_F(ObjectIntegrationTest, XmlReadWrite) {
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
@@ -610,6 +520,7 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
   auto insert = client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                                      IfGenerationMatch(0));
   ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
 
   auto entity_name = MakeEntityName();
   StatusOr<std::vector<ObjectAccessControl>> initial_acl =
@@ -659,9 +570,6 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
   current_acl = client->ListObjectAcl(bucket_name_, object_name);
   ASSERT_STATUS_OK(current_acl);
   EXPECT_THAT(AclEntityNames(*current_acl), Not(Contains(result->entity())));
-
-  status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectIntegrationTest, WriteWithContentType) {
@@ -680,12 +588,11 @@ TEST_F(ObjectIntegrationTest, WriteWithContentType) {
   os << LoremIpsum();
   os.Close();
   ObjectMetadata meta = os.metadata().value();
+  ScheduleForDelete(meta);
+
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name_, meta.bucket());
   EXPECT_EQ("text/plain", meta.content_type());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectIntegrationTest, GetObjectMetadataFailure) {
@@ -711,6 +618,7 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
   StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name_, object_name, expected, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
@@ -732,9 +640,6 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
             << " status=" << os.metadata().status();
       },
       "" /* the message generated by the C++ runtime is unknown */);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWriteFailureNoex) {
@@ -749,6 +654,7 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailureNoex) {
   StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name_, object_name, expected, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
@@ -766,8 +672,6 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailureNoex) {
       os.metadata().status().code(),
       AnyOf(Eq(StatusCode::kFailedPrecondition), Eq(StatusCode::kAborted)))
       << " status=" << os.metadata().status();
-
-  client->DeleteObject(bucket_name_, object_name);
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsFailure) {
@@ -939,12 +843,11 @@ TEST_F(ObjectIntegrationTest, InsertWithCustomTime) {
       bucket_name_, object_name, expected, IfGenerationMatch(0),
       WithObjectMetadata(ObjectMetadata{}.set_custom_time(custom_time)));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
   EXPECT_EQ(custom_time, meta->custom_time());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(ObjectIntegrationTest, WriteWithCustomTime) {
@@ -966,12 +869,11 @@ TEST_F(ObjectIntegrationTest, WriteWithCustomTime) {
   stream.Close();
   auto meta = stream.metadata();
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
   EXPECT_EQ(custom_time, meta->custom_time());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 }  // anonymous namespace

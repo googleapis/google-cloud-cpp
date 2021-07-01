@@ -69,15 +69,13 @@ TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumableParallelUpload) {
     state->shards().clear();
     auto res = state->WaitForCompletion().get();
     ASSERT_STATUS_OK(res);
+    ScheduleForDelete(*res);
     res_gen = res->generation();
   }
   auto stream = client->ReadObject(bucket_name_, dest_object_name,
                                    IfGenerationMatch(res_gen));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ("1234", actual);
-  auto deletion_status = client->DeleteObject(bucket_name_, dest_object_name,
-                                              IfGenerationMatch(res_gen));
-  ASSERT_STATUS_OK(deletion_status);
 }
 
 TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumeParallelUploadFile) {
@@ -112,6 +110,7 @@ TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumeParallelUploadFile) {
       MinStreamSize(0), IfGenerationMatch(0),
       UseResumableUploadSession(resumable_session_id));
   ASSERT_STATUS_OK(object_metadata);
+  ScheduleForDelete(*object_metadata);
 
   auto stream =
       client->ReadObject(bucket_name_, dest_object_name,
@@ -129,11 +128,6 @@ TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumeParallelUploadFile) {
   }
   ASSERT_EQ(1U, objects.size());
   ASSERT_EQ(prefix + ".dest", objects[0].name());
-
-  auto deletion_status =
-      client->DeleteObject(bucket_name_, dest_object_name,
-                           IfGenerationMatch(object_metadata->generation()));
-  ASSERT_STATUS_OK(deletion_status);
 }
 
 }  // anonymous namespace

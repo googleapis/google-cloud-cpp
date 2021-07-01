@@ -61,17 +61,14 @@ TEST_F(ObjectWritePreconditionsIntegrationTest, IfGenerationMatchSuccess) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto os = client->WriteObject(bucket_name(), object_name,
                                 IfGenerationMatch(meta->generation()));
   os << expected_text;
   os.Close();
   ASSERT_THAT(os.metadata(), IsOk());
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(os.metadata()->generation()));
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
+  ScheduleForDelete(*os.metadata());
 }
 
 TEST_F(ObjectWritePreconditionsIntegrationTest, IfGenerationMatchFailure) {
@@ -83,15 +80,13 @@ TEST_F(ObjectWritePreconditionsIntegrationTest, IfGenerationMatchFailure) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto os = client->WriteObject(bucket_name(), object_name,
                                 IfGenerationMatch(meta->generation() + 1));
   os << expected_text;
   os.Close();
   ASSERT_THAT(os.metadata(), StatusIs(StatusCode::kFailedPrecondition));
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
 }
 
 TEST_F(ObjectWritePreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
@@ -103,17 +98,14 @@ TEST_F(ObjectWritePreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto os = client->WriteObject(bucket_name(), object_name,
                                 IfGenerationNotMatch(meta->generation() + 1));
   os << expected_text;
   os.Close();
   ASSERT_THAT(os.metadata(), IsOk());
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(os.metadata()->generation()));
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
+  ScheduleForDelete(*os.metadata());
 }
 
 TEST_F(ObjectWritePreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
@@ -125,6 +117,7 @@ TEST_F(ObjectWritePreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto os = client->WriteObject(bucket_name(), object_name,
                                 IfGenerationNotMatch(meta->generation()));
@@ -132,9 +125,6 @@ TEST_F(ObjectWritePreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
   os.Close();
   ASSERT_THAT(os.metadata(), StatusIs(AnyOf(StatusCode::kFailedPrecondition,
                                             StatusCode::kAborted)));
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
 }
 
 TEST_F(ObjectWritePreconditionsIntegrationTest, IfMetagenerationMatchSuccess) {
@@ -146,17 +136,13 @@ TEST_F(ObjectWritePreconditionsIntegrationTest, IfMetagenerationMatchSuccess) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto os = client->WriteObject(bucket_name(), object_name,
                                 IfMetagenerationMatch(meta->metageneration()));
   os << expected_text;
   os.Close();
   ASSERT_THAT(os.metadata(), IsOk());
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(os.metadata()->generation()));
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
 }
 
 TEST_F(ObjectWritePreconditionsIntegrationTest, IfMetagenerationMatchFailure) {
@@ -168,6 +154,7 @@ TEST_F(ObjectWritePreconditionsIntegrationTest, IfMetagenerationMatchFailure) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto os =
       client->WriteObject(bucket_name(), object_name,
@@ -175,9 +162,6 @@ TEST_F(ObjectWritePreconditionsIntegrationTest, IfMetagenerationMatchFailure) {
   os << expected_text;
   os.Close();
   ASSERT_THAT(os.metadata(), StatusIs(StatusCode::kFailedPrecondition));
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
 }
 
 TEST_F(ObjectWritePreconditionsIntegrationTest,
@@ -190,6 +174,7 @@ TEST_F(ObjectWritePreconditionsIntegrationTest,
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto os =
       client->WriteObject(bucket_name(), object_name,
@@ -197,11 +182,7 @@ TEST_F(ObjectWritePreconditionsIntegrationTest,
   os << expected_text;
   os.Close();
   ASSERT_THAT(os.metadata(), IsOk());
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(os.metadata()->generation()));
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
+  ScheduleForDelete(*os.metadata());
 }
 
 TEST_F(ObjectWritePreconditionsIntegrationTest,
@@ -214,6 +195,7 @@ TEST_F(ObjectWritePreconditionsIntegrationTest,
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto os =
       client->WriteObject(bucket_name(), object_name,
@@ -222,9 +204,6 @@ TEST_F(ObjectWritePreconditionsIntegrationTest,
   os.Close();
   ASSERT_THAT(os.metadata(), StatusIs(AnyOf(StatusCode::kFailedPrecondition,
                                             StatusCode::kAborted)));
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
 }
 
 }  // namespace

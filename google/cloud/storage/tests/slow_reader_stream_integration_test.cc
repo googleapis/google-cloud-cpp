@@ -54,6 +54,7 @@ TEST_F(SlowReaderStreamIntegrationTest, LongPauses) {
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
+  ScheduleForDelete(*source_meta);
 
   // Create an iostream to read the object back. When running against the
   // emulator we can fail quickly by asking the emulator to break the stream
@@ -95,9 +96,6 @@ TEST_F(SlowReaderStreamIntegrationTest, LongPauses) {
 
   stream.Close();
   EXPECT_STATUS_OK(stream.status());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 }  // anonymous namespace

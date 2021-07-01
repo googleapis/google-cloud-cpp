@@ -63,6 +63,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
   os.Close();
   ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
+  ScheduleForDelete(meta);
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name_, meta.bucket());
   EXPECT_EQ("text/plain", meta.content_type());
@@ -70,9 +71,6 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
     EXPECT_TRUE(meta.has_metadata("x_emulator_upload"));
     EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
   }
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
@@ -112,15 +110,13 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
   os.Close();
   ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
+  ScheduleForDelete(meta);
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name_, meta.bucket());
   if (UsingEmulator()) {
     EXPECT_TRUE(meta.has_metadata("x_emulator_upload"));
     EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
   }
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
@@ -151,15 +147,13 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
   os.Close();
   ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
+  ScheduleForDelete(meta);
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name_, meta.bucket());
   if (UsingEmulator()) {
     EXPECT_TRUE(meta.has_metadata("x_emulator_upload"));
     EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
   }
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteNotChunked) {
@@ -190,6 +184,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteNotChunked) {
   os.Close();
   ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
+  ScheduleForDelete(meta);
   if (meta.has_metadata("x_emulator_upload")) {
     EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
   }
@@ -197,9 +192,6 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteNotChunked) {
     EXPECT_THAT(meta.metadata("x_emulator_transfer_encoding"),
                 Not(HasSubstr("chunked")));
   }
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
@@ -224,6 +216,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
   EXPECT_FALSE(os.IsOpen());
   EXPECT_EQ(session_id, os.resumable_session_id());
   ASSERT_STATUS_OK(os.metadata());
+  ScheduleForDelete(*os.metadata());
   // TODO(b/146890058) - gRPC does not return the object metadata.
   if (!UsingGrpc()) {
     ObjectMetadata meta = os.metadata().value();
@@ -234,9 +227,6 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
       EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
     }
   }
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
@@ -262,7 +252,6 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
   // This operation should fail because the object already exists.
   os.Close();
   EXPECT_TRUE(os.bad());
-  EXPECT_FALSE(os.metadata().ok());
   // The GCS server returns a different error code depending on the
   // protocol (REST vs. gRPC) used
   EXPECT_THAT(
@@ -296,13 +285,10 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteSlow) {
   os.write(data.data(), data.size());
   EXPECT_FALSE(os.bad());
 
-  // This operation should fail because the object already exists.
   os.Close();
+  ASSERT_STATUS_OK(os.metadata());
+  ScheduleForDelete(*os.metadata());
   EXPECT_FALSE(os.bad());
-  EXPECT_STATUS_OK(os.metadata());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
@@ -330,12 +316,10 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
     }
 
     os.Close();
+    ASSERT_STATUS_OK(os.metadata());
+    ScheduleForDelete(*os.metadata());
     EXPECT_FALSE(os.bad());
-    EXPECT_STATUS_OK(os.metadata());
     EXPECT_EQ(desired_size, os.metadata()->size());
-
-    auto status = client.DeleteObject(bucket_name_, object_name);
-    EXPECT_STATUS_OK(status);
   }
 }
 
@@ -366,12 +350,10 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLengthRandom) {
     }
 
     os.Close();
+    ASSERT_STATUS_OK(os.metadata());
+    ScheduleForDelete(*os.metadata());
     EXPECT_FALSE(os.bad());
-    EXPECT_STATUS_OK(os.metadata());
     EXPECT_EQ(desired_size, os.metadata()->size());
-
-    auto status = client.DeleteObject(bucket_name_, object_name);
-    EXPECT_STATUS_OK(status);
   }
 }
 

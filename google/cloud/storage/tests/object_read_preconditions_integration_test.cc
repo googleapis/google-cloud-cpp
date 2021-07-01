@@ -69,14 +69,12 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationMatchSuccess) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto reader = client->ReadObject(bucket_name(), object_name,
                                    IfGenerationMatch(meta->generation()));
   reader.Close();
   EXPECT_THAT(reader.status(), IsOk());
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
 }
 
 TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationMatchFailure) {
@@ -88,14 +86,12 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationMatchFailure) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto reader = client->ReadObject(bucket_name(), object_name,
                                    IfGenerationMatch(meta->generation() + 1));
   reader.Close();
   EXPECT_THAT(reader.status(), StatusIs(StatusCode::kFailedPrecondition));
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
 }
 
 TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
@@ -107,14 +103,12 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto reader = client->ReadObject(
       bucket_name(), object_name, IfGenerationNotMatch(meta->generation() + 1));
   reader.Close();
   EXPECT_THAT(reader.status(), IsOk());
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
 }
 
 TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
@@ -126,6 +120,7 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto reader = client->ReadObject(bucket_name(), object_name,
                                    IfGenerationNotMatch(meta->generation()));
@@ -136,9 +131,6 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
   // taking place.
   EXPECT_THAT(reader.status(), StatusIs(AnyOf(StatusCode::kFailedPrecondition,
                                               StatusCode::kAborted)));
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
 }
 
 TEST_P(ObjectReadPreconditionsIntegrationTest, IfMetagenerationMatchSuccess) {
@@ -150,15 +142,13 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfMetagenerationMatchSuccess) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto reader =
       client->ReadObject(bucket_name(), object_name,
                          IfMetagenerationMatch(meta->metageneration()));
   reader.Close();
   EXPECT_THAT(reader.status(), IsOk());
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
 }
 
 TEST_P(ObjectReadPreconditionsIntegrationTest, IfMetagenerationMatchFailure) {
@@ -170,15 +160,13 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfMetagenerationMatchFailure) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto reader =
       client->ReadObject(bucket_name(), object_name,
                          IfMetagenerationMatch(meta->metageneration() + 1));
   reader.Close();
   EXPECT_THAT(reader.status(), StatusIs(StatusCode::kFailedPrecondition));
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
 }
 
 TEST_P(ObjectReadPreconditionsIntegrationTest,
@@ -191,15 +179,13 @@ TEST_P(ObjectReadPreconditionsIntegrationTest,
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto reader =
       client->ReadObject(bucket_name(), object_name,
                          IfMetagenerationNotMatch(meta->generation() + 1));
   reader.Close();
   EXPECT_THAT(reader.status(), IsOk());
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
 }
 
 TEST_P(ObjectReadPreconditionsIntegrationTest,
@@ -212,6 +198,7 @@ TEST_P(ObjectReadPreconditionsIntegrationTest,
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto reader =
       client->ReadObject(bucket_name(), object_name,
@@ -223,9 +210,6 @@ TEST_P(ObjectReadPreconditionsIntegrationTest,
   // taking place.
   EXPECT_THAT(reader.status(), StatusIs(AnyOf(StatusCode::kFailedPrecondition,
                                               StatusCode::kAborted)));
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
 }
 
 INSTANTIATE_TEST_SUITE_P(XmlDisabled, ObjectReadPreconditionsIntegrationTest,

@@ -63,13 +63,10 @@ TEST_F(CurlResumableUploadIntegrationTest, Simple) {
   ASSERT_STATUS_OK(response);
   EXPECT_TRUE(response->payload.has_value());
   auto metadata = *response->payload;
+  ScheduleForDelete(metadata);
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name_, metadata.bucket());
   EXPECT_EQ(contents.size(), metadata.size());
-
-  auto status =
-      client->DeleteObject(DeleteObjectRequest(bucket_name_, object_name));
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
@@ -99,13 +96,10 @@ TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
 
   EXPECT_TRUE(response->payload.has_value());
   auto metadata = *response->payload;
+  ScheduleForDelete(metadata);
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name_, metadata.bucket());
   EXPECT_EQ(2 * contents.size(), metadata.size());
-
-  auto status =
-      client->DeleteObject(DeleteObjectRequest(bucket_name_, object_name));
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(CurlResumableUploadIntegrationTest, Restore) {
@@ -141,13 +135,10 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
 
   EXPECT_TRUE(response->payload.has_value());
   auto metadata = *response->payload;
+  ScheduleForDelete(metadata);
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name_, metadata.bucket());
   EXPECT_EQ(3 * contents.size(), metadata.size());
-
-  auto status =
-      client->DeleteObject(DeleteObjectRequest(bucket_name_, object_name));
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(CurlResumableUploadIntegrationTest, EmptyTrailer) {
@@ -183,13 +174,10 @@ TEST_F(CurlResumableUploadIntegrationTest, EmptyTrailer) {
 
   EXPECT_TRUE(response->payload.has_value());
   auto metadata = *response->payload;
+  ScheduleForDelete(metadata);
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name_, metadata.bucket());
   EXPECT_EQ(2 * contents.size(), metadata.size());
-
-  auto status =
-      client->DeleteObject(DeleteObjectRequest(bucket_name_, object_name));
-  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(CurlResumableUploadIntegrationTest, Empty) {
@@ -211,13 +199,10 @@ TEST_F(CurlResumableUploadIntegrationTest, Empty) {
 
   EXPECT_TRUE(response->payload.has_value());
   auto metadata = *response->payload;
+  ScheduleForDelete(metadata);
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name_, metadata.bucket());
   EXPECT_EQ(0, metadata.size());
-
-  auto status =
-      client->DeleteObject(DeleteObjectRequest(bucket_name_, object_name));
-  ASSERT_STATUS_OK(status);
 }
 
 /**
@@ -239,8 +224,13 @@ TEST_F(CurlResumableUploadIntegrationTest, ResetWithParameters) {
 
   auto res = client.CreateBucket(bucket_name, BucketMetadata{});
   ASSERT_STATUS_OK(res);
+  ScheduleForDelete(*res);
   res = client.PatchBucket(bucket_name, BucketMetadataPatchBuilder().SetBilling(
                                             BucketBilling{true}));
+  EXPECT_STATUS_OK(res);
+  EXPECT_TRUE(res->has_billing());
+  EXPECT_EQ(res->billing_as_optional().value_or(BucketBilling{true}),
+            BucketBilling{true});
 
   ResumableUploadRequest request(bucket_name, object_name);
   request.set_multiple_options(IfGenerationMatch(0),
@@ -262,9 +252,10 @@ TEST_F(CurlResumableUploadIntegrationTest, ResetWithParameters) {
 
   response = (*session)->UploadFinalChunk({{contents}}, 2 * contents.size());
   ASSERT_STATUS_OK(response);
-
-  EXPECT_TRUE(response->payload.has_value());
+  ASSERT_TRUE(response->payload.has_value());
   auto metadata = *response->payload;
+  ScheduleForDelete(metadata);
+
   EXPECT_EQ(object_name, metadata.name());
   // These are an effect of Fields("name")
   EXPECT_EQ("", metadata.bucket());
@@ -277,11 +268,6 @@ TEST_F(CurlResumableUploadIntegrationTest, ResetWithParameters) {
   EXPECT_EQ(2 * contents.size(), actual_contents.size());
   EXPECT_TRUE(std::all_of(actual_contents.begin(), actual_contents.end(),
                           [](char c) { return c == '0'; }));
-
-  auto status =
-      client.DeleteObject(bucket_name, object_name, UserProject(project_id_));
-  ASSERT_STATUS_OK(status);
-  ASSERT_STATUS_OK(client.DeleteBucket(bucket_name, UserProject(project_id_)));
 }
 
 }  // namespace

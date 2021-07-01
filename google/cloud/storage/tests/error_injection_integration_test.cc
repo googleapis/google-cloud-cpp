@@ -263,7 +263,8 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
                    static_cast<int>(kDownloadBufferSize) * 3 / 80);
   os.Close();
   EXPECT_TRUE(os);
-  EXPECT_STATUS_OK(os.metadata());
+  ASSERT_STATUS_OK(os.metadata());
+  ScheduleForDelete(*os.metadata());
 
   auto is = client.ReadObject(bucket_name_, object_name);
   std::vector<char> read_buf(kDownloadBufferSize + 1);
@@ -275,9 +276,6 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
   ASSERT_STATUS_OK(is.status());
   is.Close();
   EXPECT_EQ(SymbolInterceptor::Instance().StopFailingRecv(), kInjectedErrors);
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
@@ -302,7 +300,8 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
   WriteRandomLines(os, expected, 80, kDownloadBufferSize * 3 / 80);
   os.Close();
   EXPECT_TRUE(os);
-  EXPECT_STATUS_OK(os.metadata());
+  ASSERT_STATUS_OK(os.metadata());
+  ScheduleForDelete(*os.metadata());
 
   auto is = client.ReadObject(bucket_name_, object_name);
   std::vector<char> read_buf(kDownloadBufferSize + 1);
@@ -318,9 +317,6 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
   EXPECT_THAT(is.status(), StatusIs(StatusCode::kUnavailable));
   EXPECT_GE(SymbolInterceptor::Instance().StopFailingSend(), 1);
   EXPECT_GE(SymbolInterceptor::Instance().StopFailingRecv(), 1);
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 #endif  // _WIN32
