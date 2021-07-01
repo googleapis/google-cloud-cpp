@@ -68,10 +68,56 @@
 ### Bigtable:
 
 **BREAKING CHANGES**:
+
 * Experimental functions matching `Async*` in `bigtable::TableAdmin` and
   `bigtable::InstanceAdmin` have been removed from the public API. See
   [#5923](https://github.com/googleapis/google-cloud-cpp/issues/5923) for more
   details.
+
+**Other changes**:
+
+* feat(bigtable): add Backup IAM Policy snippets (#6847)
+* doc(bigtable): revamp examples README (#6839)
+* docs: fix connection pool size for samples (#6834)
+* cleanup(doc): add IAM examples to Bigtable gRPC doc, fix typos (#6838)
+* cleanup(bigtable)!: remove admin async methods from public API (#6711)
+
+### Pub/Sub:
+
+* fix: cast to std::string which works with string and Cord (#6850)
+* doc(pubsub): an example for publisher flow control (#6784)
+* feat(pubsub): flow control for Publisher (#6678)
+* feat(pubsub): use unary RPCs for Ack/Nack (#6674)
+* feat(pubsub): direct Ack/Nack through SubscriberStub (#6666)
+
+### Storage:
+
+* fix(storage): allow overwrites in parallel uploads (#6908)
+* feat(GCS+gRPC): capture streaming RPCs metadata (#6902)
+* fix(storage): use correct header for XML pre-conditions (#6903)
+* fix(storage): use JSON for reads with pre-conditions (#6900)
+* fix(storage): treat 304 errors as kFailedPrecondition (#6897)
+* feat(storage): micro-optimization for downloads (#6892)
+* fix(GCS+gRPC): avoid duplicate headers in downloads (#6891)
+* feat(storage): implement "public access prevention" (#6755)
+* fix(GCS+gRPC): resumable uploads can resume (#6881)
+* feat(storage): share client in throughput benchmark (#6882)
+* feat(storage): make auto-finalization optional (#6874)
+* fix(storage): alternative endpoints and Host header (#6864)
+* fix(storage): crashes with tracing enabled (#6870)
+
+### Spanner:
+
+* feature(spanner): low-cost instances (#6895)
+* refactor(spanner): Use background threads for admin LROs (#6853, #6835)
+* feature(spanner): add optimizer_statistics_package to QueryOptions (#6727)
+* fix(spanner): pick up tracing-option defaults in SetBasicDefaults() (#6691)
+
+### Common Libraries:
+
+* feat(common): support LROs (long-running operations) use background threads
+  (#6855, #6831, #6824, #6823, #6822, #6820, #6816, #6804)
+* fix(common): remove blocking call in MinimalIamCredentials (#6813)
 
 ## v1.28.0 - 2021-06
 
