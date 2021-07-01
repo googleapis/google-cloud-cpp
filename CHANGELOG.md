@@ -109,8 +109,7 @@
 ### Spanner:
 
 * feature(spanner): low-cost instances (#6895)
-* refactor(spanner): Use background threads for database-admin LROs
-  (#6853, #6835)
+* refactor(spanner): Use background threads for admin LROs (#6853, #6835)
 * feature(spanner): add optimizer_statistics_package to QueryOptions (#6727)
 * fix(spanner): pick up tracing-option defaults in SetBasicDefaults() (#6691)
 
