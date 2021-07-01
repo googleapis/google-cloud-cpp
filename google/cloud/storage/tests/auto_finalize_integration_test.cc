@@ -127,6 +127,7 @@ TEST_F(AutoFinalizeIntegrationTest, Disabled) {
                           UseResumableUploadSession(upload_session));
   os.Close();
   ASSERT_THAT(os.metadata(), IsOk());
+  ScheduleForDelete(*os.metadata());
   EXPECT_EQ(os.metadata()->size(), kSize);
 
   auto reader = client->ReadObject(bucket_name(), object_name);
@@ -135,8 +136,6 @@ TEST_F(AutoFinalizeIntegrationTest, Disabled) {
   auto const actual =
       std::string{std::istreambuf_iterator<char>{reader.rdbuf()}, {}};
   EXPECT_EQ(expected_text, actual);
-
-  (void)client->DeleteObject(bucket_name(), object_name);
 }
 
 }  // namespace

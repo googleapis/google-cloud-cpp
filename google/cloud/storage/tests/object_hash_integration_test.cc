@@ -55,12 +55,10 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashXML) {
       client.InsertObject(bucket_name_, object_name, LoremIpsum(),
                           IfGenerationMatch(0), Fields(""));
   ASSERT_STATUS_OK(insert_meta);
+  ScheduleForDelete(*insert_meta);
 
   EXPECT_THAT(log.ExtractLines(),
               Not(Contains(StartsWith("x-goog-hash: md5="))));
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 /// @test Verify that MD5 hashes are disabled by default.
@@ -72,6 +70,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
   StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
       bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0));
   ASSERT_STATUS_OK(insert_meta);
+  ScheduleForDelete(*insert_meta);
 
   // This is a big indirect, we detect if the upload changed to
   // multipart/related, and if so, we assume the hash value is being used.
@@ -87,9 +86,6 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
     EXPECT_EQ("multipart", insert_meta->metadata("x_emulator_upload"));
     ASSERT_FALSE(insert_meta->has_metadata("x_emulator_md5"));
   }
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 /// @test Verify that `DisableMD5Hash` actually disables the header.
@@ -102,12 +98,10 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashXML) {
       bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
       DisableMD5Hash(true), Fields(""));
   ASSERT_STATUS_OK(insert_meta);
+  ScheduleForDelete(*insert_meta);
 
   EXPECT_THAT(log.ExtractLines(),
               Not(Contains(StartsWith("x-goog-hash: md5="))));
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 /// @test Verify that `DisableMD5Hash` actually disables the payload.
@@ -120,6 +114,7 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
       client.InsertObject(bucket_name_, object_name, LoremIpsum(),
                           IfGenerationMatch(0), DisableMD5Hash(true));
   ASSERT_STATUS_OK(insert_meta);
+  ScheduleForDelete(*insert_meta);
 
   // This is a big indirect, we detect if the upload changed to
   // multipart/related, and if so, we assume the hash value is being used.
@@ -135,9 +130,6 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
     EXPECT_EQ("multipart", insert_meta->metadata("x_emulator_upload"));
     ASSERT_FALSE(insert_meta->has_metadata("x_emulator_md5"));
   }
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 /// @test Verify that MD5 hashes are disabled by default on downloads.
@@ -152,6 +144,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadXML) {
       client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
@@ -160,9 +153,6 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadXML) {
 
   EXPECT_EQ(stream.received_hash(), stream.computed_hash());
   EXPECT_THAT(stream.received_hash(), Not(HasSubstr(meta->md5_hash())));
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 /// @test Verify that MD5 hashes are disabled by default on downloads.
@@ -177,6 +167,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadJSON) {
       client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   auto stream = client->ReadObject(bucket_name_, object_name,
                                    IfMetagenerationNotMatch(0));
@@ -186,9 +177,6 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadJSON) {
 
   EXPECT_EQ(stream.received_hash(), stream.computed_hash());
   EXPECT_THAT(stream.received_hash(), Not(HasSubstr(meta->md5_hash())));
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 /// @test Verify that hashes and checksums can be disabled on downloads.
@@ -203,6 +191,7 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadXML) {
       client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   auto stream =
       client->ReadObject(bucket_name_, object_name, DisableMD5Hash(true),
@@ -213,9 +202,6 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadXML) {
 
   EXPECT_TRUE(stream.computed_hash().empty());
   EXPECT_TRUE(stream.received_hash().empty());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 /// @test Verify that hashes and checksums can be disabled on downloads.
@@ -230,6 +216,7 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadJSON) {
       client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableMD5Hash(true),
@@ -240,9 +227,6 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadJSON) {
 
   EXPECT_TRUE(stream.computed_hash().empty());
   EXPECT_TRUE(stream.received_hash().empty());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 /// @test Verify that MD5 hashes are disabled by default on uploads.
@@ -263,12 +247,11 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteJSON) {
   auto expected_md5hash = ComputeMD5Hash(expected.str());
 
   os.Close();
-  ObjectMetadata meta = os.metadata().value();
+  ASSERT_STATUS_OK(os.metadata());
+  ScheduleForDelete(*os.metadata());
+
   EXPECT_EQ(os.received_hash(), os.computed_hash());
   EXPECT_THAT(os.received_hash(), Not(HasSubstr(expected_md5hash)));
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 /// @test Verify MD5 hash value before upload.
@@ -288,13 +271,11 @@ TEST_F(ObjectHashIntegrationTest, VerifyValidMD5StreamingWriteJSON) {
   os.exceptions(std::ios_base::failbit);
   os << expected;
   os.Close();
+  ASSERT_STATUS_OK(os.metadata());
+  ScheduleForDelete(*os.metadata());
 
-  ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(os.received_hash(), os.computed_hash());
   EXPECT_THAT(os.received_hash(), Not(HasSubstr(expected_md5hash)));
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 /// @test Verify invalid MD5 hash value before upload.
@@ -358,12 +339,11 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingWriteJSON) {
   WriteRandomLines(os, expected);
 
   os.Close();
-  ObjectMetadata meta = os.metadata().value();
+  ASSERT_STATUS_OK(os.metadata());
+  ScheduleForDelete(*os.metadata());
+
   EXPECT_TRUE(os.received_hash().empty());
   EXPECT_TRUE(os.computed_hash().empty());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
@@ -381,6 +361,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
       bucket_name_, object_name, LoremIpsum(), EnableMD5Hash(),
       IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
@@ -403,9 +384,6 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
   EXPECT_EQ(stream.received_hash(), meta->md5_hash());
   EXPECT_FALSE(stream.status().ok());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
@@ -423,6 +401,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
       bucket_name_, object_name, LoremIpsum(), EnableMD5Hash(),
       IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
@@ -446,9 +425,6 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
   EXPECT_FALSE(stream.computed_hash().empty());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that MD5 hash mismatches are reported when using .read().
@@ -467,6 +443,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
       client->InsertObject(bucket_name_, object_name, contents, EnableMD5Hash(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
@@ -481,9 +458,6 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
   EXPECT_EQ(StatusCode::kDataLoss, stream.status().code());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
   EXPECT_EQ(stream.received_hash(), meta->md5_hash());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that MD5 hash mismatches are reported when using .read().
@@ -502,6 +476,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
       client->InsertObject(bucket_name_, object_name, contents, EnableMD5Hash(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
@@ -517,9 +492,6 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
   EXPECT_EQ(StatusCode::kDataLoss, stream.status().code());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
   EXPECT_EQ(stream.received_hash(), meta->md5_hash());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
@@ -542,11 +514,10 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
 
   stream.Close();
   EXPECT_TRUE(stream.bad());
-  EXPECT_STATUS_OK(stream.metadata());
-  EXPECT_NE(stream.received_hash(), stream.computed_hash());
+  ASSERT_STATUS_OK(stream.metadata());
+  ScheduleForDelete(*stream.metadata());
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
+  EXPECT_NE(stream.received_hash(), stream.computed_hash());
 }
 
 }  // anonymous namespace

@@ -60,15 +60,12 @@ TEST_F(ObjectComposeManyIntegrationTest, ComposeMany) {
                          dest_object_name, false);
 
   ASSERT_STATUS_OK(res);
+  ScheduleForDelete(*res);
   EXPECT_EQ(dest_object_name, res->name());
 
   auto stream = client->ReadObject(bucket_name_, dest_object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto deletion_status = client->DeleteObject(
-      bucket_name_, dest_object_name, IfGenerationMatch(res->generation()));
-  ASSERT_STATUS_OK(deletion_status);
 }
 
 }  // anonymous namespace

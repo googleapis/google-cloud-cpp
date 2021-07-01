@@ -61,9 +61,8 @@ class ObjectWriteStreambufIntegrationTest
     std::ostringstream expected_stream;
     WriteRandomLines(writer, expected_stream, line_count, line_size);
     writer.Close();
-    ObjectMetadata metadata = writer.metadata().value();
-    EXPECT_EQ(object_name, metadata.name());
-    EXPECT_EQ(bucket_name_, metadata.bucket());
+    ASSERT_STATUS_OK(writer.metadata());
+    ScheduleForDelete(*writer.metadata());
 
     ObjectReadStream reader = client->ReadObject(bucket_name_, object_name);
 
@@ -72,10 +71,6 @@ class ObjectWriteStreambufIntegrationTest
     std::string expected = std::move(expected_stream).str();
     ASSERT_EQ(expected.size(), actual.size());
     EXPECT_EQ(expected, actual);
-
-    auto status = client->DeleteObject(bucket_name_, object_name,
-                                       Generation(metadata.generation()));
-    ASSERT_STATUS_OK(status);
   }
 
   std::string bucket_name_;

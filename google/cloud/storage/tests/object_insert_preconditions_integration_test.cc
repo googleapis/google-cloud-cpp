@@ -70,16 +70,13 @@ TEST_P(ObjectInsertPreconditionsIntegrationTest, IfGenerationMatchSuccess) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto insert = client->InsertObject(bucket_name(), object_name, expected_text,
                                      GetParam().fields,
                                      IfGenerationMatch(meta->generation()));
   ASSERT_THAT(insert, IsOk());
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(insert->generation()));
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
+  ScheduleForDelete(*insert);
 }
 
 TEST_P(ObjectInsertPreconditionsIntegrationTest, IfGenerationMatchFailure) {
@@ -91,14 +88,12 @@ TEST_P(ObjectInsertPreconditionsIntegrationTest, IfGenerationMatchFailure) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto insert = client->InsertObject(bucket_name(), object_name, expected_text,
                                      GetParam().fields,
                                      IfGenerationMatch(meta->generation() + 1));
   ASSERT_THAT(insert, StatusIs(StatusCode::kFailedPrecondition));
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
 }
 
 TEST_P(ObjectInsertPreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
@@ -110,16 +105,13 @@ TEST_P(ObjectInsertPreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto insert = client->InsertObject(
       bucket_name(), object_name, expected_text, GetParam().fields,
       IfGenerationNotMatch(meta->generation() + 1));
   ASSERT_THAT(insert, IsOk());
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(insert->generation()));
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
+  ScheduleForDelete(*insert);
 }
 
 TEST_P(ObjectInsertPreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
@@ -131,15 +123,13 @@ TEST_P(ObjectInsertPreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto insert = client->InsertObject(bucket_name(), object_name, expected_text,
                                      GetParam().fields,
                                      IfGenerationNotMatch(meta->generation()));
   ASSERT_THAT(insert, StatusIs(AnyOf(StatusCode::kFailedPrecondition,
                                      StatusCode::kAborted)));
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
 }
 
 TEST_P(ObjectInsertPreconditionsIntegrationTest, IfMetagenerationMatchSuccess) {
@@ -151,16 +141,13 @@ TEST_P(ObjectInsertPreconditionsIntegrationTest, IfMetagenerationMatchSuccess) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto insert = client->InsertObject(
       bucket_name(), object_name, expected_text, GetParam().fields,
       IfMetagenerationMatch(meta->metageneration()));
   ASSERT_THAT(insert, IsOk());
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(insert->generation()));
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
+  ScheduleForDelete(*insert);
 }
 
 TEST_P(ObjectInsertPreconditionsIntegrationTest, IfMetagenerationMatchFailure) {
@@ -172,14 +159,12 @@ TEST_P(ObjectInsertPreconditionsIntegrationTest, IfMetagenerationMatchFailure) {
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto insert = client->InsertObject(
       bucket_name(), object_name, expected_text, GetParam().fields,
       IfMetagenerationMatch(meta->metageneration() + 1));
   ASSERT_THAT(insert, StatusIs(StatusCode::kFailedPrecondition));
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
 }
 
 TEST_P(ObjectInsertPreconditionsIntegrationTest,
@@ -192,16 +177,13 @@ TEST_P(ObjectInsertPreconditionsIntegrationTest,
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto insert = client->InsertObject(
       bucket_name(), object_name, expected_text, GetParam().fields,
       IfMetagenerationNotMatch(meta->metageneration() + 1));
   ASSERT_THAT(insert, IsOk());
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(insert->generation()));
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
+  ScheduleForDelete(*insert);
 }
 
 TEST_P(ObjectInsertPreconditionsIntegrationTest,
@@ -214,15 +196,13 @@ TEST_P(ObjectInsertPreconditionsIntegrationTest,
   auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
                                    IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
+  ScheduleForDelete(*meta);
 
   auto insert = client->InsertObject(
       bucket_name(), object_name, expected_text, GetParam().fields,
       IfMetagenerationNotMatch(meta->metageneration()));
   ASSERT_THAT(insert, StatusIs(AnyOf(StatusCode::kFailedPrecondition,
                                      StatusCode::kAborted)));
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(meta->generation()));
 }
 
 INSTANTIATE_TEST_SUITE_P(XmlEnabledAndUsed,

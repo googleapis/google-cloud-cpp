@@ -44,26 +44,24 @@ class CreateClientIntegrationTest
     ASSERT_THAT(bucket_name_, Not(IsEmpty()));
   }
 
+  void UseClient(Client client, std::string const& bucket_name,
+                 std::string const& object_name, std::string const& payload) {
+    StatusOr<ObjectMetadata> meta = client.InsertObject(
+        bucket_name, object_name, payload, IfGenerationMatch(0));
+    ASSERT_THAT(meta, IsOk());
+    ScheduleForDelete(*meta);
+    EXPECT_EQ(object_name, meta->name());
+
+    auto stream = client.ReadObject(bucket_name, object_name);
+    std::string actual(std::istreambuf_iterator<char>{stream}, {});
+    EXPECT_EQ(payload, actual);
+  }
+
   std::string const& bucket_name() const { return bucket_name_; }
 
  private:
   std::string bucket_name_;
 };
-
-void UseClient(Client client, std::string const& bucket_name,
-               std::string const& object_name, std::string const& payload) {
-  StatusOr<ObjectMetadata> meta = client.InsertObject(
-      bucket_name, object_name, payload, IfGenerationMatch(0));
-  ASSERT_THAT(meta, IsOk());
-  EXPECT_EQ(object_name, meta->name());
-
-  auto stream = client.ReadObject(bucket_name, object_name);
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_EQ(payload, actual);
-
-  auto status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_THAT(status, IsOk());
-}
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 

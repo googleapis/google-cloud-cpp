@@ -50,9 +50,7 @@ TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
   StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name_, object_name, expected, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
-
-  EXPECT_EQ(object_name, meta->name());
-  EXPECT_EQ(bucket_name_, meta->bucket());
+  ScheduleForDelete(*meta);
 
   // Create a iostream to read the object back.
   auto num_fds_before_test = GetNumOpenFiles();
@@ -88,9 +86,6 @@ TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
     EXPECT_EQ(StatusCode::kUnimplemented, num_fds_during_test.status().code());
     EXPECT_EQ(StatusCode::kUnimplemented, num_fds_after_test.status().code());
   }
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 }  // anonymous namespace

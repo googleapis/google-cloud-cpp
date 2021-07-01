@@ -79,6 +79,18 @@ class UnifiedCredentialsIntegrationTest
   std::string const& service_account() const { return service_account_; }
   std::string const& roots_pem() const { return roots_pem_; }
 
+  void UseClient(Client client, std::string const& bucket_name,
+                 std::string const& object_name, std::string const& payload) {
+    StatusOr<ObjectMetadata> meta = client.InsertObject(
+        bucket_name, object_name, payload, IfGenerationMatch(0));
+    ASSERT_THAT(meta, IsOk());
+    ScheduleForDelete(*meta);
+
+    auto stream = client.ReadObject(bucket_name, object_name);
+    std::string actual(std::istreambuf_iterator<char>{stream}, {});
+    EXPECT_EQ(payload, actual);
+  }
+
  private:
   std::string bucket_name_;
   std::string project_id_;
@@ -86,21 +98,6 @@ class UnifiedCredentialsIntegrationTest
   std::string roots_pem_;
   testing_util::ScopedEnvironment grpc_config_;
 };
-
-void UseClient(Client client, std::string const& bucket_name,
-               std::string const& object_name, std::string const& payload) {
-  StatusOr<ObjectMetadata> meta = client.InsertObject(
-      bucket_name, object_name, payload, IfGenerationMatch(0));
-  ASSERT_THAT(meta, IsOk());
-  EXPECT_EQ(object_name, meta->name());
-
-  auto stream = client.ReadObject(bucket_name, object_name);
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_EQ(payload, actual);
-
-  auto status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_THAT(status, IsOk());
-}
 
 TEST_P(UnifiedCredentialsIntegrationTest, GoogleDefaultCredentials) {
   if (UsingEmulator()) GTEST_SKIP();

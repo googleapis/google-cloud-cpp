@@ -18,7 +18,6 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <regex>
 
 namespace google {
 namespace cloud {
@@ -58,6 +57,7 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32c) {
       bucket_name_, object_name, expected, IfGenerationMatch(0),
       Crc32cChecksumValue("6Y46Mg=="));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
@@ -66,9 +66,6 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32c) {
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32c) {
@@ -84,6 +81,7 @@ TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32c) {
       bucket_name_, object_name, expected, IfGenerationMatch(0), Fields(""),
       Crc32cChecksumValue("6Y46Mg=="));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
@@ -92,9 +90,6 @@ TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32c) {
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32cFailure) {
@@ -140,6 +135,7 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithComputedCrc32c) {
       bucket_name_, object_name, expected, IfGenerationMatch(0),
       Crc32cChecksumValue(ComputeCrc32cChecksum(expected)));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
@@ -148,9 +144,6 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithComputedCrc32c) {
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that CRC32C checksums are computed by default.
@@ -163,11 +156,9 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertXML) {
       client.InsertObject(bucket_name_, object_name, LoremIpsum(),
                           IfGenerationMatch(0), Fields(""));
   ASSERT_STATUS_OK(insert_meta);
+  ScheduleForDelete(*insert_meta);
 
   EXPECT_THAT(log.ExtractLines(), Contains(StartsWith("x-goog-hash: crc32c=")));
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that CRC32C checksums are computed by default.
@@ -179,6 +170,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertJSON) {
   StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
       bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0));
   ASSERT_STATUS_OK(insert_meta);
+  ScheduleForDelete(*insert_meta);
 
   // This is a big indirect, we detect if the upload changed to
   // multipart/related, and if so, we assume the hash value is being used.
@@ -196,9 +188,6 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertJSON) {
     auto expected_crc32c = ComputeCrc32cChecksum(LoremIpsum());
     EXPECT_EQ(expected_crc32c, insert_meta->metadata("x_emulator_crc32c"));
   }
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that CRC32C checksums are computed by default on downloads.
@@ -213,6 +202,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadXML) {
       client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
@@ -221,9 +211,6 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadXML) {
 
   EXPECT_EQ(stream.received_hash(), stream.computed_hash());
   EXPECT_THAT(stream.received_hash(), HasSubstr(meta->crc32c()));
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that CRC32C checksums are computed by default on downloads.
@@ -238,6 +225,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadJSON) {
       client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   auto stream = client->ReadObject(bucket_name_, object_name,
                                    IfMetagenerationNotMatch(0));
@@ -247,9 +235,6 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadJSON) {
 
   EXPECT_EQ(stream.received_hash(), stream.computed_hash());
   EXPECT_THAT(stream.received_hash(), HasSubstr(meta->crc32c()));
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that CRC32C checksums are computed by default on uploads.
@@ -270,12 +255,10 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteJSON) {
   auto expected_crc32c = ComputeCrc32cChecksum(expected.str());
 
   os.Close();
-  ObjectMetadata meta = os.metadata().value();
+  ASSERT_STATUS_OK(os.metadata());
+  ScheduleForDelete(*os.metadata());
   EXPECT_EQ(os.received_hash(), os.computed_hash());
   EXPECT_THAT(os.received_hash(), HasSubstr(expected_crc32c));
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that CRC32C checksum mismatches are reported by default on
@@ -294,6 +277,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
       client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   auto stream = client->ReadObject(
       bucket_name_, object_name,
@@ -317,9 +301,6 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
   EXPECT_THAT(stream.received_hash(), HasSubstr(meta->crc32c()));
   EXPECT_THAT(stream.status(), Not(IsOk()));
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that CRC32C checksum mismatches are reported by default on
@@ -338,6 +319,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
       client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableMD5Hash(true),
@@ -361,9 +343,6 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
   EXPECT_FALSE(stream.computed_hash().empty());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that CRC32C checksum mismatches are reported when using
@@ -383,6 +362,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
       client->InsertObject(bucket_name_, object_name, contents,
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableMD5Hash(true),
@@ -397,9 +377,6 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
   EXPECT_THAT(stream.status(), StatusIs(StatusCode::kDataLoss));
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
   EXPECT_EQ(stream.received_hash(), meta->crc32c());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that CRC32C checksum mismatches are reported when using
@@ -419,6 +396,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
       client->InsertObject(bucket_name_, object_name, contents,
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableMD5Hash(true),
@@ -434,9 +412,6 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
   EXPECT_THAT(stream.status(), StatusIs(StatusCode::kDataLoss));
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
   EXPECT_EQ(stream.received_hash(), meta->crc32c());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that CRC32C checksum mismatches are reported by default on
@@ -459,11 +434,9 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
 
   stream.Close();
   EXPECT_TRUE(stream.bad());
-  EXPECT_STATUS_OK(stream.metadata());
+  ASSERT_STATUS_OK(stream.metadata());
+  ScheduleForDelete(*stream.metadata());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 }  // anonymous namespace

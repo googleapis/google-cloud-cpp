@@ -59,6 +59,7 @@ TEST_F(ObjectReadHeadersIntegrationTest, SmokeTest) {
   auto insert = client->InsertObject(bucket_name(), object_name, LoremIpsum(),
                                      IfGenerationMatch(0));
   ASSERT_THAT(insert, IsOk());
+  ScheduleForDelete(*insert);
 
   auto is = client->ReadObject(bucket_name(), object_name,
                                Generation(insert->generation()));
@@ -85,9 +86,6 @@ TEST_F(ObjectReadHeadersIntegrationTest, SmokeTest) {
                 IsSupersetOf({"x-guploader-uploadid", "x-goog-hash",
                               "x-goog-generation"}));
   }
-
-  (void)client->DeleteObject(bucket_name(), object_name,
-                             Generation(insert->generation()));
 }
 
 }  // namespace
