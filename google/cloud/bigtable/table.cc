@@ -149,10 +149,6 @@ future<Status> Table::AsyncApplyImpl(SingleRowMutation mut,
       });
 }
 
-future<Status> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
-  return AsyncApplyImpl(std::move(mut), cq);
-}
-
 future<Status> Table::AsyncApply(SingleRowMutation mut) {
   auto cq = background_threads_->cq();
   return AsyncApplyImpl(std::move(mut), cq);
@@ -192,11 +188,6 @@ future<std::vector<FailedMutation>> Table::AsyncBulkApplyImpl(
       cq, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       *mutation_policy, clone_metadata_update_policy(), client_,
       app_profile_id_, table_name(), std::move(mut));
-}
-
-future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut,
-                                                          CompletionQueue& cq) {
-  return AsyncBulkApplyImpl(std::move(mut), cq);
 }
 
 future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut) {
@@ -314,14 +305,6 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRowImpl(
                    ? MutationBranch::kPredicateMatched
                    : MutationBranch::kPredicateNotMatched;
       });
-}
-
-future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
-    std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
-    std::vector<Mutation> false_mutations, CompletionQueue& cq) {
-  return AsyncCheckAndMutateRowImpl(std::move(row_key), std::move(filter),
-                                    std::move(true_mutations),
-                                    std::move(false_mutations), cq);
 }
 
 future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
@@ -488,12 +471,6 @@ future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRowImpl(
       },
       std::move(row_set), rows_limit, std::move(filter));
   return handler->GetFuture();
-}
-
-future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRow(CompletionQueue& cq,
-                                                           std::string row_key,
-                                                           Filter filter) {
-  return AsyncReadRowImpl(cq, std::move(row_key), std::move(filter));
 }
 
 future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRow(std::string row_key,
