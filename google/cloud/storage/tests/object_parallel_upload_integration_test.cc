@@ -21,9 +21,7 @@
 #include "google/cloud/testing_util/expect_exception.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <sys/types.h>
 #include <algorithm>
-#include <cstring>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -33,6 +31,10 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
+
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::AnyOf;
+using ::testing::ElementsAre;
 
 using ObjectParallelUploadIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
@@ -56,21 +58,86 @@ TEST_F(ObjectParallelUploadIntegrationTest, ParallelUpload) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(LoremIpsum(), actual);
 
-  std::vector<ObjectMetadata> objects;
-  for (auto& object : client->ListObjects(bucket_name_)) {
-    ASSERT_STATUS_OK(object);
-    if (object->name().substr(0, prefix.size()) == prefix &&
-        object->name() != prefix) {
-      objects.emplace_back(*std::move(object));
-    }
+  std::vector<std::string> names;
+  for (auto& object : client->ListObjects(bucket_name_, Prefix(prefix))) {
+    if (!object) break;
+    names.push_back(object->name());
   }
-  ASSERT_EQ(1U, objects.size());
-  ASSERT_EQ(prefix + ".dest", objects[0].name());
+  EXPECT_THAT(names, ElementsAre(dest_object_name));
 
   auto deletion_status =
       client->DeleteObject(bucket_name_, dest_object_name,
                            IfGenerationMatch(object_metadata->generation()));
   ASSERT_STATUS_OK(deletion_status);
+}
+
+TEST_F(ObjectParallelUploadIntegrationTest, DefaultAllowOverwrites) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  // Create the local file, we overwrite its contents manually because creating
+  // a large block is fairly tedious.
+  auto const block = MakeRandomData(1024 * 1024);
+  testing::TempFile temp_file(block);
+
+  auto prefix = CreateRandomPrefixName();
+  auto const dest_object_name = prefix + ".dest";
+  // First insert the object, verify that it did not exist before the upload.
+  auto insert = client->InsertObject(bucket_name_, dest_object_name,
+                                     LoremIpsum(), IfGenerationMatch(0));
+  ASSERT_STATUS_OK(insert);
+
+  auto object_metadata = ParallelUploadFile(
+      *client, temp_file.name(), bucket_name_, dest_object_name, prefix, false,
+      MinStreamSize(0), MaxStreams(64));
+  EXPECT_STATUS_OK(object_metadata);
+  EXPECT_EQ(block.size(), object_metadata->size());
+
+  std::vector<std::string> names;
+  for (auto& object : client->ListObjects(bucket_name_, Prefix(prefix))) {
+    if (!object) break;
+    names.push_back(object->name());
+  }
+  EXPECT_THAT(names, ElementsAre(dest_object_name));
+
+  // Delete both objects
+  (void)client->DeleteObject(bucket_name_, dest_object_name,
+                             Generation(insert->generation()));
+  (void)client->DeleteObject(bucket_name_, dest_object_name,
+                             Generation(object_metadata->generation()));
+}
+
+TEST_F(ObjectParallelUploadIntegrationTest, PreconditionsPreventOverwrites) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  // Create the local file, we overwrite its contents manually because creating
+  // a large block is fairly tedious.
+  auto const block = MakeRandomData(1024 * 1024);
+  testing::TempFile temp_file(block);
+
+  auto prefix = CreateRandomPrefixName();
+  auto const dest_object_name = prefix + ".dest";
+  // First insert the object, verify that it did not exist before the upload.
+  auto insert = client->InsertObject(bucket_name_, dest_object_name,
+                                     LoremIpsum(), IfGenerationMatch(0));
+  ASSERT_STATUS_OK(insert);
+
+  auto object_metadata = ParallelUploadFile(
+      *client, temp_file.name(), bucket_name_, dest_object_name, prefix, false,
+      MinStreamSize(0), MaxStreams(64), IfGenerationMatch(0));
+  EXPECT_THAT(object_metadata, StatusIs(AnyOf(StatusCode::kFailedPrecondition,
+                                              StatusCode::kAborted)));
+
+  std::vector<std::string> names;
+  for (auto& object : client->ListObjects(bucket_name_, Prefix(prefix))) {
+    if (!object) break;
+    names.push_back(object->name());
+  }
+  EXPECT_THAT(names, ElementsAre(dest_object_name));
+
+  (void)client->DeleteObject(bucket_name_, dest_object_name,
+                             Generation(insert->generation()));
 }
 
 }  // anonymous namespace
