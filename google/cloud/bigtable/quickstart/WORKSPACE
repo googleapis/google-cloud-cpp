@@ -24,7 +24,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_archive(
     name = "com_github_googleapis_google_cloud_cpp",
     sha256 = "6a736ebf5eacae23f8e51d755378469e11f10dd3257b0d8ddaba7a97f7186c95",
-    strip_prefix = "google-cloud-cpp-1.28.0",
+    strip_prefix = "google-cloud-cpp-1.29.0",
     url = "https://github.com/googleapis/google-cloud-cpp/archive/v1.29.0.tar.gz",
 )
 
