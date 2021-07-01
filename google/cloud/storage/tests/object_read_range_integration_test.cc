@@ -57,6 +57,7 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadRangeSmall) {
   auto insert = client->InsertObject(bucket_name(), object_name, contents,
                                      IfGenerationMatch(0));
   ASSERT_THAT(insert, IsOk());
+  ScheduleForDelete(*insert);
   EXPECT_THAT(contents.size(), insert->size());
 
   auto const size = static_cast<std::int64_t>(insert->size());
@@ -81,8 +82,6 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadRangeSmall) {
     EXPECT_THAT(reader.status(), IsOk());
     EXPECT_EQ(test.expected, actual);
   }
-
-  (void)client->DeleteObject(bucket_name(), object_name);
 }
 
 TEST_F(ObjectReadRangeIntegrationTest, ReadFromOffset) {
@@ -95,6 +94,7 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadFromOffset) {
   auto insert = client->InsertObject(bucket_name(), object_name, contents,
                                      IfGenerationMatch(0));
   ASSERT_THAT(insert, IsOk());
+  ScheduleForDelete(*insert);
   EXPECT_THAT(contents.size(), insert->size());
 
   auto const size = static_cast<std::int64_t>(insert->size());
@@ -117,8 +117,6 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadFromOffset) {
     EXPECT_THAT(reader.status(), IsOk());
     EXPECT_EQ(test.expected, actual);
   }
-
-  (void)client->DeleteObject(bucket_name(), object_name);
 }
 
 TEST_F(ObjectReadRangeIntegrationTest, ReadLast) {
@@ -131,6 +129,7 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadLast) {
   auto insert = client->InsertObject(bucket_name(), object_name, contents,
                                      IfGenerationMatch(0));
   ASSERT_THAT(insert, IsOk());
+  ScheduleForDelete(*insert);
   EXPECT_THAT(contents.size(), insert->size());
 
   auto const size = static_cast<std::int64_t>(insert->size());
@@ -153,8 +152,6 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadLast) {
     EXPECT_THAT(reader.status(), IsOk());
     EXPECT_EQ(test.expected, actual);
   }
-
-  (void)client->DeleteObject(bucket_name(), object_name);
 }
 
 }  // namespace

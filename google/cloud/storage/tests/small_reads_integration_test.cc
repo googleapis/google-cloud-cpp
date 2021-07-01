@@ -58,8 +58,8 @@ TEST_F(SmallReadsIntegrationTest, Repro5096) {
     writer.write(block.data(), block.size());
   }
   writer.Close();
-  auto write_status = writer.metadata().status();
-  ASSERT_STATUS_OK(write_status);
+  ASSERT_STATUS_OK(writer.metadata());
+  ScheduleForDelete(*writer.metadata());
 
   auto reader = client->ReadObject(bucket_name_, object_name);
 
@@ -82,9 +82,6 @@ TEST_F(SmallReadsIntegrationTest, Repro5096) {
     last = ts;
     offset += reader.gcount();
   }
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 }  // anonymous namespace

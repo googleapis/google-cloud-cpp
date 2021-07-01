@@ -71,27 +71,6 @@ class GrpcIntegrationTest
         << "GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME is not set";
   }
 
-  void TearDown() override {
-    auto client = MakeIntegrationTestClient();
-    if (!client) return;
-    for (auto& o : objects_to_delete_) {
-      (void)client->DeleteObject(o.bucket(), o.name(),
-                                 Generation(o.generation()));
-    }
-    auto bucket_client = MakeBucketIntegrationTestClient();
-    if (!bucket_client) return;
-    for (auto& b : buckets_to_delete_) {
-      (void)bucket_client->DeleteBucket(b.name());
-    }
-  }
-
-  void ScheduleForDelete(ObjectMetadata meta) {
-    objects_to_delete_.push_back(std::move(meta));
-  }
-  void ScheduleForDelete(BucketMetadata meta) {
-    buckets_to_delete_.push_back(std::move(meta));
-  }
-
   std::string project_id() const { return project_id_; }
   std::string topic_name() const { return topic_name_; }
 
@@ -101,9 +80,6 @@ class GrpcIntegrationTest
   }
 
  private:
-  std::vector<ObjectMetadata> objects_to_delete_;
-  std::vector<BucketMetadata> buckets_to_delete_;
-
   std::string project_id_;
   std::string topic_name_;
   testing_util::ScopedEnvironment grpc_config_;
@@ -357,6 +333,7 @@ TEST_P(GrpcIntegrationTest, ObjectCRUD) {
   EXPECT_EQ(LoremIpsum(), actual);
   EXPECT_STATUS_OK(stream.status());
 
+  // This is part of the test, not just a cleanup.
   auto delete_object_status = client->DeleteObject(
       bucket_name, object_name, Generation(object_metadata->generation()));
   EXPECT_STATUS_OK(delete_object_status);
@@ -454,6 +431,8 @@ TEST_P(GrpcIntegrationTest, WriteResume) {
   os << LoremIpsum();
   os.Close();
   ASSERT_STATUS_OK(os.metadata());
+  ScheduleForDelete(*os.metadata());
+
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
@@ -481,6 +460,7 @@ TEST_P(GrpcIntegrationTest, InsertLarge) {
   auto bucket_metadata = bucket_client->CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
   ASSERT_STATUS_OK(bucket_metadata);
+  ScheduleForDelete(*bucket_metadata);
 
   // Insert an object that is larger than 4 MiB, and its size is not a
   // multiple of 256 KiB.
@@ -488,19 +468,10 @@ TEST_P(GrpcIntegrationTest, InsertLarge) {
   auto data = MakeRandomData(desired_size);
   auto metadata = client->InsertObject(bucket_name, object_name, data,
                                        IfGenerationMatch(0));
-  EXPECT_STATUS_OK(metadata);
-  if (!metadata) {
-    auto delete_bucket_status = client->DeleteBucket(bucket_name);
-    EXPECT_STATUS_OK(delete_bucket_status);
-    return;
-  }
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+
   EXPECT_EQ(desired_size, metadata->size());
-
-  auto status = client->DeleteObject(bucket_name, object_name);
-  EXPECT_STATUS_OK(status);
-
-  auto delete_bucket_status = bucket_client->DeleteBucket(bucket_name);
-  EXPECT_STATUS_OK(delete_bucket_status);
 }
 
 TEST_P(GrpcIntegrationTest, StreamLargeChunks) {

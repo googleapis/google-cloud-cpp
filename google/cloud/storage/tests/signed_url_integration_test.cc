@@ -71,6 +71,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlGet) {
   auto meta = client->InsertObject(bucket_name_, object_name, expected,
                                    IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   StatusOr<std::string> signed_url = client->CreateV2SignedUrl(
       "GET", bucket_name_, object_name, SigningAccount(service_account_));
@@ -85,9 +86,6 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlGet) {
   EXPECT_EQ(200, response->status_code);
 
   EXPECT_EQ(expected, response->payload);
-
-  auto deleted = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(deleted);
 }
 
 TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlPut) {
@@ -137,6 +135,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlGet) {
   auto meta = client->InsertObject(bucket_name_, object_name, expected,
                                    IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   StatusOr<std::string> signed_url = client->CreateV4SignedUrl(
       "GET", bucket_name_, object_name, SigningAccount(service_account_));
@@ -151,9 +150,6 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlGet) {
   EXPECT_EQ(200, response->status_code);
 
   EXPECT_EQ(expected, response->payload);
-
-  auto deleted = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(deleted);
 }
 
 TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlPut) {

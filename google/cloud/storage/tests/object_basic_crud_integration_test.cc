@@ -145,6 +145,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
   EXPECT_EQ(desired_patch.content_language(), patched_meta->content_language())
       << *patched_meta;
 
+  // This is the test for Object CRUD, we cannot rely on `ScheduleForDelete()`.
   auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
   EXPECT_THAT(list_object_names(), Not(Contains(object_name)));
@@ -176,14 +177,12 @@ TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointInsertJSON) {
   auto const expected = LoremIpsum();
   auto insert = client.InsertObject(bucket_name_, object_name, expected);
   ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
   auto stream =
       client.ReadObject(bucket_name_, object_name, IfGenerationNotMatch(0));
   EXPECT_STATUS_OK(stream.status());
   std::string const actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that the client works with non-default endpoints.
@@ -194,13 +193,11 @@ TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointInsertXml) {
   auto insert =
       client.InsertObject(bucket_name_, object_name, expected, Fields(""));
   ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
   auto stream = client.ReadObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(stream.status());
   std::string const actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that the client works with non-default endpoints.
@@ -212,14 +209,12 @@ TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointWriteJSON) {
   writer << expected;
   writer.Close();
   ASSERT_STATUS_OK(writer.metadata());
+  ScheduleForDelete(*writer.metadata());
   auto stream =
       client.ReadObject(bucket_name_, object_name, IfGenerationNotMatch(0));
   EXPECT_STATUS_OK(stream.status());
   std::string const actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that the client works with non-default endpoints.
@@ -231,13 +226,11 @@ TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointWriteXml) {
   writer << expected;
   writer.Close();
   ASSERT_STATUS_OK(writer.metadata());
+  ScheduleForDelete(*writer.metadata());
   auto stream = client.ReadObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(stream.status());
   std::string const actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 }  // anonymous namespace

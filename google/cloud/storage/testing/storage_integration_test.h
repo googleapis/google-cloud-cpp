@@ -35,6 +35,8 @@ namespace testing {
 class StorageIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
  protected:
+  void TearDown() override;
+
   /**
    * Return a client suitable for most integration tests.
    *
@@ -92,6 +94,20 @@ class StorageIntegrationTest
 
   google::cloud::internal::DefaultPRNG generator_ =
       google::cloud::internal::MakeDefaultPRNG();
+
+  /// Delete the given object during the test teardown.
+  void ScheduleForDelete(ObjectMetadata meta) {
+    objects_to_delete_.push_back(std::move(meta));
+  }
+
+  /// Delete the given bucket during the test teardown.
+  void ScheduleForDelete(BucketMetadata meta) {
+    buckets_to_delete_.push_back(std::move(meta));
+  }
+
+ private:
+  std::vector<ObjectMetadata> objects_to_delete_;
+  std::vector<BucketMetadata> buckets_to_delete_;
 };
 
 /**

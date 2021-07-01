@@ -82,6 +82,7 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
   auto meta = client.InsertObject(bucket_name_, object_name, expected,
                                   IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   StatusOr<std::string> signed_url =
       client.CreateV4SignedUrl("GET", bucket_name_, object_name);
@@ -96,9 +97,6 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
   EXPECT_EQ(200, response->status_code);
 
   EXPECT_EQ(expected, response->payload);
-
-  auto deleted = client.DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(deleted);
 }
 
 TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
@@ -115,6 +113,7 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
   auto meta = client.InsertObject(bucket_name_, object_name, expected,
                                   IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   StatusOr<std::string> signed_url = client.CreateV4SignedUrl(
       "GET", bucket_name_, object_name, SigningAccount(service_account_));
@@ -129,9 +128,6 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
   EXPECT_EQ(200, response->status_code);
 
   EXPECT_EQ(expected, response->payload);
-
-  auto deleted = client.DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(deleted);
 }
 
 INSTANTIATE_TEST_SUITE_P(

@@ -51,6 +51,8 @@ TEST_F(ObjectParallelUploadIntegrationTest, ParallelUpload) {
   auto object_metadata = ParallelUploadFile(
       *client, temp_file.name(), bucket_name_, dest_object_name, prefix, false,
       MinStreamSize(0), IfGenerationMatch(0));
+  ASSERT_STATUS_OK(object_metadata);
+  ScheduleForDelete(*object_metadata);
 
   auto stream =
       client->ReadObject(bucket_name_, dest_object_name,
@@ -64,11 +66,6 @@ TEST_F(ObjectParallelUploadIntegrationTest, ParallelUpload) {
     names.push_back(object->name());
   }
   EXPECT_THAT(names, ElementsAre(dest_object_name));
-
-  auto deletion_status =
-      client->DeleteObject(bucket_name_, dest_object_name,
-                           IfGenerationMatch(object_metadata->generation()));
-  ASSERT_STATUS_OK(deletion_status);
 }
 
 TEST_F(ObjectParallelUploadIntegrationTest, DefaultAllowOverwrites) {
@@ -86,11 +83,14 @@ TEST_F(ObjectParallelUploadIntegrationTest, DefaultAllowOverwrites) {
   auto insert = client->InsertObject(bucket_name_, dest_object_name,
                                      LoremIpsum(), IfGenerationMatch(0));
   ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
 
   auto object_metadata = ParallelUploadFile(
       *client, temp_file.name(), bucket_name_, dest_object_name, prefix, false,
       MinStreamSize(0), MaxStreams(64));
   EXPECT_STATUS_OK(object_metadata);
+  ScheduleForDelete(*object_metadata);
+
   EXPECT_EQ(block.size(), object_metadata->size());
 
   std::vector<std::string> names;
@@ -99,12 +99,6 @@ TEST_F(ObjectParallelUploadIntegrationTest, DefaultAllowOverwrites) {
     names.push_back(object->name());
   }
   EXPECT_THAT(names, ElementsAre(dest_object_name));
-
-  // Delete both objects
-  (void)client->DeleteObject(bucket_name_, dest_object_name,
-                             Generation(insert->generation()));
-  (void)client->DeleteObject(bucket_name_, dest_object_name,
-                             Generation(object_metadata->generation()));
 }
 
 TEST_F(ObjectParallelUploadIntegrationTest, PreconditionsPreventOverwrites) {
@@ -122,6 +116,7 @@ TEST_F(ObjectParallelUploadIntegrationTest, PreconditionsPreventOverwrites) {
   auto insert = client->InsertObject(bucket_name_, dest_object_name,
                                      LoremIpsum(), IfGenerationMatch(0));
   ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
 
   auto object_metadata = ParallelUploadFile(
       *client, temp_file.name(), bucket_name_, dest_object_name, prefix, false,
@@ -135,9 +130,6 @@ TEST_F(ObjectParallelUploadIntegrationTest, PreconditionsPreventOverwrites) {
     names.push_back(object->name());
   }
   EXPECT_THAT(names, ElementsAre(dest_object_name));
-
-  (void)client->DeleteObject(bucket_name_, dest_object_name,
-                             Generation(insert->generation()));
 }
 
 }  // anonymous namespace

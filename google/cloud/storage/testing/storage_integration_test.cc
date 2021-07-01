@@ -38,6 +38,20 @@ static bool UseGrpcForMedia() {
   return v.find("media") != std::string::npos;
 }
 
+void StorageIntegrationTest::TearDown() {
+  // The client configured to create and delete buckets is good for our
+  // purposes.
+  auto client = MakeBucketIntegrationTestClient();
+  if (!client) return;
+  for (auto& o : objects_to_delete_) {
+    (void)client->DeleteObject(o.bucket(), o.name(),
+                               Generation(o.generation()));
+  }
+  for (auto& b : buckets_to_delete_) {
+    (void)client->DeleteBucket(b.name());
+  }
+}
+
 google::cloud::StatusOr<google::cloud::storage::Client>
 StorageIntegrationTest::MakeIntegrationTestClient() {
   return MakeIntegrationTestClient(TestRetryPolicy());

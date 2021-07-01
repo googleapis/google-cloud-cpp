@@ -76,17 +76,6 @@ std::vector<Test> CreateTests() {
   return cases;
 }
 
-void UseClientReadAndDelete(Client client, std::string const& bucket_name,
-                            std::string const& object_name,
-                            std::string const& payload) {
-  auto stream = client.ReadObject(bucket_name, object_name);
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_EQ(payload, actual);
-
-  auto status = client.DeleteObject(bucket_name, object_name);
-  EXPECT_THAT(status, IsOk());
-}
-
 TEST_F(AlternativeEndpointIntegrationTest, Insert) {
   if (UsingEmulator()) GTEST_SKIP();
 
@@ -102,9 +91,13 @@ TEST_F(AlternativeEndpointIntegrationTest, Insert) {
     StatusOr<ObjectMetadata> meta = client.InsertObject(
         bucket_name(), object_name, payload, IfGenerationMatch(0));
     ASSERT_THAT(meta, IsOk());
+    ScheduleForDelete(*meta);
     EXPECT_EQ(object_name, meta->name());
 
-    UseClientReadAndDelete(client, bucket_name(), object_name, payload);
+    auto stream = client.ReadObject(bucket_name(), object_name);
+    std::string actual(std::istreambuf_iterator<char>{stream}, {});
+    EXPECT_EQ(payload, actual);
+
     auto lines = log.ExtractLines();
     test.validate(lines);
   }
@@ -129,9 +122,13 @@ TEST_F(AlternativeEndpointIntegrationTest, Write) {
     os.Close();
     auto meta = os.metadata();
     ASSERT_THAT(meta, IsOk());
+    ScheduleForDelete(*meta);
     EXPECT_EQ(object_name, meta->name());
 
-    UseClientReadAndDelete(client, bucket_name(), object_name, payload);
+    auto stream = client.ReadObject(bucket_name(), object_name);
+    std::string actual(std::istreambuf_iterator<char>{stream}, {});
+    EXPECT_EQ(payload, actual);
+
     auto lines = log.ExtractLines();
     test.validate(lines);
   }

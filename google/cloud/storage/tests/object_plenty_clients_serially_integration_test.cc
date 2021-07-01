@@ -45,13 +45,10 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
 
   std::string expected = LoremIpsum();
 
-  // Create the object, but only if it does not exist already.
   StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name_, object_name, expected, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
-
-  EXPECT_EQ(object_name, meta->name());
-  EXPECT_EQ(bucket_name_, meta->bucket());
+  ScheduleForDelete(*meta);
 
   // Create a iostream to read the object back.
 
@@ -91,9 +88,6 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
     EXPECT_EQ(*num_fds_before_test, *num_fds_after_test)
         << "Clients are leaking descriptors";
   }
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
 }
 
 }  // anonymous namespace

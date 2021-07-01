@@ -48,6 +48,7 @@ TEST_F(ObjectListObjectsVersionsIntegrationTest, ListObjectsVersions) {
       bucket_name, project_id_,
       BucketMetadata{}.set_versioning(BucketVersioning{true}));
   ASSERT_STATUS_OK(create) << bucket_name;
+  ScheduleForDelete(*create);
 
   std::vector<std::pair<std::string, std::int64_t>> expected;
   for (auto i : {1, 2, 3, 4}) {
@@ -63,6 +64,7 @@ TEST_F(ObjectListObjectsVersionsIntegrationTest, ListObjectsVersions) {
                                      "contents for the " + rev + " revision",
                                      precondition)
                       .value();
+      ScheduleForDelete(meta);
       expected.emplace_back(meta.name(), meta.generation());
       precondition = storage::IfGenerationMatch{};
     }
@@ -75,14 +77,6 @@ TEST_F(ObjectListObjectsVersionsIntegrationTest, ListObjectsVersions) {
     actual.emplace_back(meta.name(), meta.generation());
   }
   EXPECT_THAT(actual, ::testing::IsSupersetOf(expected));
-  for (auto const& o : client->ListObjects(bucket_name, Versions(true))) {
-    if (!o) break;
-    (void)client->DeleteObject(bucket_name, o->name(),
-                               Generation(o->generation()));
-  }
-
-  auto status = bucket_client->DeleteBucket(bucket_name);
-  ASSERT_STATUS_OK(status);
 }
 
 }  // anonymous namespace

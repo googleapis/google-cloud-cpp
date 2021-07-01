@@ -70,6 +70,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
+  ScheduleForDelete(*source_meta);
 
   // Create an iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
@@ -80,9 +81,6 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
   EXPECT_EQ(large_text.substr(0, 1024), actual);
   stream.Close();
   EXPECT_STATUS_OK(stream.status());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Read a portion of a relatively large object using the JSON API.
@@ -110,9 +108,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
-
-  EXPECT_EQ(object_name, source_meta->name());
-  EXPECT_EQ(bucket_name_, source_meta->bucket());
+  ScheduleForDelete(*source_meta);
 
   // Create an iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name,
@@ -121,9 +117,6 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(1 * kChunk, actual.size());
   EXPECT_EQ(large_text.substr(1 * kChunk, 1 * kChunk), actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Read a portion of a relatively large object using the XML API.
@@ -151,9 +144,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
-
-  EXPECT_EQ(object_name, source_meta->name());
-  EXPECT_EQ(bucket_name_, source_meta->bucket());
+  ScheduleForDelete(*source_meta);
 
   // Create an iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name,
@@ -161,9 +152,6 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(1 * kChunk, actual.size());
   EXPECT_EQ(large_text.substr(1 * kChunk, 1 * kChunk), actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Read a portion of a relatively large object using the JSON API.
@@ -191,9 +179,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
-
-  EXPECT_EQ(object_name, source_meta->name());
-  EXPECT_EQ(bucket_name_, source_meta->bucket());
+  ScheduleForDelete(*source_meta);
 
   // Create an iostream to read the object back.
   auto stream =
@@ -202,9 +188,6 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(2 * kChunk, actual.size());
   EXPECT_EQ(large_text.substr(2 * kChunk), actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Read a portion of a relatively large object using the XML API.
@@ -232,9 +215,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetXml) {
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
-
-  EXPECT_EQ(object_name, source_meta->name());
-  EXPECT_EQ(bucket_name_, source_meta->bucket());
+  ScheduleForDelete(*source_meta);
 
   // Create an iostream to read the object back.
   auto stream =
@@ -242,9 +223,6 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetXml) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(2 * kChunk, actual.size());
   EXPECT_EQ(large_text.substr(2 * kChunk), actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Read a relatively large object using chunks of different sizes.
@@ -272,9 +250,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadMixedChunks) {
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
-
-  EXPECT_EQ(object_name, source_meta->name());
-  EXPECT_EQ(bucket_name_, source_meta->bucket());
+  ScheduleForDelete(*source_meta);
 
   // Create an iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
@@ -304,9 +280,6 @@ TEST_F(ObjectMediaIntegrationTest, ReadMixedChunks) {
 
   EXPECT_EQ(kObjectSize, actual.size());
   EXPECT_EQ(large_text, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Read the last chunk of an object.
@@ -338,9 +311,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunk) {
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
-
-  EXPECT_EQ(object_name, source_meta->name());
-  EXPECT_EQ(bucket_name_, source_meta->bucket());
+  ScheduleForDelete(*source_meta);
 
   // Create an iostream to read the last 256KiB of the object, but simulate an
   // application that does not know how large that last chunk is.
@@ -355,9 +326,6 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunk) {
   EXPECT_EQ(kObjectSize - 3 * kMiB, stream.gcount());
   std::string actual(buffer.data(), static_cast<std::size_t>(stream.gcount()));
   EXPECT_EQ(large_text.substr(3 * kMiB), actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify left over data in the spill buffer is read.
@@ -385,6 +353,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromSpill) {
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name_, object_name, contents, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
+  ScheduleForDelete(*source_meta);
 
   // Create an iostream to read just the first few bytes of the object.
   auto stream = client->ReadObject(bucket_name_, object_name);
@@ -405,9 +374,6 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromSpill) {
   EXPECT_TRUE(stream.fail());
   EXPECT_FALSE(stream.bad());
   EXPECT_FALSE(stream.IsOpen());
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Read the last chunk of an object by setting ReadLast option.
@@ -439,9 +405,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunkReadLast) {
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
-
-  EXPECT_EQ(object_name, source_meta->name());
-  EXPECT_EQ(bucket_name_, source_meta->bucket());
+  ScheduleForDelete(*source_meta);
 
   // Create an iostream to read the last 129KiB of the object, but simulate an
   // application that does not know how large that last chunk is.
@@ -456,9 +420,6 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunkReadLast) {
   EXPECT_EQ(129 * kKiB, stream.gcount());
   std::string actual(buffer.data(), static_cast<std::size_t>(stream.gcount()));
   EXPECT_EQ(large_text.substr(kObjectSize - 129 * kKiB), actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 /// @test Read an object by chunks of equal size.
@@ -489,9 +450,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
-
-  EXPECT_EQ(object_name, source_meta->name());
-  EXPECT_EQ(bucket_name_, source_meta->bucket());
+  ScheduleForDelete(*source_meta);
 
   std::vector<char> buffer(1 * kMiB);
   for (int i = 0; i != 3; ++i) {
@@ -525,9 +484,6 @@ TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
   auto expected = large_text.substr(3 * kMiB);
   EXPECT_EQ(expected.size(), actual.size());
   EXPECT_EQ(expected, actual);
-
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadJSON) {
@@ -669,6 +625,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
   StatusOr<ObjectMetadata> source_meta = client.InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
+  ScheduleForDelete(*source_meta);
 
   auto stream = client.ReadObject(
       bucket_name_, object_name,
@@ -678,9 +635,6 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
   stream.read(buffer.data(), kObjectSize);
   EXPECT_TRUE(stream.bad());
   EXPECT_FALSE(stream.status().ok());
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
@@ -702,6 +656,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
   StatusOr<ObjectMetadata> source_meta = client.InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
+  ScheduleForDelete(*source_meta);
 
   auto stream = client.ReadObject(
       bucket_name_, object_name,
@@ -716,9 +671,6 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
   EXPECT_TRUE(stream.eof());
   EXPECT_EQ(0, stream.gcount());
   EXPECT_STATUS_OK(stream.status());
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
@@ -734,6 +686,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
   StatusOr<ObjectMetadata> source_meta = client.InsertObject(
       bucket_name_, object_name, contents, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
+  ScheduleForDelete(*source_meta);
 
   auto stream = client.ReadObject(
       bucket_name_, object_name,
@@ -750,9 +703,6 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
     EXPECT_EQ(expected_count, stream.gcount());
     EXPECT_STATUS_OK(stream.status());
   }
-
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 }  // anonymous namespace

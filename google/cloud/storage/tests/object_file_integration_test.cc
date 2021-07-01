@@ -69,7 +69,9 @@ TEST_F(ObjectFileIntegrationTest, XmlDownloadFile) {
   upload.exceptions(std::ios_base::failbit);
   WriteRandomLines(upload, expected);
   upload.Close();
-  ObjectMetadata meta = upload.metadata().value();
+  ASSERT_STATUS_OK(upload.metadata());
+  auto meta = upload.metadata().value();
+  ScheduleForDelete(meta);
 
   auto status = client->DownloadToFile(bucket_name_, object_name, file_name);
   ASSERT_STATUS_OK(status);
@@ -81,8 +83,6 @@ TEST_F(ObjectFileIntegrationTest, XmlDownloadFile) {
   ASSERT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
   EXPECT_EQ(expected_str, actual);
 
-  status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
   // On Windows one must close the stream before removing the file.
   stream.close();
   EXPECT_EQ(0, std::remove(file_name.c_str()));
@@ -102,7 +102,9 @@ TEST_F(ObjectFileIntegrationTest, JsonDownloadFile) {
       client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
   WriteRandomLines(upload, expected);
   upload.Close();
-  ObjectMetadata meta = upload.metadata().value();
+  ASSERT_STATUS_OK(upload.metadata());
+  auto meta = upload.metadata().value();
+  ScheduleForDelete(meta);
 
   auto status = client->DownloadToFile(bucket_name_, object_name, file_name,
                                        IfMetagenerationNotMatch(0));
@@ -115,8 +117,6 @@ TEST_F(ObjectFileIntegrationTest, JsonDownloadFile) {
   ASSERT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
   EXPECT_EQ(expected_str, actual);
 
-  status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
   // On Windows one must close the stream before removing the file.
   stream.close();
   EXPECT_EQ(0, std::remove(file_name.c_str()));
@@ -142,15 +142,13 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileCannotOpenFile) {
       client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   // Create an invalid path for the destination object.
   auto file_name = MakeRandomFilename() + "/" + MakeRandomFilename();
 
   auto status = client->DownloadToFile(bucket_name_, object_name, file_name);
   EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk), HasSubstr(object_name)));
-
-  status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 }
 
 TEST_F(ObjectFileIntegrationTest, DownloadFileCannotWriteToFile) {
@@ -163,6 +161,7 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileCannotWriteToFile) {
       client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   // We want to test that the code handles write errors *after* the file is
   // successfully opened for writing. Such errors are hard to get, typically
@@ -177,9 +176,6 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileCannotWriteToFile) {
 
   auto status = client->DownloadToFile(bucket_name_, object_name, kFileName);
   EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk), HasSubstr(object_name)));
-
-  status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
 #endif  // GTEST_OS_LINUX
 }
 
@@ -201,6 +197,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFile) {
   StatusOr<ObjectMetadata> meta = client->UploadFile(
       file_name, bucket_name_, object_name, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
   auto expected_str = expected.str();
@@ -213,8 +210,6 @@ TEST_F(ObjectFileIntegrationTest, UploadFile) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -245,6 +240,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileBinary) {
   StatusOr<ObjectMetadata> meta = client->UploadFile(
       file_name, bucket_name_, object_name, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
   ASSERT_EQ(expected.size(), meta->size());
@@ -256,8 +252,6 @@ TEST_F(ObjectFileIntegrationTest, UploadFileBinary) {
   EXPECT_EQ(expected.size(), actual.size()) << " meta=" << *meta;
   EXPECT_THAT(actual, ::testing::ElementsAreArray(expected));
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -275,6 +269,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileEmpty) {
   StatusOr<ObjectMetadata> meta = client->UploadFile(
       file_name, bucket_name_, object_name, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
   EXPECT_EQ(0, meta->size());
@@ -286,8 +281,6 @@ TEST_F(ObjectFileIntegrationTest, UploadFileEmpty) {
   EXPECT_EQ(0, actual.size());
   EXPECT_EQ("", actual);
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -318,6 +311,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileUploadFailure) {
   StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   // Trying to upload the file to the same object with the IfGenerationMatch(0)
   // condition should fail because the object already exists.
@@ -329,8 +323,6 @@ TEST_F(ObjectFileIntegrationTest, UploadFileUploadFailure) {
                                             Eq(StatusCode::kAborted)))
       << " upload.status=" << upload.status();
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -358,12 +350,12 @@ TEST_F(ObjectFileIntegrationTest, UploadFileNonRegularWarning) {
   StatusOr<ObjectMetadata> meta =
       client->UploadFile(file_name, bucket_name_, object_name,
                          IfGenerationMatch(0), DisableMD5Hash(true));
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("not a regular file")));
 
   t.join();
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 #endif  // GTEST_OS_LINUX
 }
@@ -400,6 +392,7 @@ TEST_F(ObjectFileIntegrationTest, XmlUploadFile) {
   StatusOr<ObjectMetadata> meta = client->UploadFile(
       file_name, bucket_name_, object_name, IfGenerationMatch(0), Fields(""));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   auto expected_str = expected.str();
 
   // Create an iostream to read the object back.
@@ -409,8 +402,6 @@ TEST_F(ObjectFileIntegrationTest, XmlUploadFile) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -430,6 +421,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableBySize) {
   StatusOr<ObjectMetadata> meta = client.UploadFile(
       file_name, bucket_name_, object_name, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
   auto expected_str = expected.str();
@@ -447,8 +439,6 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableBySize) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -471,6 +461,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableByOption) {
       client->UploadFile(file_name, bucket_name_, object_name,
                          IfGenerationMatch(0), NewResumableUploadSession());
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
   auto expected_str = expected.str();
@@ -488,8 +479,6 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableByOption) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -514,6 +503,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableQuantum) {
   StatusOr<ObjectMetadata> meta = client.UploadFile(
       file_name, bucket_name_, object_name, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
   auto expected_str = expected.str();
@@ -526,8 +516,6 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableQuantum) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -551,6 +539,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableNonQuantum) {
   StatusOr<ObjectMetadata> meta = client.UploadFile(
       file_name, bucket_name_, object_name, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
   auto expected_str = expected.str();
@@ -563,8 +552,6 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableNonQuantum) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -605,6 +592,7 @@ TEST_F(ObjectFileIntegrationTest, UploadPortionRegularFile) {
       file_name, bucket_name_, object_name, UploadFromOffset(10),
       UploadLimit(10000), IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
   auto expected_str = expected.str().substr(10, 10000);
@@ -617,8 +605,6 @@ TEST_F(ObjectFileIntegrationTest, UploadPortionRegularFile) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -647,8 +633,9 @@ TEST_F(ObjectFileIntegrationTest, ResumableUploadFileCustomHeader) {
   StatusOr<ObjectMetadata> meta =
       client->UploadFile(file_name, bucket_name_, object_name, custom_header,
                          IfGenerationMatch(0), NewResumableUploadSession());
-
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
   auto expected_str = expected.str();
@@ -664,8 +651,6 @@ TEST_F(ObjectFileIntegrationTest, ResumableUploadFileCustomHeader) {
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
-  EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
