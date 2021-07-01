@@ -1,24 +1,24 @@
 # Creating a new release of google-cloud-cpp
 
-Unless there are no changes, we create releases for `google-cloud-cpp` every
-4 weeks, or if there is a major announcement or change to the status of one
+Unless there are no changes, we create releases for `google-cloud-cpp` at the
+beginning of each month, usually on the first business day. We also create
+releases if there is a major announcement or change to the status of one
 of the libraries (like reaching the "Alpha" or "Beta" milestone).
 
 The intended audience of this document are developers in the `google-cloud-cpp`
-project that need to create a new release. The audience is expected to be
-familiar with the project itself, [git][git-docs], [GitHub][github-guides],
+project that need to create a new release. We expect the reader to be familiar
+the project itself, [git][git-docs], [GitHub][github-guides], and
 [semantic versioning](https://semver.org).
 
 ## Preparing for a release
 
-Assuming you are working on your own fork of the `google-cloud-cpp` project,
-and `upstream` points to the `googleapis/google-cloud-cpp` remote, these
-commands should be useful in identifying important changes for inclusion in the
-release notes.
+To create a new release you need to perform some maintenance tasks, these are
+enumerated below.
 
 ### Verify CI passing
+
 Before beginning the release process, verify all CI builds are passing on
-main.
+the `main` branch. This is displayed in the GitHub page for the project.
 
 ### Update the API baseline
 
@@ -37,6 +37,11 @@ can, but are not required to, send a single PR to update the baseline and the
 `CHANGELOG.md` file.
 
 ### Update CHANGELOG.md
+
+Assuming you are working on your own fork of the `google-cloud-cpp` project,
+and `upstream` points to the `googleapis/google-cloud-cpp` remote, these
+commands should be useful in identifying important changes for inclusion in the
+release notes.
 
 Update `CHANGELOG.md` based on the release notes for Bigtable, Storage,
 Spanner, and the common libraries:
@@ -86,17 +91,21 @@ discarded as they are uninteresting to our users.
 
 ### Send a PR with all these changes
 
-It is not recommended that you create the release branch before this PR is
-*merged*, but in some circumstances it might be needed, for example, if a large
-change that could destabilize the release is about to be merged, or if we want
-to create the release at an specific point in the revision history.
+In general, do not create the release branch before this PR is *merged*. We want
+to create the release from a stable point in the default branch (`main`), and
+we want this point to include the updated release notes and API baselines.
+There may be exceptions to this guideline, you are encouraged to use your own
+judgement.
 
 ## Creating the release
 
+> :warning: the `release.sh` script was broken as of 2021-07.
+
 We next need to create the release tag, the release branch, and create the
-release in the GitHub UI. These steps are handled automatically for us by the
-[`release/release.sh`
-script](https://github.com/googleapis/google-cloud-cpp/blob/main/release/release.sh).
+release in the GitHub UI. We use a script ([`release/release.sh`]) to automate
+said steps.
+
+[`release/release.sh`]: https://github.com/googleapis/google-cloud-cpp/blob/main/release/release.sh
 
 *No PR is needed for this step.*
 
@@ -104,7 +113,7 @@ First run the following command -- which will *NOT* make any changes to any
 repos -- and verify that the output and *version numbers* look correct.
 
 ```bash
-$ release/release.sh googleapis/google-cloud-cpp
+$ `release/release.sh googleapis/google-cloud-cpp`
 ```
 
 If the output from the previous command looks OK, rerun the command with the
@@ -125,9 +134,9 @@ everything looks OK, uncheck the pre-release checkbox and publish.
 
 ## Check the published docs on googleapis.dev
 
-After the release branch is submitted, the `publish-docs` build will be
-automatically triggered, and it will upload the docs for the new release to the
-following URLs:
+The `publish-docs` build should start automatically when you create the release
+branch. This build will upload the docs for the new release to the following
+URLs:
 
 * https://googleapis.dev/cpp/google-cloud-bigtable/latest/
 * https://googleapis.dev/cpp/google-cloud-pubsub/latest/
@@ -142,8 +151,8 @@ https://console.cloud.google.com/cloud-build/builds?project=cloud-cpp-testing-re
 ## Bump the version numbers in `main`
 
 Working in your fork of `google-cloud-cpp`: bump the version numbers to the
-*next* version (i.e., one version past the release you just did above), and
-send the PR for review against `main` You need to:
+*next* version, i.e., one version past the release you just did above. Then
+send the PR for review against `main`. You need to:
 
 - Update the version numbers in the top-level `CMakeLists.txt` file.
 - Run the cmake configuration step, this will update the different
@@ -181,10 +190,10 @@ Please note that we use more strict settings for release branches than for
 
 ## Push the release to Microsoft vcpkg
 
-Nudge coryan@ to send a PR to
-[vcpkg](https://github.com/Microsoft/vcpkg/tree/master/ports/google-cloud-cpp).
-The PRs are not difficult, but contributing to this repository requires SVP
-approval.
+Nudge `coryan@` to update our [vcpkg port]. These updates are not difficult, but
+contributing to this repository requires SVP approval. If you want, you can
+seek approval to make such updates yourself, just keep in mind that this may
+take several weeks.
 
 # Creating a patch release of google-cloud-cpp on an existing release branch
 
@@ -194,9 +203,10 @@ In your development fork:
 * Create or cherry-pick commits with the desired changes.
 * Update `CHANELOG.md` to reflect the changes made.
 * Bump the minor version number in the top-level CMakeLists.txt and run the
-cmake configuration step to update the different `version_info.h` files.
-* After merging the PR(s) with all the above changes, use the Release gui on
-github to create a pre-release along with a new tag for the release.
+  cmake configuration step to update the different `version_info.h` files.
+* After merging the PR(s) with all the above changes, use the Release UI on
+  GitHub to create a pre-release along with a new tag for the release.
 * After review, publish the release.
-* Nudge coryan@ to send a PR to
-[vcpkg](https://github.com/Microsoft/vcpkg/tree/master/ports/google-cloud-cpp).
+* Nudge `coryan@` to update our [vcpkg port].
+
+[vcpkg port]: https://github.com/Microsoft/vcpkg/tree/master/ports/google-cloud-cpp
