@@ -35,7 +35,7 @@ namespace testing {
 class StorageIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
  protected:
-  void TearDown() override;
+  ~StorageIntegrationTest() override;
 
   /**
    * Return a client suitable for most integration tests.

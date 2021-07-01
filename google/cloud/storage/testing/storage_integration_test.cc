@@ -38,7 +38,7 @@ static bool UseGrpcForMedia() {
   return v.find("media") != std::string::npos;
 }
 
-void StorageIntegrationTest::TearDown() {
+StorageIntegrationTest::~StorageIntegrationTest() {
   // The client configured to create and delete buckets is good for our
   // purposes.
   auto client = MakeBucketIntegrationTestClient();
