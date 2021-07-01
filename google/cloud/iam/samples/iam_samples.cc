@@ -543,13 +543,13 @@ void AutoRun(std::vector<std::string> const& argv) {
   QueryGrantableRoles(
       {absl::StrCat("//iam.googleapis.com/projects/", project_id,
                     "/serviceAccounts/", service_account_id)});
-  SetIamPolicy({service_account_name});
   ListRoles({absl::StrCat("projects/", project_id)});
   QueryTestablePermissions(
       {absl::StrCat("//iam.googleapis.com/projects/", project_id,
                     "/serviceAccounts/", service_account_id)});
 
   if (RunQuotaLimitedSamples()) {
+    SetIamPolicy({service_account_name});
     CreateServiceAccount({project_id, "sample-account-id", "SampleAccount",
                           "Service Account created during sample execution."});
     auto const sample_service_account_name =
