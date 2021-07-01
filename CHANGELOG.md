@@ -65,6 +65,19 @@
 
 ## v1.30.0 - TBD
 
+### Bigtable:
+
+**BREAKING CHANGES**:
+* `Async*` functions in `Table` that took `CompletionQueue&` as a parameter
+  have been removed. Users that need to update their code should use the
+  identically named functions which do not require a `CompletionQueue&`. If
+  users absolutely require a custom `CompletionQueue`, one can be supplied to
+  the `DataClient` used to construct the `Table`, via
+  `ClientOptions::DisableBackgroundThreads(CompletionQueue const&)`.
+  See [#2567][issue-2567] for more details.
+
+[issue-2567]: https://github.com/googleapis/google-cloud-cpp/issues/2567
+
 ## v1.29.0 - 2021-07
 
 ### Bigtable:
