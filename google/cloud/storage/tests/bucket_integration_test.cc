@@ -437,7 +437,6 @@ TEST_F(BucketIntegrationTest, UniformBucketLevelAccessPatch) {
 
 // @test Verify that we can set the iam_configuration() in a Bucket.
 TEST_F(BucketIntegrationTest, PublicAccessPreventionPatch) {
-  if (!UsingEmulator()) GTEST_SKIP();
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
