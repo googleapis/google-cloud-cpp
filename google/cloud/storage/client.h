@@ -3539,7 +3539,7 @@ StatusOr<ObjectMetadata> ComposeMany(
           internal::ComposeApplyHelper{client, bucket_name,
                                        std::move(compose_range),
                                        std::move(destination_object_name)},
-          std::tuple_cat(std::make_tuple(IfGenerationMatch(0)), all_options));
+          all_options);
     }
     return google::cloud::internal::apply(
         internal::ComposeApplyHelper{client, bucket_name,
