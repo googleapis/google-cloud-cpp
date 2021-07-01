@@ -110,8 +110,7 @@ Status Table::Apply(SingleRowMutation mut) {
   }
 }
 
-future<Status> Table::AsyncApplyImpl(SingleRowMutation mut,
-                                     CompletionQueue& cq) {
+future<Status> Table::AsyncApply(SingleRowMutation mut) {
   google::bigtable::v2::MutateRowRequest request;
   SetCommonTableOperationRequest<google::bigtable::v2::MutateRowRequest>(
       request, app_profile_id_, table_name_);
@@ -131,6 +130,7 @@ future<Status> Table::AsyncApplyImpl(SingleRowMutation mut,
   auto const idempotency =
       is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent;
 
+  auto cq = background_threads_->cq();
   auto client = client_;
   auto metadata_update_policy = clone_metadata_update_policy();
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
@@ -147,11 +147,6 @@ future<Status> Table::AsyncApplyImpl(SingleRowMutation mut,
       .then([](future<StatusOr<google::bigtable::v2::MutateRowResponse>> r) {
         return r.get().status();
       });
-}
-
-future<Status> Table::AsyncApply(SingleRowMutation mut) {
-  auto cq = background_threads_->cq();
-  return AsyncApplyImpl(std::move(mut), cq);
 }
 
 std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
@@ -181,18 +176,13 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
   return std::move(mutator).OnRetryDone();
 }
 
-future<std::vector<FailedMutation>> Table::AsyncBulkApplyImpl(
-    BulkMutation mut, CompletionQueue& cq) {
+future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut) {
+  auto cq = background_threads_->cq();
   auto mutation_policy = clone_idempotent_mutation_policy();
   return internal::AsyncRetryBulkApply::Create(
       cq, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       *mutation_policy, clone_metadata_update_policy(), client_,
       app_profile_id_, table_name(), std::move(mut));
-}
-
-future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut) {
-  auto cq = background_threads_->cq();
-  return AsyncBulkApplyImpl(std::move(mut), cq);
 }
 
 RowReader Table::ReadRows(RowSet row_set, Filter filter) {
@@ -264,9 +254,9 @@ StatusOr<MutationBranch> Table::CheckAndMutateRow(
                                       : MutationBranch::kPredicateNotMatched;
 }
 
-future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRowImpl(
+future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
     std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
-    std::vector<Mutation> false_mutations, CompletionQueue& cq) {
+    std::vector<Mutation> false_mutations) {
   btproto::CheckAndMutateRowRequest request;
   request.set_row_key(std::move(row_key));
   SetCommonTableOperationRequest<btproto::CheckAndMutateRowRequest>(
@@ -282,6 +272,7 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRowImpl(
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
 
+  auto cq = background_threads_->cq();
   auto client = client_;
   auto metadata_update_policy = clone_metadata_update_policy();
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
@@ -305,15 +296,6 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRowImpl(
                    ? MutationBranch::kPredicateMatched
                    : MutationBranch::kPredicateNotMatched;
       });
-}
-
-future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
-    std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
-    std::vector<Mutation> false_mutations) {
-  auto cq = background_threads_->cq();
-  return AsyncCheckAndMutateRowImpl(std::move(row_key), std::move(filter),
-                                    std::move(true_mutations),
-                                    std::move(false_mutations), cq);
 }
 
 // Call the `google.bigtable.v2.Bigtable.SampleRowKeys` RPC until
@@ -388,12 +370,12 @@ StatusOr<Row> Table::ReadModifyWriteRowImpl(
 }
 
 future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
-    CompletionQueue& cq,
     ::google::bigtable::v2::ReadModifyWriteRowRequest request) {
   SetCommonTableOperationRequest<
       ::google::bigtable::v2::ReadModifyWriteRowRequest>(
       request, app_profile_id_, table_name_);
 
+  auto cq = background_threads_->cq();
   auto client = client_;
   auto metadata_update_policy = clone_metadata_update_policy();
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
@@ -418,8 +400,8 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
       });
 }
 
-future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRowImpl(
-    CompletionQueue& cq, std::string row_key, Filter filter) {
+future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRow(std::string row_key,
+                                                           Filter filter) {
   class AsyncReadRowHandler {
    public:
     AsyncReadRowHandler() : row_("", {}) {}
@@ -464,19 +446,12 @@ future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRowImpl(
   RowSet row_set(std::move(row_key));
   std::int64_t const rows_limit = 1;
   auto handler = std::make_shared<AsyncReadRowHandler>();
-  AsyncReadRowsImpl(
-      cq, [handler](Row row) { return handler->OnRow(std::move(row)); },
-      [handler](Status status) {
-        handler->OnStreamFinished(std::move(status));
-      },
-      std::move(row_set), rows_limit, std::move(filter));
+  AsyncReadRows([handler](Row row) { return handler->OnRow(std::move(row)); },
+                [handler](Status status) {
+                  handler->OnStreamFinished(std::move(status));
+                },
+                std::move(row_set), rows_limit, std::move(filter));
   return handler->GetFuture();
-}
-
-future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRow(std::string row_key,
-                                                           Filter filter) {
-  auto cq = background_threads_->cq();
-  return AsyncReadRowImpl(cq, std::move(row_key), std::move(filter));
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

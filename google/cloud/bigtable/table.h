@@ -661,8 +661,6 @@ class Table {
   StatusOr<Row> ReadModifyWriteRow(std::string row_key,
                                    bigtable::ReadModifyWriteRule rule,
                                    Args&&... rules) {
-    grpc::Status status;
-
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_row_key(std::move(row_key));
 
@@ -712,9 +710,20 @@ class Table {
   future<StatusOr<Row>> AsyncReadModifyWriteRow(
       std::string row_key, bigtable::ReadModifyWriteRule rule,
       Args&&... rules) {
-    auto cq = background_threads_->cq();
-    return AsyncReadModifyWriteRowImpl(std::move(row_key), cq, std::move(rule),
-                                       std::forward<Args>(rules)...);
+    ::google::bigtable::v2::ReadModifyWriteRowRequest request;
+    request.set_row_key(std::move(row_key));
+
+    // Generate a better compile time error message than the default one
+    // if the types do not match
+    static_assert(
+        absl::conjunction<
+            std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
+        "The arguments passed to AsyncReadModifyWriteRow(row_key,...) must be "
+        "convertible to bigtable::ReadModifyWriteRule");
+
+    *request.add_rules() = std::move(rule).as_proto();
+    AddRules(request, std::forward<Args>(rules)...);
+    return AsyncReadModifyWriteRowImpl(std::move(request));
   }
 
   /**
@@ -750,9 +759,9 @@ class Table {
   template <typename RowFunctor, typename FinishFunctor>
   void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
                      Filter filter) {
-    auto cq = background_threads_->cq();
-    AsyncReadRowsImpl(cq, std::move(on_row), std::move(on_finish),
-                      std::move(row_set), std::move(filter));
+    AsyncReadRows(std::move(on_row), std::move(on_finish), std::move(row_set),
+                  AsyncRowReader<RowFunctor, FinishFunctor>::NO_ROWS_LIMIT,
+                  std::move(filter));
   }
 
   /**
@@ -793,9 +802,12 @@ class Table {
   template <typename RowFunctor, typename FinishFunctor>
   void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
                      std::int64_t rows_limit, Filter filter) {
-    auto cq = background_threads_->cq();
-    AsyncReadRowsImpl(cq, std::move(on_row), std::move(on_finish),
-                      std::move(row_set), rows_limit, std::move(filter));
+    AsyncRowReader<RowFunctor, FinishFunctor>::Create(
+        background_threads_->cq(), client_, app_profile_id_, table_name_,
+        std::move(on_row), std::move(on_finish), std::move(row_set), rows_limit,
+        std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+        metadata_update_policy_,
+        absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
   }
 
   /**
@@ -831,53 +843,6 @@ class Table {
                                                       Filter filter);
 
  private:
-  future<Status> AsyncApplyImpl(SingleRowMutation mut, CompletionQueue& cq);
-
-  future<std::vector<FailedMutation>> AsyncBulkApplyImpl(BulkMutation mut,
-                                                         CompletionQueue& cq);
-  future<StatusOr<MutationBranch>> AsyncCheckAndMutateRowImpl(
-      std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
-      std::vector<Mutation> false_mutations, CompletionQueue& cq);
-
-  template <typename... Args>
-  future<StatusOr<Row>> AsyncReadModifyWriteRowImpl(
-      std::string row_key, CompletionQueue& cq,
-      bigtable::ReadModifyWriteRule rule, Args&&... rules) {
-    ::google::bigtable::v2::ReadModifyWriteRowRequest request;
-    request.set_row_key(std::move(row_key));
-    *request.add_rules() = std::move(rule).as_proto();
-    AddRules(request, std::forward<Args>(rules)...);
-
-    return AsyncReadModifyWriteRowImpl(cq, std::move(request));
-  }
-
-  template <typename RowFunctor, typename FinishFunctor>
-  void AsyncReadRowsImpl(CompletionQueue& cq, RowFunctor on_row,
-                         FinishFunctor on_finish, RowSet row_set,
-                         Filter filter) {
-    AsyncRowReader<RowFunctor, FinishFunctor>::Create(
-        cq, client_, app_profile_id_, table_name_, std::move(on_row),
-        std::move(on_finish), std::move(row_set),
-        AsyncRowReader<RowFunctor, FinishFunctor>::NO_ROWS_LIMIT,
-        std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-        metadata_update_policy_,
-        absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
-  }
-  template <typename RowFunctor, typename FinishFunctor>
-  void AsyncReadRowsImpl(CompletionQueue& cq, RowFunctor on_row,
-                         FinishFunctor on_finish, RowSet row_set,
-                         std::int64_t rows_limit, Filter filter) {
-    AsyncRowReader<RowFunctor, FinishFunctor>::Create(
-        cq, client_, app_profile_id_, table_name_, std::move(on_row),
-        std::move(on_finish), std::move(row_set), rows_limit, std::move(filter),
-        clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-        metadata_update_policy_,
-        absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
-  }
-
-  future<StatusOr<std::pair<bool, Row>>> AsyncReadRowImpl(CompletionQueue& cq,
-                                                          std::string row_key,
-                                                          Filter filter);
   /**
    * Send request ReadModifyWriteRowRequest to modify the row and get it back
    */
@@ -885,7 +850,6 @@ class Table {
       ::google::bigtable::v2::ReadModifyWriteRowRequest request);
 
   future<StatusOr<Row>> AsyncReadModifyWriteRowImpl(
-      CompletionQueue& cq,
       ::google::bigtable::v2::ReadModifyWriteRowRequest request);
 
   void AddRules(google::bigtable::v2::ReadModifyWriteRowRequest&) {
