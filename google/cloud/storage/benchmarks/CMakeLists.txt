@@ -40,16 +40,14 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     include(CreateBazelConfig)
     create_bazel_config(storage_benchmarks YEAR 2019)
 
-    set(storage_benchmark_programs_production # cmake-format: sort
-                                              throughput_experiment_test.cc)
     set(storage_benchmark_programs
         # cmake-format: sort
-        ${storage_benchmark_programs_production}
         create_dataset.cc
         storage_file_transfer_benchmark.cc
         storage_parallel_uploads_benchmark.cc
         storage_shard_throughput_benchmark.cc
-        storage_throughput_vs_cpu_benchmark.cc)
+        storage_throughput_vs_cpu_benchmark.cc
+        throughput_experiment_test.cc)
 
     foreach (fname ${storage_benchmark_programs})
         google_cloud_cpp_add_executable(target "storage" "${fname}")
@@ -69,13 +67,6 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         set_tests_properties(
             ${target} PROPERTIES LABELS
                                  "integration-test;integration-test-emulator")
-    endforeach ()
-
-    foreach (fname ${storage_benchmark_programs_production})
-        google_cloud_cpp_set_target_name(target "storage" "${fname}")
-        set_tests_properties(
-            ${target} PROPERTIES LABELS
-                                 "integration-test;integration-test-production")
     endforeach ()
 
     export_list_to_bazel("storage_benchmark_programs.bzl"
