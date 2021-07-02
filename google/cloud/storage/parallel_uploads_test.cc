@@ -116,9 +116,9 @@ class ExpectedDeletions {
 
   StatusOr<internal::EmptyResponse> operator()(
       internal::DeleteObjectRequest const& r) {
-    EXPECT_TRUE(r.HasOption<IfGenerationMatch>());
-    auto if_gen_match = r.GetOption<IfGenerationMatch>();
-    auto status = RemoveExpectation(r.object_name(), if_gen_match.value());
+    EXPECT_TRUE(r.HasOption<Generation>());
+    auto generation = r.GetOption<Generation>().value_or(-1);
+    auto status = RemoveExpectation(r.object_name(), generation);
     EXPECT_EQ(kBucketName, r.bucket_name());
     if (status.ok()) {
       return internal::EmptyResponse();
@@ -131,8 +131,8 @@ class ExpectedDeletions {
                            std::int64_t generation) {
     std::lock_guard<std::mutex> lk(mu_);
     auto it = deletions_.find(std::make_pair(object_name, generation));
+    EXPECT_TRUE(it != deletions_.end());
     if (it == deletions_.end()) {
-      EXPECT_TRUE(false);
       return Status(StatusCode::kFailedPrecondition,
                     "Unexpected deletion. object=" + object_name +
                         " generation=" + std::to_string(generation));
@@ -310,8 +310,7 @@ auto expect_deletion = [](std::string const& name, int generation) {
   return [name, generation](internal::DeleteObjectRequest const& r) {
     EXPECT_EQ(kBucketName, r.bucket_name());
     EXPECT_EQ(name, r.object_name());
-    EXPECT_TRUE(r.HasOption<IfGenerationMatch>());
-    EXPECT_EQ(generation, r.GetOption<IfGenerationMatch>().value());
+    EXPECT_EQ(generation, r.GetOption<Generation>().value_or(-1));
     return make_status_or(internal::EmptyResponse{});
   };
 };
