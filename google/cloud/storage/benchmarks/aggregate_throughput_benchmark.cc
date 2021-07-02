@@ -104,14 +104,15 @@ int main(int argc, char* argv[]) {
   if (options->exit_after_parse) return 1;
 
   auto client = gcs::Client();
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   if (options->api == ApiName::kApiGrpc) {
     auto channels = options->grpc_channel_count;
     if (channels == 0) channels = (std::max)(options->thread_count / 4, 4);
-    auto client_options = google::cloud::Options{};
     client = DefaultGrpcClient(
         google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(
             channels));
   }
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   std::vector<gcs::ObjectMetadata> objects;
   std::uint64_t dataset_size = 0;
   for (auto& o : client.ListObjects(options->bucket_name,
@@ -269,6 +270,7 @@ google::cloud::StatusOr<AggregateThroughputOptions> SelfTest(
           "--running-time=15s",
           "--read-size=16KiB",
           "--read-buffer-size=1MiB",
+          "--api=JSON",
       },
       kDescription);
 }
