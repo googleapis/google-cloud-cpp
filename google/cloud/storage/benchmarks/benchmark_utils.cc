@@ -96,6 +96,20 @@ char const* ToString(ApiName api) {
   return "";
 }
 
+StatusOr<ApiName> ParseApiName(std::string const& val) {
+  for (auto a : {
+           ApiName::kApiJson,
+           ApiName::kApiXml,
+           ApiName::kApiGrpc,
+           ApiName::kApiRawJson,
+           ApiName::kApiRawXml,
+           ApiName::kApiRawGrpc,
+       }) {
+    if (val == ToString(a)) return a;
+  }
+  return Status{StatusCode::kInvalidArgument, "unknown ApiName " + val};
+}
+
 std::string RandomBucketPrefix() { return "cloud-cpp-testing-bm"; }
 
 std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen) {
