@@ -664,9 +664,9 @@ NonResumableParallelUploadState::Create(Client client,
       [client, bucket_name, delete_options](std::string const& object_name,
                                             std::int64_t generation) mutable {
         return google::cloud::internal::apply(
-            DeleteApplyHelper{client, std::move(bucket_name), object_name},
-            std::tuple_cat(std::make_tuple(IfGenerationMatch(generation)),
-                           std::move(delete_options)));
+            DeleteApplyHelper{client, std::move(bucket_name), object_name,
+                              generation},
+            std::move(delete_options));
       });
 
   auto compose_options = StaticTupleFilter<
@@ -725,9 +725,9 @@ std::shared_ptr<ScopedDeleter> ResumableParallelUploadState::CreateDeleter(
       [client, bucket_name, delete_options](std::string const& object_name,
                                             std::int64_t generation) mutable {
         return google::cloud::internal::apply(
-            DeleteApplyHelper{client, std::move(bucket_name), object_name},
-            std::tuple_cat(std::make_tuple(IfGenerationMatch(generation)),
-                           std::move(delete_options)));
+            DeleteApplyHelper{client, std::move(bucket_name), object_name,
+                              generation},
+            std::move(delete_options));
       });
 }
 

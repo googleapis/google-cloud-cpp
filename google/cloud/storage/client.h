@@ -3281,12 +3281,14 @@ struct ClientImplDetails {
 struct DeleteApplyHelper {
   template <typename... Options>
   Status operator()(Options... options) const {
-    return client.DeleteObject(bucket_name, object_name, std::move(options)...);
+    return client.DeleteObject(bucket_name, object_name, Generation(generation),
+                               std::move(options)...);
   }
 
   Client& client;
   std::string bucket_name;
   std::string object_name;
+  std::int64_t generation;
 };
 
 // Just a wrapper to allow for using in `google::cloud::internal::apply`.
@@ -3358,24 +3360,20 @@ Status DeleteByPrefix(Client& client, std::string const& bucket_name,
               all_options))>::value == 0,
       "This functions accepts only options of type QuotaUser, UserIp, "
       "UserProject or Versions.");
-  for (auto const& object :
+  auto status = Status{};
+  for (auto& object :
        client.ListObjects(bucket_name, Projection::NoAcl(), Prefix(prefix),
                           std::forward<Options>(options)...)) {
-    if (!object) {
-      return object.status();
-    }
-
-    auto deletion_status = google::cloud::internal::apply(
-        internal::DeleteApplyHelper{client, bucket_name, object->name()},
-        std::tuple_cat(
-            std::make_tuple(IfGenerationMatch(object->generation())),
-            StaticTupleFilter<NotAmong<Versions>::TPred>(all_options)));
-
-    if (!deletion_status.ok()) {
-      return deletion_status;
-    }
+    if (!object) return std::move(object).status();
+    auto del = google::cloud::internal::apply(
+        internal::DeleteApplyHelper{client, object->bucket(), object->name(),
+                                    object->generation()},
+        StaticTupleFilter<NotAmong<Versions>::TPred>(all_options));
+    // We ignore kNotFound because we are trying to delete the object anyway.
+    if (del.ok() || status.code() == StatusCode::kNotFound) continue;
+    status = std::move(del);
   }
-  return Status();
+  return status;
 }
 
 namespace internal {
@@ -3502,11 +3500,10 @@ StatusOr<ObjectMetadata> ComposeMany(
   internal::ScopedDeleter deleter(
       [&](std::string const& object_name, std::int64_t generation) {
         return google::cloud::internal::apply(
-            internal::DeleteApplyHelper{client, bucket_name, object_name},
-            std::tuple_cat(
-                std::make_tuple(IfGenerationMatch(generation)),
-                StaticTupleFilter<Among<QuotaUser, UserProject, UserIp>::TPred>(
-                    all_options)));
+            internal::DeleteApplyHelper{client, bucket_name, object_name,
+                                        generation},
+            StaticTupleFilter<Among<QuotaUser, UserProject, UserIp>::TPred>(
+                all_options));
       });
 
   auto lock = internal::LockPrefix(client, bucket_name, prefix, "",
