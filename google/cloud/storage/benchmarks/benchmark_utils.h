@@ -18,11 +18,9 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
 #include "google/cloud/testing_util/timer.h"
-#include "absl/types/optional.h"
-#include <functional>
-#include <sstream>
 #include <string>
 
 namespace google {
@@ -63,6 +61,8 @@ enum class ApiName {
   kApiRawGrpc,
 };
 char const* ToString(ApiName api);
+
+StatusOr<ApiName> ParseApiName(std::string const& val);
 
 std::string RandomBucketPrefix();
 
