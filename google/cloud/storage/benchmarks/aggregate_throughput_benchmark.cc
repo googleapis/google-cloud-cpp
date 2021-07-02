@@ -208,9 +208,7 @@ Counters RunThread(gcs::Client client,
       std::uniform_int_distribution<std::size_t>(0, objects.size() - 1);
   std::vector<char> buffer(options.read_buffer_size);
   auto const buffer_size = static_cast<std::streamsize>(buffer.size());
-  Counters counters{
-      {"file-count", 0},
-  };
+  Counters counters{{"download-count", 0}};
   // Using IfGenerationNotMatch(0) triggers JSON, as this feature is not
   // supported by XML.  Using IfGenerationNotMatch() -- without a value -- has
   // no effect.
@@ -268,8 +266,8 @@ google::cloud::StatusOr<AggregateThroughputOptions> SelfTest(
           "--thread-count=1",
           "--reporting-interval=5s",
           "--running-time=15s",
-          "--read-size=16KiB",
-          "--read-buffer-size=1MiB",
+          "--read-size=32KiB",
+          "--read-buffer-size=16KiB",
           "--api=JSON",
       },
       kDescription);
