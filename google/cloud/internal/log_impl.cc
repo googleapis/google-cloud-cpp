@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/log_impl.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/terminate_handler.h"
 
 namespace google {
 namespace cloud {
@@ -26,17 +27,24 @@ void StdClogBackend::Process(LogRecord const& lr) {
   if (lr.severity >= Severity::GCP_LS_WARNING) {
     std::clog << std::flush;
   }
+  if (lr.severity == Severity::GCP_LS_FATAL) {
+    google::cloud::Terminate("Encountered fatal error.");
+  }
 }
 
 void StdClogBackend::Flush() { std::clog << std::flush; }
 
 void CircularBufferBackend::ProcessWithOwnership(LogRecord lr) {
   std::unique_lock<std::mutex> lk(mu_);
-  auto const needs_flush = lr.severity >= min_flush_severity_;
+  auto const severity = std::move(lr.severity);
+  auto const needs_flush = severity >= min_flush_severity_;
   buffer_[index(end_)] = std::move(lr);
   ++end_;
   if (end_ - begin_ > buffer_.size()) ++begin_;
   if (needs_flush) FlushImpl(std::move(lk));
+  if (severity == Severity::GCP_LS_FATAL) {
+    google::cloud::Terminate("Encountered fatal error.");
+  }
 }
 
 void CircularBufferBackend::Flush() {

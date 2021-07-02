@@ -17,6 +17,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <algorithm>
+#include <cstdlib>
 #include <iterator>
 #include <utility>
 
@@ -51,6 +52,7 @@ Row::Row(std::vector<Value> values,
   if (values_.size() != columns_->size()) {
     GCP_LOG(FATAL) << "Row's value and column sizes do not match: "
                    << values_.size() << " vs " << columns_->size();
+    std::exit(EXIT_FAILURE);
   }
 }
 

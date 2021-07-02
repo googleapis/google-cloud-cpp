@@ -126,6 +126,16 @@ TEST(DefaultLogBackend, InvalidSeverity) {
   EXPECT_FALSE(!!be);
 }
 
+TEST(DefaultLogBackend, FatalErrorCircularBuffer) {
+  auto be = std::make_shared<ScopedLog::Backend>();
+  CircularBufferBackend buffer(3, Severity::GCP_LS_FATAL, be);
+  EXPECT_DEATH_IF_SUPPORTED({
+  buffer.ProcessWithOwnership(LogRecord{
+      Severity::GCP_LS_FATAL, "test_function()", "file", 1, {}, "msg 1"}); },
+  "Encountered fatal error.");
+}
+
+
 }  // namespace
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
