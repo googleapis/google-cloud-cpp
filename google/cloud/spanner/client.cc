@@ -347,13 +347,13 @@ std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
       spanner_internal::SessionPoolClockOption, SpannerPolicyOptionList>(
       opts, __func__);
   opts = spanner_internal::DefaultOptions(std::move(opts));
-  std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
-  int num_channels = opts.get<GrpcNumChannelsOption>();
-  stubs.reserve(num_channels);
-  for (int channel_id = 0; channel_id < num_channels; ++channel_id) {
-    stubs.push_back(
-        spanner_internal::CreateDefaultSpannerStub(db, opts, channel_id));
-  }
+
+  std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs(
+      (std::max)(1, opts.get<GrpcNumChannelsOption>()));
+  int id = 0;
+  std::generate(stubs.begin(), stubs.end(), [&id, db, opts] {
+    return spanner_internal::CreateDefaultSpannerStub(db, opts, id++);
+  });
   return std::make_shared<spanner_internal::ConnectionImpl>(
       std::move(db), std::move(stubs), opts);
 }
