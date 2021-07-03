@@ -97,30 +97,30 @@ Counters RunThread(gcs::Client client,
                    ThreadConfig& config);
 
 template <typename Rep, typename Period>
-std::string FormatBandwidthGpbs(std::uintmax_t bytes,
+std::string FormatBandwidthGbps(std::uintmax_t bytes,
                                 std::chrono::duration<Rep, Period> elapsed) {
   using ns = ::std::chrono::nanoseconds;
   auto const elapsed_ns = std::chrono::duration_cast<ns>(elapsed);
   if (elapsed_ns == ns(0)) return "NaN";
 
-  auto const gbps =
+  auto const bandwidth =
       8 * static_cast<double>(bytes) / static_cast<double>(elapsed_ns.count());
   std::ostringstream os;
-  os << std::fixed << std::setprecision(2) << gbps;
+  os << std::fixed << std::setprecision(2) << bandwidth;
   return std::move(os).str();
 }
 
 template <typename Rep, typename Period>
-std::string FormatBandwidthMiBs(std::uintmax_t bytes,
+std::string FormatBandwidthGiBs(std::uintmax_t bytes,
                                 std::chrono::duration<Rep, Period> elapsed) {
   using ::std::chrono::seconds;
   auto const elapsed_s = std::chrono::duration_cast<seconds>(elapsed);
   if (elapsed_s == seconds(0)) return "NaN";
 
-  auto const MiBs = static_cast<double>(bytes) / gcs_bm::kMiB /
-                    static_cast<double>(elapsed_s.count());
+  auto const bandwidth = static_cast<double>(bytes) / gcs_bm::kGiB /
+                         static_cast<double>(elapsed_s.count());
   std::ostringstream os;
-  os << std::fixed << std::setprecision(2) << MiBs;
+  os << std::fixed << std::setprecision(2) << bandwidth;
   return std::move(os).str();
 }
 
@@ -224,9 +224,9 @@ int main(int argc, char* argv[]) {
   auto const bytes_received = accumulate_bytes_received();
   std::cout << "# Bytes Received: " << FormatSize(bytes_received)
             << "\n# Elapsed Time: " << absl::FromChrono(elapsed)
-            << "\n# Gpbs: " << FormatBandwidthGpbs(bytes_received, elapsed)
-            << "\n# MiBs: " << FormatBandwidthMiBs(bytes_received, elapsed)
-            << "\n";
+            << "\n# Bandwidth: " << FormatBandwidthGbps(bytes_received, elapsed)
+            << "Gbps  " << FormatBandwidthGiBs(bytes_received, elapsed)
+            << "GiB/s\n";
 
   Counters accumulated;
   for (auto& t : tasks) {
