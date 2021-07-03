@@ -21,10 +21,12 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/options.h"
+#include "google/cloud/testing_util/command_line_parsing.h"
 #include "absl/time/time.h"
 #include <algorithm>
 #include <atomic>
 #include <future>
+#include <iomanip>
 #include <random>
 #include <sstream>
 #include <thread>
@@ -32,6 +34,7 @@
 
 namespace {
 using ::google::cloud::storage_experimental::DefaultGrpcClient;
+using ::google::cloud::testing_util::FormatSize;
 namespace gcs = google::cloud::storage;
 namespace gcs_bm = google::cloud::storage_benchmarks;
 using gcs_bm::AggregateThroughputOptions;
@@ -93,6 +96,34 @@ Counters RunThread(gcs::Client client,
                    std::vector<gcs::ObjectMetadata> const& objects,
                    ThreadConfig& config);
 
+template <typename Rep, typename Period>
+std::string FormatBandwidthGpbs(std::uintmax_t bytes,
+                                std::chrono::duration<Rep, Period> elapsed) {
+  using ns = ::std::chrono::nanoseconds;
+  auto const elapsed_ns = std::chrono::duration_cast<ns>(elapsed);
+  if (elapsed_ns == ns(0)) return "NaN";
+
+  auto const gbps =
+      8 * static_cast<double>(bytes) / static_cast<double>(elapsed_ns.count());
+  std::ostringstream os;
+  os << std::fixed << std::setprecision(2) << gbps;
+  return std::move(os).str();
+}
+
+template <typename Rep, typename Period>
+std::string FormatBandwidthMiBs(std::uintmax_t bytes,
+                                std::chrono::duration<Rep, Period> elapsed) {
+  using ::std::chrono::seconds;
+  auto const elapsed_s = std::chrono::duration_cast<seconds>(elapsed);
+  if (elapsed_s == seconds(0)) return "NaN";
+
+  auto const MiBs = static_cast<double>(bytes) / gcs_bm::kMiB /
+                    static_cast<double>(elapsed_s.count());
+  std::ostringstream os;
+  os << std::fixed << std::setprecision(2) << MiBs;
+  return std::move(os).str();
+}
+
 }  // namespace
 
 int main(int argc, char* argv[]) {
@@ -149,6 +180,8 @@ int main(int argc, char* argv[]) {
             << "\n# Running Time: " << absl::FromChrono(options->running_time)
             << "\n# Read Size: " << options->read_size
             << "\n# Read Buffer Size: " << options->read_buffer_size
+            << "\n# API: " << gcs_bm::ToString(options->api)
+            << "\n# gRPC Channel Count: " << options->grpc_channel_count
             << "\n# Build Info: " << notes
             << "\n# Object Count: " << objects.size()
             << "\n# Dataset size: " << dataset_size << std::endl;
@@ -173,16 +206,27 @@ int main(int argc, char* argv[]) {
                                      *options, objects, std::ref(c));
                  });
 
+  auto accumulate_bytes_received = [&] {
+    std::int64_t bytes_received = 0;
+    for (auto const& t : configs) bytes_received += t.bytes_received.load();
+    return bytes_received;
+  };
+
   using clock = std::chrono::steady_clock;
+  auto const start = clock::now();
   auto const deadline = clock::now() + options->running_time;
   while (clock::now() < deadline) {
     std::this_thread::sleep_for(options->reporting_interval);
-    std::int64_t bytes_received = 0;
-    for (auto const& t : configs) {
-      bytes_received += t.bytes_received.load();
-    }
-    std::cout << current_time() << "," << bytes_received << std::endl;
+    std::cout << current_time() << "," << accumulate_bytes_received()
+              << std::endl;
   }
+  auto const elapsed = clock::now() - start;
+  auto const bytes_received = accumulate_bytes_received();
+  std::cout << "# Bytes Received: " << FormatSize(bytes_received)
+            << "\n# Elapsed Time: " << absl::FromChrono(elapsed)
+            << "\n# Gpbs: " << FormatBandwidthGpbs(bytes_received, elapsed)
+            << "\n# MiBs: " << FormatBandwidthMiBs(bytes_received, elapsed)
+            << "\n";
 
   Counters accumulated;
   for (auto& t : tasks) {
@@ -212,8 +256,9 @@ Counters RunThread(gcs::Client client,
   // Using IfGenerationNotMatch(0) triggers JSON, as this feature is not
   // supported by XML.  Using IfGenerationNotMatch() -- without a value -- has
   // no effect.
-  auto xml_hack = options.api == ApiName::kApiXml ? gcs::IfGenerationNotMatch(0)
-                                                  : gcs::IfGenerationNotMatch();
+  auto xml_hack = options.api == ApiName::kApiJson
+                      ? gcs::IfGenerationNotMatch(0)
+                      : gcs::IfGenerationNotMatch();
   while (clock::now() < deadline) {
     auto const& object = objects[index(generator)];
     auto const object_size = static_cast<std::int64_t>(object.size());
