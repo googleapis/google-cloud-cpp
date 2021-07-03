@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/benchmarks/aggregate_throughput_options.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include <iterator>
 #include <sstream>
 
 namespace google {
@@ -90,7 +91,10 @@ ParseAggregateThroughputOptions(std::vector<std::string> const& argv,
 
   if (unparsed.size() != 1) {
     std::ostringstream os;
-    os << "Unknown arguments or options\n" << usage << "\n";
+    os << "Unknown arguments or options: "
+       << absl::StrJoin(std::next(unparsed.begin()), unparsed.end(), ", ")
+       << "\n"
+       << usage << "\n";
     return make_status(os);
   }
   if (options.bucket_name.empty()) {
