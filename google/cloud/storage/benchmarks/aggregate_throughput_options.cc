@@ -43,7 +43,7 @@ ParseAggregateThroughputOptions(std::vector<std::string> const& argv,
        [&options](std::string const& val) {
          options.thread_count = std::stoi(val);
        }},
-      {"--reporting-interval", "how often does the benchmark reports progress",
+      {"--reporting-interval", "how often the benchmark reports progress",
        [&options](std::string const& val) {
          options.reporting_interval = ParseDuration(val);
        }},
@@ -118,7 +118,7 @@ ParseAggregateThroughputOptions(std::vector<std::string> const& argv,
       std::set<ApiName>{ApiName::kApiGrpc, ApiName::kApiJson, ApiName::kApiXml};
   if (valid_apis.find(options.api) == valid_apis.end()) {
     std::ostringstream os;
-    os << "Unsupported api " << ToString(options.api) << "\n"
+    os << "Unsupported API " << ToString(options.api) << "\n"
        << "Choose from "
        << absl::StrJoin(valid_apis, ", ", [](std::string* out, ApiName api) {
             *out += ToString(api);

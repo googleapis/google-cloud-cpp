@@ -61,14 +61,14 @@ parameters the program will:
   threads.
 - After `running-time` seconds the main thread ask all other threads to
   terminate.
-- The main thread the waits for all the "download threads", collects any metrics
-  they choose to report, prints these metrics and then exits.
+- The main thread then waits for all the "download threads", collects any
+  metrics they choose to report, prints these metrics, and then exits.
 
-While running each download thread performs the following loop:
+While running, each download thread performs the following loop:
 
-1) Create a gcs::Client(), see the `AggregateThroughputOptions` struct for
+1) Create a gcs::Client object, see the `AggregateThroughputOptions` struct for
    details about how this client object can be configured.
-2) Check if the program is shutting down, if so, just return some metrics.
+2) Check if the program is shutting down. If so, just return some metrics.
 3) Pick one of the objects in the dataset at random.
 4) If so configured, pick a random portion of the object to download, otherwise
    simply download the full object.
@@ -97,8 +97,8 @@ Counters RunThread(gcs::Client client,
                    ThreadConfig& config);
 
 template <typename Rep, typename Period>
-std::string FormatBandwidthGbps(std::uintmax_t bytes,
-                                std::chrono::duration<Rep, Period> elapsed) {
+std::string FormatBandwidthGbPerSecond(
+    std::uintmax_t bytes, std::chrono::duration<Rep, Period> elapsed) {
   using ns = ::std::chrono::nanoseconds;
   auto const elapsed_ns = std::chrono::duration_cast<ns>(elapsed);
   if (elapsed_ns == ns(0)) return "NaN";
@@ -111,8 +111,8 @@ std::string FormatBandwidthGbps(std::uintmax_t bytes,
 }
 
 template <typename Rep, typename Period>
-std::string FormatBandwidthGiBs(std::uintmax_t bytes,
-                                std::chrono::duration<Rep, Period> elapsed) {
+std::string FormatBandwidthGiBPerSecond(
+    std::uintmax_t bytes, std::chrono::duration<Rep, Period> elapsed) {
   using ::std::chrono::seconds;
   auto const elapsed_s = std::chrono::duration_cast<seconds>(elapsed);
   if (elapsed_s == seconds(0)) return "NaN";
@@ -224,8 +224,9 @@ int main(int argc, char* argv[]) {
   auto const bytes_received = accumulate_bytes_received();
   std::cout << "# Bytes Received: " << FormatSize(bytes_received)
             << "\n# Elapsed Time: " << absl::FromChrono(elapsed)
-            << "\n# Bandwidth: " << FormatBandwidthGbps(bytes_received, elapsed)
-            << "Gbps  " << FormatBandwidthGiBs(bytes_received, elapsed)
+            << "\n# Bandwidth: "
+            << FormatBandwidthGbPerSecond(bytes_received, elapsed) << "Gbit/s  "
+            << FormatBandwidthGiBPerSecond(bytes_received, elapsed)
             << "GiB/s\n";
 
   Counters accumulated;
@@ -264,7 +265,8 @@ Counters RunThread(gcs::Client client,
     auto const object_size = static_cast<std::int64_t>(object.size());
     auto range = gcs::ReadRange();
     if (options.read_size != 0 && options.read_size < object_size) {
-      auto start = std::uniform_int_distribution<std::int64_t>(0, object_size);
+      auto start = std::uniform_int_distribution<std::int64_t>(
+          0, object_size - options.read_size);
       range = gcs::ReadRange(start(generator), options.read_size);
     }
     auto stream = client.ReadObject(object.bucket(), object.name(),
