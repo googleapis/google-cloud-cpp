@@ -441,7 +441,6 @@ class BasicExperiment : public Experiment {
 
     // Capture some overall getrusage() statistics as comments.
     Timer overall;
-    overall.Start();
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
       auto const thread_count = impl_.ThreadCount(config);
@@ -454,8 +453,7 @@ class BasicExperiment : public Experiment {
       }
       RunIterationViaClient(config, client, thread_count, channel_count);
     }
-    overall.Stop();
-    std::cout << overall.annotations();
+    std::cout << overall.Annotations() << "\n";
     return {};
   }
 
@@ -571,7 +569,6 @@ class ReadExperiment : public BasicExperiment<Traits> {
       auto key = this->impl_.RandomKeySet(config);
 
       Timer timer;
-      timer.Start();
 
       google::spanner::v1::ReadRequest request{};
       request.set_session(*session);
@@ -607,10 +604,10 @@ class ReadExperiment : public BasicExperiment<Traits> {
         }
       }
       auto final = stream->Finish();
-      timer.Stop();
+      auto const usage = timer.Sample();
       samples.push_back(RowCpuSample{
-          channel_count, thread_count, true, row_count, timer.elapsed_time(),
-          timer.cpu_time(), google::cloud::MakeStatusFromRpcError(final)});
+          channel_count, thread_count, true, row_count, usage.elapsed_time,
+          usage.cpu_time, google::cloud::MakeStatusFromRpcError(final)});
     }
     return samples;
   }
@@ -635,7 +632,6 @@ class ReadExperiment : public BasicExperiment<Traits> {
       auto key = this->impl_.RandomKeySet(config);
 
       Timer timer;
-      timer.Start();
       auto rows = client.Read(this->table_name_, key, column_names);
       int row_count = 0;
       Status status;
@@ -646,10 +642,10 @@ class ReadExperiment : public BasicExperiment<Traits> {
         }
         ++row_count;
       }
-      timer.Stop();
+      auto const usage = timer.Sample();
       samples.push_back(RowCpuSample{channel_count, thread_count, false,
-                                     row_count, timer.elapsed_time(),
-                                     timer.cpu_time(), std::move(status)});
+                                     row_count, usage.elapsed_time,
+                                     usage.cpu_time, std::move(status)});
     }
     return samples;
   }
@@ -710,7 +706,6 @@ class SelectExperiment : public BasicExperiment<Traits> {
       auto key = this->impl_.RandomKeySetBegin(config);
 
       Timer timer;
-      timer.Start();
 
       google::spanner::v1::ExecuteSqlRequest request{};
       request.set_session(*session);
@@ -752,10 +747,10 @@ class SelectExperiment : public BasicExperiment<Traits> {
         }
       }
       auto final = stream->Finish();
-      timer.Stop();
+      auto const usage = timer.Sample();
       samples.push_back(RowCpuSample{
-          channel_count, thread_count, true, row_count, timer.elapsed_time(),
-          timer.cpu_time(), google::cloud::MakeStatusFromRpcError(final)});
+          channel_count, thread_count, true, row_count, usage.elapsed_time,
+          usage.cpu_time, google::cloud::MakeStatusFromRpcError(final)});
     }
     return samples;
   }
@@ -778,7 +773,6 @@ class SelectExperiment : public BasicExperiment<Traits> {
       auto key = this->impl_.RandomKeySetBegin(config);
 
       Timer timer;
-      timer.Start();
       auto rows = client.ExecuteQuery(spanner::SqlStatement(
           statement, {{"begin", spanner::Value(key)},
                       {"end", spanner::Value(key + config.query_size)}}));
@@ -791,10 +785,10 @@ class SelectExperiment : public BasicExperiment<Traits> {
         }
         ++row_count;
       }
-      timer.Stop();
+      auto const usage = timer.Sample();
       samples.push_back(RowCpuSample{channel_count, thread_count, false,
-                                     row_count, timer.elapsed_time(),
-                                     timer.cpu_time(), std::move(status)});
+                                     row_count, usage.elapsed_time,
+                                     usage.cpu_time, std::move(status)});
     }
     return samples;
   }
@@ -879,7 +873,6 @@ class UpdateExperiment : public BasicExperiment<Traits> {
       };
 
       Timer timer;
-      timer.Start();
 
       google::spanner::v1::ExecuteSqlRequest request{};
       request.set_session(*session);
@@ -925,10 +918,10 @@ class UpdateExperiment : public BasicExperiment<Traits> {
         if (!response) status = std::move(response).status();
       }
 
-      timer.Stop();
+      auto const usage = timer.Sample();
       samples.push_back(RowCpuSample{channel_count, thread_count, true,
-                                     row_count, timer.elapsed_time(),
-                                     timer.cpu_time(), status});
+                                     row_count, usage.elapsed_time,
+                                     usage.cpu_time, status});
     }
     return samples;
   }
@@ -958,7 +951,6 @@ class UpdateExperiment : public BasicExperiment<Traits> {
       };
 
       Timer timer;
-      timer.Start();
       std::unordered_map<std::string, spanner::Value> const params{
           {"key", spanner::Value(key)},      {"v0", spanner::Value(values[0])},
           {"v1", spanner::Value(values[1])}, {"v2", spanner::Value(values[2])},
@@ -978,10 +970,10 @@ class UpdateExperiment : public BasicExperiment<Traits> {
             row_count = static_cast<int>(result->RowsModified());
             return spanner::Mutations{};
           });
-      timer.Stop();
+      auto const usage = timer.Sample();
       samples.push_back(RowCpuSample{
-          channel_count, thread_count, false, row_count, timer.elapsed_time(),
-          timer.cpu_time(), std::move(commit_result).status()});
+          channel_count, thread_count, false, row_count, usage.elapsed_time,
+          usage.cpu_time, std::move(commit_result).status()});
     }
     return samples;
   }
@@ -1074,7 +1066,6 @@ class MutationExperiment : public BasicExperiment<Traits> {
       };
 
       Timer timer;
-      timer.Start();
 
       grpc::ClientContext context;
       google::spanner::v1::CommitRequest commit_request;
@@ -1096,10 +1087,10 @@ class MutationExperiment : public BasicExperiment<Traits> {
       }
       auto response = stub->Commit(context, commit_request);
 
-      timer.Stop();
+      auto const usage = timer.Sample();
       samples.push_back(RowCpuSample{
           channel_count, thread_count, true, commit_request.mutations_size(),
-          timer.elapsed_time(), timer.cpu_time(), response.status()});
+          usage.elapsed_time, usage.cpu_time, response.status()});
     }
     return samples;
   }
@@ -1139,7 +1130,6 @@ class MutationExperiment : public BasicExperiment<Traits> {
       };
 
       Timer timer;
-      timer.Start();
 
       int row_count = 0;
       auto commit_result =
@@ -1147,10 +1137,10 @@ class MutationExperiment : public BasicExperiment<Traits> {
               this->table_name_, column_names, key, values[0], values[1],
               values[2], values[3], values[4], values[5], values[6], values[7],
               values[8], values[9])});
-      timer.Stop();
+      auto const usage = timer.Sample();
       samples.push_back(RowCpuSample{
-          channel_count, thread_count, false, row_count, timer.elapsed_time(),
-          timer.cpu_time(), std::move(commit_result).status()});
+          channel_count, thread_count, false, row_count, usage.elapsed_time,
+          usage.cpu_time, std::move(commit_result).status()});
     }
     return samples;
   }

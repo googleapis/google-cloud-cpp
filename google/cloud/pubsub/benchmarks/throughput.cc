@@ -191,12 +191,13 @@ std::string Timestamp() {
 }
 
 void PrintResult(std::string const& operation, int iteration,
-                 std::int64_t count, std::int64_t bytes, Timer const& usage) {
+                 std::int64_t count, std::int64_t bytes,
+                 Timer::Snapshot const& usage) {
   using std::chrono::duration_cast;
   using std::chrono::microseconds;
   using std::chrono::seconds;
 
-  auto const elapsed_us = duration_cast<microseconds>(usage.elapsed_time());
+  auto const elapsed_us = duration_cast<microseconds>(usage.elapsed_time);
   auto const mbs =
       absl::StrFormat("%.02f", static_cast<double>(bytes) /
                                    static_cast<double>(elapsed_us.count()));
@@ -369,8 +370,7 @@ void PublisherTask(Config const& config) {
   auto const start = std::chrono::steady_clock::now();
   for (int i = 0; !Done(config, i, start); ++i) {
     using std::chrono::steady_clock;
-    Timer usage;
-    usage.Start();
+    Timer timer;
     auto const start_send_count = send_count.load();
     auto const start_send_bytes = send_bytes.load();
     auto const start_ack_count = ack_count.load();
@@ -380,7 +380,7 @@ void PublisherTask(Config const& config) {
     auto const send_bytes_last = send_bytes.load() - start_send_bytes;
     auto const ack_count_last = ack_count.load() - start_ack_count;
     auto const ack_bytes_last = ack_bytes.load() - start_ack_bytes;
-    usage.Stop();
+    auto const usage = timer.Sample();
     PrintResult("Pub", i, send_count_last, send_bytes_last, usage);
     PrintResult("Ack", i, ack_count_last, ack_bytes_last, usage);
   }
@@ -451,14 +451,13 @@ void SubscriberTask(Config const& config) {
   auto const start = std::chrono::steady_clock::now();
   for (int i = 0; !Done(config, i, start); ++i) {
     using std::chrono::steady_clock;
-    Timer usage;
-    usage.Start();
+    Timer timer;
     auto const start_count = received_count.load();
     auto const start_bytes = received_bytes.load();
     std::this_thread::sleep_for(config.iteration_duration);
     auto const count = received_count.load() - start_count;
     auto const bytes = received_bytes.load() - start_bytes;
-    usage.Stop();
+    auto const usage = timer.Sample();
     PrintResult("Sub", i, count, bytes, usage);
   }
   for (auto& s : sessions) s.cancel();

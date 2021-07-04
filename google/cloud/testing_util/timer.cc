@@ -32,18 +32,37 @@ int rusage_who() {
 }  // namespace
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 
-void Timer::Start() {
+Timer::Timer() : start_(std::chrono::steady_clock::now()) {
 #if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
   (void)getrusage(rusage_who(), &start_usage_);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-  start_ = std::chrono::steady_clock::now();
 }
 
-void Timer::Stop() {
-  elapsed_time_ = std::chrono::duration_cast<std::chrono::microseconds>(
+Timer::Snapshot Timer::Sample() const {
+  auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(
       std::chrono::steady_clock::now() - start_);
+#if !GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
+  return Snapshot{elapsed, std::chrono::microseconds()};
+#else
+  auto as_usec = [](timeval const& tv) {
+    return std::chrono::microseconds(std::chrono::seconds(tv.tv_sec)) +
+           std::chrono::microseconds(tv.tv_usec);
+  };
 
-#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
+  struct rusage now {};
+  (void)getrusage(rusage_who(), &now);
+  auto const utime = as_usec(now.ru_utime) - as_usec(start_usage_.ru_utime);
+  auto const stime = as_usec(now.ru_stime) - as_usec(start_usage_.ru_stime);
+  return Snapshot{std::move(elapsed), utime + stime};
+#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
+}
+
+std::string Timer::Annotations() const {
+#if !GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
+  return "# No usage annotations are available";
+#else
+  auto usage = Sample();
+
   auto as_usec = [](timeval const& tv) {
     return std::chrono::microseconds(std::chrono::seconds(tv.tv_sec)) +
            std::chrono::microseconds(tv.tv_usec);
@@ -53,11 +72,10 @@ void Timer::Stop() {
   (void)getrusage(rusage_who(), &now);
   auto utime = as_usec(now.ru_utime) - as_usec(start_usage_.ru_utime);
   auto stime = as_usec(now.ru_stime) - as_usec(start_usage_.ru_stime);
-  cpu_time_ = utime + stime;
   double cpu_fraction = 0;
-  if (elapsed_time_.count() != 0) {
-    cpu_fraction = static_cast<double>(cpu_time_.count()) /
-                   static_cast<double>(elapsed_time_.count());
+  if (usage.elapsed_time.count() != 0) {
+    cpu_fraction = static_cast<double>(usage.cpu_time.count()) /
+                   static_cast<double>(usage.elapsed_time.count());
   }
   now.ru_minflt -= start_usage_.ru_minflt;
   now.ru_majflt -= start_usage_.ru_majflt;
@@ -87,12 +105,12 @@ void Timer::Stop() {
      << "# IPC messages received        =" << now.ru_msgrcv << "\n"
      << "# signals received             =" << now.ru_nsignals << "\n"
      << "# voluntary context switches   =" << now.ru_nvcsw << "\n"
-     << "# involuntary context switches =" << now.ru_nivcsw << "\n";
-  annotations_ = std::move(os).str();
+     << "# involuntary context switches =" << now.ru_nivcsw;
+  return std::move(os).str();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 }
 
-bool Timer::SupportPerThreadUsage() {
+bool Timer::SupportsPerThreadUsage() {
 #if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
   return true;
 #else
