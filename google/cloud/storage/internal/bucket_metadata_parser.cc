@@ -61,10 +61,10 @@ StatusOr<UniformBucketLevelAccess> ParseUniformBucketLevelAccess(
     nlohmann::json const& json) {
   auto enabled = internal::ParseBoolField(json, "enabled");
   if (!enabled) return std::move(enabled).status();
-  UniformBucketLevelAccess result;
-  result.enabled = *enabled;
-  result.locked_time = internal::ParseTimestampField(json, "lockedTime");
-  return result;
+  auto locked_time = internal::ParseTimestampField(json, "lockedTime");
+  if (!locked_time) return std::move(locked_time).status();
+
+  return UniformBucketLevelAccess{*enabled, *locked_time};
 }
 
 }  // namespace
@@ -180,13 +180,12 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
     auto retention_period =
         internal::ParseLongField(retention_policy, "retentionPeriod");
     if (!retention_period) return std::move(retention_period).status();
-
-    BucketRetentionPolicy r;
-    r.retention_period = std::chrono::seconds(*retention_period);
-    r.effective_time =
+    auto effective_time =
         internal::ParseTimestampField(retention_policy, "effectiveTime");
-    r.is_locked = *is_locked;
-    result.retention_policy_ = r;
+    if (!effective_time) return std::move(effective_time).status();
+
+    result.retention_policy_ = BucketRetentionPolicy{
+        std::chrono::seconds(*retention_period), *effective_time, *is_locked};
   }
 
   if (json.count("versioning") != 0) {

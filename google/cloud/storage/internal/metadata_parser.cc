@@ -51,7 +51,7 @@ StatusOr<std::int32_t> ParseIntField(nlohmann::json const& json,
   }
   std::ostringstream os;
   os << "Error parsing field <" << field_name
-     << "> as an std::int32_t, json=" << json;
+     << "> as a std::int32_t, json=" << json;
   return Status(StatusCode::kInvalidArgument, std::move(os).str());
 }
 
@@ -66,7 +66,7 @@ StatusOr<std::uint32_t> ParseUnsignedIntField(nlohmann::json const& json,
   }
   std::ostringstream os;
   os << "Error parsing field <" << field_name
-     << "> as an std::uint32_t, json=" << json;
+     << "> as a std::uint32_t, json=" << json;
   return Status(StatusCode::kInvalidArgument, std::move(os).str());
 }
 
@@ -81,7 +81,7 @@ StatusOr<std::int64_t> ParseLongField(nlohmann::json const& json,
   }
   std::ostringstream os;
   os << "Error parsing field <" << field_name
-     << "> as an std::int64_t, json=" << json;
+     << "> as a std::int64_t, json=" << json;
   return Status(StatusCode::kInvalidArgument, std::move(os).str());
 }
 
@@ -96,16 +96,21 @@ StatusOr<std::uint64_t> ParseUnsignedLongField(nlohmann::json const& json,
   }
   std::ostringstream os;
   os << "Error parsing field <" << field_name
-     << "> as an std::uint64_t, json=" << json;
+     << "> as a std::uint64_t, json=" << json;
   return Status(StatusCode::kInvalidArgument, std::move(os).str());
 }
 
-std::chrono::system_clock::time_point ParseTimestampField(
+StatusOr<std::chrono::system_clock::time_point> ParseTimestampField(
     nlohmann::json const& json, char const* field_name) {
   if (json.count(field_name) == 0) {
     return std::chrono::system_clock::time_point{};
   }
-  return google::cloud::internal::ParseRfc3339(json[field_name]);
+  auto const& f = json[field_name];
+  if (f.is_string()) return google::cloud::internal::ParseRfc3339(f);
+  std::ostringstream os;
+  os << "Error parsing field <" << field_name
+     << "> as a timestamp, json=" << json;
+  return Status(StatusCode::kInvalidArgument, std::move(os).str());
 }
 
 }  // namespace internal

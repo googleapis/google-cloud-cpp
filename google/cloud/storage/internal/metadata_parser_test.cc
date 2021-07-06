@@ -60,9 +60,7 @@ TEST(MetadataParserTest, ParseMissingBoolField) {
 
 /// @test Verify that we raise an exception with invalid boolean fields.
 TEST(MetadataParserTest, ParseInvalidBoolFieldValue) {
-  std::string text = R"""({
-      "flag": "not-a-boolean"
-})""";
+  std::string text = R"""({"flag": "not-a-boolean"})""";
   auto json_object = nlohmann::json::parse(text);
 
   EXPECT_THAT(ParseBoolField(json_object, "flag"),
@@ -88,12 +86,13 @@ TEST(MetadataParserTest, ParseTimestampField) {
 })""";
   auto json_object = nlohmann::json::parse(text);
   auto actual = ParseTimestampField(json_object, "timeCreated");
+  ASSERT_STATUS_OK(actual);
 
   // Use `date -u +%s --date='2018-05-19T19:31:14Z'` to get the magic number:
   using std::chrono::duration_cast;
   EXPECT_EQ(
       1526758274L,
-      duration_cast<std::chrono::seconds>(actual.time_since_epoch()).count());
+      duration_cast<std::chrono::seconds>(actual->time_since_epoch()).count());
 }
 
 /// @test Verify that we parse RFC-3339 timestamps in JSON objects.
@@ -103,11 +102,21 @@ TEST(MetadataParserTest, ParseMissingTimestampField) {
 })""";
   auto json_object = nlohmann::json::parse(text);
   auto actual = ParseTimestampField(json_object, "timeCreated");
+  ASSERT_STATUS_OK(actual);
 
   using std::chrono::duration_cast;
   EXPECT_EQ(
       0L,
-      duration_cast<std::chrono::seconds>(actual.time_since_epoch()).count());
+      duration_cast<std::chrono::seconds>(actual->time_since_epoch()).count());
+}
+
+TEST(MetadataParserTest, ParseTimestampInvalidType) {
+  std::string text = R"""({
+      "updated": [0, 1, 2]
+})""";
+  auto json_object = nlohmann::json::parse(text);
+  auto actual = ParseTimestampField(json_object, "updated");
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument));
 }
 
 template <typename Integer>

@@ -75,7 +75,7 @@ StatusOr<std::uint64_t> ParseUnsignedLongField(nlohmann::json const& json,
  * @return the value of @p field_name in @p json, or the epoch if the field is
  * not present.
  */
-std::chrono::system_clock::time_point ParseTimestampField(
+StatusOr<std::chrono::system_clock::time_point> ParseTimestampField(
     nlohmann::json const& json, char const* field_name);
 
 }  // namespace internal

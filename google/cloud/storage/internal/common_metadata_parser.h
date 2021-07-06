@@ -47,8 +47,12 @@ struct CommonMetadataParser {
     }
     result.self_link_ = json.value("selfLink", "");
     result.storage_class_ = json.value("storageClass", "");
-    result.time_created_ = ParseTimestampField(json, "timeCreated");
-    result.updated_ = ParseTimestampField(json, "updated");
+    auto time_created = ParseTimestampField(json, "timeCreated");
+    if (!time_created) return std::move(time_created).status();
+    result.time_created_ = *time_created;
+    auto updated = ParseTimestampField(json, "updated");
+    if (!updated) return std::move(updated).status();
+    result.updated_ = *updated;
     return Status();
   }
   static StatusOr<CommonMetadata<Derived>> FromString(
