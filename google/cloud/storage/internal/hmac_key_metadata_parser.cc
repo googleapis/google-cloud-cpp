@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/hmac_key_metadata_parser.h"
-#include "google/cloud/internal/parse_rfc3339.h"
+#include "google/cloud/storage/internal/metadata_parser.h"
 
 namespace google {
 namespace cloud {
@@ -33,14 +33,12 @@ StatusOr<HmacKeyMetadata> HmacKeyMetadataParser::FromJson(
   result.project_id_ = json.value("projectId", "");
   result.service_account_email_ = json.value("serviceAccountEmail", "");
   result.state_ = json.value("state", "");
-  if (json.count("timeCreated") != 0) {
-    result.time_created_ =
-        google::cloud::internal::ParseRfc3339(json.value("timeCreated", ""));
-  }
-  if (json.count("updated") != 0) {
-    result.updated_ =
-        google::cloud::internal::ParseRfc3339(json.value("updated", ""));
-  }
+  auto time_created = ParseTimestampField(json, "timeCreated");
+  if (!time_created) return std::move(time_created).status();
+  result.time_created_ = *time_created;
+  auto updated = ParseTimestampField(json, "updated");
+  if (!updated) return std::move(updated).status();
+  result.updated_ = *updated;
   return result;
 }
 
