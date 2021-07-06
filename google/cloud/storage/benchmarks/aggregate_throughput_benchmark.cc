@@ -22,6 +22,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
+#include "google/cloud/testing_util/timer.h"
 #include "absl/time/time.h"
 #include <algorithm>
 #include <atomic>
@@ -34,7 +35,9 @@
 
 namespace {
 using ::google::cloud::storage_experimental::DefaultGrpcClient;
+using ::google::cloud::testing_util::CpuAccounting;
 using ::google::cloud::testing_util::FormatSize;
+using ::google::cloud::testing_util::Timer;
 namespace gcs = google::cloud::storage;
 namespace gcs_bm = google::cloud::storage_benchmarks;
 using gcs_bm::AggregateThroughputOptions;
@@ -215,10 +218,12 @@ int main(int argc, char* argv[]) {
   using clock = std::chrono::steady_clock;
   auto const start = clock::now();
   auto const deadline = clock::now() + options->running_time;
+  auto timer = Timer{CpuAccounting::kPerProcess};
   while (clock::now() < deadline) {
     std::this_thread::sleep_for(options->reporting_interval);
-    std::cout << current_time() << "," << accumulate_bytes_received()
-              << std::endl;
+    auto const usage = timer.Sample();
+    std::cout << current_time() << "," << accumulate_bytes_received() << ","
+              << usage.cpu_time.count() << std::endl;
   }
   auto const elapsed = clock::now() - start;
   auto const bytes_received = accumulate_bytes_received();
