@@ -61,6 +61,68 @@ TEST(CurlHandleTest, AsStatus) {
   }
 }
 
+TEST(AssertOptionSuccess, StringWithError) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        AssertOptionSuccess(CURLE_NOT_BUILT_IN, CURLOPT_CAINFO, "test-function",
+                            "some-path");
+      } catch (std::exception const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test-function"));
+        EXPECT_THAT(ex.what(), HasSubstr("some-path"));
+        throw;
+      },
+      std::logic_error);
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST(AssertOptionSuccess, IntWithError) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        AssertOptionSuccess(CURLE_NOT_BUILT_IN, CURLOPT_CAINFO, "test-function",
+                            1234);
+      } catch (std::exception const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test-function"));
+        EXPECT_THAT(ex.what(), HasSubstr("1234"));
+        throw;
+      },
+      std::logic_error);
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+TEST(AssertOptionSuccess, NullptrWithError) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        AssertOptionSuccess(CURLE_NOT_BUILT_IN, CURLOPT_CAINFO, "test-function",
+                            nullptr);
+      } catch (std::exception const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test-function"));
+        EXPECT_THAT(ex.what(), HasSubstr("nullptr"));
+        throw;
+      },
+      std::logic_error);
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+int TestFunction() { return 42; }
+
+TEST(AssertOptionSuccess, FunctionPtrWithError) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        AssertOptionSuccess(CURLE_NOT_BUILT_IN, CURLOPT_CAINFO, "test-function",
+                            &TestFunction);
+      } catch (std::exception const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test-function"));
+        EXPECT_THAT(ex.what(), HasSubstr("a value of type="));
+        throw;
+      },
+      std::logic_error);
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

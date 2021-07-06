@@ -65,36 +65,28 @@ extern "C" std::size_t CurlRequestOnReadData(char* ptr, std::size_t size,
 }
 
 StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) {
-  auto status = handle_.SetOption(CURLOPT_UPLOAD, 0L);
-  if (!status.ok()) return status;
+  handle_.SetOption(CURLOPT_UPLOAD, 0L);
   if (!payload.empty()) {
-    status = handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload.length());
-    if (!status.ok()) return status;
-    status = handle_.SetOption(CURLOPT_POSTFIELDS, payload.c_str());
-    if (!status.ok()) return status;
+    handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload.length());
+    handle_.SetOption(CURLOPT_POSTFIELDS, payload.c_str());
   }
   return MakeRequestImpl();
 }
 
 StatusOr<HttpResponse> CurlRequest::MakeUploadRequest(
     ConstBufferSequence payload) {
-  auto status = handle_.SetOption(CURLOPT_UPLOAD, 0L);
+  handle_.SetOption(CURLOPT_UPLOAD, 0L);
   if (payload.empty()) return MakeRequestImpl();
   if (payload.size() == 1) {
-    status = handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload[0].size());
-    if (!status.ok()) return status;
-    status = handle_.SetOption(CURLOPT_POSTFIELDS, payload[0].data());
-    if (!status.ok()) return status;
+    handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload[0].size());
+    handle_.SetOption(CURLOPT_POSTFIELDS, payload[0].data());
     return MakeRequestImpl();
   }
 
   WriteVector writev{std::move(payload)};
-  status = handle_.SetOption(CURLOPT_READFUNCTION, &CurlRequestOnReadData);
-  if (!status.ok()) return status;
-  status = handle_.SetOption(CURLOPT_READDATA, &writev);
-  if (!status.ok()) return status;
-  status = handle_.SetOption(CURLOPT_UPLOAD, 1L);
-  if (!status.ok()) return status;
+  handle_.SetOption(CURLOPT_READFUNCTION, &CurlRequestOnReadData);
+  handle_.SetOption(CURLOPT_READDATA, &writev);
+  handle_.SetOption(CURLOPT_UPLOAD, 1L);
   return MakeRequestImpl();
 }
 
@@ -104,29 +96,19 @@ StatusOr<HttpResponse> CurlRequest::MakeRequestImpl() {
   auto constexpr kDefaultBufferSize = 128 * 1024L;
 
   response_payload_.clear();
-  auto status = handle_.SetOption(CURLOPT_BUFFERSIZE, kDefaultBufferSize);
-  if (!status.ok()) return status;
-  status = handle_.SetOption(CURLOPT_URL, url_.c_str());
-  if (!status.ok()) return status;
-  status = handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
-  if (!status.ok()) return status;
-  status = handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
-  if (!status.ok()) return status;
-  status = handle_.SetOption(CURLOPT_NOSIGNAL, 1);
-  if (!status.ok()) return status;
-  status = handle_.SetOption(CURLOPT_TCP_KEEPALIVE, 1L);
+  handle_.SetOption(CURLOPT_BUFFERSIZE, kDefaultBufferSize);
+  handle_.SetOption(CURLOPT_URL, url_.c_str());
+  handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
+  handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
+  handle_.SetOption(CURLOPT_NOSIGNAL, 1);
+  handle_.SetOption(CURLOPT_TCP_KEEPALIVE, 1L);
   handle_.EnableLogging(logging_enabled_);
   handle_.SetSocketCallback(socket_options_);
-  if (!status.ok()) return status;
-  status = handle_.SetOption(CURLOPT_WRITEFUNCTION, &CurlRequestOnWriteData);
-  if (!status.ok()) return status;
-  status = handle_.SetOption(CURLOPT_WRITEDATA, this);
-  if (!status.ok()) return status;
-  status = handle_.SetOption(CURLOPT_HEADERFUNCTION, &CurlRequestOnHeaderData);
-  if (!status.ok()) return status;
-  status = handle_.SetOption(CURLOPT_HEADERDATA, this);
-  if (!status.ok()) return status;
-  status = handle_.EasyPerform();
+  handle_.SetOption(CURLOPT_WRITEFUNCTION, &CurlRequestOnWriteData);
+  handle_.SetOption(CURLOPT_WRITEDATA, this);
+  handle_.SetOption(CURLOPT_HEADERFUNCTION, &CurlRequestOnHeaderData);
+  handle_.SetOption(CURLOPT_HEADERDATA, this);
+  auto status = handle_.EasyPerform();
   if (!status.ok()) return status;
 
   if (logging_enabled_) handle_.FlushDebug(__func__);
