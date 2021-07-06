@@ -111,28 +111,6 @@ class StorageIntegrationTest
 };
 
 /**
- * Tests that a callable reports permanent errors correctly.
- *
- * @param callable the function / code snippet under test. This is typically a
- *     lambda expression that exercises some code path expected to report
- *     a permanent failure.
- * @tparam Callable the type of @p callable.
- */
-template <typename Callable>
-void TestPermanentFailure(Callable&& callable) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try { callable(); } catch (std::runtime_error const& ex) {
-        EXPECT_THAT(ex.what(), ::testing::HasSubstr("Permanent error in"));
-        throw;
-      },
-      std::runtime_error);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(callable(), "");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-/**
  * Count the number of *AccessControl entities with matching name and role.
  */
 template <typename AccessControlResource>
