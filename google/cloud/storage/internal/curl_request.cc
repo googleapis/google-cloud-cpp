@@ -65,28 +65,36 @@ extern "C" std::size_t CurlRequestOnReadData(char* ptr, std::size_t size,
 }
 
 StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) {
-  handle_.SetOption(CURLOPT_UPLOAD, 0L);
+  auto status = handle_.SetOption(CURLOPT_UPLOAD, 0L);
+  if (!status.ok()) return status;
   if (!payload.empty()) {
-    handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload.length());
-    handle_.SetOption(CURLOPT_POSTFIELDS, payload.c_str());
+    status = handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload.length());
+    if (!status.ok()) return status;
+    status = handle_.SetOption(CURLOPT_POSTFIELDS, payload.c_str());
+    if (!status.ok()) return status;
   }
   return MakeRequestImpl();
 }
 
 StatusOr<HttpResponse> CurlRequest::MakeUploadRequest(
     ConstBufferSequence payload) {
-  handle_.SetOption(CURLOPT_UPLOAD, 0L);
+  auto status = handle_.SetOption(CURLOPT_UPLOAD, 0L);
   if (payload.empty()) return MakeRequestImpl();
   if (payload.size() == 1) {
-    handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload[0].size());
-    handle_.SetOption(CURLOPT_POSTFIELDS, payload[0].data());
+    status = handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload[0].size());
+    if (!status.ok()) return status;
+    status = handle_.SetOption(CURLOPT_POSTFIELDS, payload[0].data());
+    if (!status.ok()) return status;
     return MakeRequestImpl();
   }
 
   WriteVector writev{std::move(payload)};
-  handle_.SetOption(CURLOPT_READFUNCTION, &CurlRequestOnReadData);
-  handle_.SetOption(CURLOPT_READDATA, &writev);
-  handle_.SetOption(CURLOPT_UPLOAD, 1L);
+  status = handle_.SetOption(CURLOPT_READFUNCTION, &CurlRequestOnReadData);
+  if (!status.ok()) return status;
+  status = handle_.SetOption(CURLOPT_READDATA, &writev);
+  if (!status.ok()) return status;
+  status = handle_.SetOption(CURLOPT_UPLOAD, 1L);
+  if (!status.ok()) return status;
   return MakeRequestImpl();
 }
 
@@ -96,29 +104,34 @@ StatusOr<HttpResponse> CurlRequest::MakeRequestImpl() {
   auto constexpr kDefaultBufferSize = 128 * 1024L;
 
   response_payload_.clear();
-  handle_.SetOption(CURLOPT_BUFFERSIZE, kDefaultBufferSize);
-  handle_.SetOption(CURLOPT_URL, url_.c_str());
-  handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
-  handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
-  handle_.SetOption(CURLOPT_NOSIGNAL, 1);
-  handle_.SetOption(CURLOPT_TCP_KEEPALIVE, 1L);
+  auto status = handle_.SetOption(CURLOPT_BUFFERSIZE, kDefaultBufferSize);
+  if (!status.ok()) return status;
+  status = handle_.SetOption(CURLOPT_URL, url_.c_str());
+  if (!status.ok()) return status;
+  status = handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
+  if (!status.ok()) return status;
+  status = handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
+  if (!status.ok()) return status;
+  status = handle_.SetOption(CURLOPT_NOSIGNAL, 1);
+  if (!status.ok()) return status;
+  status = handle_.SetOption(CURLOPT_TCP_KEEPALIVE, 1L);
   handle_.EnableLogging(logging_enabled_);
   handle_.SetSocketCallback(socket_options_);
-  handle_.SetOption(CURLOPT_WRITEFUNCTION, &CurlRequestOnWriteData);
-  handle_.SetOption(CURLOPT_WRITEDATA, this);
-  handle_.SetOption(CURLOPT_HEADERFUNCTION, &CurlRequestOnHeaderData);
-  handle_.SetOption(CURLOPT_HEADERDATA, this);
-  auto status = handle_.EasyPerform();
-  if (!status.ok()) {
-    return status;
-  }
-  if (logging_enabled_) {
-    handle_.FlushDebug(__func__);
-  }
+  if (!status.ok()) return status;
+  status = handle_.SetOption(CURLOPT_WRITEFUNCTION, &CurlRequestOnWriteData);
+  if (!status.ok()) return status;
+  status = handle_.SetOption(CURLOPT_WRITEDATA, this);
+  if (!status.ok()) return status;
+  status = handle_.SetOption(CURLOPT_HEADERFUNCTION, &CurlRequestOnHeaderData);
+  if (!status.ok()) return status;
+  status = handle_.SetOption(CURLOPT_HEADERDATA, this);
+  if (!status.ok()) return status;
+  status = handle_.EasyPerform();
+  if (!status.ok()) return status;
+
+  if (logging_enabled_) handle_.FlushDebug(__func__);
   auto code = handle_.GetResponseCode();
-  if (!code.ok()) {
-    return std::move(code).status();
-  }
+  if (!code.ok()) return std::move(code).status();
   return HttpResponse{code.value(), std::move(response_payload_),
                       std::move(received_headers_)};
 }

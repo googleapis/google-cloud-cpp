@@ -135,15 +135,11 @@ CurlHandle::CurlHandle() : handle_(curl_easy_init(), &curl_easy_cleanup) {
 
 CurlHandle::~CurlHandle() { FlushDebug(__func__); }
 
-void CurlHandle::SetSocketCallback(SocketOptions const& options) {
+Status CurlHandle::SetSocketCallback(SocketOptions const& options) {
   socket_options_ = options;
-  SetOption(CURLOPT_SOCKOPTDATA, &socket_options_);
-  SetOption(CURLOPT_SOCKOPTFUNCTION, &CurlSetSocketOptions);
-}
-
-void CurlHandle::ResetSocketCallback() {
-  SetOption(CURLOPT_SOCKOPTDATA, nullptr);
-  SetOption(CURLOPT_SOCKOPTFUNCTION, nullptr);
+  auto status = SetOption(CURLOPT_SOCKOPTDATA, &socket_options_);
+  if (!status.ok()) return status;
+  return SetOption(CURLOPT_SOCKOPTFUNCTION, &CurlSetSocketOptions);
 }
 
 void CurlHandle::EnableLogging(bool enabled) {
@@ -170,9 +166,8 @@ void CurlHandle::FlushDebug(char const* where) {
 }
 
 Status CurlHandle::AsStatus(CURLcode e, char const* where) {
-  if (e == CURLE_OK) {
-    return Status();
-  }
+  if (e == CURLE_OK) return Status{};
+
   std::ostringstream os;
   os << where << "() - CURL error [" << e << "]=" << curl_easy_strerror(e);
   // Map the CURLE* errors using the documentation on:

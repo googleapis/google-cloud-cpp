@@ -59,10 +59,7 @@ class CurlHandle {
     std::size_t send_buffer_size_ = 0;
   };
 
-  void SetSocketCallback(SocketOptions const& options);
-
-  /// Reset the socket callback.
-  void ResetSocketCallback();
+  [[nodiscard]] Status SetSocketCallback(SocketOptions const& options);
 
   /// URL-escapes a string.
   CurlString MakeEscapedString(std::string const& s) {
@@ -72,20 +69,14 @@ class CurlHandle {
   }
 
   template <typename T>
-  void SetOption(CURLoption option, T&& param) {
+  [[nodiscard]] Status SetOption(CURLoption option, T&& param) {
     auto e = curl_easy_setopt(handle_.get(), option, std::forward<T>(param));
-    if (e == CURLE_OK) {
-      return;
-    }
-    ThrowSetOptionError(e, option, std::forward<T>(param));
+    return SetOptionStatus(e, option, std::forward<T>(param));
   }
 
-  void SetOption(CURLoption option, std::nullptr_t) {
+  [[nodiscard]] Status SetOption(CURLoption option, std::nullptr_t) {
     auto e = curl_easy_setopt(handle_.get(), option, nullptr);
-    if (e == CURLE_OK) {
-      return;
-    }
-    ThrowSetOptionError(e, option, static_cast<void*>(nullptr));
+    return SetOptionStatus(e,option, nullptr);
   }
 
   Status EasyPerform() {
@@ -137,7 +128,8 @@ class CurlHandle {
   [[noreturn]] static void ThrowSetOptionError(CURLcode e, CURLoption opt,
                                                void* param);
   template <typename T>
-  [[noreturn]] static void ThrowSetOptionError(CURLcode e, CURLoption opt, T) {
+  [[nodiscard]] static Status SetOptionStatus(CURLcode e, CURLoption opt, T) {
+    if (e == CURLE_OK) return Status{};
     std::string param = "complex-type=<";
     param += typeid(T).name();
     param += ">";
