@@ -178,17 +178,6 @@ class ReadObjectRangeRequest
 
 std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r);
 
-struct ReadObjectRangeResponse {
-  std::string contents;
-  std::int64_t first_byte;
-  std::int64_t last_byte;
-  std::int64_t object_size;
-
-  static ReadObjectRangeResponse FromHttpResponse(HttpResponse&& response);
-};
-
-std::ostream& operator<<(std::ostream& os, ReadObjectRangeResponse const& r);
-
 /**
  * Represents a request to the `Objects: delete` API.
  */
