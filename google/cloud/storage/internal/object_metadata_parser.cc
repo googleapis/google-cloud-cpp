@@ -89,21 +89,30 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
       result.metadata_.emplace(kv.key(), kv.value().get<std::string>());
     }
   }
-  result.retention_expiration_time_ =
+  auto expiration_time =
       internal::ParseTimestampField(json, "retentionExpirationTime");
+  if (!expiration_time) return std::move(expiration_time).status();
+  result.retention_expiration_time_ = *expiration_time;
   auto size = internal::ParseUnsignedLongField(json, "size");
   if (!size) return std::move(size).status();
   result.size_ = *size;
   auto temporary_hold = internal::ParseBoolField(json, "temporaryHold");
   if (!temporary_hold) return std::move(temporary_hold).status();
   result.temporary_hold_ = *temporary_hold;
-  result.time_deleted_ = internal::ParseTimestampField(json, "timeDeleted");
-  result.time_storage_class_updated_ =
+  auto time_deleted = internal::ParseTimestampField(json, "timeDeleted");
+  if (!time_deleted) return std::move(time_deleted).status();
+  result.time_deleted_ = *time_deleted;
+  auto time_storage_class_updated =
       internal::ParseTimestampField(json, "timeStorageClassUpdated");
+  if (!time_storage_class_updated)
+    return std::move(time_storage_class_updated).status();
+  result.time_storage_class_updated_ = *time_storage_class_updated;
   if (json.count("customTime") == 0) {
     result.custom_time_.reset();
   } else {
-    result.custom_time_ = internal::ParseTimestampField(json, "customTime");
+    auto v = internal::ParseTimestampField(json, "customTime");
+    if (!v) return std::move(v).status();
+    result.custom_time_ = *v;
   }
   return result;
 }
