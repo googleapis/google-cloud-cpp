@@ -75,7 +75,7 @@ start_emulator() {
   done
 
   if [[ -z "${emulator_port}" ]]; then
-    echo "${IO_COLOR_RED}Cannot find listening port for emulator.${IO_RESET}" >&2
+    io::log_red "Cannot find listening port for emulator." >&2
     cat gcs_emulator.log
     exit 1
   fi
@@ -89,11 +89,11 @@ start_emulator() {
   fi
 
   if [[ "${connected}" == "no" ]]; then
-    io::log_red "Cannot connect to emulator; aborting test." >&2
-    io::log_red "curl connection test result." >&2
-    curl "${HTTPBIN_ENDPOINT}/get" >&2
-    io::log_red "emulator log." >&2
-    cat gcs_emulator.log >&2
+    io::log_red "Cannot connect to emulator; aborting test."
+    io::log_red "curl connection test result."
+    curl "${HTTPBIN_ENDPOINT}/get"
+    io::log_red "emulator log."
+    cat gcs_emulator.log
     exit 1
   else
     echo "Successfully connected to emulator [${EMULATOR_PID}]"
@@ -106,8 +106,8 @@ start_emulator() {
   if [ "${grpc_port}" -eq "${grpc_port}" ] 2>/dev/null; then
     io::log_green "Successfully connected to gRPC server at port ${grpc_port}"
   else
-    echo "${IO_COLOR_RED}${grpc_port} must be an integer" >&2
-    echo "${IO_COLOR_RED}Cannot connect to gRPC server; aborting test.${IO_RESET}" >&2
+    io::log_red "${grpc_port} must be an integer"
+    io::log_red "Cannot connect to gRPC server; aborting test."
     cat gcs_emulator.log
     exit 1
   fi
