@@ -26,7 +26,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
-CorsEntry ParseCors(nlohmann::json const& json) {
+StatusOr<CorsEntry> ParseCors(nlohmann::json const& json) {
   auto parse_string_list = [](nlohmann::json const& json,
                               char const* field_name) {
     std::vector<std::string> list;
@@ -39,7 +39,9 @@ CorsEntry ParseCors(nlohmann::json const& json) {
   };
   CorsEntry result;
   if (json.count("maxAgeSeconds") != 0) {
-    result.max_age_seconds = internal::ParseLongField(json, "maxAgeSeconds");
+    auto v = internal::ParseLongField(json, "maxAgeSeconds");
+    if (!v) return std::move(v).status();
+    result.max_age_seconds = *v;
   }
   result.method = parse_string_list(json, "method");
   result.origin = parse_string_list(json, "origin");
@@ -55,10 +57,12 @@ void SetIfNotEmpty(nlohmann::json& json, char const* key,
   json[key] = value;
 }
 
-UniformBucketLevelAccess ParseUniformBucketLevelAccess(
+StatusOr<UniformBucketLevelAccess> ParseUniformBucketLevelAccess(
     nlohmann::json const& json) {
+  auto enabled = internal::ParseBoolField(json, "enabled");
+  if (!enabled) return std::move(enabled).status();
   UniformBucketLevelAccess result;
-  result.enabled = internal::ParseBoolField(json, "enabled");
+  result.enabled = *enabled;
   result.locked_time = internal::ParseTimestampField(json, "lockedTime");
   return result;
 }
@@ -87,13 +91,17 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
   }
   if (json.count("billing") != 0) {
     auto billing = json["billing"];
+    auto requester_pays = internal::ParseBoolField(billing, "requesterPays");
+    if (!requester_pays) return std::move(requester_pays).status();
     BucketBilling b;
-    b.requester_pays = internal::ParseBoolField(billing, "requesterPays");
+    b.requester_pays = *requester_pays;
     result.billing_ = b;
   }
   if (json.count("cors") != 0) {
     for (auto const& kv : json["cors"].items()) {
-      result.cors_.emplace_back(ParseCors(kv.value()));
+      auto cors = ParseCors(kv.value());
+      if (!cors) return std::move(cors).status();
+      result.cors_.push_back(*std::move(cors));
     }
   }
   if (json.count("defaultEventBasedHold") != 0) {
@@ -119,8 +127,10 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
     BucketIamConfiguration c;
     auto config = json["iamConfiguration"];
     if (config.count("uniformBucketLevelAccess") != 0) {
-      c.uniform_bucket_level_access =
+      auto ubla =
           ParseUniformBucketLevelAccess(config["uniformBucketLevelAccess"]);
+      if (!ubla) return std::move(ubla).status();
+      c.uniform_bucket_level_access = *ubla;
     }
     if (config.count("publicAccessPrevention") != 0) {
       c.public_access_prevention = config.value("publicAccessPrevention", "");
@@ -154,7 +164,9 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
     l.log_object_prefix = logging.value("logObjectPrefix", "");
     result.logging_ = std::move(l);
   }
-  result.project_number_ = internal::ParseLongField(json, "projectNumber");
+  auto project_number = internal::ParseLongField(json, "projectNumber");
+  if (!project_number) return std::move(project_number).status();
+  result.project_number_ = *project_number;
   if (json.count("labels") > 0) {
     for (auto const& kv : json["labels"].items()) {
       result.labels_.emplace(kv.key(), kv.value().get<std::string>());
@@ -163,20 +175,26 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
 
   if (json.count("retentionPolicy") != 0) {
     auto retention_policy = json["retentionPolicy"];
+    auto is_locked = internal::ParseBoolField(retention_policy, "isLocked");
+    if (!is_locked) return std::move(is_locked).status();
+    auto retention_period =
+        internal::ParseLongField(retention_policy, "retentionPeriod");
+    if (!retention_period) return std::move(retention_period).status();
+
     BucketRetentionPolicy r;
-    r.retention_period = std::chrono::seconds(
-        internal::ParseLongField(retention_policy, "retentionPeriod"));
+    r.retention_period = std::chrono::seconds(*retention_period);
     r.effective_time =
         internal::ParseTimestampField(retention_policy, "effectiveTime");
-    r.is_locked = internal::ParseBoolField(retention_policy, "isLocked");
+    r.is_locked = *is_locked;
     result.retention_policy_ = r;
   }
 
   if (json.count("versioning") != 0) {
     auto versioning = json["versioning"];
     if (versioning.count("enabled") != 0) {
-      BucketVersioning v{internal::ParseBoolField(versioning, "enabled")};
-      result.versioning_ = v;
+      auto enabled = internal::ParseBoolField(versioning, "enabled");
+      if (!enabled) return std::move(enabled).status();
+      result.versioning_ = BucketVersioning{*enabled};
     }
   }
 

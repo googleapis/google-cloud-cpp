@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_METADATA_PARSER_H
 
 #include "google/cloud/storage/version.h"
+#include "google/cloud/status_or.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 
@@ -31,20 +32,22 @@ namespace internal {
  * @return the value of @p field_name in @p json, or `false` if the field is not
  * present.
  */
-bool ParseBoolField(nlohmann::json const& json, char const* field_name);
+StatusOr<bool> ParseBoolField(nlohmann::json const& json,
+                              char const* field_name);
 
 /**
  * Parses an integer field, even if it is represented by a string type in the
  * JSON object.
  */
-std::int32_t ParseIntField(nlohmann::json const& json, char const* field_name);
+StatusOr<std::int32_t> ParseIntField(nlohmann::json const& json,
+                                     char const* field_name);
 
 /**
  * Parses an unsigned integer field, even if it is represented by a string type
  * in the JSON object.
  */
-std::uint32_t ParseUnsignedIntField(nlohmann::json const& json,
-                                    char const* field_name);
+StatusOr<std::uint32_t> ParseUnsignedIntField(nlohmann::json const& json,
+                                              char const* field_name);
 
 /**
  * Parses a long integer field, even if it is represented by a string type in
@@ -53,7 +56,8 @@ std::uint32_t ParseUnsignedIntField(nlohmann::json const& json,
  * @return the value of @p field_name in @p json, or `0` if the field is not
  * present.
  */
-std::int64_t ParseLongField(nlohmann::json const& json, char const* field_name);
+StatusOr<std::int64_t> ParseLongField(nlohmann::json const& json,
+                                      char const* field_name);
 
 /**
  * Parses an unsigned long integer field, even if it is represented by a string
@@ -62,8 +66,8 @@ std::int64_t ParseLongField(nlohmann::json const& json, char const* field_name);
  * @return the value of @p field_name in @p json, or `0` if the field is not
  * present.
  */
-std::uint64_t ParseUnsignedLongField(nlohmann::json const& json,
-                                     char const* field_name);
+StatusOr<std::uint64_t> ParseUnsignedLongField(nlohmann::json const& json,
+                                               char const* field_name);
 
 /**
  * Parses a RFC 3339 timestamp.

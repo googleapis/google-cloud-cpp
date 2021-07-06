@@ -35,7 +35,9 @@ struct CommonMetadataParser {
     result.etag_ = json.value("etag", "");
     result.id_ = json.value("id", "");
     result.kind_ = json.value("kind", "");
-    result.metageneration_ = ParseLongField(json, "metageneration");
+    auto metageneration = ParseLongField(json, "metageneration");
+    if (!metageneration) return std::move(metageneration).status();
+    result.metageneration_ = *metageneration;
     result.name_ = json.value("name", "");
     if (json.count("owner") != 0) {
       Owner o;

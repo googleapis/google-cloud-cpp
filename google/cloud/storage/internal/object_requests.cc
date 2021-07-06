@@ -392,16 +392,17 @@ StatusOr<RewriteObjectResponse> RewriteObjectResponse::FromHttpResponse(
   }
 
   RewriteObjectResponse result;
-  result.total_bytes_rewritten =
-      ParseUnsignedLongField(object, "totalBytesRewritten");
-  result.object_size = ParseUnsignedLongField(object, "objectSize");
+  auto v = ParseUnsignedLongField(object, "totalBytesRewritten");
+  if (!v) return std::move(v).status();
+  result.total_bytes_rewritten = *v;
+  v = ParseUnsignedLongField(object, "objectSize");
+  if (!v) return std::move(v).status();
+  result.object_size = *v;
   result.done = object.value("done", false);
   result.rewrite_token = object.value("rewriteToken", "");
   if (object.count("resource") != 0) {
     auto parsed = internal::ObjectMetadataParser::FromJson(object["resource"]);
-    if (!parsed.ok()) {
-      return std::move(parsed).status();
-    }
+    if (!parsed.ok()) return std::move(parsed).status();
     result.resource = std::move(*parsed);
   }
   return result;

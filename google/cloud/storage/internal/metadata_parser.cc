@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "absl/strings/numbers.h"
 #include <sstream>
 
 namespace google {
@@ -22,101 +23,81 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-bool ParseBoolField(nlohmann::json const& json, char const* field_name) {
-  if (json.count(field_name) == 0) {
-    return false;
-  }
+StatusOr<bool> ParseBoolField(nlohmann::json const& json,
+                              char const* field_name) {
+  if (json.count(field_name) == 0) return false;
   auto const& f = json[field_name];
-  if (f.is_boolean()) {
-    return f.get<bool>();
-  }
+  if (f.is_boolean()) return f.get<bool>();
+
   if (f.is_string()) {
     auto v = f.get<std::string>();
-    if (v == "true") {
-      return true;
-    }
-    if (v == "false") {
-      return false;
-    }
+    if (v == "true") return true;
+    if (v == "false") return false;
   }
   std::ostringstream os;
   os << "Error parsing field <" << field_name
      << "> as a boolean, json=" << json;
-  google::cloud::internal::ThrowInvalidArgument(os.str());
+  return Status(StatusCode::kInvalidArgument, std::move(os).str());
 }
 
-std::int32_t ParseIntField(nlohmann::json const& json, char const* field_name) {
-  if (json.count(field_name) == 0) {
-    return 0;
-  }
+StatusOr<std::int32_t> ParseIntField(nlohmann::json const& json,
+                                     char const* field_name) {
+  if (json.count(field_name) == 0) return 0;
   auto const& f = json[field_name];
-  if (f.is_number()) {
-    return f.get<std::int32_t>();
-  }
+  if (f.is_number()) return f.get<std::int32_t>();
   if (f.is_string()) {
-    return std::stoi(f.get_ref<std::string const&>());
+    std::int32_t v;
+    if (absl::SimpleAtoi(f.get_ref<std::string const&>(), &v)) return v;
   }
   std::ostringstream os;
   os << "Error parsing field <" << field_name
      << "> as an std::int32_t, json=" << json;
-  google::cloud::internal::ThrowInvalidArgument(os.str());
+  return Status(StatusCode::kInvalidArgument, std::move(os).str());
 }
 
-std::uint32_t ParseUnsignedIntField(nlohmann::json const& json,
-                                    char const* field_name) {
-  if (json.count(field_name) == 0) {
-    return 0;
-  }
+StatusOr<std::uint32_t> ParseUnsignedIntField(nlohmann::json const& json,
+                                              char const* field_name) {
+  if (json.count(field_name) == 0) return 0;
   auto const& f = json[field_name];
-  if (f.is_number()) {
-    return f.get<std::uint32_t>();
-  }
+  if (f.is_number()) return f.get<std::uint32_t>();
   if (f.is_string()) {
-    auto v = std::stoul(f.get_ref<std::string const&>());
-    if (v <= (std::numeric_limits<std::uint32_t>::max)()) {
-      return static_cast<std::uint32_t>(v);
-    }
+    std::uint32_t v;
+    if (absl::SimpleAtoi(f.get_ref<std::string const&>(), &v)) return v;
   }
   std::ostringstream os;
   os << "Error parsing field <" << field_name
      << "> as an std::uint32_t, json=" << json;
-  google::cloud::internal::ThrowInvalidArgument(os.str());
+  return Status(StatusCode::kInvalidArgument, std::move(os).str());
 }
 
-std::int64_t ParseLongField(nlohmann::json const& json,
-                            char const* field_name) {
-  if (json.count(field_name) == 0) {
-    return 0;
-  }
+StatusOr<std::int64_t> ParseLongField(nlohmann::json const& json,
+                                      char const* field_name) {
+  if (json.count(field_name) == 0) return 0;
   auto const& f = json[field_name];
-  if (f.is_number()) {
-    return f.get<std::int64_t>();
-  }
+  if (f.is_number()) return f.get<std::int64_t>();
   if (f.is_string()) {
-    return std::stoll(f.get_ref<std::string const&>());
+    std::int64_t v;
+    if (absl::SimpleAtoi(f.get_ref<std::string const&>(), &v)) return v;
   }
   std::ostringstream os;
   os << "Error parsing field <" << field_name
      << "> as an std::int64_t, json=" << json;
-  google::cloud::internal::ThrowInvalidArgument(os.str());
+  return Status(StatusCode::kInvalidArgument, std::move(os).str());
 }
 
-std::uint64_t ParseUnsignedLongField(nlohmann::json const& json,
-                                     char const* field_name) {
-  if (json.count(field_name) == 0) {
-    return 0;
-  }
+StatusOr<std::uint64_t> ParseUnsignedLongField(nlohmann::json const& json,
+                                               char const* field_name) {
+  if (json.count(field_name) == 0) return 0;
   auto const& f = json[field_name];
-  if (f.is_number()) {
-    return f.get<std::uint64_t>();
-  }
+  if (f.is_number()) return f.get<std::uint64_t>();
   if (f.is_string()) {
-    return std::stoull(f.get_ref<std::string const&>());
+    std::uint64_t v;
+    if (absl::SimpleAtoi(f.get_ref<std::string const&>(), &v)) return v;
   }
   std::ostringstream os;
   os << "Error parsing field <" << field_name
      << "> as an std::uint64_t, json=" << json;
-  google::cloud::internal::ThrowInvalidArgument(os.str());
+  return Status(StatusCode::kInvalidArgument, std::move(os).str());
 }
 
 std::chrono::system_clock::time_point ParseTimestampField(

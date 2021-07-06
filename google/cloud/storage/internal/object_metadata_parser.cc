@@ -46,9 +46,7 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
   }
   ObjectMetadata result{};
   auto status = CommonMetadataParser<ObjectMetadata>::FromJson(result, json);
-  if (!status.ok()) {
-    return status;
-  }
+  if (!status.ok()) return status;
 
   if (json.count("acl") != 0) {
     for (auto const& kv : json["acl"].items()) {
@@ -62,7 +60,9 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
 
   result.bucket_ = json.value("bucket", "");
   result.cache_control_ = json.value("cacheControl", "");
-  result.component_count_ = internal::ParseIntField(json, "componentCount");
+  auto component_count = internal::ParseIntField(json, "componentCount");
+  if (!component_count) return std::move(component_count).status();
+  result.component_count_ = *component_count;
   result.content_disposition_ = json.value("contentDisposition", "");
   result.content_encoding_ = json.value("contentEncoding", "");
   result.content_language_ = json.value("contentLanguage", "");
@@ -75,8 +75,12 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
     e.key_sha256 = field.value("keySha256", "");
     result.customer_encryption_ = std::move(e);
   }
-  result.event_based_hold_ = internal::ParseBoolField(json, "eventBasedHold");
-  result.generation_ = internal::ParseLongField(json, "generation");
+  auto event_based_hold = internal::ParseBoolField(json, "eventBasedHold");
+  if (!event_based_hold) return std::move(event_based_hold).status();
+  result.event_based_hold_ = *event_based_hold;
+  auto generation = internal::ParseLongField(json, "generation");
+  if (!generation) return std::move(generation).status();
+  result.generation_ = *generation;
   result.kms_key_name_ = json.value("kmsKeyName", "");
   result.md5_hash_ = json.value("md5Hash", "");
   result.media_link_ = json.value("mediaLink", "");
@@ -87,8 +91,12 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
   }
   result.retention_expiration_time_ =
       internal::ParseTimestampField(json, "retentionExpirationTime");
-  result.size_ = internal::ParseUnsignedLongField(json, "size");
-  result.temporary_hold_ = internal::ParseBoolField(json, "temporaryHold");
+  auto size = internal::ParseUnsignedLongField(json, "size");
+  if (!size) return std::move(size).status();
+  result.size_ = *size;
+  auto temporary_hold = internal::ParseBoolField(json, "temporaryHold");
+  if (!temporary_hold) return std::move(temporary_hold).status();
+  result.temporary_hold_ = *temporary_hold;
   result.time_deleted_ = internal::ParseTimestampField(json, "timeDeleted");
   result.time_storage_class_updated_ =
       internal::ParseTimestampField(json, "timeStorageClassUpdated");
