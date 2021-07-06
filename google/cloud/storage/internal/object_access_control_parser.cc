@@ -29,10 +29,10 @@ StatusOr<ObjectAccessControl> ObjectAccessControlParser::FromJson(
   }
   ObjectAccessControl result{};
   auto status = internal::AccessControlCommonParser::FromJson(result, json);
-  if (!status.ok()) {
-    return status;
-  }
-  result.generation_ = internal::ParseLongField(json, "generation");
+  if (!status.ok()) return status;
+  auto generation = internal::ParseLongField(json, "generation");
+  if (!generation) return std::move(generation).status();
+  result.generation_ = *generation;
   result.object_ = json.value("object", "");
   return result;
 }
