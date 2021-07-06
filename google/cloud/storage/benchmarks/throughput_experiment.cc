@@ -64,14 +64,13 @@ class UploadObject : public ThroughputExperiment {
     if (static_cast<std::size_t>(config.object_size) < random_data_.size() &&
         prefer_insert_) {
       Timer timer;
-      timer.Start();
       std::string data =
           random_data_.substr(0, static_cast<std::size_t>(config.object_size));
       auto object_metadata = client_.InsertObject(
           bucket_name, object_name, std::move(data),
           gcs::DisableCrc32cChecksum(!config.enable_crc32c),
           gcs::DisableMD5Hash(!config.enable_md5), api_selector);
-      timer.Stop();
+      auto const usage = timer.Sample();
       return ThroughputResult{kOpInsert,
                               config.object_size,
                               config.app_buffer_size,
@@ -79,12 +78,11 @@ class UploadObject : public ThroughputExperiment {
                               config.enable_crc32c,
                               config.enable_md5,
                               api_,
-                              timer.elapsed_time(),
-                              timer.cpu_time(),
+                              usage.elapsed_time,
+                              usage.cpu_time,
                               object_metadata.status()};
     }
     Timer timer;
-    timer.Start();
     auto writer = client_.WriteObject(
         bucket_name, object_name,
         gcs::DisableCrc32cChecksum(!config.enable_crc32c),
@@ -98,7 +96,7 @@ class UploadObject : public ThroughputExperiment {
       writer.write(random_data_.data(), len);
     }
     writer.Close();
-    timer.Stop();
+    auto const usage = timer.Sample();
 
     return ThroughputResult{kOpWrite,
                             config.object_size,
@@ -107,8 +105,8 @@ class UploadObject : public ThroughputExperiment {
                             config.enable_crc32c,
                             config.enable_md5,
                             api_,
-                            timer.elapsed_time(),
-                            timer.cpu_time(),
+                            usage.elapsed_time,
+                            usage.cpu_time,
                             writer.metadata().status()};
   }
 
@@ -141,7 +139,6 @@ class DownloadObject : public ThroughputExperiment {
     std::vector<char> buffer(config.app_buffer_size);
 
     Timer timer;
-    timer.Start();
     auto reader = client_.ReadObject(
         bucket_name, object_name,
         gcs::DisableCrc32cChecksum(!config.enable_crc32c),
@@ -149,7 +146,7 @@ class DownloadObject : public ThroughputExperiment {
     for (std::uint64_t num_read = 0; reader.read(buffer.data(), buffer.size());
          num_read += reader.gcount()) {
     }
-    timer.Stop();
+    auto const usage = timer.Sample();
     return ThroughputResult{config.op,
                             config.object_size,
                             config.app_buffer_size,
@@ -157,8 +154,8 @@ class DownloadObject : public ThroughputExperiment {
                             config.enable_crc32c,
                             config.enable_md5,
                             api_,
-                            timer.elapsed_time(),
-                            timer.cpu_time(),
+                            usage.elapsed_time,
+                            usage.cpu_time,
                             reader.status()};
   }
 
@@ -193,7 +190,6 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
     if (!header) return {};
 
     Timer timer;
-    timer.Start();
     struct curl_slist* slist1 = nullptr;
     slist1 = curl_slist_append(slist1, header->c_str());
 
@@ -231,7 +227,7 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
 
     curl_easy_cleanup(hnd);
     curl_slist_free_all(slist1);
-    timer.Stop();
+    auto const usage = timer.Sample();
     return ThroughputResult{config.op,
                             config.object_size,
                             config.app_buffer_size,
@@ -239,8 +235,8 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
                             config.enable_crc32c,
                             config.enable_md5,
                             api_,
-                            timer.elapsed_time(),
-                            timer.cpu_time(),
+                            usage.elapsed_time,
+                            usage.cpu_time,
                             status};
   }
 
@@ -288,8 +284,6 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
                        std::string const& object_name,
                        ThroughputExperimentConfig const& config) override {
     Timer timer;
-
-    timer.Start();
     google::storage::v1::GetObjectMediaRequest request;
     request.set_bucket(bucket_name);
     request.set_object(object_name);
@@ -304,7 +298,7 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
     }
     auto const status =
         ::google::cloud::MakeStatusFromRpcError(stream->Finish());
-    timer.Stop();
+    auto const usage = timer.Sample();
 
     return ThroughputResult{config.op,
                             config.object_size,
@@ -313,8 +307,8 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
                             /*crc_enabled=*/false,
                             /*md5_enabled=*/false,
                             ApiName::kApiRawGrpc,
-                            timer.elapsed_time(),
-                            timer.cpu_time(),
+                            usage.elapsed_time,
+                            usage.cpu_time,
                             status};
   }
 

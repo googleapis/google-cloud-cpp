@@ -184,7 +184,7 @@ int main(int argc, char* argv[]) {
             << "\n# gRPC Channel Count: " << options->grpc_channel_count
             << "\n# Build Info: " << notes
             << "\n# Object Count: " << objects.size()
-            << "\n# Dataset size: " << dataset_size << std::endl;
+            << "\n# Dataset size: " << FormatSize(dataset_size) << std::endl;
 
   auto configs = [](std::size_t count) {
     std::random_device rd;

@@ -29,32 +29,20 @@ namespace testing_util {
 
 class Timer {
  public:
-  Timer() = default;
+  struct Snapshot {
+    std::chrono::microseconds elapsed_time;
+    std::chrono::microseconds cpu_time;
+  };
 
-  /// Start the timer, call before the code being measured.
-  void Start();
+  Timer();
 
-  /// Stop the timer, call after the code being measured.
-  void Stop();
+  Snapshot Sample() const;
+  std::string Annotations() const;
 
-  //@{
-  /**
-   * @name Measurement results.
-   *
-   * @note The values are only valid after calling Start() and Stop().
-   */
-  std::chrono::microseconds elapsed_time() const { return elapsed_time_; }
-  std::chrono::microseconds cpu_time() const { return cpu_time_; }
-  std::string const& annotations() const { return annotations_; }
-  //@}
-
-  static bool SupportPerThreadUsage();
+  static bool SupportsPerThreadUsage();
 
  private:
   std::chrono::steady_clock::time_point start_;
-  std::chrono::microseconds elapsed_time_;
-  std::chrono::microseconds cpu_time_;
-  std::string annotations_;
 #if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
   struct rusage start_usage_;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
