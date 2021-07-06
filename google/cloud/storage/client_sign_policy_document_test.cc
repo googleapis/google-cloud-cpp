@@ -71,7 +71,7 @@ class CreateSignedPolicyDocRPCTest
 PolicyDocument CreatePolicyDocumentForTest() {
   PolicyDocument result;
   result.expiration =
-      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z");
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z").value();
   result.conditions.emplace_back(
       PolicyDocumentCondition::StartsWith("key", ""));
   result.conditions.emplace_back(
@@ -169,7 +169,7 @@ PolicyDocumentV4 CreatePolicyDocumentV4ForTest() {
   result.object = "test-object";
   result.expiration = std::chrono::seconds(13);
   result.timestamp =
-      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z");
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z").value();
   result.conditions.emplace_back(
       PolicyDocumentCondition::StartsWith("Content-Type", "image/"));
   result.conditions.emplace_back(

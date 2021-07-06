@@ -611,7 +611,8 @@ TEST(BucketMetadataTest, SetIamConfigurationUBLA) {
   auto copy = expected;
   BucketIamConfiguration new_configuration;
   new_configuration.uniform_bucket_level_access = UniformBucketLevelAccess{
-      true, google::cloud::internal::ParseRfc3339("2019-02-03T04:05:06Z")};
+      true,
+      google::cloud::internal::ParseRfc3339("2019-02-03T04:05:06Z").value()};
   copy.set_iam_configuration(new_configuration);
   ASSERT_TRUE(copy.has_iam_configuration());
   EXPECT_EQ(new_configuration, copy.iam_configuration());
@@ -725,7 +726,7 @@ TEST(BucketMetadataTest, SetRetentionPolicy) {
   auto expected = CreateBucketMetadataForTest();
   BucketRetentionPolicy new_retention_policy{
       std::chrono::seconds(3600),
-      google::cloud::internal::ParseRfc3339("2019-11-01T00:00:00Z"),
+      google::cloud::internal::ParseRfc3339("2019-11-01T00:00:00Z").value(),
       true,
   };
   auto copy = expected;
@@ -1115,7 +1116,8 @@ TEST(BucketMetadataPatchBuilder, SetRetentionPolicy) {
   BucketMetadataPatchBuilder builder;
   builder.SetRetentionPolicy(BucketRetentionPolicy{
       std::chrono::seconds(60),
-      google::cloud::internal::ParseRfc3339("2018-01-01T00:00:00Z"), false});
+      google::cloud::internal::ParseRfc3339("2018-01-01T00:00:00Z").value(),
+      false});
 
   auto actual_patch = builder.BuildPatch();
   auto actual_json = nlohmann::json::parse(actual_patch);

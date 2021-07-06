@@ -27,7 +27,7 @@ namespace {
 PolicyDocument CreatePolicyDocumentForTest() {
   PolicyDocument result;
   result.expiration =
-      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z");
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z").value();
   result.conditions = {
       {{"starts-with", "$key", ""}},
       {{"acl", "bucket-owner-read"}},
@@ -41,7 +41,7 @@ PolicyDocument CreatePolicyDocumentForTest() {
 PolicyDocumentV4 CreatePolicyDocumentV4ForTest() {
   PolicyDocumentV4 result;
   result.timestamp =
-      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z");
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z").value();
   result.conditions = {
       {{"starts-with", "$key", ""}},
       {{"acl", "bucket-owner-read"}},
@@ -151,7 +151,7 @@ TEST(PolicyDocumentTests, PolicyDocumentStreaming) {
 TEST(PolicyDocumentTests, PolicyDocumentResultStreaming) {
   PolicyDocumentResult result = {
       "foo@foo.com",
-      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z"),
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z").value(),
       "asdfasdfasdf", "asdfasdfasdf"};
   std::ostringstream os;
   os << result;
@@ -183,7 +183,7 @@ TEST(PolicyDocumentTests, PolicyDocumentV4ResultStreaming) {
   PolicyDocumentV4Result result = {
       "https://storage.googleapis.com/rsaposttest",
       "foo@foo.com",
-      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z"),
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z").value(),
       "test-policy",
       "test-sig",
       "test-alg",

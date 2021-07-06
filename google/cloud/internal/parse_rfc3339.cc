@@ -13,20 +13,19 @@
 // limitations under the License.
 
 #include "google/cloud/internal/parse_rfc3339.h"
-#include "google/cloud/internal/throw_delegate.h"
-#include "absl/strings/ascii.h"
 #include "absl/time/time.h"
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
-std::chrono::system_clock::time_point ParseRfc3339(
+StatusOr<std::chrono::system_clock::time_point> ParseRfc3339(
     std::string const& timestamp) {
   std::string err;
   absl::Time t;
   if (!absl::ParseTime(absl::RFC3339_full, timestamp, &t, &err)) {
-    google::cloud::internal::ThrowInvalidArgument(
+    return Status(
+        StatusCode::kInvalidArgument,
         "Error parsing RFC-3339 timestamp: '" + timestamp + "': " + err);
   }
   return absl::ToChronoTime(t);

@@ -153,7 +153,7 @@ TEST_F(CreateSignedUrlTest, V4SignGet) {
 
   auto actual = client.CreateV4SignedUrl(
       "GET", bucket_name, object_name,
-      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date).value()),
       SignedUrlDuration(valid_for),
       AddExtensionHeader("host", "storage.googleapis.com"));
   ASSERT_STATUS_OK(actual);
@@ -194,7 +194,7 @@ TEST_F(CreateSignedUrlTest, V4SignPut) {
 
   auto actual = client.CreateV4SignedUrl(
       "POST", bucket_name, object_name,
-      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date).value()),
       SignedUrlDuration(valid_for),
       AddExtensionHeader("host", "storage.googleapis.com"),
       AddExtensionHeader("x-goog-resumable", "start"));
