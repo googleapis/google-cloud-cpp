@@ -681,7 +681,7 @@ TEST_F(ObjectIntegrationTest, ListObjectsFailure) {
   // This operation should fail because the bucket does not exist.
   ListObjectsReader reader = client->ListObjects(bucket_name, Versions(true));
   auto it = reader.begin();
-  ASSERT_FALSE(it == reader.end());
+  ASSERT_TRUE(it != reader.end());
   EXPECT_THAT(*it, Not(IsOk()));
 }
 
