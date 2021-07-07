@@ -73,6 +73,11 @@ TEST(AssertOptionSuccess, StringWithError) {
         throw;
       },
       std::logic_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      AssertOptionSuccess(CURLE_NOT_BUILT_IN, CURLOPT_CAINFO, "test-function",
+                          "some-path"),
+      "test-function");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -88,6 +93,11 @@ TEST(AssertOptionSuccess, IntWithError) {
         throw;
       },
       std::logic_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      AssertOptionSuccess(CURLE_NOT_BUILT_IN, CURLOPT_CAINFO, "test-function",
+                          1234),
+      "test-function");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
@@ -103,12 +113,18 @@ TEST(AssertOptionSuccess, NullptrWithError) {
         throw;
       },
       std::logic_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      AssertOptionSuccess(CURLE_NOT_BUILT_IN, CURLOPT_CAINFO, "test-function",
+                          nullptr),
+      "test-function");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 int TestFunction() { return 42; }
 
 TEST(AssertOptionSuccess, FunctionPtrWithError) {
+  EXPECT_EQ(42, TestFunction());
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
       try {
@@ -120,6 +136,11 @@ TEST(AssertOptionSuccess, FunctionPtrWithError) {
         throw;
       },
       std::logic_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      AssertOptionSuccess(CURLE_NOT_BUILT_IN, CURLOPT_CAINFO, "test-function",
+                          &TestFunction),
+      "test-function");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
