@@ -96,6 +96,15 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
         ) PRIMARY KEY (Id)
       )sql");
   extra_statements.push_back(std::move(create_datatypes));
+  // Verify that NUMERIC can be used as a table key.
+  if (!emulator) {
+    // TODO(#5024): Remove this check when the emulator supports NUMERIC.
+    extra_statements.emplace_back(R"sql(
+          CREATE TABLE NumericKey (
+            Key NUMERIC NOT NULL
+          ) PRIMARY KEY (Key)
+        )sql");
+  }
   auto database_future =
       admin_client.CreateDatabase(*db_, std::move(extra_statements));
 

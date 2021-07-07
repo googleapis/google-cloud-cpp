@@ -343,6 +343,29 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayNumeric) {
   EXPECT_THAT(*result, UnorderedElementsAreArray(data));
 }
 
+TEST_F(DataTypeIntegrationTest, InsertAndQueryWithNumericKey) {
+  // TODO(#5024): Remove this check when the emulator supports NUMERIC.
+  if (google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value()) {
+    GTEST_SKIP();
+  }
+  auto& client = *client_;
+  auto const key = MakeNumeric(42).value();
+
+  auto commit_result = client.Commit(
+      Mutations{InsertOrUpdateMutationBuilder("NumericKey", {"Key"})
+                    .EmplaceRow(key)
+                    .Build()});
+  ASSERT_STATUS_OK(commit_result);
+
+  auto rows = client.Read("NumericKey", KeySet::All(), {"Key"});
+  using RowType = std::tuple<Numeric>;
+  auto row = GetSingularRow(StreamOf<RowType>(rows));
+  EXPECT_STATUS_OK(row);
+  if (row) {
+    EXPECT_EQ(std::get<0>(*std::move(row)), key);
+  }
+}
+
 // This test differs a lot from the other tests since Spanner STRUCT types may
 // not be used as column types, and they may not be returned as top-level
 // objects in a select statement. See
