@@ -20,6 +20,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -405,14 +406,9 @@ TEST(ClientOptionsTest, TracingComponents) {
   EXPECT_FALSE(options.tracing_enabled("foo"));
 }
 
-TEST(ClientOptionsTest, EditTracingComponents) {
-  auto options = ClientOptions().enable_tracing("foo");
-  ;
-}
-
 TEST(ClientOptionsTest, DefaultTracingOptionsNoEnv) {
   google::cloud::testing_util::ScopedEnvironment tracing(
-      "GOOGLE_CLOUD_CPP_TRACING_OPTIONS", {});
+      "GOOGLE_CLOUD_CPP_TRACING_OPTIONS", absl::nullopt);
   auto options = ClientOptions().tracing_options();
   EXPECT_EQ(TracingOptions(), options);
 }
@@ -425,18 +421,24 @@ TEST(ClientOptionsTest, DefaultTracingOptionsEnv) {
 }
 
 TEST(ClientOptionsTest, BackgroundThreadPoolSize) {
+  using ThreadPool =
+      ::google::cloud::internal::AutomaticallyCreatedBackgroundThreads;
+
   auto options = ClientOptions();
-  // 0 and 1 are equivalent. Either is fine.
+  // Check that the default value is 0 or 1. Both values result in the
+  // BackgroundThreadsFactory creating a ThreadPool with a single thread in it.
   EXPECT_GE(1U, options.background_thread_pool_size());
+
+  auto background = options.background_threads_factory()();
+  auto* tp = dynamic_cast<ThreadPool*>(background.get());
+  ASSERT_NE(nullptr, tp);
+  EXPECT_EQ(1U, tp->pool_size());
 
   options.set_background_thread_pool_size(5U);
   EXPECT_EQ(5U, options.background_thread_pool_size());
 
-  using ThreadPool =
-      ::google::cloud::internal::AutomaticallyCreatedBackgroundThreads;
-
-  auto background = options.background_threads_factory()();
-  auto* tp = dynamic_cast<ThreadPool*>(background.get());
+  background = options.background_threads_factory()();
+  tp = dynamic_cast<ThreadPool*>(background.get());
   ASSERT_NE(nullptr, tp);
   EXPECT_EQ(5U, tp->pool_size());
 }
@@ -448,12 +450,13 @@ TEST(ClientOptionsTest, CustomBackgroundThreads) {
 
   using ms = std::chrono::milliseconds;
 
-  // Schedule some work, it cannot execute because there is no thread attached.
+  // Schedule some work that cannot execute because there is no thread draining
+  // the completion queue.
   promise<std::thread::id> p;
   auto background_thread_id = p.get_future();
   background->cq().RunAsync(
       [&p](CompletionQueue&) { p.set_value(std::this_thread::get_id()); });
-  EXPECT_NE(std::future_status::ready, background_thread_id.wait_for(ms(1)));
+  EXPECT_NE(std::future_status::ready, background_thread_id.wait_for(ms(10)));
 
   // Verify we can create our own threads to drain the completion queue.
   std::thread t([&cq] { cq.Run(); });
