@@ -79,15 +79,11 @@ std::string Timer::Annotations() const {
 #if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
   std::string accounting =
       accounting_ == CpuAccounting::kPerThread ? "per-thread" : "per-process";
-#elif GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-  std::string accounting = accounting_ == CpuAccounting::kPerThread
-                               ? "per-thread (but unsupported)"
-                               : "per-process";
 #else
   std::string accounting = accounting_ == CpuAccounting::kPerThread
                                ? "per-thread (but unsupported)"
-                               : "per-process (but unsupported)";
-#endif
+                               : "per-process";
+#endif  //  GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
 
   std::ostringstream os;
   os << "# accounting                   =" << accounting
