@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
+#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -385,6 +386,81 @@ TEST(ClientOptionsTest, RefreshPeriod) {
   options.set_min_conn_refresh_period(ms(1000));
   EXPECT_EQ(1000, options.min_conn_refresh_period().count());
   EXPECT_EQ(5000, options.max_conn_refresh_period().count());
+}
+
+TEST(ClientOptionsTest, TracingComponents) {
+  google::cloud::testing_util::ScopedEnvironment tracing(
+      "GOOGLE_CLOUD_CPP_ENABLE_TRACING", "foo,bar");
+  auto options = ClientOptions();
+
+  // Check defaults
+  EXPECT_TRUE(options.tracing_enabled("foo"));
+  EXPECT_TRUE(options.tracing_enabled("bar"));
+  EXPECT_FALSE(options.tracing_enabled("baz"));
+
+  // Edit components
+  options.enable_tracing("baz");
+  EXPECT_TRUE(options.tracing_enabled("baz"));
+  options.disable_tracing("foo");
+  EXPECT_FALSE(options.tracing_enabled("foo"));
+}
+
+TEST(ClientOptionsTest, EditTracingComponents) {
+  auto options = ClientOptions().enable_tracing("foo");
+  ;
+}
+
+TEST(ClientOptionsTest, DefaultTracingOptionsNoEnv) {
+  google::cloud::testing_util::ScopedEnvironment tracing(
+      "GOOGLE_CLOUD_CPP_TRACING_OPTIONS", {});
+  auto options = ClientOptions().tracing_options();
+  EXPECT_EQ(TracingOptions(), options);
+}
+
+TEST(ClientOptionsTest, DefaultTracingOptionsEnv) {
+  google::cloud::testing_util::ScopedEnvironment tracing(
+      "GOOGLE_CLOUD_CPP_TRACING_OPTIONS", "single_line_mode=F");
+  auto options = ClientOptions().tracing_options();
+  EXPECT_FALSE(options.single_line_mode());
+}
+
+TEST(ClientOptionsTest, BackgroundThreadPoolSize) {
+  auto options = ClientOptions();
+  // 0 and 1 are equivalent. Either is fine.
+  EXPECT_GE(1U, options.background_thread_pool_size());
+
+  options.set_background_thread_pool_size(5U);
+  EXPECT_EQ(5U, options.background_thread_pool_size());
+
+  using ThreadPool =
+      ::google::cloud::internal::AutomaticallyCreatedBackgroundThreads;
+
+  auto background = options.background_threads_factory()();
+  auto* tp = dynamic_cast<ThreadPool*>(background.get());
+  ASSERT_NE(nullptr, tp);
+  EXPECT_EQ(5U, tp->pool_size());
+}
+
+TEST(ClientOptionsTest, CustomBackgroundThreads) {
+  CompletionQueue cq;
+  auto options = ClientOptions().DisableBackgroundThreads(cq);
+  auto background = options.background_threads_factory()();
+
+  using ms = std::chrono::milliseconds;
+
+  // Schedule some work, it cannot execute because there is no thread attached.
+  promise<std::thread::id> p;
+  auto background_thread_id = p.get_future();
+  background->cq().RunAsync(
+      [&p](CompletionQueue&) { p.set_value(std::this_thread::get_id()); });
+  EXPECT_NE(std::future_status::ready, background_thread_id.wait_for(ms(1)));
+
+  // Verify we can create our own threads to drain the completion queue.
+  std::thread t([&cq] { cq.Run(); });
+  EXPECT_EQ(t.get_id(), background_thread_id.get());
+
+  cq.Shutdown();
+  t.join();
 }
 
 }  // namespace
