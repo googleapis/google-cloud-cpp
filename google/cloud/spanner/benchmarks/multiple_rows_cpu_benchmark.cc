@@ -440,7 +440,7 @@ class BasicExperiment : public Experiment {
     auto stubs = impl_.MakeStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
-    Timer overall;
+    auto overall = Timer::PerProcess();
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
       auto const thread_count = impl_.ThreadCount(config);
@@ -568,7 +568,7 @@ class ReadExperiment : public BasicExperiment<Traits> {
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = this->impl_.RandomKeySet(config);
 
-      Timer timer;
+      auto timer = Timer::PerThread();
 
       google::spanner::v1::ReadRequest request{};
       request.set_session(*session);
@@ -631,7 +631,7 @@ class ReadExperiment : public BasicExperiment<Traits> {
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = this->impl_.RandomKeySet(config);
 
-      Timer timer;
+      auto timer = Timer::PerThread();
       auto rows = client.Read(this->table_name_, key, column_names);
       int row_count = 0;
       Status status;
@@ -705,7 +705,7 @@ class SelectExperiment : public BasicExperiment<Traits> {
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = this->impl_.RandomKeySetBegin(config);
 
-      Timer timer;
+      auto timer = Timer::PerThread();
 
       google::spanner::v1::ExecuteSqlRequest request{};
       request.set_session(*session);
@@ -772,7 +772,7 @@ class SelectExperiment : public BasicExperiment<Traits> {
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = this->impl_.RandomKeySetBegin(config);
 
-      Timer timer;
+      auto timer = Timer::PerThread();
       auto rows = client.ExecuteQuery(spanner::SqlStatement(
           statement, {{"begin", spanner::Value(key)},
                       {"end", spanner::Value(key + config.query_size)}}));
@@ -872,7 +872,7 @@ class UpdateExperiment : public BasicExperiment<Traits> {
           this->impl_.GenerateRandomValue(), this->impl_.GenerateRandomValue(),
       };
 
-      Timer timer;
+      auto timer = Timer::PerThread();
 
       google::spanner::v1::ExecuteSqlRequest request{};
       request.set_session(*session);
@@ -950,7 +950,7 @@ class UpdateExperiment : public BasicExperiment<Traits> {
           this->impl_.GenerateRandomValue(), this->impl_.GenerateRandomValue(),
       };
 
-      Timer timer;
+      auto timer = Timer::PerThread();
       std::unordered_map<std::string, spanner::Value> const params{
           {"key", spanner::Value(key)},      {"v0", spanner::Value(values[0])},
           {"v1", spanner::Value(values[1])}, {"v2", spanner::Value(values[2])},
@@ -1065,7 +1065,7 @@ class MutationExperiment : public BasicExperiment<Traits> {
           this->impl_.GenerateRandomValue(), this->impl_.GenerateRandomValue(),
       };
 
-      Timer timer;
+      auto timer = Timer::PerThread();
 
       grpc::ClientContext context;
       google::spanner::v1::CommitRequest commit_request;
@@ -1129,7 +1129,7 @@ class MutationExperiment : public BasicExperiment<Traits> {
           this->impl_.GenerateRandomValue(), this->impl_.GenerateRandomValue(),
       };
 
-      Timer timer;
+      auto timer = Timer::PerThread();
 
       int row_count = 0;
       auto commit_result =

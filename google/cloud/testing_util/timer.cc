@@ -20,21 +20,10 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
+Timer::Timer(CpuAccounting accounting)
+    : accounting_(accounting), start_(std::chrono::steady_clock::now()) {
 #if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-namespace {
-int rusage_who() {
-#if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
-  return RUSAGE_THREAD;
-#else
-  return RUSAGE_SELF;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
-}
-}  // namespace
-#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-
-Timer::Timer() : start_(std::chrono::steady_clock::now()) {
-#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-  (void)getrusage(rusage_who(), &start_usage_);
+  (void)getrusage(RUsageWho(), &start_usage_);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 }
 
@@ -50,10 +39,10 @@ Timer::Snapshot Timer::Sample() const {
   };
 
   struct rusage now {};
-  (void)getrusage(rusage_who(), &now);
+  (void)getrusage(RUsageWho(), &now);
   auto const utime = as_usec(now.ru_utime) - as_usec(start_usage_.ru_utime);
   auto const stime = as_usec(now.ru_stime) - as_usec(start_usage_.ru_stime);
-  return Snapshot{std::move(elapsed), utime + stime};
+  return Snapshot{elapsed, utime + stime};
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 }
 
@@ -69,7 +58,7 @@ std::string Timer::Annotations() const {
   };
 
   struct rusage now {};
-  (void)getrusage(rusage_who(), &now);
+  (void)getrusage(RUsageWho(), &now);
   auto utime = as_usec(now.ru_utime) - as_usec(start_usage_.ru_utime);
   auto stime = as_usec(now.ru_stime) - as_usec(start_usage_.ru_stime);
   double cpu_fraction = 0;
@@ -87,9 +76,18 @@ std::string Timer::Annotations() const {
   now.ru_nsignals -= start_usage_.ru_nsignals;
   now.ru_nvcsw -= start_usage_.ru_nvcsw;
   now.ru_nivcsw -= start_usage_.ru_nivcsw;
+#if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
+  std::string accounting =
+      accounting_ == CpuAccounting::kPerThread ? "per-thread" : "per-process";
+#else
+  std::string accounting = accounting_ == CpuAccounting::kPerThread
+                               ? "per-thread (but unsupported)"
+                               : "per-process";
+#endif  //  GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
 
   std::ostringstream os;
-  os << "# user time                    =" << utime.count() << " us\n"
+  os << "# accounting                   =" << accounting
+     << "# user time                    =" << utime.count() << " us\n"
      << "# system time                  =" << stime.count() << " us\n"
      << "# CPU fraction                 =" << cpu_fraction << "\n"
      << "# maximum resident set size    =" << now.ru_maxrss << " KiB\n"
@@ -115,6 +113,16 @@ bool Timer::SupportsPerThreadUsage() {
   return true;
 #else
   return false;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
+}
+
+int Timer::RUsageWho() const {
+#if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
+  return accounting_ == CpuAccounting::kPerThread ? RUSAGE_THREAD : RUSAGE_SELF;
+#elif GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
+  return RUSAGE_SELF;
+#else
+  return 0;  // unused, so any value would do.
 #endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
 }
 

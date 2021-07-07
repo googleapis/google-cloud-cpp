@@ -63,7 +63,7 @@ class UploadObject : public ThroughputExperiment {
     // ObjectInsert()
     if (static_cast<std::size_t>(config.object_size) < random_data_.size() &&
         prefer_insert_) {
-      Timer timer;
+      auto timer = Timer::PerThread();
       std::string data =
           random_data_.substr(0, static_cast<std::size_t>(config.object_size));
       auto object_metadata = client_.InsertObject(
@@ -82,7 +82,7 @@ class UploadObject : public ThroughputExperiment {
                               usage.cpu_time,
                               object_metadata.status()};
     }
-    Timer timer;
+    auto timer = Timer::PerThread();
     auto writer = client_.WriteObject(
         bucket_name, object_name,
         gcs::DisableCrc32cChecksum(!config.enable_crc32c),
@@ -138,7 +138,7 @@ class DownloadObject : public ThroughputExperiment {
 
     std::vector<char> buffer(config.app_buffer_size);
 
-    Timer timer;
+    auto timer = Timer::PerThread();
     auto reader = client_.ReadObject(
         bucket_name, object_name,
         gcs::DisableCrc32cChecksum(!config.enable_crc32c),
@@ -189,7 +189,7 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
     auto header = creds_->AuthorizationHeader();
     if (!header) return {};
 
-    Timer timer;
+    auto timer = Timer::PerThread();
     struct curl_slist* slist1 = nullptr;
     slist1 = curl_slist_append(slist1, header->c_str());
 
@@ -283,7 +283,7 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
   ThroughputResult Run(std::string const& bucket_name,
                        std::string const& object_name,
                        ThroughputExperimentConfig const& config) override {
-    Timer timer;
+    auto timer = Timer::PerThread();
     google::storage::v1::GetObjectMediaRequest request;
     request.set_bucket(bucket_name);
     request.set_object(object_name);
