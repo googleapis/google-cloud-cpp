@@ -90,7 +90,7 @@ std::string Timer::Annotations() const {
 #endif
 
   std::ostringstream os;
-  os << "# Accounting                   =" << accounting
+  os << "# accounting                   =" << accounting
      << "# user time                    =" << utime.count() << " us\n"
      << "# system time                  =" << stime.count() << " us\n"
      << "# CPU fraction                 =" << cpu_fraction << "\n"
