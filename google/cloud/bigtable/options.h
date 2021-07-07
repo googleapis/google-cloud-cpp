@@ -28,7 +28,7 @@
  * `google::cloud::Options` should document which options it expects. This is
  * typically done by indicating lists of options using "OptionList" aliases.
  * For example, a function may indicate that users may set any option in
- * `SpannerPolicyOptionList`.
+ * `ClientOptionList`.
  *
  * @note Unrecognized options are allowed and will be ignored. To debug issues
  *     with options set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment
