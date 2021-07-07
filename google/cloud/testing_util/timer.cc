@@ -76,9 +76,22 @@ std::string Timer::Annotations() const {
   now.ru_nsignals -= start_usage_.ru_nsignals;
   now.ru_nvcsw -= start_usage_.ru_nvcsw;
   now.ru_nivcsw -= start_usage_.ru_nivcsw;
+#if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
+  std::string accounting =
+      accounting_ == CpuAccounting::kPerThread ? "per-thread" : "per-process";
+#elif GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
+  std::string accounting = accounting_ == CpuAccounting::kPerThread
+                               ? "per-thread (but unsupported)"
+                               : "per-process";
+#else
+  std::string accounting = accounting_ == CpuAccounting::kPerThread
+                               ? "per-thread (but unsupported)"
+                               : "per-process (but unsupported)";
+#endif
 
   std::ostringstream os;
-  os << "# user time                    =" << utime.count() << " us\n"
+  os << "# Accounting                   =" << accounting
+     << "# user time                    =" << utime.count() << " us\n"
      << "# system time                  =" << stime.count() << " us\n"
      << "# CPU fraction                 =" << cpu_fraction << "\n"
      << "# maximum resident set size    =" << now.ru_maxrss << " KiB\n"
