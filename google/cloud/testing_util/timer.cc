@@ -42,7 +42,7 @@ Timer::Snapshot Timer::Sample() const {
   (void)getrusage(RUsageWho(), &now);
   auto const utime = as_usec(now.ru_utime) - as_usec(start_usage_.ru_utime);
   auto const stime = as_usec(now.ru_stime) - as_usec(start_usage_.ru_stime);
-  return Snapshot{std::move(elapsed), utime + stime};
+  return Snapshot{elapsed, utime + stime};
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 }
 
