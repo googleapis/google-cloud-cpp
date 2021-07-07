@@ -54,13 +54,7 @@ class ClientOptions {
    * Initialize the client options.
    *
    * Configure the client to connect to the Cloud Bigtable service, using the
-   * @p opts argument. If no options are set, the default Google credentials
-   * are used for authentication. Expected options are any of the types in the
-   * following option lists.
-   *
-   * - `google::cloud::CommonOptionList`
-   * - `google::cloud::GrpcOptionList`
-   * - `google::cloud::bigtable::ClientOptionList`
+   * default options.
    *
    * @par Environment Variables
    * If the `BIGTABLE_EMULATOR_HOST` environment variable is set, the default
@@ -80,7 +74,24 @@ class ClientOptions {
    * @see The [documentation](https://cloud.google.com/bigtable/docs/emulator)
    * for the Cloud Bigtable Emulator.
    */
-  explicit ClientOptions(Options opts = {});
+  ClientOptions();
+
+  /**
+   * Initialize the client options.
+   *
+   * Expected options are any of the types in the following option lists.
+   *
+   * - `google::cloud::CommonOptionList`
+   * - `google::cloud::GrpcOptionList`
+   * - `google::cloud::bigtable::ClientOptionList`
+   *
+   * @note Unrecognized options will be ignored. To debug issues with options
+   *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and
+   *     unexpected options will be logged.
+   *
+   * @param opts (optional) configuration options
+   */
+  explicit ClientOptions(Options opts);
 
   /**
    * Connect to the production instance of Cloud Bigtable using @p creds.
@@ -91,6 +102,9 @@ class ClientOptions {
    *
    * @note Prefer using the `ClientOptions(Options opts)` constructor and
    *     passing in @p creds as a `GrpcCredentialOption`.
+   *
+   * @param creds gRPC authentication credentials
+   * @param opts (optional) configuration options
    */
   explicit ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds,
                          Options opts = {});

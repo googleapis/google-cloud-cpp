@@ -81,12 +81,13 @@ TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
 TEST(ClientOptionsTest, OptionsConstructor) {
   using ms = std::chrono::milliseconds;
   using min = std::chrono::minutes;
+  auto credentials = grpc::InsecureChannelCredentials();
   auto options = ClientOptions(
       Options{}
           .set<DataEndpointOption>("testdata.googleapis.com")
           .set<AdminEndpointOption>("testadmin.googleapis.com")
           .set<InstanceAdminEndpointOption>("testinstanceadmin.googleapis.com")
-          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+          .set<GrpcCredentialOption>(credentials)
           .set<GrpcTracingOptionsOption>(
               TracingOptions{}.SetOptions("single_line_mode=F"))
           .set<TracingComponentsOption>({"test-component"})
@@ -100,7 +101,7 @@ TEST(ClientOptionsTest, OptionsConstructor) {
   EXPECT_EQ("testadmin.googleapis.com", options.admin_endpoint());
   EXPECT_EQ("testinstanceadmin.googleapis.com",
             ClientOptionsTestTraits::InstanceAdminEndpoint(options));
-  EXPECT_EQ(grpc::InsecureChannelCredentials(), options.credentials());
+  EXPECT_EQ(credentials, options.credentials());
   EXPECT_FALSE(options.tracing_options().single_line_mode());
   EXPECT_TRUE(options.tracing_enabled("test-component"));
   EXPECT_EQ(5U, options.connection_pool_size());
