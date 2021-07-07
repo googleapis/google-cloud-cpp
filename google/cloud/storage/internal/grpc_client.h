@@ -40,6 +40,11 @@ class GrpcClient : public RawClient,
                    public std::enable_shared_from_this<GrpcClient> {
  public:
   static std::shared_ptr<GrpcClient> Create(Options const& opts);
+
+  // This is used to create a client from a mocked StorageStub.
+  static std::shared_ptr<GrpcClient> CreateMock(
+      std::shared_ptr<StorageStub> stub);
+
   ~GrpcClient() override = default;
 
   //@{
@@ -321,6 +326,7 @@ class GrpcClient : public RawClient,
 
  protected:
   explicit GrpcClient(Options const& opts);
+  explicit GrpcClient(std::shared_ptr<StorageStub> stub, Options const& opts);
 
  private:
   ClientOptions backwards_compatibility_options_;
