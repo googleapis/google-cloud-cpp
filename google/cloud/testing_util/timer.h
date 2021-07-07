@@ -27,11 +27,6 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
-enum class CpuAccounting {
-  kPerThread,
-  kPerProcess,
-};
-
 class Timer {
  public:
   struct Snapshot {
@@ -47,7 +42,14 @@ class Timer {
   static bool SupportsPerThreadUsage();
 
  private:
+  enum class CpuAccounting {
+    kPerThread,
+    kPerProcess,
+  };
+
   explicit Timer(CpuAccounting cpu_accounting);
+
+  int RUsageWho() const;
 
   CpuAccounting accounting_;
   std::chrono::steady_clock::time_point start_;

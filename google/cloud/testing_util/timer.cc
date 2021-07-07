@@ -20,24 +20,10 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
-#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-namespace {
-int rusage_who(CpuAccounting accounting) {
-  switch (accounting) {
-    case CpuAccounting::kPerThread:
-      return RUSAGE_THREAD;
-    case CpuAccounting::kPerProcess:
-      break;
-  }
-  return RUSAGE_SELF;
-}
-}  // namespace
-#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-
 Timer::Timer(CpuAccounting accounting)
     : accounting_(accounting), start_(std::chrono::steady_clock::now()) {
 #if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-  (void)getrusage(rusage_who(accounting_), &start_usage_);
+  (void)getrusage(RUsageWho(), &start_usage_);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 }
 
@@ -53,7 +39,7 @@ Timer::Snapshot Timer::Sample() const {
   };
 
   struct rusage now {};
-  (void)getrusage(rusage_who(accounting_), &now);
+  (void)getrusage(RUsageWho(), &now);
   auto const utime = as_usec(now.ru_utime) - as_usec(start_usage_.ru_utime);
   auto const stime = as_usec(now.ru_stime) - as_usec(start_usage_.ru_stime);
   return Snapshot{std::move(elapsed), utime + stime};
@@ -72,7 +58,7 @@ std::string Timer::Annotations() const {
   };
 
   struct rusage now {};
-  (void)getrusage(rusage_who(accounting_), &now);
+  (void)getrusage(RUsageWho(), &now);
   auto utime = as_usec(now.ru_utime) - as_usec(start_usage_.ru_utime);
   auto stime = as_usec(now.ru_stime) - as_usec(start_usage_.ru_stime);
   double cpu_fraction = 0;
@@ -118,6 +104,16 @@ bool Timer::SupportsPerThreadUsage() {
   return true;
 #else
   return false;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
+}
+
+int Timer::RUsageWho() const {
+#if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
+  return accounting_ == CpuAccounting::kPerThread ? RUSAGE_THREAD : RUSAGE_SELF;
+#elif GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
+  return RUSAGE_SELF;
+#else
+  return 0;  // unused, so any value would do.
 #endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
 }
 
