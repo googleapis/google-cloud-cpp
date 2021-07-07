@@ -109,16 +109,11 @@ StatusOr<HttpResponse> CurlRequest::MakeRequestImpl() {
   handle_.SetOption(CURLOPT_HEADERFUNCTION, &CurlRequestOnHeaderData);
   handle_.SetOption(CURLOPT_HEADERDATA, this);
   auto status = handle_.EasyPerform();
-  if (!status.ok()) {
-    return status;
-  }
-  if (logging_enabled_) {
-    handle_.FlushDebug(__func__);
-  }
+  if (!status.ok()) return status;
+
+  if (logging_enabled_) handle_.FlushDebug(__func__);
   auto code = handle_.GetResponseCode();
-  if (!code.ok()) {
-    return std::move(code).status();
-  }
+  if (!code.ok()) return std::move(code).status();
   return HttpResponse{code.value(), std::move(response_payload_),
                       std::move(received_headers_)};
 }

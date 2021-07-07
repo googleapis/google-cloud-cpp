@@ -127,6 +127,17 @@ extern "C" int CurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
 
 }  // namespace
 
+void AssertOptionSuccessImpl(
+    CURLcode e, CURLoption opt, char const* where,
+    absl::FunctionRef<std::string()> const& format_parameter) {
+  std::ostringstream os;
+  os << where << "() - error [" << e << "] while setting curl option [" << opt
+     << "] to [" << format_parameter()
+     << "], error description=" << curl_easy_strerror(e);
+  // TODO(#5693) - replace with GCP_LOG(FATAL).
+  google::cloud::internal::ThrowLogicError(std::move(os).str());
+}
+
 CurlHandle::CurlHandle() : handle_(curl_easy_init(), &curl_easy_cleanup) {
   if (handle_.get() == nullptr) {
     google::cloud::internal::ThrowRuntimeError("Cannot initialize CURL handle");
@@ -139,11 +150,6 @@ void CurlHandle::SetSocketCallback(SocketOptions const& options) {
   socket_options_ = options;
   SetOption(CURLOPT_SOCKOPTDATA, &socket_options_);
   SetOption(CURLOPT_SOCKOPTFUNCTION, &CurlSetSocketOptions);
-}
-
-void CurlHandle::ResetSocketCallback() {
-  SetOption(CURLOPT_SOCKOPTDATA, nullptr);
-  SetOption(CURLOPT_SOCKOPTFUNCTION, nullptr);
 }
 
 void CurlHandle::EnableLogging(bool enabled) {
@@ -170,9 +176,8 @@ void CurlHandle::FlushDebug(char const* where) {
 }
 
 Status CurlHandle::AsStatus(CURLcode e, char const* where) {
-  if (e == CURLE_OK) {
-    return Status();
-  }
+  if (e == CURLE_OK) return Status{};
+
   std::ostringstream os;
   os << where << "() - CURL error [" << e << "]=" << curl_easy_strerror(e);
   // Map the CURLE* errors using the documentation on:
@@ -354,29 +359,6 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
       break;
   }
   return Status(code, std::move(os).str());
-}
-
-void CurlHandle::ThrowSetOptionError(CURLcode e, CURLoption opt,
-                                     std::intmax_t param) {
-  std::ostringstream os;
-  os << "Error [" << e << "]=" << curl_easy_strerror(e)
-     << " while setting curl option [" << opt << "] to " << param;
-  google::cloud::internal::ThrowRuntimeError(os.str());
-}
-
-void CurlHandle::ThrowSetOptionError(CURLcode e, CURLoption opt,
-                                     char const* param) {
-  std::ostringstream os;
-  os << "Error [" << e << "]=" << curl_easy_strerror(e)
-     << " while setting curl option [" << opt << "] to " << param;
-  google::cloud::internal::ThrowRuntimeError(os.str());
-}
-
-void CurlHandle::ThrowSetOptionError(CURLcode e, CURLoption opt, void* param) {
-  std::ostringstream os;
-  os << "Error [" << e << "]=" << curl_easy_strerror(e)
-     << " while setting curl option [" << opt << "] to " << param;
-  google::cloud::internal::ThrowRuntimeError(os.str());
 }
 
 }  // namespace internal

@@ -19,14 +19,49 @@
 #include "google/cloud/storage/internal/curl_wrappers.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status_or.h"
+#include "absl/functional/function_ref.h"
 #include <curl/curl.h>
 #include <string>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+void AssertOptionSuccessImpl(
+    CURLcode e, CURLoption opt, char const* where,
+    absl::FunctionRef<std::string()> const& format_parameter);
+
+inline void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where,
+                                char const* param) {
+  if (e == CURLE_OK) return;
+  AssertOptionSuccessImpl(e, opt, where,
+                          [param] { return std::string{param}; });
+}
+
+inline void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where,
+                                std::intmax_t param) {
+  if (e == CURLE_OK) return;
+  AssertOptionSuccessImpl(e, opt, where,
+                          [param] { return std::to_string(param); });
+}
+
+inline void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where,
+                                std::nullptr_t) {
+  if (e == CURLE_OK) return;
+  AssertOptionSuccessImpl(e, opt, where, [] { return "nullptr"; });
+}
+
+template <typename T,
+          typename std::enable_if<!std::is_integral<T>::value, int>::type = 0>
+void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where, T) {
+  if (e == CURLE_OK) return;
+  AssertOptionSuccessImpl(e, opt, where, [] {
+    return std::string{"a value of type="} + typeid(T).name();
+  });
+}
+
 /**
  * Wraps CURL* handles in a safer C++ interface.
  *
@@ -61,9 +96,6 @@ class CurlHandle {
 
   void SetSocketCallback(SocketOptions const& options);
 
-  /// Reset the socket callback.
-  void ResetSocketCallback();
-
   /// URL-escapes a string.
   CurlString MakeEscapedString(std::string const& s) {
     return CurlString(
@@ -74,18 +106,12 @@ class CurlHandle {
   template <typename T>
   void SetOption(CURLoption option, T&& param) {
     auto e = curl_easy_setopt(handle_.get(), option, std::forward<T>(param));
-    if (e == CURLE_OK) {
-      return;
-    }
-    ThrowSetOptionError(e, option, std::forward<T>(param));
+    AssertOptionSuccess(e, option, __func__, param);
   }
 
   void SetOption(CURLoption option, std::nullptr_t) {
     auto e = curl_easy_setopt(handle_.get(), option, nullptr);
-    if (e == CURLE_OK) {
-      return;
-    }
-    ThrowSetOptionError(e, option, static_cast<void*>(nullptr));
+    AssertOptionSuccess(e, option, __func__, nullptr);
   }
 
   Status EasyPerform() {
@@ -129,20 +155,6 @@ class CurlHandle {
   friend class CurlDownloadRequest;
   friend class CurlRequestBuilder;
   friend class CurlHandleFactory;
-
-  [[noreturn]] static void ThrowSetOptionError(CURLcode e, CURLoption opt,
-                                               std::intmax_t param);
-  [[noreturn]] static void ThrowSetOptionError(CURLcode e, CURLoption opt,
-                                               char const* param);
-  [[noreturn]] static void ThrowSetOptionError(CURLcode e, CURLoption opt,
-                                               void* param);
-  template <typename T>
-  [[noreturn]] static void ThrowSetOptionError(CURLcode e, CURLoption opt, T) {
-    std::string param = "complex-type=<";
-    param += typeid(T).name();
-    param += ">";
-    ThrowSetOptionError(e, opt, param.c_str());
-  }
 
   CurlPtr handle_;
   std::shared_ptr<DebugInfo> debug_info_;
