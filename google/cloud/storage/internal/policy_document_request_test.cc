@@ -87,7 +87,8 @@ TEST(PolicyDocumentV4Request, Printing) {
   doc.bucket = "test-bucket";
   doc.object = "test-object";
   doc.expiration = std::chrono::seconds(13);
-  doc.timestamp = google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z");
+  doc.timestamp =
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z").value();
   PolicyDocumentV4Request req(doc);
   std::stringstream stream;
   stream << req;
@@ -105,7 +106,8 @@ TEST(PolicyDocumentV4Request, RequiredFormFields) {
   doc.bucket = "test-bucket";
   doc.object = "test-object";
   doc.expiration = std::chrono::seconds(13);
-  doc.timestamp = google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z");
+  doc.timestamp =
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z").value();
   doc.conditions = std::vector<PolicyDocumentCondition>{
       PolicyDocumentCondition::StartsWith("key", ""),
       PolicyDocumentCondition::ExactMatchObject("acl", "bucket-owner-read"),

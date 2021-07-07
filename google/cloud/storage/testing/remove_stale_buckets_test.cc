@@ -92,7 +92,7 @@ TEST(CleanupStaleBucketsTest, RemoveStaleBuckets) {
   EXPECT_CALL(*mock, client_options).WillRepeatedly(ReturnRef(options));
 
   auto const now =
-      google::cloud::internal::ParseRfc3339("2020-09-23T12:34:56Z");
+      google::cloud::internal::ParseRfc3339("2020-09-23T12:34:56Z").value();
   auto const create_time_limit = now - std::chrono::hours(48);
   auto const affected_tp = create_time_limit - std::chrono::hours(1);
   auto const unaffected_tp = create_time_limit + std::chrono::hours(1);

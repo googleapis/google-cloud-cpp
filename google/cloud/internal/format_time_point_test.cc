@@ -25,25 +25,25 @@ namespace {
 using ::testing::HasSubstr;
 
 TEST(FormatRfc3339Test, NoFractional) {
-  auto timestamp = ParseRfc3339("2018-08-02T01:02:03Z");
+  auto timestamp = ParseRfc3339("2018-08-02T01:02:03Z").value();
   std::string actual = FormatRfc3339(timestamp);
   EXPECT_EQ("2018-08-02T01:02:03Z", actual);
 }
 
 TEST(FormatRfc3339Test, FractionalMillis) {
-  auto timestamp = ParseRfc3339("2018-08-02T01:02:03.123Z");
+  auto timestamp = ParseRfc3339("2018-08-02T01:02:03.123Z").value();
   std::string actual = FormatRfc3339(timestamp);
   EXPECT_EQ("2018-08-02T01:02:03.123Z", actual);
 }
 
 TEST(FormatRfc3339Test, FractionalMillsSmall) {
-  auto timestamp = ParseRfc3339("2018-08-02T01:02:03.001Z");
+  auto timestamp = ParseRfc3339("2018-08-02T01:02:03.001Z").value();
   std::string actual = FormatRfc3339(timestamp);
   EXPECT_EQ("2018-08-02T01:02:03.001Z", actual);
 }
 
 TEST(FormatRfc3339Test, FractionalMicros) {
-  auto timestamp = ParseRfc3339("2018-08-02T01:02:03.123456Z");
+  auto timestamp = ParseRfc3339("2018-08-02T01:02:03.123456Z").value();
   std::string actual = FormatRfc3339(timestamp);
 
   bool system_clock_has_micros = std::ratio_greater_equal<
@@ -58,7 +58,7 @@ TEST(FormatRfc3339Test, FractionalMicros) {
 }
 
 TEST(FormatRfc3339Test, FractionalNanos) {
-  auto timestamp = ParseRfc3339("2018-08-02T01:02:03.123456789Z");
+  auto timestamp = ParseRfc3339("2018-08-02T01:02:03.123456789Z").value();
   std::string actual = FormatRfc3339(timestamp);
 
   bool system_clock_has_nanos = std::ratio_greater_equal<
@@ -73,13 +73,13 @@ TEST(FormatRfc3339Test, FractionalNanos) {
 }
 
 TEST(FormatV4SignedUrlTimestampTest, Base) {
-  auto timestamp = ParseRfc3339("2019-08-02T01:02:03Z");
+  auto timestamp = ParseRfc3339("2019-08-02T01:02:03Z").value();
   std::string actual = FormatV4SignedUrlTimestamp(timestamp);
   EXPECT_EQ("20190802T010203Z", actual);
 }
 
 TEST(FormatV4SignedUrlScopeTest, Base) {
-  auto timestamp = ParseRfc3339("2019-08-02T01:02:03Z");
+  auto timestamp = ParseRfc3339("2019-08-02T01:02:03Z").value();
   std::string actual = FormatV4SignedUrlScope(timestamp);
   EXPECT_EQ("20190802", actual);
 }

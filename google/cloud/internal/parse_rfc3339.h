@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PARSE_RFC3339_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PARSE_RFC3339_H
 
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <chrono>
 #include <string>
@@ -37,7 +38,7 @@ namespace internal {
  *
  * @see https://tools.ietf.org/html/rfc3339
  */
-std::chrono::system_clock::time_point ParseRfc3339(
+StatusOr<std::chrono::system_clock::time_point> ParseRfc3339(
     std::string const& timestamp);
 
 }  // namespace internal

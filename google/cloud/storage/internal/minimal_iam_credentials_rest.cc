@@ -69,10 +69,11 @@ class MinimalIamCredentialsRestImpl : public MinimalIamCredentialsRest {
       return Status(StatusCode::kUnknown,
                     "invalid response from service <" + parsed.dump() + ">");
     }
+    auto expire_time = google::cloud::internal::ParseRfc3339(
+        parsed["expireTime"].get<std::string>());
+    if (!expire_time) return std::move(expire_time).status();
     return google::cloud::internal::AccessToken{
-        parsed["accessToken"].get<std::string>(),
-        google::cloud::internal::ParseRfc3339(
-            parsed["expireTime"].get<std::string>())};
+        parsed["accessToken"].get<std::string>(), *expire_time};
   }
 
  private:
