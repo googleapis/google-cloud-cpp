@@ -38,9 +38,8 @@ class Timer {
     std::chrono::microseconds elapsed_time;
     std::chrono::microseconds cpu_time;
   };
-
-  Timer() : Timer(CpuAccounting::kPerThread) {}
-  explicit Timer(CpuAccounting cpu_accounting);
+  static Timer PerThread() { return Timer(CpuAccounting::kPerThread); }
+  static Timer PerProcess() { return Timer(CpuAccounting::kPerProcess); }
 
   Snapshot Sample() const;
   std::string Annotations() const;
@@ -48,6 +47,8 @@ class Timer {
   static bool SupportsPerThreadUsage();
 
  private:
+  explicit Timer(CpuAccounting cpu_accounting);
+
   CpuAccounting accounting_;
   std::chrono::steady_clock::time_point start_;
 #if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE

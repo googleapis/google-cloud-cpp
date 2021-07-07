@@ -23,12 +23,13 @@ namespace testing_util {
 #if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 namespace {
 int rusage_who(CpuAccounting accounting) {
-#if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
-  return accounting == CpuAccounting::kPerThread ? RUSAGE_THREAD : RUSAGE_SELF;
-#else
-  (void)accounting;
+  switch (accounting) {
+    case CpuAccounting::kPerThread:
+      return RUSAGE_THREAD;
+    case CpuAccounting::kPerProcess:
+      break;
+  }
   return RUSAGE_SELF;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
 }
 }  // namespace
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE

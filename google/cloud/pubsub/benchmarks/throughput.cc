@@ -370,7 +370,7 @@ void PublisherTask(Config const& config) {
   auto const start = std::chrono::steady_clock::now();
   for (int i = 0; !Done(config, i, start); ++i) {
     using std::chrono::steady_clock;
-    Timer timer;
+    auto timer = Timer::PerThread();
     auto const start_send_count = send_count.load();
     auto const start_send_bytes = send_bytes.load();
     auto const start_ack_count = ack_count.load();
@@ -451,7 +451,7 @@ void SubscriberTask(Config const& config) {
   auto const start = std::chrono::steady_clock::now();
   for (int i = 0; !Done(config, i, start); ++i) {
     using std::chrono::steady_clock;
-    Timer timer;
+    auto timer = Timer::PerThread();
     auto const start_count = received_count.load();
     auto const start_bytes = received_bytes.load();
     std::this_thread::sleep_for(config.iteration_duration);

@@ -35,7 +35,6 @@
 
 namespace {
 using ::google::cloud::storage_experimental::DefaultGrpcClient;
-using ::google::cloud::testing_util::CpuAccounting;
 using ::google::cloud::testing_util::FormatSize;
 using ::google::cloud::testing_util::Timer;
 namespace gcs = google::cloud::storage;
@@ -215,23 +214,21 @@ int main(int argc, char* argv[]) {
     return bytes_received;
   };
 
-  using clock = std::chrono::steady_clock;
-  auto const start = clock::now();
-  auto const deadline = clock::now() + options->running_time;
-  auto timer = Timer{CpuAccounting::kPerProcess};
-  while (clock::now() < deadline) {
+  auto timer = Timer::PerProcess();
+  auto usage = timer.Sample();
+  while (usage.elapsed_time < options->running_time) {
     std::this_thread::sleep_for(options->reporting_interval);
-    auto const usage = timer.Sample();
+    usage = timer.Sample();
     std::cout << current_time() << "," << accumulate_bytes_received() << ","
               << usage.cpu_time.count() << std::endl;
   }
-  auto const elapsed = clock::now() - start;
   auto const bytes_received = accumulate_bytes_received();
   std::cout << "# Bytes Received: " << FormatSize(bytes_received)
-            << "\n# Elapsed Time: " << absl::FromChrono(elapsed)
+            << "\n# Elapsed Time: " << absl::FromChrono(usage.elapsed_time)
             << "\n# Bandwidth: "
-            << FormatBandwidthGbPerSecond(bytes_received, elapsed) << "Gbit/s  "
-            << FormatBandwidthGiBPerSecond(bytes_received, elapsed)
+            << FormatBandwidthGbPerSecond(bytes_received, usage.elapsed_time)
+            << "Gbit/s  "
+            << FormatBandwidthGiBPerSecond(bytes_received, usage.elapsed_time)
             << "GiB/s\n";
 
   Counters accumulated;
