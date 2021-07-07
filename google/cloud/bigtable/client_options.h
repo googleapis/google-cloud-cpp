@@ -15,11 +15,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLIENT_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLIENT_OPTIONS_H
 
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/tracing_options.h"
+#include "absl/strings/str_split.h"
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/resource_quota.h>
 #include <chrono>
@@ -32,10 +37,6 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 struct InstanceAdminTraits;
-std::string DefaultDataEndpoint();
-std::string DefaultAdminEndpoint();
-std::string DefaultInstanceAdminEndpoint();
-TracingOptions DefaultTracingOptions();
 }  // namespace internal
 
 /**
@@ -50,10 +51,16 @@ TracingOptions DefaultTracingOptions();
 class ClientOptions {
  public:
   /**
-   * Initialize the client options with the default credentials.
+   * Initialize the client options.
    *
    * Configure the client to connect to the Cloud Bigtable service, using the
-   * default Google credentials for authentication.
+   * @p opts argument. If no options are set, the default Google credentials
+   * are used for authentication. Expected options are any of the types in the
+   * following option lists.
+   *
+   * - `google::cloud::CommonOptionList`
+   * - `google::cloud::GrpcOptionList`
+   * - `google::cloud::bigtable::ClientOptionList`
    *
    * @par Environment Variables
    * If the `BIGTABLE_EMULATOR_HOST` environment variable is set, the default
@@ -73,7 +80,7 @@ class ClientOptions {
    * @see The [documentation](https://cloud.google.com/bigtable/docs/emulator)
    * for the Cloud Bigtable Emulator.
    */
-  ClientOptions();
+  explicit ClientOptions(Options opts = {});
 
   /**
    * Connect to the production instance of Cloud Bigtable using @p creds.
@@ -81,23 +88,33 @@ class ClientOptions {
    * This constructor always connects to the production instance of Cloud
    * Bigtable, and can be used when the application default credentials are
    * not configured in the environment where the application is running.
+   *
+   * @note Prefer using the `ClientOptions(Options opts)` constructor and
+   *     passing in @p creds as a `GrpcCredentialOption`.
    */
-  explicit ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds);
+  explicit ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds,
+                         Options opts = {});
 
   /// Return the current endpoint for data RPCs.
-  std::string const& data_endpoint() const { return data_endpoint_; }
+  std::string const& data_endpoint() const {
+    return opts_.get<DataEndpointOption>();
+  }
+
   ClientOptions& set_data_endpoint(std::string endpoint) {
-    data_endpoint_ = std::move(endpoint);
+    opts_.set<DataEndpointOption>(std::move(endpoint));
     return *this;
   }
 
   /// Return the current endpoint for admin RPCs.
-  std::string const& admin_endpoint() const { return admin_endpoint_; }
+  std::string const& admin_endpoint() const {
+    return opts_.get<AdminEndpointOption>();
+  }
+
   ClientOptions& set_admin_endpoint(std::string endpoint) {
-    admin_endpoint_ = std::move(endpoint);
+    opts_.set<AdminEndpointOption>(endpoint);
     // These two endpoints are generally equivalent, but they may differ in
     // some tests.
-    instance_admin_endpoint_ = admin_endpoint_;
+    opts_.set<InstanceAdminEndpointOption>(std::move(endpoint));
     return *this;
   }
 
@@ -113,12 +130,13 @@ class ClientOptions {
    * creates segregated pools.
    */
   ClientOptions& set_connection_pool_name(std::string name) {
-    connection_pool_name_ = std::move(name);
+    opts_.set<ConnectionPoolNameOption>(std::move(name));
     return *this;
   }
+
   /// Return the name of the connection pool.
   std::string const& connection_pool_name() const {
-    return connection_pool_name_;
+    return opts_.get<ConnectionPoolNameOption>();
   }
 
   /* Set the size of the connection pool.
@@ -128,15 +146,18 @@ class ClientOptions {
    */
   ClientOptions& set_connection_pool_size(std::size_t size);
 
-  std::size_t connection_pool_size() const { return connection_pool_size_; }
+  std::size_t connection_pool_size() const {
+    return opts_.get<ConnectionPoolSizeOption>();
+  }
 
   /// Return the current credentials.
   std::shared_ptr<grpc::ChannelCredentials> credentials() const {
-    return credentials_;
+    return opts_.get<GrpcCredentialOption>();
   }
+
   ClientOptions& SetCredentials(
       std::shared_ptr<grpc::ChannelCredentials> credentials) {
-    credentials_ = std::move(credentials);
+    opts_.set<GrpcCredentialOption>(std::move(credentials));
     return *this;
   }
 
@@ -311,29 +332,34 @@ class ClientOptions {
    * be enabled by clients configured with this option.
    */
   bool tracing_enabled(std::string const& component) const {
-    return tracing_components_.find(component) != tracing_components_.end();
+    auto tracing_components = opts_.get<TracingComponentsOption>();
+    return tracing_components.find(component) != tracing_components.end();
   }
 
   /// Enable tracing for @p component in clients configured with this object.
   ClientOptions& enable_tracing(std::string const& component) {
-    tracing_components_.insert(component);
+    auto& tracing_components = opts_.lookup<TracingComponentsOption>();
+    tracing_components.insert(component);
     return *this;
   }
 
   /// Disable tracing for @p component in clients configured with this object.
   ClientOptions& disable_tracing(std::string const& component) {
-    tracing_components_.erase(component);
+    auto& tracing_components = opts_.lookup<TracingComponentsOption>();
+    tracing_components.erase(component);
     return *this;
   }
 
   /// Return the options for use when tracing RPCs.
-  TracingOptions const& tracing_options() const { return tracing_options_; }
+  TracingOptions const& tracing_options() const {
+    return opts_.get<GrpcTracingOptionsOption>();
+  }
 
   /**
    * Maximum connection refresh period, as set via `set_max_conn_refresh_period`
    */
   std::chrono::milliseconds max_conn_refresh_period() {
-    return max_conn_refresh_period_;
+    return opts_.get<MaxConnectionRefreshOption>();
   }
 
   /**
@@ -349,8 +375,9 @@ class ClientOptions {
    * @endcode
    */
   ClientOptions& set_max_conn_refresh_period(std::chrono::milliseconds period) {
-    max_conn_refresh_period_ = period;
-    min_conn_refresh_period_ = (std::min)(min_conn_refresh_period_, period);
+    opts_.set<MaxConnectionRefreshOption>(period);
+    auto& min_conn_refresh_period = opts_.lookup<MinConnectionRefreshOption>();
+    min_conn_refresh_period = (std::min)(min_conn_refresh_period, period);
     return *this;
   }
 
@@ -358,7 +385,7 @@ class ClientOptions {
    * Minimum connection refresh period, as set via `set_min_conn_refresh_period`
    */
   std::chrono::milliseconds min_conn_refresh_period() {
-    return min_conn_refresh_period_;
+    return opts_.get<MinConnectionRefreshOption>();
   }
 
   /**
@@ -372,8 +399,9 @@ class ClientOptions {
    * @endcode
    */
   ClientOptions& set_min_conn_refresh_period(std::chrono::milliseconds period) {
-    min_conn_refresh_period_ = period;
-    max_conn_refresh_period_ = (std::max)(max_conn_refresh_period_, period);
+    opts_.set<MinConnectionRefreshOption>(period);
+    auto& max_conn_refresh_period = opts_.lookup<MaxConnectionRefreshOption>();
+    max_conn_refresh_period = (std::max)(max_conn_refresh_period, period);
     return *this;
   }
 
@@ -383,11 +411,12 @@ class ClientOptions {
    * @note this value is not used if `DisableBackgroundThreads()` is called.
    */
   ClientOptions& set_background_thread_pool_size(std::size_t s) {
-    background_thread_pool_size_ = s;
+    opts_.set<BackgroundThreadPoolSizeOption>(s);
     return *this;
   }
+
   std::size_t background_thread_pool_size() const {
-    return background_thread_pool_size_;
+    return opts_.get<BackgroundThreadPoolSizeOption>();
   }
 
   /**
@@ -413,26 +442,11 @@ class ClientOptions {
 
   /// Return the current endpoint for instance admin RPCs.
   std::string const& instance_admin_endpoint() const {
-    return instance_admin_endpoint_;
+    return opts_.get<InstanceAdminEndpointOption>();
   }
 
-  std::shared_ptr<grpc::ChannelCredentials> credentials_;
   grpc::ChannelArguments channel_arguments_;
-  std::string connection_pool_name_;
-  std::size_t connection_pool_size_;
-  std::string data_endpoint_;
-  std::string admin_endpoint_;
-  // The endpoint for instance admin operations, in most scenarios this should
-  // have the same value as `admin_endpoint_`. The most common exception is
-  // testing, where the emulator for instance admin operations may be different
-  // than the emulator for admin and data operations.
-  std::string instance_admin_endpoint_;
-  std::set<std::string> tracing_components_;
-  TracingOptions tracing_options_;
-  std::chrono::milliseconds max_conn_refresh_period_;
-  std::chrono::milliseconds min_conn_refresh_period_;
-  std::size_t background_thread_pool_size_ = 0;
-  BackgroundThreadsFactory background_threads_factory_;
+  Options opts_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

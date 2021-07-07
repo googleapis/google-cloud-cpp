@@ -141,21 +141,21 @@ TEST_F(ClientOptionsDefaultEndpointTest, DataNoEnv) {
   google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
       "BIGTABLE_EMULATOR_HOST", {});
 
-  EXPECT_EQ("bigtable.googleapis.com", internal::DefaultDataEndpoint());
+  EXPECT_EQ("bigtable.googleapis.com", ClientOptions().data_endpoint());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, AdminNoEnv) {
   google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
       "BIGTABLE_EMULATOR_HOST", {});
 
-  EXPECT_EQ("bigtableadmin.googleapis.com", internal::DefaultAdminEndpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com", ClientOptions().admin_endpoint());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, AdminEmulatorOverrides) {
   google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
       "BIGTABLE_EMULATOR_HOST", "127.0.0.1:1234");
 
-  EXPECT_EQ("127.0.0.1:1234", internal::DefaultAdminEndpoint());
+  EXPECT_EQ("127.0.0.1:1234", ClientOptions().admin_endpoint());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, AdminInstanceAdminNoEffect) {
@@ -165,7 +165,7 @@ TEST_F(ClientOptionsDefaultEndpointTest, AdminInstanceAdminNoEffect) {
       bigtable_instance_admin_emulator_host(
           "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", "127.0.0.1:1234");
 
-  EXPECT_EQ("bigtableadmin.googleapis.com", internal::DefaultAdminEndpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com", ClientOptions().admin_endpoint());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminNoEnv) {
@@ -173,14 +173,14 @@ TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminNoEnv) {
       "BIGTABLE_EMULATOR_HOST", {});
 
   EXPECT_EQ("bigtableadmin.googleapis.com",
-            internal::DefaultInstanceAdminEndpoint());
+            GetInstanceAdminEndpoint(ClientOptions()));
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminEmulatorOverrides) {
   google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
       "BIGTABLE_EMULATOR_HOST", "127.0.0.1:1234");
 
-  EXPECT_EQ("127.0.0.1:1234", internal::DefaultInstanceAdminEndpoint());
+  EXPECT_EQ("127.0.0.1:1234", GetInstanceAdminEndpoint(ClientOptions()));
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminInstanceAdminOverrides) {
@@ -190,7 +190,7 @@ TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminInstanceAdminOverrides) {
       bigtable_instance_admin_emulator_host(
           "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", "127.0.0.1:1234");
 
-  EXPECT_EQ("127.0.0.1:1234", internal::DefaultInstanceAdminEndpoint());
+  EXPECT_EQ("127.0.0.1:1234", GetInstanceAdminEndpoint(ClientOptions()));
 }
 
 TEST(ClientOptionsTest, EditDataEndpoint) {

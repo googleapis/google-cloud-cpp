@@ -97,6 +97,8 @@ add_library(
     internal/client_options_defaults.h
     internal/common_client.cc
     internal/common_client.h
+    internal/defaults.cc
+    internal/defaults.h
     internal/google_bytes_traits.cc
     internal/google_bytes_traits.h
     internal/logging_admin_client.cc
@@ -120,6 +122,7 @@ add_library(
     mutation_batcher.h
     mutations.cc
     mutations.h
+    options.h
     polling_policy.cc
     polling_policy.h
     read_modify_write_rule.h
