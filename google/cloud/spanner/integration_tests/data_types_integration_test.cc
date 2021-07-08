@@ -81,6 +81,10 @@ class DataTypeIntegrationTest
     spanner_testing::DatabaseIntegrationTest::TearDownTestSuite();
   }
 
+  static bool UsingEmulator() {
+    return google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
+  }
+
  protected:
   static std::unique_ptr<Client> client_;
 };
@@ -215,9 +219,8 @@ TEST_F(DataTypeIntegrationTest, WriteReadDate) {
 
 TEST_F(DataTypeIntegrationTest, WriteReadNumeric) {
   // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-  if (google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value()) {
-    GTEST_SKIP();
-  }
+  if (UsingEmulator()) GTEST_SKIP();
+
   auto min = MakeNumeric("-99999999999999999999999999999.999999999");
   ASSERT_STATUS_OK(min);
   auto max = MakeNumeric("99999999999999999999999999999.999999999");
@@ -326,9 +329,8 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayDate) {
 
 TEST_F(DataTypeIntegrationTest, WriteReadArrayNumeric) {
   // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-  if (google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value()) {
-    GTEST_SKIP();
-  }
+  if (UsingEmulator()) GTEST_SKIP();
+
   std::vector<std::vector<Numeric>> const data = {
       std::vector<Numeric>{},
       std::vector<Numeric>{Numeric()},
@@ -345,9 +347,8 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayNumeric) {
 
 TEST_F(DataTypeIntegrationTest, InsertAndQueryWithNumericKey) {
   // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-  if (google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value()) {
-    GTEST_SKIP();
-  }
+  if (UsingEmulator()) GTEST_SKIP();
+
   auto& client = *client_;
   auto const key = MakeNumeric(42).value();
 
@@ -360,10 +361,8 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithNumericKey) {
   auto rows = client.Read("NumericKey", KeySet::All(), {"Key"});
   using RowType = std::tuple<Numeric>;
   auto row = GetSingularRow(StreamOf<RowType>(rows));
-  EXPECT_STATUS_OK(row);
-  if (row) {
-    EXPECT_EQ(std::get<0>(*std::move(row)), key);
-  }
+  ASSERT_STATUS_OK(row);
+  EXPECT_EQ(std::get<0>(*std::move(row)), key);
 }
 
 // This test differs a lot from the other tests since Spanner STRUCT types may
