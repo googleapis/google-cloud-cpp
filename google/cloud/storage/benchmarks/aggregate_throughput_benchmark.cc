@@ -214,14 +214,24 @@ int main(int argc, char* argv[]) {
     return bytes_received;
   };
 
+  using clock = std::chrono::steady_clock;
+  auto deadline = clock::now() + options->running_time;
   auto timer = Timer::PerProcess();
   auto usage = timer.Sample();
-  while (usage.elapsed_time < options->running_time) {
-    std::this_thread::sleep_for(options->reporting_interval);
+  for (auto now = clock::now(); now < deadline; now = clock::now()) {
+    std::this_thread::sleep_until(
+        (std::min)(now + options->reporting_interval, deadline));
     usage = timer.Sample();
     std::cout << current_time() << "," << accumulate_bytes_received() << ","
               << usage.cpu_time.count() << std::endl;
   }
+
+  Counters accumulated;
+  for (auto& t : tasks) {
+    auto counters = t.get();
+    for (auto const& kv : counters) accumulated[kv.first] += kv.second;
+  }
+  usage = timer.Sample();
   auto const bytes_received = accumulate_bytes_received();
   std::cout << "# Bytes Received: " << FormatSize(bytes_received)
             << "\n# Elapsed Time: " << absl::FromChrono(usage.elapsed_time)
@@ -230,12 +240,6 @@ int main(int argc, char* argv[]) {
             << "Gbit/s  "
             << FormatBandwidthGiBPerSecond(bytes_received, usage.elapsed_time)
             << "GiB/s\n";
-
-  Counters accumulated;
-  for (auto& t : tasks) {
-    auto counters = t.get();
-    for (auto const& kv : counters) accumulated[kv.first] += kv.second;
-  }
   for (auto& kv : accumulated) {
     std::cout << "# counter " << kv.first << ": " << kv.second << "\n";
   }
