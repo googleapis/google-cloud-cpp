@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/base64_transforms.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <limits>
 
 namespace google {
@@ -117,36 +118,44 @@ void Base64Decoder::Iterator::Fill() {
   }
 }
 
-Status ValidateBase64String(std::string const& input) {
-  auto const* p = reinterpret_cast<unsigned char const*>(input.data());
-  auto const* ep = p + input.size();
-  while (ep - p >= 4) {
-    auto i0 = kCharToIndexExcessOne[p[0]];
-    auto i1 = kCharToIndexExcessOne[p[1]];
-    if (--i0 >= 64 || --i1 >= 64) break;
-    if (p[3] == kPadding) {
-      if (p[2] == kPadding) {
-        if ((i1 & 0xf) != 0) break;
-      } else {
-        auto i2 = kCharToIndexExcessOne[p[2]];
-        if (--i2 >= 64 || (i2 & 0x3) != 0) break;
-      }
-      p += 4;
-      break;
+Status Base64DecodingError(std::string const& base64,
+                           std::string::const_iterator p) {
+  auto const offset = std::distance(base64.begin(), p);
+  auto const bad_chunk = base64.substr(offset, 4);
+  return Status(StatusCode::kInvalidArgument,
+                absl::StrCat("Invalid base64 chunk \"", bad_chunk,
+                             "\" at offset ", offset));
+}
+
+std::pair<std::array<unsigned char, 3>, std::size_t> Base64Fill(
+    unsigned char p0, unsigned char p1, unsigned char p2, unsigned char p3) {
+  std::array<unsigned char, 3> buf;
+  auto i0 = kCharToIndexExcessOne[p0];
+  auto i1 = kCharToIndexExcessOne[p1];
+  if (--i0 >= 64 || --i1 >= 64) return {std::move(buf), 0};
+  if (p3 == kPadding) {
+    if (p2 == kPadding) {
+      if ((i1 & 0xf) != 0) return {std::move(buf), 0};
+      buf[0] = static_cast<unsigned char>(i0 << 2 | i1 >> 4);
+      return {buf, 1};
     }
-    auto i2 = kCharToIndexExcessOne[p[2]];
-    auto i3 = kCharToIndexExcessOne[p[3]];
-    if (--i2 >= 64 || --i3 >= 64) break;
-    p += 4;
+    auto i2 = kCharToIndexExcessOne[p2];
+    if (--i2 >= 64 || (i2 & 0x3) != 0) return {std::move(buf), 0};
+    buf[1] = static_cast<unsigned char>(i1 << 4 | i2 >> 2);
+    buf[0] = static_cast<unsigned char>(i0 << 2 | i1 >> 4);
+    return {std::move(buf), 2};
   }
-  if (p != ep) {
-    auto const offset = reinterpret_cast<char const*>(p) - input.data();
-    auto const bad_chunk = input.substr(offset, 4);
-    auto message = "Invalid base64 chunk \"" + bad_chunk + "\"" +
-                   " at offset " + std::to_string(offset);
-    return Status(StatusCode::kInvalidArgument, std::move(message));
-  }
-  return Status{};
+  auto i2 = kCharToIndexExcessOne[p2];
+  auto i3 = kCharToIndexExcessOne[p3];
+  if (--i2 >= 64 || --i3 >= 64) return {std::move(buf), 0};
+  buf[2] = static_cast<unsigned char>(i2 << 6 | i3);
+  buf[1] = static_cast<unsigned char>(i1 << 4 | i2 >> 2);
+  buf[0] = static_cast<unsigned char>(i0 << 2 | i1 >> 4);
+  return {std::move(buf), 3};
+}
+
+Status ValidateBase64String(std::string const& input) {
+  return FromBase64(input, [](unsigned char) {});
 }
 
 }  // namespace internal
