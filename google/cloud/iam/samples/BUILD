@@ -34,3 +34,17 @@ load(":iam_client_samples.bzl", "iam_client_samples")
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in iam_client_samples]
+
+load(":iam_client_mock_samples.bzl", "iam_client_mock_samples")
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    deps = [
+        "//:experimental-iam",
+        "//:experimental-iam-mocks",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in iam_client_mock_samples]
