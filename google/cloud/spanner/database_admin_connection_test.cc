@@ -422,7 +422,7 @@ TEST(DatabaseAdminConnectionTest, ListDatabases) {
       R"pb(
         name: "projects/project/instances/instance/databases/db-1"
         state: READY
-        create_time { seconds: 1625696199 nanos: 123456789 }
+        create_time { seconds: 1625696199 nanos: 111111111 }
         restore_info {
           source_type: BACKUP
           backup_info {
@@ -524,7 +524,7 @@ TEST(DatabaseAdminConnectionTest, ListDatabases) {
           kms_key_name: "projects/project/locations/location/keyRings/ring/cryptoKeys/key"
         }
         version_retention_period: "5d"
-        earliest_version_time { seconds: 1625696199 nanos: 123456789 }
+        earliest_version_time { seconds: 1625696199 nanos: 555555555 }
         default_leader: "us-east5"
       )pb",
       &expected_databases[4]));
