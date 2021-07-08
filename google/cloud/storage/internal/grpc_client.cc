@@ -137,11 +137,23 @@ std::shared_ptr<GrpcClient> GrpcClient::Create(Options const& opts) {
   return std::shared_ptr<GrpcClient>(new GrpcClient(opts));
 }
 
+std::shared_ptr<GrpcClient> GrpcClient::CreateMock(
+    std::shared_ptr<StorageStub> stub) {
+  return std::shared_ptr<GrpcClient>(
+      new GrpcClient(std::move(stub), DefaultOptionsGrpc({})));
+}
+
 GrpcClient::GrpcClient(Options const& opts)
     : backwards_compatibility_options_(
           MakeBackwardsCompatibleClientOptions(opts)),
       background_(opts.get<GrpcBackgroundThreadsFactoryOption>()()),
       stub_(CreateStorageStub(background_->cq(), opts)) {}
+
+GrpcClient::GrpcClient(std::shared_ptr<StorageStub> stub, Options const& opts)
+    : backwards_compatibility_options_(
+          MakeBackwardsCompatibleClientOptions(opts)),
+      background_(opts.get<GrpcBackgroundThreadsFactoryOption>()()),
+      stub_(std::move(stub)) {}
 
 std::unique_ptr<GrpcClient::InsertStream> GrpcClient::CreateUploadWriter(
     std::unique_ptr<grpc::ClientContext> context) {

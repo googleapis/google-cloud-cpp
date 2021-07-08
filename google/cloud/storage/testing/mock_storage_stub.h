@@ -150,6 +150,16 @@ class MockStorageStub : public internal::StorageStub {
               (override));
 };
 
+class MockInsertStream : public internal::StorageStub::InsertStream {
+ public:
+  MOCK_METHOD(void, Cancel, (), (override));
+  MOCK_METHOD(bool, Write,
+              (google::storage::v1::InsertObjectRequest const&,
+               grpc::WriteOptions),
+              (override));
+  MOCK_METHOD(StatusOr<google::storage::v1::Object>, Close, (), (override));
+};
+
 }  // namespace testing
 }  // namespace storage
 }  // namespace cloud
