@@ -130,6 +130,8 @@ add_library(
     internal/attributes.h
     internal/backoff_policy.cc
     internal/backoff_policy.h
+    internal/base64_transforms.cc
+    internal/base64_transforms.h
     internal/big_endian.h
     internal/build_info.h
     internal/compiler_info.cc
@@ -260,6 +262,7 @@ if (BUILD_TESTING)
         internal/algorithm_test.cc
         internal/api_client_header_test.cc
         internal/backoff_policy_test.cc
+        internal/base64_transforms_test.cc
         internal/big_endian_test.cc
         internal/compiler_info_test.cc
         internal/credentials_impl_test.cc
