@@ -180,63 +180,44 @@ TEST(DatabaseAdminConnectionTest, HandleCreateDatabaseError) {
 }
 
 /// @test Verify that the successful case works.
-TEST(DatabaseAdminConnectionTest, GetDatabaseSuccess) {
-  auto mock = std::make_shared<MockDatabaseAdminStub>();
-  std::string const database_name =
-      "projects/test-project/instances/test-instance/databases/test-database";
+TEST(DatabaseAdminConnectionTest, GetDatabase) {
+  auto constexpr kResponseText = R"pb(
+    name: "projects/project/instances/instance/databases/database"
+    state: READY
+    create_time { seconds: 1625696199 nanos: 123456789 }
+    restore_info {
+      source_type: BACKUP
+      backup_info {
+        backup: "projects/project/instances/instance/backups/backup"
+        create_time { seconds: 1625696099 nanos: 987564321 }
+        source_database: "projects/project/instances/instance/databases/database"
+        version_time { seconds: 1625696099 nanos: 987564321 }
+      }
+    }
+    encryption_config {
+      kms_key_name: "projects/project/locations/location/keyRings/ring/cryptoKeys/key"
+    }
+    version_retention_period: "7d"
+    earliest_version_time { seconds: 1625696199 nanos: 123456789 }
+    default_leader: "us-east5"
+  )pb";
+  gcsa::Database expected_response;
+  ASSERT_TRUE(TextFormat::ParseFromString(kResponseText, &expected_response));
 
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
   EXPECT_CALL(*mock, GetDatabase)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce([&database_name](grpc::ClientContext&,
-                                 gcsa::GetDatabaseRequest const& request) {
-        EXPECT_EQ(request.name(), database_name);
-        gcsa::Database response;
-        response.set_name(request.name());
-        response.set_state(gcsa::Database::READY);
-        return response;
-      });
+      .WillOnce(
+          [&](grpc::ClientContext&, gcsa::GetDatabaseRequest const& request) {
+            EXPECT_EQ(request.name(), expected_response.name());
+            return expected_response;
+          });
 
   auto conn = CreateTestingConnection(std::move(mock));
-  auto response = conn->GetDatabase(
-      {Database("test-project", "test-instance", "test-database")});
+  auto response =
+      conn->GetDatabase({Database("project", "instance", "database")});
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->state(), gcsa::Database::READY);
-  EXPECT_EQ(response->name(), database_name);
-}
-
-/// @test Verify that GetDatabase can return encryption info and key version.
-TEST(DatabaseAdminClientTest, GetDatabaseWithEncryption) {
-  auto mock = std::make_shared<MockDatabaseAdminStub>();
-  std::string const database_name =
-      "projects/test-project/instances/test-instance/databases/test-database";
-
-  EXPECT_CALL(*mock, GetDatabase)
-      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce([&database_name](grpc::ClientContext&,
-                                 gcsa::GetDatabaseRequest const& request) {
-        EXPECT_EQ(request.name(), database_name);
-        gcsa::Database response;
-        response.set_name(request.name());
-        response.set_state(gcsa::Database::READY);
-        response.mutable_encryption_config()->set_kms_key_name(
-            "projects/test-project/locations/some-location/keyRings/a-key-ring/"
-            "cryptoKeys/some-key-name");
-        return response;
-      });
-
-  auto conn = CreateTestingConnection(std::move(mock));
-  auto response = conn->GetDatabase(
-      {Database("test-project", "test-instance", "test-database")});
-  ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->name(), database_name);
-  EXPECT_EQ(response->state(), gcsa::Database::READY);
-  EXPECT_TRUE(response->has_encryption_config());
-  if (response->has_encryption_config()) {
-    EXPECT_EQ(
-        response->encryption_config().kms_key_name(),
-        "projects/test-project/locations/some-location/keyRings/a-key-ring/"
-        "cryptoKeys/some-key-name");
-  }
+  EXPECT_THAT(*response, IsProtoEqual(expected_response));
 }
 
 /// @test Verify that permanent errors are reported immediately.
@@ -436,55 +417,167 @@ TEST(DatabaseAdminConnectionTest, UpdateDatabaseGetOperationError) {
 
 /// @test Verify that we can list databases in multiple pages.
 TEST(DatabaseAdminConnectionTest, ListDatabases) {
-  auto mock = std::make_shared<MockDatabaseAdminStub>();
-  Instance in("test-project", "test-instance");
+  gcsa::Database expected_databases[5];
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        name: "projects/project/instances/instance/databases/db-1"
+        state: READY
+        create_time { seconds: 1625696199 nanos: 123456789 }
+        restore_info {
+          source_type: BACKUP
+          backup_info {
+            backup: "projects/project/instances/instance/backups/backup"
+            create_time { seconds: 1625696099 nanos: 111111111 }
+            source_database: "projects/project/instances/instance/databases/db"
+            version_time { seconds: 1625696099 nanos: 111111111 }
+          }
+        }
+        encryption_config {
+          kms_key_name: "projects/project/locations/location/keyRings/ring/cryptoKeys/key"
+        }
+        version_retention_period: "1d"
+        earliest_version_time { seconds: 1625696199 nanos: 111111111 }
+        default_leader: "us-east1"
+      )pb",
+      &expected_databases[0]));
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        name: "projects/project/instances/instance/databases/db-2"
+        state: READY
+        create_time { seconds: 1625696199 nanos: 222222222 }
+        restore_info {
+          source_type: BACKUP
+          backup_info {
+            backup: "projects/project/instances/instance/backups/backup"
+            create_time { seconds: 1625696099 nanos: 222222222 }
+            source_database: "projects/project/instances/instance/databases/db"
+            version_time { seconds: 1625696099 nanos: 222222222 }
+          }
+        }
+        encryption_config {
+          kms_key_name: "projects/project/locations/location/keyRings/ring/cryptoKeys/key"
+        }
+        version_retention_period: "2d"
+        earliest_version_time { seconds: 1625696199 nanos: 222222222 }
+        default_leader: "us-east2"
+      )pb",
+      &expected_databases[1]));
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        name: "projects/project/instances/instance/databases/db-3"
+        state: READY
+        create_time { seconds: 1625696199 nanos: 333333333 }
+        restore_info {
+          source_type: BACKUP
+          backup_info {
+            backup: "projects/project/instances/instance/backups/backup"
+            create_time { seconds: 1625696099 nanos: 333333333 }
+            source_database: "projects/project/instances/instance/databases/db"
+            version_time { seconds: 1625696099 nanos: 333333333 }
+          }
+        }
+        encryption_config {
+          kms_key_name: "projects/project/locations/location/keyRings/ring/cryptoKeys/key"
+        }
+        version_retention_period: "3d"
+        earliest_version_time { seconds: 1625696199 nanos: 333333333 }
+        default_leader: "us-east3"
+      )pb",
+      &expected_databases[2]));
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        name: "projects/project/instances/instance/databases/db-4"
+        state: READY
+        create_time { seconds: 1625696199 nanos: 444444444 }
+        restore_info {
+          source_type: BACKUP
+          backup_info {
+            backup: "projects/project/instances/instance/backups/backup"
+            create_time { seconds: 1625696099 nanos: 444444444 }
+            source_database: "projects/project/instances/instance/databases/db"
+            version_time { seconds: 1625696099 nanos: 444444444 }
+          }
+        }
+        encryption_config {
+          kms_key_name: "projects/project/locations/location/keyRings/ring/cryptoKeys/key"
+        }
+        version_retention_period: "4d"
+        earliest_version_time { seconds: 1625696199 nanos: 444444444 }
+        default_leader: "us-east4"
+      )pb",
+      &expected_databases[3]));
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        name: "projects/project/instances/instance/databases/db-5"
+        state: READY
+        create_time { seconds: 1625696199 nanos: 555555555 }
+        restore_info {
+          source_type: BACKUP
+          backup_info {
+            backup: "projects/project/instances/instance/backups/backup"
+            create_time { seconds: 1625696099 nanos: 555555555 }
+            source_database: "projects/project/instances/instance/databases/db"
+            version_time { seconds: 1625696099 nanos: 555555555 }
+          }
+        }
+        encryption_config {
+          kms_key_name: "projects/project/locations/location/keyRings/ring/cryptoKeys/key"
+        }
+        version_retention_period: "5d"
+        earliest_version_time { seconds: 1625696199 nanos: 123456789 }
+        default_leader: "us-east5"
+      )pb",
+      &expected_databases[4]));
+
+  Instance in("project", "instance");
   std::string const expected_parent = in.FullName();
-
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
   EXPECT_CALL(*mock, ListDatabases)
-      .WillOnce([&expected_parent](grpc::ClientContext&,
-                                   gcsa::ListDatabasesRequest const& request) {
-        EXPECT_EQ(expected_parent, request.parent());
-        EXPECT_TRUE(request.page_token().empty());
+      .WillOnce(
+          [&](grpc::ClientContext&, gcsa::ListDatabasesRequest const& request) {
+            EXPECT_EQ(expected_parent, request.parent());
+            EXPECT_TRUE(request.page_token().empty());
 
-        gcsa::ListDatabasesResponse page;
-        page.set_next_page_token("page-1");
-        gcsa::Database database;
-        page.add_databases()->set_name("db-1");
-        page.add_databases()->set_name("db-2");
-        return make_status_or(page);
-      })
-      .WillOnce([&expected_parent](grpc::ClientContext&,
-                                   gcsa::ListDatabasesRequest const& request) {
-        EXPECT_EQ(expected_parent, request.parent());
-        EXPECT_EQ("page-1", request.page_token());
+            gcsa::ListDatabasesResponse page;
+            page.set_next_page_token("page-1");
+            *page.add_databases() = expected_databases[0];
+            *page.add_databases() = expected_databases[1];
+            return make_status_or(page);
+          })
+      .WillOnce(
+          [&](grpc::ClientContext&, gcsa::ListDatabasesRequest const& request) {
+            EXPECT_EQ(expected_parent, request.parent());
+            EXPECT_EQ("page-1", request.page_token());
 
-        gcsa::ListDatabasesResponse page;
-        page.set_next_page_token("page-2");
-        gcsa::Database database;
-        page.add_databases()->set_name("db-3");
-        page.add_databases()->set_name("db-4");
-        return make_status_or(page);
-      })
-      .WillOnce([&expected_parent](grpc::ClientContext&,
-                                   gcsa::ListDatabasesRequest const& request) {
-        EXPECT_EQ(expected_parent, request.parent());
-        EXPECT_EQ("page-2", request.page_token());
+            gcsa::ListDatabasesResponse page;
+            page.set_next_page_token("page-2");
+            *page.add_databases() = expected_databases[2];
+            *page.add_databases() = expected_databases[3];
+            return make_status_or(page);
+          })
+      .WillOnce(
+          [&](grpc::ClientContext&, gcsa::ListDatabasesRequest const& request) {
+            EXPECT_EQ(expected_parent, request.parent());
+            EXPECT_EQ("page-2", request.page_token());
 
-        gcsa::ListDatabasesResponse page;
-        page.clear_next_page_token();
-        gcsa::Database database;
-        page.add_databases()->set_name("db-5");
-        return make_status_or(page);
-      });
+            gcsa::ListDatabasesResponse page;
+            page.clear_next_page_token();
+            *page.add_databases() = expected_databases[4];
+            return make_status_or(page);
+          });
 
   auto conn = CreateTestingConnection(std::move(mock));
-  std::vector<std::string> actual_names;
+  std::vector<gcsa::Database> actual_databases;
   for (auto const& database : conn->ListDatabases({in})) {
     ASSERT_STATUS_OK(database);
-    actual_names.push_back(database->name());
+    actual_databases.push_back(*database);
   }
-  EXPECT_THAT(actual_names,
-              ::testing::ElementsAre("db-1", "db-2", "db-3", "db-4", "db-5"));
+  EXPECT_THAT(actual_databases,
+              ElementsAre(IsProtoEqual(expected_databases[0]),
+                          IsProtoEqual(expected_databases[1]),
+                          IsProtoEqual(expected_databases[2]),
+                          IsProtoEqual(expected_databases[3]),
+                          IsProtoEqual(expected_databases[4])));
 }
 
 TEST(DatabaseAdminConnectionTest, ListDatabasesPermanentFailure) {
@@ -705,7 +798,7 @@ TEST(DatabaseAdminConnectionTest, GetIamPolicyTooManyTransients) {
 TEST(DatabaseAdminConnectionTest, SetIamPolicySuccess) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
-  auto constexpr kText = R"pb(
+  auto constexpr kPolicyText = R"pb(
     etag: "request-etag"
     bindings {
       role: "roles/spanner.databaseReader"
@@ -714,7 +807,7 @@ TEST(DatabaseAdminConnectionTest, SetIamPolicySuccess) {
     }
   )pb";
   google::iam::v1::Policy expected_policy;
-  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected_policy));
+  ASSERT_TRUE(TextFormat::ParseFromString(kPolicyText, &expected_policy));
 
   auto mock = std::make_shared<MockDatabaseAdminStub>();
   EXPECT_CALL(*mock, SetIamPolicy)
@@ -1216,9 +1309,8 @@ TEST(DatabaseAdminConnectionTest, ListBackups) {
     ASSERT_STATUS_OK(backup);
     actual_names.push_back(backup->name());
   }
-  EXPECT_THAT(actual_names,
-              ::testing::ElementsAre("backup-1", "backup-2", "backup-3",
-                                     "backup-4", "backup-5"));
+  EXPECT_THAT(actual_names, ElementsAre("backup-1", "backup-2", "backup-3",
+                                        "backup-4", "backup-5"));
 }
 
 TEST(DatabaseAdminConnectionTest, ListBackupsPermanentFailure) {
@@ -1355,7 +1447,7 @@ TEST(DatabaseAdminConnectionTest, ListBackupOperations) {
     actual_names.push_back(operation->name());
   }
   EXPECT_THAT(actual_names,
-              ::testing::ElementsAre("op-1", "op-2", "op-3", "op-4", "op-5"));
+              ElementsAre("op-1", "op-2", "op-3", "op-4", "op-5"));
 }
 
 TEST(DatabaseAdminConnectionTest, ListBackupOperationsPermanentFailure) {
@@ -1437,7 +1529,7 @@ TEST(DatabaseAdminConnectionTest, ListDatabaseOperations) {
     actual_names.push_back(operation->name());
   }
   EXPECT_THAT(actual_names,
-              ::testing::ElementsAre("op-1", "op-2", "op-3", "op-4", "op-5"));
+              ElementsAre("op-1", "op-2", "op-3", "op-4", "op-5"));
 }
 
 TEST(DatabaseAdminConnectionTest, ListDatabaseOperationsPermanentFailure) {
