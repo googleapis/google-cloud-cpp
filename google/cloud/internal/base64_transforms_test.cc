@@ -26,7 +26,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::ContainsRegex;
 using ::testing::Not;
 
-TEST(Base64, LongerRoundTrip) {
+TEST(Base64, RoundTrip) {
   std::vector<std::pair<std::string, std::string>> test_cases = {
       {"abcd", "YWJjZA=="},
       {"abcde", "YWJjZGU="},
