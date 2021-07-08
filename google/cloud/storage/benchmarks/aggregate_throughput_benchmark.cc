@@ -217,11 +217,10 @@ int main(int argc, char* argv[]) {
   using clock = std::chrono::steady_clock;
   auto deadline = clock::now() + options->running_time;
   auto timer = Timer::PerProcess();
-  auto usage = timer.Sample();
   for (auto now = clock::now(); now < deadline; now = clock::now()) {
     std::this_thread::sleep_until(
         (std::min)(now + options->reporting_interval, deadline));
-    usage = timer.Sample();
+    auto const usage = timer.Sample();
     std::cout << current_time() << "," << accumulate_bytes_received() << ","
               << usage.cpu_time.count() << std::endl;
   }
@@ -231,10 +230,11 @@ int main(int argc, char* argv[]) {
     auto counters = t.get();
     for (auto const& kv : counters) accumulated[kv.first] += kv.second;
   }
-  usage = timer.Sample();
+  auto const usage = timer.Sample();
   auto const bytes_received = accumulate_bytes_received();
   std::cout << "# Bytes Received: " << FormatSize(bytes_received)
             << "\n# Elapsed Time: " << absl::FromChrono(usage.elapsed_time)
+            << "\n# CPU Time: " << absl::FromChrono(usage.cpu_time)
             << "\n# Bandwidth: "
             << FormatBandwidthGbPerSecond(bytes_received, usage.elapsed_time)
             << "Gbit/s  "
