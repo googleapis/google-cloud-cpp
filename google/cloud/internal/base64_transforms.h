@@ -19,8 +19,10 @@
 #include "google/cloud/version.h"
 #include <array>
 #include <cstddef>
+#include <cstdint>
 #include <iterator>
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -95,6 +97,9 @@ struct Base64Decoder {
 };
 
 Status ValidateBase64String(std::string const& input);
+
+StatusOr<std::vector<std::uint8_t>> Base64DecodeToBytes(
+    std::string const& input);
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS

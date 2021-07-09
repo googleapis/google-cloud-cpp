@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/base64_transforms.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <limits>
 
 namespace google {
@@ -56,6 +57,61 @@ constexpr std::array<unsigned char, 256> kCharToIndexExcessOne = {{
     26, 0,  0,  0,  0,  0,  0,  27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
     38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
 }};
+
+/**
+ * Decode up to 3 octets from 4 base64-encoded characters.
+ *
+ * The output octets characters are sent to @p sink, which must meet the
+ * `std::is_invocable<Sink const&, unsigned char>` requirements.
+ *
+ * The function is inlined to avoid function call overhead in the case where @p
+ * sink is a no-op.
+ */
+template <typename Sink>
+inline bool Base64Fill(unsigned char p0, unsigned char p1, unsigned char p2,
+                       unsigned char p3, Sink const& sink) {
+  auto i0 = kCharToIndexExcessOne[p0];
+  auto i1 = kCharToIndexExcessOne[p1];
+  if (--i0 >= 64 || --i1 >= 64) return false;
+  if (p3 == kPadding) {
+    if (p2 == kPadding) {
+      if ((i1 & 0xf) != 0) return false;
+      sink(static_cast<unsigned char>(i0 << 2 | i1 >> 4));
+      return true;
+    }
+    auto i2 = kCharToIndexExcessOne[p2];
+    if (--i2 >= 64 || (i2 & 0x3) != 0) return false;
+    sink(static_cast<unsigned char>(i0 << 2 | i1 >> 4));
+    sink(static_cast<unsigned char>(i1 << 4 | i2 >> 2));
+    return true;
+  }
+  auto i2 = kCharToIndexExcessOne[p2];
+  auto i3 = kCharToIndexExcessOne[p3];
+  if (--i2 >= 64 || --i3 >= 64) return false;
+  sink(static_cast<unsigned char>(i0 << 2 | i1 >> 4));
+  sink(static_cast<unsigned char>(i1 << 4 | i2 >> 2));
+  sink(static_cast<unsigned char>(i2 << 6 | i3));
+  return true;
+}
+
+Status Base64DecodingError(std::string const& input,
+                           std::string::const_iterator p) {
+  auto const offset = std::distance(input.begin(), p);
+  auto const bad_chunk = input.substr(offset, 4);
+  return Status(StatusCode::kInvalidArgument,
+                absl::StrCat("Invalid base64 chunk \"", bad_chunk,
+                             "\" at offset ", offset));
+}
+
+template <typename Sink>
+Status Base64DecodeGeneric(std::string const& input, Sink const& sink) {
+  auto p = input.begin();
+  for (; std::distance(p, input.end()) >= 4; p = std::next(p, 4)) {
+    if (!Base64Fill(*p, *(p + 1), *(p + 2), *(p + 3), sink)) break;
+  }
+  if (p != input.end()) return Base64DecodingError(input, p);
+  return Status{};
+}
 
 }  // namespace
 
@@ -118,35 +174,16 @@ void Base64Decoder::Iterator::Fill() {
 }
 
 Status ValidateBase64String(std::string const& input) {
-  auto const* p = reinterpret_cast<unsigned char const*>(input.data());
-  auto const* ep = p + input.size();
-  while (ep - p >= 4) {
-    auto i0 = kCharToIndexExcessOne[p[0]];
-    auto i1 = kCharToIndexExcessOne[p[1]];
-    if (--i0 >= 64 || --i1 >= 64) break;
-    if (p[3] == kPadding) {
-      if (p[2] == kPadding) {
-        if ((i1 & 0xf) != 0) break;
-      } else {
-        auto i2 = kCharToIndexExcessOne[p[2]];
-        if (--i2 >= 64 || (i2 & 0x3) != 0) break;
-      }
-      p += 4;
-      break;
-    }
-    auto i2 = kCharToIndexExcessOne[p[2]];
-    auto i3 = kCharToIndexExcessOne[p[3]];
-    if (--i2 >= 64 || --i3 >= 64) break;
-    p += 4;
-  }
-  if (p != ep) {
-    auto const offset = reinterpret_cast<char const*>(p) - input.data();
-    auto const bad_chunk = input.substr(offset, 4);
-    auto message = "Invalid base64 chunk \"" + bad_chunk + "\"" +
-                   " at offset " + std::to_string(offset);
-    return Status(StatusCode::kInvalidArgument, std::move(message));
-  }
-  return Status{};
+  return Base64DecodeGeneric(input, [](unsigned char) {});
+}
+
+StatusOr<std::vector<std::uint8_t>> Base64DecodeToBytes(
+    std::string const& input) {
+  std::vector<std::uint8_t> result;
+  auto status = Base64DecodeGeneric(
+      input, [&result](unsigned char c) { result.push_back(c); });
+  if (!status.ok()) return status;
+  return result;
 }
 
 }  // namespace internal
