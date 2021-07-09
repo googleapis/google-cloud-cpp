@@ -221,7 +221,7 @@ std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
     Options options) {
   options = golden_internal::GoldenKitchenSinkDefaultOptions(
       std::move(options));
-  auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = golden_internal::CreateDefaultGoldenKitchenSinkStub(
     background->cq(), options);
   return std::make_shared<GoldenKitchenSinkConnectionImpl>(
@@ -243,7 +243,7 @@ MakeGoldenKitchenSinkConnection(
     std::shared_ptr<GoldenKitchenSinkStub> stub, Options options) {
   options = GoldenKitchenSinkDefaultOptions(std::move(options));
   return std::make_shared<golden::GoldenKitchenSinkConnectionImpl>(
-      options.get<GrpcBackgroundThreadsFactoryOption>()(),
+      internal::MakeBackgroundThreadsFactory(options)(),
       std::move(stub), std::move(options));
 }
 

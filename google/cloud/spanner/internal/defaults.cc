@@ -45,10 +45,6 @@ void SetBasicDefaults(Options& opts) {
   if (!opts.has<GrpcCredentialOption>()) {
     opts.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
   }
-  if (!opts.has<GrpcBackgroundThreadsFactoryOption>()) {
-    opts.set<GrpcBackgroundThreadsFactoryOption>(
-        internal::DefaultBackgroundThreadsFactory);
-  }
   if (!opts.has<GrpcNumChannelsOption>()) {
     opts.set<GrpcNumChannelsOption>(4);
   }

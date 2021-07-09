@@ -141,7 +141,7 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     Options options) {
   options = iam_internal::IAMCredentialsDefaultOptions(std::move(options));
-  auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       iam_internal::CreateDefaultIAMCredentialsStub(background->cq(), options);
   return std::make_shared<IAMCredentialsConnectionImpl>(
@@ -162,7 +162,7 @@ std::shared_ptr<iam::IAMCredentialsConnection> MakeIAMCredentialsConnection(
     std::shared_ptr<IAMCredentialsStub> stub, Options options) {
   options = IAMCredentialsDefaultOptions(std::move(options));
   return std::make_shared<iam::IAMCredentialsConnectionImpl>(
-      options.get<GrpcBackgroundThreadsFactoryOption>()(), std::move(stub),
+      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }
 

@@ -546,7 +546,7 @@ std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
     Options options) {
   options = golden_internal::GoldenThingAdminDefaultOptions(
       std::move(options));
-  auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = golden_internal::CreateDefaultGoldenThingAdminStub(
     background->cq(), options);
   return std::make_shared<GoldenThingAdminConnectionImpl>(
@@ -568,7 +568,7 @@ MakeGoldenThingAdminConnection(
     std::shared_ptr<GoldenThingAdminStub> stub, Options options) {
   options = GoldenThingAdminDefaultOptions(std::move(options));
   return std::make_shared<golden::GoldenThingAdminConnectionImpl>(
-      options.get<GrpcBackgroundThreadsFactoryOption>()(),
+      internal::MakeBackgroundThreadsFactory(options)(),
       std::move(stub), std::move(options));
 }
 

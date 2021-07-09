@@ -123,7 +123,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
             opts.get<SpannerBackoffPolicyOption>()->clone()),
         polling_policy_prototype_(
             opts.get<SpannerPollingPolicyOption>()->clone()),
-        background_threads_(opts.get<GrpcBackgroundThreadsFactoryOption>()()) {}
+        background_threads_(internal::MakeBackgroundThreadsFactory(opts)()) {}
 
   ~DatabaseAdminConnectionImpl() override = default;
 

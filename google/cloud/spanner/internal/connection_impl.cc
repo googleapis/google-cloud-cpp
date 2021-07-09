@@ -109,7 +109,7 @@ ConnectionImpl::ConnectionImpl(spanner::Database db,
           opts.get<spanner::SpannerRetryPolicyOption>()->clone()),
       backoff_policy_prototype_(
           opts.get<spanner::SpannerBackoffPolicyOption>()->clone()),
-      background_threads_(opts.get<GrpcBackgroundThreadsFactoryOption>()()),
+      background_threads_(internal::MakeBackgroundThreadsFactory(opts)()),
       session_pool_(MakeSessionPool(db_, std::move(stubs),
                                     background_threads_->cq(), opts)),
       rpc_stream_tracing_enabled_(internal::Contains(

@@ -44,6 +44,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 using ::google::cloud::internal::GrpcAuthenticationStrategy;
+using ::google::cloud::internal::MakeBackgroundThreadsFactory;
 
 auto constexpr kDirectPathConfig = R"json({
     "loadBalancingConfig": [{
@@ -83,11 +84,6 @@ Options DefaultOptionsGrpc(Options options) {
   if (env.has_value()) {
     options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
     options.set<EndpointOption>(*env);
-  }
-
-  if (!options.has<GrpcBackgroundThreadsFactoryOption>()) {
-    options.set<GrpcBackgroundThreadsFactoryOption>(
-        google::cloud::internal::DefaultBackgroundThreadsFactory);
   }
   if (!options.has<GrpcNumChannelsOption>()) {
     options.set<GrpcNumChannelsOption>(DefaultGrpcNumChannels());
@@ -146,13 +142,13 @@ std::shared_ptr<GrpcClient> GrpcClient::CreateMock(
 GrpcClient::GrpcClient(Options const& opts)
     : backwards_compatibility_options_(
           MakeBackwardsCompatibleClientOptions(opts)),
-      background_(opts.get<GrpcBackgroundThreadsFactoryOption>()()),
+      background_(MakeBackgroundThreadsFactory(opts)()),
       stub_(CreateStorageStub(background_->cq(), opts)) {}
 
 GrpcClient::GrpcClient(std::shared_ptr<StorageStub> stub, Options const& opts)
     : backwards_compatibility_options_(
           MakeBackwardsCompatibleClientOptions(opts)),
-      background_(opts.get<GrpcBackgroundThreadsFactoryOption>()()),
+      background_(MakeBackgroundThreadsFactory(opts)()),
       stub_(std::move(stub)) {}
 
 std::unique_ptr<GrpcClient::InsertStream> GrpcClient::CreateUploadWriter(

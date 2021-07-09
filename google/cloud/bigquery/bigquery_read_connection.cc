@@ -145,7 +145,7 @@ class BigQueryReadConnectionImpl : public BigQueryReadConnection {
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
     Options options) {
   options = bigquery_internal::BigQueryReadDefaultOptions(std::move(options));
-  auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = bigquery_internal::CreateDefaultBigQueryReadStub(background->cq(),
                                                                options);
   return std::make_shared<BigQueryReadConnectionImpl>(std::move(background),
@@ -166,7 +166,7 @@ std::shared_ptr<bigquery::BigQueryReadConnection> MakeBigQueryReadConnection(
     std::shared_ptr<BigQueryReadStub> stub, Options options) {
   options = BigQueryReadDefaultOptions(std::move(options));
   return std::make_shared<bigquery::BigQueryReadConnectionImpl>(
-      options.get<GrpcBackgroundThreadsFactoryOption>()(), std::move(stub),
+      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }
 

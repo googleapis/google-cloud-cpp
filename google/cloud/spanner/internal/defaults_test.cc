@@ -59,7 +59,6 @@ TEST(Options, Defaults) {
   // to verify that both are `nullptr` or neither is `nullptr`.
   auto const expected = grpc::GoogleDefaultCredentials();
   EXPECT_EQ(!!opts.get<GrpcCredentialOption>(), !!expected);
-  EXPECT_NE(opts.get<GrpcBackgroundThreadsFactoryOption>(), nullptr);
   EXPECT_EQ(opts.get<GrpcNumChannelsOption>(), 4);
   EXPECT_THAT(opts.get<TracingComponentsOption>(), IsEmpty());
   EXPECT_EQ(opts.get<GrpcTracingOptionsOption>(), TracingOptions{});
@@ -95,7 +94,6 @@ TEST(Options, AdminDefaults) {
   // to verify that both are `nullptr` or neither is `nullptr`.
   auto const expected = grpc::GoogleDefaultCredentials();
   EXPECT_EQ(!!opts.get<GrpcCredentialOption>(), !!expected);
-  EXPECT_NE(opts.get<GrpcBackgroundThreadsFactoryOption>(), nullptr);
   EXPECT_EQ(opts.get<GrpcNumChannelsOption>(), 4);
   EXPECT_THAT(opts.get<TracingComponentsOption>(), IsEmpty());
   EXPECT_EQ(opts.get<GrpcTracingOptionsOption>(), TracingOptions{});
@@ -186,7 +184,7 @@ TEST(Options, OverrideBackgroundThreadsFactory) {
   bool called = false;
   auto factory = [&called] {
     called = true;
-    return internal::DefaultBackgroundThreadsFactory();
+    return internal::MakeBackgroundThreadsFactory()();
   };
   auto opts =
       Options{}.set<GrpcBackgroundThreadsFactoryOption>(std::move(factory));
