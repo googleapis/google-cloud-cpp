@@ -1871,6 +1871,12 @@ std::string GrpcClient::MD5FromProto(std::string const& v) {
   return internal::Base64Encode(binary);
 }
 
+std::string GrpcClient::MD5ToProto(std::string const& v) {
+  if (v.empty()) return {};
+  auto binary = internal::Base64Decode(v);
+  return internal::HexEncode(binary);
+}
+
 std::string GrpcClient::ComputeMD5Hash(const std::string& payload) {
   return internal::HexEncode(internal::MD5Hash(payload));
 }

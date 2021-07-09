@@ -190,13 +190,16 @@ TEST(GrpcObjectReadSource, UseSpillBufferMany) {
 
 TEST(GrpcObjectReadSource, PreserveChecksums) {
   auto mock = absl::make_unique<MockStream>();
-  std::string const expected_md5 = "9e107d9d372bb6826bd81d3542a419d6";
-  std::string const expected_crc32c = "ImIEBA==";
+  std::string const expected_payload =
+      "The quick brown fox jumps over the lazy dog";
+  auto const expected_md5 = ComputeMD5Hash(expected_payload);
+  auto const expected_crc32c = ComputeCrc32cChecksum(expected_payload);
   EXPECT_CALL(*mock, Read)
       .WillOnce([&]() {
         storage_proto::GetObjectMediaResponse response;
         response.mutable_checksummed_data()->set_content("The quick brown");
-        response.mutable_object_checksums()->set_md5_hash(expected_md5);
+        response.mutable_object_checksums()->set_md5_hash(
+            GrpcClient::MD5ToProto(expected_md5));
         response.mutable_object_checksums()->mutable_crc32c()->set_value(
             GrpcClient::Crc32cToProto(expected_crc32c));
         return response;
@@ -207,21 +210,21 @@ TEST(GrpcObjectReadSource, PreserveChecksums) {
             " fox jumps over the lazy dog");
         // The headers may be included more than once in the stream,
         // `GrpcObjectReadSource` should return them only once.
-        response.mutable_object_checksums()->set_md5_hash(expected_md5);
+        response.mutable_object_checksums()->set_md5_hash(
+            GrpcClient::MD5ToProto(expected_md5));
         response.mutable_object_checksums()->mutable_crc32c()->set_value(
             GrpcClient::Crc32cToProto(expected_crc32c));
         return response;
       })
       .WillOnce(Return(Status{}));
   GrpcObjectReadSource tested(std::move(mock));
-  std::string const expected = "The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(expected.size(), response->bytes_received);
+  EXPECT_EQ(expected_payload.size(), response->bytes_received);
   EXPECT_EQ(100, response->response.status_code);
-  std::string actual(buffer.data(), expected.size());
-  EXPECT_EQ(expected, actual);
+  auto const actual = std::string(buffer.data(), response->bytes_received);
+  EXPECT_EQ(expected_payload, actual);
   auto const& headers = response->response.headers;
   EXPECT_FALSE(headers.find("x-goog-hash") == headers.end());
   auto const values = [&headers] {
@@ -232,9 +235,8 @@ TEST(GrpcObjectReadSource, PreserveChecksums) {
     }
     return v;
   }();
-  EXPECT_THAT(values, UnorderedElementsAre(
-                          "crc32c=" + expected_crc32c,
-                          "md5=" + GrpcClient::MD5FromProto(expected_md5)));
+  EXPECT_THAT(values, UnorderedElementsAre("crc32c=" + expected_crc32c,
+                                           "md5=" + expected_md5));
 
   auto status = tested.Close();
   EXPECT_STATUS_OK(status);

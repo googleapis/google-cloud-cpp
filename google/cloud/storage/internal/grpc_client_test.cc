@@ -221,8 +221,8 @@ TEST(GrpcClientFromProto, MD5Roundtrip) {
       {"96HF9K981B+JfoQuTVnyCg==", "f7a1c5f4af7cd41f897e842e4d59f20a"},
   };
   for (auto const& test : cases) {
-    auto actual = GrpcClient::MD5FromProto(test.proto);
-    EXPECT_EQ(actual, test.rest);
+    EXPECT_EQ(GrpcClient::MD5FromProto(test.proto), test.rest);
+    EXPECT_EQ(GrpcClient::MD5ToProto(test.rest), test.proto);
   }
 }
 
