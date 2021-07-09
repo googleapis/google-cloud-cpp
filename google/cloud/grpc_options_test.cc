@@ -28,6 +28,8 @@ namespace {
 
 using ::testing::Contains;
 using ::testing::ContainsRegex;
+using ::testing::NotNull;
+using ThreadPool = internal::AutomaticallyCreatedBackgroundThreads;
 
 // Tests a generic option by setting it, then getting it.
 template <typename T, typename ValueType = typename T::Type>
@@ -63,34 +65,34 @@ TEST(GrpcOptionList, GrpcBackgroundThreadsFactoryOption) {
 
 TEST(GrpcOptionList, DefaultBackgroundThreadsFactory) {
   auto threads = internal::MakeBackgroundThreadsFactory()();
-  auto* tp = dynamic_cast<internal::AutomaticallyCreatedBackgroundThreads*>(
-      threads.get());
-  ASSERT_NE(nullptr, tp);
+  auto* tp = dynamic_cast<ThreadPool*>(threads.get());
+  ASSERT_THAT(tp, NotNull());
   EXPECT_EQ(1U, tp->pool_size());
 }
 
 TEST(GrpcOptionList, GrpcBackgroundThreadPoolSizeOption) {
   auto threads = internal::MakeBackgroundThreadsFactory(
-      Options{}.set<GrpcBackgroundThreadPoolSizeOption>(4U))();
-  auto* tp = dynamic_cast<internal::AutomaticallyCreatedBackgroundThreads*>(
-      threads.get());
-  ASSERT_NE(nullptr, tp);
+      Options{}.set<GrpcBackgroundThreadPoolSizeOption>(4))();
+  auto* tp = dynamic_cast<ThreadPool*>(threads.get());
+  ASSERT_THAT(tp, NotNull());
   EXPECT_EQ(4U, tp->pool_size());
 }
 
 // Verify that the `GrpcBackgroundThreadsFactoryOption` takes precedence over
 // the `GrpcBackgroundThreadPoolSizeOption` when both are set.
 TEST(GrpcOptionList, GrpcBackgroundThreadPoolSizeIgnored) {
-  // f() creates a thread pool of size 1
-  auto f = internal::MakeBackgroundThreadsFactory();
+  auto constexpr kThreadPoolSize = 4;
+  auto f = [kThreadPoolSize] {
+    return absl::make_unique<ThreadPool>(kThreadPoolSize);
+  };
   auto threads = internal::MakeBackgroundThreadsFactory(
       Options{}
-          .set<GrpcBackgroundThreadPoolSizeOption>(4U)
-          .set<GrpcBackgroundThreadsFactoryOption>(f))();
-  auto* tp = dynamic_cast<internal::AutomaticallyCreatedBackgroundThreads*>(
-      threads.get());
-  ASSERT_NE(nullptr, tp);
-  EXPECT_EQ(1U, tp->pool_size());
+          .set<GrpcBackgroundThreadsFactoryOption>(f)
+          // This value will be ignored because a custom factory is supplied
+          .set<GrpcBackgroundThreadPoolSizeOption>(kThreadPoolSize + 1))();
+  auto* tp = dynamic_cast<ThreadPool*>(threads.get());
+  ASSERT_THAT(tp, NotNull());
+  EXPECT_EQ(kThreadPoolSize, tp->pool_size());
 }
 
 TEST(GrpcOptionList, Expected) {
