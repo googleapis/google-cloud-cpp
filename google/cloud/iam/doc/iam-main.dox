@@ -1,0 +1,124 @@
+/*!
+
+@mainpage Cloud IAM C++ Client Library
+
+The Cloud IAM C++ Client library offers types and functions to use Cloud
+IAM from C++11 applications.
+
+This library requires a C++11 compiler. It is supported (and tested) on multiple
+Linux distributions, macOS, and Windows.
+
+## Quickstart
+
+The following instructions show you how to perform basic tasks in Cloud IAM
+using the C++ client library.
+
+### Before you begin
+
+1. Select or create a Google Cloud Platform (GCP) project using the
+   [manage resource page][resource-link]. Make a note of the project id as you
+   will need to use it later.
+2. Make sure that [billing is enabled][billing-link] for your project.
+3. Learn about [key terms and concepts][concepts-link] for Cloud IAM.
+4. Setup the authentication for the examples:
+   - [Configure a service account][gcloud-authorizing],
+   - or [login with your personal account][gcloud-authorizing]
+
+### Setting up your repo
+
+In order to use the Cloud IAM C++ client library from your own code, you'll
+need to configure your build system to fetch and compile the Cloud C++
+client library. The Cloud IAM C++ client library natively supports the
+[Bazel](https://bazel.build/) and [CMake](https://cmake.org/) build systems.
+We've created a minimal, "Hello world", [quickstart repo][quickstart-link] that
+includes detailed instructions on how to compile the library for use in your
+application. You can fetch the source from [GitHub][github-link] as normal:
+
+@code{.sh}
+git clone https://github.com/googleapis/google-cloud-cpp.git
+cd google-cloud-cpp/google/cloud/iam/quickstart
+@endcode
+
+@par Example: Hello World
+@parblock
+The following shows the code that you'll run in the
+`google/cloud/iam/quickstart/` directory, which should give you a taste of
+the Cloud IAM C++ client library API.
+
+@include quickstart.cc
+@endparblock
+
+## API Notes
+
+The following are general notes about using the library.
+
+### Environment Variables
+
+There are several environment variables that can be set to configure certain
+behaviors in the library.
+
+- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
+  calls. The library injects an additional Stub decorator that prints each gRPC
+  request and response.  Unless you have configured you own logging backend,
+  you should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on
+  the program's console.
+
+- `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
+  including whether messages will be output on multiple lines, or whether
+  string/bytes fields will be truncated.
+
+- `GOOGLE_CLOUD_PROJECT=...` is used in examples and integration tests to
+  configure the GCP project.
+
+- `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library, basically
+  the library always "logs" but the logging infrastructure has no backend to
+  actually print anything until the application sets a backend or they set this
+  environment variable.
+
+### Error Handling
+
+This library never throws exceptions to signal errors. In general, the library
+returns a [`StatusOr<T>`][status-or-header] if an error is possible. Some
+functions return objects that are not wrapped in a `StatusOr<>` but will
+themselves return a `StatusOr<T>` to signal an error. For example, wrappers for
+asynchronous operations return `future<StatusOr<T>>`.
+
+Applications should check if the `StatusOr<T>` contains a value before using
+it, much like how you might check that a pointer is not null before
+dereferencing it. Indeed, a `StatusOr<T>` object can be used like a
+smart-pointer to `T`, with the main difference being that when it does not hold
+a `T` it will instead hold a `Status` object with extra information about the
+error.
+
+You can check that a `StatusOr<T>` contains a value by calling the `.ok()`
+method, or by using `operator bool()` (like with other smart pointers). If
+there is no value, you can access the contained `Status` object using the
+`.status()` member. If there is a value, you may access it by dereferencing
+with `operator*()` or `operator->()`. As with all smart pointers, callers must
+first check that the `StatusOr<T>` contains a value before dereferencing and
+accessing the contained value. Alternatively, callers may instead use the
+`.value()` member function which is defined to throw a `RuntimeStatusError` if
+there is no value.
+
+@note If you're compiling with exceptions disabled, calling `.value()` on a
+    `StatusOr<T>` that does not contain a value will terminate the program
+    instead of throwing.
+
+@par Example
+@snippet iam_samples.cc example-status-or
+
+## Next Steps
+
+* @ref iam-mock
+* @ref iam-credentials-mock
+
+[resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
+[billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
+[concepts-link]: https://cloud.google.com/iam/docs/concepts 'IAM Concepts'
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
+[gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
+[github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
+[quickstart-link]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/quickstart
+[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
+
+*/
