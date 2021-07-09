@@ -94,22 +94,23 @@ inline bool Base64Fill(unsigned char p0, unsigned char p1, unsigned char p2,
   return true;
 }
 
-template <typename Sink>
-Status Base64DecodeGeneric(std::string const& base64, Sink const& sink) {
-  auto p = base64.begin();
-  while (std::distance(p, base64.end()) >= 4) {
-    auto const p0 = *p++;
-    auto const p1 = *p++;
-    auto const p2 = *p++;
-    auto const p3 = *p++;
-    if (!Base64Fill(p0, p1, p2, p3, sink)) break;
-  }
-  if (p == base64.end()) return Status{};
-  auto const offset = std::distance(base64.begin(), p);
-  auto const bad_chunk = base64.substr(offset, 4);
+Status Base64DecodingError(std::string const& input,
+                           std::string::const_iterator p) {
+  auto const offset = std::distance(input.begin(), p);
+  auto const bad_chunk = input.substr(offset, 4);
   return Status(StatusCode::kInvalidArgument,
                 absl::StrCat("Invalid base64 chunk \"", bad_chunk,
                              "\" at offset ", offset));
+}
+
+template <typename Sink>
+Status Base64DecodeGeneric(std::string const& input, Sink const& sink) {
+  auto p = input.begin();
+  for (;std::distance(p, input.end()) >= 4; p = std::next(p, 4)) {
+    if (!Base64Fill(*p, *(p + 1), *(p + 2), *(p + 3), sink)) break;
+  }
+  if (p != input.end()) return Base64DecodingError(input, p);
+  return Status{};
 }
 
 }  // namespace
