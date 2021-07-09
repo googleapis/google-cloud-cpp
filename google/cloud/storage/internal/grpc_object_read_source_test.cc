@@ -27,6 +27,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::internal::StreamingRpcMetadata;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -41,8 +42,7 @@ class MockStream : public google::cloud::internal::StreamingReadRpc<
       absl::variant<Status, storage_proto::GetObjectMediaResponse>;
   MOCK_METHOD(ReadReturn, Read, (), (override));
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
-              (), (const, override));
+  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
 TEST(GrpcObjectReadSource, Simple) {
@@ -60,6 +60,8 @@ TEST(GrpcObjectReadSource, Simple) {
         return response;
       })
       .WillOnce(Return(Status{}));
+  EXPECT_CALL(*mock, GetRequestMetadata)
+      .WillOnce(Return(StreamingRpcMetadata{}));
   GrpcObjectReadSource tested(std::move(mock));
   std::string expected =
       "0123456789 The quick brown fox jumps over the lazy dog";
@@ -80,6 +82,8 @@ TEST(GrpcObjectReadSource, EmptyWithError) {
   auto mock = absl::make_unique<MockStream>();
   EXPECT_CALL(*mock, Read)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+  EXPECT_CALL(*mock, GetRequestMetadata)
+      .WillOnce(Return(StreamingRpcMetadata{}));
   GrpcObjectReadSource tested(std::move(mock));
   std::vector<char> buffer(1024);
   EXPECT_THAT(tested.Read(buffer.data(), buffer.size()),
@@ -98,6 +102,8 @@ TEST(GrpcObjectReadSource, DataWithError) {
         return response;
       })
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+  EXPECT_CALL(*mock, GetRequestMetadata)
+      .WillOnce(Return(StreamingRpcMetadata{}));
   GrpcObjectReadSource tested(std::move(mock));
   std::string expected = "0123456789";
   std::vector<char> buffer(1024);
@@ -128,6 +134,8 @@ TEST(GrpcObjectReadSource, UseSpillBuffer) {
         return response;
       })
       .WillOnce(Return(Status{}));
+  EXPECT_CALL(*mock, GetRequestMetadata)
+      .WillOnce(Return(StreamingRpcMetadata{}));
   GrpcObjectReadSource tested(std::move(mock));
   std::vector<char> buffer(trailer_size);
   auto response = tested.Read(buffer.data(), expected_1.size());
@@ -160,6 +168,8 @@ TEST(GrpcObjectReadSource, UseSpillBufferMany) {
         return response;
       })
       .WillOnce(Return(Status{}));
+  EXPECT_CALL(*mock, GetRequestMetadata)
+      .WillOnce(Return(StreamingRpcMetadata{}));
   GrpcObjectReadSource tested(std::move(mock));
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), 3);
@@ -217,6 +227,8 @@ TEST(GrpcObjectReadSource, PreserveChecksums) {
         return response;
       })
       .WillOnce(Return(Status{}));
+  EXPECT_CALL(*mock, GetRequestMetadata)
+      .WillOnce(Return(StreamingRpcMetadata{}));
   GrpcObjectReadSource tested(std::move(mock));
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
@@ -265,6 +277,8 @@ TEST(GrpcObjectReadSource, HandleEmptyResponses) {
         return response;
       })
       .WillOnce(Return(Status{}));
+  EXPECT_CALL(*mock, GetRequestMetadata)
+      .WillOnce(Return(StreamingRpcMetadata{}));
   GrpcObjectReadSource tested(std::move(mock));
   std::string const expected = "The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
@@ -290,6 +304,8 @@ TEST(GrpcObjectReadSource, HandleExtraRead) {
         return response;
       })
       .WillOnce(Return(Status{}));
+  EXPECT_CALL(*mock, GetRequestMetadata)
+      .WillOnce(Return(StreamingRpcMetadata{}));
   GrpcObjectReadSource tested(std::move(mock));
   std::string const expected = "The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
