@@ -280,6 +280,8 @@ TEST_F(ObjectHashIntegrationTest, VerifyValidMD5StreamingWriteJSON) {
 
 /// @test Verify invalid MD5 hash value before upload.
 TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteJSON) {
+  // TODO(#4157) - use the MD5 hashes
+  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -302,6 +304,8 @@ TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteJSON) {
 
 /// @test Verify MD5 hashes before upload.
 TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteXML) {
+  // TODO(#4157) - use the MD5 hashes
+  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -324,6 +328,8 @@ TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteXML) {
 
 /// @test Verify that hashes and checksums can be disabled in uploads.
 TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingWriteJSON) {
+  // TODO(#4157) - use the MD5 hashes
+  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

@@ -784,14 +784,6 @@ void SetResourceOptions(google::storage::v1::Object& resource,
     resource.set_content_type(
         request.template GetOption<ContentType>().value());
   }
-
-  if (request.template HasOption<Crc32cChecksumValue>()) {
-    resource.mutable_crc32c()->set_value(GrpcClient::Crc32cToProto(
-        request.template GetOption<Crc32cChecksumValue>().value()));
-  }
-  if (request.template HasOption<MD5HashValue>()) {
-    resource.set_md5_hash(request.template GetOption<MD5HashValue>().value());
-  }
   if (request.template HasOption<KmsKeyName>()) {
     resource.set_kms_key_name(request.template GetOption<KmsKeyName>().value());
   }

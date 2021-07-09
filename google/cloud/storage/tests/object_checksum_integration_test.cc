@@ -93,6 +93,8 @@ TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32c) {
 }
 
 TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32cFailure) {
+  // TODO(#4156) - use the MD5 hashes
+  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -108,6 +110,8 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32cFailure) {
 }
 
 TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32cFailure) {
+  // TODO(#4156) - use the MD5 hashes
+  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

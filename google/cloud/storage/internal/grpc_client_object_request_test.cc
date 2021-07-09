@@ -64,9 +64,10 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestAllOptions) {
             name: "test-object-name"
             content_type: "test-content-type"
             content_encoding: "test-content-encoding"
-            crc32c: { value: 576848900 }
-            # See hash_validator_test.cc for how it was obtained.
-            md5_hash: "nhB9nTcrtoJr2B01QqQZ1g=="
+            # Should not be set, the proto file says these values should
+            # not be included in the upload
+            #     crc32c:
+            #     md5_hash:
             kms_key_name: "test-kms-key-name"
           }
           predefined_acl: OBJECT_ACL_PRIVATE
@@ -90,9 +91,17 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestAllOptions) {
           user_project: "test-user-project"
           quota_user: "test-quota-user"
         }
-        # See hash_validator_test.cc for how these magic numbers are obtained.
         object_checksums: {
-          crc32c { value: 576848900 }
+          # Use gsutil to obtain the CRC32C checksum (in base64):
+          #    TEXT="The quick brown fox jumps over the lazy dog"
+          #    /bin/echo -n $TEXT >/tmp/fox.txt
+          #    gsutil hash /tmp/fox.txt
+          #
+          # Then convert the base64 values to hex
+          #
+          # echo "ImIEBA==" | openssl base64 -d | od -t x1
+          #
+          crc32c { value: 0x22620404 }
           md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
         }
       )pb",
@@ -241,8 +250,10 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestAllFields) {
             bucket: "test-bucket"
             content_encoding: "test-content-encoding"
             content_type: "test-content-type"
-            crc32c: { value: 576848900 }
-            md5_hash: "nhB9nTcrtoJr2B01QqQZ1g=="
+            # Should not be set, the proto file says these values should
+            # not be included in the upload
+            #     crc32c:
+            #     md5_hash:
             kms_key_name: "test-kms-key-name"
           }
           predefined_acl: OBJECT_ACL_PRIVATE
@@ -259,11 +270,11 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestAllFields) {
 
       common_object_request_params: {
         encryption_algorithm: "AES256"
-# to get the key value use:
-#   /bin/echo -n "01234567" | openssl base64
-# to get the key hash use (note this command goes over two lines):
-#   /bin/echo -n "01234567" | sha256sum | awk '{printf("%s", $1);}' |
-#     xxd -r -p | openssl base64
+        # to get the key value use:
+        #   /bin/echo -n "01234567" | openssl base64
+        # to get the key hash use (note this command goes over two lines):
+        #   /bin/echo -n "01234567" | sha256sum | awk '{printf("%s", $1);}' |
+        #     xxd -r -p | openssl base64
         encryption_key: "MDEyMzQ1Njc="
         encryption_key_sha256: "kkWSubED8U+DP6r7Z/SAaR8BmIqkV8AGF2n1jNRzEbw="
       })""",
