@@ -1762,7 +1762,7 @@ google::storage::v1::InsertObjectRequest GrpcClient::ToProto(
   // TODO(#4156) - use the crc32c value in the request options.
   checksums.mutable_crc32c()->set_value(crc32c::Crc32c(request.contents()));
   // TODO(#4157) - use the MD5 hash value in the request options.
-  checksums.set_md5_hash(MD5ToProto(ComputeMD5Hash(request.contents())));
+  checksums.set_md5_hash(ComputeMD5Hash(request.contents()));
 
   return r;
 }
@@ -1871,10 +1871,8 @@ std::string GrpcClient::MD5FromProto(std::string const& v) {
   return internal::Base64Encode(binary);
 }
 
-std::string GrpcClient::MD5ToProto(std::string const& v) {
-  if (v.empty()) return {};
-  auto binary = internal::Base64Decode(v);
-  return internal::HexEncode(binary);
+std::string GrpcClient::ComputeMD5Hash(const std::string& payload) {
+  return internal::HexEncode(internal::MD5Hash(payload));
 }
 
 }  // namespace internal

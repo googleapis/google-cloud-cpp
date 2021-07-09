@@ -190,14 +190,13 @@ TEST(GrpcObjectReadSource, UseSpillBufferMany) {
 
 TEST(GrpcObjectReadSource, PreserveChecksums) {
   auto mock = absl::make_unique<MockStream>();
-  std::string const expected_md5 = "nhB9nTcrtoJr2B01QqQZ1g==";
+  std::string const expected_md5 = "9e107d9d372bb6826bd81d3542a419d6";
   std::string const expected_crc32c = "ImIEBA==";
   EXPECT_CALL(*mock, Read)
       .WillOnce([&]() {
         storage_proto::GetObjectMediaResponse response;
         response.mutable_checksummed_data()->set_content("The quick brown");
-        response.mutable_object_checksums()->set_md5_hash(
-            GrpcClient::MD5ToProto(expected_md5));
+        response.mutable_object_checksums()->set_md5_hash(expected_md5);
         response.mutable_object_checksums()->mutable_crc32c()->set_value(
             GrpcClient::Crc32cToProto(expected_crc32c));
         return response;
@@ -208,8 +207,7 @@ TEST(GrpcObjectReadSource, PreserveChecksums) {
             " fox jumps over the lazy dog");
         // The headers may be included more than once in the stream,
         // `GrpcObjectReadSource` should return them only once.
-        response.mutable_object_checksums()->set_md5_hash(
-            GrpcClient::MD5ToProto(expected_md5));
+        response.mutable_object_checksums()->set_md5_hash(expected_md5);
         response.mutable_object_checksums()->mutable_crc32c()->set_value(
             GrpcClient::Crc32cToProto(expected_crc32c));
         return response;
@@ -234,8 +232,9 @@ TEST(GrpcObjectReadSource, PreserveChecksums) {
     }
     return v;
   }();
-  EXPECT_THAT(values, UnorderedElementsAre("crc32c=" + expected_crc32c,
-                                           "md5=" + expected_md5));
+  EXPECT_THAT(values, UnorderedElementsAre(
+                          "crc32c=" + expected_crc32c,
+                          "md5=" + GrpcClient::MD5FromProto(expected_md5)));
 
   auto status = tested.Close();
   EXPECT_STATUS_OK(status);
