@@ -67,7 +67,7 @@ void ListServiceAccounts(std::vector<std::string> const& argv) {
     iam::IAMClient client(iam::MakeIAMConnection());
     int count = 0;
     for (auto const& service_account :
-         client.ListServiceAccounts(absl::StrCat("projects/", project_id))) {
+         client.ListServiceAccounts("projects/" + project_id)) {
       if (!service_account)
         throw std::runtime_error(service_account.status().message());
       std::cout << "ServiceAccount successfully retrieved: "
