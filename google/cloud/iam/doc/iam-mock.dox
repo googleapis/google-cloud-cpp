@@ -9,7 +9,7 @@ and [Google Test Mocking Framework][googlemock-link].
 ### Mocking a Successful IAMClient::GetServiceAccount() call
 
 First include the headers for the Cloud IAM Client, the mocking class, and the
-Google Mock framework.
+Google Mock framework:
 
 @snippet mock_iam.cc required-includes
 

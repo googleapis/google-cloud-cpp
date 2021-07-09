@@ -77,7 +77,7 @@ behaviors in the library.
 
 ### Error Handling
 
-This library never throws exceptions to signal error. In general, the library
+This library never throws exceptions to signal errors. In general, the library
 returns a [`StatusOr<T>`][status-or-header] if an error is possible. Some
 functions return objects that are not wrapped in a `StatusOr<>` but will
 themselves return a `StatusOr<T>` to signal an error. For example, wrappers for
