@@ -208,15 +208,21 @@ TEST(GrpcClientFromProto, Crc32cRoundtrip) {
 }
 
 TEST(GrpcClientFromProto, MD5Roundtrip) {
-  std::string const values[] = {
-      "1B2M2Y8AsgTpgAmY7PhCfg==",
-      "nhB9nTcrtoJr2B01QqQZ1g==",
-      "96HF9K981B+JfoQuTVnyCg==",
+  // As usual, get the values using openssl, e.g.,
+  //  TEXT="The quick brown fox jumps over the lazy dog"
+  //  /bin/echo -n $TEXT | openssl md5 -binary | openssl base64
+  //  /bin/echo -n $TEXT | openssl md5
+  struct Test {
+    std::string rest;
+    std::string proto;
+  } cases[] = {
+      {"1B2M2Y8AsgTpgAmY7PhCfg==", "d41d8cd98f00b204e9800998ecf8427e"},
+      {"nhB9nTcrtoJr2B01QqQZ1g==", "9e107d9d372bb6826bd81d3542a419d6"},
+      {"96HF9K981B+JfoQuTVnyCg==", "f7a1c5f4af7cd41f897e842e4d59f20a"},
   };
-  for (auto const& start : values) {
-    auto proto_form = GrpcClient::MD5ToProto(start);
-    auto end = GrpcClient::MD5FromProto(proto_form);
-    EXPECT_EQ(start, end) << " proto_form=" << proto_form;
+  for (auto const& test : cases) {
+    EXPECT_EQ(GrpcClient::MD5FromProto(test.proto), test.rest);
+    EXPECT_EQ(GrpcClient::MD5ToProto(test.rest), test.proto);
   }
 }
 

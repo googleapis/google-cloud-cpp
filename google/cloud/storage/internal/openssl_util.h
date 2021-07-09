@@ -78,6 +78,9 @@ inline std::string UrlsafeBase64Encode(Collection const& bytes) {
  */
 std::vector<std::uint8_t> UrlsafeBase64Decode(std::string const& str);
 
+/// Compute the MD5 hash of @p payload
+std::vector<std::uint8_t> MD5Hash(std::string const& payload);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

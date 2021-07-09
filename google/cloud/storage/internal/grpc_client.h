@@ -323,6 +323,7 @@ class GrpcClient : public RawClient,
   static std::uint32_t Crc32cToProto(std::string const&);
   static std::string MD5FromProto(std::string const&);
   static std::string MD5ToProto(std::string const&);
+  static std::string ComputeMD5Hash(std::string const& payload);
 
  protected:
   explicit GrpcClient(Options const& opts);

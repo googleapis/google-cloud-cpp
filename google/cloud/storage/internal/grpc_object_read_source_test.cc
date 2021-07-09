@@ -190,8 +190,10 @@ TEST(GrpcObjectReadSource, UseSpillBufferMany) {
 
 TEST(GrpcObjectReadSource, PreserveChecksums) {
   auto mock = absl::make_unique<MockStream>();
-  std::string const expected_md5 = "nhB9nTcrtoJr2B01QqQZ1g==";
-  std::string const expected_crc32c = "ImIEBA==";
+  std::string const expected_payload =
+      "The quick brown fox jumps over the lazy dog";
+  auto const expected_md5 = ComputeMD5Hash(expected_payload);
+  auto const expected_crc32c = ComputeCrc32cChecksum(expected_payload);
   EXPECT_CALL(*mock, Read)
       .WillOnce([&]() {
         storage_proto::GetObjectMediaResponse response;
@@ -216,14 +218,13 @@ TEST(GrpcObjectReadSource, PreserveChecksums) {
       })
       .WillOnce(Return(Status{}));
   GrpcObjectReadSource tested(std::move(mock));
-  std::string const expected = "The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(expected.size(), response->bytes_received);
+  EXPECT_EQ(expected_payload.size(), response->bytes_received);
   EXPECT_EQ(100, response->response.status_code);
-  std::string actual(buffer.data(), expected.size());
-  EXPECT_EQ(expected, actual);
+  auto const actual = std::string(buffer.data(), response->bytes_received);
+  EXPECT_EQ(expected_payload, actual);
   auto const& headers = response->response.headers;
   EXPECT_FALSE(headers.find("x-goog-hash") == headers.end());
   auto const values = [&headers] {
