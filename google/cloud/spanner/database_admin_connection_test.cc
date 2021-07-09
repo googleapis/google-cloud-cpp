@@ -417,8 +417,7 @@ TEST(DatabaseAdminConnectionTest, UpdateDatabaseGetOperationError) {
 
 /// @test Verify that we can list databases in multiple pages.
 TEST(DatabaseAdminConnectionTest, ListDatabases) {
-  gcsa::Database expected_databases[5];
-  ASSERT_TRUE(TextFormat::ParseFromString(
+  constexpr char const* kDatabaseText[5] = {
       R"pb(
         name: "projects/project/instances/instance/databases/db-1"
         state: READY
@@ -439,8 +438,6 @@ TEST(DatabaseAdminConnectionTest, ListDatabases) {
         earliest_version_time { seconds: 1625696199 nanos: 111111111 }
         default_leader: "us-east1"
       )pb",
-      &expected_databases[0]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         name: "projects/project/instances/instance/databases/db-2"
         state: READY
@@ -461,8 +458,6 @@ TEST(DatabaseAdminConnectionTest, ListDatabases) {
         earliest_version_time { seconds: 1625696199 nanos: 222222222 }
         default_leader: "us-east2"
       )pb",
-      &expected_databases[1]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         name: "projects/project/instances/instance/databases/db-3"
         state: READY
@@ -483,8 +478,6 @@ TEST(DatabaseAdminConnectionTest, ListDatabases) {
         earliest_version_time { seconds: 1625696199 nanos: 333333333 }
         default_leader: "us-east3"
       )pb",
-      &expected_databases[2]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         name: "projects/project/instances/instance/databases/db-4"
         state: READY
@@ -505,8 +498,6 @@ TEST(DatabaseAdminConnectionTest, ListDatabases) {
         earliest_version_time { seconds: 1625696199 nanos: 444444444 }
         default_leader: "us-east4"
       )pb",
-      &expected_databases[3]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         name: "projects/project/instances/instance/databases/db-5"
         state: READY
@@ -527,7 +518,18 @@ TEST(DatabaseAdminConnectionTest, ListDatabases) {
         earliest_version_time { seconds: 1625696199 nanos: 555555555 }
         default_leader: "us-east5"
       )pb",
-      &expected_databases[4]));
+  };
+  gcsa::Database expected_databases[5];
+  ASSERT_TRUE(
+      TextFormat::ParseFromString(kDatabaseText[0], &expected_databases[0]));
+  ASSERT_TRUE(
+      TextFormat::ParseFromString(kDatabaseText[1], &expected_databases[1]));
+  ASSERT_TRUE(
+      TextFormat::ParseFromString(kDatabaseText[2], &expected_databases[2]));
+  ASSERT_TRUE(
+      TextFormat::ParseFromString(kDatabaseText[3], &expected_databases[3]));
+  ASSERT_TRUE(
+      TextFormat::ParseFromString(kDatabaseText[4], &expected_databases[4]));
 
   Instance in("project", "instance");
   std::string const expected_parent = in.FullName();

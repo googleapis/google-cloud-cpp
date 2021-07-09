@@ -363,8 +363,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfigTooManyTransients) {
 }
 
 TEST(InstanceAdminConnectionTest, ListInstanceConfigsSuccess) {
-  gcsa::InstanceConfig expected_instance_configs[3];
-  ASSERT_TRUE(TextFormat::ParseFromString(
+  constexpr const char* kInstanceConfigText[3] = {
       R"pb(
         name: "projects/test-project/instanceConfigs/test-instance-config-1"
         display_name: "test display name 1"
@@ -375,8 +374,6 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigsSuccess) {
         }
         leader_options: "location1"
       )pb",
-      &expected_instance_configs[0]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         name: "projects/test-project/instanceConfigs/test-instance-config-2"
         display_name: "test display name 2"
@@ -387,8 +384,6 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigsSuccess) {
         }
         leader_options: "location2"
       )pb",
-      &expected_instance_configs[1]));
-  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         name: "projects/test-project/instanceConfigs/test-instance-config-3"
         display_name: "test display name 3"
@@ -399,7 +394,14 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigsSuccess) {
         }
         leader_options: "location3"
       )pb",
-      &expected_instance_configs[2]));
+  };
+  gcsa::InstanceConfig expected_instance_configs[3];
+  ASSERT_TRUE(TextFormat::ParseFromString(kInstanceConfigText[0],
+                                          &expected_instance_configs[0]));
+  ASSERT_TRUE(TextFormat::ParseFromString(kInstanceConfigText[1],
+                                          &expected_instance_configs[1]));
+  ASSERT_TRUE(TextFormat::ParseFromString(kInstanceConfigText[2],
+                                          &expected_instance_configs[2]));
 
   std::string const expected_parent = "projects/test-project";
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
