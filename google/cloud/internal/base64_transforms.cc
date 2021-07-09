@@ -106,7 +106,7 @@ Status Base64DecodingError(std::string const& input,
 template <typename Sink>
 Status Base64DecodeGeneric(std::string const& input, Sink const& sink) {
   auto p = input.begin();
-  for (;std::distance(p, input.end()) >= 4; p = std::next(p, 4)) {
+  for (; std::distance(p, input.end()) >= 4; p = std::next(p, 4)) {
     if (!Base64Fill(*p, *(p + 1), *(p + 2), *(p + 3), sink)) break;
   }
   if (p != input.end()) return Base64DecodingError(input, p);
