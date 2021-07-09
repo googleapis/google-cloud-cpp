@@ -4,7 +4,7 @@
 
 This document describes how to test your own Cloud IAM application using
 the Cloud IAM C++ client library, [Google Test][googletest-link] and the
-and [Google Test Mocking Framework][googlemock-link].
+[Google Test Mocking Framework][googlemock-link].
 
 ### Mocking a Successful IAMClient::GetServiceAccount() call
 
