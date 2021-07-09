@@ -44,8 +44,8 @@ inline std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_free)> GetDigestCtx() {
 #endif
 }  // namespace
 
-std::vector<std::uint8_t> Base64Decode(std::string const& str) {
-  return google::cloud::internal::Base64DecodeToBytes(str).value();
+StatusOr<std::vector<std::uint8_t>> Base64Decode(std::string const& str) {
+  return google::cloud::internal::Base64DecodeToBytes(str);
 }
 
 std::string Base64Encode(std::string const& str) {
@@ -155,10 +155,9 @@ StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
       {signed_str.begin(), signed_str.end()});
 }
 
-std::vector<std::uint8_t> UrlsafeBase64Decode(std::string const& str) {
-  if (str.empty()) {
-    return {};
-  }
+StatusOr<std::vector<std::uint8_t>> UrlsafeBase64Decode(
+    std::string const& str) {
+  if (str.empty()) return std::vector<std::uint8_t>{};
   std::string b64str = str;
   std::replace(b64str.begin(), b64str.end(), '-', '+');
   std::replace(b64str.begin(), b64str.end(), '_', '/');

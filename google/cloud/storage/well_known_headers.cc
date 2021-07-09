@@ -36,7 +36,7 @@ EncryptionKeyData EncryptionDataFromBinaryKey(std::string const& key) {
 }
 
 EncryptionKeyData EncryptionDataFromBase64Key(std::string const& key) {
-  auto binary_key = internal::Base64Decode(key);
+  auto binary_key = internal::Base64Decode(key).value();
   return EncryptionKeyData{
       "AES256", key, internal::Base64Encode(internal::Sha256Hash(binary_key))};
 }

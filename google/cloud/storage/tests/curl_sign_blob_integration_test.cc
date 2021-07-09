@@ -55,7 +55,7 @@ TEST_F(CurlSignBlobIntegrationTest, Simple) {
   EXPECT_FALSE(response->key_id.empty());
   EXPECT_FALSE(response->signed_blob.empty());
 
-  auto decoded = Base64Decode(response->signed_blob);
+  auto decoded = Base64Decode(response->signed_blob).value();
   EXPECT_FALSE(decoded.empty());
 }
 

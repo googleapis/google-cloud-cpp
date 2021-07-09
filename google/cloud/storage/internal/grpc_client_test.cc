@@ -201,7 +201,7 @@ TEST(GrpcClientFromProto, Crc32cRoundtrip) {
   };
   for (auto const& start : values) {
     google::protobuf::UInt32Value v;
-    v.set_value(GrpcClient::Crc32cToProto(start));
+    v.set_value(GrpcClient::Crc32cToProto(start).value());
     auto end = GrpcClient::Crc32cFromProto(v);
     EXPECT_EQ(start, end) << " value=" << v.value();
   }
@@ -222,7 +222,7 @@ TEST(GrpcClientFromProto, MD5Roundtrip) {
   };
   for (auto const& test : cases) {
     EXPECT_EQ(GrpcClient::MD5FromProto(test.proto), test.rest);
-    EXPECT_EQ(GrpcClient::MD5ToProto(test.rest), test.proto);
+    EXPECT_EQ(GrpcClient::MD5ToProto(test.rest).value(), test.proto);
   }
 }
 

@@ -320,9 +320,9 @@ class GrpcClient : public RawClient,
       ReadObjectRangeRequest const& request);
 
   static std::string Crc32cFromProto(google::protobuf::UInt32Value const&);
-  static std::uint32_t Crc32cToProto(std::string const&);
+  static StatusOr<std::uint32_t> Crc32cToProto(std::string const&);
   static std::string MD5FromProto(std::string const&);
-  static std::string MD5ToProto(std::string const&);
+  static StatusOr<std::string> MD5ToProto(std::string const&);
   static std::string ComputeMD5Hash(std::string const& payload);
 
  protected:

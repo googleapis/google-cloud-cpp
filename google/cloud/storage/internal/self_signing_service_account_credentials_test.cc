@@ -47,7 +47,7 @@ TEST(SelfSigningServiceAccountCredentials, CreateBearerToken) {
   std::vector<std::string> decoded(components.size());
   std::transform(components.begin(), components.end(), decoded.begin(),
                  [](std::string const& e) {
-                   auto v = UrlsafeBase64Decode(e);
+                   auto v = UrlsafeBase64Decode(e).value();
                    return std::string{v.begin(), v.end()};
                  });
   ASSERT_THAT(3, decoded.size());

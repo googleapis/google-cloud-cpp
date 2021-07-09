@@ -380,9 +380,10 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
       std::string const& encoded_header = tokens[0];
       std::string const& encoded_payload = tokens[1];
 
-      auto header_bytes = internal::UrlsafeBase64Decode(encoded_header);
+      auto header_bytes = internal::UrlsafeBase64Decode(encoded_header).value();
       std::string header_str{header_bytes.begin(), header_bytes.end()};
-      auto payload_bytes = internal::UrlsafeBase64Decode(encoded_payload);
+      auto payload_bytes =
+          internal::UrlsafeBase64Decode(encoded_payload).value();
       std::string payload_str{payload_bytes.begin(), payload_bytes.end()};
 
       auto header = nlohmann::json::parse(header_str);
