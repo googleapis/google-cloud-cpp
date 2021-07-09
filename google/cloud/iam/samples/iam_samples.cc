@@ -27,6 +27,35 @@
 #include <utility>
 
 namespace {
+
+void ExampleStatusOr(std::vector<std::string> const& argv) {
+  //! [example-status-or]
+  namespace iam = ::google::cloud::iam;
+  [](std::string const& project_id) {
+    iam::IAMClient client(iam::MakeIAMConnection());
+    int count = 0;
+    // The actual type of `service_account` is
+    // google::cloud::StatusOr<google::iam::admin::v1::ServiceAccount>, but
+    // we expect it'll most often be declared with auto like this.
+    for (auto const& sa :
+         client.ListServiceAccounts("projects/" + project_id)) {
+      // Use `service_account` like a smart pointer; check it before
+      // de-referencing
+      if (!sa) {
+        // `service_account` doesn't contain a value, so `.status()` will
+        // contain error info
+        std::cerr << sa.status() << "\n";
+        break;
+      }
+      std::cout << "ServiceAccount successfully retrieved: " << sa->name()
+                << "\n";
+      ++count;
+    }
+  }
+  //! [example-status-or]
+  (argv.at(0));
+}
+
 void ListServiceAccounts(std::vector<std::string> const& argv) {
   if (argv.size() != 1 || argv.at(0) == "--help") {
     throw google::cloud::testing_util::Usage(
@@ -37,12 +66,11 @@ void ListServiceAccounts(std::vector<std::string> const& argv) {
   [](std::string const& project_id) {
     iam::IAMClient client(iam::MakeIAMConnection());
     int count = 0;
-    for (auto const& service_account :
-         client.ListServiceAccounts(absl::StrCat("projects/", project_id))) {
-      if (!service_account)
-        throw std::runtime_error(service_account.status().message());
-      std::cout << "ServiceAccount successfully retrieved: "
-                << service_account->name() << "\n";
+    for (auto const& sa :
+         client.ListServiceAccounts("projects/" + project_id)) {
+      if (!sa) throw std::runtime_error(sa.status().message());
+      std::cout << "ServiceAccount successfully retrieved: " << sa->name()
+                << "\n";
       ++count;
     }
     if (count == 0) {
@@ -86,8 +114,8 @@ void CreateServiceAccount(std::vector<std::string> const& argv) {
     google::iam::admin::v1::ServiceAccount service_account;
     service_account.set_display_name(display_name);
     service_account.set_description(description);
-    auto response = client.CreateServiceAccount(
-        absl::StrCat("projects/", project_id), account_id, service_account);
+    auto response = client.CreateServiceAccount("projects/" + project_id,
+                                                account_id, service_account);
     if (!response) throw std::runtime_error(response.status().message());
     std::cout << "ServiceAccount successfully created: "
               << response->DebugString() << "\n";
@@ -291,7 +319,7 @@ void CreateRole(std::vector<std::string> const& argv) {
      std::vector<std::string> const& included_permissions) {
     iam::IAMClient client(iam::MakeIAMConnection());
     google::iam::admin::v1::CreateRoleRequest request;
-    request.set_parent(absl::StrCat("projects/", parent));
+    request.set_parent("projects/" + parent);
     request.set_role_id(role_id);
     google::iam::admin::v1::Role role;
     role.set_stage(google::iam::admin::v1::Role::GA);
@@ -533,6 +561,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const service_account_name =
       absl::StrCat("projects/-/serviceAccounts/", service_account_id);
 
+  ExampleStatusOr({project_id});
   ListServiceAccounts({project_id});
   GetServiceAccount({service_account_name});
   ListServiceAccountKeys(
