@@ -19,8 +19,10 @@
 #include "google/cloud/version.h"
 #include <array>
 #include <cstddef>
+#include <cstdint>
 #include <iterator>
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -94,27 +96,10 @@ struct Base64Decoder {
   std::string const& rep_;  // encoded
 };
 
-Status Base64DecodingError(std::string const& base64,
-                           std::string::const_iterator p);
-
-std::pair<std::array<unsigned char, 3>, std::size_t> Base64Fill(
-    unsigned char p0, unsigned char p1, unsigned char p2, unsigned char p3);
-
-template <typename Sink>
-Status FromBase64(std::string const& base64, Sink const& sink) {
-  auto p = base64.begin();
-  for (; std::distance(p, base64.end()) >= 4; p = std::next(p, 4)) {
-    auto r = Base64Fill(*p, *(p + 1), *(p + 2), *(p + 3));
-    if (r.second == 0) return Base64DecodingError(base64, p);
-    for (auto* o = r.first.begin(); o != r.first.begin() + r.second; ++o) {
-      sink(*o);
-    }
-  }
-  if (p != base64.end()) return Base64DecodingError(base64, p);
-  return Status{};
-}
-
 Status ValidateBase64String(std::string const& input);
+
+StatusOr<std::vector<std::uint8_t>> Base64DecodeToBytes(
+    std::string const& input);
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS

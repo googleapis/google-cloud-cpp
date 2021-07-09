@@ -45,11 +45,7 @@ inline std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_free)> GetDigestCtx() {
 }  // namespace
 
 std::vector<std::uint8_t> Base64Decode(std::string const& str) {
-  std::vector<std::uint8_t> result;
-  auto status = google::cloud::internal::FromBase64(
-      str, [&result](unsigned char c) { result.push_back(c); });
-  if (!status.ok()) google::cloud::internal::ThrowStatus(std::move(status));
-  return result;
+  return google::cloud::internal::Base64DecodeToBytes(str).value();
 }
 
 std::string Base64Encode(std::string const& str) {

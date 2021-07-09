@@ -58,6 +58,60 @@ constexpr std::array<unsigned char, 256> kCharToIndexExcessOne = {{
     38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
 }};
 
+/**
+ * Decode up to 3 octets from 4 base64-encoded characters.
+ *
+ * The output octets characters are sent to @p sink, which must meet the
+ * `std::is_invocable<Sink const&, unsigned char>` requirements.
+ *
+ * The function is inlined to avoid function call overhead in the case where @p
+ * sink is a no-op.
+ */
+template <typename Sink>
+inline bool Base64Fill(unsigned char p0, unsigned char p1, unsigned char p2,
+                       unsigned char p3, Sink const& sink) {
+  auto i0 = kCharToIndexExcessOne[p0];
+  auto i1 = kCharToIndexExcessOne[p1];
+  if (--i0 >= 64 || --i1 >= 64) return false;
+  if (p3 == kPadding) {
+    if (p2 == kPadding) {
+      if ((i1 & 0xf) != 0) return false;
+      sink(static_cast<unsigned char>(i0 << 2 | i1 >> 4));
+      return true;
+    }
+    auto i2 = kCharToIndexExcessOne[p2];
+    if (--i2 >= 64 || (i2 & 0x3) != 0) return false;
+    sink(static_cast<unsigned char>(i0 << 2 | i1 >> 4));
+    sink(static_cast<unsigned char>(i1 << 4 | i2 >> 2));
+    return true;
+  }
+  auto i2 = kCharToIndexExcessOne[p2];
+  auto i3 = kCharToIndexExcessOne[p3];
+  if (--i2 >= 64 || --i3 >= 64) return false;
+  sink(static_cast<unsigned char>(i0 << 2 | i1 >> 4));
+  sink(static_cast<unsigned char>(i1 << 4 | i2 >> 2));
+  sink(static_cast<unsigned char>(i2 << 6 | i3));
+  return true;
+}
+
+template <typename Sink>
+Status Base64DecodeGeneric(std::string const& base64, Sink const& sink) {
+  auto p = base64.begin();
+  while (std::distance(p, base64.end()) >= 4) {
+    auto const p0 = *p++;
+    auto const p1 = *p++;
+    auto const p2 = *p++;
+    auto const p3 = *p++;
+    if (!Base64Fill(p0, p1, p2, p3, sink)) break;
+  }
+  if (p == base64.end()) return Status{};
+  auto const offset = std::distance(base64.begin(), p);
+  auto const bad_chunk = base64.substr(offset, 4);
+  return Status(StatusCode::kInvalidArgument,
+                absl::StrCat("Invalid base64 chunk \"", bad_chunk,
+                             "\" at offset ", offset));
+}
+
 }  // namespace
 
 void Base64Encoder::Flush() {
@@ -118,44 +172,17 @@ void Base64Decoder::Iterator::Fill() {
   }
 }
 
-Status Base64DecodingError(std::string const& base64,
-                           std::string::const_iterator p) {
-  auto const offset = std::distance(base64.begin(), p);
-  auto const bad_chunk = base64.substr(offset, 4);
-  return Status(StatusCode::kInvalidArgument,
-                absl::StrCat("Invalid base64 chunk \"", bad_chunk,
-                             "\" at offset ", offset));
-}
-
-std::pair<std::array<unsigned char, 3>, std::size_t> Base64Fill(
-    unsigned char p0, unsigned char p1, unsigned char p2, unsigned char p3) {
-  std::array<unsigned char, 3> buf;
-  auto i0 = kCharToIndexExcessOne[p0];
-  auto i1 = kCharToIndexExcessOne[p1];
-  if (--i0 >= 64 || --i1 >= 64) return {std::move(buf), 0};
-  if (p3 == kPadding) {
-    if (p2 == kPadding) {
-      if ((i1 & 0xf) != 0) return {std::move(buf), 0};
-      buf[0] = static_cast<unsigned char>(i0 << 2 | i1 >> 4);
-      return {buf, 1};
-    }
-    auto i2 = kCharToIndexExcessOne[p2];
-    if (--i2 >= 64 || (i2 & 0x3) != 0) return {std::move(buf), 0};
-    buf[1] = static_cast<unsigned char>(i1 << 4 | i2 >> 2);
-    buf[0] = static_cast<unsigned char>(i0 << 2 | i1 >> 4);
-    return {std::move(buf), 2};
-  }
-  auto i2 = kCharToIndexExcessOne[p2];
-  auto i3 = kCharToIndexExcessOne[p3];
-  if (--i2 >= 64 || --i3 >= 64) return {std::move(buf), 0};
-  buf[2] = static_cast<unsigned char>(i2 << 6 | i3);
-  buf[1] = static_cast<unsigned char>(i1 << 4 | i2 >> 2);
-  buf[0] = static_cast<unsigned char>(i0 << 2 | i1 >> 4);
-  return {std::move(buf), 3};
-}
-
 Status ValidateBase64String(std::string const& input) {
-  return FromBase64(input, [](unsigned char) {});
+  return Base64DecodeGeneric(input, [](unsigned char) {});
+}
+
+StatusOr<std::vector<std::uint8_t>> Base64DecodeToBytes(
+    std::string const& input) {
+  std::vector<std::uint8_t> result;
+  auto status = Base64DecodeGeneric(
+      input, [&result](unsigned char c) { result.push_back(c); });
+  if (!status.ok()) return status;
+  return result;
 }
 
 }  // namespace internal
