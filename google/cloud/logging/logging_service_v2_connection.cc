@@ -243,7 +243,7 @@ std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
     Options options) {
   options =
       logging_internal::LoggingServiceV2DefaultOptions(std::move(options));
-  auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = logging_internal::CreateDefaultLoggingServiceV2Stub(
       background->cq(), options);
   return std::make_shared<LoggingServiceV2ConnectionImpl>(
@@ -265,7 +265,7 @@ MakeLoggingServiceV2Connection(std::shared_ptr<LoggingServiceV2Stub> stub,
                                Options options) {
   options = LoggingServiceV2DefaultOptions(std::move(options));
   return std::make_shared<logging::LoggingServiceV2ConnectionImpl>(
-      options.get<GrpcBackgroundThreadsFactoryOption>()(), std::move(stub),
+      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }
 

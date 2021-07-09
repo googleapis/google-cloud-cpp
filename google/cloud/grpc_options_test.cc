@@ -62,11 +62,35 @@ TEST(GrpcOptionList, GrpcBackgroundThreadsFactoryOption) {
 }
 
 TEST(GrpcOptionList, DefaultBackgroundThreadsFactory) {
-  auto f = internal::DefaultBackgroundThreadsFactory();
-  auto* tp =
-      dynamic_cast<internal::AutomaticallyCreatedBackgroundThreads*>(f.get());
+  auto threads = internal::MakeBackgroundThreadsFactory()();
+  auto* tp = dynamic_cast<internal::AutomaticallyCreatedBackgroundThreads*>(
+      threads.get());
   ASSERT_NE(nullptr, tp);
-  EXPECT_EQ(1, tp->pool_size());
+  EXPECT_EQ(1U, tp->pool_size());
+}
+
+TEST(GrpcOptionList, GrpcBackgroundThreadPoolSizeOption) {
+  auto threads = internal::MakeBackgroundThreadsFactory(
+      Options{}.set<GrpcBackgroundThreadPoolSizeOption>(4U))();
+  auto* tp = dynamic_cast<internal::AutomaticallyCreatedBackgroundThreads*>(
+      threads.get());
+  ASSERT_NE(nullptr, tp);
+  EXPECT_EQ(4U, tp->pool_size());
+}
+
+// Verify that the `GrpcBackgroundThreadsFactoryOption` takes precedence over
+// the `GrpcBackgroundThreadPoolSizeOption` when both are set.
+TEST(GrpcOptionList, GrpcBackgroundThreadPoolSizeIgnored) {
+  // f() creates a thread pool of size 1
+  auto f = internal::MakeBackgroundThreadsFactory();
+  auto threads = internal::MakeBackgroundThreadsFactory(
+      Options{}
+          .set<GrpcBackgroundThreadPoolSizeOption>(4U)
+          .set<GrpcBackgroundThreadsFactoryOption>(f))();
+  auto* tp = dynamic_cast<internal::AutomaticallyCreatedBackgroundThreads*>(
+      threads.get());
+  ASSERT_NE(nullptr, tp);
+  EXPECT_EQ(1U, tp->pool_size());
 }
 
 TEST(GrpcOptionList, Expected) {

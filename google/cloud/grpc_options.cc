@@ -35,8 +35,14 @@ grpc::ChannelArguments MakeChannelArguments(Options const& opts) {
   return channel_arguments;
 }
 
-std::unique_ptr<BackgroundThreads> DefaultBackgroundThreadsFactory() {
-  return absl::make_unique<AutomaticallyCreatedBackgroundThreads>();
+BackgroundThreadsFactory MakeBackgroundThreadsFactory(Options const& opts) {
+  if (opts.has<GrpcBackgroundThreadsFactoryOption>())
+    return opts.get<GrpcBackgroundThreadsFactoryOption>();
+  auto const s = opts.get<GrpcBackgroundThreadPoolSizeOption>();
+  return [s] {
+    return absl::make_unique<
+        ::google::cloud::internal::AutomaticallyCreatedBackgroundThreads>(s);
+  };
 }
 
 }  // namespace internal

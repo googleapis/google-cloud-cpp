@@ -43,10 +43,6 @@ Options LoggingServiceV2DefaultOptions(Options options) {
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
   }
-  if (!options.has<GrpcBackgroundThreadsFactoryOption>()) {
-    options.set<GrpcBackgroundThreadsFactoryOption>(
-        internal::DefaultBackgroundThreadsFactory);
-  }
   if (!options.has<GrpcNumChannelsOption>()) {
     options.set<GrpcNumChannelsOption>(4);
   }

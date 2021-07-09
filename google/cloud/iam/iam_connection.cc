@@ -659,7 +659,7 @@ class IAMConnectionImpl : public IAMConnection {
 
 std::shared_ptr<IAMConnection> MakeIAMConnection(Options options) {
   options = iam_internal::IAMDefaultOptions(std::move(options));
-  auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = iam_internal::CreateDefaultIAMStub(background->cq(), options);
   return std::make_shared<IAMConnectionImpl>(std::move(background),
                                              std::move(stub), options);
@@ -679,7 +679,7 @@ std::shared_ptr<iam::IAMConnection> MakeIAMConnection(
     std::shared_ptr<IAMStub> stub, Options options) {
   options = IAMDefaultOptions(std::move(options));
   return std::make_shared<iam::IAMConnectionImpl>(
-      options.get<GrpcBackgroundThreadsFactoryOption>()(), std::move(stub),
+      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }
 
