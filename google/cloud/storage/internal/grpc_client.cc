@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_client.h"
+#include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
 #include "google/cloud/storage/internal/grpc_resumable_upload_session.h"
 #include "google/cloud/storage/internal/openssl_util.h"
@@ -56,14 +57,6 @@ auto constexpr kDirectPathConfig = R"json({
     }]
   })json";
 
-bool DirectPathEnabled() {
-  auto const direct_path_settings =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH")
-          .value_or("");
-  return absl::c_any_of(absl::StrSplit(direct_path_settings, ','),
-                        [](absl::string_view v) { return v == "storage"; });
-}
-
 int DefaultGrpcNumChannels() {
   auto constexpr kMinimumChannels = 4;
   auto const count = std::thread::hardware_concurrency();
@@ -94,9 +87,34 @@ Options DefaultOptionsGrpc(Options options) {
 std::shared_ptr<grpc::Channel> CreateGrpcChannel(
     GrpcAuthenticationStrategy& auth, Options const& options, int channel_id) {
   grpc::ChannelArguments args;
-  args.SetInt("grpc.channel_id", channel_id);
-  if (DirectPathEnabled()) {
+  auto const& config = options.get<storage_experimental::GrpcPluginOption>();
+  if (config.empty() || config == "default" || config == "none") {
+    // Just configure for the regular path.
+    args.SetInt("grpc.channel_id", channel_id);
+    return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
+  }
+  std::set<absl::string_view> settings = absl::StrSplit(config, ',');
+  auto const dp = settings.count("dp") != 0 || settings.count("alts") != 0;
+  if (dp || settings.count("pick-first-lb") != 0) {
     args.SetServiceConfigJSON(kDirectPathConfig);
+  }
+  if (dp || settings.count("enable-dns-srv-queries") != 0) {
+    args.SetInt("grpc.dns_enable_srv_queries", 1);
+  }
+  if (settings.count("disable-dns-srv-queries") != 0) {
+    args.SetInt("grpc.dns_enable_srv_queries", 0);
+  }
+  if (settings.count("exclusive") != 0) {
+    args.SetInt("grpc.channel_id", channel_id);
+  }
+  if (settings.count("alts") != 0) {
+    grpc::experimental::AltsCredentialsOptions alts_opts;
+    return grpc::CreateCustomChannel(
+        options.get<EndpointOption>(),
+        grpc::CompositeChannelCredentials(
+            grpc::experimental::AltsCredentials(alts_opts),
+            grpc::GoogleComputeEngineCredentials()),
+        std::move(args));
   }
   return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
 }

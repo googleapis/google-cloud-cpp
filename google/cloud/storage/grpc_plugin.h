@@ -31,6 +31,30 @@ namespace storage_experimental {
 inline namespace STORAGE_CLIENT_NS {
 
 /**
+ * Low-level experimental settings for the GCS+gRPC plugin.
+ *
+ * Possible values for the string include:
+ *
+ * - "default" or "none": do not use any special settings with gRPC
+ * - "dp": equivalent to setting both "pick-first-lb" and
+ *   "enable-dns-srv-queries"
+ * - "alts": same settings as "dp", but use the experimental ALTS credentials
+ * - "enable-dns-srv-queries": set the `grpc.dns_enable_srv_queries` channel
+ *   argument to `1`, see [dns-query-arg].
+ * - "disable-dns-srv-queries": set the `grpc.dns_enable_srv_queries` channel
+ *   argument to `0`, see [dns-query-arg].
+ * - "exclusive": use a exclusive channel for each stub.
+ *
+ * Unknown values are ignored.
+ *
+ * [dns-query-arg]:
+ * https://grpc.github.io/grpc/core/group__grpc__arg__keys.html#ga247ed6771077938be12ab24790a95732
+ */
+struct GrpcPluginOption {
+  using Type = std::string;
+};
+
+/**
  * Create a `google::cloud::storage::Client` object configured to use gRPC.
  *
  * @note the Credentials parameter in the configuration is ignored. The gRPC

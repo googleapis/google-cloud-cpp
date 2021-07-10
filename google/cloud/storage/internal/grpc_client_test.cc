@@ -31,22 +31,6 @@ namespace {
 
 namespace storage_proto = ::google::storage::v1;
 using ::google::cloud::testing_util::IsProtoEqual;
-using ::google::cloud::testing_util::ScopedEnvironment;
-
-TEST(GrpcClientDirectPath, NotSet) {
-  ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", {});
-  EXPECT_FALSE(DirectPathEnabled());
-}
-
-TEST(GrpcClientDirectPath, Enabled) {
-  ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", "foo,storage,bar");
-  EXPECT_TRUE(DirectPathEnabled());
-}
-
-TEST(GrpcClientDirectPath, NotEnabled) {
-  ScopedEnvironment env("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", "not-quite-storage");
-  EXPECT_FALSE(DirectPathEnabled());
-}
 
 TEST(GrpcClientFromProto, ObjectSimple) {
   storage_proto::Object input;

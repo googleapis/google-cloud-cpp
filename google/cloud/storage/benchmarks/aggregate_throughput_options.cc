@@ -68,6 +68,11 @@ ParseAggregateThroughputOptions(std::vector<std::string> const& argv,
        [&options](std::string const& val) {
          options.grpc_channel_count = std::stoi(val);
        }},
+      {"--grpc-plugin-config",
+       "low-level experimental settings for the GCS+gRPC plugin",
+       [&options](std::string const& val) {
+         options.grpc_plugin_config = val;
+       }},
   };
   auto usage = BuildUsage(desc, argv[0]);
 
