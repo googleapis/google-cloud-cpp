@@ -274,10 +274,13 @@ StatusOr<BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
 
 StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
+  auto r = ToProto(request);
+  if (!r) return std::move(r).status();
+  auto proto_request = *r;
+
   auto stream =
       stub_->InsertObjectMedia(absl::make_unique<grpc::ClientContext>());
 
-  auto proto_request = ToProto(request);
   auto const& contents = request.contents();
   auto const contents_size = static_cast<std::int64_t>(contents.size());
   std::int64_t const maximum_buffer_size =
@@ -1728,7 +1731,7 @@ google::storage::v1::DeleteNotificationRequest GrpcClient::ToProto(
   return r;
 }
 
-google::storage::v1::InsertObjectRequest GrpcClient::ToProto(
+StatusOr<google::storage::v1::InsertObjectRequest> GrpcClient::ToProto(
     InsertObjectMediaRequest const& request) {
   google::storage::v1::InsertObjectRequest r;
   auto& object_spec = *r.mutable_insert_object_spec();
@@ -1747,10 +1750,31 @@ google::storage::v1::InsertObjectRequest GrpcClient::ToProto(
   r.set_write_offset(0);
 
   auto& checksums = *r.mutable_object_checksums();
-  // TODO(#4156) - use the crc32c value in the request options.
-  checksums.mutable_crc32c()->set_value(crc32c::Crc32c(request.contents()));
-  // TODO(#4157) - use the MD5 hash value in the request options.
-  checksums.set_md5_hash(ComputeMD5Hash(request.contents()));
+  if (request.HasOption<Crc32cChecksumValue>()) {
+    // The client library accepts CRC32C checksums in the format required by the
+    // REST APIs (base64-encoded big-endian, 32-bit integers). We need to
+    // convert this to the format expected by proto, which is just a 32-bit
+    // integer. But the value received by the application might be incorrect, so
+    // we need to validated it.
+    auto as_proto =
+        Crc32cToProto(request.GetOption<Crc32cChecksumValue>().value());
+    if (!as_proto.ok()) return std::move(as_proto).status();
+    checksums.mutable_crc32c()->set_value(*as_proto);
+  } else if (request.GetOption<DisableCrc32cChecksum>().value_or(false)) {
+    // Nothing to do, the option is disabled (mostly useful in tests).
+  } else {
+    checksums.mutable_crc32c()->set_value(crc32c::Crc32c(request.contents()));
+  }
+
+  if (request.HasOption<MD5HashValue>()) {
+    auto as_proto = MD5ToProto(request.GetOption<MD5HashValue>().value());
+    if (!as_proto.ok()) return std::move(as_proto).status();
+    checksums.set_md5_hash(*std::move(as_proto));
+  } else if (request.GetOption<DisableMD5Hash>().value_or(false)) {
+    // Nothing to do, the option is disabled.
+  } else {
+    checksums.set_md5_hash(ComputeMD5Hash(request.contents()));
+  }
 
   return r;
 }

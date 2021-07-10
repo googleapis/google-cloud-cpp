@@ -305,7 +305,7 @@ class GrpcClient : public RawClient,
   static google::storage::v1::DeleteNotificationRequest ToProto(
       DeleteNotificationRequest const& request);
 
-  static google::storage::v1::InsertObjectRequest ToProto(
+  static StatusOr<google::storage::v1::InsertObjectRequest> ToProto(
       InsertObjectMediaRequest const& request);
   static google::storage::v1::DeleteObjectRequest ToProto(
       DeleteObjectRequest const& request);

@@ -32,6 +32,34 @@ namespace storage_proto = ::google::storage::v1;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 
+// Use gsutil to obtain the CRC32C checksum (in base64):
+//    TEXT="The quick brown fox jumps over the lazy dog"
+//    /bin/echo -n $TEXT >/tmp/fox.txt
+//    gsutil hash /tmp/fox.txt
+// Hashes [base64] for /tmp/fox.txt:
+//	Hash (crc32c):		ImIEBA==
+//	Hash (md5):		nhB9nTcrtoJr2B01QqQZ1g==
+//
+// Then convert the base64 values to hex
+//
+//     echo "ImIEBA==" | openssl base64 -d | od -t x1
+//     echo "nhB9nTcrtoJr2B01QqQZ1g==" | openssl base64 -d | od -t x1
+//
+// Which yields (in proto format):
+//
+//     CRC32C: 0x22620404
+//     MD5   : 9e107d9d372bb6826bd81d3542a419d6
+auto constexpr kText = "The quick brown fox jumps over the lazy dog";
+
+// Doing something similar for an alternative text yields:
+// Hashes [base64] for /tmp/alt.txt:
+//	Hash (crc32c):		StZ/gA==
+//	Hash (md5):		StEvo2V/qoDCuaktZSw3IQ==
+// In proto format
+//     CRC32C: 0x4ad67f80
+//     MD5   : 4ad12fa3657faa80c2b9a92d652c3721
+auto constexpr kAlt = "How vexingly quick daft zebras jump!";
+
 TEST(GrpcClientObjectRequest, InsertObjectMediaRequestSimple) {
   storage_proto::InsertObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
@@ -39,10 +67,11 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestSimple) {
         insert_object_spec: {
           resource: { bucket: "test-bucket-name" name: "test-object-name" }
         }
-        # See hash_validator_test.cc for how these magic numbers are obtained.
         object_checksums: {
-          crc32c { value: 576848900 }
-          md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
+          # See top-of-file comments for details on the magic numbers
+          crc32c { value: 0x22620404 }
+          # MD5 hashes are disabled by default
+          # md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
         }
       )pb",
       &expected));
@@ -50,8 +79,112 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestSimple) {
   InsertObjectMediaRequest request(
       "test-bucket-name", "test-object-name",
       "The quick brown fox jumps over the lazy dog");
-  auto actual = GrpcClient::ToProto(request);
+  auto actual = GrpcClient::ToProto(request).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientObjectRequest, InsertObjectMediaRequestHashOptions) {
+  // See top-of-file comments for details on the magic numbers
+  struct Test {
+    std::function<void(InsertObjectMediaRequest&)> apply_options;
+    std::string expected_checksums;
+  } cases[] = {
+      // These tests provide the "wrong" hashes, this is what would happen if
+      // one was (for example) reading a GCS file, obtained the expected hashes
+      // from GCS, and then uploaded to another GCS destination *but*
+      // the data was somehow corrupted locally (say a bad disk), we don't want
+      // to recompute the hashes in the upload.
+      {
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
+            r.set_option(DisableCrc32cChecksum(true));
+          },
+          R"pb(
+            md5_hash: "9e107d9d372bb6826bd81d3542a419d6")pb",
+      },
+      {
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
+            r.set_option(DisableCrc32cChecksum(false));
+          },
+          R"pb(md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
+               crc32c { value: 0x4ad67f80 })pb",
+      },
+      {
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
+            r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
+          },
+          R"pb(
+            md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
+            crc32c { value: 0x22620404 })pb",
+      },
+
+      {
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(DisableMD5Hash(false));
+            r.set_option(DisableCrc32cChecksum(true));
+          },
+          R"pb(
+            md5_hash: "4ad12fa3657faa80c2b9a92d652c3721")pb",
+      },
+      {
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(DisableMD5Hash(false));
+            r.set_option(DisableCrc32cChecksum(false));
+          },
+          R"pb(
+            md5_hash: "4ad12fa3657faa80c2b9a92d652c3721"
+            crc32c { value: 0x4ad67f80 })pb",
+      },
+      {
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(DisableMD5Hash(false));
+            r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
+          },
+          R"pb(
+            md5_hash: "4ad12fa3657faa80c2b9a92d652c3721"
+            crc32c { value: 0x22620404 })pb",
+      },
+
+      {
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(DisableMD5Hash(true));
+            r.set_option(DisableCrc32cChecksum(true));
+          },
+          R"pb()pb",
+      },
+      {
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(DisableMD5Hash(true));
+            r.set_option(DisableCrc32cChecksum(false));
+          },
+          R"pb(
+            crc32c { value: 0x4ad67f80 })pb",
+      },
+      {
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(DisableMD5Hash(true));
+            r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
+          },
+          R"pb(
+            crc32c { value: 0x22620404 })pb",
+      },
+  };
+
+  for (auto const& test : cases) {
+    SCOPED_TRACE("Expected outcome " + test.expected_checksums);
+    storage_proto::ObjectChecksums expected;
+    ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+        test.expected_checksums, &expected));
+
+    InsertObjectMediaRequest request("test-bucket-name", "test-object-name",
+                                     kAlt);
+    test.apply_options(request);
+    auto actual = GrpcClient::ToProto(request);
+    ASSERT_STATUS_OK(actual) << "expected=" << test.expected_checksums;
+    EXPECT_THAT(actual->object_checksums(), IsProtoEqual(expected));
+  }
 }
 
 TEST(GrpcClientObjectRequest, InsertObjectMediaRequestAllOptions) {
@@ -92,15 +225,7 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestAllOptions) {
           quota_user: "test-quota-user"
         }
         object_checksums: {
-          # Use gsutil to obtain the CRC32C checksum (in base64):
-          #    TEXT="The quick brown fox jumps over the lazy dog"
-          #    /bin/echo -n $TEXT >/tmp/fox.txt
-          #    gsutil hash /tmp/fox.txt
-          #
-          # Then convert the base64 values to hex
-          #
-          # echo "ImIEBA==" | openssl base64 -d | od -t x1
-          #
+          # See top-of-file comments for details on the magic numbers
           crc32c { value: 0x22620404 }
           md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
         }
@@ -122,7 +247,7 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestAllOptions) {
       UserIp("test-user-ip"), EncryptionKey::FromBinaryKey("01234567"),
       KmsKeyName("test-kms-key-name"));
 
-  auto actual = GrpcClient::ToProto(request);
+  auto actual = GrpcClient::ToProto(request).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -148,11 +273,8 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestWithObjectMetadata) {
             temporary_hold: true
           }
         }
-        # See hash_validator_test.cc for how these magic numbers are obtained.
-        object_checksums: {
-          crc32c { value: 576848900 }
-          md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
-        }
+        # See top-of-file comments for details on the magic numbers
+        object_checksums: { crc32c { value: 0x22620404 } }
       )pb",
       &expected));
 
@@ -178,7 +300,7 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestWithObjectMetadata) {
           .set_storage_class("test-storage-class")
           .set_temporary_hold(true)));
 
-  auto actual = GrpcClient::ToProto(request);
+  auto actual = GrpcClient::ToProto(request).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
