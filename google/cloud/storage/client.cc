@@ -356,11 +356,10 @@ StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
   internal::SignBlobRequest sign_request(
       signing_account_email, internal::Base64Encode(string_to_sign), {});
   auto response = raw_client_->SignBlob(sign_request);
-  if (!response) {
-    return response.status();
-  }
-  return SignBlobResponseRaw{response->key_id,
-                             internal::Base64Decode(response->signed_blob)};
+  if (!response) return response.status();
+  auto decoded = internal::Base64Decode(response->signed_blob);
+  if (!decoded) return std::move(decoded).status();
+  return SignBlobResponseRaw{response->key_id, *std::move(decoded)};
 }
 
 StatusOr<std::string> Client::SignUrlV2(

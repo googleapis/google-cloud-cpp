@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -22,6 +23,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
 
@@ -43,10 +45,14 @@ TEST(OpensslUtilTest, Base64Decode) {
       0x4c, 0x6f, 0x72, 0x67, 0xe5, 0xb4, 0x81, 0xa5,
       0xc1, 0xcf, 0xf7, 0x56, 0xd5, 0xc3, 0x00, 0x0a,
   };
-  EXPECT_THAT(Base64Decode("TG9yZ+W0gaXBz/dW1cMACg=="),
+  EXPECT_THAT(Base64Decode("TG9yZ+W0gaXBz/dW1cMACg==").value(),
               ElementsAreArray(expected));
-  EXPECT_THAT(UrlsafeBase64Decode("TG9yZ-W0gaXBz_dW1cMACg"),
+  EXPECT_THAT(UrlsafeBase64Decode("TG9yZ-W0gaXBz_dW1cMACg").value(),
               ElementsAreArray(expected));
+}
+
+TEST(OpensslUtilTest, Base64Failure) {
+  EXPECT_THAT(Base64Decode("xx"), StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(OpensslUtilTest, Base64DecodePadding) {
@@ -62,10 +68,16 @@ TEST(OpensslUtilTest, Base64DecodePadding) {
   // QUJDRAo=
   // cSpell:enable
 
-  EXPECT_THAT(UrlsafeBase64Decode("QQ=="), ElementsAre('A'));
-  EXPECT_THAT(UrlsafeBase64Decode("QUI="), ElementsAre('A', 'B'));
-  EXPECT_THAT(UrlsafeBase64Decode("QUJD"), ElementsAre('A', 'B', 'C'));
-  EXPECT_THAT(UrlsafeBase64Decode("QUJDRA=="), ElementsAre('A', 'B', 'C', 'D'));
+  EXPECT_THAT(Base64Decode("QQ==").value(), ElementsAre('A'));
+  EXPECT_THAT(UrlsafeBase64Decode("QQ").value(), ElementsAre('A'));
+  EXPECT_THAT(Base64Decode("QUI=").value(), ElementsAre('A', 'B'));
+  EXPECT_THAT(UrlsafeBase64Decode("QUI").value(), ElementsAre('A', 'B'));
+  EXPECT_THAT(Base64Decode("QUJD").value(), ElementsAre('A', 'B', 'C'));
+  EXPECT_THAT(UrlsafeBase64Decode("QUJD").value(), ElementsAre('A', 'B', 'C'));
+  EXPECT_THAT(Base64Decode("QUJDRA==").value(),
+              ElementsAre('A', 'B', 'C', 'D'));
+  EXPECT_THAT(UrlsafeBase64Decode("QUJDRA").value(),
+              ElementsAre('A', 'B', 'C', 'D'));
 }
 
 TEST(OpensslUtilTest, MD5HashEmpty) {

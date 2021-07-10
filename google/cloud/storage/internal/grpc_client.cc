@@ -1846,11 +1846,11 @@ std::string GrpcClient::Crc32cFromProto(
   return Base64Encode(endian_encoded);
 }
 
-std::uint32_t GrpcClient::Crc32cToProto(std::string const& v) {
+StatusOr<std::uint32_t> GrpcClient::Crc32cToProto(std::string const& v) {
   auto decoded = Base64Decode(v);
+  if (!decoded) return std::move(decoded).status();
   return google::cloud::internal::DecodeBigEndian<std::uint32_t>(
-             std::string(decoded.begin(), decoded.end()))
-      .value();
+      std::string(decoded->begin(), decoded->end()));
 }
 
 std::string GrpcClient::MD5FromProto(std::string const& v) {
@@ -1859,10 +1859,11 @@ std::string GrpcClient::MD5FromProto(std::string const& v) {
   return internal::Base64Encode(binary);
 }
 
-std::string GrpcClient::MD5ToProto(std::string const& v) {
+StatusOr<std::string> GrpcClient::MD5ToProto(std::string const& v) {
   if (v.empty()) return {};
   auto binary = internal::Base64Decode(v);
-  return internal::HexEncode(binary);
+  if (!binary) return std::move(binary).status();
+  return internal::HexEncode(*binary);
 }
 
 std::string GrpcClient::ComputeMD5Hash(const std::string& payload) {

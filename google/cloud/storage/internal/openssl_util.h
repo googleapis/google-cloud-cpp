@@ -31,7 +31,7 @@ namespace internal {
 /**
  * Decodes a Base64-encoded string.
  */
-std::vector<std::uint8_t> Base64Decode(std::string const& str);
+StatusOr<std::vector<std::uint8_t>> Base64Decode(std::string const& str);
 
 /**
  * Encodes a string using Base64.
@@ -76,7 +76,7 @@ inline std::string UrlsafeBase64Encode(Collection const& bytes) {
 /**
  * Decodes a Url-safe Base64-encoded string.
  */
-std::vector<std::uint8_t> UrlsafeBase64Decode(std::string const& str);
+StatusOr<std::vector<std::uint8_t>> UrlsafeBase64Decode(std::string const& str);
 
 /// Compute the MD5 hash of @p payload
 std::vector<std::uint8_t> MD5Hash(std::string const& payload);

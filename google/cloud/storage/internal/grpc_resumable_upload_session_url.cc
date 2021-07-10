@@ -49,8 +49,9 @@ StatusOr<ResumableUploadSessionGrpcParams> DecodeGrpcResumableUploadSessionUrl(
         "configuration");
   }
   auto const payload = upload_session_url.substr(std::strlen(kUriScheme));
-  auto const decoded_vec = UrlsafeBase64Decode(payload);
-  std::string decoded(decoded_vec.begin(), decoded_vec.end());
+  auto decoded_vec = UrlsafeBase64Decode(payload);
+  if (!decoded_vec) return std::move(decoded_vec).status();
+  std::string decoded(decoded_vec->begin(), decoded_vec->end());
 
   GrpcResumableUploadSessionUrl proto;
   if (!proto.ParseFromString(decoded)) {

@@ -53,7 +53,7 @@ constexpr char kJsonKeyfileContents[] = R"""({
  * base64.
  */
 std::string Dec64(std::string const& s) {
-  auto res = internal::Base64Decode(s);
+  auto res = internal::Base64Decode(s).value();
   return std::string(res.begin(), res.end());
 };
 
