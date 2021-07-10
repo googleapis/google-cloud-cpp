@@ -80,7 +80,7 @@ class DataClient {
   /**
    * The thread factory this client was created with.
    */
-  virtual ClientOptions::BackgroundThreadsFactory
+  virtual google::cloud::BackgroundThreadsFactory
   BackgroundThreadsFactory() = 0;
 
   // The member functions of this class are not intended for general use by

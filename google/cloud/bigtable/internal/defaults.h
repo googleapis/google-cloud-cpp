@@ -24,7 +24,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-std::size_t DefaultConnectionPoolSize();
+int DefaultConnectionPoolSize();
 
 /**
  * Returns an `Options` with the appropriate defaults for Bigtable.

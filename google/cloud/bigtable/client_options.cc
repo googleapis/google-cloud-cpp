@@ -87,11 +87,8 @@ ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds,
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 ClientOptions& ClientOptions::set_connection_pool_size(std::size_t size) {
-  if (size == 0) {
-    opts_.set<ConnectionPoolSizeOption>(internal::DefaultConnectionPoolSize());
-    return *this;
-  }
-  opts_.set<ConnectionPoolSizeOption>(size);
+  opts_.set<GrpcNumChannelsOption>(
+      size == 0 ? internal::DefaultConnectionPoolSize() : int(size));
   return *this;
 }
 
@@ -105,21 +102,13 @@ ClientOptions& ClientOptions::DisableBackgroundThreads(
     google::cloud::CompletionQueue const& cq) {
   opts_.set<GrpcBackgroundThreadsFactoryOption>([cq] {
     return absl::make_unique<
-        ::google::cloud::internal::CustomerSuppliedBackgroundThreads>(cq);
+        google::cloud::internal::CustomerSuppliedBackgroundThreads>(cq);
   });
   return *this;
 }
 
-ClientOptions::BackgroundThreadsFactory
-ClientOptions::background_threads_factory() const {
-  auto background_threads_factory =
-      opts_.get<GrpcBackgroundThreadsFactoryOption>();
-  if (background_threads_factory) return background_threads_factory;
-  auto const s = background_thread_pool_size();
-  return [s] {
-    return absl::make_unique<
-        ::google::cloud::internal::AutomaticallyCreatedBackgroundThreads>(s);
-  };
+BackgroundThreadsFactory ClientOptions::background_threads_factory() const {
+  return google::cloud::internal::MakeBackgroundThreadsFactory(opts_);
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

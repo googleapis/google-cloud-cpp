@@ -91,11 +91,10 @@ TEST(ClientOptionsTest, OptionsConstructor) {
           .set<GrpcTracingOptionsOption>(
               TracingOptions{}.SetOptions("single_line_mode=F"))
           .set<TracingComponentsOption>({"test-component"})
-          .set<ConnectionPoolSizeOption>(5U)
-          .set<ConnectionPoolNameOption>("test-pool")
+          .set<GrpcNumChannelsOption>(3)
           .set<MinConnectionRefreshOption>(ms(100))
           .set<MaxConnectionRefreshOption>(min(4))
-          .set<BackgroundThreadPoolSizeOption>(5U));
+          .set<GrpcBackgroundThreadPoolSizeOption>(5));
 
   EXPECT_EQ("testdata.googleapis.com", options.data_endpoint());
   EXPECT_EQ("testadmin.googleapis.com", options.admin_endpoint());
@@ -104,8 +103,7 @@ TEST(ClientOptionsTest, OptionsConstructor) {
   EXPECT_EQ(credentials, options.credentials());
   EXPECT_FALSE(options.tracing_options().single_line_mode());
   EXPECT_TRUE(options.tracing_enabled("test-component"));
-  EXPECT_EQ(5U, options.connection_pool_size());
-  EXPECT_EQ("test-pool", options.connection_pool_name());
+  EXPECT_EQ(3U, options.connection_pool_size());
   EXPECT_EQ(ms(100), options.min_conn_refresh_period());
   EXPECT_EQ(min(4), options.max_conn_refresh_period());
   EXPECT_EQ(5U, options.background_thread_pool_size());

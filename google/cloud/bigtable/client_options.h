@@ -21,6 +21,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/tracing_options.h"
@@ -144,13 +145,13 @@ class ClientOptions {
    * creates segregated pools.
    */
   ClientOptions& set_connection_pool_name(std::string name) {
-    opts_.set<ConnectionPoolNameOption>(std::move(name));
+    connection_pool_name_ = std::move(name);
     return *this;
   }
 
   /// Return the name of the connection pool.
   std::string const& connection_pool_name() const {
-    return opts_.get<ConnectionPoolNameOption>();
+    return connection_pool_name_;
   }
 
   /* Set the size of the connection pool.
@@ -161,7 +162,7 @@ class ClientOptions {
   ClientOptions& set_connection_pool_size(std::size_t size);
 
   std::size_t connection_pool_size() const {
-    return opts_.get<ConnectionPoolSizeOption>();
+    return opts_.get<GrpcNumChannelsOption>();
   }
 
   /// Return the current credentials.
@@ -346,21 +347,19 @@ class ClientOptions {
    * be enabled by clients configured with this option.
    */
   bool tracing_enabled(std::string const& component) const {
-    auto tracing_components = opts_.get<TracingComponentsOption>();
-    return tracing_components.find(component) != tracing_components.end();
+    return google::cloud::internal::Contains(
+        opts_.get<TracingComponentsOption>(), component);
   }
 
   /// Enable tracing for @p component in clients configured with this object.
   ClientOptions& enable_tracing(std::string const& component) {
-    auto& tracing_components = opts_.lookup<TracingComponentsOption>();
-    tracing_components.insert(component);
+    opts_.lookup<TracingComponentsOption>().insert(component);
     return *this;
   }
 
   /// Disable tracing for @p component in clients configured with this object.
   ClientOptions& disable_tracing(std::string const& component) {
-    auto& tracing_components = opts_.lookup<TracingComponentsOption>();
-    tracing_components.erase(component);
+    opts_.lookup<TracingComponentsOption>().erase(component);
     return *this;
   }
 
@@ -425,12 +424,12 @@ class ClientOptions {
    * @note this value is not used if `DisableBackgroundThreads()` is called.
    */
   ClientOptions& set_background_thread_pool_size(std::size_t s) {
-    opts_.set<BackgroundThreadPoolSizeOption>(s);
+    opts_.set<GrpcBackgroundThreadPoolSizeOption>(s);
     return *this;
   }
 
   std::size_t background_thread_pool_size() const {
-    return opts_.get<BackgroundThreadPoolSizeOption>();
+    return opts_.get<GrpcBackgroundThreadPoolSizeOption>();
   }
 
   /**
@@ -446,8 +445,6 @@ class ClientOptions {
   ClientOptions& DisableBackgroundThreads(
       google::cloud::CompletionQueue const& cq);
 
-  using BackgroundThreadsFactory =
-      std::function<std::unique_ptr<BackgroundThreads>()>;
   BackgroundThreadsFactory background_threads_factory() const;
 
  private:
@@ -460,6 +457,7 @@ class ClientOptions {
   }
 
   grpc::ChannelArguments channel_arguments_;
+  std::string connection_pool_name_;
   Options opts_;
 };
 

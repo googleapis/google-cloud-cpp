@@ -300,7 +300,7 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
               (override));
 
  private:
-  ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() override {
+  google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
     return options_.background_threads_factory();
   }
 

@@ -42,7 +42,7 @@ auto constexpr kDefaultMinRefreshPeriod =
 static_assert(kDefaultMinRefreshPeriod <= kDefaultMaxRefreshPeriod,
               "The default period range must be valid");
 
-std::size_t DefaultConnectionPoolSize() {
+int DefaultConnectionPoolSize() {
   // For better resource utilization and greater throughput, it is recommended
   // to calculate the default pool size based on cores(CPU) available. However,
   // as per C++11 documentation `std::thread::hardware_concurrency()` cannot be
@@ -50,12 +50,10 @@ std::size_t DefaultConnectionPoolSize() {
   // well defined or not computable. Apart from CPU count, multiple channels
   // can be opened for each CPU to increase throughput. The pool size is also
   // capped so that servers with many cores do not create too many channels.
-  std::size_t cpu_count = std::thread::hardware_concurrency();
+  int cpu_count = std::thread::hardware_concurrency();
   if (cpu_count == 0) return BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE;
-  return (
-      std::min<std::size_t>)(BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE_MAX,
-                             cpu_count *
-                                 BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU);
+  return (std::min)(BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE_MAX,
+                    cpu_count * BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU);
 }
 
 Options DefaultOptions(Options opts) {
@@ -93,17 +91,14 @@ Options DefaultOptions(Options opts) {
     opts.set<GrpcTracingOptionsOption>(
         ::google::cloud::internal::DefaultTracingOptions());
   }
-  if (!opts.has<ConnectionPoolSizeOption>()) {
-    opts.set<ConnectionPoolSizeOption>(DefaultConnectionPoolSize());
+  if (!opts.has<GrpcNumChannelsOption>()) {
+    opts.set<GrpcNumChannelsOption>(DefaultConnectionPoolSize());
   }
   if (!opts.has<MinConnectionRefreshOption>()) {
     opts.set<MinConnectionRefreshOption>(kDefaultMinRefreshPeriod);
   }
   if (!opts.has<MaxConnectionRefreshOption>()) {
     opts.set<MaxConnectionRefreshOption>(kDefaultMaxRefreshPeriod);
-  }
-  if (!opts.has<BackgroundThreadPoolSizeOption>()) {
-    opts.set<BackgroundThreadPoolSizeOption>(0);
   }
 
   return opts;

@@ -48,16 +48,6 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 
-/// The connection pool size.
-struct ConnectionPoolSizeOption {
-  using Type = size_t;
-};
-
-/// The connection pool name.
-struct ConnectionPoolNameOption {
-  using Type = std::string;
-};
-
 /// The endpoint for data operations.
 struct DataEndpointOption {
   using Type = std::string;
@@ -78,33 +68,27 @@ struct InstanceAdminEndpointOption {
   using Type = std::string;
 };
 
-// Minimum time in ms to refresh connections before the server has a chance to
-// disconnect them due to being idle.
+/*
+ * Minimum time in ms to refresh connections before the server has a chance to
+ * disconnect them due to being idle.
+ */
 struct MinConnectionRefreshOption {
   using Type = std::chrono::milliseconds;
 };
 
-// Maximum time in ms to refresh connections before the server has a chance to
-// disconnect them due to being idle.
+/*
+ * Maximum time in ms to refresh connections before the server has a chance to
+ * disconnect them due to being idle.
+ */
 struct MaxConnectionRefreshOption {
   using Type = std::chrono::milliseconds;
 };
 
-/*
- * The number of background threads.
- *
- * @note this value is not used if background threads are disabled.
- */
-struct BackgroundThreadPoolSizeOption {
-  using Type = size_t;
-};
-
 /// The complete list of options accepted by `bigtable::*Client`
 using ClientOptionList =
-    OptionList<ConnectionPoolSizeOption, ConnectionPoolNameOption,
-               DataEndpointOption, AdminEndpointOption,
+    OptionList<DataEndpointOption, AdminEndpointOption,
                InstanceAdminEndpointOption, MinConnectionRefreshOption,
-               MaxConnectionRefreshOption, BackgroundThreadPoolSizeOption>;
+               MaxConnectionRefreshOption>;
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
