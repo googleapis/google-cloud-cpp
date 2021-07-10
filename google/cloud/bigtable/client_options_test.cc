@@ -19,6 +19,7 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/types/optional.h"
+#include "options.h"
 #include <gmock/gmock.h>
 #include <thread>
 
@@ -75,6 +76,55 @@ TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
   // The number of connections should be >= 1, we "know" what the actual value
   // is, but we do not want a change-detection-test.
   EXPECT_LE(1UL, client_options_object.connection_pool_size());
+}
+
+TEST(ClientOptionsTest, OptionsConstructor) {
+  using ms = std::chrono::milliseconds;
+  using min = std::chrono::minutes;
+  auto credentials = grpc::InsecureChannelCredentials();
+  auto options = ClientOptions(
+      Options{}
+          .set<DataEndpointOption>("testdata.googleapis.com")
+          .set<AdminEndpointOption>("testadmin.googleapis.com")
+          .set<InstanceAdminEndpointOption>("testinstanceadmin.googleapis.com")
+          .set<GrpcCredentialOption>(credentials)
+          .set<GrpcTracingOptionsOption>(
+              TracingOptions{}.SetOptions("single_line_mode=F"))
+          .set<TracingComponentsOption>({"test-component"})
+          .set<GrpcNumChannelsOption>(3)
+          .set<MinConnectionRefreshOption>(ms(100))
+          .set<MaxConnectionRefreshOption>(min(4))
+          .set<GrpcBackgroundThreadPoolSizeOption>(5));
+
+  EXPECT_EQ("testdata.googleapis.com", options.data_endpoint());
+  EXPECT_EQ("testadmin.googleapis.com", options.admin_endpoint());
+  EXPECT_EQ("testinstanceadmin.googleapis.com",
+            ClientOptionsTestTraits::InstanceAdminEndpoint(options));
+  EXPECT_EQ(credentials, options.credentials());
+  EXPECT_FALSE(options.tracing_options().single_line_mode());
+  EXPECT_TRUE(options.tracing_enabled("test-component"));
+  EXPECT_EQ(3U, options.connection_pool_size());
+  EXPECT_EQ(ms(100), options.min_conn_refresh_period());
+  EXPECT_EQ(min(4), options.max_conn_refresh_period());
+  EXPECT_EQ(5U, options.background_thread_pool_size());
+}
+
+TEST(ClientOptionsTest, CustomBackgroundThreadsOption) {
+  struct Fake : BackgroundThreads {
+    CompletionQueue cq() const override { return {}; }
+  };
+  bool invoked = false;
+  auto factory = [&invoked] {
+    invoked = true;
+    return absl::make_unique<Fake>();
+  };
+
+  auto options =
+      ClientOptions(Options{}.set<GrpcBackgroundThreadsFactoryOption>(factory));
+
+  EXPECT_FALSE(invoked);
+  options.background_threads_factory()();
+  EXPECT_TRUE(invoked);
 }
 
 class ClientOptionsDefaultEndpointTest : public ::testing::Test {
@@ -141,21 +191,21 @@ TEST_F(ClientOptionsDefaultEndpointTest, DataNoEnv) {
   google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
       "BIGTABLE_EMULATOR_HOST", {});
 
-  EXPECT_EQ("bigtable.googleapis.com", internal::DefaultDataEndpoint());
+  EXPECT_EQ("bigtable.googleapis.com", ClientOptions{}.data_endpoint());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, AdminNoEnv) {
   google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
       "BIGTABLE_EMULATOR_HOST", {});
 
-  EXPECT_EQ("bigtableadmin.googleapis.com", internal::DefaultAdminEndpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com", ClientOptions{}.admin_endpoint());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, AdminEmulatorOverrides) {
   google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
       "BIGTABLE_EMULATOR_HOST", "127.0.0.1:1234");
 
-  EXPECT_EQ("127.0.0.1:1234", internal::DefaultAdminEndpoint());
+  EXPECT_EQ("127.0.0.1:1234", ClientOptions{}.admin_endpoint());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, AdminInstanceAdminNoEffect) {
@@ -165,7 +215,7 @@ TEST_F(ClientOptionsDefaultEndpointTest, AdminInstanceAdminNoEffect) {
       bigtable_instance_admin_emulator_host(
           "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", "127.0.0.1:1234");
 
-  EXPECT_EQ("bigtableadmin.googleapis.com", internal::DefaultAdminEndpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com", ClientOptions{}.admin_endpoint());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminNoEnv) {
@@ -173,14 +223,14 @@ TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminNoEnv) {
       "BIGTABLE_EMULATOR_HOST", {});
 
   EXPECT_EQ("bigtableadmin.googleapis.com",
-            internal::DefaultInstanceAdminEndpoint());
+            GetInstanceAdminEndpoint(ClientOptions()));
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminEmulatorOverrides) {
   google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
       "BIGTABLE_EMULATOR_HOST", "127.0.0.1:1234");
 
-  EXPECT_EQ("127.0.0.1:1234", internal::DefaultInstanceAdminEndpoint());
+  EXPECT_EQ("127.0.0.1:1234", GetInstanceAdminEndpoint(ClientOptions()));
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminInstanceAdminOverrides) {
@@ -190,7 +240,7 @@ TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminInstanceAdminOverrides) {
       bigtable_instance_admin_emulator_host(
           "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", "127.0.0.1:1234");
 
-  EXPECT_EQ("127.0.0.1:1234", internal::DefaultInstanceAdminEndpoint());
+  EXPECT_EQ("127.0.0.1:1234", GetInstanceAdminEndpoint(ClientOptions()));
 }
 
 TEST(ClientOptionsTest, EditDataEndpoint) {

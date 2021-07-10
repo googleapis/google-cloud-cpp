@@ -254,7 +254,7 @@ class LoggingAdminClient : public google::cloud::bigtable::AdminClient {
                     grpc::CompletionQueue* cq) override;
 
  private:
-  ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() override {
+  google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
     return child_->BackgroundThreadsFactory();
   }
 

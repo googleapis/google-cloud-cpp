@@ -437,7 +437,7 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
   }
 
  private:
-  ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() override {
+  google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
     return impl_.Options().background_threads_factory();
   }
 
