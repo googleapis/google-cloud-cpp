@@ -154,7 +154,8 @@ class ClientOptions {
     return connection_pool_name_;
   }
 
-  /* Set the size of the connection pool.
+  /**
+   * Set the size of the connection pool.
    *
    * Specifying 0 for @p size will set the size of the connection pool to
    * default.
@@ -445,6 +446,13 @@ class ClientOptions {
   ClientOptions& DisableBackgroundThreads(
       google::cloud::CompletionQueue const& cq);
 
+  /**
+   * Backwards compatibility alias
+   *
+   * @deprecated Consider using `google::cloud::BackgroundThreadsFactory`
+   * directly
+   */
+  using BackgroundThreadsFactory = ::google::cloud::BackgroundThreadsFactory;
   BackgroundThreadsFactory background_threads_factory() const;
 
  private:
