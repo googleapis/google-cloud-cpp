@@ -43,9 +43,6 @@ Options IAMCredentialsDefaultOptions(Options options) {
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
   }
-  if (!options.has<GrpcNumChannelsOption>()) {
-    options.set<GrpcNumChannelsOption>(4);
-  }
   auto& products = options.lookup<UserAgentProductsOption>();
   products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
 
