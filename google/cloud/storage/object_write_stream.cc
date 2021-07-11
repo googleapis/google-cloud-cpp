@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/object_write_stream.h"
+#include "google/cloud/storage/internal/hash_function.h"
+#include "google/cloud/storage/internal/hash_validator.h"
 #include "absl/memory/memory.h"
 
 namespace google {
@@ -28,9 +30,9 @@ ObjectWriteStream::ObjectWriteStream()
     : ObjectWriteStream(absl::make_unique<internal::ObjectWriteStreambuf>(
           absl::make_unique<internal::ResumableUploadSessionError>(
               Status(StatusCode::kUnimplemented, "null stream")),
-          /*max_buffer_size=*/0,
-          absl::make_unique<internal::NullHashValidator>(),
-          AutoFinalizeConfig::kDisabled)) {}
+          /*max_buffer_size=*/0, internal::CreateNullHashFunction(),
+          internal::CreateNullHashValidator(), AutoFinalizeConfig::kDisabled)) {
+}
 
 ObjectWriteStream::ObjectWriteStream(
     std::unique_ptr<internal::ObjectWriteStreambuf> buf)

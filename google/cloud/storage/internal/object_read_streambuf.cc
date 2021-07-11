@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/object_read_streambuf.h"
 #include "google/cloud/storage/hash_mismatch_error.h"
+#include "google/cloud/storage/internal/hash_function.h"
 #include "absl/memory/memory.h"
 #include <cstring>
 
@@ -28,13 +29,14 @@ ObjectReadStreambuf::ObjectReadStreambuf(
     std::unique_ptr<ObjectReadSource> source, std::streamoff pos_in_stream)
     : source_(std::move(source)),
       source_pos_(pos_in_stream),
+      hash_function_(CreateHashFunction(request)),
       hash_validator_(CreateHashValidator(request)) {}
 
 ObjectReadStreambuf::ObjectReadStreambuf(ReadObjectRangeRequest const&,
                                          Status status)
     : source_(new ObjectReadErrorSource(status)),
       source_pos_(-1),
-      hash_validator_(absl::make_unique<NullHashValidator>()),
+      hash_validator_(CreateNullHashValidator()),
       status_(std::move(status)) {}
 
 ObjectReadStreambuf::pos_type ObjectReadStreambuf::seekpos(
@@ -116,8 +118,12 @@ bool ObjectReadStreambuf::ValidateHashes(char const* function_name) {
   // This function is called once the stream is "closed" (either an explicit
   // `Close()` call or a permanent error). After this point the validator is
   // not usable.
+  auto function = std::move(hash_function_);
   auto validator = std::move(hash_validator_);
-  hash_validator_result_ = std::move(*validator).Finish();
+  hash_validator_result_ =
+      std::move(*validator).Finish(std::move(*function).Finish());
+  computed_hash_ = FormatComputedHashes(hash_validator_result_);
+  received_hash_ = FormatReceivedHashes(hash_validator_result_);
   if (!hash_validator_result_.is_mismatch) return true;
   ThrowHashMismatchDelegate(function_name);
   return false;
@@ -183,7 +189,7 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
   // number of bytes.
   if (!read) return run_validator_if_closed(std::move(read).status());
 
-  hash_validator_->Update(s + offset, read->bytes_received);
+  hash_function_->Update(s + offset, read->bytes_received);
   offset += static_cast<std::streamsize>(read->bytes_received);
   source_pos_ += static_cast<std::streamoff>(read->bytes_received);
 

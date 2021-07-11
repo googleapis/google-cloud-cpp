@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_WRITE_STREAMBUF_H
 
 #include "google/cloud/storage/auto_finalize.h"
+#include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/version.h"
@@ -42,6 +43,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
 
   ObjectWriteStreambuf(std::unique_ptr<ResumableUploadSession> upload_session,
                        std::size_t max_buffer_size,
+                       std::unique_ptr<HashFunction> hash_function,
                        std::unique_ptr<HashValidator> hash_validator,
                        AutoFinalizeConfig auto_finalize);
 
@@ -56,12 +58,8 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   virtual bool IsOpen() const;
   virtual bool ValidateHash(ObjectMetadata const& meta);
 
-  virtual std::string const& received_hash() const {
-    return hash_validator_result_.received;
-  }
-  virtual std::string const& computed_hash() const {
-    return hash_validator_result_.computed;
-  }
+  virtual std::string const& received_hash() const { return received_hash_; }
+  virtual std::string const& computed_hash() const { return computed_hash_; }
 
   /// The session id, if applicable, it is empty for non-resumable uploads.
   virtual std::string const& resumable_session_id() const {
@@ -110,10 +108,13 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   std::vector<char> current_ios_buffer_;
   std::size_t max_buffer_size_;
 
+  std::unique_ptr<HashFunction> hash_function_;
   std::unique_ptr<HashValidator> hash_validator_;
   AutoFinalizeConfig auto_finalize_ = AutoFinalizeConfig::kDisabled;
 
   HashValidator::Result hash_validator_result_;
+  std::string computed_hash_;
+  std::string received_hash_;
 
   StatusOr<ResumableUploadResponse> last_response_;
 };
