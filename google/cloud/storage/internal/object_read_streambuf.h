@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_READ_STREAMBUF_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_READ_STREAMBUF_H
 
+#include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/internal/object_requests.h"
@@ -62,12 +63,8 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
   bool IsOpen() const;
   void Close();
   Status const& status() const { return status_; }
-  std::string const& received_hash() const {
-    return hash_validator_result_.received;
-  }
-  std::string const& computed_hash() const {
-    return hash_validator_result_.computed;
-  }
+  std::string const& received_hash() const { return received_hash_; }
+  std::string const& computed_hash() const { return computed_hash_; }
   std::multimap<std::string, std::string> const& headers() const {
     return headers_;
   }
@@ -84,8 +81,11 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
   std::unique_ptr<ObjectReadSource> source_;
   std::streamoff source_pos_;
   std::vector<char> current_ios_buffer_;
+  std::unique_ptr<HashFunction> hash_function_;
   std::unique_ptr<HashValidator> hash_validator_;
   HashValidator::Result hash_validator_result_;
+  std::string computed_hash_;
+  std::string received_hash_;
   Status status_;
   std::multimap<std::string, std::string> headers_;
 };

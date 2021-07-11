@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HASH_VALIDATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HASH_VALIDATOR_H
 
+#include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/storage/version.h"
 #include <memory>
 #include <string>
@@ -35,9 +36,6 @@ class HashValidator {
   /// A short string that names the validator when composing results.
   virtual std::string Name() const = 0;
 
-  /// Update the computed hash value with some portion of the data.
-  virtual void Update(char const* buf, std::size_t n) = 0;
-
   /// Update the received hash value based on a ObjectMetadata response.
   virtual void ProcessMetadata(ObjectMetadata const& meta) = 0;
 
@@ -47,15 +45,15 @@ class HashValidator {
 
   struct Result {
     /// The value reported by the server, based on the calls to ProcessHeader().
-    std::string received;
+    HashValues received;
     /// The value computed locally, based on the calls to Update().
-    std::string computed;
+    HashValues computed;
     /// A flag indicating of this is considered a mismatch based on the rules
     /// for the validator.
     bool is_mismatch = false;
 
     Result() = default;
-    Result(std::string r, std::string c, bool m)
+    Result(HashValues r, HashValues c, bool m)
         : received(std::move(r)), computed(std::move(c)), is_mismatch(m) {}
   };
 
@@ -66,65 +64,14 @@ class HashValidator {
    *   the value reported by the service. Note that this can be empty for
    *   validators that disable validation.
    */
-  virtual Result Finish() && = 0;
+  virtual Result Finish(HashValues computed) && = 0;
 };
 
-/**
- * A validator that does not validate.
- */
-class NullHashValidator : public HashValidator {
- public:
-  NullHashValidator() = default;
-
-  std::string Name() const override { return "null"; }
-  void Update(char const*, std::size_t) override {}
-  void ProcessMetadata(ObjectMetadata const&) override {}
-  void ProcessHeader(std::string const&, std::string const&) override {}
-  Result Finish() && override { return Result{}; }
-};
-
-/**
- * A composite validator.
- */
-class CompositeValidator : public HashValidator {
- public:
-  CompositeValidator(std::unique_ptr<HashValidator> left,
-                     std::unique_ptr<HashValidator> right)
-      : left_(std::move(left)), right_(std::move(right)) {}
-
-  std::string Name() const override { return "composite"; }
-  void Update(char const* buf, std::size_t n) override;
-  void ProcessMetadata(ObjectMetadata const& meta) override;
-  void ProcessHeader(std::string const& key, std::string const& value) override;
-  Result Finish() && override;
-
- private:
-  std::unique_ptr<HashValidator> left_;
-  std::unique_ptr<HashValidator> right_;
-};
+std::unique_ptr<HashValidator> CreateNullHashValidator();
 
 class ReadObjectRangeRequest;
 class ResumableUploadRequest;
 
-/**
- * @{
- * The requests accepted by `CreateHashValidator` can be configured with the
- * `DisableMD5Hash` and `DisableCrc32Checksum` options. You must explicitly
- * pass `DisableCrc32Checksum` to disable Crc32cChecksum. MD5Hash is disabled by
- * default. You must explicitly pass `EnableMD5Hash()` to enable MD5Hash.
- *
- * The valid combinations are:
- * - If neither `DisableMD5Hash(true)` nor `DisableCrc32cChecksum(true)` are
- *   provided, then only Crc32cChecksum is used.
- * - If only `DisableMD5Hash(true)` is provided, then only Crc32cChecksum is
- *   used.
- * - If only `DisableCrc32c(true)` is provided, then neither are used.
- * - If both `DisableMD5Hash(true)` and `DisableCrc32cChecksum(true)` are
- *   provided, then neither are used.
- *
- * Specifying the option with `false` or no argument (default constructor) has
- * the same effect as not passing the option at all.
- */
 /// Create a hash validator configured by @p request.
 std::unique_ptr<HashValidator> CreateHashValidator(
     ReadObjectRangeRequest const& request);
@@ -132,7 +79,12 @@ std::unique_ptr<HashValidator> CreateHashValidator(
 /// Create a hash validator configured by @p request.
 std::unique_ptr<HashValidator> CreateHashValidator(
     ResumableUploadRequest const& request);
-/* @} */
+
+/// Received hashes as a string.
+std::string FormatReceivedHashes(HashValidator::Result const& result);
+
+/// Computed hashes as a string.
+std::string FormatComputedHashes(HashValidator::Result const& result);
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

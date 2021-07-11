@@ -93,8 +93,8 @@ ObjectWriteStream Client::WriteObjectImpl(
 
     ObjectWriteStream error_stream(
         absl::make_unique<internal::ObjectWriteStreambuf>(
-            std::move(error), 0,
-            absl::make_unique<internal::NullHashValidator>(),
+            std::move(error), 0, internal::CreateNullHashFunction(),
+            internal::CreateNullHashValidator(),
             AutoFinalizeConfig::kDisabled));
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     error_stream.Close();
@@ -102,6 +102,7 @@ ObjectWriteStream Client::WriteObjectImpl(
   }
   return ObjectWriteStream(absl::make_unique<internal::ObjectWriteStreambuf>(
       *std::move(session), raw_client_->client_options().upload_buffer_size(),
+      internal::CreateHashFunction(request),
       internal::CreateHashValidator(request),
       request.GetOption<AutoFinalize>().value_or(
           AutoFinalizeConfig::kEnabled)));
