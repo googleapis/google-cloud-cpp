@@ -51,11 +51,13 @@ TEST(GrpcClientInsertObjectMediaTest, Small) {
     }
     checksummed_data {
       content: "The quick brown fox jumps over the lazy dog"
-      crc32c { value: 576848900 }
+      # grpc_client_object_request_test.cc documents this magic value
+      crc32c { value: 0x22620404 }
+      # MD5 is disabled by default
     }
     object_checksums {
-      crc32c { value: 576848900 }
-      md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
+      crc32c { value: 0x22620404 }
+      # MD5 is disabled by default
     }
     finish_write: true
   )pb";
