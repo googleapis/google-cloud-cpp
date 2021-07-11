@@ -1755,7 +1755,7 @@ StatusOr<google::storage::v1::InsertObjectRequest> GrpcClient::ToProto(
     // REST APIs (base64-encoded big-endian, 32-bit integers). We need to
     // convert this to the format expected by proto, which is just a 32-bit
     // integer. But the value received by the application might be incorrect, so
-    // we need to validated it.
+    // we need to validate it.
     auto as_proto =
         Crc32cToProto(request.GetOption<Crc32cChecksumValue>().value());
     if (!as_proto.ok()) return std::move(as_proto).status();

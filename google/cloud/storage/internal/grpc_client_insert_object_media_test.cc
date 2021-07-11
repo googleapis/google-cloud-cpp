@@ -51,7 +51,7 @@ TEST(GrpcClientInsertObjectMediaTest, Small) {
     }
     checksummed_data {
       content: "The quick brown fox jumps over the lazy dog"
-      # grpc_client_object_request_test.cc documents on this magic value
+      # grpc_client_object_request_test.cc documents this magic value
       crc32c { value: 0x22620404 }
       # MD5 is disabled by default
     }

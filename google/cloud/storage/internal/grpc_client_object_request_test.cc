@@ -34,11 +34,11 @@ using ::google::cloud::testing_util::StatusIs;
 
 // Use gsutil to obtain the CRC32C checksum (in base64):
 //    TEXT="The quick brown fox jumps over the lazy dog"
-//    /bin/echo -n $TEXT >/tmp/fox.txt
+//    /bin/echo -n $TEXT > /tmp/fox.txt
 //    gsutil hash /tmp/fox.txt
 // Hashes [base64] for /tmp/fox.txt:
-//	Hash (crc32c):		ImIEBA==
-//	Hash (md5):		nhB9nTcrtoJr2B01QqQZ1g==
+//    Hash (crc32c): ImIEBA==
+//    Hash (md5)   : nhB9nTcrtoJr2B01QqQZ1g==
 //
 // Then convert the base64 values to hex
 //
@@ -47,17 +47,17 @@ using ::google::cloud::testing_util::StatusIs;
 //
 // Which yields (in proto format):
 //
-//     CRC32C: 0x22620404
-//     MD5   : 9e107d9d372bb6826bd81d3542a419d6
+//     CRC32C      : 0x22620404
+//     MD5         : 9e107d9d372bb6826bd81d3542a419d6
 auto constexpr kText = "The quick brown fox jumps over the lazy dog";
 
 // Doing something similar for an alternative text yields:
 // Hashes [base64] for /tmp/alt.txt:
-//	Hash (crc32c):		StZ/gA==
-//	Hash (md5):		StEvo2V/qoDCuaktZSw3IQ==
+//    Hash (crc32c): StZ/gA==
+//    Hash (md5)   : StEvo2V/qoDCuaktZSw3IQ==
 // In proto format
-//     CRC32C: 0x4ad67f80
-//     MD5   : 4ad12fa3657faa80c2b9a92d652c3721
+//     CRC32C      : 0x4ad67f80
+//     MD5         : 4ad12fa3657faa80c2b9a92d652c3721
 auto constexpr kAlt = "How vexingly quick daft zebras jump!";
 
 TEST(GrpcClientObjectRequest, InsertObjectMediaRequestSimple) {
@@ -89,11 +89,11 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestHashOptions) {
     std::function<void(InsertObjectMediaRequest&)> apply_options;
     std::string expected_checksums;
   } cases[] = {
-      // These tests provide the "wrong" hashes, this is what would happen if
+      // These tests provide the "wrong" hashes. This is what would happen if
       // one was (for example) reading a GCS file, obtained the expected hashes
       // from GCS, and then uploaded to another GCS destination *but*
-      // the data was somehow corrupted locally (say a bad disk), we don't want
-      // to recompute the hashes in the upload.
+      // the data was somehow corrupted locally (say a bad disk). In that case,
+      // we don't want to recompute the hashes in the upload.
       {
           [](InsertObjectMediaRequest& r) {
             r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
@@ -107,8 +107,9 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestHashOptions) {
             r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
             r.set_option(DisableCrc32cChecksum(false));
           },
-          R"pb(md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
-               crc32c { value: 0x4ad67f80 })pb",
+          R"pb(
+            md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
+            crc32c { value: 0x4ad67f80 })pb",
       },
       {
           [](InsertObjectMediaRequest& r) {
@@ -152,7 +153,8 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestHashOptions) {
             r.set_option(DisableMD5Hash(true));
             r.set_option(DisableCrc32cChecksum(true));
           },
-          R"pb()pb",
+          R"pb(
+          )pb",
       },
       {
           [](InsertObjectMediaRequest& r) {
