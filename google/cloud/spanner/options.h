@@ -124,7 +124,7 @@ struct SessionPoolActionOnExhaustionOption {
   using Type = spanner::ActionOnExhaustion;
 };
 
-/*
+/**
  * Option for `google::cloud::Options` to set the interval at which we refresh
  * sessions so they don't get collected by the backend GC.
  *
