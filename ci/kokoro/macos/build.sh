@@ -39,6 +39,10 @@ elif [[ -n "${KOKORO_JOB_NAME:-}" ]]; then
   # presubmit builds. Here we extract the value of "foo" and use it as the build
   # name.
   BUILD_NAME="$(basename "${KOKORO_JOB_NAME}" "-presubmit")"
+  # TODO(coryan) - test only DO NOT MERGE
+  if [[ "${BUILD_NAME}" == "cmake-super" ]]; then
+    BUILD_NAME="cmake-vcpkg"
+  fi
   export BUILD_NAME
 
   # This is passed into the environment of the remaining scripts to tell them if
