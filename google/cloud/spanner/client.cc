@@ -349,7 +349,7 @@ std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
   opts = spanner_internal::DefaultOptions(std::move(opts));
 
   std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs(
-      (std::max)(1, opts.get<GrpcNumChannelsOption>()));
+      opts.get<GrpcNumChannelsOption>());
   int id = 0;
   std::generate(stubs.begin(), stubs.end(), [&id, db, opts] {
     return spanner_internal::CreateDefaultSpannerStub(db, opts, id++);
