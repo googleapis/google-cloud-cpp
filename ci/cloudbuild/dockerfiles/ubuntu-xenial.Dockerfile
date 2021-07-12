@@ -49,3 +49,125 @@ RUN apt-get update && \
         apt-utils \
         ca-certificates \
         apt-transport-https
+
+# Install all the direct (and indirect) dependencies for google-cloud-cpp.
+# Use a different directory for each build, and remove the downloaded
+# files and any temporary artifacts after a successful build to keep the
+# image smaller (and with fewer layers)
+
+WORKDIR /var/tmp/build/abseil-cpp
+RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
+    cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -DCMAKE_CXX_STANDARD=11 \
+      -H. -Bcmake-out -GNinja && \
+    cmake --build cmake-out --target install && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
+
+WORKDIR /var/tmp/build/googletest
+RUN curl -sSL https://github.com/google/googletest/archive/release-1.11.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_SHARED_LIBS=yes \
+      -DCMAKE_CXX_STANDARD=11 \
+      -H. -Bcmake-out/googletest && \
+    cmake --build cmake-out/googletest --target install && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
+
+WORKDIR /var/tmp/build/benchmark
+RUN curl -sSL https://github.com/google/benchmark/archive/v1.5.5.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE="Release" \
+        -DBUILD_SHARED_LIBS=yes \
+        -DBENCHMARK_ENABLE_TESTING=OFF \
+        -H. -Bcmake-out -GNinja && \
+    cmake --build cmake-out --target install && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
+
+WORKDIR /var/tmp/build/crc32c
+RUN curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_SHARED_LIBS=yes \
+      -DCRC32C_BUILD_TESTS=OFF \
+      -DCRC32C_BUILD_BENCHMARKS=OFF \
+      -DCRC32C_USE_GLOG=OFF \
+      -H. -Bcmake-out -GNinja && \
+    cmake --build cmake-out --target install && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
+
+WORKDIR /var/tmp/build/nlohmann-json
+RUN curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBUILD_TESTING=OFF \
+      -H. -Bcmake-out -GNinja && \
+    cmake --build cmake-out --target install && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
+
+WORKDIR /var/tmp/build/protobuf
+RUN curl -sSL https://github.com/google/protobuf/archive/v3.14.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -Hcmake -Bcmake-out -GNinja && \
+    cmake --build cmake-out --target install && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
+
+WORKDIR /var/tmp/build/c-ares
+RUN curl -sSL https://github.com/c-ares/c-ares/archive/refs/tags/cares-1_17_1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -H. -Bcmake-out -GNinja && \
+    cmake --build cmake-out --target install && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
+
+WORKDIR /var/tmp/build/re2
+RUN curl -sSL https://github.com/google/re2/archive/2020-11-01.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DRE2_BUILD_TESTING=OFF \
+        -H. -Bcmake-out -GNinja && \
+    cmake --build cmake-out --target install && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
+
+WORKDIR /var/tmp/build/grpc
+RUN curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_RE2_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out -GNinja && \
+    cmake --build cmake-out --target install && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build

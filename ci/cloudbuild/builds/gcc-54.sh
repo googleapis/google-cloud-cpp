@@ -25,5 +25,9 @@ export CC=gcc
 export CXX=g++
 
 cmake -GNinja -DBUILD_SHARED_LIBS=yes -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON \
-  -Hsuper -Bcmake-out
+  -H. -Bcmake-out
 cmake --build cmake-out
+(
+  cd cmake-out
+  ctest --output-on-failure -LE "integration-test" -j "$(nproc)"
+)
