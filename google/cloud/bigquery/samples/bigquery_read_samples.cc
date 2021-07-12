@@ -100,7 +100,7 @@ void ReadRows(std::vector<std::string> const& argv) {
                                             read_session, max_stream_count);
     if (!session) throw std::runtime_error(session.status().message());
 
-    int row_count = 0;
+    std::int64_t row_count = 0;
     for (auto const& row : client.ReadRows(session->streams(0).name(), 0)) {
       if (!row) throw std::runtime_error(row.status().message());
       row_count += row->row_count();
@@ -139,7 +139,7 @@ void SplitReadStream(std::vector<std::string> const& argv) {
     split_request.set_fraction(0.5);
     auto split_response = client.SplitReadStream(split_request);
 
-    int row_count = 0;
+    std::int64_t row_count = 0;
     for (auto const& row :
          client.ReadRows(split_response->primary_stream().name(), 0)) {
       if (!row) throw std::runtime_error(row.status().message());
