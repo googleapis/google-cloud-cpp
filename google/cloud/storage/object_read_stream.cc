@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,11 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/object_stream.h"
-#include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/object_read_stream.h"
 #include "google/cloud/log.h"
-#include <sstream>
-#include <thread>
 
 namespace google {
 namespace cloud {
@@ -54,46 +51,6 @@ void ObjectReadStream::Close() {
     setstate(std::ios_base::badbit);
   }
 }
-
-ObjectWriteStream::ObjectWriteStream(
-    std::unique_ptr<internal::ObjectWriteStreambuf> buf)
-    : std::basic_ostream<char>(nullptr), buf_(std::move(buf)) {
-  init(buf_.get());
-  // If buf_ is already closed, update internal state to represent
-  // the fact that no more bytes can be uploaded to this object.
-  if (buf_ && !buf_->IsOpen()) CloseBuf();
-}
-
-ObjectWriteStream::~ObjectWriteStream() {
-  if (!IsOpen()) return;
-  // Disable exceptions, even if the application had enabled exceptions the
-  // destructor is supposed to mask them.
-  exceptions(std::ios_base::goodbit);
-  buf_->AutoFlushFinal();
-}
-
-void ObjectWriteStream::Close() {
-  if (!buf_) return;
-  CloseBuf();
-}
-
-void ObjectWriteStream::CloseBuf() {
-  auto response = buf_->Close();
-  if (!response.ok()) {
-    metadata_ = std::move(response).status();
-    setstate(std::ios_base::badbit);
-    return;
-  }
-  headers_ = {};
-  if (response->payload.has_value()) {
-    metadata_ = *std::move(response->payload);
-  }
-  if (metadata_ && !buf_->ValidateHash(*metadata_)) {
-    setstate(std::ios_base::badbit);
-  }
-}
-
-void ObjectWriteStream::Suspend() && { buf_.reset(); }
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

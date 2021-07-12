@@ -27,7 +27,6 @@
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/internal/object_requests.h"
-#include "google/cloud/storage/internal/object_streambuf.h"
 #include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/internal/service_account_requests.h"
 #include "google/cloud/storage/internal/sign_blob_requests.h"
@@ -44,6 +43,9 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+class ObjectReadStreambuf;
+class ObjectWriteStreambuf;
+
 /**
  * Defines the interface used to communicate with Google Cloud Storage.
  */
