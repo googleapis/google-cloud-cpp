@@ -64,7 +64,7 @@ struct ProjectIdOption {
   using Type = std::string;
 };
 
-/***
+/**
  * Set the maximum connection pool size.
  *
  * The C++ client library uses this value to limit the growth of the

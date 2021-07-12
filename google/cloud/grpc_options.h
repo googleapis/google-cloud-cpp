@@ -75,6 +75,8 @@ struct GrpcBackgroundThreadPoolSizeOption {
   using Type = std::size_t;
 };
 
+using BackgroundThreadsFactory =
+    std::function<std::unique_ptr<BackgroundThreads>()>;
 /**
  * Changes the `BackgroundThreadsFactory`.
  *
@@ -85,8 +87,6 @@ struct GrpcBackgroundThreadPoolSizeOption {
  * `BackgroundThreadsFactory` and it assumes responsibility for creating one or
  * more threads blocked on its `CompletionQueue::Run()`.
  */
-using BackgroundThreadsFactory =
-    std::function<std::unique_ptr<BackgroundThreads>()>;
 struct GrpcBackgroundThreadsFactoryOption {
   using Type = BackgroundThreadsFactory;
 };

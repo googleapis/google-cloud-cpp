@@ -131,7 +131,7 @@ class SessionPoolOptions {
     return opts_.get<SessionPoolActionOnExhaustionOption>();
   }
 
-  /*
+  /**
    * Set the interval at which we refresh sessions so they don't get
    * collected by the backend GC. The GC collects objects older than 60
    * minutes, so any duration below that (less some slack to allow the calls
