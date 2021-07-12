@@ -44,12 +44,12 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Cloud Pub/Sub][cloud-spanner-docs] service
+* Official documentation about the [Cloud Pub/Sub][cloud-pubsub-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this client library
 * Detailed header comments in our [public `.h`][source-link] files
 
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-pubsub/latest/
-[cloud-spanner-docs]: https://cloud.google.com/pubsub/docs/
+[cloud-pubsub-docs]: https://cloud.google.com/pubsub/docs/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/pubsub
 
 ## Quickstart
