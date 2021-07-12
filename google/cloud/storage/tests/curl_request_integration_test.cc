@@ -21,7 +21,6 @@
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <chrono>
-#include <cstdlib>
 #include <thread>
 #include <vector>
 
@@ -219,7 +218,11 @@ TEST(CurlRequestTest, MultiBufferLargePUT) {
   auto constexpr kLineSize = 1024;
   // libcurl's CURLOPT_READFUNCTION provides at most CURL_MAX_READ_SIZE bytes,
   // use enough buffers to ensure we get more than one read callback.
+#if CURL_AT_LEAST_VERSION(7, 53, 0)
   auto constexpr kLineCount = (2 * CURL_MAX_READ_SIZE) / kLineSize;
+#else
+  auto constexpr kLineCount = 512 * 1024 / kLineSize;
+#endif  // CURL_AT_LEAST_VERSION >= 7.53.0
   for (int i = 0; i != kLineCount; ++i) {
     std::string line = std::to_string(i);
     line += ": ";

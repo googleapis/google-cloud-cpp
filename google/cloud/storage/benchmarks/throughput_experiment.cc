@@ -205,9 +205,8 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
     }
     curl_easy_setopt(hnd, CURLOPT_URL, url.c_str());
     curl_easy_setopt(hnd, CURLOPT_HTTPHEADER, slist1);
-    curl_easy_setopt(hnd, CURLOPT_USERAGENT, "curl/7.65.3");
+    curl_easy_setopt(hnd, CURLOPT_USERAGENT, curl_version());
     curl_easy_setopt(hnd, CURLOPT_MAXREDIRS, 50L);
-    curl_easy_setopt(hnd, CURLOPT_HTTP09_ALLOWED, 1L);
     curl_easy_setopt(hnd, CURLOPT_TCP_KEEPALIVE, 1L);
 
     std::vector<char> buffer(CURL_MAX_WRITE_SIZE);
