@@ -120,7 +120,6 @@ std::vector<std::string> OptionsParse(std::vector<OptionDescriptor> const& desc,
   if (argv.empty()) {
     return argv;
   }
-  std::string const usage = BuildUsage(desc, argv[0]);
 
   auto next_arg = argv.begin() + 1;
   while (next_arg != argv.end()) {
