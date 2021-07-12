@@ -93,6 +93,8 @@ Options DefaultOptions(Options opts) {
     opts.set<SessionPoolClockOption>(std::make_shared<Session::Clock>());
   }
   // Enforces some SessionPool constraints.
+  auto& num_channels = opts.lookup<GrpcNumChannelsOption>();
+  num_channels = (std::max)(num_channels, 1);
   auto& max_idle = opts.lookup<spanner::SessionPoolMaxIdleSessionsOption>();
   max_idle = (std::max)(max_idle, 0);
   auto& max_sessions_per_channel =
@@ -101,8 +103,7 @@ Options DefaultOptions(Options opts) {
   auto& min_sessions = opts.lookup<spanner::SessionPoolMinSessionsOption>();
   min_sessions = (std::max)(min_sessions, 0);
   min_sessions =
-      (std::min)(min_sessions,
-                 max_sessions_per_channel * opts.get<GrpcNumChannelsOption>());
+      (std::min)(min_sessions, max_sessions_per_channel * num_channels);
 
   return opts;
 }
