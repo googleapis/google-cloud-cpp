@@ -16,8 +16,8 @@
 
 set -eu
 
-readonly GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION="328.0.0"
-readonly GOOGLE_CLOUD_CPP_SDK_SHA256="31f95d4e82bb65f756662667235a8a235a3f752894732b31cd491360c559e6ee"
+readonly GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION="348.0.0"
+readonly GOOGLE_CLOUD_CPP_SDK_SHA256="8341a9b21088fd382522be247c7e51c61d8ea4ff86e6ededfa601afd5223e153"
 
 readonly SITE="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads"
 readonly TARBALL="google-cloud-sdk-${GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION}-linux-x86_64.tar.gz"
