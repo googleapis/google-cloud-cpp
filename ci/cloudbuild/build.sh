@@ -326,5 +326,7 @@ args=(
   "--config=ci/cloudbuild/cloudbuild.yaml"
   "--substitutions=$(printf "%s," "${subs[@]}")"
   "--project=${project}"
+  # This value must match the workerPool configured in cloudbuild.yaml
+  "--region=us-east1"
 )
 io::run gcloud builds submit "${args[@]}" .
