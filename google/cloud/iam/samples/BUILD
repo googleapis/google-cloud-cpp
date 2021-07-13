@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Examples for the Cloud Pub/Sub C++ client library."""
+"""Examples for the Cloud IAM C++ client library."""
 
 package(default_visibility = ["//visibility:public"])
 

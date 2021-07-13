@@ -179,8 +179,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   assert(my_args.size() == 2);
   ExampleStatusOr(my_args);
   CreateReadSession({project_id, table_name});
-  ReadRows({project_id, table_name, "state = \"WA\""});
-  SplitReadStream({project_id, table_name, "state = \"WA\""});
+  ReadRows({project_id, table_name, R"(state = "WA")"});
+  SplitReadStream({project_id, table_name, R"(state = "WA")"});
 
   std::cout << "\nAutoRun done" << std::endl;
 }
