@@ -68,6 +68,7 @@ add_library(
     client_options.cc
     client_options.h
     download_options.h
+    hash_mismatch_error.h
     hashing_options.cc
     hashing_options.h
     hmac_key_metadata.cc
@@ -158,10 +159,12 @@ add_library(
     internal/object_metadata_parser.cc
     internal/object_metadata_parser.h
     internal/object_read_source.h
+    internal/object_read_streambuf.cc
+    internal/object_read_streambuf.h
     internal/object_requests.cc
     internal/object_requests.h
-    internal/object_streambuf.cc
-    internal/object_streambuf.h
+    internal/object_write_streambuf.cc
+    internal/object_write_streambuf.h
     internal/openssl_util.cc
     internal/openssl_util.h
     internal/parameter_pack_validation.h
@@ -228,10 +231,13 @@ add_library(
     object_access_control.h
     object_metadata.cc
     object_metadata.h
+    object_read_stream.cc
+    object_read_stream.h
     object_rewriter.cc
     object_rewriter.h
-    object_stream.cc
     object_stream.h
+    object_write_stream.cc
+    object_write_stream.h
     options.h
     override_default_project.h
     parallel_upload.cc
@@ -504,8 +510,9 @@ if (BUILD_TESTING)
         internal/metadata_parser_test.cc
         internal/notification_requests_test.cc
         internal/object_acl_requests_test.cc
+        internal/object_read_streambuf_test.cc
         internal/object_requests_test.cc
-        internal/object_streambuf_test.cc
+        internal/object_write_streambuf_test.cc
         internal/openssl_util_test.cc
         internal/parameter_pack_validation_test.cc
         internal/patch_builder_test.cc

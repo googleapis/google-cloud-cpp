@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/object_streambuf.h"
+#include "google/cloud/storage/internal/object_write_streambuf.h"
 #include "google/cloud/storage/object_metadata.h"
-#include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
@@ -681,72 +680,6 @@ TEST(ObjectWriteStreambufTest, PubsyncTooSmall) {
 
   EXPECT_EQ(half, streambuf.sputn(p0.data(), half));
   EXPECT_EQ(0, streambuf.pubsync());
-}
-
-TEST(ObjectReadStreambufTest, FailedTellg) {
-  ObjectReadStreambuf buf(ReadObjectRangeRequest{},
-                          Status(StatusCode::kInvalidArgument, "some error"));
-  std::istream stream(&buf);
-  EXPECT_EQ(-1, stream.tellg());
-}
-
-TEST(ObjectReadStreambufTest, Success) {
-  auto read_source = absl::make_unique<testing::MockObjectReadSource>();
-  EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
-  EXPECT_CALL(*read_source, Read)
-      .WillOnce(Return(ReadSourceResult{10, {}}))
-      .WillOnce(Return(ReadSourceResult{15, {}}))
-      .WillOnce(Return(ReadSourceResult{15, {}}))
-      .WillOnce(Return(ReadSourceResult{128 * 1024, {}}));
-  ObjectReadStreambuf buf(ReadObjectRangeRequest{}, std::move(read_source), 0);
-
-  std::istream stream(&buf);
-  EXPECT_EQ(0, stream.tellg());
-
-  auto read = [&](std::size_t to_read, std::streampos expected_tellg) {
-    std::vector<char> v(to_read);
-    stream.read(v.data(), v.size());
-    EXPECT_TRUE(!!stream);
-    EXPECT_EQ(expected_tellg, stream.tellg());
-  };
-  read(10, 10);
-  read(15, 25);
-  read(15, 40);
-  stream.get();
-  EXPECT_EQ(41, stream.tellg());
-  read(1000, 1041);
-  read(2000, 3041);
-  // Reach eof
-  std::vector<char> v(128 * 1024 - 1 - 1000 - 2000);
-  stream.read(v.data(), v.size());
-  EXPECT_EQ(128 * 1024 + 15 + 15 + 10, stream.tellg());
-}
-
-TEST(ObjectReadStreambufTest, WrongSeek) {
-  auto read_source = absl::make_unique<testing::MockObjectReadSource>();
-  EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
-  EXPECT_CALL(*read_source, Read).WillOnce(Return(ReadSourceResult{10, {}}));
-  ObjectReadStreambuf buf(ReadObjectRangeRequest{}, std::move(read_source), 0);
-
-  std::istream stream(&buf);
-  EXPECT_EQ(0, stream.tellg());
-
-  std::vector<char> v(10);
-  stream.read(v.data(), v.size());
-  EXPECT_TRUE(!!stream);
-  EXPECT_EQ(10, stream.tellg());
-  EXPECT_FALSE(stream.fail());
-  stream.seekg(10);
-  EXPECT_TRUE(stream.fail());
-  stream.clear();
-  stream.seekg(-1, std::ios_base::cur);
-  EXPECT_TRUE(stream.fail());
-  stream.clear();
-  stream.seekg(0, std::ios_base::beg);
-  EXPECT_TRUE(stream.fail());
-  stream.clear();
-  stream.seekg(0, std::ios_base::end);
-  EXPECT_TRUE(stream.fail());
 }
 
 }  // namespace
