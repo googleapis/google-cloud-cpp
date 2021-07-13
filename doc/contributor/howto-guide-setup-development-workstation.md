@@ -322,13 +322,10 @@ just pass this as a `-D` option to CMake, because the value must recurse to all
 the external projects in the super build.
 
 ```shell
-export OPENSSL_ROOT_DIR=/usr/local/opt/openssl
-cmake -Hsuper -Bcmake-out/si \
-    -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX="${HOME}/local-cpp" -GNinja
-cmake --build cmake-out/si --target project-dependencies
-
-cmake -H. -Bcmake-out/home -DCMAKE_PREFIX_PATH="${HOME}/local-cpp" -GNinja
-cmake --build cmake-out/home
+git clone -C $HOME https://github.com/microsoft/vcpkg.git
+$HOME/vcpkg/bootstrap-vcpkg.sh
+cmake -H. -Bcmake-out/ -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+cmake --build cmake-out -- -j $(nproc)
 ```
 
 ## Appendix: Linux VM on Google Compute Engine

@@ -5,17 +5,6 @@
 <!-- Keep these sorted by estimated date -->
 
 <details>
-<summary>2021-05-01: removing super build test files.</summary>
-
-* Shortly after 2021-05-01 we are planning to remove the super build test files
-  in the `super/` directory. `google-cloud-cpp` should remain usable in a
-  super build for a larger project, but we think this testing is redundant
-  with other testing that installs `google-cloud-cpp` in `$HOME`. Contributors
-  to `google-cloud-cpp` can use `vcpkg` to install the dependencies as part of
-  their CMake setup.
-</details>
-
-<details>
 <summary>2022-02-15: retiring legacy targets and rules</summary>
 <br>
 
@@ -77,6 +66,16 @@
   See [#2567][issue-2567] for more details.
 
 [issue-2567]: https://github.com/googleapis/google-cloud-cpp/issues/2567
+
+### Other:
+
+**We have removed the `super/` directory:** `google-cloud-cpp` remains usable in
+a super build for a larger project, but we do not believe these files add enough
+value for the additional complexity. If you prefer to build all the dependencies
+from source using CMake, we recommend you use a package manager, such as
+[vcpkg][vcpkg-github].
+
+[vcpkg-github]: https://github.com/microsoft/vcpkg
 
 ## v1.29.0 - 2021-07
 
