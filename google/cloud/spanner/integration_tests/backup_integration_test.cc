@@ -23,6 +23,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/log.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/time.h"
@@ -38,6 +39,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using fs = std::future_status;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
@@ -104,6 +106,11 @@ TEST_F(BackupTest, BackupTest) {
 
   // Cancel the CreateBackup operation.
   backup_future.cancel();
+  // TODO(#4306) - CreateBackup() times out (rarely) log for troubleshoot
+  if (backup_future.wait_for(std::chrono::minutes(5)) != fs::ready) {
+    GCP_LOG(WARNING) << "Potential timeout in CreateBackup()" << db;
+    google::cloud::LogSink::Instance().Flush();
+  }
   auto cancelled_backup = backup_future.get();
   if (cancelled_backup) {
     EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(*cancelled_backup));
@@ -130,6 +137,11 @@ TEST_F(BackupTest, BackupTest) {
       << "Database " << db.database_id()
       << " not found in the backup operation list.";
 
+  // TODO(#4306) - CreateBackup() times out (rarely) log for troubleshoot
+  if (backup_future.wait_for(std::chrono::minutes(5)) != fs::ready) {
+    GCP_LOG(WARNING) << "Potential timeout in CreateBackup()" << db;
+    google::cloud::LogSink::Instance().Flush();
+  }
   auto backup = backup_future.get();
   EXPECT_STATUS_OK(backup);
   if (backup) {
@@ -251,10 +263,14 @@ TEST_F(BackupTest, CreateBackupWithVersionTime) {
     // Create a backup when Counters[version_key] == 0.
     auto version_time = version_times[0];
     auto expire_time = MakeTimestamp(create_time + absl::Hours(8)).value();
-    auto backup =
-        database_admin_client_
-            .CreateBackup(db, db.database_id(), expire_time, version_time)
-            .get();
+    auto pending_backup = database_admin_client_.CreateBackup(
+        db, db.database_id(), expire_time, version_time);
+    // TODO(#4306) - CreateBackup() times out (rarely) log for troubleshoot
+    if (pending_backup.wait_for(std::chrono::minutes(5)) != fs::ready) {
+      GCP_LOG(WARNING) << "Potential timeout in CreateBackup()" << db;
+      google::cloud::LogSink::Instance().Flush();
+    }
+    auto backup = pending_backup.get();
     EXPECT_THAT(backup, IsOk());
     if (backup) {
       EXPECT_EQ(MakeTimestamp(backup->expire_time()).value(), expire_time);
@@ -358,10 +374,14 @@ TEST_F(BackupTest, CreateBackupWithExpiredVersionTime) {
   // version_time too far in the past (outside the version_retention_period).
   auto version_time = MakeTimestamp(create_time - absl::Hours(2)).value();
   auto expire_time = MakeTimestamp(create_time + absl::Hours(8)).value();
-  auto backup =
-      database_admin_client_
-          .CreateBackup(db, db.database_id(), expire_time, version_time)
-          .get();
+  auto pending_backup = database_admin_client_.CreateBackup(
+      db, db.database_id(), expire_time, version_time);
+  // TODO(#4306) - CreateBackup() times out (rarely) log for troubleshoot
+  if (pending_backup.wait_for(std::chrono::minutes(5)) != fs::ready) {
+    GCP_LOG(WARNING) << "Potential timeout in CreateBackup()" << db;
+    google::cloud::LogSink::Instance().Flush();
+  }
+  auto backup = pending_backup.get();
   EXPECT_THAT(backup, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("earlier than the creation time")));
   if (backup) {
@@ -396,10 +416,14 @@ TEST_F(BackupTest, CreateBackupWithFutureVersionTime) {
   // version_time in the future.
   auto version_time = MakeTimestamp(create_time + absl::Hours(2)).value();
   auto expire_time = MakeTimestamp(create_time + absl::Hours(8)).value();
-  auto backup =
-      database_admin_client_
-          .CreateBackup(db, db.database_id(), expire_time, version_time)
-          .get();
+  auto pending_backup = database_admin_client_.CreateBackup(
+      db, db.database_id(), expire_time, version_time);
+  // TODO(#4306) - CreateBackup() times out (rarely) log for troubleshoot
+  if (pending_backup.wait_for(std::chrono::minutes(5)) != fs::ready) {
+    GCP_LOG(WARNING) << "Potential timeout in CreateBackup()" << db;
+    google::cloud::LogSink::Instance().Flush();
+  }
+  auto backup = pending_backup.get();
   EXPECT_THAT(backup, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("with a future version time")));
   if (backup) {
@@ -424,10 +448,15 @@ TEST_F(BackupTest, BackupTestWithCMEK) {
   auto encryption_config = CustomerManagedEncryption(encryption_key);
 
   Database db(in, spanner_testing::RandomDatabaseName(generator_));
-  auto database =
-      database_admin_client_
-          .CreateDatabase(db, /*extra_statements=*/{}, encryption_config)
-          .get();
+  auto pending_create = database_admin_client_.CreateDatabase(
+      db, /*extra_statements=*/{}, encryption_config);
+
+  // TODO(#4306) - this test times out (rarely) additional logs to troubleshoot
+  if (pending_create.wait_for(std::chrono::minutes(5)) != fs::ready) {
+    GCP_LOG(WARNING) << "Potential timeout in CreateDatabase()" << in;
+    google::cloud::LogSink::Instance().Flush();
+  }
+  auto database = pending_create.get();
   ASSERT_STATUS_OK(database);
   EXPECT_TRUE(database->has_encryption_config());
   if (database->has_encryption_config()) {
@@ -448,10 +477,14 @@ TEST_F(BackupTest, BackupTestWithCMEK) {
   auto create_time =
       MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
   auto expire_time = MakeTimestamp(create_time + absl::Hours(7)).value();
-  auto backup = database_admin_client_
-                    .CreateBackup(db, db.database_id(), expire_time,
-                                  absl::nullopt, encryption_config)
-                    .get();
+  auto pending_backup = database_admin_client_.CreateBackup(
+      db, db.database_id(), expire_time, absl::nullopt, encryption_config);
+  // TODO(#4306) - this test times out (rarely) additional logs to troubleshoot
+  if (pending_backup.wait_for(std::chrono::minutes(5)) != fs::ready) {
+    GCP_LOG(WARNING) << "Potential timeout in CreateBackup()" << db;
+    google::cloud::LogSink::Instance().Flush();
+  }
+  auto backup = pending_backup.get();
   ASSERT_STATUS_OK(backup);
   EXPECT_TRUE(backup->has_encryption_info());
   if (backup->has_encryption_info()) {
