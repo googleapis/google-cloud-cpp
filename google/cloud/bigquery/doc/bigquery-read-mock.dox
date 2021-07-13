@@ -1,0 +1,51 @@
+/*!
+
+@page bigquery-read-mock Testing your Cloud BigQueryRead application with googlemock
+
+This document describes how to test your own Cloud BigQueryRead application using
+the Cloud BigQueryRead C++ client library, [Google Test][googletest-link] and the
+[Google Test Mocking Framework][googlemock-link].
+
+### Mocking a Successful BigQueryReadClient::GetServiceAccount() call
+
+First include the headers for the Cloud BigQueryRead Client, the mocking class,
+and the Google Mock framework:
+
+@snippet mock_bigquery_read.cc required-includes
+
+The example uses a number of aliases to save typing and improve readability:
+
+@snippet mock_bigquery_read.cc helper-aliases
+
+Create a mocking object for `google::cloud::bigquery::BigQueryReadConnection`:
+
+@snippet mock_bigquery_read.cc create-mock
+
+It is customary to first setup the expectations for your mock, and then
+write the rest of the code:
+
+@snippet mock_bigquery_read.cc setup-expectations
+
+With the expectations in place, create a
+`google::cloud::bigquery::BigQueryReadClient` object:
+
+@snippet mock_bigquery_read.cc create-client
+
+And then make calls on the client as usual:
+
+@snippet mock_bigquery_read.cc client-call
+
+And then verify the results meet your expectations:
+
+@snippet mock_bigquery_read.cc expected-results
+
+### Full Listing
+
+Finally we present the full code for this example:
+
+@snippet mock_bigquery_read.cc all
+
+[googletest-link]: https://github.com/google/googletest
+[googlemock-link]: https://github.com/google/googletest/tree/master/googlemock
+
+*/
