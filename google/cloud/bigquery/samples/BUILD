@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Examples for the Cloud IAM C++ client library."""
+"""Examples for the Cloud BigQuery C++ client library."""
 
 package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(":iam_client_samples.bzl", "iam_client_samples")
+load(":bigquery_client_samples.bzl", "bigquery_client_samples")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
@@ -28,23 +28,23 @@ load(":iam_client_samples.bzl", "iam_client_samples")
         "integration-test",
     ],
     deps = [
-        "//:experimental-iam",
+        "//:experimental-bigquery",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
     ],
-) for test in iam_client_samples]
+) for test in bigquery_client_samples]
 
-load(":iam_client_mock_samples.bzl", "iam_client_mock_samples")
+load(":bigquery_client_mock_samples.bzl", "bigquery_client_mock_samples")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
-        "//:experimental-iam",
-        "//:experimental-iam-mocks",
+        "//:experimental-bigquery",
+        "//:experimental-bigquery-mocks",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
     ],
-) for test in iam_client_mock_samples]
+) for test in bigquery_client_mock_samples]
