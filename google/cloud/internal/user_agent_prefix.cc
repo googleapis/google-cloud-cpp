@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/user_agent_prefix.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/compiler_info.h"
 
 namespace google {
@@ -21,10 +22,10 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 std::string UserAgentPrefix() {
-  return "gcloud-cpp/" + ::google::cloud::version_string() + " (" +
-         ::google::cloud::internal::CompilerId() + "-" +
-         ::google::cloud::internal::CompilerVersion() + "; " +
-         ::google::cloud::internal::CompilerFeatures() + ")";
+  static auto const* const kUserAgentPrefix = new auto(
+      absl::StrCat("gcloud-cpp/", version_string(), " (", CompilerId(), "-",
+                   CompilerVersion(), "; ", CompilerFeatures(), ")"));
+  return *kUserAgentPrefix;
 }
 
 }  // namespace internal

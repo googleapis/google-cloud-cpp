@@ -99,8 +99,6 @@ add_library(
     internal/subscription_message_source.h
     internal/subscription_session.cc
     internal/subscription_session.h
-    internal/user_agent_prefix.cc
-    internal/user_agent_prefix.h
     message.cc
     message.h
     publisher.cc
@@ -254,7 +252,6 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/subscription_lease_management_test.cc
         internal/subscription_message_queue_test.cc
         internal/subscription_session_test.cc
-        internal/user_agent_prefix_test.cc
         message_test.cc
         publisher_connection_test.cc
         publisher_options_test.cc

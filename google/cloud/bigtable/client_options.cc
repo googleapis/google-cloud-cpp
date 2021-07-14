@@ -15,8 +15,8 @@
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/internal/background_threads_impl.h"
-#include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/user_agent_prefix.h"
 #include "absl/strings/str_split.h"
 #include <limits>
 #include <thread>
@@ -92,9 +92,7 @@ ClientOptions& ClientOptions::set_connection_pool_size(std::size_t size) {
 }
 
 std::string ClientOptions::UserAgentPrefix() {
-  std::string agent = "gcloud-cpp/" + version_string() + " " +
-                      google::cloud::internal::compiler();
-  return agent;
+  return google::cloud::internal::UserAgentPrefix();
 }
 
 ClientOptions& ClientOptions::DisableBackgroundThreads(

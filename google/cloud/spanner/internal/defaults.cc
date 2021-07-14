@@ -56,7 +56,7 @@ void SetBasicDefaults(Options& opts) {
   }
   // Inserts our user-agent string at the front.
   auto& products = opts.lookup<UserAgentProductsOption>();
-  products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
+  products.insert(products.begin(), internal::UserAgentPrefix());
 }
 
 }  // namespace

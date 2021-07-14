@@ -259,7 +259,7 @@ TEST_F(ClientOptionsTest, UserAgentPrefix) {
   options.add_user_agent_prefix("foo-1.0");
   EXPECT_EQ("foo-1.0", options.user_agent_prefix());
   options.add_user_agent_prefix("bar-2.2");
-  EXPECT_EQ("bar-2.2/foo-1.0", options.user_agent_prefix());
+  EXPECT_EQ("bar-2.2 foo-1.0", options.user_agent_prefix());
 }
 
 TEST_F(ClientOptionsTest, SetMaximumSimpleUploadSize) {
