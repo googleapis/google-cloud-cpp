@@ -99,7 +99,8 @@ TEST_F(SmallReadsIntegrationTest, ReadFullSingleRead) {
 
   std::vector<char> buffer(2 * contents.size());
   auto reader = client->ReadObject(bucket_name_, object_name);
-  EXPECT_TRUE(reader.read(buffer.data(), static_cast<std::streamsize>(buffer.size())));
+  EXPECT_TRUE(
+      reader.read(buffer.data(), static_cast<std::streamsize>(buffer.size())));
   ASSERT_GT(reader.gcount(), 0);
   auto const size = static_cast<std::size_t>(reader.gcount());
   EXPECT_TRUE(reader.eof());
