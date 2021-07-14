@@ -40,7 +40,7 @@ class ObjectReadStream : public std::basic_istream<char> {
    *
    * Attempts to use this stream will result in failures.
    */
-  ObjectReadStream() : std::basic_istream<char>(nullptr), buf_() {}
+  ObjectReadStream();
 
   /**
    * Creates a stream associated with the given `streambuf`.
@@ -51,28 +51,19 @@ class ObjectReadStream : public std::basic_istream<char> {
     init(buf_.get());
   }
 
-  ObjectReadStream(ObjectReadStream&& rhs) noexcept
-      : ObjectReadStream(std::move(rhs.buf_)) {
-    // We cannot use set_rdbuf() because older versions of libstdc++ do not
-    // implement this function. Unfortunately `move()` resets `rdbuf()`, and
-    // `rdbuf()` resets the state, so we have to manually copy the rest of
-    // the state.
-    setstate(rhs.rdstate());
-    copyfmt(rhs);
-    rhs.rdbuf(nullptr);
-  }
+  ObjectReadStream(ObjectReadStream&& rhs) noexcept;
 
   ObjectReadStream& operator=(ObjectReadStream&& rhs) noexcept {
-    buf_ = std::move(rhs.buf_);
-    // Use rdbuf() (instead of set_rdbuf()) because older versions of libstdc++
-    // do not implement this function. Unfortunately `rdbuf()` resets the state,
-    // and `move()` resets `rdbuf()`, so we have to manually copy the rest of
-    // the state.
-    rdbuf(buf_.get());
-    setstate(rhs.rdstate());
-    copyfmt(rhs);
-    rhs.rdbuf(nullptr);
+    ObjectReadStream tmp(std::move(rhs));
+    swap(tmp);
     return *this;
+  }
+
+  void swap(ObjectReadStream& rhs) {
+    std::basic_istream<char>::swap(rhs);
+    std::swap(buf_, rhs.buf_);
+    rhs.set_rdbuf(rhs.buf_.get());
+    set_rdbuf(buf_.get());
   }
 
   ObjectReadStream(ObjectReadStream const&) = delete;

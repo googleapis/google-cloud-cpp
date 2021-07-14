@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/object_read_stream.h"
 #include "google/cloud/log.h"
+#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -23,6 +24,17 @@ static_assert(std::is_move_assignable<ObjectReadStream>::value,
               "storage::ObjectReadStream must be move assignable.");
 static_assert(std::is_move_constructible<ObjectReadStream>::value,
               "storage::ObjectReadStream must be move constructible.");
+
+ObjectReadStream::ObjectReadStream()
+    : ObjectReadStream(absl::make_unique<internal::ObjectReadStreambuf>(
+          internal::ReadObjectRangeRequest("", ""),
+          Status(StatusCode::kUnimplemented, "null stream"))) {}
+
+ObjectReadStream::ObjectReadStream(ObjectReadStream&& rhs) noexcept
+    : std::basic_istream<char>(std::move(rhs)), buf_(std::move(rhs.buf_)) {
+  rhs.set_rdbuf(nullptr);
+  set_rdbuf(buf_.get());
+}
 
 ObjectReadStream::~ObjectReadStream() {
   if (!IsOpen()) {

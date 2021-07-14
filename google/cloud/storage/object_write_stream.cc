@@ -19,13 +19,36 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 
+ObjectWriteStream::ObjectWriteStream()
+    : ObjectWriteStream(absl::make_unique<internal::ObjectWriteStreambuf>(
+          absl::make_unique<internal::ResumableUploadSessionError>(
+              Status(StatusCode::kUnimplemented, "null stream")),
+          /*max_buffer_size=*/0,
+          absl::make_unique<internal::NullHashValidator>(),
+          AutoFinalizeConfig::kDisabled)) {}
+
 ObjectWriteStream::ObjectWriteStream(
     std::unique_ptr<internal::ObjectWriteStreambuf> buf)
-    : std::basic_ostream<char>(nullptr), buf_(std::move(buf)) {
-  init(buf_.get());
+    : std::basic_ostream<char>(buf.get()), buf_(std::move(buf)) {
   // If buf_ is already closed, update internal state to represent
   // the fact that no more bytes can be uploaded to this object.
   if (buf_ && !buf_->IsOpen()) CloseBuf();
+}
+
+ObjectWriteStream::ObjectWriteStream(ObjectWriteStream&& rhs) noexcept
+    : std::basic_ostream<char>(std::move(rhs)),
+      buf_(std::move(rhs.buf_)),
+      metadata_(std::move(rhs.metadata_)),
+      headers_(std::move(rhs.headers_)),
+      payload_(std::move(rhs.payload_)) {
+  rhs.set_rdbuf(nullptr);
+  set_rdbuf(buf_.get());
+  if (!buf_) {
+    setstate(std::ios::badbit | std::ios::eofbit);
+  } else {
+    if (!buf_->last_status().ok()) setstate(std::ios::badbit);
+    if (!buf_->IsOpen()) setstate(std::ios::eofbit);
+  }
 }
 
 ObjectWriteStream::~ObjectWriteStream() {
