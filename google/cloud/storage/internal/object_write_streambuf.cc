@@ -59,8 +59,12 @@ bool ObjectWriteStreambuf::IsOpen() const {
 }
 
 bool ObjectWriteStreambuf::ValidateHash(ObjectMetadata const& meta) {
-  hash_validator_->ProcessMetadata(meta);
-  hash_validator_result_ = std::move(*hash_validator_).Finish();
+  // This function is called once the stream is "closed" (either an explicit
+  // `Close()` call or a permanent error). After this point the validator is
+  // not usable.
+  auto validator = std::move(hash_validator_);
+  validator->ProcessMetadata(meta);
+  hash_validator_result_ = std::move(*validator).Finish();
   return !hash_validator_result_.is_mismatch;
 }
 
