@@ -113,6 +113,9 @@ void ObjectReadStreambuf::ThrowHashMismatchDelegate(const char* function_name) {
 }
 
 bool ObjectReadStreambuf::ValidateHashes(char const* function_name) {
+  // This function is called once the stream is "closed" (either an explicit
+  // `Close()` call or a permanent error). After this point the validator is
+  // not usable.
   auto validator = std::move(hash_validator_);
   hash_validator_result_ = std::move(*validator).Finish();
   if (!hash_validator_result_.is_mismatch) return true;
