@@ -105,10 +105,8 @@ class ClientOptions {
    *     passing in @p creds as a `GrpcCredentialOption`.
    *
    * @param creds gRPC authentication credentials
-   * @param opts (optional) configuration options
    */
-  explicit ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds,
-                         Options opts = {});
+  explicit ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds);
 
   /// Return the current endpoint for data RPCs.
   std::string const& data_endpoint() const {
