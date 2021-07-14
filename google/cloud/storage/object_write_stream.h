@@ -123,35 +123,29 @@ class ObjectWriteStream : public std::basic_ostream<char> {
   explicit ObjectWriteStream(
       std::unique_ptr<internal::ObjectWriteStreambuf> buf);
 
-  // We cannot use set_rdbuf() because older versions of libstdc++ do not
-  // implement this function. Unfortunately `move()` resets `rdbuf()`, and
-  // `rdbuf()` resets the state, so we have to manually copy the rest of
-  // the state.
   ObjectWriteStream(ObjectWriteStream&& rhs) noexcept
-      : buf_(std::move(rhs.buf_)),
+      : std::basic_ostream<char>(std::move(*this)),
+        buf_(std::move(rhs.buf_)),
         metadata_(std::move(rhs.metadata_)),
         headers_(std::move(rhs.headers_)),
         payload_(std::move(rhs.payload_)) {
-    init(buf_.get());
-    setstate(rhs.rdstate());
-    copyfmt(rhs);
-    rhs.rdbuf(nullptr);
+    set_rdbuf(buf_.get());
   }
 
   ObjectWriteStream& operator=(ObjectWriteStream&& rhs) noexcept {
-    buf_ = std::move(rhs.buf_);
-    metadata_ = std::move(rhs.metadata_);
-    headers_ = std::move(rhs.headers_);
-    payload_ = std::move(rhs.payload_);
-    // Use rdbuf() (instead of set_rdbuf()) because older versions of libstdc++
-    // do not implement this function. Unfortunately `rdbuf()` resets the state,
-    // and `move()` resets `rdbuf()`, so we have to manually copy the rest of
-    // the state.
-    rdbuf(buf_.get());
-    setstate(rhs.rdstate());
-    copyfmt(rhs);
-    rhs.rdbuf(nullptr);
+    ObjectWriteStream tmp(std::move(rhs));
+    tmp.swap(rhs);
     return *this;
+  }
+
+  void swap(ObjectWriteStream& rhs) {
+    basic_ostream<char>::swap(rhs);
+    std::swap(buf_, rhs.buf_);
+    rhs.set_rdbuf(rhs.buf_.get());
+    set_rdbuf(buf_.get());
+    std::swap(metadata_, rhs.metadata_);
+    std::swap(headers_, rhs.headers_);
+    std::swap(payload_, rhs.payload_);
   }
 
   ObjectWriteStream(ObjectWriteStream const&) = delete;
