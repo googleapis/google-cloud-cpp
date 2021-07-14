@@ -18,6 +18,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/user_agent_prefix.h"
 
 namespace google {
 namespace cloud {
@@ -29,12 +30,8 @@ std::string ConnectionOptionsTraits::default_endpoint() {
 }
 
 std::string ConnectionOptionsTraits::user_agent_prefix() {
-  static auto const* const kUserAgentPrefix = new auto([] {
-    auto const defaults = spanner_internal::DefaultOptions();
-    auto const& products = defaults.get<UserAgentProductsOption>();
-    return absl::StrJoin(products, " ");
-  }());
-  return *kUserAgentPrefix;
+  static auto const kUserAgentPrefix = internal::UserAgentPrefix();
+  return kUserAgentPrefix;
 }
 
 int ConnectionOptionsTraits::default_num_channels() {

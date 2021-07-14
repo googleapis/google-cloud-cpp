@@ -16,7 +16,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
-#include "google/cloud/internal/build_info.h"
+#include "google/cloud/internal/user_agent_prefix.h"
 
 namespace google {
 namespace cloud {
@@ -120,9 +120,8 @@ std::string CurlRequestBuilder::UserAgentSuffix() const {
   ValidateBuilderState(__func__);
   // Pre-compute and cache the user agent string:
   static std::string const kUserAgentSuffix = [] {
-    std::string agent = "gcloud-cpp/" + storage::version_string() + " ";
+    std::string agent = google::cloud::internal::UserAgentPrefix() + " ";
     agent += curl_version();
-    agent += " " + google::cloud::internal::compiler();
     return agent;
   }();
   return kUserAgentSuffix;

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/connection_options.h"
-#include "google/cloud/pubsub/internal/user_agent_prefix.h"
+#include "google/cloud/internal/user_agent_prefix.h"
 #include <thread>
 
 namespace google {
@@ -26,7 +26,8 @@ std::string ConnectionOptionsTraits::default_endpoint() {
 }
 
 std::string ConnectionOptionsTraits::user_agent_prefix() {
-  return pubsub_internal::UserAgentPrefix();
+  static auto const kUserAgentPrefix = internal::UserAgentPrefix();
+  return kUserAgentPrefix;
 }
 
 int ConnectionOptionsTraits::default_num_channels() {
