@@ -182,7 +182,7 @@ class ClientOptions {
   ClientOptions& add_user_agent_prefix(std::string prefix) {
     opts_.lookup<UserAgentProductsOption>().push_back(prefix);
     if (!user_agent_prefix_.empty()) {
-      prefix += '/';
+      prefix += ' ';
       prefix += user_agent_prefix_;
     }
     user_agent_prefix_ = std::move(prefix);
