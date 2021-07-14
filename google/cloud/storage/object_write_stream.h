@@ -123,18 +123,11 @@ class ObjectWriteStream : public std::basic_ostream<char> {
   explicit ObjectWriteStream(
       std::unique_ptr<internal::ObjectWriteStreambuf> buf);
 
-  ObjectWriteStream(ObjectWriteStream&& rhs) noexcept
-      : std::basic_ostream<char>(std::move(*this)),
-        buf_(std::move(rhs.buf_)),
-        metadata_(std::move(rhs.metadata_)),
-        headers_(std::move(rhs.headers_)),
-        payload_(std::move(rhs.payload_)) {
-    set_rdbuf(buf_.get());
-  }
+  ObjectWriteStream(ObjectWriteStream&& rhs) noexcept;
 
   ObjectWriteStream& operator=(ObjectWriteStream&& rhs) noexcept {
     ObjectWriteStream tmp(std::move(rhs));
-    tmp.swap(rhs);
+    swap(tmp);
     return *this;
   }
 

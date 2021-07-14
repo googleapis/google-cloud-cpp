@@ -28,6 +28,22 @@ ObjectWriteStream::ObjectWriteStream(
   if (buf_ && !buf_->IsOpen()) CloseBuf();
 }
 
+ObjectWriteStream::ObjectWriteStream(ObjectWriteStream&& rhs) noexcept
+    : std::basic_ostream<char>(std::move(*this)),
+      buf_(std::move(rhs.buf_)),
+      metadata_(std::move(rhs.metadata_)),
+      headers_(std::move(rhs.headers_)),
+      payload_(std::move(rhs.payload_)) {
+  rhs.set_rdbuf(nullptr);
+  set_rdbuf(buf_.get());
+  if (!buf_) {
+    setstate(std::ios::badbit | std::ios::eofbit);
+  } else {
+    if (!buf_->last_status().ok()) setstate(std::ios::badbit);
+    if (!buf_->IsOpen()) setstate(std::ios::eofbit);
+  }
+}
+
 ObjectWriteStream::~ObjectWriteStream() {
   if (!IsOpen()) return;
   // Disable exceptions, even if the application had enabled exceptions the
