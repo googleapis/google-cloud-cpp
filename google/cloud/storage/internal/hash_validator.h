@@ -52,7 +52,11 @@ class HashValidator {
     std::string computed;
     /// A flag indicating of this is considered a mismatch based on the rules
     /// for the validator.
-    bool is_mismatch;
+    bool is_mismatch = false;
+
+    Result() = default;
+    Result(std::string r, std::string c, bool m)
+        : received(std::move(r)), computed(std::move(c)), is_mismatch(m) {}
   };
 
   /**

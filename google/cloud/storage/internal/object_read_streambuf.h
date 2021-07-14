@@ -74,9 +74,9 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
 
  private:
   int_type ReportError(Status status);
-  void SetEmptyRegion();
-  std::string FinishValidator(char const* function_name);
-  StatusOr<int_type> Peek();
+  void ThrowHashMismatchDelegate(char const* function_name);
+  bool ValidateHashes(char const* function_name);
+  bool CheckPreconditions(char const* function_name);
 
   int_type underflow() override;
   std::streamsize xsgetn(char* s, std::streamsize count) override;

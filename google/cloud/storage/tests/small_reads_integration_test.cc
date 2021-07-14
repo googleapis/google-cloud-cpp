@@ -84,6 +84,49 @@ TEST_F(SmallReadsIntegrationTest, Repro5096) {
   }
 }
 
+TEST_F(SmallReadsIntegrationTest, ReadFullSingleRead) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+
+  // Create a small object, read it all in the first .read() call
+  auto meta = client->InsertObject(bucket_name_, object_name, LoremIpsum(),
+                                   IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
+  std::vector<char> buffer(2 * meta->size());
+  auto reader = client->ReadObject(bucket_name_, object_name);
+  reader.read(buffer.data(), static_cast<std::streamsize>(buffer.size()));
+  EXPECT_TRUE(reader.eof());
+  EXPECT_TRUE(reader.fail());
+  EXPECT_FALSE(reader.bad());
+  ASSERT_STATUS_OK(reader.status());
+  EXPECT_EQ(LoremIpsum(), std::string(buffer.data(), reader.gcount()));
+}
+
+TEST_F(SmallReadsIntegrationTest, ReadFullByChar) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+
+  // Create a small object, read it all in the first .read() call
+  auto meta = client->InsertObject(bucket_name_, object_name, LoremIpsum(),
+                                   IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
+  auto reader = client->ReadObject(bucket_name_, object_name);
+  auto actual = std::string{std::istreambuf_iterator<char>(reader), {}};
+  ASSERT_STATUS_OK(reader.status());
+  EXPECT_FALSE(reader.eof());
+  EXPECT_FALSE(reader.fail());
+  EXPECT_TRUE(reader.good());
+  EXPECT_EQ(LoremIpsum(), actual);
+}
+
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

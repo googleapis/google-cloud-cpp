@@ -65,135 +65,6 @@ void ObjectReadStreambuf::Close() {
   }
 }
 
-StatusOr<ObjectReadStreambuf::int_type> ObjectReadStreambuf::Peek() {
-  if (!IsOpen()) {
-    // The stream is closed, reading from a closed stream can happen if there is
-    // no object to read from, or the object is empty. In that case just setup
-    // an empty (but valid) region and verify the checksums.
-    SetEmptyRegion();
-    return traits_type::eof();
-  }
-
-  auto constexpr kInitialPeekRead = 128 * 1024;
-  current_ios_buffer_.resize(kInitialPeekRead);
-  std::size_t n = current_ios_buffer_.size();
-  StatusOr<ReadSourceResult> read_result =
-      source_->Read(current_ios_buffer_.data(), n);
-  if (!read_result.ok()) {
-    return std::move(read_result).status();
-  }
-  source_pos_ += read_result->bytes_received;
-  // assert(n <= current_ios_buffer_.size())
-  current_ios_buffer_.resize(read_result->bytes_received);
-
-  auto hint = headers_.end();
-  for (auto& kv : read_result->response.headers) {
-    hash_validator_->ProcessHeader(kv.first, kv.second);
-    hint =
-        std::next(headers_.emplace_hint(hint, kv.first, std::move(kv.second)));
-  }
-  if (read_result->response.status_code >= HttpStatusCode::kMinNotSuccess) {
-    return AsStatus(read_result->response);
-  }
-
-  if (!current_ios_buffer_.empty()) {
-    char* data = current_ios_buffer_.data();
-    hash_validator_->Update(data, current_ios_buffer_.size());
-    setg(data, data, data + current_ios_buffer_.size());
-    return traits_type::to_int_type(*data);
-  }
-
-  // This is an actual EOF, there is no more data to download, create an
-  // empty (but valid) region:
-  SetEmptyRegion();
-  return traits_type::eof();
-}
-
-ObjectReadStreambuf::int_type ObjectReadStreambuf::underflow() {
-  auto next_char = Peek();
-  if (!next_char) return ReportError(next_char.status());
-  if (*next_char != traits_type::eof()) return *next_char;
-
-  auto msg = FinishValidator(__func__);
-  if (!hash_validator_result_.is_mismatch) return traits_type::eof();
-  if (status_.ok()) {
-    // If there is an existing error, we should report that instead because
-    // it is more specific. For example, every permanent network error will
-    // produce invalid checksums, but that is not the interesting
-    // information.
-    status_ = Status(StatusCode::kDataLoss, msg);
-  }
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  throw HashMismatchError(msg, received_hash(), computed_hash());
-#else
-  return traits_type::eof();
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
-  // This function optimizes stream.read(), the data is copied directly from the
-  // data source (typically libcurl) into a buffer provided by the application.
-  std::streamsize offset = 0;
-  if (!status_.ok()) {
-    return 0;
-  }
-
-  auto const* function_name = __func__;
-  auto run_validator_if_closed = [this, function_name, &offset](Status s) {
-    ReportError(std::move(s));
-    // Only validate the checksums once the stream is closed.
-    if (IsOpen()) return offset;
-    auto msg = FinishValidator(function_name);
-    if (!hash_validator_result_.is_mismatch) return offset;
-      // The only way to report errors from a std::basic_streambuf<> (which this
-      // class derives from) is to throw exceptions:
-      //   https://stackoverflow.com/questions/50716688/how-to-set-the-badbit-of-a-stream-by-a-customized-streambuf
-      // but we need to be able to report errors when the application has
-      // disabled exceptions via `-fno-exceptions` or a similar option. In that
-      // case we set `status_`, and report the error as an 0-byte read. This is
-      // obviously not ideal, but it is the best we can do when the application
-      // disables the standard mechanism to signal errors.
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    throw HashMismatchError(msg, received_hash(), computed_hash());
-#else
-    return std::streamsize(0);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  };
-
-  // Maybe the internal get area is enough to satisfy this request, no need to
-  // read more in that case:
-  auto from_internal = (std::min)(count, in_avail());
-  if (from_internal > 0) {
-    std::memcpy(s, gptr(), static_cast<std::size_t>(from_internal));
-  }
-  gbump(static_cast<int>(from_internal));
-  offset += from_internal;
-  if (offset >= count) {
-    return run_validator_if_closed(Status());
-  }
-
-  StatusOr<ReadSourceResult> read_result =
-      source_->Read(s + offset, static_cast<std::size_t>(count - offset));
-  // If there was an error set the internal state, but we still return the
-  // number of bytes.
-  if (!read_result) {
-    return run_validator_if_closed(std::move(read_result).status());
-  }
-
-  hash_validator_->Update(s + offset, read_result->bytes_received);
-  offset += read_result->bytes_received;
-  source_pos_ += read_result->bytes_received;
-
-  for (auto const& kv : read_result->response.headers) {
-    hash_validator_->ProcessHeader(kv.first, kv.second);
-    headers_.emplace(kv.first, kv.second);
-  }
-  if (read_result->response.status_code >= HttpStatusCode::kMinNotSuccess) {
-    return run_validator_if_closed(AsStatus(read_result->response));
-  }
-  return run_validator_if_closed(Status());
-}
-
 ObjectReadStreambuf::int_type ObjectReadStreambuf::ReportError(Status status) {
   // The only way to report errors from a std::basic_streambuf<> (which this
   // class derives from) is to throw exceptions:
@@ -214,17 +85,7 @@ ObjectReadStreambuf::int_type ObjectReadStreambuf::ReportError(Status status) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-void ObjectReadStreambuf::SetEmptyRegion() {
-  current_ios_buffer_.clear();
-  current_ios_buffer_.push_back('\0');
-  char* data = &current_ios_buffer_[0];
-  setg(data, data + 1, data + 1);
-}
-
-std::string ObjectReadStreambuf::FinishValidator(char const* function_name) {
-  hash_validator_result_ = std::move(*hash_validator_).Finish();
-  if (!hash_validator_result_.is_mismatch) return {};
-
+void ObjectReadStreambuf::ThrowHashMismatchDelegate(const char* function_name) {
   std::string msg;
   msg += function_name;
   msg += "(): mismatched hashes in download";
@@ -238,7 +99,96 @@ std::string ObjectReadStreambuf::FinishValidator(char const* function_name) {
     // produce invalid checksums, but that is not the interesting information.
     status_ = Status(StatusCode::kDataLoss, msg);
   }
-  return msg;
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // The only way to report errors from a std::basic_streambuf<> (which this
+  // class derives from) is to throw exceptions:
+  //   https://stackoverflow.com/questions/50716688/how-to-set-the-badbit-of-a-stream-by-a-customized-streambuf
+  // but we need to be able to report errors when the application has
+  // disabled exceptions via `-fno-exceptions` or a similar option. In that
+  // case we set `status_`, and report the error as an 0-byte read. This is
+  // obviously not ideal, but it is the best we can do when the application
+  // disables the standard mechanism to signal errors.
+  throw HashMismatchError(msg, received_hash(), computed_hash());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+bool ObjectReadStreambuf::ValidateHashes(char const* function_name) {
+  auto validator = std::move(hash_validator_);
+  hash_validator_result_ = std::move(*validator).Finish();
+  if (!hash_validator_result_.is_mismatch) return true;
+  ThrowHashMismatchDelegate(function_name);
+  return false;
+}
+
+bool ObjectReadStreambuf::CheckPreconditions(char const* function_name) {
+  if (hash_validator_result_.is_mismatch) {
+    ThrowHashMismatchDelegate(function_name);
+  }
+  if (in_avail() != 0) return true;
+  return status_.ok() && IsOpen();
+}
+
+ObjectReadStreambuf::int_type ObjectReadStreambuf::underflow() {
+  if (!CheckPreconditions(__func__)) return traits_type::eof();
+
+  // If this function is called, then the internal buffer must be empty. We will
+  // perform a read into a new buffer and reset the input area to use this
+  // buffer.
+  auto constexpr kInitialPeekRead = 128 * 1024;
+  std::vector<char> buffer(kInitialPeekRead);
+  auto const offset = xsgetn(buffer.data(), kInitialPeekRead);
+  if (offset == 0) return traits_type::eof();
+
+  buffer.resize(offset);
+  buffer.swap(current_ios_buffer_);
+  char* data = current_ios_buffer_.data();
+  setg(data, data, data + current_ios_buffer_.size());
+  return traits_type::to_int_type(*data);
+}
+
+std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
+  if (!CheckPreconditions(__func__)) return 0;
+
+  // This function optimizes stream.read(), the data is copied directly from the
+  // data source (typically libcurl) into a buffer provided by the application.
+  std::streamsize offset = 0;
+
+  // Maybe the internal get area is enough to satisfy this request, no need to
+  // read more in that case:
+  auto from_internal = (std::min)(count, in_avail());
+  if (from_internal > 0) {
+    std::memcpy(s, gptr(), static_cast<std::size_t>(from_internal));
+  }
+  gbump(static_cast<int>(from_internal));
+  offset += from_internal;
+  // If we got all the data requested, there is no need for additional reads.
+  // Likewise, if the underlying transport is closed, whatever we got is all the
+  // data available.
+  if (offset >= count || !IsOpen()) return offset;
+
+  auto const* function_name = __func__;
+  auto run_validator_if_closed = [this, function_name, &offset](Status s) {
+    ReportError(std::move(s));
+    // Only validate the checksums once the stream is closed.
+    if (IsOpen()) return offset;
+    return ValidateHashes(function_name) ? offset : 0;
+  };
+
+  StatusOr<ReadSourceResult> read =
+      source_->Read(s + offset, static_cast<std::size_t>(count - offset));
+  // If there was an error set the internal state, but we still return the
+  // number of bytes.
+  if (!read) return run_validator_if_closed(std::move(read).status());
+
+  hash_validator_->Update(s + offset, read->bytes_received);
+  offset += static_cast<std::streamsize>(read->bytes_received);
+  source_pos_ += static_cast<std::streamoff>(read->bytes_received);
+
+  for (auto const& kv : read->response.headers) {
+    hash_validator_->ProcessHeader(kv.first, kv.second);
+    headers_.emplace(kv.first, kv.second);
+  }
+  return run_validator_if_closed(Status());
 }
 
 }  // namespace internal
