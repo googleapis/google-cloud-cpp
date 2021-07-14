@@ -123,15 +123,16 @@ class ObjectWriteStream : public std::basic_ostream<char> {
   explicit ObjectWriteStream(
       std::unique_ptr<internal::ObjectWriteStreambuf> buf);
 
+  // We cannot use set_rdbuf() because older versions of libstdc++ do not
+  // implement this function. Unfortunately `move()` resets `rdbuf()`, and
+  // `rdbuf()` resets the state, so we have to manually copy the rest of
+  // the state.
   ObjectWriteStream(ObjectWriteStream&& rhs) noexcept
-      : ObjectWriteStream(std::move(rhs.buf_)) {
-    metadata_ = std::move(rhs.metadata_);
-    headers_ = std::move(rhs.headers_);
-    payload_ = std::move(rhs.payload_);
-    // We cannot use set_rdbuf() because older versions of libstdc++ do not
-    // implement this function. Unfortunately `move()` resets `rdbuf()`, and
-    // `rdbuf()` resets the state, so we have to manually copy the rest of
-    // the state.
+      : buf_(std::move(rhs.buf_)),
+        metadata_(std::move(rhs.metadata_)),
+        headers_(std::move(rhs.headers_)),
+        payload_(std::move(rhs.payload_)) {
+    init(buf_.get());
     setstate(rhs.rdstate());
     copyfmt(rhs);
     rhs.rdbuf(nullptr);
