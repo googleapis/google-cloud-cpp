@@ -43,15 +43,14 @@ TEST(StorageMockingSamples, MockReadObject) {
         l, gcs::internal::HttpResponse{200, {}, {}}};
   };
   EXPECT_CALL(*mock, ReadObject)
-      .WillOnce([simulate_read](
-                    gcs::internal::ReadObjectRangeRequest const& request) {
+      .WillOnce([&](gcs::internal::ReadObjectRangeRequest const& request) {
         EXPECT_EQ(request.bucket_name(), "mock-bucket-name") << request;
         std::unique_ptr<gcs::testing::MockObjectReadSource> mock_source(
             new gcs::testing::MockObjectReadSource);
-        EXPECT_CALL(*mock_source, IsOpen())
-            .WillOnce(Return(true))
-            .WillRepeatedly(Return(false));
-        EXPECT_CALL(*mock_source, Read).WillRepeatedly(simulate_read);
+        ::testing::InSequence seq;
+        EXPECT_CALL(*mock_source, IsOpen()).WillRepeatedly(Return(true));
+        EXPECT_CALL(*mock_source, Read).WillOnce(simulate_read);
+        EXPECT_CALL(*mock_source, IsOpen()).WillRepeatedly(Return(false));
 
         return google::cloud::make_status_or(
             std::unique_ptr<gcs::internal::ObjectReadSource>(
@@ -126,13 +125,13 @@ TEST(StorageMockingSamples, MockReadObjectFailure) {
       .WillOnce([](gcs::internal::ReadObjectRangeRequest const& request) {
         EXPECT_EQ(request.bucket_name(), "mock-bucket-name") << request;
         auto* mock_source = new gcs::testing::MockObjectReadSource;
-        EXPECT_CALL(*mock_source, IsOpen())
-            .WillOnce(Return(true))
-            .WillRepeatedly(Return(false));
+        ::testing::InSequence seq;
+        EXPECT_CALL(*mock_source, IsOpen).WillRepeatedly(Return(true));
         EXPECT_CALL(*mock_source, Read)
             .WillOnce(Return(google::cloud::Status(
                 google::cloud::StatusCode::kInvalidArgument,
                 "Invalid Argument")));
+        EXPECT_CALL(*mock_source, IsOpen).WillRepeatedly(Return(false));
 
         std::unique_ptr<gcs::internal::ObjectReadSource> result(mock_source);
 
