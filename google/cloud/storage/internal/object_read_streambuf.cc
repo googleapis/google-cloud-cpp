@@ -142,7 +142,7 @@ ObjectReadStreambuf::int_type ObjectReadStreambuf::underflow() {
   auto const offset = xsgetn(buffer.data(), kInitialPeekRead);
   if (offset == 0) return traits_type::eof();
 
-  buffer.resize(offset);
+  buffer.resize(static_cast<std::size_t>(offset));
   buffer.swap(current_ios_buffer_);
   char* data = current_ios_buffer_.data();
   setg(data, data, data + current_ios_buffer_.size());
