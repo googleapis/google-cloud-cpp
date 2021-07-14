@@ -106,7 +106,7 @@ TEST_F(SmallReadsIntegrationTest, ReadFullSingleRead) {
   EXPECT_TRUE(reader.fail());
   EXPECT_FALSE(reader.bad());
   ASSERT_STATUS_OK(reader.status());
-  EXPECT_EQ(LoremIpsum(), std::string(buffer.data(), size));
+  EXPECT_EQ(contents, std::string(buffer.data(), size));
 }
 
 TEST_F(SmallReadsIntegrationTest, ReadFullByChar) {
