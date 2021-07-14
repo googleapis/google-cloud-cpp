@@ -22,7 +22,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 std::string UserAgentPrefix() {
-  static auto* const kUserAgentPrefix = new auto(
+  static auto const* const kUserAgentPrefix = new auto(
       absl::StrCat("gcloud-cpp/", version_string(), " (", CompilerId(), "-",
                    CompilerVersion(), "; ", CompilerFeatures(), ")"));
   return *kUserAgentPrefix;
