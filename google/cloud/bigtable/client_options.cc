@@ -78,9 +78,8 @@ ClientOptions::ClientOptions(Options opts) {
       to_arg(duration_cast<milliseconds>(kDefaultKeepaliveTimeout)));
 }
 
-ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds,
-                             Options opts)
-    : ClientOptions(opts.set<GrpcCredentialOption>(std::move(creds))) {
+ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
+    : ClientOptions(Options{}.set<GrpcCredentialOption>(std::move(creds))) {
   set_data_endpoint("bigtable.googleapis.com");
   set_admin_endpoint("bigtableadmin.googleapis.com");
 }
