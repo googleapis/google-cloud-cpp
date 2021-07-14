@@ -30,8 +30,7 @@ std::string ConnectionOptionsTraits::default_endpoint() {
 }
 
 std::string ConnectionOptionsTraits::user_agent_prefix() {
-  static auto const kUserAgentPrefix = internal::UserAgentPrefix();
-  return kUserAgentPrefix;
+  return internal::UserAgentPrefix();
 }
 
 int ConnectionOptionsTraits::default_num_channels() {

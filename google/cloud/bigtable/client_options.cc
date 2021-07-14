@@ -93,9 +93,7 @@ ClientOptions& ClientOptions::set_connection_pool_size(std::size_t size) {
 }
 
 std::string ClientOptions::UserAgentPrefix() {
-  static auto const kUserAgentPrefix =
-      google::cloud::internal::UserAgentPrefix();
-  return kUserAgentPrefix;
+  return google::cloud::internal::UserAgentPrefix();
 }
 
 ClientOptions& ClientOptions::DisableBackgroundThreads(
