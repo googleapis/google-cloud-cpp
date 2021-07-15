@@ -29,9 +29,8 @@ namespace bigtable {
 namespace benchmarks {
 
 Benchmark::Benchmark(BenchmarkSetup setup)
-    : setup_(std::move(setup)),
-      key_width_(KeyWidth()),
-      client_options_(grpc::InsecureChannelCredentials()) {
+    : setup_(std::move(setup)), key_width_(KeyWidth()) {
+  auto opts = Options{}.set<GrpcNumChannelsOption>(setup_.thread_count());
   if (setup_.use_embedded_server()) {
     server_ = CreateEmbeddedServer();
     std::string address = server_->address();
@@ -39,13 +38,12 @@ Benchmark::Benchmark(BenchmarkSetup setup)
               << "\n";
     server_thread_ = std::thread([this]() { server_->Wait(); });
 
-    client_options_.set_admin_endpoint(address);
-    client_options_.set_data_endpoint(address);
-  } else {
-    client_options_ = bigtable::ClientOptions();
+    opts.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+        .set<DataEndpointOption>(address)
+        .set<AdminEndpointOption>(address)
+        .set<InstanceAdminEndpointOption>(address);
   }
-  client_options_.set_connection_pool_size(
-      static_cast<std::size_t>(setup_.thread_count()));
+  client_options_ = ClientOptions(std::move(opts));
 }
 
 Benchmark::~Benchmark() {
