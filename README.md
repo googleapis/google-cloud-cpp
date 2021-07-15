@@ -156,7 +156,8 @@ int main(int argc, char* argv[]) {
 ## Support
 
 * This project supports Windows, macOS, Linux
-* This project supports C++11 (and higher) compilers (we test with GCC \>= 5.4, Clang >= 3.8, and MSVC \>= 2019)
+* This project supports C++11 (and higher) compilers (we test with GCC >= 5.4,
+  Clang >= 6.0, and MSVC >= 2019)
 * This project supports Bazel and CMake builds. See the [Quickstart examples](https://github.com/googleapis/google-cloud-cpp#quickstart)
 * This project uses dependencies described in [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md)
 * This project works with or without exceptions enabled

@@ -46,18 +46,10 @@ std::ostream& operator<<(std::ostream& os, Timestamp const& ts) {
 
 auto constexpr kSeverityCount = static_cast<int>(Severity::GCP_LS_HIGHEST) + 1;
 
-// Double braces needed to workaround a clang-3.8 bug.
-std::array<char const*, kSeverityCount> constexpr kSeverityNames{{
-    "TRACE",
-    "DEBUG",
-    "INFO",
-    "NOTICE",
-    "WARNING",
-    "ERROR",
-    "CRITICAL",
-    "ALERT",
-    "FATAL",
-}};
+std::array<char const*, kSeverityCount> constexpr kSeverityNames{
+    "TRACE", "DEBUG",    "INFO",  "NOTICE", "WARNING",
+    "ERROR", "CRITICAL", "ALERT", "FATAL",
+};
 
 absl::optional<Severity> ParseSeverity(std::string const& name) {
   int i = 0;

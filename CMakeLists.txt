@@ -47,7 +47,7 @@ endif ()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
-    # gcc-4.8 is the first release that claims C++11 support.
+    # GCC >= 5.4 is required by Abseil, so we must require it too.
     if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.4)
         message(
             FATAL_ERROR
@@ -57,11 +57,13 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     endif ()
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 
-    # Before Clang-3.8 we ran into bugs with std::async() and exceptions.
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 3.8)
+    # Clang > 3.8 is required by the versions of protobuf that can compile
+    # googleapis protos. We only test with >= 6.0 because that is easy to
+    # install in our CI systems.
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.0)
         message(
             FATAL_ERROR
-                "Clang version must be at least 3.8. Older versions"
+                "Clang version must be at least 6.0. Older versions"
                 " either lack C++11 support or have bugs that prevent us from"
                 " using them.")
     endif ()
