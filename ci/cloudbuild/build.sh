@@ -248,6 +248,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--rm"
     "--network=host"
     "--user=$(id -u):$(id -g)"
+    "--env=PS1=docker:${DISTRO_FLAG}\$ "
     "--env=USER=$(id -un)"
     "--env=TERM=$([[ -t 0 ]] && echo "${TERM:-dumb}" || echo dumb)"
     "--env=TZ=UTC0"
@@ -281,7 +282,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     printf "To run the build manually:\n  "
     printf " %q" "${cmd[@]}"
     printf "\n\n"
-    cmd=("bash")
+    cmd=("bash" "--norc") # some distros have rc files that override our PS1
   fi
   io::run docker run "${run_flags[@]}" "${image}" "${cmd[@]}"
   exit
