@@ -124,6 +124,7 @@ StatusOr<HttpResponse> CurlDownloadRequest::Close() {
   }
   TRACE_STATE() << ", http_code.status=" << http_code.status()
                 << ", http_code=" << *http_code;
+  received_headers_.emplace(":curl-peer", handle_.GetPeer());
   return HttpResponse{http_code.value(), std::string{},
                       std::move(received_headers_)};
 }
@@ -186,6 +187,7 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
     //   if not.
     // if the option is not supported then we cannot use HTTP at all in libcurl
     // and the whole class would fail.
+    received_headers_.emplace(":curl-peer", handle_.GetPeer());
     HttpResponse response{handle_.GetResponseCode().value(), std::string{},
                           std::move(received_headers_)};
     TRACE_STATE() << ", code=" << response.status_code;
@@ -197,6 +199,7 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
     return ReadSourceResult{bytes_read, std::move(response)};
   }
   TRACE_STATE() << ", code=100";
+  received_headers_.emplace(":curl-peer", handle_.GetPeer());
   return ReadSourceResult{
       bytes_read,
       HttpResponse{

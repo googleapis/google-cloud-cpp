@@ -119,14 +119,11 @@ class CurlHandle {
     return AsStatus(e, __func__);
   }
 
-  StatusOr<long> GetResponseCode() {  // NOLINT(google-runtime-int)
-    long code;                        // NOLINT(google-runtime-int)
-    auto e = curl_easy_getinfo(handle_.get(), CURLINFO_RESPONSE_CODE, &code);
-    if (e == CURLE_OK) {
-      return code;
-    }
-    return AsStatus(e, __func__);
-  }
+  /// Get the HTTP response code, or an error.
+  StatusOr<std::int32_t> GetResponseCode();
+
+  /// Get the peer, or just "unknown".
+  std::string GetPeer();
 
   Status EasyPause(int bitmask) {
     auto e = curl_easy_pause(handle_.get(), bitmask);
