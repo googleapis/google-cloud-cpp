@@ -169,49 +169,14 @@ installation, so you would need to install it first.  This needs to be executed
 in a `cmd.exe` shell, running as the `Administrator`:
 
 ```console
-> @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -Command "iex (
+@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -Command "iex (
 (New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 ```
 
 Then you can install the dependencies in the same shell:
 ```console
-> choco install -y cmake git cmake.portable activeperl ninja golang yasm putty msys2 bazel
-> choco install -y visualstudio2019community visualstudio2019-workload-nativedesktop microsoft-build-tools
-```
-
-### Connecting to GitHub with PuTTY
-
-This short recipe is offered to setup your SSH keys quickly using PuTTY.  If
-you prefer another SSH client for Windows, please search the Internet for a
-tutorial on how to configure it.
-
-First, generate a private/public key pair with `puttygen`:
-
-```console
-> puttygen
-```
-
-Then store the public key in your
-[GitHub Settings](https://github.com/settings/keys).
-
-Once you have generated the public/private key pair, start the SSH agent in the
-background:
-
-```console
-> pageant
-```
-
-and use the menu to load the private key you generated above. Test the keys
-with:
-
-```console
-> plink -T git@github.com
-```
-
-and do not forget to setup the `GIT_SSH` environment variable:
-
-```console
-> set GIT_SSH=plink
+choco install -y visualstudio2019community visualstudio2019-workload-nativedesktop visualstudio2019buildtools
+choco install -y git cmake ninja bazelisk
 ```
 
 ### Clone `google-cloud-cpp`
