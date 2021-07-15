@@ -35,6 +35,7 @@ TEST(AggregateThroughputOptions, Basic) {
           "--read-buffer-size=1MiB",
           "--api=XML",
           "--grpc-channel-count=16",
+          "--grpc-plugin-config=default",
       },
       "");
   ASSERT_STATUS_OK(options);

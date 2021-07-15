@@ -34,6 +34,7 @@ struct AggregateThroughputOptions {
   std::size_t read_buffer_size = 4 * kMiB;
   ApiName api = ApiName::kApiGrpc;
   int grpc_channel_count = 0;
+  std::string grpc_plugin_config;
   bool exit_after_parse = false;
 };
 

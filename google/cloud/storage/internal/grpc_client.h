@@ -29,9 +29,11 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-/// Determine if using DirectPath for GCS has been enabled through
-/// GOOGLE_CLOUD_DIRECT_PATH.
-bool DirectPathEnabled();
+/**
+ * The default options for gRPC.
+ *
+ * This adds some additional defaults to the options for REST.
+ */
 Options DefaultOptionsGrpc(Options = {});
 
 class StorageStub;

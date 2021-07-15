@@ -142,8 +142,10 @@ int main(int argc, char* argv[]) {
     auto channels = options->grpc_channel_count;
     if (channels == 0) channels = (std::max)(options->thread_count / 4, 4);
     client = DefaultGrpcClient(
-        google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(
-            channels));
+        google::cloud::Options{}
+            .set<google::cloud::GrpcNumChannelsOption>(channels)
+            .set<google::cloud::storage_experimental::GrpcPluginOption>(
+                options->grpc_plugin_config));
   }
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   std::vector<gcs::ObjectMetadata> objects;
