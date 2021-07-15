@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/internal/object_write_streambuf.h"
 #include "google/cloud/storage/internal/object_requests.h"
-#include "absl/memory/memory.h"
+#include "google/cloud/storage/version.h"
 #include <sstream>
 
 namespace google {
