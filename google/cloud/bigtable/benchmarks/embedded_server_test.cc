@@ -43,8 +43,11 @@ TEST(EmbeddedServer, Admin) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  ClientOptions options(grpc::InsecureChannelCredentials());
-  options.set_admin_endpoint(server->address());
+  ClientOptions options(
+      Options{}
+          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+          .set<AdminEndpointOption>(server->address()));
+
   TableAdmin admin(CreateDefaultAdminClient("fake-project", options),
                    "fake-instance");
 
@@ -65,8 +68,11 @@ TEST(EmbeddedServer, TableApply) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  ClientOptions options(grpc::InsecureChannelCredentials());
-  options.set_data_endpoint(server->address());
+  ClientOptions options(
+      Options{}
+          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+          .set<DataEndpointOption>(server->address()));
+
   Table table(CreateDefaultDataClient("fake-project", "fake-instance", options),
               "fake-table");
 
@@ -87,8 +93,11 @@ TEST(EmbeddedServer, TableBulkApply) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  ClientOptions options(grpc::InsecureChannelCredentials());
-  options.set_data_endpoint(server->address());
+  ClientOptions options(
+      Options{}
+          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+          .set<DataEndpointOption>(server->address()));
+
   Table table(CreateDefaultDataClient("fake-project", "fake-instance", options),
               "fake-table");
 
@@ -111,8 +120,11 @@ TEST(EmbeddedServer, ReadRows1) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  ClientOptions options(grpc::InsecureChannelCredentials());
-  options.set_data_endpoint(server->address());
+  ClientOptions options(
+      Options{}
+          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+          .set<DataEndpointOption>(server->address()));
+
   Table table(CreateDefaultDataClient("fake-project", "fake-instance", options),
               "fake-table");
 
@@ -130,8 +142,11 @@ TEST(EmbeddedServer, ReadRows100) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  ClientOptions options(grpc::InsecureChannelCredentials());
-  options.set_data_endpoint(server->address());
+  ClientOptions options(
+      Options{}
+          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+          .set<DataEndpointOption>(server->address()));
+
   Table table(CreateDefaultDataClient("fake-project", "fake-instance", options),
               "fake-table");
 
