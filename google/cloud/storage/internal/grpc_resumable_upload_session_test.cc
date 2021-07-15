@@ -73,6 +73,11 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
 
   std::string const payload = "test payload";
   auto const size = payload.size();
+  HashValues hashes{ComputeCrc32cChecksum(payload), ComputeMD5Hash(payload)};
+  auto const crc32c_proto = GrpcClient::Crc32cToProto(hashes.crc32c);
+  ASSERT_STATUS_OK(crc32c_proto);
+  auto const md5_proto = GrpcClient::MD5ToProto(hashes.md5);
+  ASSERT_STATUS_OK(md5_proto);
 
   auto writer = absl::make_unique<MockInsertStream>();
 
@@ -103,6 +108,8 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
               EXPECT_EQ(payload, r.checksummed_data().content());
               EXPECT_EQ(size, r.write_offset());
               EXPECT_TRUE(r.finish_write());
+              EXPECT_EQ(*crc32c_proto, r.object_checksums().crc32c().value());
+              EXPECT_EQ(*md5_proto, r.object_checksums().md5_hash());
               EXPECT_TRUE(options.is_last_message());
               return true;
             });
@@ -116,7 +123,7 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
   EXPECT_EQ(size, session.next_expected_byte());
   EXPECT_FALSE(session.done());
 
-  upload = session.UploadFinalChunk({{payload}}, 2 * size);
+  upload = session.UploadFinalChunk({{payload}}, 2 * size, hashes);
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(2 * size - 1, upload->last_committed_byte);
   EXPECT_EQ(2 * size, session.next_expected_byte());
@@ -166,7 +173,7 @@ TEST(GrpcResumableUploadSessionTest, SingleStreamForLargeChunks) {
   EXPECT_EQ(size, session.next_expected_byte());
   EXPECT_FALSE(session.done());
 
-  upload = session.UploadFinalChunk({{payload}}, 2 * size);
+  upload = session.UploadFinalChunk({{payload}}, 2 * size, HashValues{});
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(2 * size - 1, upload->last_committed_byte);
   EXPECT_EQ(2 * size, session.next_expected_byte());
@@ -293,7 +300,7 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
         return make_status_or(resume_response);
       });
 
-  auto upload = session.UploadFinalChunk({{payload}}, size);
+  auto upload = session.UploadFinalChunk({{payload}}, size, HashValues{});
   EXPECT_THAT(upload, StatusIs(StatusCode::kUnavailable));
 
   session.ResetSession();
@@ -307,7 +314,7 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
   ASSERT_STATUS_OK(last_response);
   EXPECT_EQ(last_response.value(), resume_response);
 
-  upload = session.UploadFinalChunk({{payload}}, size);
+  upload = session.UploadFinalChunk({{payload}}, size, HashValues{});
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(size, session.next_expected_byte());
   EXPECT_TRUE(session.done());

@@ -40,20 +40,26 @@ StatusOr<ResumableUploadResponse> ReturnError(Status&& last_status,
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadChunk(
     ConstBufferSequence const& buffers) {
-  return UploadGenericChunk(buffers, absl::optional<std::uint64_t>());
+  return UploadGenericChunk(__func__, buffers,
+                            [this](ConstBufferSequence const& b) {
+                              return session_->UploadChunk(b);
+                            });
 }
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadFinalChunk(
-    ConstBufferSequence const& buffers, std::uint64_t upload_size) {
-  return UploadGenericChunk(buffers, upload_size);
+    ConstBufferSequence const& buffers, std::uint64_t upload_size,
+    HashValues const& hashes) {
+  return UploadGenericChunk(
+      __func__, buffers,
+      [this, upload_size, hashes](ConstBufferSequence const& b) {
+        return session_->UploadFinalChunk(b, upload_size, hashes);
+      });
 }
 
 StatusOr<ResumableUploadResponse>
-RetryResumableUploadSession::UploadGenericChunk(
-    ConstBufferSequence buffers,
-    absl::optional<std::uint64_t> const& upload_size) {
-  bool const is_final_chunk = upload_size.has_value();
-  char const* const func = is_final_chunk ? "UploadFinalChunk" : "UploadChunk";
+RetryResumableUploadSession::UploadGenericChunk(char const* caller,
+                                                ConstBufferSequence buffers,
+                                                UploadChunkFunction upload) {
   std::uint64_t next_byte = session_->next_expected_byte();
   Status last_status(StatusCode::kDeadlineExceeded,
                      "Retry policy exhausted before first attempt was made.");
@@ -68,7 +74,7 @@ RetryResumableUploadSession::UploadGenericChunk(
     std::uint64_t new_next_byte = session_->next_expected_byte();
     if (new_next_byte < next_byte) {
       std::stringstream os;
-      os << func << ": server previously confirmed " << next_byte
+      os << caller << ": server previously confirmed " << next_byte
          << " bytes as committed, but the current response only reports "
          << new_next_byte << " bytes as committed."
          << " This is most likely a bug in the GCS client library, possibly"
@@ -89,9 +95,7 @@ RetryResumableUploadSession::UploadGenericChunk(
                     static_cast<std::size_t>(new_next_byte - next_byte));
       next_byte = new_next_byte;
     }
-    auto result = is_final_chunk
-                      ? session_->UploadFinalChunk(buffers, *upload_size)
-                      : session_->UploadChunk(buffers);
+    auto result = upload(buffers);
     if (result.ok()) {
       if (result->upload_state == ResumableUploadResponse::kDone) {
         // The upload was completed. This can happen even if
@@ -132,7 +136,7 @@ RetryResumableUploadSession::UploadGenericChunk(
     last_status = Status();
   }
   std::ostringstream os;
-  os << "Retry policy exhausted in " << func << ": " << last_status.message();
+  os << "Retry policy exhausted in " << caller << ": " << last_status.message();
   return Status(last_status.code(), std::move(os).str());
 }
 

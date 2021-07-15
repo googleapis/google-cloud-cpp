@@ -41,12 +41,13 @@ GrpcResumableUploadSession::GrpcResumableUploadSession(
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadChunk(
     ConstBufferSequence const& payload) {
-  return UploadGeneric(payload, false);
+  return UploadGeneric(payload, false, {});
 }
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadFinalChunk(
-    ConstBufferSequence const& payload, std::uint64_t) {
-  return UploadGeneric(payload, true);
+    ConstBufferSequence const& payload, std::uint64_t,
+    HashValues const& full_object_hashes) {
+  return UploadGeneric(payload, true, full_object_hashes);
 }
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::ResetSession() {
@@ -76,7 +77,7 @@ GrpcResumableUploadSession::last_response() const {
 }
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
-    ConstBufferSequence buffers, bool final_chunk) {
+    ConstBufferSequence buffers, bool final_chunk, HashValues const& hashes) {
   // TODO(#4216) - set the timeout
   auto context = absl::make_unique<grpc::ClientContext>();
   auto writer = client_->CreateUploadWriter(std::move(context));
@@ -104,10 +105,19 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
 
     auto options = grpc::WriteOptions();
     if (final_chunk && !has_more) {
-      // At this point we can set the full object checksums, there are two bugs
-      // for this:
-      // TODO(#4156) - compute the crc32c value inline
-      // TODO(#4157) - compute the MD5 hash value inline
+      if (!hashes.md5.empty()) {
+        auto md5 = GrpcClient::MD5ToProto(hashes.md5);
+        if (md5) {
+          request.mutable_object_checksums()->set_md5_hash(*std::move(md5));
+        }
+      }
+      if (!hashes.crc32c.empty()) {
+        auto crc32c = GrpcClient::Crc32cToProto(hashes.crc32c);
+        if (crc32c) {
+          request.mutable_object_checksums()->mutable_crc32c()->set_value(
+              *std::move(crc32c));
+        }
+      }
       request.set_finish_write(true);
       options.set_last_message();
     }

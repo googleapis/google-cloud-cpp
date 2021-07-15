@@ -87,7 +87,7 @@ TEST(CurlResumableUploadSessionTest, Simple) {
   EXPECT_EQ(size, session.next_expected_byte());
   EXPECT_FALSE(session.done());
 
-  upload = session.UploadFinalChunk({{payload}}, 2 * size);
+  upload = session.UploadFinalChunk({{payload}}, 2 * size, {});
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(2 * size - 1, upload->last_committed_byte);
   EXPECT_EQ(2 * size, session.next_expected_byte());
@@ -189,7 +189,7 @@ TEST(CurlResumableUploadSessionTest, Empty) {
             "", size, {}, ResumableUploadResponse::kDone, {}});
       });
 
-  auto upload = session.UploadFinalChunk({{payload}}, size);
+  auto upload = session.UploadFinalChunk({{payload}}, size, {});
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(size, upload->last_committed_byte);
   EXPECT_EQ(size, session.next_expected_byte());

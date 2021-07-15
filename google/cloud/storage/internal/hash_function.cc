@@ -50,6 +50,11 @@ std::unique_ptr<HashFunction> CreateHashFunction(
 
 std::unique_ptr<HashFunction> CreateHashFunction(
     ResumableUploadRequest const& request) {
+  if (!request.GetOption<UseResumableUploadSession>().value_or("").empty()) {
+    // Resumed sessions cannot include a hash function because the hash state
+    // for previous values is lost.
+    return CreateNullHashFunction();
+  }
   // A non-empty Crc32cChecksumValue implies that the application provided a
   // hash, and we should not compute our own.
   return CreateHashFunction(

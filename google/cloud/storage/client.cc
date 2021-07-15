@@ -94,7 +94,7 @@ ObjectWriteStream Client::WriteObjectImpl(
     ObjectWriteStream error_stream(
         absl::make_unique<internal::ObjectWriteStreambuf>(
             std::move(error), 0, internal::CreateNullHashFunction(),
-            internal::CreateNullHashValidator(),
+            internal::HashValues{}, internal::CreateNullHashValidator(),
             AutoFinalizeConfig::kDisabled));
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     error_stream.Close();
@@ -103,6 +103,10 @@ ObjectWriteStream Client::WriteObjectImpl(
   return ObjectWriteStream(absl::make_unique<internal::ObjectWriteStreambuf>(
       *std::move(session), raw_client_->client_options().upload_buffer_size(),
       internal::CreateHashFunction(request),
+      internal::HashValues{
+          request.GetOption<Crc32cChecksumValue>().value_or(""),
+          request.GetOption<MD5HashValue>().value_or(""),
+      },
       internal::CreateHashValidator(request),
       request.GetOption<AutoFinalize>().value_or(
           AutoFinalizeConfig::kEnabled)));
@@ -261,7 +265,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     auto expected = source_size;
     buffers[0] = internal::ConstBuffer{buffer.data(), gcount};
     if (final_chunk) {
-      upload_response = session->UploadFinalChunk(buffers, source_size);
+      upload_response = session->UploadFinalChunk(buffers, source_size, {});
     } else {
       upload_response = session->UploadChunk(buffers);
     }

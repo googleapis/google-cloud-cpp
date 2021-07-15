@@ -222,8 +222,6 @@ TEST_F(ObjectHashIntegrationTest, WriteObjectWithValueSuccess) {
 
 /// @test Verify that incorrect MD5 hash values work in WriteObject().
 TEST_F(ObjectHashIntegrationTest, WriteObjectWithValueFailure) {
-  // TODO(#4157) - add supports for hashes in gRPC
-  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
@@ -263,8 +261,6 @@ TEST_F(ObjectHashIntegrationTest, WriteObjectReceiveBadChecksum) {
 
 /// @test Verify that MD5 hash mismatches are reported by default.
 TEST_F(ObjectHashIntegrationTest, WriteObjectUploadBadChecksum) {
-  // TODO(#4156) - enable test when checksums are implemented.
-  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

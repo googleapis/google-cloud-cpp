@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
+#include "absl/functional/function_ref.h"
 #include "absl/types/optional.h"
 #include <memory>
 #include <string>
@@ -46,7 +47,8 @@ class RetryResumableUploadSession : public ResumableUploadSession {
   StatusOr<ResumableUploadResponse> UploadChunk(
       ConstBufferSequence const& buffers) override;
   StatusOr<ResumableUploadResponse> UploadFinalChunk(
-      ConstBufferSequence const& buffers, std::uint64_t upload_size) override;
+      ConstBufferSequence const& buffers, std::uint64_t upload_size,
+      HashValues const& full_object_hashes) override;
   StatusOr<ResumableUploadResponse> ResetSession() override;
   std::uint64_t next_expected_byte() const override;
   std::string const& session_id() const override;
@@ -54,11 +56,14 @@ class RetryResumableUploadSession : public ResumableUploadSession {
   StatusOr<ResumableUploadResponse> const& last_response() const override;
 
  private:
+  using UploadChunkFunction =
+      absl::FunctionRef<StatusOr<ResumableUploadResponse>(
+          ConstBufferSequence const&)>;
   // Retry either UploadChunk or either UploadFinalChunk. Note that we need a
   // copy of the buffers because on some retries they need to be modified.
   StatusOr<ResumableUploadResponse> UploadGenericChunk(
-      ConstBufferSequence buffers,
-      absl::optional<std::uint64_t> const& upload_size);
+      char const* caller, ConstBufferSequence buffers,
+      UploadChunkFunction upload);
 
   // Reset the current session using previously cloned policies.
   StatusOr<ResumableUploadResponse> ResetSession(RetryPolicy& retry_policy,

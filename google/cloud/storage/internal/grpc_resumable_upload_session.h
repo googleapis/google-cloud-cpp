@@ -37,7 +37,8 @@ class GrpcResumableUploadSession : public ResumableUploadSession {
       ConstBufferSequence const& payload) override;
 
   StatusOr<ResumableUploadResponse> UploadFinalChunk(
-      ConstBufferSequence const& payload, std::uint64_t upload_size) override;
+      ConstBufferSequence const& payload, std::uint64_t upload_size,
+      HashValues const& full_object_hashes) override;
 
   StatusOr<ResumableUploadResponse> ResetSession() override;
 
@@ -56,7 +57,8 @@ class GrpcResumableUploadSession : public ResumableUploadSession {
    * This function is used by both UploadChunk() and UploadFinalChunk()
    */
   StatusOr<ResumableUploadResponse> UploadGeneric(ConstBufferSequence buffers,
-                                                  bool final_chunk);
+                                                  bool final_chunk,
+                                                  HashValues const& hashes);
 
   std::shared_ptr<GrpcClient> client_;
   ResumableUploadSessionGrpcParams session_id_params_;

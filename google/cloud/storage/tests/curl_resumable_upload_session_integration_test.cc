@@ -58,7 +58,7 @@ TEST_F(CurlResumableUploadIntegrationTest, Simple) {
 
   std::string const contents = LoremIpsum();
   StatusOr<ResumableUploadResponse> response =
-      (*session)->UploadFinalChunk({{contents}}, contents.size());
+      (*session)->UploadFinalChunk({{contents}}, contents.size(), HashValues{});
 
   ASSERT_STATUS_OK(response);
   EXPECT_TRUE(response->payload.has_value());
@@ -91,7 +91,8 @@ TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
   response = (*session)->ResetSession();
   ASSERT_STATUS_OK(response);
 
-  response = (*session)->UploadFinalChunk({{contents}}, 2 * contents.size());
+  response = (*session)->UploadFinalChunk({{contents}}, 2 * contents.size(),
+                                          HashValues{});
   ASSERT_STATUS_OK(response);
 
   EXPECT_TRUE(response->payload.has_value());
@@ -130,7 +131,8 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
   response = (*session)->UploadChunk({{contents}});
   ASSERT_STATUS_OK(response);
 
-  response = (*session)->UploadFinalChunk({{contents}}, 3 * contents.size());
+  response = (*session)->UploadFinalChunk({{contents}}, 3 * contents.size(),
+                                          HashValues{});
   ASSERT_STATUS_OK(response);
 
   EXPECT_TRUE(response->payload.has_value());
@@ -169,7 +171,8 @@ TEST_F(CurlResumableUploadIntegrationTest, EmptyTrailer) {
   // upload quantum. In this case the stream is terminated by sending an empty
   // chunk at the end, with the size of the previous chunks as an indication
   // of "done".
-  response = (*session)->UploadFinalChunk({}, 2 * contents.size());
+  response =
+      (*session)->UploadFinalChunk({}, 2 * contents.size(), HashValues{});
   ASSERT_STATUS_OK(response.status());
 
   EXPECT_TRUE(response->payload.has_value());
@@ -194,7 +197,7 @@ TEST_F(CurlResumableUploadIntegrationTest, Empty) {
 
   ASSERT_STATUS_OK(session);
 
-  auto response = (*session)->UploadFinalChunk({}, 0);
+  auto response = (*session)->UploadFinalChunk({}, 0, HashValues{});
   ASSERT_STATUS_OK(response.status());
 
   EXPECT_TRUE(response->payload.has_value());
@@ -250,7 +253,8 @@ TEST_F(CurlResumableUploadIntegrationTest, ResetWithParameters) {
   response = (*session)->ResetSession();
   ASSERT_STATUS_OK(response);
 
-  response = (*session)->UploadFinalChunk({{contents}}, 2 * contents.size());
+  response = (*session)->UploadFinalChunk({{contents}}, 2 * contents.size(),
+                                          HashValues{});
   ASSERT_STATUS_OK(response);
   ASSERT_TRUE(response->payload.has_value());
   auto metadata = *response->payload;

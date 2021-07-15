@@ -41,7 +41,8 @@ class CurlResumableUploadSession : public ResumableUploadSession {
       ConstBufferSequence const& buffers) override;
 
   StatusOr<ResumableUploadResponse> UploadFinalChunk(
-      ConstBufferSequence const& buffers, std::uint64_t upload_size) override;
+      ConstBufferSequence const& buffers, std::uint64_t upload_size,
+      HashValues const& full_object_hashes) override;
 
   StatusOr<ResumableUploadResponse> ResetSession() override;
 

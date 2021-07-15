@@ -223,7 +223,7 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
         EXPECT_CALL(*mock, UploadFinalChunk)
             .WillOnce([expected, &bytes_written](
                           internal::ConstBufferSequence const& data,
-                          std::uint64_t size) {
+                          std::uint64_t size, internal::HashValues const&) {
               bytes_written += internal::TotalBytes(data);
               EXPECT_EQ(bytes_written, size);
               return make_status_or(ResumableUploadResponse{
@@ -356,7 +356,7 @@ TEST_F(WriteObjectTest, UploadFile) {
         EXPECT_CALL(*mock, UploadFinalChunk)
             .WillOnce([expected, &bytes_written](
                           internal::ConstBufferSequence const& data,
-                          std::uint64_t size) {
+                          std::uint64_t size, internal::HashValues const&) {
               bytes_written += internal::TotalBytes(data);
               EXPECT_EQ(bytes_written, size);
               return make_status_or(ResumableUploadResponse{

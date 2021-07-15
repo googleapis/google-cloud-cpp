@@ -27,6 +27,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::ElementsAre;
 using ::testing::InSequence;
 using ::testing::InvokeWithoutArgs;
@@ -43,7 +44,8 @@ TEST(ObjectWriteStreambufTest, EmptyStream) {
 
   int count = 0;
   EXPECT_CALL(*mock, UploadFinalChunk)
-      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
+      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s,
+                    HashValues const&) {
         ++count;
         EXPECT_EQ(1, count);
         EXPECT_EQ(0, TotalBytes(p));
@@ -54,7 +56,7 @@ TEST(ObjectWriteStreambufTest, EmptyStream) {
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(0));
 
   ObjectWriteStream stream(absl::make_unique<ObjectWriteStreambuf>(
-      std::move(mock), quantum, CreateNullHashFunction(),
+      std::move(mock), quantum, CreateNullHashFunction(), HashValues{},
       CreateNullHashValidator(), AutoFinalizeConfig::kEnabled));
   stream.Close();
   EXPECT_STATUS_OK(stream.last_status());
@@ -69,7 +71,8 @@ TEST(ObjectWriteStreambufTest, AutoFinalizeEnabled) {
 
   int count = 0;
   EXPECT_CALL(*mock, UploadFinalChunk)
-      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
+      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s,
+                    HashValues const&) {
         ++count;
         EXPECT_EQ(1, count);
         EXPECT_EQ(0, TotalBytes(p));
@@ -81,7 +84,7 @@ TEST(ObjectWriteStreambufTest, AutoFinalizeEnabled) {
 
   {
     ObjectWriteStream stream(absl::make_unique<ObjectWriteStreambuf>(
-        std::move(mock), quantum, CreateNullHashFunction(),
+        std::move(mock), quantum, CreateNullHashFunction(), HashValues{},
         CreateNullHashValidator(), AutoFinalizeConfig::kEnabled));
   }
 }
@@ -98,7 +101,7 @@ TEST(ObjectWriteStreambufTest, AutoFinalizeDisabled) {
 
   {
     ObjectWriteStream stream(absl::make_unique<ObjectWriteStreambuf>(
-        std::move(mock), quantum, CreateNullHashFunction(),
+        std::move(mock), quantum, CreateNullHashFunction(), HashValues{},
         CreateNullHashValidator(), AutoFinalizeConfig::kDisabled));
   }
 }
@@ -113,7 +116,8 @@ TEST(ObjectWriteStreambufTest, SmallStream) {
 
   int count = 0;
   EXPECT_CALL(*mock, UploadFinalChunk)
-      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
+      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s,
+                    HashValues const&) {
         ++count;
         EXPECT_EQ(1, count);
         EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
@@ -129,7 +133,7 @@ TEST(ObjectWriteStreambufTest, SmallStream) {
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(0));
 
   ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum, CreateNullHashFunction(),
+      std::move(mock), quantum, CreateNullHashFunction(), HashValues{},
       CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
 
   streambuf.sputn(payload.data(), payload.size());
@@ -158,7 +162,8 @@ TEST(ObjectWriteStreambufTest, EmptyTrailer) {
         "", last_committed_byte, {}, ResumableUploadResponse::kInProgress, {}});
   });
   EXPECT_CALL(*mock, UploadFinalChunk)
-      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
+      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s,
+                    HashValues const&) {
         ++count;
         EXPECT_EQ(2, count);
         EXPECT_EQ(0, TotalBytes(p));
@@ -176,7 +181,7 @@ TEST(ObjectWriteStreambufTest, EmptyTrailer) {
   });
 
   ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum, CreateNullHashFunction(),
+      std::move(mock), quantum, CreateNullHashFunction(), HashValues{},
       CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
 
   streambuf.sputn(payload.data(), payload.size());
@@ -205,7 +210,7 @@ TEST(ObjectWriteStreambufTest, FlushAfterLargePayload) {
                                   {}});
     }));
     EXPECT_CALL(*mock, UploadFinalChunk({{payload_2}},
-                                        payload_1.size() + payload_2.size()))
+                                        payload_1.size() + payload_2.size(), _))
         .WillOnce(Return(make_status_or(
             ResumableUploadResponse{"{}",
                                     payload_1.size() + payload_2.size() - 1,
@@ -218,7 +223,7 @@ TEST(ObjectWriteStreambufTest, FlushAfterLargePayload) {
   });
 
   ObjectWriteStreambuf streambuf(
-      std::move(mock), 3 * quantum, CreateNullHashFunction(),
+      std::move(mock), 3 * quantum, CreateNullHashFunction(), HashValues{},
       CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
 
   streambuf.sputn(payload_1.data(), payload_1.size());
@@ -248,7 +253,8 @@ TEST(ObjectWriteStreambufTest, FlushAfterFullQuantum) {
         "", quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
   });
   EXPECT_CALL(*mock, UploadFinalChunk)
-      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
+      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s,
+                    HashValues const&) {
         ++count;
         EXPECT_EQ(2, count);
         auto expected = payload_2.substr(payload_2.size() - payload_1.size());
@@ -267,7 +273,7 @@ TEST(ObjectWriteStreambufTest, FlushAfterFullQuantum) {
   });
 
   ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum, CreateNullHashFunction(),
+      std::move(mock), quantum, CreateNullHashFunction(), HashValues{},
       CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
 
   streambuf.sputn(payload_1.data(), payload_1.size());
@@ -299,7 +305,8 @@ TEST(ObjectWriteStreambufTest, OverflowFlushAtFullQuantum) {
         "", next_byte - 1, {}, ResumableUploadResponse::kInProgress, {}});
   });
   EXPECT_CALL(*mock, UploadFinalChunk)
-      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
+      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s,
+                    HashValues const&) {
         ++count;
         EXPECT_EQ(2, count);
         std::string expected = " ";
@@ -312,7 +319,7 @@ TEST(ObjectWriteStreambufTest, OverflowFlushAtFullQuantum) {
       });
 
   ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum, CreateNullHashFunction(),
+      std::move(mock), quantum, CreateNullHashFunction(), HashValues{},
       CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
 
   for (auto const& c : payload) {
@@ -340,7 +347,8 @@ TEST(ObjectWriteStreambufTest, SomeBytesNotAccepted) {
         "", next_byte - 1, {}, ResumableUploadResponse::kInProgress, {}});
   });
   EXPECT_CALL(*mock, UploadFinalChunk)
-      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
+      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s,
+                    HashValues const&) {
         auto const content = payload.substr(quantum);
         EXPECT_THAT(p, ElementsAre(ConstBuffer{content}));
         EXPECT_EQ(payload.size(), s);
@@ -354,7 +362,7 @@ TEST(ObjectWriteStreambufTest, SomeBytesNotAccepted) {
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
 
   ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum, CreateNullHashFunction(),
+      std::move(mock), quantum, CreateNullHashFunction(), HashValues{},
       CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
 
   std::ostream output(&streambuf);
@@ -389,7 +397,7 @@ TEST(ObjectWriteStreambufTest, NextExpectedByteJumpsAhead) {
   EXPECT_CALL(*mock, session_id).WillOnce(ReturnRef(id));
 
   ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum, CreateNullHashFunction(),
+      std::move(mock), quantum, CreateNullHashFunction(), HashValues{},
       CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
   std::ostream output(&streambuf);
   output << payload;
@@ -419,7 +427,7 @@ TEST(ObjectWriteStreambufTest, NextExpectedByteDecreases) {
   EXPECT_CALL(*mock, session_id).WillOnce(ReturnRef(id));
 
   ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum, CreateNullHashFunction(),
+      std::move(mock), quantum, CreateNullHashFunction(), HashValues{},
       CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
   std::ostream output(&streambuf);
   output << payload;
@@ -449,7 +457,8 @@ TEST(ObjectWriteStreambufTest, MixPutcPutn) {
         "", quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
   });
   EXPECT_CALL(*mock, UploadFinalChunk)
-      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
+      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s,
+                    HashValues const&) {
         ++count;
         EXPECT_EQ(2, count);
         auto expected = payload_2.substr(payload_2.size() - payload_1.size());
@@ -468,7 +477,7 @@ TEST(ObjectWriteStreambufTest, MixPutcPutn) {
   });
 
   ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum, CreateNullHashFunction(),
+      std::move(mock), quantum, CreateNullHashFunction(), HashValues{},
       CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
 
   for (auto const& c : payload_1) {
@@ -490,7 +499,7 @@ TEST(ObjectWriteStreambufTest, CreatedForFinalizedUpload) {
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), UploadChunkRequest::kChunkSizeQuantum,
-      CreateNullHashFunction(), CreateNullHashValidator(),
+      CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
       AutoFinalizeConfig::kEnabled);
   EXPECT_EQ(streambuf.IsOpen(), false);
   StatusOr<ResumableUploadResponse> close_result = streambuf.Close();
@@ -508,7 +517,8 @@ TEST(ObjectWriteStreambufTest, ErroneousStream) {
 
   int count = 0;
   EXPECT_CALL(*mock, UploadFinalChunk)
-      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t n) {
+      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t n,
+                    HashValues const&) {
         ++count;
         EXPECT_EQ(1, count);
         EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
@@ -518,7 +528,7 @@ TEST(ObjectWriteStreambufTest, ErroneousStream) {
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(0));
 
   ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum, CreateNullHashFunction(),
+      std::move(mock), quantum, CreateNullHashFunction(), HashValues{},
       CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
 
   streambuf.sputn(payload.data(), payload.size());
@@ -545,7 +555,7 @@ TEST(ObjectWriteStreambufTest, ErrorInLargePayload) {
   });
   EXPECT_CALL(*mock, session_id).WillOnce(ReturnRef(session_id));
   ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum, CreateNullHashFunction(),
+      std::move(mock), quantum, CreateNullHashFunction(), HashValues{},
       CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
 
   streambuf.sputn(payload_1.data(), payload_1.size());
@@ -600,7 +610,7 @@ TEST(ObjectWriteStreambufTest, KnownSizeUpload) {
       });
 
   ObjectWriteStreambuf streambuf(
-      std::move(mock), quantum, CreateNullHashFunction(),
+      std::move(mock), quantum, CreateNullHashFunction(), HashValues{},
       CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
 
   streambuf.sputn(payload.data(), 2 * quantum);
@@ -635,7 +645,8 @@ TEST(ObjectWriteStreambufTest, Pubsync) {
         "", mock_next_byte - 1, {}, ResumableUploadResponse::kInProgress, {}});
   });
   EXPECT_CALL(*mock, UploadFinalChunk)
-      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t) {
+      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t,
+                    HashValues const&) {
         EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
         mock_next_byte += TotalBytes(p);
         mock_is_done = true;
@@ -644,7 +655,7 @@ TEST(ObjectWriteStreambufTest, Pubsync) {
       });
 
   ObjectWriteStreambuf streambuf(
-      std::move(mock), 2 * quantum, CreateNullHashFunction(),
+      std::move(mock), 2 * quantum, CreateNullHashFunction(), HashValues{},
       CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
 
   EXPECT_EQ(quantum, streambuf.sputn(payload.data(), quantum));
@@ -676,7 +687,7 @@ TEST(ObjectWriteStreambufTest, PubsyncTooSmall) {
   // Write some data and flush it, because there are no EXPECT_CALLS for
   // UploadChunk yet this fails if we flush too early.
   ObjectWriteStreambuf streambuf(
-      std::move(mock), 2 * quantum, CreateNullHashFunction(),
+      std::move(mock), 2 * quantum, CreateNullHashFunction(), HashValues{},
       CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
 
   EXPECT_EQ(half, streambuf.sputn(p0.data(), half));
