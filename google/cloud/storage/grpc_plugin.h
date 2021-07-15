@@ -35,15 +35,17 @@ inline namespace STORAGE_CLIENT_NS {
  *
  * Possible values for the string include:
  *
- * - "default" or "none": do not use any special settings with gRPC
- * - "dp": equivalent to setting both "pick-first-lb" and
- *   "enable-dns-srv-queries"
- * - "alts": same settings as "dp", but use the experimental ALTS credentials
+ * - "default" or "none": do not use any special settings with gRPC.
+ * - "dp": enable Google Direct Access (formerly 'Direct Path') equivalent to
+ *   setting both "pick-first-lb" and "enable-dns-srv-queries".
+ * - "alts": same settings as "dp", but use the experimental ALTS credentials.
  * - "enable-dns-srv-queries": set the `grpc.dns_enable_srv_queries` channel
  *   argument to `1`, see [dns-query-arg].
  * - "disable-dns-srv-queries": set the `grpc.dns_enable_srv_queries` channel
  *   argument to `0`, see [dns-query-arg].
- * - "exclusive": use a exclusive channel for each stub.
+ * - "pick-first-lb": configure the gRPC load balancer to use the "pick_first"
+ *   policy.
+ * - "exclusive": use an exclusive channel for each stub.
  *
  * Unknown values are ignored.
  *
