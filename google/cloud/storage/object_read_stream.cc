@@ -31,7 +31,17 @@ ObjectReadStream::ObjectReadStream()
           Status(StatusCode::kUnimplemented, "null stream"))) {}
 
 ObjectReadStream::ObjectReadStream(ObjectReadStream&& rhs) noexcept
-    : std::basic_istream<char>(std::move(rhs)), buf_(std::move(rhs.buf_)) {
+    : std::basic_istream<char>(std::move(rhs)),
+      // The spec guarantees the base class move constructor only changes a few
+      // member variables in `std::basic_istream<>`, and there is no spooky
+      // action through virtual functions because there are no virtual
+      // functions.  A good summary of the specification is "it calls the
+      // default constructor and then calls std::basic_ios<>::move":
+      //   https://en.cppreference.com/w/cpp/io/basic_ios/move
+      // In fact, as that page indicates, the base classes are designed such
+      // that derived classes can define their own move constructor and move
+      // assignment.
+      buf_(std::move(rhs.buf_)) {
   rhs.set_rdbuf(nullptr);
   set_rdbuf(buf_.get());
 }
