@@ -152,6 +152,20 @@ void CurlHandle::SetSocketCallback(SocketOptions const& options) {
   SetOption(CURLOPT_SOCKOPTFUNCTION, &CurlSetSocketOptions);
 }
 
+StatusOr<std::int32_t> CurlHandle::GetResponseCode() {
+  long code;  // NOLINT(google-runtime-int)
+  auto e = curl_easy_getinfo(handle_.get(), CURLINFO_RESPONSE_CODE, &code);
+  if (e == CURLE_OK) return static_cast<std::int32_t>(code);
+  return AsStatus(e, __func__);
+}
+
+std::string CurlHandle::GetPeer() {
+  char* ip = nullptr;
+  auto e = curl_easy_getinfo(handle_.get(), CURLINFO_PRIMARY_IP, &ip);
+  if (e == CURLE_OK && ip != nullptr) return ip;
+  return std::string{"[error-fetching-peer]"};
+}
+
 void CurlHandle::EnableLogging(bool enabled) {
   if (enabled) {
     debug_info_ = std::make_shared<DebugInfo>();
