@@ -119,10 +119,15 @@ class CurlHandle {
     return AsStatus(e, __func__);
   }
 
-  /// Get the HTTP response code, or an error.
+  /// Gets the HTTP response code, or an error.
   StatusOr<std::int32_t> GetResponseCode();
 
-  /// Get the peer, or just "unknown".
+  /**
+   * Gets a string identifying the peer.
+   *
+   * It always returns a non-empty string, even if there is an error. The
+   * contents of the string if there was an error are otherwise unspecified.
+   */
   std::string GetPeer();
 
   Status EasyPause(int bitmask) {

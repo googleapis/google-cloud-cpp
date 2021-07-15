@@ -160,9 +160,9 @@ StatusOr<std::int32_t> CurlHandle::GetResponseCode() {
 }
 
 std::string CurlHandle::GetPeer() {
-  char* ip;
+  char* ip = nullptr;
   auto e = curl_easy_getinfo(handle_.get(), CURLINFO_PRIMARY_IP, &ip);
-  if (e == CURLE_OK) return ip;
+  if (e == CURLE_OK && ip != nullptr) return ip;
   return std::string{"[error-fetching-peer]"};
 }
 
