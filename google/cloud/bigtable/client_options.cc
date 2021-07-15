@@ -54,8 +54,7 @@ ClientOptions::ClientOptions(Options opts) {
   using std::chrono::duration_cast;
   using std::chrono::milliseconds;
 
-  static std::string const kUserAgentPrefix = UserAgentPrefix();
-  channel_arguments_.SetUserAgentPrefix(kUserAgentPrefix);
+  channel_arguments_.SetUserAgentPrefix(UserAgentPrefix());
   channel_arguments_.SetMaxSendMessageSize(
       BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH);
   channel_arguments_.SetMaxReceiveMessageSize(

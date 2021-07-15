@@ -29,9 +29,9 @@ std::string compiler() {
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 std::string compiler_flags() {
-  static char const kCompilerFlags[] =
-      R"""(@CMAKE_CXX_FLAGS@ ${CMAKE_CXX_FLAGS_${GOOGLE_CLOUD_CPP_BUILD_TYPE_UPPER}})""";
-  return kCompilerFlags;
+  static auto const* const kCompilerFlags = new auto(
+      R"""(@CMAKE_CXX_FLAGS@ ${CMAKE_CXX_FLAGS_${GOOGLE_CLOUD_CPP_BUILD_TYPE_UPPER}})""");
+  return *kCompilerFlags;
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
@@ -39,8 +39,9 @@ std::string build_metadata() {
   // Sometimes GOOGLE_CLOUD_CPP_BUILD_METADATA string expands to nothing, and
   // then clang-tidy complains.
   // NOLINTNEXTLINE(readability-redundant-string-init)
-  static char const kBuildMetadata[] = R"""(@GOOGLE_CLOUD_CPP_BUILD_METADATA@)""";
-  return kBuildMetadata;
+  static auto const* const kBuildMetadata =
+      new auto(R"""(@GOOGLE_CLOUD_CPP_BUILD_METADATA@)""");
+  return *kBuildMetadata;
 }
 
 }  // namespace internal

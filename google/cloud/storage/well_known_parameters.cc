@@ -20,16 +20,16 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 std::string PredefinedAcl::HeaderName() const {
-  static std::map<std::string, std::string> const kMapping{
+  static auto const* const kMapping = new std::map<std::string, std::string>({
       {"authenticatedRead", "authenticated-read"},
       {"bucketOwnerFullControl", "bucket-owner-full-control"},
       {"bucketOwnerRead", "bucket-owner-read"},
       {"private", "private"},
       {"projectPrivate", "project-private"},
       {"publicRead", "public-read"},
-  };
-  auto loc = kMapping.find(value());
-  if (loc == kMapping.end()) {
+  });
+  auto loc = kMapping->find(value());
+  if (loc == kMapping->end()) {
     return value();
   }
   return loc->second;
