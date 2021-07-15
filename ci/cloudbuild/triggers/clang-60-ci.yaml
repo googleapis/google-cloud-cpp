@@ -1,0 +1,13 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^(master|main|v\d+\..*)$
+name: clang-60-ci
+substitutions:
+  _BUILD_NAME: clang-60
+  _DISTRO: ubuntu-bionic-install
+  _TRIGGER_TYPE: ci
+tags:
+- ci
