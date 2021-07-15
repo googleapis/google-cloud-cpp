@@ -27,7 +27,4 @@ export CXX=clang++
 cmake -GNinja -DBUILD_SHARED_LIBS=yes -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON \
   -H. -Bcmake-out
 cmake --build cmake-out
-(
-  cd cmake-out
-  ctest --output-on-failure -LE "integration-test" -j "$(nproc)"
-)
+env -C cmake-out ctest --output-on-failure -LE "integration-test" -j "$(nproc)"
