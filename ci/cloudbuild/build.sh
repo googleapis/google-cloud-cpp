@@ -246,7 +246,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--interactive"
     "--tty=$([[ -t 0 ]] && echo true || echo false)"
     "--rm"
-    "--network=host"
+    "--network=bridge"
     "--user=$(id -u):$(id -g)"
     "--env=PS1=docker:${DISTRO_FLAG}\$ "
     "--env=USER=$(id -un)"
