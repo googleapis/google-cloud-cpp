@@ -82,12 +82,10 @@ function start_emulators() {
   trap kill_emulators EXIT
 
   local -r CBT_EMULATOR_CMD="/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator"
-  rm -f emulator.log
   "${CBT_EMULATOR_CMD}" -port "${emulator_port}" >emulator.log 2>&1 </dev/null &
   EMULATOR_PID=$!
 
   # The path to this command must be set by the caller.
-  rm -f instance-admin-emulator.log
   "${CBT_INSTANCE_ADMIN_EMULATOR_CMD}" "${instance_admin_emulator_port}" >instance-admin-emulator.log 2>&1 </dev/null &
   INSTANCE_ADMIN_EMULATOR_PID=$!
 
