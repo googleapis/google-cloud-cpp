@@ -24,7 +24,7 @@ BIN=.
 
 all: $(BIN)/quickstart
 
-# Configuration variables to compile and link against the Cloud Spanner C++
+# Configuration variables to compile and link against the Cloud Pub/Sub C++
 # client library.
 PUBSUB_DEPS := pubsub_client
 PUBSUB_CXXFLAGS   := $(shell pkg-config $(PUBSUB_DEPS) --cflags)

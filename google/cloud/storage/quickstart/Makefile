@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This is a minimal Makefile to show how to use the Cloud Bigtable C++ client
-# for developers that use make(1) as their build system.
+# This is a minimal Makefile to show how to use the Google Cloud Storage C++
+# client for developers that use make(1) as their build system.
 
 # The CXX, CXXFLAGS and CXXLD variables are hard-coded. These values work for
 # our tests, but applications would typically make them configurable parameters.

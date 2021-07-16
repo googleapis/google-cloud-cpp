@@ -31,7 +31,7 @@ shift
 bazel_test_args=("$@")
 
 # Start the emulator and arranges to kill it, run in $HOME because
-# pubsub_emulator::start creates unsightly *.log files in the workspace
+# spanner_emulator::start creates unsightly *.log files in the workspace
 # otherwise. Use a fixed port so Bazel can cache the test results.
 pushd "${HOME}" >/dev/null
 spanner_emulator::start 8787
