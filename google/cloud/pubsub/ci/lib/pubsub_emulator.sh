@@ -59,15 +59,14 @@ function pubsub_emulator::start() {
   readonly PUBSUB_EMULATOR_ARGS=(
     "beta" "emulators" "pubsub" "start"
     "--project=${GOOGLE_CLOUD_PROJECT:-fake-project}")
-  rm -f emulator.log
   if [[ ! -x "${PUBSUB_EMULATOR_CMD}" ]]; then
     echo 1>&2 "The Cloud Pub/Sub emulator does not seem to be installed, aborting"
-    cat emulator.log >&2
     return 1
   fi
 
   # The tests typically run in a Docker container, where the ports are largely
   # free; when using in manual tests, you can set EMULATOR_PORT.
+  rm -f emulator.log
   "${PUBSUB_EMULATOR_CMD}" "${PUBSUB_EMULATOR_ARGS[@]}" >emulator.log 2>&1 </dev/null &
   PUBSUB_EMULATOR_PID=$!
 
