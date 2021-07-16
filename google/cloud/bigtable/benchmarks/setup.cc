@@ -41,7 +41,7 @@ std::string FormattedAnnotations() {
 }
 
 std::string MakeRandomTableId(std::string const& prefix) {
-  static std::string const* const kTableIdChars = new std::string(
+  static auto const* const kTableIdChars = new std::string(
       "ABCDEFGHIJLKMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789_");
   auto gen = google::cloud::internal::MakeDefaultPRNG();
   return prefix + "-" +

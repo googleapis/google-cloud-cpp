@@ -20,10 +20,10 @@ namespace {
 
 std::string const& GoogleWellKnownAdcFilePathSuffix() {
 #ifdef _WIN32
-  static std::string const* const kSuffix =
+  static auto const* const kSuffix =
       new std::string("/gcloud/application_default_credentials.json");
 #else
-  static std::string const* const kSuffix =
+  static auto const* const kSuffix =
       new std::string("/.config/gcloud/application_default_credentials.json");
 #endif
   return *kSuffix;

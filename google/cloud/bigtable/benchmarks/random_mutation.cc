@@ -27,7 +27,7 @@ bigtable::Mutation MakeRandomMutation(google::cloud::internal::DefaultPRNG& gen,
 }
 
 std::string MakeRandomValue(google::cloud::internal::DefaultPRNG& generator) {
-  static std::string const* const kLetters = new std::string(
+  static auto const* const kLetters = new std::string(
       "ABCDEFGHIJLKMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789-/_");
   return google::cloud::internal::Sample(generator, kFieldSize, *kLetters);
 }
