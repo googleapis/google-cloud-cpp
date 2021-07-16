@@ -26,10 +26,12 @@ namespace internal {
 
 ObjectWriteStreambuf::ObjectWriteStreambuf(
     std::unique_ptr<ResumableUploadSession> upload_session,
-    std::size_t max_buffer_size, std::unique_ptr<HashValidator> hash_validator,
+    std::size_t max_buffer_size, std::unique_ptr<HashFunction> hash_function,
+    std::unique_ptr<HashValidator> hash_validator,
     AutoFinalizeConfig auto_finalize)
     : upload_session_(std::move(upload_session)),
       max_buffer_size_(UploadChunkRequest::RoundUpToQuantum(max_buffer_size)),
+      hash_function_(std::move(hash_function)),
       hash_validator_(std::move(hash_validator)),
       auto_finalize_(auto_finalize),
       last_response_(ResumableUploadResponse{
@@ -63,9 +65,13 @@ bool ObjectWriteStreambuf::ValidateHash(ObjectMetadata const& meta) {
   // This function is called once the stream is "closed" (either an explicit
   // `Close()` call or a permanent error). After this point the validator is
   // not usable.
+  auto function = std::move(hash_function_);
   auto validator = std::move(hash_validator_);
   validator->ProcessMetadata(meta);
-  hash_validator_result_ = std::move(*validator).Finish();
+  hash_validator_result_ =
+      std::move(*validator).Finish(std::move(*function).Finish());
+  computed_hash_ = FormatComputedHashes(hash_validator_result_);
+  received_hash_ = FormatReceivedHashes(hash_validator_result_);
   return !hash_validator_result_.is_mismatch;
 }
 
@@ -114,7 +120,7 @@ void ObjectWriteStreambuf::FlushFinal() {
   // Calculate the portion of the buffer that needs to be uploaded, if any.
   auto const actual_size = put_area_size();
   auto const upload_size = upload_session_->next_expected_byte() + actual_size;
-  hash_validator_->Update(pbase(), actual_size);
+  hash_function_->Update(pbase(), actual_size);
 
   last_response_ = upload_session_->UploadFinalChunk(
       {ConstBuffer(pbase(), actual_size)}, upload_size);
@@ -154,7 +160,7 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
   }
 
   for (auto const& b : payload) {
-    hash_validator_->Update(b.data(), b.size());
+    hash_function_->Update(b.data(), b.size());
   }
 
   // GCS upload returns an updated range header that sets the next expected

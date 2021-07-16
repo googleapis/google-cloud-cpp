@@ -28,9 +28,10 @@ class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
   ParallelObjectWriteStreambuf(
       std::shared_ptr<ParallelUploadStateImpl> state, std::size_t stream_idx,
       std::unique_ptr<ResumableUploadSession> upload_session,
-      std::size_t max_buffer_size,
+      std::size_t max_buffer_size, std::unique_ptr<HashFunction> hash_function,
       std::unique_ptr<HashValidator> hash_validator)
       : ObjectWriteStreambuf(std::move(upload_session), max_buffer_size,
+                             std::move(hash_function),
                              std::move(hash_validator),
                              AutoFinalizeConfig::kEnabled),
         state_(std::move(state)),
@@ -89,7 +90,7 @@ StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
   return ObjectWriteStream(absl::make_unique<ParallelObjectWriteStreambuf>(
       shared_from_this(), idx, *std::move(session),
       raw_client.client_options().upload_buffer_size(),
-      CreateHashValidator(request)));
+      CreateHashFunction(request), CreateHashValidator(request)));
 }
 
 std::string ParallelUploadPersistentState::ToString() const {

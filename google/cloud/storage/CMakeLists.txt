@@ -124,10 +124,16 @@ add_library(
     internal/generate_message_boundary.h
     internal/generic_object_request.h
     internal/generic_request.h
+    internal/hash_function.cc
+    internal/hash_function.h
+    internal/hash_function_impl.cc
+    internal/hash_function_impl.h
     internal/hash_validator.cc
     internal/hash_validator.h
     internal/hash_validator_impl.cc
     internal/hash_validator_impl.h
+    internal/hash_values.cc
+    internal/hash_values.h
     internal/hmac_key_metadata_parser.cc
     internal/hmac_key_metadata_parser.h
     internal/hmac_key_requests.cc
@@ -500,7 +506,9 @@ if (BUILD_TESTING)
         internal/default_object_acl_requests_test.cc
         internal/generate_message_boundary_test.cc
         internal/generic_request_test.cc
+        internal/hash_function_impl_test.cc
         internal/hash_validator_test.cc
+        internal/hash_values_test.cc
         internal/hmac_key_requests_test.cc
         internal/http_response_test.cc
         internal/impersonate_service_account_credentials_test.cc
