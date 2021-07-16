@@ -32,7 +32,7 @@ function pubsub_emulator::internal::read_emulator_port() {
 
   local emulator_port="0"
   local -r expected=": Server started, listening on "
-  for attempt in $(seq 1 12); do
+  for _ in $(seq 1 12); do
     if grep -q "${expected}" "${logfile}"; then
       # The port number is whatever is after 'listening on'.
       emulator_port=$(grep "${expected}" "${logfile}" | awk -F' ' '{print $NF}')
@@ -59,6 +59,7 @@ function pubsub_emulator::start() {
   readonly PUBSUB_EMULATOR_ARGS=(
     "beta" "emulators" "pubsub" "start"
     "--project=${GOOGLE_CLOUD_PROJECT:-fake-project}")
+  rm -f emulator.log
   if [[ ! -x "${PUBSUB_EMULATOR_CMD}" ]]; then
     echo 1>&2 "The Cloud Pub/Sub emulator does not seem to be installed, aborting"
     cat emulator.log >&2
