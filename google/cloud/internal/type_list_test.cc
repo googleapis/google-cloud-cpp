@@ -68,7 +68,7 @@ TEST(TypeList, Cat) {
 
 TEST(TypeList, Big) {
   // Verifies that we can concatenate lots of types, which breaks with
-  // `std::tuple` on clang 3.8
+  // `std::tuple` on older versions of Clang
   using BigList = TypeList<int, int, int, int, int, int, int, int, int, int>;
   using BiggerList = TypeListCatT<BigList, BigList, BigList, BigList, BigList>;
   static_assert(!std::is_same<BigList, BiggerList>::value, "");

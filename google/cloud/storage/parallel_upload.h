@@ -1109,14 +1109,7 @@ struct CreateParallelUploadShards {
           offset, shard_end - offset, upload_buffer_size));
       offset = shard_end;
     }
-#if defined(__clang__) && \
-    (__clang_major__ < 4 || (__clang_major__ == 3 && __clang_minor__ <= 8))
-    // The extra std::move() is required to workaround a Clang <= 3.8 bug, which
-    // tries to copy the result otherwise.
-    return std::move(res);
-#else
     return res;
-#endif
   }
 };
 

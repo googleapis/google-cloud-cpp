@@ -75,6 +75,12 @@ value for the additional complexity. If you prefer to build all the dependencies
 from source using CMake, we recommend you use a package manager, such as
 [vcpkg][vcpkg-github].
 
+**We have dropped support for Clang < 6.0:** to support the latest Google Cloud
+services we need a version of Protobuf that can compile all the `.proto` files
+in https://github.com/googleapis/googleapis. At this time this requires
+Protobuf >= 3.15, and these versions of Protobuf do not support older versions
+of the Clang compiler.
+
 [vcpkg-github]: https://github.com/microsoft/vcpkg
 
 ## v1.29.0 - 2021-07
