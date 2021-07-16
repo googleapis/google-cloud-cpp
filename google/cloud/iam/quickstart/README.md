@@ -62,7 +62,7 @@ https://cloud.google.com/docs/authentication/production
 2. Compile this example using Bazel:
 
    ```bash
-   cd $HOME/google-cloud-cpp/google/cloud/pubsub/quickstart
+   cd $HOME/google-cloud-cpp/google/cloud/iam/quickstart
    bazel build ...
    ```
 
@@ -101,7 +101,7 @@ https://cloud.google.com/docs/authentication/production
    the dependencies:
 
    ```bash
-   cd $HOME/gooogle-cloud-cpp/google/cloud/pubsub/quickstart
+   cd $HOME/gooogle-cloud-cpp/google/cloud/iam/quickstart
    cmake -H. -B.build -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
    cmake --build .build
    ```
