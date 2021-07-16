@@ -24,7 +24,7 @@ BIN=.
 
 all: $(BIN)/quickstart
 
-# Configuration variables to compile and link against the Cloud Spanner C++
+# Configuration variables to compile and link against the Cloud IAM C++
 # client library.
 IAM_DEPS := google_cloud_cpp_iam
 IAM_CXXFLAGS   := $(shell pkg-config $(IAM_DEPS) --cflags)

@@ -12,7 +12,7 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-# A minimal CMakeList.txt showing how to use the Cloud Bigtable C++ client
+# A minimal CMakeList.txt showing how to use the Cloud Pub/Sub C++ client
 # library in CMake-based projects.
 
 cmake_minimum_required(VERSION 3.5)
