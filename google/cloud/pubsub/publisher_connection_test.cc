@@ -123,11 +123,13 @@ TEST(PublisherConnectionTest, FlowControl) {
   testing_util::ScopedLog log;
 
   AsyncSequencer<void> publish;
+  int publish_count = 0;
   EXPECT_CALL(*mock, AsyncPublish)
       .Times(AtLeast(1))
       .WillRepeatedly([&](google::cloud::CompletionQueue&,
                           std::unique_ptr<grpc::ClientContext>,
                           google::pubsub::v1::PublishRequest const& request) {
+        ++publish_count;
         return publish.PushBack().then([request](future<void>) {
           google::pubsub::v1::PublishResponse response;
           for (auto const& m : request.messages()) {
@@ -153,7 +155,9 @@ TEST(PublisherConnectionTest, FlowControl) {
   EXPECT_THAT(rejected.get(), StatusIs(StatusCode::kFailedPrecondition));
 
   publisher->Flush({});
-  publish.PopFront().set_value();
+  for (int i = 0; i < publish_count; ++i) {
+    publish.PopFront().set_value();
+  }
   for (auto& p : pending) {
     EXPECT_THAT(p.get(), IsOk());
   }
