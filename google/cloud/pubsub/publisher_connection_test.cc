@@ -155,7 +155,7 @@ TEST(PublisherConnectionTest, FlowControl) {
   EXPECT_THAT(rejected.get(), StatusIs(StatusCode::kFailedPrecondition));
 
   publisher->Flush({});
-  for (int i = 0; i < publish_count; i++) {
+  for (int i = 0; i < publish_count; ++i) {
     publish.PopFront().set_value();
   }
   for (auto& p : pending) {
