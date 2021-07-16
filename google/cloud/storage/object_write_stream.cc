@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/object_write_stream.h"
+#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
