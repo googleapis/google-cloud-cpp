@@ -12,8 +12,8 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-# A minimal CMakeList.txt showing how to use the Cloud IAM C++ client library
-# in CMake-based projects.
+# A minimal CMakeList.txt showing how to use the Cloud IAM C++ client library in
+# CMake-based projects.
 
 cmake_minimum_required(VERSION 3.5)
 project(google-cloud-cpp-iam-quickstart CXX C)
