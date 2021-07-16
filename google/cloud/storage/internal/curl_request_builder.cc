@@ -119,12 +119,12 @@ CurlRequestBuilder& CurlRequestBuilder::SetCurlShare(CURLSH* share) {
 std::string CurlRequestBuilder::UserAgentSuffix() const {
   ValidateBuilderState(__func__);
   // Pre-compute and cache the user agent string:
-  static std::string const kUserAgentSuffix = [] {
+  static auto const* const kUserAgentSuffix = new auto([] {
     std::string agent = google::cloud::internal::UserAgentPrefix() + " ";
     agent += curl_version();
     return agent;
-  }();
-  return kUserAgentSuffix;
+  }());
+  return *kUserAgentSuffix;
 }
 
 void CurlRequestBuilder::ValidateBuilderState(char const* where) const {

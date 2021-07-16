@@ -20,7 +20,7 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 std::string version_string() {
-  static std::string const kVersion = [] {
+  static auto const* const kVersion = new auto([] {
     std::ostringstream os;
     os << "v" << version_major() << "." << version_minor() << "."
        << version_patch();
@@ -29,8 +29,8 @@ std::string version_string() {
       os << "+" << metadata;
     }
     return os.str();
-  }();
-  return kVersion;
+  }());
+  return *kVersion;
 }
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

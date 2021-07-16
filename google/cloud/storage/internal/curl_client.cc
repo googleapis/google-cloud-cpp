@@ -1393,10 +1393,10 @@ std::string CurlClient::PickBoundary(std::string const& text_to_avoid) {
   // larger than `text_to_avoid`.  And we only make (approximately) one pass
   // over `text_to_avoid`.
   auto generate_candidate = [this](int n) {
-    static std::string const kChars =
-        "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    static auto const* const kChars = new std::string(
+        "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
     std::unique_lock<std::mutex> lk(mu_);
-    return google::cloud::internal::Sample(generator_, n, kChars);
+    return google::cloud::internal::Sample(generator_, n, *kChars);
   };
   constexpr int kCandidateInitialSize = 16;
   constexpr int kCandidateGrowthSize = 4;

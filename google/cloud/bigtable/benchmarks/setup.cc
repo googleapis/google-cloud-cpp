@@ -41,14 +41,15 @@ std::string FormattedAnnotations() {
 }
 
 std::string MakeRandomTableId(std::string const& prefix) {
-  static std::string const kTableIdChars(
+  static auto const* const kTableIdChars = new std::string(
       "ABCDEFGHIJLKMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789_");
   auto gen = google::cloud::internal::MakeDefaultPRNG();
   return prefix + "-" +
          google::cloud::internal::Sample(
              gen, google::cloud::bigtable::benchmarks::kTableIdRandomLetters,
-             kTableIdChars);
+             *kTableIdChars);
 }
+
 }  // anonymous namespace
 
 namespace google {
