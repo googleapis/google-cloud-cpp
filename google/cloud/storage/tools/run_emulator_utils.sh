@@ -55,6 +55,7 @@ start_emulator() {
   io::log "Launching Cloud Storage emulator on port ${port}"
   trap kill_emulator EXIT
 
+  rm -f gcs_emulator.log
   gunicorn --bind "0.0.0.0:${port}" \
     --worker-class sync \
     --threads "$(nproc)" \

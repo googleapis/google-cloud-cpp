@@ -32,7 +32,7 @@ function spanner_emulator::internal::read_emulator_port() {
 
   local emulator_port="0"
   local -r expected=" : Server address: "
-  for attempt in $(seq 1 8); do
+  for _ in $(seq 1 8); do
     if grep -q "${expected}" "${logfile}"; then
       # The port number is whatever is after the last ':'.
       emulator_port=$(grep "${expected}" "${logfile}" | awk -F: '{print $NF}')
@@ -68,6 +68,7 @@ function spanner_emulator::start() {
 
   # The tests typically run in a Docker container, where the ports are largely
   # free; when using in manual tests, you can set EMULATOR_PORT.
+  rm -f emulator.log
   "${SPANNER_EMULATOR_CMD}" --host_port "localhost:${emulator_port}" >emulator.log 2>&1 </dev/null &
   SPANNER_EMULATOR_PID=$!
 
