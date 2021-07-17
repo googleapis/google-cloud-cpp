@@ -170,6 +170,7 @@ RUN dnf makecache && dnf install -y java-latest-openjdk-devel
 
 # Some of the above libraries may have installed in /usr/local, so make sure
 # those library directories will be found.
+ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig
 RUN ldconfig /usr/local/lib*
 
 RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.10.1/bazelisk-linux-amd64" && \
