@@ -48,7 +48,8 @@ StatusOr<std::vector<std::string>> ReadFile(std::string const& filepath) {
   return file_contents;
 }
 
-class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
+class GeneratorIntegrationTest
+    : public testing::TestWithParam<absl::string_view> {
  protected:
   void SetUp() override {
     auto run_integration_tests =
@@ -149,7 +150,8 @@ TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {
   auto generated_file =
       ReadFile(absl::StrCat(output_path_, product_path_, GetParam()));
 
-  ASSERT_THAT(generated_file, IsOk());
+  EXPECT_THAT(generated_file, IsOk());
+  EXPECT_EQ(golden_file->size(), generated_file->size());
   EXPECT_THAT(*golden_file,
               ElementsAreArray(generated_file->begin(), generated_file->end()));
 }
@@ -191,8 +193,8 @@ INSTANTIATE_TEST_SUITE_P(
         "mocks/mock_golden_kitchen_sink_connection.h"),
     [](testing::TestParamInfo<GeneratorIntegrationTest::ParamType> const&
            info) {
-      return std::string{absl::StrReplaceAll(std::string(info.param),
-                                             {{".", "_"}, {"/", "_"}})};
+      return absl::StrReplaceAll(std::string(info.param),
+                                 {{".", "_"}, {"/", "_"}});
     });
 
 }  // namespace
