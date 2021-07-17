@@ -184,7 +184,7 @@ cc_binary(
 | [crc32c][crc32c-gh]  | 1.0.6 | Hardware-accelerated CRC32C implementation |
 | [OpenSSL][OpenSSL-gh] | 1.0.2 | Crypto functions for Google Cloud Storage authentication |
 | [nlohmann/json][nlohmann-json-gh] | 3.4.0 | JSON for Modern C++ |
-| [protobuf][protobuf-gh] | 3.14.0 | C++ Microgenerator support |
+| [protobuf][protobuf-gh] | 3.15.8 | C++ Microgenerator support |
 
 [abseil-gh]: https://github.com/abseil/abseil-cpp
 [gRPC-gh]: https://github.com/grpc/grpc
@@ -211,25 +211,24 @@ Install the minimal development tools:
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y ccache cmake gcc-c++ git make openssl-devel patch pkgconfig \
-        zlib-devel
+sudo dnf install -y ccache cmake curl gcc-c++ git make ninja-build \
+        openssl-devel patch pkgconfig unzip tar wget zip zlib-devel
 ```
 
-Fedora 31 includes packages for gRPC, libcurl, and OpenSSL that are recent
-enough for the project. Install these packages and additional development
-tools to compile the dependencies:
+Fedora 34 includes packages for gRPC and Protobuf, but they are not
+recent enough to support the protos published by Google Cloud. The indirect
+dependencies of libcurl, Protobuf, and gRPC are recent enough for our needs.
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y grpc-devel grpc-plugins \
-        libcurl-devel protobuf-compiler tar wget zlib-devel
+sudo dnf install -y c-ares-devel re2-devel libcurl-devel
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
 default pkg-config does not search in these directories.
 
 ```bash
-export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
+export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig
 ```
 
 #### Abseil
@@ -246,7 +245,7 @@ curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
-      -H. -Bcmake-out && \
+      -H. -Bcmake-out -GNinja && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -267,7 +266,7 @@ curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
         -DCRC32C_BUILD_TESTS=OFF \
         -DCRC32C_BUILD_BENCHMARKS=OFF \
         -DCRC32C_USE_GLOG=OFF \
-        -H. -Bcmake-out && \
+        -H. -Bcmake-out -GNinja && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -290,6 +289,50 @@ curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
       -DBUILD_TESTING=OFF \
       -H. -Bcmake-out/nlohmann/json && \
 sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
+sudo ldconfig
+```
+
+#### Protobuf
+
+Unless you are only using the Google Cloud Storage library the project
+needs Protobuf and gRPC. Unfortunately the version of Protobuf that ships
+with Fedora 34 is not recent enough to support the protos published by
+Google Cloud, so we need to build from source:
+
+```bash
+mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
+curl -sSL https://github.com/google/protobuf/archive/v3.15.8.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -Hcmake -Bcmake-out -GNinja && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig
+```
+
+#### gRPC
+
+Finally we build gRPC from source also:
+
+```bash
+mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
+curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_RE2_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out -GNinja && \
+sudo cmake --build cmake-out --target install && \
 sudo ldconfig
 ```
 
