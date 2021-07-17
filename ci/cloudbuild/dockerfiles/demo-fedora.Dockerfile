@@ -55,7 +55,7 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
-      -H. -Bcmake-out -GNinja && \
+      -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
@@ -76,7 +76,7 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
         -DCRC32C_BUILD_TESTS=OFF \
         -DCRC32C_BUILD_BENCHMARKS=OFF \
         -DCRC32C_USE_GLOG=OFF \
-        -H. -Bcmake-out -GNinja && \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
@@ -107,7 +107,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
 # Unless you are only using the Google Cloud Storage library the project
 # needs Protobuf and gRPC. Unfortunately the version of Protobuf that ships
 # with Fedora 34 is not recent enough to support the protos published by
-# Google Cloud, so we need to build from source:
+# Google Cloud. We need to build from source:
 
 # ```bash
 WORKDIR /var/tmp/build/protobuf
@@ -117,7 +117,7 @@ RUN curl -sSL https://github.com/google/protobuf/archive/v3.15.8.tar.gz | \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out -GNinja && \
+        -Hcmake -Bcmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig
 # ```
@@ -141,7 +141,7 @@ RUN curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
         -DgRPC_RE2_PROVIDER=package \
         -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
-        -H. -Bcmake-out -GNinja && \
+        -H. -Bcmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig
 # ```

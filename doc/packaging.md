@@ -245,7 +245,7 @@ curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
-      -H. -Bcmake-out -GNinja && \
+      -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -266,7 +266,7 @@ curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
         -DCRC32C_BUILD_TESTS=OFF \
         -DCRC32C_BUILD_BENCHMARKS=OFF \
         -DCRC32C_USE_GLOG=OFF \
-        -H. -Bcmake-out -GNinja && \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -297,7 +297,7 @@ sudo ldconfig
 Unless you are only using the Google Cloud Storage library the project
 needs Protobuf and gRPC. Unfortunately the version of Protobuf that ships
 with Fedora 34 is not recent enough to support the protos published by
-Google Cloud, so we need to build from source:
+Google Cloud. We need to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
@@ -307,7 +307,7 @@ curl -sSL https://github.com/google/protobuf/archive/v3.15.8.tar.gz | \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out -GNinja && \
+        -Hcmake -Bcmake-out && \
 sudo cmake --build cmake-out --target install && \
 sudo ldconfig
 ```
@@ -331,7 +331,7 @@ curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
         -DgRPC_RE2_PROVIDER=package \
         -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
-        -H. -Bcmake-out -GNinja && \
+        -H. -Bcmake-out && \
 sudo cmake --build cmake-out --target install && \
 sudo ldconfig
 ```
@@ -987,17 +987,8 @@ Install the minimal development tools, libcurl, and OpenSSL:
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ca-certificates ccache cmake curl git \
-        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 \
-        make pkg-config tar wget zlib1g-dev
-```
-
-Debian 10 includes versions of gRPC and Protobuf that support the
-Google Cloud Platform proto files. We simply install these pre-built versions:
-
-```bash
-sudo apt-get update && \
-sudo apt-get --no-install-recommends install -y libgrpc++-dev libprotobuf-dev \
-    libprotoc-dev libc-ares-dev protobuf-compiler protobuf-compiler-grpc
+        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev \
+        libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev
 ```
 
 #### Abseil
@@ -1058,6 +1049,50 @@ curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
       -DBUILD_TESTING=OFF \
       -H. -Bcmake-out/nlohmann/json && \
 sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
+sudo ldconfig
+```
+
+#### Protobuf
+
+Unless you are only using the Google Cloud Storage library the project
+needs Protobuf and gRPC. Unfortunately the version of Protobuf that ships
+with Debian 10 is not recent enough to support the protos published by
+Google Cloud. We need to build from source:
+
+```bash
+mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
+curl -sSL https://github.com/google/protobuf/archive/v3.15.8.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -Hcmake -Bcmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig
+```
+
+#### gRPC
+
+Finally we build gRPC from source also:
+
+```bash
+mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
+curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_RE2_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+sudo cmake --build cmake-out --target install && \
 sudo ldconfig
 ```
 
