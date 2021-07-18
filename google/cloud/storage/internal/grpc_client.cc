@@ -195,50 +195,25 @@ ClientOptions const& GrpcClient::client_options() const {
 }
 
 StatusOr<ListBucketsResponse> GrpcClient::ListBuckets(
-    ListBucketsRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->ListBuckets(context, ToProto(request));
-  if (!response) return std::move(response).status();
-
-  ListBucketsResponse res;
-  res.next_page_token = std::move(*response->mutable_next_page_token());
-  for (auto& item : *response->mutable_items()) {
-    res.items.emplace_back(FromProto(std::move(item)));
-  }
-
-  return res;
+    ListBucketsRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
-StatusOr<BucketMetadata> GrpcClient::CreateBucket(
-    CreateBucketRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->InsertBucket(context, ToProto(request));
-  if (!response) return std::move(response).status();
-  return FromProto(*std::move(response));
+StatusOr<BucketMetadata> GrpcClient::CreateBucket(CreateBucketRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<BucketMetadata> GrpcClient::GetBucketMetadata(
-    GetBucketMetadataRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->GetBucket(context, ToProto(request));
-  if (!response) return std::move(response).status();
-  return FromProto(*std::move(response));
+    GetBucketMetadataRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
-StatusOr<EmptyResponse> GrpcClient::DeleteBucket(
-    DeleteBucketRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->DeleteBucket(context, ToProto(request));
-  if (!response.ok()) return response;
-  return EmptyResponse{};
+StatusOr<EmptyResponse> GrpcClient::DeleteBucket(DeleteBucketRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
-StatusOr<BucketMetadata> GrpcClient::UpdateBucket(
-    UpdateBucketRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->UpdateBucket(context, ToProto(request));
-  if (!response.ok()) return std::move(response).status();
-  return FromProto(*std::move(response));
+StatusOr<BucketMetadata> GrpcClient::UpdateBucket(UpdateBucketRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<BucketMetadata> GrpcClient::PatchBucket(PatchBucketRequest const&) {
@@ -251,11 +226,8 @@ StatusOr<IamPolicy> GrpcClient::GetBucketIamPolicy(
 }
 
 StatusOr<NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
-    GetBucketIamPolicyRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->GetBucketIamPolicy(context, ToProto(request));
-  if (!response.ok()) return std::move(response).status();
-  return FromProto(*std::move(response));
+    GetBucketIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<IamPolicy> GrpcClient::SetBucketIamPolicy(
@@ -264,25 +236,13 @@ StatusOr<IamPolicy> GrpcClient::SetBucketIamPolicy(
 }
 
 StatusOr<NativeIamPolicy> GrpcClient::SetNativeBucketIamPolicy(
-    SetNativeBucketIamPolicyRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->SetBucketIamPolicy(context, ToProto(request));
-  if (!response.ok()) return std::move(response).status();
-  return FromProto(*std::move(response));
+    SetNativeBucketIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<TestBucketIamPermissionsResponse> GrpcClient::TestBucketIamPermissions(
-    TestBucketIamPermissionsRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->TestBucketIamPermissions(context, ToProto(request));
-  if (!response.ok()) return std::move(response).status();
-
-  TestBucketIamPermissionsResponse res;
-  for (auto const& permission : *response->mutable_permissions()) {
-    res.permissions.emplace_back(std::move(permission));
-  }
-
-  return res;
+    TestBucketIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
@@ -364,12 +324,8 @@ StatusOr<ListObjectsResponse> GrpcClient::ListObjects(
   return Status(StatusCode::kUnimplemented, __func__);
 }
 
-StatusOr<EmptyResponse> GrpcClient::DeleteObject(
-    DeleteObjectRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->DeleteObject(context, ToProto(request));
-  if (!response.ok()) return response;
-  return EmptyResponse{};
+StatusOr<EmptyResponse> GrpcClient::DeleteObject(DeleteObjectRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<ObjectMetadata> GrpcClient::UpdateObject(UpdateObjectRequest const&) {
@@ -426,49 +382,28 @@ GrpcClient::RestoreResumableSession(std::string const& upload_url) {
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(
-    DeleteResumableUploadRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->DeleteObject(context, ToProto(request));
-  if (!response.ok()) return response;
-  return EmptyResponse{};
+    DeleteResumableUploadRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<ListBucketAclResponse> GrpcClient::ListBucketAcl(
-    ListBucketAclRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->ListBucketAccessControls(context, ToProto(request));
-  if (!response.ok()) return std::move(response).status();
-
-  ListBucketAclResponse res;
-  for (auto& item : *response->mutable_items()) {
-    res.items.emplace_back(FromProto(std::move(item)));
-  }
-
-  return res;
+    ListBucketAclRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<BucketAccessControl> GrpcClient::GetBucketAcl(
-    GetBucketAclRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->GetBucketAccessControl(context, ToProto(request));
-  if (!response.ok()) return std::move(response).status();
-  return FromProto(*std::move(response));
+    GetBucketAclRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<BucketAccessControl> GrpcClient::CreateBucketAcl(
-    CreateBucketAclRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->InsertBucketAccessControl(context, ToProto(request));
-  if (!response.ok()) return std::move(response).status();
-  return FromProto(*std::move(response));
+    CreateBucketAclRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteBucketAcl(
-    DeleteBucketAclRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->DeleteBucketAccessControl(context, ToProto(request));
-  if (!response.ok()) return response;
-  return EmptyResponse{};
+    DeleteBucketAclRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<ListObjectAclResponse> GrpcClient::ListObjectAcl(
@@ -477,11 +412,8 @@ StatusOr<ListObjectAclResponse> GrpcClient::ListObjectAcl(
 }
 
 StatusOr<BucketAccessControl> GrpcClient::UpdateBucketAcl(
-    UpdateBucketAclRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->UpdateBucketAccessControl(context, ToProto(request));
-  if (!response.ok()) return std::move(response).status();
-  return FromProto(*std::move(response));
+    UpdateBucketAclRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<BucketAccessControl> GrpcClient::PatchBucketAcl(
@@ -515,54 +447,28 @@ StatusOr<ObjectAccessControl> GrpcClient::PatchObjectAcl(
 }
 
 StatusOr<ListDefaultObjectAclResponse> GrpcClient::ListDefaultObjectAcl(
-    ListDefaultObjectAclRequest const& request) {
-  grpc::ClientContext context;
-  auto response =
-      stub_->ListDefaultObjectAccessControls(context, ToProto(request));
-  if (!response.ok()) return std::move(response).status();
-
-  ListDefaultObjectAclResponse res;
-  for (auto& item : *response->mutable_items()) {
-    res.items.emplace_back(FromProto(std::move(item)));
-  }
-
-  return res;
+    ListDefaultObjectAclRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::CreateDefaultObjectAcl(
-    CreateDefaultObjectAclRequest const& request) {
-  grpc::ClientContext context;
-  auto response =
-      stub_->InsertDefaultObjectAccessControl(context, ToProto(request));
-  if (!response.ok()) return std::move(response).status();
-  return FromProto(*std::move(response));
+    CreateDefaultObjectAclRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteDefaultObjectAcl(
-    DeleteDefaultObjectAclRequest const& request) {
-  grpc::ClientContext context;
-  auto response =
-      stub_->DeleteDefaultObjectAccessControl(context, ToProto(request));
-  if (!response.ok()) return response;
-  return EmptyResponse{};
+    DeleteDefaultObjectAclRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::GetDefaultObjectAcl(
-    GetDefaultObjectAclRequest const& request) {
-  grpc::ClientContext context;
-  auto response =
-      stub_->GetDefaultObjectAccessControl(context, ToProto(request));
-  if (!response.ok()) return std::move(response).status();
-  return FromProto(*std::move(response));
+    GetDefaultObjectAclRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::UpdateDefaultObjectAcl(
-    UpdateDefaultObjectAclRequest const& request) {
-  grpc::ClientContext context;
-  auto response =
-      stub_->UpdateDefaultObjectAccessControl(context, ToProto(request));
-  if (!response.ok()) return std::move(response).status();
-  return FromProto(*std::move(response));
+    UpdateDefaultObjectAclRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::PatchDefaultObjectAcl(
@@ -639,41 +545,23 @@ NotificationMetadata GrpcClient::FromProto(
 }
 
 StatusOr<ListNotificationsResponse> GrpcClient::ListNotifications(
-    ListNotificationsRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->ListNotifications(context, ToProto(request));
-  if (!response.ok()) return std::move(response).status();
-
-  ListNotificationsResponse res;
-  for (auto& item : *response->mutable_items()) {
-    res.items.emplace_back(FromProto(std::move(item)));
-  }
-
-  return res;
+    ListNotificationsRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<NotificationMetadata> GrpcClient::CreateNotification(
-    CreateNotificationRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->InsertNotification(context, ToProto(request));
-  if (!response.ok()) return std::move(response).status();
-  return FromProto(*std::move(response));
+    CreateNotificationRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<NotificationMetadata> GrpcClient::GetNotification(
-    GetNotificationRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->GetNotification(context, ToProto(request));
-  if (!response.ok()) return std::move(response).status();
-  return FromProto(*std::move(response));
+    GetNotificationRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteNotification(
-    DeleteNotificationRequest const& request) {
-  grpc::ClientContext context;
-  auto response = stub_->DeleteNotification(context, ToProto(request));
-  if (!response.ok()) return response;
-  return EmptyResponse{};
+    DeleteNotificationRequest const&) {
+  return Status(StatusCode::kUnimplemented, __func__);
 }
 
 template <typename GrpcRequest, typename StorageRequest>
