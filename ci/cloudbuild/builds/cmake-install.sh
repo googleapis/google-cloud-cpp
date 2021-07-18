@@ -85,6 +85,7 @@ expected_dirs=(
   ./include/google/spanner/admin/instance/v1
   ./include/google/spanner/v1
   ./include/google/storage/v1
+  ./include/google/storage/v2
   ./include/google/type
   ./lib64/cmake/bigtable_client
   ./lib64/cmake/firestore_client
