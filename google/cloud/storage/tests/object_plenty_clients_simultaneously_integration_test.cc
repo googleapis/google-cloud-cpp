@@ -79,7 +79,7 @@ TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
         << "Clients keeps at least some file descriptors open";
     EXPECT_LT(*num_fds_after_test, *num_fds_during_test)
         << "Releasing clients also releases at least some file descriptors";
-    EXPECT_EQ(*num_fds_before_test, *num_fds_after_test)
+    EXPECT_GE(*num_fds_before_test, *num_fds_after_test)
         << "Clients are leaking descriptors";
   } else {
     EXPECT_EQ(StatusCode::kUnimplemented, num_fds_before_test.status().code());

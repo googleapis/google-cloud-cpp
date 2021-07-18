@@ -85,7 +85,7 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
   if (track_open_files) {
     auto num_fds_after_test = GetNumOpenFiles();
     ASSERT_STATUS_OK(num_fds_after_test);
-    EXPECT_EQ(*num_fds_before_test, *num_fds_after_test)
+    EXPECT_GE(*num_fds_before_test, *num_fds_after_test)
         << "Clients are leaking descriptors";
   }
 }
