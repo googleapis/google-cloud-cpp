@@ -18,7 +18,7 @@
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
-#include <google/storage/v1/storage.pb.h>
+#include <google/storage/v2/storage.pb.h>
 #include <functional>
 #include <string>
 
@@ -41,7 +41,7 @@ namespace internal {
 class GrpcObjectReadSource : public ObjectReadSource {
  public:
   using StreamingRpc = ::google::cloud::internal::StreamingReadRpc<
-      google::storage::v1::GetObjectMediaResponse>;
+      google::storage::v2::ReadObjectResponse>;
 
   explicit GrpcObjectReadSource(std::unique_ptr<StreamingRpc> stream);
 

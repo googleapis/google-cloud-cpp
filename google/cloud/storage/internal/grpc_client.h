@@ -19,7 +19,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
-#include <google/storage/v1/storage.pb.h>
+#include <google/storage/v2/storage.pb.h>
 #include <memory>
 #include <string>
 
@@ -56,8 +56,10 @@ class GrpcClient : public RawClient,
   // them is very different from the standard retry loop. Also note that these
   // are virtual functions only because we need to override them in the unit
   // tests.
+  // TODO(#6982) - rename InsertStream to WriteStream.
   using InsertStream = ::google::cloud::internal::StreamingWriteRpc<
-      google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
+      google::storage::v2::WriteObjectRequest,
+      google::storage::v2::WriteObjectResponse>;
   virtual std::unique_ptr<InsertStream> CreateUploadWriter(
       std::unique_ptr<grpc::ClientContext> context);
   virtual StatusOr<ResumableUploadResponse> QueryResumableUpload(
@@ -176,37 +178,39 @@ class GrpcClient : public RawClient,
   StatusOr<EmptyResponse> DeleteNotification(
       DeleteNotificationRequest const&) override;
 
-  static google::storage::v1::Object::CustomerEncryption ToProto(
+  static google::storage::v2::Object::CustomerEncryption ToProto(
       CustomerEncryption rhs);
   static CustomerEncryption FromProto(
-      google::storage::v1::Object::CustomerEncryption rhs);
+      google::storage::v2::Object::CustomerEncryption rhs);
 
-  static ObjectMetadata FromProto(google::storage::v1::Object object);
+  static ObjectMetadata FromProto(google::storage::v2::Object object);
 
-  static google::storage::v1::ObjectAccessControl ToProto(
+  static google::storage::v2::ObjectAccessControl ToProto(
       ObjectAccessControl const& acl);
   static ObjectAccessControl FromProto(
-      google::storage::v1::ObjectAccessControl acl);
+      google::storage::v2::ObjectAccessControl acl,
+      std::string const& bucket_name, std::string const& object_name,
+      std::uint64_t generation);
 
-  static google::storage::v1::Owner ToProto(Owner);
-  static Owner FromProto(google::storage::v1::Owner);
+  static google::storage::v2::Owner ToProto(Owner);
+  static Owner FromProto(google::storage::v2::Owner);
 
-  static google::storage::v1::CommonEnums::Projection ToProto(
-      Projection const& p);
-  static google::storage::v1::CommonEnums::PredefinedObjectAcl ToProtoObject(
+  static google::storage::v2::PredefinedObjectAcl ToProtoObject(
       PredefinedAcl const& acl);
 
-  static StatusOr<google::storage::v1::InsertObjectRequest> ToProto(
+  static StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
       InsertObjectMediaRequest const& request);
-  static google::storage::v1::StartResumableWriteRequest ToProto(
+  static ResumableUploadResponse FromProto(
+      google::storage::v2::WriteObjectResponse const&);
+  static google::storage::v2::StartResumableWriteRequest ToProto(
       ResumableUploadRequest const& request);
-  static google::storage::v1::QueryWriteStatusRequest ToProto(
+  static google::storage::v2::QueryWriteStatusRequest ToProto(
       QueryResumableUploadRequest const& request);
 
-  static google::storage::v1::GetObjectMediaRequest ToProto(
+  static google::storage::v2::ReadObjectRequest ToProto(
       ReadObjectRangeRequest const& request);
 
-  static std::string Crc32cFromProto(google::protobuf::UInt32Value const&);
+  static std::string Crc32cFromProto(std::uint32_t);
   static StatusOr<std::uint32_t> Crc32cToProto(std::string const&);
   static std::string MD5FromProto(std::string const&);
   static StatusOr<std::string> MD5ToProto(std::string const&);

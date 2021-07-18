@@ -85,6 +85,8 @@ TEST_P(ObjectHashIntegrationTest, InsertObjectExplicitDisable) {
 
 /// @test Verify that MD5 hashes can be explicitly enabled in InsertObject().
 TEST_P(ObjectHashIntegrationTest, InsertObjectExplicitEnable) {
+  // TODO(#6982) - restore this test when production is fixed
+  if (!UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
@@ -104,6 +106,8 @@ TEST_P(ObjectHashIntegrationTest, InsertObjectExplicitEnable) {
 
 /// @test Verify that valid MD5 hash values work in InsertObject().
 TEST_P(ObjectHashIntegrationTest, InsertObjectWithValueSuccess) {
+  // TODO(#6982) - restore this test when production is fixed
+  if (!UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
@@ -180,6 +184,8 @@ TEST_F(ObjectHashIntegrationTest, WriteObjectExplicitDisable) {
 
 /// @test Verify that MD5 hashes can be explicitly enabled in WriteObject().
 TEST_F(ObjectHashIntegrationTest, WriteObjectExplicitEnable) {
+  // TODO(#6982) - restore this test when production is fixed
+  if (!UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
@@ -202,6 +208,8 @@ TEST_F(ObjectHashIntegrationTest, WriteObjectExplicitEnable) {
 
 /// @test Verify that valid MD5 hash values work in WriteObject().
 TEST_F(ObjectHashIntegrationTest, WriteObjectWithValueSuccess) {
+  // TODO(#6982) - restore this test when production is fixed
+  if (!UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();

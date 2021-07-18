@@ -60,8 +60,7 @@ start_emulator() {
     --worker-class sync \
     --threads "$(nproc)" \
     --access-logfile - \
-    --chdir "${PROJECT_ROOT}/google/cloud/storage/emulator" \
-    "emulator:run()" \
+    "testbench:run()" \
     >gcs_emulator.log 2>&1 </dev/null &
   EMULATOR_PID=$!
 

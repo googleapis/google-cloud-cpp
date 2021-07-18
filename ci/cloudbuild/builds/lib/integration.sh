@@ -28,7 +28,7 @@ source module ci/lib/io.sh
 
 # To run the integration tests we need to install the dependencies for the storage emulator
 export PATH="${HOME}/.local/bin:${PATH}"
-python3 -m pip install --quiet --user -r "${PROJECT_ROOT}/google/cloud/storage/emulator/requirements.txt"
+python3 -m pip install --quiet --user "git+git://github.com/googleapis/storage-testbench@v0.4.0"
 
 # Some of the tests will need a valid roots.pem file.
 rm -f /dev/shm/roots.pem
