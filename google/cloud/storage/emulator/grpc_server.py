@@ -19,8 +19,7 @@ import gcs as gcs_type
 import grpc
 import utils
 
-from google.cloud.storage_v1.proto import storage_pb2, storage_pb2_grpc
-from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
+from google.storage.v2 import storage_pb2, storage_pb2_grpc
 from google.iam.v1 import iam_policy_pb2
 from google.protobuf.empty_pb2 import Empty
 
@@ -29,136 +28,6 @@ db = None
 
 
 class StorageServicer(storage_pb2_grpc.StorageServicer):
-
-    # === BUCKET ===#
-
-    def ListBuckets(self, request, context):
-        db.insert_test_bucket(context)
-        result = resources_pb2.ListBucketsResponse(next_page_token="", items=[])
-        for bucket in db.list_bucket(request, request.project, context):
-            result.items.append(bucket.metadata)
-        return result
-
-    def InsertBucket(self, request, context):
-        db.insert_test_bucket(context)
-        bucket, projection = gcs_type.bucket.Bucket.init(request, context)
-        db.insert_bucket(request, bucket, context)
-        return bucket.metadata
-
-    def GetBucket(self, request, context):
-        bucket_name = request.bucket
-        bucket = db.get_bucket(request, bucket_name, context)
-        return bucket.metadata
-
-    def UpdateBucket(self, request, context):
-        bucket_name = request.bucket
-        bucket = db.get_bucket(request, bucket_name, context)
-        bucket.update(request, context)
-        return bucket.metadata
-
-    def DeleteBucket(self, request, context):
-        bucket_name = request.bucket
-        db.delete_bucket(request, bucket_name, context)
-        return Empty()
-
-    def ListBucketAccessControls(self, request, context):
-        bucket_name = request.bucket
-        bucket = db.get_bucket(request, bucket_name, context)
-        result = resources_pb2.ListBucketAccessControlsResponse(
-            items=bucket.metadata.acl
-        )
-        return result
-
-    def InsertBucketAccessControl(self, request, context):
-        bucket_name = request.bucket
-        bucket = db.get_bucket(request, bucket_name, context)
-        return bucket.insert_acl(request, context)
-
-    def GetBucketAccessControl(self, request, context):
-        bucket_name = request.bucket
-        bucket = db.get_bucket(request, bucket_name, context)
-        return bucket.get_acl(request.entity, context)
-
-    def UpdateBucketAccessControl(self, request, context):
-        bucket_name = request.bucket
-        bucket = db.get_bucket(request, bucket_name, context)
-        return bucket.update_acl(request, request.entity, context)
-
-    def DeleteBucketAccessControl(self, request, context):
-        bucket_name = request.bucket
-        bucket = db.get_bucket(request, bucket_name, context)
-        bucket.delete_acl(request.entity, context)
-        return Empty()
-
-    def ListDefaultObjectAccessControls(self, request, context):
-        bucket_name = request.bucket
-        bucket = db.get_bucket(request, bucket_name, context)
-        result = resources_pb2.ListObjectAccessControlsResponse(
-            items=bucket.metadata.default_object_acl
-        )
-        return result
-
-    def InsertDefaultObjectAccessControl(self, request, context):
-        bucket_name = request.bucket
-        bucket = db.get_bucket(request, bucket_name, context)
-        return bucket.insert_default_object_acl(request, context)
-
-    def GetDefaultObjectAccessControl(self, request, context):
-        bucket_name = request.bucket
-        bucket = db.get_bucket(request, bucket_name, context)
-        return bucket.get_default_object_acl(request.entity, context)
-
-    def UpdateDefaultObjectAccessControl(self, request, context):
-        bucket_name = request.bucket
-        bucket = db.get_bucket(request, bucket_name, context)
-        return bucket.update_default_object_acl(request, request.entity, context)
-
-    def DeleteDefaultObjectAccessControl(self, request, context):
-        bucket_name = request.bucket
-        bucket = db.get_bucket(request, bucket_name, context)
-        bucket.delete_default_object_acl(request.entity, context)
-        return Empty()
-
-    def InsertNotification(self, request, context):
-        bucket_name = request.bucket
-        bucket = db.get_bucket(request, bucket_name, context)
-        return bucket.insert_notification(request, context)
-
-    def ListNotifications(self, request, context):
-        bucket_name = request.bucket
-        bucket = db.get_bucket(request, bucket_name, context)
-        result = resources_pb2.ListNotificationsResponse(
-            items=bucket.notifications.values()
-        )
-        return result
-
-    def GetNotification(self, request, context):
-        bucket_name = request.bucket
-        bucket = db.get_bucket(request, bucket_name, context)
-        notification_id = request.notification
-        return bucket.get_notification(notification_id, context)
-
-    def DeleteNotification(self, request, context):
-        bucket_name = request.bucket
-        bucket = db.get_bucket(request, bucket_name, context)
-        notification_id = request.notification
-        bucket.delete_notification(notification_id, context)
-        return Empty()
-
-    def GetBucketIamPolicy(self, request, context):
-        bucket_name = request.iam_request.resource
-        bucket = db.get_bucket(request, bucket_name, context)
-        return bucket.get_iam_policy(request, context)
-
-    def SetBucketIamPolicy(self, request, context):
-        bucket_name = request.iam_request.resource
-        bucket = db.get_bucket(request, bucket_name, context)
-        return bucket.set_iam_policy(request, context)
-
-    def TestBucketIamPermissions(self, request, context):
-        return iam_policy_pb2.TestIamPermissionsResponse(
-            permissions=request.iam_request.permissions
-        )
 
     # === OBJECT === #
 
@@ -225,7 +94,7 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
             if not is_resumable:
                 utils.error.missing("finish_write in request", context)
             else:
-                return resources_pb2.Object()
+                return storage_pb2.Object()
         blob, _ = gcs_type.object.Object.init(
             upload.request, upload.metadata, upload.media, upload.bucket, False, context
         )
@@ -241,10 +110,6 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
             },
             metadata=blob.metadata,
         )
-
-    def DeleteObject(self, request, context):
-        db.delete_object(request, request.bucket, request.object, context)
-        return Empty()
 
     def StartResumableWrite(self, request, context):
         bucket = db.get_bucket_without_generation(

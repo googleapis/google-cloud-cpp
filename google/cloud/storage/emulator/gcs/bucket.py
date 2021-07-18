@@ -23,8 +23,7 @@ import re
 import scalpl
 import utils
 
-from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
-from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
+from google.storage.v2 import storage_pb2
 from google.iam.v1 import policy_pb2
 from google.protobuf import field_mask_pb2, json_format
 
@@ -45,9 +44,9 @@ class Bucket:
         "billing",
         "retention_policy",
         "location_type",
-        "iam_configuration",
+        "iam_config",
     ]
-    rest_only_fields = ["iamConfiguration.publicAccessPrevention"]
+    rest_only_fields = []
 
     def __init__(self, metadata, notifications, iam_policy, rest_only):
         self.metadata = metadata
@@ -72,13 +71,106 @@ class Bucket:
             utils.error.invalid("Bucket name %s" % bucket_name, context)
 
     @classmethod
-    def __preprocess_rest(cls, data):
-        proxy = scalpl.Cut(data)
-        keys = utils.common.nested_key(data)
-        proxy.pop("iamConfiguration.bucketPolicyOnly", False)
-        for key in keys:
-            if key.endswith("createdBefore"):
-                proxy[key] = proxy[key] + "T00:00:00Z"
+    def __adjust_dict(cls, data, adjustments):
+        modified = data.copy()
+        for key, action in adjustments.items():
+            value = modified.pop(key, None)
+            if value is not None:
+                k, v = action(value)
+                modified[k] = v
+        return modified
+
+    @classmethod
+    def __preprocess_rest_ubla(cls, ubla):
+        return Bucket.__adjust_dict(ubla, {"lockedTime": lambda x: ("lockTime", x)})
+
+    @classmethod
+    def __preprocess_rest_iam_configuration(cls, config):
+        config = Bucket.__adjust_dict(
+            config,
+            {
+                "uniformBucketLevelAccess": lambda x: (
+                    "uniformBucketLevelAccess",
+                    Bucket.__preprocess_rest_ubla(x),
+                ),
+                "publicAccessPrevention": lambda x: (
+                    "publicAccessPrevention",
+                    x.upper(),
+                ),
+            },
+        )
+        return config
+
+    @classmethod
+    def __preprocess_rest_encryption(cls, enc):
+        return Bucket.__adjust_dict(
+            enc, {"defaultKmsKeyName": lambda x: ("defaultKmsKey", x)}
+        )
+
+    __GRPC_CONDITION_RENAMES = {
+        "age": "ageDays",
+        "createdBefore": "createdBeforeTime",
+        "customTimeBefore": "customTimeBeforeTime",
+        "noncurrentTimeBefore": "noncurrentTimeBeforeTime",
+    }
+
+    __GRPC_CONDITION_TIMESTAMPS = [
+        "createdBeforeTime",
+        "customTimeBeforeTime",
+        "noncurrentTimeBeforeTime",
+    ]
+
+    @classmethod
+    def __preprocess_rest_condition(cls, condition):
+        modified = condition.copy()
+        for rest, grpc in Bucket.__GRPC_CONDITION_RENAMES.items():
+            value = modified.pop(rest, None)
+            if value is not None:
+                if grpc in Bucket.__GRPC_CONDITION_TIMESTAMPS:
+                    modified[grpc] = value + "T00:00:00Z"
+                else:
+                    modified[grpc] = value
+        return modified
+
+    @classmethod
+    def __preprocess_rest_rule(cls, rule):
+        return Bucket.__adjust_dict(
+            rule,
+            {
+                "condition": lambda x: (
+                    "condition",
+                    Bucket.__preprocess_rest_condition(x),
+                )
+            },
+        )
+
+    @classmethod
+    def __preprocess_rest_lifecyle(cls, lc):
+        rules = lc.pop("rule", None)
+        if rules is not None:
+            lc["rule"] = [Bucket.__preprocess_rest_rule(r) for r in rules]
+        return lc
+
+    @classmethod
+    def __preprocess_rest(cls, rest):
+        rest = Bucket.__adjust_dict(
+            rest,
+            {
+                "iamConfiguration": lambda x: (
+                    "iamConfig",
+                    Bucket.__preprocess_rest_iam_configuration(x),
+                ),
+                "encryption": lambda x: (
+                    "encryption",
+                    Bucket.__preprocess_rest_encryption(x),
+                ),
+                "lifecycle": lambda x: (
+                    "lifecycle",
+                    Bucket.__preprocess_rest_lifecyle(x),
+                ),
+            },
+        )
+        proxy = scalpl.Cut(rest)
         rest_only = {}
         for field in Bucket.rest_only_fields:
             if field in proxy:
@@ -86,12 +178,105 @@ class Bucket:
         return proxy.data, rest_only
 
     @classmethod
+    def __postprocess_rest_ubla(cls, ubla):
+        return Bucket.__adjust_dict(ubla, {"lockTime": lambda x: ("lockedTime", x)})
+
+    @classmethod
+    def __postprocess_rest_iam_configuration(cls, config):
+        return Bucket.__adjust_dict(
+            config,
+            {
+                "uniformBucketLevelAccess": lambda x: (
+                    "uniformBucketLevelAccess",
+                    Bucket.__postprocess_rest_ubla(x),
+                ),
+            },
+        )
+
+    @classmethod
+    def __postprocess_rest_encryption(cls, enc):
+        return Bucket.__adjust_dict(
+            enc, {"defaultKmsKey": lambda x: ("defaultKmsKeyName", x)}
+        )
+
+    @classmethod
+    def __postprocess_rest_condition(cls, condition):
+        modified = condition.copy()
+        for rest, grpc in Bucket.__GRPC_CONDITION_RENAMES.items():
+            value = modified.pop(grpc, None)
+            if value is not None:
+                if grpc in Bucket.__GRPC_CONDITION_TIMESTAMPS:
+                    modified[rest] = value.removesuffix("T00:00:00Z")
+                else:
+                    modified[rest] = value
+        return modified
+
+    @classmethod
+    def __postprocess_rest_rule(cls, rule):
+        return Bucket.__adjust_dict(
+            rule,
+            {
+                "condition": lambda x: (
+                    "condition",
+                    Bucket.__postprocess_rest_condition(x),
+                )
+            },
+        )
+
+    @classmethod
+    def __postprocess_rest_lifecycle(cls, lc):
+        rules = lc.pop("rule", None)
+        if rules is not None:
+            lc["rule"] = [Bucket.__postprocess_rest_rule(r) for r in rules]
+        return lc
+
+    @classmethod
+    def __postprocess_rest_bucket_acl(cls, bucket_name, acl):
+        copy = acl.copy()
+        copy["kind"] = "storage#bucketAccessControl"
+        copy["bucket"] = bucket_name
+        copy["id"] = bucket_name + "/" + copy["entity"]
+        copy["etag"] = hashlib.md5(copy["id"] + "#" + copy["role"])
+        return copy
+
+    @classmethod
     def __postprocess_rest(cls, data, rest_only):
+        bucket_name = data["name"]
+        data = Bucket.__adjust_dict(
+            data,
+            {
+                "bucketId": lambda x: ("id", x),
+                "project": lambda x: ("projectNumber", x.replace("project/", "")),
+                "createTime": lambda x: ("timeCreated", x),
+                "updateTime": lambda x: ("updated", x),
+                "iamConfig": lambda x: (
+                    "iamConfiguration",
+                    Bucket.__postprocess_rest_iam_configuration(x),
+                ),
+                "encryption": lambda x: (
+                    "encryption",
+                    Bucket.__postprocess_rest_encryption(x),
+                ),
+                "lifecycle": lambda x: (
+                    "lifecycle",
+                    Bucket.__postprocess_rest_lifecycle(x),
+                ),
+                "acl": lambda x: (
+                    "acl",
+                    [Bucket.__postprocess_rest_bucket_acl(bucket_name, b) for b in x],
+                ),
+            },
+        )
+        # 0 is the default in the proto, and hidden json_format.*
+        if "metageneration" not in data:
+            data["metageneration"] = 0
         proxy = scalpl.Cut(data)
         keys = utils.common.nested_key(data)
+        # Remove the additional timestamps from gRPC fields
         for key in keys:
-            if key.endswith("createdBefore"):
-                proxy[key] = proxy[key].replace("T00:00:00Z", "")
+            for timestamp in Bucket.__GRPC_CONDITION_TIMESTAMPS:
+                if key.endswith("." + timestamp):
+                    proxy[key] = proxy[key].removesuffix("T00:00:00Z")
         proxy["kind"] = "storage#bucket"
         if "acl" in data:
             for entry in data["acl"]:
@@ -104,13 +289,9 @@ class Bucket:
 
     @classmethod
     def __insert_predefined_acl(cls, metadata, predefined_acl, context):
-        if (
-            predefined_acl == ""
-            or predefined_acl
-            == CommonEnums.PredefinedBucketAcl.PREDEFINED_BUCKET_ACL_UNSPECIFIED
-        ):
+        if predefined_acl == "" or predefined_acl == "unspecified":
             return
-        if metadata.iam_configuration.uniform_bucket_level_access.enabled:
+        if metadata.iam_config.uniform_bucket_level_access.enabled:
             utils.error.invalid(
                 "Predefined ACL with uniform bucket level access enabled", context
             )
@@ -127,10 +308,10 @@ class Bucket:
         if (
             predefined_default_object_acl == ""
             or predefined_default_object_acl
-            == CommonEnums.PredefinedObjectAcl.PREDEFINED_OBJECT_ACL_UNSPECIFIED
+            == storage_pb2.PredefinedObjectAcl.PREDEFINED_OBJECT_ACL_UNSPECIFIED
         ):
             return
-        if metadata.iam_configuration.uniform_bucket_level_access.enabled:
+        if metadata.iam_config.uniform_bucket_level_access.enabled:
             utils.error.invalid(
                 "Predefined Default Object ACL with uniform bucket level access enabled",
                 context,
@@ -158,23 +339,16 @@ class Bucket:
             metadata = request.bucket
         else:
             metadata, rest_only = cls.__preprocess_rest(json.loads(request.data))
-            metadata = json_format.ParseDict(metadata, resources_pb2.Bucket())
+            metadata = json_format.ParseDict(metadata, storage_pb2.Bucket())
         cls.__validate_bucket_name(metadata.name, context)
-        default_projection = CommonEnums.Projection.NO_ACL
+        default_projection = "noAcl"
         if len(metadata.acl) != 0 or len(metadata.default_object_acl) != 0:
-            default_projection = CommonEnums.Projection.FULL
-        is_uniform = metadata.iam_configuration.uniform_bucket_level_access.enabled
-        metadata.iam_configuration.uniform_bucket_level_access.enabled = False
+            default_projection = "full"
+        is_uniform = metadata.iam_config.uniform_bucket_level_access.enabled
+        metadata.iam_config.uniform_bucket_level_access.enabled = False
         if len(metadata.acl) == 0:
             predefined_acl = utils.acl.extract_predefined_acl(request, False, context)
-            if (
-                predefined_acl
-                == CommonEnums.PredefinedBucketAcl.PREDEFINED_BUCKET_ACL_UNSPECIFIED
-            ):
-                predefined_acl = (
-                    CommonEnums.PredefinedBucketAcl.BUCKET_ACL_PROJECT_PRIVATE
-                )
-            elif predefined_acl == "":
+            if predefined_acl == "unspecified" or predefined_acl == "":
                 predefined_acl = "projectPrivate"
             elif is_uniform:
                 utils.error.invalid(
@@ -182,15 +356,15 @@ class Bucket:
                 )
             cls.__insert_predefined_acl(metadata, predefined_acl, context)
         if len(metadata.default_object_acl) == 0:
-            predefined_default_object_acl = utils.acl.extract_predefined_default_object_acl(
-                request, context
+            predefined_default_object_acl = (
+                utils.acl.extract_predefined_default_object_acl(request, context)
             )
             if (
                 predefined_default_object_acl
-                == CommonEnums.PredefinedObjectAcl.PREDEFINED_OBJECT_ACL_UNSPECIFIED
+                == storage_pb2.PredefinedObjectAcl.PREDEFINED_OBJECT_ACL_UNSPECIFIED
             ):
                 predefined_default_object_acl = (
-                    CommonEnums.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE
+                    storage_pb2.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE
                 )
             elif predefined_default_object_acl == "":
                 predefined_default_object_acl = "projectPrivate"
@@ -203,13 +377,12 @@ class Bucket:
                 metadata, predefined_default_object_acl, context
             )
         cls.__enrich_acl(metadata)
-        metadata.iam_configuration.uniform_bucket_level_access.enabled = is_uniform
-        metadata.id = metadata.name
-        metadata.project_number = int(utils.acl.PROJECT_NUMBER)
+        metadata.iam_config.uniform_bucket_level_access.enabled = is_uniform
+        metadata.bucket_id = metadata.name
+        metadata.project = "project/" + utils.acl.PROJECT_NUMBER
         metadata.metageneration = 0
-        metadata.etag = hashlib.md5(metadata.name.encode("utf-8")).hexdigest()
-        metadata.time_created.FromDatetime(time_created)
-        metadata.updated.FromDatetime(time_created)
+        metadata.create_time.FromDatetime(time_created)
+        metadata.update_time.FromDatetime(time_created)
         metadata.owner.entity = utils.acl.get_project_entity("owners", context)
         metadata.owner.entity_id = hashlib.md5(
             metadata.owner.entity.encode("utf-8")
@@ -272,7 +445,7 @@ class Bucket:
         update_mask.MergeMessage(source, self.metadata, True, True)
         if self.metadata.versioning.enabled:
             self.metadata.metageneration += 1
-        self.metadata.updated.FromDatetime(datetime.datetime.now())
+        self.metadata.update_time.FromDatetime(datetime.datetime.now())
 
     def update(self, request, context):
         metadata = None
@@ -281,7 +454,7 @@ class Bucket:
         else:
             metadata, rest_only = self.__preprocess_rest(json.loads(request.data))
             self.rest_only.update(rest_only)
-            metadata = json_format.ParseDict(metadata, resources_pb2.Bucket())
+            metadata = json_format.ParseDict(metadata, storage_pb2.Bucket())
         self.__update_metadata(metadata, None)
         self.__insert_predefined_acl(
             metadata, utils.acl.extract_predefined_acl(request, False, context), context
@@ -312,7 +485,7 @@ class Bucket:
             data.pop("labels", None)
             data, rest_only = self.__preprocess_rest(data)
             self.rest_only.update(rest_only)
-            metadata = json_format.ParseDict(data, resources_pb2.Bucket())
+            metadata = json_format.ParseDict(data, storage_pb2.Bucket())
             paths = set()
             for key in utils.common.nested_key(data):
                 key = utils.common.to_snake_case(key)
@@ -465,7 +638,7 @@ class Bucket:
             notification = request.notification
         else:
             notification = json_format.ParseDict(
-                json.loads(request.data), resources_pb2.Notification()
+                json.loads(request.data), storage_pb2.Notification()
             )
         notification.id = "notification-%d" % random.getrandbits(16)
         self.notifications[notification.id] = notification

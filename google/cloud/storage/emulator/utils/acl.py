@@ -19,7 +19,7 @@ import os
 
 import utils
 
-from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
+from google.storage.v2 import storage_pb2
 
 PROJECT_NUMBER = os.getenv(
     "GOOGLE_CLOUD_CPP_STORAGE_EMULATOR_PROJECT_NUMBER", "123456789"
@@ -94,12 +94,8 @@ def create_bucket_acl(bucket_name, entity, role, context):
     entity = get_canonical_entity(entity)
     if role not in ["OWNER", "WRITER", "READER"]:
         utils.error.invaild("Role %s for bucket acl" % role, context)
-    etag = hashlib.md5((bucket_name + entity + role).encode("utf-8")).hexdigest()
-    acl = resources_pb2.BucketAccessControl(
+    acl = storage_pb2.BucketAccessControl(
         role=role,
-        etag=etag,
-        id=etag,
-        bucket=bucket_name,
         entity=entity,
         entity_id=hashlib.md5(entity.encode("utf-8")).hexdigest(),
         email=__extract_email(entity),
@@ -116,10 +112,8 @@ def create_default_object_acl(bucket_name, entity, role, context):
     etag = hashlib.md5(
         (bucket_name + entity + role + "storage#objectAccessControl").encode("utf-8")
     ).hexdigest()
-    acl = resources_pb2.ObjectAccessControl(
+    acl = storage_pb2.ObjectAccessControl(
         role=role,
-        etag=etag,
-        bucket=bucket_name,
         entity=entity,
         entity_id=hashlib.md5(entity.encode("utf-8")).hexdigest(),
         email=__extract_email(entity),
@@ -132,16 +126,13 @@ def create_default_object_acl(bucket_name, entity, role, context):
 def create_object_acl_from_default_object_acl(
     object_name, generation, default_object_acl, context
 ):
-    acl = resources_pb2.ObjectAccessControl()
+    acl = storage_pb2.ObjectAccessControl()
     acl.CopyFrom(default_object_acl)
     acl.id = hashlib.md5(
-        (acl.bucket + object_name + str(generation) + acl.entity + acl.role).encode(
+        (object_name + str(generation) + acl.entity + acl.role).encode(
             "utf-8"
         )
     ).hexdigest()
-    acl.etag = acl.id
-    acl.object = object_name
-    acl.generation = generation
     return acl
 
 

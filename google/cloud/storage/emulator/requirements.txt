@@ -1,4 +1,7 @@
-git+git://github.com/googleapis/python-storage@8cf6c62a96ba3fff7e5028d931231e28e5029f1c
+grpcio==1.38.1
+grpcio-tools==1.38.1
+googleapis-common-protos==1.53.0
+protobuf==3.17.3
 flask==2.0.1
 httpbin==0.7.0
 requests-toolbelt==0.9.1

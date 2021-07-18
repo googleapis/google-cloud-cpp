@@ -21,7 +21,7 @@ import types
 import flask
 import utils
 
-from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
+from google.storage.v2 import storage_pb2
 from google.protobuf import json_format
 
 
@@ -83,7 +83,7 @@ class DataHolder(types.SimpleNamespace):
     def init_resumable_rest(cls, request, bucket):
         query_name = request.args.get("name", None)
         rest_only = {}
-        metadata = resources_pb2.Object()
+        metadata = storage_pb2.Object()
         if len(request.data) > 0:
             data = json.loads(request.data)
             data_name = data.get("name", None)
@@ -139,7 +139,7 @@ class DataHolder(types.SimpleNamespace):
 
     @classmethod
     def init_resumable_grpc(cls, request, bucket, context):
-        metadata = request.insert_object_spec.resource
+        metadata = request.write_object_spec.resource
         # Add some annotations to make it easier to write tests
         metadata.metadata["x_emulator_upload"] = "resumable"
         if metadata.HasField("crc32c"):
@@ -154,7 +154,7 @@ class DataHolder(types.SimpleNamespace):
             metadata.metadata["x_emulator_no_md5"] = "true"
         upload_id = cls.__create_upload_id(bucket.name, metadata.name)
         fake_request = utils.common.FakeRequest.init_protobuf(request, context)
-        fake_request.update_protobuf(request.insert_object_spec, context)
+        fake_request.update_protobuf(request.write_object_spec, context)
         return cls.init_upload(fake_request, metadata, bucket, "", upload_id)
 
     def resumable_status_rest(self):

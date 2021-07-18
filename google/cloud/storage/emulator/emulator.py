@@ -21,13 +21,13 @@ import gcs as gcs_type
 import grpc_server
 import httpbin
 import utils
+
 from utils.handle_gzip import HandleGzipMiddleware
 from functools import wraps
 from werkzeug import serving
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
-from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
-from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
+from google.storage.v2 import storage_pb2
 from google.protobuf import json_format
 
 db = None
@@ -185,7 +185,7 @@ def bucket_get(bucket_name):
     db.insert_test_bucket(None)
     bucket = db.get_bucket(flask.request, bucket_name, None)
     projection = utils.common.extract_projection(
-        flask.request, CommonEnums.Projection.NO_ACL, None
+        flask.request, "noAcl", None
     )
     fields = flask.request.args.get("fields", None)
     return utils.common.filter_response_rest(bucket.rest(), projection, fields)
@@ -198,7 +198,7 @@ def bucket_update(bucket_name):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     bucket.update(flask.request, None)
     projection = utils.common.extract_projection(
-        flask.request, CommonEnums.Projection.FULL, None
+        flask.request, "full", None
     )
     fields = flask.request.args.get("fields", None)
     return utils.common.filter_response_rest(bucket.rest(), projection, fields)
@@ -211,7 +211,7 @@ def bucket_patch(bucket_name):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     bucket.patch(flask.request, None)
     projection = utils.common.extract_projection(
-        flask.request, CommonEnums.Projection.FULL, None
+        flask.request, "full", None
     )
     fields = flask.request.args.get("fields", None)
     return utils.common.filter_response_rest(bucket.rest(), projection, fields)
@@ -463,7 +463,7 @@ def object_update(bucket_name, object_name):
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
     blob.update(flask.request, None)
     projection = utils.common.extract_projection(
-        flask.request, CommonEnums.Projection.FULL, None
+        flask.request, "full", None
     )
     fields = flask.request.args.get("fields", None)
     return utils.common.filter_response_rest(blob.rest_metadata(), projection, fields)
@@ -476,7 +476,7 @@ def object_patch(bucket_name, object_name):
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
     blob.patch(flask.request, None)
     projection = utils.common.extract_projection(
-        flask.request, CommonEnums.Projection.FULL, None
+        flask.request, "full", None
     )
     fields = flask.request.args.get("fields", None)
     return utils.common.filter_response_rest(blob.rest_metadata(), projection, fields)
@@ -548,7 +548,7 @@ def objects_copy(src_bucket_name, src_object_name, dst_bucket_name, dst_object_n
     utils.csek.validation(
         flask.request, src_object.metadata.customer_encryption.key_sha256, False, None
     )
-    dst_metadata = resources_pb2.Object()
+    dst_metadata = storage_pb2.Object()
     dst_metadata.CopyFrom(src_object.metadata)
     del dst_metadata.acl[:]
     dst_metadata.bucket = dst_bucket_name
@@ -609,7 +609,7 @@ def objects_rewrite(src_bucket_name, src_object_name, dst_bucket_name, dst_objec
     }
     if done:
         dst_bucket = db.get_bucket_without_generation(dst_bucket_name, None).metadata
-        dst_metadata = resources_pb2.Object()
+        dst_metadata = storage_pb2.Object()
         dst_metadata.CopyFrom(src_object.metadata)
         dst_rest_only = dict(src_object.rest_only)
         dst_metadata.bucket = dst_bucket_name
@@ -723,7 +723,7 @@ def object_get(bucket_name, object_name):
     media = flask.request.args.get("alt", None)
     if media is None or media == "json":
         projection = utils.common.extract_projection(
-            flask.request, CommonEnums.Projection.NO_ACL, None
+            flask.request, "noAcl", None
         )
         fields = flask.request.args.get("fields", None)
         return utils.common.filter_response_rest(
@@ -808,7 +808,7 @@ def resumable_upload_chunk(bucket_name):
                 )
                 db.insert_object(upload.request, bucket_name, blob, None)
                 projection = utils.common.extract_projection(
-                    upload.request, CommonEnums.Projection.NO_ACL, None
+                    upload.request, "noAcl", None
                 )
                 fields = upload.request.args.get("fields", None)
                 return utils.common.filter_response_rest(
@@ -862,7 +862,7 @@ def resumable_upload_chunk(bucket_name):
         blob.metadata.metadata["x_emulator_custom_header"] = str(custom_header_value)
         db.insert_object(upload.request, bucket_name, blob, None)
         projection = utils.common.extract_projection(
-            upload.request, CommonEnums.Projection.NO_ACL, None
+            upload.request, "noAcl", None
         )
         fields = upload.request.args.get("fields", None)
         return utils.common.filter_response_rest(

@@ -297,12 +297,13 @@ def extract_media(request):
 
 def extract_projection(request, default, context):
     if context is not None:
-        return request.projection if request.projection != 0 else default
+        # TODO(#....) - it seems that in google.storage.v2 none of the requests have a projection field.
+        return request.projection if hasattr(request, "projection") and request.projection is not None else default
     else:
         projection_map = ["noAcl", "full"]
         projection = request.args.get("projection")
         return (
-            projection if projection in projection_map else projection_map[default - 1]
+            projection if projection in projection_map else default
         )
 
 

@@ -24,34 +24,14 @@ import socket
 import utils
 import json
 
+from google.storage.v2 import storage_pb2
+
 from werkzeug.test import create_environ
 from werkzeug.wrappers import Request
-from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
-from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
 
 
 class TestACL(unittest.TestCase):
     def test_extract_predefined_default_object_acl(self):
-        request = storage_pb2.InsertBucketRequest()
-        predefined_default_object_acl = utils.acl.extract_predefined_default_object_acl(
-            request, ""
-        )
-        self.assertEqual(
-            predefined_default_object_acl,
-            CommonEnums.PredefinedObjectAcl.PREDEFINED_OBJECT_ACL_UNSPECIFIED,
-        )
-
-        request.predefined_default_object_acl = (
-            CommonEnums.PredefinedObjectAcl.OBJECT_ACL_AUTHENTICATED_READ
-        )
-        predefined_default_object_acl = utils.acl.extract_predefined_default_object_acl(
-            request, ""
-        )
-        self.assertEqual(
-            predefined_default_object_acl,
-            CommonEnums.PredefinedObjectAcl.OBJECT_ACL_AUTHENTICATED_READ,
-        )
-
         request = utils.common.FakeRequest(args={})
         predefined_default_object_acl = utils.acl.extract_predefined_default_object_acl(
             request, None
@@ -65,30 +45,6 @@ class TestACL(unittest.TestCase):
         self.assertEqual(predefined_default_object_acl, "authenticatedRead")
 
     def test_extract_predefined_acl(self):
-        request = storage_pb2.InsertBucketRequest()
-        predefined_acl = utils.acl.extract_predefined_acl(request, False, "")
-        self.assertEqual(
-            predefined_acl,
-            CommonEnums.PredefinedBucketAcl.PREDEFINED_BUCKET_ACL_UNSPECIFIED,
-        )
-
-        request.predefined_acl = (
-            CommonEnums.PredefinedBucketAcl.BUCKET_ACL_AUTHENTICATED_READ
-        )
-        predefined_acl = utils.acl.extract_predefined_acl(request, False, "")
-        self.assertEqual(
-            predefined_acl,
-            CommonEnums.PredefinedBucketAcl.BUCKET_ACL_AUTHENTICATED_READ,
-        )
-
-        request = storage_pb2.CopyObjectRequest(
-            destination_predefined_acl=CommonEnums.PredefinedBucketAcl.BUCKET_ACL_PRIVATE
-        )
-        predefined_acl = utils.acl.extract_predefined_acl(request, True, "")
-        self.assertEqual(
-            predefined_acl, CommonEnums.PredefinedBucketAcl.BUCKET_ACL_PRIVATE
-        )
-
         request = utils.common.FakeRequest(args={})
         predefined_acl = utils.acl.extract_predefined_acl(request, False, None)
         self.assertEqual(predefined_acl, "")
@@ -101,16 +57,6 @@ class TestACL(unittest.TestCase):
         predefined_acl = utils.acl.extract_predefined_acl(request, True, None)
         self.assertEqual(predefined_acl, "bucketOwnerFullControl")
 
-    def test_compute_predefined_bucket_acl(self):
-        acls = utils.acl.compute_predefined_bucket_acl(
-            "bucket", "authenticatedRead", None
-        )
-        entities = [acl.entity for acl in acls]
-        self.assertListEqual(
-            entities,
-            [utils.acl.get_project_entity("owners", None), "allAuthenticatedUsers"],
-        )
-
     def test_compute_predefined_default_object_acl(self):
         acls = utils.acl.compute_predefined_default_object_acl(
             "bucket", "authenticatedRead", None
@@ -121,9 +67,6 @@ class TestACL(unittest.TestCase):
             [utils.acl.get_object_entity("OWNER", None), "allAuthenticatedUsers"],
         )
 
-        object_names = [acl.object for acl in acls]
-        self.assertEqual(object_names, 2 * [""])
-
     def test_compute_predefined_object_acl(self):
         acls = utils.acl.compute_predefined_object_acl(
             "bucket", "object", 123456789, "authenticatedRead", None
@@ -133,12 +76,6 @@ class TestACL(unittest.TestCase):
             entities,
             [utils.acl.get_object_entity("OWNER", None), "allAuthenticatedUsers"],
         )
-
-        object_names = [acl.object for acl in acls]
-        self.assertEqual(object_names, 2 * ["object"])
-
-        generations = [acl.generation for acl in acls]
-        self.assertEqual(generations, 2 * [123456789])
 
 
 class TestCommonUtils(unittest.TestCase):
@@ -185,29 +122,6 @@ class TestCommonUtils(unittest.TestCase):
                 "labels.second[1]",
             ],
         )
-
-    def test_extract_projection(self):
-        request = storage_pb2.CopyObjectRequest()
-        projection = utils.common.extract_projection(
-            request, CommonEnums.Projection.NO_ACL, ""
-        )
-        self.assertEqual(projection, CommonEnums.Projection.NO_ACL)
-        request.projection = CommonEnums.Projection.FULL
-        projection = utils.common.extract_projection(
-            request, CommonEnums.Projection.NO_ACL, ""
-        )
-        self.assertEqual(projection, CommonEnums.Projection.FULL)
-
-        request = utils.common.FakeRequest(args={})
-        projection = utils.common.extract_projection(
-            request, CommonEnums.Projection.NO_ACL, None
-        )
-        self.assertEqual(projection, "noAcl")
-        request.args["projection"] = "full"
-        projection = utils.common.extract_projection(
-            request, CommonEnums.Projection.NO_ACL, None
-        )
-        self.assertEqual(projection, "full")
 
     def test_filter_response_rest(self):
         response = {
@@ -367,36 +281,6 @@ class TestCommonUtils(unittest.TestCase):
 
 class TestGeneration(unittest.TestCase):
     def test_extract_precondition(self):
-        request = storage_pb2.CopyObjectRequest(
-            if_generation_not_match={"value": 1},
-            if_metageneration_match={"value": 2},
-            if_metageneration_not_match={"value": 3},
-            if_source_generation_match={"value": 4},
-            if_source_generation_not_match={"value": 5},
-            if_source_metageneration_match={"value": 6},
-            if_source_metageneration_not_match={"value": 7},
-        )
-        match, not_match = utils.generation.extract_precondition(
-            request, False, False, ""
-        )
-        self.assertIsNone(match)
-        self.assertEqual(not_match, 1)
-        match, not_match = utils.generation.extract_precondition(
-            request, True, False, ""
-        )
-        self.assertEqual(match, 2)
-        self.assertEqual(not_match, 3)
-        match, not_match = utils.generation.extract_precondition(
-            request, False, True, ""
-        )
-        self.assertEqual(match, 4)
-        self.assertEqual(not_match, 5)
-        match, not_match = utils.generation.extract_precondition(
-            request, True, True, ""
-        )
-        self.assertEqual(match, 6)
-        self.assertEqual(not_match, 7)
-
         request = utils.common.FakeRequest(
             args={
                 "ifGenerationNotMatch": 1,
@@ -430,18 +314,6 @@ class TestGeneration(unittest.TestCase):
         self.assertEqual(not_match, 7)
 
     def test_extract_generation(self):
-        request = storage_pb2.GetObjectRequest()
-        generation = utils.generation.extract_generation(request, False, "")
-        self.assertEqual(generation, 0)
-
-        request.generation = 1
-        generation = utils.generation.extract_generation(request, False, "")
-        self.assertEqual(generation, 1)
-
-        request = storage_pb2.CopyObjectRequest(source_generation=2)
-        generation = utils.generation.extract_generation(request, True, "")
-        self.assertEqual(generation, 2)
-
         request = utils.common.FakeRequest(args={})
         generation = utils.generation.extract_generation(request, False, None)
         self.assertEqual(generation, 0)
