@@ -17,11 +17,29 @@ package(default_visibility = ["//visibility:public"])
 licenses(["notice"])  # Apache 2.0
 
 py_test(
-    name = "test_gcs",
+    name = "test_bucket",
     size = "small",
-    srcs = ["tests/test_gcs.py"] + glob(["gcs/*.py"]) + glob(["utils/*.py"]),
+    srcs = ["tests/test_bucket.py"] + glob(["gcs/*.py"]) + glob(["utils/*.py"]),
     imports = ["."],
-    main = "tests/test_gcs.py",
+    main = "tests/test_bucket.py",
+    tags = ["manual"],
+)
+
+py_test(
+    name = "test_holder",
+    size = "small",
+    srcs = ["tests/test_holder.py"] + glob(["gcs/*.py"]) + glob(["utils/*.py"]),
+    imports = ["."],
+    main = "tests/test_holder.py",
+    tags = ["manual"],
+)
+
+py_test(
+    name = "test_object",
+    size = "small",
+    srcs = ["tests/test_object.py"] + glob(["gcs/*.py"]) + glob(["utils/*.py"]),
+    imports = ["."],
+    main = "tests/test_object.py",
     tags = ["manual"],
 )
 
