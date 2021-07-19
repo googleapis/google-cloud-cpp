@@ -43,7 +43,7 @@ popd >/dev/null
 "${BAZEL_BIN}" test "${bazel_test_args[@]}" \
   "--flaky_test_attempts=5" \
   "--test_env=CLOUD_STORAGE_EMULATOR_ENDPOINT=${CLOUD_STORAGE_EMULATOR_ENDPOINT}" \
-  -- "//google/cloud/storage/emulator:test_utils" "//google/cloud/storage/emulator:test_gcs"
+  -- "//google/cloud/storage/emulator/..."
 exit_status=$?
 
 if [[ "${exit_status}" -ne 0 ]]; then
