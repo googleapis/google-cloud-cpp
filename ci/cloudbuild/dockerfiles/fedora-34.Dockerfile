@@ -22,9 +22,9 @@ RUN dnf makecache && \
     dnf install -y abi-compliance-checker abi-dumper autoconf automake \
         ccache clang clang-analyzer clang-tools-extra \
         cmake diffutils doxygen findutils gcc-c++ git \
-        grpc-devel grpc-plugins lcov libcxx-devel libcxxabi-devel \
+        lcov libcxx-devel libcxxabi-devel \
         libasan libubsan libtsan libcurl-devel make ninja-build \
-        openssl-devel patch pkgconfig protobuf-compiler python python3.8 \
+        openssl-devel patch pkgconfig python python3.8 \
         python-pip tar unzip w3m wget which zip zlib-devel
 
 # Sets root's password to the empty string to enable users to get a root shell
@@ -105,6 +105,38 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
+WORKDIR /var/tmp/build/protobuf
+RUN curl -sSL https://github.com/google/protobuf/archive/v3.15.8.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -Hcmake -Bcmake-out -GNinja && \
+    cmake --build cmake-out --target install && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
+
+WORKDIR /var/tmp/build/grpc
+RUN dnf makecache && dnf install -y c-ares-devel re2-devel
+RUN curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_RE2_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out -GNinja && \
+    cmake --build cmake-out --target install && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
+
 # Install ctcache to speed up our clang-tidy build
 WORKDIR /var/tmp/build
 RUN curl -sSL https://github.com/matus-chochlik/ctcache/archive/0ad2e227e8a981a9c1a6060ee6c8ec144bb976c6.tar.gz | \
@@ -138,6 +170,7 @@ RUN dnf makecache && dnf install -y java-latest-openjdk-devel
 
 # Some of the above libraries may have installed in /usr/local, so make sure
 # those library directories will be found.
+ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig
 RUN ldconfig /usr/local/lib*
 
 RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.10.1/bazelisk-linux-amd64" && \

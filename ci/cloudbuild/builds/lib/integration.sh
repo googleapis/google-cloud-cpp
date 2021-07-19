@@ -245,7 +245,7 @@ function integration::ctest_with_emulators() {
   env -C "${cmake_out}" \
     GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS="yes" \
     GOOGLE_CLOUD_CPP_GENERATOR_GOOGLEAPIS_PATH="${googleapis_abs_path}" \
-    GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH="/usr/include/" \
+    GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH="/usr/local/include/" \
     GOOGLE_CLOUD_CPP_GENERATOR_CODE_PATH="/workspace/" \
     GOOGLE_CLOUD_CPP_GENERATOR_GOLDEN_PATH="/workspace/" \
     ctest -R "^google_cloud_cpp_generator_integration_" "${ctest_args[@]}"

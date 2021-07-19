@@ -206,7 +206,7 @@ cc_binary(
 | [crc32c][crc32c-gh]  | 1.0.6 | Hardware-accelerated CRC32C implementation |
 | [OpenSSL][OpenSSL-gh] | 1.0.2 | Crypto functions for Google Cloud Storage authentication |
 | [nlohmann/json][nlohmann-json-gh] | 3.4.0 | JSON for Modern C++ |
-| [protobuf][protobuf-gh] | 3.14.0 | C++ Microgenerator support |
+| [protobuf][protobuf-gh] | 3.15.8 | C++ Microgenerator support |
 
 [abseil-gh]: https://github.com/abseil/abseil-cpp
 [gRPC-gh]: https://github.com/grpc/grpc

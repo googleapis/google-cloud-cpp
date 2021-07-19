@@ -136,6 +136,7 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/spanner/v1/type.proto"
     "google/storage/v1/storage.proto"
     "google/storage/v1/storage_resources.proto"
+    "google/storage/v2/storage.proto"
     "google/type/calendar_period.proto"
     "google/type/color.proto"
     "google/type/date.proto"
@@ -648,6 +649,7 @@ google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_storage_protos
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/storage/v1/storage.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/storage/v1/storage_resources.proto"
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/storage/v2/storage.proto"
     PROTO_PATH_DIRECTORIES
     "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")

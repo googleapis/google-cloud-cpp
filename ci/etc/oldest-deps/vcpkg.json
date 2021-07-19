@@ -23,13 +23,16 @@
       },
       {
         "name": "protobuf",
-        "version>=": "3.14.0",
+        "version>=": "3.15.8",
         "host": true
       },
       {"name": "grpc", "version>=": "1.33.1"},
-      {"name": "protobuf", "version>=": "3.14.0"},
+      {"name": "protobuf", "version>=": "3.15.8"},
       {"name": "nlohmann-json", "version>=": "3.9.1"},
       "benchmark",
       "gtest"
+    ],
+    "overrides": [
+      { "name": "protobuf", "version": "3.15.8" }
     ]
-  }
+}
