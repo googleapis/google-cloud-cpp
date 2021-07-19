@@ -17,9 +17,6 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/strings/string_view.h"
-#include "absl/time/clock.h"
-#include "absl/time/time.h"
 #include "generator/generator.h"
 #include "generator/internal/codegen_utils.h"
 #include <google/protobuf/compiler/command_line_interface.h>
@@ -32,7 +29,6 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
 using ::testing::ElementsAreArray;
 
 StatusOr<std::vector<std::string>> ReadFile(std::string const& filepath) {
@@ -48,8 +44,7 @@ StatusOr<std::vector<std::string>> ReadFile(std::string const& filepath) {
   return file_contents;
 }
 
-class GeneratorIntegrationTest
-    : public testing::TestWithParam<absl::string_view> {
+class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
  protected:
   void SetUp() override {
     auto run_integration_tests =
@@ -146,12 +141,11 @@ class GeneratorIntegrationTest
 
 TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {
   auto golden_file = ReadFile(absl::StrCat(golden_path_, GetParam()));
-  EXPECT_THAT(golden_file, IsOk());
+  ASSERT_STATUS_OK(golden_file);
   auto generated_file =
       ReadFile(absl::StrCat(output_path_, product_path_, GetParam()));
+  ASSERT_STATUS_OK(generated_file);
 
-  EXPECT_THAT(generated_file, IsOk());
-  EXPECT_EQ(golden_file->size(), generated_file->size());
   EXPECT_THAT(*golden_file,
               ElementsAreArray(generated_file->begin(), generated_file->end()));
 }
