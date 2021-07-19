@@ -17,7 +17,7 @@
 function (iam_client_define_samples)
     find_package(gRPC)
     set(iam_client_samples # cmake-format: sort
-                           iam_samples.cc)
+                           iam_credentials_samples.cc iam_samples.cc)
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("iam_client_samples.bzl" "iam_client_samples" YEAR
