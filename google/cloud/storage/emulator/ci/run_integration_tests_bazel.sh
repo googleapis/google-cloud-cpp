@@ -38,12 +38,16 @@ pushd "${HOME}" >/dev/null
 start_emulator 8586 8587
 popd >/dev/null
 
-# Run the unittests of the emulator before running integration tests.
+# Run the unittests of the emulator before running integration tests. These are
+# labeled "manual" because we not always have all the testing infrastructure
+# for Python installed. We need to discover their names and list them
+# explicitly in the `bazel test` invocation.
+mapfile -t emulator_tests < <("${BAZEL_BIN}" query "attr(tags, manual, //google/cloud/storage/emulator/...)")
 # TODO(#6641): Remove the --flaky_test_attempts flag once the flakiness is fixed.
 "${BAZEL_BIN}" test "${bazel_test_args[@]}" \
   "--flaky_test_attempts=5" \
   "--test_env=CLOUD_STORAGE_EMULATOR_ENDPOINT=${CLOUD_STORAGE_EMULATOR_ENDPOINT}" \
-  -- "//google/cloud/storage/emulator/..."
+  -- "${emulator_tests[@]}"
 exit_status=$?
 
 if [[ "${exit_status}" -ne 0 ]]; then
