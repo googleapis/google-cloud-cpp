@@ -536,7 +536,9 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMedia(
   // uploads. `DisableMD5Hash` and `DisableCrc32cChecksum` should not be
   // dependent on each other.
   if (!request.GetOption<DisableMD5Hash>().value() ||
-      !request.GetOption<DisableCrc32cChecksum>().value_or(false)) {
+      !request.GetOption<DisableCrc32cChecksum>().value_or(false) ||
+      request.HasOption<MD5HashValue>() ||
+      request.HasOption<Crc32cChecksumValue>()) {
     return InsertObjectMediaMultipart(request);
   }
 

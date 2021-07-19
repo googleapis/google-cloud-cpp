@@ -14,11 +14,11 @@
 
 """Common utils"""
 
+import base64
 import json
 import random
 import re
 import types
-import time
 import sys
 import socket
 import struct
@@ -422,3 +422,54 @@ def handle_retry_test_instruction(database, request, method):
             database.dequeue_next_instruction(test_id, method)
             utils.error.notallowed()
     return __get_default_response_fn
+
+
+def rest_crc32c_to_proto(crc32c):
+    """Convert from the REST representation of crc32c checksums to the proto representation.
+
+    REST uses base64 encoded 32-bit big endian integers, while protos use just `int32`.
+    """
+    return struct.unpack(">I", base64.b64decode(crc32c.encode("utf-8")))[0]
+
+
+def rest_crc32c_from_proto(crc32c):
+    """Convert from the gRPC/proto representation of crc32c checksums to the REST representation.
+
+    REST uses base64 encoded 32-bit big endian integers, while protos use just `int32`.
+    """
+    return base64.b64encode(struct.pack(">I", crc32c)).decode("utf-8")
+
+
+def rest_adjust(data, adjustments):
+    """
+    Apply a per-key 'actions' to a dictionary *if* the key is present.
+
+    When mapping between the gRPC and the REST representations of resources
+    (Bucket, Object, etc.) we sometimes need to change the name and/or format
+    of some fields.
+
+    The `adjustments` describes what keys (if present) need adjustment, and
+    a function that returns the new key and value for the item in `data`.
+
+    Parameters
+    ----------
+    data : dict
+        A dictionary, typically the REST representation of a resource
+    adjustments : dict
+        The keys in `data` that, if present, need adjustment. The values
+        in this dictionary are functions returning a (key, value) tuple
+        that replaces the existing tuple in `data`.
+
+    Returns
+    -------
+    dict
+        A copy of `data` with the changes prescribed by `adjustments`.
+    """
+    modified = data.copy()
+    for key, action in adjustments.items():
+        value = modified.pop(key, None)
+        if value is not None:
+            k, v = action(value)
+            if value is not None:
+                modified[k] = v
+    return modified

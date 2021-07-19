@@ -29,11 +29,13 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
-using ::testing::StartsWith;
 
 class ObjectHashIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {
+    : public google::cloud::storage::testing::StorageIntegrationTest,
+      public ::testing::WithParamInterface<std::string> {
  protected:
   void SetUp() override {
     bucket_name_ = google::cloud::internal::GetEnv(
@@ -45,463 +47,198 @@ class ObjectHashIntegrationTest
   std::string bucket_name_;
 };
 
-/// @test Verify that MD5 hashes are disabled by default.
-TEST_F(ObjectHashIntegrationTest, DefaultMD5HashXML) {
-  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
+/// @test Verify that MD5 hashes are disabled by default in InsertObject().
+TEST_P(ObjectHashIntegrationTest, InsertObjectDefault) {
+  auto client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
+  auto meta = client->InsertObject(
+      bucket_name_, object_name, LoremIpsum(), DisableCrc32cChecksum(true),
+      RestApiFlags(GetParam()).for_insert, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
-  testing_util::ScopedLog log;
-  StatusOr<ObjectMetadata> insert_meta =
-      client.InsertObject(bucket_name_, object_name, LoremIpsum(),
-                          IfGenerationMatch(0), Fields(""));
-  ASSERT_STATUS_OK(insert_meta);
-  ScheduleForDelete(*insert_meta);
-
-  EXPECT_THAT(log.ExtractLines(),
-              Not(Contains(StartsWith("x-goog-hash: md5="))));
-}
-
-/// @test Verify that MD5 hashes are disabled by default.
-TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
-  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
-  auto object_name = MakeRandomObjectName();
-
-  testing_util::ScopedLog log;
-  StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
-      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0));
-  ASSERT_STATUS_OK(insert_meta);
-  ScheduleForDelete(*insert_meta);
-
-  // This is a big indirect, we detect if the upload changed to
-  // multipart/related, and if so, we assume the hash value is being used.
-  // Unfortunately I (@coryan) cannot think of a way to examine the upload
-  // contents.
-  EXPECT_THAT(
-      log.ExtractLines(),
-      Contains(StartsWith("content-type: multipart/related; boundary=")));
-
-  if (insert_meta->has_metadata("x_emulator_upload")) {
-    // When running against the emulator, we have some more information to
-    // verify the right upload type and contents were sent.
-    EXPECT_EQ("multipart", insert_meta->metadata("x_emulator_upload"));
-    ASSERT_FALSE(insert_meta->has_metadata("x_emulator_md5"));
+  if (meta->has_metadata("x_emulator_upload")) {
+    ASSERT_FALSE(meta->has_metadata("x_emulator_crc32c"));
+    ASSERT_FALSE(meta->has_metadata("x_emulator_md5"));
   }
 }
 
-/// @test Verify that `DisableMD5Hash` actually disables the header.
-TEST_F(ObjectHashIntegrationTest, DisableMD5HashXML) {
-  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
+/// @test Verify that MD5 hashes can be explicitly disabled in InsertObject().
+TEST_P(ObjectHashIntegrationTest, InsertObjectExplicitDisable) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
 
-  testing_util::ScopedLog log;
-  StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
-      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
-      DisableMD5Hash(true), Fields(""));
-  ASSERT_STATUS_OK(insert_meta);
-  ScheduleForDelete(*insert_meta);
+  auto meta = client->InsertObject(
+      bucket_name_, object_name, LoremIpsum(), DisableMD5Hash(true),
+      DisableCrc32cChecksum(true), RestApiFlags(GetParam()).for_insert,
+      IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
-  EXPECT_THAT(log.ExtractLines(),
-              Not(Contains(StartsWith("x-goog-hash: md5="))));
-}
-
-/// @test Verify that `DisableMD5Hash` actually disables the payload.
-TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
-  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
-  auto object_name = MakeRandomObjectName();
-
-  testing_util::ScopedLog log;
-  StatusOr<ObjectMetadata> insert_meta =
-      client.InsertObject(bucket_name_, object_name, LoremIpsum(),
-                          IfGenerationMatch(0), DisableMD5Hash(true));
-  ASSERT_STATUS_OK(insert_meta);
-  ScheduleForDelete(*insert_meta);
-
-  // This is a big indirect, we detect if the upload changed to
-  // multipart/related, and if so, we assume the hash value is being used.
-  // Unfortunately I (@coryan) cannot think of a way to examine the upload
-  // contents.
-  EXPECT_THAT(
-      log.ExtractLines(),
-      Contains(StartsWith("content-type: multipart/related; boundary=")));
-
-  if (insert_meta->has_metadata("x_emulator_upload")) {
-    // When running against the emulator, we have some more information to
-    // verify the right upload type and contents were sent.
-    EXPECT_EQ("multipart", insert_meta->metadata("x_emulator_upload"));
-    ASSERT_FALSE(insert_meta->has_metadata("x_emulator_md5"));
+  if (meta->has_metadata("x_emulator_upload")) {
+    ASSERT_FALSE(meta->has_metadata("x_emulator_crc32c"));
+    ASSERT_FALSE(meta->has_metadata("x_emulator_md5"));
   }
 }
 
-/// @test Verify that MD5 hashes are disabled by default on downloads.
-TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadXML) {
+/// @test Verify that MD5 hashes can be explicitly enabled in InsertObject().
+TEST_P(ObjectHashIntegrationTest, InsertObjectExplicitEnable) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
 
-  // Create an object and a stream to read it back.
-  StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
-                           IfGenerationMatch(0), Projection::Full());
+  auto meta = client->InsertObject(
+      bucket_name_, object_name, LoremIpsum(), DisableMD5Hash(false),
+      DisableCrc32cChecksum(true), RestApiFlags(GetParam()).for_insert,
+      IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  auto stream = client->ReadObject(bucket_name_, object_name);
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  ASSERT_FALSE(stream.IsOpen());
-  ASSERT_FALSE(actual.empty());
-
-  EXPECT_EQ(stream.received_hash(), stream.computed_hash());
-  EXPECT_THAT(stream.received_hash(), Not(HasSubstr(meta->md5_hash())));
+  if (meta->has_metadata("x_emulator_upload")) {
+    ASSERT_FALSE(meta->has_metadata("x_emulator_crc32c"));
+    ASSERT_TRUE(meta->has_metadata("x_emulator_md5"));
+  }
 }
 
-/// @test Verify that MD5 hashes are disabled by default on downloads.
-TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadJSON) {
+/// @test Verify that valid MD5 hash values work in InsertObject().
+TEST_P(ObjectHashIntegrationTest, InsertObjectWithValueSuccess) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
-
-  // Create an object and a stream to read it back.
-  StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
-                           IfGenerationMatch(0), Projection::Full());
+  auto meta = client->InsertObject(
+      bucket_name_, object_name, LoremIpsum(),
+      MD5HashValue(ComputeMD5Hash(LoremIpsum())), DisableCrc32cChecksum(true),
+      RestApiFlags(GetParam()).for_insert, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  auto stream = client->ReadObject(bucket_name_, object_name,
-                                   IfMetagenerationNotMatch(0));
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  ASSERT_FALSE(stream.IsOpen());
-  ASSERT_FALSE(actual.empty());
-
-  EXPECT_EQ(stream.received_hash(), stream.computed_hash());
-  EXPECT_THAT(stream.received_hash(), Not(HasSubstr(meta->md5_hash())));
+  if (meta->has_metadata("x_emulator_upload")) {
+    ASSERT_FALSE(meta->has_metadata("x_emulator_crc32c"));
+    ASSERT_TRUE(meta->has_metadata("x_emulator_md5"));
+  }
 }
 
-/// @test Verify that hashes and checksums can be disabled on downloads.
-TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadXML) {
+/// @test Verify that incorrect MD5 hash values work in InsertObject().
+TEST_P(ObjectHashIntegrationTest, InsertObjectWithValueFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
 
-  // Create an object and a stream to read it back.
-  StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
-                           IfGenerationMatch(0), Projection::Full());
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-
-  auto stream =
-      client->ReadObject(bucket_name_, object_name, DisableMD5Hash(true),
-                         DisableCrc32cChecksum(true));
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  ASSERT_FALSE(stream.IsOpen());
-  ASSERT_FALSE(actual.empty());
-
-  EXPECT_TRUE(stream.computed_hash().empty());
-  EXPECT_TRUE(stream.received_hash().empty());
+  // This should fail because the MD5 hash value is incorrect.
+  auto failure = client->InsertObject(
+      bucket_name_, object_name, LoremIpsum(), MD5HashValue(ComputeMD5Hash("")),
+      DisableCrc32cChecksum(false), RestApiFlags(GetParam()).for_insert,
+      IfGenerationMatch(0));
+  EXPECT_THAT(failure, Not(IsOk()));
 }
 
-/// @test Verify that hashes and checksums can be disabled on downloads.
-TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadJSON) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
+/// @test Verify that MD5 hashes are disabled by default in WriteObject().
+TEST_F(ObjectHashIntegrationTest, WriteObjectDefault) {
+  auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
-
-  // Create an object and a stream to read it back.
-  StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
-                           IfGenerationMatch(0), Projection::Full());
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-
-  auto stream = client->ReadObject(
-      bucket_name_, object_name, DisableMD5Hash(true),
-      DisableCrc32cChecksum(true), IfMetagenerationNotMatch(0));
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  ASSERT_FALSE(stream.IsOpen());
-  ASSERT_FALSE(actual.empty());
-
-  EXPECT_TRUE(stream.computed_hash().empty());
-  EXPECT_TRUE(stream.received_hash().empty());
-}
-
-/// @test Verify that MD5 hashes are disabled by default on uploads.
-TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteJSON) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  // Create the object, but only if it does not exist already.
   auto os =
-      client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
-  os.exceptions(std::ios_base::failbit);
-  // We will construct the expected response while streaming the data up.
-  std::ostringstream expected;
-  WriteRandomLines(os, expected);
-
-  auto expected_md5hash = ComputeMD5Hash(expected.str());
-
+      client->WriteObject(bucket_name_, object_name,
+                          DisableCrc32cChecksum(true), IfGenerationMatch(0));
+  os << LoremIpsum();
   os.Close();
-  ASSERT_STATUS_OK(os.metadata());
-  ScheduleForDelete(*os.metadata());
+  auto meta = os.metadata();
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
-  EXPECT_EQ(os.received_hash(), os.computed_hash());
-  EXPECT_THAT(os.received_hash(), Not(HasSubstr(expected_md5hash)));
+  EXPECT_THAT(os.received_hash(), Not(HasSubstr(ComputeMD5Hash(LoremIpsum()))));
+  EXPECT_THAT(os.computed_hash(), Not(HasSubstr(ComputeMD5Hash(LoremIpsum()))));
+  if (meta->has_metadata("x_emulator_upload")) {
+    ASSERT_TRUE(meta->has_metadata("x_emulator_no_crc32c"));
+    ASSERT_TRUE(meta->has_metadata("x_emulator_no_md5"));
+  }
 }
 
-/// @test Verify MD5 hash value before upload.
-TEST_F(ObjectHashIntegrationTest, VerifyValidMD5StreamingWriteJSON) {
+/// @test Verify that MD5 hashes can be explicitly disabled in WriteObject().
+TEST_F(ObjectHashIntegrationTest, WriteObjectExplicitDisable) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
-
-  std::string expected = LoremIpsum();
-  auto expected_md5hash = ComputeMD5Hash(expected);
-
-  // Create the object, but only if it does not exist already.
-  auto os = client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
-                                MD5HashValue(expected_md5hash));
-
-  os.exceptions(std::ios_base::failbit);
-  os << expected;
-  os.Close();
-  ASSERT_STATUS_OK(os.metadata());
-  ScheduleForDelete(*os.metadata());
-
-  EXPECT_EQ(os.received_hash(), os.computed_hash());
-  EXPECT_THAT(os.received_hash(), Not(HasSubstr(expected_md5hash)));
-}
-
-/// @test Verify invalid MD5 hash value before upload.
-TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteJSON) {
-  // TODO(#4157) - use the MD5 hashes
-  if (UsingGrpc()) GTEST_SKIP();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  std::string expected = LoremIpsum();
-
-  // Create the object, but only if it does not exist already. Placeholder
-  // MD5HasValue is passed during WriteObject.
-  auto os = client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
-                                MD5HashValue("AAAAAAAAAA+AAAAAAAAAAA=="));
-
-  os.exceptions(std::ios_base::failbit);
-  os << expected;
-  os.Close();
-
-  EXPECT_TRUE(os.bad());
-  EXPECT_FALSE(os.metadata().status().ok());
-}
-
-/// @test Verify MD5 hashes before upload.
-TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteXML) {
-  // TODO(#4157) - use the MD5 hashes
-  if (UsingGrpc()) GTEST_SKIP();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  std::string expected = LoremIpsum();
-
-  // Create the object, but only if it does not exist already. Placeholder
-  // MD5HasValue is passed during WriteObject.
-  auto os = client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
-                                Projection::Full(),
-                                MD5HashValue("AAAAAAAAAA+AAAAAAAAAAA=="));
-  os.exceptions(std::ios_base::failbit);
-  os << expected;
-  os.Close();
-
-  EXPECT_TRUE(os.bad());
-  EXPECT_FALSE(os.metadata().status().ok());
-}
-
-/// @test Verify that hashes and checksums can be disabled in uploads.
-TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingWriteJSON) {
-  // TODO(#4157) - use the MD5 hashes
-  if (UsingGrpc()) GTEST_SKIP();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  // Create the object, but only if it does not exist already.
   auto os =
-      client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
-                          DisableMD5Hash(true), DisableCrc32cChecksum(true));
-  os.exceptions(std::ios_base::failbit);
-  // We will construct the expected response while streaming the data up.
-  std::ostringstream expected;
-  WriteRandomLines(os, expected);
-
+      client->WriteObject(bucket_name_, object_name, DisableMD5Hash(true),
+                          DisableCrc32cChecksum(true), IfGenerationMatch(0));
+  os << LoremIpsum();
   os.Close();
-  ASSERT_STATUS_OK(os.metadata());
-  ScheduleForDelete(*os.metadata());
-
-  EXPECT_TRUE(os.received_hash().empty());
-  EXPECT_TRUE(os.computed_hash().empty());
-}
-
-/// @test Verify that MD5 hash mismatches are reported by default on downloads.
-TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
-  // This test is disabled when not using the emulator as it relies on the
-  // emulator to inject faults.
-  if (!UsingEmulator()) GTEST_SKIP();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  // Create an object and a stream to read it back.
-  StatusOr<ObjectMetadata> meta = client->InsertObject(
-      bucket_name_, object_name, LoremIpsum(), EnableMD5Hash(),
-      IfGenerationMatch(0), Projection::Full());
+  auto meta = os.metadata();
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  auto stream = client->ReadObject(
-      bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
-      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
-
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        std::string actual(std::istreambuf_iterator<char>{stream},
-                           std::istreambuf_iterator<char>{});
-      } catch (HashMismatchError const& ex) {
-        EXPECT_NE(ex.received_hash(), ex.computed_hash());
-        EXPECT_THAT(ex.what(), HasSubstr("mismatched hashes"));
-        throw;
-      },
-      HashMismatchError);
-#else
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_NE(stream.received_hash(), stream.computed_hash());
-  EXPECT_EQ(stream.received_hash(), meta->md5_hash());
-  EXPECT_FALSE(stream.status().ok());
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THAT(os.received_hash(), Not(HasSubstr(ComputeMD5Hash(LoremIpsum()))));
+  EXPECT_THAT(os.computed_hash(), Not(HasSubstr(ComputeMD5Hash(LoremIpsum()))));
+  if (meta->has_metadata("x_emulator_upload")) {
+    ASSERT_TRUE(meta->has_metadata("x_emulator_no_crc32c"));
+    ASSERT_TRUE(meta->has_metadata("x_emulator_no_md5"));
+  }
 }
 
-/// @test Verify that MD5 hash mismatches are reported by default on downloads.
-TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
-  // This test is disabled when not using the emulator as it relies on the
-  // emulator to inject faults.
-  if (!UsingEmulator()) GTEST_SKIP();
+/// @test Verify that MD5 hashes can be explicitly enabled in WriteObject().
+TEST_F(ObjectHashIntegrationTest, WriteObjectExplicitEnable) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
-
-  // Create an object and a stream to read it back.
-  StatusOr<ObjectMetadata> meta = client->InsertObject(
-      bucket_name_, object_name, LoremIpsum(), EnableMD5Hash(),
-      IfGenerationMatch(0), Projection::Full());
+  auto os =
+      client->WriteObject(bucket_name_, object_name, DisableMD5Hash(false),
+                          DisableCrc32cChecksum(true), IfGenerationMatch(0));
+  os << LoremIpsum();
+  os.Close();
+  auto meta = os.metadata();
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  auto stream = client->ReadObject(
-      bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
-      IfMetagenerationNotMatch(0),
-      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
-
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        std::string actual(std::istreambuf_iterator<char>{stream},
-                           std::istreambuf_iterator<char>{});
-      } catch (HashMismatchError const& ex) {
-        EXPECT_NE(ex.received_hash(), ex.computed_hash());
-        EXPECT_THAT(ex.what(), HasSubstr("mismatched hashes"));
-        throw;
-      },
-      HashMismatchError);
-#else
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_FALSE(stream.received_hash().empty());
-  EXPECT_FALSE(stream.computed_hash().empty());
-  EXPECT_NE(stream.received_hash(), stream.computed_hash());
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THAT(os.computed_hash(), HasSubstr(ComputeMD5Hash(LoremIpsum())));
+  EXPECT_THAT(os.received_hash(), HasSubstr(ComputeMD5Hash(LoremIpsum())));
+  if (meta->has_metadata("x_emulator_upload")) {
+    ASSERT_TRUE(meta->has_metadata("x_emulator_no_crc32c"));
+    ASSERT_TRUE(meta->has_metadata("x_emulator_no_md5"));
+  }
 }
 
-/// @test Verify that MD5 hash mismatches are reported when using .read().
-TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
-  // This test is disabled when not using the emulator as it relies on the
-  // emulator to inject faults.
-  if (!UsingEmulator()) GTEST_SKIP();
+/// @test Verify that valid MD5 hash values work in WriteObject().
+TEST_F(ObjectHashIntegrationTest, WriteObjectWithValueSuccess) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
-  auto contents = MakeRandomData(1024 * 1024);
-
-  // Create an object and a stream to read it back.
-  StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name_, object_name, contents, EnableMD5Hash(),
-                           IfGenerationMatch(0), Projection::Full());
+  auto os = client->WriteObject(
+      bucket_name_, object_name, MD5HashValue(ComputeMD5Hash(LoremIpsum())),
+      DisableCrc32cChecksum(true), IfGenerationMatch(0));
+  os << LoremIpsum();
+  os.Close();
+  auto meta = os.metadata();
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  auto stream = client->ReadObject(
-      bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
-      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
-
-  // Create a buffer large enough to hold the results and read pas EOF.
-  std::vector<char> buffer(2 * contents.size());
-  stream.read(buffer.data(), buffer.size());
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_TRUE(stream.bad());
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_EQ(StatusCode::kDataLoss, stream.status().code());
-  EXPECT_NE(stream.received_hash(), stream.computed_hash());
-  EXPECT_EQ(stream.received_hash(), meta->md5_hash());
+  if (meta->has_metadata("x_emulator_upload")) {
+    ASSERT_TRUE(meta->has_metadata("x_emulator_no_crc32c"));
+    ASSERT_TRUE(meta->has_metadata("x_emulator_md5"));
+  }
 }
 
-/// @test Verify that MD5 hash mismatches are reported when using .read().
-TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
-  // This test is disabled when not using the emulator as it relies on the
-  // emulator to inject faults.
-  if (!UsingEmulator()) GTEST_SKIP();
+/// @test Verify that incorrect MD5 hash values work in WriteObject().
+TEST_F(ObjectHashIntegrationTest, WriteObjectWithValueFailure) {
+  // TODO(#4157) - add supports for hashes in gRPC
+  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
-  auto contents = MakeRandomData(1024 * 1024);
-
-  // Create an object and a stream to read it back.
-  StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name_, object_name, contents, EnableMD5Hash(),
-                           IfGenerationMatch(0), Projection::Full());
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-
-  auto stream = client->ReadObject(
-      bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
-      IfMetagenerationNotMatch(0),
-      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
-
-  // Create a buffer large enough to hold the results and read pas EOF.
-  std::vector<char> buffer(2 * contents.size());
-  stream.read(buffer.data(), buffer.size());
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_TRUE(stream.bad());
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_EQ(StatusCode::kDataLoss, stream.status().code());
-  EXPECT_NE(stream.received_hash(), stream.computed_hash());
-  EXPECT_EQ(stream.received_hash(), meta->md5_hash());
+  auto os = client->WriteObject(
+      bucket_name_, object_name, MD5HashValue(ComputeMD5Hash("")),
+      DisableCrc32cChecksum(true), IfGenerationMatch(0));
+  os << LoremIpsum();
+  os.Close();
+  auto meta = os.metadata();
+  EXPECT_THAT(meta, Not(IsOk()));
 }
 
-/// @test Verify that MD5 hash mismatches are reported by default on downloads.
-TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
+/// @test Verify that MD5 hash mismatches are reported when the server
+/// receives bad data.
+TEST_F(ObjectHashIntegrationTest, WriteObjectReceiveBadChecksum) {
   // This test is disabled when not using the emulator as it relies on the
   // emulator to inject faults.
   if (!UsingEmulator()) GTEST_SKIP();
@@ -512,19 +249,132 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
 
   // Create a stream to upload an object.
   ObjectWriteStream stream = client->WriteObject(
-      bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
-      IfGenerationMatch(0),
-      CustomHeader("x-goog-emulator-instructions", "inject-upload-data-error"));
+      bucket_name_, object_name, DisableMD5Hash(false),
+      DisableCrc32cChecksum(true),
+      CustomHeader("x-goog-emulator-instructions", "inject-upload-data-error"),
+      IfGenerationMatch(0));
   stream << LoremIpsum() << "\n";
-  stream << LoremIpsum();
-
   stream.Close();
   EXPECT_TRUE(stream.bad());
   ASSERT_STATUS_OK(stream.metadata());
   ScheduleForDelete(*stream.metadata());
-
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
 }
+
+/// @test Verify that MD5 hash mismatches are reported by default.
+TEST_F(ObjectHashIntegrationTest, WriteObjectUploadBadChecksum) {
+  // TODO(#4156) - enable test when checksums are implemented.
+  if (UsingGrpc()) GTEST_SKIP();
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+
+  // Create a stream to upload an object.
+  ObjectWriteStream stream = client->WriteObject(
+      bucket_name_, object_name, MD5HashValue(ComputeMD5Hash("")),
+      DisableCrc32cChecksum(true), IfGenerationMatch(0));
+  stream << LoremIpsum() << "\n";
+  stream.Close();
+  EXPECT_TRUE(stream.bad());
+  ASSERT_THAT(stream.metadata(), Not(IsOk()));
+}
+
+/// @test Verify that MD5 hashes are disabled by default on downloads.
+TEST_P(ObjectHashIntegrationTest, ReadObjectDefault) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+  auto object_name = MakeRandomObjectName();
+  auto meta = client->InsertObject(bucket_name_, object_name, LoremIpsum(),
+                                   IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
+  auto stream = client->ReadObject(bucket_name_, object_name,
+                                   RestApiFlags(GetParam()).for_streaming_read);
+  auto const actual = std::string{std::istreambuf_iterator<char>{stream}, {}};
+  ASSERT_FALSE(stream.IsOpen());
+
+  EXPECT_EQ(stream.received_hash(), stream.computed_hash());
+  EXPECT_THAT(stream.received_hash(), HasSubstr(meta->crc32c()));
+}
+
+/// @test Verify that MD5 hashes mismatches are reported (if enabled) on
+/// downloads.
+TEST_P(ObjectHashIntegrationTest, ReadObjectCorruptedByServerGetc) {
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
+  if (!UsingEmulator()) GTEST_SKIP();
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+  auto object_name = MakeRandomObjectName();
+  StatusOr<ObjectMetadata> meta = client->InsertObject(
+      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
+  auto stream = client->ReadObject(
+      bucket_name_, object_name, DisableMD5Hash(false),
+      DisableCrc32cChecksum(true),
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"),
+      RestApiFlags(GetParam()).for_streaming_read);
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        std::string actual(std::istreambuf_iterator<char>{stream},
+                           std::istreambuf_iterator<char>{});
+      } catch (HashMismatchError const& ex) {
+        EXPECT_NE(ex.received_hash(), ex.computed_hash());
+        EXPECT_THAT(ex.received_hash(), HasSubstr(meta->md5_hash()));
+        EXPECT_THAT(ex.what(), HasSubstr("mismatched hashes"));
+        throw;
+      },
+      HashMismatchError);
+#else
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_NE(stream.received_hash(), stream.computed_hash());
+  EXPECT_THAT(stream.status(), Not(IsOk()));
+}
+
+/// @test Verify that MD5 hashes mismatches are reported (if enabled) on
+/// downloads.
+TEST_P(ObjectHashIntegrationTest, ReadObjectCorruptedByServerRead) {
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
+  if (!UsingEmulator()) GTEST_SKIP();
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+  auto object_name = MakeRandomObjectName();
+  StatusOr<ObjectMetadata> meta =
+      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
+                           IfGenerationMatch(0), Projection::Full());
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
+  auto stream = client->ReadObject(
+      bucket_name_, object_name, DisableMD5Hash(false),
+      DisableCrc32cChecksum(true),
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"),
+      RestApiFlags(GetParam()).for_streaming_read);
+
+  // Create a buffer large enough to read the full contents.
+  std::vector<char> buffer(2 * LoremIpsum().size());
+  stream.read(buffer.data(), static_cast<std::streamsize>(buffer.size()));
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_TRUE(stream.bad());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THAT(stream.status(), StatusIs(StatusCode::kDataLoss));
+  EXPECT_NE(stream.received_hash(), stream.computed_hash());
+  EXPECT_EQ(stream.received_hash(), meta->md5_hash());
+}
+
+INSTANTIATE_TEST_SUITE_P(ObjectHashIntegrationTestJson,
+                         ObjectHashIntegrationTest, ::testing::Values("JSON"));
+
+INSTANTIATE_TEST_SUITE_P(ObjectHashIntegrationTestXml,
+                         ObjectHashIntegrationTest, ::testing::Values("XML"));
 
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS

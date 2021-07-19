@@ -27,6 +27,7 @@ from google.protobuf import json_format
 
 class DataHolder(types.SimpleNamespace):
     rest_only_fields = ["customTime"]
+    __upload_id_generator = 0
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -58,6 +59,27 @@ class DataHolder(types.SimpleNamespace):
         )
 
     @classmethod
+    def __preprocess_rest_metadata(cls, metadata):
+        return utils.common.rest_adjust(
+            metadata,
+            {
+                "crc32c": lambda x: (
+                    "crc32c",
+                    utils.common.rest_crc32c_to_proto(metadata["crc32c"]),
+                )
+            },
+        )
+
+    @classmethod
+    def __create_upload_id(cls, bucket_name, object_name):
+        cls.__upload_id_generator = cls.__upload_id_generator + 1
+        return hashlib.sha256(
+            (
+                "%d/%s/o/%s" % (cls.__upload_id_generator, bucket_name, object_name)
+            ).encode("utf-8")
+        ).hexdigest()
+
+    @classmethod
     def init_resumable_rest(cls, request, bucket):
         query_name = request.args.get("name", None)
         rest_only = {}
@@ -76,7 +98,19 @@ class DataHolder(types.SimpleNamespace):
                     context=None,
                 )
             rest_only = cls.__extract_rest_only(data)
-            metadata = json_format.ParseDict(data, metadata)
+            metadata = json_format.ParseDict(
+                cls.__preprocess_rest_metadata(data), metadata
+            )
+            # Add some annotations to make it easier to write tests
+            metadata.metadata["x_emulator_upload"] = "resumable"
+            if data.get("crc32c", None) is not None:
+                metadata.metadata["x_emulator_crc32c"] = data.get("crc32c")
+            if data.get("md5Hash", None) is not None:
+                metadata.metadata["x_emulator_md5"] = data.get("md5Hash")
+        if metadata.metadata.get("x_emulator_crc32c", None) is None:
+            metadata.metadata["x_emulator_no_crc32c"] = "true"
+        if metadata.metadata.get("x_emulator_md5", None) is None:
+            metadata.metadata["x_emulator_no_md5"] = "true"
         if query_name:
             metadata.name = query_name
         if metadata.name == "":
@@ -85,9 +119,7 @@ class DataHolder(types.SimpleNamespace):
             metadata.content_type = request.headers.get(
                 "x-upload-content-type", "application/octet-stream"
             )
-        upload_id = hashlib.sha256(
-            ("%s/o/%s" % (bucket.name, metadata.name)).encode("utf-8")
-        ).hexdigest()
+        upload_id = cls.__create_upload_id(bucket.name, metadata.name)
         location = (
             request.host_url
             + "upload/storage/v1/b/%s/o?uploadType=resumable&upload_id=%s"
@@ -108,9 +140,19 @@ class DataHolder(types.SimpleNamespace):
     @classmethod
     def init_resumable_grpc(cls, request, bucket, context):
         metadata = request.insert_object_spec.resource
-        upload_id = hashlib.sha256(
-            ("%s/o/%s" % (bucket.name, metadata.name)).encode("utf-8")
-        ).hexdigest()
+        # Add some annotations to make it easier to write tests
+        metadata.metadata["x_emulator_upload"] = "resumable"
+        if metadata.crc32c.value is not None:
+            metadata.metadata[
+                "x_emulator_crc32c"
+            ] = utils.common.rest_crc32c_from_proto(metadata.crc32c.value)
+        else:
+            metadata.metadata["x_emulator_no_crc3c"] = "true"
+        if metadata.md5_hash is not None:
+            metadata.metadata["x_emulator_md5"] = metadata.md5_hash
+        else:
+            metadata.metadata["x_emulator_no_md5"] = "true"
+        upload_id = cls.__create_upload_id(bucket.name, metadata.name)
         fake_request = utils.common.FakeRequest.init_protobuf(request, context)
         fake_request.update_protobuf(request.insert_object_spec, context)
         return cls.init_upload(fake_request, metadata, bucket, "", upload_id)

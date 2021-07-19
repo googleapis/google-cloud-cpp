@@ -105,6 +105,30 @@ class StorageIntegrationTest
     buckets_to_delete_.push_back(std::move(meta));
   }
 
+  struct ApiSwitch {
+    Fields for_insert;
+    IfMetagenerationNotMatch for_streaming_read;
+  };
+
+  static ApiSwitch RestApiFlags(std::string const& api) {
+    if (api == "XML") {
+      return ApiSwitch{
+          // enables XML: this filters-out all metadata fields from
+          // the InsertObject() response. JSON and XML are equivalent when no
+          // metadata fields are requested, and we default to XML in that case.
+          Fields(""),
+          // empty option has no effect, and the default is XML
+          IfMetagenerationNotMatch()};
+    }
+    return ApiSwitch{
+        // empty option has no effect, and the default is JSON since only JSON
+        // can provide all metadata fields.
+        Fields(),
+        // disables XML (the default) as it does not support
+        // metageneration-not-match
+        IfMetagenerationNotMatch(0)};
+  }
+
  private:
   std::vector<ObjectMetadata> objects_to_delete_;
   std::vector<BucketMetadata> buckets_to_delete_;
