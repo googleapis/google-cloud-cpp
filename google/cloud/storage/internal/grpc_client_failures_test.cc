@@ -119,7 +119,8 @@ TEST_P(GrpcClientFailuresTest, GetBucketIamPolicy) {
 TEST_P(GrpcClientFailuresTest, GetNativeBucketIamPolicy) {
   auto actual =
       client_->GetNativeBucketIamPolicy(GetBucketIamPolicyRequest("bkt"));
-  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable)));
+  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable,
+                                     StatusCode::kUnimplemented)));
 }
 
 TEST_P(GrpcClientFailuresTest, SetBucketIamPolicy) {
@@ -133,13 +134,15 @@ TEST_P(GrpcClientFailuresTest, SetNativeBucketIamPolicy) {
   auto actual =
       client_->SetNativeBucketIamPolicy(SetNativeBucketIamPolicyRequest(
           "bkt", NativeIamPolicy(std::vector<NativeIamBinding>())));
-  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable)));
+  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable,
+                                     StatusCode::kUnimplemented)));
 }
 
 TEST_P(GrpcClientFailuresTest, TestBucketIamPermissions) {
   auto actual = client_->TestBucketIamPermissions(
       TestBucketIamPermissionsRequest("bkt", {}));
-  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable)));
+  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable,
+                                     StatusCode::kUnimplemented)));
 }
 
 TEST_P(GrpcClientFailuresTest, LockBucketRetentionPolicy) {
@@ -318,7 +321,8 @@ TEST_P(GrpcClientFailuresTest, DeleteResumableUpload) {
   auto actual = client_->DeleteResumableUpload(DeleteResumableUploadRequest(
       EncodeGrpcResumableUploadSessionUrl(ResumableUploadSessionGrpcParams{
           "test-bucket", "test-object", "test-upload-id"})));
-  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable)));
+  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable,
+                                     StatusCode::kUnimplemented)));
 }
 
 TEST_P(GrpcClientFailuresTest, ListDefaultObjectAcl) {
