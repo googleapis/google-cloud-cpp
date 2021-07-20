@@ -48,6 +48,7 @@ def index():
 TODO(#6615): Introducing failures into uploads with return-XXX-after-YYYk
 """
 
+
 # Needs to be defined in emulator.py to keep context of flask and db global variables
 def retry_test(method):
     global supported_methods
@@ -805,7 +806,6 @@ def resumable_upload_chunk(bucket_name):
                 blob.metadata.metadata["x_emulator_transfer_encoding"] = ":".join(
                     upload.transfer
                 )
-                blob.metadata.metadata["x_emulator_upload"] = "resumable"
                 db.insert_object(upload.request, bucket_name, blob, None)
                 projection = utils.common.extract_projection(
                     upload.request, CommonEnums.Projection.NO_ACL, None
@@ -905,7 +905,6 @@ def xml_get_object(bucket_name, object_name):
 
 # Define the WSGI application to handle IAM requests
 (IAM_HANDLER_PATH, iam_app) = gcs_type.iam.get_iam_app()
-
 
 server = HandleGzipMiddleware(
     DispatcherMiddleware(

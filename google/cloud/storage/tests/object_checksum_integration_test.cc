@@ -29,10 +29,10 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 using ::testing::Not;
-using ::testing::StartsWith;
 
 class ObjectChecksumIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {
+    : public google::cloud::storage::testing::StorageIntegrationTest,
+      public ::testing::WithParamInterface<std::string> {
  protected:
   void SetUp() override {
     bucket_name_ = google::cloud::internal::GetEnv(
@@ -44,226 +44,207 @@ class ObjectChecksumIntegrationTest
   std::string bucket_name_;
 };
 
-TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32c) {
+/// @test Verify that CRC32C checksums are enabled by default.
+TEST_P(ObjectChecksumIntegrationTest, InsertObjectDefault) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
-
-  std::string expected = LoremIpsum();
-
-  // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client->InsertObject(
-      bucket_name_, object_name, expected, IfGenerationMatch(0),
-      Crc32cChecksumValue("6Y46Mg=="));
+  auto meta = client->InsertObject(bucket_name_, object_name, LoremIpsum(),
+                                   RestApiFlags(GetParam()).for_insert,
+                                   DisableMD5Hash(true), IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  EXPECT_EQ(object_name, meta->name());
-  EXPECT_EQ(bucket_name_, meta->bucket());
-
-  // Create a iostream to read the object back.
-  auto stream = client->ReadObject(bucket_name_, object_name);
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_EQ(expected, actual);
-}
-
-TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32c) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  std::string expected = LoremIpsum();
-
-  // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client->InsertObject(
-      bucket_name_, object_name, expected, IfGenerationMatch(0), Fields(""),
-      Crc32cChecksumValue("6Y46Mg=="));
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-
-  EXPECT_EQ(object_name, meta->name());
-  EXPECT_EQ(bucket_name_, meta->bucket());
-
-  // Create a iostream to read the object back.
-  auto stream = client->ReadObject(bucket_name_, object_name);
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_EQ(expected, actual);
-}
-
-TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32cFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  std::string expected = LoremIpsum();
-
-  // This should fail because the CRC32C value is incorrect.
-  StatusOr<ObjectMetadata> failure = client->InsertObject(
-      bucket_name_, object_name, expected, IfGenerationMatch(0),
-      Crc32cChecksumValue("4UedKg=="));
-  EXPECT_THAT(failure, Not(IsOk()));
-}
-
-TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32cFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  std::string expected = LoremIpsum();
-
-  // This should fail because the CRC32C value is incorrect.
-  StatusOr<ObjectMetadata> failure = client->InsertObject(
-      bucket_name_, object_name, expected, IfGenerationMatch(0), Fields(""),
-      Crc32cChecksumValue("4UedKg=="));
-  EXPECT_THAT(failure, Not(IsOk()));
-}
-
-TEST_F(ObjectChecksumIntegrationTest, InsertWithComputedCrc32c) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  std::string expected = LoremIpsum();
-
-  // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client->InsertObject(
-      bucket_name_, object_name, expected, IfGenerationMatch(0),
-      Crc32cChecksumValue(ComputeCrc32cChecksum(expected)));
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-
-  EXPECT_EQ(object_name, meta->name());
-  EXPECT_EQ(bucket_name_, meta->bucket());
-
-  // Create a iostream to read the object back.
-  auto stream = client->ReadObject(bucket_name_, object_name);
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_EQ(expected, actual);
-}
-
-/// @test Verify that CRC32C checksums are computed by default.
-TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertXML) {
-  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
-  auto object_name = MakeRandomObjectName();
-
-  testing_util::ScopedLog log;
-  StatusOr<ObjectMetadata> insert_meta =
-      client.InsertObject(bucket_name_, object_name, LoremIpsum(),
-                          IfGenerationMatch(0), Fields(""));
-  ASSERT_STATUS_OK(insert_meta);
-  ScheduleForDelete(*insert_meta);
-
-  EXPECT_THAT(log.ExtractLines(), Contains(StartsWith("x-goog-hash: crc32c=")));
-}
-
-/// @test Verify that CRC32C checksums are computed by default.
-TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertJSON) {
-  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
-  auto object_name = MakeRandomObjectName();
-
-  testing_util::ScopedLog log;
-  StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
-      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0));
-  ASSERT_STATUS_OK(insert_meta);
-  ScheduleForDelete(*insert_meta);
-
-  // This is a big indirect, we detect if the upload changed to
-  // multipart/related, and if so, we assume the hash value is being used.
-  // Unfortunately I (@coryan) cannot think of a way to examine the upload
-  // contents.
-  EXPECT_THAT(
-      log.ExtractLines(),
-      Contains(StartsWith("content-type: multipart/related; boundary=")));
-
-  if (insert_meta->has_metadata("x_emulator_upload")) {
-    // When running against the emulator, we have some more information to
-    // verify the right upload type and contents were sent.
-    EXPECT_EQ("multipart", insert_meta->metadata("x_emulator_upload"));
-    ASSERT_TRUE(insert_meta->has_metadata("x_emulator_crc32c"));
-    auto expected_crc32c = ComputeCrc32cChecksum(LoremIpsum());
-    EXPECT_EQ(expected_crc32c, insert_meta->metadata("x_emulator_crc32c"));
+  if (meta->has_metadata("x_emulator_upload")) {
+    ASSERT_TRUE(meta->has_metadata("x_emulator_crc32c"));
+    ASSERT_FALSE(meta->has_metadata("x_emulator_md5"));
   }
 }
 
-/// @test Verify that CRC32C checksums are computed by default on downloads.
-TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadXML) {
+/// @test Verify that `DisableCrc32cChecksum(true)` works as expected.
+TEST_P(ObjectChecksumIntegrationTest, InsertObjectExplicitDisable) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
-
-  // Create an object and a stream to read it back.
-  StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
-                           IfGenerationMatch(0), Projection::Full());
+  auto meta = client->InsertObject(
+      bucket_name_, object_name, LoremIpsum(), DisableCrc32cChecksum(true),
+      DisableMD5Hash(true), RestApiFlags(GetParam()).for_insert,
+      IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  auto stream = client->ReadObject(bucket_name_, object_name);
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  ASSERT_FALSE(stream.IsOpen());
-  ASSERT_FALSE(actual.empty());
-
-  EXPECT_EQ(stream.received_hash(), stream.computed_hash());
-  EXPECT_THAT(stream.received_hash(), HasSubstr(meta->crc32c()));
+  if (meta->has_metadata("x_emulator_upload")) {
+    ASSERT_FALSE(meta->has_metadata("x_emulator_crc32c"));
+    ASSERT_FALSE(meta->has_metadata("x_emulator_md5"));
+  }
 }
 
-/// @test Verify that CRC32C checksums are computed by default on downloads.
-TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadJSON) {
+/// @test Verify that `DisableCrc32cChecksum(false)` works as expected.
+TEST_P(ObjectChecksumIntegrationTest, InsertObjectExplicitEnable) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
-
-  // Create an object and a stream to read it back.
-  StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
-                           IfGenerationMatch(0), Projection::Full());
+  auto meta = client->InsertObject(
+      bucket_name_, object_name, LoremIpsum(), DisableCrc32cChecksum(false),
+      DisableMD5Hash(true), RestApiFlags(GetParam()).for_insert,
+      IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  auto stream = client->ReadObject(bucket_name_, object_name,
-                                   IfMetagenerationNotMatch(0));
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  ASSERT_FALSE(stream.IsOpen());
-  ASSERT_FALSE(actual.empty());
-
-  EXPECT_EQ(stream.received_hash(), stream.computed_hash());
-  EXPECT_THAT(stream.received_hash(), HasSubstr(meta->crc32c()));
+  if (meta->has_metadata("x_emulator_upload")) {
+    ASSERT_TRUE(meta->has_metadata("x_emulator_crc32c"));
+    ASSERT_FALSE(meta->has_metadata("x_emulator_md5"));
+  }
 }
 
-/// @test Verify that CRC32C checksums are computed by default on uploads.
-TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteJSON) {
+TEST_P(ObjectChecksumIntegrationTest, InsertObjectWithValueSuccess) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
+  auto meta = client->InsertObject(
+      bucket_name_, object_name, LoremIpsum(),
+      Crc32cChecksumValue(ComputeCrc32cChecksum(LoremIpsum())),
+      RestApiFlags(GetParam()).for_insert, DisableMD5Hash(true),
+      IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
-  // Create the object, but only if it does not exist already.
-  auto os =
-      client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
-  os.exceptions(std::ios_base::failbit);
-  // We will construct the expected response while streaming the data up.
-  std::ostringstream expected;
-  WriteRandomLines(os, expected);
+  if (meta->has_metadata("x_emulator_upload")) {
+    ASSERT_TRUE(meta->has_metadata("x_emulator_crc32c"));
+    ASSERT_FALSE(meta->has_metadata("x_emulator_md5"));
+  }
+}
 
-  auto expected_crc32c = ComputeCrc32cChecksum(expected.str());
+TEST_P(ObjectChecksumIntegrationTest, InsertObjectWithValueFailure) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+  auto object_name = MakeRandomObjectName();
+  auto failure = client->InsertObject(
+      bucket_name_, object_name, LoremIpsum(),
+      RestApiFlags(GetParam()).for_insert, DisableMD5Hash(true),
+      IfGenerationMatch(0), Crc32cChecksumValue(ComputeCrc32cChecksum("")));
+  EXPECT_THAT(failure, Not(IsOk()));
+}
 
+/// @test Verify that CRC32C checksums are computed by default in WriteObject().
+TEST_F(ObjectChecksumIntegrationTest, WriteObjectDefault) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+  auto object_name = MakeRandomObjectName();
+  auto os = client->WriteObject(bucket_name_, object_name, DisableMD5Hash(true),
+                                IfGenerationMatch(0));
+  os << LoremIpsum();
   os.Close();
-  ASSERT_STATUS_OK(os.metadata());
-  ScheduleForDelete(*os.metadata());
+  auto meta = os.metadata();
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   EXPECT_EQ(os.received_hash(), os.computed_hash());
-  EXPECT_THAT(os.received_hash(), HasSubstr(expected_crc32c));
+
+  EXPECT_THAT(os.received_hash(),
+              HasSubstr(ComputeCrc32cChecksum(LoremIpsum())));
+  EXPECT_THAT(os.computed_hash(),
+              HasSubstr(ComputeCrc32cChecksum(LoremIpsum())));
+  if (meta->has_metadata("x_emulator_upload")) {
+    // Streaming uploads over REST cannot include checksums
+    EXPECT_TRUE(meta->has_metadata("x_emulator_no_crc32c")) << *meta;
+    EXPECT_TRUE(meta->has_metadata("x_emulator_no_md5")) << *meta;
+  }
 }
 
-/// @test Verify that CRC32C checksum mismatches are reported by default on
-/// downloads.
-TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
+/// @test Verify that CRC32C checksums can be explicitly disabled in
+/// WriteObject().
+TEST_F(ObjectChecksumIntegrationTest, WriteObjectExplicitDisable) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+  auto object_name = MakeRandomObjectName();
+  auto os = client->WriteObject(bucket_name_, object_name,
+                                DisableCrc32cChecksum(true),
+                                DisableMD5Hash(true), IfGenerationMatch(0));
+  os << LoremIpsum();
+  os.Close();
+  auto meta = os.metadata();
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
+  EXPECT_THAT(os.received_hash(),
+              Not(HasSubstr(ComputeCrc32cChecksum(LoremIpsum()))));
+  EXPECT_THAT(os.computed_hash(),
+              Not(HasSubstr(ComputeCrc32cChecksum(LoremIpsum()))));
+  if (meta->has_metadata("x_emulator_upload")) {
+    // Streaming uploads over REST cannot include checksums
+    EXPECT_TRUE(meta->has_metadata("x_emulator_no_crc32c")) << *meta;
+    EXPECT_TRUE(meta->has_metadata("x_emulator_no_md5")) << *meta;
+  }
+}
+
+/// @test Verify that CRC32C checksums can be explicitly enabled in
+/// WriteObject().
+TEST_F(ObjectChecksumIntegrationTest, WriteObjectExplicitEnable) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+  auto object_name = MakeRandomObjectName();
+  auto os = client->WriteObject(bucket_name_, object_name,
+                                DisableCrc32cChecksum(false),
+                                DisableMD5Hash(true), IfGenerationMatch(0));
+  os << LoremIpsum();
+  os.Close();
+  auto meta = os.metadata();
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
+  EXPECT_THAT(os.received_hash(),
+              HasSubstr(ComputeCrc32cChecksum(LoremIpsum())));
+  EXPECT_THAT(os.computed_hash(),
+              HasSubstr(ComputeCrc32cChecksum(LoremIpsum())));
+  if (meta->has_metadata("x_emulator_upload")) {
+    // Streaming uploads over REST cannot include checksums
+    EXPECT_TRUE(meta->has_metadata("x_emulator_no_crc32c")) << *meta;
+    EXPECT_TRUE(meta->has_metadata("x_emulator_no_md5")) << *meta;
+  }
+}
+
+/// @test Verify that valid CRC32C checksums values work in WriteObject().
+TEST_F(ObjectChecksumIntegrationTest, WriteObjectWithValueSuccess) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+  auto object_name = MakeRandomObjectName();
+  auto os = client->WriteObject(
+      bucket_name_, object_name,
+      Crc32cChecksumValue(ComputeCrc32cChecksum(LoremIpsum())),
+      DisableMD5Hash(true), IfGenerationMatch(0));
+  os << LoremIpsum();
+  os.Close();
+  auto meta = os.metadata();
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
+  if (meta->has_metadata("x_emulator_upload")) {
+    // Streaming uploads over REST cannot include checksums unless provided by
+    // the application when the upload begins.
+    EXPECT_TRUE(meta->has_metadata("x_emulator_crc32c")) << *meta;
+    EXPECT_TRUE(meta->has_metadata("x_emulator_no_md5")) << *meta;
+  }
+}
+
+/// @test Verify that incorrect CRC32C checksums values work in WriteObject().
+TEST_F(ObjectChecksumIntegrationTest, WriteObjectWithValueFailure) {
+  // TODO(#4157) - add supports for hashes in gRPC
+  if (UsingGrpc()) GTEST_SKIP();
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+  auto object_name = MakeRandomObjectName();
+  auto os = client->WriteObject(
+      bucket_name_, object_name, MD5HashValue(ComputeMD5Hash("")),
+      DisableCrc32cChecksum(true), IfGenerationMatch(0));
+  os << LoremIpsum();
+  os.Close();
+  auto meta = os.metadata();
+  EXPECT_THAT(meta, Not(IsOk()));
+}
+
+/// @test Verify that CRC32C checksum mismatches are reported when the server
+/// receives bad data.
+TEST_F(ObjectChecksumIntegrationTest, WriteObjectReceiveBadChecksum) {
   // This test is disabled when not using the emulator as it relies on the
   // emulator to inject faults.
   if (!UsingEmulator()) GTEST_SKIP();
@@ -272,16 +253,75 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
 
   auto object_name = MakeRandomObjectName();
 
-  // Create an object and a stream to read it back.
-  StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
-                           IfGenerationMatch(0), Projection::Full());
+  // Create a stream to upload an object.
+  ObjectWriteStream stream = client->WriteObject(
+      bucket_name_, object_name, DisableMD5Hash(true),
+      CustomHeader("x-goog-emulator-instructions", "inject-upload-data-error"),
+      IfGenerationMatch(0));
+  stream << LoremIpsum() << "\n";
+  stream.Close();
+  EXPECT_TRUE(stream.bad());
+  ASSERT_STATUS_OK(stream.metadata());
+  ScheduleForDelete(*stream.metadata());
+  EXPECT_NE(stream.received_hash(), stream.computed_hash());
+}
+
+/// @test Verify that CRC32C checksum mismatches are reported by default.
+TEST_F(ObjectChecksumIntegrationTest, WriteObjectUploadBadChecksum) {
+  // TODO(#4156) - enable test when checksums are implemented.
+  if (UsingGrpc()) GTEST_SKIP();
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+
+  // Create a stream to upload an object.
+  ObjectWriteStream stream = client->WriteObject(
+      bucket_name_, object_name, Crc32cChecksumValue(ComputeCrc32cChecksum("")),
+      DisableMD5Hash(true), IfGenerationMatch(0));
+  stream << LoremIpsum() << "\n";
+  stream.Close();
+  EXPECT_TRUE(stream.bad());
+  ASSERT_THAT(stream.metadata(), Not(IsOk()));
+}
+
+/// @test Verify that CRC32C checksums are computed by default on downloads.
+TEST_P(ObjectChecksumIntegrationTest, ReadObjectDefault) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+  auto object_name = MakeRandomObjectName();
+  auto meta = client->InsertObject(bucket_name_, object_name, LoremIpsum(),
+                                   IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+
+  auto stream = client->ReadObject(bucket_name_, object_name,
+                                   RestApiFlags(GetParam()).for_streaming_read);
+  auto const actual = std::string{std::istreambuf_iterator<char>{stream}, {}};
+  ASSERT_FALSE(stream.IsOpen());
+
+  EXPECT_EQ(stream.received_hash(), stream.computed_hash());
+  EXPECT_THAT(stream.received_hash(), HasSubstr(meta->crc32c()));
+}
+
+/// @test Verify that CRC32C checksum mismatches are reported by default on
+/// downloads.
+TEST_P(ObjectChecksumIntegrationTest, ReadObjectCorruptedByServerGetc) {
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
+  if (!UsingEmulator()) GTEST_SKIP();
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+  auto object_name = MakeRandomObjectName();
+  StatusOr<ObjectMetadata> meta = client->InsertObject(
+      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
   auto stream = client->ReadObject(
-      bucket_name_, object_name,
-      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
+      bucket_name_, object_name, DisableMD5Hash(true),
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"),
+      RestApiFlags(GetParam()).for_streaming_read);
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
@@ -305,16 +345,13 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
 
 /// @test Verify that CRC32C checksum mismatches are reported by default on
 /// downloads.
-TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
+TEST_P(ObjectChecksumIntegrationTest, ReadObjectCorruptedByServerRead) {
   // This test is disabled when not using the emulator as it relies on the
   // emulator to inject faults.
   if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
-
   auto object_name = MakeRandomObjectName();
-
-  // Create an object and a stream to read it back.
   StatusOr<ObjectMetadata> meta =
       client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
@@ -323,54 +360,12 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
 
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableMD5Hash(true),
-      IfMetagenerationNotMatch(0),
-      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"),
+      RestApiFlags(GetParam()).for_streaming_read);
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        std::string actual(std::istreambuf_iterator<char>{stream},
-                           std::istreambuf_iterator<char>{});
-      } catch (HashMismatchError const& ex) {
-        EXPECT_NE(ex.received_hash(), ex.computed_hash());
-        EXPECT_THAT(ex.what(), HasSubstr("mismatched hashes"));
-        throw;
-      },
-      HashMismatchError);
-#else
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_FALSE(stream.received_hash().empty());
-  EXPECT_FALSE(stream.computed_hash().empty());
-  EXPECT_NE(stream.received_hash(), stream.computed_hash());
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-/// @test Verify that CRC32C checksum mismatches are reported when using
-/// .read().
-TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
-  // This test is disabled when not using the emulator as it relies on the
-  // emulator to inject faults.
-  if (!UsingEmulator()) GTEST_SKIP();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-  auto contents = MakeRandomData(1024 * 1024);
-
-  // Create an object and a stream to read it back.
-  StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name_, object_name, contents,
-                           IfGenerationMatch(0), Projection::Full());
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-
-  auto stream = client->ReadObject(
-      bucket_name_, object_name, DisableMD5Hash(true),
-      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
-
-  // Create a buffer large enough to hold the results and read pas EOF.
-  std::vector<char> buffer(2 * contents.size());
-  stream.read(buffer.data(), buffer.size());
+  // Create a buffer large enough to read the full contents.
+  std::vector<char> buffer(2 * LoremIpsum().size());
+  stream.read(buffer.data(), static_cast<std::streamsize>(buffer.size()));
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_TRUE(stream.bad());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -379,65 +374,13 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
   EXPECT_EQ(stream.received_hash(), meta->crc32c());
 }
 
-/// @test Verify that CRC32C checksum mismatches are reported when using
-/// .read().
-TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
-  // This test is disabled when not using the emulator as it relies on the
-  // emulator to inject faults.
-  if (!UsingEmulator()) GTEST_SKIP();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+INSTANTIATE_TEST_SUITE_P(ObjectChecksumIntegrationTestJson,
+                         ObjectChecksumIntegrationTest,
+                         ::testing::Values("JSON"));
 
-  auto object_name = MakeRandomObjectName();
-  auto contents = MakeRandomData(1024 * 1024);
-
-  // Create an object and a stream to read it back.
-  StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name_, object_name, contents,
-                           IfGenerationMatch(0), Projection::Full());
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-
-  auto stream = client->ReadObject(
-      bucket_name_, object_name, DisableMD5Hash(true),
-      IfMetagenerationNotMatch(0),
-      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
-
-  // Create a buffer large enough to hold the results and read pas EOF.
-  std::vector<char> buffer(2 * contents.size());
-  stream.read(buffer.data(), buffer.size());
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_TRUE(stream.bad());
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THAT(stream.status(), StatusIs(StatusCode::kDataLoss));
-  EXPECT_NE(stream.received_hash(), stream.computed_hash());
-  EXPECT_EQ(stream.received_hash(), meta->crc32c());
-}
-
-/// @test Verify that CRC32C checksum mismatches are reported by default on
-/// downloads.
-TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
-  // This test is disabled when not using the emulator as it relies on the
-  // emulator to inject faults.
-  if (!UsingEmulator()) GTEST_SKIP();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  // Create a stream to upload an object.
-  ObjectWriteStream stream = client->WriteObject(
-      bucket_name_, object_name, DisableMD5Hash(true), IfGenerationMatch(0),
-      CustomHeader("x-goog-emulator-instructions", "inject-upload-data-error"));
-  stream << LoremIpsum() << "\n";
-  stream << LoremIpsum();
-
-  stream.Close();
-  EXPECT_TRUE(stream.bad());
-  ASSERT_STATUS_OK(stream.metadata());
-  ScheduleForDelete(*stream.metadata());
-  EXPECT_NE(stream.received_hash(), stream.computed_hash());
-}
+INSTANTIATE_TEST_SUITE_P(ObjectChecksumIntegrationTestXml,
+                         ObjectChecksumIntegrationTest,
+                         ::testing::Values("XML"));
 
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS

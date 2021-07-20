@@ -195,6 +195,14 @@ class TestHolder(unittest.TestCase):
             insert_object_spec=insert_object_spec, write_offset=0
         )
         upload = gcs.holder.DataHolder.init_resumable_grpc(request, bucket, "")
+        # Verify the annotations inserted by the emulator.
+        annotations = upload.metadata.metadata
+        self.assertGreaterEqual(
+            set(["x_emulator_upload", "x_emulator_crc32c", "x_emulator_md5"]),
+            set(annotations.keys()),
+        )
+        # Clear any annotations created by the emulator
+        upload.metadata.metadata.clear()
         self.assertEqual(
             upload.metadata, resources_pb2.Object(name="object", bucket="bucket")
         )
@@ -214,6 +222,30 @@ class TestHolder(unittest.TestCase):
         self.assertEqual(not_match, 3)
         projection = utils.common.extract_projection(upload.request, False, "")
         self.assertEqual(projection, CommonEnums.Projection.FULL)
+
+    def test_init_resumable_rest(self):
+        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
+        bucket, _ = gcs.bucket.Bucket.init(request, "")
+        bucket = bucket.metadata
+        data = json.dumps(
+            {
+                # Empty payload checksums
+                "crc32c": "AAAAAA==",
+                "md5Hash": "1B2M2Y8AsgTpgAmY7PhCfg==",
+                "name": "test-object-name",
+            }
+        )
+        environ = create_environ(
+            base_url="http://localhost:8080",
+            content_length=len(data),
+            data=data,
+            content_type="application/json",
+            method="POST",
+        )
+        upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
+        self.assertEqual(upload.metadata.name, "test-object-name")
+        self.assertEqual(upload.metadata.crc32c.value, 0)
+        self.assertEqual(upload.metadata.md5_hash, "1B2M2Y8AsgTpgAmY7PhCfg==")
 
 
 if __name__ == "__main__":

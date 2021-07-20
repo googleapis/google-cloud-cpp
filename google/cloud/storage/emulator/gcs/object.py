@@ -203,9 +203,7 @@ class Object:
             metadata["md5Hash"] = metadata["md5Hash"]
         if "crc32c" in metadata:
             metadata["metadata"]["x_emulator_crc32c"] = metadata["crc32c"]
-            metadata["crc32c"] = struct.unpack(
-                ">I", base64.b64decode(metadata["crc32c"].encode("utf-8"))
-            )[0]
+            metadata["crc32c"] = utils.common.rest_crc32c_to_proto(metadata["crc32c"])
         return cls.init_dict(request, metadata, media, bucket, False)
 
     @classmethod
@@ -227,9 +225,7 @@ class Object:
                     metadata["md5Hash"] = md5Hash
                 if checksum.startswith("crc32c="):
                     crc32c_value = checksum[7:]
-                    metadata["crc32c"] = struct.unpack(
-                        ">I", base64.b64decode(crc32c_value.encode("utf-8"))
-                    )[0]
+                    metadata["crc32c"] = utils.common.rest_crc32c_to_proto(crc32c_value)
         blob, _ = cls.init_dict(fake_request, metadata, media, bucket, False)
         return blob, fake_request
 
@@ -374,9 +370,7 @@ class Object:
     def rest(cls, metadata, rest_only):
         response = json_format.MessageToDict(metadata)
         response["kind"] = "storage#object"
-        response["crc32c"] = base64.b64encode(
-            struct.pack(">I", response["crc32c"])
-        ).decode("utf-8")
+        response["crc32c"] = utils.common.rest_crc32c_from_proto(response["crc32c"])
         response.update(rest_only)
         old_metadata = {}
         if "metadata" in response:
@@ -391,14 +385,15 @@ class Object:
         return self.rest(self.metadata, self.rest_only)
 
     def x_goog_hash_header(self):
-        header = ""
-        if "x_emulator_crc32c" in self.metadata.metadata:
-            header += "crc32c=" + self.metadata.metadata["x_emulator_crc32c"]
-        if "x_emulator_md5" in self.metadata.metadata:
-            if header != "":
-                header += ","
-            header += "md5=" + self.metadata.metadata["x_emulator_md5"]
-        return header if header != "" else None
+        hashes = []
+        if self.metadata.crc32c is not None and self.metadata.crc32c.value is not None:
+            hashes.append(
+                "crc32c=%s"
+                % utils.common.rest_crc32c_from_proto(self.metadata.crc32c.value)
+            )
+        if self.metadata.md5_hash is not None:
+            hashes.append("md5=%s" % self.metadata.md5_hash)
+        return ",".join(hashes) if len(hashes) != 0 else None
 
     def rest_media(self, request):
         range_header = request.headers.get("range")
