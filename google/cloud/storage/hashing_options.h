@@ -24,12 +24,16 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 /**
- * Provide a pre-computed MD5 hash value to an upload or download request.
+ * Provide a pre-computed MD5 hash value.
  *
- * The application may know what the MD5 hash value of a particular object is,
- * for example, because it was downloaded from GCS or some other cloud storage
- * service. In these cases, the client can include the hash value in the
- * request for better end-to-end validation.
+ * The application may be able to obtain a MD5 hash in some out-of-band way.
+ * For example, if the object was downloaded from some other cloud storage
+ * service, or because the application already queried the GCS object metadata.
+ * In these cases, providing the value to the client library improves the
+ * end-to-end data integrity verification.
+ *
+ * @see
+ * https://sigops.org/s/conferences/hotos/2021/papers/hotos21-s01-hochschild.pdf
  */
 struct MD5HashValue
     : public internal::ComplexOption<MD5HashValue, std::string> {
@@ -48,13 +52,14 @@ std::string ComputeMD5Hash(std::string const& payload);
 /**
  * Disable or enable MD5 Hashing computations.
  *
- * By default MD5 Hashing computations is disabled.
- * Default constructor DisableMD5Hash() also disables MD5 Hashing computations.
- * You must explicitly pass `EnableMD5Hash()` to enable MD5Hash.
+ * By default MD5 hashes are disabled. To enable them use the
+ * `EnableMD5Hash()` helper function.
  *
- * @warning Disabling MD5 hashing and Crc32cChecksum at the same time exposes
- *   your application to data corruption. We recommend that all uploads to GCS
- *   are protected by the supported checksums and/or hashes.
+ * @warning MD5 hashes are disabled by default, as they are computationally
+ *   expensive, and CRC32C checksums provide enough data integrity protection
+ *   for most applications.  Disabling CRC32C checksums while MD5 hashes remain
+ *   disabled exposes your application to data corruption. We recommend that all
+ *   uploads to GCS and downloads from GCS use CRC32C checksums.
  */
 struct DisableMD5Hash : public internal::ComplexOption<DisableMD5Hash, bool> {
   using ComplexOption<DisableMD5Hash, bool>::ComplexOption;
@@ -65,20 +70,24 @@ struct DisableMD5Hash : public internal::ComplexOption<DisableMD5Hash, bool> {
 };
 
 /**
- * Enable MD5 Hashing computations.
+ * Enable MD5 hashes in upload and download operations.
  *
  * Use this function where the option `DisableMD5Hash` is expected to enable MD5
- * Hashing computations.
+ * hashes.
  */
 inline DisableMD5Hash EnableMD5Hash() { return DisableMD5Hash(false); }
 
 /**
- * Provide a pre-computed MD5 hash value to an upload or download request.
+ * Provide a pre-computed CRC32C checksum value.
  *
- * The application may know what the MD5 hash value of a particular object is,
- * for example, because it was downloaded from GCS or some other cloud storage
- * service. In these cases, the client can include the hash value in the
- * request for better end-to-end validation.
+ * The application may be able to obtain a CRC32C checksum in some out-of-band
+ * way.  For example, if the object was downloaded from some other cloud storage
+ * service, or because the application already queried the GCS object metadata.
+ * In these cases, providing the value to the client library improves the
+ * end-to-end data integrity verification.
+ *
+ * @see
+ * https://sigops.org/s/conferences/hotos/2021/papers/hotos21-s01-hochschild.pdf
  */
 struct Crc32cChecksumValue
     : public internal::ComplexOption<Crc32cChecksumValue, std::string> {
@@ -90,20 +99,22 @@ struct Crc32cChecksumValue
 };
 
 /**
- * Compute the MD5 Hash of a string in the format preferred by GCS.
+ * Compute the CRC32C checksum of a string in the format preferred by GCS.
  */
 std::string ComputeCrc32cChecksum(std::string const& payload);
 
 /**
- * Disable MD5 Hashing computations.
+ * Disable CRC32C checksum computations.
  *
- * By default the GCS client library computes MD5 hashes in all
- * `Client::InsertObject` calls. The application can disable the hash
- * computation by passing this parameter.
+ * By default the GCS client library computes CRC32C checksums in all upload and
+ * download operations. The application can use this option to disable the
+ * checksum computation.
  *
- * @warning Disabling MD5 hashing exposes your application to data corruption.
- *   We recommend that all uploads to GCS are protected by the supported
- *   checksums and/or hashes.
+ * @warning MD5 hashes are disabled by default, as they are computationally
+ *   expensive, and CRC32C checksums provide enough data integrity protection
+ *   for most applications.  Disabling CRC32C checksums while MD5 hashes remain
+ *   disabled exposes your application to data corruption. We recommend that all
+ *   uploads to GCS and downloads from GCS use CRC32C checksums.
  */
 struct DisableCrc32cChecksum
     : public internal::ComplexOption<DisableCrc32cChecksum, bool> {
