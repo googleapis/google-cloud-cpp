@@ -21,15 +21,15 @@ import unittest
 import gcs
 import utils
 
-from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
-from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
-from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
+from google.storage.v2 import storage_pb2
 
 
 class TestObject(unittest.TestCase):
     def setUp(self):
-        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
-        bucket, _ = gcs.bucket.Bucket.init(request, "")
+        request = utils.common.FakeRequest(
+            args={}, data=json.dumps({"name": "bucket"})
+        )
+        bucket, _ = gcs.bucket.Bucket.init(request, None)
         self.bucket = bucket
 
     def test_init_media(self):
@@ -63,8 +63,8 @@ class TestObject(unittest.TestCase):
 
     def test_grpc_to_rest(self):
         # Make sure that object created by `gRPC` works with `REST`'s request.
-        spec = storage_pb2.InsertObjectSpec(
-            resource=resources_pb2.Object(
+        spec = storage_pb2.WriteObjectSpec(
+            resource=storage_pb2.Object(
                 name="test-object-name",
                 bucket="bucket",
                 metadata={"label0": "value0"},
@@ -74,31 +74,29 @@ class TestObject(unittest.TestCase):
                 content_language="test-value",
                 content_type="octet-stream",
                 storage_class="regional",
-                customer_encryption=resources_pb2.Object.CustomerEncryption(
+                customer_encryption=storage_pb2.Object.CustomerEncryption(
                     encryption_algorithm="AES", key_sha256="123456"
                 ),
-                # TODO(#6982) - add these fields when moving to storage/v2
-                #   custom_time=utils.common.rest_rfc3339_to_proto("2021-08-01T12:00:00Z"),
-                event_based_hold={"value": True},
-                kms_key_name="test-value",
-                retention_expiration_time=utils.common.rest_rfc3339_to_proto(
+                custom_time=utils.common.rest_rfc3339_to_proto("2021-08-01T12:00:00Z"),
+                event_based_hold=True,
+                kms_key="test-value",
+                retention_expire_time=utils.common.rest_rfc3339_to_proto(
                     "2022-01-01T00:00:00Z"
                 ),
                 temporary_hold=True,
-                time_deleted=utils.common.rest_rfc3339_to_proto("2021-06-01T00:00:00Z"),
-                time_storage_class_updated=utils.common.rest_rfc3339_to_proto(
+                delete_time=utils.common.rest_rfc3339_to_proto("2021-06-01T00:00:00Z"),
+                update_storage_class_time=utils.common.rest_rfc3339_to_proto(
                     "2021-07-01T00:00:00Z"
                 ),
             )
         )
-        request = storage_pb2.StartResumableWriteRequest(insert_object_spec=spec)
+        request = storage_pb2.StartResumableWriteRequest(write_object_spec=spec)
         upload = gcs.holder.DataHolder.init_resumable_grpc(
             request, self.bucket.metadata, ""
         )
         blob, _ = gcs.object.Object.init(
             upload.request, upload.metadata, b"123456789", upload.bucket, False, ""
         )
-        self.assertDictEqual(blob.rest_only, {})
         self.assertEqual(blob.metadata.bucket, "bucket")
         self.assertEqual(blob.metadata.name, "test-object-name")
         self.assertEqual(blob.media, b"123456789")
@@ -155,6 +153,7 @@ class TestObject(unittest.TestCase):
                 "contentEncoding": "test-value",
                 "contentLanguage": "test-value",
                 "contentType": "octet-stream",
+                "customTime": "2021-08-01T12:00:00Z",
                 "eventBasedHold": True,
                 "crc32c": "4waSgw==",
                 "customerEncryption": {
@@ -323,13 +322,8 @@ class TestObject(unittest.TestCase):
 
         # `grpc` PATCH
 
-        request = storage_pb2.PatchObjectRequest(
-            bucket="bucket",
-            object="object",
-            metadata={"metadata": {"method": "grpc"}},
-            update_mask={"paths": ["metadata"]},
-        )
-        blob.patch(request, "")
+        request = utils.common.FakeRequest(args={}, data=json.dumps({"metadata": {"method": "grpc"}}))
+        blob.patch(request, None)
         self.assertEqual(blob.metadata.bucket, "bucket")
         self.assertEqual(blob.metadata.name, "test-object-name")
         self.assertEqual(blob.media, b"123456789")

@@ -142,15 +142,20 @@ class DataHolder(types.SimpleNamespace):
         metadata = request.write_object_spec.resource
         # Add some annotations to make it easier to write tests
         metadata.metadata["x_emulator_upload"] = "resumable"
-        if metadata.HasField("crc32c"):
-            metadata.metadata[
-                "x_emulator_crc32c"
-            ] = utils.common.rest_crc32c_from_proto(metadata.crc32c.value)
+        if metadata.HasField("checksums"):
+            cs = metadata.checksums
+            if cs.HasField("crc32c"):
+                metadata.metadata[
+                    "x_emulator_crc32c"
+                ] = utils.common.rest_crc32c_from_proto(cs.crc32c)
+            else:
+                metadata.metadata["x_emulator_no_crc32c"] = "true"
+            if cs.HasField("md5_hash"):
+                metadata.metadata["x_emulator_md5"] = cs.md5_hash
+            else:
+                metadata.metadata["x_emulator_no_md5"] = "true"
         else:
             metadata.metadata["x_emulator_no_crc32c"] = "true"
-        if metadata.md5_hash is not None and metadata.md5_hash != "":
-            metadata.metadata["x_emulator_md5"] = metadata.md5_hash
-        else:
             metadata.metadata["x_emulator_no_md5"] = "true"
         upload_id = cls.__create_upload_id(bucket.name, metadata.name)
         fake_request = utils.common.FakeRequest.init_protobuf(request, context)

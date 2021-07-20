@@ -74,13 +74,76 @@ class Object:
         metadata.acl.extend(acls)
 
     @classmethod
-    def __enrich_acl(cls, metadata):
-        for entry in metadata.acl:
-            entry.bucket = metadata.bucket
-            entry.object = metadata.name
-            entry.generation = metadata.generation
+    def __preprocess_object_metadata(cls, metadata):
+        """The protos for storage/v2 renamed some fields in ways that require some custom coding."""
+        # For some fields the storage/v2 name just needs to change slightly.
+        metadata = utils.common.rest_adjust(
+            metadata,
+            {
+                "timeCreated": lambda x: ("createTime", x),
+                "updated": lambda x: ("updateTime", x),
+                "kmsKeyName": lambda x: ("kmsKey", x),
+                "retentionExpirationTime": lambda x: ("retentionExpireTime", x),
+                "timeDeleted": lambda x: ("deleteTime", x),
+                "timeStorageClassUpdated": lambda x: ("updateStorageClassTime", x),
+            },
+        )
+        checksums = {}
+        if "crc32c" in metadata:
+            checksums["crc32c"] = metadata.pop("crc32c")
+        if "md5Hash" in metadata:
+            print("\nREST %s\n" % metadata.get("md5Hash"))
+            checksums["md5Hash"] = base64.b64decode(metadata.pop("md5Hash"))
+        if len(checksums) > 0:
+            metadata["checksums"] = checksums
+        # Finally the ACLs, if present, have fewer fields in gRPC
+        if "acl" in metadata:
+            for a in metadata["acl"]:
+                del a["kind"]
+                del a["bucket"]
+                del a["object"]
+                del a["generation"]
+        return metadata
 
-    # TODO(#4893): Remove `rest_only`
+    @classmethod
+    def __postprocess_object_metadata(cls, metadata):
+        """The protos for storage/v2 renamed some fields in ways that require some custom coding."""
+        # For some fields the storage/v2 name just needs to change slightly.
+        metadata = utils.common.rest_adjust(
+            metadata,
+            {
+                "createTime": lambda x: ("timeCreated", x),
+                "updateTime": lambda x: ("updated", x),
+                "kmsKey": lambda x: ("kmsKeyName", x),
+                "retentionExpireTime": lambda x: ("retentionExpirationTime", x),
+                "deleteTime": lambda x: ("timeDeleted", x),
+                "updateStorageClassTime": lambda x: ("timeStorageClassUpdated", x),
+            },
+        )
+        metadata["kind"] = "storage#object"
+        metadata["id"] = "%s/o/%s#%s" % (
+            metadata["bucket"],
+            metadata["name"],
+            metadata["generation"],
+        )
+        # Checksums need special treatment
+        cs = metadata.pop("checksums", None)
+        if cs is not None:
+            if "crc32c" in cs:
+                metadata["crc32c"] = base64.b64encode(
+                    struct.pack(">I", cs["crc32c"])
+                ).decode("utf-8")
+            if "md5Hash" in cs:
+                metadata["md5Hash"] = cs["md5Hash"]
+        # Finally the ACLs, if present, require additional fields
+        if "acl" in metadata:
+            for a in metadata["acl"]:
+                a["kind"] = "storage#objectAccessControl"
+                a["bucket"] = metadata.get("bucket", None)
+                a["object"] = metadata.get("name", None)
+                a["generation"] = metadata.get("generation", None)
+        return metadata
+
     @classmethod
     def init(cls, request, metadata, media, bucket, is_destination, context):
         instruction = utils.common.extract_instruction(request, context)
@@ -91,7 +154,7 @@ class Object:
         metadata.generation = int(timestamp.timestamp() * 1000)
         metadata.metageneration = 1
         metadata.size = len(media)
-        actual_md5Hash = base64.b64encode(hashlib.md5(media).digest())
+        actual_md5Hash = hashlib.md5(media).digest()
         actual_crc32c = crc32c.crc32c(media)
         if metadata.HasField("checksums"):
             cs = metadata.checksums
@@ -135,7 +198,6 @@ class Object:
                     "Predefined ACL with uniform bucket level access enabled", context
                 )
             cls.__insert_predefined_acl(metadata, bucket, predefined_acl, context)
-        cls.__enrich_acl(metadata)
         bucket.iam_config.uniform_bucket_level_access.enabled = is_uniform
         return (
             cls(metadata, media, bucket),
@@ -144,7 +206,9 @@ class Object:
 
     @classmethod
     def init_dict(cls, request, metadata, media, bucket, is_destination):
-        metadata = json_format.ParseDict(metadata, storage_pb2.Object())
+        metadata = json_format.ParseDict(
+            cls.__preprocess_object_metadata(metadata), storage_pb2.Object()
+        )
         return cls.init(request, metadata, media, bucket, is_destination, None)
 
     @classmethod
@@ -230,7 +294,7 @@ class Object:
             metadata = request.metadata
         else:
             data = json.loads(request.data)
-            metadata = json_format.ParseDict(data, storage_pb2.Object())
+            metadata = json_format.ParseDict(Object.__preprocess_object_metadata(data), storage_pb2.Object())
         self.__update_metadata(metadata, None)
         self.__insert_predefined_acl(
             metadata,
@@ -257,7 +321,7 @@ class Object:
                         else:
                             self.metadata.metadata[key] = value
             data.pop("metadata", None)
-            metadata = json_format.ParseDict(data, storage_pb2.Object())
+            metadata = json_format.ParseDict(Object.__preprocess_object_metadata(data), storage_pb2.Object())
             paths = set()
             for key in utils.common.nested_key(data):
                 key = utils.common.to_snake_case(key)
@@ -348,60 +412,11 @@ class Object:
     # === RESPONSE === #
 
     @classmethod
-    def __adjust_grpc_field_names(cls, metadata):
-        """The protos for storage/v2 renamed some fields in ways that require some custom coding."""
-        # For some fields the storage/v2 name just needs to change slightly.
-        renames = {
-            "createTime": "timeCreated",
-            "updateTime": "updated",
-            "kmsKey": "kmsKeyName",
-            "retentionExpireTime": "retentionExpirationTime",
-            "deleteTime": "timeDeleted",
-            "updateStorageClassTime": "timeStorageClassUpdated",
-        }
-        # Some fields should be skipped because they are represented differently in REST
-        skipped = set(["checksums"])
-        result = {}
-        # Some fields simply do not exists in gRPC
-        result["id"] = (
-            result.get("bucket", "")
-            + "/"
-            + result.get("name", "")
-            + "#"
-            + result.get("generation", "")
-        )
-        for k, v in metadata.items():
-            if k in skipped:
-                continue
-            if k in renames:
-                result[renames[k]] = v
-            else:
-                result[k] = v
-        # And some fields just require custom coding because their names
-        # and contents are different
-        if "checksums" in metadata:
-            cs = metadata["checksums"]
-            if "crc32c" in cs:
-                result["crc32c"] = base64.b64encode(
-                    struct.pack(">I", cs["crc32c"])
-                ).decode("utf-8")
-            if "md5Hash" in cs:
-                result["md5Hash"] = cs["md5Hash"]
-        # Finally the ACLs, if present, require additional fields
-        if "acl" in result:
-            bucket = result["bucket"]
-            object = result["name"]
-            for acl in result["acl"]:
-                acl["bucket"] = bucket
-                acl["object"] = object
-        return result
-
-    @classmethod
     def rest(cls, metadata):
-        response = json_format.MessageToDict(metadata)
-        response = cls.__adjust_grpc_field_names(response)
+        response = cls.__postprocess_object_metadata(
+            json_format.MessageToDict(metadata)
+        )
         response["kind"] = "storage#object"
-        response["crc32c"] = utils.common.rest_crc32c_from_proto(response["crc32c"])
         old_metadata = {}
         if "metadata" in response:
             for key, value in response["metadata"].items():
@@ -409,9 +424,6 @@ class Object:
                     old_key = key.replace("emulator", "testbench")
                     old_metadata[old_key] = value
             response["metadata"].update(old_metadata)
-        if "acl" in response:
-            for entry in response["acl"]:
-                entry["kind"] = "storage#objectAccessControl"
         return response
 
     def rest_metadata(self):
