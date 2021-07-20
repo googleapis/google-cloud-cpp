@@ -17,5 +17,6 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 iam_client_samples = [
+    "iam_credentials_samples.cc",
     "iam_samples.cc",
 ]
