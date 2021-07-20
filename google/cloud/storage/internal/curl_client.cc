@@ -535,7 +535,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMedia(
   // If the application has set an explicit hash value we need to use multipart
   // uploads. `DisableMD5Hash` and `DisableCrc32cChecksum` should not be
   // dependent on each other.
-  if (!request.GetOption<DisableMD5Hash>().value() ||
+  if (!request.GetOption<DisableMD5Hash>().value_or(false) ||
       !request.GetOption<DisableCrc32cChecksum>().value_or(false) ||
       request.HasOption<MD5HashValue>() ||
       request.HasOption<Crc32cChecksumValue>()) {
@@ -1236,7 +1236,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
   if (request.HasOption<MD5HashValue>()) {
     builder.AddHeader("x-goog-hash: md5=" +
                       request.GetOption<MD5HashValue>().value());
-  } else if (!request.GetOption<DisableMD5Hash>().value()) {
+  } else if (!request.GetOption<DisableMD5Hash>().value_or(false)) {
     builder.AddHeader("x-goog-hash: md5=" + ComputeMD5Hash(request.contents()));
   }
   if (request.HasOption<Crc32cChecksumValue>()) {
@@ -1350,7 +1350,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   }
   if (request.HasOption<MD5HashValue>()) {
     metadata["md5Hash"] = request.GetOption<MD5HashValue>().value();
-  } else if (!request.GetOption<DisableMD5Hash>().value()) {
+  } else if (!request.GetOption<DisableMD5Hash>().value_or(false)) {
     metadata["md5Hash"] = ComputeMD5Hash(request.contents());
   }
 
