@@ -63,11 +63,18 @@ bool ObjectWriteStreambuf::IsOpen() const {
 }
 
 bool ObjectWriteStreambuf::ValidateHash(ObjectMetadata const& meta) {
-  // This function is called once the stream is "closed" (either an explicit
-  // `Close()` call or a permanent error). The `hash_values_` would have been
-  // computed before the final chunk was uploaded. And the hash_validator_
-  // member variable won't be used because the preconditions for `Flush*()`
-  // would fail.
+  // This function is called once the stream is "closed", via an explicit
+  // `Close()` call, or a permanent error, or (more rarely) implicitly because
+  // the application is using the X-Upload-Content-Length header. In any case,
+  // once closed the stream will never use `hash_validator_` or `hash_function_`
+  // again, as the pre-conditions for `Flush*()` prevent this.
+  //
+  // If the application has set X-Upload-Content-Length then the stream may be
+  // implicitly closed. In that case we need to compute the hashes.
+  if (hash_function_) {
+    auto function = std::move(hash_function_);
+    hash_values_ = std::move(*function).Finish();
+  }
   auto validator = std::move(hash_validator_);
   validator->ProcessMetadata(meta);
   hash_validator_result_ = std::move(*validator).Finish(hash_values_);

@@ -25,6 +25,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::AnyOf;
 using ::testing::Eq;
 using ::testing::HasSubstr;
@@ -318,8 +319,9 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
     os.Close();
     ASSERT_STATUS_OK(os.metadata());
     ScheduleForDelete(*os.metadata());
-    EXPECT_FALSE(os.bad());
+    EXPECT_FALSE(os.bad()) << *os.metadata();
     EXPECT_EQ(desired_size, os.metadata()->size());
+    EXPECT_EQ(desired_size, offset);
   }
 }
 
