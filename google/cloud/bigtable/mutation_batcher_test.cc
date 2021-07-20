@@ -141,7 +141,7 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
         batcher_(new MutationBatcher(table_)) {}
 
   void ExpectInteraction(std::vector<Exchange> const& interactions) {
-    // gMock expectation matching starts form the latest added, so we need to
+    // gMock expectation matching starts from the latest added, so we need to
     // add them in the reverse order.
     for (auto exchange_it = interactions.crbegin();
          exchange_it != interactions.crend(); ++exchange_it) {
@@ -408,6 +408,86 @@ TEST_F(MutationBatcherTest, RequestsWithManyMutationsAreRejected) {
   EXPECT_TRUE(state->admitted);
   EXPECT_TRUE(state->completed);
   EXPECT_THAT(state->completion_status, Not(IsOk()));
+  EXPECT_EQ(0, NumOperationsOutstanding());
+}
+
+TEST_F(MutationBatcherTest, OutstandingMutationsAreCapped) {
+  std::vector<SingleRowMutation> mutations(
+      {SingleRowMutation("foo", {bt::SetCell("fam", "col1", 0_ms, "baz")}),
+       SingleRowMutation("foo", {bt::SetCell("fam", "col1", 0_ms, "baz"),
+                                 bt::SetCell("fam", "col2", 0_ms, "baz"),
+                                 bt::SetCell("fam", "col3", 0_ms, "baz")})});
+
+  // The second mutation will go through alone. But it will not go through if
+  // the first mutation is outstanding due to the outstanding mutations limit.
+  batcher_.reset(new MutationBatcher(
+      table_, MutationBatcher::Options().SetMaxOutstandingMutations(3)));
+
+  ExpectInteraction({{{mutations[0]}, {ResultPiece({0}, {}, {})}},
+                     {{mutations[1]}, {ResultPiece({0, 1, 2}, {}, {})}}});
+
+  auto initially_admitted = Apply(mutations[0]);
+  EXPECT_TRUE(initially_admitted->admitted);
+  EXPECT_FALSE(initially_admitted->completed);
+  EXPECT_EQ(1, NumOperationsOutstanding());
+
+  auto initially_not_admitted = Apply(mutations[1]);
+  EXPECT_FALSE(initially_not_admitted->admitted);
+  EXPECT_FALSE(initially_not_admitted->completed);
+  EXPECT_EQ(1, NumOperationsOutstanding());
+
+  FinishSingleItemStream();
+
+  EXPECT_TRUE(initially_admitted->completed);
+  EXPECT_STATUS_OK(initially_admitted->completion_status);
+  EXPECT_TRUE(initially_not_admitted->admitted);
+  EXPECT_FALSE(initially_not_admitted->completed);
+  EXPECT_EQ(1, NumOperationsOutstanding());
+
+  FinishSingleItemStream();
+
+  EXPECT_TRUE(initially_not_admitted->completed);
+  EXPECT_STATUS_OK(initially_not_admitted->completion_status);
+  EXPECT_EQ(0, NumOperationsOutstanding());
+}
+
+TEST_F(MutationBatcherTest, OutstandingMutationSizeIsCapped) {
+  std::vector<SingleRowMutation> mutations(
+      {SingleRowMutation("foo", {bt::SetCell("fam", "col1", 0_ms, "baz")}),
+       SingleRowMutation("foo", {bt::SetCell("fam", "col1", 0_ms, "baz"),
+                                 bt::SetCell("fam", "col2", 0_ms, "baz")})});
+
+  // The second mutation will go through alone. But it will not go through if
+  // the first mutation is outstanding due to the outstanding size limit.
+  batcher_.reset(new MutationBatcher(
+      table_, MutationBatcher::Options().SetMaxOutstandingSize(
+                  MutationSize(mutations[1]))));
+
+  ExpectInteraction({{{mutations[0]}, {ResultPiece({0}, {}, {})}},
+                     {{mutations[1]}, {ResultPiece({0, 1, 2}, {}, {})}}});
+
+  auto initially_admitted = Apply(mutations[0]);
+  EXPECT_TRUE(initially_admitted->admitted);
+  EXPECT_FALSE(initially_admitted->completed);
+  EXPECT_EQ(1, NumOperationsOutstanding());
+
+  auto initially_not_admitted = Apply(mutations[1]);
+  EXPECT_FALSE(initially_not_admitted->admitted);
+  EXPECT_FALSE(initially_not_admitted->completed);
+  EXPECT_EQ(1, NumOperationsOutstanding());
+
+  FinishSingleItemStream();
+
+  EXPECT_TRUE(initially_admitted->completed);
+  EXPECT_STATUS_OK(initially_admitted->completion_status);
+  EXPECT_TRUE(initially_not_admitted->admitted);
+  EXPECT_FALSE(initially_not_admitted->completed);
+  EXPECT_EQ(1, NumOperationsOutstanding());
+
+  FinishSingleItemStream();
+
+  EXPECT_TRUE(initially_not_admitted->completed);
+  EXPECT_STATUS_OK(initially_not_admitted->completion_status);
   EXPECT_EQ(0, NumOperationsOutstanding());
 }
 
