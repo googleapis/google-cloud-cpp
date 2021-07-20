@@ -45,7 +45,7 @@ std::unique_ptr<HashFunction> CreateHashFunction(
   if (request.RequiresRangeHeader()) return CreateNullHashFunction();
   return CreateHashFunction(
       request.GetOption<DisableCrc32cChecksum>().value_or(false),
-      request.GetOption<DisableMD5Hash>().value_or(true));
+      request.GetOption<DisableMD5Hash>().value_or(false));
 }
 
 std::unique_ptr<HashFunction> CreateHashFunction(
@@ -55,7 +55,7 @@ std::unique_ptr<HashFunction> CreateHashFunction(
   return CreateHashFunction(
       request.GetOption<DisableCrc32cChecksum>().value_or(false) ||
           !request.GetOption<Crc32cChecksumValue>().value_or("").empty(),
-      request.GetOption<DisableMD5Hash>().value_or(true) ||
+      request.GetOption<DisableMD5Hash>().value_or(false) ||
           !request.GetOption<MD5HashValue>().value_or("").empty());
 }
 

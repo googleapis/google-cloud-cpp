@@ -52,18 +52,18 @@ std::unique_ptr<HashValidator> CreateHashValidator(
   if (request.RequiresRangeHeader()) return CreateNullHashValidator();
 
   // `DisableMD5Hash`'s default value is `true`.
-  auto disable_md5 = request.GetOption<DisableMD5Hash>().value();
-  auto disable_crc32c = request.HasOption<DisableCrc32cChecksum>() &&
-                        request.GetOption<DisableCrc32cChecksum>().value();
+  auto disable_md5 = request.GetOption<DisableMD5Hash>().value_or(false);
+  auto disable_crc32c =
+      request.GetOption<DisableCrc32cChecksum>().value_or(false);
   return CreateHashValidator(disable_md5, disable_crc32c);
 }
 
 std::unique_ptr<HashValidator> CreateHashValidator(
     ResumableUploadRequest const& request) {
   // `DisableMD5Hash`'s default value is `true`.
-  auto disable_md5 = request.GetOption<DisableMD5Hash>().value();
-  auto disable_crc32c = request.HasOption<DisableCrc32cChecksum>() &&
-                        request.GetOption<DisableCrc32cChecksum>().value();
+  auto disable_md5 = request.GetOption<DisableMD5Hash>().value_or(false);
+  auto disable_crc32c =
+      request.GetOption<DisableCrc32cChecksum>().value_or(false);
   return CreateHashValidator(disable_md5, disable_crc32c);
 }
 
