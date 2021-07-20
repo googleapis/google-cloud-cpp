@@ -25,7 +25,7 @@ void GenerateAccessToken(std::vector<std::string> const& argv) {
         "generate-access-token <service-account-name> <lifetime-seconds> "
         "<scope>+");
   }
-  //! [START iamcredentials-generate-access-token]
+  //! [START iamcredentials_generate_access_token]
   //! [iamcredentials-generate-access-token]
   namespace iam = google::cloud::iam;
   [](std::string const& name, std::string const& lifetime_seconds,
@@ -38,7 +38,7 @@ void GenerateAccessToken(std::vector<std::string> const& argv) {
     std::cout << "Access Token successfully created: "
               << response->DebugString() << "\n";
   }
-  //! [END iamcredentials-generate-access-token]
+  //! [END iamcredentials_generate_access_token]
   //! [iamcredentials-generate-access-token]
   (argv.at(0), argv.at(1), {argv.begin() + 2, argv.end()});
 }
@@ -49,7 +49,7 @@ void GenerateIdToken(std::vector<std::string> const& argv) {
         "generate-id-token <service-account-name> <audience> <include-email> "
         "[<delegates>]*");
   }
-  //! [START iamcredentials-generate-id-token]
+  //! [START iamcredentials_generate_id_token]
   //! [iamcredentials-generate-id-token]
   namespace iam = google::cloud::iam;
   [](std::string const& name, std::string const& audience,
@@ -62,7 +62,7 @@ void GenerateIdToken(std::vector<std::string> const& argv) {
     std::cout << "Id Token successfully created: " << response->DebugString()
               << "\n";
   }
-  //! [END iamcredentials-generate-id-token] [iamcredentials-generate-id-token]
+  //! [END iamcredentials_generate_id_token] [iamcredentials-generate-id-token]
   (argv.at(0), argv.at(1), argv.at(2), {argv.begin() + 3, argv.end()});
 }
 
@@ -71,7 +71,7 @@ void SignBlob(std::vector<std::string> const& argv) {
     throw google::cloud::testing_util::Usage(
         "sign-blob <service-account-name> <payload> [<delegates>]*");
   }
-  //! [START iamcredentials-sign-blob] [iamcredentials-sign-blob]
+  //! [START iamcredentials_sign_blob] [iamcredentials-sign-blob]
   namespace iam = google::cloud::iam;
   [](std::string const& name, std::string const& payload,
      std::vector<std::string> const& delegates) {
@@ -81,7 +81,7 @@ void SignBlob(std::vector<std::string> const& argv) {
     std::cout << "Blob successfully signed: " << response->DebugString()
               << "\n";
   }
-  //! [END iamcredentials-sign-blob] [iamcredentials-sign-blob]
+  //! [END iamcredentials_sign_blob] [iamcredentials-sign-blob]
   (argv.at(0), argv.at(1), {argv.begin() + 2, argv.end()});
 }
 
@@ -90,7 +90,7 @@ void SignJwt(std::vector<std::string> const& argv) {
     throw google::cloud::testing_util::Usage(
         "sign-jwt <service-account-name> <payload> [<delegates>]*");
   }
-  //! [START iamcredentials-sign-jwt] [iamcredentials-sign-jwt]
+  //! [START iamcredentials_sign_jwt] [iamcredentials-sign-jwt]
   namespace iam = google::cloud::iam;
   [](std::string const& name, std::string const& payload,
      std::vector<std::string> const& delegates) {
@@ -99,7 +99,7 @@ void SignJwt(std::vector<std::string> const& argv) {
     if (!response) throw std::runtime_error(response.status().message());
     std::cout << "JWT successfully signed: " << response->DebugString() << "\n";
   }
-  //! [END iamcredentials-sign-jwt] [iamcredentials-sign-jwt]
+  //! [END iamcredentials_sign_jwt] [iamcredentials-sign-jwt]
   (argv.at(0), argv.at(1), {argv.begin() + 2, argv.end()});
 }
 
