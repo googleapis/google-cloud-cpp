@@ -93,6 +93,12 @@ class Bucket:
             if key.endswith("createdBefore"):
                 proxy[key] = proxy[key].replace("T00:00:00Z", "")
         proxy["kind"] = "storage#bucket"
+        if "acl" in data:
+            for entry in data["acl"]:
+                entry["kind"] = "storage#bucketAccessControl"
+        if "defaultObjectAcl" in data:
+            for entry in data["defaultObjectAcl"]:
+                entry["kind"] = "storage#objectAccessControl"
         proxy.update(rest_only)
         return proxy.data
 
@@ -134,6 +140,13 @@ class Bucket:
         )
         del metadata.default_object_acl[:]
         metadata.default_object_acl.extend(acls)
+
+    @classmethod
+    def __enrich_acl(cls, metadata):
+        for entry in metadata.acl:
+            entry.bucket = metadata.name
+        for entry in metadata.default_object_acl:
+            entry.bucket = metadata.name
 
     # === INITIALIZATION === #
 
@@ -189,6 +202,7 @@ class Bucket:
             cls.__insert_predefined_default_object_acl(
                 metadata, predefined_default_object_acl, context
             )
+        cls.__enrich_acl(metadata)
         metadata.iam_configuration.uniform_bucket_level_access.enabled = is_uniform
         metadata.id = metadata.name
         metadata.project_number = int(utils.acl.PROJECT_NUMBER)

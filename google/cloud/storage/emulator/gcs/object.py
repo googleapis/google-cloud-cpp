@@ -84,6 +84,13 @@ class Object:
         del metadata.acl[:]
         metadata.acl.extend(acls)
 
+    @classmethod
+    def __enrich_acl(cls, metadata):
+        for entry in metadata.acl:
+            entry.bucket = metadata.bucket
+            entry.object = metadata.name
+            entry.generation = metadata.generation
+
     # TODO(#4893): Remove `rest_only`
     @classmethod
     def init(
@@ -94,7 +101,7 @@ class Object:
             media = utils.common.corrupt_media(media)
         timestamp = datetime.datetime.now(datetime.timezone.utc)
         metadata.bucket = bucket.name
-        metadata.generation = random.getrandbits(63)
+        metadata.generation = int(timestamp.timestamp() * 1000)
         metadata.metageneration = 1
         metadata.id = "%s/o/%s#%d" % (
             metadata.bucket,
@@ -146,6 +153,7 @@ class Object:
                     "Predefined ACL with uniform bucket level access enabled", context
                 )
             cls.__insert_predefined_acl(metadata, bucket, predefined_acl, context)
+        cls.__enrich_acl(metadata)
         bucket.iam_configuration.uniform_bucket_level_access.enabled = is_uniform
         if rest_only is None:
             rest_only = {}
@@ -379,6 +387,9 @@ class Object:
                     old_key = key.replace("emulator", "testbench")
                     old_metadata[old_key] = value
             response["metadata"].update(old_metadata)
+        if "acl" in response:
+            for entry in response["acl"]:
+                entry["kind"] = "storage#objectAccessControl"
         return response
 
     def rest_metadata(self):
