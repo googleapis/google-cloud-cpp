@@ -44,6 +44,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   ObjectWriteStreambuf(std::unique_ptr<ResumableUploadSession> upload_session,
                        std::size_t max_buffer_size,
                        std::unique_ptr<HashFunction> hash_function,
+                       HashValues known_hashes,
                        std::unique_ptr<HashValidator> hash_validator,
                        AutoFinalizeConfig auto_finalize);
 
@@ -109,6 +110,8 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   std::size_t max_buffer_size_;
 
   std::unique_ptr<HashFunction> hash_function_;
+  HashValues hash_values_;
+  HashValues known_hashes_;
   std::unique_ptr<HashValidator> hash_validator_;
   AutoFinalizeConfig auto_finalize_ = AutoFinalizeConfig::kDisabled;
 

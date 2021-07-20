@@ -27,11 +27,12 @@ namespace internal {
 ObjectWriteStreambuf::ObjectWriteStreambuf(
     std::unique_ptr<ResumableUploadSession> upload_session,
     std::size_t max_buffer_size, std::unique_ptr<HashFunction> hash_function,
-    std::unique_ptr<HashValidator> hash_validator,
+    HashValues known_hashes, std::unique_ptr<HashValidator> hash_validator,
     AutoFinalizeConfig auto_finalize)
     : upload_session_(std::move(upload_session)),
       max_buffer_size_(UploadChunkRequest::RoundUpToQuantum(max_buffer_size)),
       hash_function_(std::move(hash_function)),
+      known_hashes_(std::move(known_hashes)),
       hash_validator_(std::move(hash_validator)),
       auto_finalize_(auto_finalize),
       last_response_(ResumableUploadResponse{
@@ -62,14 +63,21 @@ bool ObjectWriteStreambuf::IsOpen() const {
 }
 
 bool ObjectWriteStreambuf::ValidateHash(ObjectMetadata const& meta) {
-  // This function is called once the stream is "closed" (either an explicit
-  // `Close()` call or a permanent error). After this point the validator is
-  // not usable.
-  auto function = std::move(hash_function_);
+  // This function is called once the stream is "closed", via an explicit
+  // `Close()` call, or a permanent error, or (more rarely) implicitly because
+  // the application is using the X-Upload-Content-Length header. In any case,
+  // once closed the stream will never use `hash_validator_` or `hash_function_`
+  // again, as the pre-conditions for `Flush*()` prevent this.
+  //
+  // If the application has set X-Upload-Content-Length then the stream may be
+  // implicitly closed. In that case we need to compute the hashes.
+  if (hash_function_) {
+    auto function = std::move(hash_function_);
+    hash_values_ = std::move(*function).Finish();
+  }
   auto validator = std::move(hash_validator_);
   validator->ProcessMetadata(meta);
-  hash_validator_result_ =
-      std::move(*validator).Finish(std::move(*function).Finish());
+  hash_validator_result_ = std::move(*validator).Finish(hash_values_);
   computed_hash_ = FormatComputedHashes(hash_validator_result_);
   received_hash_ = FormatReceivedHashes(hash_validator_result_);
   return !hash_validator_result_.is_mismatch;
@@ -122,8 +130,13 @@ void ObjectWriteStreambuf::FlushFinal() {
   auto const upload_size = upload_session_->next_expected_byte() + actual_size;
   hash_function_->Update(pbase(), actual_size);
 
+  // After this point the session will be closed, and no more calls to the hash
+  // function are possible.
+  auto function = std::move(hash_function_);
+  hash_values_ = std::move(*function).Finish();
   last_response_ = upload_session_->UploadFinalChunk(
-      {ConstBuffer(pbase(), actual_size)}, upload_size);
+      {ConstBuffer(pbase(), actual_size)}, upload_size,
+      Merge(known_hashes_, hash_values_));
 
   // Reset the iostream put area with valid pointers, but empty.
   current_ios_buffer_.resize(1);

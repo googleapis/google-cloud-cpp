@@ -37,10 +37,14 @@ StatusOr<ResumableUploadResponse> LoggingResumableUploadSession::UploadChunk(
 
 StatusOr<ResumableUploadResponse>
 LoggingResumableUploadSession::UploadFinalChunk(
-    ConstBufferSequence const& buffers, std::uint64_t upload_size) {
+    ConstBufferSequence const& buffers, std::uint64_t upload_size,
+    HashValues const& full_object_hashes) {
   GCP_LOG(INFO) << __func__ << "() << upload_size=" << upload_size
-                << ", buffer.size=" << TotalBytes(buffers);
-  auto response = session_->UploadFinalChunk(buffers, upload_size);
+                << ", buffer.size=" << TotalBytes(buffers) << ", crc32c=<"
+                << full_object_hashes.crc32c << ">, md5=<"
+                << full_object_hashes.md5 << ">";
+  auto response =
+      session_->UploadFinalChunk(buffers, upload_size, full_object_hashes);
   if (response.ok()) {
     GCP_LOG(INFO) << __func__ << "() >> payload={" << response.value() << "}";
   } else {

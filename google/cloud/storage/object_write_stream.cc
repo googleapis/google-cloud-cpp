@@ -31,8 +31,8 @@ ObjectWriteStream::ObjectWriteStream()
           absl::make_unique<internal::ResumableUploadSessionError>(
               Status(StatusCode::kUnimplemented, "null stream")),
           /*max_buffer_size=*/0, internal::CreateNullHashFunction(),
-          internal::CreateNullHashValidator(), AutoFinalizeConfig::kDisabled)) {
-}
+          internal::HashValues{}, internal::CreateNullHashValidator(),
+          AutoFinalizeConfig::kDisabled)) {}
 
 ObjectWriteStream::ObjectWriteStream(
     std::unique_ptr<internal::ObjectWriteStreambuf> buf)

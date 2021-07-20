@@ -199,7 +199,8 @@ class ParallelUploadTest
       EXPECT_CALL(res, UploadFinalChunk)
           .WillOnce([expected_content, object_name, generation](
                         ConstBufferSequence const& content,
-                        std::uint64_t /*size*/) {
+                        std::uint64_t /*size*/,
+                        HashValues const& /*full_object_hashes*/) {
             EXPECT_THAT(content, ElementsAre(ConstBuffer(*expected_content)));
             return make_status_or(
                 ResumableUploadResponse{"fake-url",

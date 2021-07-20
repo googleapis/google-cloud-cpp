@@ -228,8 +228,6 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectWithValueSuccess) {
 
 /// @test Verify that incorrect CRC32C checksums values work in WriteObject().
 TEST_F(ObjectChecksumIntegrationTest, WriteObjectWithValueFailure) {
-  // TODO(#4157) - add supports for hashes in gRPC
-  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
@@ -268,8 +266,6 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectReceiveBadChecksum) {
 
 /// @test Verify that CRC32C checksum mismatches are reported by default.
 TEST_F(ObjectChecksumIntegrationTest, WriteObjectUploadBadChecksum) {
-  // TODO(#4156) - enable test when checksums are implemented.
-  if (UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

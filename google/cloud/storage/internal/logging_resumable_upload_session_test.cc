@@ -63,7 +63,8 @@ TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
 
   std::string const payload = "test-payload-data";
   EXPECT_CALL(*mock, UploadFinalChunk)
-      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
+      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s,
+                    HashValues const&) {
         EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
         EXPECT_EQ(513 * 1024, s);
         return StatusOr<ResumableUploadResponse>(
@@ -72,7 +73,7 @@ TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
 
   LoggingResumableUploadSession session(std::move(mock));
 
-  auto result = session.UploadFinalChunk({{payload}}, 513 * 1024);
+  auto result = session.UploadFinalChunk({{payload}}, 513 * 1024, {});
   EXPECT_THAT(result, StatusIs(StatusCode::kUnavailable, "uh oh"));
 
   auto const log_lines = log_backend_.ExtractLines();

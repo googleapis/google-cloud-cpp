@@ -203,6 +203,18 @@ TEST(HasFunctionImplTest, CreateHashFunctionUpload) {
   }
 }
 
+TEST(HasFunctionImplTest, CreateHashFunctionUploadResumedSession) {
+  auto function = CreateHashFunction(
+      ResumableUploadRequest("test-bucket", "test-object")
+          .set_multiple_options(UseResumableUploadSession("test-session-id"),
+                                DisableCrc32cChecksum(false),
+                                DisableMD5Hash(false)));
+  Update(*function, "The quick brown fox jumps over the lazy dog");
+  auto const actual = std::move(*function).Finish();
+  EXPECT_THAT(actual.crc32c, IsEmpty());
+  EXPECT_THAT(actual.crc32c, IsEmpty());
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

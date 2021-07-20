@@ -56,7 +56,7 @@ class ObjectWriteStreambufIntegrationTest
         internal::ClientImplDetails::GetRawClient(*client)
             ->client_options()
             .upload_buffer_size(),
-        CreateNullHashFunction(), CreateNullHashValidator(),
+        CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
         AutoFinalizeConfig::kEnabled));
 
     std::ostringstream expected_stream;
