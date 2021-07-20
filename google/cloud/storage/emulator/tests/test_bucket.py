@@ -147,10 +147,128 @@ class TestBucket(unittest.TestCase):
         self.assertEqual(bucket.metadata.labels["method"], "rest")
 
     def test_init_rest(self):
-        request = utils.common.FakeRequest(args={}, data=json.dumps({"name": "bucket"}))
+        metadata = {
+            "name": "test-bucket-name",
+            "defaultEventBasedHold": True,
+            "retentionPolicy": {
+                "retentionPeriod": "90",
+                "effectiveTime": "2021-09-01T02:03:04Z",
+                "isLocked": True,
+            },
+            "acl": [{"entity": "allAuthenticatedUsers", "role": "READER"}],
+            "defaultObjectAcl": [{"entity": "allAuthenticatedUsers", "role": "READER"}],
+            "iamConfiguration": {
+                "publicAccessPrevention": "enforced",
+                "uniformBucketLevelAccess": {
+                    "enabled": True,
+                    "lockedTime": "2023-01-01T01:02:03Z",
+                },
+            },
+            "encryption": {"defaultKmsKeyName": "test-only-value-"},
+            "location": "us-central1",
+            "locationType": "REGIONAL",
+            "website": {"mainPageSuffix": "html", "notFoundPage": "404.html"},
+            "logging": {
+                "logBucket": "test-only-value",
+                "logObjectPrefix": "test-prefix/",
+            },
+            "versioning": {"enabled": True},
+            "cors": [{"method": ["POST"]}],
+            "lifecycle": {
+                "rule": [
+                    {
+                        "action": {"type": "delete"},
+                        "condition": {
+                            "age": 60,
+                            "createdBefore": "2023-08-01",
+                            # TODO(#6982) - these cannot be tested until we move to storage v2/
+                            #   "customTimeBefore": "2024-08-01",
+                            #   "daysSinceCustomTime": 90,
+                            #   "daysSinceNoncurrentTime": 30,
+                            #   "noncurrentTimeBefore": "2021-10-01",
+                            "isLive": True,
+                            "matchesStorageClass": ["STANDARD"],
+                            "numNewerVersions": 42,
+                        },
+                    }
+                ]
+            },
+            "labels": {"label0": "value0"},
+            "storageClass": "regional",
+            "billing": {"requesterPays": True},
+        }
+        request = utils.common.FakeRequest(args={}, data=json.dumps(metadata))
         bucket, projection = gcs.bucket.Bucket.init(request, None)
-        self.assertEqual(bucket.metadata.name, "bucket")
-        self.assertEqual(projection, "noAcl")
+        bucket_rest = bucket.rest()
+        # Verify the BucketAccessControl entries have the desired fields
+        metadata.pop("acl")
+        acl = bucket_rest.pop("acl", None)
+        self.assertLessEqual(
+            set(["allAuthenticatedUsers"]), set([e["entity"] for e in acl])
+        )
+        self.assertIsNotNone(acl)
+        for entry in acl:
+            self.assertEqual(entry.pop("kind", None), "storage#bucketAccessControl")
+            self.assertEqual(entry.pop("bucket", None), "test-bucket-name")
+            self.assertIsNotNone(entry.pop("entity", None))
+            self.assertIsNotNone(entry.pop("role", None))
+            # Verify the remaining keys are a subset of the expected keys
+            self.assertLessEqual(
+                set(entry.keys()),
+                set(
+                    [
+                        "id",
+                        "selfLink",
+                        "email",
+                        "entityId",
+                        "domain",
+                        "projectTeam",
+                        "etag",
+                    ]
+                ),
+            )
+        # Verify the BucketAccessControl entries have the desired fields
+        metadata.pop("defaultObjectAcl")
+        default_object_acl = bucket_rest.pop("defaultObjectAcl", None)
+        self.assertIsNotNone(default_object_acl)
+        self.assertLessEqual(
+            set(["allAuthenticatedUsers"]),
+            set([e["entity"] for e in default_object_acl]),
+        )
+        for entry in default_object_acl:
+            self.assertEqual(entry.pop("kind", None), "storage#objectAccessControl")
+            self.assertEqual(entry.pop("bucket", None), "test-bucket-name")
+            self.assertIsNotNone(entry.pop("entity", None))
+            self.assertIsNotNone(entry.pop("role", None))
+            # Verify the remaining keys are a subset of the expected keys
+            self.assertLessEqual(
+                set(entry.keys()),
+                set(
+                    [
+                        "id",
+                        "selfLink",
+                        "email",
+                        "entityId",
+                        "domain",
+                        "projectTeam",
+                        "etag",
+                    ]
+                ),
+            )
+        # Some fields are inserted by `Bucket.init()`, we want to verify they
+        # exist and have the right value.
+        expected_new_fields = {"kind": "storage#bucket", "id": "test-bucket-name"}
+        actual_new_fields = {
+            k: bucket_rest.pop(k, None) for k, _ in expected_new_fields.items()
+        }
+        self.assertDictEqual(expected_new_fields, actual_new_fields)
+        # Some fields are inserted by `Bucket.init()`, we want to verify they are
+        # present, but their value is not that interesting.
+        for key in ["timeCreated", "updated", "owner", "projectNumber", "etag"]:
+            self.assertIsNotNone(bucket_rest.pop(key, None), msg="key=%s" % key)
+        self.maxDiff = None
+        self.assertDictEqual(metadata, bucket_rest)
+        self.assertEqual(projection, "full")
 
         request = utils.common.FakeRequest(
             args={},

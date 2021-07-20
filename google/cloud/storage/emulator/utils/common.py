@@ -27,7 +27,7 @@ from flask import Response as FlaskResponse
 import scalpl
 import utils
 
-
+from google.protobuf import timestamp_pb2
 from requests_toolbelt import MultipartDecoder
 from requests_toolbelt.multipart.decoder import ImproperBodyPartContentException
 
@@ -438,6 +438,13 @@ def rest_crc32c_from_proto(crc32c):
     REST uses base64 encoded 32-bit big endian integers, while protos use just `int32`.
     """
     return base64.b64encode(struct.pack(">I", crc32c)).decode("utf-8")
+
+
+def rest_rfc3339_to_proto(rfc3339):
+    """Convert a RFC3339 timestamp to the google.protobuf.Timestamp format."""
+    ts = timestamp_pb2.Timestamp()
+    ts.FromJsonString(rfc3339)
+    return ts
 
 
 def rest_adjust(data, adjustments):

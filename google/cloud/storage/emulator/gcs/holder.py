@@ -142,13 +142,13 @@ class DataHolder(types.SimpleNamespace):
         metadata = request.insert_object_spec.resource
         # Add some annotations to make it easier to write tests
         metadata.metadata["x_emulator_upload"] = "resumable"
-        if metadata.crc32c.value is not None:
+        if metadata.HasField("crc32c"):
             metadata.metadata[
                 "x_emulator_crc32c"
             ] = utils.common.rest_crc32c_from_proto(metadata.crc32c.value)
         else:
-            metadata.metadata["x_emulator_no_crc3c"] = "true"
-        if metadata.md5_hash is not None:
+            metadata.metadata["x_emulator_no_crc32c"] = "true"
+        if metadata.md5_hash is not None and metadata.md5_hash != "":
             metadata.metadata["x_emulator_md5"] = metadata.md5_hash
         else:
             metadata.metadata["x_emulator_no_md5"] = "true"
