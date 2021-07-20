@@ -18,6 +18,7 @@
 #
 #   Options:
 #     --distro=<name>      The distro name to use
+#     --docker-clean       Delete the build output directories
 #     -t|--trigger         The trigger file to extract the build name and distro
 #     -l|--local           Run the build in the local environment
 #     -d|--docker          Run the build in a local docker
@@ -90,7 +91,7 @@ function print_usage() {
 # Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
   --options="p:t:ldsh" \
-  --longoptions="distro:,project:,trigger:,local,docker,docker-shell,help" \
+  --longoptions="distro:,project:,trigger:,local,docker,docker-shell,docker-clean,help" \
   --name="${PROGRAM_NAME}" \
   -- "$@")"
 eval set -- "${PARSED}"
@@ -98,6 +99,7 @@ eval set -- "${PARSED}"
 DISTRO_FLAG=""
 PROJECT_FLAG=""
 TRIGGER_FLAG=""
+CLEAN_FLAG="false"
 LOCAL_FLAG="false"
 DOCKER_FLAG="false"
 SHELL_FLAG="false"
@@ -126,6 +128,11 @@ while true; do
   -s | --docker-shell)
     DOCKER_FLAG="true"
     SHELL_FLAG="true"
+    shift
+    ;;
+  --docker-clean)
+    DOCKER_FLAG="true"
+    CLEAN_FLAG="true"
     shift
     ;;
   -h | --help)
@@ -233,6 +240,11 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
   out_dir="${PROJECT_ROOT}/build-out/${DISTRO_FLAG}-${BUILD_NAME}"
   out_home="${out_dir}/h"
   out_cmake="${out_dir}/cmake-out"
+  if [[ "${CLEAN_FLAG}" = "true" ]]; then
+    io::log_yellow "Removing build output directory:"
+    du -sh "${out_dir}"
+    rm -rf "${out_dir}"
+  fi
   # Creates the directories that docker will mount as a volumes, otherwise they
   # will be created by the docker daemon as root-owned directories.
   mkdir -p "${out_cmake}" "${out_home}/.config/gcloud"
