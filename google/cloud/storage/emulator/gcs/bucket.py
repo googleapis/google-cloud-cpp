@@ -14,6 +14,7 @@
 
 """Implement a class to simulate GCS buckets."""
 
+import base64
 import datetime
 import hashlib
 import json
@@ -186,6 +187,9 @@ class Bucket:
         return Bucket.__adjust_dict(
             config,
             {
+                "publicAccessPrevention": lambda x: (
+                    "publicAccessPrevention", x.lower()
+                ),
                 "uniformBucketLevelAccess": lambda x: (
                     "uniformBucketLevelAccess",
                     Bucket.__postprocess_rest_ubla(x),
@@ -236,7 +240,16 @@ class Bucket:
         copy["kind"] = "storage#bucketAccessControl"
         copy["bucket"] = bucket_name
         copy["id"] = bucket_name + "/" + copy["entity"]
-        copy["etag"] = hashlib.md5(copy["id"] + "#" + copy["role"])
+        copy["etag"] = hashlib.md5((copy["id"] + "#" + copy["role"]).encode("utf-8"))
+        return copy
+
+    @classmethod
+    def __postprocess_rest_default_object_acl(cls, bucket_name, acl):
+        copy = acl.copy()
+        copy["kind"] = "storage#objectAccessControl"
+        copy["bucket"] = bucket_name
+        copy["id"] = bucket_name + "/" + copy["entity"]
+        copy["etag"] = hashlib.md5((copy["id"] + "#" + copy["role"]).encode("utf-8"))
         return copy
 
     @classmethod
@@ -263,10 +276,19 @@ class Bucket:
                 ),
                 "acl": lambda x: (
                     "acl",
-                    [Bucket.__postprocess_rest_bucket_acl(bucket_name, b) for b in x],
+                    [Bucket.__postprocess_rest_bucket_acl(bucket_name, a) for a in x],
+                ),
+                "defaultObjectAcl": lambda x: (
+                    "defaultObjectAcl",
+                    [
+                        Bucket.__postprocess_rest_default_object_acl(bucket_name, a)
+                        for a in x
+                    ],
                 ),
             },
         )
+        data["kind"] = "storage#bucket"
+        data["etag"] = base64.b64encode(data["updated"].encode("utf-8"))
         # 0 is the default in the proto, and hidden json_format.*
         if "metageneration" not in data:
             data["metageneration"] = 0
@@ -277,13 +299,6 @@ class Bucket:
             for timestamp in Bucket.__GRPC_CONDITION_TIMESTAMPS:
                 if key.endswith("." + timestamp):
                     proxy[key] = proxy[key].removesuffix("T00:00:00Z")
-        proxy["kind"] = "storage#bucket"
-        if "acl" in data:
-            for entry in data["acl"]:
-                entry["kind"] = "storage#bucketAccessControl"
-        if "defaultObjectAcl" in data:
-            for entry in data["defaultObjectAcl"]:
-                entry["kind"] = "storage#objectAccessControl"
         proxy.update(rest_only)
         return proxy.data
 
@@ -321,13 +336,6 @@ class Bucket:
         )
         del metadata.default_object_acl[:]
         metadata.default_object_acl.extend(acls)
-
-    @classmethod
-    def __enrich_acl(cls, metadata):
-        for entry in metadata.acl:
-            entry.bucket = metadata.name
-        for entry in metadata.default_object_acl:
-            entry.bucket = metadata.name
 
     # === INITIALIZATION === #
 
@@ -376,7 +384,6 @@ class Bucket:
             cls.__insert_predefined_default_object_acl(
                 metadata, predefined_default_object_acl, context
             )
-        cls.__enrich_acl(metadata)
         metadata.iam_config.uniform_bucket_level_access.enabled = is_uniform
         metadata.bucket_id = metadata.name
         metadata.project = "project/" + utils.acl.PROJECT_NUMBER
