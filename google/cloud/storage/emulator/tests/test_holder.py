@@ -195,6 +195,14 @@ class TestHolder(unittest.TestCase):
             insert_object_spec=insert_object_spec, write_offset=0
         )
         upload = gcs.holder.DataHolder.init_resumable_grpc(request, bucket, "")
+        # Verify the annotations inserted by the emulator.
+        annotations = upload.metadata.metadata
+        self.assertGreaterEqual(
+            set(["x_emulator_upload", "x_emulator_crc32c", "x_emulator_md5"]),
+            set(annotations.keys()),
+        )
+        # Clear any annotations created by the emulator
+        upload.metadata.metadata.clear()
         self.assertEqual(
             upload.metadata, resources_pb2.Object(name="object", bucket="bucket")
         )
