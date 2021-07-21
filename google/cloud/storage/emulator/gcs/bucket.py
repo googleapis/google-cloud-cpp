@@ -47,13 +47,11 @@ class Bucket:
         "location_type",
         "iam_config",
     ]
-    rest_only_fields = []
 
-    def __init__(self, metadata, notifications, iam_policy, rest_only):
+    def __init__(self, metadata, notifications, iam_policy):
         self.metadata = metadata
         self.notifications = notifications
         self.iam_policy = iam_policy
-        self.rest_only = rest_only
 
     @classmethod
     def __validate_bucket_name(cls, bucket_name, context):
@@ -154,7 +152,7 @@ class Bucket:
 
     @classmethod
     def __preprocess_rest(cls, rest):
-        rest = Bucket.__adjust_dict(
+        return Bucket.__adjust_dict(
             rest,
             {
                 "iamConfiguration": lambda x: (
@@ -171,12 +169,6 @@ class Bucket:
                 ),
             },
         )
-        proxy = scalpl.Cut(rest)
-        rest_only = {}
-        for field in Bucket.rest_only_fields:
-            if field in proxy:
-                rest_only[field] = proxy.pop(field)
-        return proxy.data, rest_only
 
     @classmethod
     def __postprocess_rest_ubla(cls, ubla):
@@ -253,7 +245,7 @@ class Bucket:
         return copy
 
     @classmethod
-    def __postprocess_rest(cls, data, rest_only):
+    def __postprocess_rest(cls, data):
         bucket_name = data["name"]
         data = Bucket.__adjust_dict(
             data,
@@ -299,7 +291,6 @@ class Bucket:
             for timestamp in Bucket.__GRPC_CONDITION_TIMESTAMPS:
                 if key.endswith("." + timestamp):
                     proxy[key] = proxy[key].removesuffix("T00:00:00Z")
-        proxy.update(rest_only)
         return proxy.data
 
     @classmethod
@@ -340,13 +331,13 @@ class Bucket:
     # === INITIALIZATION === #
 
     @classmethod
-    def init(cls, request, context, rest_only=None):
+    def init(cls, request, context):
         time_created = datetime.datetime.now()
         metadata = None
         if context is not None:
             metadata = request.bucket
         else:
-            metadata, rest_only = cls.__preprocess_rest(json.loads(request.data))
+            metadata = cls.__preprocess_rest(json.loads(request.data))
             metadata = json_format.ParseDict(metadata, storage_pb2.Bucket())
         cls.__validate_bucket_name(metadata.name, context)
         default_projection = "noAcl"
@@ -394,10 +385,8 @@ class Bucket:
         metadata.owner.entity_id = hashlib.md5(
             metadata.owner.entity.encode("utf-8")
         ).hexdigest()
-        if rest_only is None:
-            rest_only = {}
         return (
-            cls(metadata, {}, cls.__init_iam_policy(metadata, context), rest_only),
+            cls(metadata, {}, cls.__init_iam_policy(metadata, context)),
             utils.common.extract_projection(request, default_projection, context),
         )
 
@@ -459,8 +448,7 @@ class Bucket:
         if context is not None:
             metadata = request.metadata
         else:
-            metadata, rest_only = self.__preprocess_rest(json.loads(request.data))
-            self.rest_only.update(rest_only)
+            metadata = self.__preprocess_rest(json.loads(request.data))
             metadata = json_format.ParseDict(metadata, storage_pb2.Bucket())
         self.__update_metadata(metadata, None)
         self.__insert_predefined_acl(
@@ -490,8 +478,7 @@ class Bucket:
                         else:
                             self.metadata.labels[key] = value
             data.pop("labels", None)
-            data, rest_only = self.__preprocess_rest(data)
-            self.rest_only.update(rest_only)
+            data = self.__preprocess_rest(data)
             metadata = json_format.ParseDict(data, storage_pb2.Bucket())
             paths = set()
             for key in utils.common.nested_key(data):
@@ -661,4 +648,4 @@ class Bucket:
 
     def rest(self):
         response = json_format.MessageToDict(self.metadata)
-        return Bucket.__postprocess_rest(response, self.rest_only)
+        return Bucket.__postprocess_rest(response)

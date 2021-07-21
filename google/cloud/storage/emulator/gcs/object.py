@@ -74,10 +74,6 @@ class Object:
         metadata.acl.extend(acls)
 
     @classmethod
-    def __preprocess_object_metadata(cls, metadata):
-        return utils.common.preprocess_object_metadata(metadata)
-
-    @classmethod
     def __postprocess_object_metadata(cls, metadata):
         """The protos for storage/v2 renamed some fields in ways that require some custom coding."""
         # For some fields the storage/v2 name just needs to change slightly.
@@ -180,7 +176,7 @@ class Object:
     @classmethod
     def init_dict(cls, request, metadata, media, bucket, is_destination):
         metadata = json_format.ParseDict(
-            cls.__preprocess_object_metadata(metadata), storage_pb2.Object()
+            utils.common.preprocess_object_metadata(metadata), storage_pb2.Object()
         )
         return cls.init(request, metadata, media, bucket, is_destination, None)
 
@@ -247,7 +243,7 @@ class Object:
                     metadata["md5Hash"] = md5Hash
                 if checksum.startswith("crc32c="):
                     crc32c_value = checksum[7:]
-                    metadata["crc32c"] = utils.common.rest_crc32c_to_proto(crc32c_value)
+                    metadata["crc32c"] = crc32c_value
         blob, _ = cls.init_dict(fake_request, metadata, media, bucket, False)
         return blob, fake_request
 
@@ -267,7 +263,7 @@ class Object:
             metadata = request.metadata
         else:
             data = json.loads(request.data)
-            metadata = json_format.ParseDict(Object.__preprocess_object_metadata(data), storage_pb2.Object())
+            metadata = json_format.ParseDict(utils.common.preprocess_object_metadata(data), storage_pb2.Object())
         self.__update_metadata(metadata, None)
         self.__insert_predefined_acl(
             metadata,
@@ -294,7 +290,7 @@ class Object:
                         else:
                             self.metadata.metadata[key] = value
             data.pop("metadata", None)
-            metadata = json_format.ParseDict(Object.__preprocess_object_metadata(data), storage_pb2.Object())
+            metadata = json_format.ParseDict(utils.common.preprocess_object_metadata(data), storage_pb2.Object())
             paths = set()
             for key in utils.common.nested_key(data):
                 key = utils.common.to_snake_case(key)

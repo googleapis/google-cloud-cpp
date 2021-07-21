@@ -155,7 +155,6 @@ class Database:
             include_trailing_delimiter,
         ) = self.__extract_list_object_request(request, context)
         items = []
-        rest_onlys = []
         prefixes = set()
         for obj in bucket.values():
             generation = obj.metadata.generation
@@ -176,8 +175,7 @@ class Database:
                 if delimiter_index < len(name) - 1 or not include_trailing_delimiter:
                     continue
             items.append(obj.metadata)
-            rest_onlys.append(obj.rest_only)
-        return items, list(prefixes), rest_onlys
+        return items, list(prefixes)
 
     def check_object_generation(
         self, request, bucket_name, object_name, is_source, context

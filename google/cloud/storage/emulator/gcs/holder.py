@@ -26,7 +26,6 @@ from google.protobuf import json_format
 
 
 class DataHolder(types.SimpleNamespace):
-    rest_only_fields = ["customTime"]
     __upload_id_generator = 0
 
     def __init__(self, **kwargs):
@@ -35,16 +34,8 @@ class DataHolder(types.SimpleNamespace):
     # === UPLOAD === #
 
     @classmethod
-    def __extract_rest_only(cls, data):
-        rest_only = {}
-        for field in DataHolder.rest_only_fields:
-            if field in data:
-                rest_only[field] = data.pop(field)
-        return rest_only
-
-    @classmethod
     def init_upload(
-        cls, request, metadata, bucket, location, upload_id, rest_only=None
+        cls, request, metadata, bucket, location, upload_id
     ):
         return cls(
             request=request,
@@ -54,8 +45,7 @@ class DataHolder(types.SimpleNamespace):
             upload_id=upload_id,
             media=b"",
             complete=False,
-            transfer=set(),
-            rest_only=rest_only,
+            transfer=set()
         )
 
     @classmethod
@@ -75,7 +65,6 @@ class DataHolder(types.SimpleNamespace):
     @classmethod
     def init_resumable_rest(cls, request, bucket):
         query_name = request.args.get("name", None)
-        rest_only = {}
         metadata = storage_pb2.Object()
         if len(request.data) > 0:
             data = json.loads(request.data)
@@ -90,7 +79,6 @@ class DataHolder(types.SimpleNamespace):
                     % (data_name, query_name),
                     context=None,
                 )
-            rest_only = cls.__extract_rest_only(data)
             metadata = json_format.ParseDict(
                 cls.__preprocess_rest_metadata(data), metadata
             )
@@ -127,7 +115,7 @@ class DataHolder(types.SimpleNamespace):
             args=request.args.to_dict(), headers=headers, data=b""
         )
         return cls.init_upload(
-            request, metadata, bucket, location, upload_id, rest_only
+            request, metadata, bucket, location, upload_id
         )
 
     @classmethod
