@@ -25,6 +25,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 // Cloud Bigtable doesn't accept more than this in a single request.
 auto constexpr kBigtableMutationLimit = 100000;
 // Maximum mutations that can be outstanding in the Cloud Bigtable front end.
+// NOTE: this is a system-wide limit, but it is only enforced per process.
 auto constexpr kBigtableOutstandingMutationLimit = 300000;
 // Let's make the default slightly smaller, so that overheads or
 // miscalculations don't tip us over.
@@ -40,6 +41,20 @@ MutationBatcher::Options::Options()
       max_batches(kDefaultMaxBatches),
       max_outstanding_size(kDefaultMaxOutstandingSize),
       max_outstanding_mutations(kBigtableOutstandingMutationLimit) {}
+
+MutationBatcher::Options& MutationBatcher::Options::SetMaxMutationsPerBatch(
+    size_t max_mutations_per_batch_arg) {
+  max_mutations_per_batch = std::min<std::size_t>(max_mutations_per_batch_arg,
+                                                  kBigtableMutationLimit);
+  return *this;
+}
+
+MutationBatcher::Options& MutationBatcher::Options::SetMaxOutstandingMutations(
+    size_t max_outstanding_mutations_arg) {
+  max_outstanding_mutations = std::min<std::size_t>(
+      max_outstanding_mutations_arg, kBigtableOutstandingMutationLimit);
+  return *this;
+}
 
 std::pair<future<void>, future<Status>> MutationBatcher::AsyncApply(
     CompletionQueue& cq, SingleRowMutation mut) {

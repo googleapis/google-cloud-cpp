@@ -254,11 +254,23 @@ TEST(OptionsTest, Trivial) {
                                      .SetMaxMutationsPerBatch(1)
                                      .SetMaxSizePerBatch(2)
                                      .SetMaxBatches(3)
-                                     .SetMaxOutstandingSize(4);
+                                     .SetMaxOutstandingSize(4)
+                                     .SetMaxOutstandingMutations(5);
   ASSERT_EQ(1, opt.max_mutations_per_batch);
   ASSERT_EQ(2, opt.max_size_per_batch);
   ASSERT_EQ(3, opt.max_batches);
   ASSERT_EQ(4, opt.max_outstanding_size);
+  ASSERT_EQ(5, opt.max_outstanding_mutations);
+}
+
+TEST(OptionsTest, StrictLimits) {
+  MutationBatcher::Options opt = MutationBatcher::Options()
+                                     .SetMaxMutationsPerBatch(200000)
+                                     .SetMaxOutstandingMutations(400000);
+  // See `kBigtableMutationLimit`
+  ASSERT_EQ(100000, opt.max_mutations_per_batch);
+  // See `kBigtableOutstandingMutationLimit`
+  ASSERT_EQ(300000, opt.max_outstanding_mutations);
 }
 
 TEST_F(MutationBatcherTest, TrivialTest) {
