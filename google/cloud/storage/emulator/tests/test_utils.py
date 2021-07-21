@@ -20,11 +20,9 @@ import os
 import unittest
 import urllib
 import gzip
-import socket
-import utils
 import json
 
-from google.storage.v2 import storage_pb2
+import utils
 
 from werkzeug.test import create_environ
 from werkzeug.wrappers import Request

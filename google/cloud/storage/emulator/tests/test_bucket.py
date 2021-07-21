@@ -21,7 +21,6 @@ import unittest
 import gcs
 import utils
 
-from google.storage.v2 import storage_pb2
 from google.protobuf import json_format
 
 
@@ -35,17 +34,7 @@ class TestBucket(unittest.TestCase):
             # Verify the remaining keys are a subset of the expected keys
             self.assertLessEqual(
                 set(entry.keys()),
-                set(
-                    [
-                        "id",
-                        "selfLink",
-                        "email",
-                        "entityId",
-                        "domain",
-                        "projectTeam",
-                        "etag",
-                    ]
-                ),
+                {"id", "selfLink", "email", "entityId", "domain", "projectTeam", "etag"},
             )
 
     def _validate_default_object_acl(self, acl, bucket_name):
@@ -57,17 +46,7 @@ class TestBucket(unittest.TestCase):
             # Verify the remaining keys are a subset of the expected keys
             self.assertLessEqual(
                 set(entry.keys()),
-                set(
-                    [
-                        "id",
-                        "selfLink",
-                        "email",
-                        "entityId",
-                        "domain",
-                        "projectTeam",
-                        "etag",
-                    ]
-                ),
+                {"id", "selfLink", "email", "entityId", "domain", "projectTeam", "etag"},
             )
 
     def test_init_rest(self):
@@ -128,7 +107,7 @@ class TestBucket(unittest.TestCase):
         metadata.pop("acl")
         acl = bucket_rest.pop("acl", None)
         self.assertLessEqual(
-            set(["allAuthenticatedUsers"]), set([e["entity"] for e in acl])
+            {"allAuthenticatedUsers"}, set([e["entity"] for e in acl])
         )
         self.assertIsNotNone(acl)
         self._validate_bucket_acl(acl, "test-bucket-name")
@@ -137,7 +116,7 @@ class TestBucket(unittest.TestCase):
         default_object_acl = bucket_rest.pop("defaultObjectAcl", None)
         self.assertIsNotNone(default_object_acl)
         self.assertLessEqual(
-            set(["allAuthenticatedUsers"]),
+            {"allAuthenticatedUsers"},
             set([e["entity"] for e in default_object_acl]),
         )
         self._validate_default_object_acl(default_object_acl, "test-bucket-name")

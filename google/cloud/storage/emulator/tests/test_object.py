@@ -117,18 +117,7 @@ class TestObject(unittest.TestCase):
             # Verify the remaining keys are a subset of the expected keys
             self.assertLessEqual(
                 set(entry.keys()),
-                set(
-                    [
-                        "id",
-                        "selfLink",
-                        "generation",
-                        "email",
-                        "entityId",
-                        "domain",
-                        "projectTeam",
-                        "etag",
-                    ]
-                ),
+                {"id", "selfLink", "generation", "email", "entityId", "domain", "projectTeam", "etag"},
             )
         # Some fields we only care that they exist.
         for key in self.__REST_FIELDS_KEY_ONLY:
@@ -262,18 +251,7 @@ class TestObject(unittest.TestCase):
             # Verify the remaining keys are a subset of the expected keys
             self.assertLessEqual(
                 set(entry.keys()),
-                set(
-                    [
-                        "id",
-                        "selfLink",
-                        "generation",
-                        "email",
-                        "entityId",
-                        "domain",
-                        "projectTeam",
-                        "etag",
-                    ]
-                ),
+                {"id", "selfLink", "generation", "email", "entityId", "domain", "projectTeam", "etag"},
             )
         # Some fields we only care that they exist.
         for key in self.__REST_FIELDS_KEY_ONLY:

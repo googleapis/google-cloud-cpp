@@ -204,7 +204,7 @@ class TestHolder(unittest.TestCase):
         # Verify the annotations inserted by the emulator.
         annotations = upload.metadata.metadata
         self.assertGreaterEqual(
-            set(["x_emulator_upload", "x_emulator_no_crc32c", "x_emulator_no_md5"]),
+            {"x_emulator_upload", "x_emulator_no_crc32c", "x_emulator_no_md5"},
             set(annotations.keys()),
         )
         # Clear any annotations created by the emulator
