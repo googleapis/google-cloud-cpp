@@ -41,7 +41,8 @@ class StorageStub {
 
   // TODO(#6982) - update the name of this stream
   using InsertStream = google::cloud::internal::StreamingWriteRpc<
-      google::storage::v2::WriteObjectRequest, google::storage::v2::WriteObjectResponse>;
+      google::storage::v2::WriteObjectRequest,
+      google::storage::v2::WriteObjectResponse>;
   virtual std::unique_ptr<InsertStream> InsertObjectMedia(
       std::unique_ptr<grpc::ClientContext> context) = 0;
 

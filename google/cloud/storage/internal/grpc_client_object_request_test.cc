@@ -225,9 +225,7 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestAllOptions) {
           encryption_key: "MDEyMzQ1Njc="
           encryption_key_sha256: "kkWSubED8U+DP6r7Z/SAaR8BmIqkV8AGF2n1jNRzEbw="
         }
-        common_request_params: {
-          user_project: "test-user-project"
-        }
+        common_request_params: { user_project: "test-user-project" }
         object_checksums: {
           # See top-of-file comments for details on the magic numbers
           crc32c: 0x22620404
@@ -278,7 +276,7 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestWithObjectMetadata) {
           }
         }
         # See top-of-file comments for details on the magic numbers
-        object_checksums: { crc32c : 0x22620404 }
+        object_checksums: { crc32c: 0x22620404 }
       )pb",
       &expected));
 
@@ -468,9 +466,7 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestAllFields) {
         if_generation_not_match: 2
         if_metageneration_match: 3
         if_metageneration_not_match: 4
-        common_request_params: {
-          user_project: "test-user-project"
-        }
+        common_request_params: { user_project: "test-user-project" }
         common_object_request_params: {
           encryption_algorithm: "AES256"
           # to get the key value use:

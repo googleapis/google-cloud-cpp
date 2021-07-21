@@ -167,8 +167,9 @@ TEST(GrpcResumableUploadSessionTest, SingleStreamForLargeChunks) {
               expected_write_offset += content_size;
               return true;
             });
-        EXPECT_CALL(*writer, Close)
-            .WillOnce([&] { return MockCloseSuccess(expected_write_offset); });
+        EXPECT_CALL(*writer, Close).WillOnce([&] {
+          return MockCloseSuccess(expected_write_offset);
+        });
 
         return std::unique_ptr<GrpcClient::InsertStream>(writer.release());
       });

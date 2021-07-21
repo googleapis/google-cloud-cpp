@@ -75,8 +75,7 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
       self.stream_ = nullptr;
       return metadata;
     }
-    HeadersMap operator()(
-        google::storage::v2::ReadObjectResponse response) {
+    HeadersMap operator()(google::storage::v2::ReadObjectResponse response) {
       // The google.storage.v1.Storage documentation says this field can be
       // empty.
       if (response.has_checksummed_data()) {

@@ -59,7 +59,8 @@ std::unique_ptr<StorageStub::ObjectMediaStream> MakeObjectMediaStream(
 std::unique_ptr<StorageStub::InsertStream> MakeInsertStream(
     std::unique_ptr<grpc::ClientContext>) {
   using ErrorStream = google::cloud::internal::StreamingWriteRpcError<
-      google::storage::v2::WriteObjectRequest, google::storage::v2::WriteObjectResponse>;
+      google::storage::v2::WriteObjectRequest,
+      google::storage::v2::WriteObjectResponse>;
   return absl::make_unique<ErrorStream>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
 }
