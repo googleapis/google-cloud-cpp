@@ -508,42 +508,6 @@ StatusOr<SignBlobResponse> GrpcClient::SignBlob(SignBlobRequest const&) {
   return Status(StatusCode::kUnimplemented, __func__);
 }
 
-google::storage::v1::Notification GrpcClient::ToProto(
-    NotificationMetadata const& notification) {
-  google::storage::v1::Notification result;
-  result.set_topic(notification.topic());
-  result.set_etag(notification.etag());
-  result.set_object_name_prefix(notification.object_name_prefix());
-  result.set_payload_format(notification.payload_format());
-  result.set_id(notification.id());
-
-  for (auto const& v : notification.event_types()) {
-    result.add_event_types(v);
-  }
-  for (auto const& kv : notification.custom_attributes()) {
-    (*result.mutable_custom_attributes())[kv.first] = kv.second;
-  }
-
-  return result;
-}
-
-NotificationMetadata GrpcClient::FromProto(
-    google::storage::v1::Notification notification) {
-  NotificationMetadata result{notification.id(), notification.etag()};
-  result.set_topic(notification.topic())
-      .set_object_name_prefix(notification.object_name_prefix())
-      .set_payload_format(notification.payload_format());
-
-  for (auto& v : *notification.mutable_event_types()) {
-    result.append_event_type(std::move(v));
-  }
-  for (auto& kv : *notification.mutable_custom_attributes()) {
-    result.upsert_custom_attributes(std::move(kv.first), std::move(kv.second));
-  }
-
-  return result;
-}
-
 StatusOr<ListNotificationsResponse> GrpcClient::ListNotifications(
     ListNotificationsRequest const&) {
   return Status(StatusCode::kUnimplemented, __func__);

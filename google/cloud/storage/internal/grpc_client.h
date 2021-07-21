@@ -167,10 +167,6 @@ class GrpcClient : public RawClient,
   StatusOr<HmacKeyMetadata> UpdateHmacKey(UpdateHmacKeyRequest const&) override;
   StatusOr<SignBlobResponse> SignBlob(SignBlobRequest const&) override;
 
-  static google::storage::v1::Notification ToProto(
-      NotificationMetadata const& notification);
-  static NotificationMetadata FromProto(
-      google::storage::v1::Notification notification);
   StatusOr<ListNotificationsResponse> ListNotifications(
       ListNotificationsRequest const&) override;
   StatusOr<NotificationMetadata> CreateNotification(
