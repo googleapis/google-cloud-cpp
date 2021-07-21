@@ -59,8 +59,8 @@ cc_library(
         "@com_google_absl//absl/algorithm:container",
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/time",
-        "@com_google_googleapis//google/storage/v1:storage_cc_grpc",
-        "@com_google_googleapis//google/storage/v1:storage_cc_proto",
+        "@com_google_googleapis//google/storage/v2:storage_cc_grpc",
+        "@com_google_googleapis//google/storage/v2:storage_cc_proto",
     ],
 )
 

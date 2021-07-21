@@ -18,7 +18,7 @@
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
-#include <google/storage/v1/storage.pb.h>
+#include <google/storage/v2/storage.pb.h>
 #include <functional>
 #include <string>
 

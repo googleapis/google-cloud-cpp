@@ -19,7 +19,7 @@
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
 #include "google/cloud/status_or.h"
-#include <google/storage/v1/storage.pb.h>
+#include <google/storage/v2/storage.pb.h>
 #include <grpcpp/grpcpp.h>
 
 namespace google {

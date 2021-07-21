@@ -19,7 +19,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
-#include <google/storage/v1/storage.pb.h>
+#include <google/storage/v2/storage.pb.h>
 #include <memory>
 #include <string>
 

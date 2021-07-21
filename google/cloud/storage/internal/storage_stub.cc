@@ -16,7 +16,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/getenv.h"
 #include "absl/memory/memory.h"
-#include <google/storage/v1/storage.grpc.pb.h>
+#include <google/storage/v2/storage.grpc.pb.h>
 
 namespace google {
 namespace cloud {

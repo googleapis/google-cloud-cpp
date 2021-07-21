@@ -24,7 +24,7 @@
 #include "absl/algorithm/container.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/str_split.h"
-#include <google/storage/v1/storage.grpc.pb.h>
+#include <google/storage/v2/storage.grpc.pb.h>
 #include <curl/curl.h>
 #include <vector>
 
