@@ -15,15 +15,14 @@
 
 """Tests for the Object class (see gcs/object.py)."""
 
+import base64
 import json
 import unittest
 
 import gcs
 import utils
 
-from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
-from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
-from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
+from google.storage.v2 import storage_pb2
 
 from werkzeug.test import create_environ
 from werkzeug.wrappers import Request
@@ -180,19 +179,26 @@ class TestHolder(unittest.TestCase):
         upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
 
     def test_init_resumable_grpc(self):
-        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
-        bucket, _ = gcs.bucket.Bucket.init(request, "")
-        bucket = bucket.metadata
-        insert_object_spec = storage_pb2.InsertObjectSpec(
-            resource={"name": "object", "bucket": "bucket"},
-            predefined_acl=CommonEnums.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE,
-            if_generation_not_match={"value": 1},
-            if_metageneration_match={"value": 2},
-            if_metageneration_not_match={"value": 3},
-            projection=CommonEnums.Projection.FULL,
+        bucket_metadata = json.dumps({"name": "bucket-test"})
+        environ = create_environ(
+            base_url="http://localhost:8080",
+            content_length=len(bucket_metadata),
+            data=bucket_metadata,
+            content_type="application/json",
+            method="POST",
         )
-        request = storage_pb2.InsertObjectRequest(
-            insert_object_spec=insert_object_spec, write_offset=0
+
+        bucket, _ = gcs.bucket.Bucket.init(Request(environ), None)
+        bucket = bucket.metadata
+        write_object_spec = storage_pb2.WriteObjectSpec(
+            resource={"name": "object", "bucket": "bucket"},
+            predefined_acl=storage_pb2.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE,
+            if_generation_not_match=1,
+            if_metageneration_match=2,
+            if_metageneration_not_match=3
+        )
+        request = storage_pb2.WriteObjectRequest(
+            write_object_spec=write_object_spec, write_offset=0
         )
         upload = gcs.holder.DataHolder.init_resumable_grpc(request, bucket, "")
         # Verify the annotations inserted by the emulator.
@@ -204,11 +210,11 @@ class TestHolder(unittest.TestCase):
         # Clear any annotations created by the emulator
         upload.metadata.metadata.clear()
         self.assertEqual(
-            upload.metadata, resources_pb2.Object(name="object", bucket="bucket")
+            upload.metadata, storage_pb2.Object(name="object", bucket="bucket")
         )
         predefined_acl = utils.acl.extract_predefined_acl(upload.request, False, "")
         self.assertEqual(
-            predefined_acl, CommonEnums.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE
+            predefined_acl, storage_pb2.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE
         )
         match, not_match = utils.generation.extract_precondition(
             upload.request, False, False, ""
@@ -221,11 +227,19 @@ class TestHolder(unittest.TestCase):
         self.assertEqual(match, 2)
         self.assertEqual(not_match, 3)
         projection = utils.common.extract_projection(upload.request, False, "")
-        self.assertEqual(projection, CommonEnums.Projection.FULL)
+        self.assertEqual(projection, "full")
 
     def test_init_resumable_rest(self):
-        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
-        bucket, _ = gcs.bucket.Bucket.init(request, "")
+        bucket_metadata = json.dumps({"name": "bucket-test"})
+        environ = create_environ(
+            base_url="http://localhost:8080",
+            content_length=len(bucket_metadata),
+            data=bucket_metadata,
+            content_type="application/json",
+            method="POST",
+        )
+
+        bucket, _ = gcs.bucket.Bucket.init(Request(environ), None)
         bucket = bucket.metadata
         data = json.dumps(
             {
@@ -244,8 +258,8 @@ class TestHolder(unittest.TestCase):
         )
         upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
         self.assertEqual(upload.metadata.name, "test-object-name")
-        self.assertEqual(upload.metadata.crc32c.value, 0)
-        self.assertEqual(upload.metadata.md5_hash, "1B2M2Y8AsgTpgAmY7PhCfg==")
+        self.assertEqual(upload.metadata.checksums.crc32c, 0)
+        self.assertEqual(base64.b64encode(upload.metadata.checksums.md5_hash).decode("utf-8"), "1B2M2Y8AsgTpgAmY7PhCfg==")
 
 
 if __name__ == "__main__":

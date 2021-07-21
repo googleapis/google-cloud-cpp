@@ -60,15 +60,8 @@ class DataHolder(types.SimpleNamespace):
 
     @classmethod
     def __preprocess_rest_metadata(cls, metadata):
-        return utils.common.rest_adjust(
-            metadata,
-            {
-                "crc32c": lambda x: (
-                    "crc32c",
-                    utils.common.rest_crc32c_to_proto(metadata["crc32c"]),
-                )
-            },
-        )
+        return utils.common.preprocess_object_metadata(metadata)
+
 
     @classmethod
     def __create_upload_id(cls, bucket_name, object_name):

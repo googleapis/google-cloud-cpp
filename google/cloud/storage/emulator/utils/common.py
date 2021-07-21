@@ -116,7 +116,7 @@ class FakeRequest(types.SimpleNamespace):
             args_field,
         ) in FakeRequest.protobuf_wrapper_to_json_args.items():
             if hasattr(request, proto_field) and request.HasField(proto_field):
-                self.args[args_field] = getattr(request, proto_field).value
+                self.args[args_field] = getattr(request, proto_field)
                 setattr(self, proto_field, getattr(request, proto_field))
         for (
             proto_field,
@@ -297,14 +297,12 @@ def extract_media(request):
 
 def extract_projection(request, default, context):
     if context is not None:
-        # TODO(#....) - it seems that in google.storage.v2 none of the requests have a projection field.
-        return request.projection if hasattr(request, "projection") and request.projection is not None else default
-    else:
-        projection_map = ["noAcl", "full"]
-        projection = request.args.get("projection")
-        return (
-            projection if projection in projection_map else default
-        )
+        # In the storage v2/ protos none of the requests have a "project",
+        # the response is always "full".
+        return "full"
+    projection_map = ["noAcl", "full"]
+    projection = request.args.get("projection")
+    return projection if projection in projection_map else default
 
 
 # === DATA === #
@@ -481,3 +479,34 @@ def rest_adjust(data, adjustments):
             if value is not None:
                 modified[k] = v
     return modified
+
+
+def preprocess_object_metadata(metadata):
+    """The protos for storage/v2 renamed some fields in ways that require some custom coding."""
+    # For some fields the storage/v2 name just needs to change slightly.
+    md = rest_adjust(
+        metadata,
+        {
+            "timeCreated": lambda x: ("createTime", x),
+            "updated": lambda x: ("updateTime", x),
+            "kmsKeyName": lambda x: ("kmsKey", x),
+            "retentionExpirationTime": lambda x: ("retentionExpireTime", x),
+            "timeDeleted": lambda x: ("deleteTime", x),
+            "timeStorageClassUpdated": lambda x: ("updateStorageClassTime", x),
+        },
+    )
+    checksums = {}
+    if "crc32c" in md:
+        checksums["crc32c"] = rest_crc32c_to_proto(md.pop("crc32c"))
+    if "md5Hash" in metadata:
+        checksums["md5Hash"] = md.pop("md5Hash")
+    if len(checksums) > 0:
+        md["checksums"] = checksums
+    # Finally the ACLs, if present, have fewer fields in gRPC
+    if "acl" in md:
+        for a in metadata["acl"]:
+            del a["kind"]
+            del a["bucket"]
+            del a["object"]
+            del a["generation"]
+    return md

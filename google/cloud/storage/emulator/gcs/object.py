@@ -75,35 +75,7 @@ class Object:
 
     @classmethod
     def __preprocess_object_metadata(cls, metadata):
-        """The protos for storage/v2 renamed some fields in ways that require some custom coding."""
-        # For some fields the storage/v2 name just needs to change slightly.
-        metadata = utils.common.rest_adjust(
-            metadata,
-            {
-                "timeCreated": lambda x: ("createTime", x),
-                "updated": lambda x: ("updateTime", x),
-                "kmsKeyName": lambda x: ("kmsKey", x),
-                "retentionExpirationTime": lambda x: ("retentionExpireTime", x),
-                "timeDeleted": lambda x: ("deleteTime", x),
-                "timeStorageClassUpdated": lambda x: ("updateStorageClassTime", x),
-            },
-        )
-        checksums = {}
-        if "crc32c" in metadata:
-            checksums["crc32c"] = metadata.pop("crc32c")
-        if "md5Hash" in metadata:
-            print("\nREST %s\n" % metadata.get("md5Hash"))
-            checksums["md5Hash"] = base64.b64decode(metadata.pop("md5Hash"))
-        if len(checksums) > 0:
-            metadata["checksums"] = checksums
-        # Finally the ACLs, if present, have fewer fields in gRPC
-        if "acl" in metadata:
-            for a in metadata["acl"]:
-                del a["kind"]
-                del a["bucket"]
-                del a["object"]
-                del a["generation"]
-        return metadata
+        return utils.common.preprocess_object_metadata(metadata)
 
     @classmethod
     def __postprocess_object_metadata(cls, metadata):
