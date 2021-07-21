@@ -259,19 +259,6 @@ TEST(GrpcClientToProto, Projection) {
             GrpcClient::ToProto(Projection::Full()));
 }
 
-TEST(GrpcClientToProto, PredefinedAclBucket) {
-  EXPECT_EQ(storage_proto::CommonEnums::BUCKET_ACL_AUTHENTICATED_READ,
-            GrpcClient::ToProtoBucket(PredefinedAcl::AuthenticatedRead()));
-  EXPECT_EQ(storage_proto::CommonEnums::BUCKET_ACL_PRIVATE,
-            GrpcClient::ToProtoBucket(PredefinedAcl::Private()));
-  EXPECT_EQ(storage_proto::CommonEnums::BUCKET_ACL_PROJECT_PRIVATE,
-            GrpcClient::ToProtoBucket(PredefinedAcl::ProjectPrivate()));
-  EXPECT_EQ(storage_proto::CommonEnums::BUCKET_ACL_PUBLIC_READ,
-            GrpcClient::ToProtoBucket(PredefinedAcl::PublicRead()));
-  EXPECT_EQ(storage_proto::CommonEnums::BUCKET_ACL_PUBLIC_READ_WRITE,
-            GrpcClient::ToProtoBucket(PredefinedAcl::PublicReadWrite()));
-}
-
 TEST(GrpcClientToProto, PredefinedAclObject) {
   EXPECT_EQ(storage_proto::CommonEnums::OBJECT_ACL_AUTHENTICATED_READ,
             GrpcClient::ToProtoObject(PredefinedAcl::AuthenticatedRead()));
@@ -288,25 +275,6 @@ TEST(GrpcClientToProto, PredefinedAclObject) {
       GrpcClient::ToProtoObject(PredefinedAcl::BucketOwnerFullControl()));
   EXPECT_EQ(google::storage::v1::CommonEnums::OBJECT_ACL_BUCKET_OWNER_READ,
             GrpcClient::ToProtoObject(PredefinedAcl::BucketOwnerRead()));
-}
-
-TEST(GrpcClientToProto, PredefinedDefaultObjectAcl) {
-  EXPECT_EQ(
-      storage_proto::CommonEnums::OBJECT_ACL_AUTHENTICATED_READ,
-      GrpcClient::ToProto(PredefinedDefaultObjectAcl::AuthenticatedRead()));
-
-  EXPECT_EQ(storage_proto::CommonEnums::OBJECT_ACL_BUCKET_OWNER_FULL_CONTROL,
-            GrpcClient::ToProto(
-                PredefinedDefaultObjectAcl::BucketOwnerFullControl()));
-
-  EXPECT_EQ(storage_proto::CommonEnums::OBJECT_ACL_PRIVATE,
-            GrpcClient::ToProto(PredefinedDefaultObjectAcl::Private()));
-
-  EXPECT_EQ(storage_proto::CommonEnums::OBJECT_ACL_PROJECT_PRIVATE,
-            GrpcClient::ToProto(PredefinedDefaultObjectAcl::ProjectPrivate()));
-
-  EXPECT_EQ(storage_proto::CommonEnums::OBJECT_ACL_PUBLIC_READ,
-            GrpcClient::ToProto(PredefinedDefaultObjectAcl::PublicRead()));
 }
 
 TEST(GrpcClientToProto, ObjectAccessControlSimple) {
@@ -366,70 +334,6 @@ TEST(GrpcClientToProto, ObjectAccessControlMinimalFields) {
                                                             &expected));
 
   EXPECT_THAT(actual, IsProtoEqual(expected));
-}
-
-TEST(GrpcClientToProto, NotificationMetadata) {
-  NotificationMetadata notification{"test-notification-id", "XYZ="};
-  notification.set_topic("test-topic")
-      .append_event_type("OBJECT_FINALIZE")
-      .append_event_type("OBJECT_METADATA_UPDATE")
-      .upsert_custom_attributes("test-ca-1", "value1")
-      .upsert_custom_attributes("test-ca-2", "value2")
-      .set_object_name_prefix("test-object-prefix-")
-      .set_payload_format("JSON_API_V1");
-  auto actual = GrpcClient::ToProto(notification);
-
-  google::storage::v1::Notification expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-     topic: "test-topic"
-     event_types: "OBJECT_FINALIZE"
-     event_types: "OBJECT_METADATA_UPDATE"
-     custom_attributes: { key: "test-ca-1" value: "value1" }
-     custom_attributes: { key: "test-ca-2" value: "value2" }
-     etag: "XYZ="
-     object_name_prefix: "test-object-prefix-"
-     payload_format: "JSON_API_V1"
-     id: "test-notification-id"
-     )""",
-                                                            &expected));
-
-  EXPECT_THAT(actual, IsProtoEqual(expected));
-}
-
-TEST(GrpcClientFromProto, NotificationMetadata) {
-  auto constexpr kText = R"pb(
-    topic: "test-topic"
-    event_types: "OBJECT_FINALIZE"
-    event_types: "OBJECT_METADATA_UPDATE"
-    custom_attributes: { key: "test-ca-1" value: "value1" }
-    custom_attributes: { key: "test-ca-2" value: "value2" }
-    etag: "XYZ="
-    object_name_prefix: "test-object-prefix-"
-    payload_format: "JSON_API_V1"
-    id: "test-notification-id"
-  )pb";
-  google::storage::v1::Notification start;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
-  auto const expected = NotificationMetadataParser::FromString(R"""({
-    "topic": "test-topic",
-    "event_types": [
-      "OBJECT_FINALIZE",
-      "OBJECT_METADATA_UPDATE"
-    ],
-    "custom_attributes": {
-      "test-ca-1": "value1",
-      "test-ca-2": "value2"
-    },
-    "etag": "XYZ=",
-    "object_name_prefix": "test-object-prefix-",
-    "payload_format": "JSON_API_V1",
-    "id": "test-notification-id"
-  })""")
-                            .value();
-  auto const middle = GrpcClient::FromProto(start);
-  EXPECT_EQ(middle, expected);
-  auto const end = GrpcClient::ToProto(middle);
-  EXPECT_THAT(end, IsProtoEqual(start));
 }
 
 }  // namespace

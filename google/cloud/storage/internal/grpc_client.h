@@ -180,8 +180,6 @@ class GrpcClient : public RawClient,
   StatusOr<EmptyResponse> DeleteNotification(
       DeleteNotificationRequest const&) override;
 
-  static BucketMetadata FromProto(google::storage::v1::Bucket bucket);
-
   static google::storage::v1::Object::CustomerEncryption ToProto(
       CustomerEncryption rhs);
   static CustomerEncryption FromProto(
@@ -194,123 +192,16 @@ class GrpcClient : public RawClient,
   static ObjectAccessControl FromProto(
       google::storage::v1::ObjectAccessControl acl);
 
-  static google::storage::v1::BucketAccessControl ToProto(
-      BucketAccessControl const& acl);
-  static BucketAccessControl FromProto(
-      google::storage::v1::BucketAccessControl acl);
-
-  static google::storage::v1::Bucket::Billing ToProto(BucketBilling const&);
-  static BucketBilling FromProto(google::storage::v1::Bucket::Billing const&);
-
-  static google::storage::v1::Bucket::Cors ToProto(CorsEntry const&);
-  static CorsEntry FromProto(google::storage::v1::Bucket::Cors const&);
-
-  static google::storage::v1::Bucket::Encryption ToProto(
-      BucketEncryption const&);
-  static BucketEncryption FromProto(
-      google::storage::v1::Bucket::Encryption const&);
-
-  static google::storage::v1::Bucket::IamConfiguration ToProto(
-      BucketIamConfiguration const&);
-  static BucketIamConfiguration FromProto(
-      google::storage::v1::Bucket::IamConfiguration const&);
-
-  static google::storage::v1::Bucket::Logging ToProto(BucketLogging const&);
-  static BucketLogging FromProto(google::storage::v1::Bucket::Logging const&);
-
-  static google::storage::v1::Bucket::RetentionPolicy ToProto(
-      BucketRetentionPolicy const&);
-  static BucketRetentionPolicy FromProto(
-      google::storage::v1::Bucket::RetentionPolicy const&);
-
-  static google::storage::v1::Bucket::Versioning ToProto(
-      BucketVersioning const&);
-  static BucketVersioning FromProto(
-      google::storage::v1::Bucket::Versioning const&);
-
-  static google::storage::v1::Bucket::Website ToProto(BucketWebsite);
-  static BucketWebsite FromProto(google::storage::v1::Bucket::Website);
-
-  static google::storage::v1::Bucket::Lifecycle::Rule::Action ToProto(
-      LifecycleRuleAction);
-  static LifecycleRuleAction FromProto(
-      google::storage::v1::Bucket::Lifecycle::Rule::Action);
-  static google::storage::v1::Bucket::Lifecycle::Rule::Condition ToProto(
-      LifecycleRuleCondition);
-  static LifecycleRuleCondition FromProto(
-      google::storage::v1::Bucket::Lifecycle::Rule::Condition);
-  static google::storage::v1::Bucket::Lifecycle::Rule ToProto(LifecycleRule);
-  static LifecycleRule FromProto(google::storage::v1::Bucket::Lifecycle::Rule);
-  static google::storage::v1::Bucket::Lifecycle ToProto(BucketLifecycle);
-  static BucketLifecycle FromProto(google::storage::v1::Bucket::Lifecycle);
-
   static google::storage::v1::Owner ToProto(Owner);
   static Owner FromProto(google::storage::v1::Owner);
 
-  static NativeIamPolicy FromProto(google::iam::v1::Policy rhs);
-
   static google::storage::v1::CommonEnums::Projection ToProto(
       Projection const& p);
-  static google::storage::v1::CommonEnums::PredefinedBucketAcl ToProtoBucket(
-      PredefinedAcl const& acl);
   static google::storage::v1::CommonEnums::PredefinedObjectAcl ToProtoObject(
       PredefinedAcl const& acl);
-  static google::storage::v1::CommonEnums::PredefinedObjectAcl ToProto(
-      PredefinedDefaultObjectAcl const& acl);
-  static google::storage::v1::Bucket ToProto(BucketMetadata const& metadata);
-  static google::storage::v1::InsertBucketRequest ToProto(
-      CreateBucketRequest const& request);
-  static google::storage::v1::ListBucketsRequest ToProto(
-      ListBucketsRequest const& request);
-  static google::storage::v1::GetBucketRequest ToProto(
-      GetBucketMetadataRequest const& request);
-  static google::storage::v1::UpdateBucketRequest ToProto(
-      UpdateBucketRequest const& request);
-  static google::storage::v1::DeleteBucketRequest ToProto(
-      DeleteBucketRequest const& request);
-
-  static google::storage::v1::GetIamPolicyRequest ToProto(
-      GetBucketIamPolicyRequest const& request);
-  static google::storage::v1::SetIamPolicyRequest ToProto(
-      SetNativeBucketIamPolicyRequest const& request);
-  static google::storage::v1::TestIamPermissionsRequest ToProto(
-      TestBucketIamPermissionsRequest const& request);
-
-  static google::storage::v1::InsertBucketAccessControlRequest ToProto(
-      CreateBucketAclRequest const& request);
-  static google::storage::v1::ListBucketAccessControlsRequest ToProto(
-      ListBucketAclRequest const& request);
-  static google::storage::v1::GetBucketAccessControlRequest ToProto(
-      GetBucketAclRequest const& request);
-  static google::storage::v1::UpdateBucketAccessControlRequest ToProto(
-      UpdateBucketAclRequest const& request);
-  static google::storage::v1::DeleteBucketAccessControlRequest ToProto(
-      DeleteBucketAclRequest const& request);
-
-  static google::storage::v1::InsertDefaultObjectAccessControlRequest ToProto(
-      CreateDefaultObjectAclRequest const& request);
-  static google::storage::v1::ListDefaultObjectAccessControlsRequest ToProto(
-      ListDefaultObjectAclRequest const& request);
-  static google::storage::v1::GetDefaultObjectAccessControlRequest ToProto(
-      GetDefaultObjectAclRequest const& request);
-  static google::storage::v1::UpdateDefaultObjectAccessControlRequest ToProto(
-      UpdateDefaultObjectAclRequest const& request);
-  static google::storage::v1::DeleteDefaultObjectAccessControlRequest ToProto(
-      DeleteDefaultObjectAclRequest const& request);
-
-  static google::storage::v1::InsertNotificationRequest ToProto(
-      CreateNotificationRequest const& request);
-  static google::storage::v1::ListNotificationsRequest ToProto(
-      ListNotificationsRequest const& request);
-  static google::storage::v1::GetNotificationRequest ToProto(
-      GetNotificationRequest const& request);
-  static google::storage::v1::DeleteNotificationRequest ToProto(
-      DeleteNotificationRequest const& request);
 
   static StatusOr<google::storage::v1::InsertObjectRequest> ToProto(
       InsertObjectMediaRequest const& request);
-  static google::storage::v1::DeleteObjectRequest ToProto(
-      DeleteObjectRequest const& request);
   static google::storage::v1::StartResumableWriteRequest ToProto(
       ResumableUploadRequest const& request);
   static google::storage::v1::QueryWriteStatusRequest ToProto(

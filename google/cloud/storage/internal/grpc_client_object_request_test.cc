@@ -306,48 +306,6 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestWithObjectMetadata) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientObjectRequest, DeleteObjectRequestSimple) {
-  storage_proto::DeleteObjectRequest expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-    bucket: "test-bucket-name"
-    object: "test-object-name"
-)""",
-                                                            &expected));
-
-  DeleteObjectRequest request("test-bucket-name", "test-object-name");
-
-  auto actual = GrpcClient::ToProto(request);
-  EXPECT_THAT(actual, IsProtoEqual(expected));
-}
-
-TEST(GrpcClientObjectRequest, DeleteObjectRequestAllFields) {
-  storage_proto::DeleteObjectRequest expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-    bucket: "test-bucket-name"
-    object: "test-object-name"
-    generation: 1234
-    if_generation_match: { value: 2345 }
-    if_generation_not_match: { value: 3456 }
-    if_metageneration_match: { value: 42 }
-    if_metageneration_not_match: { value: 7 }
-    common_request_params: {
-      quota_user: "test-quota-user"
-      user_project: "test-user-project"
-    }
-)""",
-                                                            &expected));
-
-  DeleteObjectRequest request("test-bucket-name", "test-object-name");
-  request.set_multiple_options(
-      Generation(1234), IfGenerationMatch(2345), IfGenerationNotMatch(3456),
-      IfMetagenerationMatch(42), IfMetagenerationNotMatch(7),
-      UserProject("test-user-project"), QuotaUser("test-quota-user"),
-      UserIp("test-user-ip"));
-
-  auto actual = GrpcClient::ToProto(request);
-  EXPECT_THAT(actual, IsProtoEqual(expected));
-}
-
 TEST(GrpcClientObjectRequest, ResumableUploadRequestSimple) {
   google::storage::v1::StartResumableWriteRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
