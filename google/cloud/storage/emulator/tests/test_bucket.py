@@ -34,7 +34,15 @@ class TestBucket(unittest.TestCase):
             # Verify the remaining keys are a subset of the expected keys
             self.assertLessEqual(
                 set(entry.keys()),
-                {"id", "selfLink", "email", "entityId", "domain", "projectTeam", "etag"},
+                {
+                    "id",
+                    "selfLink",
+                    "email",
+                    "entityId",
+                    "domain",
+                    "projectTeam",
+                    "etag",
+                },
             )
 
     def _validate_default_object_acl(self, acl, bucket_name):
@@ -46,7 +54,15 @@ class TestBucket(unittest.TestCase):
             # Verify the remaining keys are a subset of the expected keys
             self.assertLessEqual(
                 set(entry.keys()),
-                {"id", "selfLink", "email", "entityId", "domain", "projectTeam", "etag"},
+                {
+                    "id",
+                    "selfLink",
+                    "email",
+                    "entityId",
+                    "domain",
+                    "projectTeam",
+                    "etag",
+                },
             )
 
     def test_init_rest(self):
@@ -106,9 +122,7 @@ class TestBucket(unittest.TestCase):
         # Verify the BucketAccessControl entries have the desired fields
         metadata.pop("acl")
         acl = bucket_rest.pop("acl", None)
-        self.assertLessEqual(
-            {"allAuthenticatedUsers"}, set([e["entity"] for e in acl])
-        )
+        self.assertLessEqual({"allAuthenticatedUsers"}, set([e["entity"] for e in acl]))
         self.assertIsNotNone(acl)
         self._validate_bucket_acl(acl, "test-bucket-name")
         # Verify the BucketAccessControl entries have the desired fields
@@ -116,8 +130,7 @@ class TestBucket(unittest.TestCase):
         default_object_acl = bucket_rest.pop("defaultObjectAcl", None)
         self.assertIsNotNone(default_object_acl)
         self.assertLessEqual(
-            {"allAuthenticatedUsers"},
-            set([e["entity"] for e in default_object_acl]),
+            {"allAuthenticatedUsers"}, set([e["entity"] for e in default_object_acl])
         )
         self._validate_default_object_acl(default_object_acl, "test-bucket-name")
         # Some fields are inserted by `Bucket.init()`, we want to verify they
@@ -303,16 +316,12 @@ class TestBucket(unittest.TestCase):
         }
         request = utils.common.FakeRequest(args={}, data=json.dumps(metadata))
         bucket, _ = gcs.bucket.Bucket.init(request, None)
-        
+
         for topic in ["test-topic-1", "test-topic-2"]:
             request = utils.common.FakeRequest(
                 args={},
-                data=json.dumps(
-                    {
-                        "topic": topic,
-                        "payload_format": "JSON_API_V1"
-                    }
-                ))
+                data=json.dumps({"topic": topic, "payload_format": "JSON_API_V1"}),
+            )
             notification = bucket.insert_notification(request, None)
             self.assertEqual(notification["topic"], topic)
 

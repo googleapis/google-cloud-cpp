@@ -86,8 +86,8 @@ class Bucket:
     @classmethod
     def __preprocess_rest_pap(cls, pap):
         pap = pap.upper()
-        if pap == 'UNSPECIFIED':
-            return 'PUBLIC_ACCESS_PREVENTION_UNSPECIFIED'
+        if pap == "UNSPECIFIED":
+            return "PUBLIC_ACCESS_PREVENTION_UNSPECIFIED"
         return pap
 
     @classmethod
@@ -100,7 +100,8 @@ class Bucket:
                     Bucket.__preprocess_rest_ubla(x),
                 ),
                 "publicAccessPrevention": lambda x: (
-                    "publicAccessPrevention", Bucket.__preprocess_rest_pap(x)
+                    "publicAccessPrevention",
+                    Bucket.__preprocess_rest_pap(x),
                 ),
             },
         )
@@ -183,8 +184,8 @@ class Bucket:
     @classmethod
     def __postprocess_rest_pap(cls, pap):
         pap = pap.lower()
-        if pap == 'public_access_prevention_unspecified':
-            return 'unspecified'
+        if pap == "public_access_prevention_unspecified":
+            return "unspecified"
         return pap
 
     @classmethod
@@ -193,10 +194,13 @@ class Bucket:
             config,
             {
                 "publicAccessPrevention": lambda x: (
-                    "publicAccessPrevention", Bucket.__postprocess_rest_pap(x)),
+                    "publicAccessPrevention",
+                    Bucket.__postprocess_rest_pap(x),
+                ),
                 "uniformBucketLevelAccess": lambda x: (
                     "uniformBucketLevelAccess",
-                    Bucket.__postprocess_rest_ubla(x)),
+                    Bucket.__postprocess_rest_ubla(x),
+                ),
             },
         )
 
@@ -243,7 +247,9 @@ class Bucket:
         copy["kind"] = "storage#bucketAccessControl"
         copy["bucket"] = bucket_name
         copy["id"] = bucket_name + "/" + copy["entity"]
-        copy["etag"] = hashlib.md5((copy["id"] + "#" + copy["role"]).encode("utf-8")).hexdigest()
+        copy["etag"] = hashlib.md5(
+            (copy["id"] + "#" + copy["role"]).encode("utf-8")
+        ).hexdigest()
         return copy
 
     @classmethod
@@ -252,7 +258,9 @@ class Bucket:
         copy["kind"] = "storage#objectAccessControl"
         copy["bucket"] = bucket_name
         copy["id"] = bucket_name + "/" + copy["entity"]
-        copy["etag"] = hashlib.md5((copy["id"] + "#" + copy["role"]).encode("utf-8")).hexdigest()
+        copy["etag"] = hashlib.md5(
+            (copy["id"] + "#" + copy["role"]).encode("utf-8")
+        ).hexdigest()
         return copy
 
     @classmethod
@@ -641,7 +649,7 @@ class Bucket:
         notification = {
             "kind": "storage#notification",
             "id": "notification-%d" % random.getrandbits(16),
-            "payload_format": "JSON_API_V1"
+            "payload_format": "JSON_API_V1",
         }
         data = json.loads(request.data)
         for required_key in {"topic", "payload_format"}:
@@ -649,7 +657,9 @@ class Bucket:
             if value is not None:
                 notification[required_key] = value
             else:
-                utils.error.invalid("Missing field in notification %s" % required_key, context)
+                utils.error.invalid(
+                    "Missing field in notification %s" % required_key, context
+                )
         for key in {"event_types", "custom_attributes", "object_name_prefix"}:
             value = data.pop(key, None)
             if value is not None:
