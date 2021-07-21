@@ -59,8 +59,11 @@ class MockGrpcClient : public GrpcClient {
               (QueryResumableUploadRequest const&), (override));
 };
 
-StatusOr<google::storage::v2::WriteObjectResponse> MockCloseSuccess() {
-  return google::storage::v2::WriteObjectResponse{};
+StatusOr<google::storage::v2::WriteObjectResponse> MockCloseSuccess(
+    std::uint64_t committed_size) {
+  google::storage::v2::WriteObjectResponse response;
+  response.set_committed_size(committed_size);
+  return response;
 }
 
 StatusOr<google::storage::v2::WriteObjectResponse> MockCloseError(Status s) {
@@ -97,7 +100,7 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
               EXPECT_FALSE(options.is_last_message());
               return true;
             });
-        EXPECT_CALL(*writer, Close()).WillOnce(Return(MockCloseSuccess()));
+        EXPECT_CALL(*writer, Close()).WillOnce(Return(MockCloseSuccess(size)));
         return std::unique_ptr<GrpcClient::InsertStream>(writer.release());
       })
       .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
@@ -114,7 +117,8 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
               EXPECT_TRUE(options.is_last_message());
               return true;
             });
-        EXPECT_CALL(*writer, Close()).WillOnce(Return(MockCloseSuccess()));
+        EXPECT_CALL(*writer, Close())
+            .WillOnce(Return(MockCloseSuccess(2 * size)));
         return std::unique_ptr<GrpcClient::InsertStream>(writer.release());
       });
 
@@ -163,7 +167,8 @@ TEST(GrpcResumableUploadSessionTest, SingleStreamForLargeChunks) {
               expected_write_offset += content_size;
               return true;
             });
-        EXPECT_CALL(*writer, Close).WillOnce(Return(MockCloseSuccess()));
+        EXPECT_CALL(*writer, Close)
+            .WillOnce([&] { return MockCloseSuccess(expected_write_offset); });
 
         return std::unique_ptr<GrpcClient::InsertStream>(writer.release());
       });
@@ -218,7 +223,7 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
               EXPECT_FALSE(r.finish_write());
               return true;
             });
-        EXPECT_CALL(*writer, Close).WillOnce(Return(MockCloseSuccess()));
+        EXPECT_CALL(*writer, Close).WillOnce(Return(MockCloseSuccess(size)));
         return std::unique_ptr<GrpcClient::InsertStream>(writer.release());
       });
 
@@ -288,7 +293,7 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
               EXPECT_TRUE(r.finish_write());
               return true;
             });
-        EXPECT_CALL(*writer, Close).WillOnce(Return(MockCloseSuccess()));
+        EXPECT_CALL(*writer, Close).WillOnce(Return(MockCloseSuccess(size)));
 
         return std::unique_ptr<GrpcClient::InsertStream>(writer.release());
       });

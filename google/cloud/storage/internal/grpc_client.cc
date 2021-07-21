@@ -180,16 +180,19 @@ StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
   auto status = stub_->QueryWriteStatus(context, ToProto(request));
   if (!status) return std::move(status).status();
 
+  ResumableUploadResponse response;
+  response.upload_state = ResumableUploadResponse::kInProgress;
+  // TODO(#6982) / TODO(#6880) - cleanup the committed_byte vs. size thing
+  if (status->has_committed_size() && status->committed_size()) {
+    response.last_committed_byte =
+        static_cast<std::uint64_t>(status->committed_size());
+  } else {
+    response.last_committed_byte = 0;
+  }
   if (status->has_resource()) {
-    ResumableUploadResponse response;
     response.payload = FromProto(status->resource());
     response.upload_state = ResumableUploadResponse::kDone;
-    return response;
   }
-  ResumableUploadResponse response;
-  response.last_committed_byte =
-      static_cast<std::uint64_t>(status->committed_size());
-  response.upload_state = ResumableUploadResponse::kInProgress;
   return response;
 }
 
@@ -904,10 +907,12 @@ ResumableUploadResponse GrpcClient::FromProto(
     google::storage::v2::WriteObjectResponse const& p) {
   ResumableUploadResponse response;
   response.upload_state = ResumableUploadResponse::kInProgress;
-  if (p.has_committed_size()) {
+  if (p.has_committed_size() && p.committed_size() > 0) {
     // TODO(#6982) / TODO(#6880) - cleanup the committed_byte vs. size thing
     response.last_committed_byte =
-        static_cast<std::uint64_t>(p.committed_size());
+        static_cast<std::uint64_t>(p.committed_size()) - 1;
+  } else {
+    response.last_committed_byte = 0;
   }
   if (p.has_resource()) {
     response.payload = FromProto(p.resource());
