@@ -84,6 +84,13 @@ class Bucket:
         return Bucket.__adjust_dict(ubla, {"lockedTime": lambda x: ("lockTime", x)})
 
     @classmethod
+    def __preprocess_rest_pap(cls, pap):
+        pap = pap.upper()
+        if pap == 'UNSPECIFIED':
+            return 'PUBLIC_ACCESS_PREVENTION_UNSPECIFIED'
+        return pap
+
+    @classmethod
     def __preprocess_rest_iam_configuration(cls, config):
         config = Bucket.__adjust_dict(
             config,
@@ -93,8 +100,7 @@ class Bucket:
                     Bucket.__preprocess_rest_ubla(x),
                 ),
                 "publicAccessPrevention": lambda x: (
-                    "publicAccessPrevention",
-                    x.upper(),
+                    "publicAccessPrevention", Bucket.__preprocess_rest_pap(x)
                 ),
             },
         )
@@ -175,18 +181,22 @@ class Bucket:
         return Bucket.__adjust_dict(ubla, {"lockTime": lambda x: ("lockedTime", x)})
 
     @classmethod
+    def __postprocess_rest_pap(cls, pap):
+        pap = pap.lower()
+        if pap == 'public_access_prevention_unspecified':
+            return 'unspecified'
+        return pap
+
+    @classmethod
     def __postprocess_rest_iam_configuration(cls, config):
         return Bucket.__adjust_dict(
             config,
             {
                 "publicAccessPrevention": lambda x: (
-                    "publicAccessPrevention",
-                    x.lower(),
-                ),
+                    "publicAccessPrevention", Bucket.__postprocess_rest_pap(x)),
                 "uniformBucketLevelAccess": lambda x: (
                     "uniformBucketLevelAccess",
-                    Bucket.__postprocess_rest_ubla(x),
-                ),
+                    Bucket.__postprocess_rest_ubla(x)),
             },
         )
 

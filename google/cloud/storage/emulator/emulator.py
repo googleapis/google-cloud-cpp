@@ -541,8 +541,8 @@ def objects_copy(src_bucket_name, src_object_name, dst_bucket_name, dst_object_n
     if flask.request.data:
         dst_object.patch(flask.request, None)
     dst_object.metadata.metageneration = 1
-    dst_object.metadata.updated.FromDatetime(
-        dst_object.metadata.time_created.ToDatetime()
+    dst_object.metadata.update_time.FromDatetime(
+        dst_object.metadata.create_time.ToDatetime()
     )
     return dst_object.rest_metadata()
 
@@ -599,8 +599,8 @@ def objects_rewrite(src_bucket_name, src_object_name, dst_bucket_name, dst_objec
         if flask.request.data:
             dst_object.patch(rewrite.request, None)
         dst_object.metadata.metageneration = 1
-        dst_object.metadata.updated.FromDatetime(
-            dst_object.metadata.time_created.ToDatetime()
+        dst_object.metadata.update_time.FromDatetime(
+            dst_object.metadata.create_time.ToDatetime()
         )
         resources = dst_object.rest_metadata()
         response["resource"] = resources
