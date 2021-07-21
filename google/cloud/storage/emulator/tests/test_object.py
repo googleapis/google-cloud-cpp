@@ -417,6 +417,122 @@ class TestObject(unittest.TestCase):
         response = blob.rest_media(get)
         self.assertEqual(response.get_data(as_text=True), media)
 
+    def test_rest_insert_no_md5_hash(self):
+        """Verify inserting an object with hash values and media works.
+
+        This is the most common way for objects to be created in the C++ client client tests.
+        """
+        media = "The quick brown fox jumps over the lazy dog"
+        metadata = {
+            "bucket": "bucket",
+            "name": "test-object-name",
+            "cacheControl": "no-cache",
+            "contentType": "text/plain",
+            "crc32c": "ImIEBA=="
+        }
+        boundary = "test_separator_deadbeef"
+        payload = (
+            ("--" + boundary + "\r\n").join(
+                [
+                    "",
+                    # object metadata "part"
+                    "\r\n".join(
+                        [
+                            "Content-Type: application/json; charset=UTF-8",
+                            "",
+                            json.dumps(metadata),
+                            "",
+                        ]
+                    ),
+                    # object media "part"
+                    "\r\n".join(
+                        [
+                            "Content-Type: text/plain",
+                            "Content-Length: %d" % len(media),
+                            "",
+                            media,
+                            "",
+                        ]
+                    ),
+                ]
+            )
+            + "--"
+            + boundary
+            + "--\r\n"
+        )
+        request = utils.common.FakeRequest(
+            args={},
+            headers={"content-type": "multipart/related; boundary=" + boundary},
+            data=payload.encode("UTF-8"),
+            environ={},
+        )
+        blob, _ = gcs.object.Object.init_multipart(request, self.bucket.metadata)
+        self.assertEqual(blob.media, media.encode("utf-8"))
+        self.assertEqual(blob.metadata.bucket, "bucket")
+        self.assertEqual(blob.metadata.name, "test-object-name")
+
+        get = utils.common.FakeRequest(headers={})
+        response = blob.rest_media(get)
+        self.assertEqual(response.get_data(as_text=True), media)
+
+    def test_rest_insert_no_crc32c(self):
+        """Verify inserting an object with hash values and media works.
+
+        This is the most common way for objects to be created in the C++ client client tests.
+        """
+        media = "The quick brown fox jumps over the lazy dog"
+        metadata = {
+            "bucket": "bucket",
+            "name": "test-object-name",
+            "cacheControl": "no-cache",
+            "contentType": "text/plain",
+            "md5Hash": "nhB9nTcrtoJr2B01QqQZ1g==",
+        }
+        boundary = "test_separator_deadbeef"
+        payload = (
+            ("--" + boundary + "\r\n").join(
+                [
+                    "",
+                    # object metadata "part"
+                    "\r\n".join(
+                        [
+                            "Content-Type: application/json; charset=UTF-8",
+                            "",
+                            json.dumps(metadata),
+                            "",
+                        ]
+                    ),
+                    # object media "part"
+                    "\r\n".join(
+                        [
+                            "Content-Type: text/plain",
+                            "Content-Length: %d" % len(media),
+                            "",
+                            media,
+                            "",
+                        ]
+                    ),
+                ]
+            )
+            + "--"
+            + boundary
+            + "--\r\n"
+        )
+        request = utils.common.FakeRequest(
+            args={},
+            headers={"content-type": "multipart/related; boundary=" + boundary},
+            data=payload.encode("UTF-8"),
+            environ={},
+        )
+        blob, _ = gcs.object.Object.init_multipart(request, self.bucket.metadata)
+        self.assertEqual(blob.media, media.encode("utf-8"))
+        self.assertEqual(blob.metadata.bucket, "bucket")
+        self.assertEqual(blob.metadata.name, "test-object-name")
+
+        get = utils.common.FakeRequest(headers={})
+        response = blob.rest_media(get)
+        self.assertEqual(response.get_data(as_text=True), media)
+
 
 if __name__ == "__main__":
     unittest.main()

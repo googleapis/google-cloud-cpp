@@ -126,7 +126,8 @@ class Object:
         actual_crc32c = crc32c.crc32c(media)
         if metadata.HasField("checksums"):
             cs = metadata.checksums
-            if cs.md5_hash != '' and actual_md5Hash != cs.md5_hash:
+            if len(cs.md5_hash) != 0 and actual_md5Hash != cs.md5_hash:
+                print("EXPECTED %s\nRECEIVED %s\n" % (actual_md5Hash, cs.md5_hash))
                 utils.error.mismatch("md5Hash", cs.md5_hash, actual_md5Hash, context)
             if cs.HasField("crc32c") and actual_crc32c != cs.crc32c:
                 utils.error.mismatch("crc32c", cs.crc32c, actual_crc32c, context)
@@ -407,7 +408,7 @@ class Object:
                 "crc32c=%s"
                 % utils.common.rest_crc32c_from_proto(cs.crc32c)
             )
-        if cs.md5_hash != '':
+        if len(cs.md5_hash) != 0:
             hashes.append("md5=%s" % base64.b64encode(cs.md5_hash))
         return ",".join(hashes) if len(hashes) != 0 else None
 
