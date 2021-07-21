@@ -119,7 +119,7 @@ RUN curl -sSL https://github.com/google/protobuf/archive/v3.15.8.tar.gz | \
 
 WORKDIR /var/tmp/build/grpc
 RUN dnf makecache && dnf install -y c-ares-devel re2-devel
-RUN curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
+RUN curl -sSL https://github.com/grpc/grpc/archive/v1.39.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
