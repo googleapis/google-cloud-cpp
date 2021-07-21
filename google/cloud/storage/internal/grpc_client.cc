@@ -691,10 +691,12 @@ google::storage::v2::Object::CustomerEncryption GrpcClient::ToProto(
 ObjectMetadata GrpcClient::FromProto(google::storage::v2::Object object) {
   ObjectMetadata metadata;
   metadata.kind_ = "storage#object";
-  metadata.id_ = object.bucket() + "/" + object.name() + "#" +
-                 std::to_string(object.generation());
-  metadata.metageneration_ = object.metageneration();
+  metadata.bucket_ = std::move(*object.mutable_bucket());
   metadata.name_ = std::move(*object.mutable_name());
+  metadata.generation_ = object.generation();
+  metadata.id_ = metadata.bucket() + "/" + metadata.name() + "#" +
+                 std::to_string(metadata.generation());
+  metadata.metageneration_ = object.metageneration();
   if (object.has_owner()) {
     metadata.owner_ = FromProto(*object.mutable_owner());
   }
@@ -710,10 +712,10 @@ ObjectMetadata GrpcClient::FromProto(google::storage::v2::Object object) {
   std::vector<ObjectAccessControl> acl;
   acl.reserve(object.acl_size());
   for (auto& item : *object.mutable_acl()) {
-    acl.push_back(FromProto(std::move(item)));
+    acl.push_back(FromProto(std::move(item), metadata.bucket(), metadata.name(),
+                            metadata.generation()));
   }
   metadata.acl_ = std::move(acl);
-  metadata.bucket_ = std::move(*object.mutable_bucket());
   metadata.cache_control_ = std::move(*object.mutable_cache_control());
   metadata.component_count_ = object.component_count();
   metadata.content_disposition_ =
@@ -736,7 +738,6 @@ ObjectMetadata GrpcClient::FromProto(google::storage::v2::Object object) {
   if (object.has_event_based_hold()) {
     metadata.event_based_hold_ = object.event_based_hold();
   }
-  metadata.generation_ = object.generation();
   metadata.kms_key_name_ = std::move(*object.mutable_kms_key());
 
   for (auto const& kv : object.metadata()) {
@@ -784,13 +785,15 @@ google::storage::v2::ObjectAccessControl GrpcClient::ToProto(
 }
 
 ObjectAccessControl GrpcClient::FromProto(
-    google::storage::v2::ObjectAccessControl acl) {
+    google::storage::v2::ObjectAccessControl acl,
+    std::string const& bucket_name, std::string const& object_name,
+    std::uint64_t generation) {
   // TODO(#6982) - receive bucket, object, and generation as parameters
   ObjectAccessControl result;
   result.kind_ = "storage#objectAccessControl";
-  // result.bucket_ = std::move(*acl.mutable_bucket());
-  // result.object_ = std::move(*acl.mutable_object());
-  // result.generation_ = acl.generation();
+  result.bucket_ = bucket_name;
+  result.object_ = object_name;
+  result.generation_ = generation;
   result.domain_ = std::move(*acl.mutable_domain());
   result.email_ = std::move(*acl.mutable_email());
   result.entity_ = std::move(*acl.mutable_entity());

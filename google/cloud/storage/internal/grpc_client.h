@@ -188,7 +188,9 @@ class GrpcClient : public RawClient,
   static google::storage::v2::ObjectAccessControl ToProto(
       ObjectAccessControl const& acl);
   static ObjectAccessControl FromProto(
-      google::storage::v2::ObjectAccessControl acl);
+      google::storage::v2::ObjectAccessControl acl,
+      std::string const& bucket_name, std::string const& object_name,
+      std::uint64_t generation);
 
   static google::storage::v2::Owner ToProto(Owner);
   static Owner FromProto(google::storage::v2::Owner);

@@ -43,45 +43,42 @@ TEST(GrpcClientFromProto, ObjectSimple) {
     cache_control: "test-cache-control"
     content_language: "test-content-language"
     metageneration: 42
-    time_deleted: {
+    delete_time: {
       seconds: 1565194924
       nanos: 123456789
     }
     content_type: "test-content-type"
     size: 123456
-    time_created: {
+    create_time: {
       seconds: 1565194924
       nanos: 234567890
     }
-#       This magical value is from:
-#       (echo 'ibase=16'; echo  'ImIEBA==' | openssl base64 -d | xxd -p) | bc
-#       and 'ImIEBA==' is the CRC32C checksum for (see hash_validator_test.cc)
-#       'The quick brown fox jumps over the lazy dog'
-    crc32c: { value: 576848900 }
+    # These magic numbers can be obtained using `gsutil hash` and then
+    # transforming the output from base64 to binary using tools like xxd(1).
+    checksums {
+      crc32c: 576848900
+      md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
+    }
     component_count: 7
-#       See hash_validator_test.cc for this magic value.
-    md5_hash: "nhB9nTcrtoJr2B01QqQZ1g=="
-    etag: "test-etag"
-    updated: {
+    update_time: {
       seconds: 1565194924
       nanos: 345678901
     }
     storage_class: "test-storage-class"
-    kms_key_name: "test-kms-key-name"
-    time_storage_class_updated: {
+    kms_key: "test-kms-key-name"
+    update_storage_class_time: {
       seconds: 1565194924
       nanos: 456789012
     }
     temporary_hold: true
-    retention_expiration_time: {
+    retention_expire_time: {
       seconds: 1565194924
       nanos: 567890123
     }
     metadata: { key: "test-key-1" value: "test-value-1" }
     metadata: { key: "test-key-2" value: "test-value-2" }
-    event_based_hold: { value: true }
+    event_based_hold: true
     name: "test-object-name"
-    id: "test-object-id"
     bucket: "test-bucket"
     generation: 2345
     owner: {
@@ -101,8 +98,11 @@ TEST(GrpcClientFromProto, ObjectSimple) {
   //     hash_validator_test.cc
   auto expected = ObjectMetadataParser::FromString(R"""({
     "acl": [
-      {"role": "OWNER", "entity": "user:test-user@gmail.com",
-       "kind": "storage#objectAccessControl"}
+      {"bucket": "test-bucket",
+       "object": "test-object-name",
+       "generation": 2345,
+       "kind": "storage#objectAccessControl",
+       "role": "OWNER", "entity": "user:test-user@gmail.com"}
     ],
     "contentEncoding": "test-content-encoding",
     "contentDisposition": "test-content-disposition",
@@ -116,7 +116,6 @@ TEST(GrpcClientFromProto, ObjectSimple) {
     "crc32c": "ImIEBA==",
     "componentCount": 7,
     "md5Hash": "nhB9nTcrtoJr2B01QqQZ1g==",
-    "etag": "test-etag",
     "updated": "2019-08-07T16:22:04.345678901Z",
     "storageClass": "test-storage-class",
     "kmsKeyName": "test-kms-key-name",
@@ -129,7 +128,7 @@ TEST(GrpcClientFromProto, ObjectSimple) {
     },
     "eventBasedHold": true,
     "name": "test-object-name",
-    "id": "test-object-id",
+    "id": "test-bucket/test-object-name#2345",
     "kind": "storage#object",
     "bucket": "test-bucket",
     "generation": 2345,
@@ -212,11 +211,7 @@ TEST(GrpcClientFromProto, ObjectAccessControlSimple) {
   google::storage::v2::ObjectAccessControl input;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
      role: "test-role"
-     etag: "test-etag"
      id: "test-id"
-     bucket: "test-bucket"
-     object: "test-object"
-     generation: 42
      entity: "test-entity"
      entity_id: "test-entity-id"
      email: "test-email"
@@ -230,7 +225,6 @@ TEST(GrpcClientFromProto, ObjectAccessControlSimple) {
 
   auto const expected = ObjectAccessControlParser::FromString(R"""({
      "role": "test-role",
-     "etag": "test-etag",
      "id": "test-id",
      "kind": "storage#objectAccessControl",
      "bucket": "test-bucket",
@@ -247,7 +241,7 @@ TEST(GrpcClientFromProto, ObjectAccessControlSimple) {
   })""");
   ASSERT_STATUS_OK(expected);
 
-  auto actual = GrpcClient::FromProto(input);
+  auto actual = GrpcClient::FromProto(input, "test-bucket", "test-object", 42);
   EXPECT_EQ(*expected, actual);
 }
 
@@ -271,7 +265,6 @@ TEST(GrpcClientToProto, PredefinedAclObject) {
 TEST(GrpcClientToProto, ObjectAccessControlSimple) {
   auto acl = ObjectAccessControlParser::FromString(R"""({
      "role": "test-role",
-     "etag": "test-etag",
      "id": "test-id",
      "kind": "storage#objectAccessControl",
      "bucket": "test-bucket",
@@ -292,11 +285,7 @@ TEST(GrpcClientToProto, ObjectAccessControlSimple) {
   google::storage::v2::ObjectAccessControl expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
      role: "test-role"
-     etag: "test-etag"
      id: "test-id"
-     bucket: "test-bucket"
-     object: "test-object"
-     generation: 42
      entity: "test-entity"
      entity_id: "test-entity-id"
      email: "test-email"
