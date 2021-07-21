@@ -155,6 +155,7 @@ class MutationBatcher {
    */
   std::pair<future<void>, future<Status>> AsyncApply(CompletionQueue& cq,
                                                      SingleRowMutation mut);
+
   /**
    * Asynchronously wait until all submitted mutations complete.
    *
