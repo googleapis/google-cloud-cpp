@@ -294,6 +294,33 @@ class TestBucket(unittest.TestCase):
         with self.assertRaises(Exception):
             bucket.get_default_object_acl(entity, None)
 
+    def test_notification(self):
+        metadata = {
+            "name": "test-bucket-name",
+            "location": "us-central1",
+            "locationType": "REGIONAL",
+            "storageClass": "regional",
+        }
+        request = utils.common.FakeRequest(args={}, data=json.dumps(metadata))
+        bucket, _ = gcs.bucket.Bucket.init(request, None)
+        
+        for topic in ["test-topic-1", "test-topic-2"]:
+            request = utils.common.FakeRequest(
+                args={},
+                data=json.dumps(
+                    {
+                        "topic": topic,
+                        "payload_format": "JSON_API_V1"
+                    }
+                ))
+            notification = bucket.insert_notification(request, None)
+            self.assertEqual(notification["topic"], topic)
+
+            get = bucket.get_notification(notification["id"], None)
+            self.assertEqual(notification, get)
+
+            bucket.delete_notification(notification["id"], None)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -75,7 +75,7 @@ time {
   # A couple useful invocations:
   #  $ typos --write-changes  # writes spelling fixes back to disk
   #  $ typos --dump-config -  # dumps effective config to stdout
-  typos
+  typos --exclude 'google/cloud/storage/emulator/google/**'
 }
 
 printf "%-30s" "Running markdown generators:" >&2
@@ -153,7 +153,8 @@ time {
 #    https://pypi.org/project/black/
 printf "%-30s" "Running black:" >&2
 time {
-  git ls-files -z | grep -z '\.py$' | xargs -0 python3 -m black --quiet
+  git ls-files -z | grep -z -v 'google/cloud/storage/emulator/google' |
+    grep -z '\.py$' | xargs -0 python3 -m black --quiet
 }
 
 # Apply shfmt to format all shell scripts

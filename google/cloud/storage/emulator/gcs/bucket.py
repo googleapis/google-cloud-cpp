@@ -233,7 +233,7 @@ class Bucket:
         copy["kind"] = "storage#bucketAccessControl"
         copy["bucket"] = bucket_name
         copy["id"] = bucket_name + "/" + copy["entity"]
-        copy["etag"] = hashlib.md5((copy["id"] + "#" + copy["role"]).encode("utf-8"))
+        copy["etag"] = hashlib.md5((copy["id"] + "#" + copy["role"]).encode("utf-8")).hexdigest()
         return copy
 
     @classmethod
@@ -242,7 +242,7 @@ class Bucket:
         copy["kind"] = "storage#objectAccessControl"
         copy["bucket"] = bucket_name
         copy["id"] = bucket_name + "/" + copy["entity"]
-        copy["etag"] = hashlib.md5((copy["id"] + "#" + copy["role"]).encode("utf-8"))
+        copy["etag"] = hashlib.md5((copy["id"] + "#" + copy["role"]).encode("utf-8")).hexdigest()
         return copy
 
     @classmethod
@@ -281,7 +281,7 @@ class Bucket:
             },
         )
         data["kind"] = "storage#bucket"
-        data["etag"] = base64.b64encode(data["updated"].encode("utf-8"))
+        data["etag"] = base64.b64encode(data["updated"].encode("utf-8")).decode("utf-8")
         # 0 is the default in the proto, and hidden json_format.*
         if "metageneration" not in data:
             data["metageneration"] = 0
@@ -628,15 +628,23 @@ class Bucket:
     # === NOTIFICATIONS === #
 
     def insert_notification(self, request, context):
-        notification = None
-        if context is not None:
-            notification = request.notification
-        else:
-            notification = json_format.ParseDict(
-                json.loads(request.data), storage_pb2.Notification()
-            )
-        notification.id = "notification-%d" % random.getrandbits(16)
-        self.notifications[notification.id] = notification
+        notification = {
+            "kind": "storage#notification",
+            "id": "notification-%d" % random.getrandbits(16),
+            "payload_format": "JSON_API_V1"
+        }
+        data = json.loads(request.data)
+        for required_key in {"topic", "payload_format"}:
+            value = data.pop(required_key, None)
+            if value is not None:
+                notification[required_key] = value
+            else:
+                utils.error.invalid("Missing field in notification %s" % required_key, context)
+        for key in {"event_types", "custom_attributes", "object_name_prefix"}:
+            value = data.pop(key, None)
+            if value is not None:
+                notification[key] = value
+        self.notifications[notification["id"]] = notification
         return notification
 
     def get_notification(self, notification_id, context):
