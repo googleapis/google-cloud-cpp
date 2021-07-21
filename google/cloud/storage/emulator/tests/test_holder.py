@@ -195,7 +195,7 @@ class TestHolder(unittest.TestCase):
             predefined_acl=storage_pb2.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE,
             if_generation_not_match=1,
             if_metageneration_match=2,
-            if_metageneration_not_match=3
+            if_metageneration_not_match=3,
         )
         request = storage_pb2.WriteObjectRequest(
             write_object_spec=write_object_spec, write_offset=0
@@ -259,7 +259,10 @@ class TestHolder(unittest.TestCase):
         upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
         self.assertEqual(upload.metadata.name, "test-object-name")
         self.assertEqual(upload.metadata.checksums.crc32c, 0)
-        self.assertEqual(base64.b64encode(upload.metadata.checksums.md5_hash).decode("utf-8"), "1B2M2Y8AsgTpgAmY7PhCfg==")
+        self.assertEqual(
+            base64.b64encode(upload.metadata.checksums.md5_hash).decode("utf-8"),
+            "1B2M2Y8AsgTpgAmY7PhCfg==",
+        )
 
 
 if __name__ == "__main__":

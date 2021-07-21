@@ -34,9 +34,7 @@ class DataHolder(types.SimpleNamespace):
     # === UPLOAD === #
 
     @classmethod
-    def init_upload(
-        cls, request, metadata, bucket, location, upload_id
-    ):
+    def init_upload(cls, request, metadata, bucket, location, upload_id):
         return cls(
             request=request,
             metadata=metadata,
@@ -45,13 +43,12 @@ class DataHolder(types.SimpleNamespace):
             upload_id=upload_id,
             media=b"",
             complete=False,
-            transfer=set()
+            transfer=set(),
         )
 
     @classmethod
     def __preprocess_rest_metadata(cls, metadata):
         return utils.common.preprocess_object_metadata(metadata)
-
 
     @classmethod
     def __create_upload_id(cls, bucket_name, object_name):
@@ -114,9 +111,7 @@ class DataHolder(types.SimpleNamespace):
         request = utils.common.FakeRequest(
             args=request.args.to_dict(), headers=headers, data=b""
         )
-        return cls.init_upload(
-            request, metadata, bucket, location, upload_id
-        )
+        return cls.init_upload(request, metadata, bucket, location, upload_id)
 
     @classmethod
     def init_resumable_grpc(cls, request, bucket, context):

@@ -129,9 +129,7 @@ def create_object_acl_from_default_object_acl(
     acl = storage_pb2.ObjectAccessControl()
     acl.CopyFrom(default_object_acl)
     acl.id = hashlib.md5(
-        (object_name + str(generation) + acl.entity + acl.role).encode(
-            "utf-8"
-        )
+        (object_name + str(generation) + acl.entity + acl.role).encode("utf-8")
     ).hexdigest()
     return acl
 

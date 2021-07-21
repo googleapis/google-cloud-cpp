@@ -262,7 +262,9 @@ class Object:
             metadata = request.metadata
         else:
             data = json.loads(request.data)
-            metadata = json_format.ParseDict(utils.common.preprocess_object_metadata(data), storage_pb2.Object())
+            metadata = json_format.ParseDict(
+                utils.common.preprocess_object_metadata(data), storage_pb2.Object()
+            )
         self.__update_metadata(metadata, None)
         self.__insert_predefined_acl(
             metadata,
@@ -289,7 +291,9 @@ class Object:
                         else:
                             self.metadata.metadata[key] = value
             data.pop("metadata", None)
-            metadata = json_format.ParseDict(utils.common.preprocess_object_metadata(data), storage_pb2.Object())
+            metadata = json_format.ParseDict(
+                utils.common.preprocess_object_metadata(data), storage_pb2.Object()
+            )
             paths = set()
             for key in utils.common.nested_key(data):
                 key = utils.common.to_snake_case(key)
@@ -403,10 +407,7 @@ class Object:
         hashes = []
         cs = self.metadata.checksums
         if cs.HasField("crc32c"):
-            hashes.append(
-                "crc32c=%s"
-                % utils.common.rest_crc32c_from_proto(cs.crc32c)
-            )
+            hashes.append("crc32c=%s" % utils.common.rest_crc32c_from_proto(cs.crc32c))
         if len(cs.md5_hash) != 0:
             hashes.append("md5=%s" % base64.b64encode(cs.md5_hash).decode("utf-8"))
         return ",".join(hashes) if len(hashes) != 0 else None
