@@ -127,7 +127,6 @@ class Object:
         if metadata.HasField("checksums"):
             cs = metadata.checksums
             if len(cs.md5_hash) != 0 and actual_md5Hash != cs.md5_hash:
-                print("EXPECTED %s\nRECEIVED %s\n" % (actual_md5Hash, cs.md5_hash))
                 utils.error.mismatch("md5Hash", cs.md5_hash, actual_md5Hash, context)
             if cs.HasField("crc32c") and actual_crc32c != cs.crc32c:
                 utils.error.mismatch("crc32c", cs.crc32c, actual_crc32c, context)
@@ -409,7 +408,7 @@ class Object:
                 % utils.common.rest_crc32c_from_proto(cs.crc32c)
             )
         if len(cs.md5_hash) != 0:
-            hashes.append("md5=%s" % base64.b64encode(cs.md5_hash))
+            hashes.append("md5=%s" % base64.b64encode(cs.md5_hash).decode("utf-8"))
         return ",".join(hashes) if len(hashes) != 0 else None
 
     def rest_media(self, request):
@@ -491,13 +490,10 @@ class Object:
                         yield response_payload[r:chunk_end]
 
             elif instructions.endswith(u"/retry-1"):
-                print("## Return error for retry 1")
-                return flask.Response("Service Unavailable", status=503)
+                return flask.Response("Service Unavailable / retry-1", status=503)
             elif instructions.endswith(u"/retry-2"):
-                print("## Return error for retry 2")
-                return flask.Response("Service Unavailable", status=503)
+                return flask.Response("Service Unavailable / retry-2", status=503)
             else:
-                print("## Return success for %s" % instructions)
                 return flask.Response(response_payload, status=200, headers=headers)
         else:
 

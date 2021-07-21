@@ -416,6 +416,7 @@ class TestObject(unittest.TestCase):
         get = utils.common.FakeRequest(headers={})
         response = blob.rest_media(get)
         self.assertEqual(response.get_data(as_text=True), media)
+        self.assertEqual(response.headers.get("x-goog-hash"), "crc32c=ImIEBA==,md5=nhB9nTcrtoJr2B01QqQZ1g==")
 
     def test_rest_insert_no_md5_hash(self):
         """Verify inserting an object with hash values and media works.
@@ -474,6 +475,7 @@ class TestObject(unittest.TestCase):
         get = utils.common.FakeRequest(headers={})
         response = blob.rest_media(get)
         self.assertEqual(response.get_data(as_text=True), media)
+        self.assertEqual(response.headers.get("x-goog-hash"), "crc32c=ImIEBA==,md5=nhB9nTcrtoJr2B01QqQZ1g==")
 
     def test_rest_insert_no_crc32c(self):
         """Verify inserting an object with hash values and media works.
@@ -532,6 +534,7 @@ class TestObject(unittest.TestCase):
         get = utils.common.FakeRequest(headers={})
         response = blob.rest_media(get)
         self.assertEqual(response.get_data(as_text=True), media)
+        self.assertEqual(response.headers.get("x-goog-hash"), "crc32c=ImIEBA==,md5=nhB9nTcrtoJr2B01QqQZ1g==")
 
 
 if __name__ == "__main__":
