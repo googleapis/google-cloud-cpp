@@ -64,12 +64,12 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestSimple) {
   storage_proto::WriteObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
-        insert_object_spec: {
+        write_object_spec: {
           resource: { bucket: "test-bucket-name" name: "test-object-name" }
         }
         object_checksums: {
           # See top-of-file comments for details on the magic numbers
-          crc32c { value: 0x22620404 }
+          crc32c: 0x22620404
           # MD5 hashes are disabled by default
           # md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
         }
@@ -88,91 +88,95 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestHashOptions) {
   struct Test {
     std::function<void(InsertObjectMediaRequest&)> apply_options;
     std::string expected_checksums;
-  } cases[] = {
-      // These tests provide the "wrong" hashes. This is what would happen if
-      // one was (for example) reading a GCS file, obtained the expected hashes
-      // from GCS, and then uploaded to another GCS destination *but*
-      // the data was somehow corrupted locally (say a bad disk). In that case,
-      // we don't want to recompute the hashes in the upload.
+  } cases[] =
       {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
-            r.set_option(DisableCrc32cChecksum(true));
+          // These tests provide the "wrong" hashes. This is what would happen
+          // if
+          // one was (for example) reading a GCS file, obtained the expected
+          // hashes
+          // from GCS, and then uploaded to another GCS destination *but*
+          // the data was somehow corrupted locally (say a bad disk). In that
+          // case,
+          // we don't want to recompute the hashes in the upload.
+          {
+              [](InsertObjectMediaRequest& r) {
+                r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
+                r.set_option(DisableCrc32cChecksum(true));
+              },
+              R"pb(
+                md5_hash: "9e107d9d372bb6826bd81d3542a419d6")pb",
           },
-          R"pb(
-            md5_hash: "9e107d9d372bb6826bd81d3542a419d6")pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
-            r.set_option(DisableCrc32cChecksum(false));
+          {
+              [](InsertObjectMediaRequest& r) {
+                r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
+                r.set_option(DisableCrc32cChecksum(false));
+              },
+              R"pb(
+                md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
+                crc32c: 0x4ad67f80)pb",
           },
-          R"pb(
-            md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
-            crc32c { value: 0x4ad67f80 })pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
-            r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
+          {
+              [](InsertObjectMediaRequest& r) {
+                r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
+                r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
+              },
+              R"pb(
+                md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
+                crc32c: 0x22620404)pb",
           },
-          R"pb(
-            md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
-            crc32c { value: 0x22620404 })pb",
-      },
 
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(false));
-            r.set_option(DisableCrc32cChecksum(true));
+          {
+              [](InsertObjectMediaRequest& r) {
+                r.set_option(DisableMD5Hash(false));
+                r.set_option(DisableCrc32cChecksum(true));
+              },
+              R"pb(
+                md5_hash: "4ad12fa3657faa80c2b9a92d652c3721")pb",
           },
-          R"pb(
-            md5_hash: "4ad12fa3657faa80c2b9a92d652c3721")pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(false));
-            r.set_option(DisableCrc32cChecksum(false));
+          {
+              [](InsertObjectMediaRequest& r) {
+                r.set_option(DisableMD5Hash(false));
+                r.set_option(DisableCrc32cChecksum(false));
+              },
+              R"pb(
+                md5_hash: "4ad12fa3657faa80c2b9a92d652c3721"
+                crc32c: 0x4ad67f80)pb",
           },
-          R"pb(
-            md5_hash: "4ad12fa3657faa80c2b9a92d652c3721"
-            crc32c { value: 0x4ad67f80 })pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(false));
-            r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
+          {
+              [](InsertObjectMediaRequest& r) {
+                r.set_option(DisableMD5Hash(false));
+                r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
+              },
+              R"pb(
+                md5_hash: "4ad12fa3657faa80c2b9a92d652c3721"
+                crc32c: 0x22620404)pb",
           },
-          R"pb(
-            md5_hash: "4ad12fa3657faa80c2b9a92d652c3721"
-            crc32c { value: 0x22620404 })pb",
-      },
 
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(true));
-            r.set_option(DisableCrc32cChecksum(true));
+          {
+              [](InsertObjectMediaRequest& r) {
+                r.set_option(DisableMD5Hash(true));
+                r.set_option(DisableCrc32cChecksum(true));
+              },
+              R"pb(
+              )pb",
           },
-          R"pb(
-          )pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(true));
-            r.set_option(DisableCrc32cChecksum(false));
+          {
+              [](InsertObjectMediaRequest& r) {
+                r.set_option(DisableMD5Hash(true));
+                r.set_option(DisableCrc32cChecksum(false));
+              },
+              R"pb(
+                crc32c: 0x4ad67f80)pb",
           },
-          R"pb(
-            crc32c { value: 0x4ad67f80 })pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(true));
-            r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
+          {
+              [](InsertObjectMediaRequest& r) {
+                r.set_option(DisableMD5Hash(true));
+                r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
+              },
+              R"pb(
+                crc32c: 0x22620404)pb",
           },
-          R"pb(
-            crc32c { value: 0x22620404 })pb",
-      },
-  };
+      };
 
   for (auto const& test : cases) {
     SCOPED_TRACE("Expected outcome " + test.expected_checksums);
@@ -193,7 +197,7 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestAllOptions) {
   storage_proto::WriteObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
-        insert_object_spec: {
+        write_object_spec: {
           resource: {
             bucket: "test-bucket-name"
             name: "test-object-name"
@@ -203,14 +207,13 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestAllOptions) {
             # not be included in the upload
             #     crc32c:
             #     md5_hash:
-            kms_key_name: "test-kms-key-name"
+            kms_key: "test-kms-key-name"
           }
           predefined_acl: OBJECT_ACL_PRIVATE
-          if_generation_match: { value: 0 }
-          if_generation_not_match: { value: 7 }
-          if_metageneration_match: { value: 42 }
-          if_metageneration_not_match: { value: 84 }
-          projection: FULL
+          if_generation_match: 0
+          if_generation_not_match: 7
+          if_metageneration_match: 42
+          if_metageneration_not_match: 84
         }
         common_object_request_params: {
           encryption_algorithm: "AES256"
@@ -224,11 +227,10 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestAllOptions) {
         }
         common_request_params: {
           user_project: "test-user-project"
-          quota_user: "test-quota-user"
         }
         object_checksums: {
           # See top-of-file comments for details on the magic numbers
-          crc32c { value: 0x22620404 }
+          crc32c: 0x22620404
           md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
         }
       )pb",
@@ -257,7 +259,7 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestWithObjectMetadata) {
   storage_proto::WriteObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
-        insert_object_spec: {
+        write_object_spec: {
           resource: {
             bucket: "test-bucket-name"
             name: "test-object-name"
@@ -268,7 +270,7 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestWithObjectMetadata) {
             content_encoding: "test-content-encoding"
             content_language: "test-content-language"
             content_type: "test-content-type"
-            event_based_hold: { value: true }
+            event_based_hold: true
             metadata: { key: "test-key-1" value: "test-value-1" }
             metadata: { key: "test-key-2" value: "test-value-2" }
             storage_class: "test-storage-class"
@@ -276,7 +278,7 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestWithObjectMetadata) {
           }
         }
         # See top-of-file comments for details on the magic numbers
-        object_checksums: { crc32c { value: 0x22620404 } }
+        object_checksums: { crc32c : 0x22620404 }
       )pb",
       &expected));
 
@@ -309,7 +311,7 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestWithObjectMetadata) {
 TEST(GrpcClientObjectRequest, ResumableUploadRequestSimple) {
   google::storage::v2::StartResumableWriteRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-      insert_object_spec: {
+      write_object_spec: {
           resource: {
             name: "test-object"
             bucket: "test-bucket"
@@ -326,7 +328,7 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestSimple) {
 TEST(GrpcClientObjectRequest, ResumableUploadRequestAllFields) {
   google::storage::v2::StartResumableWriteRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-      insert_object_spec: {
+      write_object_spec: {
           resource: {
             name: "test-object"
             bucket: "test-bucket"
@@ -336,18 +338,16 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestAllFields) {
             # not be included in the upload
             #     crc32c:
             #     md5_hash:
-            kms_key_name: "test-kms-key-name"
+            kms_key: "test-kms-key-name"
           }
           predefined_acl: OBJECT_ACL_PRIVATE
-          if_generation_match: { value: 0 }
-          if_generation_not_match: { value: 7 }
-          if_metageneration_match: { value: 42 }
-          if_metageneration_not_match: { value: 84 }
-          projection: FULL
+          if_generation_match: 0
+          if_generation_not_match: 7
+          if_metageneration_match: 42
+          if_metageneration_not_match: 84
       }
       common_request_params: {
         user_project: "test-user-project"
-        quota_user: "test-quota-user"
       }
 
       common_object_request_params: {
@@ -384,7 +384,7 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestAllFields) {
 TEST(GrpcClientObjectRequest, ResumableUploadRequestWithObjectMetadataFields) {
   google::storage::v2::StartResumableWriteRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-      insert_object_spec: {
+      write_object_spec: {
           resource: {
             name: "test-object"
             bucket: "test-bucket"
@@ -394,7 +394,7 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestWithObjectMetadataFields) {
             content_language: "test-content-language"
             content_type: "test-content-type"
             storage_class: "REGIONAL"
-            event_based_hold: { value: true }
+            event_based_hold: true
             metadata: { key: "test-metadata-key1" value: "test-value1" }
             metadata: { key: "test-metadata-key2" value: "test-value2" }
             temporary_hold: true
@@ -464,13 +464,12 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestAllFields) {
         generation: 7
         read_offset: 2000
         read_limit: 1000
-        if_generation_match: { value: 1 }
-        if_generation_not_match: { value: 2 }
-        if_metageneration_match: { value: 3 }
-        if_metageneration_not_match: { value: 4 }
+        if_generation_match: 1
+        if_generation_not_match: 2
+        if_metageneration_match: 3
+        if_metageneration_not_match: 4
         common_request_params: {
           user_project: "test-user-project"
-          quota_user: "test-quota-user"
         }
         common_object_request_params: {
           encryption_algorithm: "AES256"
