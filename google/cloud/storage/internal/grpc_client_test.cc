@@ -28,7 +28,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-namespace storage_proto = ::google::storage::v1;
+namespace storage_proto = ::google::storage::v2;
 using ::google::cloud::testing_util::IsProtoEqual;
 
 TEST(GrpcClientFromProto, ObjectSimple) {
@@ -153,7 +153,7 @@ TEST(GrpcClientFromProto, ObjectCustomerEncryptionRoundtrip) {
     encryption_algorithm: "test-encryption-algorithm"
     key_sha256: "test-key-sha256"
   )pb";
-  google::storage::v1::Object::CustomerEncryption start;
+  google::storage::v2::Object::CustomerEncryption start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
   auto const expected =
       CustomerEncryption{"test-encryption-algorithm", "test-key-sha256"};
@@ -167,7 +167,7 @@ TEST(GrpcClientFromProto, OwnerRoundtrip) {
   auto constexpr kText = R"pb(
     entity: "test-entity" entity_id: "test-entity-id"
   )pb";
-  google::storage::v1::Owner start;
+  google::storage::v2::Owner start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
   auto const expected = Owner{"test-entity", "test-entity-id"};
   auto const middle = GrpcClient::FromProto(start);
@@ -183,10 +183,9 @@ TEST(GrpcClientFromProto, Crc32cRoundtrip) {
       "6Y46Mg==",
   };
   for (auto const& start : values) {
-    google::protobuf::UInt32Value v;
-    v.set_value(GrpcClient::Crc32cToProto(start).value());
-    auto end = GrpcClient::Crc32cFromProto(v);
-    EXPECT_EQ(start, end) << " value=" << v.value();
+    auto const end =
+        GrpcClient::Crc32cFromProto(GrpcClient::Crc32cToProto(start).value());
+    EXPECT_EQ(start, end);
   }
 }
 
@@ -210,7 +209,7 @@ TEST(GrpcClientFromProto, MD5Roundtrip) {
 }
 
 TEST(GrpcClientFromProto, ObjectAccessControlSimple) {
-  google::storage::v1::ObjectAccessControl input;
+  google::storage::v2::ObjectAccessControl input;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
      role: "test-role"
      etag: "test-etag"
@@ -252,28 +251,20 @@ TEST(GrpcClientFromProto, ObjectAccessControlSimple) {
   EXPECT_EQ(*expected, actual);
 }
 
-TEST(GrpcClientToProto, Projection) {
-  EXPECT_EQ(storage_proto::CommonEnums::NO_ACL,
-            GrpcClient::ToProto(Projection::NoAcl()));
-  EXPECT_EQ(storage_proto::CommonEnums::FULL,
-            GrpcClient::ToProto(Projection::Full()));
-}
-
 TEST(GrpcClientToProto, PredefinedAclObject) {
-  EXPECT_EQ(storage_proto::CommonEnums::OBJECT_ACL_AUTHENTICATED_READ,
+  EXPECT_EQ(storage_proto::OBJECT_ACL_AUTHENTICATED_READ,
             GrpcClient::ToProtoObject(PredefinedAcl::AuthenticatedRead()));
-  EXPECT_EQ(storage_proto::CommonEnums::OBJECT_ACL_PRIVATE,
+  EXPECT_EQ(storage_proto::OBJECT_ACL_PRIVATE,
             GrpcClient::ToProtoObject(PredefinedAcl::Private()));
-  EXPECT_EQ(storage_proto::CommonEnums::OBJECT_ACL_PROJECT_PRIVATE,
+  EXPECT_EQ(storage_proto::OBJECT_ACL_PROJECT_PRIVATE,
             GrpcClient::ToProtoObject(PredefinedAcl::ProjectPrivate()));
-  EXPECT_EQ(storage_proto::CommonEnums::OBJECT_ACL_PUBLIC_READ,
+  EXPECT_EQ(storage_proto::OBJECT_ACL_PUBLIC_READ,
             GrpcClient::ToProtoObject(PredefinedAcl::PublicRead()));
-  EXPECT_EQ(storage_proto::CommonEnums::PREDEFINED_OBJECT_ACL_UNSPECIFIED,
+  EXPECT_EQ(storage_proto::PREDEFINED_OBJECT_ACL_UNSPECIFIED,
             GrpcClient::ToProtoObject(PredefinedAcl::PublicReadWrite()));
-  EXPECT_EQ(
-      google::storage::v1::CommonEnums::OBJECT_ACL_BUCKET_OWNER_FULL_CONTROL,
-      GrpcClient::ToProtoObject(PredefinedAcl::BucketOwnerFullControl()));
-  EXPECT_EQ(google::storage::v1::CommonEnums::OBJECT_ACL_BUCKET_OWNER_READ,
+  EXPECT_EQ(google::storage::v2::OBJECT_ACL_BUCKET_OWNER_FULL_CONTROL,
+            GrpcClient::ToProtoObject(PredefinedAcl::BucketOwnerFullControl()));
+  EXPECT_EQ(google::storage::v2::OBJECT_ACL_BUCKET_OWNER_READ,
             GrpcClient::ToProtoObject(PredefinedAcl::BucketOwnerRead()));
 }
 
@@ -298,7 +289,7 @@ TEST(GrpcClientToProto, ObjectAccessControlSimple) {
   ASSERT_STATUS_OK(acl);
   auto actual = GrpcClient::ToProto(*acl);
 
-  google::storage::v1::ObjectAccessControl expected;
+  google::storage::v2::ObjectAccessControl expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
      role: "test-role"
      etag: "test-etag"
@@ -326,7 +317,7 @@ TEST(GrpcClientToProto, ObjectAccessControlMinimalFields) {
   acl.set_entity("test-entity");
   auto actual = GrpcClient::ToProto(acl);
 
-  google::storage::v1::ObjectAccessControl expected;
+  google::storage::v2::ObjectAccessControl expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
      role: "test-role"
      entity: "test-entity"

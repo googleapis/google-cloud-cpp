@@ -28,7 +28,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-namespace storage_proto = ::google::storage::v1;
+namespace storage_proto = ::google::storage::v2;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 
@@ -61,7 +61,7 @@ auto constexpr kText = "The quick brown fox jumps over the lazy dog";
 auto constexpr kAlt = "How vexingly quick daft zebras jump!";
 
 TEST(GrpcClientObjectRequest, InsertObjectMediaRequestSimple) {
-  storage_proto::InsertObjectRequest expected;
+  storage_proto::WriteObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
         insert_object_spec: {
@@ -190,7 +190,7 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestHashOptions) {
 }
 
 TEST(GrpcClientObjectRequest, InsertObjectMediaRequestAllOptions) {
-  storage_proto::InsertObjectRequest expected;
+  storage_proto::WriteObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
         insert_object_spec: {
@@ -254,7 +254,7 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestAllOptions) {
 }
 
 TEST(GrpcClientObjectRequest, InsertObjectMediaRequestWithObjectMetadata) {
-  storage_proto::InsertObjectRequest expected;
+  storage_proto::WriteObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
         insert_object_spec: {
@@ -307,7 +307,7 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestWithObjectMetadata) {
 }
 
 TEST(GrpcClientObjectRequest, ResumableUploadRequestSimple) {
-  google::storage::v1::StartResumableWriteRequest expected;
+  google::storage::v2::StartResumableWriteRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
       insert_object_spec: {
           resource: {
@@ -324,7 +324,7 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestSimple) {
 }
 
 TEST(GrpcClientObjectRequest, ResumableUploadRequestAllFields) {
-  google::storage::v1::StartResumableWriteRequest expected;
+  google::storage::v2::StartResumableWriteRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
       insert_object_spec: {
           resource: {
@@ -382,7 +382,7 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestAllFields) {
 }
 
 TEST(GrpcClientObjectRequest, ResumableUploadRequestWithObjectMetadataFields) {
-  google::storage::v1::StartResumableWriteRequest expected;
+  google::storage::v2::StartResumableWriteRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
       insert_object_spec: {
           resource: {
@@ -428,7 +428,7 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestWithObjectMetadataFields) {
 }
 
 TEST(GrpcClientObjectRequest, QueryResumableUploadRequestSimple) {
-  google::storage::v1::QueryWriteStatusRequest expected;
+  google::storage::v2::QueryWriteStatusRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
         upload_id: "test-upload-id"
@@ -442,7 +442,7 @@ TEST(GrpcClientObjectRequest, QueryResumableUploadRequestSimple) {
 }
 
 TEST(GrpcClientObjectRequest, ReadObjectRangeRequestSimple) {
-  google::storage::v1::GetObjectMediaRequest expected;
+  google::storage::v2::ReadObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
         bucket: "test-bucket" object: "test-object"
@@ -456,7 +456,7 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestSimple) {
 }
 
 TEST(GrpcClientObjectRequest, ReadObjectRangeRequestAllFields) {
-  google::storage::v1::GetObjectMediaRequest expected;
+  google::storage::v2::ReadObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
         bucket: "test-bucket"
@@ -498,7 +498,7 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestAllFields) {
 }
 
 TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLast) {
-  google::storage::v1::GetObjectMediaRequest expected;
+  google::storage::v2::ReadObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
         bucket: "test-bucket" object: "test-object" read_offset: -2000
@@ -513,7 +513,7 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLast) {
 }
 
 TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLastZero) {
-  google::storage::v1::GetObjectMediaRequest expected;
+  google::storage::v2::ReadObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
         bucket: "test-bucket" object: "test-object"

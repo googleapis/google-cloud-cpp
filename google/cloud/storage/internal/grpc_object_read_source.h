@@ -41,7 +41,7 @@ namespace internal {
 class GrpcObjectReadSource : public ObjectReadSource {
  public:
   using StreamingRpc = google::cloud::internal::StreamingReadRpc<
-      google::storage::v1::GetObjectMediaResponse>;
+      google::storage::v2::ReadObjectResponse>;
 
   explicit GrpcObjectReadSource(std::unique_ptr<StreamingRpc> stream);
 

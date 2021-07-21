@@ -35,10 +35,11 @@ using ::testing::Return;
 class MockInsertStream : public GrpcClient::InsertStream {
  public:
   MOCK_METHOD(bool, Write,
-              (google::storage::v1::InsertObjectRequest const&,
+              (google::storage::v2::WriteObjectRequest const&,
                grpc::WriteOptions),
               (override));
-  MOCK_METHOD(StatusOr<google::storage::v1::Object>, Close, (), (override));
+  MOCK_METHOD(StatusOr<google::storage::v2::WriteObjectResponse>, Close, (),
+              (override));
   MOCK_METHOD(void, Cancel, (), (override));
 };
 
@@ -58,12 +59,12 @@ class MockGrpcClient : public GrpcClient {
               (QueryResumableUploadRequest const&), (override));
 };
 
-StatusOr<google::storage::v1::Object> MockCloseSuccess() {
-  return google::storage::v1::Object{};
+StatusOr<google::storage::v2::WriteObjectResponse> MockCloseSuccess() {
+  return google::storage::v2::WriteObjectResponse{};
 }
 
-StatusOr<google::storage::v1::Object> MockCloseError(Status s) {
-  return StatusOr<google::storage::v1::Object>(std::move(s));
+StatusOr<google::storage::v2::WriteObjectResponse> MockCloseError(Status s) {
+  return StatusOr<google::storage::v2::WriteObjectResponse>(std::move(s));
 }
 
 TEST(GrpcResumableUploadSessionTest, Simple) {
@@ -87,7 +88,7 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
       .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
         auto writer = absl::make_unique<MockInsertStream>();
         EXPECT_CALL(*writer, Write)
-            .WillOnce([&](google::storage::v1::InsertObjectRequest const& r,
+            .WillOnce([&](google::storage::v2::WriteObjectRequest const& r,
                           grpc::WriteOptions const& options) {
               EXPECT_EQ("test-upload-id", r.upload_id());
               EXPECT_EQ(payload, r.checksummed_data().content());
@@ -102,13 +103,13 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
       .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
         auto writer = absl::make_unique<MockInsertStream>();
         EXPECT_CALL(*writer, Write)
-            .WillOnce([&](google::storage::v1::InsertObjectRequest const& r,
+            .WillOnce([&](google::storage::v2::WriteObjectRequest const& r,
                           grpc::WriteOptions const& options) {
               EXPECT_EQ("test-upload-id", r.upload_id());
               EXPECT_EQ(payload, r.checksummed_data().content());
               EXPECT_EQ(size, r.write_offset());
               EXPECT_TRUE(r.finish_write());
-              EXPECT_EQ(*crc32c_proto, r.object_checksums().crc32c().value());
+              EXPECT_EQ(*crc32c_proto, r.object_checksums().crc32c());
               EXPECT_EQ(*md5_proto, r.object_checksums().md5_hash());
               EXPECT_TRUE(options.is_last_message());
               return true;
@@ -147,10 +148,10 @@ TEST(GrpcResumableUploadSessionTest, SingleStreamForLargeChunks) {
       .WillRepeatedly([&](std::unique_ptr<grpc::ClientContext>) {
         auto writer = absl::make_unique<MockInsertStream>();
 
-        using google::storage::v1::InsertObjectRequest;
+        using google::storage::v2::WriteObjectRequest;
         EXPECT_CALL(*writer, Write)
             .Times(AtLeast(2))
-            .WillRepeatedly([&](InsertObjectRequest const& r,
+            .WillRepeatedly([&](WriteObjectRequest const& r,
                                 grpc::WriteOptions const&) {
               EXPECT_EQ("test-upload-id", r.upload_id());
               EXPECT_EQ(expected_write_offset, r.write_offset());
@@ -158,7 +159,7 @@ TEST(GrpcResumableUploadSessionTest, SingleStreamForLargeChunks) {
               auto const content_size = r.checksummed_data().content().size();
               EXPECT_LE(
                   content_size,
-                  google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
+                  google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
               expected_write_offset += content_size;
               return true;
             });
@@ -193,7 +194,7 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
       .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
         auto writer = absl::make_unique<MockInsertStream>();
         EXPECT_CALL(*writer, Write)
-            .WillOnce([&](google::storage::v1::InsertObjectRequest const& r,
+            .WillOnce([&](google::storage::v2::WriteObjectRequest const& r,
                           grpc::WriteOptions const&) {
               EXPECT_EQ("test-upload-id", r.upload_id());
               EXPECT_EQ(payload, r.checksummed_data().content());
@@ -209,7 +210,7 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
       .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
         auto writer = absl::make_unique<MockInsertStream>();
         EXPECT_CALL(*writer, Write)
-            .WillOnce([&](google::storage::v1::InsertObjectRequest const& r,
+            .WillOnce([&](google::storage::v2::WriteObjectRequest const& r,
                           grpc::WriteOptions const&) {
               EXPECT_EQ("test-upload-id", r.upload_id());
               EXPECT_EQ(payload, r.checksummed_data().content());
@@ -261,7 +262,7 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
         auto writer = absl::make_unique<MockInsertStream>();
 
         EXPECT_CALL(*writer, Write)
-            .WillOnce([&](google::storage::v1::InsertObjectRequest const& r,
+            .WillOnce([&](google::storage::v2::WriteObjectRequest const& r,
                           grpc::WriteOptions const&) {
               EXPECT_EQ("test-upload-id", r.upload_id());
               EXPECT_EQ(payload, r.checksummed_data().content());
@@ -279,7 +280,7 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
         auto writer = absl::make_unique<MockInsertStream>();
 
         EXPECT_CALL(*writer, Write)
-            .WillOnce([&](google::storage::v1::InsertObjectRequest const& r,
+            .WillOnce([&](google::storage::v2::WriteObjectRequest const& r,
                           grpc::WriteOptions const&) {
               EXPECT_EQ("test-upload-id", r.upload_id());
               EXPECT_EQ(payload, r.checksummed_data().content());

@@ -42,7 +42,7 @@ using ::testing::Return;
 TEST(GrpcClientInsertObjectMediaTest, Small) {
   auto constexpr kResponseText =
       R"pb(bucket: "test-bucket" name: "test-object" generation: 12345)pb";
-  google::storage::v1::Object response;
+  google::storage::v2::WriteObjectResponse response;
   ASSERT_TRUE(TextFormat::ParseFromString(kResponseText, &response));
 
   auto constexpr kWriteRequestText = R"pb(
@@ -61,7 +61,7 @@ TEST(GrpcClientInsertObjectMediaTest, Small) {
     }
     finish_write: true
   )pb";
-  google::storage::v1::InsertObjectRequest write_request;
+  google::storage::v2::WriteObjectRequest write_request;
   ASSERT_TRUE(TextFormat::ParseFromString(kWriteRequestText, &write_request));
 
   auto mock = std::make_shared<MockStorageStub>();

@@ -22,9 +22,9 @@ namespace internal {
 
 std::unique_ptr<StorageStub::ObjectMediaStream> StorageAuth::GetObjectMedia(
     std::unique_ptr<grpc::ClientContext> context,
-    google::storage::v1::GetObjectMediaRequest const& request) {
+    google::storage::v2::ReadObjectRequest const& request) {
   using ErrorStream = google::cloud::internal::StreamingReadRpcError<
-      google::storage::v1::GetObjectMediaResponse>;
+      google::storage::v2::ReadObjectResponse>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
   return child_->GetObjectMedia(std::move(context), request);
@@ -33,25 +33,26 @@ std::unique_ptr<StorageStub::ObjectMediaStream> StorageAuth::GetObjectMedia(
 std::unique_ptr<StorageStub::InsertStream> StorageAuth::InsertObjectMedia(
     std::unique_ptr<grpc::ClientContext> context) {
   using ErrorStream = google::cloud::internal::StreamingWriteRpcError<
-      google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
+      google::storage::v2::WriteObjectRequest,
+      google::storage::v2::WriteObjectResponse>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
   return child_->InsertObjectMedia(std::move(context));
 }
 
-StatusOr<google::storage::v1::StartResumableWriteResponse>
+StatusOr<google::storage::v2::StartResumableWriteResponse>
 StorageAuth::StartResumableWrite(
     grpc::ClientContext& context,
-    google::storage::v1::StartResumableWriteRequest const& request) {
+    google::storage::v2::StartResumableWriteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StartResumableWrite(context, request);
 }
 
-StatusOr<google::storage::v1::QueryWriteStatusResponse>
+StatusOr<google::storage::v2::QueryWriteStatusResponse>
 StorageAuth::QueryWriteStatus(
     grpc::ClientContext& context,
-    google::storage::v1::QueryWriteStatusRequest const& request) {
+    google::storage::v2::QueryWriteStatusRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->QueryWriteStatus(context, request);

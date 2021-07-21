@@ -28,7 +28,7 @@ namespace {
 using HeadersMap = std::multimap<std::string, std::string>;
 
 HeadersMap MakeHeadersFromChecksums(
-    google::storage::v1::ObjectChecksums const& checksums) {
+    google::storage::v2::ObjectChecksums const& checksums) {
   HeadersMap headers;
   if (checksums.has_crc32c()) {
     headers.emplace("x-goog-hash", "crc32c=" + GrpcClient::Crc32cFromProto(
@@ -76,7 +76,7 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
       return metadata;
     }
     HeadersMap operator()(
-        google::storage::v1::GetObjectMediaResponse response) {
+        google::storage::v2::ReadObjectResponse response) {
       // The google.storage.v1.Storage documentation says this field can be
       // empty.
       if (response.has_checksummed_data()) {

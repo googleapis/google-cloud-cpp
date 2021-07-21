@@ -32,25 +32,27 @@ class StorageStub {
  public:
   virtual ~StorageStub() = default;
 
+  // TODO(#6982) - update the name of this stream
   using ObjectMediaStream = google::cloud::internal::StreamingReadRpc<
-      google::storage::v1::GetObjectMediaResponse>;
+      google::storage::v2::ReadObjectResponse>;
   virtual std::unique_ptr<ObjectMediaStream> GetObjectMedia(
       std::unique_ptr<grpc::ClientContext> context,
-      google::storage::v1::GetObjectMediaRequest const& request) = 0;
+      google::storage::v2::ReadObjectRequest const& request) = 0;
 
+  // TODO(#6982) - update the name of this stream
   using InsertStream = google::cloud::internal::StreamingWriteRpc<
-      google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
+      google::storage::v2::WriteObjectRequest, google::storage::v2::WriteObjectResponse>;
   virtual std::unique_ptr<InsertStream> InsertObjectMedia(
       std::unique_ptr<grpc::ClientContext> context) = 0;
 
-  virtual StatusOr<google::storage::v1::StartResumableWriteResponse>
+  virtual StatusOr<google::storage::v2::StartResumableWriteResponse>
   StartResumableWrite(
       grpc::ClientContext& context,
-      google::storage::v1::StartResumableWriteRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::QueryWriteStatusResponse>
+      google::storage::v2::StartResumableWriteRequest const& request) = 0;
+  virtual StatusOr<google::storage::v2::QueryWriteStatusResponse>
   QueryWriteStatus(
       grpc::ClientContext& context,
-      google::storage::v1::QueryWriteStatusRequest const& request) = 0;
+      google::storage::v2::QueryWriteStatusRequest const& request) = 0;
 };
 
 std::shared_ptr<StorageStub> MakeDefaultStorageStub(
