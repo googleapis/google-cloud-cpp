@@ -71,6 +71,10 @@ excluded_targets+=(
   # and some CMake magic. It is also skipped against production, so most Bazel
   # builds run it but it is a no-op.
   "-//google/cloud/storage/tests:error_injection_integration_test"
+
+  # TODO(#6892) - exclude gRPC targets until this is ready
+  "-//google/cloud/storage/tests:grpc_integration_test"
+  "-//google/cloud/storage/examples:storage_grpc_samples"
 )
 for target in "${production_only_targets[@]}"; do
   excluded_targets+=("-${target}")

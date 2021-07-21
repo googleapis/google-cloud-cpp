@@ -502,11 +502,10 @@ def preprocess_object_metadata(metadata):
         checksums["md5Hash"] = md.pop("md5Hash")
     if len(checksums) > 0:
         md["checksums"] = checksums
-    # Finally the ACLs, if present, have fewer fields in gRPC
+    # Finally the ACLs, if present, have fewer fields in gRPC, remove
+    # them if present, ignore then otherwise
     if "acl" in md:
-        for a in metadata["acl"]:
-            del a["kind"]
-            del a["bucket"]
-            del a["object"]
-            del a["generation"]
+        for a in md["acl"]:
+            for field in ["kind", "bucket", "object", "generation"]:
+                a.pop(field, None)
     return md
