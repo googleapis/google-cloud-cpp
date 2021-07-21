@@ -17,6 +17,7 @@ set -eu
 
 source "$(dirname "$0")/../../../../../ci/lib/init.sh"
 source module /google/cloud/storage/tools/run_emulator_utils.sh
+source module ci/lib/io.sh
 
 if [[ $# -lt 1 ]]; then
   echo "Usage: $(basename "$0") <bazel-program> [bazel-test-args]"
@@ -27,8 +28,6 @@ fi
 BAZEL_BIN="$1"
 shift
 
-bazel_test_args=("$@")
-
 # `start_emulator` creates unsightly *.log files in the current directory
 # (which is ${PROJECT_ROOT}) and we cannot use a subshell because we want the
 # environment variables that it sets.
@@ -38,19 +37,20 @@ pushd "${HOME}" >/dev/null
 start_emulator 8586 8587
 popd >/dev/null
 
-# Run the unittests of the emulator before running integration tests. These are
-# labeled "manual" because we not always have all the testing infrastructure
-# for Python installed. We need to discover their names and list them
-# explicitly in the `bazel test` invocation.
-mapfile -t emulator_tests < <("${BAZEL_BIN}" query "attr(tags, manual, //google/cloud/storage/emulator/...)")
-# TODO(#6641): Remove the --flaky_test_attempts flag once the flakiness is fixed.
-"${BAZEL_BIN}" test "${bazel_test_args[@]}" \
-  "--flaky_test_attempts=5" \
-  "--test_env=CLOUD_STORAGE_EMULATOR_ENDPOINT=${CLOUD_STORAGE_EMULATOR_ENDPOINT}" \
-  -- "${emulator_tests[@]}"
-exit_status=$?
+set +e
+for target in google/cloud/storage/emulator/tests/*.py; do
+  io::log_green "Running ${target}"
+  target="$(basename "${target}")"
+  # TODO(#6641): Remove the retry loop once the flakiness is fixed.
+  ci/retry-command.sh 5 0 env -C google/cloud/storage/emulator python -m unittest "tests/${target}"
+  exit_status=$?
+  if [[ ${exit_status} -ne 0 ]]; then
+    break
+  fi
+done
 
 if [[ "${exit_status}" -ne 0 ]]; then
+  io::log_red "emulator log"
   cat "${HOME}/gcs_emulator.log"
 fi
 
