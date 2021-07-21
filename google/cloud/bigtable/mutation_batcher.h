@@ -61,10 +61,7 @@ class MutationBatcher {
     Options();
 
     /// A single RPC will not have more mutations than this.
-    Options& SetMaxMutationsPerBatch(size_t max_mutations_per_batch_arg) {
-      max_mutations_per_batch = max_mutations_per_batch_arg;
-      return *this;
-    }
+    Options& SetMaxMutationsPerBatch(size_t max_mutations_per_batch_arg);
 
     /// Sum of mutations' sizes in a single RPC will not be larger than this.
     Options& SetMaxSizePerBatch(size_t max_size_per_batch_arg) {
@@ -85,10 +82,7 @@ class MutationBatcher {
     }
 
     /// MutationBatcher will at most admit this many mutations.
-    Options& SetMaxOutstandingMutations(size_t max_outstanding_mutations_arg) {
-      max_outstanding_mutations = max_outstanding_mutations_arg;
-      return *this;
-    }
+    Options& SetMaxOutstandingMutations(size_t max_outstanding_mutations_arg);
 
     std::size_t max_mutations_per_batch;
     std::size_t max_size_per_batch;
