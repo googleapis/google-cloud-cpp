@@ -946,15 +946,6 @@ google::storage::v1::QueryWriteStatusRequest GrpcClient::ToProto(
   return r;
 }
 
-google::storage::v1::DeleteObjectRequest GrpcClient::ToProto(
-    DeleteResumableUploadRequest const& request) {
-  auto upload_session_params =
-      DecodeGrpcResumableUploadSessionUrl(request.upload_session_url());
-  google::storage::v1::DeleteObjectRequest r;
-  r.set_upload_id(upload_session_params->upload_id);
-  return r;
-}
-
 google::storage::v1::GetObjectMediaRequest GrpcClient::ToProto(
     ReadObjectRangeRequest const& request) {
   google::storage::v1::GetObjectMediaRequest r;
