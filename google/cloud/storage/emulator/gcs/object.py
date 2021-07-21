@@ -130,7 +130,8 @@ class Object:
         actual_crc32c = crc32c.crc32c(media)
         if metadata.HasField("checksums"):
             cs = metadata.checksums
-            if cs.HasField("md5_hash") and actual_md5Hash != cs.md5_hash:
+            if cs.md5_hash != '' and actual_md5Hash != cs.md5_hash:
+                print("PROVIDED %s\n\nACTUAL %s\n\n" % (cs.md5_hash, actual_md5Hash))
                 utils.error.mismatch("md5Hash", cs.md5_hash, actual_md5Hash, context)
             if cs.HasField("crc32c") and actual_crc32c != cs.crc32c:
                 utils.error.mismatch("crc32c", cs.crc32c, actual_crc32c, context)
@@ -224,7 +225,7 @@ class Object:
             metadata["md5Hash"] = metadata["md5Hash"]
         if "crc32c" in metadata:
             metadata["metadata"]["x_emulator_crc32c"] = metadata["crc32c"]
-            metadata["crc32c"] = utils.common.rest_crc32c_to_proto(metadata["crc32c"])
+            metadata["crc32c"] = metadata["crc32c"]
         return cls.init_dict(request, metadata, media, bucket, False)
 
     @classmethod
