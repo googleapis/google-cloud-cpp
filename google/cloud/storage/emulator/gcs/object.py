@@ -127,7 +127,6 @@ class Object:
         if metadata.HasField("checksums"):
             cs = metadata.checksums
             if cs.md5_hash != '' and actual_md5Hash != cs.md5_hash:
-                print("PROVIDED %s\n\nACTUAL %s\n\n" % (cs.md5_hash, actual_md5Hash))
                 utils.error.mismatch("md5Hash", cs.md5_hash, actual_md5Hash, context)
             if cs.HasField("crc32c") and actual_crc32c != cs.crc32c:
                 utils.error.mismatch("crc32c", cs.crc32c, actual_crc32c, context)
@@ -399,14 +398,17 @@ class Object:
         return self.rest(self.metadata)
 
     def x_goog_hash_header(self):
+        if not self.metadata.HasField("checksums"):
+            return None
         hashes = []
-        if self.metadata.crc32c is not None and self.metadata.crc32c.value is not None:
+        cs = self.metadata.checksums
+        if cs.HasField("crc32c"):
             hashes.append(
                 "crc32c=%s"
-                % utils.common.rest_crc32c_from_proto(self.metadata.crc32c.value)
+                % utils.common.rest_crc32c_from_proto(cs.crc32c)
             )
-        if self.metadata.md5_hash is not None:
-            hashes.append("md5=%s" % self.metadata.md5_hash)
+        if cs.md5_hash != '':
+            hashes.append("md5=%s" % base64.b64encode(cs.md5_hash))
         return ",".join(hashes) if len(hashes) != 0 else None
 
     def rest_media(self, request):

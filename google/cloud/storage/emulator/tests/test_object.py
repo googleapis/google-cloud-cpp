@@ -26,9 +26,7 @@ from google.storage.v2 import storage_pb2
 
 class TestObject(unittest.TestCase):
     def setUp(self):
-        request = utils.common.FakeRequest(
-            args={}, data=json.dumps({"name": "bucket"})
-        )
+        request = utils.common.FakeRequest(args={}, data=json.dumps({"name": "bucket"}))
         bucket, _ = gcs.bucket.Bucket.init(request, None)
         self.bucket = bucket
 
@@ -322,7 +320,9 @@ class TestObject(unittest.TestCase):
 
         # `grpc` PATCH
 
-        request = utils.common.FakeRequest(args={}, data=json.dumps({"metadata": {"method": "grpc"}}))
+        request = utils.common.FakeRequest(
+            args={}, data=json.dumps({"metadata": {"method": "grpc"}})
+        )
         blob.patch(request, None)
         self.assertEqual(blob.metadata.bucket, "bucket")
         self.assertEqual(blob.metadata.name, "test-object-name")
@@ -358,10 +358,10 @@ class TestObject(unittest.TestCase):
         blob.patch(request, None)
         self.assertEqual(blob.metadata.metadata["method"], "rest_patch")
 
-    def test_rest_insert_with_hashes(self):
+    def test_rest_insert_and_read(self):
         """Verify inserting an object with hash values and media works.
-        
-        This is the most common way for objects to be created in the C++ client client tests. 
+
+        This is the most common way for objects to be created in the C++ client client tests.
         """
         media = "The quick brown fox jumps over the lazy dog"
         metadata = {
@@ -409,9 +409,13 @@ class TestObject(unittest.TestCase):
             environ={},
         )
         blob, _ = gcs.object.Object.init_multipart(request, self.bucket.metadata)
-        self.assertEqual(blob.media, media.encode('utf-8'))
+        self.assertEqual(blob.media, media.encode("utf-8"))
         self.assertEqual(blob.metadata.bucket, "bucket")
         self.assertEqual(blob.metadata.name, "test-object-name")
+
+        get = utils.common.FakeRequest(headers={})
+        response = blob.rest_media(get)
+        self.assertEqual(response.get_data(as_text=True), media)
 
 
 if __name__ == "__main__":
