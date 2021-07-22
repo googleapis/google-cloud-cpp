@@ -24,13 +24,11 @@
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/big_endian.h"
-#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/log.h"
-#include "absl/algorithm/container.h"
 #include "absl/strings/str_split.h"
 #include "absl/time/time.h"
 #include <crc32c/crc32c.h>
@@ -995,7 +993,6 @@ StatusOr<std::uint32_t> GrpcClient::Crc32cToProto(std::string const& v) {
 }
 
 std::string GrpcClient::MD5FromProto(std::string const& v) {
-  if (v.empty()) return {};
   return internal::Base64Encode(v);
 }
 
@@ -1003,11 +1000,12 @@ StatusOr<std::string> GrpcClient::MD5ToProto(std::string const& v) {
   if (v.empty()) return {};
   auto binary = internal::Base64Decode(v);
   if (!binary) return std::move(binary).status();
-  return internal::HexEncode(*binary);
+  return std::string{binary->begin(), binary->end()};
 }
 
 std::string GrpcClient::ComputeMD5Hash(const std::string& payload) {
-  return internal::HexEncode(internal::MD5Hash(payload));
+  auto b = internal::MD5Hash(payload);
+  return std::string{b.begin(), b.end()};
 }
 
 }  // namespace internal

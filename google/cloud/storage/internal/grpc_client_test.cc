@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/notification_metadata_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
+#include "google/cloud/storage/internal/sha256_hash.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
@@ -57,7 +58,7 @@ TEST(GrpcClientFromProto, ObjectSimple) {
     # transforming the output from base64 to binary using tools like xxd(1).
     checksums {
       crc32c: 576848900
-      md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
+      md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
     }
     component_count: 7
     update_time: {
@@ -195,15 +196,20 @@ TEST(GrpcClientFromProto, MD5Roundtrip) {
   //  /bin/echo -n $TEXT | openssl md5
   struct Test {
     std::string rest;
-    std::string proto;
+    std::vector<std::uint8_t> proto;
   } cases[] = {
-      {"1B2M2Y8AsgTpgAmY7PhCfg==", "d41d8cd98f00b204e9800998ecf8427e"},
-      {"nhB9nTcrtoJr2B01QqQZ1g==", "9e107d9d372bb6826bd81d3542a419d6"},
-      {"96HF9K981B+JfoQuTVnyCg==", "f7a1c5f4af7cd41f897e842e4d59f20a"},
+      {"1B2M2Y8AsgTpgAmY7PhCfg==",
+       internal::HexDecode("d41d8cd98f00b204e9800998ecf8427e")},
+      {"nhB9nTcrtoJr2B01QqQZ1g==",
+       internal::HexDecode("9e107d9d372bb6826bd81d3542a419d6")},
+      {"96HF9K981B+JfoQuTVnyCg==",
+       internal::HexDecode("f7a1c5f4af7cd41f897e842e4d59f20a")},
   };
   for (auto const& test : cases) {
-    EXPECT_EQ(GrpcClient::MD5FromProto(test.proto), test.rest);
-    EXPECT_EQ(GrpcClient::MD5ToProto(test.rest).value(), test.proto);
+    auto const p = std::string{test.proto.begin(), test.proto.end()};
+    EXPECT_EQ(GrpcClient::MD5FromProto(p), test.rest);
+    EXPECT_THAT(GrpcClient::MD5ToProto(test.rest).value(),
+                testing::ElementsAreArray(p));
   }
 }
 

@@ -88,95 +88,91 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestHashOptions) {
   struct Test {
     std::function<void(InsertObjectMediaRequest&)> apply_options;
     std::string expected_checksums;
-  } cases[] =
+  } cases[] = {
+      // These tests provide the "wrong" hashes. This is what would happen if
+      // one was (for example) reading a GCS file, obtained the expected hashes
+      // from GCS, and then uploaded to another GCS destination *but* the data
+      // was somehow corrupted locally (say a bad disk). In that case, we don't
+      // want to recompute the hashes in the upload.
       {
-          // These tests provide the "wrong" hashes. This is what would happen
-          // if
-          // one was (for example) reading a GCS file, obtained the expected
-          // hashes
-          // from GCS, and then uploaded to another GCS destination *but*
-          // the data was somehow corrupted locally (say a bad disk). In that
-          // case,
-          // we don't want to recompute the hashes in the upload.
-          {
-              [](InsertObjectMediaRequest& r) {
-                r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
-                r.set_option(DisableCrc32cChecksum(true));
-              },
-              R"pb(
-                md5_hash: "9e107d9d372bb6826bd81d3542a419d6")pb",
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
+            r.set_option(DisableCrc32cChecksum(true));
           },
-          {
-              [](InsertObjectMediaRequest& r) {
-                r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
-                r.set_option(DisableCrc32cChecksum(false));
-              },
-              R"pb(
-                md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
-                crc32c: 0x4ad67f80)pb",
+          R"pb(
+            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6")pb",
+      },
+      {
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
+            r.set_option(DisableCrc32cChecksum(false));
           },
-          {
-              [](InsertObjectMediaRequest& r) {
-                r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
-                r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
-              },
-              R"pb(
-                md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
-                crc32c: 0x22620404)pb",
+          R"pb(
+            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
+            crc32c: 0x4ad67f80)pb",
+      },
+      {
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
+            r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
           },
+          R"pb(
+            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
+            crc32c: 0x22620404)pb",
+      },
 
-          {
-              [](InsertObjectMediaRequest& r) {
-                r.set_option(DisableMD5Hash(false));
-                r.set_option(DisableCrc32cChecksum(true));
-              },
-              R"pb(
-                md5_hash: "4ad12fa3657faa80c2b9a92d652c3721")pb",
+      {
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(DisableMD5Hash(false));
+            r.set_option(DisableCrc32cChecksum(true));
           },
-          {
-              [](InsertObjectMediaRequest& r) {
-                r.set_option(DisableMD5Hash(false));
-                r.set_option(DisableCrc32cChecksum(false));
-              },
-              R"pb(
-                md5_hash: "4ad12fa3657faa80c2b9a92d652c3721"
-                crc32c: 0x4ad67f80)pb",
+          R"pb(
+            md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21")pb",
+      },
+      {
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(DisableMD5Hash(false));
+            r.set_option(DisableCrc32cChecksum(false));
           },
-          {
-              [](InsertObjectMediaRequest& r) {
-                r.set_option(DisableMD5Hash(false));
-                r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
-              },
-              R"pb(
-                md5_hash: "4ad12fa3657faa80c2b9a92d652c3721"
-                crc32c: 0x22620404)pb",
+          R"pb(
+            md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21"
+            crc32c: 0x4ad67f80)pb",
+      },
+      {
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(DisableMD5Hash(false));
+            r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
           },
+          R"pb(
+            md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21"
+            crc32c: 0x22620404)pb",
+      },
 
-          {
-              [](InsertObjectMediaRequest& r) {
-                r.set_option(DisableMD5Hash(true));
-                r.set_option(DisableCrc32cChecksum(true));
-              },
-              R"pb(
-              )pb",
+      {
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(DisableMD5Hash(true));
+            r.set_option(DisableCrc32cChecksum(true));
           },
-          {
-              [](InsertObjectMediaRequest& r) {
-                r.set_option(DisableMD5Hash(true));
-                r.set_option(DisableCrc32cChecksum(false));
-              },
-              R"pb(
-                crc32c: 0x4ad67f80)pb",
+          R"pb(
+          )pb",
+      },
+      {
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(DisableMD5Hash(true));
+            r.set_option(DisableCrc32cChecksum(false));
           },
-          {
-              [](InsertObjectMediaRequest& r) {
-                r.set_option(DisableMD5Hash(true));
-                r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
-              },
-              R"pb(
-                crc32c: 0x22620404)pb",
+          R"pb(
+            crc32c: 0x4ad67f80)pb",
+      },
+      {
+          [](InsertObjectMediaRequest& r) {
+            r.set_option(DisableMD5Hash(true));
+            r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
           },
-      };
+          R"pb(
+            crc32c: 0x22620404)pb",
+      },
+  };
 
   for (auto const& test : cases) {
     SCOPED_TRACE("Expected outcome " + test.expected_checksums);
@@ -229,7 +225,7 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestAllOptions) {
         object_checksums: {
           # See top-of-file comments for details on the magic numbers
           crc32c: 0x22620404
-          md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
+          md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
         }
       )pb",
       &expected));
