@@ -21,18 +21,23 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace {
+std::unique_ptr<internal::ObjectWriteStreambuf> MakeErrorStreambuf() {
+  return absl::make_unique<internal::ObjectWriteStreambuf>(
+      absl::make_unique<internal::ResumableUploadSessionError>(
+          Status(StatusCode::kUnimplemented, "null stream")),
+      /*max_buffer_size=*/0, internal::CreateNullHashFunction(),
+      internal::HashValues{}, internal::CreateNullHashValidator(),
+      AutoFinalizeConfig::kDisabled);
+}
+}  // namespace
 static_assert(std::is_move_assignable<ObjectWriteStream>::value,
               "storage::ObjectWriteStream must be move assignable.");
 static_assert(std::is_move_constructible<ObjectWriteStream>::value,
               "storage::ObjectWriteStream must be move constructible.");
 
 ObjectWriteStream::ObjectWriteStream()
-    : ObjectWriteStream(absl::make_unique<internal::ObjectWriteStreambuf>(
-          absl::make_unique<internal::ResumableUploadSessionError>(
-              Status(StatusCode::kUnimplemented, "null stream")),
-          /*max_buffer_size=*/0, internal::CreateNullHashFunction(),
-          internal::HashValues{}, internal::CreateNullHashValidator(),
-          AutoFinalizeConfig::kDisabled)) {}
+    : ObjectWriteStream(MakeErrorStreambuf()) {}
 
 ObjectWriteStream::ObjectWriteStream(
     std::unique_ptr<internal::ObjectWriteStreambuf> buf)
@@ -57,7 +62,8 @@ ObjectWriteStream::ObjectWriteStream(ObjectWriteStream&& rhs) noexcept
       metadata_(std::move(rhs.metadata_)),
       headers_(std::move(rhs.headers_)),
       payload_(std::move(rhs.payload_)) {
-  rhs.set_rdbuf(nullptr);
+  rhs.buf_ = MakeErrorStreambuf();
+  rhs.set_rdbuf(rhs.buf_.get());
   set_rdbuf(buf_.get());
   if (!buf_) {
     setstate(std::ios::badbit | std::ios::eofbit);
@@ -96,7 +102,11 @@ void ObjectWriteStream::CloseBuf() {
   }
 }
 
-void ObjectWriteStream::Suspend() && { buf_.reset(); }
+void ObjectWriteStream::Suspend() && {
+  ObjectWriteStream tmp;
+  swap(tmp);
+  tmp.buf_.reset();
+}
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

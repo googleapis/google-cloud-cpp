@@ -20,15 +20,20 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace {
+std::unique_ptr<internal::ObjectReadStreambuf> MakeErrorStreambuf() {
+  return absl::make_unique<internal::ObjectReadStreambuf>(
+      internal::ReadObjectRangeRequest("", ""),
+      Status(StatusCode::kUnimplemented, "null stream"));
+}
+}  // namespace
+
 static_assert(std::is_move_assignable<ObjectReadStream>::value,
               "storage::ObjectReadStream must be move assignable.");
 static_assert(std::is_move_constructible<ObjectReadStream>::value,
               "storage::ObjectReadStream must be move constructible.");
 
-ObjectReadStream::ObjectReadStream()
-    : ObjectReadStream(absl::make_unique<internal::ObjectReadStreambuf>(
-          internal::ReadObjectRangeRequest("", ""),
-          Status(StatusCode::kUnimplemented, "null stream"))) {}
+ObjectReadStream::ObjectReadStream() : ObjectReadStream(MakeErrorStreambuf()) {}
 
 ObjectReadStream::ObjectReadStream(ObjectReadStream&& rhs) noexcept
     : std::basic_istream<char>(std::move(rhs)),
@@ -42,7 +47,8 @@ ObjectReadStream::ObjectReadStream(ObjectReadStream&& rhs) noexcept
       // that derived classes can define their own move constructor and move
       // assignment.
       buf_(std::move(rhs.buf_)) {
-  rhs.set_rdbuf(nullptr);
+  rhs.buf_ = MakeErrorStreambuf();
+  rhs.set_rdbuf(rhs.buf_.get());
   set_rdbuf(buf_.get());
 }
 
