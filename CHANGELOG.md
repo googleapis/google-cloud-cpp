@@ -67,6 +67,16 @@
 
 [issue-2567]: https://github.com/googleapis/google-cloud-cpp/issues/2567
 
+### Storage:
+
+**BREAKING CHANGES**:
+* The usage of `google::cloud::internal::ObjectReadSource` has changed. If your
+  tests mock how the library uses this class you may need to update your tests.
+  We updated the [mocking examples][storage-mocking-link] to guide you in
+  changing the tests.
+
+[storage-mocking-link]: https://googleapis.dev/cpp/google-cloud-storage/latest/storage-mocking.html
+
 ### Other:
 
 **We have removed the `super/` directory:** `google-cloud-cpp` remains usable in
