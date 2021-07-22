@@ -61,9 +61,7 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
                 continue
             content = checksummed_data.content
             crc32c_hash = (
-                checksummed_data.crc32c
-                if checksummed_data.HasField("crc32c")
-                else None
+                checksummed_data.crc32c if checksummed_data.HasField("crc32c") else None
             )
             if crc32c_hash is not None:
                 actual_crc32c = crc32c.crc32(content)
@@ -126,7 +124,8 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
         # TODO(#6892) - support querying completed uploads
         upload = db.get_upload(request.upload_id, context)
         return storage_pb2.QueryWriteStatusResponse(
-            committed_size=len(upload.media), resource=upload.blob)
+            committed_size=len(upload.media), resource=upload.blob
+        )
 
 
 def run(port, database):
