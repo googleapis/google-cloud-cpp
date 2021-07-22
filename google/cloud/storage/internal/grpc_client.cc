@@ -996,8 +996,7 @@ StatusOr<std::uint32_t> GrpcClient::Crc32cToProto(std::string const& v) {
 
 std::string GrpcClient::MD5FromProto(std::string const& v) {
   if (v.empty()) return {};
-  auto binary = internal::HexDecode(v);
-  return internal::Base64Encode(binary);
+  return internal::Base64Encode(v);
 }
 
 StatusOr<std::string> GrpcClient::MD5ToProto(std::string const& v) {

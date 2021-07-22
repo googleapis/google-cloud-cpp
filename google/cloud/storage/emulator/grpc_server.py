@@ -43,26 +43,25 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
                         "Uploading to a completed upload %s" % upload.upload_id, context
                     )
                 is_resumable = True
-            elif first_message == "insert_object_spec":
+            elif first_message == "write_object_spec":
                 bucket = db.get_bucket_without_generation(
-                    request.insert_object_spec.resource.bucket, context
+                    request.write_object_spec.resource.bucket, context
                 ).metadata
                 upload = gcs_type.holder.DataHolder.init_resumable_grpc(
                     request, bucket, context
                 )
+            else:
+                print("WARNING unexpected first message %s\n" % first_message)
+                continue
             data = request.WhichOneof("data")
-            checksummed_data = None
             if data == "checksummed_data":
                 checksummed_data = request.checksummed_data
-            elif data == "reference":
-                checksummed_data = self.GetObjectMedia(
-                    data.reference, context
-                ).checksummed_data
             else:
+                print("WARNING unexpected data field %s\n" % data)
                 continue
             content = checksummed_data.content
             crc32c_hash = (
-                checksummed_data.crc32c.value
+                checksummed_data.crc32c
                 if checksummed_data.HasField("crc32c")
                 else None
             )
@@ -81,7 +80,7 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
                 break
         return upload, is_resumable
 
-    def InsertObject(self, request_iterator, context):
+    def WriteObject(self, request_iterator, context):
         db.insert_test_bucket(context)
         upload, is_resumable = self.handle_insert_object_streaming_rpc(
             request_iterator, context
@@ -94,26 +93,28 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
             if not is_resumable:
                 utils.error.missing("finish_write in request", context)
             else:
-                return storage_pb2.Object()
+                return storage_pb2.WriteObjectResponse(committed_size=len(upload.media))
         blob, _ = gcs_type.object.Object.init(
             upload.request, upload.metadata, upload.media, upload.bucket, False, context
         )
+        upload.blob = blob
         db.insert_object(upload.request, upload.bucket.name, blob, context)
-        return blob.metadata
+        return storage_pb2.WriteObjectResponse(resource=blob.metadata)
 
-    def GetObjectMedia(self, request, context):
+    def ReadObject(self, request, context):
+        # TODO(#6892) - break media in 2MiB responses
         blob = db.get_object(request, request.bucket, request.object, False, context)
-        yield storage_pb2.GetObjectMediaResponse(
+        yield storage_pb2.ReadObjectResponse(
             checksummed_data={
                 "content": blob.media,
-                "crc32c": {"value": crc32c.crc32(blob.media)},
+                "crc32c": crc32c.crc32(blob.media),
             },
             metadata=blob.metadata,
         )
 
     def StartResumableWrite(self, request, context):
         bucket = db.get_bucket_without_generation(
-            request.insert_object_spec.resource.bucket, context
+            request.write_object_spec.resource.bucket, context
         ).metadata
         upload = gcs_type.holder.DataHolder.init_resumable_grpc(
             request, bucket, context
@@ -122,10 +123,10 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
         return storage_pb2.StartResumableWriteResponse(upload_id=upload.upload_id)
 
     def QueryWriteStatus(self, request, context):
+        # TODO(#6892) - support querying completed uploads
         upload = db.get_upload(request.upload_id, context)
         return storage_pb2.QueryWriteStatusResponse(
-            committed_size=len(upload.media), complete=upload.complete
-        )
+            committed_size=len(upload.media), resource=upload.blob)
 
 
 def run(port, database):
