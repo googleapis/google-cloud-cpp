@@ -7,28 +7,28 @@
 It is possible to mock GCS bucket read and write using gmock framework, this is specially ueeful
 for developer using GCS C++ client library.
 
-### Mocking Successful call of `ReadObject`
+### Mocking Successful call of ReadObject()
 
 Mocking of ReadObject can be achieved by mocking `ObjectReadSource`. The following code snippet
 explains this
 
 @snippet storage_client_mock_samples.cc mock successful readobject
 
-### Mocking Failed call of `ReadObject`
+### Mocking Failed call of ReadObject()
 
 Mocking of ReadObject can be achieved by mocking `ObjectReadSource`. The following code snippet
 explains this
 
 @snippet storage_client_mock_samples.cc mock failed readobject
 
-### Mocking Successful call of `WriteObject`
+### Mocking Successful call of WriteObject()
 
 Mocking of ReadObject can be achieved by mocking `ObjectWriteStreambuf`. The following code snippet
 explains this
 
 @snippet storage_client_mock_samples.cc mock successful writeobject
 
-### Mocking Failed call of `WriteObject`
+### Mocking Failed call of WriteObject()
 
 Mocking of ReadObject can be achieved by mocking `ObjectWriteStreambuf`. The following code snippet
 explains this
