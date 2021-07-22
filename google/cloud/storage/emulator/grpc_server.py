@@ -50,9 +50,9 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
                 upload = gcs_type.holder.DataHolder.init_resumable_grpc(
                     request, bucket, context
                 )
-            else:
-                print("WARNING unexpected first message %s\n" % first_message)
-                continue
+            elif upload is None:
+                print("WARNING lacking first message %s\n" % first_message)
+                return None, False
             data = request.WhichOneof("data")
             if data == "checksummed_data":
                 checksummed_data = request.checksummed_data
@@ -74,6 +74,7 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
                     )
             upload.media += checksummed_data.content
             if request.finish_write:
+                print("INFO finish write in request\n")
                 upload.complete = True
                 break
         return upload, is_resumable

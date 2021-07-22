@@ -44,6 +44,7 @@ class DataHolder(types.SimpleNamespace):
             media=b"",
             complete=False,
             transfer=set(),
+            blob=None,
         )
 
     @classmethod
