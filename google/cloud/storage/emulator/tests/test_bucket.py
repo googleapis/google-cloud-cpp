@@ -316,8 +316,8 @@ class TestBucket(unittest.TestCase):
         self.assertDictEqual(
             list_result, {"kind": "storage#notifications", "items": expected}
         )
-        for id in [n["id"] for n in expected]:
-            bucket.delete_notification(id, None)
+        for n in expected:
+            bucket.delete_notification(n["id"], None)
 
 
 if __name__ == "__main__":
