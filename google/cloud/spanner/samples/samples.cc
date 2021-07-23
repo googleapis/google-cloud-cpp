@@ -3490,10 +3490,10 @@ void RunAll(bool emulator) {
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
 
-  auto random_instance =
-      google::cloud::spanner_testing::PickRandomInstance(generator, project_id);
+  auto random_instance = google::cloud::spanner_testing::PickRandomInstance(
+      generator, project_id, "NOT name:/instances/test-instance-mr-");
   if (!random_instance) {
-    throw std::runtime_error("Cannot find an instance to run the examples: " +
+    throw std::runtime_error("Cannot find an instance to run the samples: " +
                              random_instance.status().message());
   }
   std::string instance_id = *std::move(random_instance);

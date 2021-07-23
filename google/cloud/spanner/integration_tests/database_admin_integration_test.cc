@@ -64,8 +64,8 @@ class DatabaseAdminClientTest
 
     auto generator = google::cloud::internal::MakeDefaultPRNG();
 
-    auto instance_id =
-        spanner_testing::PickRandomInstance(generator, project_id);
+    auto instance_id = spanner_testing::PickRandomInstance(
+        generator, project_id, "NOT name:/instances/test-instance-mr-");
     ASSERT_STATUS_OK(instance_id);
     instance_ = Instance(project_id, *instance_id);
 
