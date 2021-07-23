@@ -363,10 +363,7 @@ def bucket_default_object_acl_delete(bucket_name, entity):
 @retry_test(method="storage.notifications.list")
 def bucket_notification_list(bucket_name):
     bucket = db.get_bucket(flask.request, bucket_name, None)
-    response = {"kind": "storage#notifications", "items": []}
-    for notification in bucket.notifications.values():
-        response["items"].append(notification)
-    return response
+    return bucket.list_notifications(None)
 
 
 @gcs.route("/b/<bucket_name>/notificationConfigs", methods=["POST"])

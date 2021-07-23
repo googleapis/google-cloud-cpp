@@ -299,6 +299,7 @@ class TestBucket(unittest.TestCase):
         request = utils.common.FakeRequest(args={}, data=json.dumps(metadata))
         bucket, _ = gcs.bucket.Bucket.init(request, None)
 
+        expected = []
         for topic in ["test-topic-1", "test-topic-2"]:
             request = utils.common.FakeRequest(
                 args={},
@@ -307,10 +308,16 @@ class TestBucket(unittest.TestCase):
             notification = bucket.insert_notification(request, None)
             self.assertEqual(notification["topic"], topic)
 
-            get = bucket.get_notification(notification["id"], None)
-            self.assertEqual(notification, get)
+            get_result = bucket.get_notification(notification["id"], None)
+            self.assertEqual(notification, get_result)
+            expected.append(notification)
 
-            bucket.delete_notification(notification["id"], None)
+        list_result = bucket.list_notifications(None)
+        self.assertDictEqual(
+            list_result, {"kind": "storage#notifications", "items": expected}
+        )
+        for id in [n["id"] for n in expected]:
+            bucket.delete_notification(id, None)
 
 
 if __name__ == "__main__":

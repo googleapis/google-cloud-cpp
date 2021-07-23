@@ -463,7 +463,6 @@ class Bucket:
         notification = {
             "kind": "storage#notification",
             "id": "notification-%d" % random.getrandbits(16),
-            "payload_format": "JSON_API_V1",
         }
         data = json.loads(request.data)
         for required_key in {"topic", "payload_format"}:
@@ -486,6 +485,12 @@ class Bucket:
 
     def delete_notification(self, notification_id, context):
         del self.notifications[notification_id]
+
+    def list_notifications(self, context):
+        response = {"kind": "storage#notifications", "items": []}
+        for notification in self.notifications.values():
+            response["items"].append(notification)
+        return response
 
     # === RESPONSE === #
 
