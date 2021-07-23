@@ -460,15 +460,24 @@ class Bucket:
     # === NOTIFICATIONS === #
 
     def insert_notification(self, request, context):
-        notification = None
-        if context is not None:
-            notification = request.notification
-        else:
-            notification = json_format.ParseDict(
-                json.loads(request.data), resources_pb2.Notification()
-            )
-        notification.id = "notification-%d" % random.getrandbits(16)
-        self.notifications[notification.id] = notification
+        notification = {
+            "kind": "storage#notification",
+            "id": "notification-%d" % random.getrandbits(16),
+        }
+        data = json.loads(request.data)
+        for required_key in {"topic", "payload_format"}:
+            value = data.pop(required_key, None)
+            if value is not None:
+                notification[required_key] = value
+            else:
+                utils.error.invalid(
+                    "Missing field in notification %s" % required_key, context
+                )
+        for key in {"event_types", "custom_attributes", "object_name_prefix"}:
+            value = data.pop(key, None)
+            if value is not None:
+                notification[key] = value
+        self.notifications[notification["id"]] = notification
         return notification
 
     def get_notification(self, notification_id, context):
@@ -476,6 +485,12 @@ class Bucket:
 
     def delete_notification(self, notification_id, context):
         del self.notifications[notification_id]
+
+    def list_notifications(self, context):
+        response = {"kind": "storage#notifications", "items": []}
+        for notification in self.notifications.values():
+            response["items"].append(notification)
+        return response
 
     # === RESPONSE === #
 

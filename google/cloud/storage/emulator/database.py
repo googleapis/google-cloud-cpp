@@ -100,12 +100,9 @@ class Database:
             "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME", "bucket"
         )
         if self.buckets.get(bucket_name) is None:
-            if context is not None:
-                request = storage_pb2.InsertBucketRequest(bucket={"name": bucket_name})
-            else:
-                request = utils.common.FakeRequest(
-                    args={}, data=json.dumps({"name": bucket_name})
-                )
+            request = utils.common.FakeRequest(
+                args={}, data=json.dumps({"name": bucket_name})
+            )
             bucket_test, _ = gcs.bucket.Bucket.init(request, context)
             self.insert_bucket(request, bucket_test, context)
             bucket_test.metadata.metageneration = 4

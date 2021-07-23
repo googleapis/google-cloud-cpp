@@ -363,32 +363,21 @@ def bucket_default_object_acl_delete(bucket_name, entity):
 @retry_test(method="storage.notifications.list")
 def bucket_notification_list(bucket_name):
     bucket = db.get_bucket(flask.request, bucket_name, None)
-    response = {"kind": "storage#notifications", "items": []}
-    for notification in bucket.notifications.values():
-        response["items"].append(
-            json_format.MessageToDict(notification, preserving_proto_field_name=True)
-        )
-    return response
+    return bucket.list_notifications(None)
 
 
 @gcs.route("/b/<bucket_name>/notificationConfigs", methods=["POST"])
 @retry_test(method="storage.notifications.insert")
 def bucket_notification_insert(bucket_name):
     bucket = db.get_bucket(flask.request, bucket_name, None)
-    notification = bucket.insert_notification(flask.request, None)
-    response = json_format.MessageToDict(notification, preserving_proto_field_name=True)
-    response["kind"] = "storage#notification"
-    return response
+    return bucket.insert_notification(flask.request, None)
 
 
 @gcs.route("/b/<bucket_name>/notificationConfigs/<notification_id>")
 @retry_test(method="storage.notifications.get")
 def bucket_notification_get(bucket_name, notification_id):
     bucket = db.get_bucket(flask.request, bucket_name, None)
-    notification = bucket.get_notification(notification_id, None)
-    response = json_format.MessageToDict(notification, preserving_proto_field_name=True)
-    response["kind"] = "storage#notification"
-    return response
+    return bucket.get_notification(notification_id, None)
 
 
 @gcs.route("/b/<bucket_name>/notificationConfigs/<notification_id>", methods=["DELETE"])
