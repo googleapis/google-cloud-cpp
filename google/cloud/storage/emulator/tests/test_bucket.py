@@ -27,125 +27,6 @@ from google.protobuf import json_format
 
 
 class TestBucket(unittest.TestCase):
-    def test_init_grpc(self):
-        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
-        bucket, projection = gcs.bucket.Bucket.init(request, "")
-        self.assertEqual(bucket.metadata.name, "bucket")
-        self.assertEqual(projection, CommonEnums.Projection.NO_ACL)
-        self.assertListEqual(
-            list(bucket.metadata.acl),
-            utils.acl.compute_predefined_bucket_acl(
-                "bucket", CommonEnums.PredefinedBucketAcl.BUCKET_ACL_PROJECT_PRIVATE, ""
-            ),
-        )
-        self.assertListEqual(
-            list(bucket.metadata.default_object_acl),
-            utils.acl.compute_predefined_default_object_acl(
-                "bucket", CommonEnums.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE, ""
-            ),
-        )
-
-        # WITH ACL
-        request = storage_pb2.InsertBucketRequest(
-            bucket={
-                "name": "bucket",
-                "acl": utils.acl.compute_predefined_bucket_acl(
-                    "bucket",
-                    CommonEnums.PredefinedBucketAcl.BUCKET_ACL_AUTHENTICATED_READ,
-                    "",
-                ),
-            }
-        )
-        bucket, projection = gcs.bucket.Bucket.init(request, "")
-        self.assertEqual(bucket.metadata.name, "bucket")
-        self.assertEqual(projection, CommonEnums.Projection.FULL)
-        self.assertEqual(
-            list(bucket.metadata.acl),
-            utils.acl.compute_predefined_bucket_acl(
-                "bucket",
-                CommonEnums.PredefinedBucketAcl.BUCKET_ACL_AUTHENTICATED_READ,
-                "",
-            ),
-        )
-        self.assertListEqual(
-            list(bucket.metadata.default_object_acl),
-            utils.acl.compute_predefined_default_object_acl(
-                "bucket", CommonEnums.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE, ""
-            ),
-        )
-
-        # WITH PREDEFINED ACL
-        request = storage_pb2.InsertBucketRequest(
-            bucket={"name": "bucket"},
-            predefined_acl=CommonEnums.PredefinedBucketAcl.BUCKET_ACL_PUBLIC_READ_WRITE,
-        )
-        bucket, projection = gcs.bucket.Bucket.init(request, "")
-        self.assertEqual(bucket.metadata.name, "bucket")
-        self.assertEqual(projection, CommonEnums.Projection.NO_ACL)
-        self.assertEqual(
-            list(bucket.metadata.acl),
-            utils.acl.compute_predefined_bucket_acl(
-                "bucket",
-                CommonEnums.PredefinedBucketAcl.BUCKET_ACL_PUBLIC_READ_WRITE,
-                "",
-            ),
-        )
-        self.assertListEqual(
-            list(bucket.metadata.default_object_acl),
-            utils.acl.compute_predefined_default_object_acl(
-                "bucket", CommonEnums.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE, ""
-            ),
-        )
-
-        # WITH ACL AND PREDEFINED ACL
-        request = storage_pb2.InsertBucketRequest(
-            bucket={
-                "name": "bucket",
-                "acl": utils.acl.compute_predefined_bucket_acl(
-                    "bucket",
-                    CommonEnums.PredefinedBucketAcl.BUCKET_ACL_AUTHENTICATED_READ,
-                    "",
-                ),
-            },
-            predefined_acl=CommonEnums.PredefinedBucketAcl.BUCKET_ACL_PRIVATE,
-        )
-        bucket, projection = gcs.bucket.Bucket.init(request, "")
-        self.assertEqual(bucket.metadata.name, "bucket")
-        self.assertEqual(projection, CommonEnums.Projection.FULL)
-        self.assertEqual(
-            list(bucket.metadata.acl),
-            utils.acl.compute_predefined_bucket_acl(
-                "bucket",
-                CommonEnums.PredefinedBucketAcl.BUCKET_ACL_AUTHENTICATED_READ,
-                "",
-            ),
-        )
-        self.assertListEqual(
-            list(bucket.metadata.default_object_acl),
-            utils.acl.compute_predefined_default_object_acl(
-                "bucket", CommonEnums.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE, ""
-            ),
-        )
-
-    def test_grpc_to_rest(self):
-        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
-        bucket, projection = gcs.bucket.Bucket.init(request, "")
-        self.assertEqual(bucket.metadata.name, "bucket")
-
-        # `REST` GET
-
-        rest_metadata = bucket.rest()
-        self.assertEqual(rest_metadata["name"], "bucket")
-        self.assertIsNone(bucket.metadata.labels.get("method"))
-
-        # `REST` PATCH
-
-        request = utils.common.FakeRequest(
-            args={}, data=json.dumps({"labels": {"method": "rest"}})
-        )
-        bucket.patch(request, None)
-        self.assertEqual(bucket.metadata.labels["method"], "rest")
-
     def test_init_rest(self):
         metadata = {
             "name": "test-bucket-name",
@@ -203,9 +84,7 @@ class TestBucket(unittest.TestCase):
         # Verify the BucketAccessControl entries have the desired fields
         metadata.pop("acl")
         acl = bucket_rest.pop("acl", None)
-        self.assertLessEqual(
-            set(["allAuthenticatedUsers"]), set([e["entity"] for e in acl])
-        )
+        self.assertLessEqual({"allAuthenticatedUsers"}, {e["entity"] for e in acl})
         self.assertIsNotNone(acl)
         for entry in acl:
             self.assertEqual(entry.pop("kind", None), "storage#bucketAccessControl")
@@ -215,17 +94,15 @@ class TestBucket(unittest.TestCase):
             # Verify the remaining keys are a subset of the expected keys
             self.assertLessEqual(
                 set(entry.keys()),
-                set(
-                    [
-                        "id",
-                        "selfLink",
-                        "email",
-                        "entityId",
-                        "domain",
-                        "projectTeam",
-                        "etag",
-                    ]
-                ),
+                {
+                    "id",
+                    "selfLink",
+                    "email",
+                    "entityId",
+                    "domain",
+                    "projectTeam",
+                    "etag",
+                },
             )
         # Verify the BucketAccessControl entries have the desired fields
         metadata.pop("defaultObjectAcl")
@@ -411,6 +288,29 @@ class TestBucket(unittest.TestCase):
         bucket.delete_default_object_acl(entity, "")
         with self.assertRaises(Exception):
             bucket.get_default_object_acl(entity, None)
+
+    def test_notification(self):
+        metadata = {
+            "name": "test-bucket-name",
+            "location": "us-central1",
+            "locationType": "REGIONAL",
+            "storageClass": "regional",
+        }
+        request = utils.common.FakeRequest(args={}, data=json.dumps(metadata))
+        bucket, _ = gcs.bucket.Bucket.init(request, None)
+
+        for topic in ["test-topic-1", "test-topic-2"]:
+            request = utils.common.FakeRequest(
+                args={},
+                data=json.dumps({"topic": topic, "payload_format": "JSON_API_V1"}),
+            )
+            notification = bucket.insert_notification(request, None)
+            self.assertEqual(notification["topic"], topic)
+
+            get = bucket.get_notification(notification["id"], None)
+            self.assertEqual(notification, get)
+
+            bucket.delete_notification(notification["id"], None)
 
 
 if __name__ == "__main__":
