@@ -50,13 +50,7 @@ class CurlDownloadRequest : public ObjectReadSource {
  public:
   explicit CurlDownloadRequest();
 
-  ~CurlDownloadRequest() override {
-    if (!factory_) {
-      return;
-    }
-    factory_->CleanupHandle(std::move(handle_));
-    factory_->CleanupMultiHandle(std::move(multi_));
-  }
+  ~CurlDownloadRequest() override;
 
   CurlDownloadRequest(CurlDownloadRequest&&) = default;
   CurlDownloadRequest& operator=(CurlDownloadRequest&& rhs) = default;
@@ -75,6 +69,9 @@ class CurlDownloadRequest : public ObjectReadSource {
    * @returns 100-Continue if the transfer is not yet completed.
    */
   StatusOr<ReadSourceResult> Read(char* buf, std::size_t n) override;
+
+  /// Debug and test only, help identify download handles.
+  void* id() const { return handle_.handle_.get(); }
 
  private:
   friend class CurlRequestBuilder;

@@ -60,6 +60,15 @@ CurlDownloadRequest::CurlDownloadRequest()
       multi_(nullptr, &curl_multi_cleanup),
       spill_(CURL_MAX_WRITE_SIZE) {}
 
+CurlDownloadRequest::~CurlDownloadRequest() {
+  if (!multi_ && !handle_.handle_) return;  // moved-from, nothing to do
+  if (!curl_closed_) (void)Close();         // may need to shutdown handles
+  if (factory_) {
+    factory_->CleanupHandle(std::move(handle_));
+    factory_->CleanupMultiHandle(std::move(multi_));
+  }
+}
+
 StatusOr<HttpResponse> CurlDownloadRequest::Close() {
   TRACE_STATE();
   // Set the the closing_ flag to trigger a return 0 from the next read
