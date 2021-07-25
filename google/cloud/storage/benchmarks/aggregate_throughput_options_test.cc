@@ -26,10 +26,12 @@ TEST(AggregateThroughputOptions, Basic) {
   auto options = ParseAggregateThroughputOptions(
       {
           "self-test",
+          "--labels=a,b,c",
           "--bucket-name=test-bucket-name",
           "--object-prefix=test/object/prefix/",
           "--thread-count=42",
           "--iteration-count=10",
+          "--repeats-per-iteration=2",
           "--read-size=4MiB",
           "--read-buffer-size=1MiB",
           "--api=XML",
@@ -39,10 +41,12 @@ TEST(AggregateThroughputOptions, Basic) {
       "");
   ASSERT_STATUS_OK(options);
   EXPECT_FALSE(options->exit_after_parse);
+  EXPECT_EQ("a,b,c", options->labels);
   EXPECT_EQ("test-bucket-name", options->bucket_name);
   EXPECT_EQ("test/object/prefix/", options->object_prefix);
   EXPECT_EQ(42, options->thread_count);
   EXPECT_EQ(10, options->iteration_count);
+  EXPECT_EQ(2, options->repeats_per_iteration);
   EXPECT_EQ(4 * kMiB, options->read_size);
   EXPECT_EQ(1 * kMiB, options->read_buffer_size);
   EXPECT_EQ(ApiName::kApiXml, options->api);
@@ -76,6 +80,10 @@ TEST(AggregateThroughputOptions, Validate) {
       {"self-test", "--bucket-name=b", "--iteration-count=0"}, ""));
   EXPECT_FALSE(ParseAggregateThroughputOptions(
       {"self-test", "--bucket-name=b", "--iteration-count=-1"}, ""));
+  EXPECT_FALSE(ParseAggregateThroughputOptions(
+      {"self-test", "--bucket-name=b", "--repeats-per-iteration=0"}, ""));
+  EXPECT_FALSE(ParseAggregateThroughputOptions(
+      {"self-test", "--bucket-name=b", "--repeats-per-iteration=-1"}, ""));
   EXPECT_FALSE(ParseAggregateThroughputOptions(
       {"self-test", "--bucket-name=b", "--api=GRPC-RAW"}, ""));
   EXPECT_FALSE(ParseAggregateThroughputOptions(
