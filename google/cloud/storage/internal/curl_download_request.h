@@ -49,13 +49,7 @@ class CurlDownloadRequest : public ObjectReadSource {
  public:
   explicit CurlDownloadRequest();
 
-  ~CurlDownloadRequest() override {
-    if (!factory_) {
-      return;
-    }
-    factory_->CleanupHandle(std::move(handle_));
-    factory_->CleanupMultiHandle(std::move(multi_));
-  }
+  ~CurlDownloadRequest() override;
 
   CurlDownloadRequest(CurlDownloadRequest&&) = default;
   CurlDownloadRequest& operator=(CurlDownloadRequest&& rhs) = default;

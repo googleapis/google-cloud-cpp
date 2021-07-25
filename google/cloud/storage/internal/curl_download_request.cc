@@ -60,6 +60,14 @@ CurlDownloadRequest::CurlDownloadRequest()
       multi_(nullptr, &curl_multi_cleanup),
       spill_(CURL_MAX_WRITE_SIZE) {}
 
+CurlDownloadRequest::~CurlDownloadRequest() {
+  if (!curl_closed_) (void)Close();
+  if (factory_) {
+    factory_->CleanupHandle(std::move(handle_));
+    factory_->CleanupMultiHandle(std::move(multi_));
+  }
+}
+
 template <typename Predicate>
 Status CurlDownloadRequest::Wait(Predicate predicate) {
   int repeats = 0;

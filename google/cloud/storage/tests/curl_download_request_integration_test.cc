@@ -30,6 +30,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
+
 std::string HttpBinEndpoint() {
   return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT")
       .value_or("https://nghttp2.org/httpbin");
@@ -70,6 +72,65 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
     delay *= 2;
   }
   EXPECT_EQ(kDownloadedLines, count);
+}
+
+// Run one attempt of the Regression7501 test. This is wrapped in a retry loop,
+// as integration tests flake due to unrelated (and unavoidable) problems, e.g.,
+// trying to setup connections.
+Status AttemptRegression7501() {
+  // Download the maximum number of lines supported by httpbin.org
+  auto constexpr kDownloadedLines = 100;
+  auto constexpr kTestPoolSize = 32;
+  auto factory =
+      std::make_shared<PooledCurlHandleFactory>(kTestPoolSize, Options{});
+
+  auto make_download = [factory] {
+    CurlRequestBuilder builder(
+        HttpBinEndpoint() + "/stream/" + std::to_string(kDownloadedLines),
+        factory);
+    return builder.BuildDownloadRequest(std::string{});
+  };
+
+  auto constexpr kBufferSize = kDownloadedLines;
+  char buffer[kBufferSize];
+
+  {
+    auto r_no_close = make_download();
+    auto read = r_no_close.Read(buffer, kBufferSize);
+    if (!read) return std::move(read).status();
+  }
+
+  {
+    auto r_partial_close = make_download();
+    auto read = r_partial_close.Read(buffer, kBufferSize);
+    if (!read) return std::move(read).status();
+    auto close = r_partial_close.Close();
+    if (!close) return std::move(close).status();
+  }
+
+  auto r_full = make_download();
+  do {
+    auto read = r_full.Read(buffer, kBufferSize);
+    if (!read) return std::move(read).status();
+    if (read->response.status_code != 100) break;
+  } while (true);
+  auto close = r_full.Close();
+  if (!close) return std::move(close).status();
+
+  return Status{};
+}
+
+/// @test Prevent regressions of #7501: re-using a stream after a partial read.
+TEST(CurlDownloadRequestTest, Regression7501) {
+  auto delay = std::chrono::seconds(1);
+  auto status = Status{};
+  for (int i = 0; i != 3; ++i) {
+    status = AttemptRegression7501();
+    if (status.ok()) break;
+    std::this_thread::sleep_for(delay);
+    delay *= 2;
+  }
+  EXPECT_THAT(status, IsOk());
 }
 
 }  // namespace
