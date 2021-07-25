@@ -87,7 +87,6 @@ using Counters = std::map<std::string, std::int64_t>;
 
 struct DownloadDetail {
   int iteration;
-  int thread_count;
   std::string peer;
   std::uint64_t bytes_downloaded;
   std::chrono::microseconds elapsed_time;
@@ -232,7 +231,7 @@ int main(int argc, char* argv[]) {
       for (auto const& d : r.details) {
         // Join the iteration details with the per-download details. That makes
         // it easier to analyze the data in external scripts.
-        std::cout << d.iteration << ',' << d.thread_count << ','
+        std::cout << d.iteration << ',' << options->thread_count << ','
                   << options->read_size << ',' << options->read_buffer_size
                   << ',' << ToString(options->api) << ','
                   << options->grpc_channel_count << ','
@@ -307,9 +306,8 @@ TaskResult DownloadTask(gcs::Client client,
       p = stream.headers().find(":curl-peer");
     }
     auto const& peer = p == stream.headers().end() ? unknown_peer : p->second;
-    result.details.push_back(DownloadDetail{iteration, options.thread_count,
-                                            peer, object_bytes, object_elapsed,
-                                            stream.status()});
+    result.details.push_back(DownloadDetail{iteration, peer, object_bytes,
+                                            object_elapsed, stream.status()});
   }
   result.elapsed_time = duration_cast<microseconds>(clock::now() - start);
   return result;
