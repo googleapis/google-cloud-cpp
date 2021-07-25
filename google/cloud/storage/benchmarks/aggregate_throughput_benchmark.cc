@@ -67,10 +67,10 @@ To run each iteration the benchmark performs the following steps:
 
 a) Split the objects into `thread-count` groups, each group being approximately
    of the same size.
-b) Start one thread to start the objects in each group.
+b) Start one thread for each group.
 c) Each thread creates a `gcs::Client`, as configured by the
    `AggregateThroughputOptions`.
-d) The thread downloads the objects in its group, discarding its data, but
+d) The thread downloads the objects in its group, discarding their data, but
    capturing the download time, size, status, and peer for each download.
 e) The thread returns the vector of results at the end of the upload.
 )""";
@@ -88,11 +88,6 @@ using Counters = std::map<std::string, std::int64_t>;
 struct DownloadDetail {
   int iteration;
   int thread_count;
-  std::int64_t read_size;
-  std::size_t read_buffer_size;
-  gcs_bm::ApiName api;
-  int grpc_channel_count;
-  std::string grpc_plugin_config;
   std::string peer;
   std::uint64_t bytes_downloaded;
   std::chrono::microseconds elapsed_time;
@@ -237,13 +232,15 @@ int main(int argc, char* argv[]) {
       for (auto const& d : r.details) {
         // Join the iteration details with the per-download details. That makes
         // it easier to analyze the data in external scripts.
-        std::cout << d.iteration << ',' << d.thread_count << ',' << d.read_size
-                  << ',' << d.read_buffer_size << ',' << ToString(d.api) << ','
-                  << d.grpc_channel_count << ',' << d.grpc_plugin_config << ','
-                  << d.status.code() << ',' << d.peer << ','
-                  << d.bytes_downloaded << ',' << d.elapsed_time.count() << ','
-                  << downloaded_bytes << ',' << usage.elapsed_time.count()
-                  << ',' << usage.cpu_time.count() << "\n";
+        std::cout << d.iteration << ',' << d.thread_count << ','
+                  << options->read_size << ',' << options->read_buffer_size
+                  << ',' << ToString(options->api) << ','
+                  << options->grpc_channel_count << ','
+                  << options->grpc_plugin_config << ',' << d.status.code()
+                  << ',' << d.peer << ',' << d.bytes_downloaded << ','
+                  << d.elapsed_time.count() << ',' << downloaded_bytes << ','
+                  << usage.elapsed_time.count() << ',' << usage.cpu_time.count()
+                  << "\n";
       }
       // Update the counters.
       for (auto const& kv : r.counters) accumulated[kv.first] += kv.second;
@@ -310,11 +307,9 @@ TaskResult DownloadTask(gcs::Client client,
       p = stream.headers().find(":curl-peer");
     }
     auto const& peer = p == stream.headers().end() ? unknown_peer : p->second;
-    result.details.push_back(
-        DownloadDetail{iteration, options.thread_count, options.read_size,
-                       options.read_buffer_size, options.api,
-                       options.grpc_channel_count, options.grpc_plugin_config,
-                       peer, object_bytes, object_elapsed, stream.status()});
+    result.details.push_back(DownloadDetail{iteration, options.thread_count,
+                                            peer, object_bytes, object_elapsed,
+                                            stream.status()});
   }
   result.elapsed_time = duration_cast<microseconds>(clock::now() - start);
   return result;
