@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/version.h"
+#include "absl/functional/function_ref.h"
 #include <chrono>
 #include <string>
 #include <vector>
@@ -96,8 +97,7 @@ class CurlDownloadRequest : public ObjectReadSource {
                              std::size_t nitems);
 
   /// Wait until a condition is met.
-  template <typename Predicate>
-  Status Wait(Predicate predicate);
+  Status Wait(absl::FunctionRef<bool()> predicate);
 
   /// Use libcurl to perform at least part of the transfer.
   StatusOr<int> PerformWork();

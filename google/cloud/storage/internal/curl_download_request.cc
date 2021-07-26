@@ -60,34 +60,6 @@ CurlDownloadRequest::CurlDownloadRequest()
       multi_(nullptr, &curl_multi_cleanup),
       spill_(CURL_MAX_WRITE_SIZE) {}
 
-template <typename Predicate>
-Status CurlDownloadRequest::Wait(Predicate predicate) {
-  int repeats = 0;
-  // We can assert that the current thread is the leader, because the
-  // predicate is satisfied, and the condition variable exited. Therefore,
-  // this thread must run the I/O event loop.
-  while (!predicate()) {
-    handle_.FlushDebug(__func__);
-    TRACE_STATE() << ", repeats=" << repeats;
-    auto running_handles = PerformWork();
-    if (!running_handles.ok()) {
-      return std::move(running_handles).status();
-    }
-    // Only wait if there are CURL handles with pending work *and* the
-    // predicate is not satisfied. Note that if the predicate is ill-defined
-    // it might continue to be unsatisfied even though the handles have
-    // completed their work.
-    if (*running_handles == 0 || predicate()) {
-      break;
-    }
-    auto status = WaitForHandles(repeats);
-    if (!status.ok()) {
-      return status;
-    }
-  }
-  return Status();
-}
-
 StatusOr<HttpResponse> CurlDownloadRequest::Close() {
   TRACE_STATE();
   // Set the the closing_ flag to trigger a return 0 from the next read
@@ -305,6 +277,27 @@ std::size_t CurlDownloadRequest::HeaderCallback(char* contents,
                                                 std::size_t size,
                                                 std::size_t nitems) {
   return CurlAppendHeaderData(received_headers_, contents, size * nitems);
+}
+
+Status CurlDownloadRequest::Wait(absl::FunctionRef<bool()> predicate) {
+  int repeats = 0;
+  // We can assert that the current thread is the leader, because the
+  // predicate is satisfied, and the condition variable exited. Therefore,
+  // this thread must run the I/O event loop.
+  while (!predicate()) {
+    handle_.FlushDebug(__func__);
+    TRACE_STATE() << ", repeats=" << repeats;
+    auto running_handles = PerformWork();
+    if (!running_handles.ok()) return std::move(running_handles).status();
+    // Only wait if there are CURL handles with pending work *and* the
+    // predicate is not satisfied. Note that if the predicate is ill-defined
+    // it might continue to be unsatisfied even though the handles have
+    // completed their work.
+    if (*running_handles == 0 || predicate()) break;
+    auto status = WaitForHandles(repeats);
+    if (!status.ok()) return status;
+  }
+  return Status();
 }
 
 StatusOr<int> CurlDownloadRequest::PerformWork() {
