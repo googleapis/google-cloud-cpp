@@ -65,6 +65,9 @@ std::string CurlSslLibraryId();
 /// Determines if the SSL library requires locking.
 bool SslLibraryNeedsLocking(std::string const& curl_ssl_id);
 
+/// Convert a HTTP version string to the CURL codes
+long VersionToCurlCode(std::string const& v);  // NOLINT(google-runtime-int)
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

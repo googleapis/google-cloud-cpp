@@ -31,6 +31,9 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::testing::Contains;
+using ::testing::Pair;
+using ::testing::StartsWith;
 
 std::string HttpBinEndpoint() {
   return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT")
@@ -140,6 +143,55 @@ TEST(CurlDownloadRequestTest, Regression7051) {
     delay *= 2;
   }
   EXPECT_THAT(status, IsOk());
+}
+
+TEST(CurlDownloadRequestTest, HttpVersion) {
+  using Headers = std::multimap<std::string, std::string>;
+  // Run one attempt and return the headers, if any.
+  auto attempt = [] {
+    Headers headers;
+    CurlRequestBuilder builder(HttpBinEndpoint() + "/get",
+                               GetDefaultCurlHandleFactory());
+    auto download = builder.BuildDownloadRequest(std::string{});
+
+    auto constexpr kBufferSize = 4096;
+    char buffer[kBufferSize];
+    do {
+      auto read = download.Read(buffer, kBufferSize);
+      if (!read) return Headers{};
+      headers.insert(read->response.headers.begin(),
+                     read->response.headers.end());
+      if (read->response.status_code != 100) break;
+    } while (true);
+    auto close = download.Close();
+    if (!close) return Headers{};
+    return headers;
+  };
+
+  struct Test {
+    std::string version;
+    std::string prefix;
+  } cases[] = {
+      // The HTTP version setting is a request, libcurl may choose a slightly
+      // different version (e.g. 1.1 when 1.0 is requested).
+      {"1.0", "http/1"},
+      {"1.1", "http/1"},
+      {"2", "http/"},  // HTTP/2 may not be compiled in
+      {"", "http/"},
+  };
+
+  for (auto const& test : cases) {
+    SCOPED_TRACE("Testing with version=<" + test.version + ">");
+    auto delay = std::chrono::seconds(1);
+    Headers headers;
+    for (int i = 0; i != 3; ++i) {
+      headers = attempt();
+      if (!headers.empty()) break;
+    }
+    std::this_thread::sleep_for(delay);
+    delay *= 2;
+    EXPECT_THAT(headers, Contains(Pair(StartsWith(test.prefix), "")));
+  }
 }
 
 }  // namespace

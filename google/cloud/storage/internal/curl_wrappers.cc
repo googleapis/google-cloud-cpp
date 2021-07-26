@@ -206,6 +206,20 @@ bool SslLibraryNeedsLocking(std::string const& curl_ssl_id) {
           curl_ssl_id.rfind("LibreSSL/2", 0) == 0);
 }
 
+long VersionToCurlCode(std::string const& v) {  // NOLINT(google-runtime-int)
+  if (v == "1.0") return CURL_HTTP_VERSION_1_0;
+  if (v == "1.1") return CURL_HTTP_VERSION_1_1;
+  // CURL_HTTP_VERSION_2_0 and CURL_HTTP_VERSION_2 are aliases.
+  if (v == "2.0" || v == "2") return CURL_HTTP_VERSION_2_0;
+  if (v == "2TLS") return CURL_HTTP_VERSION_2TLS;
+#if CURL_AT_LEAST_VERSION(7, 66, 0)
+  // google-cloud-cpp requires curl >= 7.47.0. All the previous codes exist at
+  // that version, but the next one is more recent.
+  if (v == "3") return CURL_HTTP_VERSION_3;
+#endif  // CURL >= 7.66.0
+  return CURL_HTTP_VERSION_NONE;
+}
+
 bool SslLockingCallbacksInstalled() {
 #if GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS
   return !ssl_locks.empty();

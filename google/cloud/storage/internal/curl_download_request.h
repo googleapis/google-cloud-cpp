@@ -115,6 +115,7 @@ class CurlDownloadRequest : public ObjectReadSource {
   CurlHeaders headers_;
   std::string payload_;
   std::string user_agent_;
+  std::string http_version_;
   CurlReceivedHeaders received_headers_;
   std::int32_t http_code_ = 0;
   bool logging_enabled_ = false;

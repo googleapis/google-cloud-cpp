@@ -44,6 +44,7 @@ CurlRequest CurlRequestBuilder::BuildRequest() {
   request.url_ = std::move(url_);
   request.headers_ = std::move(headers_);
   request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();
+  request.http_version_ = std::move(http_version_);
   request.handle_ = std::move(handle_);
   request.factory_ = std::move(factory_);
   request.logging_enabled_ = logging_enabled_;
@@ -58,6 +59,7 @@ CurlDownloadRequest CurlRequestBuilder::BuildDownloadRequest(
   request.url_ = std::move(url_);
   request.headers_ = std::move(headers_);
   request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();
+  request.http_version_ = std::move(http_version_);
   request.payload_ = std::move(payload);
   request.handle_ = std::move(handle_);
   request.multi_ = factory_->CreateMultiHandle();
@@ -81,6 +83,8 @@ CurlRequestBuilder& CurlRequestBuilder::ApplyClientOptions(
   auto agents = options.get<UserAgentProductsOption>();
   agents.push_back(user_agent_prefix_);
   user_agent_prefix_ = absl::StrJoin(agents, " ");
+  http_version_ =
+      std::move(options.get<storage_experimental::CurlHttpVersion>());
   download_stall_timeout_ = options.get<DownloadStallTimeoutOption>();
   return *this;
 }
