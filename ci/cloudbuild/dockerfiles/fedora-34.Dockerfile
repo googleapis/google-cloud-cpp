@@ -133,7 +133,7 @@ RUN curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
         -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
         -H. -Bcmake-out -GNinja && \
-    cmake --build cmake-out --target install && \
+    cmake --build cmake-out --target install -- -j ${NCPU} && \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
