@@ -104,7 +104,7 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
       -H. -Bcmake-out -GNinja && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU} && \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
@@ -116,7 +116,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -H. -Bcmake-out -GNinja && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU} && \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
@@ -128,7 +128,7 @@ RUN curl -sSL https://github.com/google/protobuf/archive/v3.15.8.tar.gz | \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -Hcmake -Bcmake-out -GNinja && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU} && \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
@@ -139,7 +139,7 @@ RUN curl -sSL https://github.com/c-ares/c-ares/archive/refs/tags/cares-1_17_1.ta
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -H. -Bcmake-out -GNinja && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU} && \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
@@ -150,7 +150,7 @@ RUN curl -sSL https://github.com/google/re2/archive/2020-11-01.tar.gz | \
         -DBUILD_SHARED_LIBS=ON \
         -DRE2_BUILD_TESTING=OFF \
         -H. -Bcmake-out -GNinja && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU} && \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
@@ -169,7 +169,7 @@ RUN curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
         -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
         -H. -Bcmake-out -GNinja && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU} && \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
