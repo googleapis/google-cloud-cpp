@@ -149,6 +149,7 @@ done < <(find "${INSTALL_PREFIX}" -type f -print0)
 
 for repo_root in "ci/verify_current_targets" "ci/verify_deprecated_targets"; do
   out_dir="cmake-out/$(basename "${repo_root}")-out"
+  rm -f "${out_dir}/CMakeCache.txt"
   io::log_h2 "Verifying CMake targets in repo root: ${repo_root}"
   cmake -GNinja -DCMAKE_PREFIX_PATH="${INSTALL_PREFIX}" \
     -S "${repo_root}" -B "${out_dir}" -Wno-dev

@@ -24,7 +24,7 @@ RUN dnf makecache && \
         cmake diffutils doxygen findutils gcc-c++ git \
         lcov libcxx-devel libcxxabi-devel \
         libasan libubsan libtsan libcurl-devel make ninja-build \
-        openssl-devel patch pkgconfig python python3.8 \
+        openssl-devel patch python python3.8 \
         python-pip tar unzip w3m wget which zip zlib-devel
 
 # Sets root's password to the empty string to enable users to get a root shell
@@ -37,6 +37,20 @@ RUN echo 'root:' | chpasswd
 RUN dnf makecache && dnf install -y python3-devel
 RUN pip3 install --upgrade pip
 RUN pip3 install setuptools wheel
+
+# Fedora's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
+# when handling `.pc` files with lots of `Requires:` deps, which happens with
+# Abseil, so we use the normal `pkg-config` binary, which seems to not suffer
+# from this bottleneck. For more details see
+# https://github.com/googleapis/google-cloud-cpp/issues/7052
+WORKDIR /var/tmp/build/pkg-config-cpp
+RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    ./configure --with-internal-glib && \
+    make -j ${NCPU:-4} && \
+    make install && \
+    ldconfig
+ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
 
 # Install Abseil, remove the downloaded files and the temporary artifacts
 # after a successful build to keep the image smaller (and with fewer layers)
@@ -170,7 +184,6 @@ RUN dnf makecache && dnf install -y java-latest-openjdk-devel
 
 # Some of the above libraries may have installed in /usr/local, so make sure
 # those library directories will be found.
-ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig
 RUN ldconfig /usr/local/lib*
 
 RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.10.1/bazelisk-linux-amd64" && \
