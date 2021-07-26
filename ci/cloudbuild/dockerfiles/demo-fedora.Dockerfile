@@ -21,8 +21,8 @@ ARG NCPU=4
 
 # ```bash
 RUN dnf makecache && \
-    dnf install -y ccache cmake curl gcc-c++ git make ninja-build \
-        openssl-devel patch pkgconfig unzip tar wget zip zlib-devel
+    dnf install -y ccache cmake curl findutils gcc-c++ git make ninja-build \
+        openssl-devel patch unzip tar wget zip zlib-devel
 # ```
 
 # Fedora 34 includes packages for gRPC and Protobuf, but they are not
@@ -34,11 +34,27 @@ RUN dnf makecache && \
     dnf install -y c-ares-devel re2-devel libcurl-devel
 # ```
 
+# Fedora's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
+# when handling `.pc` files with lots of `Requires:` deps, which happens with
+# Abseil. If you plan to use `pkg-config` with any of the installed artifacts,
+# you may want to use a recent version of the standard `pkg-config` binary. If
+# not, `dnf install pkgconfig` should work.
+
+# ```bash
+WORKDIR /var/tmp/build/pkg-config-cpp
+RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    ./configure --with-internal-glib && \
+    make -j ${NCPU:-4} && \
+    make install && \
+    ldconfig
+# ```
+
 # The following steps will install libraries and tools in `/usr/local`. By
 # default pkg-config does not search in these directories.
 
 # ```bash
-ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig
+ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
 # ```
 
 # #### Abseil
