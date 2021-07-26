@@ -130,12 +130,10 @@ extern "C" int CurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
 void AssertOptionSuccessImpl(
     CURLcode e, CURLoption opt, char const* where,
     absl::FunctionRef<std::string()> const& format_parameter) {
-  std::ostringstream os;
-  os << where << "() - error [" << e << "] while setting curl option [" << opt
-     << "] to [" << format_parameter()
-     << "], error description=" << curl_easy_strerror(e);
-  // TODO(#5693) - replace with GCP_LOG(FATAL).
-  google::cloud::internal::ThrowLogicError(std::move(os).str());
+  GCP_LOG(FATAL) << where << "() - error [" << e
+                 << "] while setting curl option [" << opt << "] to ["
+                 << format_parameter()
+                 << "], error description=" << curl_easy_strerror(e);
 }
 
 CurlHandle::CurlHandle() : handle_(curl_easy_init(), &curl_easy_cleanup) {

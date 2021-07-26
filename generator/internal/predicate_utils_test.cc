@@ -508,6 +508,7 @@ TEST(PredicateUtilsTest, PaginationNoRepeatedMessageField) {
 }
 
 TEST(PredicateUtilsDeathTest, PaginationRepeatedMessageOrderMismatch) {
+  google::cloud::LogSink::EnableStdClog();
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -552,8 +553,9 @@ TEST(PredicateUtilsDeathTest, PaginationRepeatedMessageOrderMismatch) {
                                                             &service_file));
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
-  EXPECT_DEATH(IsPaginated(*service_file_descriptor->service(0)->method(0)),
-               "");
+  EXPECT_DEATH_IF_SUPPORTED(
+      IsPaginated(*service_file_descriptor->service(0)->method(0)),
+      "Repeated field in paginated response must be first");
 }
 
 TEST(PredicateUtilsTest, PaginationExactlyOneRepatedStringResponse) {
@@ -628,8 +630,7 @@ class AbortingErrorCollector : public DescriptorPool::ErrorCollector {
                 const google::protobuf::Message*, ErrorLocation,
                 const std::string& error_message) override {
     GCP_LOG(FATAL) << "AddError() called unexpectedly: " << filename << " ["
-                   << element_name << "]: " << error_message << "\n";
-    std::exit(1);
+                   << element_name << "]: " << error_message;
   }
 };
 
