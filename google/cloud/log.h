@@ -437,7 +437,7 @@ class Logger<false> {
    * interface.
    */
   // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
-  constexpr bool enabled() const { return false; }
+  bool enabled() const { return false; }
   void LogTo(LogSink&) {}
   // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   NullStream Stream() { return NullStream(); }
