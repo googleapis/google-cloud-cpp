@@ -29,8 +29,7 @@ TEST(AggregateThroughputOptions, Basic) {
           "--bucket-name=test-bucket-name",
           "--object-prefix=test/object/prefix/",
           "--thread-count=42",
-          "--reporting-interval=2m",
-          "--running-time=1h",
+          "--iteration-count=10",
           "--read-size=4MiB",
           "--read-buffer-size=1MiB",
           "--api=XML",
@@ -43,8 +42,7 @@ TEST(AggregateThroughputOptions, Basic) {
   EXPECT_EQ("test-bucket-name", options->bucket_name);
   EXPECT_EQ("test/object/prefix/", options->object_prefix);
   EXPECT_EQ(42, options->thread_count);
-  EXPECT_EQ(std::chrono::minutes(2), options->reporting_interval);
-  EXPECT_EQ(std::chrono::hours(1), options->running_time);
+  EXPECT_EQ(10, options->iteration_count);
   EXPECT_EQ(4 * kMiB, options->read_size);
   EXPECT_EQ(1 * kMiB, options->read_buffer_size);
   EXPECT_EQ(ApiName::kApiXml, options->api);
@@ -74,6 +72,10 @@ TEST(AggregateThroughputOptions, Validate) {
       {"self-test", "--bucket-name=b", "--thread-count=0"}, ""));
   EXPECT_FALSE(ParseAggregateThroughputOptions(
       {"self-test", "--bucket-name=b", "--thread-count=-1"}, ""));
+  EXPECT_FALSE(ParseAggregateThroughputOptions(
+      {"self-test", "--bucket-name=b", "--iteration-count=0"}, ""));
+  EXPECT_FALSE(ParseAggregateThroughputOptions(
+      {"self-test", "--bucket-name=b", "--iteration-count=-1"}, ""));
   EXPECT_FALSE(ParseAggregateThroughputOptions(
       {"self-test", "--bucket-name=b", "--api=GRPC-RAW"}, ""));
   EXPECT_FALSE(ParseAggregateThroughputOptions(

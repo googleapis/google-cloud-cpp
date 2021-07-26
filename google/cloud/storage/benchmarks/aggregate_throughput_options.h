@@ -28,8 +28,7 @@ struct AggregateThroughputOptions {
   std::string bucket_name;
   std::string object_prefix;
   int thread_count = 1;
-  std::chrono::seconds reporting_interval = std::chrono::seconds(10);
-  std::chrono::seconds running_time = std::chrono::seconds(30);
+  int iteration_count = 1;
   std::int64_t read_size = 0;  // 0 means "read the whole file"
   std::size_t read_buffer_size = 4 * kMiB;
   ApiName api = ApiName::kApiGrpc;

@@ -43,14 +43,9 @@ ParseAggregateThroughputOptions(std::vector<std::string> const& argv,
        [&options](std::string const& val) {
          options.thread_count = std::stoi(val);
        }},
-      {"--reporting-interval", "how often the benchmark reports progress",
+      {"--iteration-count", "set the number of iterations",
        [&options](std::string const& val) {
-         options.reporting_interval = ParseDuration(val);
-       }},
-      {"--running-time",
-       "stop the benchmark once this many seconds have elapsed",
-       [&options](std::string const& val) {
-         options.running_time = ParseDuration(val);
+         options.iteration_count = std::stoi(val);
        }},
       {"--read-size", "number of bytes downloaded in each iteration",
        [&options](std::string const& val) {
@@ -111,6 +106,12 @@ ParseAggregateThroughputOptions(std::vector<std::string> const& argv,
     std::ostringstream os;
     os << "Invalid number of threads (" << options.thread_count
        << "), check your --thread-count option\n";
+    return make_status(os);
+  }
+  if (options.iteration_count <= 0) {
+    std::ostringstream os;
+    os << "Invalid number of iterations (" << options.iteration_count
+       << "), check your --iteration-count option\n";
     return make_status(os);
   }
   if (options.grpc_channel_count < 0) {

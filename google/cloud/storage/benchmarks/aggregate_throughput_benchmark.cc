@@ -51,52 +51,58 @@ It is useful when the C++ client library team collaborates with the GCS team to
 measure changes in the service's performance.
 
 The program measures the observed download throughput given a fixed "dataset",
-that is, a collection of GCS objects contained in the same bucket, with a common
-prefix. If needed, synthetic datasets can be created using the
-`create_dataset.cc` in this directory. Given a dataset and some configuration
-parameters the program will:
+that is, a collection of GCS objects contained in the same bucket. For this
+benchmark, all the objects with a common prefix are part of the same "dataset".
+If needed, synthetic datasets can be created using the `create_dataset.cc` in
+this directory. Given a dataset and some configuration parameters the program
+will:
 
-- Read the list of available objects in the dataset.
-- Launch `thread-count` *download threads*, see below for their description.
-- Every `reporting-interval` seconds the main thread will report the current
-  wall time and the total number of bytes downloaded by all the download
-  threads.
-- After `running-time` seconds the main thread ask all other threads to
-  terminate.
-- The main thread then waits for all the "download threads", collects any
-  metrics they choose to report, prints these metrics, and then exits.
+1) Read the list of available objects in the dataset.
+2) Run `iteration-count` iterations where many threads download these objects
+   in parallel.
+3) Report the effective bandwidth from each iteration.
+4) Report additional counters and metrics, such as observed bandwidth per peer.
 
-While running, each download thread performs the following loop:
+To run each iteration the benchmark performs the following steps:
 
-1) Create a gcs::Client object, see the `AggregateThroughputOptions` struct for
-   details about how this client object can be configured.
-2) Check if the program is shutting down. If so, just return some metrics.
-3) Pick one of the objects in the dataset at random.
-4) If so configured, pick a random portion of the object to download, otherwise
-   simply download the full object.
-5) Download the object, requesting `read-buffer-size` bytes from the client
-   library at a time.
-6) Once the requested buffer is received, increment a per-thread counter with
-   the number of bytes received so far.
-7) Keep track of the number of files downloaded, the gRPC peer used to download
-   the object (if applicable) and other counters.
-8) Go back to step (2) in this list.
+a) Split the objects into `thread-count` groups, each group being approximately
+   of the same size.
+b) Start one thread for each group.
+c) Each thread creates a `gcs::Client`, as configured by the
+   `AggregateThroughputOptions`.
+d) The thread downloads the objects in its group, discarding their data, but
+   capturing the download time, size, status, and peer for each download.
+e) The thread returns the vector of results at the end of the upload.
 )""";
 
 google::cloud::StatusOr<AggregateThroughputOptions> ParseArgs(int argc,
                                                               char* argv[]);
 
-struct ThreadConfig {
-  std::atomic<std::int64_t> bytes_received{0};
+struct TaskConfig {
   std::seed_seq::result_type seed;
+  std::vector<gcs::ObjectMetadata> objects;
 };
 
 using Counters = std::map<std::string, std::int64_t>;
 
-Counters RunThread(gcs::Client client,
-                   AggregateThroughputOptions const& options,
-                   std::vector<gcs::ObjectMetadata> const& objects,
-                   ThreadConfig& config);
+struct DownloadDetail {
+  int iteration;
+  std::string peer;
+  std::uint64_t bytes_downloaded;
+  std::chrono::microseconds elapsed_time;
+  google::cloud::Status status;
+};
+
+struct TaskResult {
+  std::uint64_t bytes_downloaded = 0;
+  std::chrono::microseconds elapsed_time = std::chrono::microseconds(0);
+  std::vector<DownloadDetail> details;
+  Counters counters;
+};
+
+TaskResult DownloadTask(gcs::Client client,
+                        AggregateThroughputOptions const& options,
+                        int iteration, TaskConfig const& config);
 
 template <typename Rep, typename Period>
 std::string FormatBandwidthGbPerSecond(
@@ -107,20 +113,6 @@ std::string FormatBandwidthGbPerSecond(
 
   auto const bandwidth =
       8 * static_cast<double>(bytes) / static_cast<double>(elapsed_ns.count());
-  std::ostringstream os;
-  os << std::fixed << std::setprecision(2) << bandwidth;
-  return std::move(os).str();
-}
-
-template <typename Rep, typename Period>
-std::string FormatBandwidthGiBPerSecond(
-    std::uintmax_t bytes, std::chrono::duration<Rep, Period> elapsed) {
-  using ::std::chrono::seconds;
-  auto const elapsed_s = std::chrono::duration_cast<seconds>(elapsed);
-  if (elapsed_s == seconds(0)) return "NaN";
-
-  auto const bandwidth = static_cast<double>(bytes) / gcs_bm::kGiB /
-                         static_cast<double>(elapsed_s.count());
   std::ostringstream os;
   os << std::fixed << std::setprecision(2) << bandwidth;
   return std::move(os).str();
@@ -179,69 +171,89 @@ int main(int argc, char* argv[]) {
             << "\n# Bucket Name: " << options->bucket_name
             << "\n# Object Prefix: " << options->object_prefix
             << "\n# Thread Count: " << options->thread_count
-            << "\n# Reporting Interval: "
-            << absl::FromChrono(options->reporting_interval)
-            << "\n# Running Time: " << absl::FromChrono(options->running_time)
+            << "\n# Iterations: " << options->iteration_count
             << "\n# Read Size: " << options->read_size
             << "\n# Read Buffer Size: " << options->read_buffer_size
             << "\n# API: " << gcs_bm::ToString(options->api)
             << "\n# gRPC Channel Count: " << options->grpc_channel_count
+            << "\n# gRPC Plugin Config: " << options->grpc_plugin_config
             << "\n# Build Info: " << notes
             << "\n# Object Count: " << objects.size()
             << "\n# Dataset size: " << FormatSize(dataset_size) << std::endl;
 
-  auto configs = [](std::size_t count) {
+  auto configs = [](std::size_t count,
+                    std::vector<gcs::ObjectMetadata> objects) {
     std::random_device rd;
     std::vector<std::seed_seq::result_type> seeds(count);
     std::seed_seq({rd(), rd(), rd()}).generate(seeds.begin(), seeds.end());
 
-    std::vector<ThreadConfig> config(seeds.size());
+    std::vector<TaskConfig> config(seeds.size());
     for (std::size_t i = 0; i != config.size(); ++i) config[i].seed = seeds[i];
+    for (std::size_t i = 0; i != objects.size(); ++i) {
+      auto const target = i % config.size();
+      config[target].objects.push_back(std::move(objects[i]));
+    }
     return config;
-  }(options->thread_count);
+  }(options->thread_count, std::move(objects));
 
-  std::cout << "CurrentTime,BytesReceived,CpuTimeMicroseconds\n"
-            << current_time() << ",0,0\n";
-
-  std::vector<std::future<Counters>> tasks(configs.size());
-  std::transform(configs.begin(), configs.end(), tasks.begin(),
-                 [&](ThreadConfig& c) {
-                   return std::async(std::launch::async, RunThread, client,
-                                     *options, objects, std::ref(c));
-                 });
-
-  auto accumulate_bytes_received = [&] {
-    std::int64_t bytes_received = 0;
-    for (auto const& t : configs) bytes_received += t.bytes_received.load();
-    return bytes_received;
+  auto accumulate_bytes_downloaded = [](std::vector<TaskResult> const& r) {
+    return std::accumulate(r.begin(), r.end(), std::int64_t{0},
+                           [](std::int64_t a, TaskResult const& b) {
+                             return a + b.bytes_downloaded;
+                           });
   };
 
-  using clock = std::chrono::steady_clock;
-  auto deadline = clock::now() + options->running_time;
-  auto timer = Timer::PerProcess();
-  for (auto now = clock::now(); now < deadline; now = clock::now()) {
-    std::this_thread::sleep_until(
-        (std::min)(now + options->reporting_interval, deadline));
+  Counters accumulated;
+  std::cout << "Iteration,ThreadCount,ReadSize,ReadBufferSize,Api,"
+               "GrpcChannelCount,GrpcPluginConfig,StatusCode,Peer,"
+               "BytesDownloaded,ElapsedMicroseconds,IterationBytes,"
+               "IterationElapsedMicroseconds,IterationCpuMicroseconds\n";
+  for (int i = 0; i != options->iteration_count; ++i) {
+    auto timer = Timer::PerProcess();
+    std::vector<std::future<TaskResult>> tasks(configs.size());
+    std::transform(configs.begin(), configs.end(), tasks.begin(),
+                   [&](TaskConfig const& c) {
+                     return std::async(std::launch::async, DownloadTask, client,
+                                       *options, i, std::cref(c));
+                   });
+    std::vector<TaskResult> iteration_results(configs.size());
+    std::transform(std::make_move_iterator(tasks.begin()),
+                   std::make_move_iterator(tasks.end()),
+                   iteration_results.begin(),
+                   [](std::future<TaskResult> f) { return f.get(); });
     auto const usage = timer.Sample();
-    std::cout << current_time() << "," << accumulate_bytes_received() << ","
-              << usage.cpu_time.count() << std::endl;
+    auto const downloaded_bytes =
+        accumulate_bytes_downloaded(iteration_results);
+
+    // Print the results after each iteration. Makes it possible to interrupt
+    // the benchmark in the middle and still get some data.
+    for (auto const& r : iteration_results) {
+      for (auto const& d : r.details) {
+        // Join the iteration details with the per-download details. That makes
+        // it easier to analyze the data in external scripts.
+        std::cout << d.iteration << ',' << options->thread_count << ','
+                  << options->read_size << ',' << options->read_buffer_size
+                  << ',' << ToString(options->api) << ','
+                  << options->grpc_channel_count << ','
+                  << options->grpc_plugin_config << ',' << d.status.code()
+                  << ',' << d.peer << ',' << d.bytes_downloaded << ','
+                  << d.elapsed_time.count() << ',' << downloaded_bytes << ','
+                  << usage.elapsed_time.count() << ',' << usage.cpu_time.count()
+                  << "\n";
+      }
+      // Update the counters.
+      for (auto const& kv : r.counters) accumulated[kv.first] += kv.second;
+    }
+    // After each iteration print a human-readable summary. Flush it because
+    // the operator of these benchmarks (coryan@) is an impatient person.
+    auto const bandwidth =
+        FormatBandwidthGbPerSecond(downloaded_bytes, usage.elapsed_time);
+    std::cout << "# " << current_time() << " downloaded=" << downloaded_bytes
+              << " cpu_time=" << absl::FromChrono(usage.cpu_time)
+              << " elapsed_time=" << absl::FromChrono(usage.elapsed_time)
+              << " Gbit/s=" << bandwidth << std::endl;
   }
 
-  Counters accumulated;
-  for (auto& t : tasks) {
-    auto counters = t.get();
-    for (auto const& kv : counters) accumulated[kv.first] += kv.second;
-  }
-  auto const usage = timer.Sample();
-  auto const bytes_received = accumulate_bytes_received();
-  std::cout << "# Bytes Received: " << FormatSize(bytes_received)
-            << "\n# Elapsed Time: " << absl::FromChrono(usage.elapsed_time)
-            << "\n# CPU Time: " << absl::FromChrono(usage.cpu_time)
-            << "\n# Bandwidth: "
-            << FormatBandwidthGbPerSecond(bytes_received, usage.elapsed_time)
-            << "Gbit/s  "
-            << FormatBandwidthGiBPerSecond(bytes_received, usage.elapsed_time)
-            << "GiB/s\n";
   for (auto& kv : accumulated) {
     std::cout << "# counter " << kv.first << ": " << kv.second << "\n";
   }
@@ -250,47 +262,55 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
-Counters RunThread(gcs::Client client,
-                   AggregateThroughputOptions const& options,
-                   std::vector<gcs::ObjectMetadata> const& objects,
-                   ThreadConfig& config) {
-  using clock = std::chrono::steady_clock;
-  auto const deadline = clock::now() + options.running_time;
-  auto generator = std::mt19937_64(config.seed);
-  auto index =
-      std::uniform_int_distribution<std::size_t>(0, objects.size() - 1);
+TaskResult DownloadTask(gcs::Client client,
+                        AggregateThroughputOptions const& options,
+                        int iteration, TaskConfig const& config) {
+  TaskResult result;
   std::vector<char> buffer(options.read_buffer_size);
   auto const buffer_size = static_cast<std::streamsize>(buffer.size());
-  Counters counters{{"download-count", 0}};
+  auto generator = std::mt19937_64(config.seed);
   // Using IfGenerationNotMatch(0) triggers JSON, as this feature is not
   // supported by XML.  Using IfGenerationNotMatch() -- without a value -- has
   // no effect.
   auto xml_hack = options.api == ApiName::kApiJson
                       ? gcs::IfGenerationNotMatch(0)
                       : gcs::IfGenerationNotMatch();
-  while (clock::now() < deadline) {
-    auto const& object = objects[index(generator)];
+
+  using clock = std::chrono::steady_clock;
+  using std::chrono::duration_cast;
+  using std::chrono::microseconds;
+  auto const start = clock::now();
+  auto const unknown_peer = std::string{"unknown"};
+  for (auto const& object : config.objects) {
+    auto const object_start = clock::now();
+    auto object_bytes = std::uint64_t{0};
     auto const object_size = static_cast<std::int64_t>(object.size());
     auto range = gcs::ReadRange();
     if (options.read_size != 0 && options.read_size < object_size) {
-      auto start = std::uniform_int_distribution<std::int64_t>(
+      auto read_start = std::uniform_int_distribution<std::int64_t>(
           0, object_size - options.read_size);
-      range = gcs::ReadRange(start(generator), options.read_size);
+      range = gcs::ReadRange(read_start(generator), options.read_size);
     }
     auto stream = client.ReadObject(object.bucket(), object.name(),
                                     gcs::Generation(object.generation()), range,
                                     xml_hack);
     while (stream.read(buffer.data(), buffer_size)) {
-      config.bytes_received += stream.gcount();
+      object_bytes += stream.gcount();
     }
     stream.Close();
-    ++counters["download-count"];
-    auto peer = stream.headers().find(":grpc-context-peer");
-    if (peer != stream.headers().end()) {
-      ++counters[peer->first + "/" + peer->second];
+    result.bytes_downloaded += object_bytes;
+    auto const object_elapsed =
+        duration_cast<microseconds>(clock::now() - object_start);
+    auto p = stream.headers().find(":grpc-context-peer");
+    if (p == stream.headers().end()) {
+      p = stream.headers().find(":curl-peer");
     }
+    auto const& peer = p == stream.headers().end() ? unknown_peer : p->second;
+    result.details.push_back(DownloadDetail{iteration, peer, object_bytes,
+                                            object_elapsed, stream.status()});
   }
-  return counters;
+  result.elapsed_time = duration_cast<microseconds>(clock::now() - start);
+  return result;
 }
 
 using ::google::cloud::internal::GetEnv;
@@ -319,20 +339,20 @@ google::cloud::StatusOr<AggregateThroughputOptions> SelfTest(
           "--bucket-name=" + bucket_name,
           "--object-prefix=aggregate-throughput-benchmark/",
           "--thread-count=1",
-          "--reporting-interval=5s",
-          "--running-time=15s",
+          "--iteration-count=1",
           "--read-size=32KiB",
           "--read-buffer-size=16KiB",
           "--api=JSON",
+          "--grpc-channel-count=1",
+          "--grpc-plugin-config=dp",
       },
       kDescription);
 }
 
 google::cloud::StatusOr<AggregateThroughputOptions> ParseArgs(int argc,
                                                               char* argv[]) {
-  bool auto_run =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
-          .value_or("") == "yes";
+  auto const auto_run =
+      GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES").value_or("") == "yes";
   if (auto_run) return SelfTest(argv[0]);
 
   return gcs_bm::ParseAggregateThroughputOptions({argv, argv + argc},
