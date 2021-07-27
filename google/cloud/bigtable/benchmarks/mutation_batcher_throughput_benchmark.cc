@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/command_line_parsing.h"
 #include "google/cloud/testing_util/timer.h"
 #include "absl/time/time.h"
+#include <algorithm>
 #include <chrono>
 #include <iomanip>
 #include <sstream>
