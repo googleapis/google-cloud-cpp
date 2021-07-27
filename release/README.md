@@ -99,11 +99,6 @@ judgment.
 
 ## Creating the release
 
-> :warning: the `release.sh` script was broken as of 2021-07.
-> See [#6682] for details
-
-[#6682]: https://github.com/googleapis/google-cloud-cpp/issues/6682
-
 We next need to create the release tag, the release branch, and create the
 release in the GitHub UI. We use a script ([`release/release.sh`]) to automate
 said steps.
@@ -112,8 +107,8 @@ said steps.
 
 *No PR is needed for this step.*
 
-First run the following command -- which will *NOT* make any changes to any
-repos -- and verify that the output and *version numbers* look correct.
+First run the following command -- which will *NOT* make any changes to the
+repo -- and verify that the output and *version numbers* look correct.
 
 ```bash
 $ release/release.sh googleapis/google-cloud-cpp

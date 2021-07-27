@@ -1,11 +1,24 @@
 #!/bin/bash
 #
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 # Usage:
 #   $ release.sh [-f] <organization/project-name> [<new-version>]
 #
 #   Args:
 #     organization/project-name    Required. The GitHub repo to release.
-#
 #     new-version                  Optional. The new version number to use,
 #                                  specified as M.N.0. If not specified, the
 #                                  new version will be computed from existing
@@ -27,8 +40,8 @@
 # Before running this script the user should make sure the CHANGELOG.md on
 # main is up-to-date with the release notes for the new release that will
 # happen. Then run this script. After running this script, the user must still
-# go to the GH UI where the new release will exist as a "pre-release", and edit
-# the release notes.
+# go to the GH UI where the new release will exist as a "pre-release", confirm
+# that everything looks OK, then mark the release as not pre-release.
 #
 # Examples:
 #
@@ -38,16 +51,16 @@
 #   # NO CHANGES ARE PUSHED. Shows what commands would be run.
 #   $ release.sh googleapis/google-cloud-cpp 2.0.0
 #
-#   # PUSHES CHANGES to release -spanner
+#   # PUSHES CHANGES.
 #   $ release.sh -f googleapis/google-cloud-cpp
 #
-#   # PUSHES CHANGES to release -spanner, setting its new version to 2.0.0
-#   $ release.sh -f googleapis/google-cloud-cpp 2.0.0
+#   # PUSHES CHANGES to your fork
+#   $ release.sh -f <my-gh-username>/google-cloud-cpp
 
 set -eu
 
 # Extracts all the documentation at the top of this file as the usage text.
-USAGE="$(sed -n '3,/^$/s/^# \?//p' "$0")"
+USAGE="$(sed -n '17,/^$/s/^# \?//p' "$0")"
 readonly USAGE
 
 # Takes an optional list of strings to be printed with a trailing newline and
@@ -77,21 +90,21 @@ done
 shift $((OPTIND - 1))
 declare -r FORCE_FLAG
 
-PROJECT_ARG=""
+REPO_ARG=""
 VERSION_ARG=""
 if [[ $# -eq 1 ]]; then
-  PROJECT_ARG="$1"
+  REPO_ARG="$1"
 elif [[ $# -eq 2 ]]; then
-  PROJECT_ARG="$1"
+  REPO_ARG="$1"
   VERSION_ARG="$2"
 else
   die_with_message "Invalid arguments" "${USAGE}"
 fi
-declare -r PROJECT_ARG
+declare -r REPO_ARG
 declare -r VERSION_ARG
 
-readonly CLONE_URL="git@github.com:${PROJECT_ARG}.git"
-TMP_DIR="$(mktemp -d "/tmp/${PROJECT_ARG//\//-}-release.XXXXXXXX")"
+readonly CLONE_URL="git@github.com:${REPO_ARG}"
+TMP_DIR="$(mktemp -d "/tmp/${REPO_ARG//\//-}-release.XXXXXXXX")"
 readonly TMP_DIR
 readonly REPO_DIR="${TMP_DIR}/repo"
 
@@ -153,23 +166,24 @@ function exit_handler() {
 }
 trap exit_handler EXIT
 
-# We use github's "hub" command to create the release on on the GH website, so
-# we make sure it's installed early on so we don't fail after completing part
-# of the release. We also use 'hub' to do the clone so that the user is asked
-# to authenticate at the beginning of the process rather than at the end.
-if ! command -v hub >/dev/null; then
+# We use github's official `gh` command to create the release on on the GH
+# website, so we make sure it's installed early on so we don't fail after
+# completing part of the release. 
+if ! command -v gh >/dev/null; then
   die_with_message \
-    "Can't find 'hub' command" \
-    "Maybe run: sudo apt install hub" \
-    "Or build it from https://github.com/github/hub"
+    "Can't find 'gh' command." \
+    "You can build from source or download a binary from" \
+    "https://github.com/cli/cli"
 fi
+# Makes sure auth works, else fails
+gh auth status
 
-banner "Starting release for ${PROJECT_ARG} (${CLONE_URL})"
+banner "Starting release for ${REPO_ARG} (${CLONE_URL})"
 # Only clones the last 90 days worth of commits, which should be more than
 # enough to get the most recent release tags.
 SINCE="$(date --date="90 days ago" +"%Y-%m-%d")"
 readonly SINCE
-hub clone --shallow-since="${SINCE}" "${PROJECT_ARG}" "${REPO_DIR}"
+git clone --tags --shallow-since="${SINCE}" "${CLONE_URL}" "${REPO_DIR}"
 cd "${REPO_DIR}"
 
 # Figures out the most recent tagged version, and computes the next version.
@@ -209,20 +223,19 @@ banner "Creating and pushing branch ${NEW_BRANCH}"
 run git checkout -b "${NEW_BRANCH}" "${NEW_TAG}"
 run git push --set-upstream origin "${NEW_BRANCH}"
 
-banner "Using release notes for ${NEW_TAG}"
+banner "Getting release notes for ${NEW_TAG}"
 RELEASE_NOTES="$(get_release_notes "${NEW_TAG}")"
 readonly RELEASE_NOTES
-echo "${RELEASE_NOTES}"
+echo "got release notes"
 
 banner "Creating release"
-run hub release create \
+run gh -R "${REPO_ARG}" release create \
   --prerelease \
-  --file=<(printf "%s\n\n%s" "${NEW_TAG} Release" "${RELEASE_NOTES}") \
+  --notes-file=<(printf "%s\n\n%s" "${NEW_TAG} Release" "${RELEASE_NOTES}") \
   "${NEW_TAG}"
 
 banner "Success!"
-readonly release_fmt="%n date: %cI%n  url: %U%nstate: %S%ntitle: %t%n"
-run hub release show --format="${release_fmt}" "${NEW_TAG}"
+run gh -R "${REPO_ARG}" release view "${NEW_TAG}"
 
 # Clean up
 if [[ "${TMP_DIR}" == /tmp/* ]]; then
