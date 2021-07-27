@@ -243,7 +243,7 @@ std::size_t CurlDownloadRequest::WriteCallback(void* ptr, std::size_t size,
   if (buffer_offset_ >= buffer_size_) {
     TRACE_STATE() << " *** PAUSING HANDLE ***";
     paused_ = true;
-    return CURL_READFUNC_PAUSE;
+    return CURL_WRITEFUNC_PAUSE;
   }
 
   // Use the spill buffer first, if there is any...
@@ -252,7 +252,7 @@ std::size_t CurlDownloadRequest::WriteCallback(void* ptr, std::size_t size,
   if (free == 0) {
     TRACE_STATE() << " *** PAUSING HANDLE ***";
     paused_ = true;
-    return CURL_READFUNC_PAUSE;
+    return CURL_WRITEFUNC_PAUSE;
   }
   TRACE_STATE() << ", n=" << size * nmemb << ", free=" << free;
 
