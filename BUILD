@@ -114,14 +114,14 @@ cc_library(
 )
 
 cc_library(
-    name = "experimental-iam",
+    name = "iam",
     deps = [
         "//google/cloud/iam:google_cloud_cpp_iam",
     ],
 )
 
 cc_library(
-    name = "experimental-iam-mocks",
+    name = "iam-mocks",
     deps = [
         "//google/cloud/iam:google_cloud_cpp_iam_mocks",
     ],
