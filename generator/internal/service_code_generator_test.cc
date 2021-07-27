@@ -78,8 +78,7 @@ class AbortingErrorCollector : public DescriptorPool::ErrorCollector {
                 const google::protobuf::Message*, ErrorLocation,
                 const std::string& error_message) override {
     GCP_LOG(FATAL) << "AddError() called unexpectedly: " << filename << " ["
-                   << element_name << "]: " << error_message << "\n";
-    std::exit(1);
+                   << element_name << "]: " << error_message;
   }
 };
 

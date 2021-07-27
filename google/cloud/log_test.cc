@@ -229,7 +229,7 @@ TEST(LogSinkTest, LogCheckCounter) {
   EXPECT_CALL(*backend, ProcessWithOwnership).Times(2);
   sink.AddBackend(backend);
   GOOGLE_CLOUD_CPP_LOG_I(GCP_LS_ALERT, sink) << "count is " << counter;
-  GOOGLE_CLOUD_CPP_LOG_I(GCP_LS_FATAL, sink) << "count is " << counter;
+  GOOGLE_CLOUD_CPP_LOG_I(GCP_LS_CRITICAL, sink) << "count is " << counter;
   EXPECT_EQ(2, counter.count);
 }
 
@@ -290,6 +290,11 @@ TEST(LogSinkTest, DisabledLogsMakeNoCalls) {
   GOOGLE_CLOUD_CPP_LOG_I(GCP_LS_WARNING, sink) << "count is " << caller();
   // With no backends, we expect no calls to the expressions in the log line.
   EXPECT_EQ(0, counter);
+}
+
+TEST(LogFatalTest, NoReturn) {
+  LogSink::EnableStdClog();
+  EXPECT_DEATH_IF_SUPPORTED(GCP_LOG(FATAL) << "fatal message", "fatal message");
 }
 
 }  // namespace

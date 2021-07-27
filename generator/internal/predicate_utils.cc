@@ -82,8 +82,7 @@ DeterminePagination(google::protobuf::MethodDescriptor const& method) {
     if (min_field_number != std::get<2>(repeated_message_fields[0])) {
       GCP_LOG(FATAL) << "Repeated field in paginated response must be first "
                         "appearing and lowest field number: "
-                     << method.full_name() << std::endl;
-      std::exit(1);
+                     << method.full_name();
     }
   }
   return std::make_pair(std::get<0>(repeated_message_fields[0]),

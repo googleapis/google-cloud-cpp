@@ -72,8 +72,7 @@ std::string CppTypeToString(FieldDescriptor const* field) {
       return ProtoNameToCppName(field->message_type()->full_name());
   }
   GCP_LOG(FATAL) << "FieldDescriptor " << std::string(field->cpp_type_name())
-                 << " not handled.";
-  std::exit(1);
+                 << " not handled";
 }
 
 std::string FormatDoxygenLink(google::protobuf::Descriptor const& message_type,
@@ -238,29 +237,23 @@ void SetResourceRoutingMethodVars(
 
 std::string DefaultIdempotencyFromHttpOperation(
     google::protobuf::MethodDescriptor const& method) {
-  if (!method.options().HasExtension(google::api::http)) {
-    // if no http option exists, opt for more conservative.
-    return "kNonIdempotent";
+  if (method.options().HasExtension(google::api::http)) {
+    google::api::HttpRule http_rule =
+        method.options().GetExtension(google::api::http);
+    switch (http_rule.pattern_case()) {
+      case google::api::HttpRule::kGet:
+      case google::api::HttpRule::kPut:
+        return "kIdempotent";
+      case google::api::HttpRule::kPost:
+      case google::api::HttpRule::kDelete:
+      case google::api::HttpRule::kPatch:
+        break;
+      default:
+        GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
+                       << ": google::api::HttpRule not handled";
+    }
   }
-
-  google::api::HttpRule http_rule =
-      method.options().GetExtension(google::api::http);
-
-  switch (http_rule.pattern_case()) {
-    case google::api::HttpRule::kGet:
-    case google::api::HttpRule::kPut:
-      return "kIdempotent";
-      break;
-    case google::api::HttpRule::kPost:
-    case google::api::HttpRule::kDelete:
-    case google::api::HttpRule::kPatch:
-      return "kNonIdempotent";
-      break;
-    default:
-      GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
-                     << ": google::api::HttpRule not handled" << std::endl;
-      std::exit(1);
-  }
+  return "kNonIdempotent";
 }
 
 std::string ChompByValue(std::string const& s) {
@@ -274,19 +267,18 @@ std::string EscapePrinterDelimiter(std::string const& text) {
 std::string FormatClassCommentsFromServiceComments(
     google::protobuf::ServiceDescriptor const& service) {
   google::protobuf::SourceLocation service_source_location;
-  if (service.GetSourceLocation(&service_source_location) &&
-      !service_source_location.leading_comments.empty()) {
-    std::string doxygen_formatted_comments =
-        absl::StrCat("/**\n *",
-                     absl::StrReplaceAll(
-                         ChompByValue(service_source_location.leading_comments),
-                         {{"\n\n", "\n *\n * "}, {"\n", "\n * "}}),
-                     "\n */");
-    return absl::StrReplaceAll(doxygen_formatted_comments, {{"*  ", "* "}});
+  if (!service.GetSourceLocation(&service_source_location) ||
+      service_source_location.leading_comments.empty()) {
+    GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << service.full_name()
+                   << " no leading_comments to format";
   }
-  GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << service.full_name()
-                 << " no leading_comments to format.\n";
-  std::exit(1);
+  std::string doxygen_formatted_comments =
+      absl::StrCat("/**\n *",
+                   absl::StrReplaceAll(
+                       ChompByValue(service_source_location.leading_comments),
+                       {{"\n\n", "\n *\n * "}, {"\n", "\n * "}}),
+                   "\n */");
+  return absl::StrReplaceAll(doxygen_formatted_comments, {{"*  ", "* "}});
 }
 
 std::string FormatApiMethodSignatureParameters(
@@ -367,8 +359,7 @@ absl::optional<ResourceRoutingInfo> ParseResourceRoutingHeader(
       break;
     default:
       GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
-                     << ": google::api::HttpRule not handled" << std::endl;
-      std::exit(1);
+                     << ": google::api::HttpRule not handled";
   }
 
   static std::regex const kUrlPatternRegex(R"(.*\{(.*)=(.*)\}.*)");
@@ -381,35 +372,34 @@ std::string FormatMethodCommentsFromRpcComments(
     google::protobuf::MethodDescriptor const& method,
     MethodParameterStyle parameter_style) {
   google::protobuf::SourceLocation method_source_location;
-  if (method.GetSourceLocation(&method_source_location) &&
-      !method_source_location.leading_comments.empty()) {
-    std::string parameter_comment_string;
-    if (parameter_style == MethodParameterStyle::kApiMethodSignature) {
-      parameter_comment_string = FormatApiMethodSignatureParameters(method);
-    } else {
-      parameter_comment_string =
-          FormatProtobufRequestParameters(method, "$googleapis_commit_hash$");
-    }
-
-    std::string doxygen_formatted_function_comments = absl::StrReplaceAll(
-        EscapePrinterDelimiter(method_source_location.leading_comments),
-        {{"\n", "\n   *"}});
-
-    std::string return_comment_string;
-    if (IsLongrunningOperation(method)) {
-      return_comment_string =
-          "   * @return $method_longrunning_deduced_return_doxygen_link$\n";
-    } else if (!IsResponseTypeEmpty(method) && !IsPaginated(method)) {
-      return_comment_string = "   * @return $method_return_doxygen_link$\n";
-    }
-
-    return absl::StrCat("  /**\n   *", doxygen_formatted_function_comments,
-                        "\n", parameter_comment_string, return_comment_string,
-                        "   */\n");
+  if (!method.GetSourceLocation(&method_source_location) ||
+      method_source_location.leading_comments.empty()) {
+    GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
+                   << " no leading_comments to format";
   }
-  GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
-                 << " no leading_comments to format.\n";
-  std::exit(1);
+  std::string parameter_comment_string;
+  if (parameter_style == MethodParameterStyle::kApiMethodSignature) {
+    parameter_comment_string = FormatApiMethodSignatureParameters(method);
+  } else {
+    parameter_comment_string =
+        FormatProtobufRequestParameters(method, "$googleapis_commit_hash$");
+  }
+
+  std::string doxygen_formatted_function_comments = absl::StrReplaceAll(
+      EscapePrinterDelimiter(method_source_location.leading_comments),
+      {{"\n", "\n   *"}});
+
+  std::string return_comment_string;
+  if (IsLongrunningOperation(method)) {
+    return_comment_string =
+        "   * @return $method_longrunning_deduced_return_doxygen_link$\n";
+  } else if (!IsResponseTypeEmpty(method) && !IsPaginated(method)) {
+    return_comment_string = "   * @return $method_return_doxygen_link$\n";
+  }
+
+  return absl::StrCat("  /**\n   *", doxygen_formatted_function_comments, "\n",
+                      parameter_comment_string, return_comment_string,
+                      "   */\n");
 }
 
 VarsDictionary CreateServiceVars(
