@@ -61,8 +61,7 @@ CurlDownloadRequest::CurlDownloadRequest()
       spill_(CURL_MAX_WRITE_SIZE) {}
 
 CurlDownloadRequest::~CurlDownloadRequest() {
-  if (!multi_ && !handle_.handle_) return;  // moved-from, nothing to do
-  if (!curl_closed_) (void)Close();         // may need to shutdown handles
+  CleanupHandles();
   if (factory_) {
     factory_->CleanupHandle(std::move(handle_));
     factory_->CleanupMultiHandle(std::move(multi_));
@@ -70,44 +69,33 @@ CurlDownloadRequest::~CurlDownloadRequest() {
 }
 
 StatusOr<HttpResponse> CurlDownloadRequest::Close() {
+  if (curl_closed_) return HttpResponse{http_code_, {}, received_headers_};
   TRACE_STATE();
   // Set the the closing_ flag to trigger a return 0 from the next read
+
   // callback, see the comments in the header file for more details.
   closing_ = true;
-
-  paused_ = false;
-  (void)handle_.EasyPause(CURLPAUSE_RECV_CONT);
   TRACE_STATE();
 
-  // Block until that callback is made.
-  auto status = Wait([this] { return curl_closed_; });
-  if (!status.ok()) {
-    TRACE_STATE() << ", status=" << status;
-    return status;
-  }
-  TRACE_STATE();
+  CleanupHandles();
 
-  // Now remove the handle from the CURLM* interface and wait for the response.
-  if (in_multi_) {
-    auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
-    in_multi_ = false;
-    status = AsStatus(error, __func__);
-    if (!status.ok()) {
-      TRACE_STATE() << ", status=" << status;
-      return status;
-    }
+  if (!curl_closed_) {
+    // Ignore errors. Except in some really unfortunate cases [*] we are closing
+    // the download early. That is done [**] by having the write callback return
+    // 0, which always results in libcurl returning `CURLE_WRITE_ERROR`.
+    //
+    // [*]: the only other case would be the case where a download completes
+    //   and the handle is paused because just the right number of bytes
+    //   arrived to satisfy the last `Read()` request. In that case ignoring the
+    //   errors seems sensible too, the download completed, what is the problem?
+    // [**]: this is the recommended practice to shutdown a download early. See
+    //   the comments in the header file and elsewhere in this file.
+    (void)handle_.EasyPerform();
+    curl_closed_ = true;
+    TRACE_STATE();
+    OnTransferDone();
   }
-
-  auto http_code = handle_.GetResponseCode();
-  if (!http_code.ok()) {
-    TRACE_STATE() << ", http_code.status=" << http_code.status();
-    return http_code.status();
-  }
-  TRACE_STATE() << ", http_code.status=" << http_code.status()
-                << ", http_code=" << *http_code;
-  received_headers_.emplace(":curl-peer", handle_.GetPeer());
-  return HttpResponse{http_code.value(), std::string{},
-                      std::move(received_headers_)};
+  return HttpResponse{http_code_, std::string{}, received_headers_};
 }
 
 StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
@@ -132,51 +120,30 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
   handle_.FlushDebug(__func__);
   TRACE_STATE();
 
-#if CURL_AT_LEAST_VERSION(7, 69, 0)
   if (!curl_closed_ && paused_) {
-#else
-  if (!curl_closed_) {
-#endif  // libcurl >= 7.69.0
     paused_ = false;
     auto status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
-    if (!status.ok()) {
-      TRACE_STATE() << ", status=" << status;
-      return status;
-    }
-    TRACE_STATE();
+    TRACE_STATE() << ", status=" << status;
+    if (!status.ok()) return status;
   }
 
   auto status = Wait([this] {
     return curl_closed_ || paused_ || buffer_offset_ >= buffer_size_;
   });
-  if (!status.ok()) {
-    return status;
-  }
-  TRACE_STATE();
+  TRACE_STATE() << ", status=" << status;
+  if (!status.ok()) return status;
   auto bytes_read = buffer_offset_;
   buffer_ = nullptr;
   buffer_offset_ = 0;
   buffer_size_ = 0;
   if (curl_closed_) {
-    // Retrieve the response code for a closed stream. Note the use of
-    // `.value()`, this is equivalent to: assert(http_code.ok());
-    // The only way the previous call can fail indicates a bug in our code (or
-    // corrupted memory), the documentation for CURLINFO_RESPONSE_CODE:
-    //   https://curl.haxx.se/libcurl/c/CURLINFO_RESPONSE_CODE.html
-    // says:
-    //   Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION
-    //   if not.
-    // if the option is not supported then we cannot use HTTP at all in libcurl
-    // and the whole class would fail.
-    received_headers_.emplace(":curl-peer", handle_.GetPeer());
-    HttpResponse response{handle_.GetResponseCode().value(), std::string{},
+    OnTransferDone();
+    HttpResponse response{http_code_, std::string{},
                           std::move(received_headers_)};
-    TRACE_STATE() << ", code=" << response.status_code;
     status = google::cloud::storage::internal::AsStatus(response);
-    if (!status.ok()) {
-      TRACE_STATE() << ", status=" << response.status_code;
-      return status;
-    }
+    TRACE_STATE() << ", status=" << status
+                  << ", http code=" << response.status_code;
+    if (!status.ok()) return status;
     return ReadSourceResult{bytes_read, std::move(response)};
   }
   TRACE_STATE() << ", code=100";
@@ -185,6 +152,27 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
       bytes_read,
       HttpResponse{
           HttpStatusCode::kContinue, {}, std::move(received_headers_)}};
+}
+
+void CurlDownloadRequest::CleanupHandles() {
+  if (!multi_ != !handle_.handle_) {
+    GCP_LOG(FATAL) << "handles are inconsistent, multi_=" << multi_.get()
+                   << ", handle_.handle_=" << handle_.handle_.get();
+  }
+  if (curl_closed_ || !multi_) return;
+
+  if (paused_) {
+    paused_ = false;
+    (void)handle_.EasyPause(CURLPAUSE_RECV_CONT);
+    TRACE_STATE();
+  }
+
+  // Now remove the handle from the CURLM* interface and wait for the response.
+  if (in_multi_) {
+    (void)curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
+    in_multi_ = false;
+    TRACE_STATE();
+  }
 }
 
 void CurlDownloadRequest::SetOptions() {
@@ -213,9 +201,7 @@ void CurlDownloadRequest::SetOptions() {
         // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
         static_cast<long>(download_stall_timeout_.count()));
   }
-  if (in_multi_) {
-    return;
-  }
+  if (in_multi_) GCP_LOG(FATAL) << "in_multi_ should be false in `SetOptions`";
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
   if (error != CURLM_OK) {
     // This indicates that we are using the API incorrectly, the application
@@ -224,6 +210,24 @@ void CurlDownloadRequest::SetOptions() {
     google::cloud::internal::ThrowStatus(AsStatus(error, __func__));
   }
   in_multi_ = true;
+}
+
+void CurlDownloadRequest::OnTransferDone() {
+  // Retrieve the response code for a closed stream. Note the use of
+  // `.value()`, this is equivalent to: assert(http_code.ok());
+  // The only way the previous call can fail indicates a bug in our code (or
+  // corrupted memory), the documentation for CURLINFO_RESPONSE_CODE:
+  //   https://curl.haxx.se/libcurl/c/CURLINFO_RESPONSE_CODE.html
+  // says:
+  //   Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION
+  //   if not.
+  // if the option is not supported then we cannot use HTTP at all in libcurl
+  // and the whole class would fail.
+  http_code_ = handle_.GetResponseCode().value();
+
+  // Capture the peer (the HTTP server), used for troubleshooting.
+  received_headers_.emplace(":curl-peer", handle_.GetPeer());
+  TRACE_STATE();
 }
 
 void CurlDownloadRequest::DrainSpillBuffer() {
