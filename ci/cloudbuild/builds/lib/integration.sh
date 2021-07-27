@@ -164,26 +164,26 @@ function integration::bazel_with_emulators() {
     tag_filters="integration-test,-no-msan"
   fi
 
-  #  io::log_h2 "Running integration tests that require production access"
-  #  bazel "${verb}" "${args[@]}" --test_tag_filters="${tag_filters}" \
-  #    "${production_integration_tests[@]}"
-  #
-  #  io::log_h2 "Running Pub/Sub integration tests (with emulator)"
-  #  "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
-  #    bazel "${verb}" "${args[@]}"
-  #
-  #  io::log_h2 "Running Storage Emulator integration tests"
-  #  "google/cloud/storage/emulator/ci/run_integration_tests_bazel.sh" \
-  #    bazel "${args[@]}"
-  #
-  #  io::log_h2 "Running Storage integration tests (with emulator)"
-  #  "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-  #    bazel "${verb}" "${args[@]}"
-  #
-  #  io::log_h2 "Running Spanner integration tests (with emulator)"
-  #  "google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
-  #    bazel "${verb}" "${args[@]}"
-  #
+  io::log_h2 "Running integration tests that require production access"
+  bazel "${verb}" "${args[@]}" --test_tag_filters="${tag_filters}" \
+    "${production_integration_tests[@]}"
+
+  io::log_h2 "Running Pub/Sub integration tests (with emulator)"
+  "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
+    bazel "${verb}" "${args[@]}"
+
+  io::log_h2 "Running Storage Emulator integration tests"
+  "google/cloud/storage/emulator/ci/run_integration_tests_bazel.sh" \
+    bazel "${args[@]}"
+
+  io::log_h2 "Running Storage integration tests (with emulator)"
+  "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
+    bazel "${verb}" "${args[@]}"
+
+  io::log_h2 "Running Spanner integration tests (with emulator)"
+  "google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
+    bazel "${verb}" "${args[@]}"
+
   # We retry these tests because the emulator crashes due to #441.
   io::log_h2 "Running Bigtable integration tests (with emulator)"
   ci/retry-command.sh 3 0 \
@@ -197,27 +197,27 @@ function integration::bazel_with_emulators() {
   bazel "${verb}" "${args[@]}" \
     "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${access_token}" \
     //google/cloud/bigtable/examples:bigtable_grpc_credentials
-  #
-  #  # This test is run separately because the URL may change and that would mess
-  #  # up Bazel's test cache for all the other tests.
-  #  io::log_h2 "Running combined examples using multiple services"
-  #  hello_world_http="$(gcloud run services describe \
-  #    hello-world-http \
-  #    --project="${GOOGLE_CLOUD_PROJECT}" \
-  #    --region="us-central1" --platform="managed" \
-  #    --format='value(status.url)')"
-  #
-  #  hello_world_grpc="$(gcloud run services describe \
-  #    hello-world-grpc \
-  #    --project="${GOOGLE_CLOUD_PROJECT}" \
-  #    --region="us-central1" --platform="managed" \
-  #    --format='value(status.url)')"
-  #
-  #  bazel "${verb}" "${args[@]}" \
-  #    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL=${hello_world_http}" \
-  #    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_GRPC_URL=${hello_world_grpc}" \
-  #    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT}" \
-  #    //google/cloud/examples/...
+
+  # This test is run separately because the URL may change and that would mess
+  # up Bazel's test cache for all the other tests.
+  io::log_h2 "Running combined examples using multiple services"
+  hello_world_http="$(gcloud run services describe \
+    hello-world-http \
+    --project="${GOOGLE_CLOUD_PROJECT}" \
+    --region="us-central1" --platform="managed" \
+    --format='value(status.url)')"
+
+  hello_world_grpc="$(gcloud run services describe \
+    hello-world-grpc \
+    --project="${GOOGLE_CLOUD_PROJECT}" \
+    --region="us-central1" --platform="managed" \
+    --format='value(status.url)')"
+
+  bazel "${verb}" "${args[@]}" \
+    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL=${hello_world_http}" \
+    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_GRPC_URL=${hello_world_grpc}" \
+    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT}" \
+    //google/cloud/examples/...
 }
 
 # Runs integration tests with CTest using emulators. This function requires a
@@ -240,27 +240,27 @@ function integration::ctest_with_emulators() {
     "--parallel" "$(nproc)"
   )
 
-  #  io::log_h2 "Running Generator integration tests via CTest"
-  #  googleapis_abs_path="$(realpath "${cmake_out}")/external/googleapis/src/googleapis_download/"
-  #  env -C "${cmake_out}" \
-  #    GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS="yes" \
-  #    GOOGLE_CLOUD_CPP_GENERATOR_GOOGLEAPIS_PATH="${googleapis_abs_path}" \
-  #    GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH="/usr/include/" \
-  #    GOOGLE_CLOUD_CPP_GENERATOR_CODE_PATH="/workspace/" \
-  #    GOOGLE_CLOUD_CPP_GENERATOR_GOLDEN_PATH="/workspace/" \
-  #    ctest -R "^google_cloud_cpp_generator_integration_" "${ctest_args[@]}"
-  #
-  #  io::log_h2 "Running Pub/Sub integration tests (with emulator)"
-  #  "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
-  #    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
-  #
-  #  io::log_h2 "Running Storage integration tests (with emulator)"
-  #  "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-  #    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
-  #
-  #  io::log_h2 "Running Spanner integration tests (with emulator)"
-  #  "${PROJECT_ROOT}/google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
-  #    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+  io::log_h2 "Running Generator integration tests via CTest"
+  googleapis_abs_path="$(realpath "${cmake_out}")/external/googleapis/src/googleapis_download/"
+  env -C "${cmake_out}" \
+    GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS="yes" \
+    GOOGLE_CLOUD_CPP_GENERATOR_GOOGLEAPIS_PATH="${googleapis_abs_path}" \
+    GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH="/usr/local/include/" \
+    GOOGLE_CLOUD_CPP_GENERATOR_CODE_PATH="/workspace/" \
+    GOOGLE_CLOUD_CPP_GENERATOR_GOLDEN_PATH="/workspace/" \
+    ctest -R "^google_cloud_cpp_generator_integration_" "${ctest_args[@]}"
+
+  io::log_h2 "Running Pub/Sub integration tests (with emulator)"
+  "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
+    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+
+  io::log_h2 "Running Storage integration tests (with emulator)"
+  "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
+    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+
+  io::log_h2 "Running Spanner integration tests (with emulator)"
+  "${PROJECT_ROOT}/google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
+    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 
   io::log_h2 "Running Bigtable integration tests (with emulator)"
   ci/retry-command.sh 3 0 \
