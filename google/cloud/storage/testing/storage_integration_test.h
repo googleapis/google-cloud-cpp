@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/integration_test.h"
 #include <gmock/gmock.h>
 #include <algorithm>
+#include <mutex>
 #include <string>
 #include <thread>
 #include <vector>
@@ -97,11 +98,13 @@ class StorageIntegrationTest
 
   /// Delete the given object during the test teardown.
   void ScheduleForDelete(ObjectMetadata meta) {
+    std::lock_guard<std::mutex> lk(mu_);
     objects_to_delete_.push_back(std::move(meta));
   }
 
   /// Delete the given bucket during the test teardown.
   void ScheduleForDelete(BucketMetadata meta) {
+    std::lock_guard<std::mutex> lk(mu_);
     buckets_to_delete_.push_back(std::move(meta));
   }
 
@@ -130,6 +133,7 @@ class StorageIntegrationTest
   }
 
  private:
+  std::mutex mu_;
   std::vector<ObjectMetadata> objects_to_delete_;
   std::vector<BucketMetadata> buckets_to_delete_;
 };
