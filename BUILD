@@ -114,9 +114,23 @@ cc_library(
 )
 
 cc_library(
+    name = "iam",
+    deps = [
+        "//google/cloud/iam:google_cloud_cpp_iam",
+    ],
+)
+
+cc_library(
     name = "experimental-iam",
     deps = [
         "//google/cloud/iam:google_cloud_cpp_iam",
+    ],
+)
+
+cc_library(
+    name = "iam-mocks",
+    deps = [
+        "//google/cloud/iam:google_cloud_cpp_iam_mocks",
     ],
 )
 
