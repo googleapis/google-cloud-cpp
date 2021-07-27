@@ -19,6 +19,7 @@
 bigtable_benchmark_programs = [
     "apply_read_latency_benchmark.cc",
     "endurance_benchmark.cc",
+    "mutation_batcher_throughput_benchmark.cc",
     "read_sync_vs_async_benchmark.cc",
     "scan_throughput_benchmark.cc",
 ]
