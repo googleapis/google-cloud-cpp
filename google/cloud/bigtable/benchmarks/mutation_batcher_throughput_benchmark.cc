@@ -194,7 +194,7 @@ int main(int argc, char* argv[]) {
   std::thread cq_runner([&cq] { cq.Run(); });
 
   int key_width = 0;
-  for (std::int64_t i = options->mutation_count - 1; i > 0; i /= 10) ++key_width;
+  for (auto i = options->mutation_count - 1; i > 0; i /= 10) ++key_width;
   auto write = [&options, &batcher, &cq, &fails, &successes, &timeout,
                 key_width](std::int64_t const& start, std::int64_t const& end,
                            bool const& log) {
