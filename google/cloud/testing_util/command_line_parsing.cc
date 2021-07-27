@@ -108,7 +108,7 @@ std::string Basename(std::string const& path) {
 std::string BuildUsage(std::vector<OptionDescriptor> const& desc,
                        std::string const& command_path) {
   std::ostringstream os;
-  os << "Usage: " << Basename(command_path) << " [options] <region>\n";
+  os << "Usage: " << Basename(command_path) << " [options]\n";
   for (auto const& d : desc) {
     os << "    " << d.option << ": " << d.help << "\n";
   }
