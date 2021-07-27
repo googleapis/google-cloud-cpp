@@ -168,7 +168,7 @@ trap exit_handler EXIT
 
 # We use github's official `gh` command to create the release on on the GH
 # website, so we make sure it's installed early on so we don't fail after
-# completing part of the release. 
+# completing part of the release.
 if ! command -v gh >/dev/null; then
   die_with_message \
     "Can't find 'gh' command." \
