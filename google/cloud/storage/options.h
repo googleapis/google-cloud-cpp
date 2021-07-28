@@ -44,7 +44,7 @@ inline namespace STORAGE_CLIENT_NS {
  *
  * [libcurl's default]: https://curl.se/libcurl/c/CURLOPT_HTTP_VERSION.html
  */
-struct CurlHttpVersion {
+struct CurlHttpVersionOption {
   using Type = std::string;
 };
 }  // namespace STORAGE_CLIENT_NS
@@ -236,7 +236,7 @@ using ClientOptionList = ::google::cloud::OptionList<
     MaximumCurlSocketRecvSizeOption, MaximumCurlSocketSendSizeOption,
     DownloadStallTimeoutOption, RetryPolicyOption, BackoffPolicyOption,
     IdempotencyPolicyOption, CARootsFilePathOption,
-    storage_experimental::CurlHttpVersion>;
+    storage_experimental::CurlHttpVersionOption>;
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -344,8 +344,8 @@ TEST(CurlRequestTest, HttpVersion) {
         HttpBinEndpoint() + "/get",
         storage::internal::GetDefaultCurlHandleFactory());
     auto options =
-        google::cloud::Options{}.set<storage_experimental::CurlHttpVersion>(
-            test.version);
+        google::cloud::Options{}
+            .set<storage_experimental::CurlHttpVersionOption>(test.version);
     builder.ApplyClientOptions(options);
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("charsets: utf-8");
