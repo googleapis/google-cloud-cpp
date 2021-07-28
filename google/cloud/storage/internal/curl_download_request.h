@@ -75,14 +75,20 @@ class CurlDownloadRequest : public ObjectReadSource {
 
  private:
   friend class CurlRequestBuilder;
-  /// Set the underlying CurlHandle options on a new CurlDownloadRequest.
-  void SetOptions();
-
   friend std::size_t CurlDownloadRequestWrite(char* ptr, size_t size,
                                               size_t nmemb, void* userdata);
   friend std::size_t CurlDownloadRequestHeader(char* contents, std::size_t size,
                                                std::size_t nitems,
                                                void* userdata);
+
+  /// Cleanup the CURL handles, leaving them ready for reuse.
+  void CleanupHandles();
+
+  /// Set the underlying CurlHandle options on a new CurlDownloadRequest.
+  void SetOptions();
+
+  /// Handle a completed (even interrupted) download.
+  void OnTransferDone();
 
   /// Copy any available data from the spill buffer to `buffer_`
   void DrainSpillBuffer();
@@ -110,6 +116,7 @@ class CurlDownloadRequest : public ObjectReadSource {
   std::string payload_;
   std::string user_agent_;
   CurlReceivedHeaders received_headers_;
+  std::int32_t http_code_ = 0;
   bool logging_enabled_ = false;
   CurlHandle::SocketOptions socket_options_;
   std::chrono::seconds download_stall_timeout_;
