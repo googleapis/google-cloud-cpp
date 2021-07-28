@@ -115,10 +115,9 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnRead) {
     std::this_thread::sleep_for(delay);
     delay *= 2;
   }
-  // Even if there was an error the handles should have returned to the pool.
+  ASSERT_STATUS_OK(status);
   EXPECT_EQ(1, factory->CurrentHandleCount());
   EXPECT_EQ(1, factory->CurrentMultiHandleCount());
-  ASSERT_STATUS_OK(status);
 }
 
 TEST(CurlDownloadRequestTest, HandlesReleasedOnClose) {
@@ -164,6 +163,32 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnClose) {
   EXPECT_EQ(1, factory->CurrentHandleCount());
   EXPECT_EQ(1, factory->CurrentMultiHandleCount());
   ASSERT_STATUS_OK(status);
+}
+
+TEST(CurlDownloadRequestTest, HandlesReleasedOnError) {
+  auto constexpr kTestPoolSize = 8;
+  auto factory =
+      std::make_shared<PooledCurlHandleFactory>(kTestPoolSize, Options{});
+  ASSERT_EQ(0, factory->CurrentHandleCount());
+  ASSERT_EQ(0, factory->CurrentMultiHandleCount());
+
+  CurlRequestBuilder request("https://localhost:1/get", factory);
+  auto download = std::move(request).BuildDownloadRequest();
+  // Perform a series of very small `.Read()` calls. This will force the
+  char buffer[4096];
+  auto read = download->Read(buffer, sizeof(buffer));
+  ASSERT_THAT(read, Not(IsOk()));
+  // Assuming there was an error the CURL* handle should not be returned to the
+  // pool. The CURLM* handle is a local resource and always reusable so it does:
+  EXPECT_EQ(0, factory->CurrentHandleCount());
+  EXPECT_EQ(1, factory->CurrentMultiHandleCount());
+
+  auto close = download->Close();
+  ASSERT_THAT(close, IsOk());
+  EXPECT_THAT(0, close->status_code);
+  // No changes expected in the pool sizes.
+  EXPECT_EQ(0, factory->CurrentHandleCount());
+  EXPECT_EQ(1, factory->CurrentMultiHandleCount());
 }
 
 TEST(CurlDownloadRequestTest, SimpleStreamReadAfterClosed) {
