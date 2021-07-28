@@ -70,6 +70,7 @@ class CurlRequest {
   std::string url_;
   CurlHeaders headers_ = CurlHeaders(nullptr, &curl_slist_free_all);
   std::string user_agent_;
+  std::string http_version_;
   std::string response_payload_;
   CurlReceivedHeaders received_headers_;
   bool logging_enabled_ = false;

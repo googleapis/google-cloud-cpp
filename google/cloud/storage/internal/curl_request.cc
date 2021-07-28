@@ -104,6 +104,8 @@ StatusOr<HttpResponse> CurlRequest::MakeRequestImpl() {
   handle_.SetOption(CURLOPT_TCP_KEEPALIVE, 1L);
   handle_.EnableLogging(logging_enabled_);
   handle_.SetSocketCallback(socket_options_);
+  handle_.SetOptionUnchecked(CURLOPT_HTTP_VERSION,
+                             VersionToCurlCode(http_version_));
   handle_.SetOption(CURLOPT_WRITEFUNCTION, &CurlRequestOnWriteData);
   handle_.SetOption(CURLOPT_WRITEDATA, this);
   handle_.SetOption(CURLOPT_HEADERFUNCTION, &CurlRequestOnHeaderData);

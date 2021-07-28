@@ -32,9 +32,12 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::testing::Contains;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::Pair;
+using ::testing::StartsWith;
 
 std::string HttpBinEndpoint() {
   return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT")
@@ -319,6 +322,39 @@ TEST(CurlRequestTest, UserAgent) {
   EXPECT_THAT(headers.value("User-Agent", ""),
               HasSubstr("test-user-agent-prefix"));
   EXPECT_THAT(headers.value("User-Agent", ""), HasSubstr("gcloud-cpp/"));
+}
+
+/// @test Verify the HTTP Version option.
+TEST(CurlRequestTest, HttpVersion) {
+  struct Test {
+    std::string version;
+    std::string prefix;
+  } cases[] = {
+      // The HTTP version setting is a request, libcurl may choose a slightly
+      // different version (e.g. 1.1 when 1.0 is requested).
+      {"1.1", "http/1"},
+      {"1.0", "http/1"},
+      {"2", "http/"},  // HTTP/2 may not be compiled in
+      {"", "http/"},
+  };
+
+  for (auto const& test : cases) {
+    SCOPED_TRACE("Testing with version=<" + test.version + ">");
+    CurlRequestBuilder builder(
+        HttpBinEndpoint() + "/get",
+        storage::internal::GetDefaultCurlHandleFactory());
+    auto options =
+        google::cloud::Options{}.set<storage_experimental::HttpVersionOption>(
+            test.version);
+    builder.ApplyClientOptions(options);
+    builder.AddHeader("Accept: application/json");
+    builder.AddHeader("charsets: utf-8");
+
+    auto response = RetryMakeRequest(builder.BuildRequest());
+    ASSERT_STATUS_OK(response);
+    EXPECT_EQ(200, response->status_code);
+    EXPECT_THAT(response->headers, Contains(Pair(StartsWith(test.prefix), "")));
+  }
 }
 
 /// @test Verify that the Projection parameter is included if set.

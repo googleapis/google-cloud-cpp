@@ -114,6 +114,18 @@ class CurlHandle {
     AssertOptionSuccess(e, option, __func__, nullptr);
   }
 
+  /**
+   * Sets an option that may fail.
+   *
+   * The common case to use this is setting an option that sometimes is disabled
+   * in libcurl at compile-time. For example, libcurl can be compiled without
+   * HTTP/2 support, requesting HTTP/2 results in a (harmless) error.
+   */
+  template <typename T>
+  void SetOptionUnchecked(CURLoption option, T&& param) {
+    (void)curl_easy_setopt(handle_.get(), option, std::forward<T>(param));
+  }
+
   Status EasyPerform() {
     auto e = curl_easy_perform(handle_.get());
     return AsStatus(e, __func__);

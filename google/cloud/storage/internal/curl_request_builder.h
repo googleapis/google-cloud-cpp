@@ -196,6 +196,7 @@ class CurlRequestBuilder {
   bool logging_enabled_;
   CurlHandle::SocketOptions socket_options_;
   std::chrono::seconds download_stall_timeout_;
+  std::string http_version_;
 };
 
 }  // namespace internal

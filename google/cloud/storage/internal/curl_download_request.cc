@@ -191,6 +191,8 @@ void CurlDownloadRequest::SetOptions() {
   }
   handle_.EnableLogging(logging_enabled_);
   handle_.SetSocketCallback(socket_options_);
+  handle_.SetOptionUnchecked(CURLOPT_HTTP_VERSION,
+                             VersionToCurlCode(http_version_));
   if (download_stall_timeout_.count() != 0) {
     // Timeout if the download receives less than 1 byte/second (i.e.
     // effectively no bytes) for `download_stall_timeout_` seconds.

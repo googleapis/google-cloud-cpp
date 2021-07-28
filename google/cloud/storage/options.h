@@ -28,6 +28,28 @@
 
 namespace google {
 namespace cloud {
+namespace storage_experimental {
+inline namespace STORAGE_CLIENT_NS {
+/**
+ * Set the HTTP version used by the client.
+ *
+ * If this option is not provided, or is set to `default` then the library uses
+ * [libcurl's default], typically HTTP/2 with SSL. Possible settings include:
+ * - "1.0": use HTTP/1.0, this is not recommended as would require a new
+ *   connection for each request.
+ * - "1.1": use HTTP/1.1, this may be useful when the overhead of HTTP/2 is
+ *   unacceptable. Note that this may require additional connections.
+ * - "2TLS": use HTTP/2 with TLS
+ * - "2.0": use HTTP/2 with our without TLS.
+ *
+ * [libcurl's default]: https://curl.se/libcurl/c/CURLOPT_HTTP_VERSION.html
+ */
+struct HttpVersionOption {
+  using Type = std::string;
+};
+}  // namespace STORAGE_CLIENT_NS
+}  // namespace storage_experimental
+
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
@@ -213,7 +235,8 @@ using ClientOptionList = ::google::cloud::OptionList<
     EnableCurlSslLockingOption, EnableCurlSigpipeHandlerOption,
     MaximumCurlSocketRecvSizeOption, MaximumCurlSocketSendSizeOption,
     DownloadStallTimeoutOption, RetryPolicyOption, BackoffPolicyOption,
-    IdempotencyPolicyOption, CARootsFilePathOption>;
+    IdempotencyPolicyOption, CARootsFilePathOption,
+    storage_experimental::HttpVersionOption>;
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
