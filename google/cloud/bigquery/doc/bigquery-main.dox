@@ -8,8 +8,6 @@ BigQuery from C++11 applications.
 This library requires a C++11 compiler. It is supported (and tested) on multiple
 Linux distributions, macOS, and Windows.
 
-@warning This library is not yet GA and breaking changes could be introduced.
-
 ## Quickstart
 
 The following instructions show you how to perform basic tasks in Cloud BigQuery

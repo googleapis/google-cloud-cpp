@@ -28,7 +28,7 @@ load(":bigquery_client_samples.bzl", "bigquery_client_samples")
         "integration-test",
     ],
     deps = [
-        "//:experimental-bigquery",
+        "//:bigquery",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
@@ -41,8 +41,8 @@ load(":bigquery_client_mock_samples.bzl", "bigquery_client_mock_samples")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
-        "//:experimental-bigquery",
-        "//:experimental-bigquery-mocks",
+        "//:bigquery",
+        "//:bigquery-mocks",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",

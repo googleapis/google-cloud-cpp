@@ -29,9 +29,8 @@ function (bigquery_client_define_samples)
         add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(
             ${target}
-            PRIVATE google_cloud_cpp_testing
-                    google-cloud-cpp::experimental-bigquery GTest::gmock_main
-                    GTest::gmock GTest::gtest)
+            PRIVATE google_cloud_cpp_testing google-cloud-cpp::bigquery
+                    GTest::gmock_main GTest::gmock GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()
 
@@ -56,9 +55,8 @@ function (bigquery_client_define_samples)
         add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(
             ${target}
-            PRIVATE google_cloud_cpp_testing
-                    google-cloud-cpp::experimental-bigquery GTest::gmock_main
-                    GTest::gmock GTest::gtest)
+            PRIVATE google_cloud_cpp_testing google-cloud-cpp::bigquery
+                    GTest::gmock_main GTest::gmock GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()
 

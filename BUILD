@@ -168,3 +168,17 @@ cc_library(
         "//google/cloud/bigquery:google_cloud_cpp_bigquery_mocks",
     ],
 )
+
+cc_library(
+    name = "bigquery",
+    deps = [
+        "//google/cloud/bigquery:google_cloud_cpp_bigquery",
+    ],
+)
+
+cc_library(
+    name = "bigquery-mocks",
+    deps = [
+        "//google/cloud/bigquery:google_cloud_cpp_bigquery_mocks",
+    ],
+)

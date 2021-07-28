@@ -17,6 +17,7 @@ package(default_visibility = ["//visibility:public"])
 licenses(["notice"])  # Apache 2.0
 
 CURRENT_TARGETS = [
+    ":bigquery",
     ":bigtable",
     ":experimental-firestore",
     ":iam",
