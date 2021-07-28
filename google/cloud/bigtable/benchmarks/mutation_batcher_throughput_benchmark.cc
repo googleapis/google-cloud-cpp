@@ -1,4 +1,4 @@
-// Copyright 2021 Google Inc.
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
-#include "google/cloud/testing_util/timer.h"
 #include "absl/time/time.h"
 #include <algorithm>
 #include <chrono>
@@ -35,20 +34,20 @@ using cbt::benchmarks::MutationBatcherThroughputOptions;
 using cbt::benchmarks::ParseMutationBatcherThroughputOptions;
 using google::cloud::Status;
 using google::cloud::StatusCode;
+using google::cloud::StatusOr;
 using google::cloud::internal::GetEnv;
 
 char const kDescription[] =
     R"""(A benchmark to measure the throughput of the `MutationBatcher` class.
 
-The purpose of the program is to determine effective default settings for
+The purpose of the program is to determine default settings for
 `MutationBatcher::Options` that maximize throughput. The specific settings,
 which are the main inputs to this program, are maximum mutations per batch and
 maximum concurrent batches in flight.
 
-The program is designed to be run repeatedly. It has the ability to cut itself
-off (if really bad options are supplied). It also has the ability to use a
-pre-existing table instead of creating a new one then deleting it when the
-program is done.
+The program is designed to be run repeatedly. It can be configured to terminate
+after a set amount of time. It can also be configured to use a pre-existing
+table instead of creating a new one then deleting it when the program is done.
 
 The program will:
 
@@ -65,8 +64,7 @@ The program will:
 9) Conditionally delete the table.
 )""";
 
-google::cloud::StatusOr<MutationBatcherThroughputOptions> ParseArgs(
-    int argc, char* argv[]) {
+StatusOr<MutationBatcherThroughputOptions> ParseArgs(int argc, char* argv[]) {
   auto const auto_run =
       GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES").value_or("") == "yes";
   if (auto_run) {
@@ -121,7 +119,8 @@ int main(int argc, char* argv[]) {
   using google::cloud::future;
   using google::cloud::Options;
   using google::cloud::Status;
-  using google::cloud::testing_util::Timer;
+  using google::cloud::StatusOr;
+  using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
 
   cbt::TableAdmin admin(cbt::CreateDefaultAdminClient(options->project_id, {}),
                         options->instance_id);
@@ -142,14 +141,18 @@ int main(int argc, char* argv[]) {
             {{options->column_family, cbt::GcRule::MaxNumVersions(10)}}, {}));
     if (!status) {
       std::cout << status.status() << std::endl;
-      return -1;
+      return 1;
     }
     std::cout << "#\n";
   } else {
-    auto status = admin.GetTable(table_id, cbt::TableAdmin::NAME_ONLY);
-    if (!status) {
-      std::cout << status.status() << std::endl;
-      return -1;
+    auto table = admin.GetTable(table_id, cbt::TableAdmin::NAME_ONLY);
+    if (!table) {
+      if (table.status().code() == StatusCode::kNotFound) {
+        std::cout << "Table " << table_id << " does not exist\n";
+        return 1;
+      }
+      std::cout << table.status() << std::endl;
+      return 1;
     }
   }
 
@@ -178,64 +181,59 @@ int main(int argc, char* argv[]) {
   std::atomic<int> successes{0};
   std::atomic<bool> timeout{false};
 
-  // Conditionally start the timeout thread
-  std::thread* timeout_thread = nullptr;
-  if (options->max_time.count() > 0) {
-    auto deadline = std::chrono::system_clock::now() + options->max_time;
-    timeout_thread = new std::thread([deadline, &timeout] {
-      while (std::chrono::system_clock::now() < deadline) {
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-      }
-      timeout = true;
-    });
-  }
-
   // Start the MutationBatcher thread
   CompletionQueue cq;
   std::thread cq_runner([&cq] { cq.Run(); });
 
+  // Create a deadline timer
+  // If there is no deadline set, the timer fires instantly and does nothing
+  auto timer = cq.MakeRelativeTimer(options->max_time)
+                   .then([&timeout, &options](TimerFuture) {
+                     timeout = options->max_time.count() > 0;
+                   });
+
   int key_width = 0;
   for (auto i = options->mutation_count - 1; i > 0; i /= 10) ++key_width;
   auto write = [&options, &batcher, &cq, &fails, &successes, &timeout,
-                key_width](std::int64_t const& start, std::int64_t const& end,
-                           bool const& log) {
+                key_width](std::int64_t start, std::int64_t end, bool log) {
     // One write thread will log its progress
     if (log) std::cout << "#\n# Writing" << std::flush;
-    auto progress_period = (std::max)(1L, (end - start) / 20);
+    auto progress_period = std::max<std::int64_t>(1, (end - start) / 20);
 
-    for (std::int64_t i = start; i < end; ++i) {
+    for (auto i = start; i < end; ++i) {
       // Stop writing if we hit the cutoff deadline
       if (timeout) break;
 
       auto mut = MakeMutation(*options, key_width, i);
-      auto admission_completion = batcher.AsyncApply(cq, mut);
+      auto admission_completion = batcher.AsyncApply(cq, std::move(mut));
       auto& admission_future = admission_completion.first;
       auto& completion_future = admission_completion.second;
       completion_future.then([&fails, &successes](future<Status> fut) {
         auto status = fut.get();
-        if (!status.ok())
+        if (!status.ok()) {
           ++fails;
-        else
+        } else {
           ++successes;
+        }
       });
       admission_future.get();
 
-      if (log && (i - start) % progress_period == 0)
+      if (log && (i - start) % progress_period == 0) {
         std::cout << "." << std::flush;
+      }
     }
     if (log) std::cout << "\n#" << std::endl;
   };
 
-  auto timer = Timer::PerThread();
+  auto start_time = std::chrono::steady_clock::now();
 
-  std::vector<std::future<void>> tasks;
   std::int64_t start = 0;
-  for (int j = 0; j < options->thread_count; ++j) {
-    auto end =
-        (std::min)(options->mutation_count,
-                   start + options->mutation_count / options->thread_count);
-    tasks.emplace_back(
-        std::async(std::launch::async, write, start, end, j == 0));
+  std::vector<std::future<void>> tasks(options->thread_count);
+  for (auto& t : tasks) {
+    auto end = std::min<std::int64_t>(
+        options->mutation_count,
+        start + options->mutation_count / options->thread_count);
+    t = std::async(std::launch::async, write, start, end, start == 0);
     start = end;
   }
 
@@ -244,16 +242,22 @@ int main(int argc, char* argv[]) {
   // Wait for all mutations to complete
   batcher.AsyncWaitForNoPendingRequests().get();
 
+  auto end_time = std::chrono::steady_clock::now();
+  std::chrono::duration<double> elapsed = end_time - start_time;
+
+  // Shutdown the deadline timer
+  timer.cancel();
+  timer.get();
+
   // Join the MutationBatcher thread
   cq.Shutdown();
   cq_runner.join();
 
-  auto snapshot = timer.Sample();
-  std::cout << "MutationCount,BatchSize,MaxBatches,ElapsedMicroseconds,"
+  std::cout << "MutationCount,BatchSize,MaxBatches,ElapsedSeconds,"
                "Successes,Fails\n"
             << options->mutation_count << "," << options->batch_size << ","
-            << options->max_batches << "," << snapshot.elapsed_time.count()
-            << "," << successes << "," << fails << "\n";
+            << options->max_batches << "," << elapsed.count() << ","
+            << successes << "," << fails << "\n";
 
   // If we created a table, delete it.
   if (options->table_id.empty()) {
@@ -263,12 +267,6 @@ int main(int argc, char* argv[]) {
       std::cout << status << std::endl;
       return -1;
     }
-  }
-
-  // Detach the timeout thread if it is running
-  if (timeout_thread) {
-    timeout_thread->detach();
-    delete timeout_thread;
   }
 
   return 0;

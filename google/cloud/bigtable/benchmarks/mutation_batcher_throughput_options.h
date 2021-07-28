@@ -28,9 +28,9 @@ namespace benchmarks {
 struct MutationBatcherThroughputOptions {
   std::string project_id;
   std::string instance_id;
+  std::string table_id;
   std::string column_family = "cf1";
   std::string column = "c1";
-  std::string table_id;
   std::chrono::seconds max_time = std::chrono::seconds(0);
   int thread_count = 1;
   std::int64_t mutation_count = 1000000;
