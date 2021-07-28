@@ -29,6 +29,7 @@ This repository contains idiomatic C++ client libraries for the following
 [Google Cloud Platform](https://cloud.google.com/) services.
 
 * [Google Cloud Bigtable](google/cloud/bigtable/README.md) [[quickstart]](google/cloud/bigtable/quickstart/README.md)
+* [Google Cloud IAM](google/cloud/iam/README.md) [[quickstart]](google/cloud/iam/quickstart/README.md)
 * [Google Cloud Spanner](google/cloud/spanner/README.md) [[quickstart]](google/cloud/spanner/quickstart/README.md)
 * [Google Cloud Pub/Sub](google/cloud/pubsub/README.md) [[quickstart]](google/cloud/pubsub/quickstart/README.md)
 * [Google Cloud Storage](google/cloud/storage/README.md) [[quickstart]](google/cloud/storage/quickstart/README.md)
@@ -96,6 +97,7 @@ how to use the library, along with minimal build files for common build
 systems, such as CMake and Bazel.
 
 * [Google Cloud Bigtable Quickstart](google/cloud/bigtable/quickstart/README.md)
+* [Google Cloud IAM Quickstart](google/cloud/iam/quickstart/README.md)
 * [Google Cloud Spanner Quickstart](google/cloud/spanner/quickstart/README.md)
 * [Google Cloud Pub/Sub Quickstart](google/cloud/pubsub/quickstart/README.md)
 * [Google Cloud Storage Quickstart](google/cloud/storage/quickstart/README.md)
