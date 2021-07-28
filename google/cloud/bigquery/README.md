@@ -92,7 +92,6 @@ int main(int argc, char* argv[]) try {
   std::cerr << "Standard exception raised: " << ex.what() << "\n";
   return 1;
 }
-//! [END bigquerystorage_quickstart]
 ```
 
 * Packaging maintainers or developers that prefer to install the library in a
