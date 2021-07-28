@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_request_builder.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -21,7 +20,6 @@
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <chrono>
-#include <cstdlib>
 #include <thread>
 #include <vector>
 
@@ -77,6 +75,94 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
     delay *= 2;
   }
   EXPECT_EQ(kDownloadedLines, count);
+}
+
+TEST(CurlDownloadRequestTest, HandlesReleasedOnRead) {
+  auto constexpr kLineCount = 10;
+  auto constexpr kTestPoolSize = 8;
+  auto factory =
+      std::make_shared<PooledCurlHandleFactory>(kTestPoolSize, Options{});
+  ASSERT_EQ(0, factory->CurrentHandleCount());
+  ASSERT_EQ(0, factory->CurrentMultiHandleCount());
+
+  auto download = [&]() -> Status {
+    CurlRequestBuilder request(
+        HttpBinEndpoint() + "/stream/" + std::to_string(kLineCount), factory);
+    auto download = request.BuildDownloadRequest(std::string{});
+
+    char buffer[4096];
+    auto read = download.Read(buffer, sizeof(buffer));
+    if (!read) return std::move(read).status();
+    // The data is 10 lines of about 200 bytes each, it all fits in the buffer.
+    EXPECT_LT(read->bytes_received, sizeof(buffer));
+    // This means the transfers completes during the Read() call, and the
+    // handles are immediately returned to the pool.
+    EXPECT_EQ(1, factory->CurrentHandleCount());
+    EXPECT_EQ(1, factory->CurrentMultiHandleCount());
+
+    auto close = download.Close();
+    if (!close) return std::move(close).status();
+    EXPECT_EQ(1, factory->CurrentHandleCount());
+    EXPECT_EQ(1, factory->CurrentMultiHandleCount());
+    return Status{};
+  };
+
+  auto delay = std::chrono::seconds(1);
+  Status status;
+  for (int i = 0; i != 3; ++i) {
+    status = download();
+    if (status.ok()) break;
+    std::this_thread::sleep_for(delay);
+    delay *= 2;
+  }
+  EXPECT_EQ(1, factory->CurrentHandleCount());
+  EXPECT_EQ(1, factory->CurrentMultiHandleCount());
+  ASSERT_STATUS_OK(status);
+}
+
+TEST(CurlDownloadRequestTest, HandlesReleasedOnClose) {
+  auto constexpr kLineCount = 10;
+  auto constexpr kTestPoolSize = 8;
+  auto factory =
+      std::make_shared<PooledCurlHandleFactory>(kTestPoolSize, Options{});
+  ASSERT_EQ(0, factory->CurrentHandleCount());
+  ASSERT_EQ(0, factory->CurrentMultiHandleCount());
+
+  auto download = [&]() -> Status {
+    CurlRequestBuilder request(
+        HttpBinEndpoint() + "/stream/" + std::to_string(kLineCount), factory);
+    auto download = request.BuildDownloadRequest(std::string{});
+
+    char buffer[4];
+    auto read = download.Read(buffer, sizeof(buffer));
+    if (!read) return std::move(read).status();
+    // The data is 10 lines of about 200 bytes each, it will not fit in the
+    // buffer:
+    EXPECT_EQ(read->bytes_received, sizeof(buffer));
+    EXPECT_EQ(read->response.status_code, HttpStatusCode::kContinue);
+    // This means the transfer is still active, and the handles would not have
+    // been returned to the pool.
+    EXPECT_EQ(0, factory->CurrentHandleCount());
+    EXPECT_EQ(0, factory->CurrentMultiHandleCount());
+
+    auto close = download.Close();
+    if (!close) return std::move(close).status();
+    EXPECT_EQ(1, factory->CurrentHandleCount());
+    EXPECT_EQ(1, factory->CurrentMultiHandleCount());
+    return Status{};
+  };
+
+  auto delay = std::chrono::seconds(1);
+  Status status;
+  for (int i = 0; i != 3; ++i) {
+    status = download();
+    if (status.ok()) break;
+    std::this_thread::sleep_for(delay);
+    delay *= 2;
+  }
+  EXPECT_EQ(1, factory->CurrentHandleCount());
+  EXPECT_EQ(1, factory->CurrentMultiHandleCount());
+  ASSERT_STATUS_OK(status);
 }
 
 TEST(CurlDownloadRequestTest, SimpleStreamReadAfterClosed) {
