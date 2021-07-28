@@ -71,8 +71,10 @@ std::string CppTypeToString(FieldDescriptor const* field) {
     case FieldDescriptor::CPPTYPE_MESSAGE:
       return ProtoNameToCppName(field->message_type()->full_name());
   }
-  GCP_LOG(FATAL) << "FieldDescriptor " << std::string(field->cpp_type_name())
+  GCP_LOG(FATAL) << "FieldDescriptor " << field->cpp_type_name()
                  << " not handled";
+  /*NOTREACHED*/
+  return field->cpp_type_name();
 }
 
 std::string FormatDoxygenLink(google::protobuf::Descriptor const& message_type,
