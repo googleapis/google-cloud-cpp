@@ -106,17 +106,22 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
   if (n == 0) {
     return Status(StatusCode::kInvalidArgument, "Empty buffer for Read()");
   }
-  handle_.SetOption(CURLOPT_WRITEFUNCTION, &CurlDownloadRequestWrite);
-  handle_.SetOption(CURLOPT_WRITEDATA, this);
-  handle_.SetOption(CURLOPT_HEADERFUNCTION, &CurlDownloadRequestHeader);
-  handle_.SetOption(CURLOPT_HEADERDATA, this);
-
   // Before calling `Wait()` copy any data from the spill buffer into the
   // application buffer. It is possible that `Wait()` will never call
   // `WriteCallback()`, for example, because the Read() or Peek() closed the
   // connection, but if there is any data left in the spill buffer we need
   // to return it.
   DrainSpillBuffer();
+  if (curl_closed_) {
+    return ReadSourceResult{
+        buffer_offset_,
+        HttpResponse{http_code_, std::string{}, std::move(received_headers_)}};
+  }
+
+  handle_.SetOption(CURLOPT_WRITEFUNCTION, &CurlDownloadRequestWrite);
+  handle_.SetOption(CURLOPT_WRITEDATA, this);
+  handle_.SetOption(CURLOPT_HEADERFUNCTION, &CurlDownloadRequestHeader);
+  handle_.SetOption(CURLOPT_HEADERDATA, this);
 
   handle_.FlushDebug(__func__);
   TRACE_STATE();
@@ -225,12 +230,19 @@ void CurlDownloadRequest::OnTransferDone() {
   //   Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION
   //   if not.
   // if the option is not supported then we cannot use HTTP at all in libcurl
-  // and the whole class would fail.
+  // and the whole library would be unusable.
   http_code_ = handle_.GetResponseCode().value();
 
   // Capture the peer (the HTTP server), used for troubleshooting.
   received_headers_.emplace(":curl-peer", handle_.GetPeer());
   TRACE_STATE();
+
+  // Release the handles back to the factory as soon as possible, so they can be
+  // reused for any other requests.
+  if (factory_) {
+    factory_->CleanupHandle(std::move(handle_));
+    factory_->CleanupMultiHandle(std::move(multi_));
+  }
 }
 
 void CurlDownloadRequest::DrainSpillBuffer() {
