@@ -72,7 +72,6 @@ StatusOr<HttpResponse> CurlDownloadRequest::Close() {
   if (curl_closed_) return HttpResponse{http_code_, {}, received_headers_};
   TRACE_STATE();
   // Set the the closing_ flag to trigger a return 0 from the next read
-
   // callback, see the comments in the header file for more details.
   closing_ = true;
   TRACE_STATE();
