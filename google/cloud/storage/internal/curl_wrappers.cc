@@ -209,9 +209,13 @@ bool SslLibraryNeedsLocking(std::string const& curl_ssl_id) {
 long VersionToCurlCode(std::string const& v) {  // NOLINT(google-runtime-int)
   if (v == "1.0") return CURL_HTTP_VERSION_1_0;
   if (v == "1.1") return CURL_HTTP_VERSION_1_1;
+#if CURL_AT_LEAST_VERSION(7, 33, 0)
   // CURL_HTTP_VERSION_2_0 and CURL_HTTP_VERSION_2 are aliases.
   if (v == "2.0" || v == "2") return CURL_HTTP_VERSION_2_0;
+#endif  // CURL >= 7.33.0
+#if CURL_AT_LEAST_VERSION(7, 47, 0)
   if (v == "2TLS") return CURL_HTTP_VERSION_2TLS;
+#endif  // CURL >= 7.47.0
 #if CURL_AT_LEAST_VERSION(7, 66, 0)
   // google-cloud-cpp requires curl >= 7.47.0. All the previous codes exist at
   // that version, but the next one is more recent.
