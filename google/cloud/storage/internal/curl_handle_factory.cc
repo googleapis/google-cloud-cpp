@@ -54,6 +54,7 @@ CurlPtr DefaultCurlHandleFactory::CreateHandle() {
 }
 
 void DefaultCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
+  if (GetHandle(h) == nullptr) return;
   char* ip;
   auto res = curl_easy_getinfo(GetHandle(h), CURLINFO_LOCAL_IP, &ip);
   if (res == CURLE_OK && ip != nullptr) {
@@ -111,6 +112,7 @@ CurlPtr PooledCurlHandleFactory::CreateHandle() {
 }
 
 void PooledCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
+  if (GetHandle(h) == nullptr) return;
   std::unique_lock<std::mutex> lk(mu_);
   char* ip;
   auto res = curl_easy_getinfo(GetHandle(h), CURLINFO_LOCAL_IP, &ip);
@@ -138,6 +140,7 @@ CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {
 }
 
 void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti&& m) {
+  if (!m) return;
   std::unique_lock<std::mutex> lk(mu_);
   while (multi_handles_.size() >= maximum_size_) {
     auto* tmp = multi_handles_.front();

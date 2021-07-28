@@ -17,7 +17,9 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 #include <chrono>
 #include <cstdlib>
 #include <thread>
@@ -75,6 +77,46 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
     delay *= 2;
   }
   EXPECT_EQ(kDownloadedLines, count);
+}
+
+TEST(CurlDownloadRequestTest, SimpleStreamReadAfterClosed) {
+  auto constexpr kLineCount = 10;
+  auto download = [&]() -> StatusOr<std::string> {
+    std::string contents;
+    CurlRequestBuilder request(
+        HttpBinEndpoint() + "/stream/" + std::to_string(kLineCount),
+        storage::internal::GetDefaultCurlHandleFactory());
+    auto download = request.BuildDownloadRequest(std::string{});
+    // Perform a series of very small `.Read()` calls. This will force the
+    char buffer[4];
+    do {
+      auto result = download.Read(buffer, sizeof(buffer));
+      if (!result) return std::move(result).status();
+      if (result->bytes_received == 0) break;
+      contents += std::string{buffer, result->bytes_received};
+    } while (true);
+    return contents;
+  };
+
+  auto delay = std::chrono::seconds(1);
+  StatusOr<std::string> received;
+  for (int i = 0; i != 3; ++i) {
+    received = download();
+    if (received) break;
+    std::this_thread::sleep_for(delay);
+    delay *= 2;
+  }
+  ASSERT_STATUS_OK(received);
+  std::vector<std::string> lines = absl::StrSplit(*received, "\n");
+  auto p = std::remove(lines.begin(), lines.end(), std::string{});
+  lines.erase(p, lines.end());
+  EXPECT_EQ(kLineCount, lines.size());
+  int count = 0;
+  for (auto const& line : lines) {
+    auto parsed = nlohmann::json::parse(line);
+    ASSERT_TRUE(parsed.contains("id"));
+    EXPECT_EQ(count++, parsed["id"].get<std::int64_t>());
+  }
 }
 
 // Run one attempt of the Regression7051 test. This is wrapped in a retry loop,
