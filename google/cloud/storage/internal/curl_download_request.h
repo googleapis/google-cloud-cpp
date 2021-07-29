@@ -48,12 +48,14 @@ extern "C" std::size_t CurlDownloadRequestHeader(char* contents,
  */
 class CurlDownloadRequest : public ObjectReadSource {
  public:
-  explicit CurlDownloadRequest();
+  CurlDownloadRequest(CurlHeaders headers, CurlHandle handle, CurlMulti multi);
 
   ~CurlDownloadRequest() override;
 
-  CurlDownloadRequest(CurlDownloadRequest&&) = default;
-  CurlDownloadRequest& operator=(CurlDownloadRequest&& rhs) = default;
+  CurlDownloadRequest(CurlDownloadRequest&&) = delete;
+  CurlDownloadRequest& operator=(CurlDownloadRequest&&) = delete;
+  CurlDownloadRequest(CurlDownloadRequest const&) = delete;
+  CurlDownloadRequest& operator=(CurlDownloadRequest const&) = delete;
 
   bool IsOpen() const override { return !(curl_closed_ && spill_offset_ == 0); }
   StatusOr<HttpResponse> Close() override;

@@ -13,13 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_request_builder.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
-#include <cstdlib>
 #include <thread>
 #include <vector>
 
@@ -48,14 +46,14 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
   std::size_t count = 0;
   auto download = [&] {
     count = 0;
-    CurlRequestBuilder request(
+    CurlRequestBuilder builder(
         HttpBinEndpoint() + "/stream/" + std::to_string(kDownloadedLines),
         storage::internal::GetDefaultCurlHandleFactory());
-    auto download = request.BuildDownloadRequest(std::string{});
+    auto download = std::move(builder).BuildDownloadRequest();
     char buffer[128 * 1024];
     do {
       auto n = sizeof(buffer);
-      auto result = download.Read(buffer, n);
+      auto result = download->Read(buffer, n);
       if (!result) return std::move(result).status();
       if (result->bytes_received > sizeof(buffer)) {
         return Status{StatusCode::kUnknown, "invalid byte count"};
@@ -91,7 +89,7 @@ Status AttemptRegression7051() {
     CurlRequestBuilder builder(
         HttpBinEndpoint() + "/stream/" + std::to_string(kDownloadedLines),
         factory);
-    return builder.BuildDownloadRequest(std::string{});
+    return std::move(builder).BuildDownloadRequest();
   };
 
   auto error = [](std::string msg) {
@@ -104,29 +102,29 @@ Status AttemptRegression7051() {
   void* id;
   {
     auto r_no_close = make_download();
-    id = r_no_close.id();
+    id = r_no_close->id();
     if (id == nullptr) return error("r_no_close.id()==nulltptr");
-    auto read = r_no_close.Read(buffer, kBufferSize);
+    auto read = r_no_close->Read(buffer, kBufferSize);
     if (!read) return std::move(read).status();
   }
 
   {
     auto r_partial_close = make_download();
-    if (r_partial_close.id() != id) return error("r_partial_close.id() != id");
-    auto read = r_partial_close.Read(buffer, kBufferSize);
+    if (r_partial_close->id() != id) return error("r_partial_close.id() != id");
+    auto read = r_partial_close->Read(buffer, kBufferSize);
     if (!read) return std::move(read).status();
-    auto close = r_partial_close.Close();
+    auto close = r_partial_close->Close();
     if (!close) return std::move(close).status();
   }
 
   auto r_full = make_download();
-  if (r_full.id() != id) return error("r_full.id() != id");
+  if (r_full->id() != id) return error("r_full.id() != id");
   do {
-    auto read = r_full.Read(buffer, kBufferSize);
+    auto read = r_full->Read(buffer, kBufferSize);
     if (!read) return std::move(read).status();
     if (read->response.status_code != 100) break;
   } while (true);
-  auto close = r_full.Close();
+  auto close = r_full->Close();
   if (!close) return std::move(close).status();
 
   return Status{};
@@ -152,18 +150,18 @@ TEST(CurlDownloadRequestTest, HttpVersion) {
     Headers headers;
     CurlRequestBuilder builder(HttpBinEndpoint() + "/get",
                                GetDefaultCurlHandleFactory());
-    auto download = builder.BuildDownloadRequest(std::string{});
+    auto download = std::move(builder).BuildDownloadRequest();
 
     auto constexpr kBufferSize = 4096;
     char buffer[kBufferSize];
     do {
-      auto read = download.Read(buffer, kBufferSize);
+      auto read = download->Read(buffer, kBufferSize);
       if (!read) return Headers{};
       headers.insert(read->response.headers.begin(),
                      read->response.headers.end());
       if (read->response.status_code != 100) break;
     } while (true);
-    auto close = download.Close();
+    auto close = download->Close();
     if (!close) return Headers{};
     return headers;
   };

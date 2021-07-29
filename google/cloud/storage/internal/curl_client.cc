@@ -608,7 +608,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObject(
   }
 
   return std::unique_ptr<ObjectReadSource>(
-      new CurlDownloadRequest(builder.BuildDownloadRequest(std::string{})));
+      std::move(builder).BuildDownloadRequest());
 }
 
 StatusOr<ListObjectsResponse> CurlClient::ListObjects(
@@ -1316,7 +1316,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObjectXml(
   }
 
   return std::unique_ptr<ObjectReadSource>(
-      new CurlDownloadRequest(builder.BuildDownloadRequest(std::string{})));
+      std::move(builder).BuildDownloadRequest());
 }
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
