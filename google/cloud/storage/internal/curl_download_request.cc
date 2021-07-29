@@ -54,10 +54,12 @@ extern "C" std::size_t CurlDownloadRequestHeader(char* contents,
                  << ", closing=" << closing_ << ", closed=" << curl_closed_ \
                  << ", paused=" << paused_ << ", in_multi=" << in_multi_
 
-CurlDownloadRequest::CurlDownloadRequest()
-    : headers_(nullptr, &curl_slist_free_all),
+CurlDownloadRequest::CurlDownloadRequest(CurlHeaders headers, CurlHandle handle,
+                                         CurlMulti multi)
+    : headers_(std::move(headers)),
       download_stall_timeout_(0),
-      multi_(nullptr, &curl_multi_cleanup),
+      handle_(std::move(handle)),
+      multi_(std::move(multi)),
       spill_(CURL_MAX_WRITE_SIZE) {}
 
 CurlDownloadRequest::~CurlDownloadRequest() {

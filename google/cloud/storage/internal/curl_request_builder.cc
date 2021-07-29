@@ -52,22 +52,20 @@ CurlRequest CurlRequestBuilder::BuildRequest() {
   return request;
 }
 
-CurlDownloadRequest CurlRequestBuilder::BuildDownloadRequest(
-    std::string payload) {
+std::unique_ptr<CurlDownloadRequest>
+CurlRequestBuilder::BuildDownloadRequest() && {
   ValidateBuilderState(__func__);
-  CurlDownloadRequest request;
-  request.url_ = std::move(url_);
-  request.headers_ = std::move(headers_);
-  request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();
-  request.http_version_ = std::move(http_version_);
-  request.payload_ = std::move(payload);
-  request.handle_ = std::move(handle_);
-  request.multi_ = factory_->CreateMultiHandle();
-  request.factory_ = factory_;
-  request.logging_enabled_ = logging_enabled_;
-  request.socket_options_ = socket_options_;
-  request.download_stall_timeout_ = download_stall_timeout_;
-  request.SetOptions();
+  auto agent = user_agent_prefix_ + UserAgentSuffix();
+  auto request = absl::make_unique<CurlDownloadRequest>(
+      std::move(headers_), std::move(handle_), factory_->CreateMultiHandle());
+  request->url_ = std::move(url_);
+  request->user_agent_ = std::move(agent);
+  request->http_version_ = std::move(http_version_);
+  request->factory_ = factory_;
+  request->logging_enabled_ = logging_enabled_;
+  request->socket_options_ = socket_options_;
+  request->download_stall_timeout_ = download_stall_timeout_;
+  request->SetOptions();
   return request;
 }
 
