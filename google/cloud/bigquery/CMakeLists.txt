@@ -66,19 +66,12 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_bigquery)
 set_target_properties(
     google_cloud_cpp_bigquery
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-bigquery
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
-set_target_properties(
-    google_cloud_cpp_bigquery
     PROPERTIES EXPORT_NAME google-cloud-cpp::bigquery VERSION
                                                       "${PROJECT_VERSION}"
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_bigquery
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-bigquery ALIAS
-            google_cloud_cpp_bigquery)
 add_library(google-cloud-cpp::bigquery ALIAS google_cloud_cpp_bigquery)
 
 # To avoid maintaining the list of files for the library, export them to a .bzl
