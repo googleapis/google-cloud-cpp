@@ -6,6 +6,7 @@ cmake-build-coverage/
 cmake-build-release/
 google/cloud/bigquery/quickstart/
 google/cloud/bigtable/quickstart/
+google/cloud/iam/quickstart/
 google/cloud/pubsub/quickstart/
 google/cloud/spanner/quickstart/
 google/cloud/storage/quickstart/

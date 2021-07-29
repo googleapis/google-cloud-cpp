@@ -59,6 +59,12 @@
   is now GA.
 * *IAM* -- The [IAM libray](https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/iam) is now GA.
 
+### BigQuery:
+
+**BREAKING CHANGES**:
+* The `experimental-bigquery` target has been replaced with the target
+  `bigquery`. Current usages will need to be updated.
+
 ### Bigtable:
 
 **BREAKING CHANGES**:
@@ -71,6 +77,12 @@
   See [#2567][issue-2567] for more details.
 
 [issue-2567]: https://github.com/googleapis/google-cloud-cpp/issues/2567
+
+### IAM:
+
+**BREAKING CHANGES**:
+* The `experimental-iam` target has been replaced with the target `iam`. Current
+  usages will need to be updated.
 
 ### Storage:
 
