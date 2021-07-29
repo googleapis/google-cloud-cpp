@@ -82,6 +82,7 @@ printf "%-30s" "Running markdown generators:" >&2
 time {
   declare -A -r GENERATOR_MAP=(
     ["ci/generate-markdown/generate-readme.sh"]="README.md"
+    ["ci/generate-markdown/generate-bigquery-readme.sh"]="google/cloud/bigquery/README.md"
     ["ci/generate-markdown/generate-bigtable-readme.sh"]="google/cloud/bigtable/README.md"
     ["ci/generate-markdown/generate-iam-readme.sh"]="google/cloud/iam/README.md"
     ["ci/generate-markdown/generate-pubsub-readme.sh"]="google/cloud/pubsub/README.md"

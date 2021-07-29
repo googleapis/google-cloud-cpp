@@ -156,14 +156,14 @@ cc_library(
 )
 
 cc_library(
-    name = "experimental-bigquery",
+    name = "bigquery",
     deps = [
         "//google/cloud/bigquery:google_cloud_cpp_bigquery",
     ],
 )
 
 cc_library(
-    name = "experimental-bigquery-mocks",
+    name = "bigquery-mocks",
     deps = [
         "//google/cloud/bigquery:google_cloud_cpp_bigquery_mocks",
     ],

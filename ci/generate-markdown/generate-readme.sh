@@ -54,6 +54,7 @@ cat <<"EOF"
 This repository contains idiomatic C++ client libraries for the following
 [Google Cloud Platform](https://cloud.google.com/) services.
 
+* [Google Cloud BigQuery](google/cloud/bigquery/README.md) [[quickstart]](google/cloud/bigquery/quickstart/README.md)
 * [Google Cloud Bigtable](google/cloud/bigtable/README.md) [[quickstart]](google/cloud/bigtable/quickstart/README.md)
 * [Google Cloud IAM](google/cloud/iam/README.md) [[quickstart]](google/cloud/iam/quickstart/README.md)
 * [Google Cloud Spanner](google/cloud/spanner/README.md) [[quickstart]](google/cloud/spanner/quickstart/README.md)
@@ -122,6 +123,7 @@ intended to help you get up and running in a matter of minutes. This
 how to use the library, along with minimal build files for common build
 systems, such as CMake and Bazel.
 
+* [Google Cloud BigQuery Quickstart](google/cloud/bigquery/quickstart/README.md)
 * [Google Cloud Bigtable Quickstart](google/cloud/bigtable/quickstart/README.md)
 * [Google Cloud IAM Quickstart](google/cloud/iam/quickstart/README.md)
 * [Google Cloud Spanner Quickstart](google/cloud/spanner/quickstart/README.md)
