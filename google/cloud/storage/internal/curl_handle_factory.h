@@ -113,6 +113,17 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
     return last_client_ip_address_;
   }
 
+  // Test only
+  std::size_t CurrentHandleCount() const {
+    std::lock_guard<std::mutex> lk(mu_);
+    return handles_.size();
+  }
+  // Test only
+  std::size_t CurrentMultiHandleCount() const {
+    std::lock_guard<std::mutex> lk(mu_);
+    return multi_handles_.size();
+  }
+
  private:
   void SetCurlOptions(CURL* handle);
 
