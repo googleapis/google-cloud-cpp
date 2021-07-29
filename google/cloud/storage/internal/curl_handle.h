@@ -88,6 +88,8 @@ class CurlHandle {
   CurlHandle(CurlHandle&&) = default;
   CurlHandle& operator=(CurlHandle&&) = default;
 
+  operator bool() const { return static_cast<bool>(handle_); }
+
   /// Set the callback to initialize each socket.
   struct SocketOptions {
     std::size_t recv_buffer_size_ = 0;

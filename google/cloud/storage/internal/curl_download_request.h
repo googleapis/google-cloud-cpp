@@ -90,6 +90,9 @@ class CurlDownloadRequest : public ObjectReadSource {
   /// Handle a completed (even interrupted) download.
   void OnTransferDone();
 
+  /// Release the handles back to the pool.
+  void ReleaseHandles();
+
   /// Copy any available data from the spill buffer to `buffer_`.
   void DrainSpillBuffer();
 

@@ -54,7 +54,7 @@ CurlPtr DefaultCurlHandleFactory::CreateHandle() {
 }
 
 void DefaultCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
-  if (GetHandle(h) == nullptr) return;
+  if (!h) return;
   char* ip;
   auto res = curl_easy_getinfo(GetHandle(h), CURLINFO_LOCAL_IP, &ip);
   if (res == CURLE_OK && ip != nullptr) {
@@ -112,7 +112,7 @@ CurlPtr PooledCurlHandleFactory::CreateHandle() {
 }
 
 void PooledCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
-  if (GetHandle(h) == nullptr) return;
+  if (!h) return;
   std::unique_lock<std::mutex> lk(mu_);
   char* ip;
   auto res = curl_easy_getinfo(GetHandle(h), CURLINFO_LOCAL_IP, &ip);

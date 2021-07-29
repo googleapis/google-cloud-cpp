@@ -62,10 +62,7 @@ CurlDownloadRequest::CurlDownloadRequest()
 
 CurlDownloadRequest::~CurlDownloadRequest() {
   CleanupHandles();
-  if (factory_) {
-    factory_->CleanupHandle(std::move(handle_));
-    factory_->CleanupMultiHandle(std::move(multi_));
-  }
+  ReleaseHandles();
 }
 
 StatusOr<HttpResponse> CurlDownloadRequest::Close() {
@@ -98,6 +95,7 @@ StatusOr<HttpResponse> CurlDownloadRequest::Close() {
 }
 
 StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
+  GCP_LOG(WARNING) << __func__ << "()";
   buffer_ = buf;
   buffer_offset_ = 0;
   buffer_size_ = n;
@@ -237,10 +235,19 @@ void CurlDownloadRequest::OnTransferDone() {
 
   // Release the handles back to the factory as soon as possible, so they can be
   // reused for any other requests.
-  if (factory_) {
-    factory_->CleanupHandle(std::move(handle_));
-    factory_->CleanupMultiHandle(std::move(multi_));
-  }
+  ReleaseHandles();
+}
+
+void CurlDownloadRequest::ReleaseHandles() {
+  GCP_LOG(WARNING) << __func__ << "() - handle_=" << handle_.handle_.get();
+  GCP_LOG(WARNING) << __func__ << "() - multi_=" << multi_.get();
+  auto handle = std::move(handle_);
+  auto multi = std::move(multi_);
+  GCP_LOG(WARNING) << __func__ << "() - handle=" << handle.handle_.get() << ", handle_=" << handle_.handle_.get();
+  GCP_LOG(WARNING) << __func__ << "() - multi=" << multi.get() << ", multi_=" << multi_.get();
+  if (!factory_) return;
+  factory_->CleanupHandle(std::move(handle));
+  factory_->CleanupMultiHandle(std::move(multi));
 }
 
 void CurlDownloadRequest::DrainSpillBuffer() {
