@@ -63,7 +63,6 @@ TEST(CurlHandleTest, AsStatus) {
 }
 
 TEST(AssertOptionSuccess, StringWithError) {
-  google::cloud::LogSink::EnableStdClog();
   EXPECT_DEATH_IF_SUPPORTED(
       AssertOptionSuccess(CURLE_NOT_BUILT_IN, CURLOPT_CAINFO, "test-function",
                           "some-path"),
@@ -71,7 +70,6 @@ TEST(AssertOptionSuccess, StringWithError) {
 }
 
 TEST(AssertOptionSuccess, IntWithError) {
-  google::cloud::LogSink::EnableStdClog();
   EXPECT_DEATH_IF_SUPPORTED(
       AssertOptionSuccess(CURLE_NOT_BUILT_IN, CURLOPT_CAINFO, "test-function",
                           1234),
@@ -79,7 +77,6 @@ TEST(AssertOptionSuccess, IntWithError) {
 }
 
 TEST(AssertOptionSuccess, NullptrWithError) {
-  google::cloud::LogSink::EnableStdClog();
   EXPECT_DEATH_IF_SUPPORTED(
       AssertOptionSuccess(CURLE_NOT_BUILT_IN, CURLOPT_CAINFO, "test-function",
                           nullptr),
@@ -89,7 +86,6 @@ TEST(AssertOptionSuccess, NullptrWithError) {
 int TestFunction() { return 42; }
 
 TEST(AssertOptionSuccess, FunctionPtrWithError) {
-  google::cloud::LogSink::EnableStdClog();
   EXPECT_EQ(42, TestFunction());
   EXPECT_DEATH_IF_SUPPORTED(
       AssertOptionSuccess(CURLE_NOT_BUILT_IN, CURLOPT_CAINFO, "test-function",

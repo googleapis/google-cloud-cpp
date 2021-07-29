@@ -17,6 +17,7 @@
 
 #include "google/cloud/log.h"
 #include "google/cloud/version.h"
+#include <algorithm>
 #include <vector>
 
 namespace google {
@@ -26,7 +27,10 @@ namespace internal {
 
 class StdClogBackend : public LogBackend {
  public:
-  StdClogBackend() = default;
+  explicit StdClogBackend(Severity min_severity)
+      : min_severity_((std::min)(min_severity, Severity::GCP_LS_FATAL)) {}
+
+  Severity min_severity() const { return min_severity_; }
 
   void Process(LogRecord const& lr) override;
   void ProcessWithOwnership(LogRecord lr) override { Process(lr); }
@@ -34,6 +38,7 @@ class StdClogBackend : public LogBackend {
 
  private:
   std::mutex mu_;
+  Severity min_severity_;
 };
 
 class CircularBufferBackend : public LogBackend {
@@ -48,6 +53,7 @@ class CircularBufferBackend : public LogBackend {
 
   std::size_t size() const { return buffer_.size(); }
   Severity min_flush_severity() const { return min_flush_severity_; }
+  std::shared_ptr<LogBackend> backend() const { return backend_; }
 
   void Process(LogRecord const& lr) override { ProcessWithOwnership(lr); }
   void ProcessWithOwnership(LogRecord lr) override;

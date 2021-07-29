@@ -490,7 +490,7 @@ class MockLogBackend : public google::cloud::LogBackend {
 TEST(CurlRequestTest, Logging) {
   // Prepare the Log subsystem to receive mock calls:
   auto mock_logger = std::make_shared<MockLogBackend>();
-  google::cloud::LogSink::Instance().AddBackend(mock_logger);
+  auto backend_id = google::cloud::LogSink::Instance().AddBackend(mock_logger);
 
   std::string log_messages;
   EXPECT_CALL(*mock_logger, ProcessWithOwnership)
@@ -516,7 +516,7 @@ TEST(CurlRequestTest, Logging) {
     EXPECT_EQ(200, response->status_code);
   }
 
-  google::cloud::LogSink::Instance().ClearBackends();
+  google::cloud::LogSink::Instance().RemoveBackend(backend_id);
 
   // Verify the URL, and headers, and payload are logged.
   EXPECT_THAT(log_messages, HasSubstr("/post?foo=bar"));
@@ -528,6 +528,7 @@ TEST(CurlRequestTest, Logging) {
   EXPECT_THAT(log_messages, HasSubstr("curl(Recv Header)"));
   EXPECT_THAT(log_messages, HasSubstr("curl(Recv Data)"));
 }
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

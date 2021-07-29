@@ -1480,7 +1480,6 @@ TEST(ConnectionImplTest, ExecuteBatchDmlNoResultSets) {
 }
 
 TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
-  google::cloud::LogSink::EnableStdClog();
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
