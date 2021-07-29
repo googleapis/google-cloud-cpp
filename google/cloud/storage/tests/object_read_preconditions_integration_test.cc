@@ -49,7 +49,6 @@ class ObjectReadPreconditionsIntegrationTest
 
   void SetUp() override {
     // TODO(coryan) - do not merge, troubleshooting on Windows.
-    google::cloud::LogSink::Instance().Flush();
     bucket_name_ =
         GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
 
@@ -78,6 +77,7 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationMatchSuccess) {
                                    IfGenerationMatch(meta->generation()));
   reader.Close();
   EXPECT_THAT(reader.status(), IsOk());
+  google::cloud::LogSink::Instance().Flush();
 }
 
 TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationMatchFailure) {
@@ -95,6 +95,7 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationMatchFailure) {
                                    IfGenerationMatch(meta->generation() + 1));
   reader.Close();
   EXPECT_THAT(reader.status(), StatusIs(StatusCode::kFailedPrecondition));
+  google::cloud::LogSink::Instance().Flush();
 }
 
 TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
