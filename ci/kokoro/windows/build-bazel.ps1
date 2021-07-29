@@ -179,7 +179,7 @@ if (Integration-Tests-Enabled) {
         "--test_env=GOOGLE_APPLICATION_CREDENTIALS=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json",
         "--test_env=GOOGLE_CLOUD_PROJECT=${env:GOOGLE_CLOUD_PROJECT}",
         "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes",
-        "--test_env=GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG=lastN,100,WARNING",
+        "--test_env=GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG=lastN,1000,WARNING",
         "--test_env=GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc-streams",
         "--test_env=GOOGLE_CLOUD_CPP_TRACING_OPTIONS=truncate_string_field_longer_than=512",
         "--test_env=CLOUD_STORAGE_ENABLE_TRACING=raw-client",
