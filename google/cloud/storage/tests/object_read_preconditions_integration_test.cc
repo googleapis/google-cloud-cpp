@@ -15,6 +15,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/types/optional.h"
@@ -75,6 +76,8 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationMatchSuccess) {
                                    IfGenerationMatch(meta->generation()));
   reader.Close();
   EXPECT_THAT(reader.status(), IsOk());
+  // TODO(coryan) - do not merge, troubleshooting on Windows.
+  google::cloud::LogSink::Instance().Flush();
 }
 
 TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationMatchFailure) {
@@ -92,6 +95,8 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationMatchFailure) {
                                    IfGenerationMatch(meta->generation() + 1));
   reader.Close();
   EXPECT_THAT(reader.status(), StatusIs(StatusCode::kFailedPrecondition));
+  // TODO(coryan) - do not merge, troubleshooting on Windows.
+  google::cloud::LogSink::Instance().Flush();
 }
 
 TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
