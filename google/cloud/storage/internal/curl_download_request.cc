@@ -46,13 +46,14 @@ extern "C" std::size_t CurlDownloadRequestHeader(char* contents,
 // `CMAKE_BUILD_TYPE=Debug` builds. The level of detail created by the
 // `TRACE_STATE()` macro is only needed by the library developers when
 // troubleshooting this class.
-#define TRACE_STATE()                                                       \
-  GCP_LOG(DEBUG) << __func__ << "(), buffer_size_=" << buffer_size_         \
+#define TRACE_STATE_IMPL(LEVEL)                                             \
+  GCP_LOG(LEVEL) << __func__ << "(), buffer_size_=" << buffer_size_         \
                  << ", buffer_offset_=" << buffer_offset_                   \
                  << ", spill_.size()=" << spill_.size()                     \
                  << ", spill_offset_=" << spill_offset_                     \
                  << ", closing=" << closing_ << ", closed=" << curl_closed_ \
                  << ", paused=" << paused_ << ", in_multi=" << in_multi_
+#define TRACE_STATE() TRACE_STATE_IMPL(TRACE)
 
 CurlDownloadRequest::CurlDownloadRequest()
     : headers_(nullptr, &curl_slist_free_all),
@@ -71,7 +72,7 @@ CurlDownloadRequest::~CurlDownloadRequest() {
 StatusOr<HttpResponse> CurlDownloadRequest::Close() {
   if (curl_closed_) return HttpResponse{http_code_, {}, received_headers_};
   TRACE_STATE();
-  // Set the the closing_ flag to trigger a return 0 from the next read
+  // Set the closing_ flag to trigger a return 0 from the next read
   // callback, see the comments in the header file for more details.
   closing_ = true;
   TRACE_STATE();
@@ -80,8 +81,8 @@ StatusOr<HttpResponse> CurlDownloadRequest::Close() {
 
   if (!curl_closed_) {
     // Ignore errors. Except in some really unfortunate cases [*] we are closing
-    // the download early. That is done [**] by having the write callback return
-    // 0, which always results in libcurl returning `CURLE_WRITE_ERROR`.
+    // the download early. That is done [**] by having WriteCallback() return 0,
+    // which always results in libcurl returning `CURLE_WRITE_ERROR`.
     //
     // [*]: the only other case would be the case where a download completes
     //   and the handle is paused because just the right number of bytes
@@ -134,7 +135,7 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
   auto status = Wait([this] {
     return curl_closed_ || paused_ || buffer_offset_ >= buffer_size_;
   });
-  TRACE_STATE() << ", status=" << status;
+  TRACE_STATE_IMPL(DEBUG) << ", status=" << status;
   if (!status.ok()) return status;
   auto bytes_read = buffer_offset_;
   buffer_ = nullptr;
@@ -312,7 +313,7 @@ Status CurlDownloadRequest::Wait(absl::FunctionRef<bool()> predicate) {
   // this thread must run the I/O event loop.
   while (!predicate()) {
     handle_.FlushDebug(__func__);
-    TRACE_STATE() << ", repeats=" << repeats;
+    TRACE_STATE_IMPL(DEBUG) << ", repeats=" << repeats;
     auto running_handles = PerformWork();
     if (!running_handles.ok()) return std::move(running_handles).status();
     // Only wait if there are CURL handles with pending work *and* the
@@ -343,8 +344,8 @@ StatusOr<int> CurlDownloadRequest::PerformWork() {
 
   // Return an error if the result is unexpected, otherwise return.
   auto status = AsStatus(result, __func__);
+  TRACE_STATE_IMPL(DEBUG) << ", status=" << status;
   if (!status.ok()) {
-    TRACE_STATE() << ", status=" << status;
     return status;
   }
   if (running_handles == 0) {
@@ -380,9 +381,10 @@ StatusOr<int> CurlDownloadRequest::PerformWork() {
         in_multi_ = false;
       }
 
-      TRACE_STATE() << ", status=" << status << ", remaining=" << remaining
-                    << ", running_handles=" << running_handles
-                    << ", multi_remove_status=" << multi_remove_status;
+      TRACE_STATE_IMPL(DEBUG)
+          << ", status=" << status << ", remaining=" << remaining
+          << ", running_handles=" << running_handles
+          << ", multi_remove_status=" << multi_remove_status;
 
       // Ignore errors when closing the handle. They are expected because
       // libcurl may have received a block of data, but the WriteCallback()
