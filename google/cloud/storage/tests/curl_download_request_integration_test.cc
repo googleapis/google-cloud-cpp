@@ -115,6 +115,7 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnRead) {
     std::this_thread::sleep_for(delay);
     delay *= 2;
   }
+  // Even if there was an error the handles should have returned to the pool.
   EXPECT_EQ(1, factory->CurrentHandleCount());
   EXPECT_EQ(1, factory->CurrentMultiHandleCount());
   ASSERT_STATUS_OK(status);
@@ -173,7 +174,10 @@ TEST(CurlDownloadRequestTest, SimpleStreamReadAfterClosed) {
         HttpBinEndpoint() + "/stream/" + std::to_string(kLineCount),
         storage::internal::GetDefaultCurlHandleFactory());
     auto download = std::move(builder).BuildDownloadRequest();
-    // Perform a series of very small `.Read()` calls. This will force the
+    // Perform a series of very small `.Read()` calls. libcurl provides data to
+    // CurlDownloadRequest in chunks larger than 4 bytes. This forces
+    // CurlDownloadRequest to keep data in its "spill" buffer, and to return the
+    // data in the `Read()` requests even after the CURL* handle is closed.
     char buffer[4];
     do {
       auto result = download->Read(buffer, sizeof(buffer));
