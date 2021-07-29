@@ -15,6 +15,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/types/optional.h"
@@ -47,6 +48,8 @@ class ObjectReadPreconditionsIntegrationTest
                 GetParam().rest_config) {}
 
   void SetUp() override {
+    // TODO(coryan) - do not merge, troubleshooting on Windows.
+    google::cloud::LogSink::Instance().Flush();
     bucket_name_ =
         GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
 
