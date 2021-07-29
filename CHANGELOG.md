@@ -54,6 +54,9 @@
 
 ## v1.30.0 - TBD
 
+### BigQuery:
+* The BigQuery library is now GA. Currently the v1 Storage API is supported.
+
 ### Bigtable:
 
 **BREAKING CHANGES**:
