@@ -90,7 +90,7 @@ class CurlDownloadRequest : public ObjectReadSource {
   /// Handle a completed (even interrupted) download.
   void OnTransferDone();
 
-  /// Copy any available data from the spill buffer to `buffer_`
+  /// Copy any available data from the spill buffer to `buffer_`.
   void DrainSpillBuffer();
 
   /// Called by libcurl to show that more data is available in the download.

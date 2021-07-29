@@ -341,7 +341,7 @@ StatusOr<int> CurlDownloadRequest::PerformWork() {
     result = curl_multi_perform(multi_.get(), &running_handles);
   } while (result == CURLM_CALL_MULTI_PERFORM);
 
-  // Throw an exception if the result is unexpected, otherwise return.
+  // Return an error if the result is unexpected, otherwise return.
   auto status = AsStatus(result, __func__);
   if (!status.ok()) {
     TRACE_STATE() << ", status=" << status;
