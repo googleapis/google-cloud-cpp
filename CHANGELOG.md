@@ -54,8 +54,15 @@
 
 ## v1.30.0 - TBD
 
+## New GA Libraries
+* *BigQuery Storage* -- The [BigQuery Storage library](https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/bigquery)
+  is now GA.
+
 ### BigQuery:
-* The BigQuery library is now GA. Currently the v1 Storage API is supported.
+
+**BREAKING CHANGES**:
+* The `experimental-bigquery` target has been replaced with the target
+  `bigquery`. Current usages will need to be updated.
 
 ### Bigtable:
 
