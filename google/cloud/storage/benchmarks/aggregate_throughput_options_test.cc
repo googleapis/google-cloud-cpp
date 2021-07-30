@@ -38,7 +38,7 @@ TEST(AggregateThroughputOptions, Basic) {
           "--grpc-channel-count=16",
           "--grpc-plugin-config=default",
           "--rest-http-version=1.1",
-          "--client-per-thread=true",
+          "--client-per-thread",
       },
       "");
   ASSERT_STATUS_OK(options);

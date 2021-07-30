@@ -81,7 +81,7 @@ ParseAggregateThroughputOptions(std::vector<std::string> const& argv,
        "use a different storage::Client object in each thread",
        [&options](std::string const& val) {
          options.client_per_thread =
-             testing_util::ParseBoolean(val).value_or("false");
+             testing_util::ParseBoolean(val).value_or("true");
        }},
   };
   auto usage = BuildUsage(desc, argv[0]);
