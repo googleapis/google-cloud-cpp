@@ -137,7 +137,7 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
     return curl_closed_ || paused_ || buffer_offset_ >= buffer_size_;
   });
   TRACE_STATE() << ", status=" << status;
-  if (!status.ok()) return status;
+  if (!status.ok()) return OnTransferError(std::move(status));
   auto bytes_read = buffer_offset_;
   buffer_ = nullptr;
   buffer_offset_ = 0;
@@ -243,6 +243,21 @@ void CurlDownloadRequest::OnTransferDone() {
     factory_->CleanupHandle(std::move(handle_));
     factory_->CleanupMultiHandle(std::move(multi_));
   }
+}
+
+Status CurlDownloadRequest::OnTransferError(Status status) {
+  // When there is a transfer error the handle is suspect. It could be pointing
+  // to an invalid host, a host that is slow and trickling data, or otherwise in
+  // a bad state. Release the handle, but do not return it to the pool.
+  CleanupHandles();
+  auto handle = std::move(handle_);
+  if (factory_) {
+    // While the handle is suspect, there is probably nothing wrong with the
+    // CURLM* handle, that just represents a local resource, such as data
+    // structures for `epoll(7)` or `select(2)`
+    factory_->CleanupMultiHandle(std::move(multi_));
+  }
+  return status;
 }
 
 void CurlDownloadRequest::DrainSpillBuffer() {

@@ -92,6 +92,9 @@ class CurlDownloadRequest : public ObjectReadSource {
   /// Handle a completed (even interrupted) download.
   void OnTransferDone();
 
+  /// Handle an error during a transfer
+  Status OnTransferError(Status status);
+
   /// Copy any available data from the spill buffer to `buffer_`
   void DrainSpillBuffer();
 
