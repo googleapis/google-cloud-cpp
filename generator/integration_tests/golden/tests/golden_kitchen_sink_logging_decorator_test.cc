@@ -153,7 +153,7 @@ TEST_F(LoggingDecoratorTest, ListLogsError) {
 }
 
 TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
-  auto mock_response = new MockTailLogEntriesStreamingReadRpc;
+  auto* mock_response = new MockTailLogEntriesStreamingReadRpc;
   EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
   EXPECT_CALL(*mock_, TailLogEntries)
       .WillOnce(Return(ByMove(
@@ -173,7 +173,7 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
 }
 
 TEST_F(LoggingDecoratorTest, TailLogEntriesRpcWithRpcStreams) {
-  auto mock_response = new MockTailLogEntriesStreamingReadRpc;
+  auto* mock_response = new MockTailLogEntriesStreamingReadRpc;
   EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
   EXPECT_CALL(*mock_, TailLogEntries)
       .WillOnce(Return(ByMove(

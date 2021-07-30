@@ -21,8 +21,7 @@
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
-using ::testing::ByMove;
+using ::testing::_;  // NOLINT(bugprone-reserved-identifier)
 using ::testing::Return;
 
 namespace google {

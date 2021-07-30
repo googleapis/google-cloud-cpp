@@ -31,7 +31,6 @@ using ::google::cloud::testing_util::MockAsyncResponseReader;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
-using ::testing::ByMove;
 using ::testing::Return;
 using ::testing::ReturnRef;
 
