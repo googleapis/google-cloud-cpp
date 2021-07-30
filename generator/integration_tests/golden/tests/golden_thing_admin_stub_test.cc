@@ -521,10 +521,8 @@ class MockLongrunningOperationsStub
 class GoldenStubTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    grpc_stub_ = std::unique_ptr<MockGrpcGoldenThingAdminStub>(
-        new MockGrpcGoldenThingAdminStub());
-    longrunning_stub_ = std::unique_ptr<MockLongrunningOperationsStub>(
-        new MockLongrunningOperationsStub());
+    grpc_stub_ = absl::make_unique<MockGrpcGoldenThingAdminStub>();
+    longrunning_stub_ = absl::make_unique<MockLongrunningOperationsStub>();
   }
 
   static grpc::Status GrpcTransientError() {
