@@ -27,6 +27,7 @@ using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::ScopedLog;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
+using ::testing::NotNull;
 
 auto constexpr kLogConfig = "GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG";
 auto constexpr kEnableClog = "GOOGLE_CLOUD_CPP_ENABLE_CLOG";
@@ -73,7 +74,7 @@ TEST(DefaultLogBackend, CircularBuffer) {
   EXPECT_EQ(5, buffer->size());
   EXPECT_EQ(Severity::GCP_LS_WARNING, buffer->min_flush_severity());
   auto const* clog_be = dynamic_cast<StdClogBackend*>(buffer->backend().get());
-  ASSERT_NE(clog_be, nullptr);
+  ASSERT_THAT(clog_be, NotNull());
   EXPECT_EQ(Severity::GCP_LS_DEBUG, clog_be->min_severity());
 }
 
@@ -82,7 +83,7 @@ TEST(DefaultLogBackend, CLog) {
   ScopedEnvironment clog(kEnableClog, absl::nullopt);
   auto be = DefaultLogBackend();
   auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
-  ASSERT_NE(clog_be, nullptr);
+  ASSERT_THAT(clog_be, NotNull());
   EXPECT_EQ(Severity::GCP_LS_DEBUG, clog_be->min_severity());
 }
 
@@ -91,7 +92,7 @@ TEST(DefaultLogBackend, BackwardsCompatibilityCLog) {
   ScopedEnvironment clog(kEnableClog, "yes");
   auto be = DefaultLogBackend();
   auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
-  ASSERT_NE(clog_be, nullptr);
+  ASSERT_THAT(clog_be, NotNull());
   EXPECT_EQ(Severity::GCP_LS_DEBUG, clog_be->min_severity());
 }
 
@@ -100,7 +101,7 @@ TEST(DefaultLogBackend, BackwardsCompatibilityCLogUnset) {
   ScopedEnvironment clog(kEnableClog, absl::nullopt);
   auto be = DefaultLogBackend();
   auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
-  ASSERT_NE(clog_be, nullptr);
+  ASSERT_THAT(clog_be, NotNull());
   EXPECT_EQ(Severity::GCP_LS_FATAL, clog_be->min_severity());
 }
 
@@ -109,7 +110,7 @@ TEST(DefaultLogBackend, BackwardsCompatibilityCLogWithSeverity) {
   ScopedEnvironment clog(kEnableClog, "WARNING");
   auto be = DefaultLogBackend();
   auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
-  ASSERT_NE(clog_be, nullptr);
+  ASSERT_THAT(clog_be, NotNull());
   EXPECT_EQ(Severity::GCP_LS_WARNING, clog_be->min_severity());
 }
 
@@ -118,7 +119,7 @@ TEST(DefaultLogBackend, UnknownType) {
   ScopedEnvironment clog(kEnableClog, absl::nullopt);
   auto be = DefaultLogBackend();
   auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
-  ASSERT_NE(clog_be, nullptr);
+  ASSERT_THAT(clog_be, NotNull());
   EXPECT_EQ(Severity::GCP_LS_FATAL, clog_be->min_severity());
 }
 
@@ -127,7 +128,7 @@ TEST(DefaultLogBackend, MissingComponents) {
   ScopedEnvironment clog(kEnableClog, absl::nullopt);
   auto be = DefaultLogBackend();
   auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
-  ASSERT_NE(clog_be, nullptr);
+  ASSERT_THAT(clog_be, NotNull());
   EXPECT_EQ(Severity::GCP_LS_FATAL, clog_be->min_severity());
 }
 
@@ -136,7 +137,7 @@ TEST(DefaultLogBackend, InvalidSize) {
   ScopedEnvironment clog(kEnableClog, absl::nullopt);
   auto be = DefaultLogBackend();
   auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
-  ASSERT_NE(clog_be, nullptr);
+  ASSERT_THAT(clog_be, NotNull());
   EXPECT_EQ(Severity::GCP_LS_FATAL, clog_be->min_severity());
 }
 
@@ -145,7 +146,7 @@ TEST(DefaultLogBackend, InvalidSeverity) {
   ScopedEnvironment clog(kEnableClog, absl::nullopt);
   auto be = DefaultLogBackend();
   auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
-  ASSERT_NE(clog_be, nullptr);
+  ASSERT_THAT(clog_be, NotNull());
   EXPECT_EQ(Severity::GCP_LS_FATAL, clog_be->min_severity());
 }
 
