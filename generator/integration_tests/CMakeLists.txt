@@ -27,9 +27,6 @@ endif ()
 
 include(CompileProtos)
 
-# TODO(#5854) - enable clang-tidy for the non-generated code!
-set(CMAKE_CXX_CLANG_TIDY "")
-
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_generator_testing_grpc_lib
     ${PROJECT_SOURCE_DIR}/generator/integration_tests/backup.proto
@@ -49,6 +46,8 @@ target_link_libraries(
            google-cloud-cpp::iam_v1_policy_protos
            google-cloud-cpp::longrunning_operations_protos
            google-cloud-cpp::rpc_status_protos)
+set_target_properties(google_cloud_cpp_generator_testing_grpc_lib
+                      PROPERTIES CXX_CLANG_TIDY "")
 
 function (google_cloud_cpp_generator_define_integration_tests)
     # The tests require googletest to be installed. Force CMake to use the

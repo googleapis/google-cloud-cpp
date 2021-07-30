@@ -237,12 +237,10 @@ TEST(GoldenKitchenSinkConnectionTest, ListLogsTooManyTransients) {
   EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
 }
 
-using ::google::test::admin::database::v1::TailLogEntriesResponse;
-
 std::unique_ptr<MockTailLogEntriesStreamingReadRpc> MakeFailingReader(
     Status status) {
   auto reader = absl::make_unique<MockTailLogEntriesStreamingReadRpc>();
-  EXPECT_CALL(*reader, Read).WillOnce(Return(status));
+  EXPECT_CALL(*reader, Read).WillOnce(Return(std::move(status)));
   return reader;
 }
 

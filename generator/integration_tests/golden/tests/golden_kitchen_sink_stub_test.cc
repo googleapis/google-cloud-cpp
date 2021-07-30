@@ -19,17 +19,17 @@
 #include <grpcpp/impl/codegen/status_code_enum.h>
 #include <memory>
 
-using ::google::cloud::testing_util::IsOk;
-using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
-using ::testing::ByMove;
-using ::testing::Return;
-
 namespace google {
 namespace cloud {
 namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
+
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
+using ::testing::Return;
+
 class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
                                           v1::GoldenKitchenSink::StubInterface {
  public:
@@ -221,8 +221,7 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
 class GoldenKitchenSinkStubTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    grpc_stub_ = std::unique_ptr<MockGrpcGoldenKitchenSinkStub>(
-        new MockGrpcGoldenKitchenSinkStub());
+    grpc_stub_ = absl::make_unique<MockGrpcGoldenKitchenSinkStub>();
   }
 
   static grpc::Status GrpcTransientError() {
@@ -305,8 +304,8 @@ class MockTailLogEntriesResponse
 
 TEST_F(GoldenKitchenSinkStubTest, TailLogEntries) {
   grpc::Status status;
-  auto* success_response = new MockTailLogEntriesResponse;
-  auto* failure_response = new MockTailLogEntriesResponse;
+  auto success_response = absl::make_unique<MockTailLogEntriesResponse>();
+  auto failure_response = absl::make_unique<MockTailLogEntriesResponse>();
   EXPECT_CALL(*success_response, Read).WillOnce(Return(false));
   EXPECT_CALL(*success_response, Finish()).WillOnce(Return(status));
   EXPECT_CALL(*failure_response, Read).WillOnce(Return(false));
@@ -314,8 +313,8 @@ TEST_F(GoldenKitchenSinkStubTest, TailLogEntries) {
 
   google::test::admin::database::v1::TailLogEntriesRequest request;
   EXPECT_CALL(*grpc_stub_, TailLogEntriesRaw)
-      .WillOnce(Return(success_response))
-      .WillOnce(Return(failure_response));
+      .WillOnce(Return(success_response.release()))
+      .WillOnce(Return(failure_response.release()));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
   auto success_stream =
       stub.TailLogEntries(absl::make_unique<grpc::ClientContext>(), request);

@@ -31,7 +31,6 @@ namespace {
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAreArray;
-using ::testing::HasSubstr;
 using ::testing::UnorderedElementsAreArray;
 
 TEST(GoldenKitchenSinkClientTest, CopyMoveEquality) {

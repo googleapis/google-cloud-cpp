@@ -153,13 +153,13 @@ TEST_F(LoggingDecoratorTest, ListLogsError) {
 }
 
 TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
-  auto mock_response = new MockTailLogEntriesStreamingReadRpc;
+  auto mock_response = absl::make_unique<MockTailLogEntriesStreamingReadRpc>();
   EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
   EXPECT_CALL(*mock_, TailLogEntries)
       .WillOnce(Return(ByMove(
           std::unique_ptr<internal::StreamingReadRpc<
               google::test::admin::database::v1::TailLogEntriesResponse>>(
-              mock_response))));
+              mock_response.release()))));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   auto response = stub.TailLogEntries(
       absl::make_unique<grpc::ClientContext>(),
@@ -173,13 +173,13 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
 }
 
 TEST_F(LoggingDecoratorTest, TailLogEntriesRpcWithRpcStreams) {
-  auto mock_response = new MockTailLogEntriesStreamingReadRpc;
+  auto mock_response = absl::make_unique<MockTailLogEntriesStreamingReadRpc>();
   EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
   EXPECT_CALL(*mock_, TailLogEntries)
       .WillOnce(Return(ByMove(
           std::unique_ptr<internal::StreamingReadRpc<
               google::test::admin::database::v1::TailLogEntriesResponse>>(
-              mock_response))));
+              mock_response.release()))));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
   auto response = stub.TailLogEntries(
       absl::make_unique<grpc::ClientContext>(),
