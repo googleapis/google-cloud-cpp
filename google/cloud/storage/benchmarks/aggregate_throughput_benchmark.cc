@@ -38,6 +38,7 @@ using ::google::cloud::storage_experimental::DefaultGrpcClient;
 using ::google::cloud::testing_util::FormatSize;
 using ::google::cloud::testing_util::Timer;
 namespace gcs = google::cloud::storage;
+namespace gcs_experimental = google::cloud::storage_experimental;
 namespace gcs_bm = google::cloud::storage_benchmarks;
 using gcs_bm::AggregateThroughputOptions;
 using gcs_bm::ApiName;
@@ -79,6 +80,7 @@ google::cloud::StatusOr<AggregateThroughputOptions> ParseArgs(int argc,
                                                               char* argv[]);
 
 struct TaskConfig {
+  gcs::Client client;
   std::seed_seq::result_type seed;
   std::vector<gcs::ObjectMetadata> objects;
 };
@@ -100,9 +102,8 @@ struct TaskResult {
   Counters counters;
 };
 
-TaskResult DownloadTask(gcs::Client client,
-                        AggregateThroughputOptions const& options,
-                        int iteration, TaskConfig const& config);
+TaskResult DownloadTask(AggregateThroughputOptions const& options,
+                        TaskConfig const& config, int iteration);
 
 template <typename Rep, typename Period>
 std::string FormatBandwidthGbPerSecond(
@@ -118,6 +119,23 @@ std::string FormatBandwidthGbPerSecond(
   return std::move(os).str();
 }
 
+gcs::Client MakeClient(AggregateThroughputOptions const& options) {
+  auto client_options =
+      google::cloud::Options{}.set<gcs_experimental::HttpVersionOption>(
+          options.rest_http_version);
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  if (options.api == ApiName::kApiGrpc) {
+    auto channels = options.grpc_channel_count;
+    if (channels == 0) channels = (std::max)(options.thread_count / 4, 4);
+    client_options.set<google::cloud::GrpcNumChannelsOption>(channels)
+        .set<google::cloud::storage_experimental::GrpcPluginOption>(
+            options.grpc_plugin_config);
+    return DefaultGrpcClient(std::move(client_options));
+  }
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  return gcs::Client(std::move(client_options));
+}
+
 }  // namespace
 
 int main(int argc, char* argv[]) {
@@ -128,18 +146,7 @@ int main(int argc, char* argv[]) {
   }
   if (options->exit_after_parse) return 1;
 
-  auto client = gcs::Client();
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  if (options->api == ApiName::kApiGrpc) {
-    auto channels = options->grpc_channel_count;
-    if (channels == 0) channels = (std::max)(options->thread_count / 4, 4);
-    client = DefaultGrpcClient(
-        google::cloud::Options{}
-            .set<google::cloud::GrpcNumChannelsOption>(channels)
-            .set<google::cloud::storage_experimental::GrpcPluginOption>(
-                options->grpc_plugin_config));
-  }
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  auto client = MakeClient(*options);
   std::vector<gcs::ObjectMetadata> objects;
   std::uint64_t dataset_size = 0;
   for (auto& o : client.ListObjects(options->bucket_name,
@@ -183,23 +190,28 @@ int main(int argc, char* argv[]) {
             << "\n# Object Count: " << objects.size()
             << "\n# Dataset size: " << FormatSize(dataset_size) << std::endl;
 
-  auto configs = [](std::size_t count, int repeats,
+  auto configs = [](AggregateThroughputOptions const& options,
+                    gcs::Client const& default_client,
                     std::vector<gcs::ObjectMetadata> const& objects) {
     std::random_device rd;
-    std::vector<std::seed_seq::result_type> seeds(count);
+    std::vector<std::seed_seq::result_type> seeds(options.thread_count);
     std::seed_seq({rd(), rd(), rd()}).generate(seeds.begin(), seeds.end());
 
-    std::vector<TaskConfig> config(seeds.size());
-    for (std::size_t i = 0; i != config.size(); ++i) config[i].seed = seeds[i];
+    auto default_config = TaskConfig{default_client, 0, {}};
+    std::vector<TaskConfig> config(seeds.size(), default_config);
+    for (std::size_t i = 0; i != config.size(); ++i) {
+      if (options.client_per_thread) config[i].client = MakeClient(options);
+      config[i].seed = seeds[i];
+    }
     std::size_t pos = 0;
-    for (int j = 0; j != repeats; ++j) {
+    for (int j = 0; j != options.repeats_per_iteration; ++j) {
       for (auto const& o : objects) {
         auto const target = pos++ % config.size();
         config[target].objects.push_back(o);
       }
     }
     return config;
-  }(options->thread_count, options->repeats_per_iteration, objects);
+  }(*options, client, objects);
 
   auto accumulate_bytes_downloaded = [](std::vector<TaskResult> const& r) {
     return std::accumulate(r.begin(), r.end(), std::int64_t{0},
@@ -224,8 +236,8 @@ int main(int argc, char* argv[]) {
     std::vector<std::future<TaskResult>> tasks(configs.size());
     std::transform(configs.begin(), configs.end(), tasks.begin(),
                    [&](TaskConfig const& c) {
-                     return std::async(std::launch::async, DownloadTask, client,
-                                       *options, i, std::cref(c));
+                     return std::async(std::launch::async, DownloadTask,
+                                       *options, std::cref(c), i);
                    });
     std::vector<TaskResult> iteration_results(configs.size());
     std::transform(std::make_move_iterator(tasks.begin()),
@@ -281,12 +293,10 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
-TaskResult DownloadTask(gcs::Client client,
-                        AggregateThroughputOptions const& options,
-                        int iteration, TaskConfig const& config) {
-  if (options.api != ApiName::kApiGrpc) {
-    client = gcs::Client{};
-  }
+TaskResult DownloadTask(AggregateThroughputOptions const& options,
+                        TaskConfig const& config, int iteration) {
+  auto client = config.client;
+
   TaskResult result;
   std::vector<char> buffer(options.read_buffer_size);
   auto const buffer_size = static_cast<std::streamsize>(buffer.size());

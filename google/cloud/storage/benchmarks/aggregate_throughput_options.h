@@ -36,6 +36,8 @@ struct AggregateThroughputOptions {
   ApiName api = ApiName::kApiGrpc;
   int grpc_channel_count = 0;
   std::string grpc_plugin_config;
+  std::string rest_http_version;
+  bool client_per_thread = false;
   bool exit_after_parse = false;
 };
 
