@@ -25,6 +25,7 @@ cc_library(
     deps = [
         "//:bigtable",
         "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/bigtable:bigtable_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
     ],
 )

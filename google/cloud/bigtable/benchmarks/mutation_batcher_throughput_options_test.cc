@@ -30,7 +30,9 @@ TEST(MutationBatcherThroughputOptions, Basic) {
           "--instance-id=test-instance",
           "--table-id=test-table",
           "--max-time=200s",
-          "--thread-count=2",
+          "--shard-count=2",
+          "--write-thread-count=3",
+          "--batcher-thread-count=4",
           "--mutation-count=2000000",
           "--max-batches=20",
           "--batch-size=2000",
@@ -42,7 +44,9 @@ TEST(MutationBatcherThroughputOptions, Basic) {
   EXPECT_EQ("test-instance", options->instance_id);
   EXPECT_EQ("test-table", options->table_id);
   EXPECT_EQ(200, options->max_time.count());
-  EXPECT_EQ(2, options->thread_count);
+  EXPECT_EQ(2, options->shard_count);
+  EXPECT_EQ(3, options->write_thread_count);
+  EXPECT_EQ(4, options->batcher_thread_count);
   EXPECT_EQ(2000000, options->mutation_count);
   EXPECT_EQ(20, options->max_batches);
   EXPECT_EQ(2000, options->batch_size);
@@ -58,7 +62,9 @@ TEST(MutationBatcherThroughputOptions, Defaults) {
       "");
   EXPECT_TRUE(options->table_id.empty());
   EXPECT_EQ(0, options->max_time.count());
-  EXPECT_EQ(1, options->thread_count);
+  EXPECT_EQ(1, options->shard_count);
+  EXPECT_EQ(1, options->write_thread_count);
+  EXPECT_EQ(1, options->batcher_thread_count);
   EXPECT_EQ(1000000, options->mutation_count);
   EXPECT_EQ(10, options->max_batches);
   EXPECT_EQ(1000, options->batch_size);
@@ -92,10 +98,26 @@ TEST(MutationBatcherThroughputOptions, Validate) {
       {"self-test", "--project-id=a", "--instance-id=b", "--max-time=-1s"},
       ""));
   EXPECT_FALSE(ParseMutationBatcherThroughputOptions(
-      {"self-test", "--project-id=a", "--instance-id=b", "--thread-count=-1"},
+      {"self-test", "--project-id=a", "--instance-id=b", "--shard-count=-1"},
       ""));
   EXPECT_FALSE(ParseMutationBatcherThroughputOptions(
-      {"self-test", "--project-id=a", "--instance-id=b", "--thread-count=0"},
+      {"self-test", "--project-id=a", "--instance-id=b", "--shard-count=0"},
+      ""));
+  EXPECT_FALSE(ParseMutationBatcherThroughputOptions(
+      {"self-test", "--project-id=a", "--instance-id=b",
+       "--write-thread-count=-1"},
+      ""));
+  EXPECT_FALSE(ParseMutationBatcherThroughputOptions(
+      {"self-test", "--project-id=a", "--instance-id=b",
+       "--write-thread-count=0"},
+      ""));
+  EXPECT_FALSE(ParseMutationBatcherThroughputOptions(
+      {"self-test", "--project-id=a", "--instance-id=b",
+       "--batcher-thread-count=-1"},
+      ""));
+  EXPECT_FALSE(ParseMutationBatcherThroughputOptions(
+      {"self-test", "--project-id=a", "--instance-id=b",
+       "--batcher-thread-count=0"},
       ""));
   EXPECT_FALSE(ParseMutationBatcherThroughputOptions(
       {"self-test", "--project-id=a", "--instance-id=b", "--mutation_count=-1"},

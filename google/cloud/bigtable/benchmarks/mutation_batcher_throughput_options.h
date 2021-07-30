@@ -32,7 +32,9 @@ struct MutationBatcherThroughputOptions {
   std::string column_family = "cf1";
   std::string column = "c1";
   std::chrono::seconds max_time = std::chrono::seconds(0);
-  int thread_count = 1;
+  int shard_count = 1;
+  int write_thread_count = 1;
+  int batcher_thread_count = 1;
   std::int64_t mutation_count = 1000000;
   int max_batches = 10;
   int batch_size = 1000;

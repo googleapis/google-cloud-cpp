@@ -29,6 +29,7 @@ add_library(
     setup.h)
 target_link_libraries(
     bigtable_benchmark_common
+    bigtable_client_testing
     google-cloud-cpp::bigtable
     google-cloud-cpp::bigtable_protos
     google-cloud-cpp::common

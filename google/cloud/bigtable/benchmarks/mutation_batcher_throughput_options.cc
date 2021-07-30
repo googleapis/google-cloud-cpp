@@ -54,10 +54,23 @@ ParseMutationBatcherThroughputOptions(std::vector<std::string> const& argv,
        [&options](std::string const& val) {
          options.max_time = ParseDuration(val);
        }},
-      {"--thread-count",
-       "the number of threads sending mutations to the batcher",
+      {"--shard-count",
+       "the number of initial splits provided to the table. The rows will be "
+       "uniformly distributed across these shards",
        [&options](std::string const& val) {
-         options.thread_count = std::stoi(val);
+         options.shard_count = std::stoi(val);
+       }},
+      {"--write-thread-count",
+       "the number of threads launched to write mutations. The M mutations are "
+       "broken up across this many threads. Each thread has its own batcher",
+       [&options](std::string const& val) {
+         options.write_thread_count = std::stoi(val);
+       }},
+      {"--batcher-thread-count",
+       "the number of background threads running the batcher. These threads "
+       "reorganize pending batches when a response is received from the server",
+       [&options](std::string const& val) {
+         options.batcher_thread_count = std::stoi(val);
        }},
       {"--mutation-count", "the total number of mutations",
        [&options](std::string const& val) {
@@ -118,10 +131,22 @@ ParseMutationBatcherThroughputOptions(std::vector<std::string> const& argv,
        << "s). Check your --max-time option\n";
     return make_status(os);
   }
-  if (options.thread_count <= 0) {
+  if (options.shard_count <= 0) {
     std::ostringstream os;
-    os << "Invalid number of threads (" << options.thread_count
-       << "). Check your --thread-count option\n";
+    os << "Invalid number of shards (" << options.shard_count
+       << "). Check your --shard-count option\n";
+    return make_status(os);
+  }
+  if (options.write_thread_count <= 0) {
+    std::ostringstream os;
+    os << "Invalid number of write threads (" << options.write_thread_count
+       << "). Check your --write-thread-count option\n";
+    return make_status(os);
+  }
+  if (options.batcher_thread_count <= 0) {
+    std::ostringstream os;
+    os << "Invalid number of batcher threads (" << options.batcher_thread_count
+       << "). Check your --batcher-thread-count option\n";
     return make_status(os);
   }
   if (options.mutation_count < 0) {
@@ -136,6 +161,8 @@ ParseMutationBatcherThroughputOptions(std::vector<std::string> const& argv,
        << options.max_batches << "). Check your --max-batches option\n";
     return make_status(os);
   }
+  // A maximum of 100,000 mutations per request can be sent to the batcher.
+  // See `kBigtableMutationLimit`
   if (options.batch_size <= 0 || options.batch_size > 100000) {
     std::ostringstream os;
     os << "Invalid maximum number of mutations per batch("
