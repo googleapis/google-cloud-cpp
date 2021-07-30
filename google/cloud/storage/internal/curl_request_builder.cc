@@ -17,6 +17,7 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/user_agent_prefix.h"
+#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
