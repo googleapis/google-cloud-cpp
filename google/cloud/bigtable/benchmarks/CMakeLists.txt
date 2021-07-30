@@ -30,6 +30,7 @@ add_library(
 target_link_libraries(
     bigtable_benchmark_common
     bigtable_client_testing
+    google_cloud_cpp_testing_grpc
     google-cloud-cpp::bigtable
     google-cloud-cpp::bigtable_protos
     google-cloud-cpp::common
