@@ -37,6 +37,8 @@ TEST(AggregateThroughputOptions, Basic) {
           "--api=XML",
           "--grpc-channel-count=16",
           "--grpc-plugin-config=default",
+          "--rest-http-version=1.1",
+          "--client-per-thread=true",
       },
       "");
   ASSERT_STATUS_OK(options);
@@ -51,6 +53,9 @@ TEST(AggregateThroughputOptions, Basic) {
   EXPECT_EQ(1 * kMiB, options->read_buffer_size);
   EXPECT_EQ(ApiName::kApiXml, options->api);
   EXPECT_EQ(16, options->grpc_channel_count);
+  EXPECT_EQ("default", options->grpc_plugin_config);
+  EXPECT_EQ("1.1", options->rest_http_version);
+  EXPECT_EQ(true, options->client_per_thread);
 }
 
 TEST(AggregateThroughputOptions, Description) {

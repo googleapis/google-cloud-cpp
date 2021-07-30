@@ -75,6 +75,14 @@ ParseAggregateThroughputOptions(std::vector<std::string> const& argv,
        [&options](std::string const& val) {
          options.grpc_plugin_config = val;
        }},
+      {"--rest-http-version", "change the preferred HTTP version",
+       [&options](std::string const& val) { options.rest_http_version = val; }},
+      {"--client-per-thread",
+       "use a different storage::Client object in each thread",
+       [&options](std::string const& val) {
+         options.client_per_thread =
+             testing_util::ParseBoolean(val).value_or("false");
+       }},
   };
   auto usage = BuildUsage(desc, argv[0]);
 
