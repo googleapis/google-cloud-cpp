@@ -35,6 +35,8 @@ ParseAggregateThroughputOptions(std::vector<std::string> const& argv,
        [&wants_help](std::string const&) { wants_help = true; }},
       {"--description", "print benchmark description",
        [&wants_description](std::string const&) { wants_description = true; }},
+      {"--labels", "user-defined labels to tag the results",
+       [&options](std::string const& val) { options.labels = val; }},
       {"--bucket-name", "the bucket where the dataset is located",
        [&options](std::string const& val) { options.bucket_name = val; }},
       {"--object-prefix", "the dataset prefix",
@@ -46,6 +48,11 @@ ParseAggregateThroughputOptions(std::vector<std::string> const& argv,
       {"--iteration-count", "set the number of iterations",
        [&options](std::string const& val) {
          options.iteration_count = std::stoi(val);
+       }},
+      {"--repeats-per-iteration",
+       "each iteration downloads the dataset this many times",
+       [&options](std::string const& val) {
+         options.repeats_per_iteration = std::stoi(val);
        }},
       {"--read-size", "number of bytes downloaded in each iteration",
        [&options](std::string const& val) {
@@ -112,6 +119,13 @@ ParseAggregateThroughputOptions(std::vector<std::string> const& argv,
     std::ostringstream os;
     os << "Invalid number of iterations (" << options.iteration_count
        << "), check your --iteration-count option\n";
+    return make_status(os);
+  }
+  if (options.repeats_per_iteration <= 0) {
+    std::ostringstream os;
+    os << "Invalid number of repeats per iteration ("
+       << options.repeats_per_iteration
+       << "), check your --repeats-per-iteration option\n";
     return make_status(os);
   }
   if (options.grpc_channel_count < 0) {

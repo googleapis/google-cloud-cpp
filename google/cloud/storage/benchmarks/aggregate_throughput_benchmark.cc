@@ -168,10 +168,12 @@ int main(int argc, char* argv[]) {
   };
 
   std::cout << "# Start time: " << current_time()
+            << "\n# Labels: " << options->labels
             << "\n# Bucket Name: " << options->bucket_name
             << "\n# Object Prefix: " << options->object_prefix
             << "\n# Thread Count: " << options->thread_count
             << "\n# Iterations: " << options->iteration_count
+            << "\n# Repeats Per Iteration: " << options->repeats_per_iteration
             << "\n# Read Size: " << options->read_size
             << "\n# Read Buffer Size: " << options->read_buffer_size
             << "\n# API: " << gcs_bm::ToString(options->api)
@@ -181,20 +183,23 @@ int main(int argc, char* argv[]) {
             << "\n# Object Count: " << objects.size()
             << "\n# Dataset size: " << FormatSize(dataset_size) << std::endl;
 
-  auto configs = [](std::size_t count,
-                    std::vector<gcs::ObjectMetadata> objects) {
+  auto configs = [](std::size_t count, int repeats,
+                    std::vector<gcs::ObjectMetadata> const& objects) {
     std::random_device rd;
     std::vector<std::seed_seq::result_type> seeds(count);
     std::seed_seq({rd(), rd(), rd()}).generate(seeds.begin(), seeds.end());
 
     std::vector<TaskConfig> config(seeds.size());
     for (std::size_t i = 0; i != config.size(); ++i) config[i].seed = seeds[i];
-    for (std::size_t i = 0; i != objects.size(); ++i) {
-      auto const target = i % config.size();
-      config[target].objects.push_back(std::move(objects[i]));
+    std::size_t pos = 0;
+    for (int j = 0; j != repeats; ++j) {
+      for (auto const& o : objects) {
+        auto const target = pos++ % config.size();
+        config[target].objects.push_back(o);
+      }
     }
     return config;
-  }(options->thread_count, std::move(objects));
+  }(options->thread_count, options->repeats_per_iteration, objects);
 
   auto accumulate_bytes_downloaded = [](std::vector<TaskResult> const& r) {
     return std::accumulate(r.begin(), r.end(), std::int64_t{0},
@@ -204,10 +209,16 @@ int main(int argc, char* argv[]) {
   };
 
   Counters accumulated;
-  std::cout << "Iteration,ThreadCount,ReadSize,ReadBufferSize,Api,"
-               "GrpcChannelCount,GrpcPluginConfig,StatusCode,Peer,"
-               "BytesDownloaded,ElapsedMicroseconds,IterationBytes,"
-               "IterationElapsedMicroseconds,IterationCpuMicroseconds\n";
+  // Print the header, so it can be easily loaded using the tools available in
+  // our analysis tools (typically Python pandas, but could be R). Flush the
+  // header because sometimes we interrupt the benchmark and these tools
+  // require a header even for empty files.
+  std::cout << "Labels,Iteration,ObjectCount,DatasetSize,ThreadCount"
+               ",RepeatsPerIteration,ReadSize,ReadBufferSize,Api"
+               ",GrpcChannelCount,GrpcPluginConfig,StatusCode,Peer"
+               ",BytesDownloaded,ElapsedMicroseconds,IterationBytes"
+               ",IterationElapsedMicroseconds,IterationCpuMicroseconds"
+            << std::endl;
   for (int i = 0; i != options->iteration_count; ++i) {
     auto timer = Timer::PerProcess();
     std::vector<std::future<TaskResult>> tasks(configs.size());
@@ -225,18 +236,26 @@ int main(int argc, char* argv[]) {
     auto const downloaded_bytes =
         accumulate_bytes_downloaded(iteration_results);
 
+    auto clean_csv_field = [](std::string v) {
+      std::replace(v.begin(), v.end(), ',', ';');
+      return v;
+    };
+    auto const labels = clean_csv_field(options->labels);
+    auto const grpc_plugin_config =
+        clean_csv_field(options->grpc_plugin_config);
     // Print the results after each iteration. Makes it possible to interrupt
     // the benchmark in the middle and still get some data.
     for (auto const& r : iteration_results) {
       for (auto const& d : r.details) {
         // Join the iteration details with the per-download details. That makes
         // it easier to analyze the data in external scripts.
-        std::cout << d.iteration << ',' << options->thread_count << ','
-                  << options->read_size << ',' << options->read_buffer_size
-                  << ',' << ToString(options->api) << ','
-                  << options->grpc_channel_count << ','
-                  << options->grpc_plugin_config << ',' << d.status.code()
-                  << ',' << d.peer << ',' << d.bytes_downloaded << ','
+        std::cout << labels << ',' << d.iteration << ',' << objects.size()
+                  << ',' << dataset_size << options->thread_count << ','
+                  << options->repeats_per_iteration << options->read_size << ','
+                  << options->read_buffer_size << ',' << ToString(options->api)
+                  << ',' << options->grpc_channel_count << ','
+                  << grpc_plugin_config << ',' << d.status.code() << ','
+                  << d.peer << ',' << d.bytes_downloaded << ','
                   << d.elapsed_time.count() << ',' << downloaded_bytes << ','
                   << usage.elapsed_time.count() << ',' << usage.cpu_time.count()
                   << "\n";
@@ -265,6 +284,9 @@ namespace {
 TaskResult DownloadTask(gcs::Client client,
                         AggregateThroughputOptions const& options,
                         int iteration, TaskConfig const& config) {
+  if (options.api != ApiName::kApiGrpc) {
+    client = gcs::Client{};
+  }
   TaskResult result;
   std::vector<char> buffer(options.read_buffer_size);
   auto const buffer_size = static_cast<std::streamsize>(buffer.size());
