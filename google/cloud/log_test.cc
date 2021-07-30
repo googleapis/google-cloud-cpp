@@ -27,7 +27,8 @@ using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::ExitedWithCode;
 using ::testing::HasSubstr;
 
-auto constexpr kLogConfigVariable = "GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG";
+auto constexpr kLogConfig = "GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG";
+auto constexpr kEnableClog = "GOOGLE_CLOUD_CPP_ENABLE_CLOG";
 
 TEST(LogSeverityTest, Streaming) {
   std::ostringstream os;
@@ -146,32 +147,31 @@ TEST(LogSinkTest, FlushMultipleBackends) {
 }
 
 TEST(LogSinkTest, LogDefaultInstance) {
-  ScopedEnvironment config(kLogConfigVariable, absl::nullopt);
+  ScopedEnvironment config(kLogConfig, absl::nullopt);
+  ScopedEnvironment env(kEnableClog, "anyvalue");
 
   auto backend = std::make_shared<MockLogBackend>();
-  EXPECT_CALL(*backend, ProcessWithOwnership).WillOnce([](LogRecord const& lr) {
+  EXPECT_CALL(*backend, Process).WillOnce([](LogRecord const& lr) {
     EXPECT_EQ(Severity::GCP_LS_WARNING, lr.severity);
     EXPECT_EQ("test message", lr.message);
   });
-  LogSink::Instance().AddBackend(backend);
 
+  auto backend_id = LogSink::Instance().AddBackend(backend);
   GCP_LOG(WARNING) << "test message";
-  LogSink::Instance().ClearBackends();
+  LogSink::Instance().RemoveBackend(backend_id);
 }
 
 TEST(LogSinkTest, LogToClog) {
-  LogSink::EnableStdClog();
   EXPECT_FALSE(LogSink::Instance().empty());
   LogSink::Instance().set_minimum_severity(Severity::GCP_LS_NOTICE);
   GCP_LOG(NOTICE) << "test message";
   LogSink::DisableStdClog();
   EXPECT_TRUE(LogSink::Instance().empty());
   EXPECT_EQ(0, LogSink::Instance().BackendCount());
-  LogSink::Instance().ClearBackends();
+  LogSink::EnableStdClog();
 }
 
 TEST(LogSinkTest, ClogMultiple) {
-  LogSink::EnableStdClog();
   EXPECT_FALSE(LogSink::Instance().empty());
   EXPECT_EQ(1, LogSink::Instance().BackendCount());
   LogSink::EnableStdClog();
@@ -185,6 +185,7 @@ TEST(LogSinkTest, ClogMultiple) {
   LogSink::DisableStdClog();
   EXPECT_TRUE(LogSink::Instance().empty());
   EXPECT_EQ(0, LogSink::Instance().BackendCount());
+  LogSink::EnableStdClog();
 }
 
 TEST(LogSinkTest, ClogEnvironment) {
@@ -197,8 +198,8 @@ TEST(LogSinkTest, ClogEnvironment) {
   auto old_style = testing::FLAGS_gtest_death_test_style;
   testing::FLAGS_gtest_death_test_style = "threadsafe";
 
-  ScopedEnvironment config(kLogConfigVariable, absl::nullopt);
-  ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_CLOG", "anyvalue");
+  ScopedEnvironment config(kLogConfig, absl::nullopt);
+  ScopedEnvironment env(kEnableClog, "anyvalue");
 
   auto f = [] {
     GCP_LOG(INFO) << "testing clog";
@@ -293,7 +294,6 @@ TEST(LogSinkTest, DisabledLogsMakeNoCalls) {
 }
 
 TEST(LogFatalTest, NoReturn) {
-  LogSink::EnableStdClog();
   EXPECT_DEATH_IF_SUPPORTED(GCP_LOG(FATAL) << "fatal message", "fatal message");
 }
 

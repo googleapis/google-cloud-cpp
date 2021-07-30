@@ -22,9 +22,11 @@ namespace internal {
 
 void StdClogBackend::Process(LogRecord const& lr) {
   std::lock_guard<std::mutex> lk(mu_);
-  std::clog << lr << "\n";
-  if (lr.severity >= Severity::GCP_LS_WARNING) {
-    std::clog << std::flush;
+  if (lr.severity >= min_severity_) {
+    std::clog << lr << "\n";
+    if (lr.severity >= Severity::GCP_LS_WARNING) {
+      std::clog << std::flush;
+    }
   }
 }
 

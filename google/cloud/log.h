@@ -24,8 +24,10 @@
  * The functions and macros used for logging are defined in this file. In
  * general, we abide by the following principles:
  *
- * - Logging should controlled by the application developer, unless explicitly
- *   instructed, the libraries produce no output to the console.
+ * - Logging should controlled by the application developer. Unless explicitly
+ *   instructed, the libraries produce no output to the console, except
+ *   to emit a message to `std::clog` immediately before a GCP_LOG(FATAL)
+ *   terminates the process.
  * - Logging should have very low cost:
  *   - It should be possible to disable logs at compile time, they should
  *     disappear as-if there were `#%ifdef`/`#%endif` directives around them.
@@ -323,13 +325,20 @@ class LogSink {
    * This is also enabled if the "GOOGLE_CLOUD_CPP_ENABLE_CLOG" environment
    * variable is set.
    */
-  static void EnableStdClog() { Instance().EnableStdClogImpl(); }
+  static void EnableStdClog(
+      Severity min_severity = Severity::GCP_LS_LOWEST_ENABLED) {
+    Instance().EnableStdClogImpl(min_severity);
+  }
 
-  /// Disable `std::clog` on `LogSink::Instance()`.
+  /**
+   * Disable `std::clog` on `LogSink::Instance()`.
+   *
+   * Note that this will remove the default logging backend.
+   */
   static void DisableStdClog() { Instance().DisableStdClogImpl(); }
 
  private:
-  void EnableStdClogImpl();
+  void EnableStdClogImpl(Severity min_severity);
   void DisableStdClogImpl();
   void SetDefaultBackend(std::shared_ptr<LogBackend> backend);
   BackendId AddBackendImpl(std::shared_ptr<LogBackend> backend);

@@ -508,7 +508,6 @@ TEST(PredicateUtilsTest, PaginationNoRepeatedMessageField) {
 }
 
 TEST(PredicateUtilsDeathTest, PaginationRepeatedMessageOrderMismatch) {
-  google::cloud::LogSink::EnableStdClog();
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
