@@ -14,6 +14,7 @@
 
 #include "google/cloud/testing_util/scoped_log.h"
 #include "absl/strings/str_split.h"
+#include <iterator>
 
 namespace google {
 namespace cloud {
@@ -30,10 +31,11 @@ std::vector<std::string> ScopedLog::Backend::ExtractLines() {
 }
 
 void ScopedLog::Backend::Process(LogRecord const& lr) {
-  // Break the records in lines, it is easier to analyze them as such.
-  std::lock_guard<std::mutex> lk(mu_);
+  // Break the record into lines. It is easier to analyze them as such.
   std::vector<std::string> result = absl::StrSplit(lr.message, '\n');
-  log_lines_.insert(log_lines_.end(), result.begin(), result.end());
+  std::lock_guard<std::mutex> lk(mu_);
+  log_lines_.insert(log_lines_.end(), std::make_move_iterator(result.begin()),
+                    std::make_move_iterator(result.end()));
 }
 
 void ScopedLog::Backend::ProcessWithOwnership(LogRecord lr) { Process(lr); }
