@@ -50,7 +50,7 @@ if (BUILD_TESTING)
         bigtable_benchmark_test.cc
         embedded_server_test.cc
         format_duration_test.cc
-        mutation_batcher_throughput_options.cc
+        mutation_batcher_throughput_options_test.cc
         random_mutation_test.cc
         setup_test.cc)
     export_list_to_bazel("bigtable_benchmarks_unit_tests.bzl"
