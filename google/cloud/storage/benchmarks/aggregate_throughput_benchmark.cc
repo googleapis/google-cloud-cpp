@@ -121,8 +121,9 @@ std::string FormatBandwidthGbPerSecond(
 
 gcs::Client MakeClient(AggregateThroughputOptions const& options) {
   auto client_options =
-      google::cloud::Options{}.set<gcs_experimental::HttpVersionOption>(
-          options.rest_http_version);
+      google::cloud::Options{}
+          .set<gcs_experimental::HttpVersionOption>(options.rest_http_version)
+          .set<gcs::DownloadStallTimeoutOption>(std::chrono::seconds(60));
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   if (options.api == ApiName::kApiGrpc) {
     auto channels = options.grpc_channel_count;
@@ -226,11 +227,11 @@ int main(int argc, char* argv[]) {
   // header because sometimes we interrupt the benchmark and these tools
   // require a header even for empty files.
   std::cout << "Labels,Iteration,ObjectCount,DatasetSize,ThreadCount"
-               ",RepeatsPerIteration,ReadSize,ReadBufferSize,Api"
-               ",GrpcChannelCount,GrpcPluginConfig,StatusCode,Peer"
-               ",BytesDownloaded,ElapsedMicroseconds,IterationBytes"
-               ",IterationElapsedMicroseconds,IterationCpuMicroseconds"
-            << std::endl;
+            << ",RepeatsPerIteration,ReadSize,ReadBufferSize,Api"
+            << ",GrpcChannelCount,GrpcPluginConfig,ClientPerThread"
+            << ",StatusCode,Peer,BytesDownloaded,ElapsedMicroseconds"
+            << ",IterationBytes,IterationElapsedMicroseconds"
+            << ",IterationCpuMicroseconds" << std::endl;
   for (int i = 0; i != options->iteration_count; ++i) {
     auto timer = Timer::PerProcess();
     std::vector<std::future<TaskResult>> tasks(configs.size());
@@ -255,6 +256,8 @@ int main(int argc, char* argv[]) {
     auto const labels = clean_csv_field(options->labels);
     auto const grpc_plugin_config =
         clean_csv_field(options->grpc_plugin_config);
+    auto const* client_per_thread =
+        options->client_per_thread ? "true" : "false";
     // Print the results after each iteration. Makes it possible to interrupt
     // the benchmark in the middle and still get some data.
     for (auto const& r : iteration_results) {
@@ -272,6 +275,7 @@ int main(int argc, char* argv[]) {
                   << ',' << ToString(options->api)          //
                   << ',' << options->grpc_channel_count     //
                   << ',' << grpc_plugin_config              //
+                  << ',' << client_per_thread               //
                   << ',' << d.status.code()                 //
                   << ',' << d.peer                          //
                   << ',' << d.bytes_downloaded              //

@@ -38,6 +38,7 @@ struct AggregateThroughputOptions {
   std::string grpc_plugin_config;
   std::string rest_http_version;
   bool client_per_thread = false;
+  std::chrono::seconds download_stall_timeout = std::chrono::seconds(60);
   bool exit_after_parse = false;
 };
 

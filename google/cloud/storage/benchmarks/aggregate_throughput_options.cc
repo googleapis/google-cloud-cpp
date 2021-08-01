@@ -83,6 +83,11 @@ ParseAggregateThroughputOptions(std::vector<std::string> const& argv,
          options.client_per_thread =
              testing_util::ParseBoolean(val).value_or("true");
        }},
+      {"--download-stall-timeout",
+       "abort downloads stalled for more than this time",
+       [&options](std::string const& val) {
+         options.download_stall_timeout = testing_util::ParseDuration(val);
+       }},
   };
   auto usage = BuildUsage(desc, argv[0]);
 
