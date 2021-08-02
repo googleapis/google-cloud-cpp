@@ -96,7 +96,7 @@ for lib in "${libraries[@]}"; do
     fi
   fi
   # Replaces the (old) expected dump file with the (new) actual one.
-  gzip "cmake-out/${actual_dump_file}"
+  gzip -n "cmake-out/${actual_dump_file}"
   mv -f "cmake-out/${actual_dump_file}.gz" "${expected_dump_path}"
 done
 echo
