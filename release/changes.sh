@@ -27,14 +27,15 @@ function filter_messages() {
   pr_url="https://github.com/googleapis/google-cloud-cpp/pull"
   for message in "$@"; do
     # Linkify "(#NNNN)" PR numbers.
+    # shellcheck disable=SC2001
     message="$(sed -e "s,(#\([0-9]\+\)),([#\1][${pr_url}/\1]),g" <<<"${message}")"
-    # Include any PR message that says it's a breaking change.
+    # Include any message that says it's a breaking change, like "feat!: foo"
     if grep -qP "!:" <<<"${message}"; then
       echo "${message}"
       continue
     fi
     # Skip PRs that likely won't interest our customers.
-    if grep -qP "^\* (ci|chore|test|testing|cleanup)\b" <<<"${message}"; then
+    if grep -qP "^\*\s(ci|chore|test|testing|cleanup)\b" <<<"${message}"; then
       continue
     fi
     echo "${message}"
@@ -66,7 +67,7 @@ for lib in "${libraries[@]}"; do
   mapfile -t messages < <(git log --no-merges --format="format:* %s" \
     "${last_tag}"..HEAD upstream/main -- "${path}")
   mapfile -t changelog < <(filter_messages "${messages[@]}")
-  if [[ ${#changelog[@]} > 0 ]]; then
+  if [[ ${#changelog[@]} -gt 0 ]]; then
     printf "\n### [%s][%s]\n\n" "${title}" "${url}"
     printf "%s\n" "${changelog[@]}"
   fi
@@ -78,9 +79,8 @@ done
 mapfile -t messages < <(git log --no-merges --format="format:* %s" \
   "${last_tag}"..HEAD upstream/main -- "google/cloud" "${git_exclude[@]}")
 mapfile -t changelog < <(filter_messages "${messages[@]}")
-if [[ ${#changelog[@]} > 0 ]]; then
+if [[ ${#changelog[@]} -gt 0 ]]; then
   url="https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md"
   printf "\n### [%s][%s]\n\n" "Common Libraries" "${url}"
   printf "%s\n" "${changelog[@]}"
 fi
-
