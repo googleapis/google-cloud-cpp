@@ -59,7 +59,7 @@
 ### New GA Libraries
 * *BigQuery Storage* -- The [BigQuery Storage library](https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/bigquery)
   is now GA.
-* *IAM* -- The [IAM libray](https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/iam) is now GA.
+* *IAM* -- The [IAM library](https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/iam) is now GA.
 
 ### Bigtable:
 
@@ -75,10 +75,9 @@
 [issue-2567]: https://github.com/googleapis/google-cloud-cpp/issues/2567
 
 **OTHER CHANGES**:
-* fix(bigtable): change default max mutations per batch from 100k to 1k (#7095)
-* cleanup(bigtable): strictly enforce bigtable limits in mutation batcher (#7036)
-* feat(bigtable): cap outstanding mutation number for mutation batcher (#7028)
-* feat(bigtable): start converting bigtable to use `g::c::Options` (#6949)
+* The `MutationBatcher`'s default setting for max mutations per batch was reduced
+  from 100k to 1k. The new value achieves better throughput and avoids errors
+  from exhausting the server. ([#7095][https://github.com/googleapis/google-cloud-cpp/pull/7095])
 
 ### Storage:
 
@@ -95,7 +94,6 @@
 * feat(storage): release download handles sooner (#7085)
 * feat(storage): support setting HTTP version (#7077)
 * fix(storage): cleanup interrupted downloads (#7064)
-* test(storage): make ScheduleForDelete() thread-safe (#7063)
 * fix(storage): avoid crashes after move (#7045)
 * feat(GCS+gRPC): upload checksums with last chunk (#7031)
 * fix(storage): use hash values in InsertObject() (#7025)
@@ -103,7 +101,6 @@
 * feat(GCS+gRPC): option to configure plugin (#6991)
 * feat(GCS+gRPC): checksums on ObjectInsert (#6967)
 * fix(GCS+gRPC): no hashes in Object resource (#6963)
-* feat(storage): use Base64 transforms (#6956)
 
 ### Common Libraries:
 
