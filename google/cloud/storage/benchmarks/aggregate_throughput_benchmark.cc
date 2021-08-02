@@ -261,15 +261,24 @@ int main(int argc, char* argv[]) {
       for (auto const& d : r.details) {
         // Join the iteration details with the per-download details. That makes
         // it easier to analyze the data in external scripts.
-        std::cout << labels << ',' << d.iteration << ',' << objects.size()
-                  << ',' << dataset_size << options->thread_count << ','
-                  << options->repeats_per_iteration << options->read_size << ','
-                  << options->read_buffer_size << ',' << ToString(options->api)
-                  << ',' << options->grpc_channel_count << ','
-                  << grpc_plugin_config << ',' << d.status.code() << ','
-                  << d.peer << ',' << d.bytes_downloaded << ','
-                  << d.elapsed_time.count() << ',' << downloaded_bytes << ','
-                  << usage.elapsed_time.count() << ',' << usage.cpu_time.count()
+        std::cout << labels                                 //
+                  << ',' << d.iteration                     //
+                  << ',' << objects.size()                  //
+                  << ',' << dataset_size                    //
+                  << ',' << options->thread_count           //
+                  << ',' << options->repeats_per_iteration  //
+                  << ',' << options->read_size              //
+                  << ',' << options->read_buffer_size       //
+                  << ',' << ToString(options->api)          //
+                  << ',' << options->grpc_channel_count     //
+                  << ',' << grpc_plugin_config              //
+                  << ',' << d.status.code()                 //
+                  << ',' << d.peer                          //
+                  << ',' << d.bytes_downloaded              //
+                  << ',' << d.elapsed_time.count()          //
+                  << ',' << downloaded_bytes                //
+                  << ',' << usage.elapsed_time.count()      //
+                  << ',' << usage.cpu_time.count()          //
                   << "\n";
       }
       // Update the counters.
