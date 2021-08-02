@@ -19,7 +19,7 @@ ARG NCPU=4
 # for `google-cloud-cpp`. Install these packages and additional development
 # tools to compile the dependencies:
 RUN dnf makecache && \
-    dnf install -y abi-compliance-checker abi-dumper autoconf automake \
+    dnf install -y abi-compliance-checker autoconf automake \
         ccache clang clang-analyzer clang-tools-extra \
         cmake diffutils doxygen findutils gcc-c++ git \
         lcov libcxx-devel libcxxabi-devel \
@@ -169,6 +169,14 @@ RUN curl -sSL https://github.com/universal-ctags/ctags/archive/refs/tags/p5.9.20
     make && \
     make install && \
     cd /var/tmp && rm -fr build
+
+# Installs the abi-dumper that has the integer overflow fix from
+# https://github.com/lvc/abi-dumper/pull/29
+WORKDIR /var/tmp/build
+RUN curl -sSL https://github.com/lvc/abi-dumper/archive/814effec0f20a9613441dfa033aa0a0bc2a96a87.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    mv abi-dumper.pl /usr/local/bin/abi-dumper && \
+    chmod +x /usr/local/bin/abi-dumper
 
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
 # integration tests for the client libraries.
