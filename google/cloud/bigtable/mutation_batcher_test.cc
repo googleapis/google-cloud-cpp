@@ -249,6 +249,12 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
   std::unique_ptr<MutationBatcher> batcher_;
 };
 
+TEST(OptionsTest, Defaults) {
+  MutationBatcher::Options opt = MutationBatcher::Options();
+  ASSERT_EQ(1000, opt.max_mutations_per_batch);
+  ASSERT_EQ(4, opt.max_batches);
+}
+
 TEST(OptionsTest, Trivial) {
   MutationBatcher::Options opt = MutationBatcher::Options()
                                      .SetMaxMutationsPerBatch(1)
