@@ -170,8 +170,9 @@ RUN curl -sSL https://github.com/universal-ctags/ctags/archive/refs/tags/p5.9.20
     make install && \
     cd /var/tmp && rm -fr build
 
-# Installs the abi-dumper that has the integer overflow fix from
-# https://github.com/lvc/abi-dumper/pull/29
+# Installs the abi-dumper with the integer overflow fix from
+# https://github.com/lvc/abi-dumper/pull/29. We can switch back to `dnf install
+# abi-dumper` once it has the fix.
 WORKDIR /var/tmp/build
 RUN curl -sSL https://github.com/lvc/abi-dumper/archive/814effec0f20a9613441dfa033aa0a0bc2a96a87.tar.gz | \
     tar -xzf - --strip-components=1 && \
