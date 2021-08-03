@@ -136,7 +136,9 @@ The `publish-docs` build should start automatically when you create the release
 branch. This build will upload the docs for the new release to the following
 URLs:
 
+* https://googleapis.dev/cpp/google-cloud-biquery/latest/
 * https://googleapis.dev/cpp/google-cloud-bigtable/latest/
+* https://googleapis.dev/cpp/google-cloud-iam/latest/
 * https://googleapis.dev/cpp/google-cloud-pubsub/latest/
 * https://googleapis.dev/cpp/google-cloud-storage/latest/
 * https://googleapis.dev/cpp/google-cloud-spanner/latest/
@@ -144,20 +146,23 @@ URLs:
 
 It can take up to an hour after the build finishes for the new docs to show up
 at the above URLs. You can watch the status of the build at
-https://console.cloud.google.com/cloud-build/builds?project=cloud-cpp-testing-resources&query=tags%3D%22publish-docs%22
+https://console.cloud.google.com/cloud-build/builds;region=us-east1?project=cloud-cpp-testing-resources&query=tags%3D%22publish-docs%22
 
-## Bump the version numbers in `main`
+## Bump the version number in `main`
 
 Working in your fork of `google-cloud-cpp`: bump the version numbers to the
 *next* version, i.e., one version past the release you just did above. Then
 send the PR for review against `main`. You need to:
 
-- Update the version numbers in the top-level `CMakeLists.txt` file.
-- Run the cmake configuration step, this will update the different
-  `version_info.h` files.
-- Update the version number and SHA256 checksums in the
-  `google/cloud/*/quickstart/WORKSPACE` files to point to the *just-released*
-  version.
+- Update the version number in the top-level `CMakeLists.txt` file.
+- Run the cmake configuration step, which will update the
+  `google/cloud/internal/version_info.h` file. Hint: Running
+  `ci/cloudbuild/build.sh --docker --trigger clang-tidy-pr` will do this, and
+  you can `CTRL-C` the build after CMake's configure step is finished.
+
+**NOTE:** The Renovate bot will automatically update the Bazel deps in the
+quickstart `WORKSPACE` files after it sees the new release published. Watch for
+this PR to come through, kick off the builds, approve, and merge it.
 
 ## Review the protections for the `v[0-9].*` branches
 
