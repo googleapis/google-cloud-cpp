@@ -123,7 +123,7 @@ gcs::Client MakeClient(AggregateThroughputOptions const& options) {
   auto client_options =
       google::cloud::Options{}
           .set<gcs_experimental::HttpVersionOption>(options.rest_http_version)
-          .set<gcs::DownloadStallTimeoutOption>(std::chrono::seconds(60));
+          .set<gcs::DownloadStallTimeoutOption>(options.download_stall_timeout);
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   if (options.api == ApiName::kApiGrpc) {
     auto channels = options.grpc_channel_count;
