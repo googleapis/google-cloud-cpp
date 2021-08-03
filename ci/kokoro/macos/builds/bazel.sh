@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -eu
+set -euo pipefail
 
 source "$(dirname "$0")/../../../lib/init.sh"
 source module ci/etc/integration-tests-config.sh

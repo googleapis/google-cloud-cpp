@@ -21,7 +21,7 @@
 # 2. It verifies that the installed artifacts work by compiling and running the
 #    quickstart programs against the installed artifacts.
 
-set -eu
+set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh

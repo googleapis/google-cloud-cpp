@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -eu
+set -euo pipefail
 
 # This script is sourced from several other scripts in `ci/` to configure the
 # repository name (and short name). It makes those scripts portable across
