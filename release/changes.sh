@@ -63,7 +63,7 @@ function print_changelog() {
   local url=$2
   shift 2
   if [[ $# -gt 0 ]]; then
-    printf "\n### [%s][%s]\n\n" "${title}" "${url}"
+    printf "\n### [%s](%s)\n\n" "${title}" "${url}"
     printf "* %s\n" "${changelog[@]}"
   fi
 }
