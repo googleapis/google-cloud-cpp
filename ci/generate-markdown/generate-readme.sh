@@ -252,7 +252,7 @@ rules are deprecated as of 2021-02-15, and will be become inaccessible
 Only CMake packages starting with the `google_cloud_cpp_` prefix are intended
 for customer use. Only targets starting with `google-cloud-cpp::`, are intended
 for customer use. Experimental targets have `experimental` in their name (e.g.
-`google-cloud-cpp::experimental-iam`). As previously stated, experimental
+`google-cloud-cpp::experimental-firestore`). As previously stated, experimental
 targets are subject to change or removal without notice.
 
 In previous versions we released packages with other prefixes (or without
