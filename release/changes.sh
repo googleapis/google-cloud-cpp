@@ -42,7 +42,7 @@ function filter_messages() {
   for message in "$@"; do
     # Linkify "(#NNNN)" PR numbers.
     # shellcheck disable=SC2001
-    message="$(sed -e "s,(#\([0-9]\+\)),([#\1][${pr_url}/\1]),g" <<<"${message}")"
+    message="$(sed -e "s,(#\([0-9]\+\)),([#\1](${pr_url}/\1)),g" <<<"${message}")"
     if grep -qP "!:" <<<"${message}"; then
       echo "${message}"
       continue
