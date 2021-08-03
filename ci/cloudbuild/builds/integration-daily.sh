@@ -25,7 +25,7 @@
 # this build by hand with:
 #   `ci/cloudbuild/build.sh --distro fedora-34 integration-daily --project cloud-cpp-testing-resources`
 
-set -eu
+set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh

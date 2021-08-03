@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -eu
+set -euo pipefail
 
 readonly GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION="348.0.0"
 readonly GOOGLE_CLOUD_CPP_SDK_SHA256="8341a9b21088fd382522be247c7e51c61d8ea4ff86e6ededfa601afd5223e153"

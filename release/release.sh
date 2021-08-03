@@ -57,7 +57,7 @@
 #   # PUSHES CHANGES to your fork
 #   $ release.sh -f <my-gh-username>/google-cloud-cpp
 
-set -eu
+set -euo pipefail
 
 # Extracts all the documentation at the top of this file as the usage text.
 USAGE="$(sed -n '17,/^$/s/^# \?//p' "$0")"

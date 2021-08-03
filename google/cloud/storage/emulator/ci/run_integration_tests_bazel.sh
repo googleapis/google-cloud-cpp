@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -eu
+set -euo pipefail
 
 source "$(dirname "$0")/../../../../../ci/lib/init.sh"
 source module /google/cloud/storage/tools/run_emulator_utils.sh
