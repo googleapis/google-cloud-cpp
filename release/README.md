@@ -38,56 +38,17 @@ can, but are not required to, send a single PR to update the baseline and the
 
 ### Update CHANGELOG.md
 
-Assuming you are working on your own fork of the `google-cloud-cpp` project,
-and `upstream` points to the `googleapis/google-cloud-cpp` remote, these
-commands should be useful in identifying important changes for inclusion in the
-release notes.
-
-Update `CHANGELOG.md` based on the release notes for Bigtable, Storage,
-Spanner, and the common libraries:
+To update the top-level [`CHANGELOG.md`] file, you run the script
 
 ```bash
-# Summarize the output of this into CHANGELOG.md under the "Bigtable" header
-git log --no-merges --format="format:* %s" \
-    $(git describe --tags --abbrev=0 upstream/main)..HEAD \
-    upstream/main -- google/cloud/bigtable
+release/changes.sh
 ```
 
-```bash
-# Summarize the output of this into CHANGELOG.md under the "Pub/Sub" header
-git log --no-merges --format="format:* %s" \
-    $(git describe --tags --abbrev=0 upstream/main)..HEAD \
-    upstream/main -- google/cloud/pubsub
-```
+to output a summary of the potentially interesting changes since the previous
+release. You paste the output into the relevant section in the `CHANGELOG.md`
+file, and manually tweak as needed.
 
-```bash
-# Summarize the output of this into CHANGELOG.md under the "Storage" header
-git log --no-merges --format="format:* %s" \
-    $(git describe --tags --abbrev=0 upstream/main)..HEAD \
-    upstream/main -- google/cloud/storage
-```
-
-```bash
-# Summarize the output of this into CHANGELOG.md under the "Spanner" header
-git log --no-merges --format="format:* %s" \
-    $(git describe --tags --abbrev=0 upstream/main)..HEAD \
-    upstream/main -- google/cloud/spanner
-```
-
-```bash
-# Summarize the output of this into CHANGELOG.md under the "Common libraries" header
-git log --no-merges --format="format:* %s" \
-    $(git describe --tags --abbrev=0 upstream/main)..HEAD \
-    upstream/main -- google/cloud \
-   ':(exclude)google/cloud/firestore/' \
-   ':(exclude)google/cloud/bigtable/' \
-   ':(exclude)google/cloud/pubsub/' \
-   ':(exclude)google/cloud/spanner/' \
-   ':(exclude)google/cloud/storage/'
-```
-
-Any **chore**/**ci**/**test**-tagged PRs in the above lists should probably be
-discarded as they are uninteresting to our users.
+[`CHANGELOG.md`]: /CHANGELOG.md
 
 ### Send a PR with all these changes
 
