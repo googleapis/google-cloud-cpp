@@ -31,4 +31,3 @@ In brief, the Kokoro configuration is split in two:
 Somewhat unique to Kokoro one must define a separate *INTEGRATION* vs.
 *PRESUBMIT* thus the duplication of configuration files for essentially the
 same settings.
-
