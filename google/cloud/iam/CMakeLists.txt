@@ -86,9 +86,7 @@ set_target_properties(
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_iam
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-
 add_library(google-cloud-cpp::iam ALIAS google_cloud_cpp_iam)
-add_library(google-cloud-cpp::experimental-iam ALIAS google_cloud_cpp_iam)
 
 # To avoid maintaining the list of files for the library, export them to a .bzl
 # file.

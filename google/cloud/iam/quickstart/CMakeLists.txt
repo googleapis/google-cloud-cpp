@@ -32,4 +32,4 @@ endif ()
 
 # Once the iam_client package is found, define new targets.
 add_executable(quickstart quickstart.cc)
-target_link_libraries(quickstart google-cloud-cpp::experimental-iam)
+target_link_libraries(quickstart google-cloud-cpp::iam)
