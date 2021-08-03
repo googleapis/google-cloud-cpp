@@ -152,9 +152,9 @@ std::shared_ptr<GrpcClient> GrpcClient::Create(Options const& opts) {
 }
 
 std::shared_ptr<GrpcClient> GrpcClient::CreateMock(
-    std::shared_ptr<StorageStub> stub) {
+    std::shared_ptr<StorageStub> stub, Options opts) {
   return std::shared_ptr<GrpcClient>(
-      new GrpcClient(std::move(stub), DefaultOptionsGrpc({})));
+      new GrpcClient(std::move(stub), DefaultOptionsGrpc(std::move(opts))));
 }
 
 GrpcClient::GrpcClient(Options const& opts)
@@ -314,9 +314,15 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
         StatusCode::kOutOfRange,
         "ReadLast(0) is invalid in REST and produces incorrect output in gRPC");
   }
+  auto context = absl::make_unique<grpc::ClientContext>();
+  if (backwards_compatibility_options_.download_stall_timeout().count() != 0) {
+    context->set_deadline(
+        std::chrono::system_clock::now() +
+        backwards_compatibility_options_.download_stall_timeout());
+  }
   return std::unique_ptr<ObjectReadSource>(
-      absl::make_unique<GrpcObjectReadSource>(stub_->GetObjectMedia(
-          absl::make_unique<grpc::ClientContext>(), ToProto(request))));
+      absl::make_unique<GrpcObjectReadSource>(
+          stub_->GetObjectMedia(std::move(context), ToProto(request))));
 }
 
 StatusOr<ListObjectsResponse> GrpcClient::ListObjects(

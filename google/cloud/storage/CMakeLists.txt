@@ -602,6 +602,7 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
             internal/grpc_client_failures_test.cc
             internal/grpc_client_insert_object_media_test.cc
             internal/grpc_client_object_request_test.cc
+            internal/grpc_client_read_object_test.cc
             internal/grpc_client_test.cc
             internal/grpc_object_read_source_test.cc
             internal/grpc_resumable_upload_session_test.cc

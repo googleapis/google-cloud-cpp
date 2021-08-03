@@ -53,6 +53,16 @@ class MockInsertStream : public internal::StorageStub::InsertStream {
   MOCK_METHOD(StatusOr<google::storage::v1::Object>, Close, (), (override));
 };
 
+class MockObjectMediaStream : public internal::StorageStub::ObjectMediaStream {
+ public:
+  MOCK_METHOD(void, Cancel, (), (override));
+  using ReadResultType =
+      absl::variant<Status, google::storage::v1::GetObjectMediaResponse>;
+  MOCK_METHOD(ReadResultType, Read, (), (override));
+  MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
+              (), (const, override));
+};
+
 }  // namespace testing
 }  // namespace storage
 }  // namespace cloud
