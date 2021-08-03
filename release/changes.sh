@@ -21,7 +21,10 @@
 # uninteresting to customers are omitted. The output should be pasted into the
 # `CHANGELOG.md` file during a release and manually tweaked as needed.
 
-set -eu
+set -euo pipefail
+
+source "$(dirname "$0")/../ci/lib/init.sh"
+cd "${PROJECT_ROOT}"
 
 # Lists all the changes between the given tag and HEAD.
 function list_changes() {
@@ -80,12 +83,15 @@ sections=(
 )
 
 # Adds a section for "Common Libraries", which excludes the previous sections.
-exclude=($(printf "%s\n" "${sections[@]}" | cut -f2 -d, | sed -e 's/^/:(exclude)/'))
+mapfile -t exclude < <(printf "%s\n" "${sections[@]}" |
+  cut -f2 -d, | sed -e 's/^/:(exclude)/')
 sections+=("Common Libraries,google/cloud,${exclude[*]}")
 
 for section in "${sections[@]}"; do
   title="$(cut -f1 -d, <<<"${section}")"
   path="$(cut -f2 -d, <<<"${section}")"
+  # We want space-splitting to array here, so we need to disable
+  # shellcheck disable=SC2207
   extra=($(cut -f3 -d, <<<"${section}"))
   url="https://github.com/googleapis/google-cloud-cpp/blob/main/${path}/README.md"
   mapfile -t messages < <(list_changes "${last_tag}" "${path}" "${extra[@]}")
