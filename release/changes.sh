@@ -90,9 +90,7 @@ sections+=("Common Libraries,google/cloud,${exclude[*]}")
 for section in "${sections[@]}"; do
   title="$(cut -f1 -d, <<<"${section}")"
   path="$(cut -f2 -d, <<<"${section}")"
-  # We want space-splitting to array here, so we need to disable
-  # shellcheck disable=SC2207
-  extra=($(cut -f3 -d, <<<"${section}"))
+  mapfile -d ' ' -t extra < <(cut -f3 -d, <<<"${section}")
   url="https://github.com/googleapis/google-cloud-cpp/blob/main/${path}/README.md"
   mapfile -t messages < <(list_changes "${last_tag}" "${path}" "${extra[@]}")
   mapfile -t changelog < <(filter_messages "${messages[@]}")
