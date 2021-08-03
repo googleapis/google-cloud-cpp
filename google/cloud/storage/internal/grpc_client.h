@@ -45,7 +45,7 @@ class GrpcClient : public RawClient,
 
   // This is used to create a client from a mocked StorageStub.
   static std::shared_ptr<GrpcClient> CreateMock(
-      std::shared_ptr<StorageStub> stub);
+      std::shared_ptr<StorageStub> stub, Options opts = {});
 
   ~GrpcClient() override = default;
 
