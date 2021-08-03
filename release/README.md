@@ -48,7 +48,7 @@ to output a summary of the potentially interesting changes since the previous
 release. You paste the output into the relevant section in the `CHANGELOG.md`
 file, and manually tweak as needed.
 
-[`CHANGELOG.md`]: https://github.com/googleapis/google-cloud-cpp/blob/main/CHANGELOG.md
+[`CHANGELOG.md`]: /CHANGELOG.md
 
 ### Send a PR with all these changes
 
