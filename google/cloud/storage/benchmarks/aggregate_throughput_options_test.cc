@@ -39,6 +39,7 @@ TEST(AggregateThroughputOptions, Basic) {
           "--grpc-plugin-config=default",
           "--rest-http-version=1.1",
           "--client-per-thread",
+          "--download-stall-timeout=120s",
       },
       "");
   ASSERT_STATUS_OK(options);
@@ -56,6 +57,7 @@ TEST(AggregateThroughputOptions, Basic) {
   EXPECT_EQ("default", options->grpc_plugin_config);
   EXPECT_EQ("1.1", options->rest_http_version);
   EXPECT_EQ(true, options->client_per_thread);
+  EXPECT_EQ(std::chrono::seconds(120), options->download_stall_timeout);
 }
 
 TEST(AggregateThroughputOptions, Description) {
