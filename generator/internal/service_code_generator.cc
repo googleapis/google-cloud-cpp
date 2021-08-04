@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/service_code_generator.h"
+#include "google/cloud/internal/absl_flat_hash_map_quiet.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
@@ -119,6 +120,37 @@ bool ServiceCodeGenerator::HasStreamingReadMethod() const {
                      [](google::protobuf::MethodDescriptor const& m) {
                        return IsStreamingRead(m);
                      });
+}
+
+std::vector<std::string>
+ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
+  // This hash is not intended to be comprehensive. Problematic types and their
+  // includes should be added as needed.
+  static absl::flat_hash_map<std::string, std::string> const kTypeIncludeMap = {
+      {"google.protobuf.Duration", "google/protobuf/duration.pb.h"}};
+  std::vector<std::string> include_paths;
+  for (auto method : methods_) {
+    auto method_signature_extension =
+        method.get().options().GetRepeatedExtension(
+            google::api::method_signature);
+    google::protobuf::Descriptor const* input_type = method.get().input_type();
+    for (auto const& extension : method_signature_extension) {
+      std::vector<std::string> parameters = absl::StrSplit(extension, ",");
+      for (auto const& parameter : parameters) {
+        google::protobuf::FieldDescriptor const* parameter_descriptor =
+            input_type->FindFieldByName(parameter);
+        if (parameter_descriptor->type() ==
+            google::protobuf::FieldDescriptor::TYPE_MESSAGE) {
+          auto iter = kTypeIncludeMap.find(
+              parameter_descriptor->message_type()->full_name());
+          if (iter != kTypeIncludeMap.end()) {
+            include_paths.push_back(iter->second);
+          }
+        }
+      }
+    }
+  }
+  return include_paths;
 }
 
 VarsDictionary const& ServiceCodeGenerator::vars() const {
