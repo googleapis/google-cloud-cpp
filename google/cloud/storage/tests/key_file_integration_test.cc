@@ -35,16 +35,16 @@ class KeyFileIntegrationTest
     // The emulator does not implement signed URLs.
     if (UsingEmulator()) GTEST_SKIP();
 
-    std::string const key_file_envvar = GetParam();
+    std::string const env = GetParam();
+    key_filename_ = google::cloud::internal::GetEnv(env.c_str()).value_or("");
+    if (key_filename_.empty()) {
+      GTEST_SKIP() << "Skipping because " << env << " is not set";
+    }
 
     bucket_name_ = google::cloud::internal::GetEnv(
                        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
                        .value_or("");
     ASSERT_FALSE(bucket_name_.empty());
-    key_filename_ =
-        google::cloud::internal::GetEnv(key_file_envvar.c_str()).value_or("");
-    ASSERT_FALSE(key_filename_.empty())
-        << " expected non-empty value for ${" << key_file_envvar << "}";
     service_account_ =
         google::cloud::internal::GetEnv(
             "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT")
