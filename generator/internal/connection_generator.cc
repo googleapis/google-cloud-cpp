@@ -487,6 +487,7 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
 )""");
 
   CcCloseNamespaces();
+  CcPrint("\n");
   CcOpenNamespaces(NamespaceType::kInternal);
 
   CcPrint(
