@@ -71,7 +71,7 @@ _EOF_
 sed -n '/^#/,$p' "${BINDIR}/../../google/cloud/storage/quickstart/quickstart.cc"
 
 cat <<'_EOF_'
-````
+```
 
 * Packaging maintainers or developers that prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
