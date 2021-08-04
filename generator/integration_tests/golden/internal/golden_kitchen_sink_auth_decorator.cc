@@ -86,4 +86,3 @@ StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> Gold
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
-

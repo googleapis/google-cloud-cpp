@@ -71,4 +71,3 @@ CreateDefaultGoldenKitchenSinkStub(
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
-

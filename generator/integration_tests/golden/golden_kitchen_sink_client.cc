@@ -111,4 +111,3 @@ GoldenKitchenSinkClient::ListServiceAccountKeys(google::test::admin::database::v
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google
-

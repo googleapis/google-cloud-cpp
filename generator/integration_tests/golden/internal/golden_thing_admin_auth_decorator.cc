@@ -243,4 +243,3 @@ future<Status> GoldenThingAdminAuth::AsyncCancelOperation(
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
-
