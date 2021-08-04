@@ -131,19 +131,17 @@ time {
     xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
-# Apply transformations to fix whitespace formatting in files not handled by
-# clang-format(1) above.  For now we simply remove trailing blanks.  Note that
-# we do not expand TABs (they currently only appear in Makefiles and Makefile
-# snippets).
+# Applies the following fixes in text files that do not say "DO NOT EDIT":
+#   - Removes trailing whitespace on lines
+#   - Removes trailing blank lines in files
 printf "%-30s" "Running whitespace fixes:" >&2
 time {
   expressions=("-e" "'s/[[:blank:]]\+$//'")
-  # The next three expressions trim trailing blank lines, courtesy of
+  # Trims trailing blank lines, courtesy of
   # http://sed.sourceforge.net/sed1line.txt.
-  expressions+=("-e" ":a")
-  expressions+=("-e" "'/^\n*$/{\$d;N;ba'")
-  expressions+=("-e" "'}'")
+  expressions+=("-e" ":a" "-e" "'/^\n*$/{\$d;N;ba'" "-e" "'}'")
   git ls-files -z | grep -zv '\.gz$' |
+    xargs -P "$(nproc)" -n 50 -0 grep -ZPL "\bDO NOT EDIT\b" |
     xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
