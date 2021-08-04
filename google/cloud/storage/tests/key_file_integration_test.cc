@@ -27,6 +27,9 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+constexpr auto kJsonEnvVar = "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON";
+constexpr auto kP12EnvVar = "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12";
+
 class KeyFileIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
       public ::testing::WithParamInterface<std::string> {
@@ -37,9 +40,13 @@ class KeyFileIntegrationTest
 
     std::string const env = GetParam();
     key_filename_ = google::cloud::internal::GetEnv(env.c_str()).value_or("");
-    if (key_filename_.empty()) {
-      GTEST_SKIP() << "Skipping because " << env << " is not set";
+    // The p12 test is only run on certain platforms, so if it's not set, skip
+    // the test rather than failing.
+    if (key_filename_.empty() && env == kP12EnvVar) {
+      GTEST_SKIP() << "Skipping because ${" << env << "} is not set";
     }
+    ASSERT_FALSE(key_filename_.empty())
+        << "Expected non-empty value for ${" << env << "}";
 
     bucket_name_ = google::cloud::internal::GetEnv(
                        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
@@ -130,12 +137,10 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
   EXPECT_EQ(expected, response->payload);
 }
 
-INSTANTIATE_TEST_SUITE_P(
-    KeyFileJsonTest, KeyFileIntegrationTest,
-    ::testing::Values("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON"));
-INSTANTIATE_TEST_SUITE_P(
-    KeyFileP12Test, KeyFileIntegrationTest,
-    ::testing::Values("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12"));
+INSTANTIATE_TEST_SUITE_P(KeyFileJsonTest, KeyFileIntegrationTest,
+                         ::testing::Values(kJsonEnvVar));
+INSTANTIATE_TEST_SUITE_P(KeyFileP12Test, KeyFileIntegrationTest,
+                         ::testing::Values(kP12EnvVar));
 
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
