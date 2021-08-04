@@ -137,8 +137,14 @@ time {
 # snippets).
 printf "%-30s" "Running whitespace fixes:" >&2
 time {
+  expressions=("-e" "'s/[[:blank:]]\+$//'")
+  # The next three expressions trim trailing blank lines, courtesy of
+  # http://sed.sourceforge.net/sed1line.txt.
+  expressions+=("-e" ":a")
+  expressions+=("-e" "'/^\n*$/{\$d;N;ba'")
+  expressions+=("-e" "'}'")
   git ls-files -z | grep -zv '\.gz$' |
-    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit -e 's/[[:blank:]]\+$//' \"\$0\" \"\$@\""
+    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
