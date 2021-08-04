@@ -171,7 +171,10 @@ Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {
   return OpenNamespaces(header_, ns_type);
 }
 
-void ServiceCodeGenerator::HeaderCloseNamespaces() { CloseNamespaces(header_); }
+void ServiceCodeGenerator::HeaderCloseNamespaces() {
+  CloseNamespaces(header_);
+  HeaderPrint("\n");
+}
 
 Status ServiceCodeGenerator::CcOpenNamespaces(NamespaceType ns_type) {
   return OpenNamespaces(cc_, ns_type);
@@ -256,7 +259,6 @@ void ServiceCodeGenerator::CloseNamespaces(Printer& p) {
   for (auto iter = namespaces_.rbegin(); iter != namespaces_.rend(); ++iter) {
     p.Print("}  // namespace $namespace$\n", "namespace", *iter);
   }
-  p.Print("\n");
 }
 
 Status ServiceCodeGenerator::Generate() {
