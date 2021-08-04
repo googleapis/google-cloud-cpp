@@ -36,6 +36,9 @@ using ::testing::AllOf;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
+constexpr auto kJsonEnvVar = "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON";
+constexpr auto kP12EnvVar = "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12";
+
 class ObjectInsertIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
       public ::testing::WithParamInterface<std::string> {
@@ -49,15 +52,19 @@ class ObjectInsertIntegrationTest
       // P12 and JSON credentials are usable in production. The positives for
       // this test are (1) it is relatively short (less than 60 seconds), (2) it
       // actually performs multiple operations against production.
-      std::string const key_file_envvar = GetParam();
-      if (UsingGrpc() && key_file_envvar.find("P12") != std::string::npos) {
+      std::string const env = GetParam();
+      if (UsingGrpc() && env == kP12EnvVar) {
         // TODO(#5116): gRPC doesn't support PKCS #12 keys.
-        GTEST_SKIP();
+        GTEST_SKIP() << "Skipping because gRPC doesn't support PKCS #12 keys";
       }
-      auto value =
-          google::cloud::internal::GetEnv(key_file_envvar.c_str()).value_or("");
-      ASSERT_FALSE(value.empty()) << " expected ${" << key_file_envvar
-                                  << "} to be set and be not empty";
+      auto value = google::cloud::internal::GetEnv(env.c_str()).value_or("");
+      // The p12 test is only run on certain platforms, so if it's not set, skip
+      // the test rather than failing.
+      if (value.empty() && env == kP12EnvVar) {
+        GTEST_SKIP() << "Skipping because ${" << env << "} is not set";
+      }
+      ASSERT_FALSE(value.empty())
+          << "Expected non-empty value for ${" << env << "}";
       google::cloud::internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS", value);
     }
     bucket_name_ = google::cloud::internal::GetEnv(
@@ -661,12 +668,12 @@ TEST_P(ObjectInsertIntegrationTest, InsertXmlFailure) {
   EXPECT_THAT(failure, Not(IsOk())) << "metadata=" << failure.value();
 }
 
-INSTANTIATE_TEST_SUITE_P(
-    ObjectInsertWithJsonCredentialsTest, ObjectInsertIntegrationTest,
-    ::testing::Values("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON"));
-INSTANTIATE_TEST_SUITE_P(
-    ObjectInsertWithP12CredentialsTest, ObjectInsertIntegrationTest,
-    ::testing::Values("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12"));
+INSTANTIATE_TEST_SUITE_P(ObjectInsertWithJsonCredentialsTest,
+                         ObjectInsertIntegrationTest,
+                         ::testing::Values(kJsonEnvVar));
+INSTANTIATE_TEST_SUITE_P(ObjectInsertWithP12CredentialsTest,
+                         ObjectInsertIntegrationTest,
+                         ::testing::Values(kP12EnvVar));
 
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
