@@ -41,7 +41,6 @@ bazel_args=(
 
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
 readonly TEST_KEY_FILE_JSON="${CONFIG_DIR}/kokoro-run-key.json"
-readonly TEST_KEY_FILE_P12="${CONFIG_DIR}/kokoro-run-key.p12"
 readonly BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
 
 # If we have the right credentials, tell bazel to cache build results in a GCS
@@ -84,8 +83,7 @@ bazelisk build "${bazel_args[@]}" ...
 
 should_run_integration_tests() {
   if [[ -r "${GOOGLE_APPLICATION_CREDENTIALS}" && -r \
-    "${TEST_KEY_FILE_JSON}" && -r \
-    "${TEST_KEY_FILE_P12}" ]]; then
+    "${TEST_KEY_FILE_JSON}" ]]; then
     return 0
   fi
   return 1
@@ -124,7 +122,6 @@ if should_run_integration_tests; then
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE=${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${TEST_KEY_FILE_JSON}"
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${TEST_KEY_FILE_P12}"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_ROOTS_PEM=${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
 
     # Spanner
