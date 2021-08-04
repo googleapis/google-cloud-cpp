@@ -38,10 +38,8 @@ if (-not (Test-Path env:KOKORO_GFILE_DIR)) {
 } else {
     $integration_tests_config="${project_root}/ci/etc/integration-tests-config.ps1"
     $test_key_file_json="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
-    $test_key_file_p12="${env:KOKORO_GFILE_DIR}/kokoro-run-key.p12"
     if ((Test-Path "${integration_tests_config}") -and
-        (Test-Path "${test_key_file_json}") -and
-        (Test-Path "${test_key_file_p12}")) {
+        (Test-Path "${test_key_file_json}")) {
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Loading integration tests config"
         . "${integration_tests_config}"
         ${env:GOOGLE_APPLICATION_CREDENTIALS}="${test_key_file_json}"

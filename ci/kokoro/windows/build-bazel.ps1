@@ -140,8 +140,7 @@ if ($LastExitCode) {
 
 function Integration-Tests-Enabled {
     if ((Test-Path env:KOKORO_GFILE_DIR) -and
-        (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json") -and
-        (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.p12")) {
+        (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")) {
         return $True
     }
     return $False
@@ -202,7 +201,6 @@ if (Integration-Tests-Enabled) {
         "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE=${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json",
         "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json",
         "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json",
-        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${env:KOKORO_GFILE_DIR}/kokoro-run-key.p12",
         # Spanner
         "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID=${env:GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}",
         "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT}",
