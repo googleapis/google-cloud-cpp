@@ -82,7 +82,6 @@ google::cloud::StatusOr<AggregateThroughputOptions> ParseArgs(int argc,
 struct TaskConfig {
   gcs::Client client;
   std::seed_seq::result_type seed;
-  std::vector<gcs::ObjectMetadata> objects;
 };
 
 using Counters = std::map<std::string, std::int64_t>;
@@ -97,13 +96,26 @@ struct DownloadDetail {
 
 struct TaskResult {
   std::uint64_t bytes_downloaded = 0;
-  std::chrono::microseconds elapsed_time = std::chrono::microseconds(0);
   std::vector<DownloadDetail> details;
   Counters counters;
 };
 
-TaskResult DownloadTask(AggregateThroughputOptions const& options,
-                        TaskConfig const& config, int iteration);
+class Iteration {
+ public:
+  Iteration(int iteration, AggregateThroughputOptions options,
+            std::vector<gcs::ObjectMetadata> objects)
+      : iteration_(iteration),
+        options_(std::move(options)),
+        remaining_objects_(std::move(objects)) {}
+
+  TaskResult DownloadTask(TaskConfig const& config);
+
+ private:
+  std::mutex mu_;
+  int const iteration_;
+  AggregateThroughputOptions const options_;
+  std::vector<gcs::ObjectMetadata> remaining_objects_;
+};
 
 template <typename Rep, typename Period>
 std::string FormatBandwidthGbPerSecond(
@@ -148,15 +160,15 @@ int main(int argc, char* argv[]) {
   if (options->exit_after_parse) return 1;
 
   auto client = MakeClient(*options);
-  std::vector<gcs::ObjectMetadata> objects;
+  std::vector<gcs::ObjectMetadata> dataset;
   std::uint64_t dataset_size = 0;
   for (auto& o : client.ListObjects(options->bucket_name,
                                     gcs::Prefix(options->object_prefix))) {
     if (!o) break;
     dataset_size += o->size();
-    objects.push_back(*std::move(o));
+    dataset.push_back(*std::move(o));
   }
-  if (objects.empty()) {
+  if (dataset.empty()) {
     std::cerr << "No objects found in bucket " << options->bucket_name
               << " starting with prefix " << options->object_prefix << "\n"
               << "Cannot run the benchmark with an empty dataset\n";
@@ -188,31 +200,32 @@ int main(int argc, char* argv[]) {
             << "\n# gRPC Channel Count: " << options->grpc_channel_count
             << "\n# gRPC Plugin Config: " << options->grpc_plugin_config
             << "\n# Build Info: " << notes
-            << "\n# Object Count: " << objects.size()
+            << "\n# Object Count: " << dataset.size()
             << "\n# Dataset size: " << FormatSize(dataset_size) << std::endl;
 
   auto configs = [](AggregateThroughputOptions const& options,
-                    gcs::Client const& default_client,
-                    std::vector<gcs::ObjectMetadata> const& objects) {
+                    gcs::Client const& default_client) {
     std::random_device rd;
     std::vector<std::seed_seq::result_type> seeds(options.thread_count);
     std::seed_seq({rd(), rd(), rd()}).generate(seeds.begin(), seeds.end());
 
-    auto default_config = TaskConfig{default_client, 0, {}};
-    std::vector<TaskConfig> config(seeds.size(), default_config);
+    std::vector<TaskConfig> config(seeds.size(), TaskConfig{default_client, 0});
     for (std::size_t i = 0; i != config.size(); ++i) {
       if (options.client_per_thread) config[i].client = MakeClient(options);
       config[i].seed = seeds[i];
     }
-    std::size_t pos = 0;
-    for (int j = 0; j != options.repeats_per_iteration; ++j) {
-      for (auto const& o : objects) {
-        auto const target = pos++ % config.size();
-        config[target].objects.push_back(o);
-      }
-    }
     return config;
-  }(*options, client, objects);
+  }(*options, client);
+
+  // Create N copies of the object list, this simplifies the rest of the code
+  // as we can unnest some loops. Note that we do not copy each object
+  // consecutively, we want to control the "hotness" of the dataset by
+  // going through the objects in a round-robin fashion.
+  std::vector<gcs::ObjectMetadata> objects;
+  objects.reserve(dataset.size() * options->repeats_per_iteration);
+  for (int i = 0; i != options->repeats_per_iteration; ++i) {
+    objects.insert(objects.end(), dataset.begin(), dataset.end());
+  }
 
   auto accumulate_bytes_downloaded = [](std::vector<TaskResult> const& r) {
     return std::accumulate(r.begin(), r.end(), std::int64_t{0},
@@ -232,14 +245,19 @@ int main(int argc, char* argv[]) {
             << ",StatusCode,Peer,BytesDownloaded,ElapsedMicroseconds"
             << ",IterationBytes,IterationElapsedMicroseconds"
             << ",IterationCpuMicroseconds" << std::endl;
+
   for (int i = 0; i != options->iteration_count; ++i) {
     auto timer = Timer::PerProcess();
+    Iteration iteration(i, *options, objects);
+    auto task = [&iteration](TaskConfig const& c) {
+      return iteration.DownloadTask(c);
+    };
     std::vector<std::future<TaskResult>> tasks(configs.size());
     std::transform(configs.begin(), configs.end(), tasks.begin(),
-                   [&](TaskConfig const& c) {
-                     return std::async(std::launch::async, DownloadTask,
-                                       *options, std::cref(c), i);
+                   [&task](TaskConfig const& c) {
+                     return std::async(std::launch::async, task, std::cref(c));
                    });
+
     std::vector<TaskResult> iteration_results(configs.size());
     std::transform(std::make_move_iterator(tasks.begin()),
                    std::make_move_iterator(tasks.end()),
@@ -306,55 +324,66 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
-TaskResult DownloadTask(AggregateThroughputOptions const& options,
-                        TaskConfig const& config, int iteration) {
-  auto client = config.client;
+DownloadDetail DownloadOneObject(gcs::Client& client,
+                                 std::mt19937_64& generator,
+                                 AggregateThroughputOptions const& options,
+                                 gcs::ObjectMetadata const& object,
+                                 int iteration) {
+  using clock = std::chrono::steady_clock;
+  using std::chrono::duration_cast;
+  using std::chrono::microseconds;
 
-  TaskResult result;
   std::vector<char> buffer(options.read_buffer_size);
   auto const buffer_size = static_cast<std::streamsize>(buffer.size());
-  auto generator = std::mt19937_64(config.seed);
   // Using IfGenerationNotMatch(0) triggers JSON, as this feature is not
   // supported by XML.  Using IfGenerationNotMatch() -- without a value -- has
   // no effect.
   auto xml_hack = options.api == ApiName::kApiJson
                       ? gcs::IfGenerationNotMatch(0)
                       : gcs::IfGenerationNotMatch();
-
-  using clock = std::chrono::steady_clock;
-  using std::chrono::duration_cast;
-  using std::chrono::microseconds;
-  auto const start = clock::now();
-  auto const unknown_peer = std::string{"unknown"};
-  for (auto const& object : config.objects) {
-    auto const object_start = clock::now();
-    auto object_bytes = std::uint64_t{0};
-    auto const object_size = static_cast<std::int64_t>(object.size());
-    auto range = gcs::ReadRange();
-    if (options.read_size != 0 && options.read_size < object_size) {
-      auto read_start = std::uniform_int_distribution<std::int64_t>(
-          0, object_size - options.read_size);
-      range = gcs::ReadRange(read_start(generator), options.read_size);
-    }
-    auto stream = client.ReadObject(object.bucket(), object.name(),
-                                    gcs::Generation(object.generation()), range,
-                                    xml_hack);
-    while (stream.read(buffer.data(), buffer_size)) {
-      object_bytes += stream.gcount();
-    }
-    stream.Close();
-    result.bytes_downloaded += object_bytes;
-    auto const object_elapsed =
-        duration_cast<microseconds>(clock::now() - object_start);
-    auto p = stream.headers().find(":grpc-context-peer");
-    if (p == stream.headers().end()) {
-      p = stream.headers().find(":curl-peer");
-    }
-    auto const& peer = p == stream.headers().end() ? unknown_peer : p->second;
-    result.details.push_back(DownloadDetail{iteration, peer, object_bytes,
-                                            object_elapsed, stream.status()});
+  auto const object_start = clock::now();
+  auto object_bytes = std::uint64_t{0};
+  auto const object_size = static_cast<std::int64_t>(object.size());
+  auto range = gcs::ReadRange();
+  if (options.read_size != 0 && options.read_size < object_size) {
+    auto read_start = std::uniform_int_distribution<std::int64_t>(
+        0, object_size - options.read_size);
+    range = gcs::ReadRange(read_start(generator), options.read_size);
   }
-  result.elapsed_time = duration_cast<microseconds>(clock::now() - start);
+  auto stream =
+      client.ReadObject(object.bucket(), object.name(),
+                        gcs::Generation(object.generation()), range, xml_hack);
+  while (stream.read(buffer.data(), buffer_size)) {
+    object_bytes += stream.gcount();
+  }
+  stream.Close();
+  auto const object_elapsed =
+      duration_cast<microseconds>(clock::now() - object_start);
+  auto p = stream.headers().find(":grpc-context-peer");
+  if (p == stream.headers().end()) {
+    p = stream.headers().find(":curl-peer");
+  }
+  auto const& peer =
+      p == stream.headers().end() ? std::string{"unknown"} : p->second;
+  return DownloadDetail{iteration, peer, object_bytes, object_elapsed,
+                        stream.status()};
+}
+
+TaskResult Iteration::DownloadTask(TaskConfig const& config) {
+  auto client = config.client;
+  auto generator = std::mt19937_64(config.seed);
+
+  TaskResult result;
+  while (true) {
+    std::unique_lock<std::mutex> lk(mu_);
+    if (remaining_objects_.empty()) break;
+    auto object = std::move(remaining_objects_.back());
+    remaining_objects_.pop_back();
+    lk.unlock();
+    result.details.push_back(
+        DownloadOneObject(client, generator, options_, object, iteration_));
+    result.bytes_downloaded += result.details.back().bytes_downloaded;
+  }
   return result;
 }
 
