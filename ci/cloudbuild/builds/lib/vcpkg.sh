@@ -35,8 +35,7 @@ time {
     git -C "${VCPKG_ROOT_DIR}" checkout "${VCPKG_RELEASE_VERSION}"
     pwd
   fi
-  sed -i 's/eval CXX="$CXX"/CXX="$CXX" eval/' "${VCPKG_ROOT_DIR}/scripts/bootstrap.sh"
-  io::log_h2 "env -C ${VCPKG_ROOT_DIR} CC=ccache ${CC} CXX=ccache ${CXX}  ./bootstrap-vcpkg.sh"
+  sed -i "s/eval CXX="$CXX"/CXX="$CXX" eval/" "${VCPKG_ROOT_DIR}/scripts/bootstrap.sh"
   env -C "${VCPKG_ROOT_DIR}" CC="ccache ${CC}" CXX="ccache ${CXX}" \
     ./bootstrap-vcpkg.sh
 }
