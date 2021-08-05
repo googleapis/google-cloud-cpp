@@ -20,6 +20,7 @@
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
 #include "google/cloud/testing_util/timer.h"
@@ -199,6 +200,10 @@ int main(int argc, char* argv[]) {
             << "\n# API: " << gcs_bm::ToString(options->api)
             << "\n# gRPC Channel Count: " << options->grpc_channel_count
             << "\n# gRPC Plugin Config: " << options->grpc_plugin_config
+            << "\n# HTTP Version: " << options->rest_http_version
+            << "\n# Client Per Thread: " << std::boolalpha
+            << options->client_per_thread << "\n# Download Stall Timeout: "
+            << absl::FromChrono(options->download_stall_timeout)
             << "\n# Build Info: " << notes
             << "\n# Object Count: " << dataset.size()
             << "\n# Dataset size: " << FormatSize(dataset_size) << std::endl;
@@ -357,6 +362,8 @@ DownloadDetail DownloadOneObject(gcs::Client& client,
     object_bytes += stream.gcount();
   }
   stream.Close();
+  // Flush the logs, if any.
+  if (!stream.status().ok()) google::cloud::LogSink::Instance().Flush();
   auto const object_elapsed =
       duration_cast<microseconds>(clock::now() - object_start);
   auto p = stream.headers().find(":grpc-context-peer");
