@@ -42,6 +42,7 @@ TEST(LogRecordTest, Streaming) {
   lr.function = "Func";
   lr.filename = "filename.cc";
   lr.lineno = 123;
+  lr.thread_id = std::this_thread::get_id();
   lr.timestamp = std::chrono::system_clock::from_time_t(1585112316) +
                  std::chrono::microseconds(123456);
   lr.message = "message";

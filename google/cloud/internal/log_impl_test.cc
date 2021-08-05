@@ -35,32 +35,34 @@ auto constexpr kEnableClog = "GOOGLE_CLOUD_CPP_ENABLE_CLOG";
 TEST(CircularBufferBackend, Basic) {
   auto be = std::make_shared<ScopedLog::Backend>();
   CircularBufferBackend buffer(3, Severity::GCP_LS_ERROR, be);
-  buffer.ProcessWithOwnership(LogRecord{
-      Severity::GCP_LS_INFO, "test_function()", "file", 1, {}, "msg 1"});
-  buffer.ProcessWithOwnership(LogRecord{
-      Severity::GCP_LS_DEBUG, "test_function()", "file", 1, {}, "msg 2"});
-  buffer.ProcessWithOwnership(LogRecord{
-      Severity::GCP_LS_TRACE, "test_function()", "file", 1, {}, "msg 3"});
-  buffer.ProcessWithOwnership(LogRecord{
-      Severity::GCP_LS_WARNING, "test_function()", "file", 1, {}, "msg 4"});
-  buffer.ProcessWithOwnership(LogRecord{
-      Severity::GCP_LS_INFO, "test_function()", "file", 1, {}, "msg 5"});
+  auto test_log_record = [](Severity severity, std::string msg) {
+    return LogRecord{
+        severity, "test_function()", "file", 1, std::this_thread::get_id(),
+        {},       std::move(msg)};
+  };
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 1"));
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_DEBUG, "msg 2"));
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_TRACE, "msg 3"));
+  buffer.ProcessWithOwnership(
+      test_log_record(Severity::GCP_LS_WARNING, "msg 4"));
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 5"));
   EXPECT_THAT(be->ExtractLines(), IsEmpty());
 
-  buffer.ProcessWithOwnership(LogRecord{
-      Severity::GCP_LS_ERROR, "test_error()", "file", 1, {}, "msg 6"});
+  buffer.ProcessWithOwnership(LogRecord{Severity::GCP_LS_ERROR,
+                                        "test_error()",
+                                        "file",
+                                        1,
+                                        std::this_thread::get_id(),
+                                        {},
+                                        "msg 6"});
   EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 4", "msg 5", "msg 6"));
 
-  buffer.ProcessWithOwnership(LogRecord{
-      Severity::GCP_LS_INFO, "test_function()", "file", 1, {}, "msg 7"});
-  buffer.ProcessWithOwnership(LogRecord{
-      Severity::GCP_LS_ERROR, "test_function()", "file", 1, {}, "msg 8"});
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 7"));
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_ERROR, "msg 8"));
   EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 7", "msg 8"));
 
-  buffer.ProcessWithOwnership(LogRecord{
-      Severity::GCP_LS_INFO, "test_function()", "file", 1, {}, "msg 9"});
-  buffer.ProcessWithOwnership(LogRecord{
-      Severity::GCP_LS_INFO, "test_function()", "file", 1, {}, "msg 10"});
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 9"));
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 10"));
   buffer.Flush();
   EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 9", "msg 10"));
 }

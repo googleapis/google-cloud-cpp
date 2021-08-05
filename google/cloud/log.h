@@ -95,6 +95,7 @@
 #include <mutex>
 #include <sstream>
 #include <string>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -220,6 +221,7 @@ struct LogRecord {
   std::string function;
   std::string filename;
   int lineno;
+  std::thread::id thread_id;
   std::chrono::system_clock::time_point timestamp;
   std::string message;
 };
@@ -405,6 +407,7 @@ class Logger {
     record.function = function_;
     record.filename = filename_;
     record.lineno = lineno_;
+    record.thread_id = std::this_thread::get_id();
     record.timestamp = std::chrono::system_clock::now();
     record.message = stream_->str();
     sink.Log(std::move(record));
