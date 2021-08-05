@@ -131,7 +131,7 @@ time {
     xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
-# Applies the following fixes in text files that do not say "DO NOT EDIT":
+# Applies the following fixes in text files unless they say "DO NOT EDIT":
 #   - Removes trailing whitespace on lines
 #   - Removes trailing blank lines in files
 printf "%-30s" "Running whitespace fixes:" >&2
