@@ -89,4 +89,3 @@ void GoldenKitchenSinkMetadata::SetMetadata(grpc::ClientContext& context,
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
-

@@ -34,4 +34,3 @@ timeline to change this API in a separate document.
 [gcs-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/storage
 [bigtable-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/bigtable
 [survey-link]: https://isocpp.org/blog/2018/03/results-summary-cpp-foundation-developer-survey-lite-2018-02
-

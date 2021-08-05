@@ -135,4 +135,3 @@ std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy>
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google
-
