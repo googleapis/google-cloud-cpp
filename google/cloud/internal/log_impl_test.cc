@@ -48,13 +48,7 @@ TEST(CircularBufferBackend, Basic) {
   buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 5"));
   EXPECT_THAT(be->ExtractLines(), IsEmpty());
 
-  buffer.ProcessWithOwnership(LogRecord{Severity::GCP_LS_ERROR,
-                                        "test_error()",
-                                        "file",
-                                        1,
-                                        std::this_thread::get_id(),
-                                        {},
-                                        "msg 6"});
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_ERROR, "msg 6"));
   EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 4", "msg 5", "msg 6"));
 
   buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 7"));
