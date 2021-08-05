@@ -139,7 +139,7 @@ time {
   expressions=("-e" "'s/[[:blank:]]\+$//'")
   # Trims trailing blank lines, courtesy of
   # http://sed.sourceforge.net/sed1line.txt.
-  expressions+=("-e" ":a" "-e" "'/^\n*$/{\$d;N;ba'" "-e" "'}'")
+  expressions+=("-e" "':a;/^\n*$/{\$d;N;ba;}'")
   git ls-files -z | grep -zv '\.gz$' |
     (xargs -P "$(nproc)" -n 50 -0 grep -ZPL "\bDO NOT EDIT\b" || true) |
     xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
