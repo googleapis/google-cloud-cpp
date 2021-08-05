@@ -85,7 +85,7 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
-````
+```
 
 * Packaging maintainers or developers that prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
