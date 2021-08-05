@@ -93,6 +93,8 @@ class QueryOptions {
   }
 
  private:
+  // Note: If you add an attribute here, remember to update the implementation
+  // of Client::OverlayQueryOptions().
   absl::optional<std::string> optimizer_version_;
   absl::optional<std::string> optimizer_statistics_package_;
   absl::optional<RequestPriority> request_priority_;

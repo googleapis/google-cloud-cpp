@@ -89,6 +89,9 @@ behaviors in the library.
 - `SPANNER_OPTIMIZER_VERSION=n` sets the default query optimizer version to use
   in `Client::ExecuteQuery()` calls.
 
+- `SPANNER_OPTIMIZER_STATISTICS_PACKAGE=...` specifies a statistics package
+  for the query optimizer to use when compiling a SQL query.
+
 - `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library, basically
   the library always "logs" but the logging infrastructure has no backend to
   actually print anything until the application sets a backend or they set this
