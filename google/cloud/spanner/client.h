@@ -643,6 +643,11 @@ class Client {
       SqlStatement statement, QueryOptions const& opts = {});
 
  private:
+  friend class OverlayQueryOptionsTester;
+  static QueryOptions OverlayQueryOptions(
+      QueryOptions const& preferred, QueryOptions const& fallback,
+      absl::optional<std::string> const& optimizer_version_env,
+      absl::optional<std::string> const& optimizer_statistics_package_env);
   QueryOptions OverlayQueryOptions(QueryOptions const&);
 
   std::shared_ptr<Connection> conn_;

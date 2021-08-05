@@ -19,9 +19,7 @@
 #include "google/cloud/spanner/results.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/value.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include "absl/types/optional.h"
@@ -36,6 +34,19 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
+class OverlayQueryOptionsTester {
+ public:
+  static QueryOptions OverlayQueryOptions(
+      QueryOptions const& preferred, QueryOptions const& fallback,
+      absl::optional<std::string> const& optimizer_version_env,
+      absl::optional<std::string> const& optimizer_statistics_package_env) {
+    return Client::OverlayQueryOptions(preferred, fallback,
+                                       optimizer_version_env,
+                                       optimizer_statistics_package_env);
+  }
+};
+
 namespace {
 
 namespace spanner_proto = ::google::spanner::v1;
@@ -45,12 +56,9 @@ using ::google::cloud::spanner_mocks::MockResultSetSource;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
-using ::testing::AnyNumber;
 using ::testing::ByMove;
 using ::testing::DoAll;
 using ::testing::ElementsAre;
-using ::testing::Eq;
-using ::testing::Field;
 using ::testing::HasSubstr;
 using ::testing::Return;
 using ::testing::SaveArg;
@@ -1026,59 +1034,86 @@ TEST(ClientTest, ProfileQueryWithOptionsSuccess) {
 }
 
 TEST(ClientTest, QueryOptionsOverlayPrecedence) {
-  struct Levels {
-    absl::optional<std::string> env;
-    absl::optional<std::string> client;
-    absl::optional<std::string> function;
-    absl::optional<std::string> expected;
-  };
-  std::vector<Levels> levels = {
-      {{}, {}, {}, {}},
-      {"env", {}, {}, "env"},
-      {{}, "client", {}, "client"},
-      {{}, {}, "function", "function"},
-      {"env", "client", {}, "client"},
-      {"env", {}, "function", "function"},
-      {{}, "client", "function", "function"},
-      {"env", "client", "function", "function"},
-  };
+  constexpr auto OverlayQueryOptions =  // NOLINT(readability-identifier-naming)
+      OverlayQueryOptionsTester::OverlayQueryOptions;
 
-  auto constexpr kQueryOptionsField = &Connection::SqlParams::query_options;
-  auto conn = std::make_shared<MockConnection>();
-  for (auto const& level : levels) {
-    google::cloud::testing_util::ScopedEnvironment opt_ver_env(
-        "SPANNER_OPTIMIZER_VERSION", level.env);
-    google::cloud::testing_util::ScopedEnvironment opt_stats_env(
-        "SPANNER_OPTIMIZER_STATISTICS_PACKAGE", level.env);
-    auto client_qo = QueryOptions()
-                         .set_optimizer_version(level.client)
-                         .set_optimizer_statistics_package(level.client);
-    Client client(conn, ClientOptions().set_query_options(client_qo));
-    auto expected = QueryOptions()
-                        .set_optimizer_version(level.expected)
-                        .set_optimizer_statistics_package(level.expected);
-    EXPECT_CALL(*conn, ExecuteQuery(Field(kQueryOptionsField, Eq(expected))))
-        .Times(AnyNumber());
+  // Check optimizer_version.
+  {
+    QueryOptions preferred;
+    preferred.set_optimizer_version("preferred");
+    QueryOptions fallback;
+    fallback.set_optimizer_version("fallback");
+    absl::optional<std::string> optimizer_version_env = "environment";
+    EXPECT_EQ(OverlayQueryOptions(preferred, fallback, optimizer_version_env,
+                                  absl::nullopt)
+                  .optimizer_version(),
+              "preferred");
+    preferred.set_optimizer_version(absl::nullopt);
+    EXPECT_EQ(OverlayQueryOptions(preferred, fallback, optimizer_version_env,
+                                  absl::nullopt)
+                  .optimizer_version(),
+              "fallback");
+    fallback.set_optimizer_version(absl::nullopt);
+    EXPECT_EQ(OverlayQueryOptions(preferred, fallback, optimizer_version_env,
+                                  absl::nullopt)
+                  .optimizer_version(),
+              "environment");
+    optimizer_version_env = absl::nullopt;
+    EXPECT_EQ(OverlayQueryOptions(preferred, fallback, optimizer_version_env,
+                                  absl::nullopt)
+                  .optimizer_version(),
+              absl::nullopt);
+  }
 
-    auto const qo = QueryOptions()
-                        .set_optimizer_version(level.function)
-                        .set_optimizer_statistics_package(level.function);
-    auto const ro = Transaction::ReadOnlyOptions{};
-    auto const su = Transaction::SingleUseOptions{ro};
+  // Check optimizer_statistics_package.
+  {
+    QueryOptions preferred;
+    preferred.set_optimizer_statistics_package("preferred");
+    QueryOptions fallback;
+    fallback.set_optimizer_statistics_package("fallback");
+    absl::optional<std::string> optimizer_statistics_package_env =
+        "environment";
+    EXPECT_EQ(OverlayQueryOptions(preferred, fallback, absl::nullopt,
+                                  optimizer_statistics_package_env)
+                  .optimizer_statistics_package(),
+              "preferred");
+    preferred.set_optimizer_statistics_package(absl::nullopt);
+    EXPECT_EQ(OverlayQueryOptions(preferred, fallback, absl::nullopt,
+                                  optimizer_statistics_package_env)
+                  .optimizer_statistics_package(),
+              "fallback");
+    fallback.set_optimizer_statistics_package(absl::nullopt);
+    EXPECT_EQ(OverlayQueryOptions(preferred, fallback, absl::nullopt,
+                                  optimizer_statistics_package_env)
+                  .optimizer_statistics_package(),
+              "environment");
+    optimizer_statistics_package_env = absl::nullopt;
+    EXPECT_EQ(OverlayQueryOptions(preferred, fallback, absl::nullopt,
+                                  optimizer_statistics_package_env)
+                  .optimizer_statistics_package(),
+              absl::nullopt);
+  }
 
-    // Call all the overloads that accept QueryOptions to ensure they all work.
-    client.ExecuteQuery(SqlStatement{}, qo);
-    client.ExecuteQuery(su, SqlStatement{}, qo);
-    client.ExecuteQuery(Transaction{ro}, SqlStatement{}, qo);
-    client.ExecuteQuery(QueryPartition{}, qo);
-
-    client.ProfileQuery(SqlStatement{}, qo);
-    client.ProfileQuery(su, SqlStatement{}, qo);
-    client.ProfileQuery(Transaction{ro}, SqlStatement{}, qo);
-
-    client.ExecuteDml(Transaction{ro}, SqlStatement{}, qo);
-    client.ProfileDml(Transaction{ro}, SqlStatement{}, qo);
-    client.AnalyzeSql(Transaction{ro}, SqlStatement{}, qo);
+  // Check request_priority.
+  {
+    QueryOptions preferred;
+    preferred.set_request_priority(RequestPriority::kHigh);
+    QueryOptions fallback;
+    fallback.set_request_priority(RequestPriority::kLow);
+    EXPECT_EQ(
+        OverlayQueryOptions(preferred, fallback, absl::nullopt, absl::nullopt)
+            .request_priority(),
+        RequestPriority::kHigh);
+    preferred.set_request_priority(absl::nullopt);
+    EXPECT_EQ(
+        OverlayQueryOptions(preferred, fallback, absl::nullopt, absl::nullopt)
+            .request_priority(),
+        RequestPriority::kLow);
+    fallback.set_request_priority(absl::nullopt);
+    EXPECT_EQ(
+        OverlayQueryOptions(preferred, fallback, absl::nullopt, absl::nullopt)
+            .request_priority(),
+        absl::nullopt);
   }
 }
 

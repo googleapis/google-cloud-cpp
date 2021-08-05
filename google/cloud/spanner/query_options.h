@@ -30,6 +30,9 @@ inline namespace SPANNER_CLIENT_NS {
  * These QueryOptions allow users to configure features about how their SQL
  * queries executes on the server.
  *
+ * Note: If you add an attribute here, remember to update the implementation
+ * of Client::OverlayQueryOptions().
+ *
  * @see https://cloud.google.com/spanner/docs/reference/rest/v1/QueryOptions
  * @see http://cloud/spanner/docs/query-optimizer/manage-query-optimizer
  */
