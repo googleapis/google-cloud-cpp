@@ -131,17 +131,16 @@ time {
     xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
-# Applies the following fixes in text files unless they say "DO NOT EDIT":
-#   - Removes trailing whitespace on lines
-#   - Removes trailing blank lines in files
+# Applies whitespace fixes in text files, unless they request no edits. The
+# `[D]` character class makes this file not contain the target text itself.
 printf "%-30s" "Running whitespace fixes:" >&2
 time {
+  # Removes trailing whitespace on lines
   expressions=("-e" "'s/[[:blank:]]\+$//'")
-  # Trims trailing blank lines, courtesy of
-  # http://sed.sourceforge.net/sed1line.txt.
+  # Removes trailing blank lines (see http://sed.sourceforge.net/sed1line.txt)
   expressions+=("-e" "':a;/^\n*$/{\$d;N;ba;}'")
   git ls-files -z | grep -zv '\.gz$' |
-    (xargs -P "$(nproc)" -n 50 -0 grep -ZPL "\bDO NOT EDIT\b" || true) |
+    (xargs -P "$(nproc)" -n 50 -0 grep -ZPL "\b[D]O NOT EDIT\b" || true) |
     xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
