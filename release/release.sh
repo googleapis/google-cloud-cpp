@@ -197,8 +197,8 @@ NEW_VERSION=""
 if [[ -n "${VERSION_ARG}" ]]; then
   NEW_VERSION="${VERSION_ARG}"
 else
-  # No new version specified; compute the new version number
-  NEW_VERSION="$(perl -pe 's/(\d+).(\d+).(\d+)/"$1.${\($2+1)}.$3"/e' <<<"${CUR_VERSION}")"
+  # Compute the new version by incrementing the minor number.
+  NEW_VERSION="$(awk -F. '{printf "%d.%d.%d", $1, $2+1, $3}' <<<"${CUR_VERSION}")"
 fi
 declare -r NEW_VERSION
 
