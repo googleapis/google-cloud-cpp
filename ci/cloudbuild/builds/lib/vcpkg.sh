@@ -24,7 +24,7 @@ source module ci/lib/io.sh
 
 TIMEFORMAT="==> 🕑 vcpkg installed in %R seconds"
 time {
-  VCPKG_RELEASE_VERSION="89329642267de55a66e0f91ed86848d4bab0c6b0"
+  VCPKG_RELEASE_VERSION="3ab8c7487451cc61c778258c92bd88dfe3c5f32e"
   VCPKG_ROOT_DIR="${HOME}/vcpkg-${VCPKG_RELEASE_VERSION}"
   io::log_h2 "Installing vcpkg ${VCPKG_RELEASE_VERSION} -> ${VCPKG_ROOT_DIR}"
   if [[ ! -d "${VCPKG_ROOT_DIR}" ]]; then
@@ -35,6 +35,8 @@ time {
     git -C "${VCPKG_ROOT_DIR}" checkout "${VCPKG_RELEASE_VERSION}"
     pwd
   fi
+  sed -i 's/eval CXX="$CXX"/CXX="$CXX" eval/' "${VCPKG_ROOT_DIR}/scripts/bootstrap.sh"
+  io::log_h2 "env -C ${VCPKG_ROOT_DIR} CC=ccache ${CC} CXX=ccache ${CXX}  ./bootstrap-vcpkg.sh"
   env -C "${VCPKG_ROOT_DIR}" CC="ccache ${CC}" CXX="ccache ${CXX}" \
     ./bootstrap-vcpkg.sh
 }
