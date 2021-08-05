@@ -81,7 +81,7 @@ std::ostream& operator<<(std::ostream& os, Severity x) {
 
 std::ostream& operator<<(std::ostream& os, LogRecord const& rhs) {
   return os << Timestamp{rhs.timestamp} << " [" << rhs.severity << "]"
-            << " <" << std::this_thread::get_id() << ">"
+            << " <" << rhs.thread_id << ">"
             << " " << rhs.message << " (" << rhs.filename << ':' << rhs.lineno
             << ')';
 }
