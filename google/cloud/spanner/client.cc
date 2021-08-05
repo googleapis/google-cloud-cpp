@@ -301,44 +301,6 @@ StatusOr<PartitionedDmlResult> Client::ExecutePartitionedDml(
       {std::move(statement), OverlayQueryOptions(opts)});
 }
 
-// Returns a QueryOptions that has each attribute set according to the
-// preferred/fallback/environment hierarchy.
-QueryOptions Client::OverlayQueryOptions(
-    QueryOptions const& preferred, QueryOptions const& fallback,
-    absl::optional<std::string> const& optimizer_version_env,
-    absl::optional<std::string> const& optimizer_statistics_package_env) {
-  QueryOptions opts;
-
-  // Choose the `optimizer_version` option.
-  if (preferred.optimizer_version().has_value()) {
-    opts.set_optimizer_version(preferred.optimizer_version());
-  } else if (fallback.optimizer_version().has_value()) {
-    opts.set_optimizer_version(fallback.optimizer_version());
-  } else if (optimizer_version_env.has_value()) {
-    opts.set_optimizer_version(*optimizer_version_env);
-  }
-
-  // Choose the `optimizer_statistics_package` option.
-  if (preferred.optimizer_statistics_package().has_value()) {
-    opts.set_optimizer_statistics_package(
-        preferred.optimizer_statistics_package());
-  } else if (fallback.optimizer_statistics_package().has_value()) {
-    opts.set_optimizer_statistics_package(
-        fallback.optimizer_statistics_package());
-  } else if (optimizer_statistics_package_env.has_value()) {
-    opts.set_optimizer_statistics_package(*optimizer_statistics_package_env);
-  }
-
-  // Choose the `request_priority` option.
-  if (preferred.request_priority().has_value()) {
-    opts.set_request_priority(preferred.request_priority());
-  } else if (fallback.request_priority().has_value()) {
-    opts.set_request_priority(fallback.request_priority());
-  }
-
-  return opts;
-}
-
 // Returns a QueryOptions that has each attribute set according to
 // the hierarchy that options specified at the function call (i.e.,
 // `preferred`) are preferred, followed by options set at the Client
@@ -353,9 +315,9 @@ QueryOptions Client::OverlayQueryOptions(QueryOptions const& preferred) {
   static auto const* const kOptimizerStatisticsPackageEnvValue = new auto(
       google::cloud::internal::GetEnv("SPANNER_OPTIMIZER_STATISTICS_PACKAGE"));
 
-  return OverlayQueryOptions(preferred, opts_.query_options(),
-                             *kOptimizerVersionEnvValue,
-                             *kOptimizerStatisticsPackageEnvValue);
+  return spanner_internal::OverlayQueryOptions(
+      preferred, opts_.query_options(), *kOptimizerVersionEnvValue,
+      *kOptimizerStatisticsPackageEnvValue);
 }
 
 std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
@@ -400,5 +362,50 @@ std::shared_ptr<Connection> MakeConnection(
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+
+// Returns a QueryOptions that has each attribute set according to the
+// preferred/fallback/environment hierarchy.
+spanner::QueryOptions OverlayQueryOptions(
+    spanner::QueryOptions const& preferred,
+    spanner::QueryOptions const& fallback,
+    absl::optional<std::string> const& optimizer_version_env,
+    absl::optional<std::string> const& optimizer_statistics_package_env) {
+  spanner::QueryOptions opts;
+
+  // Choose the `optimizer_version` option.
+  if (preferred.optimizer_version().has_value()) {
+    opts.set_optimizer_version(preferred.optimizer_version());
+  } else if (fallback.optimizer_version().has_value()) {
+    opts.set_optimizer_version(fallback.optimizer_version());
+  } else if (optimizer_version_env.has_value()) {
+    opts.set_optimizer_version(*optimizer_version_env);
+  }
+
+  // Choose the `optimizer_statistics_package` option.
+  if (preferred.optimizer_statistics_package().has_value()) {
+    opts.set_optimizer_statistics_package(
+        preferred.optimizer_statistics_package());
+  } else if (fallback.optimizer_statistics_package().has_value()) {
+    opts.set_optimizer_statistics_package(
+        fallback.optimizer_statistics_package());
+  } else if (optimizer_statistics_package_env.has_value()) {
+    opts.set_optimizer_statistics_package(*optimizer_statistics_package_env);
+  }
+
+  // Choose the `request_priority` option.
+  if (preferred.request_priority().has_value()) {
+    opts.set_request_priority(preferred.request_priority());
+  } else if (fallback.request_priority().has_value()) {
+    opts.set_request_priority(fallback.request_priority());
+  }
+
+  return opts;
+}
+
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

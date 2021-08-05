@@ -34,19 +34,6 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-
-class OverlayQueryOptionsTester {
- public:
-  static QueryOptions OverlayQueryOptions(
-      QueryOptions const& preferred, QueryOptions const& fallback,
-      absl::optional<std::string> const& optimizer_version_env,
-      absl::optional<std::string> const& optimizer_statistics_package_env) {
-    return Client::OverlayQueryOptions(preferred, fallback,
-                                       optimizer_version_env,
-                                       optimizer_statistics_package_env);
-  }
-};
-
 namespace {
 
 namespace spanner_proto = ::google::spanner::v1;
@@ -1034,9 +1021,6 @@ TEST(ClientTest, ProfileQueryWithOptionsSuccess) {
 }
 
 TEST(ClientTest, QueryOptionsOverlayPrecedence) {
-  constexpr auto OverlayQueryOptions =  // NOLINT(readability-identifier-naming)
-      OverlayQueryOptionsTester::OverlayQueryOptions;
-
   // Check optimizer_version.
   {
     QueryOptions preferred;
@@ -1044,23 +1028,23 @@ TEST(ClientTest, QueryOptionsOverlayPrecedence) {
     QueryOptions fallback;
     fallback.set_optimizer_version("fallback");
     absl::optional<std::string> optimizer_version_env = "environment";
-    EXPECT_EQ(OverlayQueryOptions(preferred, fallback, optimizer_version_env,
-                                  absl::nullopt)
+    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
+                  preferred, fallback, optimizer_version_env, absl::nullopt)
                   .optimizer_version(),
               "preferred");
     preferred.set_optimizer_version(absl::nullopt);
-    EXPECT_EQ(OverlayQueryOptions(preferred, fallback, optimizer_version_env,
-                                  absl::nullopt)
+    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
+                  preferred, fallback, optimizer_version_env, absl::nullopt)
                   .optimizer_version(),
               "fallback");
     fallback.set_optimizer_version(absl::nullopt);
-    EXPECT_EQ(OverlayQueryOptions(preferred, fallback, optimizer_version_env,
-                                  absl::nullopt)
+    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
+                  preferred, fallback, optimizer_version_env, absl::nullopt)
                   .optimizer_version(),
               "environment");
     optimizer_version_env = absl::nullopt;
-    EXPECT_EQ(OverlayQueryOptions(preferred, fallback, optimizer_version_env,
-                                  absl::nullopt)
+    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
+                  preferred, fallback, optimizer_version_env, absl::nullopt)
                   .optimizer_version(),
               absl::nullopt);
   }
@@ -1073,23 +1057,27 @@ TEST(ClientTest, QueryOptionsOverlayPrecedence) {
     fallback.set_optimizer_statistics_package("fallback");
     absl::optional<std::string> optimizer_statistics_package_env =
         "environment";
-    EXPECT_EQ(OverlayQueryOptions(preferred, fallback, absl::nullopt,
-                                  optimizer_statistics_package_env)
+    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
+                  preferred, fallback, absl::nullopt,
+                  optimizer_statistics_package_env)
                   .optimizer_statistics_package(),
               "preferred");
     preferred.set_optimizer_statistics_package(absl::nullopt);
-    EXPECT_EQ(OverlayQueryOptions(preferred, fallback, absl::nullopt,
-                                  optimizer_statistics_package_env)
+    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
+                  preferred, fallback, absl::nullopt,
+                  optimizer_statistics_package_env)
                   .optimizer_statistics_package(),
               "fallback");
     fallback.set_optimizer_statistics_package(absl::nullopt);
-    EXPECT_EQ(OverlayQueryOptions(preferred, fallback, absl::nullopt,
-                                  optimizer_statistics_package_env)
+    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
+                  preferred, fallback, absl::nullopt,
+                  optimizer_statistics_package_env)
                   .optimizer_statistics_package(),
               "environment");
     optimizer_statistics_package_env = absl::nullopt;
-    EXPECT_EQ(OverlayQueryOptions(preferred, fallback, absl::nullopt,
-                                  optimizer_statistics_package_env)
+    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
+                  preferred, fallback, absl::nullopt,
+                  optimizer_statistics_package_env)
                   .optimizer_statistics_package(),
               absl::nullopt);
   }
@@ -1100,20 +1088,20 @@ TEST(ClientTest, QueryOptionsOverlayPrecedence) {
     preferred.set_request_priority(RequestPriority::kHigh);
     QueryOptions fallback;
     fallback.set_request_priority(RequestPriority::kLow);
-    EXPECT_EQ(
-        OverlayQueryOptions(preferred, fallback, absl::nullopt, absl::nullopt)
-            .request_priority(),
-        RequestPriority::kHigh);
+    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
+                  preferred, fallback, absl::nullopt, absl::nullopt)
+                  .request_priority(),
+              RequestPriority::kHigh);
     preferred.set_request_priority(absl::nullopt);
-    EXPECT_EQ(
-        OverlayQueryOptions(preferred, fallback, absl::nullopt, absl::nullopt)
-            .request_priority(),
-        RequestPriority::kLow);
+    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
+                  preferred, fallback, absl::nullopt, absl::nullopt)
+                  .request_priority(),
+              RequestPriority::kLow);
     fallback.set_request_priority(absl::nullopt);
-    EXPECT_EQ(
-        OverlayQueryOptions(preferred, fallback, absl::nullopt, absl::nullopt)
-            .request_priority(),
-        absl::nullopt);
+    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
+                  preferred, fallback, absl::nullopt, absl::nullopt)
+                  .request_priority(),
+              absl::nullopt);
   }
 }
 
