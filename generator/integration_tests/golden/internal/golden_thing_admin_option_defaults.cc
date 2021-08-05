@@ -80,4 +80,3 @@ Options GoldenThingAdminDefaultOptions(Options options) {
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
-

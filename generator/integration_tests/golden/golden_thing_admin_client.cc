@@ -244,4 +244,3 @@ GoldenThingAdminClient::ListBackupOperations(google::test::admin::database::v1::
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google
-

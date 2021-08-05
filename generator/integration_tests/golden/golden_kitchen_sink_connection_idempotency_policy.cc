@@ -75,4 +75,3 @@ std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google
-

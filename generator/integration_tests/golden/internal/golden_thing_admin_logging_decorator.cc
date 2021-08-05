@@ -276,4 +276,3 @@ future<Status> GoldenThingAdminLogging::AsyncCancelOperation(
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
-
