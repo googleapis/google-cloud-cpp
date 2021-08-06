@@ -35,11 +35,12 @@ absl::optional<std::string> IncludePathForWellKnownProtobufType(
     google::protobuf::FieldDescriptor const& parameter) {
   // This hash is not intended to be comprehensive. Problematic types and their
   // includes should be added as needed.
-  static absl::flat_hash_map<std::string, std::string> const kTypeIncludeMap = {
-      {"google.protobuf.Duration", "google/protobuf/duration.pb.h"}};
+  static const auto* const kTypeIncludeMap =
+      new absl::flat_hash_map<std::string, std::string>(
+          {{"google.protobuf.Duration", "google/protobuf/duration.pb.h"}});
   if (parameter.type() == google::protobuf::FieldDescriptor::TYPE_MESSAGE) {
-    auto iter = kTypeIncludeMap.find(parameter.message_type()->full_name());
-    if (iter != kTypeIncludeMap.end()) {
+    auto iter = kTypeIncludeMap->find(parameter.message_type()->full_name());
+    if (iter != kTypeIncludeMap->end()) {
       return iter->second;
     }
   }
