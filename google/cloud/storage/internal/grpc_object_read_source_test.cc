@@ -108,12 +108,8 @@ TEST(GrpcObjectReadSource, DataWithError) {
   std::string expected = "0123456789";
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
-  ASSERT_STATUS_OK(response);
-  EXPECT_EQ(expected.size(), response->bytes_received);
-  std::string actual(buffer.data(), response->bytes_received);
-  EXPECT_EQ(expected, actual);
-
-  EXPECT_THAT(tested.Read(buffer.data(), buffer.size()),
+  EXPECT_FALSE(tested.IsOpen());
+  EXPECT_THAT(response,
               StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
 
   EXPECT_THAT(tested.Close(),
@@ -319,7 +315,7 @@ TEST(GrpcObjectReadSource, HandleExtraRead) {
   response = tested.Read(buffer.data(), buffer.size());
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(0, response->bytes_received);
-  EXPECT_EQ(200, response->response.status_code);
+  EXPECT_EQ(100, response->response.status_code);
 
   auto status = tested.Close();
   EXPECT_STATUS_OK(status);
