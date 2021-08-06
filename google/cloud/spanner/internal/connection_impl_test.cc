@@ -71,6 +71,7 @@ using ::testing::DoAll;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::InSequence;
+using ::testing::NiceMock;
 using ::testing::Not;
 using ::testing::Property;
 using ::testing::Return;
@@ -711,7 +712,7 @@ TEST(ConnectionImplTest, QueryOptions) {
   auto constexpr kRequestOptionsProp =
       &spanner_proto::ExecuteSqlRequest::request_options;
 
-  // A helper function to make constructing QueryOptions protos inline possible.
+  // Helper functions to build QueryOptions/RequestOptions protos inline.
   auto const make_qo_proto = [](absl::optional<std::string> version,
                                 absl::optional<std::string> stats) {
     spanner_proto::ExecuteSqlRequest::QueryOptions proto;
@@ -719,61 +720,79 @@ TEST(ConnectionImplTest, QueryOptions) {
     if (stats) proto.set_optimizer_statistics_package(*stats);
     return proto;
   };
+  auto const make_ro_proto =
+      [](absl::optional<spanner_proto::RequestOptions::Priority> priority) {
+        spanner_proto::RequestOptions proto;
+        if (priority) proto.set_priority(*priority);
+        return proto;
+      };
 
   struct {
+    // Given this for SqlParams::query_options ...
+    spanner::QueryOptions options;
+
+    // ... expect these for ExecuteSqlRequest query_options/request_options.
     spanner_proto::ExecuteSqlRequest::QueryOptions qo_proto;
-    spanner::QueryOptions qo_struct;
+    spanner_proto::RequestOptions ro_proto;
   } test_cases[] = {
-      {{}, {}},
+      // Default options.
+      {spanner::QueryOptions(),  //
+       make_qo_proto(absl::nullopt, absl::nullopt),
+       make_ro_proto(absl::nullopt)},
 
-      // Optimizer version alone
-      {make_qo_proto("", {}),
-       spanner::QueryOptions().set_optimizer_version("")},
-      {make_qo_proto("some-version", {}),
-       spanner::QueryOptions().set_optimizer_version("some-version")},
+      // Optimizer version alone.
+      {spanner::QueryOptions().set_optimizer_version(""),
+       make_qo_proto("", absl::nullopt),  //
+       make_ro_proto(absl::nullopt)},
+      {spanner::QueryOptions().set_optimizer_version("some-version"),
+       make_qo_proto("some-version", absl::nullopt),
+       make_ro_proto(absl::nullopt)},
 
-      // Optimizer stats package alone
-      {make_qo_proto({}, ""),
-       spanner::QueryOptions().set_optimizer_statistics_package("")},
-      {make_qo_proto({}, "some-stats"),
-       spanner::QueryOptions().set_optimizer_statistics_package("some-stats")},
+      // Optimizer stats package alone.
+      {spanner::QueryOptions().set_optimizer_statistics_package(""),
+       make_qo_proto(absl::nullopt, ""),  //
+       make_ro_proto(absl::nullopt)},
+      {spanner::QueryOptions().set_optimizer_statistics_package("some-stats"),
+       make_qo_proto(absl::nullopt, "some-stats"),
+       make_ro_proto(absl::nullopt)},
 
-      // Both options
-      {make_qo_proto("", ""), spanner::QueryOptions()
-                                  .set_optimizer_version("")
-                                  .set_optimizer_statistics_package("")},
-      {make_qo_proto("some-version", "some-stats"),
-       spanner::QueryOptions()
+      // Request priority alone.
+      {spanner::QueryOptions().set_request_priority(
+           spanner::RequestPriority::kLow),
+       make_qo_proto(absl::nullopt, absl::nullopt),
+       make_ro_proto(spanner_proto::RequestOptions::PRIORITY_LOW)},
+      {spanner::QueryOptions().set_request_priority(
+           spanner::RequestPriority::kHigh),
+       make_qo_proto(absl::nullopt, absl::nullopt),
+       make_ro_proto(spanner_proto::RequestOptions::PRIORITY_HIGH)},
+
+      // All options together.
+      {spanner::QueryOptions()
+           .set_optimizer_version("")
+           .set_optimizer_statistics_package("")
+           .set_request_priority(spanner::RequestPriority::kMedium),
+       make_qo_proto("", ""),
+       make_ro_proto(spanner_proto::RequestOptions::PRIORITY_MEDIUM)},
+      {spanner::QueryOptions()
            .set_optimizer_version("some-version")
-           .set_optimizer_statistics_package("some-stats")},
+           .set_optimizer_statistics_package("some-stats")
+           .set_request_priority(spanner::RequestPriority::kLow),
+       make_qo_proto("some-version", "some-stats"),
+       make_ro_proto(spanner_proto::RequestOptions::PRIORITY_LOW)},
   };
 
-  spanner_proto::RequestOptions ro;
-  ro.set_priority(spanner_proto::RequestOptions::PRIORITY_LOW);
-
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
   for (auto const& tc : test_cases) {
-    spanner_proto::ExecuteSqlRequest::QueryOptions qo = tc.qo_proto;
-    auto m = AllOf(Property(kQueryOptionsProp, IsProtoEqual(qo)),
-                   Property(kRequestOptionsProp, IsProtoEqual(ro)));
     auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
-
-    auto txn = MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
-    auto query_options = tc.qo_struct;
-    query_options.set_request_priority(spanner::RequestPriority::kLow);
-    auto params = spanner::Connection::SqlParams{txn, spanner::SqlStatement{},
-                                                 query_options};
-    auto db = spanner::Database("placeholder_project", "placeholder_instance",
-                                "placeholder_database_id");
-    auto conn = MakeConnectionImpl(db, {mock});
-
     EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
         .WillOnce(Return(MakeSessionsResponse({"session-name"})));
+    auto conn = MakeConnectionImpl(db, {mock});
 
     // We wrap MockGrpcReader in NiceMock, because we don't really care how
     // it's called in this test (aside from needing to return a transaction in
     // the first call), and we want to minimize gMock's "uninteresting mock
     // function call" warnings.
-    using ::testing::NiceMock;
     auto grpc_reader = absl::make_unique<NiceMock<MockGrpcReader>>();
     auto constexpr kResponseText =
         R"pb(metadata: { transaction: { id: "ABCDEF00" } })pb";
@@ -784,13 +803,17 @@ TEST(ConnectionImplTest, QueryOptions) {
 
     // Calls the 5 Connection::* methods that take SqlParams and ensures that
     // the protos being sent contain the expected options.
+    auto params = spanner::Connection::SqlParams{
+        MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions()),
+        spanner::SqlStatement{}, tc.options};
+    auto m = AllOf(Property(kQueryOptionsProp, IsProtoEqual(tc.qo_proto)),
+                   Property(kRequestOptionsProp, IsProtoEqual(tc.ro_proto)));
     EXPECT_CALL(*mock, ExecuteStreamingSql(_, m))
         .WillOnce(Return(ByMove(std::move(grpc_reader))))
         .WillOnce(
             Return(ByMove(absl::make_unique<NiceMock<MockGrpcReader>>())));
     (void)conn->ExecuteQuery(params);
     (void)conn->ProfileQuery(params);
-
     EXPECT_CALL(*mock, ExecuteSql(_, m)).Times(3);
     (void)conn->ExecuteDml(params);
     (void)conn->ProfileDml(params);
