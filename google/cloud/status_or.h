@@ -18,6 +18,7 @@
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
+#include "absl/types/optional.h"
 #include <type_traits>
 #include <utility>
 
@@ -127,73 +128,6 @@ class StatusOr final {
     return *this;
   }
 
-  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-  StatusOr(StatusOr&& rhs) noexcept(noexcept(T(std::move(*rhs))))
-      : status_(std::move(rhs.status_)) {
-    if (status_.ok()) {
-      new (&value_) T(std::move(*rhs));
-    }
-  }
-
-  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-  StatusOr& operator=(StatusOr&& rhs) noexcept(noexcept(T(std::move(*rhs)))) {
-    // There may be shorter ways to express this, but this is fairly readable,
-    // and should be reasonably efficient. Note that we must avoid destructing
-    // the destination and/or default initializing it unless really needed.
-    if (!ok()) {
-      if (!rhs.ok()) {
-        status_ = std::move(rhs.status_);
-        return *this;
-      }
-      new (&value_) T(std::move(*rhs));
-      status_ = Status();
-      return *this;
-    }
-    if (!rhs.ok()) {
-      value_.~T();
-      status_ = std::move(rhs.status_);
-      return *this;
-    }
-    **this = *std::move(rhs);
-    status_ = Status();
-    return *this;
-  }
-
-  StatusOr(StatusOr const& rhs) : status_(rhs.status_) {
-    if (status_.ok()) {
-      new (&value_) T(*rhs);
-    }
-  }
-
-  StatusOr& operator=(StatusOr const& rhs) {
-    // There may be shorter ways to express this, but this is fairly readable,
-    // and should be reasonably efficient. Note that we must avoid destructing
-    // the destination and/or default initializing it unless really needed.
-    if (!ok()) {
-      if (!rhs.ok()) {
-        status_ = rhs.status_;
-        return *this;
-      }
-      new (&value_) T(*rhs);
-      status_ = rhs.status_;
-      return *this;
-    }
-    if (!rhs.ok()) {
-      value_.~T();
-      status_ = rhs.status_;
-      return *this;
-    }
-    **this = *rhs;
-    status_ = rhs.status_;
-    return *this;
-  }
-
-  ~StatusOr() {
-    if (ok()) {
-      value_.~T();
-    }
-  }
-
   /**
    * Assign a `T` (or anything convertible to `T`) into the `StatusOr`.
    */
@@ -205,16 +139,8 @@ class StatusOr final {
       !std::is_same<StatusOr, typename std::decay<U>::type>::value,
       StatusOr>::type&
   operator=(U&& rhs) {
-    // There may be shorter ways to express this, but this is fairly readable,
-    // and should be reasonably efficient. Note that we must avoid destructing
-    // the destination and/or default initializing it unless really needed.
-    if (!ok()) {
-      new (&value_) T(std::forward<U>(rhs));
-      status_ = Status();
-      return *this;
-    }
-    **this = std::forward<U>(rhs);
     status_ = Status();
+    value_ = std::forward<U>(rhs);
     return *this;
   }
 
@@ -229,10 +155,10 @@ class StatusOr final {
    * @throws only if `T`'s move constructor throws.
    */
   // NOLINTNEXTLINE(google-explicit-constructor)
-  StatusOr(T&& rhs) { new (&value_) T(std::move(rhs)); }
+  StatusOr(T&& rhs) : value_(std::move(rhs)) {}
 
   // NOLINTNEXTLINE(google-explicit-constructor)
-  StatusOr(T const& rhs) { new (&value_) T(rhs); }
+  StatusOr(T const& rhs) : value_(rhs) {}
 
   bool ok() const { return status_.ok(); }
   explicit operator bool() const { return status_.ok(); }
@@ -247,13 +173,13 @@ class StatusOr final {
    * @return All these return a (properly ref and const-qualified) reference to
    *     the underlying value.
    */
-  T& operator*() & { return value_; }
+  T& operator*() & { return *value_; }
 
-  T const& operator*() const& { return value_; }
+  T const& operator*() const& { return *value_; }
 
-  T&& operator*() && { return std::move(value_); }
+  T&& operator*() && { return *std::move(value_); }
 
-  T const&& operator*() const&& { return std::move(value_); }
+  T const&& operator*() const&& { return *std::move(value_); }
   //@}
 
   //@{
@@ -266,9 +192,9 @@ class StatusOr final {
    * @return All these return a (properly ref and const-qualified) pointer to
    *     the underlying value.
    */
-  T* operator->() & { return &value_; }
+  T* operator->() & { return &*value_; }
 
-  T const* operator->() const& { return &value_; }
+  T const* operator->() const& { return &*value_; }
   //@}
 
   //@{
@@ -331,9 +257,7 @@ class StatusOr final {
   }
 
   Status status_;
-  union {
-    T value_;
-  };
+  absl::optional<T> value_;
 };
 
 // Returns true IFF both `StatusOr<T>` objects hold an equal `Status` or an
