@@ -29,6 +29,8 @@ namespace {
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
+using ::testing::Contains;
+using ::testing::IsEmpty;
 using ::testing::Return;
 
 class MockGeneratorContext
@@ -501,8 +503,7 @@ TEST_F(MethodSignatureWellKnownProtobufTypeIncludesTest,
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(0), generator_context.get());
   auto includes = g.MethodSignatureWellKnownProtobufTypeIncludes();
-  ASSERT_GT(includes.size(), 0);
-  EXPECT_EQ(includes[0], "google/protobuf/duration.pb.h");
+  EXPECT_THAT(includes, Contains("google/protobuf/duration.pb.h"));
 }
 
 TEST_F(MethodSignatureWellKnownProtobufTypeIncludesTest,
@@ -515,7 +516,7 @@ TEST_F(MethodSignatureWellKnownProtobufTypeIncludesTest,
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(1), generator_context.get());
   auto includes = g.MethodSignatureWellKnownProtobufTypeIncludes();
-  EXPECT_EQ(includes.size(), 0);
+  EXPECT_THAT(includes, IsEmpty());
 }
 
 const char* const kStreamingServiceProto =

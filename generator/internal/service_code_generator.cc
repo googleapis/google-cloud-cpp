@@ -122,12 +122,23 @@ bool ServiceCodeGenerator::HasStreamingReadMethod() const {
                      });
 }
 
-std::vector<std::string>
-ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
+absl::optional<std::string> IncludePathForWellKnownProtobufType(
+    google::protobuf::FieldDescriptor const& parameter) {
   // This hash is not intended to be comprehensive. Problematic types and their
   // includes should be added as needed.
   static absl::flat_hash_map<std::string, std::string> const kTypeIncludeMap = {
       {"google.protobuf.Duration", "google/protobuf/duration.pb.h"}};
+  if (parameter.type() == google::protobuf::FieldDescriptor::TYPE_MESSAGE) {
+    auto iter = kTypeIncludeMap.find(parameter.message_type()->full_name());
+    if (iter != kTypeIncludeMap.end()) {
+      return iter->second;
+    }
+  }
+  return {};
+}
+
+std::vector<std::string>
+ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
   std::vector<std::string> include_paths;
   for (auto method : methods_) {
     auto method_signature_extension =
@@ -137,16 +148,9 @@ ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
     for (auto const& extension : method_signature_extension) {
       std::vector<std::string> parameters = absl::StrSplit(extension, ",");
       for (auto const& parameter : parameters) {
-        google::protobuf::FieldDescriptor const* parameter_descriptor =
-            input_type->FindFieldByName(parameter);
-        if (parameter_descriptor->type() ==
-            google::protobuf::FieldDescriptor::TYPE_MESSAGE) {
-          auto iter = kTypeIncludeMap.find(
-              parameter_descriptor->message_type()->full_name());
-          if (iter != kTypeIncludeMap.end()) {
-            include_paths.push_back(iter->second);
-          }
-        }
+        auto path = IncludePathForWellKnownProtobufType(
+            *input_type->FindFieldByName(parameter));
+        if (path) include_paths.push_back(*path);
       }
     }
   }

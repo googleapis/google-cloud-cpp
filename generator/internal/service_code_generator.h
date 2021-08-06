@@ -114,9 +114,6 @@ class ServiceCodeGenerator : public GeneratorInterface {
    * Well-Known Types per
    * https://developers.google.com/protocol-buffers/docs/reference/google.protobuf
    * and provides the necessary include path.
-   * These additional includes are typically only necessary for building in
-   * google3. Outside of google3, the appropriate includes are typically
-   * provided via transitive inclusion from the service pb.h file.
    */
   std::vector<std::string> MethodSignatureWellKnownProtobufTypeIncludes() const;
 
