@@ -66,7 +66,7 @@ ServiceCodeGenerator::ServiceCodeGenerator(
   std::vector<std::string> omitted_rpcs;
   auto iter = service_vars_.find("omitted_rpcs");
   if (iter != service_vars_.end()) {
-    omitted_rpcs = absl::StrSplit(iter->second, ",");
+    omitted_rpcs = absl::StrSplit(iter->second, ',');
   }
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
     if (!internal::Contains(omitted_rpcs,
@@ -92,7 +92,7 @@ ServiceCodeGenerator::ServiceCodeGenerator(
   std::vector<std::string> omitted_rpcs;
   auto iter = service_vars_.find("omitted_rpcs");
   if (iter != service_vars_.end()) {
-    omitted_rpcs = absl::StrSplit(iter->second, ",");
+    omitted_rpcs = absl::StrSplit(iter->second, ',');
   }
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
     if (!internal::Contains(omitted_rpcs,
