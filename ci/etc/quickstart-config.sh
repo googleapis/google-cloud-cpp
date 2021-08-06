@@ -23,9 +23,7 @@ fi # include guard
 source module ci/etc/integration-tests-config.sh
 
 function quickstart::libraries() {
-  echo "bigquery"
   echo "bigtable"
-  echo "iam"
   echo "spanner"
   echo "storage"
   echo "pubsub"
