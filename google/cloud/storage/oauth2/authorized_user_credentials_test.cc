@@ -37,6 +37,7 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::An;
+using ::testing::AtLeast;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Return;
@@ -117,20 +118,24 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
     "id_token": "id-token-value",
     "expires_in": 1000
 })""";
-  auto mock_request = std::make_shared<MockHttpRequest::Impl>();
-  EXPECT_CALL(*mock_request, MakeRequest)
-      .WillOnce(Return(HttpResponse{200, r1, {}}))
-      .WillOnce(Return(HttpResponse{200, r2, {}}));
 
   // Now setup the builder to return those responses.
   auto mock_builder = MockHttpRequestBuilder::mock_;
-  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce([mock_request] {
-    MockHttpRequest request;
-    request.mock = mock_request;
-    return request;
-  });
+  EXPECT_CALL(*mock_builder, BuildRequest())
+      .WillOnce([&] {
+        MockHttpRequest request;
+        EXPECT_CALL(*request.mock, MakeRequest)
+            .WillOnce(Return(HttpResponse{200, r1, {}}));
+        return request;
+      })
+      .WillOnce([&] {
+        MockHttpRequest request;
+        EXPECT_CALL(*request.mock, MakeRequest)
+            .WillOnce(Return(HttpResponse{200, r2, {}}));
+        return request;
+      });
   EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
-      .Times(1);
+      .Times(AtLeast(1));
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
       .WillRepeatedly([](std::string const& s) {
         auto t = std::unique_ptr<char[]>(new char[s.size() + 1]);
@@ -158,20 +163,23 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
 
 /// @test Mock a failed refresh response.
 TEST_F(AuthorizedUserCredentialsTest, FailedRefresh) {
-  auto mock_request = std::make_shared<MockHttpRequest::Impl>();
-  EXPECT_CALL(*mock_request, MakeRequest)
-      .WillOnce(Return(Status(StatusCode::kAborted, "Fake Curl error")))
-      .WillOnce(Return(HttpResponse{400, "", {}}));
-
   // Now setup the builder to return those responses.
   auto mock_builder = MockHttpRequestBuilder::mock_;
-  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce([mock_request] {
-    MockHttpRequest request;
-    request.mock = mock_request;
-    return request;
-  });
+  EXPECT_CALL(*mock_builder, BuildRequest())
+      .WillOnce([] {
+        MockHttpRequest request;
+        EXPECT_CALL(*request.mock, MakeRequest)
+            .WillOnce(Return(Status(StatusCode::kAborted, "Fake Curl error")));
+        return request;
+      })
+      .WillOnce([] {
+        MockHttpRequest request;
+        EXPECT_CALL(*request.mock, MakeRequest)
+            .WillOnce(Return(HttpResponse{400, "", {}}));
+        return request;
+      });
   EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
-      .Times(1);
+      .Times(AtLeast(1));
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
       .WillRepeatedly([](std::string const& s) {
         auto t = std::unique_ptr<char[]>(new char[s.size() + 1]);

@@ -48,6 +48,7 @@ using ::google::cloud::storage::testing::WriteBase64AsBinary;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::An;
+using ::testing::AtLeast;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Return;
@@ -190,21 +191,26 @@ TEST_F(ServiceAccountCredentialsTest,
     "access_token": "access-token-r2",
     "expires_in": 1000
 })""";
-  auto mock_request = std::make_shared<MockHttpRequest::Impl>();
-  EXPECT_CALL(*mock_request, MakeRequest)
-      .WillOnce(Return(HttpResponse{200, r1, {}}))
-      .WillOnce(Return(HttpResponse{200, r2, {}}));
 
   // Now setup the builder to return those responses.
   auto mock_builder = MockHttpRequestBuilder::mock_;
-  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce([mock_request] {
-    MockHttpRequest request;
-    request.mock = mock_request;
-    return request;
-  });
-  EXPECT_CALL(*mock_builder, AddHeader(An<std::string const&>())).Times(1);
+  EXPECT_CALL(*mock_builder, BuildRequest())
+      .WillOnce([&] {
+        MockHttpRequest request;
+        EXPECT_CALL(*request.mock, MakeRequest)
+            .WillOnce(Return(HttpResponse{200, r1, {}}));
+        return request;
+      })
+      .WillOnce([&] {
+        MockHttpRequest request;
+        EXPECT_CALL(*request.mock, MakeRequest)
+            .WillOnce(Return(HttpResponse{200, r2, {}}));
+        return request;
+      });
+  EXPECT_CALL(*mock_builder, AddHeader(An<std::string const&>()))
+      .Times(AtLeast(1));
   EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
-      .Times(1);
+      .Times(AtLeast(1));
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
       .WillRepeatedly([](std::string const& s) -> std::unique_ptr<char[]> {
         EXPECT_EQ(kGrantParamUnescaped, s);
@@ -407,25 +413,30 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
   };
 
   // Setup the mock request / response for the first Refresh().
-  auto mock_request = std::make_shared<MockHttpRequest::Impl>();
   auto const clock_value_1 = 10000;
   auto const clock_value_2 = 20000;
-  EXPECT_CALL(*mock_request, MakeRequest)
-      .WillOnce(make_request_assertion(clock_value_1))
-      .WillOnce(make_request_assertion(clock_value_2));
 
   auto mock_builder = MockHttpRequestBuilder::mock_;
-  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce([mock_request] {
-    MockHttpRequest result;
-    result.mock = mock_request;
-    return result;
-  });
+  EXPECT_CALL(*mock_builder, BuildRequest())
+      .WillOnce([&] {
+        MockHttpRequest result;
+        EXPECT_CALL(*result.mock, MakeRequest)
+            .WillOnce(make_request_assertion(clock_value_1));
+        return result;
+      })
+      .WillOnce([&] {
+        MockHttpRequest result;
+        EXPECT_CALL(*result.mock, MakeRequest)
+            .WillOnce(make_request_assertion(clock_value_2));
+        return result;
+      });
 
   std::string expected_header =
       "Content-Type: application/x-www-form-urlencoded";
-  EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header))).Times(1);
+  EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)))
+      .Times(AtLeast(1));
   EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
-      .Times(1);
+      .Times(AtLeast(1));
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
       .WillRepeatedly([](std::string const& s) -> std::unique_ptr<char[]> {
         EXPECT_EQ(kGrantParamUnescaped, s);
@@ -456,24 +467,6 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
 
 /// @test Verify that we can create sign blobs using a service account.
 TEST_F(ServiceAccountCredentialsTest, SignBlob) {
-  auto mock_builder = MockHttpRequestBuilder::mock_;
-  std::string expected_header =
-      "Content-Type: application/x-www-form-urlencoded";
-  EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)));
-  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
-      .Times(1);
-  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
-      .WillRepeatedly([](std::string const& s) -> std::unique_ptr<char[]> {
-        EXPECT_EQ(kGrantParamUnescaped, s);
-        auto t = std::unique_ptr<char[]>(new char[sizeof(kGrantParamEscaped)]);
-        std::copy(kGrantParamEscaped,
-                  kGrantParamEscaped + sizeof(kGrantParamEscaped), t.get());
-        return t;
-      });
-  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce([] {
-    return MockHttpRequest();
-  });
-
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
   ASSERT_STATUS_OK(info);
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
@@ -508,24 +501,6 @@ x-goog-meta-foo:bar,baz
 
 /// @test Verify that signing blobs fails with invalid e-mail.
 TEST_F(ServiceAccountCredentialsTest, SignBlobFailure) {
-  auto mock_builder = MockHttpRequestBuilder::mock_;
-  std::string expected_header =
-      "Content-Type: application/x-www-form-urlencoded";
-  EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)));
-  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
-      .Times(1);
-  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
-      .WillRepeatedly([](std::string const& s) -> std::unique_ptr<char[]> {
-        EXPECT_EQ(kGrantParamUnescaped, s);
-        auto t = std::unique_ptr<char[]>(new char[sizeof(kGrantParamEscaped)]);
-        std::copy(kGrantParamEscaped,
-                  kGrantParamEscaped + sizeof(kGrantParamEscaped), t.get());
-        return t;
-      });
-  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce([] {
-    return MockHttpRequest();
-  });
-
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
   ASSERT_STATUS_OK(info);
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
@@ -541,24 +516,6 @@ TEST_F(ServiceAccountCredentialsTest, SignBlobFailure) {
 
 /// @test Verify that we can get the client id from a service account.
 TEST_F(ServiceAccountCredentialsTest, ClientId) {
-  auto mock_builder = MockHttpRequestBuilder::mock_;
-  std::string expected_header =
-      "Content-Type: application/x-www-form-urlencoded";
-  EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)));
-  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
-      .Times(1);
-  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
-      .WillRepeatedly([](std::string const& s) -> std::unique_ptr<char[]> {
-        EXPECT_EQ(kGrantParamUnescaped, s);
-        auto t = std::unique_ptr<char[]>(new char[sizeof(kGrantParamEscaped)]);
-        std::copy(kGrantParamEscaped,
-                  kGrantParamEscaped + sizeof(kGrantParamEscaped), t.get());
-        return t;
-      });
-  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce([] {
-    return MockHttpRequest();
-  });
-
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
   ASSERT_STATUS_OK(info);
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
