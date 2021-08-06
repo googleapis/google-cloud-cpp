@@ -46,13 +46,14 @@ RetryObjectReadSource::RetryObjectReadSource(
 
 StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
                                                        std::size_t n) {
-  GCP_LOG(INFO) << __func__ << "() current_offset=" << current_offset_;
   if (!child_) {
     return Status(StatusCode::kFailedPrecondition, "Stream is not open");
   }
-  // Refactor code to handle a successful read so we can return early.
+  // This lambda handles a successful read, avoiding some repetition below.
   auto handle_result = [this](StatusOr<ReadSourceResult> const& r) {
     if (!r) {
+      GCP_LOG(INFO) << "current_offset=" << current_offset_
+                    << ", status=" << r.status();
       return false;
     }
     auto g = r->response.headers.find("x-goog-generation");
@@ -68,9 +69,7 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
   };
   // Read some data, if successful return immediately, saving some allocations.
   auto result = child_->Read(buf, n);
-  if (handle_result(result)) {
-    return result;
-  }
+  if (handle_result(result)) return result;
   bool has_emulator_instructions = false;
   std::string instructions;
   if (request_.HasOption<CustomHeader>()) {
@@ -109,16 +108,14 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
     auto new_child =
         client_->ReadObjectNotWrapped(request_, *retry_policy, *backoff_policy);
     if (!new_child) {
-      // We've exhausted the retry policy while trying to create the child, so
-      // return right away.
+      // We've exhausted the retry policy while trying to create the child.
+      // There is nothing else we can do, return immediately.
       return new_child.status();
     }
     child_ = std::move(*new_child);
   }
-  if (handle_result(result)) {
-    return result;
-  }
-  // We have exhausted the retry policy, return an error.
+  if (handle_result(result)) return result;
+  // We have exhausted the retry policy, return the error.
   auto status = std::move(result).status();
   std::stringstream os;
   if (internal::StatusTraits::IsPermanentFailure(status)) {
