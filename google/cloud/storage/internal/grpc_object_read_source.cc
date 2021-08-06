@@ -100,19 +100,9 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
     headers.insert(h.begin(), h.end());
   }
 
-  if (offset != 0) {
-    return ReadSourceResult{
-        offset,
-        HttpResponse{HttpStatusCode::kContinue, {}, std::move(headers)}};
-  }
-  if (status_.ok()) {
-    // The stream was closed successfully, but there is no more data, cannot
-    // return a "OK" Status via a `StatusOr` need to provide some value.
-    return ReadSourceResult{
-        0, HttpResponse{HttpStatusCode::kOk, {}, std::move(headers)}};
-  }
-
-  return status_;
+  if (!status_.ok()) return status_;
+  return ReadSourceResult{
+      offset, HttpResponse{HttpStatusCode::kContinue, {}, std::move(headers)}};
 }
 
 }  // namespace internal
