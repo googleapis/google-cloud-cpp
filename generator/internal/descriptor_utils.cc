@@ -166,7 +166,7 @@ void SetMethodSignatureMethodVars(
   for (int i = 0; i < method_signature_extension.size(); ++i) {
     google::protobuf::Descriptor const* input_type = method.input_type();
     std::vector<std::string> parameters =
-        absl::StrSplit(method_signature_extension[i], ",");
+        absl::StrSplit(method_signature_extension[i], ',');
     std::string method_signature;
     std::string method_request_setters;
     for (unsigned int j = 0; j < parameters.size(); ++j) {
@@ -230,7 +230,7 @@ void SetResourceRoutingMethodVars(
     method_vars["method_request_url_substitution"] = result->url_substitution;
     std::string param = result->param_key;
     method_vars["method_request_param_key"] = param;
-    std::vector<std::string> chunks = absl::StrSplit(param, std::string("."));
+    std::vector<std::string> chunks = absl::StrSplit(param, '.');
     method_vars["method_request_param_value"] =
         absl::StrJoin(chunks, "().") + "()";
     method_vars["method_request_body"] = result->body;
@@ -290,7 +290,7 @@ std::string FormatApiMethodSignatureParameters(
       method.options().GetRepeatedExtension(google::api::method_signature);
   for (auto const& signature : method_signature_extension) {
     google::protobuf::Descriptor const* input_type = method.input_type();
-    std::vector<std::string> parameters = absl::StrSplit(signature, ",");
+    std::vector<std::string> parameters = absl::StrSplit(signature, ',');
     for (auto const& parameter : parameters) {
       google::protobuf::FieldDescriptor const* parameter_descriptor =
           input_type->FindFieldByName(parameter);

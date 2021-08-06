@@ -155,7 +155,7 @@ std::string CamelCaseToSnakeCase(absl::string_view input) {
 }
 
 std::string ServiceNameToFilePath(absl::string_view service_name) {
-  std::vector<absl::string_view> components = absl::StrSplit(service_name, ".");
+  std::vector<absl::string_view> components = absl::StrSplit(service_name, '.');
   absl::ConsumeSuffix(&components.back(), "Service");
   auto formatter = [](std::string* s, absl::string_view sv) {
     *s += CamelCaseToSnakeCase(sv);
