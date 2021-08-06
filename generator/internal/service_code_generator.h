@@ -109,6 +109,14 @@ class ServiceCodeGenerator : public GeneratorInterface {
    */
   bool HasStreamingReadMethod() const;
 
+  /**
+   * Determines if any of the method signatures has any Protocol Buffer
+   * Well-Known Types per
+   * https://developers.google.com/protocol-buffers/docs/reference/google.protobuf
+   * and provides the necessary include path.
+   */
+  std::vector<std::string> MethodSignatureWellKnownProtobufTypeIncludes() const;
+
  private:
   enum class FileType { kHeaderFile, kCcFile };
   static void GenerateLocalIncludes(Printer& p,

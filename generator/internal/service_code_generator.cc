@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/service_code_generator.h"
+#include "google/cloud/internal/absl_flat_hash_map_quiet.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
@@ -28,6 +29,25 @@
 namespace google {
 namespace cloud {
 namespace generator_internal {
+namespace {
+
+absl::optional<std::string> IncludePathForWellKnownProtobufType(
+    google::protobuf::FieldDescriptor const& parameter) {
+  // This hash is not intended to be comprehensive. Problematic types and their
+  // includes should be added as needed.
+  static const auto* const kTypeIncludeMap =
+      new absl::flat_hash_map<std::string, std::string>(
+          {{"google.protobuf.Duration", "google/protobuf/duration.pb.h"}});
+  if (parameter.type() == google::protobuf::FieldDescriptor::TYPE_MESSAGE) {
+    auto iter = kTypeIncludeMap->find(parameter.message_type()->full_name());
+    if (iter != kTypeIncludeMap->end()) {
+      return iter->second;
+    }
+  }
+  return {};
+}
+
+}  // namespace
 
 ServiceCodeGenerator::ServiceCodeGenerator(
     std::string const& header_path_key, std::string const& cc_path_key,
@@ -119,6 +139,26 @@ bool ServiceCodeGenerator::HasStreamingReadMethod() const {
                      [](google::protobuf::MethodDescriptor const& m) {
                        return IsStreamingRead(m);
                      });
+}
+
+std::vector<std::string>
+ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
+  std::vector<std::string> include_paths;
+  for (auto method : methods_) {
+    auto method_signature_extension =
+        method.get().options().GetRepeatedExtension(
+            google::api::method_signature);
+    google::protobuf::Descriptor const* input_type = method.get().input_type();
+    for (auto const& extension : method_signature_extension) {
+      std::vector<std::string> parameters = absl::StrSplit(extension, ',');
+      for (auto const& parameter : parameters) {
+        auto path = IncludePathForWellKnownProtobufType(
+            *input_type->FindFieldByName(parameter));
+        if (path) include_paths.push_back(*path);
+      }
+    }
+  }
+  return include_paths;
 }
 
 VarsDictionary const& ServiceCodeGenerator::vars() const {
