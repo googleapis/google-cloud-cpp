@@ -100,6 +100,13 @@ class StatusOr final {
    */
   StatusOr() : StatusOr(Status(StatusCode::kUnknown, "default")) {}
 
+  StatusOr(StatusOr const&) = default;
+  StatusOr& operator=(StatusOr const&) = default;
+  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
+  StatusOr(StatusOr&&) = default;
+  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
+  StatusOr& operator=(StatusOr&&) = default;
+
   /**
    * Creates a new `StatusOr<T>` holding the error condition @p rhs.
    *
