@@ -29,6 +29,24 @@
 namespace google {
 namespace cloud {
 namespace generator_internal {
+namespace {
+
+absl::optional<std::string> IncludePathForWellKnownProtobufType(
+    google::protobuf::FieldDescriptor const& parameter) {
+  // This hash is not intended to be comprehensive. Problematic types and their
+  // includes should be added as needed.
+  static absl::flat_hash_map<std::string, std::string> const kTypeIncludeMap = {
+      {"google.protobuf.Duration", "google/protobuf/duration.pb.h"}};
+  if (parameter.type() == google::protobuf::FieldDescriptor::TYPE_MESSAGE) {
+    auto iter = kTypeIncludeMap.find(parameter.message_type()->full_name());
+    if (iter != kTypeIncludeMap.end()) {
+      return iter->second;
+    }
+  }
+  return {};
+}
+
+}  // namespace
 
 ServiceCodeGenerator::ServiceCodeGenerator(
     std::string const& header_path_key, std::string const& cc_path_key,
@@ -120,21 +138,6 @@ bool ServiceCodeGenerator::HasStreamingReadMethod() const {
                      [](google::protobuf::MethodDescriptor const& m) {
                        return IsStreamingRead(m);
                      });
-}
-
-absl::optional<std::string> IncludePathForWellKnownProtobufType(
-    google::protobuf::FieldDescriptor const& parameter) {
-  // This hash is not intended to be comprehensive. Problematic types and their
-  // includes should be added as needed.
-  static absl::flat_hash_map<std::string, std::string> const kTypeIncludeMap = {
-      {"google.protobuf.Duration", "google/protobuf/duration.pb.h"}};
-  if (parameter.type() == google::protobuf::FieldDescriptor::TYPE_MESSAGE) {
-    auto iter = kTypeIncludeMap.find(parameter.message_type()->full_name());
-    if (iter != kTypeIncludeMap.end()) {
-      return iter->second;
-    }
-  }
-  return {};
 }
 
 std::vector<std::string>
