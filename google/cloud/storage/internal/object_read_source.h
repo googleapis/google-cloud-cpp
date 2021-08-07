@@ -54,12 +54,6 @@ struct ReadSourceResult {
   ReadSourceResult() = default;
   ReadSourceResult(std::size_t b, HttpResponse r)
       : bytes_received(std::move(b)), response(std::move(r)) {}
-
-  // This makes it easier to write some unit tests
-  ReadSourceResult&& set_generation(std::int64_t v) && {
-    generation = v;
-    return std::move(*this);
-  }
 };
 
 /**
