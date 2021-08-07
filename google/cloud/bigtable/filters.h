@@ -52,8 +52,8 @@ class Filter {
   explicit Filter(::google::bigtable::v2::RowFilter rhs)
       : filter_(std::move(rhs)) {}
 
-  Filter(Filter&&) noexcept = default;
-  Filter& operator=(Filter&&) noexcept = default;
+  Filter(Filter&&) = default;
+  Filter& operator=(Filter&&) = default;
   Filter(Filter const&) = default;
   Filter& operator=(Filter const&) = default;
 

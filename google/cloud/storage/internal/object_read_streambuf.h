@@ -51,8 +51,8 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
 
   ~ObjectReadStreambuf() override = default;
 
-  ObjectReadStreambuf(ObjectReadStreambuf&&) noexcept = delete;
-  ObjectReadStreambuf& operator=(ObjectReadStreambuf&&) noexcept = delete;
+  ObjectReadStreambuf(ObjectReadStreambuf&&) = delete;
+  ObjectReadStreambuf& operator=(ObjectReadStreambuf&&) = delete;
   ObjectReadStreambuf(ObjectReadStreambuf const&) = delete;
   ObjectReadStreambuf& operator=(ObjectReadStreambuf const&) = delete;
 

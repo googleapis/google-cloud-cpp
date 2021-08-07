@@ -45,8 +45,8 @@ class BigQueryReadClient {
   // @name Copy and move support
   BigQueryReadClient(BigQueryReadClient const&) = default;
   BigQueryReadClient& operator=(BigQueryReadClient const&) = default;
-  BigQueryReadClient(BigQueryReadClient&&) noexcept = default;
-  BigQueryReadClient& operator=(BigQueryReadClient&&) noexcept = default;
+  BigQueryReadClient(BigQueryReadClient&&) = default;
+  BigQueryReadClient& operator=(BigQueryReadClient&&) = default;
   //@}
 
   //@{

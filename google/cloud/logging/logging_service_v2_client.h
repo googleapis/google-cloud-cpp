@@ -44,9 +44,8 @@ class LoggingServiceV2Client {
   // @name Copy and move support
   LoggingServiceV2Client(LoggingServiceV2Client const&) = default;
   LoggingServiceV2Client& operator=(LoggingServiceV2Client const&) = default;
-  LoggingServiceV2Client(LoggingServiceV2Client&&) noexcept = default;
-  LoggingServiceV2Client& operator=(LoggingServiceV2Client&&) noexcept =
-      default;
+  LoggingServiceV2Client(LoggingServiceV2Client&&) = default;
+  LoggingServiceV2Client& operator=(LoggingServiceV2Client&&) = default;
   //@}
 
   //@{

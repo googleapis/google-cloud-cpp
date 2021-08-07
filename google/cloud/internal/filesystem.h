@@ -106,10 +106,10 @@ class file_status {  // NOLINT(readability-identifier-naming)
   file_status() noexcept : file_status(file_type::none) {}
   explicit file_status(file_type type, perms permissions = perms::unknown)
       : type_(type), permissions_(permissions) {}
-  file_status(file_status const&) noexcept = default;
-  file_status(file_status&&) noexcept = default;
-  file_status& operator=(file_status const&) noexcept = default;
-  file_status& operator=(file_status&&) noexcept = default;
+  file_status(file_status const&) = default;
+  file_status(file_status&&) = default;
+  file_status& operator=(file_status const&) = default;
+  file_status& operator=(file_status&&) = default;
 
   file_type type() const noexcept { return type_; }
   void type(file_type type) noexcept { type_ = type; }

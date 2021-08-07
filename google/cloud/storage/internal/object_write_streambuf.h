@@ -50,8 +50,8 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
 
   ~ObjectWriteStreambuf() override = default;
 
-  ObjectWriteStreambuf(ObjectWriteStreambuf&& rhs) noexcept = delete;
-  ObjectWriteStreambuf& operator=(ObjectWriteStreambuf&& rhs) noexcept = delete;
+  ObjectWriteStreambuf(ObjectWriteStreambuf&& rhs) = delete;
+  ObjectWriteStreambuf& operator=(ObjectWriteStreambuf&& rhs) = delete;
   ObjectWriteStreambuf(ObjectWriteStreambuf const&) = delete;
   ObjectWriteStreambuf& operator=(ObjectWriteStreambuf const&) = delete;
 

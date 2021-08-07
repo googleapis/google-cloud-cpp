@@ -34,8 +34,8 @@ inline namespace BIGTABLE_CLIENT_NS {
  */
 class ReadModifyWriteRule {
  public:
-  ReadModifyWriteRule(ReadModifyWriteRule&&) noexcept = default;
-  ReadModifyWriteRule& operator=(ReadModifyWriteRule&&) noexcept = default;
+  ReadModifyWriteRule(ReadModifyWriteRule&&) = default;
+  ReadModifyWriteRule& operator=(ReadModifyWriteRule&&) = default;
   ReadModifyWriteRule(ReadModifyWriteRule const&) = default;
   ReadModifyWriteRule& operator=(ReadModifyWriteRule const&) = default;
 

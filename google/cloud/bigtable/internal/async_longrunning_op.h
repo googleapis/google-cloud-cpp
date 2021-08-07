@@ -41,7 +41,8 @@ class AsyncLongrunningOperation {
       : client_(std::move(client)), operation_(std::move(operation)) {}
 
   AsyncLongrunningOperation(AsyncLongrunningOperation const&) = delete;
-  AsyncLongrunningOperation(AsyncLongrunningOperation&&) noexcept = default;
+  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
+  AsyncLongrunningOperation(AsyncLongrunningOperation&&) = default;
 
   // The semantics of the value returned by the future is as follows:
   // - outer status is the attempt's status (e.g. couldn't reach CBT)

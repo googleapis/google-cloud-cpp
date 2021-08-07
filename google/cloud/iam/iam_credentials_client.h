@@ -52,8 +52,8 @@ class IAMCredentialsClient {
   // @name Copy and move support
   IAMCredentialsClient(IAMCredentialsClient const&) = default;
   IAMCredentialsClient& operator=(IAMCredentialsClient const&) = default;
-  IAMCredentialsClient(IAMCredentialsClient&&) noexcept = default;
-  IAMCredentialsClient& operator=(IAMCredentialsClient&&) noexcept = default;
+  IAMCredentialsClient(IAMCredentialsClient&&) = default;
+  IAMCredentialsClient& operator=(IAMCredentialsClient&&) = default;
   //@}
 
   //@{

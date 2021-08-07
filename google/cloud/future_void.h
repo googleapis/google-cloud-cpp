@@ -141,7 +141,7 @@ class promise<void> final : private internal::promise_base<void> {
   explicit promise(null_promise_t x) : promise_base(std::move(x)) {}
 
   /// Constructs a new promise and transfer any shared state from @p rhs.
-  promise(promise&&) noexcept = default;
+  promise(promise&&) = default;
 
   /// Abandons the shared state in `*this`, if any, and transfers the shared
   /// state from @p rhs.

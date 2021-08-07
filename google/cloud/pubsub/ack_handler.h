@@ -49,8 +49,8 @@ class AckHandler {
  public:
   ~AckHandler();
 
-  AckHandler(AckHandler&&) noexcept = default;
-  AckHandler& operator=(AckHandler&&) noexcept = default;
+  AckHandler(AckHandler&&) = default;
+  AckHandler& operator=(AckHandler&&) = default;
 
   /**
    * Acknowledges the message associated with this handler.

@@ -40,8 +40,8 @@ class RowRange {
   explicit RowRange(::google::bigtable::v2::RowRange rhs)
       : row_range_(std::move(rhs)) {}
 
-  RowRange(RowRange&&) noexcept = default;
-  RowRange& operator=(RowRange&&) noexcept = default;
+  RowRange(RowRange&&) = default;
+  RowRange& operator=(RowRange&&) = default;
   RowRange(RowRange const&) = default;
   RowRange& operator=(RowRange const&) = default;
 
