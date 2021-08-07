@@ -79,23 +79,12 @@ template <typename HttpRequestBuilderType =
           typename ClockType = std::chrono::system_clock>
 class AuthorizedUserCredentials : public Credentials {
  public:
-  explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo const& info,
+  explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo info,
                                      ChannelOptions const& channel_options = {})
-      : clock_() {
-    HttpRequestBuilderType request_builder(
-        info.token_uri, storage::internal::GetDefaultCurlHandleFactory(
-                            Options{}.set<CARootsFilePathOption>(
-                                channel_options.ssl_root_path())));
-    std::string payload("grant_type=refresh_token");
-    payload += "&client_id=";
-    payload += request_builder.MakeEscapedString(info.client_id).get();
-    payload += "&client_secret=";
-    payload += request_builder.MakeEscapedString(info.client_secret).get();
-    payload += "&refresh_token=";
-    payload += request_builder.MakeEscapedString(info.refresh_token).get();
-    payload_ = std::move(payload);
-    request_ = request_builder.BuildRequest();
-  }
+      : info_(std::move(info)),
+        options_(Options{}.set<CARootsFilePathOption>(
+            channel_options.ssl_root_path())),
+        clock_() {}
 
   StatusOr<std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
@@ -105,19 +94,25 @@ class AuthorizedUserCredentials : public Credentials {
 
  private:
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() {
-    auto response = request_.MakeRequest(payload_);
-    if (!response) {
-      return std::move(response).status();
-    }
-    if (response->status_code >= 300) {
-      return AsStatus(*response);
-    }
+    HttpRequestBuilderType request_builder(
+        info_.token_uri,
+        storage::internal::GetDefaultCurlHandleFactory(options_));
+    std::string payload("grant_type=refresh_token");
+    payload += "&client_id=";
+    payload += request_builder.MakeEscapedString(info_.client_id).get();
+    payload += "&client_secret=";
+    payload += request_builder.MakeEscapedString(info_.client_secret).get();
+    payload += "&refresh_token=";
+    payload += request_builder.MakeEscapedString(info_.refresh_token).get();
+    auto response = request_builder.BuildRequest().MakeRequest(payload);
+    if (!response) return std::move(response).status();
+    if (response->status_code >= 300) return AsStatus(*response);
     return ParseAuthorizedUserRefreshResponse(*response, clock_.now());
   }
 
+  AuthorizedUserCredentialsInfo info_;
+  Options options_;
   ClockType clock_;
-  typename HttpRequestBuilderType::RequestType request_;
-  std::string payload_;
   mutable std::mutex mu_;
   RefreshingCredentialsWrapper refreshing_creds_;
 };
