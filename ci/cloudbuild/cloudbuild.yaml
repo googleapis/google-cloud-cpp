@@ -95,7 +95,7 @@ steps:
   # Runs the specified build in the image that was created in the first step.
 - name: 'gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}'
   entrypoint: 'ci/cloudbuild/build.sh'
-  args: [ '--local', '${_BUILD_NAME}' ]
+  args: [ '--local', '--build', '${_BUILD_NAME}' ]
   secretEnv: ['CODECOV_TOKEN', 'LOG_LINKER_PAT']
   env: [
     'BAZEL_REMOTE_CACHE=https://storage.googleapis.com/${_CACHE_BUCKET}/bazel-cache/${_DISTRO}-${_BUILD_NAME}',

@@ -14,68 +14,62 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Usage: build.sh [options] [build-name]
+# Usage: build.sh [options]
 #
 #   Options:
+#     --build=<name>       The basename minus suffix of the build script to run
 #     --distro=<name>      The distro name to use
 #     --docker-clean       Delete the build output directories
 #     -t|--trigger         The trigger file to extract the build name and distro
+#     -c|--cloud=<project> Run the build in GCB in the given project
 #     -l|--local           Run the build in the local environment
-#     -d|--docker          Run the build in a local docker
+#     -d|--docker          Run the build in a local docker (default)
 #     -s|--docker-shell    Run a shell in the build's docker container
-#     -p|--project=<name>  The Cloud Project ID to use
 #     -h|--help            Print this help message
 #
-# This script runs named builds, where builds are defined as a build script
-# (which lives in `ci/cloudbuild/builds/`) and a distro (which is defined in
-# `ci/cloudbuild/dockerfiles/<distro>.Dockerfile`). Trigger files (which live
-# in `ci/cloudbuild/triggers/`) associate build scripts with the distro they're
-# intended to run on. For example, the "asan-pr" build is defined in the
-# `ci/cloudbuild/triggers/asan-pr.yaml` file, which specifies that the
-# `ci/cloudbuild/builds/asan.sh` script should be run on the
-# `ci/cloudbuild/dockerfiles/fedora.Dockerfile` image. There are a couple ways
-# to specify builds:
+#   Note: flags may be specified in any order and with or without an equals
+#   sign (e.g. `-t=foo` is the same as `-t foo`)
 #
-# 1. Explicitly name the distro and build script. For example:
-#    $ build.sh --distro fedora asan
+# This tool runs build scripts (named using the --build flag), which live in
+# ci/cloudbuild/builds, in certain environments (named using the --distro
+# flag), which are defined in ci/cloudbuild/dockerfiles. Each build can be run
+# in one of three modes: on the local machine (--local), in the cloud
+# (--cloud), or in docker on the local machine (--docker), which is the default
+# if no other mode is specified.
 #
-# 2. Name the trigger file, which contains the distro and build script:
-#    $ build.sh --trigger asan-pr
+# A build name and a distro are required. These can be specified with the
+# --build and --distro flags, respectively. As a short-hand, the --trigger flag
+# can specify the basename (minus suffix) of a file in ci/cloudbuild/triggers,
+# and the _BUILD_NAME and _DISTRO will be looked up from that file.
 #
-# Note: command-line flags may be specified with or without an equals sign
-# (e.g. `-t=foo` is the same as `-t foo`), and in any order.
+# Examples:
 #
-# Usage examples:
+# 1. Runs the asan build in docker on the local machine
+#    $ build.sh -t asan-pr
+#    $ build.sh -t asan-pr -d  # Equivalent form
 #
-#   Runs the asan build from the asan-pr.yaml file on GCB
-#   $ build.sh -t asan-pr
+# 2. Starts a shell in the asan build's docker container on the local machine
+#    $ build.sh -t asan-pr -s
+#    $ build.sh -t asan-pr -d -s  # Equivalent form
 #
-#   Runs the asan build from the asan-pr.yaml file in docker
-#   $ build.sh -t asan-pr --docker
+# 3. Runs the asan build in the named Google Cloud Build project
+#    $ build.sh -t asan-pr --cloud=cloud-cpp-testing-resources
 #
-#   Opens a shell in the docker container for the asan-pr.yaml build
-#   NOTE: The `-s` flag is useful for debugging builds.
-#   $ build.sh -t asan-pr --docker-shell
-#   $ build.sh -t asan-pr --docker -s  # equivalent
-#   $ build.sh -t asan-pr -s  # equivalent
+# 4. Runs a local docker build with a completely clean environment with all
+#    cached artifacts from previous builds removed
+#    $ build.sh -t asan-pr --docker-clean
 #
-#   Runs the asan build from the asan-pr.yaml file in the local environment
-#   $ build.sh -t asan-pr --local
+# Advanced Examples:
 #
-#   Runs builds/cmake-install.sh script in the demo-centos-7.Dockerfile
-#   $ build.sh cmake-install --distro demo-centos-7 --docker
-#
-#   Runs the asan/integration tests in the cloud-cpp-testing-resources project
-#   $ build.sh -t asan-pr --project cloud-cpp-testing-resources
-#
-#   Runs the checkers in your local docker
-#   NOTE: This is a good way to format your code and check for style issues.
-#   $ build.sh -t checkers-pr --docker
+# 1. Runs the ci/cloudbuild/builds/asan.sh script using the
+#    ci/cloudbuild/dockerfiles/fedora-34.Dockerfile distro.
+#    $ build.sh --build asan --distro fedora-34
 #
 # Note: Builds with the `--docker` flag inherit some (but not all) environment
 # variables from the calling process, such as USE_BAZEL_VERSION
 # (https://github.com/bazelbuild/bazelisk), CODECOV_TOKEN
 # (https://codecov.io/), and every variable starting with GOOGLE_CLOUD_.
+#
 
 set -euo pipefail
 
@@ -88,33 +82,44 @@ function print_usage() {
   sed -n '17,/^$/s/^# \?//p' "${PROGRAM_PATH}"
 }
 
+function die() {
+  io::log_red "$@"
+  print_usage
+  exit 1
+}
+
 # Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
-  --options="p:t:ldsh" \
-  --longoptions="distro:,project:,trigger:,local,docker,docker-shell,docker-clean,help" \
+  --options="t:c:ldsh" \
+  --longoptions="build:,distro:,trigger:,cloud:,local,docker,docker-shell,docker-clean,help" \
   --name="${PROGRAM_NAME}" \
   -- "$@")"
 eval set -- "${PARSED}"
 
+BUILD_FLAG=""
 DISTRO_FLAG=""
-PROJECT_FLAG=""
 TRIGGER_FLAG=""
+CLOUD_FLAG=""
 CLEAN_FLAG="false"
 LOCAL_FLAG="false"
 DOCKER_FLAG="false"
 SHELL_FLAG="false"
 while true; do
   case "$1" in
+  --build)
+    BUILD_FLAG="$2"
+    shift 2
+    ;;
   --distro)
     DISTRO_FLAG="$2"
     shift 2
     ;;
-  -p | --project)
-    PROJECT_FLAG="$2"
-    shift 2
-    ;;
   -t | --trigger)
     TRIGGER_FLAG="$2"
+    shift 2
+    ;;
+  -c | --cloud)
+    CLOUD_FLAG="$2"
     shift 2
     ;;
   -l | --local)
@@ -145,27 +150,18 @@ while true; do
     ;;
   esac
 done
-readonly PROJECT_FLAG
 
 # If `--trigger=name` was specified, use the _BUILD_NAME and _DISTRO in the
 # trigger file as defaults.
-BUILD_NAME="${1:-}"
 if [[ -n "${TRIGGER_FLAG}" ]]; then
   trigger_file="${PROGRAM_DIR}/triggers/${TRIGGER_FLAG}.yaml"
-  if [[ ! -r "${trigger_file}" ]]; then
-    io::log_red "Cannot open ${trigger_file}"
-    exit 1
-  fi
-  : "${BUILD_NAME:="$(grep _BUILD_NAME "${trigger_file}" | awk '{print $2}')"}"
+  test -r "${trigger_file}" || die "Cannot open ${trigger_file}"
+  : "${BUILD_FLAG:="$(grep _BUILD_NAME "${trigger_file}" | awk '{print $2}')"}"
   : "${DISTRO_FLAG:="$(grep _DISTRO "${trigger_file}" | awk '{print $2}')"}"
 fi
-readonly BUILD_NAME
-readonly DISTRO_FLAG
 
-if [[ -z "${BUILD_NAME}" ]]; then
-  io::log_red "No build name specified. Specify a build name or use --trigger"
-  print_usage
-  exit 1
+if [[ -z "${BUILD_FLAG}" ]]; then
+  die "No build name. Specify --build or --trigger"
 fi
 
 # Sets some env vars that usually come from GCB, but need to be set explicitly
@@ -190,10 +186,8 @@ export LOG_LINKER_PAT
 # will call the --local build.
 if [[ "${LOCAL_FLAG}" = "true" ]]; then
   test -n "${DISTRO_FLAG}" && io::log_red "Local build ignoring --distro=${DISTRO_FLAG}"
-  if [[ "${DOCKER_FLAG}" = "true" ]]; then
-    io::log_red "Only one of --local or --docker may be specified"
-    print_usage
-    exit 1
+  if [[ "${DOCKER_FLAG}" = "true" || -n "${CLOUD_FLAG}" ]]; then
+    die "Only one of --local, --docker, or --cloud may be specified"
   fi
 
   # Prints links to the log files for the current build. These can be useful to
@@ -221,23 +215,65 @@ if [[ "${LOCAL_FLAG}" = "true" ]]; then
   printf "%10s %s\n" "gcc:" "$(gcc --version 2>&1 | head -1)"
   printf "%10s %s\n" "clang:" "$(clang --version 2>&1 | head -1)"
   printf "%10s %s\n" "cc:" "$(cc --version 2>&1 | head -1)"
-  io::log_h1 "Starting local build: ${BUILD_NAME}"
-  readonly TIMEFORMAT="==> 🕑 ${BUILD_NAME} completed in %R seconds"
-  time "${PROGRAM_DIR}/builds/${BUILD_NAME}.sh"
+  io::log_h1 "Starting local build: ${BUILD_FLAG}"
+  readonly TIMEFORMAT="==> 🕑 ${BUILD_FLAG} completed in %R seconds"
+  time "${PROGRAM_DIR}/builds/${BUILD_FLAG}.sh"
   exit
 fi
 
 if [[ -z "${DISTRO_FLAG}" ]]; then
-  io::log_red "No distro specified. Use --distro or --trigger"
-  print_usage
-  exit 1
+  die "No distro specified. Use --distro or --trigger"
 fi
 
+if [[ -n "${CLOUD_FLAG}" ]]; then
+  test "${DOCKER_FLAG}" = "true" && die "Cannot specify --docker and --cloud"
+  # Surface invalid arguments early rather than waiting for GCB to fail.
+  if [ ! -r "${PROGRAM_DIR}/dockerfiles/${DISTRO_FLAG}.Dockerfile" ]; then
+    die "Unknown distro: ${DISTRO_FLAG}"
+  elif [ ! -x "${PROGRAM_DIR}/builds/${BUILD_FLAG}.sh" ]; then
+    die "Unknown build name: ${BUILD_FLAG}"
+  fi
+
+  # Uses Google Cloud build to run the specified build.
+  io::log_h1 "Starting cloud build: ${BUILD_FLAG}"
+  # The cloudbuild.yaml file expects certain "secrets" to be present in the
+  # project's "Secret Manager". This is true for our main production project, but
+  # for personal projects we may need to create them (with empty strings).
+  if [[ "${CLOUD_FLAG}" != "cloud-cpp-testing-resources" ]]; then
+    for secret in "CODECOV_TOKEN" "LOG_LINKER_PAT"; do
+      if ! gcloud --project "${CLOUD_FLAG}" secrets describe "${secret}" >/dev/null; then
+        io::log_yellow "Adding missing secret ${secret} to ${CLOUD_FLAG}"
+        echo | gcloud --project "${CLOUD_FLAG}" secrets create "${secret}" --data-file=-
+      fi
+    done
+  fi
+  account="$(gcloud config get-value account 2>/dev/null)"
+  subs=("_DISTRO=${DISTRO_FLAG}")
+  subs+=("_BUILD_NAME=${BUILD_FLAG}")
+  subs+=("_TRIGGER_SOURCE=manual-${account}")
+  subs+=("_PR_NUMBER=") # Must be empty or a number, and this is not a PR
+  subs+=("_LOGS_BUCKET=${CLOUD_FLAG}_cloudbuild")
+  subs+=("BRANCH_NAME=${BRANCH_NAME}")
+  subs+=("COMMIT_SHA=${COMMIT_SHA}")
+  printf "Substitutions:\n"
+  printf "  %s\n" "${subs[@]}"
+  args=(
+    "--config=ci/cloudbuild/cloudbuild.yaml"
+    "--substitutions=$(printf "%s," "${subs[@]}")"
+    "--project=${CLOUD_FLAG}"
+    # This value must match the workerPool configured in cloudbuild.yaml
+    "--region=us-east1"
+  )
+  io::run gcloud builds submit "${args[@]}" .
+fi
+
+# Default to --docker mode since no other mode was specified.
+DOCKER_FLAG="true"
+
 # Uses docker to locally build the specified image and run the build command.
-# Docker builds store their outputs on the host system in `build-out/`.
 if [[ "${DOCKER_FLAG}" = "true" ]]; then
-  io::log_h1 "Starting docker build: ${BUILD_NAME}"
-  out_dir="${PROJECT_ROOT}/build-out/${DISTRO_FLAG}-${BUILD_NAME}"
+  io::log_h1 "Starting docker build: ${BUILD_FLAG}"
+  out_dir="${PROJECT_ROOT}/build-out/${DISTRO_FLAG}-${BUILD_FLAG}"
   out_home="${out_dir}/h"
   out_cmake="${out_dir}/cmake-out"
   if [[ "${CLEAN_FLAG}" = "true" ]]; then
@@ -289,7 +325,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
       run_flags+=("--env=${e}")
     fi
   done
-  cmd=(ci/cloudbuild/build.sh --local "${BUILD_NAME}")
+  cmd=(ci/cloudbuild/build.sh --local --build "${BUILD_FLAG}")
   if [[ "${SHELL_FLAG}" = "true" ]]; then
     printf "To run the build manually:\n  "
     printf " %q" "${cmd[@]}"
@@ -297,49 +333,4 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     cmd=("bash" "--norc") # some distros have rc files that override our PS1
   fi
   io::run docker run "${run_flags[@]}" "${image}" "${cmd[@]}"
-  exit
 fi
-
-# Surface invalid arguments early rather than waiting for GCB to fail.
-if [ ! -r "${PROGRAM_DIR}/dockerfiles/${DISTRO_FLAG}.Dockerfile" ]; then
-  io::log_red "Unknown distro: ${DISTRO_FLAG}"
-  print_usage
-  exit 1
-elif [ ! -x "${PROGRAM_DIR}/builds/${BUILD_NAME}.sh" ]; then
-  io::log_red "Unknown build name: ${BUILD_NAME}"
-  print_usage
-  exit 1
-fi
-
-# Uses Google Cloud build to run the specified build.
-io::log_h1 "Starting cloud build: ${BUILD_NAME}"
-project="${PROJECT_FLAG:-$(gcloud config get-value project 2>/dev/null)}"
-account="$(gcloud config get-value account 2>/dev/null)"
-# The cloudbuild.yaml file expects certain "secrets" to be present in the
-# project's "Secret Manager". This is true for our main production project, but
-# for personal projects we may need to create them (with empty strings).
-if [[ "${project}" != "cloud-cpp-testing-resources" ]]; then
-  for secret in "CODECOV_TOKEN" "LOG_LINKER_PAT"; do
-    if ! gcloud --project "${project}" secrets describe "${secret}" >/dev/null; then
-      io::log_yellow "Adding missing secret ${secret} to ${project}"
-      echo | gcloud --project "${project}" secrets create "${secret}" --data-file=-
-    fi
-  done
-fi
-subs=("_DISTRO=${DISTRO_FLAG}")
-subs+=("_BUILD_NAME=${BUILD_NAME}")
-subs+=("_TRIGGER_SOURCE=manual-${account}")
-subs+=("_PR_NUMBER=") # Must be empty or a number, and this is not a PR
-subs+=("_LOGS_BUCKET=${project}_cloudbuild")
-subs+=("BRANCH_NAME=${BRANCH_NAME}")
-subs+=("COMMIT_SHA=${COMMIT_SHA}")
-printf "Substitutions:\n"
-printf "  %s\n" "${subs[@]}"
-args=(
-  "--config=ci/cloudbuild/cloudbuild.yaml"
-  "--substitutions=$(printf "%s," "${subs[@]}")"
-  "--project=${project}"
-  # This value must match the workerPool configured in cloudbuild.yaml
-  "--region=us-east1"
-)
-io::run gcloud builds submit "${args[@]}" .
