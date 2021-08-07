@@ -30,10 +30,9 @@ void CompositeValidator::ProcessMetadata(ObjectMetadata const& meta) {
   b_->ProcessMetadata(meta);
 }
 
-void CompositeValidator::ProcessHeader(std::string const& key,
-                                       std::string const& value) {
-  a_->ProcessHeader(key, value);
-  b_->ProcessHeader(key, value);
+void CompositeValidator::ProcessHashValues(HashValues const& values) {
+  a_->ProcessHashValues(values);
+  b_->ProcessHashValues(values);
 }
 
 HashValidator::Result CompositeValidator::Finish(HashValues computed) && {
@@ -56,19 +55,8 @@ void MD5HashValidator::ProcessMetadata(ObjectMetadata const& meta) {
   received_hash_ = meta.md5_hash();
 }
 
-void MD5HashValidator::ProcessHeader(std::string const& key,
-                                     std::string const& value) {
-  if (key != "x-goog-hash") return;
-  char const prefix[] = "md5=";
-  auto constexpr kPrefixLen = sizeof(prefix) - 1;
-  auto pos = value.find(prefix);
-  if (pos == std::string::npos) return;
-  auto end = value.find(',', pos);
-  if (end == std::string::npos) {
-    received_hash_ = value.substr(pos + kPrefixLen);
-    return;
-  }
-  received_hash_ = value.substr(pos + kPrefixLen, end - pos - kPrefixLen);
+void MD5HashValidator::ProcessHashValues(HashValues const& values) {
+  if (!values.md5.empty()) received_hash_ = values.md5;
 }
 
 HashValidator::Result MD5HashValidator::Finish(HashValues computed) && {
@@ -88,20 +76,8 @@ void Crc32cHashValidator::ProcessMetadata(ObjectMetadata const& meta) {
   received_hash_ = meta.crc32c();
 }
 
-void Crc32cHashValidator::ProcessHeader(std::string const& key,
-                                        std::string const& value) {
-  if (key != "x-goog-hash") return;
-
-  char const prefix[] = "crc32c=";
-  auto constexpr kPrefixLen = sizeof(prefix) - 1;
-  auto pos = value.find(prefix);
-  if (pos == std::string::npos) return;
-  auto end = value.find(',', pos);
-  if (end == std::string::npos) {
-    received_hash_ = value.substr(pos + kPrefixLen);
-    return;
-  }
-  received_hash_ = value.substr(pos + kPrefixLen, end - pos - kPrefixLen);
+void Crc32cHashValidator::ProcessHashValues(HashValues const& values) {
+  if (!values.crc32c.empty()) received_hash_ = values.crc32c;
 }
 
 HashValidator::Result Crc32cHashValidator::Finish(HashValues computed) && {

@@ -34,7 +34,7 @@ class NullHashValidator : public HashValidator {
 
   std::string Name() const override { return "null"; }
   void ProcessMetadata(ObjectMetadata const&) override {}
-  void ProcessHeader(std::string const&, std::string const&) override {}
+  void ProcessHashValues(HashValues const&) override {}
   Result Finish(HashValues computed) && override;
 };
 
@@ -49,7 +49,7 @@ class CompositeValidator : public HashValidator {
 
   std::string Name() const override { return "composite"; }
   void ProcessMetadata(ObjectMetadata const& meta) override;
-  void ProcessHeader(std::string const& key, std::string const& value) override;
+  void ProcessHashValues(HashValues const& values) override;
   Result Finish(HashValues computed) && override;
 
  private:
@@ -69,7 +69,7 @@ class MD5HashValidator : public HashValidator {
 
   std::string Name() const override { return "md5"; }
   void ProcessMetadata(ObjectMetadata const& meta) override;
-  void ProcessHeader(std::string const& key, std::string const& value) override;
+  void ProcessHashValues(HashValues const& values) override;
   Result Finish(HashValues computed) && override;
 
  private:
@@ -88,7 +88,7 @@ class Crc32cHashValidator : public HashValidator {
 
   std::string Name() const override { return "crc32c"; }
   void ProcessMetadata(ObjectMetadata const& meta) override;
-  void ProcessHeader(std::string const& key, std::string const& value) override;
+  void ProcessHashValues(HashValues const& values) override;
   Result Finish(HashValues computed) && override;
 
  private:

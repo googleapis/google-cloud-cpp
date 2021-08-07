@@ -77,6 +77,69 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
   EXPECT_EQ(kDownloadedLines, count);
 }
 
+TEST(CurlDownloadRequestTest, HashHeaders) {
+  // Run one attempt and return the headers, if any.
+  HashValues hashes;
+  auto attempt = [&] {
+    CurlRequestBuilder builder(HttpBinEndpoint() + "/response-headers",
+                               GetDefaultCurlHandleFactory());
+    builder.AddQueryParameter("x-goog-hash", "crc32c=123, md5=234");
+    auto download = std::move(builder).BuildDownloadRequest();
+
+    auto constexpr kBufferSize = 4096;
+    char buffer[kBufferSize];
+    do {
+      auto read = download->Read(buffer, kBufferSize);
+      if (!read) return read.status();
+      hashes = Merge(std::move(hashes), std::move(read->hashes));
+      if (read->response.status_code != 100) break;
+    } while (true);
+    return Status{};
+  };
+
+  auto delay = std::chrono::seconds(1);
+  for (int i = 0; i != 3; ++i) {
+    auto status = attempt();
+    if (status.ok()) break;
+    std::this_thread::sleep_for(delay);
+    delay *= 2;
+  }
+  EXPECT_EQ(hashes.crc32c, "123");
+  EXPECT_EQ(hashes.md5, "234");
+}
+
+TEST(CurlDownloadRequestTest, Generation) {
+  // Run one attempt and return the headers, if any.
+  absl::optional<std::int64_t> received_generation;
+  auto attempt = [&] {
+    CurlRequestBuilder builder(HttpBinEndpoint() + "/response-headers",
+                               GetDefaultCurlHandleFactory());
+    builder.AddQueryParameter("x-goog-generation", "123456");
+    auto download = std::move(builder).BuildDownloadRequest();
+
+    auto constexpr kBufferSize = 4096;
+    char buffer[kBufferSize];
+    do {
+      auto read = download->Read(buffer, kBufferSize);
+      if (!read) return read.status();
+      if (!received_generation && read->generation.has_value()) {
+        received_generation = read->generation;
+      }
+      if (read->response.status_code != 100) break;
+    } while (true);
+    return Status{};
+  };
+
+  auto delay = std::chrono::seconds(1);
+  for (int i = 0; i != 3; ++i) {
+    auto status = attempt();
+    if (status.ok()) break;
+    std::this_thread::sleep_for(delay);
+    delay *= 2;
+  }
+  EXPECT_EQ(received_generation.value_or(0), 123456);
+}
+
 TEST(CurlDownloadRequestTest, HandlesReleasedOnRead) {
   auto constexpr kLineCount = 10;
   auto constexpr kTestPoolSize = 8;

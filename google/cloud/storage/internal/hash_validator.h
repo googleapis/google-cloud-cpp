@@ -40,8 +40,7 @@ class HashValidator {
   virtual void ProcessMetadata(ObjectMetadata const& meta) = 0;
 
   /// Update the received hash value based on a response header.
-  virtual void ProcessHeader(std::string const& key,
-                             std::string const& value) = 0;
+  virtual void ProcessHashValues(HashValues const& hashes) = 0;
 
   struct Result {
     /// The value reported by the server, based on the calls to ProcessHeader().

@@ -190,11 +190,10 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
   if (!read) return run_validator_if_closed(std::move(read).status());
 
   hash_function_->Update(s + offset, read->bytes_received);
+  hash_validator_->ProcessHashValues(read->hashes);
   offset += static_cast<std::streamsize>(read->bytes_received);
   source_pos_ += static_cast<std::streamoff>(read->bytes_received);
-
   for (auto const& kv : read->response.headers) {
-    hash_validator_->ProcessHeader(kv.first, kv.second);
     headers_.emplace(kv.first, kv.second);
   }
   return run_validator_if_closed(Status());
