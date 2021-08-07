@@ -56,10 +56,7 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
                     << ", status=" << r.status();
       return false;
     }
-    auto g = r->response.headers.find("x-goog-generation");
-    if (g != r->response.headers.end()) {
-      generation_ = std::stoll(g->second);
-    }
+    if (r->generation) generation_ = *r->generation;
     if (offset_direction_ == kFromEnd) {
       current_offset_ -= r->bytes_received;
     } else {

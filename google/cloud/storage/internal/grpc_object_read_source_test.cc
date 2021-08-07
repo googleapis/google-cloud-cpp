@@ -31,7 +31,6 @@ using ::google::cloud::internal::StreamingRpcMetadata;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 using ::testing::Return;
-using ::testing::UnorderedElementsAre;
 
 namespace storage_proto = ::google::storage::v1;
 
@@ -194,7 +193,7 @@ TEST(GrpcObjectReadSource, UseSpillBufferMany) {
   EXPECT_STATUS_OK(status);
 }
 
-TEST(GrpcObjectReadSource, PreserveChecksums) {
+TEST(GrpcObjectReadSource, CaptureChecksums) {
   auto mock = absl::make_unique<MockStream>();
   std::string const expected_payload =
       "The quick brown fox jumps over the lazy dog";
@@ -233,22 +232,45 @@ TEST(GrpcObjectReadSource, PreserveChecksums) {
   EXPECT_EQ(100, response->response.status_code);
   auto const actual = std::string(buffer.data(), response->bytes_received);
   EXPECT_EQ(expected_payload, actual);
-  auto const& headers = response->response.headers;
-  EXPECT_FALSE(headers.find("x-goog-hash") == headers.end());
-  auto const values = [&headers] {
-    std::vector<std::string> v;
-    for (auto const& kv : headers) {
-      if (kv.first != "x-goog-hash") continue;
-      v.push_back(kv.second);
-    }
-    return v;
-  }();
-  EXPECT_THAT(values, UnorderedElementsAre("crc32c=" + expected_crc32c,
-                                           "md5=" + expected_md5));
+  EXPECT_EQ(response->hashes.crc32c, expected_crc32c);
+  EXPECT_EQ(response->hashes.md5, expected_md5);
 
   auto status = tested.Close();
   EXPECT_STATUS_OK(status);
   EXPECT_EQ(200, status->status_code);
+}
+
+TEST(GrpcObjectReadSource, CaptureGeneration) {
+  auto mock = absl::make_unique<MockStream>();
+  std::string const expected_payload =
+      "The quick brown fox jumps over the lazy dog";
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&] {
+        // Generate a response that includes the generation, but not enough data
+        // to return immediately.
+        storage_proto::GetObjectMediaResponse response;
+        response.mutable_metadata()->set_generation(1234);
+        response.mutable_checksummed_data()->set_content("The quick brown");
+        return response;
+      })
+      .WillOnce([&] {
+        // The last response, without metadata or generation.
+        storage_proto::GetObjectMediaResponse response;
+        response.mutable_checksummed_data()->set_content(
+            " fox jumps over the lazy dog");
+        return response;
+      })
+      .WillOnce(Return(Status{}));
+  EXPECT_CALL(*mock, GetRequestMetadata)
+      .WillOnce(Return(StreamingRpcMetadata{}));
+
+  GrpcObjectReadSource tested(std::move(mock));
+  std::vector<char> buffer(1024);
+  auto response = tested.Read(buffer.data(), buffer.size());
+  ASSERT_STATUS_OK(response);
+  // The generation is captured on any message that contains it, and saved until
+  // it can be returned.
+  EXPECT_EQ(1234, response->generation.value_or(0));
 }
 
 TEST(GrpcObjectReadSource, HandleEmptyResponses) {

@@ -23,24 +23,8 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-namespace {
 
 using HeadersMap = std::multimap<std::string, std::string>;
-
-HeadersMap MakeHeadersFromChecksums(
-    google::storage::v1::ObjectChecksums const& checksums) {
-  HeadersMap headers;
-  if (checksums.has_crc32c()) {
-    headers.emplace("x-goog-hash", "crc32c=" + GrpcClient::Crc32cFromProto(
-                                                   checksums.crc32c()));
-  }
-  if (!checksums.md5_hash().empty()) {
-    headers.emplace("x-goog-hash",
-                    "md5=" + GrpcClient::MD5FromProto(checksums.md5_hash()));
-  }
-  return headers;
-}
-}  // namespace
 
 GrpcObjectReadSource::GrpcObjectReadSource(std::unique_ptr<StreamingRpc> stream)
     : stream_(std::move(stream)) {}
@@ -65,44 +49,60 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
     return source;
   };
   struct Visitor {
+    Visitor(GrpcObjectReadSource& source,
+            absl::FunctionRef<std::string(std::string)> update)
+        : self(source), update_buf(std::move(update)) {
+      result.response.status_code = HttpStatusCode::kContinue;
+    }
+
     GrpcObjectReadSource& self;
     absl::FunctionRef<std::string(std::string)> update_buf;
+    ReadSourceResult result;
 
-    HeadersMap operator()(Status s) {
+    void operator()(Status s) {
       // A status, whether success or failure, closes the stream.
       self.status_ = std::move(s);
       auto metadata = self.stream_->GetRequestMetadata();
+      result.response.headers.insert(metadata.begin(), metadata.end());
       self.stream_ = nullptr;
-      return metadata;
     }
-    HeadersMap operator()(
-        google::storage::v1::GetObjectMediaResponse response) {
+    void operator()(google::storage::v1::GetObjectMediaResponse response) {
       // The google.storage.v1.Storage documentation says this field can be
       // empty.
       if (response.has_checksummed_data()) {
-        self.spill_ =
-            update_buf(std::string(  // Sometimes protobuf bytes are not strings
-                std::move(
-                    *response.mutable_checksummed_data()->mutable_content())));
+        // Sometimes protobuf bytes are not strings, but the explicit conversion
+        // always works.
+        self.spill_ = update_buf(std::string(std::move(
+            *response.mutable_checksummed_data()->mutable_content())));
       }
-      if (self.checksums_known_) return {};
-      if (!response.has_object_checksums()) return {};
-      self.checksums_known_ = true;
-      return MakeHeadersFromChecksums(response.object_checksums());
+      if (response.has_object_checksums()) {
+        auto const& checksums = response.object_checksums();
+        if (checksums.has_crc32c()) {
+          result.hashes = Merge(
+              std::move(result.hashes),
+              HashValues{GrpcClient::Crc32cFromProto(checksums.crc32c()), {}});
+        }
+        if (!checksums.md5_hash().empty()) {
+          result.hashes = Merge(
+              std::move(result.hashes),
+              HashValues{{}, GrpcClient::MD5FromProto(checksums.md5_hash())});
+        }
+      }
+      if (response.has_metadata() && !result.generation) {
+        result.generation = response.metadata().generation();
+      }
     }
   };
 
   spill_ = update_buf(std::move(spill_));
-  HeadersMap headers;
+  Visitor visitor{*this, update_buf};
   while (offset < n && stream_) {
-    auto v = stream_->Read();
-    auto h = absl::visit(Visitor{*this, update_buf}, std::move(v));
-    headers.insert(h.begin(), h.end());
+    absl::visit(visitor, stream_->Read());
   }
 
   if (!status_.ok()) return status_;
-  return ReadSourceResult{
-      offset, HttpResponse{HttpStatusCode::kContinue, {}, std::move(headers)}};
+  visitor.result.bytes_received = offset;
+  return std::move(visitor.result);
 }
 
 }  // namespace internal

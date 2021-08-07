@@ -40,6 +40,18 @@ std::string HttpBinEndpoint() {
       .value_or("https://nghttp2.org/httpbin");
 }
 
+Status Make3Attempts(std::function<Status()> const& attempt) {
+  Status status;
+  auto backoff = std::chrono::seconds(1);
+  for (int i = 0; i != 3; ++i) {
+    status = attempt();
+    if (status.ok()) return status;
+    std::this_thread::sleep_for(backoff);
+    backoff *= 2;
+  }
+  return status;
+}
+
 TEST(CurlDownloadRequestTest, SimpleStream) {
   // httpbin can generate up to 100 lines, do not try to download more than
   // that.
@@ -77,6 +89,59 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
   EXPECT_EQ(kDownloadedLines, count);
 }
 
+TEST(CurlDownloadRequestTest, HashHeaders) {
+  // Run one attempt and return the headers, if any.
+  HashValues hashes;
+  auto attempt = [&] {
+    CurlRequestBuilder builder(HttpBinEndpoint() + "/response-headers",
+                               GetDefaultCurlHandleFactory());
+    builder.AddQueryParameter("x-goog-hash", "crc32c=123, md5=234");
+    auto download = std::move(builder).BuildDownloadRequest();
+
+    auto constexpr kBufferSize = 4096;
+    char buffer[kBufferSize];
+    do {
+      auto read = download->Read(buffer, kBufferSize);
+      if (!read) return read.status();
+      hashes = Merge(std::move(hashes), std::move(read->hashes));
+      if (read->response.status_code != 100) break;
+    } while (true);
+    return Status{};
+  };
+
+  auto status = Make3Attempts(attempt);
+  ASSERT_STATUS_OK(status);
+  EXPECT_EQ(hashes.crc32c, "123");
+  EXPECT_EQ(hashes.md5, "234");
+}
+
+TEST(CurlDownloadRequestTest, Generation) {
+  // Run one attempt and return the headers, if any.
+  absl::optional<std::int64_t> received_generation;
+  auto attempt = [&] {
+    CurlRequestBuilder builder(HttpBinEndpoint() + "/response-headers",
+                               GetDefaultCurlHandleFactory());
+    builder.AddQueryParameter("x-goog-generation", "123456");
+    auto download = std::move(builder).BuildDownloadRequest();
+
+    auto constexpr kBufferSize = 4096;
+    char buffer[kBufferSize];
+    do {
+      auto read = download->Read(buffer, kBufferSize);
+      if (!read) return read.status();
+      if (!received_generation && read->generation.has_value()) {
+        received_generation = read->generation;
+      }
+      if (read->response.status_code != 100) break;
+    } while (true);
+    return Status{};
+  };
+
+  auto status = Make3Attempts(attempt);
+  ASSERT_STATUS_OK(status);
+  EXPECT_EQ(received_generation.value_or(0), 123456);
+}
+
 TEST(CurlDownloadRequestTest, HandlesReleasedOnRead) {
   auto constexpr kLineCount = 10;
   auto constexpr kTestPoolSize = 8;
@@ -107,14 +172,7 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnRead) {
     return Status{};
   };
 
-  auto delay = std::chrono::seconds(1);
-  Status status;
-  for (int i = 0; i != 3; ++i) {
-    status = download();
-    if (status.ok()) break;
-    std::this_thread::sleep_for(delay);
-    delay *= 2;
-  }
+  auto status = Make3Attempts(download);
   ASSERT_STATUS_OK(status);
   EXPECT_EQ(1, factory->CurrentHandleCount());
   EXPECT_EQ(1, factory->CurrentMultiHandleCount());
@@ -152,14 +210,8 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnClose) {
     return Status{};
   };
 
-  auto delay = std::chrono::seconds(1);
-  Status status;
-  for (int i = 0; i != 3; ++i) {
-    status = download();
-    if (status.ok()) break;
-    std::this_thread::sleep_for(delay);
-    delay *= 2;
-  }
+  auto status = Make3Attempts(download);
+  ASSERT_STATUS_OK(status);
   EXPECT_EQ(1, factory->CurrentHandleCount());
   EXPECT_EQ(1, factory->CurrentMultiHandleCount());
   ASSERT_STATUS_OK(status);
@@ -291,15 +343,8 @@ Status AttemptRegression7051() {
 
 /// @test Prevent regressions of #7051: re-using a stream after a partial read.
 TEST(CurlDownloadRequestTest, Regression7051) {
-  auto delay = std::chrono::seconds(1);
-  auto status = Status{};
-  for (int i = 0; i != 3; ++i) {
-    status = AttemptRegression7051();
-    if (status.ok()) break;
-    std::this_thread::sleep_for(delay);
-    delay *= 2;
-  }
-  EXPECT_THAT(status, IsOk());
+  auto status = Make3Attempts(AttemptRegression7051);
+  ASSERT_STATUS_OK(status);
 }
 
 TEST(CurlDownloadRequestTest, HttpVersion) {

@@ -15,9 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_READ_SOURCE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_READ_SOURCE_H
 
+#include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/optional.h"
 
 namespace google {
 namespace cloud {
@@ -46,6 +48,12 @@ namespace internal {
 struct ReadSourceResult {
   std::size_t bytes_received;
   HttpResponse response;
+  HashValues hashes;
+  absl::optional<std::int64_t> generation;
+
+  ReadSourceResult() = default;
+  ReadSourceResult(std::size_t b, HttpResponse r)
+      : bytes_received(std::move(b)), response(std::move(r)) {}
 };
 
 /**

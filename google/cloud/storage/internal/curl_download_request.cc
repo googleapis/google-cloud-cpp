@@ -28,6 +28,34 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
+std::string ExtractHashValue(std::string const& hash_header,
+                             std::string const& hash_key) {
+  auto const pos = hash_header.find(hash_key);
+  if (pos == std::string::npos) return {};
+  auto const start = pos + hash_key.size();
+  auto const end = hash_header.find(',', start);
+  if (end == std::string::npos) {
+    return hash_header.substr(start);
+  }
+  return hash_header.substr(start, end - start);
+}
+
+ReadSourceResult MakeReadResult(std::size_t bytes_received,
+                                HttpResponse response) {
+  auto r = ReadSourceResult{bytes_received, std::move(response)};
+  for (auto const& kv : r.response.headers) {
+    if (!r.generation && kv.first == "x-goog-generation") {
+      r.generation = std::stoll(kv.second);
+    }
+    if (kv.first != "x-goog-hash") continue;
+    HashValues h;
+    h.crc32c = ExtractHashValue(kv.second, "crc32c=");
+    h.md5 = ExtractHashValue(kv.second, "md5=");
+    r.hashes = Merge(std::move(r.hashes), std::move(h));
+  }
+  return r;
+}
+
 extern "C" std::size_t CurlDownloadRequestWrite(char* ptr, size_t size,
                                                 size_t nmemb, void* userdata) {
   auto* request = reinterpret_cast<CurlDownloadRequest*>(userdata);
@@ -113,9 +141,9 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
   // to return it.
   DrainSpillBuffer();
   if (curl_closed_) {
-    return ReadSourceResult{
+    return MakeReadResult(
         buffer_offset_,
-        HttpResponse{http_code_, std::string{}, std::move(received_headers_)}};
+        HttpResponse{http_code_, std::string{}, std::move(received_headers_)});
   }
 
   handle_.SetOption(CURLOPT_WRITEFUNCTION, &CurlDownloadRequestWrite);
@@ -150,14 +178,13 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
     TRACE_STATE() << ", status=" << status
                   << ", http code=" << response.status_code;
     if (!status.ok()) return status;
-    return ReadSourceResult{bytes_read, std::move(response)};
+    return MakeReadResult(bytes_read, std::move(response));
   }
   TRACE_STATE() << ", code=100";
   received_headers_.emplace(":curl-peer", handle_.GetPeer());
-  return ReadSourceResult{
-      bytes_read,
-      HttpResponse{
-          HttpStatusCode::kContinue, {}, std::move(received_headers_)}};
+  return MakeReadResult(bytes_read, HttpResponse{HttpStatusCode::kContinue,
+                                                 {},
+                                                 std::move(received_headers_)});
 }
 
 void CurlDownloadRequest::CleanupHandles() {
