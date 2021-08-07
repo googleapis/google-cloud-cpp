@@ -4,7 +4,7 @@
 
 ## Mocking GCS bucket read and write
 
-It is possible to mock GCS bucket read and write using gmock framework, this is specially ueeful
+It is possible to mock GCS bucket read and write using gmock framework, this is specially useful
 for developer using GCS C++ client library.
 
 ### Mocking Successful call of ReadObject()
