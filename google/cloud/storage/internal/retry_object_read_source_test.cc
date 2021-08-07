@@ -304,10 +304,8 @@ TEST(RetryObjectReadSourceTest, TransientFailureWithGeneration) {
         EXPECT_FALSE(req.HasOption<ReadRange>());
         EXPECT_FALSE(req.HasOption<Generation>());
         auto source = absl::make_unique<MockObjectReadSource>();
-        auto result = ReadSourceResult{
-          static_cast<std::size_t>(1024),
-          HttpResponse{
-            200, "", {}}};
+        auto result = ReadSourceResult{static_cast<std::size_t>(1024),
+                                       HttpResponse{200, "", {}}};
         result.generation = 23456;
         EXPECT_CALL(*source, Read)
             .WillOnce(Return(result))
