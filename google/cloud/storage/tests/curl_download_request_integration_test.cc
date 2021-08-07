@@ -40,6 +40,18 @@ std::string HttpBinEndpoint() {
       .value_or("https://nghttp2.org/httpbin");
 }
 
+Status Make3Attemps(std::function<Status()> const& attempt) {
+  Status status;
+  auto backoff = std::chrono::seconds(1);
+  for (int i = 0; i != 3; ++i) {
+    status = attempt();
+    if (status.ok()) return status;
+    std::this_thread::sleep_for(backoff);
+    backoff *= 2;
+  }
+  return status;
+}
+
 TEST(CurlDownloadRequestTest, SimpleStream) {
   // httpbin can generate up to 100 lines, do not try to download more than
   // that.
@@ -97,13 +109,8 @@ TEST(CurlDownloadRequestTest, HashHeaders) {
     return Status{};
   };
 
-  auto delay = std::chrono::seconds(1);
-  for (int i = 0; i != 3; ++i) {
-    auto status = attempt();
-    if (status.ok()) break;
-    std::this_thread::sleep_for(delay);
-    delay *= 2;
-  }
+  auto status = Make3Attemps(attempt);
+  ASSERT_STATUS_OK(status);
   EXPECT_EQ(hashes.crc32c, "123");
   EXPECT_EQ(hashes.md5, "234");
 }
@@ -130,13 +137,8 @@ TEST(CurlDownloadRequestTest, Generation) {
     return Status{};
   };
 
-  auto delay = std::chrono::seconds(1);
-  for (int i = 0; i != 3; ++i) {
-    auto status = attempt();
-    if (status.ok()) break;
-    std::this_thread::sleep_for(delay);
-    delay *= 2;
-  }
+  auto status = Make3Attemps(attempt);
+  ASSERT_STATUS_OK(status);
   EXPECT_EQ(received_generation.value_or(0), 123456);
 }
 
@@ -170,14 +172,7 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnRead) {
     return Status{};
   };
 
-  auto delay = std::chrono::seconds(1);
-  Status status;
-  for (int i = 0; i != 3; ++i) {
-    status = download();
-    if (status.ok()) break;
-    std::this_thread::sleep_for(delay);
-    delay *= 2;
-  }
+  auto status = Make3Attemps(download);
   ASSERT_STATUS_OK(status);
   EXPECT_EQ(1, factory->CurrentHandleCount());
   EXPECT_EQ(1, factory->CurrentMultiHandleCount());
@@ -215,14 +210,8 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnClose) {
     return Status{};
   };
 
-  auto delay = std::chrono::seconds(1);
-  Status status;
-  for (int i = 0; i != 3; ++i) {
-    status = download();
-    if (status.ok()) break;
-    std::this_thread::sleep_for(delay);
-    delay *= 2;
-  }
+  auto status = Make3Attemps(download);
+  ASSERT_STATUS_OK(status);
   EXPECT_EQ(1, factory->CurrentHandleCount());
   EXPECT_EQ(1, factory->CurrentMultiHandleCount());
   ASSERT_STATUS_OK(status);
@@ -354,15 +343,8 @@ Status AttemptRegression7051() {
 
 /// @test Prevent regressions of #7051: re-using a stream after a partial read.
 TEST(CurlDownloadRequestTest, Regression7051) {
-  auto delay = std::chrono::seconds(1);
-  auto status = Status{};
-  for (int i = 0; i != 3; ++i) {
-    status = AttemptRegression7051();
-    if (status.ok()) break;
-    std::this_thread::sleep_for(delay);
-    delay *= 2;
-  }
-  EXPECT_THAT(status, IsOk());
+  auto status = Make3Attemps(AttemptRegression7051);
+  ASSERT_STATUS_OK(status);
 }
 
 TEST(CurlDownloadRequestTest, HttpVersion) {
