@@ -29,6 +29,7 @@ namespace {
 
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::IsOk;
+using ::testing::Contains;
 using ::testing::IsSupersetOf;
 
 class ObjectReadHeadersIntegrationTest
@@ -77,14 +78,13 @@ TEST_F(ObjectReadHeadersIntegrationTest, SmokeTest) {
     return keys;
   };
   if (UsingGrpc()) {
-    EXPECT_THAT(keys(is.headers()),
-                IsSupersetOf({":grpc-context-peer", "x-goog-hash"}));
+    EXPECT_THAT(keys(is.headers()), Contains(":grpc-context-peer"));
   } else if (UsingEmulator()) {
-    EXPECT_THAT(keys(is.headers()), IsSupersetOf({"x-goog-hash"}));
+    EXPECT_THAT(keys(is.headers()), Contains("x-goog-hash"));
   } else {
     EXPECT_THAT(keys(is.headers()),
                 IsSupersetOf({"x-guploader-uploadid", "x-goog-hash",
-                              "x-goog-generation"}));
+                              "x-goog-generation", ":curl-peer"}));
   }
 }
 
