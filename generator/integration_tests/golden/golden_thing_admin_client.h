@@ -48,8 +48,8 @@ class GoldenThingAdminClient {
   // @name Copy and move support
   GoldenThingAdminClient(GoldenThingAdminClient const&) = default;
   GoldenThingAdminClient& operator=(GoldenThingAdminClient const&) = default;
-  GoldenThingAdminClient(GoldenThingAdminClient&&) noexcept = default;
-  GoldenThingAdminClient& operator=(GoldenThingAdminClient&&) noexcept = default;
+  GoldenThingAdminClient(GoldenThingAdminClient&&) = default;
+  GoldenThingAdminClient& operator=(GoldenThingAdminClient&&) = default;
   //@}
 
   //@{

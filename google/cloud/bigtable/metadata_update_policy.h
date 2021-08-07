@@ -86,7 +86,7 @@ class MetadataUpdatePolicy {
   MetadataUpdatePolicy(std::string const& resource_name,
                        MetadataParamTypes const& metadata_param_type);
 
-  MetadataUpdatePolicy(MetadataUpdatePolicy&&) noexcept = default;
+  MetadataUpdatePolicy(MetadataUpdatePolicy&&) = default;
   MetadataUpdatePolicy& operator=(MetadataUpdatePolicy&&) = default;
   MetadataUpdatePolicy(MetadataUpdatePolicy const&) = default;
   MetadataUpdatePolicy& operator=(MetadataUpdatePolicy const&) = default;

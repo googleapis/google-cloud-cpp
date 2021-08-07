@@ -103,8 +103,8 @@ class Publisher {
   //@{
   Publisher(Publisher const&) = default;
   Publisher& operator=(Publisher const&) = default;
-  Publisher(Publisher&&) noexcept = default;
-  Publisher& operator=(Publisher&&) noexcept = default;
+  Publisher(Publisher&&) = default;
+  Publisher& operator=(Publisher&&) = default;
   //@}
 
   //@{

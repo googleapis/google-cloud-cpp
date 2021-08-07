@@ -52,8 +52,8 @@ class GoldenKitchenSinkClient {
   // @name Copy and move support
   GoldenKitchenSinkClient(GoldenKitchenSinkClient const&) = default;
   GoldenKitchenSinkClient& operator=(GoldenKitchenSinkClient const&) = default;
-  GoldenKitchenSinkClient(GoldenKitchenSinkClient&&) noexcept = default;
-  GoldenKitchenSinkClient& operator=(GoldenKitchenSinkClient&&) noexcept = default;
+  GoldenKitchenSinkClient(GoldenKitchenSinkClient&&) = default;
+  GoldenKitchenSinkClient& operator=(GoldenKitchenSinkClient&&) = default;
   //@}
 
   //@{

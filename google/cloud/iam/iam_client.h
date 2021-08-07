@@ -60,8 +60,8 @@ class IAMClient {
   // @name Copy and move support
   IAMClient(IAMClient const&) = default;
   IAMClient& operator=(IAMClient const&) = default;
-  IAMClient(IAMClient&&) noexcept = default;
-  IAMClient& operator=(IAMClient&&) noexcept = default;
+  IAMClient(IAMClient&&) = default;
+  IAMClient& operator=(IAMClient&&) = default;
   //@}
 
   //@{

@@ -143,8 +143,8 @@ class GcRule {
 
   //@{
   /// @name Use default constructors and assignments.
-  GcRule(GcRule&&) noexcept = default;
-  GcRule& operator=(GcRule&&) noexcept = default;
+  GcRule(GcRule&&) = default;
+  GcRule& operator=(GcRule&&) = default;
   GcRule(GcRule const&) = default;
   GcRule& operator=(GcRule const&) = default;
   //@}
@@ -207,9 +207,8 @@ class ColumnFamilyModification {
 
   //@{
   /// @name Use default constructors and assignments.
-  ColumnFamilyModification(ColumnFamilyModification&&) noexcept = default;
-  ColumnFamilyModification& operator=(ColumnFamilyModification&&) noexcept =
-      default;
+  ColumnFamilyModification(ColumnFamilyModification&&) = default;
+  ColumnFamilyModification& operator=(ColumnFamilyModification&&) = default;
   ColumnFamilyModification(ColumnFamilyModification const&) = default;
   ColumnFamilyModification& operator=(ColumnFamilyModification const&) =
       default;

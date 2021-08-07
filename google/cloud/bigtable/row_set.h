@@ -33,8 +33,8 @@ class RowSet {
   /// Create an empty set.
   RowSet() = default;
 
-  RowSet(RowSet&&) noexcept = default;
-  RowSet& operator=(RowSet&&) noexcept = default;
+  RowSet(RowSet&&) = default;
+  RowSet& operator=(RowSet&&) = default;
   RowSet(RowSet const&) = default;
   RowSet& operator=(RowSet const&) = default;
 
