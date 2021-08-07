@@ -40,7 +40,7 @@ std::string HttpBinEndpoint() {
       .value_or("https://nghttp2.org/httpbin");
 }
 
-Status Make3Attemps(std::function<Status()> const& attempt) {
+Status Make3Attempts(std::function<Status()> const& attempt) {
   Status status;
   auto backoff = std::chrono::seconds(1);
   for (int i = 0; i != 3; ++i) {
@@ -109,7 +109,7 @@ TEST(CurlDownloadRequestTest, HashHeaders) {
     return Status{};
   };
 
-  auto status = Make3Attemps(attempt);
+  auto status = Make3Attempts(attempt);
   ASSERT_STATUS_OK(status);
   EXPECT_EQ(hashes.crc32c, "123");
   EXPECT_EQ(hashes.md5, "234");
@@ -137,7 +137,7 @@ TEST(CurlDownloadRequestTest, Generation) {
     return Status{};
   };
 
-  auto status = Make3Attemps(attempt);
+  auto status = Make3Attempts(attempt);
   ASSERT_STATUS_OK(status);
   EXPECT_EQ(received_generation.value_or(0), 123456);
 }
@@ -172,7 +172,7 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnRead) {
     return Status{};
   };
 
-  auto status = Make3Attemps(download);
+  auto status = Make3Attempts(download);
   ASSERT_STATUS_OK(status);
   EXPECT_EQ(1, factory->CurrentHandleCount());
   EXPECT_EQ(1, factory->CurrentMultiHandleCount());
@@ -210,7 +210,7 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnClose) {
     return Status{};
   };
 
-  auto status = Make3Attemps(download);
+  auto status = Make3Attempts(download);
   ASSERT_STATUS_OK(status);
   EXPECT_EQ(1, factory->CurrentHandleCount());
   EXPECT_EQ(1, factory->CurrentMultiHandleCount());
@@ -343,7 +343,7 @@ Status AttemptRegression7051() {
 
 /// @test Prevent regressions of #7051: re-using a stream after a partial read.
 TEST(CurlDownloadRequestTest, Regression7051) {
-  auto status = Make3Attemps(AttemptRegression7051);
+  auto status = Make3Attempts(AttemptRegression7051);
   ASSERT_STATUS_OK(status);
 }
 
