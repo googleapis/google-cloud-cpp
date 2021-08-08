@@ -83,6 +83,28 @@ using ::testing::Unused;
 
 namespace spanner_proto = ::google::spanner::v1;
 
+// A simple protobuf builder.
+template <typename T>
+class ProtoBuilder {
+ public:
+  template <typename ArgT0, typename... ArgT>
+  ProtoBuilder&& Set(void (T::*set)(ArgT0&&, ArgT&&...), ArgT0&& v,
+                     ArgT&&... args) && {
+    (t_.*set)(std::forward<ArgT0>(v), std::forward<ArgT>(args)...);
+    return std::move(*this);
+  }
+  template <typename ArgT>
+  ProtoBuilder&& Set(void (T::*set)(ArgT), ArgT v) && {
+    (t_.*set)(std::move(v));
+    return std::move(*this);
+  }
+
+  T Build() && { return std::move(t_); }
+
+ private:
+  T t_;
+};
+
 // Matchers for mock calls.
 MATCHER_P(HasSession, session, "request has expected session name") {
   return arg.session() == session;
@@ -706,88 +728,132 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
   EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "00FEDCBA"));
 }
 
+/**
+ * @test Verify that the protos sent by the 9 Connection::* methods affected
+ * by QueryOptions contain the expected fields.
+ */
 TEST(ConnectionImplTest, QueryOptions) {
-  auto constexpr kQueryOptionsProp =
-      &spanner_proto::ExecuteSqlRequest::query_options;
-  auto constexpr kRequestOptionsProp =
-      &spanner_proto::ExecuteSqlRequest::request_options;
-
-  // Helper functions to build QueryOptions/RequestOptions protos inline.
-  auto const make_qo_proto = [](absl::optional<std::string> version,
-                                absl::optional<std::string> stats) {
-    spanner_proto::ExecuteSqlRequest::QueryOptions proto;
-    if (version) proto.set_optimizer_version(*version);
-    if (stats) proto.set_optimizer_statistics_package(*stats);
-    return proto;
-  };
-  auto const make_ro_proto =
-      [](absl::optional<spanner_proto::RequestOptions::Priority> priority) {
-        spanner_proto::RequestOptions proto;
-        if (priority) proto.set_priority(*priority);
-        return proto;
-      };
-
   struct {
-    // Given this for SqlParams::query_options ...
+    // Given these QueryOptions ...
     spanner::QueryOptions options;
-
-    // ... expect these for ExecuteSqlRequest query_options/request_options.
+    // ... expect these protos.
     spanner_proto::ExecuteSqlRequest::QueryOptions qo_proto;
     spanner_proto::RequestOptions ro_proto;
   } test_cases[] = {
       // Default options.
-      {spanner::QueryOptions(),  //
-       make_qo_proto(absl::nullopt, absl::nullopt),
-       make_ro_proto(absl::nullopt)},
+      {spanner::QueryOptions(),
+       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>().Build(),
+       ProtoBuilder<spanner_proto::RequestOptions>().Build()},
 
       // Optimizer version alone.
       {spanner::QueryOptions().set_optimizer_version(""),
-       make_qo_proto("", absl::nullopt),  //
-       make_ro_proto(absl::nullopt)},
+       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>()
+           .Set(&spanner_proto::ExecuteSqlRequest::QueryOptions::
+                    set_optimizer_version,
+                "")
+           .Build(),
+       ProtoBuilder<spanner_proto::RequestOptions>().Build()},
       {spanner::QueryOptions().set_optimizer_version("some-version"),
-       make_qo_proto("some-version", absl::nullopt),
-       make_ro_proto(absl::nullopt)},
+       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>()
+           .Set(&spanner_proto::ExecuteSqlRequest::QueryOptions::
+                    set_optimizer_version,
+                "some-version")
+           .Build(),
+       ProtoBuilder<spanner_proto::RequestOptions>().Build()},
 
       // Optimizer stats package alone.
       {spanner::QueryOptions().set_optimizer_statistics_package(""),
-       make_qo_proto(absl::nullopt, ""),  //
-       make_ro_proto(absl::nullopt)},
+       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>()
+           .Set(&spanner_proto::ExecuteSqlRequest::QueryOptions::
+                    set_optimizer_statistics_package,
+                "")
+           .Build(),
+       ProtoBuilder<spanner_proto::RequestOptions>().Build()},
       {spanner::QueryOptions().set_optimizer_statistics_package("some-stats"),
-       make_qo_proto(absl::nullopt, "some-stats"),
-       make_ro_proto(absl::nullopt)},
+       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>()
+           .Set(&spanner_proto::ExecuteSqlRequest::QueryOptions::
+                    set_optimizer_statistics_package,
+                "some-stats")
+           .Build(),
+       ProtoBuilder<spanner_proto::RequestOptions>().Build()},
 
       // Request priority alone.
       {spanner::QueryOptions().set_request_priority(
            spanner::RequestPriority::kLow),
-       make_qo_proto(absl::nullopt, absl::nullopt),
-       make_ro_proto(spanner_proto::RequestOptions::PRIORITY_LOW)},
+       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>().Build(),
+       ProtoBuilder<spanner_proto::RequestOptions>()
+           .Set(&spanner_proto::RequestOptions::set_priority,
+                spanner_proto::RequestOptions::PRIORITY_LOW)
+           .Build()},
       {spanner::QueryOptions().set_request_priority(
            spanner::RequestPriority::kHigh),
-       make_qo_proto(absl::nullopt, absl::nullopt),
-       make_ro_proto(spanner_proto::RequestOptions::PRIORITY_HIGH)},
+       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>().Build(),
+       ProtoBuilder<spanner_proto::RequestOptions>()
+           .Set(&spanner_proto::RequestOptions::set_priority,
+                spanner_proto::RequestOptions::PRIORITY_HIGH)
+           .Build()},
 
       // All options together.
       {spanner::QueryOptions()
            .set_optimizer_version("")
            .set_optimizer_statistics_package("")
            .set_request_priority(spanner::RequestPriority::kMedium),
-       make_qo_proto("", ""),
-       make_ro_proto(spanner_proto::RequestOptions::PRIORITY_MEDIUM)},
+       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>()
+           .Set(&spanner_proto::ExecuteSqlRequest::QueryOptions::
+                    set_optimizer_version,
+                "")
+           .Set(&spanner_proto::ExecuteSqlRequest::QueryOptions::
+                    set_optimizer_statistics_package,
+                "")
+           .Build(),
+       ProtoBuilder<spanner_proto::RequestOptions>()
+           .Set(&spanner_proto::RequestOptions::set_priority,
+                spanner_proto::RequestOptions::PRIORITY_MEDIUM)
+           .Build()},
       {spanner::QueryOptions()
            .set_optimizer_version("some-version")
            .set_optimizer_statistics_package("some-stats")
            .set_request_priority(spanner::RequestPriority::kLow),
-       make_qo_proto("some-version", "some-stats"),
-       make_ro_proto(spanner_proto::RequestOptions::PRIORITY_LOW)},
+       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>()
+           .Set(&spanner_proto::ExecuteSqlRequest::QueryOptions::
+                    set_optimizer_version,
+                "some-version")
+           .Set(&spanner_proto::ExecuteSqlRequest::QueryOptions::
+                    set_optimizer_statistics_package,
+                "some-stats")
+           .Build(),
+       ProtoBuilder<spanner_proto::RequestOptions>()
+           .Set(&spanner_proto::RequestOptions::set_priority,
+                spanner_proto::RequestOptions::PRIORITY_LOW)
+           .Build()},
   };
 
-  auto db = spanner::Database("placeholder_project", "placeholder_instance",
-                              "placeholder_database_id");
   for (auto const& tc : test_cases) {
+    auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                                "placeholder_database_id");
     auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
-    EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
-        .WillOnce(Return(MakeSessionsResponse({"session-name"})));
     auto conn = MakeConnectionImpl(db, {mock});
+    auto txn = MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
+
+    auto sql_params = spanner::Connection::SqlParams{
+        txn, spanner::SqlStatement{}, tc.options};
+    auto execute_partitioned_dml_params =
+        spanner::Connection::ExecutePartitionedDmlParams{
+            spanner::SqlStatement{}, tc.options};
+    auto execute_batch_dml_params =
+        spanner::Connection::ExecuteBatchDmlParams{txn, {}, Options{}};
+    if (tc.options.request_priority().has_value()) {
+      execute_batch_dml_params.options.set<spanner::RequestPriorityOption>(
+          *tc.options.request_priority());
+    }
+    spanner::ReadOptions read_options;
+    read_options.request_priority = tc.options.request_priority();
+    auto read_params = spanner::Connection::ReadParams{
+        txn, "table", spanner::KeySet::All(), {}, read_options, absl::nullopt};
+    auto commit_params = spanner::Connection::CommitParams{
+        txn, spanner::Mutations{},
+        spanner::CommitOptions{}.set_request_priority(
+            tc.options.request_priority())};
 
     // We wrap MockGrpcReader in NiceMock, because we don't really care how
     // it's called in this test (aside from needing to return a transaction in
@@ -801,23 +867,84 @@ TEST(ConnectionImplTest, QueryOptions) {
     EXPECT_CALL(*grpc_reader, Read)
         .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)));
 
-    // Calls the 5 Connection::* methods that take SqlParams and ensures that
-    // the protos being sent contain the expected options.
-    auto params = spanner::Connection::SqlParams{
-        MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions()),
-        spanner::SqlStatement{}, tc.options};
-    auto m = AllOf(Property(kQueryOptionsProp, IsProtoEqual(tc.qo_proto)),
-                   Property(kRequestOptionsProp, IsProtoEqual(tc.ro_proto)));
-    EXPECT_CALL(*mock, ExecuteStreamingSql(_, m))
-        .WillOnce(Return(ByMove(std::move(grpc_reader))))
-        .WillOnce(
-            Return(ByMove(absl::make_unique<NiceMock<MockGrpcReader>>())));
-    (void)conn->ExecuteQuery(params);
-    (void)conn->ProfileQuery(params);
-    EXPECT_CALL(*mock, ExecuteSql(_, m)).Times(3);
-    (void)conn->ExecuteDml(params);
-    (void)conn->ProfileDml(params);
-    (void)conn->AnalyzeSql(params);
+    {
+      InSequence seq;
+
+      auto execute_sql_request_matcher =
+          AllOf(Property(&spanner_proto::ExecuteSqlRequest::query_options,
+                         IsProtoEqual(tc.qo_proto)),
+                Property(&spanner_proto::ExecuteSqlRequest::request_options,
+                         IsProtoEqual(tc.ro_proto)));
+      auto begin_transaction_request_matcher =
+          Property(&spanner_proto::BeginTransactionRequest::request_options,
+                   IsProtoEqual(spanner_proto::RequestOptions{}));
+      auto execute_batch_dml_request_matcher =
+          Property(&spanner_proto::ExecuteBatchDmlRequest::request_options,
+                   IsProtoEqual(tc.ro_proto));
+      auto read_request_matcher =
+          Property(&spanner_proto::ReadRequest::request_options,
+                   IsProtoEqual(tc.ro_proto));
+      auto commit_request_matcher =
+          Property(&spanner_proto::CommitRequest::request_options,
+                   IsProtoEqual(tc.ro_proto));
+
+      // ExecuteQuery().
+      EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+          .WillOnce(Return(MakeSessionsResponse({"session-name"})))
+          .RetiresOnSaturation();
+      EXPECT_CALL(*mock, ExecuteStreamingSql(_, execute_sql_request_matcher))
+          .WillOnce(Return(ByMove(std::move(grpc_reader))))
+          .RetiresOnSaturation();
+
+      // ProfileQuery().
+      EXPECT_CALL(*mock, ExecuteStreamingSql(_, execute_sql_request_matcher))
+          .WillOnce(
+              Return(ByMove(absl::make_unique<NiceMock<MockGrpcReader>>())))
+          .RetiresOnSaturation();
+
+      // ExecutePartitionedDml().
+      EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+          .WillOnce(Return(MakeSessionsResponse({"session-name"})))
+          .RetiresOnSaturation();
+      EXPECT_CALL(*mock, BeginTransaction(_, begin_transaction_request_matcher))
+          .WillOnce(Return(MakeTestTransaction()))
+          .RetiresOnSaturation();
+      EXPECT_CALL(*mock, ExecuteStreamingSql(_, execute_sql_request_matcher))
+          .WillOnce(
+              Return(ByMove(absl::make_unique<NiceMock<MockGrpcReader>>())))
+          .RetiresOnSaturation();
+
+      // ExecuteDml(), ProfileDml(), AnalyzeSql().
+      EXPECT_CALL(*mock, ExecuteSql(_, execute_sql_request_matcher))
+          .Times(3)
+          .RetiresOnSaturation();
+
+      // ExecuteBatchDml().
+      EXPECT_CALL(*mock, ExecuteBatchDml(_, execute_batch_dml_request_matcher))
+          .Times(1)
+          .RetiresOnSaturation();
+
+      // Read().
+      EXPECT_CALL(*mock, StreamingRead(_, read_request_matcher))
+          .WillOnce(
+              Return(ByMove(absl::make_unique<NiceMock<MockGrpcReader>>())))
+          .RetiresOnSaturation();
+
+      // Commit().
+      EXPECT_CALL(*mock, Commit(_, commit_request_matcher))
+          .Times(1)
+          .RetiresOnSaturation();
+    }
+
+    (void)conn->ExecuteQuery(sql_params);
+    (void)conn->ProfileQuery(sql_params);
+    (void)conn->ExecutePartitionedDml(execute_partitioned_dml_params);
+    (void)conn->ExecuteDml(sql_params);
+    (void)conn->ProfileDml(sql_params);
+    (void)conn->AnalyzeSql(sql_params);
+    (void)conn->ExecuteBatchDml(execute_batch_dml_params);
+    (void)conn->Read(read_params);
+    (void)conn->Commit(commit_params);
   }
 }
 
