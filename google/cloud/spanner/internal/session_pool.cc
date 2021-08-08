@@ -448,7 +448,10 @@ future<StatusOr<spanner_proto::ResultSet>> SessionPool::AsyncRefreshSession(
     std::string session_name) {
   spanner_proto::ExecuteSqlRequest request;
   request.set_session(std::move(session_name));
+  // Single-use transaction with strong concurrency.
   request.set_sql("SELECT 1;");
+  request.mutable_request_options()->set_priority(
+      spanner_proto::RequestOptions::PRIORITY_LOW);
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
       cq, __func__, retry_policy_prototype_->clone(),
       backoff_policy_prototype_->clone(), Idempotency::kIdempotent,
