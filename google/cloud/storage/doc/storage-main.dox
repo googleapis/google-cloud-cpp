@@ -189,6 +189,9 @@ good places to continue learning about the library.
 
 @ref storage-mocking "Example for mocking GCS C++ Client"
 
+<!-- @ref storage-grpc "Using the GCS+gRPC plugin" -->
+
+
 [Client]: @ref google::cloud::storage::v1::Client
 [ReadObject]: @ref google::cloud::storage::v1::Client::ReadObject()
 [WriteObject]: @ref google::cloud::storage::v1::Client::WriteObject()

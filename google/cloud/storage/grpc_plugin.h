@@ -66,6 +66,8 @@ struct GrpcPluginOption {
  *
  * @warning this is an experimental feature, and subject to change without
  *     notice.
+ *
+ * @par Example storage_grpc_samples.cc grpc-read-write
  */
 google::cloud::storage::Client DefaultGrpcClient(Options opts = {});
 

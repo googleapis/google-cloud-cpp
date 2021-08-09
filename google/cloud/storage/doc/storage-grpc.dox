@@ -1,0 +1,58 @@
+/*!
+
+@page storage-grpc Using the GCS+gRPC Plugin
+
+The GCS C++ client library includes an optional plugin to access GCS via gRPC.
+When using GCS from Google Compute Engine (GCE) this plugin can enable higher
+total throughput across large workloads that run on hundreds or thousands of
+VMs.  Note that this feature is not GA, consult with with account manager to
+be included in the early access.
+
+## Required code changes
+
+To use GCS+gRPC plugin you need to make some changes to how your application
+initializes the GCS C++ client library. First, an additional header provides
+the initialization functions:
+
+@snippet storage_grpc_samples.cc grpc-includes
+
+Then you initialize a `google::cloud::storage::Client` using a new function:
+
+@snippet storage_grpc_samples.cc grpc-default-client
+
+The `google::cloud::storage::Client` object returned by this function can be
+used as before:
+
+@snippet storage_grpc_samples.cc grpc-read-write
+
+## Changing your build scripts
+
+If you are using CMake to compile your application, then you need to change the
+`target_link_libraries()` command to use
+`google-cloud-cpp::%experimental-storage-grpc` instead
+of `google-cloud-cpp::%storage`. For example, our quickstart program for gRPC
+uses:
+
+```{.cmake}
+add_executable(quickstart_grpc quickstart_grpc.cc)
+target_link_libraries(quickstart_grpc google-cloud-cpp::experimental-storage-grpc)
+```
+
+If you are using Bazel to compile your application, then you need to change
+the dependencies from `@com_github_googleapis_google_cloud_cpp//:storage`
+to `@com_github_googleapis_google_cloud_cpp//:experimental-storage-grpc`.
+For example, our `grpc/quickstart uses:
+
+```{.py}
+cc_binary(
+    name = "quickstart_grpc",
+    srcs = [
+        "quickstart_grpc.cc",
+    ],
+    deps = [
+        "@com_github_googleapis_google_cloud_cpp//:experimental-storage-grpc",
+    ],
+)
+```
+
+*/

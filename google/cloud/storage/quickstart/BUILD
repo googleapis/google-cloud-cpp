@@ -25,3 +25,13 @@ cc_binary(
         "@com_github_googleapis_google_cloud_cpp//:storage",
     ],
 )
+
+cc_binary(
+    name = "quickstart_grpc",
+    srcs = [
+        "quickstart_grpc.cc",
+    ],
+    deps = [
+        "@com_github_googleapis_google_cloud_cpp//:experimental-storage-grpc",
+    ],
+)

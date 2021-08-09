@@ -48,12 +48,6 @@ function quickstart::build_cmake_and_make() {
   done
 }
 
-function quickstart::build_gcs_grpc_quickstart() {
-  local prefix="$1"
-  io::log_h2 "Building quickstart for GCS+gRPC"
-  quickstart::build_one_quickstart "${prefix}" "google/cloud/storage/quickstart/grpc" "gcs-grpc"
-}
-
 function quickstart::build_one_quickstart() {
   local prefix="$1"
   local src_dir="$2"
@@ -89,13 +83,23 @@ function quickstart::run_cmake_and_make() {
     mapfile -t run_args < <(quickstart::arguments "${lib}")
     quickstart::run_one_quickstart "${prefix}" "${lib}" "${run_args[@]}"
   done
+  quickstart::run_gcs_grpc_quickstart "${prefix}"
 }
 
 function quickstart::run_gcs_grpc_quickstart() {
   local prefix="$1"
   mapfile -t run_args < <(quickstart::arguments "storage")
   io::log_h2 "Running quickstart for GCS+gRPC"
-  quickstart::run_one_quickstart "${prefix}" "gcs-grpc" "${run_args[@]}"
+
+  io::log "[ CMake ]"
+  local cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-cmake-storage"
+  "${cmake_bin_dir}/quickstart_grpc" "${run_args[@]}"
+
+  echo
+  io::log "[ Make ]"
+  local makefile_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-makefile-storage"
+  LD_LIBRARY_PATH="${prefix}/lib64:${prefix}/lib:${LD_LIBRARY_PATH:-}" \
+    "${makefile_bin_dir}/quickstart_grpc" "${run_args[@]}"
 }
 
 function quickstart::run_one_quickstart() {
