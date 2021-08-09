@@ -85,11 +85,7 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
   auto const ordering_key = std::string{};
   auto publisher = BatchingPublisherConnection::Create(
-      topic,
-      pubsub::PublisherOptions{}
-          .set_maximum_batch_message_count(4)
-          .set_maximum_hold_time(std::chrono::milliseconds(50)),
-      ordering_key, mock, background.cq());
+      topic, pubsub::PublisherOptions{}, ordering_key, mock, background.cq());
 
   // We expect the responses to be satisfied in the context of the completion
   // queue threads. This is an important property, the processing of any
