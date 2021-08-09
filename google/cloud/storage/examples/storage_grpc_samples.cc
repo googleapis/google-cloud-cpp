@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/examples/storage_examples_common.h"
+//! [grpc-includes]
 #include "google/cloud/storage/grpc_plugin.h"
+//! [grpc-includes]
 #include "google/cloud/internal/getenv.h"
 
 namespace {

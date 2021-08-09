@@ -22,7 +22,7 @@ CXXFLAGS=-std=c++11
 CXXLD=$(CXX)
 BIN=.
 
-all: $(BIN)/quickstart
+all: $(BIN)/quickstart $(BIN)/quickstart_grpc
 
 # Configuration variables to compile and link against the Google Cloud Storage
 # C++ client library.
@@ -34,3 +34,11 @@ GCS_LIBS       := $(shell pkg-config $(GCS_DEPS) --libs-only-l)
 # A target using the Google Cloud Storage C++ client library.
 $(BIN)/quickstart: quickstart.cc
 	$(CXXLD) $(CXXFLAGS) $(GCS_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(GCS_LIBS)
+
+GCS_GRPC_DEPS := google_cloud_cpp_storage_grpc
+GCS_GRPC_CXXFLAGS   := $(shell pkg-config $(GCS_GRPC_DEPS) --cflags)
+GCS_GRPC_CXXLDFLAGS := $(shell pkg-config $(GCS_GRPC_DEPS) --libs-only-L)
+GCS_GRPC_LIBS       := $(shell pkg-config $(GCS_GRPC_DEPS) --libs-only-l)
+
+$(BIN)/quickstart_grpc: quickstart_grpc.cc
+	$(CXXLD) $(CXXFLAGS) $(GCS_GRPC_CXXFLAGS) $(GCS_GRPC_CXXLDFLAGS) -o $@ $^ $(GCS_GRPC_LIBS)

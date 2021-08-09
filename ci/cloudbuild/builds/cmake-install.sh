@@ -30,6 +30,7 @@ readonly INSTALL_PREFIX
 # Compiles and installs all libraries and headers.
 cmake -GNinja \
   -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
   -S . -B cmake-out
