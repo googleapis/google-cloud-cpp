@@ -30,7 +30,6 @@ readonly INSTALL_PREFIX
 # Compiles and installs all libraries and headers.
 cmake -GNinja \
   -DBUILD_TESTING=OFF \
-  -DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
   -S . -B cmake-out
@@ -160,15 +159,12 @@ done
 
 # Tests the installed artifacts by building and running the quickstarts.
 quickstart::build_cmake_and_make "${INSTALL_PREFIX}"
-quickstart::build_gcs_grpc_quickstart "${INSTALL_PREFIX}" "${PROJECT_ROOT}/google/cloud/storage/quickstart" "storage"
 quickstart::run_cmake_and_make "${INSTALL_PREFIX}"
-quickstart::run_gcs_grpc_quickstart "${INSTALL_PREFIX}"
 
 # Deletes all the installed artifacts, and installs only the runtime components
 # to verify that we can still execute the compiled quickstart programs.
 rm -rf "${INSTALL_PREFIX:?}"/{include,lib64}
 cmake --install cmake-out --component google_cloud_cpp_runtime
 quickstart::run_cmake_and_make "${INSTALL_PREFIX}"
-quickstart::run_gcs_grpc_quickstart "${INSTALL_PREFIX}"
 
 exit "${exit_code}"
