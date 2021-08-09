@@ -48,6 +48,24 @@ function quickstart::build_cmake_and_make() {
   done
 }
 
+function quickstart::build_gcs_grpc_quickstart() {
+  local prefix="$1"
+  local src_dir="$2"
+  local bin_dir_suffix="$3"
+
+  io::log "[ CMake ]"
+  local cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-cmake-${bin_dir_suffix}"
+  cmake -H"${src_dir}" -B"${cmake_bin_dir}" "-DCMAKE_PREFIX_PATH=${prefix}"
+  cmake --build "${cmake_bin_dir}" --target quickstart_grpc
+
+  echo
+  io::log "[ Make ]"
+  local makefile_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-makefile-${bin_dir_suffix}"
+  mkdir -p "${makefile_bin_dir}"
+  PKG_CONFIG_PATH="${prefix}/lib64/pkgconfig:${prefix}/lib/pkgconfig:${PKG_CONFIG_PATH:-}" \
+    make -C "${src_dir}" BIN="${makefile_bin_dir}" "${makefile_bin_dir}/quickstart_grpc"
+}
+
 function quickstart::build_one_quickstart() {
   local prefix="$1"
   local src_dir="$2"
@@ -83,7 +101,6 @@ function quickstart::run_cmake_and_make() {
     mapfile -t run_args < <(quickstart::arguments "${lib}")
     quickstart::run_one_quickstart "${prefix}" "${lib}" "${run_args[@]}"
   done
-  quickstart::run_gcs_grpc_quickstart "${prefix}"
 }
 
 function quickstart::run_gcs_grpc_quickstart() {
