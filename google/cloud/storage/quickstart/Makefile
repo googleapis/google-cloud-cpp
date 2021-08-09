@@ -22,7 +22,7 @@ CXXFLAGS=-std=c++11
 CXXLD=$(CXX)
 BIN=.
 
-all: $(BIN)/quickstart $(BIN)/quickstart_grpc
+all: $(BIN)/quickstart
 
 # Configuration variables to compile and link against the Google Cloud Storage
 # C++ client library.
