@@ -239,14 +239,10 @@ class StatusOr final {
   /**
    * @name Status accessors.
    *
-   * @return All these member functions return the (properly ref and
-   *     const-qualified) status. If the object contains a value then
-   *     `status().ok() == true`.
+   * @return A reference to the contained `Status`.
    */
-  Status& status() & { return status_; }
   Status const& status() const& { return status_; }
   Status&& status() && { return std::move(status_); }
-  Status const&& status() const&& { return std::move(status_); }
   //@}
 
  private:

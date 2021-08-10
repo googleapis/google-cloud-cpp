@@ -54,6 +54,16 @@
 
 ## v1.31.0 - TBD
 
+## [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
+
+**BREAKING CHANGES**:
+
+* `google::cloud::StatusOr<T>` had an accessor that returned an lvalue
+  reference to non-const `Status`, which could allow callers to modify the
+  contained `Status` and thus break invariants of the `StatusOr` class. This
+  function was removed. If your code previously relied on `sor.status() =
+  new_status` you should change it to `sor = new_status`.
+
 ## v1.30.0 - 2021-08
 
 ### New GA Libraries
