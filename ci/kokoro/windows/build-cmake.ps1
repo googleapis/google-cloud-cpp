@@ -106,8 +106,7 @@ if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "
 
 function Integration-Tests-Enabled {
     if ((Test-Path env:KOKORO_GFILE_DIR) -and
-        (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json") -and
-        (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.p12")) {
+        (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")) {
         return $True
     }
     return $False
@@ -136,7 +135,6 @@ if (Integration-Tests-Enabled) {
     ${env:GOOGLE_APPLICATION_CREDENTIALS}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
     ${env:GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES}="yes"
     ${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
-    ${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.p12"
     ${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_ROOTS_PEM}="${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
     ${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE}="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
     ${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME}="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
