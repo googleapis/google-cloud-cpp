@@ -69,11 +69,6 @@ set_target_properties(
     PROPERTIES EXPORT_NAME google-cloud-cpp::bigquery VERSION
                                                       "${PROJECT_VERSION}"
                SOVERSION "${PROJECT_VERSION_MAJOR}")
-set_target_properties(
-    google_cloud_cpp_bigquery
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-bigquery
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_bigquery
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
