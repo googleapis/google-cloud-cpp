@@ -3106,7 +3106,7 @@ void QueryInformationSchemaDatabaseOptions(
       if (!row) throw std::runtime_error(row.status().message());
       std::cout << std::get<0>(*row) << "=" << std::get<1>(*row) << "\n";
     }
-  }  // namespace =::google::cloud::spanner;
+  }
   {
     auto rows = client.ExecuteQuery(spanner::SqlStatement(R"""(
         SELECT s.OPTION_NAME, s.OPTION_VALUE
