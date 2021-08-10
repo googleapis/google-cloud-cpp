@@ -19,6 +19,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
+#include "absl/types/variant.h"
 #include <type_traits>
 #include <utility>
 
@@ -108,20 +109,19 @@ class StatusOr final {
   StatusOr& operator=(StatusOr&&) = default;
 
   /**
-   * Creates a new `StatusOr<T>` holding the error condition @p rhs.
+   * Creates a new `StatusOr<T>` holding the error condition @p status.
    *
    * @par Post-conditions
-   * `ok() == false` and `status() == rhs`.
+   * `ok() == false` and `status() == status`.
    *
-   * @param rhs the status to initialize the object.
-   * @throws std::invalid_argument if `rhs.ok()`. If exceptions are disabled the
-   *     program terminates via `google::cloud::Terminate()`
+   * @param status the status to initialize the object.
+   * @throws std::invalid_argument if `status.ok()`. If exceptions are disabled
+   * the program terminates via `google::cloud::Terminate()`
    */
   // NOLINTNEXTLINE(google-explicit-constructor)
-  StatusOr(Status rhs) : status_(std::move(rhs)) {
-    if (status_.ok()) {
+  StatusOr(Status status) : v_(std::move(status)) {
+    if (absl::get<Status>(v_).ok())
       google::cloud::internal::ThrowInvalidArgument(__func__);
-    }
   }
 
   /**
@@ -145,30 +145,29 @@ class StatusOr final {
   typename std::enable_if<  // NOLINT(misc-unconventional-assign-operator)
       !std::is_same<StatusOr, typename std::decay<U>::type>::value,
       StatusOr>::type&
-  operator=(U&& rhs) {
-    status_ = Status();
-    value_ = std::forward<U>(rhs);
+  operator=(U&& u) {
+    v_.template emplace<T>(std::forward<U>(u));
     return *this;
   }
 
   /**
-   * Creates a new `StatusOr<T>` holding the value @p rhs.
+   * Creates a new `StatusOr<T>` holding the value @p value.
    *
    * @par Post-conditions
-   * `ok() == true` and `value() == rhs`.
+   * `ok() == true` and `value() == value`.
    *
-   * @param rhs the value used to initialize the object.
+   * @param value the value used to initialize the object.
    *
    * @throws only if `T`'s move constructor throws.
    */
   // NOLINTNEXTLINE(google-explicit-constructor)
-  StatusOr(T&& rhs) : value_(std::move(rhs)) {}
+  StatusOr(T&& value) : v_(std::move(value)) {}
 
   // NOLINTNEXTLINE(google-explicit-constructor)
-  StatusOr(T const& rhs) : value_(rhs) {}
+  StatusOr(T const& value) : v_(value) {}
 
-  bool ok() const { return status_.ok(); }
-  explicit operator bool() const { return status_.ok(); }
+  bool ok() const { return absl::holds_alternative<T>(v_); }
+  explicit operator bool() const { return ok(); }
 
   //@{
   /**
@@ -180,13 +179,10 @@ class StatusOr final {
    * @return All these return a (properly ref and const-qualified) reference to
    *     the underlying value.
    */
-  T& operator*() & { return *value_; }
-
-  T const& operator*() const& { return *value_; }
-
-  T&& operator*() && { return *std::move(value_); }
-
-  T const&& operator*() const&& { return *std::move(value_); }
+  T& operator*() & { return absl::get<T>(v_); }
+  T const& operator*() const& { return absl::get<T>(v_); }
+  T&& operator*() && { return absl::get<T>(std::move(v_)); }
+  T const&& operator*() const&& { return absl::get<T>(std::move(v_)); }
   //@}
 
   //@{
@@ -199,9 +195,8 @@ class StatusOr final {
    * @return All these return a (properly ref and const-qualified) pointer to
    *     the underlying value.
    */
-  T* operator->() & { return &*value_; }
-
-  T const* operator->() const& { return &*value_; }
+  T* operator->() & { return &**this; }
+  T const* operator->() const& { return &**this; }
   //@}
 
   //@{
@@ -218,17 +213,14 @@ class StatusOr final {
     CheckHasValue();
     return **this;
   }
-
   T const& value() const& {
     CheckHasValue();
     return **this;
   }
-
   T&& value() && {
     CheckHasValue();
     return std::move(**this);
   }
-
   T const&& value() const&& {
     CheckHasValue();
     return std::move(**this);
@@ -241,26 +233,26 @@ class StatusOr final {
    *
    * @return A reference to the contained `Status`.
    */
-  Status const& status() const& { return status_; }
-  Status&& status() && { return std::move(status_); }
+  Status const& status() const& {
+    static auto const* const kOk = new Status{};
+    if (ok()) return *kOk;
+    return absl::get<Status>(v_);
+  }
+  Status&& status() && {
+    if (ok()) v_ = Status{};
+    return absl::get<Status>(std::move(v_));
+  }
   //@}
 
  private:
   void CheckHasValue() const& {
-    if (!ok()) {
-      internal::ThrowStatus(status_);
-    }
+    if (!ok()) internal::ThrowStatus(status());
   }
-
-  // When possible, do not copy the status.
   void CheckHasValue() && {
-    if (!ok()) {
-      internal::ThrowStatus(std::move(status_));
-    }
+    if (!ok()) internal::ThrowStatus(std::move(*this).status());
   }
 
-  Status status_;
-  absl::optional<T> value_;
+  absl::variant<Status, T> v_;
 };
 
 // Returns true IFF both `StatusOr<T>` objects hold an equal `Status` or an
