@@ -54,6 +54,18 @@
 
 ## v1.31.0 - TBD
 
+## v1.31.1 - 2021-08-10
+
+### BigQuery
+
+* Support both google-cloud-cpp::bigquery and deprecated
+  google-cloud-cpp::experimental-bigquery targets.
+
+### IAM
+
+* Support both google-cloud-cpp::iam and deprecated
+  google-cloud-cpp::experimental-iam targets.
+
 ## v1.30.0 - 2021-08
 
 ### New GA Libraries
