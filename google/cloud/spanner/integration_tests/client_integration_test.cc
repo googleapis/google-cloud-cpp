@@ -887,12 +887,11 @@ TEST_F(ClientIntegrationTest, ProfileDml) {
 }
 
 /// @test Verify version_retention_period is returned in information schema.
-TEST_F(ClientIntegrationTest, InformationSchema) {
+TEST_F(ClientIntegrationTest, VersionRetentionPeriod) {
   auto rows = client_->ExecuteQuery(SqlStatement(R"""(
         SELECT s.OPTION_VALUE
         FROM INFORMATION_SCHEMA.DATABASE_OPTIONS s
-        WHERE s.SCHEMA_NAME = ""
-          AND s.OPTION_NAME = "version_retention_period"
+        WHERE s.OPTION_NAME = "version_retention_period"
       )"""));
   using RowType = std::tuple<std::string>;
   for (auto& row : StreamOf<RowType>(rows)) {
@@ -904,6 +903,28 @@ TEST_F(ClientIntegrationTest, InformationSchema) {
     }
     if (!row) break;
     EXPECT_EQ("2h", std::get<0>(*row));
+  }
+}
+
+/// @test Verify default_leader is returned in information schema.
+TEST_F(ClientIntegrationTest, DefaultLeader) {
+  auto rows = client_->ExecuteQuery(SqlStatement(R"""(
+        SELECT s.OPTION_VALUE
+        FROM INFORMATION_SCHEMA.DATABASE_OPTIONS s
+        WHERE s.OPTION_NAME = "default_leader"
+      )"""));
+  using RowType = std::tuple<std::string>;
+  for (auto& row : StreamOf<RowType>(rows)) {
+    if (emulator_) {
+      // TODO(#7144): Awaiting emulator support for default_leader.
+      EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
+    } else {
+      EXPECT_THAT(row, IsOk());
+    }
+    if (!row) break;
+    // When the backend starts delivering rows for the table, we can
+    // refine the column expectations beyond a non-empty leader.
+    EXPECT_NE(std::get<0>(*row), "");
   }
 }
 

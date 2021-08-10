@@ -36,9 +36,11 @@
 #include "absl/types/optional.h"
 #include <chrono>
 #include <iomanip>
+#include <iterator>
 #include <string>
 #include <tuple>
 #include <utility>
+#include <vector>
 
 namespace {
 
@@ -186,7 +188,7 @@ void DeleteInstanceCommand(std::vector<std::string> argv) {
   DeleteInstance(std::move(client), argv[0], argv[1]);
 }
 
-//! [list-instance-configs]
+//! [START spanner_list_instance_configs] [list-instance-configs]
 void ListInstanceConfigs(google::cloud::spanner::InstanceAdminClient client,
                          std::string const& project_id) {
   int count = 0;
@@ -202,7 +204,7 @@ void ListInstanceConfigs(google::cloud::spanner::InstanceAdminClient client,
     std::cout << "No instance configs found in project " << project_id << "\n";
   }
 }
-//! [list-instance-configs]
+//! [END spanner_list_instance_configs] [list-instance-configs]
 
 void ListInstanceConfigsCommand(std::vector<std::string> argv) {
   if (argv.size() != 1) {
@@ -213,7 +215,7 @@ void ListInstanceConfigsCommand(std::vector<std::string> argv) {
   ListInstanceConfigs(std::move(client), argv[0]);
 }
 
-//! [get-instance-config]
+//! [START spanner_get_instance_config] [get-instance-config]
 void GetInstanceConfig(google::cloud::spanner::InstanceAdminClient client,
                        std::string const& project_id,
                        std::string const& instance_config_name) {
@@ -227,7 +229,7 @@ void GetInstanceConfig(google::cloud::spanner::InstanceAdminClient client,
             << " exists and its metadata is:\n"
             << instance_config->DebugString();
 }
-//! [get-instance-config]
+//! [END spanner_get_instance_config] [get-instance-config]
 
 void GetInstanceConfigCommand(std::vector<std::string> argv) {
   if (argv.size() != 2) {
@@ -504,6 +506,40 @@ void CreateDatabaseWithVersionRetentionPeriod(
 }
 // [END spanner_create_database_with_version_retention_period]
 
+// [START spanner_create_database_with_default_leader]
+void CreateDatabaseWithDefaultLeader(
+    google::cloud::spanner::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id, std::string const& default_leader) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  std::vector<std::string> extra_statements;
+  extra_statements.push_back("ALTER DATABASE `" + database_id + "` " +
+                             "SET OPTIONS (default_leader='" + default_leader +
+                             "')");
+  auto db = client.CreateDatabase(database, std::move(extra_statements)).get();
+  if (!db) throw std::runtime_error(db.status().message());
+  std::cout << "Database " << db->name() << " created.\n" << db->DebugString();
+}
+// [END spanner_create_database_with_default_leader]
+
+// [START spanner_update_database_with_default_leader]
+void UpdateDatabaseWithDefaultLeader(
+    google::cloud::spanner::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id, std::string const& default_leader) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  std::vector<std::string> statements;
+  statements.push_back("ALTER DATABASE `" + database_id + "` " +
+                       "SET OPTIONS (default_leader='" + default_leader + "')");
+  auto metadata = client.UpdateDatabase(database, std::move(statements)).get();
+  if (!metadata) throw std::runtime_error(metadata.status().message());
+  std::cout << "`default_leader` altered, new DDL metadata:\n"
+            << metadata->DebugString();
+}
+// [END spanner_update_database_with_default_leader]
+
 // [START spanner_create_table_with_datatypes]
 void CreateTableWithDatatypes(
     google::cloud::spanner::DatabaseAdminClient client,
@@ -586,7 +622,7 @@ void GetDatabase(google::cloud::spanner::DatabaseAdminClient client,
 }
 //! [get-database]
 
-//! [get-database-ddl]
+//! [START spanner_get_database_ddl] [get-database-ddl]
 void GetDatabaseDdl(google::cloud::spanner::DatabaseAdminClient client,
                     std::string const& project_id,
                     std::string const& instance_id,
@@ -597,7 +633,7 @@ void GetDatabaseDdl(google::cloud::spanner::DatabaseAdminClient client,
   if (!database) throw std::runtime_error(database.status().message());
   std::cout << "Database metadata is:\n" << database->DebugString();
 }
-//! [get-database-ddl]
+//! [END spanner_get_database_ddl] [get-database-ddl]
 
 //! [update-database] [START spanner_add_column]
 void AddColumn(google::cloud::spanner::DatabaseAdminClient client,
@@ -652,7 +688,7 @@ void AddStoringIndex(google::cloud::spanner::DatabaseAdminClient client,
 }
 // [END spanner_create_storing_index]
 
-//! [list-databases]
+//! [START spanner_list_databases] [list-databases]
 void ListDatabases(google::cloud::spanner::DatabaseAdminClient client,
                    std::string const& project_id,
                    std::string const& instance_id) {
@@ -669,7 +705,7 @@ void ListDatabases(google::cloud::spanner::DatabaseAdminClient client,
               << " for project << " << project_id << "\n";
   }
 }
-//! [list-databases]
+//! [END spanner_list_databases] [list-databases]
 
 void ListDatabasesCommand(std::vector<std::string> argv) {
   if (argv.size() != 2) {
@@ -3055,6 +3091,37 @@ void PartitionQuery(google::cloud::spanner::Client client) {
   //! [execute-sql-query-partition]
 }
 
+// [START spanner_query_information_schema_database_options]
+void QueryInformationSchemaDatabaseOptions(
+    google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  {
+    auto rows = client.ExecuteQuery(spanner::SqlStatement(R"""(
+        SELECT s.OPTION_NAME, s.OPTION_VALUE
+        FROM INFORMATION_SCHEMA.DATABASE_OPTIONS s
+        WHERE s.OPTION_NAME = 'default_leader'
+      )"""));
+    using RowType = std::tuple<std::string, std::string>;
+    for (auto& row : spanner::StreamOf<RowType>(rows)) {
+      if (!row) throw std::runtime_error(row.status().message());
+      std::cout << std::get<0>(*row) << "=" << std::get<1>(*row) << "\n";
+    }
+  }  // namespace =::google::cloud::spanner;
+  {
+    auto rows = client.ExecuteQuery(spanner::SqlStatement(R"""(
+        SELECT s.OPTION_NAME, s.OPTION_VALUE
+        FROM INFORMATION_SCHEMA.DATABASE_OPTIONS s
+        WHERE s.OPTION_NAME = 'version_retention_period'
+      )"""));
+    using RowType = std::tuple<std::string, std::string>;
+    for (auto& row : spanner::StreamOf<RowType>(rows)) {
+      if (!row) throw std::runtime_error(row.status().message());
+      std::cout << std::get<0>(*row) << "=" << std::get<1>(*row) << "\n";
+    }
+  }
+}
+// [END spanner_query_information_schema_database_options]
+
 int RunOneCommand(std::vector<std::string> argv) {
   using CommandType = std::function<void(std::vector<std::string> const&)>;
 
@@ -3227,6 +3294,8 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("make-replace-mutation", MakeReplaceMutation),
       make_command_entry("delete-mutation-builder", DeleteMutationBuilder),
       make_command_entry("make-delete-mutation", MakeDeleteMutation),
+      make_command_entry("query-information-schema-database-options",
+                         QueryInformationSchemaDatabaseOptions),
   };
 
   static std::string usage_msg = [&argv, &commands] {
@@ -3305,6 +3374,22 @@ std::string PickConfig(google::cloud::spanner::InstanceAdminClient client,
               << "\n";
   }
   return ret.empty() ? first : ret;
+}
+
+std::vector<std::string> LeaderOptions(
+    google::cloud::spanner::InstanceAdminClient client,
+    std::string const& project_id, std::string const& instance_id) {
+  google::cloud::spanner::Instance in(project_id, instance_id);
+  auto instance = client.GetInstance(in);
+  if (!instance) throw std::runtime_error(instance.status().message());
+
+  auto config = client.GetInstanceConfig(instance->config());
+  if (!config) throw std::runtime_error(config.status().message());
+
+  auto* leader_options = config->mutable_leader_options();
+  return std::vector<std::string>(
+      std::make_move_iterator(leader_options->begin()),
+      std::make_move_iterator(leader_options->end()));
 }
 
 void RunAllSlowInstanceTests(
@@ -3885,9 +3970,51 @@ void RunAll(bool emulator) {
   std::cout << "\nRunning the make-delete-mutation example" << std::endl;
   MakeDeleteMutation(client);
 
+  if (!emulator) {
+    std::cout << "\nRunning spanner_query_information_schema_database_options"
+              << " sample" << std::endl;
+    QueryInformationSchemaDatabaseOptions(client);
+  }
+
   std::cout << "\nRunning spanner_drop_database sample" << std::endl;
   DeleteAll(client);
   DropDatabase(database_admin_client, project_id, instance_id, database_id);
+
+  // TODO(#7144): Awaiting emulator support for default_leader.
+  if (!emulator) {
+    auto random_instance = google::cloud::spanner_testing::PickRandomInstance(
+        generator, project_id, "name:/instances/test-instance-mr-");
+    if (!random_instance) {
+      throw std::runtime_error(
+          "Cannot find an instance to run the multi-region samples: " +
+          random_instance.status().message());
+    }
+    std::string instance_id = *std::move(random_instance);
+    std::cout << "\nRunning multi-region samples on " << instance_id
+              << std::endl;
+
+    auto leader_options =
+        LeaderOptions(instance_admin_client, project_id, instance_id);
+    if (leader_options.size() < 2) {
+      throw std::runtime_error("Did not find at least two leader options in " +
+                               instance_id);
+    }
+
+    std::cout << "\nRunning spanner_create_database_with_default_leader sample"
+              << std::endl;
+    CreateDatabaseWithDefaultLeader(database_admin_client, project_id,
+                                    instance_id, database_id,
+                                    leader_options[1]);
+
+    std::cout << "\nRunning spanner_update_database_with_default_leader sample"
+              << std::endl;
+    UpdateDatabaseWithDefaultLeader(database_admin_client, project_id,
+                                    instance_id, database_id,
+                                    leader_options[0]);
+
+    std::cout << "\nRunning spanner_drop_database sample" << std::endl;
+    DropDatabase(database_admin_client, project_id, instance_id, database_id);
+  }
 }
 
 bool AutoRun() {
