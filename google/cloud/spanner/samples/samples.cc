@@ -3095,6 +3095,9 @@ void PartitionQuery(google::cloud::spanner::Client client) {
 void QueryInformationSchemaDatabaseOptions(
     google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
+  // clang-format misinterprets the namespace alias followed by a block as
+  // introducing a sub-namespace and so adds a misleading namespace-closing
+  // comment at the end. This separating comment defeats that.
   {
     auto rows = client.ExecuteQuery(spanner::SqlStatement(R"""(
         SELECT s.OPTION_NAME, s.OPTION_VALUE
