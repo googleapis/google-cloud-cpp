@@ -64,7 +64,7 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
   pubsub::Topic const topic("test-project", "test-topic");
 
   AsyncSequencer<void> async;
-  auto publish_count = 0;
+  std::atomic<int> publish_count{0};
   EXPECT_CALL(*mock, AsyncPublish)
       .Times(AtLeast(1))
       .WillRepeatedly([&](google::pubsub::v1::PublishRequest const& request) {
@@ -113,7 +113,7 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
   publisher->Flush({});
   // Use the CQ threads to satisfy the AsyncPull future, like we do in the
   // normal code.
-  background.cq().RunAsync([&async, publish_count] {
+  background.cq().RunAsync([&async, &publish_count] {
     for (auto i = 0; i != publish_count; ++i) {
       async.PopFront().set_value();
     }
