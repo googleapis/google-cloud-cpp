@@ -42,7 +42,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 * Windows, macOS, Linux
 * C++11 (and higher) compilers (we test with GCC >= 5.4, Clang >= 6.0, and
-  MSVC >= 2019)
+  MSVC >= 2017)
 * Environments with or without exceptions
 * Bazel and CMake builds
 
