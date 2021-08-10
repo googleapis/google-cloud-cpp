@@ -279,7 +279,7 @@ void AsyncBenchmark::OnReadRow(
 
   std::unique_lock<std::mutex> lk(mu_);
   outstanding_requests_--;
-  results_.operations.push_back({row.status(), usecs});
+  results_.operations.push_back({std::move(row).status(), usecs});
   ++results_.row_count;
   if (now < deadline_) {
     lk.unlock();
