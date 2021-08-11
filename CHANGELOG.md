@@ -74,7 +74,6 @@
 
 * Support both google-cloud-cpp::iam and deprecated google-cloud-cpp::experimental-iam targets.
 
-
 ## v1.30.0 - 2021-08
 
 ### New GA Libraries
