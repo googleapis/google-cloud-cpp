@@ -26,7 +26,7 @@ all: $(BIN)/quickstart
 
 # Configuration variables to compile and link against the Cloud Pub/Sub C++
 # client library.
-PUBSUB_DEPS := pubsub_client
+PUBSUB_DEPS := google_cloud_cpp_pubsub
 PUBSUB_CXXFLAGS   := $(shell pkg-config $(PUBSUB_DEPS) --cflags)
 PUBSUB_CXXLDFLAGS := $(shell pkg-config $(PUBSUB_DEPS) --libs-only-L)
 PUBSUB_LIBS       := $(shell pkg-config $(PUBSUB_DEPS) --libs-only-l)

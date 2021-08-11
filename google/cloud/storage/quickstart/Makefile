@@ -26,7 +26,7 @@ all: $(BIN)/quickstart
 
 # Configuration variables to compile and link against the Google Cloud Storage
 # C++ client library.
-GCS_DEPS := storage_client
+GCS_DEPS := google_cloud_cpp_storage
 GCS_CXXFLAGS   := $(shell pkg-config $(GCS_DEPS) --cflags)
 GCS_CXXLDFLAGS := $(shell pkg-config $(GCS_DEPS) --libs-only-L)
 GCS_LIBS       := $(shell pkg-config $(GCS_DEPS) --libs-only-l)
