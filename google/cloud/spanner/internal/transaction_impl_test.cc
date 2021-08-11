@@ -33,6 +33,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::spanner::v1::TransactionSelector;
+using ::testing::IsEmpty;
 using ::testing::IsNull;
 using ::testing::NotNull;
 
@@ -75,8 +76,8 @@ class Client {
     auto read = [this, &table, &keys, &columns](
                     SessionHolder& session,
                     StatusOr<TransactionSelector>& selector,
-                    std::int64_t seqno) {
-      return this->Read(session, selector, seqno, table, keys, columns);
+                    std::string const& tag, std::int64_t seqno) {
+      return this->Read(session, selector, tag, seqno, table, keys, columns);
     };
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
@@ -91,7 +92,8 @@ class Client {
 
  private:
   ResultSet Read(SessionHolder& session,
-                 StatusOr<TransactionSelector>& selector, std::int64_t seqno,
+                 StatusOr<TransactionSelector>& selector,
+                 std::string const& tag, std::int64_t seqno,
                  std::string const& table, KeySet const& keys,
                  std::vector<std::string> const& columns);
 
@@ -110,12 +112,14 @@ class Client {
 // the pre-assigned transaction ID after checking the read timestamp.
 ResultSet Client::Read(SessionHolder& session,
                        StatusOr<TransactionSelector>& selector,
-                       std::int64_t seqno, std::string const&, KeySet const&,
+                       std::string const& tag, std::int64_t seqno,
+                       std::string const&, KeySet const&,
                        std::vector<std::string> const&) {
   // when we mark a transaction invalid, we use this Status.
   const Status failed_txn_status(StatusCode::kInternal, "Bad transaction");
 
   bool fail_with_throw = false;
+  EXPECT_THAT(tag, IsEmpty());
   if (!selector) {
     std::unique_lock<std::mutex> lock(mu_);
     switch (mode_) {

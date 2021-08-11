@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/internal/transaction_impl.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
+#include "absl/types/optional.h"
 #include <google/spanner/v1/transaction.pb.h>
 #include <chrono>
 #include <memory>
@@ -85,9 +86,13 @@ class Transaction {
     // There are currently no read-write options.
     ReadWriteOptions();
 
+    // A tag used for collecting statistics about the transaction.
+    ReadWriteOptions& WithTag(absl::optional<std::string> tag);
+
    private:
     friend Transaction;
     google::spanner::v1::TransactionOptions_ReadWrite rw_opts_;
+    absl::optional<std::string> tag_;
   };
 
   /**
@@ -161,7 +166,8 @@ class Transaction {
   // Construction of a single-use transaction.
   explicit Transaction(SingleUseOptions opts);
   // Construction of a transaction with existing IDs.
-  Transaction(std::string session_id, std::string transaction_id);
+  Transaction(std::string session_id, std::string transaction_id,
+              std::string transaction_tag);
 
   std::shared_ptr<spanner_internal::TransactionImpl> impl_;
 };
@@ -222,7 +228,8 @@ struct TransactionInternals {
   }
 
   static spanner::Transaction MakeTransactionFromIds(
-      std::string session_id, std::string transaction_id);
+      std::string session_id, std::string transaction_id,
+      std::string transaction_tag);
 };
 
 template <typename T>
@@ -239,10 +246,12 @@ VisitInvokeResult<Functor> Visit(spanner::Transaction txn, Functor&& f) {
   return TransactionInternals::Visit(std::move(txn), std::forward<Functor>(f));
 }
 
-inline spanner::Transaction MakeTransactionFromIds(std::string session_id,
-                                                   std::string transaction_id) {
+inline spanner::Transaction MakeTransactionFromIds(
+    std::string session_id, std::string transaction_id,
+    std::string transaction_tag) {
   return TransactionInternals::MakeTransactionFromIds(
-      std::move(session_id), std::move(transaction_id));
+      std::move(session_id), std::move(transaction_id),
+      std::move(transaction_tag));
 }
 
 }  // namespace SPANNER_CLIENT_NS

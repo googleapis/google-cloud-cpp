@@ -26,14 +26,17 @@ TEST(CommitOptionsTest, Defaults) {
   CommitOptions options;
   EXPECT_FALSE(options.return_stats());
   EXPECT_FALSE(options.request_priority().has_value());
+  EXPECT_FALSE(options.transaction_tag().has_value());
 }
 
 TEST(CommitOptionsTest, SetValues) {
   CommitOptions options;
   options.set_return_stats(true);
   options.set_request_priority(RequestPriority::kLow);
+  options.set_transaction_tag("tag");
   EXPECT_TRUE(options.return_stats());
-  EXPECT_EQ(RequestPriority::kLow, *options.request_priority());
+  EXPECT_EQ(RequestPriority::kLow, options.request_priority());
+  EXPECT_EQ("tag", options.transaction_tag());
 }
 
 }  // namespace

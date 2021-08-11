@@ -196,7 +196,9 @@ StatusOr<CommitResult> Client::Commit(
   // The status-code discriminator of TransactionRerunPolicy.
   using RerunnablePolicy = spanner_internal::SafeTransactionRerun;
 
-  Transaction txn = MakeReadWriteTransaction();
+  auto const opts =
+      Transaction::ReadWriteOptions().WithTag(options.transaction_tag());
+  Transaction txn = MakeReadWriteTransaction(opts);
   for (int rerun = 0;; ++rerun) {
     StatusOr<Mutations> mutations;
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -246,15 +248,15 @@ StatusOr<CommitResult> Client::Commit(
       spanner_internal::Visit(
           txn, [](spanner_internal::SessionHolder& s,
                   StatusOr<google::spanner::v1::TransactionSelector> const&,
-                  std::int64_t) {
+                  std::string const&, std::int64_t) {
             if (s) s->set_bad();
             return true;
           });
-      txn = MakeReadWriteTransaction();
+      txn = MakeReadWriteTransaction(opts);
     } else {
       // Create a new transaction for the next loop, but reuse the session
       // so that we have a slightly better chance of avoiding another abort.
-      txn = MakeReadWriteTransaction(txn);
+      txn = MakeReadWriteTransaction(txn, opts);
     }
     std::this_thread::sleep_for(backoff_policy->OnCompletion());
   }
@@ -400,6 +402,13 @@ spanner::QueryOptions OverlayQueryOptions(
     opts.set_request_priority(preferred.request_priority());
   } else if (fallback.request_priority().has_value()) {
     opts.set_request_priority(fallback.request_priority());
+  }
+
+  // Choose the `request_tag` option.
+  if (preferred.request_tag().has_value()) {
+    opts.set_request_tag(preferred.request_tag());
+  } else if (fallback.request_tag().has_value()) {
+    opts.set_request_tag(fallback.request_tag());
   }
 
   return opts;

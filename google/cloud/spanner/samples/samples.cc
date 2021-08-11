@@ -1901,6 +1901,57 @@ void ReadOnlyTransaction(google::cloud::spanner::Client client) {
 }
 //! [END spanner_read_only_transaction]
 
+//! [START spanner_set_transaction_tag]
+void SetTransactionTag(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  using ::google::cloud::StatusOr;
+
+  // Sets the transaction tag to "app=concert,env=dev". This will be
+  // applied to all the individual operations inside this transaction.
+  auto commit_options =
+      spanner::CommitOptions{}.set_transaction_tag("app=concert,env=dev");
+  auto commit = client.Commit(
+      [&client](
+          spanner::Transaction const& txn) -> StatusOr<spanner::Mutations> {
+        spanner::SqlStatement select_venues(
+            "SELECT VenueId, VenueName, Capacity"
+            "  FROM Venues"
+            " WHERE OutdoorVenue = @outdoor_venue",
+            {{"outdoor_venue", spanner::Value(false)}});
+        using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
+                                   absl::optional<std::int64_t>>;
+        // Sets the request tag to "app=concert,env=dev,action=select".
+        // This will only be set on this request.
+        auto rows =
+            client.ExecuteQuery(txn, select_venues,
+                                spanner::QueryOptions().set_request_tag(
+                                    "app=concert,env=dev,action=select"));
+        for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+          if (!row) throw std::runtime_error(row.status().message());
+          auto new_capacity = std::get<2>(*row).value() / 4;
+          spanner::SqlStatement update_capacity(
+              "UPDATE Venues"
+              "   SET Capacity = @capacity"
+              " WHERE VenueId = @venue_id",
+              {{"capacity", spanner::Value(new_capacity)},
+               {"venue_id", spanner::Value(std::get<0>(*row))}});
+          // Sets the request tag to "app=concert,env=dev,action=update".
+          // This will only be set on this request.
+          auto update =
+              client.ExecuteDml(txn, update_capacity,
+                                spanner::QueryOptions().set_request_tag(
+                                    "app=concert,env=dev,action=update"));
+          if (!update) throw std::runtime_error(update.status().message());
+          std::cout << "Capacity of " << std::get<1>(*row).value()
+                    << " updated to " << new_capacity << "\n";
+        }
+        return spanner::Mutations{};
+      },
+      commit_options);
+  if (!commit) throw std::runtime_error(commit.status().message());
+}
+//! [END spanner_set_transaction_tag]
+
 //! [START spanner_read_stale_data]
 void ReadStaleData(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
@@ -1920,6 +1971,25 @@ void ReadStaleData(google::cloud::spanner::Client client) {
   }
 }
 //! [END spanner_read_stale_data]
+
+//! [START spanner_set_request_tag]
+void SetRequestTag(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  spanner::SqlStatement select(
+      "SELECT SingerId, AlbumId, AlbumTitle FROM Albums");
+  auto opts = spanner::QueryOptions().set_request_tag(
+      "app=concert,env=dev,action=select");
+  using RowType = std::tuple<std::int64_t, std::int64_t, std::string>;
+
+  auto rows = client.ExecuteQuery(select, opts);
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "SingerId: " << std::get<0>(*row)
+              << " AlbumId: " << std::get<1>(*row)
+              << " AlbumTitle: " << std::get<2>(*row) << "\n";
+  }
+}
+//! [END spanner_set_request_tag]
 
 //! [START spanner_batch_client]
 void UsePartitionQuery(google::cloud::spanner::Client client) {
@@ -3237,7 +3307,9 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("query-with-numeric-parameter",
                          QueryWithNumericParameter),
       make_command_entry("read-only-transaction", ReadOnlyTransaction),
+      make_command_entry("set-transaction-tag", SetTransactionTag),
       make_command_entry("read-stale-data", ReadStaleData),
+      make_command_entry("set-request-tag", SetRequestTag),
       make_command_entry("use-partition-query", UsePartitionQuery),
       make_command_entry("read-data-with-index", ReadDataWithIndex),
       make_command_entry("query-new-column", QueryNewColumn),
@@ -3795,8 +3867,14 @@ void RunAll(bool emulator) {
   std::cout << "\nRunning spanner_read_only_transaction sample" << std::endl;
   ReadOnlyTransaction(client);
 
+  std::cout << "\nRunning spanner_set_transaction_tag sample" << std::endl;
+  SetTransactionTag(client);
+
   std::cout << "\nRunning spanner_stale_data sample" << std::endl;
   ReadStaleData(client);
+
+  std::cout << "\nRunning spanner_set_request_tag sample" << std::endl;
+  SetRequestTag(client);
 
   if (!emulator) {
     std::cout << "\nRunning spanner_batch_client sample" << std::endl;

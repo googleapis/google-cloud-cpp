@@ -125,9 +125,9 @@ class ReadPartition {
 
   explicit ReadPartition(google::spanner::v1::ReadRequest proto)
       : proto_(std::move(proto)) {}
-  ReadPartition(std::string transaction_id, std::string session_id,
-                std::string partition_token, std::string table_name,
-                google::cloud::spanner::KeySet key_set,
+  ReadPartition(std::string transaction_id, std::string transaction_tag,
+                std::string session_id, std::string partition_token,
+                std::string table_name, google::cloud::spanner::KeySet key_set,
                 std::vector<std::string> column_names,
                 google::cloud::spanner::ReadOptions read_options);
 
@@ -135,6 +135,9 @@ class ReadPartition {
   std::string PartitionToken() const { return proto_.partition_token(); }
   std::string SessionId() const { return proto_.session(); }
   std::string TransactionId() const { return proto_.transaction().id(); }
+  std::string TransactionTag() const {
+    return proto_.request_options().transaction_tag();
+  }
   google::spanner::v1::KeySet KeySet() const { return proto_.key_set(); }
 
   google::spanner::v1::ReadRequest proto_;
@@ -149,21 +152,24 @@ inline namespace SPANNER_CLIENT_NS {
 
 struct ReadPartitionInternals {
   static spanner::ReadPartition MakeReadPartition(
-      std::string transaction_id, std::string session_id,
-      std::string partition_token, std::string table_name,
-      spanner::KeySet key_set, std::vector<std::string> column_names,
+      std::string transaction_id, std::string transaction_tag,
+      std::string session_id, std::string partition_token,
+      std::string table_name, spanner::KeySet key_set,
+      std::vector<std::string> column_names,
       spanner::ReadOptions read_options) {
     return spanner::ReadPartition(
-        std::move(transaction_id), std::move(session_id),
-        std::move(partition_token), std::move(table_name), std::move(key_set),
-        std::move(column_names), std::move(read_options));
+        std::move(transaction_id), std::move(transaction_tag),
+        std::move(session_id), std::move(partition_token),
+        std::move(table_name), std::move(key_set), std::move(column_names),
+        std::move(read_options));
   }
 
   static spanner::Connection::ReadParams MakeReadParams(
       spanner::ReadPartition const& read_partition) {
     return spanner::Connection::ReadParams{
         MakeTransactionFromIds(read_partition.SessionId(),
-                               read_partition.TransactionId()),
+                               read_partition.TransactionId(),
+                               read_partition.TransactionTag()),
         read_partition.TableName(),
         FromProto(read_partition.KeySet()),
         read_partition.ColumnNames(),
@@ -173,14 +179,14 @@ struct ReadPartitionInternals {
 };
 
 inline spanner::ReadPartition MakeReadPartition(
-    std::string transaction_id, std::string session_id,
-    std::string partition_token, std::string table_name,
+    std::string transaction_id, std::string transaction_tag,
+    std::string session_id, std::string partition_token, std::string table_name,
     spanner::KeySet key_set, std::vector<std::string> column_names,
     spanner::ReadOptions read_options) {
   return ReadPartitionInternals::MakeReadPartition(
-      std::move(transaction_id), std::move(session_id),
-      std::move(partition_token), std::move(table_name), std::move(key_set),
-      std::move(column_names), std::move(read_options));
+      std::move(transaction_id), std::move(transaction_tag),
+      std::move(session_id), std::move(partition_token), std::move(table_name),
+      std::move(key_set), std::move(column_names), std::move(read_options));
 }
 
 inline spanner::Connection::ReadParams MakeReadParams(
