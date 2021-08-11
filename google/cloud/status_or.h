@@ -145,7 +145,7 @@ class StatusOr final {
       !std::is_same<StatusOr, typename std::decay<U>::type>::value,
       StatusOr>::type&
   operator=(U&& u) {
-    v_.template emplace<T>(std::forward<U>(u));
+    v_ = std::forward<U>(u);
     return *this;
   }
 
@@ -161,7 +161,6 @@ class StatusOr final {
    */
   // NOLINTNEXTLINE(google-explicit-constructor)
   StatusOr(T&& value) : v_(std::move(value)) {}
-
   // NOLINTNEXTLINE(google-explicit-constructor)
   StatusOr(T const& value) : v_(value) {}
 

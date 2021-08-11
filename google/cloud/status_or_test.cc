@@ -336,10 +336,10 @@ TEST(StatusOrObservableTest, MoveAssignmentValueT) {
   Observable::reset_counters();
   assigned = std::move(other);
   EXPECT_STATUS_OK(assigned);
-  EXPECT_EQ(1, Observable::destructor());
-  EXPECT_EQ(0, Observable::move_assignment());
+  EXPECT_EQ(0, Observable::destructor());
+  EXPECT_EQ(1, Observable::move_assignment());
   EXPECT_EQ(0, Observable::copy_assignment());
-  EXPECT_EQ(1, Observable::move_constructor());
+  EXPECT_EQ(0, Observable::move_constructor());
   EXPECT_EQ(0, Observable::copy_constructor());
   EXPECT_EQ("foo", assigned->str());
   EXPECT_EQ("moved-out", other.str());  // NOLINT(bugprone-use-after-move)
@@ -394,10 +394,10 @@ TEST(StatusOrObservableTest, CopyAssignmentNoValueT) {
   EXPECT_STATUS_OK(assigned);
   EXPECT_EQ("foo", assigned->str());
   EXPECT_EQ("foo", other.str());
-  EXPECT_EQ(0, Observable::destructor());
+  EXPECT_EQ(1, Observable::destructor());
   EXPECT_EQ(0, Observable::move_assignment());
   EXPECT_EQ(0, Observable::copy_assignment());
-  EXPECT_EQ(0, Observable::move_constructor());
+  EXPECT_EQ(1, Observable::move_constructor());
   EXPECT_EQ(1, Observable::copy_constructor());
 }
 
@@ -448,11 +448,11 @@ TEST(StatusOrObservableTest, CopyAssignmentValueT) {
   Observable::reset_counters();
   assigned = other;
   EXPECT_STATUS_OK(assigned);
-  EXPECT_EQ(1, Observable::destructor());
+  EXPECT_EQ(0, Observable::destructor());
   EXPECT_EQ(0, Observable::move_assignment());
-  EXPECT_EQ(0, Observable::copy_assignment());
+  EXPECT_EQ(1, Observable::copy_assignment());
   EXPECT_EQ(0, Observable::move_constructor());
-  EXPECT_EQ(1, Observable::copy_constructor());
+  EXPECT_EQ(0, Observable::copy_constructor());
   EXPECT_EQ("foo", assigned->str());
   EXPECT_EQ("foo", other.str());
 }
