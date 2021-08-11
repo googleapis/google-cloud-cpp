@@ -238,6 +238,13 @@ class StatusOr final {
     return absl::get<Status>(v_);
   }
   Status&& status() && {
+    // OOPS: this violates the class invariant (documented below), because we
+    // need to return an rvalue reference to some Status, even if that Status
+    // is OK. So we do that by writing OK into v_ and returning an rvalue
+    // reference to it. This is OK, because this is an rvalue-qualified member
+    // function anyway. However, it's also kinda not good because an object's
+    // moved-from state ideally should be "valid", and this moved-from state
+    // would violate a class in variant by holding a Status that is OK.
     if (ok()) v_ = Status{};
     return absl::get<Status>(std::move(v_));
   }
@@ -251,6 +258,9 @@ class StatusOr final {
     if (!ok()) internal::ThrowStatus(std::move(*this).status());
   }
 
+  // Class invariants:
+  // 1. v_ holds a T IFF Status == OK
+  // 2. v_ holds a Status IFF Status != OK
   absl::variant<Status, T> v_;
 };
 
