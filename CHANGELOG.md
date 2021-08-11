@@ -64,7 +64,6 @@
   removed. If your code previously relied on `sor.status() = new_status` you
   should change it to `sor = new_status`. ([#7150](https://github.com/googleapis/google-cloud-cpp/pull/7150))
 
-
 ## v1.30.1 - 2021-08
 
 ### BigQuery
