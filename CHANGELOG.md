@@ -64,6 +64,16 @@
   removed. If your code previously relied on `sor.status() = new_status` you
   should change it to `sor = new_status`. ([#7150](https://github.com/googleapis/google-cloud-cpp/pull/7150))
 
+## v1.30.1 - 2021-08
+
+### BigQuery
+
+* Support both google-cloud-cpp::bigquery and deprecated google-cloud-cpp::experimental-bigquery targets.
+
+### IAM
+
+* Support both google-cloud-cpp::iam and deprecated google-cloud-cpp::experimental-iam targets.
+
 ## v1.30.0 - 2021-08
 
 ### New GA Libraries
