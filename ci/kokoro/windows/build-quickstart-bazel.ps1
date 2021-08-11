@@ -106,7 +106,8 @@ if (-not (Test-Path env:KOKORO_GFILE_DIR)) {
 }
 
 $quickstart_config=@{
-    "storage"=@(":quickstart", "${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}");
+    "bigquery"=@(":quickstart", "${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_BIGQUERY_TEST_QUICKSTART_TABLE}")
+    "storage"=@(":quickstart", "${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}")
     # TODO(#6467) - enable GCS+gRPC quickstart after next release
     # "storage"=@(":quickstart_grpc", "${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}");
     "bigtable"=@(":quickstart", "${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}", "quickstart")
