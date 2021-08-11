@@ -32,7 +32,7 @@ time {
     # vcpkg needs git history to support versioning, so we clone a recent
     # release tag rather than just extracting a tarball without history.
 #    git clone https://github.com/microsoft/vcpkg.git "${VCPKG_ROOT_DIR}"
-    git clone git@github.com:scotthart/vcpkg.git "${VCPKG_ROOT_DIR}"
+    git clone https://github.com/scotthart/vcpkg.git "${VCPKG_ROOT_DIR}"
     git -C "${VCPKG_ROOT_DIR}" checkout "${VCPKG_RELEASE_VERSION}"
     pwd
   fi
