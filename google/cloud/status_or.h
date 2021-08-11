@@ -18,7 +18,6 @@
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include "absl/types/variant.h"
 #include <type_traits>
 #include <utility>
