@@ -99,11 +99,7 @@ if should_run_integration_tests; then
     export GOOGLE_CLOUD_CPP_TRACING_OPTIONS="truncate_string_field_longer_than=512"
     export CLOUD_STORAGE_ENABLE_TRACING="raw-client"
 
-    if [[ "${SOURCE_DIR}" == "super" ]]; then
-      cd "${BINARY_DIR}/src/google_cloud_cpp_project-build/"
-    else
-      cd "${BINARY_DIR}"
-    fi
+    cd "${BINARY_DIR}"
     ctest \
       -L 'integration-test-production' \
       -E '(bigtable_grpc_credentials|grpc_credential_types|storage_service_account_samples|service_account_integration_test)' \

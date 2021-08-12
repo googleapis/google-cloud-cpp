@@ -112,8 +112,7 @@ cmake -H. -Bcmake-out/ -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/v
 cmake --build cmake-out -- -j $(nproc)
 ```
 
-The binary artifacts, such as examples, will be placed in
-`cmake-out/super/src/google_cloud_cpp_project-build/`.
+The binary artifacts, such as examples, will be placed in `cmake-out/`.
 
 ## Quickstart
 
