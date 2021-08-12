@@ -81,12 +81,15 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
       });
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
+  // Make this so large that the test times out before the message hold expires.
+  // This ensures that the two messages will be sent in one batch.
+  auto constexpr kMaxHoldTime = std::chrono::hours(24);
   auto const ordering_key = std::string{};
   auto publisher = BatchingPublisherConnection::Create(
       topic,
       pubsub::PublisherOptions{}
           .set_maximum_batch_message_count(4)
-          .set_maximum_hold_time(std::chrono::milliseconds(50)),
+          .set_maximum_hold_time(kMaxHoldTime),
       ordering_key, mock, background.cq());
 
   // We expect the responses to be satisfied in the context of the completion
@@ -117,6 +120,9 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
   // normal code.
   background.cq().RunAsync([&async] { async.PopFront().set_value(); });
   for (auto& p : published) p.get();
+
+  // Cancel the CQ which is still running a deadline timer
+  background.cq().CancelAll();
 }
 
 TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
