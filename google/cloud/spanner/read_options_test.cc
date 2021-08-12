@@ -41,6 +41,11 @@ TEST(ReadOptionsTest, Equality) {
   test_options_1.request_priority = RequestPriority::kLow;
   EXPECT_EQ(test_options_0, test_options_1);
 
+  test_options_0.request_tag = "tag";
+  EXPECT_NE(test_options_0, test_options_1);
+  test_options_1.request_tag = "tag";
+  EXPECT_EQ(test_options_0, test_options_1);
+
   ReadOptions test_options_2 = test_options_0;
   EXPECT_EQ(test_options_0, test_options_2);
 }

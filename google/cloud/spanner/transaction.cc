@@ -69,6 +69,12 @@ Transaction::ReadOnlyOptions::ReadOnlyOptions(
 
 Transaction::ReadWriteOptions::ReadWriteOptions() = default;  // currently none
 
+Transaction::ReadWriteOptions& Transaction::ReadWriteOptions::WithTag(
+    absl::optional<std::string> tag) {
+  tag_ = std::move(tag);
+  return *this;
+}
+
 Transaction::SingleUseOptions::SingleUseOptions(ReadOnlyOptions opts) {
   ro_opts_ = std::move(opts.ro_opts_);
 }
@@ -88,37 +94,39 @@ Transaction::SingleUseOptions::SingleUseOptions(
 Transaction::Transaction(ReadOnlyOptions opts) {
   google::spanner::v1::TransactionSelector selector;
   *selector.mutable_begin() = MakeOpts(std::move(opts.ro_opts_));
-  impl_ =
-      std::make_shared<spanner_internal::TransactionImpl>(std::move(selector));
+  impl_ = std::make_shared<spanner_internal::TransactionImpl>(
+      std::move(selector), std::string());
 }
 
 Transaction::Transaction(ReadWriteOptions opts) {
   google::spanner::v1::TransactionSelector selector;
   *selector.mutable_begin() = MakeOpts(std::move(opts.rw_opts_));
-  impl_ =
-      std::make_shared<spanner_internal::TransactionImpl>(std::move(selector));
+  impl_ = std::make_shared<spanner_internal::TransactionImpl>(
+      std::move(selector), std::move(opts.tag_).value_or(std::string()));
 }
 
 Transaction::Transaction(Transaction const& txn, ReadWriteOptions opts) {
   google::spanner::v1::TransactionSelector selector;
   *selector.mutable_begin() = MakeOpts(std::move(opts.rw_opts_));
   impl_ = std::make_shared<spanner_internal::TransactionImpl>(
-      *txn.impl_, std::move(selector));
+      *txn.impl_, std::move(selector),
+      std::move(opts.tag_).value_or(std::string()));
 }
 
 Transaction::Transaction(SingleUseOptions opts) {
   google::spanner::v1::TransactionSelector selector;
   *selector.mutable_single_use() = MakeOpts(std::move(opts.ro_opts_));
-  impl_ =
-      std::make_shared<spanner_internal::TransactionImpl>(std::move(selector));
+  impl_ = std::make_shared<spanner_internal::TransactionImpl>(
+      std::move(selector), std::string());
 }
 
-Transaction::Transaction(std::string session_id, std::string transaction_id) {
+Transaction::Transaction(std::string session_id, std::string transaction_id,
+                         std::string transaction_tag) {
   google::spanner::v1::TransactionSelector selector;
   selector.set_id(std::move(transaction_id));
   impl_ = std::make_shared<spanner_internal::TransactionImpl>(
       spanner_internal::MakeDissociatedSessionHolder(std::move(session_id)),
-      std::move(selector));
+      std::move(selector), std::move(transaction_tag));
 }
 
 Transaction::~Transaction() = default;
@@ -130,8 +138,10 @@ namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 
 spanner::Transaction TransactionInternals::MakeTransactionFromIds(
-    std::string session_id, std::string transaction_id) {
-  return spanner::Transaction(std::move(session_id), std::move(transaction_id));
+    std::string session_id, std::string transaction_id,
+    std::string transaction_tag) {
+  return spanner::Transaction(std::move(session_id), std::move(transaction_id),
+                              std::move(transaction_tag));
 }
 
 }  // namespace SPANNER_CLIENT_NS

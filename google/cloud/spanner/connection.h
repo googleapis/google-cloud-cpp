@@ -29,6 +29,7 @@
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/optional.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 #include <string>

@@ -164,9 +164,16 @@ struct RequestPriorityOption {
 };
 
 /**
+ * Option for `google::cloud::Options` to set a per-request tag.
+ */
+struct RequestTagOption {
+  using Type = std::string;
+};
+
+/**
  * List of all Request options.
  */
-using RequestOptionList = OptionList<RequestPriorityOption>;
+using RequestOptionList = OptionList<RequestPriorityOption, RequestTagOption>;
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

@@ -32,6 +32,7 @@ struct QueryPartitionInternals;
 
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
 /**
  * Serializes an instance of `QueryPartition` to a string of bytes.
  *
@@ -119,15 +120,18 @@ class QueryPartition {
   friend StatusOr<QueryPartition> DeserializeQueryPartition(
       std::string const& serialized_query_partition);
 
-  QueryPartition(std::string transaction_id, std::string session_id,
-                 std::string partition_token, SqlStatement sql_statement);
+  QueryPartition(std::string transaction_id, std::string transaction_tag,
+                 std::string session_id, std::string partition_token,
+                 SqlStatement sql_statement);
 
   // Accessor methods for use by friends.
   std::string const& partition_token() const { return partition_token_; }
   std::string const& session_id() const { return session_id_; }
+  std::string const& transaction_tag() const { return transaction_tag_; }
   std::string const& transaction_id() const { return transaction_id_; }
 
   std::string transaction_id_;
+  std::string transaction_tag_;
   std::string session_id_;
   std::string partition_token_;
   SqlStatement sql_statement_;
@@ -135,38 +139,45 @@ class QueryPartition {
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
+
+// Internal implementation details that callers should not use.
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
+
 struct QueryPartitionInternals {
   static spanner::QueryPartition MakeQueryPartition(
-      std::string const& transaction_id, std::string const& session_id,
-      std::string const& partition_token,
+      std::string const& transaction_id, std::string const& transaction_tag,
+      std::string const& session_id, std::string const& partition_token,
       spanner::SqlStatement const& sql_statement) {
-    return spanner::QueryPartition(transaction_id, session_id, partition_token,
-                                   sql_statement);
+    return spanner::QueryPartition(transaction_id, transaction_tag, session_id,
+                                   partition_token, sql_statement);
   }
 
   static spanner::Connection::SqlParams MakeSqlParams(
       spanner::QueryPartition const& query_partition) {
+    spanner::QueryOptions query_options;  // not serialized
     return {MakeTransactionFromIds(query_partition.session_id(),
-                                   query_partition.transaction_id()),
-            query_partition.sql_statement(), spanner::QueryOptions{},
+                                   query_partition.transaction_id(),
+                                   query_partition.transaction_tag()),
+            query_partition.sql_statement(), query_options,
             query_partition.partition_token()};
   }
 };
 
 inline spanner::QueryPartition MakeQueryPartition(
-    std::string const& transaction_id, std::string const& session_id,
-    std::string const& partition_token,
+    std::string const& transaction_id, std::string const& transaction_tag,
+    std::string const& session_id, std::string const& partition_token,
     spanner::SqlStatement const& sql_statement) {
   return QueryPartitionInternals::MakeQueryPartition(
-      transaction_id, session_id, partition_token, sql_statement);
+      transaction_id, transaction_tag, session_id, partition_token,
+      sql_statement);
 }
 
 inline spanner::Connection::SqlParams MakeSqlParams(
     spanner::QueryPartition const& query_partition) {
   return QueryPartitionInternals::MakeSqlParams(query_partition);
 }
+
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud

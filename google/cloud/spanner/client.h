@@ -37,6 +37,7 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/optional.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/v1/spanner.pb.h>
@@ -303,12 +304,13 @@ class Client {
    */
   RowStream ExecuteQuery(Transaction transaction, SqlStatement statement,
                          QueryOptions const& opts = {});
+
   /**
    * Executes a SQL query on a subset of rows in a database. Requires a prior
    * call to `PartitionQuery` to obtain the partition information; see the
    * documentation of that method for full details.
    *
-   * @param partition A `QueryPartition`, obtained by calling `PartitionRead`.
+   * @param partition A `QueryPartition`, obtained by calling `PartitionQuery`.
    * @param opts The `QueryOptions` to use for this call. If given, these will
    *     take precedence over the options set at the client and environment
    *     levels.

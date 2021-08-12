@@ -25,6 +25,7 @@
 #include <cstdint>
 #include <memory>
 #include <mutex>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -34,24 +35,29 @@ inline namespace SPANNER_CLIENT_NS {
 template <typename Functor>
 using VisitInvokeResult = ::google::cloud::internal::invoke_result_t<
     Functor, SessionHolder&,
-    StatusOr<google::spanner::v1::TransactionSelector>&, std::int64_t>;
+    StatusOr<google::spanner::v1::TransactionSelector>&, std::string const&,
+    std::int64_t>;
 
 /**
  * The internal representation of a google::cloud::spanner::Transaction.
  */
 class TransactionImpl {
  public:
-  explicit TransactionImpl(google::spanner::v1::TransactionSelector selector)
-      : TransactionImpl(/*session=*/{}, std::move(selector)) {}
+  TransactionImpl(google::spanner::v1::TransactionSelector selector,
+                  std::string tag)
+      : TransactionImpl(/*session=*/{}, std::move(selector), std::move(tag)) {}
 
   TransactionImpl(TransactionImpl const& impl,
-                  google::spanner::v1::TransactionSelector selector)
-      : TransactionImpl(impl.session_, std::move(selector)) {}
+                  google::spanner::v1::TransactionSelector selector,
+                  std::string tag)
+      : TransactionImpl(impl.session_, std::move(selector), std::move(tag)) {}
 
   TransactionImpl(SessionHolder session,
-                  google::spanner::v1::TransactionSelector selector)
+                  google::spanner::v1::TransactionSelector selector,
+                  std::string tag)
       : session_(std::move(session)),
         selector_(std::move(selector)),
+        tag_(std::move(tag)),
         seqno_(0) {
     state_ = selector_->has_begin() ? State::kBegin : State::kDone;
   }
@@ -75,13 +81,14 @@ class TransactionImpl {
   // must not modify it. Rather it should use either the transaction ID or
   // the error state in a manner appropriate for the operation.
   //
-  // A monotonically-increasing sequence number is also passed to the functor.
+  // A tag string and a monotonically-increasing sequence number are also
+  // passed to the functor.
   template <typename Functor>
   VisitInvokeResult<Functor> Visit(Functor&& f) {
     static_assert(google::cloud::internal::is_invocable<
                       Functor, SessionHolder&,
                       StatusOr<google::spanner::v1::TransactionSelector>&,
-                      std::int64_t>::value,
+                      std::string const&, std::int64_t>::value,
                   "TransactionImpl::Visit() functor has incompatible type.");
     std::int64_t seqno;
     {
@@ -90,7 +97,7 @@ class TransactionImpl {
       cond_.wait(lock, [this] { return state_ != State::kPending; });
       if (state_ == State::kDone) {
         lock.unlock();
-        return f(session_, selector_, seqno);
+        return f(session_, selector_, tag_, seqno);
       }
       state_ = State::kPending;
     }
@@ -98,7 +105,7 @@ class TransactionImpl {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
 #endif
-      auto r = f(session_, selector_, seqno);
+      auto r = f(session_, selector_, tag_, seqno);
       bool done = false;
       {
         std::lock_guard<std::mutex> lock(mu_);
@@ -136,6 +143,7 @@ class TransactionImpl {
   std::condition_variable cond_;
   SessionHolder session_;
   StatusOr<google::spanner::v1::TransactionSelector> selector_;
+  std::string tag_;
   std::int64_t seqno_;
 };
 

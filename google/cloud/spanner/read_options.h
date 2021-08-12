@@ -45,12 +45,17 @@ struct ReadOptions {
    * Priority for the read request.
    */
   absl::optional<RequestPriority> request_priority;
+
+  /**
+   * Tag for the read request.
+   */
+  absl::optional<std::string> request_tag;
 };
 
 inline bool operator==(ReadOptions const& lhs, ReadOptions const& rhs) {
   return lhs.limit == rhs.limit &&
          lhs.request_priority == rhs.request_priority &&
-         lhs.index_name == rhs.index_name;
+         lhs.request_tag == rhs.request_tag && lhs.index_name == rhs.index_name;
 }
 
 inline bool operator!=(ReadOptions const& lhs, ReadOptions const& rhs) {
