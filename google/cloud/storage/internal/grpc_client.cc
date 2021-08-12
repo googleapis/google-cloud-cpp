@@ -1012,7 +1012,7 @@ StatusOr<std::string> GrpcClient::MD5ToProto(std::string const& v) {
   return internal::HexEncode(*binary);
 }
 
-std::string GrpcClient::ComputeMD5Hash(const std::string& payload) {
+std::string GrpcClient::ComputeMD5Hash(std::string const& payload) {
   return internal::HexEncode(internal::MD5Hash(payload));
 }
 

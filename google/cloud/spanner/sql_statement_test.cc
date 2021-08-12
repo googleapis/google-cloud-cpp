@@ -32,7 +32,7 @@ using ::testing::Eq;
 using ::testing::UnorderedPointwise;
 
 TEST(SqlStatementTest, SqlAccessor) {
-  const char* statement = "select * from foo";
+  char const* statement = "select * from foo";
   SqlStatement stmt(statement);
   EXPECT_EQ(statement, stmt.sql());
 }

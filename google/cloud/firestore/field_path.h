@@ -98,7 +98,7 @@ class FieldPath {
    * @return The ostream written to.
    */
   friend std::ostream& operator<<(std::ostream& os,
-                                  const FieldPath& field_path);
+                                  FieldPath const& field_path);
 
   // This is a friend because it accesses parts_ directly.
   friend bool operator<(FieldPath const& lhs, FieldPath const& rhs);

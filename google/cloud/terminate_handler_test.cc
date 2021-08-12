@@ -24,12 +24,12 @@ using ::google::cloud::TerminateHandler;
 namespace {
 const std::string kHandlerMsg = "Custom handler invoked. Extra description: ";
 
-void CustomHandler(const char* msg) {
+void CustomHandler(char const* msg) {
   std::cerr << kHandlerMsg << msg << "\n";
   abort();
 }
 
-void CustomHandlerOld(const char*) { abort(); }
+void CustomHandlerOld(char const*) { abort(); }
 }  // namespace
 
 TEST(TerminateHandler, UnsetTerminates) {
@@ -41,14 +41,14 @@ TEST(TerminateHandler, UnsetTerminates) {
 TEST(TerminateHandler, SettingGettingWorks) {
   SetTerminateHandler(&CustomHandler);
   TerminateHandler set_handler = GetTerminateHandler();
-  ASSERT_TRUE(CustomHandler == *set_handler.target<void (*)(const char*)>())
+  ASSERT_TRUE(CustomHandler == *set_handler.target<void (*)(char const*)>())
       << "The handler objects should be equal.";
 }
 
 TEST(TerminateHandler, OldHandlerIsReturned) {
   SetTerminateHandler(&CustomHandlerOld);
   TerminateHandler old_handler = SetTerminateHandler(CustomHandler);
-  ASSERT_TRUE(CustomHandlerOld == *old_handler.target<void (*)(const char*)>())
+  ASSERT_TRUE(CustomHandlerOld == *old_handler.target<void (*)(char const*)>())
       << "The handler objects should be equal.";
 }
 
@@ -58,7 +58,7 @@ TEST(TerminateHandler, TerminateTerminates) {
 }
 
 TEST(TerminateHandler, NoAbortAborts) {
-  SetTerminateHandler([](const char*) {});
+  SetTerminateHandler([](char const*) {});
   const std::string expected =
       "Aborting because the installed terminate "
       "handler returned. Error details: details";

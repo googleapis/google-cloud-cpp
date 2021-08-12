@@ -212,7 +212,7 @@ void RemoveObjectOwner(google::cloud::storage::Client client,
     std::vector<gcs::ObjectAccessControl> original_acl =
         original_metadata->acl();
     auto it = std::find_if(original_acl.begin(), original_acl.end(),
-                           [entity](const gcs::ObjectAccessControl& entry) {
+                           [entity](gcs::ObjectAccessControl const& entry) {
                              return entry.entity() == entity &&
                                     entry.role() ==
                                         gcs::ObjectAccessControl::ROLE_OWNER();
