@@ -438,7 +438,7 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
   EXPECT_STATUS_OK(reader.status());
 
   // Verify the returned values are correct.
-  for (const auto& value :
+  for (auto const& value :
        {"not_chunked", "first_chunksecond_chunkthird_chunk",
         "second group first_chunk second group second_chunk",
         "also not_chunked", "still not_chunked"}) {

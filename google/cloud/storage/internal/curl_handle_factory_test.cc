@@ -35,7 +35,7 @@ class OverriddenDefaultCurlHandleFactory : public DefaultCurlHandleFactory {
 
  protected:
   void SetCurlStringOption(CURL* handle, CURLoption option_tag,
-                           const char* value) override {
+                           char const* value) override {
     set_options_[option_tag] = value;
     DefaultCurlHandleFactory::SetCurlStringOption(handle, option_tag, value);
   }
@@ -56,7 +56,7 @@ class OverriddenPooledCurlHandleFactory : public PooledCurlHandleFactory {
 
  protected:
   void SetCurlStringOption(CURL* handle, CURLoption option_tag,
-                           const char* value) override {
+                           char const* value) override {
     set_options_[option_tag] = value;
     PooledCurlHandleFactory::SetCurlStringOption(handle, option_tag, value);
   }

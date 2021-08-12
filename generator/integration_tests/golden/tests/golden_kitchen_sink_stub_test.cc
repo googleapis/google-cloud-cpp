@@ -37,7 +37,7 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
   MOCK_METHOD(
       ::grpc::Status, GenerateAccessToken,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::GenerateAccessTokenRequest&
+       ::google::test::admin::database::v1::GenerateAccessTokenRequest const&
            request,
        ::google::test::admin::database::v1::GenerateAccessTokenResponse*
            response),
@@ -45,7 +45,7 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
   MOCK_METHOD(
       ::grpc::Status, GenerateIdToken,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::GenerateIdTokenRequest&
+       ::google::test::admin::database::v1::GenerateIdTokenRequest const&
            request,
        ::google::test::admin::database::v1::GenerateIdTokenResponse* response),
       (override));
@@ -54,7 +54,7 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
           ::google::test::admin::database::v1::GenerateAccessTokenResponse>*,
       AsyncGenerateAccessTokenRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::GenerateAccessTokenRequest&
+       ::google::test::admin::database::v1::GenerateAccessTokenRequest const&
            request,
        ::grpc::CompletionQueue* cq),
       (override));
@@ -63,7 +63,7 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
           ::google::test::admin::database::v1::GenerateAccessTokenResponse>*,
       PrepareAsyncGenerateAccessTokenRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::GenerateAccessTokenRequest&
+       ::google::test::admin::database::v1::GenerateAccessTokenRequest const&
            request,
        ::grpc::CompletionQueue* cq),
       (override));
@@ -72,7 +72,7 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
           ::google::test::admin::database::v1::GenerateIdTokenResponse>*,
       AsyncGenerateIdTokenRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::GenerateIdTokenRequest&
+       ::google::test::admin::database::v1::GenerateIdTokenRequest const&
            request,
        ::grpc::CompletionQueue* cq),
       (override));
@@ -81,14 +81,14 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
           ::google::test::admin::database::v1::GenerateIdTokenResponse>*,
       PrepareAsyncGenerateIdTokenRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::GenerateIdTokenRequest&
+       ::google::test::admin::database::v1::GenerateIdTokenRequest const&
            request,
        ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
       ::grpc::Status, WriteLogEntries,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::WriteLogEntriesRequest&
+       ::google::test::admin::database::v1::WriteLogEntriesRequest const&
            request,
        ::google::test::admin::database::v1::WriteLogEntriesResponse* response),
       (override));
@@ -97,7 +97,7 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
           ::google::test::admin::database::v1::WriteLogEntriesResponse>*,
       AsyncWriteLogEntriesRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::WriteLogEntriesRequest&
+       ::google::test::admin::database::v1::WriteLogEntriesRequest const&
            request,
        ::grpc::CompletionQueue* cq),
       (override));
@@ -106,14 +106,14 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
           ::google::test::admin::database::v1::WriteLogEntriesResponse>*,
       PrepareAsyncWriteLogEntriesRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::WriteLogEntriesRequest&
+       ::google::test::admin::database::v1::WriteLogEntriesRequest const&
            request,
        ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
       ::grpc::Status, ListLogs,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::ListLogsRequest& request,
+       ::google::test::admin::database::v1::ListLogsRequest const& request,
        ::google::test::admin::database::v1::ListLogsResponse* response),
       (override));
   MOCK_METHOD(
@@ -121,7 +121,7 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
           ::google::test::admin::database::v1::ListLogsResponse>*,
       AsyncListLogsRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::ListLogsRequest& request,
+       ::google::test::admin::database::v1::ListLogsRequest const& request,
        ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
@@ -129,21 +129,21 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
           ::google::test::admin::database::v1::ListLogsResponse>*,
       PrepareAsyncListLogsRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::ListLogsRequest& request,
+       ::google::test::admin::database::v1::ListLogsRequest const& request,
        ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(::grpc::ClientReaderInterface<
                   ::google::test::admin::database::v1::TailLogEntriesResponse>*,
               TailLogEntriesRaw,
               (::grpc::ClientContext * context,
-               const ::google::test::admin::database::v1::TailLogEntriesRequest&
+               ::google::test::admin::database::v1::TailLogEntriesRequest const&
                    request),
               (override));
   MOCK_METHOD(::grpc::ClientAsyncReaderInterface<
                   ::google::test::admin::database::v1::TailLogEntriesResponse>*,
               AsyncTailLogEntriesRaw,
               (::grpc::ClientContext * context,
-               const ::google::test::admin::database::v1::TailLogEntriesRequest&
+               ::google::test::admin::database::v1::TailLogEntriesRequest const&
                    request,
                ::grpc::CompletionQueue* cq, void* tag),
               (override));
@@ -151,48 +151,48 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
                   ::google::test::admin::database::v1::TailLogEntriesResponse>*,
               PrepareAsyncTailLogEntriesRaw,
               (::grpc::ClientContext * context,
-               const ::google::test::admin::database::v1::TailLogEntriesRequest&
+               ::google::test::admin::database::v1::TailLogEntriesRequest const&
                    request,
                ::grpc::CompletionQueue* cq),
               (override));
   MOCK_METHOD(::grpc::Status, Omitted1,
               (::grpc::ClientContext * context,
-               const ::google::protobuf::Empty& request,
+               ::google::protobuf::Empty const& request,
                ::google::protobuf::Empty* response),
               (override));
   MOCK_METHOD(
       ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::Empty>*,
       AsyncOmitted1Raw,
       (::grpc::ClientContext * context,
-       const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq),
+       ::google::protobuf::Empty const& request, ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
       ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::Empty>*,
       PrepareAsyncOmitted1Raw,
       (::grpc::ClientContext * context,
-       const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq),
+       ::google::protobuf::Empty const& request, ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(::grpc::Status, Omitted2,
               (::grpc::ClientContext * context,
-               const ::google::protobuf::Empty& request,
+               ::google::protobuf::Empty const& request,
                ::google::protobuf::Empty* response),
               (override));
   MOCK_METHOD(
       ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::Empty>*,
       AsyncOmitted2Raw,
       (::grpc::ClientContext * context,
-       const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq),
+       ::google::protobuf::Empty const& request, ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
       ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::Empty>*,
       PrepareAsyncOmitted2Raw,
       (::grpc::ClientContext * context,
-       const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq),
+       ::google::protobuf::Empty const& request, ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
       ::grpc::Status, ListServiceAccountKeys,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::ListServiceAccountKeysRequest&
+       ::google::test::admin::database::v1::ListServiceAccountKeysRequest const&
            request,
        ::google::test::admin::database::v1::ListServiceAccountKeysResponse*
            response),
@@ -203,7 +203,7 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
           ::google::test::admin::database::v1::ListServiceAccountKeysResponse>*,
       AsyncListServiceAccountKeysRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::ListServiceAccountKeysRequest&
+       ::google::test::admin::database::v1::ListServiceAccountKeysRequest const&
            request,
        ::grpc::CompletionQueue* cq),
       (override));
@@ -212,7 +212,7 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
           ::google::test::admin::database::v1::ListServiceAccountKeysResponse>*,
       PrepareAsyncListServiceAccountKeysRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::ListServiceAccountKeysRequest&
+       ::google::test::admin::database::v1::ListServiceAccountKeysRequest const&
            request,
        ::grpc::CompletionQueue* cq),
       (override));

@@ -46,7 +46,7 @@ class StringSourceTree : public google::protobuf::compiler::SourceTree {
       : files_(std::move(files)) {}
 
   google::protobuf::io::ZeroCopyInputStream* Open(
-      const std::string& filename) override {
+      std::string const& filename) override {
     auto iter = files_.find(filename);
     return iter == files_.end() ? nullptr
                                 : new google::protobuf::io::ArrayInputStream(
@@ -64,15 +64,15 @@ class AbortingErrorCollector : public DescriptorPool::ErrorCollector {
   AbortingErrorCollector(AbortingErrorCollector const&) = delete;
   AbortingErrorCollector& operator=(AbortingErrorCollector const&) = delete;
 
-  void AddError(const std::string& filename, const std::string& element_name,
-                const google::protobuf::Message*, ErrorLocation,
-                const std::string& error_message) override {
+  void AddError(std::string const& filename, std::string const& element_name,
+                google::protobuf::Message const*, ErrorLocation,
+                std::string const& error_message) override {
     GCP_LOG(FATAL) << "AddError() called unexpectedly: " << filename << " ["
                    << element_name << "]: " << error_message;
   }
 };
 
-const char* const kHttpProto =
+char const* const kHttpProto =
     "syntax = \"proto3\";\n"
     "package google.api;\n"
     "option cc_enable_arenas = true;\n"
@@ -99,7 +99,7 @@ const char* const kHttpProto =
     "  string path = 2;\n"
     "}\n";
 
-const char* const kAnnotationsProto =
+char const* const kAnnotationsProto =
     "syntax = \"proto3\";\n"
     "package google.api;\n"
     "import \"google/api/http.proto\";\n"
@@ -109,7 +109,7 @@ const char* const kAnnotationsProto =
     "  HttpRule http = 72295728;\n"
     "}\n";
 
-const char* const kFrobberServiceProto =
+char const* const kFrobberServiceProto =
     "syntax = \"proto3\";\n"
     "package google.cloud.frobber.v1;\n"
     "import \"google/api/annotations.proto\";\n"
@@ -171,7 +171,7 @@ TEST_F(CreateServiceVarsTest, FilesParseSuccessfully) {
 }
 
 TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
-  const FileDescriptor* service_file_descriptor =
+  FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/cloud/frobber/v1/frobber.proto");
   service_vars_ = CreateServiceVars(
       *service_file_descriptor->service(0),
@@ -269,11 +269,11 @@ INSTANTIATE_TEST_SUITE_P(
                        "google/cloud/frobber/internal/frobber_stub_factory.cc"),
         std::make_pair("stub_factory_header_path",
                        "google/cloud/frobber/internal/frobber_stub_factory.h")),
-    [](const testing::TestParamInfo<CreateServiceVarsTest::ParamType>& info) {
+    [](testing::TestParamInfo<CreateServiceVarsTest::ParamType> const& info) {
       return std::get<0>(info.param);
     });
 
-const char* const kClientProto =
+char const* const kClientProto =
     "syntax = \"proto3\";\n"
     "package google.api;\n"
     "import \"google/protobuf/descriptor.proto\";\n"
@@ -285,7 +285,7 @@ const char* const kClientProto =
     "  string oauth_scopes = 1050;\n"
     "}\n";
 
-const char* const kLongrunningOperationsProto =
+char const* const kLongrunningOperationsProto =
     "syntax = \"proto3\";\n"
     "package google.longrunning;\n"
     "import \"google/protobuf/descriptor.proto\";\n"
@@ -300,7 +300,7 @@ const char* const kLongrunningOperationsProto =
     "  string metadata_type = 2;\n"
     "}\n";
 
-const char* const kSourceLocationTestInput =
+char const* const kSourceLocationTestInput =
     "syntax = \"proto3\";\n"
     "import \"google/api/annotations.proto\";\n"
     "message A {\n"
@@ -322,7 +322,7 @@ const char* const kSourceLocationTestInput =
     "  }\n"
     "}\n";
 
-const char* const kServiceProto =
+char const* const kServiceProto =
     "syntax = \"proto3\";\n"
     "package google.protobuf;\n"
     "import \"google/api/annotations.proto\";\n"
@@ -489,7 +489,7 @@ TEST_F(CreateMethodVarsTest, FilesParseSuccessfully) {
 
 TEST_F(CreateMethodVarsTest,
        FormatMethodCommentsFromRpcCommentsProtobufRequest) {
-  const FileDescriptor* service_file_descriptor =
+  FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
   EXPECT_EQ(
       FormatMethodCommentsFromRpcComments(
@@ -503,7 +503,7 @@ TEST_F(CreateMethodVarsTest,
 
 TEST_F(CreateMethodVarsTest,
        FormatMethodCommentsFromRpcCommentsApiMethodSignature) {
-  const FileDescriptor* service_file_descriptor =
+  FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
   EXPECT_EQ(FormatMethodCommentsFromRpcComments(
                 *service_file_descriptor->service(0)->method(6),
@@ -513,7 +513,7 @@ TEST_F(CreateMethodVarsTest,
 }
 
 TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
-  const FileDescriptor* service_file_descriptor =
+  FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
   vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
   auto method_iter = vars_.find(GetParam().method);
@@ -703,7 +703,7 @@ INSTANTIATE_TEST_SUITE_P(
             "method_longrunning_deduced_return_doxygen_link",
             "[google::protobuf::Bar](https://github.com/googleapis/"
             "googleapis/blob/foo/google/foo/v1/service.proto#L14)")),
-    [](const testing::TestParamInfo<CreateMethodVarsTest::ParamType>& info) {
+    [](testing::TestParamInfo<CreateMethodVarsTest::ParamType> const& info) {
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
       return pieces.back() + "_" + info.param.vars_key;
     });

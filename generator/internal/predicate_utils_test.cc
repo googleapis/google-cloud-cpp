@@ -607,7 +607,7 @@ class StringSourceTree : public google::protobuf::compiler::SourceTree {
       : files_(std::move(files)) {}
 
   google::protobuf::io::ZeroCopyInputStream* Open(
-      const std::string& filename) override {
+      std::string const& filename) override {
     auto iter = files_.find(filename);
     return iter == files_.end() ? nullptr
                                 : new google::protobuf::io::ArrayInputStream(
@@ -625,15 +625,15 @@ class AbortingErrorCollector : public DescriptorPool::ErrorCollector {
   AbortingErrorCollector(AbortingErrorCollector const&) = delete;
   AbortingErrorCollector& operator=(AbortingErrorCollector const&) = delete;
 
-  void AddError(const std::string& filename, const std::string& element_name,
-                const google::protobuf::Message*, ErrorLocation,
-                const std::string& error_message) override {
+  void AddError(std::string const& filename, std::string const& element_name,
+                google::protobuf::Message const*, ErrorLocation,
+                std::string const& error_message) override {
     GCP_LOG(FATAL) << "AddError() called unexpectedly: " << filename << " ["
                    << element_name << "]: " << error_message;
   }
 };
 
-const char* const kStreamingServiceProto =
+char const* const kStreamingServiceProto =
     "syntax = \"proto3\";\n"
     "package google.protobuf;\n"
     "// Leading comments about message Foo.\n"
@@ -700,7 +700,7 @@ class StreamingReadTest : public testing::Test {
 };
 
 TEST_F(StreamingReadTest, IsStreamingRead) {
-  const FileDescriptor* service_file_descriptor =
+  FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/cloud/foo/streaming.proto");
   EXPECT_TRUE(IsStreamingRead(*service_file_descriptor->service(0)->method(0)));
   EXPECT_FALSE(

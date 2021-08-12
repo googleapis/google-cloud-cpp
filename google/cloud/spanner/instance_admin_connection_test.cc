@@ -363,7 +363,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfigTooManyTransients) {
 }
 
 TEST(InstanceAdminConnectionTest, ListInstanceConfigsSuccess) {
-  constexpr const char* kInstanceConfigText[3] = {
+  constexpr char const* kInstanceConfigText[3] = {
       R"pb(
         name: "projects/test-project/instanceConfigs/test-instance-config-1"
         display_name: "test display name 1"

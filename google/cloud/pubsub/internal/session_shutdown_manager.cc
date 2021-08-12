@@ -39,7 +39,7 @@ SessionShutdownManager::~SessionShutdownManager() {
   done_.set_value(std::move(result_));
 }
 
-void SessionShutdownManager::LogStart(const char* caller, const char* name) {
+void SessionShutdownManager::LogStart(char const* caller, char const* name) {
   auto increase_count = [&] { return ++ops_[name]; };
   GCP_LOG(TRACE) << "operation <" << name << "> starting from " << caller
                  << ", shutdown=" << shutdown_ << ", signaled=" << signaled_

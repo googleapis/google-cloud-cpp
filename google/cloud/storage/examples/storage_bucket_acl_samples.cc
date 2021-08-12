@@ -200,7 +200,7 @@ void RemoveBucketOwner(google::cloud::storage::Client client,
     std::vector<gcs::BucketAccessControl> original_acl =
         original_metadata->acl();
     auto it = std::find_if(original_acl.begin(), original_acl.end(),
-                           [entity](const gcs::BucketAccessControl& entry) {
+                           [entity](gcs::BucketAccessControl const& entry) {
                              return entry.entity() == entity &&
                                     entry.role() ==
                                         gcs::BucketAccessControl::ROLE_OWNER();

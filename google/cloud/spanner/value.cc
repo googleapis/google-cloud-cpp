@@ -150,7 +150,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
              << spanner_internal::FromProto(t, v).get<absl::CivilDay>().value();
 
     case google::spanner::v1::TypeCode::ARRAY: {
-      const char* delimiter = "";
+      char const* delimiter = "";
       os << '[';
       for (auto const& e : v.list_value().values()) {
         os << delimiter;
@@ -161,7 +161,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     }
 
     case google::spanner::v1::TypeCode::STRUCT: {
-      const char* delimiter = "";
+      char const* delimiter = "";
       os << '(';
       for (int i = 0; i < v.list_value().values_size(); ++i) {
         os << delimiter;

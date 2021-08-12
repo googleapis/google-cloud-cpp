@@ -87,7 +87,7 @@ ObjectReadStreambuf::int_type ObjectReadStreambuf::ReportError(Status status) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-void ObjectReadStreambuf::ThrowHashMismatchDelegate(const char* function_name) {
+void ObjectReadStreambuf::ThrowHashMismatchDelegate(char const* function_name) {
   std::string msg;
   msg += function_name;
   msg += "(): mismatched hashes in download";

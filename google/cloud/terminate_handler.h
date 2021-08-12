@@ -38,7 +38,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  * It should handle the error, whose description are given in *msg* and should
  * never return.
  */
-using TerminateHandler = std::function<void(const char* msg)>;
+using TerminateHandler = std::function<void(char const* msg)>;
 
 /**
  * Install terminate handler and get the old one atomically.
@@ -65,7 +65,7 @@ TerminateHandler GetTerminateHandler();
  * This function should never return.
  *
  */
-[[noreturn]] void Terminate(const char* msg);
+[[noreturn]] void Terminate(char const* msg);
 
 //@}
 
