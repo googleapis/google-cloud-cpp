@@ -229,7 +229,7 @@ TEST(RowStreamIterator, Basics) {
   EXPECT_STATUS_OK(*it);
   EXPECT_EQ(rows[2], **it);
 
-  // Tests const op*() and op->()
+  // Tests op*() const and op->() const
   auto const copy = it;
   EXPECT_EQ(copy, it);
   EXPECT_NE(copy, end);
@@ -350,7 +350,7 @@ TEST(TupleStreamIterator, Basics) {
   EXPECT_STATUS_OK(*it);
   EXPECT_EQ(std::make_tuple(3, "baz", true), **it);
 
-  // Tests const op*() and op->()
+  // Tests op*() const and op->() const
   auto const copy = it;
   EXPECT_EQ(copy, it);
   EXPECT_NE(copy, end);

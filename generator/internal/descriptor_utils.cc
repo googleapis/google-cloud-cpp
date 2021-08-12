@@ -47,7 +47,7 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 namespace {
-const char* const kGoogleapisProtoFileLinkPrefix =
+char const* const kGoogleapisProtoFileLinkPrefix =
     "https://github.com/googleapis/googleapis/blob/";
 
 std::string CppTypeToString(FieldDescriptor const* field) {

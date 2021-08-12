@@ -35,7 +35,7 @@ absl::optional<std::string> IncludePathForWellKnownProtobufType(
     google::protobuf::FieldDescriptor const& parameter) {
   // This hash is not intended to be comprehensive. Problematic types and their
   // includes should be added as needed.
-  static const auto* const kTypeIncludeMap =
+  static auto const* const kTypeIncludeMap =
       new absl::flat_hash_map<std::string, std::string>(
           {{"google.protobuf.Duration", "google/protobuf/duration.pb.h"}});
   if (parameter.type() == google::protobuf::FieldDescriptor::TYPE_MESSAGE) {
@@ -118,8 +118,8 @@ bool ServiceCodeGenerator::HasPaginatedMethod() const {
 
 bool ServiceCodeGenerator::HasMessageWithMapField() const {
   for (auto method : methods_) {
-    const auto* const request = method.get().input_type();
-    const auto* const response = method.get().output_type();
+    auto const* const request = method.get().input_type();
+    auto const* const response = method.get().output_type();
     for (int j = 0; j < request->field_count(); ++j) {
       if (request->field(j)->is_map()) {
         return true;
