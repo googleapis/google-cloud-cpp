@@ -1238,7 +1238,6 @@ void Quickstart(std::string const& project_id, std::string const& instance_id,
 
   auto rows =
       client.ExecuteQuery(spanner::SqlStatement("SELECT 'Hello World'"));
-
   using RowType = std::tuple<std::string>;
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
@@ -1977,10 +1976,10 @@ void SetRequestTag(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
   spanner::SqlStatement select(
       "SELECT SingerId, AlbumId, AlbumTitle FROM Albums");
-  auto opts = spanner::QueryOptions().set_request_tag(
-      "app=concert,env=dev,action=select");
   using RowType = std::tuple<std::int64_t, std::int64_t, std::string>;
 
+  auto opts = spanner::QueryOptions().set_request_tag(
+      "app=concert,env=dev,action=select");
   auto rows = client.ExecuteQuery(select, opts);
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
@@ -2040,9 +2039,9 @@ void QueryNewColumn(google::cloud::spanner::Client client) {
 
   spanner::SqlStatement select(
       "SELECT SingerId, AlbumId, MarketingBudget FROM Albums");
-
   using RowType =
       std::tuple<std::int64_t, std::int64_t, absl::optional<std::int64_t>>;
+
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());

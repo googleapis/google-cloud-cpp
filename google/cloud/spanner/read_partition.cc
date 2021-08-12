@@ -55,15 +55,12 @@ ReadPartition::ReadPartition(std::string transaction_id,
         break;
     }
   }
-  if (read_options.request_tag.has_value() &&
-      !read_options.request_tag->empty()) {
+  if (read_options.request_tag.has_value()) {
     proto_.mutable_request_options()->set_request_tag(
         *std::move(read_options.request_tag));
   }
-  if (!transaction_tag.empty()) {
-    proto_.mutable_request_options()->set_transaction_tag(
-        std::move(transaction_tag));
-  }
+  proto_.mutable_request_options()->set_transaction_tag(
+      std::move(transaction_tag));
 }
 
 google::cloud::spanner::ReadOptions ReadPartition::ReadOptions() const {

@@ -57,10 +57,8 @@ StatusOr<std::string> SerializeQueryPartition(
   // QueryOptions are not serialized, but are instead applied on the remote
   // side during the Client::ExecuteQuery(QueryPartition, QueryOptions) call.
   // However, we do encode any transaction tag in proto.request_options.
-  if (!query_partition.transaction_tag().empty()) {
-    proto.mutable_request_options()->set_transaction_tag(
-        query_partition.transaction_tag());
-  }
+  proto.mutable_request_options()->set_transaction_tag(
+      query_partition.transaction_tag());
 
   std::string serialized_proto;
   if (proto.SerializeToString(&serialized_proto)) {

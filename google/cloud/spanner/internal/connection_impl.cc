@@ -361,12 +361,8 @@ StatusOr<spanner_proto::Transaction> ConnectionImpl::BeginTransaction(
   // `begin.request_options.priority` is ignored. To set the priority
   // for a transaction, set it on the reads and writes that are part of
   // the transaction instead.
-  if (!request_tag.empty()) {
-    begin.mutable_request_options()->set_request_tag(request_tag);
-  }
-  if (!transaction_tag.empty()) {
-    begin.mutable_request_options()->set_transaction_tag(transaction_tag);
-  }
+  begin.mutable_request_options()->set_request_tag(std::move(request_tag));
+  begin.mutable_request_options()->set_transaction_tag(transaction_tag);
 
   auto stub = session_pool_->GetStub(*session);
   auto response = RetryLoop(
@@ -412,14 +408,11 @@ spanner::RowStream ConnectionImpl::ReadImpl(
   }
   request.mutable_request_options()->set_priority(
       ProtoRequestPriority(params.read_options.request_priority));
-  if (params.read_options.request_tag.has_value() &&
-      !params.read_options.request_tag->empty()) {
+  if (params.read_options.request_tag.has_value()) {
     request.mutable_request_options()->set_request_tag(
         *std::move(params.read_options.request_tag));
   }
-  if (!transaction_tag.empty()) {
-    request.mutable_request_options()->set_transaction_tag(transaction_tag);
-  }
+  request.mutable_request_options()->set_transaction_tag(transaction_tag);
 
   // Capture a copy of `stub` to ensure the `shared_ptr<>` remains valid through
   // the lifetime of the lambda.
@@ -582,14 +575,11 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
   }
   request.mutable_request_options()->set_priority(
       ProtoRequestPriority(params.query_options.request_priority()));
-  if (params.query_options.request_tag().has_value() &&
-      !params.query_options.request_tag()->empty()) {
+  if (params.query_options.request_tag().has_value()) {
     request.mutable_request_options()->set_request_tag(
         *params.query_options.request_tag());
   }
-  if (!transaction_tag.empty()) {
-    request.mutable_request_options()->set_transaction_tag(transaction_tag);
-  }
+  request.mutable_request_options()->set_transaction_tag(transaction_tag);
 
   for (;;) {
     auto reader = retry_resume_fn(request);
@@ -861,12 +851,8 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
                 params.options.get<spanner::RequestPriorityOption>())
           : spanner_proto::RequestOptions::PRIORITY_UNSPECIFIED);
   auto const& request_tag = params.options.get<spanner::RequestTagOption>();
-  if (!request_tag.empty()) {
-    request.mutable_request_options()->set_request_tag(request_tag);
-  }
-  if (!transaction_tag.empty()) {
-    request.mutable_request_options()->set_transaction_tag(transaction_tag);
-  }
+  request.mutable_request_options()->set_request_tag(request_tag);
+  request.mutable_request_options()->set_transaction_tag(transaction_tag);
 
   auto stub = session_pool_->GetStub(*session);
   for (;;) {
@@ -973,12 +959,11 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
   request.set_return_commit_stats(params.options.return_stats());
   request.mutable_request_options()->set_priority(
       ProtoRequestPriority(params.options.request_priority()));
-  if (!transaction_tag.empty()) {
-    // params.options.transaction_tag() was either already used to set
-    // transaction_tag (for a library-generated transaction), or it is
-    // ignored (for a user-supplied transaction).
-    request.mutable_request_options()->set_transaction_tag(transaction_tag);
-  }
+
+  // params.options.transaction_tag() was either already used to set
+  // transaction_tag (for a library-generated transaction), or it is
+  // ignored (for a user-supplied transaction).
+  request.mutable_request_options()->set_transaction_tag(transaction_tag);
 
   if (s->selector_case() != spanner_proto::TransactionSelector::kId) {
     auto begin =

@@ -143,7 +143,7 @@ class TransactionImpl {
   std::condition_variable cond_;
   SessionHolder session_;
   StatusOr<google::spanner::v1::TransactionSelector> selector_;
-  std::string tag_;  // would be nicer as a selector_.begin.read_write.tag
+  std::string tag_;
   std::int64_t seqno_;
 };
 
