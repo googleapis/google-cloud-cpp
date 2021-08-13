@@ -73,7 +73,7 @@ Status ConnectionGenerator::GenerateHeader() {
     "    $product_internal_namespace$::$retry_traits_name$>;\n"
     "\n"
     "using $limited_error_count_retry_policy_name$ =\n"
-    "    google::cloud::internal::LimitedErrorCountRetryPolicy<\n"
+    "    ::google::cloud::internal::LimitedErrorCountRetryPolicy<\n"
     "        $product_internal_namespace$::$retry_traits_name$>;\n\n"
     //  clang-format on
   );

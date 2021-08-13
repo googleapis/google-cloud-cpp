@@ -38,11 +38,11 @@ using BigQueryReadRetryPolicy =
         bigquery_internal::BigQueryReadRetryTraits>;
 
 using BigQueryReadLimitedTimeRetryPolicy =
-    google::cloud::internal::LimitedTimeRetryPolicy<
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
         bigquery_internal::BigQueryReadRetryTraits>;
 
 using BigQueryReadLimitedErrorCountRetryPolicy =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<
+    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         bigquery_internal::BigQueryReadRetryTraits>;
 
 void BigQueryReadReadRowsStreamingUpdater(

@@ -22,7 +22,7 @@ namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
-using google::cloud::internal::Idempotency;
+using ::google::cloud::internal::Idempotency;
 
 class GoldenKitchenSinkIdempotencyPolicyTest : public ::testing::Test {
  protected:

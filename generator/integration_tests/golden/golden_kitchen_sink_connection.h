@@ -40,7 +40,7 @@ using GoldenKitchenSinkLimitedTimeRetryPolicy = ::google::cloud::internal::Limit
     golden_internal::GoldenKitchenSinkRetryTraits>;
 
 using GoldenKitchenSinkLimitedErrorCountRetryPolicy =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<
+    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         golden_internal::GoldenKitchenSinkRetryTraits>;
 
 void GoldenKitchenSinkTailLogEntriesStreamingUpdater(

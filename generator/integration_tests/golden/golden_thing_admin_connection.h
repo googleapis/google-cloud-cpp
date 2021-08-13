@@ -43,7 +43,7 @@ using GoldenThingAdminLimitedTimeRetryPolicy = ::google::cloud::internal::Limite
     golden_internal::GoldenThingAdminRetryTraits>;
 
 using GoldenThingAdminLimitedErrorCountRetryPolicy =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<
+    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         golden_internal::GoldenThingAdminRetryTraits>;
 
 class GoldenThingAdminConnection {

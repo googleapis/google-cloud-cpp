@@ -34,15 +34,15 @@ namespace logging {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 using LoggingServiceV2RetryPolicy =
-    google::cloud::internal::TraitBasedRetryPolicy<
+    ::google::cloud::internal::TraitBasedRetryPolicy<
         logging_internal::LoggingServiceV2RetryTraits>;
 
 using LoggingServiceV2LimitedTimeRetryPolicy =
-    google::cloud::internal::LimitedTimeRetryPolicy<
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
         logging_internal::LoggingServiceV2RetryTraits>;
 
 using LoggingServiceV2LimitedErrorCountRetryPolicy =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<
+    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         logging_internal::LoggingServiceV2RetryTraits>;
 
 class LoggingServiceV2Connection {

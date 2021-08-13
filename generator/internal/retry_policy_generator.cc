@@ -61,7 +61,7 @@ Status RetryPolicyGenerator::GenerateHeader() {
     "\n"
     "/// A retry policy that limits the number of times a request can fail.\n"
     "using LimitedErrorCountRetryPolicy =\n"
-    "    google::cloud::internal::LimitedErrorCountRetryPolicy<\n"
+    "    ::google::cloud::internal::LimitedErrorCountRetryPolicy<\n"
     "        $product_internal_namespace$::RetryTraits>;\n\n"
     //  clang-format on
   );

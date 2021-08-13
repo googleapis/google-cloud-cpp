@@ -129,7 +129,7 @@ Status IdempotencyPolicyGenerator::GenerateCc() {
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
 
-  CcPrint("using google::cloud::internal::Idempotency;\n\n");
+  CcPrint("using ::google::cloud::internal::Idempotency;\n\n");
 
   CcPrint(  // clang-format off
     "$idempotency_class_name$::~$idempotency_class_name$() = default;\n\n");
