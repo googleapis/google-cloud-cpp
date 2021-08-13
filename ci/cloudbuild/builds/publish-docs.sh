@@ -22,6 +22,7 @@ source module ci/cloudbuild/builds/lib/cmake.sh
 version=""
 doc_args=(
   "-DCMAKE_BUILD_TYPE=Debug"
+  "-DGOOGLE_CLOUD_CPP_GENERATE_DOXYGEN=ON"
   "-DGOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV=ON"
   "-DDOXYGEN_CLANG_OPTIONS=-resource-dir=$(clang -print-resource-dir)"
 )

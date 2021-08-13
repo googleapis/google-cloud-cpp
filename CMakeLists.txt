@@ -124,6 +124,10 @@ if ("${GOOGLE_CLOUD_CPP_ENABLE_CCACHE}")
     endif ()
 endif ()
 
+# Search for Doxygen and create the targets for it if it exists
+option(GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN "Generate Doxygen documentation" OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
+
 # The default source for dependencies.
 set(GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
     "unused"
