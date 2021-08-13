@@ -54,7 +54,7 @@ std::vector<std::shared_ptr<StorageStub>> AsPlainStubs(
 std::unique_ptr<StorageStub::ObjectMediaStream> MakeObjectMediaStream(
     std::unique_ptr<grpc::ClientContext>,
     google::storage::v1::GetObjectMediaRequest const&) {
-  using ErrorStream = google::cloud::internal::StreamingReadRpcError<
+  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::storage::v1::GetObjectMediaResponse>;
   return absl::make_unique<ErrorStream>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
@@ -62,7 +62,7 @@ std::unique_ptr<StorageStub::ObjectMediaStream> MakeObjectMediaStream(
 
 std::unique_ptr<StorageStub::InsertStream> MakeInsertStream(
     std::unique_ptr<grpc::ClientContext>) {
-  using ErrorStream = google::cloud::internal::StreamingWriteRpcError<
+  using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
       google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
   return absl::make_unique<ErrorStream>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));

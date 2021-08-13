@@ -22,7 +22,7 @@ namespace {
 void SetObjectEventBasedHold(google::cloud::storage::Client client,
                              std::vector<std::string> const& argv) {
   //! [set event based hold] [START storage_set_event_based_hold]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
@@ -47,7 +47,7 @@ void SetObjectEventBasedHold(google::cloud::storage::Client client,
 void ReleaseObjectEventBasedHold(google::cloud::storage::Client client,
                                  std::vector<std::string> const& argv) {
   //! [release event based hold] [START storage_release_event_based_hold]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
@@ -72,7 +72,7 @@ void ReleaseObjectEventBasedHold(google::cloud::storage::Client client,
 void SetObjectTemporaryHold(google::cloud::storage::Client client,
                             std::vector<std::string> const& argv) {
   //! [set temporary hold] [START storage_set_temporary_hold]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
@@ -97,7 +97,7 @@ void SetObjectTemporaryHold(google::cloud::storage::Client client,
 void ReleaseObjectTemporaryHold(google::cloud::storage::Client client,
                                 std::vector<std::string> const& argv) {
   //! [release temporary hold] [START storage_release_temporary_hold]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {

@@ -83,7 +83,7 @@
 /// Helper functions and types for the apply_read_latency_benchmark.
 namespace {
 
-namespace bigtable = google::cloud::bigtable;
+namespace bigtable = ::google::cloud::bigtable;
 using bigtable::benchmarks::Benchmark;
 using bigtable::benchmarks::BenchmarkResult;
 using bigtable::benchmarks::FormatDuration;
@@ -251,8 +251,8 @@ BenchmarkResult AsyncBenchmark::Run(std::chrono::seconds test_duration,
 }
 
 void AsyncBenchmark::RunOneAsyncReadRow() {
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
 
   auto row_key = [this] {
     std::lock_guard<std::mutex> lk(mu_);

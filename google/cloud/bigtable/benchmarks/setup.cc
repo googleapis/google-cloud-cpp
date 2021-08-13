@@ -61,7 +61,7 @@ BenchmarkSetup::BenchmarkSetup(BenchmarkSetupData setup_data)
 
 google::cloud::StatusOr<BenchmarkSetup> MakeBenchmarkSetup(
     std::string const& prefix, int& argc, char* argv[]) {
-  using google::cloud::internal::GetEnv;
+  using ::google::cloud::internal::GetEnv;
 
   BenchmarkSetupData setup_data;
   setup_data.start_time = FormattedStartTime();

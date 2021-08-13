@@ -38,23 +38,23 @@ struct StatusTraits {
 
 /// The retry policy base class
 using RetryPolicy =
-    google::cloud::internal::TraitBasedRetryPolicy<internal::StatusTraits>;
+    ::google::cloud::internal::TraitBasedRetryPolicy<internal::StatusTraits>;
 
 /// Keep retrying until some time has expired.
 using LimitedTimeRetryPolicy =
-    google::cloud::internal::LimitedTimeRetryPolicy<internal::StatusTraits>;
+    ::google::cloud::internal::LimitedTimeRetryPolicy<internal::StatusTraits>;
 
 /// Keep retrying until the error count has been exceeded.
 using LimitedErrorCountRetryPolicy =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<
+    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         internal::StatusTraits>;
 
 /// The backoff policy base class.
-using BackoffPolicy = google::cloud::internal::BackoffPolicy;
+using BackoffPolicy = ::google::cloud::internal::BackoffPolicy;
 
 /// Implement truncated exponential backoff with randomization.
 using ExponentialBackoffPolicy =
-    google::cloud::internal::ExponentialBackoffPolicy;
+    ::google::cloud::internal::ExponentialBackoffPolicy;
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

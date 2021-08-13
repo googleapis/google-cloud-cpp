@@ -35,7 +35,7 @@ namespace cloud {
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 
-using google::cloud::internal::Idempotency;
+using ::google::cloud::internal::Idempotency;
 
 class DefaultPartialResultSetReader : public PartialResultSetReader {
  public:

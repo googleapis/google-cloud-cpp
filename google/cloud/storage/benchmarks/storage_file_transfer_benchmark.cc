@@ -25,8 +25,8 @@
 #include <sstream>
 
 namespace {
-namespace gcs = google::cloud::storage;
-namespace gcs_bm = google::cloud::storage_benchmarks;
+namespace gcs = ::google::cloud::storage;
+namespace gcs_bm = ::google::cloud::storage_benchmarks;
 
 char const kDescription[] = R"""(
 A throughput benchmark for the Google Cloud Storage C++ client library.
@@ -264,8 +264,8 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
 }
 
 google::cloud::StatusOr<Options> SelfTest() {
-  using google::cloud::internal::GetEnv;
-  using google::cloud::internal::Sample;
+  using ::google::cloud::internal::GetEnv;
+  using ::google::cloud::internal::Sample;
 
   google::cloud::Status const self_test_error(
       google::cloud::StatusCode::kUnknown, "self-test failure");

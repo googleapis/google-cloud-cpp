@@ -38,7 +38,7 @@ using ::testing::Contains;
 using ::testing::EndsWith;
 using ::testing::HasSubstr;
 using ::testing::Not;
-namespace btadmin = google::bigtable::admin::v2;
+namespace btadmin = ::google::bigtable::admin::v2;
 
 class InstanceAdminIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {

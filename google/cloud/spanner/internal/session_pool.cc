@@ -37,7 +37,7 @@ inline namespace SPANNER_CLIENT_NS {
 
 namespace spanner_proto = ::google::spanner::v1;
 
-using google::cloud::internal::Idempotency;
+using ::google::cloud::internal::Idempotency;
 
 std::shared_ptr<SessionPool> MakeSessionPool(
     spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,

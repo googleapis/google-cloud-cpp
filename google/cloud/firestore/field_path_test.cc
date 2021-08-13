@@ -15,7 +15,7 @@
 #include "google/cloud/firestore/field_path.h"
 #include <gtest/gtest.h>
 
-namespace firestore = google::cloud::firestore;
+namespace firestore = ::google::cloud::firestore;
 
 TEST(FieldPath, EmptyStringInConstructor) {
   const std::vector<std::string> parts = {"a", "", "b"};

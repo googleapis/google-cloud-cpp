@@ -56,7 +56,7 @@
 
 /// Helper functions and types for the scan_throughput_benchmark.
 namespace {
-namespace bigtable = google::cloud::bigtable;
+namespace bigtable = ::google::cloud::bigtable;
 using bigtable::benchmarks::Benchmark;
 using bigtable::benchmarks::BenchmarkResult;
 using bigtable::benchmarks::FormatDuration;

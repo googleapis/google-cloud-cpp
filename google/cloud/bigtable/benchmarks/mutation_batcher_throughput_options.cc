@@ -23,10 +23,10 @@ namespace cloud {
 namespace bigtable {
 namespace benchmarks {
 
-using google::cloud::testing_util::BuildUsage;
-using google::cloud::testing_util::OptionDescriptor;
-using google::cloud::testing_util::OptionsParse;
-using google::cloud::testing_util::ParseDuration;
+using ::google::cloud::testing_util::BuildUsage;
+using ::google::cloud::testing_util::OptionDescriptor;
+using ::google::cloud::testing_util::OptionsParse;
+using ::google::cloud::testing_util::ParseDuration;
 
 google::cloud::StatusOr<MutationBatcherThroughputOptions>
 ParseMutationBatcherThroughputOptions(std::vector<std::string> const& argv,

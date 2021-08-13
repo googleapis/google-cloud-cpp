@@ -54,8 +54,8 @@ class SequentialBatchSink
   explicit SequentialBatchSink(
       std::shared_ptr<pubsub_internal::BatchSink> sink);
 
-  using PublishResponse = google::pubsub::v1::PublishResponse;
-  using PublishRequest = google::pubsub::v1::PublishRequest;
+  using PublishResponse = ::google::pubsub::v1::PublishResponse;
+  using PublishRequest = ::google::pubsub::v1::PublishRequest;
 
   void OnPublish(Status s);
   std::weak_ptr<SequentialBatchSink> WeakFromThis() {

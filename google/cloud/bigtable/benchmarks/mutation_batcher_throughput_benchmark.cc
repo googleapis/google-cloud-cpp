@@ -31,13 +31,13 @@
 
 namespace {
 
-namespace cbt = google::cloud::bigtable;
+namespace cbt = ::google::cloud::bigtable;
 using cbt::benchmarks::MutationBatcherThroughputOptions;
 using cbt::benchmarks::ParseMutationBatcherThroughputOptions;
-using google::cloud::Status;
-using google::cloud::StatusCode;
-using google::cloud::StatusOr;
-using google::cloud::internal::GetEnv;
+using ::google::cloud::Status;
+using ::google::cloud::StatusCode;
+using ::google::cloud::StatusOr;
+using ::google::cloud::internal::GetEnv;
 
 char const kDescription[] =
     R"""(A benchmark to measure the throughput of the `MutationBatcher` class.
@@ -135,14 +135,14 @@ int main(int argc, char* argv[]) {
   }
   if (options->exit_after_parse) return 0;
 
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::CompletionQueue;
-  using google::cloud::future;
-  using google::cloud::Options;
-  using google::cloud::Status;
-  using google::cloud::StatusOr;
-  using google::cloud::bigtable::testing::RandomTableId;
-  using google::cloud::internal::AutomaticallyCreatedBackgroundThreads;
+  namespace cbt = ::google::cloud::bigtable;
+  using ::google::cloud::CompletionQueue;
+  using ::google::cloud::future;
+  using ::google::cloud::Options;
+  using ::google::cloud::Status;
+  using ::google::cloud::StatusOr;
+  using ::google::cloud::bigtable::testing::RandomTableId;
+  using ::google::cloud::internal::AutomaticallyCreatedBackgroundThreads;
   using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
 
   cbt::TableAdmin admin(cbt::CreateDefaultAdminClient(options->project_id, {}),

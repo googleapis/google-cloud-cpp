@@ -85,9 +85,9 @@ class SharedBackoffPolicyMock : public bigtable::RPCBackoffPolicy {
   std::shared_ptr<BackoffPolicyMock> state_;
 };
 
-using google::bigtable::admin::v2::Cluster;
-using google::bigtable::admin::v2::ListClustersRequest;
-using google::bigtable::admin::v2::ListClustersResponse;
+using ::google::bigtable::admin::v2::Cluster;
+using ::google::bigtable::admin::v2::ListClustersRequest;
+using ::google::bigtable::admin::v2::ListClustersResponse;
 
 class AsyncMultipageFutureTest : public ::testing::Test {
  public:

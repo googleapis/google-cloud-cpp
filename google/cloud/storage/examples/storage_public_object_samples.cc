@@ -20,12 +20,12 @@
 
 namespace {
 
-using google::cloud::storage::examples::Usage;
+using ::google::cloud::storage::examples::Usage;
 
 void MakeObjectPublic(google::cloud::storage::Client client,
                       std::vector<std::string> const& argv) {
   //! [make object public] [START storage_make_public]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
@@ -46,7 +46,7 @@ void ReadObjectUnauthenticated(std::vector<std::string> const& argv) {
     throw Usage{"read-object-unauthenticated <bucket-name> <object-name>"};
   }
   //! [download_public_file] [START storage_download_public_file]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   [](std::string const& bucket_name, std::string const& object_name) {
     // Create a client that does not authenticate with the server.
     auto client = gcs::Client{

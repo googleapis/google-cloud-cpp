@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) try {
   std::string const table_name = argv[2];
 
   // Create a namespace alias to make the code easier to read.
-  namespace bigquery = google::cloud::bigquery;
+  namespace bigquery = ::google::cloud::bigquery;
   constexpr int kMaxReadStreams = 1;
   // Create the ReadSession.
   auto client =

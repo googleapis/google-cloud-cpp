@@ -27,7 +27,7 @@
 
 namespace {
 
-using google::cloud::bigtable::examples::Usage;
+using ::google::cloud::bigtable::examples::Usage;
 
 void BigtableHelloWorld(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
@@ -39,8 +39,8 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
 
   // Create a namespace alias to make the code easier to read.
   //! [aliases]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  namespace cbt = ::google::cloud::bigtable;
+  using ::google::cloud::StatusOr;
   //! [aliases]
 
   // Connect to the Cloud Bigtable Admin API.
@@ -135,7 +135,7 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
 
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
 
   if (!argv.empty()) throw Usage{"auto"};
   if (!examples::RunAdminIntegrationTests()) return;

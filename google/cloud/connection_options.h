@@ -234,7 +234,7 @@ class ConnectionOptions {
     return *this;
   }
 
-  using BackgroundThreadsFactory = google::cloud::BackgroundThreadsFactory;
+  using BackgroundThreadsFactory = ::google::cloud::BackgroundThreadsFactory;
   BackgroundThreadsFactory background_threads_factory() const {
     if (background_threads_factory_) return background_threads_factory_;
     auto const s = background_thread_pool_size_;

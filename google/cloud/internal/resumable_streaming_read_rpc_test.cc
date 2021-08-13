@@ -80,11 +80,12 @@ class MockStub {
 };
 
 using RetryPolicyForTest =
-    google::cloud::internal::TraitBasedRetryPolicy<TestRetryablePolicy>;
+    ::google::cloud::internal::TraitBasedRetryPolicy<TestRetryablePolicy>;
 using LimitedTimeRetryPolicyForTest =
-    google::cloud::internal::LimitedTimeRetryPolicy<TestRetryablePolicy>;
+    ::google::cloud::internal::LimitedTimeRetryPolicy<TestRetryablePolicy>;
 using LimitedErrorCountRetryPolicyForTest =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<TestRetryablePolicy>;
+    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
+        TestRetryablePolicy>;
 
 std::unique_ptr<RetryPolicyForTest> DefaultRetryPolicy() {
   // With maximum_failures==2 it tolerates up to 2 failures, so the *third*

@@ -116,7 +116,7 @@ AdminClient::AsyncRestoreTable(
   return {};
 }
 
-namespace btadmin = google::bigtable::admin::v2;
+namespace btadmin = ::google::bigtable::admin::v2;
 
 /**
  * An AdminClient for single-threaded programs that refreshes credentials on all
@@ -142,7 +142,7 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
     }
   };
 
-  using Impl = google::cloud::bigtable::internal::CommonClient<
+  using Impl = ::google::cloud::bigtable::internal::CommonClient<
       AdminTraits, btadmin::BigtableTableAdmin>;
 
  public:

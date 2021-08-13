@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) try {
   std::string const table_id = argv[3];
 
   // Create a namespace alias to make the code easier to read.
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
 
   cbt::Table table(cbt::CreateDefaultDataClient(project_id, instance_id,
                                                 cbt::ClientOptions()),

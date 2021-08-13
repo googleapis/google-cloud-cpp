@@ -37,7 +37,7 @@ std::unique_ptr<pubsub_testing::MockAsyncPullStream> FakeAsyncStreamingPull(
     return cq.MakeRelativeTimer(us(10)).then([](TimerFuture) { return true; });
   };
 
-  using Response = google::pubsub::v1::StreamingPullResponse;
+  using Response = ::google::pubsub::v1::StreamingPullResponse;
   class MessageGenerator {
    public:
     MessageGenerator() = default;

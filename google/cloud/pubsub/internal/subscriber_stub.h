@@ -71,7 +71,7 @@ class SubscriberStub {
       grpc::ClientContext& client_context,
       google::pubsub::v1::ModifyPushConfigRequest const& request) = 0;
 
-  using AsyncPullStream = google::cloud::internal::AsyncStreamingReadWriteRpc<
+  using AsyncPullStream = ::google::cloud::internal::AsyncStreamingReadWriteRpc<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>;
 

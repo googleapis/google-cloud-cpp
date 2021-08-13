@@ -34,7 +34,7 @@ using MockAsyncLongrunningOpReader =
     ::google::cloud::testing_util::MockAsyncResponseReader<
         google::longrunning::Operation>;
 
-namespace btadmin = google::bigtable::admin::v2;
+namespace btadmin = ::google::bigtable::admin::v2;
 
 class LoggingInstanceAdminClientTest : public ::testing::Test {
  protected:

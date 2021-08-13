@@ -24,7 +24,7 @@ namespace {
 void AddBucketDefaultKmsKey(google::cloud::storage::Client client,
                             std::vector<std::string> const& argv) {
   //! [add bucket kms key] [START storage_set_bucket_default_kms_key]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& key_name) {
@@ -53,7 +53,7 @@ void AddBucketDefaultKmsKey(google::cloud::storage::Client client,
 void GetBucketDefaultKmsKey(google::cloud::storage::Client client,
                             std::vector<std::string> const& argv) {
   //! [get bucket default kms key] [START storage_bucket_get_default_kms_key]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> metadata =
@@ -77,7 +77,7 @@ void RemoveBucketDefaultKmsKey(google::cloud::storage::Client client,
                                std::vector<std::string> const& argv) {
   //! [remove bucket default kms key]
   // [START storage_bucket_delete_default_kms_key]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> updated = client.PatchBucket(

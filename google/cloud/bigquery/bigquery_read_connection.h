@@ -33,15 +33,16 @@ namespace cloud {
 namespace bigquery {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-using BigQueryReadRetryPolicy = google::cloud::internal::TraitBasedRetryPolicy<
-    bigquery_internal::BigQueryReadRetryTraits>;
+using BigQueryReadRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        bigquery_internal::BigQueryReadRetryTraits>;
 
 using BigQueryReadLimitedTimeRetryPolicy =
-    google::cloud::internal::LimitedTimeRetryPolicy<
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
         bigquery_internal::BigQueryReadRetryTraits>;
 
 using BigQueryReadLimitedErrorCountRetryPolicy =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<
+    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         bigquery_internal::BigQueryReadRetryTraits>;
 
 void BigQueryReadReadRowsStreamingUpdater(

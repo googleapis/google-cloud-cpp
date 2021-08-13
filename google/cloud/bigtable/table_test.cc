@@ -24,7 +24,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 namespace btproto = ::google::bigtable::v2;
-using google::cloud::testing_util::FakeCompletionQueueImpl;
+using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 
 /// Define types and functions used in the tests.
 namespace {

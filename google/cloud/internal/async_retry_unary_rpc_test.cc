@@ -74,12 +74,12 @@ struct IsRetryableTraits {
 };
 
 using RpcRetryPolicy =
-    google::cloud::internal::TraitBasedRetryPolicy<IsRetryableTraits>;
+    ::google::cloud::internal::TraitBasedRetryPolicy<IsRetryableTraits>;
 using RpcLimitedErrorCountRetryPolicy =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<IsRetryableTraits>;
-using RpcBackoffPolicy = google::cloud::internal::BackoffPolicy;
+    ::google::cloud::internal::LimitedErrorCountRetryPolicy<IsRetryableTraits>;
+using RpcBackoffPolicy = ::google::cloud::internal::BackoffPolicy;
 using RpcExponentialBackoffPolicy =
-    google::cloud::internal::ExponentialBackoffPolicy;
+    ::google::cloud::internal::ExponentialBackoffPolicy;
 
 TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
   MockStub mock;

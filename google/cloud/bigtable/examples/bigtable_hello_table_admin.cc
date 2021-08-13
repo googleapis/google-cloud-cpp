@@ -27,7 +27,7 @@
 
 namespace {
 
-using google::cloud::bigtable::examples::Usage;
+using ::google::cloud::bigtable::examples::Usage;
 
 void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
@@ -40,8 +40,8 @@ void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
   std::string const table_id = argv[2];
 
   //! [aliases]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  namespace cbt = ::google::cloud::bigtable;
+  using ::google::cloud::StatusOr;
   //! [aliases]
 
   // Connect to the Cloud Bigtable admin endpoint.
@@ -120,7 +120,7 @@ void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
 
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
 
   if (!argv.empty()) throw google::cloud::bigtable::examples::Usage{"auto"};
   if (!examples::RunAdminIntegrationTests()) return;

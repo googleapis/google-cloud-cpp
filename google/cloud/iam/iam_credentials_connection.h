@@ -33,15 +33,15 @@ namespace iam {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 using IAMCredentialsRetryPolicy =
-    google::cloud::internal::TraitBasedRetryPolicy<
+    ::google::cloud::internal::TraitBasedRetryPolicy<
         iam_internal::IAMCredentialsRetryTraits>;
 
 using IAMCredentialsLimitedTimeRetryPolicy =
-    google::cloud::internal::LimitedTimeRetryPolicy<
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
         iam_internal::IAMCredentialsRetryTraits>;
 
 using IAMCredentialsLimitedErrorCountRetryPolicy =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<
+    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         iam_internal::IAMCredentialsRetryTraits>;
 
 class IAMCredentialsConnection {

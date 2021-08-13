@@ -33,14 +33,14 @@ namespace cloud {
 namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-using GoldenKitchenSinkRetryPolicy = google::cloud::internal::TraitBasedRetryPolicy<
+using GoldenKitchenSinkRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     golden_internal::GoldenKitchenSinkRetryTraits>;
 
-using GoldenKitchenSinkLimitedTimeRetryPolicy = google::cloud::internal::LimitedTimeRetryPolicy<
+using GoldenKitchenSinkLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
     golden_internal::GoldenKitchenSinkRetryTraits>;
 
 using GoldenKitchenSinkLimitedErrorCountRetryPolicy =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<
+    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         golden_internal::GoldenKitchenSinkRetryTraits>;
 
 void GoldenKitchenSinkTailLogEntriesStreamingUpdater(

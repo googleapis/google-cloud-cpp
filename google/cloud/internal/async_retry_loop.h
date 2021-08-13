@@ -77,7 +77,7 @@ class AsyncRetryLoopImpl
         request_(std::move(request)),
         location_(location) {}
 
-  using ReturnType = google::cloud::internal::invoke_result_t<
+  using ReturnType = ::google::cloud::internal::invoke_result_t<
       Functor, google::cloud::CompletionQueue&,
       std::unique_ptr<grpc::ClientContext>, Request const&>;
   using T = typename FutureValueType<ReturnType>::value_type;

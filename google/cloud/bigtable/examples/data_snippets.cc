@@ -28,12 +28,12 @@
 
 namespace {
 
-using google::cloud::bigtable::examples::Usage;
+using ::google::cloud::bigtable::examples::Usage;
 
 void Apply(google::cloud::bigtable::Table table,
            std::vector<std::string> const& argv) {
   //! [apply]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   [](cbt::Table table, std::string const& row_key) {
     auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::system_clock::now().time_since_epoch());
@@ -53,7 +53,7 @@ void Apply(google::cloud::bigtable::Table table,
 void ApplyRelaxedIdempotency(google::cloud::bigtable::Table const& table,
                              std::vector<std::string> const& argv) {
   //! [apply relaxed idempotency]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& table_id, std::string const& row_key) {
     cbt::Table table(cbt::CreateDefaultDataClient(project_id, instance_id,
@@ -74,7 +74,7 @@ void ApplyRelaxedIdempotency(google::cloud::bigtable::Table const& table,
 void ApplyCustomRetry(google::cloud::bigtable::Table const& table,
                       std::vector<std::string> const& argv) {
   //! [apply custom retry]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& table_id, std::string const& row_key) {
     cbt::Table table(cbt::CreateDefaultDataClient(project_id, instance_id,
@@ -93,7 +93,7 @@ void ApplyCustomRetry(google::cloud::bigtable::Table const& table,
 void BulkApply(google::cloud::bigtable::Table table,
                std::vector<std::string> const&) {
   //! [bulk apply] [START bigtable_mutate_insert_rows]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   [](cbt::Table table) {
     // Write several rows in a single operation, each row has some trivial data.
     cbt::BulkMutation bulk;
@@ -138,8 +138,8 @@ void BulkApply(google::cloud::bigtable::Table table,
 void CheckAndMutate(google::cloud::bigtable::Table table,
                     std::vector<std::string> const& argv) {
   //! [check and mutate]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  namespace cbt = ::google::cloud::bigtable;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table, std::string const& row_key) {
     // Check if the latest value of the flip-flop column is "on".
     cbt::Filter predicate = cbt::Filter::Chain(
@@ -169,8 +169,8 @@ void CheckAndMutate(google::cloud::bigtable::Table table,
 void CheckAndMutateNotPresent(google::cloud::bigtable::Table table,
                               std::vector<std::string> const& argv) {
   //! [check and mutate not present]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  namespace cbt = ::google::cloud::bigtable;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table, std::string const& row_key) {
     // Check if the latest value of the "test-column" column is present,
     // regardless of its value.
@@ -197,8 +197,8 @@ void CheckAndMutateNotPresent(google::cloud::bigtable::Table table,
 void ReadModifyWrite(google::cloud::bigtable::Table table,
                      std::vector<std::string> const& argv) {
   //! [read modify write]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  namespace cbt = ::google::cloud::bigtable;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table, std::string const& row_key) {
     StatusOr<cbt::Row> row = table.ReadModifyWriteRow(
         row_key, cbt::ReadModifyWriteRule::IncrementAmount("fam", "counter", 1),
@@ -233,8 +233,8 @@ void ReadModifyWrite(google::cloud::bigtable::Table table,
 void SampleRows(google::cloud::bigtable::Table table,
                 std::vector<std::string> const&) {
   //! [sample row keys] [START bigtable_table_sample_splits]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  namespace cbt = ::google::cloud::bigtable;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     StatusOr<std::vector<cbt::RowKeySample>> samples = table.SampleRows();
     if (!samples) throw std::runtime_error(samples.status().message());
@@ -250,7 +250,7 @@ void SampleRows(google::cloud::bigtable::Table table,
 void DeleteAllCells(google::cloud::bigtable::Table table,
                     std::vector<std::string> const& argv) {
   //! [delete all cells]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   [](cbt::Table table, std::string const& row_key) {
     google::cloud::Status status =
         table.Apply(cbt::SingleRowMutation(row_key, cbt::DeleteFromRow()));
@@ -264,7 +264,7 @@ void DeleteAllCells(google::cloud::bigtable::Table table,
 void DeleteFamilyCells(google::cloud::bigtable::Table table,
                        std::vector<std::string> const& argv) {
   //! [delete family cells]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   [](cbt::Table table, std::string const& row_key,
      std::string const& family_name) {
     // Delete all cells within a family.
@@ -280,7 +280,7 @@ void DeleteFamilyCells(google::cloud::bigtable::Table table,
 void DeleteSelectiveFamilyCells(google::cloud::bigtable::Table table,
                                 std::vector<std::string> const& argv) {
   //! [delete selective family cells]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   [](cbt::Table table, std::string const& row_key,
      std::string const& family_name, std::string const& column_name) {
     // Delete selective cell within a family.
@@ -296,8 +296,8 @@ void DeleteSelectiveFamilyCells(google::cloud::bigtable::Table table,
 void RowExists(google::cloud::bigtable::Table table,
                std::vector<std::string> const& argv) {
   //! [row exists]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  namespace cbt = ::google::cloud::bigtable;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table, std::string const& row_key) {
     // Filter the results, turn any value into an empty string.
     cbt::Filter filter = cbt::Filter::StripValueTransformer();
@@ -348,7 +348,7 @@ void MutateDeleteColumns(std::vector<std::string> const& argv) {
   //! [connect data]
 
   // [START bigtable_mutate_delete_columns]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   [](cbt::Table table, std::string const& key,
      std::vector<std::pair<std::string, std::string>> const& columns) {
     cbt::SingleRowMutation mutation(key);
@@ -366,7 +366,7 @@ void MutateDeleteColumns(std::vector<std::string> const& argv) {
 void MutateDeleteRows(google::cloud::bigtable::Table table,
                       std::vector<std::string> const& argv) {
   // [START bigtable_mutate_delete_rows]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   [](cbt::Table table, std::vector<std::string> const& keys) {
     cbt::BulkMutation mutation;
     for (auto const& row_key : keys) {
@@ -439,7 +439,7 @@ void MutateInsertUpdateRows(google::cloud::bigtable::Table table,
   }
 
   // [START bigtable_insert_update_rows]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   [](cbt::Table table, std::string const& key,
      std::vector<InsertOrUpdate> const& inserts) {
     cbt::SingleRowMutation mutation(key);
@@ -480,9 +480,9 @@ void MutateInsertUpdateRowsCommand(std::vector<std::string> const& argv) {
 void RenameColumn(google::cloud::bigtable::Table table,
                   std::vector<std::string> const& argv) {
   // [START bigtable_mutate_mix_match]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::Status;
-  using google::cloud::StatusOr;
+  namespace cbt = ::google::cloud::bigtable;
+  using ::google::cloud::Status;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table, std::string const& key, std::string const& family,
      std::string const& old_name, std::string const& new_name) {
     StatusOr<std::pair<bool, cbt::Row>> row =
@@ -519,7 +519,7 @@ void InsertTestData(google::cloud::bigtable::Table table,
   // This is not a code sample in the normal sense, we do not display this code
   // in the documentation. We use it to populate data in the table used to run
   // the actual examples during the CI builds.
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   cbt::BulkMutation bulk;
   for (int i = 0; i != 5000; ++i) {
     // Note: This example uses sequential numeric IDs for simplicity, but
@@ -560,7 +560,7 @@ void InsertTestData(google::cloud::bigtable::Table table,
 // code is not extracted into the documentation.
 void PopulateTableHierarchy(google::cloud::bigtable::Table table,
                             std::vector<std::string> const&) {
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   // Write several rows.
   int q = 0;
   for (int i = 0; i != 4; ++i) {
@@ -584,7 +584,7 @@ void PopulateTableHierarchy(google::cloud::bigtable::Table table,
 void WriteSimple(google::cloud::bigtable::Table table,
                  std::vector<std::string> const&) {
   // [START bigtable_writes_simple]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   [](cbt::Table table) {
     auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::system_clock::now().time_since_epoch());
@@ -610,7 +610,7 @@ void WriteSimple(google::cloud::bigtable::Table table,
 void WriteBatch(google::cloud::bigtable::Table table,
                 std::vector<std::string> const&) {
   // [START bigtable_writes_batch]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   [](cbt::Table table) {
     auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::system_clock::now().time_since_epoch());
@@ -647,7 +647,7 @@ void WriteBatch(google::cloud::bigtable::Table table,
 void WriteIncrement(google::cloud::bigtable::Table table,
                     std::vector<std::string> const&) {
   // [START bigtable_writes_increment]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   [](cbt::Table table) {
     std::string row_key = "phone#4c410523#20190501";
     std::string column_family = "stats_summary";
@@ -666,7 +666,7 @@ void WriteIncrement(google::cloud::bigtable::Table table,
 void WriteConditionally(google::cloud::bigtable::Table table,
                         std::vector<std::string> const&) {
   // [START bigtable_writes_conditional]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   [](cbt::Table table) {
     auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::system_clock::now().time_since_epoch());
@@ -696,7 +696,7 @@ void WriteConditionally(google::cloud::bigtable::Table table,
 
 void ConfigureConnectionPoolSize(std::vector<std::string> const& argv) {
   // [START bigtable_configure_connection_pool]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& table_id) {
     auto constexpr kPoolSize = 10;
@@ -713,7 +713,7 @@ void ConfigureConnectionPoolSize(std::vector<std::string> const& argv) {
 
 void RunMutateExamples(google::cloud::bigtable::TableAdmin admin,
                        google::cloud::internal::DefaultPRNG& generator) {
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
 
   auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
   auto schema = admin.CreateTable(
@@ -739,7 +739,7 @@ void RunMutateExamples(google::cloud::bigtable::TableAdmin admin,
 
 void RunWriteExamples(google::cloud::bigtable::TableAdmin admin,
                       google::cloud::internal::DefaultPRNG& generator) {
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
 
   auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
   auto schema = admin.CreateTable(
@@ -769,7 +769,7 @@ void RunWriteExamples(google::cloud::bigtable::TableAdmin admin,
 
 void RunDataExamples(google::cloud::bigtable::TableAdmin admin,
                      google::cloud::internal::DefaultPRNG& generator) {
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
 
   auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
   std::cout << "Creating table " << table_id << std::endl;
@@ -868,7 +868,7 @@ void RunDataExamples(google::cloud::bigtable::TableAdmin admin,
 
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
 
   if (!argv.empty()) throw google::cloud::bigtable::examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
@@ -902,7 +902,7 @@ void RunAll(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   google::cloud::testing_util::InstallCrashHandler(argv[0]);
 
-  using google::cloud::bigtable::examples::MakeCommandEntry;
+  using ::google::cloud::bigtable::examples::MakeCommandEntry;
   google::cloud::bigtable::examples::Commands commands = {
       MakeCommandEntry("apply", {"<row-key>"}, Apply),
       MakeCommandEntry("apply-relaxed-idempotency", {"<row-key>"},

@@ -36,14 +36,14 @@ namespace cloud {
 namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-using GoldenThingAdminRetryPolicy = google::cloud::internal::TraitBasedRetryPolicy<
+using GoldenThingAdminRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     golden_internal::GoldenThingAdminRetryTraits>;
 
-using GoldenThingAdminLimitedTimeRetryPolicy = google::cloud::internal::LimitedTimeRetryPolicy<
+using GoldenThingAdminLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
     golden_internal::GoldenThingAdminRetryTraits>;
 
 using GoldenThingAdminLimitedErrorCountRetryPolicy =
-    google::cloud::internal::LimitedErrorCountRetryPolicy<
+    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         golden_internal::GoldenThingAdminRetryTraits>;
 
 class GoldenThingAdminConnection {

@@ -99,7 +99,7 @@ class ExponentialBackoffPolicy : public RPCBackoffPolicy {
   std::chrono::milliseconds OnCompletion(grpc::Status const& status) override;
 
  private:
-  using Impl = google::cloud::internal::ExponentialBackoffPolicy;
+  using Impl = ::google::cloud::internal::ExponentialBackoffPolicy;
   Impl impl_;
 };
 

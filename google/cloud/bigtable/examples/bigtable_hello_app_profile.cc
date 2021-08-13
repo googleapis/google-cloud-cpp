@@ -23,12 +23,12 @@
 #include "google/cloud/testing_util/crash_handler.h"
 
 //! [cbt namespace]
-namespace cbt = google::cloud::bigtable;
+namespace cbt = ::google::cloud::bigtable;
 //! [cbt namespace]
 
 namespace {
 
-using google::cloud::bigtable::examples::Usage;
+using ::google::cloud::bigtable::examples::Usage;
 
 void HelloWorldAppProfile(std::vector<std::string> const& argv) {
   if (argv.size() != 4) {

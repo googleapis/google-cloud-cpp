@@ -74,12 +74,13 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 /// The base class for retry policies.
-using RetryPolicy = google::cloud::internal::TraitBasedRetryPolicy<
+using RetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     spanner_internal::SafeGrpcRetry>;
 
 /// A retry policy that limits based on time.
-using LimitedTimeRetryPolicy = google::cloud::internal::LimitedTimeRetryPolicy<
-    spanner_internal::SafeGrpcRetry>;
+using LimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        spanner_internal::SafeGrpcRetry>;
 
 /// A retry policy that limits the number of times a request can fail.
 using LimitedErrorCountRetryPolicy =
@@ -87,7 +88,7 @@ using LimitedErrorCountRetryPolicy =
         spanner_internal::SafeGrpcRetry>;
 
 /// The base class for transaction rerun policies.
-using TransactionRerunPolicy = google::cloud::internal::TraitBasedRetryPolicy<
+using TransactionRerunPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     spanner_internal::SafeTransactionRerun>;
 
 /// A transaction rerun policy that limits the duration of the rerun loop.

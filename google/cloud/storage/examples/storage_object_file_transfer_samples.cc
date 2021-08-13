@@ -25,7 +25,7 @@ namespace {
 void UploadFile(google::cloud::storage::Client client,
                 std::vector<std::string> const& argv) {
   //! [upload file] [START storage_upload_file]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& file_name,
      std::string const& bucket_name, std::string const& object_name) {
@@ -46,7 +46,7 @@ void UploadFile(google::cloud::storage::Client client,
 void UploadFileResumable(google::cloud::storage::Client client,
                          std::vector<std::string> const& argv) {
   //! [upload file resumable]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& file_name,
      std::string const& bucket_name, std::string const& object_name) {
@@ -68,7 +68,7 @@ void UploadFileResumable(google::cloud::storage::Client client,
 void ParallelUploadFile(google::cloud::storage::Client client,
                         std::vector<std::string> const& argv) {
   //! [parallel upload file]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& file_name,
      std::string const& bucket_name, std::string const& object_name) {
@@ -91,7 +91,7 @@ void ParallelUploadFile(google::cloud::storage::Client client,
 void DownloadFile(google::cloud::storage::Client client,
                   std::vector<std::string> const& argv) {
   //! [download file]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& file_name) {
     google::cloud::Status status =

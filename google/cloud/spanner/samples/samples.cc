@@ -73,7 +73,7 @@ void CreateInstance(google::cloud::spanner::InstanceAdminClient client,
                     std::string const& instance_id,
                     std::string const& display_name,
                     std::string const& config) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
   spanner::Instance in(project_id, instance_id);
 
   std::string instance_config =
@@ -97,7 +97,7 @@ void CreateInstanceWithProcessingUnits(
     google::cloud::spanner::InstanceAdminClient client,
     std::string const& project_id, std::string const& instance_id,
     std::string const& display_name, std::string const& config) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
   spanner::Instance in(project_id, instance_id);
 
   std::string instance_config =

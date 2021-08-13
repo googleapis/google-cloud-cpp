@@ -131,7 +131,7 @@ void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
   //! [START pubsub_quickstart_create_topic]
   //! [START pubsub_create_topic] [create-topic]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string project_id,
      std::string topic_id) {
     auto topic = client.CreateTopic(pubsub::TopicBuilder(
@@ -154,7 +154,7 @@ void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
 void GetTopic(google::cloud::pubsub::TopicAdminClient client,
               std::vector<std::string> const& argv) {
   //! [get-topic]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string project_id,
      std::string topic_id) {
     auto topic = client.GetTopic(
@@ -171,7 +171,7 @@ void GetTopic(google::cloud::pubsub::TopicAdminClient client,
 void UpdateTopic(google::cloud::pubsub::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
   //! [update-topic]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string project_id,
      std::string topic_id) {
     auto topic = client.UpdateTopic(
@@ -190,7 +190,7 @@ void UpdateTopic(google::cloud::pubsub::TopicAdminClient client,
 void ListTopics(google::cloud::pubsub::TopicAdminClient client,
                 std::vector<std::string> const& argv) {
   //! [START pubsub_list_topics] [list-topics]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string const& project_id) {
     int count = 0;
     for (auto const& topic : client.ListTopics(project_id)) {
@@ -209,7 +209,7 @@ void ListTopics(google::cloud::pubsub::TopicAdminClient client,
 void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
   //! [START pubsub_delete_topic] [delete-topic]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string const& project_id,
      std::string const& topic_id) {
     auto status = client.DeleteTopic(
@@ -230,7 +230,7 @@ void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
 void DetachSubscription(google::cloud::pubsub::TopicAdminClient client,
                         std::vector<std::string> const& argv) {
   //! [START pubsub_detach_subscription] [detach-subscription]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string project_id,
      std::string subscription_id) {
     auto response = client.DetachSubscription(pubsub::Subscription(
@@ -247,7 +247,7 @@ void DetachSubscription(google::cloud::pubsub::TopicAdminClient client,
 void ListTopicSubscriptions(google::cloud::pubsub::TopicAdminClient client,
                             std::vector<std::string> const& argv) {
   //! [START pubsub_list_topic_subscriptions] [list-topic-subscriptions]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string project_id,
      std::string topic_id) {
     auto const topic =
@@ -265,7 +265,7 @@ void ListTopicSubscriptions(google::cloud::pubsub::TopicAdminClient client,
 void ListTopicSnapshots(google::cloud::pubsub::TopicAdminClient client,
                         std::vector<std::string> const& argv) {
   //! [list-topic-snapshots]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string project_id,
      std::string topic_id) {
     auto const topic =
@@ -283,7 +283,7 @@ void ListTopicSnapshots(google::cloud::pubsub::TopicAdminClient client,
 void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
                         std::vector<std::string> const& argv) {
   //! [START pubsub_create_pull_subscription] [create-subscription]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& topic_id, std::string const& subscription_id) {
     auto sub = client.CreateSubscription(
@@ -306,7 +306,7 @@ void CreateFilteredSubscription(
     google::cloud::pubsub::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
   //! [create-filtered-subscription]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string topic_id, std::string subscription_id) {
     auto sub = client.CreateSubscription(
@@ -331,7 +331,7 @@ void CreatePushSubscription(
     google::cloud::pubsub::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
   //! [START pubsub_create_push_subscription] [create-push-subscription]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& topic_id, std::string const& subscription_id,
      std::string const& endpoint) {
@@ -357,7 +357,7 @@ void CreateOrderingSubscription(
     google::cloud::pubsub::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
   //! [START pubsub_enable_subscription_ordering] [enable-subscription-ordering]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& topic_id, std::string const& subscription_id) {
     auto sub = client.CreateSubscription(
@@ -382,7 +382,7 @@ void CreateDeadLetterSubscription(
     std::vector<std::string> const& argv) {
   //! [dead-letter-create-subscription]
   // [START pubsub_dead_letter_create_subscription]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& topic_id, std::string const& subscription_id,
      std::string const& dead_letter_topic_id,
@@ -420,7 +420,7 @@ void UpdateDeadLetterSubscription(
     std::vector<std::string> const& argv) {
   //! [dead-letter-update-subscription]
   // [START pubsub_dead_letter_update_subscription]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id,
      std::string const& dead_letter_topic_id,
@@ -454,7 +454,7 @@ void ReceiveDeadLetterDeliveryAttempt(
   auto const initial = EventCounter::Instance().Current();
   //! [dead-letter-delivery-attempt]
   // [START pubsub_dead_letter_delivery_attempt]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   auto sample = [](pubsub::Subscriber subscriber) {
     return subscriber.Subscribe(
         [&](pubsub::Message const& m, pubsub::AckHandler h) {
@@ -475,7 +475,7 @@ void RemoveDeadLetterPolicy(
     google::cloud::pubsub::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
   //! [START pubsub_dead_letter_remove] [dead-letter-remove]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id) {
     auto sub = client.UpdateSubscription(
@@ -493,7 +493,7 @@ void RemoveDeadLetterPolicy(
 void GetSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
                      std::vector<std::string> const& argv) {
   //! [get-subscription]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id) {
     auto sub = client.GetSubscription(
@@ -510,7 +510,7 @@ void GetSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
 void UpdateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
                         std::vector<std::string> const& argv) {
   //! [update-subscription]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id) {
     auto s = client.UpdateSubscription(
@@ -529,7 +529,7 @@ void UpdateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
 void ListSubscriptions(google::cloud::pubsub::SubscriptionAdminClient client,
                        std::vector<std::string> const& argv) {
   //! [START pubsub_list_subscriptions] [list-subscriptions]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id) {
     int count = 0;
     for (auto const& subscription : client.ListSubscriptions(project_id)) {
@@ -549,7 +549,7 @@ void ListSubscriptions(google::cloud::pubsub::SubscriptionAdminClient client,
 void DeleteSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
                         std::vector<std::string> const& argv) {
   //! [START pubsub_delete_subscription] [delete-subscription]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id) {
     auto status = client.DeleteSubscription(pubsub::Subscription(
@@ -570,7 +570,7 @@ void DeleteSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
 void ModifyPushConfig(google::cloud::pubsub::SubscriptionAdminClient client,
                       std::vector<std::string> const& argv) {
   //! [START pubsub_update_push_configuration] [modify-push-config]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id, std::string const& endpoint) {
     auto status = client.ModifyPushSubscription(
@@ -588,7 +588,7 @@ void ModifyPushConfig(google::cloud::pubsub::SubscriptionAdminClient client,
 void CreateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
                     std::vector<std::string> const& argv) {
   //! [create-snapshot-with-name]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id, std::string const& snapshot_id) {
     auto snapshot = client.CreateSnapshot(
@@ -610,7 +610,7 @@ void CreateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
 void GetSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
                  std::vector<std::string> const& argv) {
   //! [get-snapshot]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& snapshot_id) {
     auto response = client.GetSnapshot(
@@ -627,7 +627,7 @@ void GetSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
 void UpdateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
                     std::vector<std::string> const& argv) {
   //! [update-snapshot]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string snapshot_id) {
     auto snap = client.UpdateSnapshot(
@@ -645,7 +645,7 @@ void UpdateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
 void ListSnapshots(google::cloud::pubsub::SubscriptionAdminClient client,
                    std::vector<std::string> const& argv) {
   //! [list-snapshots]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id) {
     std::cout << "Snapshot list for project " << project_id << ":\n";
     for (auto const& snapshot : client.ListSnapshots(project_id)) {
@@ -660,7 +660,7 @@ void ListSnapshots(google::cloud::pubsub::SubscriptionAdminClient client,
 void DeleteSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
                     std::vector<std::string> const& argv) {
   //! [delete-snapshot]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& snapshot_id) {
     auto status = client.DeleteSnapshot(
@@ -681,7 +681,7 @@ void DeleteSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
 void SeekWithSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
                       std::vector<std::string> const& argv) {
   //! [seek-with-snapshot]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id, std::string const& snapshot_id) {
     auto response =
@@ -699,7 +699,7 @@ void SeekWithSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
 void SeekWithTimestamp(google::cloud::pubsub::SubscriptionAdminClient client,
                        std::vector<std::string> const& argv) {
   //! [seek-with-timestamp]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id, std::string const& seconds) {
     auto response =
@@ -741,7 +741,7 @@ void ExampleStatusOr(google::cloud::pubsub::TopicAdminClient client,
 void CreateAvroSchema(google::cloud::pubsub::SchemaAdminClient client,
                       std::vector<std::string> const& argv) {
   //! [START pubsub_create_avro_schema] [create-avro-schema]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaAdminClient client, std::string const& project_id,
      std::string const& schema_id) {
     auto constexpr kDefinition = R"js({
@@ -780,7 +780,7 @@ void CreateAvroSchema(google::cloud::pubsub::SchemaAdminClient client,
 void CreateProtobufSchema(google::cloud::pubsub::SchemaAdminClient client,
                           std::vector<std::string> const& argv) {
   //! [START pubsub_create_proto_schema] [create-protobuf-schema]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaAdminClient client, std::string const& project_id,
      std::string const& schema_id) {
     auto constexpr kDefinition = R"pfile(
@@ -809,7 +809,7 @@ void CreateProtobufSchema(google::cloud::pubsub::SchemaAdminClient client,
 void GetSchema(google::cloud::pubsub::SchemaAdminClient client,
                std::vector<std::string> const& argv) {
   //! [START pubsub_get_schema] [get-schema]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaAdminClient client, std::string const& project_id,
      std::string const& schema_id) {
     auto schema = client.GetSchema(pubsub::Schema(project_id, schema_id),
@@ -826,7 +826,7 @@ void GetSchema(google::cloud::pubsub::SchemaAdminClient client,
 void ListSchemas(google::cloud::pubsub::SchemaAdminClient client,
                  std::vector<std::string> const& argv) {
   //! [START pubsub_list_schemas] [list-schemas]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaAdminClient client, std::string const& project_id) {
     for (auto const& schema :
          client.ListSchemas(project_id, google::pubsub::v1::FULL)) {
@@ -841,7 +841,7 @@ void ListSchemas(google::cloud::pubsub::SchemaAdminClient client,
 void DeleteSchema(google::cloud::pubsub::SchemaAdminClient client,
                   std::vector<std::string> const& argv) {
   //! [START pubsub_delete_schema] [delete-schema]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaAdminClient client, std::string const& project_id,
      std::string const& schema_id) {
     auto status = client.DeleteSchema(pubsub::Schema(project_id, schema_id));
@@ -861,7 +861,7 @@ void DeleteSchema(google::cloud::pubsub::SchemaAdminClient client,
 void ValidateAvroSchema(google::cloud::pubsub::SchemaAdminClient client,
                         std::vector<std::string> const& argv) {
   //! [validate-avro-schema]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaAdminClient client, std::string const& project_id) {
     auto constexpr kDefinition = R"js({
       "type": "record",
@@ -892,7 +892,7 @@ void ValidateAvroSchema(google::cloud::pubsub::SchemaAdminClient client,
 void ValidateProtobufSchema(google::cloud::pubsub::SchemaAdminClient client,
                             std::vector<std::string> const& argv) {
   //! [validate-protobuf-schema]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaAdminClient client, std::string const& project_id) {
     auto constexpr kDefinition = R"pfile(
         syntax = "proto3";
@@ -914,7 +914,7 @@ void ValidateProtobufSchema(google::cloud::pubsub::SchemaAdminClient client,
 void ValidateMessageAvro(google::cloud::pubsub::SchemaAdminClient client,
                          std::vector<std::string> const& argv) {
   //! [validate-message-avro]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaAdminClient client, std::string const& project_id) {
     auto constexpr kDefinition = R"js({
       "type": "record",
@@ -950,7 +950,7 @@ void ValidateMessageAvro(google::cloud::pubsub::SchemaAdminClient client,
 void ValidateMessageProtobuf(google::cloud::pubsub::SchemaAdminClient client,
                              std::vector<std::string> const& argv) {
   //! [validate-message-protobuf]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaAdminClient client, std::string const& project_id) {
     google::cloud::pubsub::samples::State data;
     data.set_name("New York");
@@ -977,7 +977,7 @@ void ValidateMessageProtobuf(google::cloud::pubsub::SchemaAdminClient client,
 void ValidateMessageNamedSchema(google::cloud::pubsub::SchemaAdminClient client,
                                 std::vector<std::string> const& argv) {
   //! [validate-message-named-schema]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaAdminClient client, std::string const& project_id,
      std::string const& schema_id) {
     google::cloud::pubsub::samples::State data;
@@ -997,7 +997,7 @@ void ValidateMessageNamedSchema(google::cloud::pubsub::SchemaAdminClient client,
 void CreateTopicWithSchema(google::cloud::pubsub::TopicAdminClient client,
                            std::vector<std::string> const& argv) {
   //! [START pubsub_create_topic_with_schema]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string project_id,
      std::string topic_id, std::string schema_id, std::string const& encoding) {
     auto const& schema = pubsub::Schema(project_id, std::move(schema_id));
@@ -1024,9 +1024,9 @@ void CreateTopicWithSchema(google::cloud::pubsub::TopicAdminClient client,
 void PublishAvroRecords(google::cloud::pubsub::Publisher publisher,
                         std::vector<std::string> const&) {
   //! [START pubsub_publish_avro_records]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](pubsub::Publisher publisher) {
     auto constexpr kNewYork =
         R"js({ "name": "New York", "post_abbr": "NY" })js";
@@ -1053,9 +1053,9 @@ google::cloud::future<google::cloud::Status> SubscribeAvroRecords(
     google::cloud::pubsub::Subscriber subscriber,
     std::vector<std::string> const&) {
   //! [START pubsub_subscribe_avro_records]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   return [](pubsub::Subscriber subscriber) {
     auto session = subscriber.Subscribe(
         [](pubsub::Message const& m, pubsub::AckHandler h) {
@@ -1071,9 +1071,9 @@ google::cloud::future<google::cloud::Status> SubscribeAvroRecords(
 void PublishProtobufRecords(google::cloud::pubsub::Publisher publisher,
                             std::vector<std::string> const&) {
   //! [START pubsub_publish_proto_messages]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](pubsub::Publisher publisher) {
     std::vector<std::pair<std::string, std::string>> states{
         {"New York", "NY"},
@@ -1105,9 +1105,9 @@ google::cloud::future<google::cloud::Status> SubscribeProtobufRecords(
     google::cloud::pubsub::Subscriber subscriber,
     std::vector<std::string> const&) {
   //! [START pubsub_subscribe_proto_messages]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   return [](pubsub::Subscriber subscriber) {
     auto session = subscriber.Subscribe(
         [](pubsub::Message const& m, pubsub::AckHandler h) {
@@ -1127,9 +1127,9 @@ void Publish(google::cloud::pubsub::Publisher publisher,
   //! [START pubsub_publish_messages_error_handler]
   //! [START pubsub_publish_with_error_handler]
   //! [START pubsub_publish] [publish]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](pubsub::Publisher publisher) {
     auto message_id = publisher.Publish(
         pubsub::MessageBuilder{}.SetData("Hello World!").Build());
@@ -1150,9 +1150,9 @@ void Publish(google::cloud::pubsub::Publisher publisher,
 void PublishCustomAttributes(google::cloud::pubsub::Publisher publisher,
                              std::vector<std::string> const&) {
   //! [START pubsub_publish_custom_attributes] [publish-custom-attributes]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](pubsub::Publisher publisher) {
     std::vector<future<void>> done;
     for (int i = 0; i != 10; ++i) {
@@ -1180,9 +1180,9 @@ void PublishCustomAttributes(google::cloud::pubsub::Publisher publisher,
 // example.
 void PublishHelper(google::cloud::pubsub::Publisher publisher,
                    std::string const& prefix, int message_count) {
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   std::vector<future<StatusOr<std::string>>> done;
   done.reserve(message_count);
   for (int i = 0; i != message_count; ++i) {
@@ -1200,9 +1200,9 @@ void PublishHelper(google::cloud::pubsub::Publisher publisher,
 void PublishOrderingKey(google::cloud::pubsub::Publisher publisher,
                         std::vector<std::string> const&) {
   //! [START pubsub_publish_with_ordering_keys] [publish-with-ordering-keys]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](pubsub::Publisher publisher) {
     struct SampleData {
       std::string ordering_key;
@@ -1237,9 +1237,9 @@ void PublishOrderingKey(google::cloud::pubsub::Publisher publisher,
 void ResumeOrderingKey(google::cloud::pubsub::Publisher publisher,
                        std::vector<std::string> const&) {
   //! [START pubsub_resume_publish_with_ordering_keys] [resume-publish]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](pubsub::Publisher publisher) {
     struct SampleData {
       std::string ordering_key;
@@ -1282,7 +1282,7 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
   auto const initial = EventCounter::Instance().Current();
   //! [START pubsub_quickstart_subscriber]
   //! [START pubsub_subscriber_async_pull] [subscribe]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   auto sample = [](pubsub::Subscriber subscriber) {
     return subscriber.Subscribe(
         [&](pubsub::Message const& m, pubsub::AckHandler h) {
@@ -1302,8 +1302,8 @@ void SubscribeErrorListener(google::cloud::pubsub::Subscriber subscriber,
                             std::vector<std::string> const&) {
   auto current = EventCounter::Instance().Current();
   // [START pubsub_subscriber_error_listener]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
   auto sample = [](pubsub::Subscriber subscriber) {
     return subscriber
         .Subscribe([&](pubsub::Message const& m, pubsub::AckHandler h) {
@@ -1328,7 +1328,7 @@ void SubscribeCustomAttributes(google::cloud::pubsub::Subscriber subscriber,
                                std::vector<std::string> const&) {
   auto const initial = EventCounter::Instance().Current();
   //! [START pubsub_subscriber_async_pull_custom_attributes]
-  namespace pubsub = google::cloud::pubsub;
+  namespace pubsub = ::google::cloud::pubsub;
   auto sample = [](pubsub::Subscriber subscriber) {
     return subscriber.Subscribe(
         [&](pubsub::Message const& m, pubsub::AckHandler h) {
@@ -1353,9 +1353,9 @@ void CustomThreadPoolPublisher(std::vector<std::string> const& argv) {
         "custom-thread-pool-publisher <project-id> <topic-id>"};
   }
   //! [custom-thread-pool-publisher]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     // Create our own completion queue to run the background activity, such as
     // flushing the publisher.
@@ -1401,9 +1401,9 @@ void PublisherConcurrencyControl(std::vector<std::string> const& argv) {
         "publisher-concurrency-control <project-id> <topic-id>"};
   }
   //! [START pubsub_publisher_concurrency_control]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
     // Override the default number of background (I/O) threads. By default the
@@ -1437,9 +1437,9 @@ void PublisherFlowControl(std::vector<std::string> const& argv) {
     throw examples::Usage{"publisher-flow-control <project-id> <topic-id>"};
   }
   //! [START pubsub_publisher_flow_control]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
     // Configure the publisher to block if either (1) 100 or more messages, or
@@ -1476,9 +1476,9 @@ void PublisherRetrySettings(std::vector<std::string> const& argv) {
     throw examples::Usage{"publisher-retry-settings <project-id> <topic-id>"};
   }
   //! [START pubsub_publisher_retry_settings] [publisher-retry-settings]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
     // By default a publisher will retry for 60 seconds, with an initial backoff
@@ -1520,9 +1520,9 @@ void PublisherDisableRetries(std::vector<std::string> const& argv) {
     throw examples::Usage{"publisher-disable-retries <project-id> <topic-id>"};
   }
   //! [publisher-disable-retries]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
     auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
@@ -1560,9 +1560,9 @@ void CustomBatchPublisher(std::vector<std::string> const& argv) {
         "custom-thread-pool-publisher <project-id> <topic-id>"};
   }
   //! [START pubsub_publisher_batch_settings] [publisher-options]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
     // By default the publisher will flush a batch after 10ms, after it contains
@@ -1601,9 +1601,9 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
         "custom-thread-pool-subscriber <project-id> <topic-id>"};
   }
   //! [custom-thread-pool-subscriber]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string subscription_id) {
     // Create our own completion queue to run the background activity.
     google::cloud::CompletionQueue cq;
@@ -1664,9 +1664,9 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
 
   auto const initial = EventCounter::Instance().Current();
   //! [START pubsub_subscriber_concurrency_control] [subscriber-concurrency]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   auto sample = [](std::string project_id, std::string subscription_id) {
     // Create a subscriber with 16 threads handling I/O work, by default the
     // library creates `std::thread::hardware_concurrency()` threads.
@@ -1708,9 +1708,9 @@ void SubscriberFlowControlSettings(std::vector<std::string> const& argv) {
 
   auto const initial = EventCounter::Instance().Current();
   //! [START pubsub_subscriber_flow_settings] [subscriber-flow-control]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   auto sample = [](std::string project_id, std::string subscription_id) {
     // Change the flow control watermarks, by default the client library uses
     // 0 and 1,000 for the message count watermarks, and 0 and 10MiB for the
@@ -1751,9 +1751,9 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
 
   auto const initial = EventCounter::Instance().Current();
   //! [subscriber-retry-settings]
-  namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  namespace pubsub = ::google::cloud::pubsub;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   auto sample = [](std::string project_id, std::string subscription_id) {
     // By default a subscriber will retry for 60 seconds, with an initial
     // backoff of 100ms, a maximum backoff of 60 seconds, and the backoff will

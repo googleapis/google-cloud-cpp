@@ -24,9 +24,9 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-namespace btproto = google::bigtable::v2;
+namespace btproto = ::google::bigtable::v2;
 
-using google::cloud::internal::Idempotency;
+using ::google::cloud::internal::Idempotency;
 
 BulkMutatorState::BulkMutatorState(std::string const& app_profile_id,
                                    std::string const& table_name,

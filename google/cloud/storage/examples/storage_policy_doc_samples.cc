@@ -24,7 +24,7 @@ namespace {
 void CreateSignedPolicyDocumentV2(google::cloud::storage::Client client,
                                   std::vector<std::string> const& argv) {
   //! [create signed policy document]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& signing_account) {
@@ -56,7 +56,7 @@ void CreateSignedPolicyDocumentV2(google::cloud::storage::Client client,
 void CreateSignedPolicyDocumentV4(google::cloud::storage::Client client,
                                   std::vector<std::string> const& argv) {
   //! [create signed policy document v4]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& signing_account) {
@@ -89,7 +89,7 @@ void CreateSignedPolicyDocumentV4(google::cloud::storage::Client client,
 void CreatePolicyDocumentFormV4(google::cloud::storage::Client client,
                                 std::vector<std::string> const& argv) {
   // [START storage_generate_signed_post_policy_v4]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& signing_account) {

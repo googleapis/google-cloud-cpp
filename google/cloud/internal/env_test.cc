@@ -16,9 +16,9 @@
 #include "google/cloud/internal/setenv.h"
 #include <gmock/gmock.h>
 
-using google::cloud::internal::GetEnv;
-using google::cloud::internal::SetEnv;
-using google::cloud::internal::UnsetEnv;
+using ::google::cloud::internal::GetEnv;
+using ::google::cloud::internal::SetEnv;
+using ::google::cloud::internal::UnsetEnv;
 
 /// @test Verify passing an empty string creates an environment variable.
 TEST(SetEnv, SetEmptyEnvVar) {

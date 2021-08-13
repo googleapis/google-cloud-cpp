@@ -25,7 +25,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
-namespace btproto = google::bigtable::v2;
+namespace btproto = ::google::bigtable::v2;
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
@@ -39,7 +39,7 @@ class TableBulkApplyTest
  public:
   TableBulkApplyTest() : TableTestFixture(CompletionQueue{}) {}
 };
-using google::cloud::bigtable::testing::MockMutateRowsReader;
+using ::google::cloud::bigtable::testing::MockMutateRowsReader;
 
 /// @test Verify that Table::BulkApply() works in the easy case.
 TEST_F(TableBulkApplyTest, Simple) {

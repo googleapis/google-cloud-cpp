@@ -57,7 +57,7 @@ std::string GenerateEncryptionKey() {
   // the C++ standard library produce predictable keys.
   std::mt19937_64 gen(seed);
 
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   gcs::EncryptionKeyData data = gcs::CreateKeyFromGenerator(gen);
 
   std::cout << "Base64 encoded key = " << data.key << "\n"
@@ -76,7 +76,7 @@ void GenerateEncryptionKeyCommand(std::vector<std::string> const& argv) {
 void WriteEncryptedObject(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
   //! [insert encrypted object] [START storage_upload_encrypted_file]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& base64_aes256_key) {
@@ -99,7 +99,7 @@ void WriteEncryptedObject(google::cloud::storage::Client client,
 void ReadEncryptedObject(google::cloud::storage::Client client,
                          std::vector<std::string> const& argv) {
   //! [read encrypted object] [START storage_download_encrypted_file]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& base64_aes256_key) {
     gcs::ObjectReadStream stream =
@@ -125,7 +125,7 @@ void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
   } while (it != argv.cend());
 
   //! [compose object csek]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& destination_object_name,
@@ -151,7 +151,7 @@ void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
 void CopyEncryptedObject(google::cloud::storage::Client client,
                          std::vector<std::string> const& argv) {
   //! [copy encrypted object]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& source_bucket_name,
      std::string const& source_object_name,
@@ -180,7 +180,7 @@ void CopyEncryptedObject(google::cloud::storage::Client client,
 void RotateEncryptionKey(google::cloud::storage::Client client,
                          std::vector<std::string> const& argv) {
   //! [rotate encryption key] [START storage_rotate_encryption_key]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& old_key_base64,

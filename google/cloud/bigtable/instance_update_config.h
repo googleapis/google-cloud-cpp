@@ -39,7 +39,7 @@ class InstanceUpdateConfig {
 
   //@{
   /// @name Convenient shorthands for the instance types.
-  using InstanceType = google::bigtable::admin::v2::Instance::Type;
+  using InstanceType = ::google::bigtable::admin::v2::Instance::Type;
   // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static InstanceType TYPE_UNSPECIFIED =
       google::bigtable::admin::v2::Instance::TYPE_UNSPECIFIED;
@@ -53,7 +53,7 @@ class InstanceUpdateConfig {
 
   //@{
   /// @name Convenient shorthands for the instance state.
-  using StateType = google::bigtable::admin::v2::Instance::State;
+  using StateType = ::google::bigtable::admin::v2::Instance::State;
   // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static StateType STATE_NOT_KNOWN =
       google::bigtable::admin::v2::Instance::STATE_NOT_KNOWN;

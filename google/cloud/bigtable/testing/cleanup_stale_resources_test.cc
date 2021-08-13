@@ -31,7 +31,7 @@ using ::testing::ReturnRef;
 
 TEST(CleanupStaleResources, CleanupOldTables) {
   using MockAdminClient = ::google::cloud::bigtable::testing::MockAdminClient;
-  namespace btadmin = google::bigtable::admin::v2;
+  namespace btadmin = ::google::bigtable::admin::v2;
 
   auto const expired_tp =
       std::chrono::system_clock::now() - std::chrono::hours(72);
@@ -83,8 +83,8 @@ TEST(CleanupStaleResources, CleanupOldTables) {
 
 TEST(CleanupStaleResources, CleanupStaleBackups) {
   using MockAdminClient = ::google::cloud::bigtable::testing::MockAdminClient;
-  using google::protobuf::util::TimeUtil;
-  namespace btadmin = google::bigtable::admin::v2;
+  using ::google::protobuf::util::TimeUtil;
+  namespace btadmin = ::google::bigtable::admin::v2;
 
   std::string const project_id = "test-project-id";
   std::string const instance_id = "test-instance-id";
@@ -151,7 +151,7 @@ TEST(CleanupStaleResources, CleanupStaleBackups) {
 TEST(CleanupStaleResources, CleanupOldInstances) {
   using MockAdminClient =
       ::google::cloud::bigtable::testing::MockInstanceAdminClient;
-  namespace btadmin = google::bigtable::admin::v2;
+  namespace btadmin = ::google::bigtable::admin::v2;
 
   auto const expired_tp =
       std::chrono::system_clock::now() - std::chrono::hours(72);

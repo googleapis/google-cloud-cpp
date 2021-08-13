@@ -27,7 +27,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 /// Specify the initial configuration for a new cluster.
 class ClusterConfig {
  public:
-  using StorageType = google::bigtable::admin::v2::StorageType;
+  using StorageType = ::google::bigtable::admin::v2::StorageType;
   // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static StorageType STORAGE_TYPE_UNSPECIFIED =
       google::bigtable::admin::v2::STORAGE_TYPE_UNSPECIFIED;

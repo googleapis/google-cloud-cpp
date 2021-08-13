@@ -31,8 +31,8 @@ inline namespace SPANNER_CLIENT_NS {
 
 namespace gcsa = ::google::spanner::admin::database::v1;
 
-using google::cloud::internal::Idempotency;
-using google::cloud::internal::RetryLoop;
+using ::google::cloud::internal::Idempotency;
+using ::google::cloud::internal::RetryLoop;
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
 // NOLINTNEXTLINE(performance-unnecessary-value-param)

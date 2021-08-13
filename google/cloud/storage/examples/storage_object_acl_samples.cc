@@ -24,7 +24,7 @@ namespace {
 void ListObjectAcl(google::cloud::storage::Client client,
                    std::vector<std::string> const& argv) {
   //! [list object acl] [START storage_print_file_acl]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
@@ -45,7 +45,7 @@ void ListObjectAcl(google::cloud::storage::Client client,
 void CreateObjectAcl(google::cloud::storage::Client client,
                      std::vector<std::string> const& argv) {
   //! [create object acl]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& entity,
@@ -65,7 +65,7 @@ void CreateObjectAcl(google::cloud::storage::Client client,
 void DeleteObjectAcl(google::cloud::storage::Client client,
                      std::vector<std::string> const& argv) {
   //! [delete object acl]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& entity) {
     google::cloud::Status status =
@@ -82,7 +82,7 @@ void DeleteObjectAcl(google::cloud::storage::Client client,
 void GetObjectAcl(google::cloud::storage::Client client,
                   std::vector<std::string> const& argv) {
   //! [print file acl for user] [START storage_print_file_acl_for_user]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& entity) {
@@ -101,7 +101,7 @@ void GetObjectAcl(google::cloud::storage::Client client,
 void UpdateObjectAcl(google::cloud::storage::Client client,
                      std::vector<std::string> const& argv) {
   //! [update object acl]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& entity,
@@ -127,7 +127,7 @@ void UpdateObjectAcl(google::cloud::storage::Client client,
 void PatchObjectAcl(google::cloud::storage::Client client,
                     std::vector<std::string> const& argv) {
   //! [patch object acl]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& entity,
@@ -157,7 +157,7 @@ void PatchObjectAcl(google::cloud::storage::Client client,
 void PatchObjectAclNoRead(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
   //! [patch object acl no-read]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& entity,
@@ -178,7 +178,7 @@ void PatchObjectAclNoRead(google::cloud::storage::Client client,
 void AddObjectOwner(google::cloud::storage::Client client,
                     std::vector<std::string> const& argv) {
   //! [add file owner] [START storage_add_file_owner]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& entity) {
@@ -198,7 +198,7 @@ void AddObjectOwner(google::cloud::storage::Client client,
 void RemoveObjectOwner(google::cloud::storage::Client client,
                        std::vector<std::string> const& argv) {
   //! [remove file owner] [START storage_remove_file_owner]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& entity) {
