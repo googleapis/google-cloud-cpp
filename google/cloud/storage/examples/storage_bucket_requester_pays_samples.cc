@@ -24,7 +24,7 @@ namespace {
 void GetBilling(google::cloud::storage::Client client,
                 std::vector<std::string> const& argv) {
   //! [get billing] [START storage_get_requester_pays_status]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& user_project) {
@@ -57,7 +57,7 @@ void GetBilling(google::cloud::storage::Client client,
 void EnableRequesterPays(google::cloud::storage::Client client,
                          std::vector<std::string> const& argv) {
   //! [enable requester pays] [START storage_enable_requester_pays]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> metadata = client.PatchBucket(
@@ -83,7 +83,7 @@ void EnableRequesterPays(google::cloud::storage::Client client,
 void DisableRequesterPays(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
   //! [disable requester pays] [START storage_disable_requester_pays]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& billed_project) {
@@ -111,7 +111,7 @@ void DisableRequesterPays(google::cloud::storage::Client client,
 void WriteObjectRequesterPays(google::cloud::storage::Client client,
                               std::vector<std::string> const& argv) {
   //! [write object requester pays]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& billed_project) {
@@ -138,7 +138,7 @@ void ReadObjectRequesterPays(google::cloud::storage::Client client,
                              std::vector<std::string> const& argv) {
   //! [read object requester pays]
   // [START storage_download_file_requester_pays]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& billed_project) {
     gcs::ObjectReadStream stream = client.ReadObject(
@@ -157,7 +157,7 @@ void ReadObjectRequesterPays(google::cloud::storage::Client client,
 void DeleteObjectRequesterPays(google::cloud::storage::Client client,
                                std::vector<std::string> const& argv) {
   //! [delete object requester pays]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& billed_project) {
     google::cloud::Status status = client.DeleteObject(

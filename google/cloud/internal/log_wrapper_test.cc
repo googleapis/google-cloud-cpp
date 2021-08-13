@@ -20,7 +20,7 @@
 #include <google/spanner/v1/mutation.pb.h>
 #include <gmock/gmock.h>
 
-namespace btproto = google::bigtable::v2;
+namespace btproto = ::google::bigtable::v2;
 
 namespace google {
 namespace cloud {

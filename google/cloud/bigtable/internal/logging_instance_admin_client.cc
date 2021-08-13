@@ -25,7 +25,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-namespace btadmin = google::bigtable::admin::v2;
+namespace btadmin = ::google::bigtable::admin::v2;
 using ::google::cloud::internal::LogWrapper;
 
 grpc::Status LoggingInstanceAdminClient::ListInstances(

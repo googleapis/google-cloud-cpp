@@ -34,7 +34,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 namespace {
 
-namespace btproto = google::bigtable::admin::v2;
+namespace btproto = ::google::bigtable::admin::v2;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 

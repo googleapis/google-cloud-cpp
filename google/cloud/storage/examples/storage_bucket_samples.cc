@@ -23,7 +23,7 @@ namespace {
 void ListBuckets(google::cloud::storage::Client client,
                  std::vector<std::string> const& /*argv*/) {
   //! [list buckets] [START storage_list_buckets]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client) {
     int count = 0;
@@ -48,7 +48,7 @@ void ListBuckets(google::cloud::storage::Client client,
 void ListBucketsForProject(google::cloud::storage::Client client,
                            std::vector<std::string> const& argv) {
   //! [list buckets for project]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   [](gcs::Client client, std::string const& project_id) {
     int count = 0;
     for (auto&& bucket_metadata : client.ListBucketsForProject(project_id)) {
@@ -71,7 +71,7 @@ void ListBucketsForProject(google::cloud::storage::Client client,
 void CreateBucket(google::cloud::storage::Client client,
                   std::vector<std::string> const& argv) {
   //! [create bucket] [START storage_create_bucket]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
@@ -91,7 +91,7 @@ void CreateBucket(google::cloud::storage::Client client,
 void CreateBucketForProject(google::cloud::storage::Client client,
                             std::vector<std::string> const& argv) {
   //! [create bucket for project]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& project_id) {
@@ -116,7 +116,7 @@ void CreateBucketWithStorageClassLocation(
     std::vector<std::string> const& argv) {
   //! [create bucket class location]
   // [START storage_create_bucket_class_location]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& storage_class, std::string const& location) {
@@ -141,7 +141,7 @@ void GetBucketMetadata(google::cloud::storage::Client client,
                        std::vector<std::string> const& argv) {
   //! [get bucket metadata]
   // [START storage_get_bucket_metadata]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
@@ -162,7 +162,7 @@ void GetBucketMetadata(google::cloud::storage::Client client,
 void DeleteBucket(google::cloud::storage::Client client,
                   std::vector<std::string> const& argv) {
   //! [delete bucket] [START storage_delete_bucket]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name) {
     google::cloud::Status status = client.DeleteBucket(bucket_name);
 
@@ -176,7 +176,7 @@ void DeleteBucket(google::cloud::storage::Client client,
 void ChangeDefaultStorageClass(google::cloud::storage::Client client,
                                std::vector<std::string> const& argv) {
   //! [update bucket]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& storage_class) {
@@ -202,7 +202,7 @@ void ChangeDefaultStorageClass(google::cloud::storage::Client client,
 void PatchBucketStorageClass(google::cloud::storage::Client client,
                              std::vector<std::string> const& argv) {
   //! [patch bucket storage class] [START storage_change_default_storage_class]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& storage_class) {
@@ -228,7 +228,7 @@ void PatchBucketStorageClass(google::cloud::storage::Client client,
 void PatchBucketStorageClassWithBuilder(google::cloud::storage::Client client,
                                         std::vector<std::string> const& argv) {
   //! [patch bucket storage class with builder]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& storage_class) {
@@ -248,7 +248,7 @@ void PatchBucketStorageClassWithBuilder(google::cloud::storage::Client client,
 void GetBucketClassAndLocation(google::cloud::storage::Client client,
                                std::vector<std::string> const& argv) {
   // [START storage_get_bucket_class_and_location]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
@@ -271,7 +271,7 @@ void EnableUniformBucketLevelAccess(google::cloud::storage::Client client,
                                     std::vector<std::string> const& argv) {
   //! [enable uniform bucket level access]
   // [START storage_enable_uniform_bucket_level_access]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     gcs::BucketIamConfiguration configuration;
@@ -297,7 +297,7 @@ void DisableUniformBucketLevelAccess(google::cloud::storage::Client client,
                                      std::vector<std::string> const& argv) {
   //! [disable uniform bucket level access]
   // [START storage_disable_uniform_bucket_level_access]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     gcs::BucketIamConfiguration configuration;
@@ -323,7 +323,7 @@ void GetUniformBucketLevelAccess(google::cloud::storage::Client client,
                                  std::vector<std::string> const& argv) {
   //! [get uniform bucket level access]
   // [START storage_get_uniform_bucket_level_access]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
@@ -356,7 +356,7 @@ void GetUniformBucketLevelAccess(google::cloud::storage::Client client,
 void SetPublicAccessPreventionEnforced(google::cloud::storage::Client client,
                                        std::vector<std::string> const& argv) {
   // [START storage_set_public_access_prevention_enforced]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     gcs::BucketIamConfiguration configuration;
@@ -381,7 +381,7 @@ void SetPublicAccessPreventionUnspecified(
     google::cloud::storage::Client client,
     std::vector<std::string> const& argv) {
   // [START storage_set_public_access_prevention_unspecified]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     gcs::BucketIamConfiguration configuration;
@@ -405,7 +405,7 @@ void SetPublicAccessPreventionUnspecified(
 void GetPublicAccessPrevention(google::cloud::storage::Client client,
                                std::vector<std::string> const& argv) {
   // [START storage_get_public_access_prevention]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
@@ -433,7 +433,7 @@ void GetPublicAccessPrevention(google::cloud::storage::Client client,
 void AddBucketLabel(google::cloud::storage::Client client,
                     std::vector<std::string> const& argv) {
   //! [add bucket label] [START storage_add_bucket_label]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& label_key, std::string const& label_value) {
@@ -460,7 +460,7 @@ void AddBucketLabel(google::cloud::storage::Client client,
 void GetBucketLabels(google::cloud::storage::Client client,
                      std::vector<std::string> const& argv) {
   //! [get bucket labels] [START storage_get_bucket_labels]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
@@ -488,7 +488,7 @@ void GetBucketLabels(google::cloud::storage::Client client,
 void RemoveBucketLabel(google::cloud::storage::Client client,
                        std::vector<std::string> const& argv) {
   //! [remove bucket label] [START storage_remove_bucket_label]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& label_key) {

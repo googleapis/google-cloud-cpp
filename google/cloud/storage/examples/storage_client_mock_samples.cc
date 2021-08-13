@@ -26,7 +26,7 @@ using ::testing::Return;
 
 //! [mock successful readobject]
 TEST(StorageMockingSamples, MockReadObject) {
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
 
   std::shared_ptr<gcs::testing::MockClient> mock =
       std::make_shared<gcs::testing::MockClient>();
@@ -69,7 +69,7 @@ TEST(StorageMockingSamples, MockReadObject) {
 
 //! [mock successful writeobject]
 TEST(StorageMockingSamples, MockWriteObject) {
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
 
   std::shared_ptr<gcs::testing::MockClient> mock =
       std::make_shared<gcs::testing::MockClient>();
@@ -114,7 +114,7 @@ TEST(StorageMockingSamples, MockWriteObject) {
 
 //! [mock failed readobject]
 TEST(StorageMockingSamples, MockReadObjectFailure) {
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
 
   std::shared_ptr<gcs::testing::MockClient> mock =
       std::make_shared<gcs::testing::MockClient>();
@@ -147,7 +147,7 @@ TEST(StorageMockingSamples, MockReadObjectFailure) {
 
 //! [mock failed writeobject]
 TEST(StorageMockingSamples, MockWriteObjectFailure) {
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
 
   std::shared_ptr<gcs::testing::MockClient> mock =
       std::make_shared<gcs::testing::MockClient>();

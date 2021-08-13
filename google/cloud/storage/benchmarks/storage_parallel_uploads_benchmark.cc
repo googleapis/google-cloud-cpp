@@ -26,8 +26,8 @@
 #include <sstream>
 
 namespace {
-namespace gcs = google::cloud::storage;
-namespace gcs_bm = google::cloud::storage_benchmarks;
+namespace gcs = ::google::cloud::storage;
+namespace gcs_bm = ::google::cloud::storage_benchmarks;
 
 char const kDescription[] = R"""(
 A parallel uploads benchmark for the Google Cloud Storage C++ client library.

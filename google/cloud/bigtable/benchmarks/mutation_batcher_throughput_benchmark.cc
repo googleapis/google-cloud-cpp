@@ -31,7 +31,7 @@
 
 namespace {
 
-namespace cbt = google::cloud::bigtable;
+namespace cbt = ::google::cloud::bigtable;
 using cbt::benchmarks::MutationBatcherThroughputOptions;
 using cbt::benchmarks::ParseMutationBatcherThroughputOptions;
 using ::google::cloud::Status;
@@ -135,7 +135,7 @@ int main(int argc, char* argv[]) {
   }
   if (options->exit_after_parse) return 0;
 
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::CompletionQueue;
   using ::google::cloud::future;
   using ::google::cloud::Options;

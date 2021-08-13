@@ -23,7 +23,7 @@ namespace {
 void ListNotifications(google::cloud::storage::Client client,
                        std::vector<std::string> const& argv) {
   //! [list notifications] [START storage_list_bucket_notifications]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<std::vector<gcs::NotificationMetadata>> items =
@@ -42,7 +42,7 @@ void ListNotifications(google::cloud::storage::Client client,
 void CreateNotification(google::cloud::storage::Client client,
                         std::vector<std::string> const& argv) {
   //! [create notification] [START storage_create_bucket_notifications]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& topic_name) {
@@ -67,7 +67,7 @@ void CreateNotification(google::cloud::storage::Client client,
 void GetNotification(google::cloud::storage::Client client,
                      std::vector<std::string> const& argv) {
   //! [get notification] [START storage_print_pubsub_bucket_notification]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& notification_id) {
@@ -95,7 +95,7 @@ void GetNotification(google::cloud::storage::Client client,
 void DeleteNotification(google::cloud::storage::Client client,
                         std::vector<std::string> const& argv) {
   //! [delete notification] [START storage_delete_bucket_notification]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& notification_id) {
     google::cloud::Status status =

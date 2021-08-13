@@ -30,7 +30,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
-namespace btproto = google::bigtable::v2;
+namespace btproto = ::google::bigtable::v2;
 namespace bt = ::google::cloud::bigtable;
 
 using ::google::cloud::testing_util::IsContextMDValid;

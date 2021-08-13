@@ -43,7 +43,7 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
   std::string const zone = argv[3];
 
   //! [aliases]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::future;
   using ::google::cloud::StatusOr;
   //! [aliases]
@@ -165,7 +165,7 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
 
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
 
   if (!argv.empty()) throw Usage{"auto"};
   if (!examples::RunAdminIntegrationTests()) return;

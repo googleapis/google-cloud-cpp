@@ -24,7 +24,7 @@ namespace {
 void GetObjectVersioning(google::cloud::storage::Client client,
                          std::vector<std::string> const& argv) {
   //! [START storage_view_versioning_status]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> metadata =
@@ -47,7 +47,7 @@ void GetObjectVersioning(google::cloud::storage::Client client,
 void EnableObjectVersioning(google::cloud::storage::Client client,
                             std::vector<std::string> const& argv) {
   //! [enable versioning] [START storage_enable_versioning]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
@@ -77,7 +77,7 @@ void EnableObjectVersioning(google::cloud::storage::Client client,
 void DisableObjectVersioning(google::cloud::storage::Client client,
                              std::vector<std::string> const& argv) {
   //! [START storage_disable_versioning]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
@@ -107,7 +107,7 @@ void DisableObjectVersioning(google::cloud::storage::Client client,
 void CopyVersionedObject(google::cloud::storage::Client client,
                          std::vector<std::string> const& argv) {
   // [START storage_copy_file_archived_generation]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& source_bucket_name,
      std::string const& source_object_name,
@@ -135,7 +135,7 @@ void DeleteVersionedObject(google::cloud::storage::Client client,
                            std::vector<std::string> const& argv) {
   //! [delete versioned object]
   // [START storage_delete_file_archived_generation]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::int64_t object_generation) {
     google::cloud::Status status = client.DeleteObject(

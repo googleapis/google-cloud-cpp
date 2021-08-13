@@ -26,7 +26,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
-namespace btproto = google::bigtable::v2;
+namespace btproto = ::google::bigtable::v2;
 using ::testing::Return;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::bigtable::testing::MockMutateRowsReader;

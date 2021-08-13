@@ -18,7 +18,7 @@
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/log.h"
 
-namespace btproto = google::bigtable::v2;
+namespace btproto = ::google::bigtable::v2;
 
 namespace google {
 namespace cloud {

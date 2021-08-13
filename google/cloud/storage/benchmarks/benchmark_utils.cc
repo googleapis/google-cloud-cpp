@@ -38,7 +38,7 @@ void DeleteAllObjects(google::cloud::storage::Client client,
   using WorkQueue = BoundedQueue<google::cloud::storage::ObjectMetadata>;
   using std::chrono::duration_cast;
   using std::chrono::milliseconds;
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
 
   std::cout << "# Deleting test objects [" << thread_count << "]\n";
   auto start = std::chrono::steady_clock::now();

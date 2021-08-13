@@ -27,8 +27,8 @@ namespace {
 
 using ::testing::Contains;
 using ::testing::Not;
-namespace btadmin = google::bigtable::admin::v2;
-namespace bigtable = google::cloud::bigtable;
+namespace btadmin = ::google::bigtable::admin::v2;
+namespace bigtable = ::google::cloud::bigtable;
 
 class AdminIAMPolicyIntegrationTest
     : public bigtable::testing::TableIntegrationTest {

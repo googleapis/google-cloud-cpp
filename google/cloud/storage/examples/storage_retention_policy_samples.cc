@@ -25,7 +25,7 @@ void GetRetentionPolicy(google::cloud::storage::Client client,
                         std::vector<std::string> const& argv) {
   //! [get retention policy]
   // [START storage_get_retention_policy]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
@@ -54,7 +54,7 @@ void SetRetentionPolicy(google::cloud::storage::Client client,
                         std::vector<std::string> const& argv) {
   //! [set retention policy]
   // [START storage_set_retention_policy]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::chrono::seconds period) {
@@ -90,7 +90,7 @@ void RemoveRetentionPolicy(google::cloud::storage::Client client,
                            std::vector<std::string> const& argv) {
   //! [remove retention policy]
   // [START storage_remove_retention_policy]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
@@ -126,7 +126,7 @@ void LockRetentionPolicy(google::cloud::storage::Client client,
                          std::vector<std::string> const& argv) {
   //! [lock retention policy]
   // [START storage_lock_retention_policy]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =

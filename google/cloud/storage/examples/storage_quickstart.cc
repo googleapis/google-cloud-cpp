@@ -27,7 +27,7 @@ using ::google::cloud::storage::examples::Usage;
 // [START storage_quickstart]
 void StorageQuickstart(std::string const& bucket_name) {
   // Create an aliases to make the code easier to read.
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
 
   // Create a client to communicate with Google Cloud Storage. This client
   // uses the default configuration for authentication and project id.

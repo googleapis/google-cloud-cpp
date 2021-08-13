@@ -26,7 +26,7 @@ namespace {
 void AsyncApply(google::cloud::bigtable::Table table,
                 std::vector<std::string> const& argv) {
   //! [async-apply]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::future;
   using ::google::cloud::StatusOr;
   [](cbt::Table table, std::string const& row_key) {
@@ -52,7 +52,7 @@ void AsyncApply(google::cloud::bigtable::Table table,
 void AsyncBulkApply(google::cloud::bigtable::Table table,
                     std::vector<std::string> const&) {
   //! [bulk async-bulk-apply]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::future;
   [](cbt::Table table) {
     // Write several rows in a single operation, each row has some trivial data.
@@ -107,7 +107,7 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
 void AsyncReadRows(google::cloud::bigtable::Table table,
                    std::vector<std::string> const&) {
   //! [async read rows]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::make_ready_future;
   using ::google::cloud::promise;
   using ::google::cloud::Status;
@@ -146,7 +146,7 @@ void AsyncReadRows(google::cloud::bigtable::Table table,
 void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
                             std::vector<std::string> const& argv) {
   //! [async read rows with limit]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::make_ready_future;
   using ::google::cloud::promise;
   using ::google::cloud::Status;
@@ -185,7 +185,7 @@ void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
 void AsyncReadRow(google::cloud::bigtable::Table table,
                   std::vector<std::string> const& argv) {
   //! [async read row]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::future;
   using ::google::cloud::StatusOr;
   [](google::cloud::bigtable::Table table, std::string const& row_key) {
@@ -225,7 +225,7 @@ void AsyncReadRow(google::cloud::bigtable::Table table,
 void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
                          std::vector<std::string> const& argv) {
   //! [async check and mutate]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::future;
   using ::google::cloud::StatusOr;
   [](cbt::Table table, std::string const& row_key) {
@@ -259,7 +259,7 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
 void AsyncSampleRows(google::cloud::bigtable::Table table,
                      std::vector<std::string> const&) {
   //! [async sample row keys]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::future;
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
@@ -284,7 +284,7 @@ void AsyncSampleRows(google::cloud::bigtable::Table table,
 void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
                           std::vector<std::string> const& argv) {
   //! [async read modify write]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::future;
   using ::google::cloud::StatusOr;
   [](cbt::Table table, std::string const& row_key) {
@@ -313,7 +313,7 @@ void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
 
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({

@@ -28,7 +28,7 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
-namespace btproto = google::bigtable::v2;
+namespace btproto = ::google::bigtable::v2;
 
 class LoggingDataClientTest : public ::testing::Test {
  protected:

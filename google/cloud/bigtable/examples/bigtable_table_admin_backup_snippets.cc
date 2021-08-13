@@ -29,7 +29,7 @@ using ::google::cloud::bigtable::examples::Usage;
 void CreateBackup(google::cloud::bigtable::TableAdmin const& admin,
                   std::vector<std::string> const& argv) {
   //! [create backup]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id,
      std::string const& cluster_id, std::string const& backup_id,
@@ -54,7 +54,7 @@ void CreateBackup(google::cloud::bigtable::TableAdmin const& admin,
 void ListBackups(google::cloud::bigtable::TableAdmin const& admin,
                  std::vector<std::string> const& argv) {
   //! [list backups]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& cluster_id,
      std::string const& filter, std::string const& order_by) {
@@ -76,7 +76,7 @@ void ListBackups(google::cloud::bigtable::TableAdmin const& admin,
 void GetBackup(google::cloud::bigtable::TableAdmin const& admin,
                std::vector<std::string> const& argv) {
   //! [get backup]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& cluster_id,
      std::string const& backup_id) {
@@ -93,7 +93,7 @@ void GetBackup(google::cloud::bigtable::TableAdmin const& admin,
 void DeleteBackup(google::cloud::bigtable::TableAdmin const& admin,
                   std::vector<std::string> const& argv) {
   //! [delete backup]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string const& cluster_id,
      std::string const& backup_id) {
     google::cloud::Status status = admin.DeleteBackup(cluster_id, backup_id);
@@ -107,7 +107,7 @@ void DeleteBackup(google::cloud::bigtable::TableAdmin const& admin,
 void UpdateBackup(google::cloud::bigtable::TableAdmin const& admin,
                   std::vector<std::string> const& argv) {
   //! [update backup]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& cluster_id,
      std::string const& backup_id, std::string const& expire_time_string) {
@@ -132,7 +132,7 @@ void UpdateBackup(google::cloud::bigtable::TableAdmin const& admin,
 void RestoreTable(google::cloud::bigtable::TableAdmin const& admin,
                   std::vector<std::string> const& argv) {
   //! [restore table]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id,
      std::string const& cluster_id, std::string const& backup_id) {
@@ -149,7 +149,7 @@ void RestoreTable(google::cloud::bigtable::TableAdmin const& admin,
 void RestoreTableFromInstance(google::cloud::bigtable::TableAdmin const& admin,
                               std::vector<std::string> const& argv) {
   //! [restore2]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id,
      std::string const& other_instance_id, std::string const& cluster_id,
@@ -169,7 +169,7 @@ void RestoreTableFromInstance(google::cloud::bigtable::TableAdmin const& admin,
 void GetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
                   std::vector<std::string> const& argv) {
   //! [get backup iam policy]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& cluster_id,
      std::string const& backup_id) {
@@ -185,7 +185,7 @@ void GetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
 void SetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
                   std::vector<std::string> const& argv) {
   //! [set backup iam policy]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& cluster_id,
      std::string const& backup_id, std::string const& role,
@@ -217,7 +217,7 @@ void SetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
 
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
   if (!examples::RunAdminIntegrationTests()) return;
@@ -310,7 +310,7 @@ void RunAll(std::vector<std::string> const& argv) {
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
-  namespace examples = google::cloud::bigtable::examples;
+  namespace examples = ::google::cloud::bigtable::examples;
   google::cloud::bigtable::examples::Example example({
       examples::MakeCommandEntry(
           "create-backup",

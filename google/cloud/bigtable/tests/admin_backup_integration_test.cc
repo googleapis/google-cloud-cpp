@@ -35,8 +35,8 @@ namespace {
 using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::Contains;
 using ::testing::Not;
-namespace btadmin = google::bigtable::admin::v2;
-namespace bigtable = google::cloud::bigtable;
+namespace btadmin = ::google::bigtable::admin::v2;
+namespace bigtable = ::google::cloud::bigtable;
 
 class AdminBackupIntegrationTest
     : public bigtable::testing::TableIntegrationTest {

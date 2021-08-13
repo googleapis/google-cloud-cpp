@@ -38,9 +38,9 @@ namespace {
 using ::google::cloud::storage_experimental::DefaultGrpcClient;
 using ::google::cloud::testing_util::FormatSize;
 using ::google::cloud::testing_util::Timer;
-namespace gcs = google::cloud::storage;
-namespace gcs_experimental = google::cloud::storage_experimental;
-namespace gcs_bm = google::cloud::storage_benchmarks;
+namespace gcs = ::google::cloud::storage;
+namespace gcs_experimental = ::google::cloud::storage_experimental;
+namespace gcs_bm = ::google::cloud::storage_benchmarks;
 using gcs_bm::AggregateThroughputOptions;
 using gcs_bm::ApiName;
 

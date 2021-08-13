@@ -39,7 +39,7 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
 
   // Create a namespace alias to make the code easier to read.
   //! [aliases]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::StatusOr;
   //! [aliases]
 
@@ -135,7 +135,7 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
 
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
 
   if (!argv.empty()) throw Usage{"auto"};
   if (!examples::RunAdminIntegrationTests()) return;

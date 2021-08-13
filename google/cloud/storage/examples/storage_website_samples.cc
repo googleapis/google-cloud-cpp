@@ -25,7 +25,7 @@ void GetStaticWebsiteConfiguration(google::cloud::storage::Client client,
                                    std::vector<std::string> const& argv) {
   //! [print bucket website configuration]
   // [START storage_print_bucket_website_configuration]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
@@ -56,7 +56,7 @@ void SetStaticWebsiteConfiguration(google::cloud::storage::Client client,
                                    std::vector<std::string> const& argv) {
   //! [define bucket website configuration]
   // [START storage_define_bucket_website_configuration]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& main_page_suffix, std::string const& not_found_page) {
@@ -94,7 +94,7 @@ void SetStaticWebsiteConfiguration(google::cloud::storage::Client client,
 void RemoveStaticWebsiteConfiguration(google::cloud::storage::Client client,
                                       std::vector<std::string> const& argv) {
   //! [remove bucket website configuration]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =

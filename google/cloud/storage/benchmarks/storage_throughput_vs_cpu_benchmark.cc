@@ -28,8 +28,8 @@
 #include <sstream>
 
 namespace {
-namespace gcs = google::cloud::storage;
-namespace gcs_bm = google::cloud::storage_benchmarks;
+namespace gcs = ::google::cloud::storage;
+namespace gcs_bm = ::google::cloud::storage_benchmarks;
 using gcs_bm::ApiName;
 using gcs_bm::ThroughputOptions;
 using gcs_bm::ThroughputResult;

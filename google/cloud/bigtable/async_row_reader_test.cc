@@ -32,7 +32,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
-namespace btproto = google::bigtable::v2;
+namespace btproto = ::google::bigtable::v2;
 
 using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::IsContextMDValid;

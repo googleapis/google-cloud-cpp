@@ -32,7 +32,7 @@ namespace google {
 namespace cloud {
 namespace storage_benchmarks {
 
-namespace gcs = google::cloud::storage;
+namespace gcs = ::google::cloud::storage;
 
 namespace {
 

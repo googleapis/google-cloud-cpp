@@ -24,7 +24,7 @@ namespace examples = ::google::cloud::storage::examples;
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 //! [grpc-read-write]
 void GrpcReadWrite(std::string const& bucket_name) {
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   auto constexpr kText = R"""(Lorem ipsum dolor sit amet, consectetur adipiscing
 elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
 ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
@@ -65,7 +65,7 @@ void GrpcReadWriteCommand(std::vector<std::string> argv) {
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 //! [grpc-client-with-project]
 void GrpcClientWithProject(std::string project_id) {
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   auto client = google::cloud::storage_experimental::DefaultGrpcClient(
       google::cloud::Options{}.set<gcs::ProjectIdOption>(
           std::move(project_id)));

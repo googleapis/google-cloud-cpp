@@ -33,8 +33,8 @@
  * Shows how to upload CSV data from Google Cloud Storage to Google Cloud
  * Bigtable.
  */
-namespace cbt = google::cloud::bigtable;
-namespace gcs = google::cloud::storage;
+namespace cbt = ::google::cloud::bigtable;
+namespace gcs = ::google::cloud::storage;
 
 namespace {
 

@@ -25,7 +25,7 @@ void GetDefaultEventBasedHold(google::cloud::storage::Client client,
                               std::vector<std::string> const& argv) {
   //! [get default event based hold]
   // [START storage_get_default_event_based_hold]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
@@ -50,7 +50,7 @@ void EnableDefaultEventBasedHold(google::cloud::storage::Client client,
                                  std::vector<std::string> const& argv) {
   //! [enable default event based hold]
   // [START storage_enable_default_event_based_hold]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
@@ -81,7 +81,7 @@ void DisableDefaultEventBasedHold(google::cloud::storage::Client client,
                                   std::vector<std::string> const& argv) {
   //! [disable default event based hold]
   // [START storage_disable_default_event_based_hold]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =

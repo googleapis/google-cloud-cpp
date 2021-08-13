@@ -27,7 +27,7 @@ void GenerateAccessToken(std::vector<std::string> const& argv) {
   }
   //! [START iamcredentials_generate_access_token]
   //! [iamcredentials-generate-access-token]
-  namespace iam = google::cloud::iam;
+  namespace iam = ::google::cloud::iam;
   [](std::string const& name, std::string const& lifetime_seconds,
      std::vector<std::string> const& scope) {
     iam::IAMCredentialsClient client(iam::MakeIAMCredentialsConnection());
@@ -51,7 +51,7 @@ void GenerateIdToken(std::vector<std::string> const& argv) {
   }
   //! [START iamcredentials_generate_id_token]
   //! [iamcredentials-generate-id-token]
-  namespace iam = google::cloud::iam;
+  namespace iam = ::google::cloud::iam;
   [](std::string const& name, std::string const& audience,
      std::string const& include_email,
      std::vector<std::string> const& delegates) {
@@ -72,7 +72,7 @@ void SignBlob(std::vector<std::string> const& argv) {
         "sign-blob <service-account-name> <payload> [<delegates>]*");
   }
   //! [START iamcredentials_sign_blob] [iamcredentials-sign-blob]
-  namespace iam = google::cloud::iam;
+  namespace iam = ::google::cloud::iam;
   [](std::string const& name, std::string const& payload,
      std::vector<std::string> const& delegates) {
     iam::IAMCredentialsClient client(iam::MakeIAMCredentialsConnection());
@@ -91,7 +91,7 @@ void SignJwt(std::vector<std::string> const& argv) {
         "sign-jwt <service-account-name> <payload> [<delegates>]*");
   }
   //! [START iamcredentials_sign_jwt] [iamcredentials-sign-jwt]
-  namespace iam = google::cloud::iam;
+  namespace iam = ::google::cloud::iam;
   [](std::string const& name, std::string const& payload,
      std::vector<std::string> const& delegates) {
     iam::IAMCredentialsClient client(iam::MakeIAMCredentialsConnection());

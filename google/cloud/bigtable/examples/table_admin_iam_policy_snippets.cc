@@ -28,7 +28,7 @@ using ::google::cloud::bigtable::examples::Usage;
 void GetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
                   std::vector<std::string> const& argv) {
   //! [get iam policy]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id) {
     StatusOr<google::iam::v1::Policy> policy = admin.GetIamPolicy(table_id);
@@ -43,7 +43,7 @@ void GetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
 void SetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
                   std::vector<std::string> const& argv) {
   //! [set iam policy]
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id,
      std::string const& role, std::string const& member) {
@@ -93,7 +93,7 @@ void TestIamPermissions(std::vector<std::string> const& argv) {
   //! [test iam permissions]
 
   using ::google::cloud::StatusOr;
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
 
   [](cbt::TableAdmin admin, std::string const& resource,
      std::vector<std::string> const& permissions) {
@@ -110,7 +110,7 @@ void TestIamPermissions(std::vector<std::string> const& argv) {
 
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
@@ -175,7 +175,7 @@ void RunAll(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {
   google::cloud::testing_util::InstallCrashHandler(argv[0]);
 
-  namespace examples = google::cloud::bigtable::examples;
+  namespace examples = ::google::cloud::bigtable::examples;
   examples::Example example({
       examples::MakeCommandEntry("get-iam-policy", {"<table-id>"},
                                  GetIamPolicy),

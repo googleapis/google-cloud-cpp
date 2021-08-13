@@ -21,8 +21,8 @@
 #include <iomanip>
 #include <sstream>
 
-namespace btproto = google::bigtable::v2;
-namespace btadmin = google::bigtable::admin::v2;
+namespace btproto = ::google::bigtable::v2;
+namespace btadmin = ::google::bigtable::admin::v2;
 
 namespace google {
 namespace cloud {

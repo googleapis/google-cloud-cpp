@@ -116,7 +116,7 @@ AdminClient::AsyncRestoreTable(
   return {};
 }
 
-namespace btadmin = google::bigtable::admin::v2;
+namespace btadmin = ::google::bigtable::admin::v2;
 
 /**
  * An AdminClient for single-threaded programs that refreshes credentials on all

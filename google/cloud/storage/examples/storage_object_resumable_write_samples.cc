@@ -25,7 +25,7 @@ namespace {
 std::string StartResumableUpload(google::cloud::storage::Client client,
                                  std::vector<std::string> const& argv) {
   //! [start resumable upload]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   return [](gcs::Client client, std::string const& bucket_name,
             std::string const& object_name) {
     gcs::ObjectWriteStream stream = client.WriteObject(
@@ -46,7 +46,7 @@ std::string StartResumableUpload(google::cloud::storage::Client client,
 std::string SuspendResumableUpload(google::cloud::storage::Client client,
                                    std::vector<std::string> const& argv) {
   //! [suspend resumable upload]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   return [](gcs::Client client, std::string const& bucket_name,
             std::string const& object_name) {
     gcs::ObjectWriteStream stream = client.WriteObject(
@@ -68,7 +68,7 @@ std::string SuspendResumableUpload(google::cloud::storage::Client client,
 void ResumeResumableUpload(google::cloud::storage::Client client,
                            std::vector<std::string> const& argv) {
   //! [resume resumable upload]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& session_id) {
@@ -110,7 +110,7 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 void DeleteResumableUpload(google::cloud::storage::Client client,
                            std::vector<std::string> const& argv) {
   //! [delete resumable upload]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
     gcs::ObjectWriteStream stream = client.WriteObject(

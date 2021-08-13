@@ -29,7 +29,7 @@ void AccessToken(std::vector<std::string> const& argv) {
   }
 
   // Create a namespace alias to make the code easier to read.
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::GrpcCredentialOption;
   using ::google::cloud::Options;
   using ::google::cloud::StatusOr;
@@ -62,7 +62,7 @@ void JWTAccessToken(std::vector<std::string> const& argv) {
         "<service_account_file_json>"};
   }
   // Create a namespace alias to make the code easier to read.
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::GrpcCredentialOption;
   using ::google::cloud::Options;
   using ::google::cloud::StatusOr;
@@ -103,7 +103,7 @@ void GCECredentials(std::vector<std::string> const& argv) {
     throw Usage{"test-gce-credentials: <project-id> <instance-id>"};
   }
   // Create a namespace alias to make the code easier to read.
-  namespace cbt = google::cloud::bigtable;
+  namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::GrpcCredentialOption;
   using ::google::cloud::Options;
   using ::google::cloud::StatusOr;

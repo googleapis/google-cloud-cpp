@@ -28,7 +28,7 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
-namespace btadmin = google::bigtable::admin::v2;
+namespace btadmin = ::google::bigtable::admin::v2;
 
 class LoggingAdminClientTest : public ::testing::Test {
  protected:

@@ -87,7 +87,7 @@ std::set<std::string> DefaultTracingComponents() {
 google::iam::credentials::v1::GenerateAccessTokenResponse UseAccessToken(
     google::cloud::iam::IAMCredentialsClient client,
     std::vector<std::string> const& argv) {
-  namespace iam = google::cloud::iam;
+  namespace iam = ::google::cloud::iam;
   return [](iam::IAMCredentialsClient client,
             std::string const& service_account, std::string const& project_id) {
     google::protobuf::Duration duration;
@@ -105,7 +105,7 @@ google::iam::credentials::v1::GenerateAccessTokenResponse UseAccessToken(
               << ", which will expire around " << absl::FromChrono(expiration)
               << std::endl;
 
-    namespace spanner = google::cloud::spanner;
+    namespace spanner = ::google::cloud::spanner;
     auto credentials = grpc::CompositeChannelCredentials(
         grpc::SslCredentials({}),
         grpc::AccessTokenCredentials(token->access_token()));
@@ -134,7 +134,7 @@ void UseAccessTokenUntilExpired(google::cloud::iam::IAMCredentialsClient client,
             << absl::FromChrono(expiration) << ")" << std::endl;
 
   auto iteration = [=](bool expired) {
-    namespace spanner = google::cloud::spanner;
+    namespace spanner = ::google::cloud::spanner;
     auto credentials = grpc::CompositeChannelCredentials(
         grpc::SslCredentials({}),
         grpc::AccessTokenCredentials(token.access_token()));
@@ -174,7 +174,7 @@ void UseAccessTokenUntilExpired(google::cloud::iam::IAMCredentialsClient client,
 
 void UseIdTokenHttp(google::cloud::iam::IAMCredentialsClient client,
                     std::vector<std::string> const& argv) {
-  namespace iam = google::cloud::iam;
+  namespace iam = ::google::cloud::iam;
   [](iam::IAMCredentialsClient client, std::string const& service_account,
      std::string const& hello_world_url) {
     auto token = client.GenerateIdToken(
@@ -199,7 +199,7 @@ void UseIdTokenHttp(google::cloud::iam::IAMCredentialsClient client,
 
 void UseIdTokenGrpc(google::cloud::iam::IAMCredentialsClient client,
                     std::vector<std::string> const& argv) {
-  namespace iam = google::cloud::iam;
+  namespace iam = ::google::cloud::iam;
   [](iam::IAMCredentialsClient client, std::string const& service_account,
      std::string const& url) {
     auto token = client.GenerateIdToken(
