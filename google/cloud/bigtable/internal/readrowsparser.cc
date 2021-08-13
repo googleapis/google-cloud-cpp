@@ -20,7 +20,7 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
-using google::bigtable::v2::ReadRowsResponse_CellChunk;
+using ::google::bigtable::v2::ReadRowsResponse_CellChunk;
 
 void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
                                  grpc::Status& status) {

@@ -83,7 +83,7 @@ TEST(CleanupStaleResources, CleanupOldTables) {
 
 TEST(CleanupStaleResources, CleanupStaleBackups) {
   using MockAdminClient = ::google::cloud::bigtable::testing::MockAdminClient;
-  using google::protobuf::util::TimeUtil;
+  using ::google::protobuf::util::TimeUtil;
   namespace btadmin = google::bigtable::admin::v2;
 
   std::string const project_id = "test-project-id";

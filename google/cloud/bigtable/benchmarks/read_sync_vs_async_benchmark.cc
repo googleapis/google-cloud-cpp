@@ -251,8 +251,8 @@ BenchmarkResult AsyncBenchmark::Run(std::chrono::seconds test_duration,
 }
 
 void AsyncBenchmark::RunOneAsyncReadRow() {
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
 
   auto row_key = [this] {
     std::lock_guard<std::mutex> lk(mu_);

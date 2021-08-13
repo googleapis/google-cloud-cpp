@@ -42,7 +42,7 @@ Client::Client(Options opts)
 
 std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
     Options const& opts, std::shared_ptr<internal::RawClient> client) {
-  using google::cloud::internal::Contains;
+  using ::google::cloud::internal::Contains;
   auto const& tracing_components = opts.get<TracingComponentsOption>();
   auto const enable_logging = Contains(tracing_components, "raw-client") ||
                               Contains(tracing_components, "rpc");

@@ -1025,8 +1025,8 @@ void PublishAvroRecords(google::cloud::pubsub::Publisher publisher,
                         std::vector<std::string> const&) {
   //! [START pubsub_publish_avro_records]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](pubsub::Publisher publisher) {
     auto constexpr kNewYork =
         R"js({ "name": "New York", "post_abbr": "NY" })js";
@@ -1054,8 +1054,8 @@ google::cloud::future<google::cloud::Status> SubscribeAvroRecords(
     std::vector<std::string> const&) {
   //! [START pubsub_subscribe_avro_records]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   return [](pubsub::Subscriber subscriber) {
     auto session = subscriber.Subscribe(
         [](pubsub::Message const& m, pubsub::AckHandler h) {
@@ -1072,8 +1072,8 @@ void PublishProtobufRecords(google::cloud::pubsub::Publisher publisher,
                             std::vector<std::string> const&) {
   //! [START pubsub_publish_proto_messages]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](pubsub::Publisher publisher) {
     std::vector<std::pair<std::string, std::string>> states{
         {"New York", "NY"},
@@ -1106,8 +1106,8 @@ google::cloud::future<google::cloud::Status> SubscribeProtobufRecords(
     std::vector<std::string> const&) {
   //! [START pubsub_subscribe_proto_messages]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   return [](pubsub::Subscriber subscriber) {
     auto session = subscriber.Subscribe(
         [](pubsub::Message const& m, pubsub::AckHandler h) {
@@ -1128,8 +1128,8 @@ void Publish(google::cloud::pubsub::Publisher publisher,
   //! [START pubsub_publish_with_error_handler]
   //! [START pubsub_publish] [publish]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](pubsub::Publisher publisher) {
     auto message_id = publisher.Publish(
         pubsub::MessageBuilder{}.SetData("Hello World!").Build());
@@ -1151,8 +1151,8 @@ void PublishCustomAttributes(google::cloud::pubsub::Publisher publisher,
                              std::vector<std::string> const&) {
   //! [START pubsub_publish_custom_attributes] [publish-custom-attributes]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](pubsub::Publisher publisher) {
     std::vector<future<void>> done;
     for (int i = 0; i != 10; ++i) {
@@ -1181,8 +1181,8 @@ void PublishCustomAttributes(google::cloud::pubsub::Publisher publisher,
 void PublishHelper(google::cloud::pubsub::Publisher publisher,
                    std::string const& prefix, int message_count) {
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   std::vector<future<StatusOr<std::string>>> done;
   done.reserve(message_count);
   for (int i = 0; i != message_count; ++i) {
@@ -1201,8 +1201,8 @@ void PublishOrderingKey(google::cloud::pubsub::Publisher publisher,
                         std::vector<std::string> const&) {
   //! [START pubsub_publish_with_ordering_keys] [publish-with-ordering-keys]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](pubsub::Publisher publisher) {
     struct SampleData {
       std::string ordering_key;
@@ -1238,8 +1238,8 @@ void ResumeOrderingKey(google::cloud::pubsub::Publisher publisher,
                        std::vector<std::string> const&) {
   //! [START pubsub_resume_publish_with_ordering_keys] [resume-publish]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](pubsub::Publisher publisher) {
     struct SampleData {
       std::string ordering_key;
@@ -1303,7 +1303,7 @@ void SubscribeErrorListener(google::cloud::pubsub::Subscriber subscriber,
   auto current = EventCounter::Instance().Current();
   // [START pubsub_subscriber_error_listener]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
+  using ::google::cloud::future;
   auto sample = [](pubsub::Subscriber subscriber) {
     return subscriber
         .Subscribe([&](pubsub::Message const& m, pubsub::AckHandler h) {
@@ -1354,8 +1354,8 @@ void CustomThreadPoolPublisher(std::vector<std::string> const& argv) {
   }
   //! [custom-thread-pool-publisher]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     // Create our own completion queue to run the background activity, such as
     // flushing the publisher.
@@ -1402,8 +1402,8 @@ void PublisherConcurrencyControl(std::vector<std::string> const& argv) {
   }
   //! [START pubsub_publisher_concurrency_control]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
     // Override the default number of background (I/O) threads. By default the
@@ -1438,8 +1438,8 @@ void PublisherFlowControl(std::vector<std::string> const& argv) {
   }
   //! [START pubsub_publisher_flow_control]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
     // Configure the publisher to block if either (1) 100 or more messages, or
@@ -1477,8 +1477,8 @@ void PublisherRetrySettings(std::vector<std::string> const& argv) {
   }
   //! [START pubsub_publisher_retry_settings] [publisher-retry-settings]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
     // By default a publisher will retry for 60 seconds, with an initial backoff
@@ -1521,8 +1521,8 @@ void PublisherDisableRetries(std::vector<std::string> const& argv) {
   }
   //! [publisher-disable-retries]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
     auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
@@ -1561,8 +1561,8 @@ void CustomBatchPublisher(std::vector<std::string> const& argv) {
   }
   //! [START pubsub_publisher_batch_settings] [publisher-options]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
     // By default the publisher will flush a batch after 10ms, after it contains
@@ -1602,8 +1602,8 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
   }
   //! [custom-thread-pool-subscriber]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string subscription_id) {
     // Create our own completion queue to run the background activity.
     google::cloud::CompletionQueue cq;
@@ -1665,8 +1665,8 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
   auto const initial = EventCounter::Instance().Current();
   //! [START pubsub_subscriber_concurrency_control] [subscriber-concurrency]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   auto sample = [](std::string project_id, std::string subscription_id) {
     // Create a subscriber with 16 threads handling I/O work, by default the
     // library creates `std::thread::hardware_concurrency()` threads.
@@ -1709,8 +1709,8 @@ void SubscriberFlowControlSettings(std::vector<std::string> const& argv) {
   auto const initial = EventCounter::Instance().Current();
   //! [START pubsub_subscriber_flow_settings] [subscriber-flow-control]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   auto sample = [](std::string project_id, std::string subscription_id) {
     // Change the flow control watermarks, by default the client library uses
     // 0 and 1,000 for the message count watermarks, and 0 and 10MiB for the
@@ -1752,8 +1752,8 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
   auto const initial = EventCounter::Instance().Current();
   //! [subscriber-retry-settings]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   auto sample = [](std::string project_id, std::string subscription_id) {
     // By default a subscriber will retry for 60 seconds, with an initial
     // backoff of 100ms, a maximum backoff of 60 seconds, and the backoff will

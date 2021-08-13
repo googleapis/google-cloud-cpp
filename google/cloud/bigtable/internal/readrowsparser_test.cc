@@ -69,7 +69,7 @@ TEST(ReadRowsParserTest, HandleChunkAfterEndOfStreamThrows) {
 }
 
 TEST(ReadRowsParserTest, SingleChunkSucceeds) {
-  using google::protobuf::TextFormat;
+  using ::google::protobuf::TextFormat;
   ReadRowsParser parser;
   ReadRowsResponse_CellChunk chunk;
   std::string chunk1 = R"(
@@ -104,7 +104,7 @@ TEST(ReadRowsParserTest, SingleChunkSucceeds) {
 }
 
 TEST(ReadRowsParserTest, NextAfterEndOfStreamSucceeds) {
-  using google::protobuf::TextFormat;
+  using ::google::protobuf::TextFormat;
   ReadRowsParser parser;
   ReadRowsResponse_CellChunk chunk;
   std::string chunk1 = R"(
@@ -177,7 +177,7 @@ class AcceptanceTest : public ::testing::Test {
 
   static std::vector<ReadRowsResponse_CellChunk> ConvertChunks(
       std::vector<std::string> const& chunk_strings) {
-    using google::protobuf::TextFormat;
+    using ::google::protobuf::TextFormat;
 
     std::vector<ReadRowsResponse_CellChunk> chunks;
     for (std::string const& chunk_string : chunk_strings) {

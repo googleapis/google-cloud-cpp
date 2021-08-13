@@ -264,8 +264,8 @@ google::cloud::StatusOr<Options> ParseArgsDefault(
 }
 
 google::cloud::StatusOr<Options> SelfTest() {
-  using google::cloud::internal::GetEnv;
-  using google::cloud::internal::Sample;
+  using ::google::cloud::internal::GetEnv;
+  using ::google::cloud::internal::Sample;
 
   google::cloud::Status const self_test_error(
       google::cloud::StatusCode::kUnknown, "self-test failure");

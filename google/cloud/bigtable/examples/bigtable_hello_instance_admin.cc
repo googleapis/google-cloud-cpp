@@ -28,7 +28,7 @@
 
 namespace {
 
-using google::cloud::bigtable::examples::Usage;
+using ::google::cloud::bigtable::examples::Usage;
 
 void BigtableHelloInstance(std::vector<std::string> const& argv) {
   if (argv.size() != 4) {
@@ -44,8 +44,8 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
 
   //! [aliases]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   //! [aliases]
 
   // Connect to the Cloud Bigtable admin endpoint.

@@ -398,7 +398,7 @@ using ::google::cloud::internal::GetEnv;
 
 google::cloud::StatusOr<AggregateThroughputOptions> SelfTest(
     char const* argv0) {
-  using google::cloud::internal::Sample;
+  using ::google::cloud::internal::Sample;
 
   for (auto const& var : {"GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME"}) {
     auto const value = GetEnv(var).value_or("");

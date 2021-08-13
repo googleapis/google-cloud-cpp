@@ -341,8 +341,8 @@ TestResults RunThread(ThroughputOptions const& options, gcs::Client rest_client,
 }
 
 google::cloud::StatusOr<ThroughputOptions> SelfTest(char const* argv0) {
-  using google::cloud::internal::GetEnv;
-  using google::cloud::internal::Sample;
+  using ::google::cloud::internal::GetEnv;
+  using ::google::cloud::internal::Sample;
 
   for (auto const& var :
        {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID"}) {

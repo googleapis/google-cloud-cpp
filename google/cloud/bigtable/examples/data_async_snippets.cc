@@ -27,8 +27,8 @@ void AsyncApply(google::cloud::bigtable::Table table,
                 std::vector<std::string> const& argv) {
   //! [async-apply]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table, std::string const& row_key) {
     auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::system_clock::now().time_since_epoch());
@@ -53,7 +53,7 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
                     std::vector<std::string> const&) {
   //! [bulk async-bulk-apply]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::future;
+  using ::google::cloud::future;
   [](cbt::Table table) {
     // Write several rows in a single operation, each row has some trivial data.
     cbt::BulkMutation bulk;
@@ -108,9 +108,9 @@ void AsyncReadRows(google::cloud::bigtable::Table table,
                    std::vector<std::string> const&) {
   //! [async read rows]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::make_ready_future;
-  using google::cloud::promise;
-  using google::cloud::Status;
+  using ::google::cloud::make_ready_future;
+  using ::google::cloud::promise;
+  using ::google::cloud::Status;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000010", "key-000020");
@@ -147,9 +147,9 @@ void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
                             std::vector<std::string> const& argv) {
   //! [async read rows with limit]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::make_ready_future;
-  using google::cloud::promise;
-  using google::cloud::Status;
+  using ::google::cloud::make_ready_future;
+  using ::google::cloud::promise;
+  using ::google::cloud::Status;
   [](cbt::Table table, std::int64_t const& limit) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000010", "key-000020");
@@ -186,8 +186,8 @@ void AsyncReadRow(google::cloud::bigtable::Table table,
                   std::vector<std::string> const& argv) {
   //! [async read row]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](google::cloud::bigtable::Table table, std::string const& row_key) {
     // Filter the results, only include the latest value on each cell.
     cbt::Filter filter = cbt::Filter::Latest(1);
@@ -226,8 +226,8 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
                          std::vector<std::string> const& argv) {
   //! [async check and mutate]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table, std::string const& row_key) {
     // Check if the latest value of the flip-flop column is "on".
     cbt::Filter predicate = cbt::Filter::Chain(
@@ -260,8 +260,8 @@ void AsyncSampleRows(google::cloud::bigtable::Table table,
                      std::vector<std::string> const&) {
   //! [async sample row keys]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     future<StatusOr<std::vector<cbt::RowKeySample>>> samples_future =
         table.AsyncSampleRows();
@@ -285,8 +285,8 @@ void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
                           std::vector<std::string> const& argv) {
   //! [async read modify write]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table, std::string const& row_key) {
     future<StatusOr<cbt::Row>> row_future = table.AsyncReadModifyWriteRow(
         std::move(row_key),
@@ -394,7 +394,7 @@ void RunAll(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {
   google::cloud::testing_util::InstallCrashHandler(argv[0]);
 
-  using google::cloud::bigtable::examples::MakeCommandEntry;
+  using ::google::cloud::bigtable::examples::MakeCommandEntry;
   google::cloud::bigtable::examples::Example example({
       MakeCommandEntry("async-apply", {"<row-key>"}, AsyncApply),
       MakeCommandEntry("async-bulk-apply", {}, AsyncBulkApply),

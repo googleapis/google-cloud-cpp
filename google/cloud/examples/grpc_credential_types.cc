@@ -239,7 +239,7 @@ void UseIdTokenGrpc(google::cloud::iam::IAMCredentialsClient client,
 
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
-  using google::cloud::internal::GetEnv;
+  using ::google::cloud::internal::GetEnv;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({

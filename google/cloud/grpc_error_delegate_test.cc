@@ -21,7 +21,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 TEST(MakeStatusFromRpcError, AllCodes) {
-  using google::cloud::StatusCode;
+  using ::google::cloud::StatusCode;
 
   struct {
     grpc::StatusCode grpc;
@@ -56,7 +56,7 @@ TEST(MakeStatusFromRpcError, AllCodes) {
 }
 
 TEST(MakeStatusFromRpcError, ProtoValidCode) {
-  using google::cloud::StatusCode;
+  using ::google::cloud::StatusCode;
 
   struct {
     grpc::StatusCode grpc;
@@ -93,7 +93,7 @@ TEST(MakeStatusFromRpcError, ProtoValidCode) {
 }
 
 TEST(MakeStatusFromRpcError, ProtoInvalidCode) {
-  using google::cloud::StatusCode;
+  using ::google::cloud::StatusCode;
 
   for (auto const& code : {-100, -1, 30, 100}) {
     std::string const message = "test message";

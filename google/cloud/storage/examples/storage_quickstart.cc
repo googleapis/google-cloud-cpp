@@ -22,7 +22,7 @@
 
 namespace {
 
-using google::cloud::storage::examples::Usage;
+using ::google::cloud::storage::examples::Usage;
 
 // [START storage_quickstart]
 void StorageQuickstart(std::string const& bucket_name) {

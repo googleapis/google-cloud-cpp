@@ -20,7 +20,7 @@
 
 namespace {
 
-using google::cloud::storage::examples::Usage;
+using ::google::cloud::storage::examples::Usage;
 
 void NativeGetBucketIamPolicy(google::cloud::storage::Client client,
                               std::vector<std::string> const& argv) {
@@ -228,7 +228,7 @@ void NativeSetBucketPublicIam(google::cloud::storage::Client client,
                               std::vector<std::string> const& argv) {
   // [START storage_set_bucket_public_iam]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     auto current_policy = client.GetNativeBucketIamPolicy(
         bucket_name, gcs::RequestedPolicyVersion(3));

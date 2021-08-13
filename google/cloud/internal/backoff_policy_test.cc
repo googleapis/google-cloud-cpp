@@ -17,7 +17,7 @@
 #include <chrono>
 #include <vector>
 
-using google::cloud::internal::ExponentialBackoffPolicy;
+using ::google::cloud::internal::ExponentialBackoffPolicy;
 using ms = std::chrono::milliseconds;
 
 using ::testing::ElementsAreArray;

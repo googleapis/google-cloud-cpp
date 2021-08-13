@@ -27,7 +27,7 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 
-using google::cloud::internal::Idempotency;
+using ::google::cloud::internal::Idempotency;
 
 namespace {
 template <typename Request>

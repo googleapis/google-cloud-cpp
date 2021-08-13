@@ -28,7 +28,7 @@
 
 namespace {
 
-using google::cloud::bigtable::examples::Usage;
+using ::google::cloud::bigtable::examples::Usage;
 
 void Apply(google::cloud::bigtable::Table table,
            std::vector<std::string> const& argv) {
@@ -139,7 +139,7 @@ void CheckAndMutate(google::cloud::bigtable::Table table,
                     std::vector<std::string> const& argv) {
   //! [check and mutate]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table, std::string const& row_key) {
     // Check if the latest value of the flip-flop column is "on".
     cbt::Filter predicate = cbt::Filter::Chain(
@@ -170,7 +170,7 @@ void CheckAndMutateNotPresent(google::cloud::bigtable::Table table,
                               std::vector<std::string> const& argv) {
   //! [check and mutate not present]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table, std::string const& row_key) {
     // Check if the latest value of the "test-column" column is present,
     // regardless of its value.
@@ -198,7 +198,7 @@ void ReadModifyWrite(google::cloud::bigtable::Table table,
                      std::vector<std::string> const& argv) {
   //! [read modify write]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table, std::string const& row_key) {
     StatusOr<cbt::Row> row = table.ReadModifyWriteRow(
         row_key, cbt::ReadModifyWriteRule::IncrementAmount("fam", "counter", 1),
@@ -234,7 +234,7 @@ void SampleRows(google::cloud::bigtable::Table table,
                 std::vector<std::string> const&) {
   //! [sample row keys] [START bigtable_table_sample_splits]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     StatusOr<std::vector<cbt::RowKeySample>> samples = table.SampleRows();
     if (!samples) throw std::runtime_error(samples.status().message());
@@ -297,7 +297,7 @@ void RowExists(google::cloud::bigtable::Table table,
                std::vector<std::string> const& argv) {
   //! [row exists]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table, std::string const& row_key) {
     // Filter the results, turn any value into an empty string.
     cbt::Filter filter = cbt::Filter::StripValueTransformer();
@@ -481,8 +481,8 @@ void RenameColumn(google::cloud::bigtable::Table table,
                   std::vector<std::string> const& argv) {
   // [START bigtable_mutate_mix_match]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::Status;
-  using google::cloud::StatusOr;
+  using ::google::cloud::Status;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table, std::string const& key, std::string const& family,
      std::string const& old_name, std::string const& new_name) {
     StatusOr<std::pair<bool, cbt::Row>> row =
@@ -902,7 +902,7 @@ void RunAll(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   google::cloud::testing_util::InstallCrashHandler(argv[0]);
 
-  using google::cloud::bigtable::examples::MakeCommandEntry;
+  using ::google::cloud::bigtable::examples::MakeCommandEntry;
   google::cloud::bigtable::examples::Commands commands = {
       MakeCommandEntry("apply", {"<row-key>"}, Apply),
       MakeCommandEntry("apply-relaxed-idempotency", {"<row-key>"},

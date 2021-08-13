@@ -49,9 +49,9 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-using google::cloud::conformance::storage::v1::PostPolicyV4Test;
-using google::cloud::conformance::storage::v1::SigningV4Test;
-using google::cloud::conformance::storage::v1::UrlStyle;
+using ::google::cloud::conformance::storage::v1::PostPolicyV4Test;
+using ::google::cloud::conformance::storage::v1::SigningV4Test;
+using ::google::cloud::conformance::storage::v1::UrlStyle;
 using ::testing::HasSubstr;
 
 // Initialized in main() below.
@@ -282,8 +282,8 @@ INSTANTIATE_TEST_SUITE_P(
 }  // namespace cloud
 }  // namespace google
 
-using google::cloud::conformance::storage::v1::PostPolicyV4Test;
-using google::cloud::conformance::storage::v1::SigningV4Test;
+using ::google::cloud::conformance::storage::v1::PostPolicyV4Test;
+using ::google::cloud::conformance::storage::v1::SigningV4Test;
 
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   auto conformance_tests_file =

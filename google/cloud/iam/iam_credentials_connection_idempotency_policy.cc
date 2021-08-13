@@ -24,7 +24,7 @@ namespace cloud {
 namespace iam {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-using google::cloud::internal::Idempotency;
+using ::google::cloud::internal::Idempotency;
 
 IAMCredentialsConnectionIdempotencyPolicy::
     ~IAMCredentialsConnectionIdempotencyPolicy() = default;

@@ -336,7 +336,7 @@ TEST_F(InstanceAdminTest, ListInstancesTooManyTransients) {
 
 /// @test Verify that `bigtable::DeleteInstance` works in the positive case.
 TEST_F(InstanceAdminTest, DeleteInstance) {
-  using google::protobuf::Empty;
+  using ::google::protobuf::Empty;
   InstanceAdmin tested(client_);
   std::string expected_text = R"""(
   name: 'projects/the-project/instances/the-instance'
@@ -486,7 +486,7 @@ TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
 
 /// @test Verify that DeleteCluster works in the positive case.
 TEST_F(InstanceAdminTest, DeleteCluster) {
-  using google::protobuf::Empty;
+  using ::google::protobuf::Empty;
   InstanceAdmin tested(client_);
   std::string expected_text = R"""(
   name: 'projects/the-project/instances/the-instance/clusters/the-cluster'
@@ -994,7 +994,7 @@ TEST_F(InstanceAdminTest, CreateAppProfile) {
 }
 
 TEST_F(InstanceAdminTest, DeleteAppProfile) {
-  using google::protobuf::Empty;
+  using ::google::protobuf::Empty;
   InstanceAdmin tested(client_);
   std::string expected_text = R"""(
       name: "projects/the-project/instances/the-instance/appProfiles/the-profile"
@@ -1008,7 +1008,7 @@ TEST_F(InstanceAdminTest, DeleteAppProfile) {
 }
 
 TEST_F(InstanceAdminTest, GetAppProfile) {
-  using google::protobuf::Empty;
+  using ::google::protobuf::Empty;
   InstanceAdmin tested(client_);
   std::string expected_text = R"""(
       name: "projects/the-project/instances/the-instance/appProfiles/the-profile"
@@ -1023,7 +1023,7 @@ TEST_F(InstanceAdminTest, GetAppProfile) {
 }
 
 TEST_F(InstanceAdminTest, GetInstance) {
-  using google::protobuf::Empty;
+  using ::google::protobuf::Empty;
   InstanceAdmin tested(client_);
   std::string expected_text = R"""(
       name: "projects/the-project/instances/the-instance"

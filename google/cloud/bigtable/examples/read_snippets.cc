@@ -28,7 +28,7 @@
 
 namespace {
 
-using google::cloud::bigtable::examples::Usage;
+using ::google::cloud::bigtable::examples::Usage;
 
 void PrintRow(google::cloud::bigtable::Row const& row) {
   std::cout << "Reading data for " << row.row_key() << "\n";
@@ -110,7 +110,7 @@ void ReadRowsWithLimit(google::cloud::bigtable::Table table,
                        std::vector<std::string> const& argv) {
   //! [read rows with limit]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table, std::int64_t limit) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("phone#4c410523#20190501",
@@ -152,7 +152,7 @@ void ReadKeysSet(std::vector<std::string> argv) {
 
   // [START bigtable_read_keys_set]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table, std::vector<std::string> const& row_keys) {
     auto row_set = cbt::RowSet();
 
@@ -180,7 +180,7 @@ void ReadPrefixList(google::cloud::bigtable::Table table,
                     std::vector<std::string> const& argv) {
   //! [read prefix list] [START bigtable_read_prefix_list]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table, std::vector<std::string> const& prefix_list) {
     cbt::Filter filter = cbt::Filter::Latest(1);
     auto row_set = cbt::RowSet();
@@ -208,7 +208,7 @@ void ReadRow(google::cloud::bigtable::Table table,
              std::vector<std::string> const& argv) {
   //! [START bigtable_reads_row]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](google::cloud::bigtable::Table table, std::string const& row_key) {
     StatusOr<std::pair<bool, cbt::Row>> tuple =
         table.ReadRow(row_key, cbt::Filter::PassAllFilter());
@@ -227,7 +227,7 @@ void ReadRowPartial(google::cloud::bigtable::Table table,
                     std::vector<std::string> const& argv) {
   //! [read row] [START bigtable_reads_row_partial]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](google::cloud::bigtable::Table table, std::string const& row_key) {
     StatusOr<std::pair<bool, cbt::Row>> tuple = table.ReadRow(
         row_key, cbt::Filter::ColumnName("stats_summary", "os_build"));
@@ -246,7 +246,7 @@ void ReadRows(google::cloud::bigtable::Table table,
               std::vector<std::string> const&) {
   //! [START bigtable_reads_rows]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row : table.ReadRows(
@@ -264,7 +264,7 @@ void ReadRowRange(google::cloud::bigtable::Table table,
                   std::vector<std::string> const&) {
   //! [read rows] [START bigtable_reads_row_range]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row :
@@ -283,7 +283,7 @@ void ReadRowRanges(google::cloud::bigtable::Table table,
                    std::vector<std::string> const&) {
   //! [START bigtable_reads_row_ranges]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row : table.ReadRows(
@@ -304,7 +304,7 @@ void ReadRowPrefix(google::cloud::bigtable::Table table,
                    std::vector<std::string> const&) {
   //! [read rowset prefix] [START bigtable_reads_prefix]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row : table.ReadRows(
@@ -321,7 +321,7 @@ void ReadFilter(google::cloud::bigtable::Table table,
                 std::vector<std::string> const&) {
   //! [START bigtable_reads_filter]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row :
@@ -409,7 +409,7 @@ void RunAll(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {
   google::cloud::testing_util::InstallCrashHandler(argv[0]);
 
-  using google::cloud::bigtable::examples::MakeCommandEntry;
+  using ::google::cloud::bigtable::examples::MakeCommandEntry;
   google::cloud::bigtable::examples::Commands commands = {
       MakeCommandEntry("read-row", {"<row-key>"}, ReadRow),
       MakeCommandEntry("read-row-partial", {}, ReadRowPartial),

@@ -484,7 +484,7 @@ TEST_F(TableAdminTest, GetTableTooManyFailures) {
 
 /// @test Verify that bigtable::TableAdmin::DeleteTable works as expected.
 TEST_F(TableAdminTest, DeleteTable) {
-  using google::protobuf::Empty;
+  using ::google::protobuf::Empty;
 
   TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"pb(
@@ -716,7 +716,7 @@ TEST_F(TableAdminTest, UpdateBackupTooManyFailures) {
 
 /// @test Verify that bigtable::TableAdmin::DeleteBackup works as expected.
 TEST_F(TableAdminTest, DeleteBackup) {
-  using google::protobuf::Empty;
+  using ::google::protobuf::Empty;
 
   TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"pb(
@@ -756,7 +756,7 @@ TEST_F(TableAdminTest, DeleteBackupFailure) {
  * expected.
  */
 TEST_F(TableAdminTest, ModifyColumnFamilies) {
-  using google::protobuf::Empty;
+  using ::google::protobuf::Empty;
 
   TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"pb(
@@ -805,7 +805,7 @@ TEST_F(TableAdminTest, ModifyColumnFamiliesFailure) {
 
 /// @test Verify that bigtable::TableAdmin::DropRowsByPrefix works as expected.
 TEST_F(TableAdminTest, DropRowsByPrefix) {
-  using google::protobuf::Empty;
+  using ::google::protobuf::Empty;
 
   TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"pb(
@@ -836,7 +836,7 @@ TEST_F(TableAdminTest, DropRowsByPrefixFailure) {
 
 /// @test Verify that bigtable::TableAdmin::DropRowsByPrefix works as expected.
 TEST_F(TableAdminTest, DropAllRows) {
-  using google::protobuf::Empty;
+  using ::google::protobuf::Empty;
 
   TableAdmin tested(client_, "the-instance");
   std::string expected_text = R"pb(

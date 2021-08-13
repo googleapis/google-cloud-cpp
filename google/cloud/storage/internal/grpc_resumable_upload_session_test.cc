@@ -147,7 +147,7 @@ TEST(GrpcResumableUploadSessionTest, SingleStreamForLargeChunks) {
       .WillRepeatedly([&](std::unique_ptr<grpc::ClientContext>) {
         auto writer = absl::make_unique<MockInsertStream>();
 
-        using google::storage::v1::InsertObjectRequest;
+        using ::google::storage::v1::InsertObjectRequest;
         EXPECT_CALL(*writer, Write)
             .Times(AtLeast(2))
             .WillRepeatedly([&](InsertObjectRequest const& r,

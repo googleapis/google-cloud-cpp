@@ -27,8 +27,8 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-using google::cloud::internal::Idempotency;
-using google::cloud::internal::RetryLoop;
+using ::google::cloud::internal::Idempotency;
+using ::google::cloud::internal::RetryLoop;
 
 class SchemaAdminConnectionImpl : public pubsub::SchemaAdminConnection {
  public:

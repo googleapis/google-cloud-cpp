@@ -29,7 +29,7 @@ void GetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
                   std::vector<std::string> const& argv) {
   //! [get iam policy]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id) {
     StatusOr<google::iam::v1::Policy> policy = admin.GetIamPolicy(table_id);
     if (!policy) throw std::runtime_error(policy.status().message());
@@ -44,7 +44,7 @@ void SetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
                   std::vector<std::string> const& argv) {
   //! [set iam policy]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id,
      std::string const& role, std::string const& member) {
     StatusOr<google::iam::v1::Policy> current = admin.GetIamPolicy(table_id);
@@ -92,7 +92,7 @@ void TestIamPermissions(std::vector<std::string> const& argv) {
 
   //! [test iam permissions]
 
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   namespace cbt = google::cloud::bigtable;
 
   [](cbt::TableAdmin admin, std::string const& resource,

@@ -25,7 +25,7 @@
 
 namespace {
 
-using google::cloud::bigtable::examples::Usage;
+using ::google::cloud::bigtable::examples::Usage;
 using std::chrono::microseconds;
 using std::chrono::milliseconds;
 
@@ -33,7 +33,7 @@ void FilterLimitRowSample(google::cloud::bigtable::Table table,
                           std::vector<std::string> const&) {
   //! [START bigtable_filters_limit_row_sample]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Filter the results, only include rows with a given probability
     cbt::Filter filter = cbt::Filter::RowSample(0.75);
@@ -58,7 +58,7 @@ void FilterLimitRowRegex(google::cloud::bigtable::Table table,
                          std::vector<std::string> const&) {
   //! [START bigtable_filters_limit_row_regex]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000010", "key-000030");
@@ -84,7 +84,7 @@ void FilterLimitCellsPerColumn(google::cloud::bigtable::Table table,
                                std::vector<std::string> const&) {
   //! [START bigtable_filters_limit_cells_per_col]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000010", "key-000020");
@@ -109,7 +109,7 @@ void FilterLimitCellsPerRow(google::cloud::bigtable::Table table,
                             std::vector<std::string> const&) {
   //! [START bigtable_filters_limit_cells_per_row]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000010", "key-000020");
@@ -134,7 +134,7 @@ void FilterLimitCellsPerRowOfset(google::cloud::bigtable::Table table,
                                  std::vector<std::string> const&) {
   //! [START bigtable_filters_limit_cells_per_row_offset]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000010", "key-000020");
@@ -158,7 +158,7 @@ void FilterLimitColFamilyRegex(google::cloud::bigtable::Table table,
                                std::vector<std::string> const&) {
   //! [START bigtable_filters_limit_col_family_regex]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000011", "key-000015");
@@ -182,7 +182,7 @@ void FilterLimitColQualifierRegex(google::cloud::bigtable::Table table,
                                   std::vector<std::string> const&) {
   //! [START bigtable_filters_limit_col_qualifier_regex]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000011", "key-000015");
@@ -206,7 +206,7 @@ void FilterLimitColRange(google::cloud::bigtable::Table table,
                          std::vector<std::string> const&) {
   //! [START bigtable_filters_limit_col_range]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000011", "key-000015");
@@ -230,7 +230,7 @@ void FilterLimitValueRange(google::cloud::bigtable::Table table,
                            std::vector<std::string> const&) {
   //! [START bigtable_filters_limit_value_range]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000011", "key-000015");
@@ -254,7 +254,7 @@ void FilterLimitValueRegex(google::cloud::bigtable::Table table,
                            std::vector<std::string> const&) {
   //! [START bigtable_filters_limit_value_regex]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000011", "key-000015");
@@ -278,7 +278,7 @@ void FilterLimitTimestampRange(google::cloud::bigtable::Table table,
                                std::vector<std::string> const&) {
   //! [START bigtable_filters_limit_timestamp_range]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000011", "key-000015");
@@ -303,7 +303,7 @@ void FilterLimitBlockAll(google::cloud::bigtable::Table table,
                          std::vector<std::string> const&) {
   //! [START bigtable_filters_limit_block_all]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000000", "key-000050");
@@ -328,7 +328,7 @@ void FilterLimitPassAll(google::cloud::bigtable::Table table,
                         std::vector<std::string> const&) {
   //! [START bigtable_filters_limit_pass_all]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000011", "key-000015");
@@ -352,7 +352,7 @@ void FilterModifyStripValue(google::cloud::bigtable::Table table,
                             std::vector<std::string> const&) {
   //! [START bigtable_filters_modify_strip_value]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000011", "key-000015");
@@ -376,7 +376,7 @@ void FilterModifyApplyLabel(google::cloud::bigtable::Table table,
                             std::vector<std::string> const&) {
   //! [START bigtable_filters_modify_apply_label]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000011", "key-000015");
@@ -405,7 +405,7 @@ void FilterComposingChain(google::cloud::bigtable::Table table,
                           std::vector<std::string> const&) {
   //! [START bigtable_filters_composing_chain]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000011", "key-000015");
@@ -430,7 +430,7 @@ void FilterComposingInterleave(google::cloud::bigtable::Table table,
                                std::vector<std::string> const&) {
   //! [START bigtable_filters_composing_interleave]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000011", "key-000015");
@@ -455,7 +455,7 @@ void FilterComposingCondition(google::cloud::bigtable::Table table,
                               std::vector<std::string> const&) {
   //! [START bigtable_filters_composing_condition]
   namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000000", "key-000005");
@@ -622,7 +622,7 @@ void RunAll(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {
   google::cloud::testing_util::InstallCrashHandler(argv[0]);
 
-  using google::cloud::bigtable::examples::MakeCommandEntry;
+  using ::google::cloud::bigtable::examples::MakeCommandEntry;
   google::cloud::bigtable::examples::Commands commands = {
       MakeCommandEntry("insert-test-data", {}, InsertTestData),
       MakeCommandEntry("filter-limit-row-sample", {}, FilterLimitRowSample),

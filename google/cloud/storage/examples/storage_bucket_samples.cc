@@ -272,7 +272,7 @@ void EnableUniformBucketLevelAccess(google::cloud::storage::Client client,
   //! [enable uniform bucket level access]
   // [START storage_enable_uniform_bucket_level_access]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     gcs::BucketIamConfiguration configuration;
     configuration.uniform_bucket_level_access =
@@ -298,7 +298,7 @@ void DisableUniformBucketLevelAccess(google::cloud::storage::Client client,
   //! [disable uniform bucket level access]
   // [START storage_disable_uniform_bucket_level_access]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     gcs::BucketIamConfiguration configuration;
     configuration.uniform_bucket_level_access =
@@ -324,7 +324,7 @@ void GetUniformBucketLevelAccess(google::cloud::storage::Client client,
   //! [get uniform bucket level access]
   // [START storage_get_uniform_bucket_level_access]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name);
@@ -357,7 +357,7 @@ void SetPublicAccessPreventionEnforced(google::cloud::storage::Client client,
                                        std::vector<std::string> const& argv) {
   // [START storage_set_public_access_prevention_enforced]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     gcs::BucketIamConfiguration configuration;
     configuration.public_access_prevention =
@@ -382,7 +382,7 @@ void SetPublicAccessPreventionUnspecified(
     std::vector<std::string> const& argv) {
   // [START storage_set_public_access_prevention_unspecified]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     gcs::BucketIamConfiguration configuration;
     configuration.public_access_prevention =
@@ -406,7 +406,7 @@ void GetPublicAccessPrevention(google::cloud::storage::Client client,
                                std::vector<std::string> const& argv) {
   // [START storage_get_public_access_prevention]
   namespace gcs = google::cloud::storage;
-  using google::cloud::StatusOr;
+  using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name);

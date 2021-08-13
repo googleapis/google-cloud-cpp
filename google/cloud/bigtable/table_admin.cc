@@ -50,7 +50,7 @@ constexpr TableAdmin::TableView TableAdmin::VIEW_UNSPECIFIED;
 
 /// Shortcuts to avoid typing long names over and over.
 using ClientUtils = bigtable::internal::UnaryClientUtils<AdminClient>;
-using google::cloud::internal::Idempotency;
+using ::google::cloud::internal::Idempotency;
 
 StatusOr<btadmin::Table> TableAdmin::CreateTable(std::string table_id,
                                                  TableConfig config) {

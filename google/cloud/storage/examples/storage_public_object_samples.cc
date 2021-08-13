@@ -20,7 +20,7 @@
 
 namespace {
 
-using google::cloud::storage::examples::Usage;
+using ::google::cloud::storage::examples::Usage;
 
 void MakeObjectPublic(google::cloud::storage::Client client,
                       std::vector<std::string> const& argv) {
