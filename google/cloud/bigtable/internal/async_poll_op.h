@@ -205,12 +205,10 @@ class PollAsyncOpFuture {
 template <typename Operation>
 future<
     StatusOr<typename PollableOperationRequestTraits<Operation>::ResponseType>>
-StartAsyncPollOp(
-    char const* location, std::unique_ptr<PollingPolicy> polling_policy,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
-    MetadataUpdatePolicy metadata_update_policy,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
-    CompletionQueue cq, Operation operation) {
+StartAsyncPollOp(char const* location,
+                 std::unique_ptr<PollingPolicy> polling_policy,
+                 MetadataUpdatePolicy metadata_update_policy,
+                 CompletionQueue cq, Operation operation) {
   auto req = std::shared_ptr<PollAsyncOpFuture<Operation>>(
       new PollAsyncOpFuture<Operation>(location, std::move(polling_policy),
                                        std::move(metadata_update_policy),

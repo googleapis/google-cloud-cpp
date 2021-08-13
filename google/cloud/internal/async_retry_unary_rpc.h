@@ -207,7 +207,6 @@ template <
                                 RequestT const&, grpc::CompletionQueue*>::value,
                             int>::type = 0>
 future<StatusOr<typename AsyncCallResponseType<AsyncCallT, RequestT>::type>>
-// NOLINTNEXTLINE(performance-unnecessary-value-param)  TODO(#4112)
 StartRetryAsyncUnaryRpc(CompletionQueue cq, char const* location,
                         std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
                         std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,

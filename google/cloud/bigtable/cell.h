@@ -109,10 +109,8 @@ class Cell {
 
   /// Create a Cell and fill it with a 64-bit value encoded as big endian.
   template <typename KeyType, typename ColumnType>
-  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   Cell(KeyType&& row_key, std::string family_name,
        ColumnType&& column_qualifier, std::int64_t timestamp,
-       // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
        std::int64_t value, std::vector<std::string> labels)
       : Cell(std::forward<KeyType>(row_key), std::move(family_name),
              std::forward<ColumnType>(column_qualifier), timestamp,
@@ -121,7 +119,6 @@ class Cell {
 
   /// Create a cell and fill it with data, but with empty labels.
   template <typename KeyType, typename ColumnType, typename ValueType>
-  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   Cell(KeyType&& row_key, std::string family_name,
        ColumnType&& column_qualifier, std::int64_t timestamp, ValueType&& value)
       : Cell(std::forward<KeyType>(row_key), std::move(family_name),

@@ -71,7 +71,6 @@ class ConnectionOptions {
 
   /// Change the gRPC credentials value.
   ConnectionOptions& set_credentials(
-      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
       std::shared_ptr<grpc::ChannelCredentials> v) {
     opts_.set<GrpcCredentialOption>(std::move(v));
     return *this;
@@ -91,7 +90,6 @@ class ConnectionOptions {
    *
    * The default value is set by `ConnectionTraits::default_endpoint()`.
    */
-  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   ConnectionOptions& set_endpoint(std::string v) {
     opts_.set<EndpointOption>(std::move(v));
     return *this;
@@ -172,7 +170,6 @@ class ConnectionOptions {
   }
 
   /// Set the value for `channel_pool_domain()`.
-  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   ConnectionOptions& set_channel_pool_domain(std::string v) {
     channel_pool_domain_ = std::move(v);
     return *this;

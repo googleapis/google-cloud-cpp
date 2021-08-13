@@ -62,7 +62,6 @@ future<StatusOr<Response>> AsyncStartPollAfterRetryUnaryRpc(
     std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
     std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
     IdempotencyPolicy idempotent_policy,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
     MetadataUpdatePolicy metadata_update_policy, std::shared_ptr<Client> client,
     AsyncCallType async_call, RequestType request, CompletionQueue cq) {
   static_assert(

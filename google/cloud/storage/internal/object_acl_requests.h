@@ -65,7 +65,6 @@ class GenericObjectAclRequest
     : public GenericObjectRequest<Derived, Generation, UserProject> {
  public:
   GenericObjectAclRequest() = default;
-  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   GenericObjectAclRequest(std::string bucket, std::string object,
                           std::string entity)
       : GenericObjectRequest<Derived, Generation, UserProject>(
@@ -111,13 +110,8 @@ class GenericChangeObjectAclRequest : public GenericObjectAclRequest<Derived> {
  public:
   GenericChangeObjectAclRequest() = default;
 
-  explicit GenericChangeObjectAclRequest(
-      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
-      std::string bucket,
-      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
-      std::string object,
-      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
-      std::string entity, std::string role)
+  explicit GenericChangeObjectAclRequest(std::string bucket, std::string object,
+                                         std::string entity, std::string role)
       : GenericObjectAclRequest<Derived>(std::move(bucket), std::move(object),
                                          std::move(entity)),
         role_(std::move(role)) {}

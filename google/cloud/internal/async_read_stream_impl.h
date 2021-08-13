@@ -140,7 +140,6 @@ class AsyncReadStreamImpl
   template <typename AsyncFunctionType, typename Request>
   void Start(AsyncFunctionType&& async_call, Request const& request,
              std::unique_ptr<grpc::ClientContext> context,
-             // NOLINTNEXTLINE(performance-unnecessary-value-param)  TODO(#4112)
              std::shared_ptr<CompletionQueueImpl> cq) {
     // An adapter to call OnStart() via the completion queue.
     class NotifyStart final : public AsyncGrpcOperation {

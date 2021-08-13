@@ -138,9 +138,7 @@ class promise final : private internal::promise_base<T> {
   promise() : internal::promise_base<T>([] {}) {}
 
   /// Creates a promise with an unsatisfied shared state.
-  explicit promise(
-      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
-      std::function<void()> cancellation_callback)
+  explicit promise(std::function<void()> cancellation_callback)
       : internal::promise_base<T>(std::move(cancellation_callback)) {}
 
   /// Creates a promise *without* a shared state.
