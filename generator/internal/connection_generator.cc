@@ -66,10 +66,10 @@ Status ConnectionGenerator::GenerateHeader() {
   if (!result.ok()) return result;
 
   HeaderPrint(  // clang-format off
-    "using $retry_policy_name$ = google::cloud::internal::TraitBasedRetryPolicy<\n"
+    "using $retry_policy_name$ = ::google::cloud::internal::TraitBasedRetryPolicy<\n"
     "    $product_internal_namespace$::$retry_traits_name$>;\n"
     "\n"
-    "using $limited_time_retry_policy_name$ = google::cloud::internal::LimitedTimeRetryPolicy<\n"
+    "using $limited_time_retry_policy_name$ = ::google::cloud::internal::LimitedTimeRetryPolicy<\n"
     "    $product_internal_namespace$::$retry_traits_name$>;\n"
     "\n"
     "using $limited_error_count_retry_policy_name$ =\n"

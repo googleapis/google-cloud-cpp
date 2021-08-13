@@ -136,7 +136,7 @@ class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
   bool OnFailure(grpc::Status const& status) override;
 
  private:
-  using Impl = google::cloud::internal::LimitedErrorCountRetryPolicy<
+  using Impl = ::google::cloud::internal::LimitedErrorCountRetryPolicy<
       internal::SafeGrpcRetry>;
   Impl impl_;
 };

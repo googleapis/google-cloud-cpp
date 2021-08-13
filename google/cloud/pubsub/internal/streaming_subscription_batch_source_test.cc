@@ -73,7 +73,7 @@ class FakeStream {
     auto read_response = [this] {
       return AddAction("Read").then([](future<bool> g) {
         auto ok = g.get();
-        using Response = google::pubsub::v1::StreamingPullResponse;
+        using Response = ::google::pubsub::v1::StreamingPullResponse;
         if (!ok) return absl::optional<Response>{};
         return absl::make_optional(Response{});
       });
@@ -218,7 +218,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartTooManyTransientFailures) {
                              google::pubsub::v1::StreamingPullRequest const&) {
     using us = std::chrono::microseconds;
     using F = future<StatusOr<std::chrono::system_clock::time_point>>;
-    using Response = google::pubsub::v1::StreamingPullResponse;
+    using Response = ::google::pubsub::v1::StreamingPullResponse;
     auto start_response = [cq]() mutable {
       return cq.MakeRelativeTimer(us(10)).then([](F) { return true; });
     };
@@ -283,7 +283,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartPermanentFailure) {
                              google::pubsub::v1::StreamingPullRequest const&) {
     using us = std::chrono::microseconds;
     using F = future<StatusOr<std::chrono::system_clock::time_point>>;
-    using Response = google::pubsub::v1::StreamingPullResponse;
+    using Response = ::google::pubsub::v1::StreamingPullResponse;
     auto start_response = [cq]() mutable {
       return cq.MakeRelativeTimer(us(10)).then([](F) { return true; });
     };
@@ -448,7 +448,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ResumeAfterFirstRead) {
                           google::pubsub::v1::StreamingPullRequest const&) {
       using us = std::chrono::microseconds;
       using F = future<StatusOr<std::chrono::system_clock::time_point>>;
-      using Response = google::pubsub::v1::StreamingPullResponse;
+      using Response = ::google::pubsub::v1::StreamingPullResponse;
       auto start_response = [cq]() mutable {
         return cq.MakeRelativeTimer(us(10)).then([](F) { return true; });
       };
@@ -546,7 +546,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
                       google::pubsub::v1::StreamingPullRequest const& request) {
           auto stream = success_stream.MakeWriteFailureStream(
               cq, std::move(context), request);
-          using Request = google::pubsub::v1::StreamingPullRequest;
+          using Request = ::google::pubsub::v1::StreamingPullRequest;
           // Add expectations for Write() calls with empty subscriptions, only
           // the first call has a non-empty value and it is already set.
           EXPECT_CALL(*stream,
@@ -631,7 +631,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
                     google::pubsub::v1::StreamingPullRequest const& request) {
         auto stream =
             fake_stream.MakeWriteFailureStream(cq, std::move(context), request);
-        using Request = google::pubsub::v1::StreamingPullRequest;
+        using Request = ::google::pubsub::v1::StreamingPullRequest;
         // Add expectations for Write() calls with empty subscriptions, only
         // the first call has a non-empty value and it is already set.
         EXPECT_CALL(*stream,
@@ -690,7 +690,7 @@ TEST(StreamingSubscriptionBatchSourceTest, WriteErrorWaitsForRead) {
                     google::pubsub::v1::StreamingPullRequest const& request) {
         auto stream =
             fake_stream.MakeWriteFailureStream(cq, std::move(context), request);
-        using Request = google::pubsub::v1::StreamingPullRequest;
+        using Request = ::google::pubsub::v1::StreamingPullRequest;
         // Add expectations for Write() calls with empty subscriptions, only
         // the first call has a non-empty value and it is already set.
         EXPECT_CALL(*stream,
@@ -792,8 +792,8 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingReadCancel) {
   auto async_pull_mock = [&](google::cloud::CompletionQueue&,
                              std::unique_ptr<grpc::ClientContext>,
                              google::pubsub::v1::StreamingPullRequest const&) {
-    using Response = google::pubsub::v1::StreamingPullResponse;
-    using Request = google::pubsub::v1::StreamingPullRequest;
+    using Response = ::google::pubsub::v1::StreamingPullResponse;
+    using Request = ::google::pubsub::v1::StreamingPullRequest;
     auto start_response = [&async] {
       return async.PushBack("Start").then(
           [](future<bool> f) { return f.get(); });

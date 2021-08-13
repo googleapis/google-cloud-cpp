@@ -77,7 +77,7 @@ using RpcRetryPolicy =
     google::cloud::internal::TraitBasedRetryPolicy<IsRetryableTraits>;
 using RpcLimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<IsRetryableTraits>;
-using RpcBackoffPolicy = google::cloud::internal::BackoffPolicy;
+using RpcBackoffPolicy = ::google::cloud::internal::BackoffPolicy;
 using RpcExponentialBackoffPolicy =
     google::cloud::internal::ExponentialBackoffPolicy;
 

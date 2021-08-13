@@ -33,7 +33,7 @@ namespace cloud {
 namespace iam {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-using IAMRetryPolicy = google::cloud::internal::TraitBasedRetryPolicy<
+using IAMRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     iam_internal::IAMRetryTraits>;
 
 using IAMLimitedTimeRetryPolicy =

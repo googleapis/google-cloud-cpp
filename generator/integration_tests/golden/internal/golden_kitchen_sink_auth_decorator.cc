@@ -68,7 +68,7 @@ std::unique_ptr<internal::StreamingReadRpc<google::test::admin::database::v1::Ta
 GoldenKitchenSinkAuth::TailLogEntries(
    std::unique_ptr<grpc::ClientContext> context,
    google::test::admin::database::v1::TailLogEntriesRequest const& request) {
-  using ErrorStream = google::cloud::internal::StreamingReadRpcError<
+  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::test::admin::database::v1::TailLogEntriesResponse>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));

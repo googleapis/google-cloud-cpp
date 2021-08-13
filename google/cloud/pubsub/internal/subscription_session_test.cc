@@ -570,7 +570,7 @@ TEST(SubscriptionSessionTest, FireAndForgetShutdown) {
                              google::pubsub::v1::StreamingPullRequest const&) {
     using us = std::chrono::microseconds;
     using F = future<StatusOr<std::chrono::system_clock::time_point>>;
-    using Response = google::pubsub::v1::StreamingPullResponse;
+    using Response = ::google::pubsub::v1::StreamingPullResponse;
     auto start_response = [cq]() mutable {
       return cq.MakeRelativeTimer(us(10)).then([](F) { return true; });
     };

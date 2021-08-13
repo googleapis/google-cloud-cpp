@@ -488,7 +488,7 @@ TEST(CompletionQueueTest, RunAsyncThread) {
   for (auto& t : runners) t.join();
 }
 
-using RunAsyncBlocker = google::cloud::testing_util::AsyncSequencer<void>;
+using RunAsyncBlocker = ::google::cloud::testing_util::AsyncSequencer<void>;
 
 TEST(CompletionQueueTest, RunAsyncParallel) {
   auto impl = std::make_shared<internal::DefaultCompletionQueueImpl>();

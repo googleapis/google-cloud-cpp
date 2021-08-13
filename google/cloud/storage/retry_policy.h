@@ -50,7 +50,7 @@ using LimitedErrorCountRetryPolicy =
         internal::StatusTraits>;
 
 /// The backoff policy base class.
-using BackoffPolicy = google::cloud::internal::BackoffPolicy;
+using BackoffPolicy = ::google::cloud::internal::BackoffPolicy;
 
 /// Implement truncated exponential backoff with randomization.
 using ExponentialBackoffPolicy =

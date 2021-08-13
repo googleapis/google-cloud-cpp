@@ -192,7 +192,7 @@ class TableAdmin {
 
   //@{
   /// @name Convenience shorthands for the schema views.
-  using TableView = google::bigtable::admin::v2::Table::View;
+  using TableView = ::google::bigtable::admin::v2::Table::View;
   /// Only populate 'name' and fields related to the table's encryption state.
   static auto constexpr ENCRYPTION_VIEW =  // NOLINT(readability-identifier-naming)
       google::bigtable::admin::v2::Table::ENCRYPTION_VIEW;

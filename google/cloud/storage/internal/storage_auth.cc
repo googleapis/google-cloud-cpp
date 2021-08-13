@@ -23,7 +23,7 @@ namespace internal {
 std::unique_ptr<StorageStub::ObjectMediaStream> StorageAuth::GetObjectMedia(
     std::unique_ptr<grpc::ClientContext> context,
     google::storage::v1::GetObjectMediaRequest const& request) {
-  using ErrorStream = google::cloud::internal::StreamingReadRpcError<
+  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::storage::v1::GetObjectMediaResponse>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
@@ -32,7 +32,7 @@ std::unique_ptr<StorageStub::ObjectMediaStream> StorageAuth::GetObjectMedia(
 
 std::unique_ptr<StorageStub::InsertStream> StorageAuth::InsertObjectMedia(
     std::unique_ptr<grpc::ClientContext> context) {
-  using ErrorStream = google::cloud::internal::StreamingWriteRpcError<
+  using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
       google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));

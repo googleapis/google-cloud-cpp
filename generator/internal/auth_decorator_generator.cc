@@ -196,7 +196,7 @@ std::unique_ptr<internal::StreamingReadRpc<$response_type$>>
 $auth_class_name$::$method_name$(
    std::unique_ptr<grpc::ClientContext> context,
    $request_type$ const& request) {
-  using ErrorStream = google::cloud::internal::StreamingReadRpcError<
+  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       $response_type$>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));

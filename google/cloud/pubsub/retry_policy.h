@@ -42,12 +42,13 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /// The base class for retry policies.
-using RetryPolicy = google::cloud::internal::TraitBasedRetryPolicy<
+using RetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     pubsub_internal::RetryTraits>;
 
 /// A retry policy that limits based on time.
-using LimitedTimeRetryPolicy = google::cloud::internal::LimitedTimeRetryPolicy<
-    pubsub_internal::RetryTraits>;
+using LimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        pubsub_internal::RetryTraits>;
 
 /// A retry policy that limits the number of times a request can fail.
 using LimitedErrorCountRetryPolicy =

@@ -45,7 +45,7 @@ std::unique_ptr<internal::StreamingReadRpc<
 BigQueryReadAuth::ReadRows(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
-  using ErrorStream = google::cloud::internal::StreamingReadRpcError<
+  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::cloud::bigquery::storage::v1::ReadRowsResponse>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));

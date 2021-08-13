@@ -85,7 +85,7 @@ class TraitBasedRetryPolicy : public RetryPolicy {
   using RetryableTraits = RetryableTraitsP;
 
   /// The status type used by the retry policy
-  using StatusType = google::cloud::Status;
+  using StatusType = ::google::cloud::Status;
   ///@}
 
   ~TraitBasedRetryPolicy() override = default;

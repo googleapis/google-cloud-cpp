@@ -142,7 +142,7 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
     }
   };
 
-  using Impl = google::cloud::bigtable::internal::CommonClient<
+  using Impl = ::google::cloud::bigtable::internal::CommonClient<
       AdminTraits, btadmin::BigtableTableAdmin>;
 
  public:

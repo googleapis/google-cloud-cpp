@@ -41,7 +41,7 @@ inline namespace SPANNER_CLIENT_NS {
  *
  * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
  */
-using ListInstancesRange = google::cloud::internal::PaginationRange<
+using ListInstancesRange = ::google::cloud::internal::PaginationRange<
     google::spanner::admin::instance::v1::Instance>;
 
 /**
@@ -53,7 +53,7 @@ using ListInstancesRange = google::cloud::internal::PaginationRange<
  *
  * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
  */
-using ListInstanceConfigsRange = google::cloud::internal::PaginationRange<
+using ListInstanceConfigsRange = ::google::cloud::internal::PaginationRange<
     google::spanner::admin::instance::v1::InstanceConfig>;
 
 /**

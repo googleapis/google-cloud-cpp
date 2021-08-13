@@ -56,7 +56,7 @@ class GrpcClient : public RawClient,
   // them is very different from the standard retry loop. Also note that these
   // are virtual functions only because we need to override them in the unit
   // tests.
-  using InsertStream = google::cloud::internal::StreamingWriteRpc<
+  using InsertStream = ::google::cloud::internal::StreamingWriteRpc<
       google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
   virtual std::unique_ptr<InsertStream> CreateUploadWriter(
       std::unique_ptr<grpc::ClientContext> context);

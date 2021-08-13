@@ -52,11 +52,11 @@ Status RetryPolicyGenerator::GenerateHeader() {
 
   HeaderPrint(  // clang-format off
     "/// The base class for retry policies.\n"
-    "using RetryPolicy = google::cloud::internal::TraitBasedRetryPolicy<\n"
+    "using RetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<\n"
     "    $product_internal_namespace$::RetryTraits>;\n"
     "\n"
     "/// A retry policy that limits based on time.\n"
-    "using LimitedTimeRetryPolicy = google::cloud::internal::LimitedTimeRetryPolicy<\n"
+    "using LimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<\n"
     "    $product_internal_namespace$::RetryTraits>;\n"
     "\n"
     "/// A retry policy that limits the number of times a request can fail.\n"

@@ -33,8 +33,9 @@ namespace cloud {
 namespace bigquery {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-using BigQueryReadRetryPolicy = google::cloud::internal::TraitBasedRetryPolicy<
-    bigquery_internal::BigQueryReadRetryTraits>;
+using BigQueryReadRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        bigquery_internal::BigQueryReadRetryTraits>;
 
 using BigQueryReadLimitedTimeRetryPolicy =
     google::cloud::internal::LimitedTimeRetryPolicy<
