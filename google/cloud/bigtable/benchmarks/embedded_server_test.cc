@@ -25,7 +25,7 @@ namespace bigtable {
 namespace benchmarks {
 namespace {
 
-using std::chrono::milliseconds;
+using ::std::chrono::milliseconds;
 
 TEST(EmbeddedServer, WaitAndShutdown) {
   auto server = CreateEmbeddedServer();

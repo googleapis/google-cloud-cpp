@@ -26,8 +26,8 @@
 namespace {
 
 using ::google::cloud::bigtable::examples::Usage;
-using std::chrono::microseconds;
-using std::chrono::milliseconds;
+using ::std::chrono::microseconds;
+using ::std::chrono::milliseconds;
 
 void FilterLimitRowSample(google::cloud::bigtable::Table table,
                           std::vector<std::string> const&) {
