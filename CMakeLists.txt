@@ -124,7 +124,7 @@ if ("${GOOGLE_CLOUD_CPP_ENABLE_CCACHE}")
     endif ()
 endif ()
 
-# Search for Doxygen and create the targets for it if it exists
+# Search for Doxygen and create the targets for it if found.
 option(GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN "Generate Doxygen documentation" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
 
@@ -132,9 +132,9 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
 set(GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
     "unused"
     CACHE STRING "This option is no longer used.")
-
 set_property(CACHE GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
              PROPERTY STRINGS "external" "package" "unused")
+mark_as_advanced(GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER)
 
 # Generate docs with relative URLs matching with the directory structure on
 # googleapis.dev hositng.
@@ -173,8 +173,27 @@ option(GOOGLE_CLOUD_CPP_ENABLE_GENERATOR "Enable building the generator." OFF)
 set(GOOGLE_CLOUD_CPP_ENABLE
     "bigtable;bigquery;iam;firestore;logging;pubsub;spanner;storage"
     CACHE STRING "The list of libraries to build.")
-
 string(REPLACE "," ";" GOOGLE_CLOUD_CPP_ENABLE "${GOOGLE_CLOUD_CPP_ENABLE}")
+
+# Since these are not the recommended practice, mark them as advanced.
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE)
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY)
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_SPANNER)
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE)
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_PUBSUB)
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_IAM)
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_LOGGING)
+mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GENERATOR)
+
+set(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT OFF)
+if (experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+    set(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT ON)
+endif ()
+option(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC
+       "Enable compilation for the GCS gRPC plugin (EXPERIMENTAL)"
+       "${GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT}")
+mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
 # We no longer build the generator by default, but if it was explicitly
 # requested, we add it to the list of enabled libraries.
@@ -186,6 +205,9 @@ endif ()
 foreach (library ${GOOGLE_CLOUD_CPP_ENABLE})
     string(TOUPPER "${library}" _library)
     set(_library "GOOGLE_CLOUD_CPP_ENABLE_${_library}")
+    if ("${library}" STREQUAL "experimental-storage-grpc")
+        set(_library "GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC")
+    endif ()
     if (NOT ${_library})
         message(
             WARNING
@@ -194,6 +216,17 @@ foreach (library ${GOOGLE_CLOUD_CPP_ENABLE})
         list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE ${library})
     endif ()
 endforeach ()
+
+if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC AND NOT
+                                             GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
+    message(
+        FATAL_ERROR
+            "The experimental GCS+gRPC plugin is enabled, but the base storage"
+            " library is disabled. This is not a valid configuration, please"
+            " review the options provided to CMake. Pay particular attention to"
+            " GOOGLE_CLOUD_CPP_ENABLE, GOOGLE_CLOUD_CPP_ENABLE_STORAGE, and"
+            " GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC.")
+endif ()
 
 # Enable building the gRPC utilities library if any of its dependents are
 # enabled.
@@ -206,6 +239,7 @@ foreach (
     iam
     spanner
     pubsub
+    experimental-storage-grpc
     generator)
     if (_library IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         set(GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION ON)
@@ -246,8 +280,12 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
 
 add_subdirectory(google/cloud)
 foreach (library ${GOOGLE_CLOUD_CPP_ENABLE})
-    if (${library} STREQUAL generator)
+    if ("${library}" STREQUAL generator)
         add_subdirectory(generator)
+    elseif ("${library}" STREQUAL "experimental-storage-grpc")
+        if (NOT ("storage" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
+            add_subdirectory(google/cloud/storage)
+        endif ()
     else ()
         add_subdirectory(google/cloud/${library})
     endif ()

@@ -16,10 +16,6 @@
 
 find_package(absl CONFIG REQUIRED)
 
-option(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC
-       "Enable compilation for the GCS gRPC plugin (EXPERIMENTAL)" OFF)
-mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
-
 set(DOXYGEN_PROJECT_NAME "Google Cloud Storage C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Storage")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
