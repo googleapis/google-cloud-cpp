@@ -119,9 +119,9 @@ class GenericChangeDefaultObjectAclRequest
  public:
   GenericChangeDefaultObjectAclRequest() = default;
 
-  explicit GenericChangeDefaultObjectAclRequest(
-      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
-      std::string bucket, std::string entity, std::string role)
+  explicit GenericChangeDefaultObjectAclRequest(std::string bucket,
+                                                std::string entity,
+                                                std::string role)
       : GenericDefaultObjectAclRequest<Derived>(std::move(bucket),
                                                 std::move(entity)),
         role_(std::move(role)) {}

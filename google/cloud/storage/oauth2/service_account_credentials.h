@@ -136,7 +136,6 @@ template <typename HttpRequestBuilderType =
           typename ClockType = std::chrono::system_clock>
 class ServiceAccountCredentials : public Credentials {
  public:
-  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo info)
       : ServiceAccountCredentials(std::move(info), {}) {}
   ServiceAccountCredentials(ServiceAccountCredentialsInfo info,

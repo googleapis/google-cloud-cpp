@@ -334,7 +334,6 @@ template <typename T>
 class future_shared_state final : private future_shared_state_base {
  public:
   future_shared_state() : future_shared_state_base(), buffer_() {}
-  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   explicit future_shared_state(std::function<void()> cancellation_callback)
       : future_shared_state_base(std::move(cancellation_callback)), buffer_() {}
   ~future_shared_state() {

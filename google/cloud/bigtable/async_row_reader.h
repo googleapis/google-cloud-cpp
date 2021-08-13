@@ -67,16 +67,11 @@ class AsyncRowReader : public std::enable_shared_from_this<
       "RowFunctor should return a future<bool>.");
 
   static std::shared_ptr<AsyncRowReader> Create(
-      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
       CompletionQueue cq, std::shared_ptr<DataClient> client,
-      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
       std::string app_profile_id, std::string table_name, RowFunctor on_row,
-      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
       FinishFunctor on_finish, RowSet row_set, std::int64_t rows_limit,
-      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
       Filter filter, std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
       std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
       MetadataUpdatePolicy metadata_update_policy,
       std::unique_ptr<internal::ReadRowsParserFactory> parser_factory) {
     std::shared_ptr<AsyncRowReader> res(new AsyncRowReader(

@@ -111,7 +111,6 @@ class GenericChangeBucketAclRequest : public GenericBucketAclRequest<Derived> {
  public:
   GenericChangeBucketAclRequest() = default;
 
-  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   explicit GenericChangeBucketAclRequest(std::string bucket, std::string entity,
                                          std::string role)
       : GenericBucketAclRequest<Derived>(std::move(bucket), std::move(entity)),
