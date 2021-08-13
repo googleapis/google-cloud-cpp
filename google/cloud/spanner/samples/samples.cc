@@ -1912,38 +1912,35 @@ void SetTransactionTag(google::cloud::spanner::Client client) {
   auto commit = client.Commit(
       [&client](
           spanner::Transaction const& txn) -> StatusOr<spanner::Mutations> {
-        spanner::SqlStatement select_venues(
-            "SELECT VenueId, VenueName, Capacity"
-            "  FROM Venues"
-            " WHERE OutdoorVenue = @outdoor_venue",
-            {{"outdoor_venue", spanner::Value(false)}});
-        using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
-                                   absl::optional<std::int64_t>>;
-        // Sets the request tag to "app=concert,env=dev,action=select".
+        spanner::SqlStatement update_statement(
+            "UPDATE Venues SET Capacity = CAST(Capacity/4 AS INT64)"
+            " WHERE OutdoorVenue = false");
+        // Sets the request tag to "app=concert,env=dev,action=update".
         // This will only be set on this request.
-        auto rows =
-            client.ExecuteQuery(txn, select_venues,
-                                spanner::QueryOptions().set_request_tag(
-                                    "app=concert,env=dev,action=select"));
-        for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-          if (!row) throw std::runtime_error(row.status().message());
-          auto new_capacity = std::get<2>(*row).value() / 4;
-          spanner::SqlStatement update_capacity(
-              "UPDATE Venues"
-              "   SET Capacity = @capacity"
-              " WHERE VenueId = @venue_id",
-              {{"capacity", spanner::Value(new_capacity)},
-               {"venue_id", spanner::Value(std::get<0>(*row))}});
-          // Sets the request tag to "app=concert,env=dev,action=update".
-          // This will only be set on this request.
-          auto update =
-              client.ExecuteDml(txn, update_capacity,
-                                spanner::QueryOptions().set_request_tag(
-                                    "app=concert,env=dev,action=update"));
-          if (!update) throw std::runtime_error(update.status().message());
-          std::cout << "Capacity of " << std::get<1>(*row).value()
-                    << " updated to " << new_capacity << "\n";
-        }
+        auto update =
+            client.ExecuteDml(txn, update_statement,
+                              spanner::QueryOptions().set_request_tag(
+                                  "app=concert,env=dev,action=update"));
+        if (!update) throw std::runtime_error(update.status().message());
+
+        spanner::SqlStatement insert_statement(
+            "INSERT INTO Venues (VenueId, VenueName, Capacity, OutdoorVenue, "
+            "                    LastUpdateTime)"
+            " VALUES (@venueId, @venueName, @capacity, @outdoorVenue, "
+            "         PENDING_COMMIT_TIMESTAMP())",
+            {
+                {"venueId", spanner::Value(81)},
+                {"venueName", spanner::Value("Venue 81")},
+                {"capacity", spanner::Value(1440)},
+                {"outdoorVenue", spanner::Value(true)},
+            });
+        // Sets the request tag to "app=concert,env=dev,action=insert".
+        // This will only be set on this request.
+        auto insert =
+            client.ExecuteDml(txn, insert_statement,
+                              spanner::QueryOptions().set_request_tag(
+                                  "app=concert,env=dev,action=select"));
+        if (!insert) throw std::runtime_error(insert.status().message());
         return spanner::Mutations{};
       },
       commit_options);
