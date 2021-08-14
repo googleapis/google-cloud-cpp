@@ -201,21 +201,26 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GENERATOR)
     list(APPEND GOOGLE_CLOUD_CPP_ENABLE "generator")
 endif ()
 
-# Remove any library that's been disabled from the list.
-foreach (library ${GOOGLE_CLOUD_CPP_ENABLE})
-    string(TOUPPER "${library}" _library)
-    set(_library "GOOGLE_CLOUD_CPP_ENABLE_${_library}")
-    if ("${library}" STREQUAL "experimental-storage-grpc")
-        set(_library "GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC")
-    endif ()
-    if (NOT ${_library})
-        message(
-            WARNING
-                "Using ${_library} is discouraged in favor of using the unified "
-                "GOOGLE_CLOUD_CPP_ENABLE flag instead.")
-        list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE ${library})
-    endif ()
-endforeach ()
+function (google_cloud_cpp_enable_cleanup)
+    # Remove any library that's been disabled from the list.
+    foreach (library ${GOOGLE_CLOUD_CPP_ENABLE})
+        if ("${library}" STREQUAL "experimental-storage-grpc")
+            set(feature_flag "GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC")
+        else ()
+            string(TOUPPER "GOOGLE_CLOUD_CPP_ENABLE_${library}" feature_flag)
+        endif ()
+        if (NOT ${feature_flag})
+            message(
+                WARNING "Using ${feature_flag} is discouraged. Please use the"
+                        " unified GOOGLE_CLOUD_CPP_ENABLE list instead.")
+            list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE ${library})
+        endif ()
+    endforeach ()
+    set(GOOGLE_CLOUD_CPP_ENABLE
+        "${GOOGLE_CLOUD_CPP_ENABLE}"
+        PARENT_SCOPE)
+endfunction ()
+google_cloud_cpp_enable_cleanup()
 
 if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC AND NOT
                                              GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
@@ -228,24 +233,12 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC AND NOT
             " GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC.")
 endif ()
 
-# Enable building the gRPC utilities library if any of its dependents are
-# enabled.
-set(GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION OFF)
-foreach (
-    _library
-    bigquery
-    bigtable
-    logging
-    iam
-    spanner
-    pubsub
-    experimental-storage-grpc
-    generator)
-    if (_library IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        set(GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION ON)
-        break()
-    endif ()
-endforeach ()
+# The only case where gRPC support is not needed is when compiling *only* the
+# storage library.
+set(GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION ON)
+if ("${GOOGLE_CLOUD_CPP_ENABLE}" STREQUAL "storage")
+    set(GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION OFF)
+endif ()
 
 cmake_dependent_option(
     GOOGLE_CLOUD_CPP_ENABLE_GRPC "Enable building the gRPC utilities library."
@@ -279,17 +272,20 @@ cmake_dependent_option(
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
 
 add_subdirectory(google/cloud)
-foreach (library ${GOOGLE_CLOUD_CPP_ENABLE})
-    if ("${library}" STREQUAL "generator")
-        add_subdirectory(generator)
-    elseif ("${library}" STREQUAL "experimental-storage-grpc")
-        if (NOT ("storage" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
-            add_subdirectory(google/cloud/storage)
+function (google_cloud_cpp_enable_features)
+    foreach (feature ${GOOGLE_CLOUD_CPP_ENABLE})
+        if ("${feature}" STREQUAL "generator")
+            add_subdirectory(generator)
+        elseif ("${feature}" STREQUAL "experimental-storage-grpc")
+            if (NOT ("storage" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
+                add_subdirectory(google/cloud/storage)
+            endif ()
+        else ()
+            add_subdirectory(google/cloud/${feature})
         endif ()
-    else ()
-        add_subdirectory(google/cloud/${library})
-    endif ()
-endforeach ()
+    endforeach ()
+endfunction ()
+google_cloud_cpp_enable_features()
 
 # The examples are more readable if we use exceptions for error handling. We had
 # to tradeoff readability vs. "making them compile everywhere".
