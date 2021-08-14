@@ -137,7 +137,7 @@ set_property(CACHE GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
              PROPERTY STRINGS "external" "package" "unused")
 
 # Generate docs with relative URLs matching with the directory structure on
-# googleapis.dev hositng.
+# googleapis.dev hosting.
 option(GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV
        "Use relative URLs in docs for googleapis.dev" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV)
