@@ -24,7 +24,7 @@ source module ci/lib/io.sh
 
 TIMEFORMAT="==> 🕑 vcpkg installed in %R seconds"
 time {
-  VCPKG_RELEASE_VERSION="297349f9236db97defd14d00c3d680a3c8d4bc8c"
+  VCPKG_RELEASE_VERSION="7e396645d919f463ef6f0f2ad6a8c5272c1f9b27"
   VCPKG_ROOT_DIR="${HOME}/vcpkg-${VCPKG_RELEASE_VERSION}"
   io::log_h2 "Installing vcpkg ${VCPKG_RELEASE_VERSION} -> ${VCPKG_ROOT_DIR}"
   if [[ ! -d "${VCPKG_ROOT_DIR}" ]]; then

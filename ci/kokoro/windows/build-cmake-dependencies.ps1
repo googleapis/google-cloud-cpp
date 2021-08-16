@@ -49,7 +49,7 @@ if ($args.count -ge 1) {
     $vcpkg_flags=("--triplet", "${env:VCPKG_TRIPLET}")
 }
 $vcpkg_dir = "cmake-out\${vcpkg_base}"
-$vcpkg_version = "6e024e744e7717c06ddacd5089401109c6298553"
+$vcpkg_version = "7e396645d919f463ef6f0f2ad6a8c5272c1f9b27"
 $Env:VCPKG_FEATURE_FLAGS = "-manifests"
 
 New-Item -ItemType Directory -Path "cmake-out" -ErrorAction SilentlyContinue
