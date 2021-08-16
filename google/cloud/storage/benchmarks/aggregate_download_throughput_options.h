@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_AGGREGATE_THROUGHPUT_OPTIONS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_AGGREGATE_THROUGHPUT_OPTIONS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_AGGREGATE_DOWNLOAD_THROUGHPUT_OPTIONS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_AGGREGATE_DOWNLOAD_THROUGHPUT_OPTIONS_H
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include <cstdint>
@@ -24,7 +24,7 @@ namespace google {
 namespace cloud {
 namespace storage_benchmarks {
 
-struct AggregateThroughputOptions {
+struct AggregateDownloadThroughputOptions {
   std::string labels;
   std::string bucket_name;
   std::string object_prefix;
@@ -42,12 +42,12 @@ struct AggregateThroughputOptions {
   bool exit_after_parse = false;
 };
 
-google::cloud::StatusOr<AggregateThroughputOptions>
-ParseAggregateThroughputOptions(std::vector<std::string> const& argv,
-                                std::string const& description);
+google::cloud::StatusOr<AggregateDownloadThroughputOptions>
+ParseAggregateDownloadThroughputOptions(std::vector<std::string> const& argv,
+                                        std::string const& description);
 
 }  // namespace storage_benchmarks
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_AGGREGATE_THROUGHPUT_OPTIONS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_AGGREGATE_DOWNLOAD_THROUGHPUT_OPTIONS_H

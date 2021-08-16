@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/benchmarks/aggregate_throughput_options.h"
+#include "google/cloud/storage/benchmarks/aggregate_download_throughput_options.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/grpc_plugin.h"
@@ -41,7 +41,7 @@ using ::google::cloud::testing_util::Timer;
 namespace gcs = ::google::cloud::storage;
 namespace gcs_experimental = ::google::cloud::storage_experimental;
 namespace gcs_bm = ::google::cloud::storage_benchmarks;
-using gcs_bm::AggregateThroughputOptions;
+using gcs_bm::AggregateDownloadThroughputOptions;
 using gcs_bm::ApiName;
 
 char const kDescription[] = R"""(A benchmark for aggregated throughput.
@@ -71,14 +71,14 @@ a) Split the objects into `thread-count` groups, each group being approximately
    of the same size.
 b) Start one thread for each group.
 c) Each thread creates a `gcs::Client`, as configured by the
-   `AggregateThroughputOptions`.
+   `AggregateDownloadThroughputOptions`.
 d) The thread downloads the objects in its group, discarding their data, but
    capturing the download time, size, status, and peer for each download.
 e) The thread returns the vector of results at the end of the upload.
 )""";
 
-google::cloud::StatusOr<AggregateThroughputOptions> ParseArgs(int argc,
-                                                              char* argv[]);
+google::cloud::StatusOr<AggregateDownloadThroughputOptions> ParseArgs(
+    int argc, char* argv[]);
 
 struct TaskConfig {
   gcs::Client client;
@@ -103,7 +103,7 @@ struct TaskResult {
 
 class Iteration {
  public:
-  Iteration(int iteration, AggregateThroughputOptions options,
+  Iteration(int iteration, AggregateDownloadThroughputOptions options,
             std::vector<gcs::ObjectMetadata> objects)
       : iteration_(iteration),
         options_(std::move(options)),
@@ -114,7 +114,7 @@ class Iteration {
  private:
   std::mutex mu_;
   int const iteration_;
-  AggregateThroughputOptions const options_;
+  AggregateDownloadThroughputOptions const options_;
   std::vector<gcs::ObjectMetadata> remaining_objects_;
 };
 
@@ -132,7 +132,7 @@ std::string FormatBandwidthGbPerSecond(
   return std::move(os).str();
 }
 
-gcs::Client MakeClient(AggregateThroughputOptions const& options) {
+gcs::Client MakeClient(AggregateDownloadThroughputOptions const& options) {
   auto client_options =
       google::cloud::Options{}
           .set<gcs_experimental::HttpVersionOption>(options.rest_http_version)
@@ -208,7 +208,7 @@ int main(int argc, char* argv[]) {
             << "\n# Object Count: " << dataset.size()
             << "\n# Dataset size: " << FormatSize(dataset_size) << std::endl;
 
-  auto configs = [](AggregateThroughputOptions const& options,
+  auto configs = [](AggregateDownloadThroughputOptions const& options,
                     gcs::Client const& default_client) {
     std::random_device rd;
     std::vector<std::seed_seq::result_type> seeds(options.thread_count);
@@ -329,11 +329,10 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
-DownloadDetail DownloadOneObject(gcs::Client& client,
-                                 std::mt19937_64& generator,
-                                 AggregateThroughputOptions const& options,
-                                 gcs::ObjectMetadata const& object,
-                                 int iteration) {
+DownloadDetail DownloadOneObject(
+    gcs::Client& client, std::mt19937_64& generator,
+    AggregateDownloadThroughputOptions const& options,
+    gcs::ObjectMetadata const& object, int iteration) {
   using clock = std::chrono::steady_clock;
   using std::chrono::duration_cast;
   using std::chrono::microseconds;
@@ -396,7 +395,7 @@ TaskResult Iteration::DownloadTask(TaskConfig const& config) {
 
 using ::google::cloud::internal::GetEnv;
 
-google::cloud::StatusOr<AggregateThroughputOptions> SelfTest(
+google::cloud::StatusOr<AggregateDownloadThroughputOptions> SelfTest(
     char const* argv0) {
   using ::google::cloud::internal::Sample;
 
@@ -414,7 +413,7 @@ google::cloud::StatusOr<AggregateThroughputOptions> SelfTest(
   (void)client.InsertObject(bucket_name,
                             "aggregate-throughput-benchmark/32KiB.bin",
                             std::string(32 * gcs_bm::kKiB, 'A'));
-  return gcs_bm::ParseAggregateThroughputOptions(
+  return gcs_bm::ParseAggregateDownloadThroughputOptions(
       {
           argv0,
           "--bucket-name=" + bucket_name,
@@ -430,14 +429,14 @@ google::cloud::StatusOr<AggregateThroughputOptions> SelfTest(
       kDescription);
 }
 
-google::cloud::StatusOr<AggregateThroughputOptions> ParseArgs(int argc,
-                                                              char* argv[]) {
+google::cloud::StatusOr<AggregateDownloadThroughputOptions> ParseArgs(
+    int argc, char* argv[]) {
   auto const auto_run =
       GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES").value_or("") == "yes";
   if (auto_run) return SelfTest(argv[0]);
 
-  return gcs_bm::ParseAggregateThroughputOptions({argv, argv + argc},
-                                                 kDescription);
+  return gcs_bm::ParseAggregateDownloadThroughputOptions({argv, argv + argc},
+                                                         kDescription);
 }
 
 }  // namespace
