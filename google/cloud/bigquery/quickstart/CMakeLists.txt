@@ -32,4 +32,4 @@ endif ()
 
 # Once the bigquery_client package is found, define new targets.
 add_executable(quickstart quickstart.cc)
-target_link_libraries(quickstart google-cloud-cpp::experimental-bigquery)
+target_link_libraries(quickstart google-cloud-cpp::bigquery)

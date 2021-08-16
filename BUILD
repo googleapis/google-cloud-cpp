@@ -128,20 +128,6 @@ cc_library(
 )
 
 cc_library(
-    name = "experimental-iam",
-    deps = [
-        "//google/cloud/iam:google_cloud_cpp_iam",
-    ],
-)
-
-cc_library(
-    name = "experimental-iam-mocks",
-    deps = [
-        "//google/cloud/iam:google_cloud_cpp_iam_mocks",
-    ],
-)
-
-cc_library(
     name = "experimental-logging",
     deps = [
         "//google/cloud/logging:google_cloud_cpp_logging",
@@ -164,20 +150,6 @@ cc_library(
 
 cc_library(
     name = "bigquery-mocks",
-    deps = [
-        "//google/cloud/bigquery:google_cloud_cpp_bigquery_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-bigquery",
-    deps = [
-        "//google/cloud/bigquery:google_cloud_cpp_bigquery",
-    ],
-)
-
-cc_library(
-    name = "experimental-bigquery-mocks",
     deps = [
         "//google/cloud/bigquery:google_cloud_cpp_bigquery_mocks",
     ],
