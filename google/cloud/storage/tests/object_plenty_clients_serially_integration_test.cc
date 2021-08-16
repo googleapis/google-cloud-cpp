@@ -38,6 +38,11 @@ using ObjectPlentyClientsSeriallyIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 
 TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
+  // The main purpose of this test is to search for file description leaks in
+  // the REST-based client. We do not need such tests with gRPC, they have their
+  // own tests.
+  if (UsingGrpc()) GTEST_SKIP();
+
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -50,7 +55,7 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  // Create a iostream to read the object back.
+  // Create an iostream to read the object back.
 
   // Track the number of open files to ensure every client creates the same
   // number of file descriptors and none are leaked.
