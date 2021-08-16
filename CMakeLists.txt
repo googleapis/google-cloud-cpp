@@ -280,7 +280,7 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
 
 add_subdirectory(google/cloud)
 foreach (library ${GOOGLE_CLOUD_CPP_ENABLE})
-    if ("${library}" STREQUAL generator)
+    if ("${library}" STREQUAL "generator")
         add_subdirectory(generator)
     elseif ("${library}" STREQUAL "experimental-storage-grpc")
         if (NOT ("storage" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
