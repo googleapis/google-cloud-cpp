@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/benchmarks/aggregate_throughput_options.h"
+#include "google/cloud/storage/benchmarks/aggregate_download_throughput_options.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include <iterator>
 #include <sstream>
@@ -23,10 +23,10 @@ namespace storage_benchmarks {
 
 using ::google::cloud::testing_util::OptionDescriptor;
 
-google::cloud::StatusOr<AggregateThroughputOptions>
-ParseAggregateThroughputOptions(std::vector<std::string> const& argv,
-                                std::string const& description) {
-  AggregateThroughputOptions options;
+google::cloud::StatusOr<AggregateDownloadThroughputOptions>
+ParseAggregateDownloadThroughputOptions(std::vector<std::string> const& argv,
+                                        std::string const& description) {
+  AggregateDownloadThroughputOptions options;
   bool wants_help = false;
   bool wants_description = false;
 

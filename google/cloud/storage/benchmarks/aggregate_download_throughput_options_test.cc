@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/benchmarks/aggregate_throughput_options.h"
+#include "google/cloud/storage/benchmarks/aggregate_download_throughput_options.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <thread>
@@ -22,8 +22,8 @@ namespace cloud {
 namespace storage_benchmarks {
 namespace {
 
-TEST(AggregateThroughputOptions, Basic) {
-  auto options = ParseAggregateThroughputOptions(
+TEST(AggregateDownloadThroughputOptions, Basic) {
+  auto options = ParseAggregateDownloadThroughputOptions(
       {
           "self-test",
           "--labels=a,b,c",
@@ -60,40 +60,41 @@ TEST(AggregateThroughputOptions, Basic) {
   EXPECT_EQ(std::chrono::seconds(120), options->download_stall_timeout);
 }
 
-TEST(AggregateThroughputOptions, Description) {
-  auto options = ParseAggregateThroughputOptions(
+TEST(AggregateDownloadThroughputOptions, Description) {
+  auto options = ParseAggregateDownloadThroughputOptions(
       {"self-test", "--description", "fake-bucket"}, "Description for test");
   EXPECT_STATUS_OK(options);
   EXPECT_TRUE(options->exit_after_parse);
 }
 
-TEST(AggregateThroughputOptions, Help) {
-  auto options = ParseAggregateThroughputOptions(
+TEST(AggregateDownloadThroughputOptions, Help) {
+  auto options = ParseAggregateDownloadThroughputOptions(
       {"self-test", "--help", "fake-bucket"}, "");
   EXPECT_STATUS_OK(options);
   EXPECT_TRUE(options->exit_after_parse);
 }
 
-TEST(AggregateThroughputOptions, Validate) {
-  EXPECT_FALSE(ParseAggregateThroughputOptions({"self-test"}, ""));
-  EXPECT_FALSE(ParseAggregateThroughputOptions({"self-test", "unused-1"}, ""));
+TEST(AggregateDownloadThroughputOptions, Validate) {
+  EXPECT_FALSE(ParseAggregateDownloadThroughputOptions({"self-test"}, ""));
   EXPECT_FALSE(
-      ParseAggregateThroughputOptions({"self-test", "--invalid-option"}, ""));
-  EXPECT_FALSE(ParseAggregateThroughputOptions(
+      ParseAggregateDownloadThroughputOptions({"self-test", "unused-1"}, ""));
+  EXPECT_FALSE(ParseAggregateDownloadThroughputOptions(
+      {"self-test", "--invalid-option"}, ""));
+  EXPECT_FALSE(ParseAggregateDownloadThroughputOptions(
       {"self-test", "--bucket-name=b", "--thread-count=0"}, ""));
-  EXPECT_FALSE(ParseAggregateThroughputOptions(
+  EXPECT_FALSE(ParseAggregateDownloadThroughputOptions(
       {"self-test", "--bucket-name=b", "--thread-count=-1"}, ""));
-  EXPECT_FALSE(ParseAggregateThroughputOptions(
+  EXPECT_FALSE(ParseAggregateDownloadThroughputOptions(
       {"self-test", "--bucket-name=b", "--iteration-count=0"}, ""));
-  EXPECT_FALSE(ParseAggregateThroughputOptions(
+  EXPECT_FALSE(ParseAggregateDownloadThroughputOptions(
       {"self-test", "--bucket-name=b", "--iteration-count=-1"}, ""));
-  EXPECT_FALSE(ParseAggregateThroughputOptions(
+  EXPECT_FALSE(ParseAggregateDownloadThroughputOptions(
       {"self-test", "--bucket-name=b", "--repeats-per-iteration=0"}, ""));
-  EXPECT_FALSE(ParseAggregateThroughputOptions(
+  EXPECT_FALSE(ParseAggregateDownloadThroughputOptions(
       {"self-test", "--bucket-name=b", "--repeats-per-iteration=-1"}, ""));
-  EXPECT_FALSE(ParseAggregateThroughputOptions(
+  EXPECT_FALSE(ParseAggregateDownloadThroughputOptions(
       {"self-test", "--bucket-name=b", "--api=GRPC-RAW"}, ""));
-  EXPECT_FALSE(ParseAggregateThroughputOptions(
+  EXPECT_FALSE(ParseAggregateDownloadThroughputOptions(
       {"self-test", "--bucket-name=b", "--grpc-channel-count=-1"}, ""));
 }
 
