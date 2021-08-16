@@ -39,6 +39,11 @@ using ObjectPlentyClientsSimultaneouslyIntegrationTest =
 
 TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
        PlentyClientsSimultaneously) {
+  // The main purpose of this test is to search for file description leaks in
+  // the REST-based client. We do not need such tests with gRPC, they have their
+  // own tests.
+  if (UsingGrpc()) GTEST_SKIP();
+
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -52,7 +57,7 @@ TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  // Create a iostream to read the object back.
+  // Create an iostream to read the object back.
   auto num_fds_before_test = GetNumOpenFiles();
   std::vector<Client> read_clients;
   std::vector<ObjectReadStream> read_streams;
