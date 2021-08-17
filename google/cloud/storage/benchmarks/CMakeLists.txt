@@ -21,6 +21,8 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         storage_benchmarks # cmake-format: sort
         aggregate_download_throughput_options.cc
         aggregate_download_throughput_options.h
+        aggregate_upload_throughput_options.cc
+        aggregate_upload_throughput_options.h
         benchmark_utils.cc
         benchmark_utils.h
         bounded_queue.h
@@ -45,6 +47,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     set(storage_benchmark_programs
         # cmake-format: sort
         aggregate_download_throughput_benchmark.cc
+        aggregate_upload_throughput_benchmark.cc
         create_dataset.cc
         storage_file_transfer_benchmark.cc
         storage_parallel_uploads_benchmark.cc
@@ -78,6 +81,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     set(storage_benchmarks_unit_tests
         # cmake-format: sort
         aggregate_download_throughput_options_test.cc
+        aggregate_upload_throughput_options_test.cc
         benchmark_make_random_test.cc
         benchmark_parser_test.cc
         create_dataset_options_test.cc

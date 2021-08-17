@@ -43,6 +43,7 @@ namespace gcs_experimental = ::google::cloud::storage_experimental;
 namespace gcs_bm = ::google::cloud::storage_benchmarks;
 using gcs_bm::AggregateDownloadThroughputOptions;
 using gcs_bm::ApiName;
+using gcs_bm::FormatBandwidthGbPerSecond;
 
 char const kDescription[] = R"""(A benchmark for aggregated throughput.
 
@@ -117,20 +118,6 @@ class Iteration {
   AggregateDownloadThroughputOptions const options_;
   std::vector<gcs::ObjectMetadata> remaining_objects_;
 };
-
-template <typename Rep, typename Period>
-std::string FormatBandwidthGbPerSecond(
-    std::uintmax_t bytes, std::chrono::duration<Rep, Period> elapsed) {
-  using ns = ::std::chrono::nanoseconds;
-  auto const elapsed_ns = std::chrono::duration_cast<ns>(elapsed);
-  if (elapsed_ns == ns(0)) return "NaN";
-
-  auto const bandwidth =
-      8 * static_cast<double>(bytes) / static_cast<double>(elapsed_ns.count());
-  std::ostringstream os;
-  os << std::fixed << std::setprecision(2) << bandwidth;
-  return std::move(os).str();
-}
 
 gcs::Client MakeClient(AggregateDownloadThroughputOptions const& options) {
   auto client_options =
