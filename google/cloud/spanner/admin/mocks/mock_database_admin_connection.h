@@ -26,76 +26,104 @@ namespace cloud {
 namespace spanner_admin_mocks {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-class MockDatabaseAdminConnection : public spanner_admin::DatabaseAdminConnection {
+class MockDatabaseAdminConnection
+    : public spanner_admin::DatabaseAdminConnection {
  public:
-  MOCK_METHOD(StreamRange<google::spanner::admin::database::v1::Database>,
-  ListDatabases,
-  (google::spanner::admin::database::v1::ListDatabasesRequest request), (override));
+  MOCK_METHOD(
+      StreamRange<google::spanner::admin::database::v1::Database>,
+      ListDatabases,
+      (google::spanner::admin::database::v1::ListDatabasesRequest request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
-  CreateDatabase,
-  (google::spanner::admin::database::v1::CreateDatabaseRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::spanner::admin::database::v1::Database>>,
+      CreateDatabase,
+      (google::spanner::admin::database::v1::CreateDatabaseRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::spanner::admin::database::v1::Database>,
-  GetDatabase,
-  (google::spanner::admin::database::v1::GetDatabaseRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::spanner::admin::database::v1::Database>, GetDatabase,
+      (google::spanner::admin::database::v1::GetDatabaseRequest const& request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>,
-  UpdateDatabaseDdl,
-  (google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<
+          google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>,
+      UpdateDatabaseDdl,
+      (google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DropDatabase,
-  (google::spanner::admin::database::v1::DropDatabaseRequest const& request), (override));
+  MOCK_METHOD(Status, DropDatabase,
+              (google::spanner::admin::database::v1::DropDatabaseRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>,
-  GetDatabaseDdl,
-  (google::spanner::admin::database::v1::GetDatabaseDdlRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>,
+      GetDatabaseDdl,
+      (google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Backup>>,
-  CreateBackup,
-  (google::spanner::admin::database::v1::CreateBackupRequest const& request), (override));
+              CreateBackup,
+              (google::spanner::admin::database::v1::CreateBackupRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::spanner::admin::database::v1::Backup>, GetBackup,
+      (google::spanner::admin::database::v1::GetBackupRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::spanner::admin::database::v1::Backup>,
-  GetBackup,
-  (google::spanner::admin::database::v1::GetBackupRequest const& request), (override));
+              UpdateBackup,
+              (google::spanner::admin::database::v1::UpdateBackupRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::spanner::admin::database::v1::Backup>,
-  UpdateBackup,
-  (google::spanner::admin::database::v1::UpdateBackupRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteBackup,
+              (google::spanner::admin::database::v1::DeleteBackupRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteBackup,
-  (google::spanner::admin::database::v1::DeleteBackupRequest const& request), (override));
+  MOCK_METHOD(
+      StreamRange<google::spanner::admin::database::v1::Backup>, ListBackups,
+      (google::spanner::admin::database::v1::ListBackupsRequest request),
+      (override));
 
-  MOCK_METHOD(StreamRange<google::spanner::admin::database::v1::Backup>,
-  ListBackups,
-  (google::spanner::admin::database::v1::ListBackupsRequest request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::spanner::admin::database::v1::Database>>,
+      RestoreDatabase,
+      (google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
-  RestoreDatabase,
-  (google::spanner::admin::database::v1::RestoreDatabaseRequest const& request), (override));
+  MOCK_METHOD(
+      StreamRange<google::longrunning::Operation>, ListDatabaseOperations,
+      (google::spanner::admin::database::v1::ListDatabaseOperationsRequest
+           request),
+      (override));
 
-  MOCK_METHOD(StreamRange<google::longrunning::Operation>,
-  ListDatabaseOperations,
-  (google::spanner::admin::database::v1::ListDatabaseOperationsRequest request), (override));
-
-  MOCK_METHOD(StreamRange<google::longrunning::Operation>,
-  ListBackupOperations,
-  (google::spanner::admin::database::v1::ListBackupOperationsRequest request), (override));
-
+  MOCK_METHOD(StreamRange<google::longrunning::Operation>, ListBackupOperations,
+              (google::spanner::admin::database::v1::ListBackupOperationsRequest
+                   request),
+              (override));
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

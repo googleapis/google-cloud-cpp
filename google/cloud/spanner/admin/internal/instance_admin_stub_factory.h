@@ -18,11 +18,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INTERNAL_INSTANCE_ADMIN_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INTERNAL_INSTANCE_ADMIN_STUB_FACTORY_H
 
+#include "google/cloud/spanner/admin/instance_admin_connection.h"
+#include "google/cloud/spanner/admin/internal/instance_admin_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/spanner/admin/instance_admin_connection.h"
-#include "google/cloud/spanner/admin/internal/instance_admin_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -30,7 +30,6 @@ namespace google {
 namespace cloud {
 namespace spanner_admin_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
-
 
 std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
     google::cloud::CompletionQueue cq, Options const& options);

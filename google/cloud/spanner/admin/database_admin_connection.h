@@ -18,13 +18,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_DATABASE_ADMIN_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_DATABASE_ADMIN_CONNECTION_H
 
+#include "google/cloud/spanner/admin/database_admin_connection_idempotency_policy.h"
+#include "google/cloud/spanner/admin/internal/database_admin_stub.h"
+#include "google/cloud/spanner/admin/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/spanner/admin/database_admin_connection_idempotency_policy.h"
-#include "google/cloud/spanner/admin/internal/database_admin_stub.h"
-#include "google/cloud/spanner/admin/retry_traits.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -36,11 +36,13 @@ namespace cloud {
 namespace spanner_admin {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-using DatabaseAdminRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    spanner_admin_internal::DatabaseAdminRetryTraits>;
+using DatabaseAdminRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        spanner_admin_internal::DatabaseAdminRetryTraits>;
 
-using DatabaseAdminLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    spanner_admin_internal::DatabaseAdminRetryTraits>;
+using DatabaseAdminLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        spanner_admin_internal::DatabaseAdminRetryTraits>;
 
 using DatabaseAdminLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -51,56 +53,68 @@ class DatabaseAdminConnection {
   virtual ~DatabaseAdminConnection() = 0;
 
   virtual StreamRange<google::spanner::admin::database::v1::Database>
-  ListDatabases(google::spanner::admin::database::v1::ListDatabasesRequest request);
+  ListDatabases(
+      google::spanner::admin::database::v1::ListDatabasesRequest request);
 
   virtual future<StatusOr<google::spanner::admin::database::v1::Database>>
-  CreateDatabase(google::spanner::admin::database::v1::CreateDatabaseRequest const& request);
+  CreateDatabase(
+      google::spanner::admin::database::v1::CreateDatabaseRequest const&
+          request);
 
-  virtual StatusOr<google::spanner::admin::database::v1::Database>
-  GetDatabase(google::spanner::admin::database::v1::GetDatabaseRequest const& request);
+  virtual StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
+      google::spanner::admin::database::v1::GetDatabaseRequest const& request);
 
-  virtual future<StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-  UpdateDatabaseDdl(google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const& request);
+  virtual future<
+      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+  UpdateDatabaseDdl(
+      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+          request);
 
-  virtual Status
-  DropDatabase(google::spanner::admin::database::v1::DropDatabaseRequest const& request);
+  virtual Status DropDatabase(
+      google::spanner::admin::database::v1::DropDatabaseRequest const& request);
 
   virtual StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
-  GetDatabaseDdl(google::spanner::admin::database::v1::GetDatabaseDdlRequest const& request);
+  GetDatabaseDdl(
+      google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
+          request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
   virtual future<StatusOr<google::spanner::admin::database::v1::Backup>>
-  CreateBackup(google::spanner::admin::database::v1::CreateBackupRequest const& request);
+  CreateBackup(
+      google::spanner::admin::database::v1::CreateBackupRequest const& request);
 
-  virtual StatusOr<google::spanner::admin::database::v1::Backup>
-  GetBackup(google::spanner::admin::database::v1::GetBackupRequest const& request);
+  virtual StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
+      google::spanner::admin::database::v1::GetBackupRequest const& request);
 
-  virtual StatusOr<google::spanner::admin::database::v1::Backup>
-  UpdateBackup(google::spanner::admin::database::v1::UpdateBackupRequest const& request);
+  virtual StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
+      google::spanner::admin::database::v1::UpdateBackupRequest const& request);
 
-  virtual Status
-  DeleteBackup(google::spanner::admin::database::v1::DeleteBackupRequest const& request);
+  virtual Status DeleteBackup(
+      google::spanner::admin::database::v1::DeleteBackupRequest const& request);
 
-  virtual StreamRange<google::spanner::admin::database::v1::Backup>
-  ListBackups(google::spanner::admin::database::v1::ListBackupsRequest request);
+  virtual StreamRange<google::spanner::admin::database::v1::Backup> ListBackups(
+      google::spanner::admin::database::v1::ListBackupsRequest request);
 
   virtual future<StatusOr<google::spanner::admin::database::v1::Database>>
-  RestoreDatabase(google::spanner::admin::database::v1::RestoreDatabaseRequest const& request);
+  RestoreDatabase(
+      google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+          request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListDatabaseOperations(google::spanner::admin::database::v1::ListDatabaseOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListDatabaseOperations(
+      google::spanner::admin::database::v1::ListDatabaseOperationsRequest
+          request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListBackupOperations(google::spanner::admin::database::v1::ListBackupOperationsRequest request);
-
+  virtual StreamRange<google::longrunning::Operation> ListBackupOperations(
+      google::spanner::admin::database::v1::ListBackupOperationsRequest
+          request);
 };
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
@@ -117,9 +131,8 @@ namespace spanner_admin_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<spanner_admin::DatabaseAdminConnection>
-MakeDatabaseAdminConnection(
-    std::shared_ptr<DatabaseAdminStub> stub,
-    Options options = {});
+MakeDatabaseAdminConnection(std::shared_ptr<DatabaseAdminStub> stub,
+                            Options options = {});
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace spanner_admin_internal

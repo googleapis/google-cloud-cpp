@@ -18,13 +18,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INSTANCE_ADMIN_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INSTANCE_ADMIN_CONNECTION_H
 
+#include "google/cloud/spanner/admin/instance_admin_connection_idempotency_policy.h"
+#include "google/cloud/spanner/admin/internal/instance_admin_stub.h"
+#include "google/cloud/spanner/admin/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/spanner/admin/instance_admin_connection_idempotency_policy.h"
-#include "google/cloud/spanner/admin/internal/instance_admin_stub.h"
-#include "google/cloud/spanner/admin/retry_traits.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -36,11 +36,13 @@ namespace cloud {
 namespace spanner_admin {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-using InstanceAdminRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    spanner_admin_internal::InstanceAdminRetryTraits>;
+using InstanceAdminRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        spanner_admin_internal::InstanceAdminRetryTraits>;
 
-using InstanceAdminLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    spanner_admin_internal::InstanceAdminRetryTraits>;
+using InstanceAdminLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        spanner_admin_internal::InstanceAdminRetryTraits>;
 
 using InstanceAdminLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -51,35 +53,43 @@ class InstanceAdminConnection {
   virtual ~InstanceAdminConnection() = 0;
 
   virtual StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
-  ListInstanceConfigs(google::spanner::admin::instance::v1::ListInstanceConfigsRequest request);
+  ListInstanceConfigs(
+      google::spanner::admin::instance::v1::ListInstanceConfigsRequest request);
 
   virtual StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
-  GetInstanceConfig(google::spanner::admin::instance::v1::GetInstanceConfigRequest const& request);
+  GetInstanceConfig(
+      google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
+          request);
 
   virtual StreamRange<google::spanner::admin::instance::v1::Instance>
-  ListInstances(google::spanner::admin::instance::v1::ListInstancesRequest request);
+  ListInstances(
+      google::spanner::admin::instance::v1::ListInstancesRequest request);
 
-  virtual StatusOr<google::spanner::admin::instance::v1::Instance>
-  GetInstance(google::spanner::admin::instance::v1::GetInstanceRequest const& request);
-
-  virtual future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  CreateInstance(google::spanner::admin::instance::v1::CreateInstanceRequest const& request);
+  virtual StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
+      google::spanner::admin::instance::v1::GetInstanceRequest const& request);
 
   virtual future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  UpdateInstance(google::spanner::admin::instance::v1::UpdateInstanceRequest const& request);
+  CreateInstance(
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&
+          request);
 
-  virtual Status
-  DeleteInstance(google::spanner::admin::instance::v1::DeleteInstanceRequest const& request);
+  virtual future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+  UpdateInstance(
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+          request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual Status DeleteInstance(
+      google::spanner::admin::instance::v1::DeleteInstanceRequest const&
+          request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
-
 };
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
@@ -96,9 +106,8 @@ namespace spanner_admin_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<spanner_admin::InstanceAdminConnection>
-MakeInstanceAdminConnection(
-    std::shared_ptr<InstanceAdminStub> stub,
-    Options options = {});
+MakeInstanceAdminConnection(std::shared_ptr<InstanceAdminStub> stub,
+                            Options options = {});
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace spanner_admin_internal

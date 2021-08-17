@@ -24,7 +24,9 @@ namespace cloud {
 namespace spanner_admin {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-DatabaseAdminClient::DatabaseAdminClient(std::shared_ptr<DatabaseAdminConnection> connection) : connection_(std::move(connection)) {}
+DatabaseAdminClient::DatabaseAdminClient(
+    std::shared_ptr<DatabaseAdminConnection> connection)
+    : connection_(std::move(connection)) {}
 DatabaseAdminClient::~DatabaseAdminClient() = default;
 
 StreamRange<google::spanner::admin::database::v1::Database>
@@ -35,7 +37,8 @@ DatabaseAdminClient::ListDatabases(std::string const& parent) {
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
-DatabaseAdminClient::CreateDatabase(std::string const& parent, std::string const& create_statement) {
+DatabaseAdminClient::CreateDatabase(std::string const& parent,
+                                    std::string const& create_statement) {
   google::spanner::admin::database::v1::CreateDatabaseRequest request;
   request.set_parent(parent);
   request.set_create_statement(create_statement);
@@ -49,16 +52,17 @@ DatabaseAdminClient::GetDatabase(std::string const& name) {
   return connection_->GetDatabase(request);
 }
 
-future<StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-DatabaseAdminClient::UpdateDatabaseDdl(std::string const& database, std::vector<std::string> const& statements) {
+future<
+    StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+DatabaseAdminClient::UpdateDatabaseDdl(
+    std::string const& database, std::vector<std::string> const& statements) {
   google::spanner::admin::database::v1::UpdateDatabaseDdlRequest request;
   request.set_database(database);
   *request.mutable_statements() = {statements.begin(), statements.end()};
   return connection_->UpdateDatabaseDdl(request);
 }
 
-Status
-DatabaseAdminClient::DropDatabase(std::string const& database) {
+Status DatabaseAdminClient::DropDatabase(std::string const& database) {
   google::spanner::admin::database::v1::DropDatabaseRequest request;
   request.set_database(database);
   return connection_->DropDatabase(request);
@@ -71,23 +75,24 @@ DatabaseAdminClient::GetDatabaseDdl(std::string const& database) {
   return connection_->GetDatabaseDdl(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-DatabaseAdminClient::SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy) {
+StatusOr<google::iam::v1::Policy> DatabaseAdminClient::SetIamPolicy(
+    std::string const& resource, google::iam::v1::Policy const& policy) {
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
   *request.mutable_policy() = policy;
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-DatabaseAdminClient::GetIamPolicy(std::string const& resource) {
+StatusOr<google::iam::v1::Policy> DatabaseAdminClient::GetIamPolicy(
+    std::string const& resource) {
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DatabaseAdminClient::TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions) {
+DatabaseAdminClient::TestIamPermissions(
+    std::string const& resource, std::vector<std::string> const& permissions) {
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
   *request.mutable_permissions() = {permissions.begin(), permissions.end()};
@@ -95,7 +100,10 @@ DatabaseAdminClient::TestIamPermissions(std::string const& resource, std::vector
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
-DatabaseAdminClient::CreateBackup(std::string const& parent, google::spanner::admin::database::v1::Backup const& backup, std::string const& backup_id) {
+DatabaseAdminClient::CreateBackup(
+    std::string const& parent,
+    google::spanner::admin::database::v1::Backup const& backup,
+    std::string const& backup_id) {
   google::spanner::admin::database::v1::CreateBackupRequest request;
   request.set_parent(parent);
   *request.mutable_backup() = backup;
@@ -111,15 +119,16 @@ DatabaseAdminClient::GetBackup(std::string const& name) {
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
-DatabaseAdminClient::UpdateBackup(google::spanner::admin::database::v1::Backup const& backup, google::protobuf::FieldMask const& update_mask) {
+DatabaseAdminClient::UpdateBackup(
+    google::spanner::admin::database::v1::Backup const& backup,
+    google::protobuf::FieldMask const& update_mask) {
   google::spanner::admin::database::v1::UpdateBackupRequest request;
   *request.mutable_backup() = backup;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateBackup(request);
 }
 
-Status
-DatabaseAdminClient::DeleteBackup(std::string const& name) {
+Status DatabaseAdminClient::DeleteBackup(std::string const& name) {
   google::spanner::admin::database::v1::DeleteBackupRequest request;
   request.set_name(name);
   return connection_->DeleteBackup(request);
@@ -133,7 +142,9 @@ DatabaseAdminClient::ListBackups(std::string const& parent) {
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
-DatabaseAdminClient::RestoreDatabase(std::string const& parent, std::string const& database_id, std::string const& backup) {
+DatabaseAdminClient::RestoreDatabase(std::string const& parent,
+                                     std::string const& database_id,
+                                     std::string const& backup) {
   google::spanner::admin::database::v1::RestoreDatabaseRequest request;
   request.set_parent(parent);
   request.set_database_id(database_id);
@@ -156,87 +167,106 @@ DatabaseAdminClient::ListBackupOperations(std::string const& parent) {
 }
 
 StreamRange<google::spanner::admin::database::v1::Database>
-DatabaseAdminClient::ListDatabases(google::spanner::admin::database::v1::ListDatabasesRequest request) {
+DatabaseAdminClient::ListDatabases(
+    google::spanner::admin::database::v1::ListDatabasesRequest request) {
   return connection_->ListDatabases(std::move(request));
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
-DatabaseAdminClient::CreateDatabase(google::spanner::admin::database::v1::CreateDatabaseRequest const& request) {
+DatabaseAdminClient::CreateDatabase(
+    google::spanner::admin::database::v1::CreateDatabaseRequest const&
+        request) {
   return connection_->CreateDatabase(request);
 }
 
 StatusOr<google::spanner::admin::database::v1::Database>
-DatabaseAdminClient::GetDatabase(google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
+DatabaseAdminClient::GetDatabase(
+    google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
   return connection_->GetDatabase(request);
 }
 
-future<StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-DatabaseAdminClient::UpdateDatabaseDdl(google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+future<
+    StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+DatabaseAdminClient::UpdateDatabaseDdl(
+    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+        request) {
   return connection_->UpdateDatabaseDdl(request);
 }
 
-Status
-DatabaseAdminClient::DropDatabase(google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
+Status DatabaseAdminClient::DropDatabase(
+    google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
   return connection_->DropDatabase(request);
 }
 
 StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
-DatabaseAdminClient::GetDatabaseDdl(google::spanner::admin::database::v1::GetDatabaseDdlRequest const& request) {
+DatabaseAdminClient::GetDatabaseDdl(
+    google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
+        request) {
   return connection_->GetDatabaseDdl(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-DatabaseAdminClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> DatabaseAdminClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-DatabaseAdminClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> DatabaseAdminClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DatabaseAdminClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+DatabaseAdminClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   return connection_->TestIamPermissions(request);
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
-DatabaseAdminClient::CreateBackup(google::spanner::admin::database::v1::CreateBackupRequest const& request) {
+DatabaseAdminClient::CreateBackup(
+    google::spanner::admin::database::v1::CreateBackupRequest const& request) {
   return connection_->CreateBackup(request);
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
-DatabaseAdminClient::GetBackup(google::spanner::admin::database::v1::GetBackupRequest const& request) {
+DatabaseAdminClient::GetBackup(
+    google::spanner::admin::database::v1::GetBackupRequest const& request) {
   return connection_->GetBackup(request);
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
-DatabaseAdminClient::UpdateBackup(google::spanner::admin::database::v1::UpdateBackupRequest const& request) {
+DatabaseAdminClient::UpdateBackup(
+    google::spanner::admin::database::v1::UpdateBackupRequest const& request) {
   return connection_->UpdateBackup(request);
 }
 
-Status
-DatabaseAdminClient::DeleteBackup(google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
+Status DatabaseAdminClient::DeleteBackup(
+    google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
   return connection_->DeleteBackup(request);
 }
 
 StreamRange<google::spanner::admin::database::v1::Backup>
-DatabaseAdminClient::ListBackups(google::spanner::admin::database::v1::ListBackupsRequest request) {
+DatabaseAdminClient::ListBackups(
+    google::spanner::admin::database::v1::ListBackupsRequest request) {
   return connection_->ListBackups(std::move(request));
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
-DatabaseAdminClient::RestoreDatabase(google::spanner::admin::database::v1::RestoreDatabaseRequest const& request) {
+DatabaseAdminClient::RestoreDatabase(
+    google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+        request) {
   return connection_->RestoreDatabase(request);
 }
 
 StreamRange<google::longrunning::Operation>
-DatabaseAdminClient::ListDatabaseOperations(google::spanner::admin::database::v1::ListDatabaseOperationsRequest request) {
+DatabaseAdminClient::ListDatabaseOperations(
+    google::spanner::admin::database::v1::ListDatabaseOperationsRequest
+        request) {
   return connection_->ListDatabaseOperations(std::move(request));
 }
 
 StreamRange<google::longrunning::Operation>
-DatabaseAdminClient::ListBackupOperations(google::spanner::admin::database::v1::ListBackupOperationsRequest request) {
+DatabaseAdminClient::ListBackupOperations(
+    google::spanner::admin::database::v1::ListBackupOperationsRequest request) {
   return connection_->ListBackupOperations(std::move(request));
 }
 

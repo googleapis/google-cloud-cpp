@@ -35,63 +35,75 @@ class DatabaseAdminConnectionIdempotencyPolicy {
   virtual ~DatabaseAdminConnectionIdempotencyPolicy() = 0;
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> clone() const = 0;
+  virtual std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> clone()
+      const = 0;
 
-  virtual google::cloud::internal::Idempotency
-  ListDatabases(google::spanner::admin::database::v1::ListDatabasesRequest request) = 0;
+  virtual google::cloud::internal::Idempotency ListDatabases(
+      google::spanner::admin::database::v1::ListDatabasesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  CreateDatabase(google::spanner::admin::database::v1::CreateDatabaseRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency CreateDatabase(
+      google::spanner::admin::database::v1::CreateDatabaseRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  GetDatabase(google::spanner::admin::database::v1::GetDatabaseRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency GetDatabase(
+      google::spanner::admin::database::v1::GetDatabaseRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  UpdateDatabaseDdl(google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency UpdateDatabaseDdl(
+      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  DropDatabase(google::spanner::admin::database::v1::DropDatabaseRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency DropDatabase(
+      google::spanner::admin::database::v1::DropDatabaseRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  GetDatabaseDdl(google::spanner::admin::database::v1::GetDatabaseDdlRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency GetDatabaseDdl(
+      google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  CreateBackup(google::spanner::admin::database::v1::CreateBackupRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency CreateBackup(
+      google::spanner::admin::database::v1::CreateBackupRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  GetBackup(google::spanner::admin::database::v1::GetBackupRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency GetBackup(
+      google::spanner::admin::database::v1::GetBackupRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  UpdateBackup(google::spanner::admin::database::v1::UpdateBackupRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency UpdateBackup(
+      google::spanner::admin::database::v1::UpdateBackupRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  DeleteBackup(google::spanner::admin::database::v1::DeleteBackupRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency DeleteBackup(
+      google::spanner::admin::database::v1::DeleteBackupRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  ListBackups(google::spanner::admin::database::v1::ListBackupsRequest request) = 0;
+  virtual google::cloud::internal::Idempotency ListBackups(
+      google::spanner::admin::database::v1::ListBackupsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  RestoreDatabase(google::spanner::admin::database::v1::RestoreDatabaseRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency RestoreDatabase(
+      google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  ListDatabaseOperations(google::spanner::admin::database::v1::ListDatabaseOperationsRequest request) = 0;
+  virtual google::cloud::internal::Idempotency ListDatabaseOperations(
+      google::spanner::admin::database::v1::ListDatabaseOperationsRequest
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  ListBackupOperations(google::spanner::admin::database::v1::ListBackupOperationsRequest request) = 0;
-
+  virtual google::cloud::internal::Idempotency ListBackupOperations(
+      google::spanner::admin::database::v1::ListBackupOperationsRequest
+          request) = 0;
 };
 
 std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy>
-    MakeDefaultDatabaseAdminConnectionIdempotencyPolicy();
+MakeDefaultDatabaseAdminConnectionIdempotencyPolicy();
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace spanner_admin

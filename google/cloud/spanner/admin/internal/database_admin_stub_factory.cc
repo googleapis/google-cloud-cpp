@@ -17,15 +17,15 @@
 // source: google/spanner/admin/database/v1/spanner_database_admin.proto
 
 #include "google/cloud/spanner/admin/internal/database_admin_stub_factory.h"
+#include "google/cloud/spanner/admin/internal/database_admin_auth_decorator.h"
+#include "google/cloud/spanner/admin/internal/database_admin_logging_decorator.h"
+#include "google/cloud/spanner/admin/internal/database_admin_metadata_decorator.h"
+#include "google/cloud/spanner/admin/internal/database_admin_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/spanner/admin/internal/database_admin_auth_decorator.h"
-#include "google/cloud/spanner/admin/internal/database_admin_logging_decorator.h"
-#include "google/cloud/spanner/admin/internal/database_admin_metadata_decorator.h"
-#include "google/cloud/spanner/admin/internal/database_admin_stub.h"
 #include <memory>
 
 namespace google {
@@ -33,9 +33,7 @@ namespace cloud {
 namespace spanner_admin_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-
-std::shared_ptr<DatabaseAdminStub>
-CreateDefaultDatabaseAdminStub(
+std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
     google::cloud::CompletionQueue cq, Options const& options) {
   auto auth = [&] {
     if (options.has<google::cloud::UnifiedCredentialsOption>()) {
@@ -46,25 +44,24 @@ CreateDefaultDatabaseAdminStub(
     return google::cloud::internal::CreateAuthenticationStrategy(
         options.get<google::cloud::GrpcCredentialOption>());
   }();
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::spanner::admin::database::v1::DatabaseAdmin::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::spanner::admin::database::v1::DatabaseAdmin::NewStub(channel);
   std::shared_ptr<DatabaseAdminStub> stub =
-    std::make_shared<DefaultDatabaseAdminStub>(
-      std::move(service_grpc_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultDatabaseAdminStub>(
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<DatabaseAdminAuth>(
-        std::move(auth), std::move(stub));
+    stub =
+        std::make_shared<DatabaseAdminAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<DatabaseAdminMetadata>(std::move(stub));
-  if (internal::Contains(
-      options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<DatabaseAdminLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
   }
   return stub;

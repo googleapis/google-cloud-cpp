@@ -35,42 +35,48 @@ class InstanceAdminConnectionIdempotencyPolicy {
   virtual ~InstanceAdminConnectionIdempotencyPolicy() = 0;
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy> clone() const = 0;
+  virtual std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy> clone()
+      const = 0;
 
-  virtual google::cloud::internal::Idempotency
-  ListInstanceConfigs(google::spanner::admin::instance::v1::ListInstanceConfigsRequest request) = 0;
+  virtual google::cloud::internal::Idempotency ListInstanceConfigs(
+      google::spanner::admin::instance::v1::ListInstanceConfigsRequest
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  GetInstanceConfig(google::spanner::admin::instance::v1::GetInstanceConfigRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency GetInstanceConfig(
+      google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  ListInstances(google::spanner::admin::instance::v1::ListInstancesRequest request) = 0;
+  virtual google::cloud::internal::Idempotency ListInstances(
+      google::spanner::admin::instance::v1::ListInstancesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  GetInstance(google::spanner::admin::instance::v1::GetInstanceRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency GetInstance(
+      google::spanner::admin::instance::v1::GetInstanceRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  CreateInstance(google::spanner::admin::instance::v1::CreateInstanceRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency CreateInstance(
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  UpdateInstance(google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency UpdateInstance(
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  DeleteInstance(google::spanner::admin::instance::v1::DeleteInstanceRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency DeleteInstance(
+      google::spanner::admin::instance::v1::DeleteInstanceRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) = 0;
-
+  virtual google::cloud::internal::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 };
 
 std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy>
-    MakeDefaultInstanceAdminConnectionIdempotencyPolicy();
+MakeDefaultInstanceAdminConnectionIdempotencyPolicy();
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace spanner_admin

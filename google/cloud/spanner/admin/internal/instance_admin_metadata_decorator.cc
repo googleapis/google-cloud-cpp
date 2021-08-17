@@ -34,7 +34,8 @@ InstanceAdminMetadata::InstanceAdminMetadata(
 StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
 InstanceAdminMetadata::ListInstanceConfigs(
     grpc::ClientContext& context,
-    google::spanner::admin::instance::v1::ListInstanceConfigsRequest const& request) {
+    google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
+        request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListInstanceConfigs(context, request);
 }
@@ -42,7 +43,8 @@ InstanceAdminMetadata::ListInstanceConfigs(
 StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
 InstanceAdminMetadata::GetInstanceConfig(
     grpc::ClientContext& context,
-    google::spanner::admin::instance::v1::GetInstanceConfigRequest const& request) {
+    google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
+        request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetInstanceConfig(context, request);
 }
@@ -67,7 +69,8 @@ future<StatusOr<google::longrunning::Operation>>
 InstanceAdminMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    google::spanner::admin::instance::v1::CreateInstanceRequest const& request) {
+    google::spanner::admin::instance::v1::CreateInstanceRequest const&
+        request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateInstance(cq, std::move(context), request);
 }
@@ -75,28 +78,27 @@ future<StatusOr<google::longrunning::Operation>>
 InstanceAdminMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) {
+    google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+        request) {
   SetMetadata(*context, "instance.name=" + request.instance().name());
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
 }
-Status
-InstanceAdminMetadata::DeleteInstance(
+Status InstanceAdminMetadata::DeleteInstance(
     grpc::ClientContext& context,
-    google::spanner::admin::instance::v1::DeleteInstanceRequest const& request) {
+    google::spanner::admin::instance::v1::DeleteInstanceRequest const&
+        request) {
   SetMetadata(context, "name=" + request.name());
   return child_->DeleteInstance(context, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-InstanceAdminMetadata::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> InstanceAdminMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   SetMetadata(context, "resource=" + request.resource());
   return child_->SetIamPolicy(context, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-InstanceAdminMetadata::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> InstanceAdminMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   SetMetadata(context, "resource=" + request.resource());

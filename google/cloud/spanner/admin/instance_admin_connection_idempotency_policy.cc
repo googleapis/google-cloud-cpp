@@ -26,73 +26,82 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 using ::google::cloud::internal::Idempotency;
 
-InstanceAdminConnectionIdempotencyPolicy::~InstanceAdminConnectionIdempotencyPolicy() = default;
+InstanceAdminConnectionIdempotencyPolicy::
+    ~InstanceAdminConnectionIdempotencyPolicy() = default;
 
 namespace {
-class DefaultInstanceAdminConnectionIdempotencyPolicy : public InstanceAdminConnectionIdempotencyPolicy {
+class DefaultInstanceAdminConnectionIdempotencyPolicy
+    : public InstanceAdminConnectionIdempotencyPolicy {
  public:
   ~DefaultInstanceAdminConnectionIdempotencyPolicy() override = default;
 
   /// Create a new copy of this object.
-  std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultInstanceAdminConnectionIdempotencyPolicy>(*this);
+  std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy> clone()
+      const override {
+    return absl::make_unique<DefaultInstanceAdminConnectionIdempotencyPolicy>(
+        *this);
   }
 
-  Idempotency
-  ListInstanceConfigs(google::spanner::admin::instance::v1::ListInstanceConfigsRequest) override {
+  Idempotency ListInstanceConfigs(
+      google::spanner::admin::instance::v1::ListInstanceConfigsRequest)
+      override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  GetInstanceConfig(google::spanner::admin::instance::v1::GetInstanceConfigRequest const&) override {
+  Idempotency GetInstanceConfig(
+      google::spanner::admin::instance::v1::GetInstanceConfigRequest const&)
+      override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  ListInstances(google::spanner::admin::instance::v1::ListInstancesRequest) override {
+  Idempotency ListInstances(
+      google::spanner::admin::instance::v1::ListInstancesRequest) override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  GetInstance(google::spanner::admin::instance::v1::GetInstanceRequest const&) override {
+  Idempotency GetInstance(
+      google::spanner::admin::instance::v1::GetInstanceRequest const&)
+      override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  CreateInstance(google::spanner::admin::instance::v1::CreateInstanceRequest const&) override {
+  Idempotency CreateInstance(
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&)
+      override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  UpdateInstance(google::spanner::admin::instance::v1::UpdateInstanceRequest const&) override {
+  Idempotency UpdateInstance(
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&)
+      override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  DeleteInstance(google::spanner::admin::instance::v1::DeleteInstanceRequest const&) override {
+  Idempotency DeleteInstance(
+      google::spanner::admin::instance::v1::DeleteInstanceRequest const&)
+      override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const&) override {
+  Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) override {
+  Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) override {
+  Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
-
 };
 }  // namespace
 
 std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy>
-    MakeDefaultInstanceAdminConnectionIdempotencyPolicy() {
+MakeDefaultInstanceAdminConnectionIdempotencyPolicy() {
   return absl::make_unique<DefaultInstanceAdminConnectionIdempotencyPolicy>();
 }
 

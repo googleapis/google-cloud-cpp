@@ -35,50 +35,59 @@ class InstanceAdminStub {
  public:
   virtual ~InstanceAdminStub() = 0;
 
-  virtual StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse> ListInstanceConfigs(
-    grpc::ClientContext& context,
-    google::spanner::admin::instance::v1::ListInstanceConfigsRequest const& request) = 0;
+  virtual StatusOr<
+      google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
+  ListInstanceConfigs(
+      grpc::ClientContext& context,
+      google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::spanner::admin::instance::v1::InstanceConfig> GetInstanceConfig(
-    grpc::ClientContext& context,
-    google::spanner::admin::instance::v1::GetInstanceConfigRequest const& request) = 0;
+  virtual StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
+  GetInstanceConfig(
+      grpc::ClientContext& context,
+      google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse> ListInstances(
-    grpc::ClientContext& context,
-    google::spanner::admin::instance::v1::ListInstancesRequest const& request) = 0;
+  virtual StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
+  ListInstances(
+      grpc::ClientContext& context,
+      google::spanner::admin::instance::v1::ListInstancesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
-    grpc::ClientContext& context,
-    google::spanner::admin::instance::v1::GetInstanceRequest const& request) = 0;
-
+      grpc::ClientContext& context,
+      google::spanner::admin::instance::v1::GetInstanceRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::spanner::admin::instance::v1::CreateInstanceRequest const& request) = 0;
-
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) = 0;
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+          request) = 0;
 
   virtual Status DeleteInstance(
-    grpc::ClientContext& context,
-    google::spanner::admin::instance::v1::DeleteInstanceRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::spanner::admin::instance::v1::DeleteInstanceRequest const&
+          request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-    grpc::ClientContext& context,
-    google::iam::v1::SetIamPolicyRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-    grpc::ClientContext& context,
-    google::iam::v1::GetIamPolicyRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-    grpc::ClientContext& context,
-    google::iam::v1::TestIamPermissionsRequest const& request) = 0;
-
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context,
+      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -94,61 +103,63 @@ class InstanceAdminStub {
 class DefaultInstanceAdminStub : public InstanceAdminStub {
  public:
   DefaultInstanceAdminStub(
-      std::unique_ptr<google::spanner::admin::instance::v1::InstanceAdmin::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
-      : grpc_stub_(std::move(grpc_stub)),
-        operations_(std::move(operations)) {}
+      std::unique_ptr<
+          google::spanner::admin::instance::v1::InstanceAdmin::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations)
+      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
   ListInstanceConfigs(
-    grpc::ClientContext& client_context,
-    google::spanner::admin::instance::v1::ListInstanceConfigsRequest const& request) override;
+      grpc::ClientContext& client_context,
+      google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
+          request) override;
 
   StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
   GetInstanceConfig(
-    grpc::ClientContext& client_context,
-    google::spanner::admin::instance::v1::GetInstanceConfigRequest const& request) override;
+      grpc::ClientContext& client_context,
+      google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
+          request) override;
 
   StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
   ListInstances(
-    grpc::ClientContext& client_context,
-    google::spanner::admin::instance::v1::ListInstancesRequest const& request) override;
+      grpc::ClientContext& client_context,
+      google::spanner::admin::instance::v1::ListInstancesRequest const& request)
+      override;
 
-  StatusOr<google::spanner::admin::instance::v1::Instance>
-  GetInstance(
-    grpc::ClientContext& client_context,
-    google::spanner::admin::instance::v1::GetInstanceRequest const& request) override;
-
+  StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
+      grpc::ClientContext& client_context,
+      google::spanner::admin::instance::v1::GetInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::spanner::admin::instance::v1::CreateInstanceRequest const& request) override;
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) override;
-  Status
-  DeleteInstance(
-    grpc::ClientContext& client_context,
-    google::spanner::admin::instance::v1::DeleteInstanceRequest const& request) override;
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+          request) override;
+  Status DeleteInstance(
+      grpc::ClientContext& client_context,
+      google::spanner::admin::instance::v1::DeleteInstanceRequest const&
+          request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(
-    grpc::ClientContext& client_context,
-    google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext& client_context,
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(
-    grpc::ClientContext& client_context,
-    google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& client_context,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(
-    grpc::ClientContext& client_context,
-    google::iam::v1::TestIamPermissionsRequest const& request) override;
-
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& client_context,
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -159,8 +170,11 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
+
  private:
-  std::unique_ptr<google::spanner::admin::instance::v1::InstanceAdmin::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::spanner::admin::instance::v1::InstanceAdmin::StubInterface>
+      grpc_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

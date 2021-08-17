@@ -17,13 +17,13 @@
 // source: google/spanner/admin/database/v1/spanner_database_admin.proto
 
 #include "google/cloud/spanner/admin/internal/database_admin_option_defaults.h"
+#include "google/cloud/spanner/admin/database_admin_connection.h"
+#include "google/cloud/spanner/admin/database_admin_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/options.h"
-#include "google/cloud/spanner/admin/database_admin_connection.h"
-#include "google/cloud/spanner/admin/database_admin_options.h"
 #include <memory>
 
 namespace google {
@@ -49,26 +49,30 @@ Options DatabaseAdminDefaultOptions(Options options) {
   if (!options.has<spanner_admin::DatabaseAdminRetryPolicyOption>()) {
     options.set<spanner_admin::DatabaseAdminRetryPolicyOption>(
         spanner_admin::DatabaseAdminLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
 
   if (!options.has<spanner_admin::DatabaseAdminBackoffPolicyOption>()) {
     options.set<spanner_admin::DatabaseAdminBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
 
   if (!options.has<spanner_admin::DatabaseAdminPollingPolicyOption>()) {
     options.set<spanner_admin::DatabaseAdminPollingPolicyOption>(
         GenericPollingPolicy<spanner_admin::DatabaseAdminLimitedTimeRetryPolicy,
-        ExponentialBackoffPolicy>(
+                             ExponentialBackoffPolicy>(
             spanner_admin::DatabaseAdminLimitedTimeRetryPolicy(
                 std::chrono::minutes(30)),
-                ExponentialBackoffPolicy(std::chrono::seconds(10),
-                    std::chrono::minutes(5), kBackoffScaling)).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(10),
+                                     std::chrono::minutes(5), kBackoffScaling))
+            .clone());
   }
 
-  if (!options.has<spanner_admin::DatabaseAdminConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          spanner_admin::DatabaseAdminConnectionIdempotencyPolicyOption>()) {
     options.set<spanner_admin::DatabaseAdminConnectionIdempotencyPolicyOption>(
         spanner_admin::MakeDefaultDatabaseAdminConnectionIdempotencyPolicy());
   }

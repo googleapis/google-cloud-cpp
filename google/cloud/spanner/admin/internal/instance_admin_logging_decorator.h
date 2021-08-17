@@ -38,58 +38,67 @@ class InstanceAdminLogging : public InstanceAdminStub {
                        TracingOptions tracing_options,
                        std::set<std::string> components);
 
-  StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse> ListInstanceConfigs(
-    grpc::ClientContext& context,
-    google::spanner::admin::instance::v1::ListInstanceConfigsRequest const& request) override;
+  StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
+  ListInstanceConfigs(
+      grpc::ClientContext& context,
+      google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
+          request) override;
 
-  StatusOr<google::spanner::admin::instance::v1::InstanceConfig> GetInstanceConfig(
-    grpc::ClientContext& context,
-    google::spanner::admin::instance::v1::GetInstanceConfigRequest const& request) override;
+  StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
+  GetInstanceConfig(
+      grpc::ClientContext& context,
+      google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
+          request) override;
 
-  StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse> ListInstances(
-    grpc::ClientContext& context,
-    google::spanner::admin::instance::v1::ListInstancesRequest const& request) override;
+  StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
+  ListInstances(
+      grpc::ClientContext& context,
+      google::spanner::admin::instance::v1::ListInstancesRequest const& request)
+      override;
 
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
-    grpc::ClientContext& context,
-    google::spanner::admin::instance::v1::GetInstanceRequest const& request) override;
-
+      grpc::ClientContext& context,
+      google::spanner::admin::instance::v1::GetInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::spanner::admin::instance::v1::CreateInstanceRequest const& request) override;
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) override;
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+          request) override;
   Status DeleteInstance(
-    grpc::ClientContext& context,
-    google::spanner::admin::instance::v1::DeleteInstanceRequest const& request) override;
+      grpc::ClientContext& context,
+      google::spanner::admin::instance::v1::DeleteInstanceRequest const&
+          request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-    grpc::ClientContext& context,
-    google::iam::v1::SetIamPolicyRequest const& request) override;
+      grpc::ClientContext& context,
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-    grpc::ClientContext& context,
-    google::iam::v1::GetIamPolicyRequest const& request) override;
+      grpc::ClientContext& context,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-    grpc::ClientContext& context,
-    google::iam::v1::TestIamPermissionsRequest const& request) override;
+      grpc::ClientContext& context,
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::longrunning::GetOperationRequest const& request) override;
 
-future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::longrunning::GetOperationRequest const& request) override;
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::longrunning::CancelOperationRequest const& request) override;
 
-future<Status> AsyncCancelOperation(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::longrunning::CancelOperationRequest const& request) override;
  private:
   std::shared_ptr<InstanceAdminStub> child_;
   TracingOptions tracing_options_;

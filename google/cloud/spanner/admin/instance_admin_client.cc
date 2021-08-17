@@ -24,7 +24,9 @@ namespace cloud {
 namespace spanner_admin {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-InstanceAdminClient::InstanceAdminClient(std::shared_ptr<InstanceAdminConnection> connection) : connection_(std::move(connection)) {}
+InstanceAdminClient::InstanceAdminClient(
+    std::shared_ptr<InstanceAdminConnection> connection)
+    : connection_(std::move(connection)) {}
 InstanceAdminClient::~InstanceAdminClient() = default;
 
 StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
@@ -56,7 +58,9 @@ InstanceAdminClient::GetInstance(std::string const& name) {
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-InstanceAdminClient::CreateInstance(std::string const& parent, std::string const& instance_id, google::spanner::admin::instance::v1::Instance const& instance) {
+InstanceAdminClient::CreateInstance(
+    std::string const& parent, std::string const& instance_id,
+    google::spanner::admin::instance::v1::Instance const& instance) {
   google::spanner::admin::instance::v1::CreateInstanceRequest request;
   request.set_parent(parent);
   request.set_instance_id(instance_id);
@@ -65,37 +69,39 @@ InstanceAdminClient::CreateInstance(std::string const& parent, std::string const
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-InstanceAdminClient::UpdateInstance(google::spanner::admin::instance::v1::Instance const& instance, google::protobuf::FieldMask const& field_mask) {
+InstanceAdminClient::UpdateInstance(
+    google::spanner::admin::instance::v1::Instance const& instance,
+    google::protobuf::FieldMask const& field_mask) {
   google::spanner::admin::instance::v1::UpdateInstanceRequest request;
   *request.mutable_instance() = instance;
   *request.mutable_field_mask() = field_mask;
   return connection_->UpdateInstance(request);
 }
 
-Status
-InstanceAdminClient::DeleteInstance(std::string const& name) {
+Status InstanceAdminClient::DeleteInstance(std::string const& name) {
   google::spanner::admin::instance::v1::DeleteInstanceRequest request;
   request.set_name(name);
   return connection_->DeleteInstance(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-InstanceAdminClient::SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy) {
+StatusOr<google::iam::v1::Policy> InstanceAdminClient::SetIamPolicy(
+    std::string const& resource, google::iam::v1::Policy const& policy) {
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
   *request.mutable_policy() = policy;
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-InstanceAdminClient::GetIamPolicy(std::string const& resource) {
+StatusOr<google::iam::v1::Policy> InstanceAdminClient::GetIamPolicy(
+    std::string const& resource) {
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-InstanceAdminClient::TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions) {
+InstanceAdminClient::TestIamPermissions(
+    std::string const& resource, std::vector<std::string> const& permissions) {
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
   *request.mutable_permissions() = {permissions.begin(), permissions.end()};
@@ -103,52 +109,63 @@ InstanceAdminClient::TestIamPermissions(std::string const& resource, std::vector
 }
 
 StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
-InstanceAdminClient::ListInstanceConfigs(google::spanner::admin::instance::v1::ListInstanceConfigsRequest request) {
+InstanceAdminClient::ListInstanceConfigs(
+    google::spanner::admin::instance::v1::ListInstanceConfigsRequest request) {
   return connection_->ListInstanceConfigs(std::move(request));
 }
 
 StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
-InstanceAdminClient::GetInstanceConfig(google::spanner::admin::instance::v1::GetInstanceConfigRequest const& request) {
+InstanceAdminClient::GetInstanceConfig(
+    google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
+        request) {
   return connection_->GetInstanceConfig(request);
 }
 
 StreamRange<google::spanner::admin::instance::v1::Instance>
-InstanceAdminClient::ListInstances(google::spanner::admin::instance::v1::ListInstancesRequest request) {
+InstanceAdminClient::ListInstances(
+    google::spanner::admin::instance::v1::ListInstancesRequest request) {
   return connection_->ListInstances(std::move(request));
 }
 
 StatusOr<google::spanner::admin::instance::v1::Instance>
-InstanceAdminClient::GetInstance(google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
+InstanceAdminClient::GetInstance(
+    google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
   return connection_->GetInstance(request);
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-InstanceAdminClient::CreateInstance(google::spanner::admin::instance::v1::CreateInstanceRequest const& request) {
+InstanceAdminClient::CreateInstance(
+    google::spanner::admin::instance::v1::CreateInstanceRequest const&
+        request) {
   return connection_->CreateInstance(request);
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-InstanceAdminClient::UpdateInstance(google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) {
+InstanceAdminClient::UpdateInstance(
+    google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+        request) {
   return connection_->UpdateInstance(request);
 }
 
-Status
-InstanceAdminClient::DeleteInstance(google::spanner::admin::instance::v1::DeleteInstanceRequest const& request) {
+Status InstanceAdminClient::DeleteInstance(
+    google::spanner::admin::instance::v1::DeleteInstanceRequest const&
+        request) {
   return connection_->DeleteInstance(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-InstanceAdminClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> InstanceAdminClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-InstanceAdminClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> InstanceAdminClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-InstanceAdminClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+InstanceAdminClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   return connection_->TestIamPermissions(request);
 }
 

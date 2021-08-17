@@ -43,7 +43,8 @@ future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncCreateDatabase(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    google::spanner::admin::database::v1::CreateDatabaseRequest const& request) {
+    google::spanner::admin::database::v1::CreateDatabaseRequest const&
+        request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateDatabase(cq, std::move(context), request);
 }
@@ -59,12 +60,12 @@ future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncUpdateDatabaseDdl(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+        request) {
   SetMetadata(*context, "database=" + request.database());
   return child_->AsyncUpdateDatabaseDdl(cq, std::move(context), request);
 }
-Status
-DatabaseAdminMetadata::DropDatabase(
+Status DatabaseAdminMetadata::DropDatabase(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
   SetMetadata(context, "database=" + request.database());
@@ -74,21 +75,20 @@ DatabaseAdminMetadata::DropDatabase(
 StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
 DatabaseAdminMetadata::GetDatabaseDdl(
     grpc::ClientContext& context,
-    google::spanner::admin::database::v1::GetDatabaseDdlRequest const& request) {
+    google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
+        request) {
   SetMetadata(context, "database=" + request.database());
   return child_->GetDatabaseDdl(context, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-DatabaseAdminMetadata::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> DatabaseAdminMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   SetMetadata(context, "resource=" + request.resource());
   return child_->SetIamPolicy(context, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-DatabaseAdminMetadata::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> DatabaseAdminMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   SetMetadata(context, "resource=" + request.resource());
@@ -127,8 +127,7 @@ DatabaseAdminMetadata::UpdateBackup(
   return child_->UpdateBackup(context, request);
 }
 
-Status
-DatabaseAdminMetadata::DeleteBackup(
+Status DatabaseAdminMetadata::DeleteBackup(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
   SetMetadata(context, "name=" + request.name());
@@ -147,14 +146,16 @@ future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncRestoreDatabase(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    google::spanner::admin::database::v1::RestoreDatabaseRequest const& request) {
+    google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+        request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncRestoreDatabase(cq, std::move(context), request);
 }
 StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>
 DatabaseAdminMetadata::ListDatabaseOperations(
     grpc::ClientContext& context,
-    google::spanner::admin::database::v1::ListDatabaseOperationsRequest const& request) {
+    google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
+        request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListDatabaseOperations(context, request);
 }
@@ -162,7 +163,8 @@ DatabaseAdminMetadata::ListDatabaseOperations(
 StatusOr<google::spanner::admin::database::v1::ListBackupOperationsResponse>
 DatabaseAdminMetadata::ListBackupOperations(
     grpc::ClientContext& context,
-    google::spanner::admin::database::v1::ListBackupOperationsRequest const& request) {
+    google::spanner::admin::database::v1::ListBackupOperationsRequest const&
+        request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListBackupOperations(context, request);
 }
