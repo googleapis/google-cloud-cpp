@@ -32,7 +32,6 @@ TEST(AggregateUploadThroughputOptions, Basic) {
           "--object-count=100",
           "--minimum-object-size=16MiB",
           "--maximum-object-size=32MiB",
-          "--use-resumable-upload=false",
           "--resumable-upload-chunk-size=4MiB",
           "--thread-count=42",
           "--iteration-count=10",

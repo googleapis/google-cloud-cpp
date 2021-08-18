@@ -45,7 +45,7 @@ to upload each object, as well as the time taken to upload the dataset.
 
 The benchmark uses multiple threads to upload the dataset, expecting higher
 throughput as threads are added. The benchmark runs multiple iterations of the
-same workload, after each iteration it prints the upload time for each object,
+same workload. After each iteration it prints the upload time for each object,
 with arbitrary annotations describing the library configuration (API, buffer
 sizes, the iteration number), as well as arbitrary labels provided by the
 application, and the overall results for the iteration ("denormalized" to
@@ -134,7 +134,7 @@ int main(int argc, char* argv[]) {
     std::cerr << options.status() << "\n";
     return 1;
   }
-  if (options->exit_after_parse) return 1;
+  if (options->exit_after_parse) return 0;
 
   auto client = MakeClient(*options);
 
@@ -150,32 +150,33 @@ int main(int argc, char* argv[]) {
     return absl::FormatTime(kFormat, t, absl::UTCTimeZone());
   };
 
-  std::cout
-      << "# Start time: " << current_time() << "\n# Labels: " << options->labels
-      << "\n# Bucket Name: " << options->bucket_name
-      << "\n# Object Prefix: " << options->object_prefix
-      << "\n# Object Count: " << options->object_count
-      << "\n# Minimum Object Size: " << FormatSize(options->minimum_object_size)
-      << "\n# Maximum Object Size: " << FormatSize(options->maximum_object_size)
-      << "\n# Use Resumable Uploads: " << std::boolalpha
-      << options->use_resumable_upload << "\n# Resumable Upload Chunk Size: "
-      << FormatSize(options->resumable_upload_chunk_size)
-      << "\n# Thread Count: " << options->thread_count
-      << "\n# Iterations: " << options->iteration_count
-      << "\n# API: " << gcs_bm::ToString(options->api)
-      << "\n# gRPC Channel Count: " << options->grpc_channel_count
-      << "\n# gRPC Plugin Config: " << options->grpc_plugin_config
-      << "\n# HTTP Version: " << options->rest_http_version
-      << "\n# Client Per Thread: " << std::boolalpha
-      << options->client_per_thread << "\n# Build Info: " << notes << std::endl;
+  std::cout << "# Start time: " << current_time()
+            << "\n# Labels: " << options->labels
+            << "\n# Bucket Name: " << options->bucket_name
+            << "\n# Object Prefix: " << options->object_prefix
+            << "\n# Object Count: " << options->object_count
+            << "\n# Minimum Object Size: "
+            << FormatSize(options->minimum_object_size)
+            << "\n# Maximum Object Size: "
+            << FormatSize(options->maximum_object_size)
+            << "\n# Resumable Upload Chunk Size: "
+            << FormatSize(options->resumable_upload_chunk_size)
+            << "\n# Thread Count: " << options->thread_count
+            << "\n# Iterations: " << options->iteration_count
+            << "\n# API: " << gcs_bm::ToString(options->api)
+            << "\n# gRPC Channel Count: " << options->grpc_channel_count
+            << "\n# gRPC Plugin Config: " << options->grpc_plugin_config
+            << "\n# HTTP Version: " << options->rest_http_version
+            << "\n# Client Per Thread: " << std::boolalpha
+            << options->client_per_thread << "\n# Build Info: " << notes
+            << std::endl;
 
   auto configs = [](AggregateUploadThroughputOptions const& options,
                     gcs::Client const& default_client) {
     std::vector<TaskConfig> config(options.thread_count,
                                    TaskConfig{default_client});
-    for (std::size_t i = 0; i != config.size(); ++i) {
-      if (options.client_per_thread) config[i].client = MakeClient(options);
-    }
+    if (!options.client_per_thread) return config;
+    for (auto& c : config) c.client = MakeClient(options);
     return config;
   }(*options, client);
 
@@ -193,9 +194,11 @@ int main(int argc, char* argv[]) {
     std::int64_t lineno = 0;
     while (block.size() <
            static_cast<std::size_t>(options->resumable_upload_chunk_size)) {
+      // Create data that consists of equally-sized, numbered lines.
+      auto constexpr kLineSize = 128;
       auto header = absl::StrFormat("%09d", lineno++);
       block += header;
-      block += gcs_bm::MakeRandomData(generator, 128 - header.size());
+      block += gcs_bm::MakeRandomData(generator, kLineSize - header.size());
     }
     return block;
   }();
@@ -213,7 +216,7 @@ int main(int argc, char* argv[]) {
   // header because sometimes we interrupt the benchmark and these tools
   // require a header even for empty files.
   std::cout
-      << "Labels,Iteration,ObjectCount,UseResumableUpload"
+      << "Iteration,Labels,ObjectCount"
       << ",ResumableUploadChunkSize,ThreadCount,Api"
       << ",GrpcChannelCount,GrpcPluginConfig,RestHttpVersion"
       << ",ClientPerThread,StatusCode,Peer,BytesUploaded,ElapsedMicroseconds"
@@ -255,10 +258,9 @@ int main(int argc, char* argv[]) {
       for (auto const& d : r.details) {
         // Join the iteration details with the per-upload details. That makes
         // it easier to analyze the data in external scripts.
-        std::cout << labels                                       //
-                  << ',' << d.iteration                           //
+        std::cout << d.iteration                                  //
+                  << ',' << labels                                //
                   << ',' << options->object_count                 //
-                  << ',' << options->use_resumable_upload         //
                   << ',' << options->resumable_upload_chunk_size  //
                   << ',' << options->thread_count                 //
                   << ',' << ToString(options->api)                //
@@ -383,7 +385,6 @@ google::cloud::StatusOr<AggregateUploadThroughputOptions> SelfTest(
           "--object-count=1",
           "--minimum-object-size=16KiB",
           "--maximum-object-size=32KiB",
-          "--use-resumable-upload=true",
           "--thread-count=1",
           "--iteration-count=1",
           "--api=JSON",

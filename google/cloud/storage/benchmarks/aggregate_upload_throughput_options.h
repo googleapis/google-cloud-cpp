@@ -31,7 +31,6 @@ struct AggregateUploadThroughputOptions {
   int object_count = 1000;
   std::int64_t minimum_object_size = 64 * kMiB;
   std::int64_t maximum_object_size = 64 * kMiB;
-  bool use_resumable_upload = true;
   std::int64_t resumable_upload_chunk_size = 64 * kMiB;
   int thread_count = 1;
   int iteration_count = 1;

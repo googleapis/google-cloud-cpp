@@ -53,11 +53,6 @@ ParseAggregateUploadThroughputOptions(std::vector<std::string> const& argv,
        [&options](std::string const& val) {
          options.maximum_object_size = ParseSize(val);
        }},
-      {"--use-resumable-upload", "use resumable uploads",
-       [&options](std::string const& val) {
-         options.use_resumable_upload =
-             testing_util::ParseBoolean(val).value_or("true");
-       }},
       {"--resumable-upload-chunk-size", "how much data is sent in each chunk",
        [&options](std::string const& val) {
          options.resumable_upload_chunk_size = ParseSize(val);
@@ -136,8 +131,7 @@ ParseAggregateUploadThroughputOptions(std::vector<std::string> const& argv,
     os << "Invalid object size range [" << options.minimum_object_size << ","
        << options.maximum_object_size << "], check your --minimum-object-size"
        << " and --maximum-object-size options";
-    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(os).str()};
+    return make_status(os);
   }
   if (options.thread_count <= 0) {
     std::ostringstream os;
