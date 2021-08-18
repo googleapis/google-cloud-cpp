@@ -42,7 +42,7 @@ git pull --ff-only upstream main
 git push  # Pushes new commits up to your fork on GitHub
 ```
 
-> :attention: you probably want to do this periodically, and almost certainly
+> :warning: you probably want to do this periodically, and almost certainly
 > before starting any new branches. Keeping your default branch (aka `main`)
 > in sync is important to make your pull requests easy to review.
 
@@ -68,6 +68,20 @@ change for review you need to create a pull request. Typically you start by:
    **adding more [commits][about-commits]** to your branch and `git push` -ing
    those commits to your fork.
 
+## Merging the changes
+
+Eventually the reviewers accept your changes, and they are merged into the
+`main` branch. We use "squash commits", where all your commits become a single
+commit into the default branch. A project owner needs to merge your changes,
+if you are a project owner, the expectation is that you will perform the merge
+operation, and update the commit comments to something readable.
+
+## When the PR requires more work
+
+The previous steps described a happy case for a PR (hopefully for most PRs),
+where no build failures or conflicts are detected in the PR.  The next two
+sections explain what to do when things are not so rosy.
+
 ### Resolving Conflicts and Rebasing
 
 From time to time your pull request may have conflicts with the destination
@@ -83,35 +97,43 @@ git rebase main
 git push --force-with-lease
 ```
 
+If there are conflicts, the `git rebase` command will show you the conflicts.
+These will not be automatically resolved, if they were, `git rebase` would not
+have required human intervention!  You will need to edit the code to resolve
+these conflicts, potentially `git add` or `git rm` files as needed. Once the
+conflicts are resolved you `git add` the files to indicate the conflict
+resolution is complete, and then continue the rebase with:
+
+```
+git rebase --continue
+```
+
+If there are multiple commits in your PR this process runs for each commit.
+
 ### Reproducing CI build failures
 
-If you are a Googler, when you submit your pull request a number (about 40 at
+If you are a Googler, when you submit your pull request a number (about 50 at
 last count) of builds start automatically. For non-Googlers, a project owner
 needs to kickoff these builds for you.
 
 We run so many builds because we need to test the libraries under as many
 compilers, platforms, and configurations as possible. Our customers will not
-necessarily use the same environment we use to build and run these libraries.
+necessarily use the same environment as we do to build and run these libraries.
 
 There is a completely separate
 [guide](howto-guide-running-ci-builds-locally.md) explaining how to run these
-builds locally in case one fails. It's also a good idea to run some of the
-builds locally before sending a PR to verify that your change (likely) works.
+builds locally in case one fails. It's also a good idea to run some of these
+builds locally, before sending a PR, to verify that your change (likely) works.
 Running the following builds locally should identify most common issues:
 
 ```
-ci/cloudbuild/build.sh -t checkers-pr --docker
-ci/cloudbuild/build.sh -t clang-tidy-pr --docker
-ci/cloudbuild/build.sh -t asan-pr --docker
+ci/cloudbuild/build.sh -t checkers-pr
+ci/cloudbuild/build.sh -t clang-tidy-pr
+ci/cloudbuild/build.sh -t asan-pr
 ```
 
-## Merging the changes
-
-Eventually the reviewers accept your changes, and they are merged into the
-`main` branch. We use "squash commits", where all your commits become a single
-commit into the default branch. A project owner needs to merge your changes,
-if you are a project owner, the expectation is that you will perform the merge
-operation, and update the commit comments to something readable.
+In general, most of the builds for Linux can be reproduced locally using the
+build name as an argument to `build.sh`.
 
 [workflow-link]: https://guides.github.com/introduction/flow/
 [fork-link]: https://guides.github.com/activities/forking/
