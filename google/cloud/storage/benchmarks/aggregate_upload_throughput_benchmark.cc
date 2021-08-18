@@ -39,14 +39,37 @@ using gcs_bm::ApiName;
 using gcs_bm::FormatBandwidthGbPerSecond;
 
 char const kDescription[] = R"""(A benchmark for aggregated upload throughput.
-    )""";
+
+This benchmark repeatedly uploads a dataset to GCS, and reports the time taken
+to upload each object, as well as the time taken to upload the dataset.
+
+The benchmark uses multiple threads to upload the dataset, expecting higher
+throughput as threads are added. The benchmark runs multiple iterations of the
+same workload, after each iteration it prints the upload time for each object,
+with arbitrary annotations describing the library configuration (API, buffer
+sizes, the iteration number), as well as arbitrary labels provided by the
+application, and the overall results for the iteration ("denormalized" to
+simplify any external scripts used in analysis).
+
+During each iteration the benchmark keeps a pool of objects to upload, and each
+threads pulls objects from this pool as they complete their previous work.
+
+The data for each object is pre-generated and used by all threads, and consist
+of a repeating block of N lines with random ASCII characters. The size of this
+block is configurable in the command-line. We recommend using multiples of
+256KiB for this block size.
+)""";
 
 google::cloud::StatusOr<AggregateUploadThroughputOptions> ParseArgs(
     int argc, char* argv[]);
 
 struct TaskConfig {
   gcs::Client client;
-  std::seed_seq::result_type seed;
+};
+
+struct UploadItem {
+  std::string object_name;
+  std::uint64_t object_size;
 };
 
 using Counters = std::map<std::string, std::int64_t>;
@@ -68,10 +91,10 @@ struct TaskResult {
 class UploadIteration {
  public:
   UploadIteration(int iteration, AggregateUploadThroughputOptions options,
-                  std::vector<std::string> object_names)
+                  std::vector<UploadItem> upload_items)
       : iteration_(iteration),
         options_(std::move(options)),
-        remaining_objects_(std::move(object_names)) {}
+        remaining_work_(std::move(upload_items)) {}
 
   TaskResult UploadTask(TaskConfig const& config,
                         std::string const& write_block);
@@ -80,7 +103,7 @@ class UploadIteration {
   std::mutex mu_;
   int const iteration_;
   AggregateUploadThroughputOptions const options_;
-  std::vector<std::string> remaining_objects_;
+  std::vector<UploadItem> remaining_work_;
 };
 
 gcs::Client MakeClient(AggregateUploadThroughputOptions const& options) {
@@ -148,23 +171,22 @@ int main(int argc, char* argv[]) {
 
   auto configs = [](AggregateUploadThroughputOptions const& options,
                     gcs::Client const& default_client) {
-    std::random_device rd;
-    std::vector<std::seed_seq::result_type> seeds(options.thread_count);
-    std::seed_seq({rd(), rd(), rd()}).generate(seeds.begin(), seeds.end());
-
-    std::vector<TaskConfig> config(seeds.size(), TaskConfig{default_client, 0});
+    std::vector<TaskConfig> config(options.thread_count,
+                                   TaskConfig{default_client});
     for (std::size_t i = 0; i != config.size(); ++i) {
       if (options.client_per_thread) config[i].client = MakeClient(options);
-      config[i].seed = seeds[i];
     }
     return config;
   }(*options, client);
 
-  std::vector<std::string> object_names(options->object_count);
+  std::vector<UploadItem> upload_items(options->object_count);
   std::mt19937_64 generator(std::random_device{}());
-  std::generate(object_names.begin(), object_names.end(), [&] {
-    return options->object_prefix +
-           gcs_bm::MakeRandomObjectName(generator).substr(0, 32);
+  std::generate(upload_items.begin(), upload_items.end(), [&] {
+    auto const object_size = std::uniform_int_distribution<std::uint64_t>(
+        options->minimum_object_size, options->maximum_object_size)(generator);
+    return UploadItem{options->object_prefix +
+                          gcs_bm::MakeRandomObjectName(generator).substr(0, 32),
+                      object_size};
   });
   auto const write_block = [&] {
     std::string block;
@@ -200,7 +222,7 @@ int main(int argc, char* argv[]) {
 
   for (int i = 0; i != options->iteration_count; ++i) {
     auto timer = Timer::PerProcess();
-    UploadIteration iteration(i, *options, object_names);
+    UploadIteration iteration(i, *options, upload_items);
     auto task = [&iteration, &write_block](TaskConfig const& c) {
       return iteration.UploadTask(c, write_block);
     };
@@ -274,9 +296,9 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
-UploadDetail UploadOneObject(gcs::Client& client, std::mt19937_64& generator,
+UploadDetail UploadOneObject(gcs::Client& client,
                              AggregateUploadThroughputOptions const& options,
-                             std::string const& object_name,
+                             UploadItem const& upload,
                              std::string const& write_block, int iteration) {
   using clock = std::chrono::steady_clock;
   using std::chrono::duration_cast;
@@ -290,14 +312,13 @@ UploadDetail UploadOneObject(gcs::Client& client, std::mt19937_64& generator,
   auto xml_hack =
       options.api == ApiName::kApiJson ? gcs::Fields() : gcs::Fields("");
   auto const object_start = clock::now();
-  auto const object_size = std::uniform_int_distribution<std::uint64_t>(
-      options.minimum_object_size, options.maximum_object_size)(generator);
 
-  auto stream = client.WriteObject(options.bucket_name, object_name, xml_hack);
+  auto stream =
+      client.WriteObject(options.bucket_name, upload.object_name, xml_hack);
   auto object_bytes = std::uint64_t{0};
-  while (object_bytes < object_size) {
+  while (object_bytes < upload.object_size) {
     auto n = std::min(static_cast<std::uint64_t>(buffer_size),
-                      object_size - object_bytes);
+                      upload.object_size - object_bytes);
     if (!stream.write(write_block.data(), n)) break;
     object_bytes += n;
   }
@@ -319,17 +340,16 @@ UploadDetail UploadOneObject(gcs::Client& client, std::mt19937_64& generator,
 TaskResult UploadIteration::UploadTask(TaskConfig const& config,
                                        std::string const& write_block) {
   auto client = config.client;
-  auto generator = std::mt19937_64(config.seed);
 
   TaskResult result;
   while (true) {
     std::unique_lock<std::mutex> lk(mu_);
-    if (remaining_objects_.empty()) break;
-    auto object = std::move(remaining_objects_.back());
-    remaining_objects_.pop_back();
+    if (remaining_work_.empty()) break;
+    auto const upload = std::move(remaining_work_.back());
+    remaining_work_.pop_back();
     lk.unlock();
-    result.details.push_back(UploadOneObject(client, generator, options_,
-                                             object, write_block, iteration_));
+    result.details.push_back(
+        UploadOneObject(client, options_, upload, write_block, iteration_));
     result.bytes_uploaded += result.details.back().bytes_uploaded;
   }
   return result;
