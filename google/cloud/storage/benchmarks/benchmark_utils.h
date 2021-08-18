@@ -21,6 +21,10 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
 #include "google/cloud/testing_util/timer.h"
+#include <chrono>
+#include <cstdint>
+#include <iomanip>
+#include <sstream>
 #include <string>
 
 namespace google {
@@ -67,6 +71,20 @@ StatusOr<ApiName> ParseApiName(std::string const& val);
 std::string RandomBucketPrefix();
 
 std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen);
+
+template <typename Rep, typename Period>
+std::string FormatBandwidthGbPerSecond(
+    std::uintmax_t bytes, std::chrono::duration<Rep, Period> elapsed) {
+  using ns = ::std::chrono::nanoseconds;
+  auto const elapsed_ns = std::chrono::duration_cast<ns>(elapsed);
+  if (elapsed_ns == ns(0)) return "NaN";
+
+  auto const bandwidth =
+      8 * static_cast<double>(bytes) / static_cast<double>(elapsed_ns.count());
+  std::ostringstream os;
+  os << std::fixed << std::setprecision(2) << bandwidth;
+  return std::move(os).str();
+}
 
 }  // namespace storage_benchmarks
 }  // namespace cloud

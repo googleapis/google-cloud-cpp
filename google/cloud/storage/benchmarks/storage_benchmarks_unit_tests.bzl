@@ -18,6 +18,7 @@
 
 storage_benchmarks_unit_tests = [
     "aggregate_download_throughput_options_test.cc",
+    "aggregate_upload_throughput_options_test.cc",
     "benchmark_make_random_test.cc",
     "benchmark_parser_test.cc",
     "create_dataset_options_test.cc",

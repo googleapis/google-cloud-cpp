@@ -18,6 +18,7 @@
 
 storage_benchmarks_hdrs = [
     "aggregate_download_throughput_options.h",
+    "aggregate_upload_throughput_options.h",
     "benchmark_utils.h",
     "bounded_queue.h",
     "create_dataset_options.h",
@@ -28,6 +29,7 @@ storage_benchmarks_hdrs = [
 
 storage_benchmarks_srcs = [
     "aggregate_download_throughput_options.cc",
+    "aggregate_upload_throughput_options.cc",
     "benchmark_utils.cc",
     "create_dataset_options.cc",
     "throughput_experiment.cc",
