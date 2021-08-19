@@ -50,13 +50,40 @@ struct GrpcNumChannelsOption {
  *
  * This option gives users the ability to set various arguments for the
  * underlying `grpc::ChannelArguments` objects that will be created. See the
- * gRPC documentation for more details about available options.
+ * gRPC documentation for more details about available channel arguments.
+ *
+ * Our library will always start with the native object from
+ * `GrpcChannelArgumentsNativeOption`, then add the channel arguments from this
+ * option. Users are cautioned not to set the same channel argument to different
+ * values in different options as gRPC will use the first value set for some
+ * channel arguments, and the last value set for others.
  *
  * @see https://grpc.github.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
  * @see https://grpc.github.io/grpc/core/group__grpc__arg__keys.html
  */
 struct GrpcChannelArgumentsOption {
   using Type = std::map<std::string, std::string>;
+};
+
+/**
+ * The native `grpc::ChannelArguments` object.
+ *
+ * This option gives users full control over the `grpc::ChannelArguments`
+ * objects that will be created. See the gRPC documentation for more details
+ * about available channel arguments.
+ *
+ * Our library will always start with the native object, then add in the channel
+ * arguments from `GrpcChannelArgumentsOption`, then add the user agent prefix
+ * from `UserAgentProductsOption`. Users are cautioned not to set the same
+ * channel argument to different values in different options as gRPC will use
+ * the first value set for some channel arguments, and the last value set for
+ * others.
+ *
+ * @see https://grpc.github.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
+ * @see https://grpc.github.io/grpc/core/group__grpc__arg__keys.html
+ */
+struct GrpcChannelArgumentsNativeOption {
+  using Type = grpc::ChannelArguments;
 };
 
 /**
@@ -96,8 +123,8 @@ struct GrpcBackgroundThreadsFactoryOption {
  */
 using GrpcOptionList =
     OptionList<GrpcCredentialOption, GrpcNumChannelsOption,
-               GrpcChannelArgumentsOption, GrpcTracingOptionsOption,
-               GrpcBackgroundThreadsFactoryOption>;
+               GrpcChannelArgumentsOption, GrpcChannelArgumentsNativeOption,
+               GrpcTracingOptionsOption, GrpcBackgroundThreadsFactoryOption>;
 
 namespace internal {
 
