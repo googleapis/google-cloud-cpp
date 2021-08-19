@@ -26,7 +26,7 @@ namespace cloud {
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 
-auto constexpr kMaximumWaitTimeMinutes = 30;  // test timeout notwithstanding
+auto constexpr kMaximumWaitTimeMinutes = 60;  // test timeout notwithstanding
 auto constexpr kBackoffScaling = 2.0;
 
 inline std::unique_ptr<spanner::RetryPolicy> TestRetryPolicy() {
