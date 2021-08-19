@@ -24,7 +24,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 grpc::ChannelArguments MakeChannelArguments(Options const& opts) {
-  grpc::ChannelArguments channel_arguments;
+  auto channel_arguments = opts.get<GrpcChannelArgumentsNativeOption>();
   for (auto const& p : opts.get<GrpcChannelArgumentsOption>()) {
     channel_arguments.SetString(p.first, p.second);
   }

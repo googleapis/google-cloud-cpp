@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "absl/memory/memory.h"
@@ -39,6 +40,47 @@ void TestGrpcOption(ValueType const& expected) {
       << "Failed with type: " << typeid(T).name();
 }
 
+// Checks equality for two grpc::ChannelArguments
+void CheckGrpcChannelArguments(grpc::ChannelArguments const& expected,
+                               grpc::ChannelArguments const& actual) {
+  auto c_args_expected = expected.c_channel_args();
+  auto c_args_actual = actual.c_channel_args();
+  ASSERT_EQ(c_args_expected.num_args, c_args_actual.num_args)
+      << "Number of channel arguments are mismatched";
+
+  for (size_t i = 0; i != c_args_expected.num_args; ++i) {
+    auto& expected = c_args_expected.args[i];
+    auto& actual = c_args_actual.args[i];
+    ASSERT_EQ(std::string(expected.key), std::string(actual.key))
+        << "Order of keys are mismatched";
+    ASSERT_EQ(expected.type, actual.type)
+        << "Type mismatch for key: " << std::string(expected.key);
+    if (expected.type == GRPC_ARG_STRING) {
+      EXPECT_EQ(std::string(expected.value.string),
+                std::string(actual.value.string))
+          << "Value (string) mismatch for key: " << std::string(expected.key);
+    } else if (expected.type == GRPC_ARG_INTEGER) {
+      EXPECT_EQ(expected.value.integer, actual.value.integer)
+          << "Value (integer) mismatch for key: " << std::string(expected.key);
+    } else if (expected.type == GRPC_ARG_POINTER) {
+      auto& ptr_expected = expected.value.pointer;
+      auto& ptr_actual = actual.value.pointer;
+
+      // First we check to see if the objects are the same type, by checking to
+      // see if they point to the same vtable
+      auto e = "Object mismatch for key: " + std::string(expected.key);
+      ASSERT_EQ(ptr_expected.vtable->cmp, ptr_actual.vtable->cmp) << e;
+      ASSERT_EQ(ptr_expected.vtable->copy, ptr_actual.vtable->copy) << e;
+      ASSERT_EQ(ptr_expected.vtable->destroy, ptr_actual.vtable->destroy) << e;
+
+      // Then we use the comparison function to check equality of the two
+      // objects
+      EXPECT_TRUE(ptr_expected.vtable->cmp(ptr_expected.p, ptr_actual.p))
+          << "Value (pointer) mismatch for key: " << std::string(expected.key);
+    }
+  }
+}
+
 }  // namespace
 
 TEST(GrpcOptionList, RegularOptions) {
@@ -46,6 +88,25 @@ TEST(GrpcOptionList, RegularOptions) {
   TestGrpcOption<GrpcNumChannelsOption>(42);
   TestGrpcOption<GrpcChannelArgumentsOption>({{"foo", "bar"}, {"baz", "quux"}});
   TestGrpcOption<GrpcTracingOptionsOption>(TracingOptions{});
+}
+
+TEST(GrpcOptionList, MakeChannelArguments) {
+  // This test will just set all 3 options related to channel arguments and
+  // ensure that `MakeChannelArguments` combines them in the correct order.
+  grpc::ChannelArguments native;
+  native.SetString("foo", "bar");
+
+  auto opts = Options{}
+                  .set<GrpcChannelArgumentsOption>({{"baz", "quux"}})
+                  .set<UserAgentProductsOption>({"user_agent"})
+                  .set<GrpcChannelArgumentsNativeOption>(native);
+
+  grpc::ChannelArguments expected;
+  expected.SetString("foo", "bar");
+  expected.SetString("baz", "quux");
+  expected.SetUserAgentPrefix("user_agent");
+
+  CheckGrpcChannelArguments(expected, internal::MakeChannelArguments(opts));
 }
 
 TEST(GrpcOptionList, GrpcBackgroundThreadsFactoryOption) {
