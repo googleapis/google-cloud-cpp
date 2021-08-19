@@ -49,6 +49,19 @@ std::chrono::system_clock::time_point ToChronoTimePoint(
 google::protobuf::Timestamp ToProtoTimestamp(
     std::chrono::system_clock::time_point const& tp);
 
+// Convert a std::chrono::duration<Rep, Period> to the protobuf representation
+template <typename Rep, typename Period>
+google::protobuf::Duration ToDurationProto(
+    std::chrono::duration<Rep, Period> d) {
+  auto seconds = std::chrono::duration_cast<std::chrono::seconds>(d);
+  auto nanos =
+      std::chrono::duration_cast<std::chrono::nanoseconds>(d - seconds);
+  google::protobuf::Duration result;
+  result.set_seconds(seconds.count());
+  result.set_nanos(static_cast<std::int32_t>(nanos.count()));
+  return result;
+}
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
