@@ -97,7 +97,7 @@ class InstanceAdminClient {
    * @param name  Required. The name of the requested instance configuration.
    * Values are of the form `projects/<project>/instanceConfigs/<config>`.
    * @return
-   * [google::spanner::admin::instance::v1::InstanceConfig](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304)
+   * [google::spanner::admin::instance::v1::InstanceConfig](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304)
    */
   StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
   GetInstanceConfig(std::string const& name);
@@ -117,7 +117,7 @@ class InstanceAdminClient {
    * @param name  Required. The name of the requested instance. Values are of
    * the form `projects/<project>/instances/<instance>`.
    * @return
-   * [google::spanner::admin::instance::v1::Instance](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328)
+   * [google::spanner::admin::instance::v1::Instance](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328)
    */
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       std::string const& name);
@@ -166,7 +166,7 @@ class InstanceAdminClient {
    * @param instance  Required. The instance to create.  The name may be
    * omitted, but if specified must be `<parent>/instances/<instance_id>`.
    * @return
-   * [google::spanner::admin::instance::v1::Instance](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328)
+   * [google::spanner::admin::instance::v1::Instance](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328)
    */
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   CreateInstance(
@@ -225,7 +225,7 @@ class InstanceAdminClient {
    * in [Instance][google.spanner.admin.instance.v1.Instance] from being erased
    * accidentally by clients that do not know about them.
    * @return
-   * [google::spanner::admin::instance::v1::Instance](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328)
+   * [google::spanner::admin::instance::v1::Instance](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328)
    */
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   UpdateInstance(google::spanner::admin::instance::v1::Instance const& instance,
@@ -264,7 +264,7 @@ class InstanceAdminClient {
    * policy is a valid policy but certain Cloud Platform services (such as
    * Projects) might reject them.
    * @return
-   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/iam/v1/policy.proto#L88)
+   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/v1/policy.proto#L88)
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy);
@@ -280,7 +280,7 @@ class InstanceAdminClient {
    * requested. See the operation documentation for the appropriate value for
    * this field.
    * @return
-   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/iam/v1/policy.proto#L88)
+   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/v1/policy.proto#L88)
    */
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource);
 
@@ -300,7 +300,7 @@ class InstanceAdminClient {
    * For more information see [IAM
    * Overview](https://cloud.google.com/iam/docs/overview#permissions).
    * @return
-   * [google::iam::v1::TestIamPermissionsResponse](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/iam/v1/iam_policy.proto#L141)
+   * [google::iam::v1::TestIamPermissionsResponse](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/v1/iam_policy.proto#L141)
    */
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions);
@@ -309,7 +309,7 @@ class InstanceAdminClient {
    * Lists the supported instance configurations for a given project.
    *
    * @param request
-   * [google::spanner::admin::instance::v1::ListInstanceConfigsRequest](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L415)
+   * [google::spanner::admin::instance::v1::ListInstanceConfigsRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L415)
    */
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
   ListInstanceConfigs(
@@ -319,9 +319,9 @@ class InstanceAdminClient {
    * Gets information about a particular instance configuration.
    *
    * @param request
-   * [google::spanner::admin::instance::v1::GetInstanceConfigRequest](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L449)
+   * [google::spanner::admin::instance::v1::GetInstanceConfigRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L449)
    * @return
-   * [google::spanner::admin::instance::v1::InstanceConfig](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304)
+   * [google::spanner::admin::instance::v1::InstanceConfig](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304)
    */
   StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
   GetInstanceConfig(
@@ -332,7 +332,7 @@ class InstanceAdminClient {
    * Lists all instances in the given project.
    *
    * @param request
-   * [google::spanner::admin::instance::v1::ListInstancesRequest](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L499)
+   * [google::spanner::admin::instance::v1::ListInstancesRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L499)
    */
   StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
       google::spanner::admin::instance::v1::ListInstancesRequest request);
@@ -341,9 +341,9 @@ class InstanceAdminClient {
    * Gets information about a particular instance.
    *
    * @param request
-   * [google::spanner::admin::instance::v1::GetInstanceRequest](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L461)
+   * [google::spanner::admin::instance::v1::GetInstanceRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L461)
    * @return
-   * [google::spanner::admin::instance::v1::Instance](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328)
+   * [google::spanner::admin::instance::v1::Instance](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328)
    */
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       google::spanner::admin::instance::v1::GetInstanceRequest const& request);
@@ -385,9 +385,9 @@ class InstanceAdminClient {
    * [Instance][google.spanner.admin.instance.v1.Instance], if successful.
    *
    * @param request
-   * [google::spanner::admin::instance::v1::CreateInstanceRequest](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L478)
+   * [google::spanner::admin::instance::v1::CreateInstanceRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L478)
    * @return
-   * [google::spanner::admin::instance::v1::Instance](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328)
+   * [google::spanner::admin::instance::v1::Instance](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328)
    */
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   CreateInstance(
@@ -437,9 +437,9 @@ class InstanceAdminClient {
    * resource [name][google.spanner.admin.instance.v1.Instance.name].
    *
    * @param request
-   * [google::spanner::admin::instance::v1::UpdateInstanceRequest](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L552)
+   * [google::spanner::admin::instance::v1::UpdateInstanceRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L552)
    * @return
-   * [google::spanner::admin::instance::v1::Instance](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328)
+   * [google::spanner::admin::instance::v1::Instance](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328)
    */
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   UpdateInstance(
@@ -460,7 +460,7 @@ class InstanceAdminClient {
    *     is permanently deleted.
    *
    * @param request
-   * [google::spanner::admin::instance::v1::DeleteInstanceRequest](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L565)
+   * [google::spanner::admin::instance::v1::DeleteInstanceRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L565)
    */
   Status DeleteInstance(
       google::spanner::admin::instance::v1::DeleteInstanceRequest const&
@@ -474,9 +474,9 @@ class InstanceAdminClient {
    * [resource][google.iam.v1.SetIamPolicyRequest.resource].
    *
    * @param request
-   * [google::iam::v1::SetIamPolicyRequest](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/iam/v1/iam_policy.proto#L98)
+   * [google::iam::v1::SetIamPolicyRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/v1/iam_policy.proto#L98)
    * @return
-   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/iam/v1/policy.proto#L88)
+   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/v1/policy.proto#L88)
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request);
@@ -489,9 +489,9 @@ class InstanceAdminClient {
    * [resource][google.iam.v1.GetIamPolicyRequest.resource].
    *
    * @param request
-   * [google::iam::v1::GetIamPolicyRequest](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/iam/v1/iam_policy.proto#L113)
+   * [google::iam::v1::GetIamPolicyRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/v1/iam_policy.proto#L113)
    * @return
-   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/iam/v1/policy.proto#L88)
+   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/v1/policy.proto#L88)
    */
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);
@@ -505,9 +505,9 @@ class InstanceAdminClient {
    * empty set of permissions.
    *
    * @param request
-   * [google::iam::v1::TestIamPermissionsRequest](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/iam/v1/iam_policy.proto#L126)
+   * [google::iam::v1::TestIamPermissionsRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/v1/iam_policy.proto#L126)
    * @return
-   * [google::iam::v1::TestIamPermissionsResponse](https://github.com/googleapis/googleapis/blob/80f404215a9346259db760d80d0671f28c433453/google/iam/v1/iam_policy.proto#L141)
+   * [google::iam::v1::TestIamPermissionsResponse](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/v1/iam_policy.proto#L141)
    */
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request);
