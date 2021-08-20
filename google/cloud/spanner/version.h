@@ -19,9 +19,7 @@
 #include "google/cloud/version.h"
 #include <string>
 
-#define SPANNER_CLIENT_NS                              \
-  GOOGLE_CLOUD_CPP_VEVAL(SPANNER_CLIENT_VERSION_MAJOR, \
-                         SPANNER_CLIENT_VERSION_MINOR)
+#define SPANNER_CLIENT_NS GOOGLE_CLOUD_CPP_NS
 
 namespace google {
 /**
@@ -45,28 +43,20 @@ inline namespace SPANNER_CLIENT_NS {
 /**
  * The Cloud spanner C++ Client major version.
  */
-int constexpr VersionMajor() { return SPANNER_CLIENT_VERSION_MAJOR; }
+int constexpr VersionMajor() { return google::cloud::version_major(); }
 
 /**
  * The Cloud spanner C++ Client minor version.
  */
-int constexpr VersionMinor() { return SPANNER_CLIENT_VERSION_MINOR; }
+int constexpr VersionMinor() { return google::cloud::version_minor(); }
 
 /**
  * The Cloud spanner C++ Client patch version.
  */
-int constexpr VersionPatch() { return SPANNER_CLIENT_VERSION_PATCH; }
+int constexpr VersionPatch() { return google::cloud::version_patch(); }
 
 /// A single integer representing the Major/Minor/Patch version.
-int constexpr Version() {
-  static_assert(::google::cloud::version_major() == VersionMajor(),
-                "Mismatched major version");
-  static_assert(::google::cloud::version_minor() == VersionMinor(),
-                "Mismatched minor version");
-  static_assert(::google::cloud::version_patch() == VersionPatch(),
-                "Mismatched patch version");
-  return ::google::cloud::version();
-}
+int constexpr Version() { return google::cloud::version(); }
 
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string VersionString();
