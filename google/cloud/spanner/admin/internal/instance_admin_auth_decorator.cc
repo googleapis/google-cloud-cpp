@@ -175,6 +175,7 @@ future<Status> InstanceAdminAuth::AsyncCancelOperation(
         return child->AsyncCancelOperation(cq, *std::move(context), request);
       });
 }
+
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace spanner_admin_internal
 }  // namespace cloud

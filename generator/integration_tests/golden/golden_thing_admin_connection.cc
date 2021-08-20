@@ -255,7 +255,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->GetDatabase(context, request);
         },
         request, __func__);
-}
+  }
 
   future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override {
@@ -294,7 +294,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->DropDatabase(context, request);
         },
         request, __func__);
-}
+  }
 
   StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(
@@ -307,7 +307,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->GetDatabaseDdl(context, request);
         },
         request, __func__);
-}
+  }
 
   StatusOr<google::iam::v1::Policy>
   SetIamPolicy(
@@ -320,7 +320,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->SetIamPolicy(context, request);
         },
         request, __func__);
-}
+  }
 
   StatusOr<google::iam::v1::Policy>
   GetIamPolicy(
@@ -333,7 +333,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->GetIamPolicy(context, request);
         },
         request, __func__);
-}
+  }
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(
@@ -346,7 +346,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->TestIamPermissions(context, request);
         },
         request, __func__);
-}
+  }
 
   future<StatusOr<google::test::admin::database::v1::Backup>>
   CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request) override {
@@ -385,7 +385,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->GetBackup(context, request);
         },
         request, __func__);
-}
+  }
 
   StatusOr<google::test::admin::database::v1::Backup>
   UpdateBackup(
@@ -398,7 +398,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->UpdateBackup(context, request);
         },
         request, __func__);
-}
+  }
 
   Status
   DeleteBackup(
@@ -411,7 +411,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->DeleteBackup(context, request);
         },
         request, __func__);
-}
+  }
 
   StreamRange<google::test::admin::database::v1::Backup> ListBackups(
       google::test::admin::database::v1::ListBackupsRequest request) override {

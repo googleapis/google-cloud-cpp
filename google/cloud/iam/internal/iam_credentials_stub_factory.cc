@@ -64,6 +64,7 @@ std::shared_ptr<IAMCredentialsStub> CreateDefaultIAMCredentialsStub(
   }
   return stub;
 }
+
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace iam_internal
 }  // namespace cloud

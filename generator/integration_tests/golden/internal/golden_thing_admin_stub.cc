@@ -43,7 +43,6 @@ DefaultGoldenThingAdminStub::ListDatabases(
     return response;
 }
 
-
 future<StatusOr<google::longrunning::Operation>>
 DefaultGoldenThingAdminStub::AsyncCreateDatabase(
       google::cloud::CompletionQueue& cq,
@@ -57,6 +56,7 @@ DefaultGoldenThingAdminStub::AsyncCreateDatabase(
       },
       request, std::move(context));
 }
+
 StatusOr<google::test::admin::database::v1::Database>
 DefaultGoldenThingAdminStub::GetDatabase(
   grpc::ClientContext& client_context,
@@ -69,7 +69,6 @@ DefaultGoldenThingAdminStub::GetDatabase(
     }
     return response;
 }
-
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultGoldenThingAdminStub::AsyncUpdateDatabaseDdl(
@@ -84,6 +83,7 @@ DefaultGoldenThingAdminStub::AsyncUpdateDatabaseDdl(
       },
       request, std::move(context));
 }
+
 Status
 DefaultGoldenThingAdminStub::DropDatabase(
   grpc::ClientContext& client_context,
@@ -149,7 +149,6 @@ DefaultGoldenThingAdminStub::TestIamPermissions(
     return response;
 }
 
-
 future<StatusOr<google::longrunning::Operation>>
 DefaultGoldenThingAdminStub::AsyncCreateBackup(
       google::cloud::CompletionQueue& cq,
@@ -163,6 +162,7 @@ DefaultGoldenThingAdminStub::AsyncCreateBackup(
       },
       request, std::move(context));
 }
+
 StatusOr<google::test::admin::database::v1::Backup>
 DefaultGoldenThingAdminStub::GetBackup(
   grpc::ClientContext& client_context,
@@ -215,7 +215,6 @@ DefaultGoldenThingAdminStub::ListBackups(
     return response;
 }
 
-
 future<StatusOr<google::longrunning::Operation>>
 DefaultGoldenThingAdminStub::AsyncRestoreDatabase(
       google::cloud::CompletionQueue& cq,
@@ -229,6 +228,7 @@ DefaultGoldenThingAdminStub::AsyncRestoreDatabase(
       },
       request, std::move(context));
 }
+
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
 DefaultGoldenThingAdminStub::ListDatabaseOperations(
   grpc::ClientContext& client_context,

@@ -57,6 +57,7 @@ DefaultDatabaseAdminStub::AsyncCreateDatabase(
       },
       request, std::move(context));
 }
+
 StatusOr<google::spanner::admin::database::v1::Database>
 DefaultDatabaseAdminStub::GetDatabase(
     grpc::ClientContext& client_context,
@@ -85,6 +86,7 @@ DefaultDatabaseAdminStub::AsyncUpdateDatabaseDdl(
       },
       request, std::move(context));
 }
+
 Status DefaultDatabaseAdminStub::DropDatabase(
     grpc::ClientContext& client_context,
     google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
@@ -158,6 +160,7 @@ DefaultDatabaseAdminStub::AsyncCreateBackup(
       },
       request, std::move(context));
 }
+
 StatusOr<google::spanner::admin::database::v1::Backup>
 DefaultDatabaseAdminStub::GetBackup(
     grpc::ClientContext& client_context,
@@ -220,6 +223,7 @@ DefaultDatabaseAdminStub::AsyncRestoreDatabase(
       },
       request, std::move(context));
 }
+
 StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>
 DefaultDatabaseAdminStub::ListDatabaseOperations(
     grpc::ClientContext& client_context,

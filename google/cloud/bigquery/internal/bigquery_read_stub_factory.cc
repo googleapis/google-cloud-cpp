@@ -63,6 +63,7 @@ std::shared_ptr<BigQueryReadStub> CreateDefaultBigQueryReadStub(
   }
   return stub;
 }
+
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace bigquery_internal
 }  // namespace cloud
