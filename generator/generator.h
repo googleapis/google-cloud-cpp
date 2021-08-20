@@ -40,6 +40,8 @@ namespace generator {
  *   --cpp_codegen_out=. \
  *   --cpp_codegen_opt=product_path=google/cloud/spanner
  *   --cpp_codegen_opt=copyright_year=2020
+ *   --cpp_codegen_opt=service_endpoint_env_var=SERVICE_ENDPOINT
+ *   --cpp_codegen_opt=emulator_endpoint_env_var=SERVICE_EMULATOR_HOST
  * @endcode
  */
 class Generator : public google::protobuf::compiler::CodeGenerator {

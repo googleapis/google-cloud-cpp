@@ -37,8 +37,12 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options GoldenKitchenSinkDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
-    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_GOLDEN_KITCHEN_SINK_ENDPOINT");
+    auto env = internal::GetEnv("GOLDEN_KITCHEN_SINK_ENDPOINT");
     options.set<EndpointOption>(env ? *env : "goldenkitchensink.googleapis.com");
+  }
+  if (auto emulator = internal::GetEnv("GOLDEN_KITCHEN_SINK_EMULATOR_HOST")) {
+    options.set<EndpointOption>(*emulator).set<GrpcCredentialOption>(
+        grpc::InsecureChannelCredentials());
   }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());

@@ -106,6 +106,10 @@ int main(int argc, char** argv) {
     for (auto const& omit_rpc : service.omitted_rpcs()) {
       args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc);
     }
+    args.emplace_back("--cpp_codegen_opt=service_endpoint_env_var=" +
+                      service.service_endpoint_env_var());
+    args.emplace_back("--cpp_codegen_opt=emulator_endpoint_env_var=" +
+                      service.emulator_endpoint_env_var());
     args.emplace_back(service.service_proto_path());
     GCP_LOG(INFO) << "Generating service code using: "
                   << absl::StrJoin(args, ";") << "\n";
