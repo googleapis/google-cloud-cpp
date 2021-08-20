@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -35,34 +36,10 @@ struct ClientOptionsTestTraits {
 };
 
 namespace {
-
+using ::google::cloud::internal::GetIntChannelArgument;
+using ::google::cloud::internal::GetStringChannelArgument;
 using ::testing::HasSubstr;
-
-absl::optional<int> GetInt(grpc::ChannelArguments const& args,
-                           std::string const& key) {
-  auto c_args = args.c_channel_args();
-  // Just do a linear search for the key; the data structure is not organized
-  // in any other useful way.
-  for (auto const* a = c_args.args; a != c_args.args + c_args.num_args; ++a) {
-    if (key != a->key) continue;
-    if (a->type != GRPC_ARG_INTEGER) return absl::nullopt;
-    return a->value.integer;
-  }
-  return absl::nullopt;
-}
-
-absl::optional<std::string> GetString(grpc::ChannelArguments const& args,
-                                      std::string const& key) {
-  auto c_args = args.c_channel_args();
-  // Just do a linear search for the key; the data structure is not organized
-  // in any other useful way.
-  for (auto const* a = c_args.args; a != c_args.args + c_args.num_args; ++a) {
-    if (key != a->key) continue;
-    if (a->type != GRPC_ARG_STRING) return absl::nullopt;
-    return a->value.string;
-  }
-  return absl::nullopt;
-}
+}  // namespace
 
 TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
@@ -307,8 +284,9 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutMS) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   ASSERT_STATUS_OK(client_options_object.SetGrpclbFallbackTimeout(
       std::chrono::milliseconds(5)));
-  auto const actual = GetInt(client_options_object.channel_arguments(),
-                             GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS);
+  auto const actual =
+      GetIntChannelArgument(client_options_object.channel_arguments(),
+                            GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, 5);
 }
@@ -319,8 +297,9 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutSec) {
       bigtable::ClientOptions();
   ASSERT_STATUS_OK(client_options_object_second.SetGrpclbFallbackTimeout(
       std::chrono::seconds(5)));
-  auto const actual = GetInt(client_options_object_second.channel_arguments(),
-                             GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS);
+  auto const actual =
+      GetIntChannelArgument(client_options_object_second.channel_arguments(),
+                            GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, 5000);
 }
@@ -339,8 +318,9 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutException) {
 TEST(ClientOptionsTest, SetCompressionAlgorithm) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   client_options_object.SetCompressionAlgorithm(GRPC_COMPRESS_NONE);
-  auto const actual = GetInt(client_options_object.channel_arguments(),
-                             GRPC_COMPRESSION_CHANNEL_DEFAULT_ALGORITHM);
+  auto const actual =
+      GetIntChannelArgument(client_options_object.channel_arguments(),
+                            GRPC_COMPRESSION_CHANNEL_DEFAULT_ALGORITHM);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, GRPC_COMPRESS_NONE);
 }
@@ -349,8 +329,9 @@ TEST(ClientOptionsTest, SetMaxReceiveMessageSize) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   auto constexpr kExpected = 256 * 1024L * 1024L;
   client_options_object.SetMaxReceiveMessageSize(kExpected);
-  auto const actual = GetInt(client_options_object.channel_arguments(),
-                             GRPC_ARG_MAX_RECEIVE_MESSAGE_LENGTH);
+  auto const actual =
+      GetIntChannelArgument(client_options_object.channel_arguments(),
+                            GRPC_ARG_MAX_RECEIVE_MESSAGE_LENGTH);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, kExpected);
 }
@@ -360,8 +341,9 @@ TEST(ClientOptionsTest, SetMaxSendMessageSize) {
   auto constexpr kExpected = 256 * 1024L * 1024L;
   client_options_object.SetMaxSendMessageSize(kExpected);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
-  auto const actual = GetInt(client_options_object.channel_arguments(),
-                             GRPC_ARG_MAX_SEND_MESSAGE_LENGTH);
+  auto const actual =
+      GetIntChannelArgument(client_options_object.channel_arguments(),
+                            GRPC_ARG_MAX_SEND_MESSAGE_LENGTH);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, kExpected);
 }
@@ -370,8 +352,8 @@ TEST(ClientOptionsTest, SetLoadBalancingPolicyName) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   client_options_object.SetLoadBalancingPolicyName("test-policy-name");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
-  auto const actual = GetString(client_options_object.channel_arguments(),
-                                GRPC_ARG_LB_POLICY_NAME);
+  auto const actual = GetStringChannelArgument(
+      client_options_object.channel_arguments(), GRPC_ARG_LB_POLICY_NAME);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, "test-policy-name");
 }
@@ -380,8 +362,8 @@ TEST(ClientOptionsTest, SetServiceConfigJSON) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   client_options_object.SetServiceConfigJSON("test-config");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
-  auto const actual = GetString(client_options_object.channel_arguments(),
-                                GRPC_ARG_SERVICE_CONFIG);
+  auto const actual = GetStringChannelArgument(
+      client_options_object.channel_arguments(), GRPC_ARG_SERVICE_CONFIG);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, "test-config");
 }
@@ -389,8 +371,9 @@ TEST(ClientOptionsTest, SetServiceConfigJSON) {
 TEST(ClientOptionsTest, SetUserAgentPrefix) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   client_options_object.SetUserAgentPrefix("test_prefix");
-  auto const actual = GetString(client_options_object.channel_arguments(),
-                                GRPC_ARG_PRIMARY_USER_AGENT_STRING);
+  auto const actual =
+      GetStringChannelArgument(client_options_object.channel_arguments(),
+                               GRPC_ARG_PRIMARY_USER_AGENT_STRING);
   ASSERT_TRUE(actual.has_value());
   EXPECT_THAT(*actual, HasSubstr("test_prefix"));
 }
@@ -398,8 +381,9 @@ TEST(ClientOptionsTest, SetUserAgentPrefix) {
 TEST(ClientOptionsTest, SetSslTargetNameOverride) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   client_options_object.SetSslTargetNameOverride("test-name");
-  auto const actual = GetString(client_options_object.channel_arguments(),
-                                GRPC_SSL_TARGET_NAME_OVERRIDE_ARG);
+  auto const actual =
+      GetStringChannelArgument(client_options_object.channel_arguments(),
+                               GRPC_SSL_TARGET_NAME_OVERRIDE_ARG);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, "test-name");
 }
@@ -516,7 +500,6 @@ TEST(ClientOptionsTest, CustomBackgroundThreads) {
   t.join();
 }
 
-}  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
