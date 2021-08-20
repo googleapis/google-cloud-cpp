@@ -165,9 +165,8 @@ void LifecycleRule::MergeConditions(LifecycleRuleCondition& result,
   }
   if (rhs.days_since_noncurrent_time.has_value()) {
     if (result.days_since_noncurrent_time.has_value()) {
-      result.days_since_noncurrent_time =
-          (std::max)(*result.days_since_noncurrent_time,
-                     *rhs.days_since_noncurrent_time);
+      result.days_since_noncurrent_time = (std::max)(
+          *result.days_since_noncurrent_time, *rhs.days_since_noncurrent_time);
     } else {
       result.days_since_noncurrent_time = *rhs.days_since_noncurrent_time;
     }
