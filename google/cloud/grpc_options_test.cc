@@ -109,6 +109,28 @@ TEST(GrpcOptionList, MakeChannelArguments) {
   CheckGrpcChannelArguments(expected, internal::MakeChannelArguments(opts));
 }
 
+TEST(GrpcOptionList, GetIntChannelArgument) {
+  grpc::ChannelArguments args;
+  args.SetInt("key", 1);
+  args.SetInt("key", 2);
+  EXPECT_FALSE(internal::GetIntChannelArgument(args, "key-not-present"));
+  auto value = internal::GetIntChannelArgument(args, "key");
+  ASSERT_TRUE(value.has_value());
+  // Check that the value is extracted, and that the first value is used.
+  EXPECT_EQ(1, value.value());
+}
+
+TEST(GrpcOptionList, GetStringChannelArgument) {
+  grpc::ChannelArguments args;
+  args.SetString("key", "first-value");
+  args.SetString("key", "last-value");
+  EXPECT_FALSE(internal::GetStringChannelArgument(args, "key-not-present"));
+  auto value = internal::GetStringChannelArgument(args, "key");
+  ASSERT_TRUE(value.has_value());
+  // Check that the value is extracted, and that the first value is used.
+  EXPECT_EQ("first-value", value.value());
+}
+
 TEST(GrpcOptionList, GrpcBackgroundThreadsFactoryOption) {
   struct Fake : BackgroundThreads {
     CompletionQueue cq() const override { return {}; }

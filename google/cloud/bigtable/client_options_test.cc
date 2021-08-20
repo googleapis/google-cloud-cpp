@@ -37,32 +37,12 @@ struct ClientOptionsTestTraits {
 namespace {
 
 using ::testing::HasSubstr;
+// NOLINTNEXTLINE(readability-identifier-naming)
+auto const GetInt = ::google::cloud::internal::GetIntChannelArgument;
+// NOLINTNEXTLINE(readability-identifier-naming)
+auto const GetString = ::google::cloud::internal::GetStringChannelArgument;
 
-absl::optional<int> GetInt(grpc::ChannelArguments const& args,
-                           std::string const& key) {
-  auto c_args = args.c_channel_args();
-  // Just do a linear search for the key; the data structure is not organized
-  // in any other useful way.
-  for (auto const* a = c_args.args; a != c_args.args + c_args.num_args; ++a) {
-    if (key != a->key) continue;
-    if (a->type != GRPC_ARG_INTEGER) return absl::nullopt;
-    return a->value.integer;
-  }
-  return absl::nullopt;
-}
-
-absl::optional<std::string> GetString(grpc::ChannelArguments const& args,
-                                      std::string const& key) {
-  auto c_args = args.c_channel_args();
-  // Just do a linear search for the key; the data structure is not organized
-  // in any other useful way.
-  for (auto const* a = c_args.args; a != c_args.args + c_args.num_args; ++a) {
-    if (key != a->key) continue;
-    if (a->type != GRPC_ARG_STRING) return absl::nullopt;
-    return a->value.string;
-  }
-  return absl::nullopt;
-}
+}  // namespace
 
 TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
@@ -516,7 +496,6 @@ TEST(ClientOptionsTest, CustomBackgroundThreads) {
   t.join();
 }
 
-}  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud

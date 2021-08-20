@@ -131,6 +131,14 @@ namespace internal {
 /// Creates a new `grpc::ChannelArguments` configured with @p opts.
 grpc::ChannelArguments MakeChannelArguments(Options const& opts);
 
+/// Helper function to extract the first instance of an integer channel argument
+absl::optional<int> GetIntChannelArgument(grpc::ChannelArguments const& args,
+                                          std::string const& key);
+
+/// Helper function to extract the first instance of a string channel argument
+absl::optional<std::string> GetStringChannelArgument(
+    grpc::ChannelArguments const& args, std::string const& key);
+
 /**
  * Returns a factory for generating `BackgroundThreads`. If
  * `GrpcBackgroundThreadsFactoryOption` is unset, it will return a thread pool
