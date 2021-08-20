@@ -101,6 +101,8 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
     copyright_year_ = CurrentCopyrightYear();
     omit_rpc1_ = "Omitted1";
     omit_rpc2_ = "Omitted2";
+    service_endpoint_env_var_ = "GOLDEN_KITCHEN_SINK_ENDPOINT";
+    emulator_endpoint_env_var_ = "GOLDEN_KITCHEN_SINK_EMULATOR_HOST";
 
     std::vector<std::string> args;
     // empty arg keeps first real arg from being ignored.
@@ -115,6 +117,10 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
     args.emplace_back("--cpp_codegen_opt=copyright_year=" + copyright_year_);
     args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc1_);
     args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc2_);
+    args.emplace_back("--cpp_codegen_opt=service_endpoint_env_var=" +
+                      service_endpoint_env_var_);
+    args.emplace_back("--cpp_codegen_opt=emulator_endpoint_env_var=" +
+                      emulator_endpoint_env_var_);
     args.emplace_back("generator/integration_tests/test.proto");
 
     std::vector<char const*> c_args;
@@ -137,6 +143,8 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
   std::string copyright_year_;
   std::string omit_rpc1_;
   std::string omit_rpc2_;
+  std::string service_endpoint_env_var_;
+  std::string emulator_endpoint_env_var_;
 };
 
 TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {

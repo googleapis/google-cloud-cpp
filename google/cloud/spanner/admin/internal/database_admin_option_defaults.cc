@@ -37,8 +37,12 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DatabaseAdminDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
-    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_DATABASE_ADMIN_ENDPOINT");
+    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT");
     options.set<EndpointOption>(env ? *env : "spanner.googleapis.com");
+  }
+  if (auto emulator = internal::GetEnv("SPANNER_EMULATOR_HOST")) {
+    options.set<EndpointOption>(*emulator).set<GrpcCredentialOption>(
+        grpc::InsecureChannelCredentials());
   }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());

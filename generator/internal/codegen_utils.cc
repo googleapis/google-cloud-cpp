@@ -108,6 +108,30 @@ void ProcessArgOmitRpc(
   }
 }
 
+void ProcessArgServiceEndpointEnvVar(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  auto service_endpoint_env_var =
+      std::find_if(command_line_args.begin(), command_line_args.end(),
+                   [](std::pair<std::string, std::string> const& p) {
+                     return p.first == "service_endpoint_env_var";
+                   });
+  if (service_endpoint_env_var == command_line_args.end()) {
+    command_line_args.emplace_back("service_endpoint_env_var", "");
+  }
+}
+
+void ProcessArgEmulatorEndpointEnvVar(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  auto emulator_endpoint_env_var =
+      std::find_if(command_line_args.begin(), command_line_args.end(),
+                   [](std::pair<std::string, std::string> const& p) {
+                     return p.first == "emulator_endpoint_env_var";
+                   });
+  if (emulator_endpoint_env_var == command_line_args.end()) {
+    command_line_args.emplace_back("emulator_endpoint_env_var", "");
+  }
+}
+
 }  // namespace
 std::string CurrentCopyrightYear() {
   static std::string const kCurrentCopyrightYear =
@@ -197,6 +221,8 @@ ProcessCommandLineArgs(std::string const& parameters) {
 
   ProcessArgCopyrightYear(command_line_args);
   ProcessArgOmitRpc(command_line_args);
+  ProcessArgServiceEndpointEnvVar(command_line_args);
+  ProcessArgEmulatorEndpointEnvVar(command_line_args);
   return command_line_args;
 }
 

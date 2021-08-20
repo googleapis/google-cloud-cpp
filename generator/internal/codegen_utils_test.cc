@@ -25,7 +25,9 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::Contains;
 using ::testing::ElementsAre;
+using ::testing::Pair;
 
 TEST(LocalInclude, Success) {
   EXPECT_EQ("#include \"google/cloud/status.h\"\n",
@@ -173,15 +175,15 @@ TEST(ProcessCommandLineArgs, EmptyProductPath) {
 TEST(ProcessCommandLineArgs, ProductPathNeedsFormatting) {
   auto result = ProcessCommandLineArgs(
       "product_path=/google/cloud/pubsub,googleapis_commit_hash=foo");
-  EXPECT_THAT(result, IsOk());
-  EXPECT_EQ(result->front().second, "google/cloud/pubsub/");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, Contains(Pair("product_path", "google/cloud/pubsub/")));
 }
 
 TEST(ProcessCommandLineArgs, ProductPathAlreadyFormatted) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/pubsub/,googleapis_commit_hash=foo");
-  EXPECT_THAT(result, IsOk());
-  EXPECT_EQ(result->front().second, "google/cloud/pubsub/");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, Contains(Pair("product_path", "google/cloud/pubsub/")));
 }
 
 TEST(ProcessCommandLineArgs, NoCommitHash) {
@@ -203,9 +205,8 @@ TEST(ProcessCommandLineArgs, NoCopyrightYearParameterOrValue) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/pubsub/,googleapis_commit_hash=foo");
   auto expected_year = CurrentCopyrightYear();
-  EXPECT_THAT(result, IsOk());
-  EXPECT_EQ(result->back().first, "copyright_year");
-  EXPECT_EQ(result->back().second, expected_year);
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, Contains(Pair("copyright_year", expected_year)));
 }
 
 TEST(ProcessCommandLineArgs, NoCopyrightYearValue) {
@@ -213,18 +214,37 @@ TEST(ProcessCommandLineArgs, NoCopyrightYearValue) {
       "product_path=google/cloud/pubsub/"
       ",googleapis_commit_hash=foo,copyright_year=");
   auto expected_year = CurrentCopyrightYear();
-  EXPECT_THAT(result, IsOk());
-  EXPECT_EQ(result->back().first, "copyright_year");
-  EXPECT_EQ(result->back().second, expected_year);
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, Contains(Pair("copyright_year", expected_year)));
 }
 
 TEST(ProcessCommandLineArgs, CopyrightYearWithValue) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/pubsub/"
       ",googleapis_commit_hash=foo,copyright_year=1995");
-  EXPECT_THAT(result, IsOk());
-  EXPECT_EQ(result->back().first, "copyright_year");
-  EXPECT_EQ(result->back().second, "1995");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, Contains(Pair("copyright_year", "1995")));
+}
+
+TEST(ProcessCommandLineArgs, ServiceEndpointEnvVar) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/spanner/,googleapis_commit_hash=foo"
+      ",service_endpoint_env_var=GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result,
+              Contains(Pair("service_endpoint_env_var",
+                            "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT")));
+  EXPECT_THAT(*result, Contains(Pair("emulator_endpoint_env_var", "")));
+}
+
+TEST(ProcessCommandLineArgs, EmulatorEndpointEnvVar) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/spanner/,googleapis_commit_hash=foo"
+      ",emulator_endpoint_env_var=SPANNER_EMULATOR_HOST");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, Contains(Pair("emulator_endpoint_env_var",
+                                     "SPANNER_EMULATOR_HOST")));
+  EXPECT_THAT(*result, Contains(Pair("service_endpoint_env_var", "")));
 }
 
 }  // namespace

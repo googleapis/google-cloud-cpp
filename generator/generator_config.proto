@@ -21,6 +21,8 @@ message ServiceConfiguration {
   string product_path = 2;
   string initial_copyright_year = 3;
   repeated string omitted_rpcs = 4;
+  string service_endpoint_env_var = 5;
+  string emulator_endpoint_env_var = 6;
 }
 
 message GeneratorConfiguration {

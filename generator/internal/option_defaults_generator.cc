@@ -94,8 +94,13 @@ Status OptionDefaultsGenerator::GenerateCc() {
     "  if (!options.has<EndpointOption>()) {\n"
     "    auto env = internal::GetEnv(\"$service_endpoint_env_var$\");\n"
     "    options.set<EndpointOption>(env ? *env : \"$service_endpoint$\");\n"
-    "  }\n"
-    "  if (!options.has<GrpcCredentialOption>()) {\n"
+    "  }\n"},
+   {[this]{return vars("emulator_endpoint_env_var").empty();}, "",
+    "  if (auto emulator = internal::GetEnv(\"$emulator_endpoint_env_var$\")) {\n"
+    "    options.set<EndpointOption>(*emulator).set<GrpcCredentialOption>(\n"
+    "        grpc::InsecureChannelCredentials());\n"
+    "  }\n"},
+   {"  if (!options.has<GrpcCredentialOption>()) {\n"
     "    options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());\n"
     "  }\n"
     "  auto& products = options.lookup<UserAgentProductsOption>();\n"

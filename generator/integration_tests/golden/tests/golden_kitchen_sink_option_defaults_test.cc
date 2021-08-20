@@ -33,16 +33,14 @@ TEST(GoldenKitchenSinkDefaultOptions, DefaultEndpoint) {
 }
 
 TEST(GoldenKitchenSinkDefaultOptions, EnvVarEndpoint) {
-  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_KITCHEN_SINK_ENDPOINT",
-                   "foo.googleapis.com");
+  internal::SetEnv("GOLDEN_KITCHEN_SINK_ENDPOINT", "foo.googleapis.com");
   Options options;
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
   EXPECT_EQ("foo.googleapis.com", updated_options.get<EndpointOption>());
 }
 
 TEST(GoldenKitchenSinkDefaultOptions, OptionEndpoint) {
-  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_KITCHEN_SINK_ENDPOINT",
-                   "foo.googleapis.com");
+  internal::SetEnv("GOLDEN_KITCHEN_SINK_ENDPOINT", "foo.googleapis.com");
   Options options;
   options.set<EndpointOption>("bar.googleapis.com");
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
