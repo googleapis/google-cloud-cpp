@@ -30,7 +30,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 struct ClientOptionsTestTraits {
   static std::string const& InstanceAdminEndpoint(
-      bigtable::ClientOptions const& options) {
+      ClientOptions const& options) {
     return options.instance_admin_endpoint();
   }
 };
@@ -38,21 +38,40 @@ struct ClientOptionsTestTraits {
 namespace {
 using ::google::cloud::internal::GetIntChannelArgument;
 using ::google::cloud::internal::GetStringChannelArgument;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::HasSubstr;
 }  // namespace
 
 TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
-  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  EXPECT_EQ("bigtable.googleapis.com", client_options_object.data_endpoint());
-  EXPECT_EQ("bigtableadmin.googleapis.com",
-            client_options_object.admin_endpoint());
+  ClientOptions client_options;
+  EXPECT_EQ("bigtable.googleapis.com", client_options.data_endpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com", client_options.admin_endpoint());
   EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
-            typeid(client_options_object.credentials()));
+            typeid(client_options.credentials()));
 
-  EXPECT_EQ("", client_options_object.connection_pool_name());
+  EXPECT_EQ("", client_options.connection_pool_name());
   // The number of connections should be >= 1, we "know" what the actual value
   // is, but we do not want a change-detection-test.
-  EXPECT_LE(1UL, client_options_object.connection_pool_size());
+  EXPECT_LE(1UL, client_options.connection_pool_size());
+
+  auto args = client_options.channel_arguments();
+  auto max_send = GetIntChannelArgument(args, GRPC_ARG_MAX_SEND_MESSAGE_LENGTH);
+  ASSERT_TRUE(max_send.has_value());
+  EXPECT_EQ(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH, max_send.value());
+  auto max_recv =
+      GetIntChannelArgument(args, GRPC_ARG_MAX_RECEIVE_MESSAGE_LENGTH);
+  ASSERT_TRUE(max_recv.has_value());
+  EXPECT_EQ(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH, max_recv.value());
+
+  // See `kDefaultKeepaliveTime`
+  auto time = GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIME_MS);
+  ASSERT_TRUE(time.has_value());
+  EXPECT_EQ(30000, time.value());
+
+  // See `kDefaultKeepaliveTimeout`
+  auto timeout = GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS);
+  ASSERT_TRUE(timeout.has_value());
+  EXPECT_EQ(10000, timeout.value());
 }
 
 TEST(ClientOptionsTest, OptionsConstructor) {
@@ -117,162 +136,137 @@ class ClientOptionsDefaultEndpointTest : public ::testing::Test {
     return ClientOptionsTestTraits::InstanceAdminEndpoint(options);
   }
 
-  google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host_;
-  google::cloud::testing_util::ScopedEnvironment
-      bigtable_instance_admin_emulator_host_;
+  ScopedEnvironment bigtable_emulator_host_;
+  ScopedEnvironment bigtable_instance_admin_emulator_host_;
 };
 
 TEST_F(ClientOptionsDefaultEndpointTest, Default) {
-  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
+  ClientOptions client_options;
+  EXPECT_EQ("testendpoint.googleapis.com", client_options.data_endpoint());
+  EXPECT_EQ("testendpoint.googleapis.com", client_options.admin_endpoint());
   EXPECT_EQ("testendpoint.googleapis.com",
-            client_options_object.data_endpoint());
-  EXPECT_EQ("testendpoint.googleapis.com",
-            client_options_object.admin_endpoint());
-  EXPECT_EQ("testendpoint.googleapis.com",
-            GetInstanceAdminEndpoint(client_options_object));
+            GetInstanceAdminEndpoint(client_options));
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, WithCredentials) {
   auto credentials = grpc::GoogleDefaultCredentials();
-  bigtable::ClientOptions tested(credentials);
+  ClientOptions tested(credentials);
   EXPECT_EQ("bigtable.googleapis.com", tested.data_endpoint());
   EXPECT_EQ("bigtableadmin.googleapis.com", tested.admin_endpoint());
   EXPECT_EQ(credentials.get(), tested.credentials().get());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, DefaultNoEmulator) {
-  google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
-      "BIGTABLE_EMULATOR_HOST", {});
+  ScopedEnvironment bigtable_emulator_host("BIGTABLE_EMULATOR_HOST", {});
 
   auto credentials = grpc::GoogleDefaultCredentials();
-  bigtable::ClientOptions tested(credentials);
+  ClientOptions tested(credentials);
   EXPECT_EQ("bigtable.googleapis.com", tested.data_endpoint());
   EXPECT_EQ("bigtableadmin.googleapis.com", tested.admin_endpoint());
   EXPECT_EQ("bigtableadmin.googleapis.com", GetInstanceAdminEndpoint(tested));
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, SeparateEmulators) {
-  google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
-      "BIGTABLE_EMULATOR_HOST", "emulator-host:8000");
-  google::cloud::testing_util::ScopedEnvironment
-      bigtable_instance_admin_emulator_host(
-          "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST",
-          "instance-emulator-host:9000");
-  bigtable::ClientOptions actual = bigtable::ClientOptions();
+  ScopedEnvironment bigtable_emulator_host("BIGTABLE_EMULATOR_HOST",
+                                           "emulator-host:8000");
+  ScopedEnvironment bigtable_instance_admin_emulator_host(
+      "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", "instance-emulator-host:9000");
+  ClientOptions actual;
   EXPECT_EQ("emulator-host:8000", actual.data_endpoint());
   EXPECT_EQ("emulator-host:8000", actual.admin_endpoint());
   EXPECT_EQ("instance-emulator-host:9000", GetInstanceAdminEndpoint(actual));
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, DataNoEnv) {
-  google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
-      "BIGTABLE_EMULATOR_HOST", {});
-
+  ScopedEnvironment bigtable_emulator_host("BIGTABLE_EMULATOR_HOST", {});
   EXPECT_EQ("bigtable.googleapis.com", ClientOptions{}.data_endpoint());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, AdminNoEnv) {
-  google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
-      "BIGTABLE_EMULATOR_HOST", {});
-
+  ScopedEnvironment bigtable_emulator_host("BIGTABLE_EMULATOR_HOST", {});
   EXPECT_EQ("bigtableadmin.googleapis.com", ClientOptions{}.admin_endpoint());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, AdminEmulatorOverrides) {
-  google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
-      "BIGTABLE_EMULATOR_HOST", "127.0.0.1:1234");
-
+  ScopedEnvironment bigtable_emulator_host("BIGTABLE_EMULATOR_HOST",
+                                           "127.0.0.1:1234");
   EXPECT_EQ("127.0.0.1:1234", ClientOptions{}.admin_endpoint());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, AdminInstanceAdminNoEffect) {
-  google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
-      "BIGTABLE_EMULATOR_HOST", {});
-  google::cloud::testing_util::ScopedEnvironment
-      bigtable_instance_admin_emulator_host(
-          "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", "127.0.0.1:1234");
-
+  ScopedEnvironment bigtable_emulator_host("BIGTABLE_EMULATOR_HOST", {});
+  ScopedEnvironment bigtable_instance_admin_emulator_host(
+      "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", "127.0.0.1:1234");
   EXPECT_EQ("bigtableadmin.googleapis.com", ClientOptions{}.admin_endpoint());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminNoEnv) {
-  google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
-      "BIGTABLE_EMULATOR_HOST", {});
-
+  ScopedEnvironment bigtable_emulator_host("BIGTABLE_EMULATOR_HOST", {});
   EXPECT_EQ("bigtableadmin.googleapis.com",
             GetInstanceAdminEndpoint(ClientOptions()));
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminEmulatorOverrides) {
-  google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
-      "BIGTABLE_EMULATOR_HOST", "127.0.0.1:1234");
-
+  ScopedEnvironment bigtable_emulator_host("BIGTABLE_EMULATOR_HOST",
+                                           "127.0.0.1:1234");
   EXPECT_EQ("127.0.0.1:1234", GetInstanceAdminEndpoint(ClientOptions()));
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminInstanceAdminOverrides) {
-  google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
-      "BIGTABLE_EMULATOR_HOST", "unused");
-  google::cloud::testing_util::ScopedEnvironment
-      bigtable_instance_admin_emulator_host(
-          "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", "127.0.0.1:1234");
-
+  ScopedEnvironment bigtable_emulator_host("BIGTABLE_EMULATOR_HOST", "unused");
+  ScopedEnvironment bigtable_instance_admin_emulator_host(
+      "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", "127.0.0.1:1234");
   EXPECT_EQ("127.0.0.1:1234", GetInstanceAdminEndpoint(ClientOptions()));
 }
 
 TEST(ClientOptionsTest, EditDataEndpoint) {
-  bigtable::ClientOptions client_options_object;
-  client_options_object =
-      client_options_object.set_data_endpoint("customendpoint.com");
-  EXPECT_EQ("customendpoint.com", client_options_object.data_endpoint());
+  auto client_options = ClientOptions{}.set_data_endpoint("customendpoint.com");
+  EXPECT_EQ("customendpoint.com", client_options.data_endpoint());
 }
 
 TEST(ClientOptionsTest, EditAdminEndpoint) {
-  bigtable::ClientOptions client_options_object;
-  client_options_object =
-      client_options_object.set_admin_endpoint("customendpoint.com");
-  EXPECT_EQ("customendpoint.com", client_options_object.admin_endpoint());
-  EXPECT_EQ(
-      "customendpoint.com",
-      ClientOptionsTestTraits::InstanceAdminEndpoint(client_options_object));
+  auto client_options =
+      ClientOptions{}.set_admin_endpoint("customendpoint.com");
+  EXPECT_EQ("customendpoint.com", client_options.admin_endpoint());
+  EXPECT_EQ("customendpoint.com",
+            ClientOptionsTestTraits::InstanceAdminEndpoint(client_options));
 }
 
 TEST(ClientOptionsTest, EditCredentials) {
-  bigtable::ClientOptions client_options_object;
-  client_options_object =
-      client_options_object.SetCredentials(grpc::InsecureChannelCredentials());
+  auto client_options =
+      ClientOptions{}.SetCredentials(grpc::InsecureChannelCredentials());
   EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
-            typeid(client_options_object.credentials()));
+            typeid(client_options.credentials()));
 }
 
 TEST(ClientOptionsTest, EditConnectionPoolName) {
-  bigtable::ClientOptions client_options_object;
-  auto& returned = client_options_object.set_connection_pool_name("foo");
-  EXPECT_EQ(&returned, &client_options_object);
+  ClientOptions client_options;
+  auto& returned = client_options.set_connection_pool_name("foo");
+  EXPECT_EQ(&returned, &client_options);
   EXPECT_EQ("foo", returned.connection_pool_name());
 }
 
 TEST(ClientOptionsTest, EditConnectionPoolSize) {
-  bigtable::ClientOptions client_options_object;
-  auto& returned = client_options_object.set_connection_pool_size(42);
-  EXPECT_EQ(&returned, &client_options_object);
+  ClientOptions client_options;
+  auto& returned = client_options.set_connection_pool_size(42);
+  EXPECT_EQ(&returned, &client_options);
   EXPECT_EQ(42UL, returned.connection_pool_size());
 }
 
 TEST(ClientOptionsTest, ResetToDefaultConnectionPoolSize) {
-  bigtable::ClientOptions client_options_object;
-  auto& returned = client_options_object.set_connection_pool_size(0);
-  EXPECT_EQ(&returned, &client_options_object);
+  ClientOptions client_options;
+  auto& returned = client_options.set_connection_pool_size(0);
+  EXPECT_EQ(&returned, &client_options);
   // The number of connections should be >= 1, we "know" what the actual value
   // is, but we do not want a change-detection-test.
   EXPECT_LE(1UL, returned.connection_pool_size());
 }
 
 TEST(ClientOptionsTest, ConnectionPoolSizeDoesNotExceedMax) {
-  bigtable::ClientOptions client_options_object;
-  auto& returned = client_options_object.set_connection_pool_size(
+  ClientOptions client_options;
+  auto& returned = client_options.set_connection_pool_size(
       BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE_MAX + 1);
-  EXPECT_EQ(&returned, &client_options_object);
+  EXPECT_EQ(&returned, &client_options);
   // The number of connections should be >= 1, we "know" what the actual value
   // is, but we do not want a change-detection-test.
   EXPECT_LE(BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE_MAX,
@@ -281,25 +275,22 @@ TEST(ClientOptionsTest, ConnectionPoolSizeDoesNotExceedMax) {
 
 TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutMS) {
   // Test milliseconds are set properly to channel_arguments
-  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  ASSERT_STATUS_OK(client_options_object.SetGrpclbFallbackTimeout(
-      std::chrono::milliseconds(5)));
-  auto const actual =
-      GetIntChannelArgument(client_options_object.channel_arguments(),
-                            GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS);
+  ClientOptions client_options;
+  ASSERT_STATUS_OK(
+      client_options.SetGrpclbFallbackTimeout(std::chrono::milliseconds(5)));
+  auto const actual = GetIntChannelArgument(
+      client_options.channel_arguments(), GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, 5);
 }
 
 TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutSec) {
   // Test seconds are converted into milliseconds
-  bigtable::ClientOptions client_options_object_second =
-      bigtable::ClientOptions();
-  ASSERT_STATUS_OK(client_options_object_second.SetGrpclbFallbackTimeout(
-      std::chrono::seconds(5)));
-  auto const actual =
-      GetIntChannelArgument(client_options_object_second.channel_arguments(),
-                            GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS);
+  ClientOptions client_options;
+  ASSERT_STATUS_OK(
+      client_options.SetGrpclbFallbackTimeout(std::chrono::seconds(5)));
+  auto const actual = GetIntChannelArgument(
+      client_options.channel_arguments(), GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, 5000);
 }
@@ -307,95 +298,65 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutSec) {
 TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutException) {
   // Test if fallback_timeout exceeds int range and StatusCode
   // matches kOutOfRange
-  bigtable::ClientOptions client_options_object_third =
-      bigtable::ClientOptions();
-  EXPECT_EQ(client_options_object_third
-                .SetGrpclbFallbackTimeout(std::chrono::hours(999))
-                .code(),
-            google::cloud::StatusCode::kOutOfRange);
+  ClientOptions client_options;
+  EXPECT_EQ(
+      client_options.SetGrpclbFallbackTimeout(std::chrono::hours(999)).code(),
+      google::cloud::StatusCode::kOutOfRange);
 }
 
 TEST(ClientOptionsTest, SetCompressionAlgorithm) {
-  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  client_options_object.SetCompressionAlgorithm(GRPC_COMPRESS_NONE);
+  ClientOptions client_options;
+  client_options.SetCompressionAlgorithm(GRPC_COMPRESS_NONE);
   auto const actual =
-      GetIntChannelArgument(client_options_object.channel_arguments(),
+      GetIntChannelArgument(client_options.channel_arguments(),
                             GRPC_COMPRESSION_CHANNEL_DEFAULT_ALGORITHM);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, GRPC_COMPRESS_NONE);
 }
 
-TEST(ClientOptionsTest, SetMaxReceiveMessageSize) {
-  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  auto constexpr kExpected = 256 * 1024L * 1024L;
-  client_options_object.SetMaxReceiveMessageSize(kExpected);
-  auto const actual =
-      GetIntChannelArgument(client_options_object.channel_arguments(),
-                            GRPC_ARG_MAX_RECEIVE_MESSAGE_LENGTH);
-  ASSERT_TRUE(actual.has_value());
-  EXPECT_EQ(*actual, kExpected);
-}
-
-TEST(ClientOptionsTest, SetMaxSendMessageSize) {
-  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  auto constexpr kExpected = 256 * 1024L * 1024L;
-  client_options_object.SetMaxSendMessageSize(kExpected);
-  grpc::ChannelArguments c_args = client_options_object.channel_arguments();
-  auto const actual =
-      GetIntChannelArgument(client_options_object.channel_arguments(),
-                            GRPC_ARG_MAX_SEND_MESSAGE_LENGTH);
-  ASSERT_TRUE(actual.has_value());
-  EXPECT_EQ(*actual, kExpected);
-}
-
 TEST(ClientOptionsTest, SetLoadBalancingPolicyName) {
-  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  client_options_object.SetLoadBalancingPolicyName("test-policy-name");
-  grpc::ChannelArguments c_args = client_options_object.channel_arguments();
+  ClientOptions client_options;
+  client_options.SetLoadBalancingPolicyName("test-policy-name");
   auto const actual = GetStringChannelArgument(
-      client_options_object.channel_arguments(), GRPC_ARG_LB_POLICY_NAME);
+      client_options.channel_arguments(), GRPC_ARG_LB_POLICY_NAME);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, "test-policy-name");
 }
 
 TEST(ClientOptionsTest, SetServiceConfigJSON) {
-  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  client_options_object.SetServiceConfigJSON("test-config");
-  grpc::ChannelArguments c_args = client_options_object.channel_arguments();
+  ClientOptions client_options;
+  client_options.SetServiceConfigJSON("test-config");
   auto const actual = GetStringChannelArgument(
-      client_options_object.channel_arguments(), GRPC_ARG_SERVICE_CONFIG);
+      client_options.channel_arguments(), GRPC_ARG_SERVICE_CONFIG);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, "test-config");
 }
 
 TEST(ClientOptionsTest, SetUserAgentPrefix) {
-  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  client_options_object.SetUserAgentPrefix("test_prefix");
-  auto const actual =
-      GetStringChannelArgument(client_options_object.channel_arguments(),
-                               GRPC_ARG_PRIMARY_USER_AGENT_STRING);
+  ClientOptions client_options;
+  client_options.SetUserAgentPrefix("test_prefix");
+  auto const actual = GetStringChannelArgument(
+      client_options.channel_arguments(), GRPC_ARG_PRIMARY_USER_AGENT_STRING);
   ASSERT_TRUE(actual.has_value());
   EXPECT_THAT(*actual, HasSubstr("test_prefix"));
 }
 
 TEST(ClientOptionsTest, SetSslTargetNameOverride) {
-  bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  client_options_object.SetSslTargetNameOverride("test-name");
-  auto const actual =
-      GetStringChannelArgument(client_options_object.channel_arguments(),
-                               GRPC_SSL_TARGET_NAME_OVERRIDE_ARG);
+  ClientOptions client_options;
+  client_options.SetSslTargetNameOverride("test-name");
+  auto const actual = GetStringChannelArgument(
+      client_options.channel_arguments(), GRPC_SSL_TARGET_NAME_OVERRIDE_ARG);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, "test-name");
 }
 
 TEST(ClientOptionsTest, UserAgentPrefix) {
-  std::string const actual = bigtable::ClientOptions::UserAgentPrefix();
-
+  std::string const actual = ClientOptions::UserAgentPrefix();
   EXPECT_THAT(actual, HasSubstr("gcloud-cpp/"));
 }
 
 TEST(ClientOptionsTest, RefreshPeriod) {
-  auto options = bigtable::ClientOptions();
+  auto options = ClientOptions();
   EXPECT_LE(options.min_conn_refresh_period(),
             options.max_conn_refresh_period());
   using ms = std::chrono::milliseconds;
@@ -424,8 +385,7 @@ TEST(ClientOptionsTest, RefreshPeriod) {
 }
 
 TEST(ClientOptionsTest, TracingComponents) {
-  google::cloud::testing_util::ScopedEnvironment tracing(
-      "GOOGLE_CLOUD_CPP_ENABLE_TRACING", "foo,bar");
+  ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_ENABLE_TRACING", "foo,bar");
   auto options = ClientOptions();
 
   // Check defaults
@@ -441,15 +401,14 @@ TEST(ClientOptionsTest, TracingComponents) {
 }
 
 TEST(ClientOptionsTest, DefaultTracingOptionsNoEnv) {
-  google::cloud::testing_util::ScopedEnvironment tracing(
-      "GOOGLE_CLOUD_CPP_TRACING_OPTIONS", absl::nullopt);
+  ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_TRACING_OPTIONS", absl::nullopt);
   auto options = ClientOptions().tracing_options();
   EXPECT_EQ(TracingOptions(), options);
 }
 
 TEST(ClientOptionsTest, DefaultTracingOptionsEnv) {
-  google::cloud::testing_util::ScopedEnvironment tracing(
-      "GOOGLE_CLOUD_CPP_TRACING_OPTIONS", "single_line_mode=F");
+  ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_TRACING_OPTIONS",
+                            "single_line_mode=F");
   auto options = ClientOptions().tracing_options();
   EXPECT_FALSE(options.single_line_mode());
 }
