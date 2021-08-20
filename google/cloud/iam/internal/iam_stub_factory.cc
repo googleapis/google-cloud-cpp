@@ -62,6 +62,7 @@ std::shared_ptr<IAMStub> CreateDefaultIAMStub(google::cloud::CompletionQueue cq,
   }
   return stub;
 }
+
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace iam_internal
 }  // namespace cloud

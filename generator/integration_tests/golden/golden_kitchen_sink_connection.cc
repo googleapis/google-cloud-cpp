@@ -107,7 +107,7 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
           return stub_->GenerateAccessToken(context, request);
         },
         request, __func__);
-}
+  }
 
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
   GenerateIdToken(
@@ -120,7 +120,7 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
           return stub_->GenerateIdToken(context, request);
         },
         request, __func__);
-}
+  }
 
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
   WriteLogEntries(
@@ -133,7 +133,7 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
           return stub_->WriteLogEntries(context, request);
         },
         request, __func__);
-}
+  }
 
   StreamRange<std::string> ListLogs(
       google::test::admin::database::v1::ListLogsRequest request) override {
@@ -206,7 +206,7 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
           return stub_->ListServiceAccountKeys(context, request);
         },
         request, __func__);
-}
+  }
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

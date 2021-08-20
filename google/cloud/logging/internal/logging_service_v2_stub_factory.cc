@@ -65,6 +65,7 @@ std::shared_ptr<LoggingServiceV2Stub> CreateDefaultLoggingServiceV2Stub(
   }
   return stub;
 }
+
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace logging_internal
 }  // namespace cloud

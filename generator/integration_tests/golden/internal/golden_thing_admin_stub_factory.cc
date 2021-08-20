@@ -33,7 +33,6 @@ namespace cloud {
 namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-
 std::shared_ptr<GoldenThingAdminStub>
 CreateDefaultGoldenThingAdminStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -69,6 +68,7 @@ CreateDefaultGoldenThingAdminStub(
   }
   return stub;
 }
+
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud

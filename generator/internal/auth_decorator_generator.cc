@@ -241,6 +241,7 @@ future<Status> $auth_class_name$::AsyncCancelOperation(
         return child->AsyncCancelOperation(cq, *std::move(context), request);
       });
 }
+
 )""");
   }
 

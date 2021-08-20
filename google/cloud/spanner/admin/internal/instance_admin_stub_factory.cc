@@ -66,6 +66,7 @@ std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
   }
   return stub;
 }
+
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace spanner_admin_internal
 }  // namespace cloud

@@ -28,6 +28,7 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 namespace {
+
 std::vector<std::pair<std::string, std::string>> const& SnakeCaseExceptions() {
   static const std::vector<std::pair<std::string, std::string>> kExceptions = {
       {"big_query", "bigquery"}};
@@ -133,6 +134,7 @@ void ProcessArgEmulatorEndpointEnvVar(
 }
 
 }  // namespace
+
 std::string CurrentCopyrightYear() {
   static std::string const kCurrentCopyrightYear =
       absl::FormatTime("%Y", absl::Now(), absl::UTCTimeZone());

@@ -113,6 +113,7 @@ DefaultInstanceAdminStub::AsyncUpdateInstance(
       },
       request, std::move(context));
 }
+
 Status DefaultInstanceAdminStub::DeleteInstance(
     grpc::ClientContext& client_context,
     google::spanner::admin::instance::v1::DeleteInstanceRequest const&

@@ -47,6 +47,7 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 namespace {
+
 char const* const kGoogleapisProtoFileLinkPrefix =
     "https://github.com/googleapis/googleapis/blob/";
 
