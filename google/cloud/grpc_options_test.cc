@@ -90,7 +90,7 @@ TEST(GrpcOptionList, RegularOptions) {
   TestGrpcOption<GrpcTracingOptionsOption>(TracingOptions{});
 }
 
-TEST(GrpcOptionList, MakeChannelArguments) {
+TEST(GrpcChannelArguments, MakeChannelArguments) {
   // This test will just set all 3 options related to channel arguments and
   // ensure that `MakeChannelArguments` combines them in the correct order.
   grpc::ChannelArguments native;
@@ -109,7 +109,7 @@ TEST(GrpcOptionList, MakeChannelArguments) {
   CheckGrpcChannelArguments(expected, internal::MakeChannelArguments(opts));
 }
 
-TEST(GrpcOptionList, GetIntChannelArgument) {
+TEST(GrpcChannelArguments, GetIntChannelArgument) {
   grpc::ChannelArguments args;
   args.SetInt("key", 1);
   args.SetInt("key", 2);
@@ -120,7 +120,7 @@ TEST(GrpcOptionList, GetIntChannelArgument) {
   EXPECT_EQ(1, value.value());
 }
 
-TEST(GrpcOptionList, GetStringChannelArgument) {
+TEST(GrpcChannelArguments, GetStringChannelArgument) {
   grpc::ChannelArguments args;
   args.SetString("key", "first-value");
   args.SetString("key", "last-value");
