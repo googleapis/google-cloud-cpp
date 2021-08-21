@@ -36,7 +36,7 @@ std::unique_ptr<RPCBackoffPolicy> ExponentialBackoffPolicy::clone() const {
 void ExponentialBackoffPolicy::Setup(grpc::ClientContext&) const {}
 
 std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion(
-    google::cloud::Status const&) {
+    Status const&) {
   return impl_.OnCompletion();
 }
 

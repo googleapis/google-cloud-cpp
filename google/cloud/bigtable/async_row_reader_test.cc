@@ -75,7 +75,7 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
                       grpc::CompletionQueue*) {
           EXPECT_STATUS_OK(
               IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows",
-                               google::cloud::internal::ApiClientHeader()));
+                               internal::ApiClientHeader()));
           (*request_expectations_ptr)(r);
           return std::unique_ptr<
               MockClientAsyncReaderInterface<btproto::ReadRowsResponse>>(

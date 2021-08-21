@@ -30,8 +30,7 @@ using ::google::cloud::bigtable::testing::MockSampleRowKeysReader;
 using ::testing::Return;
 using ::testing::Unused;
 
-class TableSampleRowKeysTest
-    : public ::google::cloud::bigtable::testing::TableTestFixture {
+class TableSampleRowKeysTest : public bigtable::testing::TableTestFixture {
  public:
   TableSampleRowKeysTest() : TableTestFixture(CompletionQueue{}) {}
 };

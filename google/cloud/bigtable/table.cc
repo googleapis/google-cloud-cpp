@@ -96,9 +96,8 @@ Status Table::Apply(SingleRowMutation mut) {
     metadata_update_policy_.Setup(client_context);
     status = client_->MutateRow(&client_context, request, &response);
 
-    if (status.ok()) {
-      return google::cloud::Status{};
-    }
+    if (status.ok()) return Status{};
+
     // It is up to the policy to terminate this loop, it could run
     // forever, but that would be a bad policy (pun intended).
     if (!rpc_policy->OnFailure(status) || !is_idempotent) {
@@ -132,7 +131,7 @@ future<Status> Table::AsyncApply(SingleRowMutation mut) {
   auto cq = background_threads_->cq();
   auto client = client_;
   auto metadata_update_policy = clone_metadata_update_policy();
-  return google::cloud::internal::StartRetryAsyncUnaryRpc(
+  return internal::StartRetryAsyncUnaryRpc(
              cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              idempotency,
              [client, metadata_update_policy](
@@ -274,7 +273,7 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
   auto cq = background_threads_->cq();
   auto client = client_;
   auto metadata_update_policy = clone_metadata_update_policy();
-  return google::cloud::internal::StartRetryAsyncUnaryRpc(
+  return internal::StartRetryAsyncUnaryRpc(
              cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              idempotency,
              [client, metadata_update_policy](
@@ -375,7 +374,7 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
   auto cq = background_threads_->cq();
   auto client = client_;
   auto metadata_update_policy = clone_metadata_update_policy();
-  return google::cloud::internal::StartRetryAsyncUnaryRpc(
+  return internal::StartRetryAsyncUnaryRpc(
              cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              Idempotency::kNonIdempotent,
              [client, metadata_update_policy](

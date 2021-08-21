@@ -52,7 +52,7 @@ std::string ClientOptions::UserAgentPrefix() {
 }
 
 ClientOptions& ClientOptions::DisableBackgroundThreads(
-    google::cloud::CompletionQueue const& cq) {
+    CompletionQueue const& cq) {
   opts_.set<GrpcBackgroundThreadsFactoryOption>([cq] {
     return absl::make_unique<internal::CustomerSuppliedBackgroundThreads>(cq);
   });

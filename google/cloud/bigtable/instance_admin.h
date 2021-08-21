@@ -654,8 +654,7 @@ class InstanceAdmin {
   GOOGLE_CLOUD_CPP_BIGTABLE_IAM_DEPRECATED(
       "SetIamPolicy(std::string const&, google::iam::v1::Policy const&)")
   StatusOr<google::cloud::IamPolicy> SetIamPolicy(
-      std::string const& instance_id,
-      google::cloud::IamBindings const& iam_bindings,
+      std::string const& instance_id, IamBindings const& iam_bindings,
       std::string const& etag = std::string{});
 
   /**

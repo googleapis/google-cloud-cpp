@@ -34,8 +34,7 @@ using ::testing::Not;
 using ::testing::Return;
 
 /// Define types and functions used in the tests.
-class TableBulkApplyTest
-    : public ::google::cloud::bigtable::testing::TableTestFixture {
+class TableBulkApplyTest : public bigtable::testing::TableTestFixture {
  public:
   TableBulkApplyTest() : TableTestFixture(CompletionQueue{}) {}
 };

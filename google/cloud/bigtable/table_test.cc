@@ -28,7 +28,7 @@ using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 
 /// Define types and functions used in the tests.
 namespace {
-class TableTest : public ::google::cloud::bigtable::testing::TableTestFixture {
+class TableTest : public bigtable::testing::TableTestFixture {
  public:
   TableTest() : TableTestFixture(CompletionQueue{}) {}
 };
@@ -119,7 +119,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
   ValidContextMdAsyncTest()
       : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
-        client_(new ::google::cloud::bigtable::testing::MockDataClient(
+        client_(new bigtable::testing::MockDataClient(
             ClientOptions().DisableBackgroundThreads(cq_))) {
     EXPECT_CALL(*client_, project_id())
         .WillRepeatedly(::testing::ReturnRef(kProjectId));
@@ -130,23 +130,21 @@ class ValidContextMdAsyncTest : public ::testing::Test {
 
  protected:
   template <typename ResultType>
-  void FinishTest(
-      ::google::cloud::future<google::cloud::StatusOr<ResultType>> res_future) {
+  void FinishTest(future<StatusOr<ResultType>> res_future) {
     EXPECT_EQ(1U, cq_impl_->size());
     cq_impl_->SimulateCompletion(true);
     EXPECT_EQ(0U, cq_impl_->size());
     auto res = res_future.get();
     EXPECT_FALSE(res);
-    EXPECT_EQ(::google::cloud::StatusCode::kPermissionDenied,
-              res.status().code());
+    EXPECT_EQ(StatusCode::kPermissionDenied, res.status().code());
   }
 
-  void FinishTest(::google::cloud::future<google::cloud::Status> res_future) {
+  void FinishTest(future<Status> res_future) {
     EXPECT_EQ(1U, cq_impl_->size());
     cq_impl_->SimulateCompletion(true);
     EXPECT_EQ(0U, cq_impl_->size());
     auto res = res_future.get();
-    EXPECT_EQ(::google::cloud::StatusCode::kPermissionDenied, res.code());
+    EXPECT_EQ(StatusCode::kPermissionDenied, res.code());
   }
 
   std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;

@@ -179,7 +179,7 @@ class ClientOptions {
 
   /// Access all the channel arguments.
   grpc::ChannelArguments channel_arguments() const {
-    return ::google::cloud::internal::MakeChannelArguments(opts_);
+    return internal::MakeChannelArguments(opts_);
   }
 
   /// Set all the channel arguments.

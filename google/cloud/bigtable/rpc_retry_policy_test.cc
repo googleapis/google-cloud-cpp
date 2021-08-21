@@ -46,7 +46,7 @@ auto const kLimitedTimeTolerance = 10_ms;
  * This eliminates some amount of code duplication in the following tests.
  */
 void CheckLimitedTime(RPCRetryPolicy& tested) {
-  google::cloud::testing_util::CheckPredicateBecomesFalse(
+  testing_util::CheckPredicateBecomesFalse(
       [&tested] {
         return tested.OnFailure(
             grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"));

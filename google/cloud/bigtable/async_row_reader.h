@@ -56,15 +56,13 @@ class AsyncRowReader : public std::enable_shared_from_this<
   AsyncRowReader(AsyncRowReader const&) = delete;
 
  private:
-  static_assert(google::cloud::internal::is_invocable<RowFunctor, Row>::value,
+  static_assert(internal::is_invocable<RowFunctor, Row>::value,
                 "RowFunctor must be invocable with Row.");
-  static_assert(
-      google::cloud::internal::is_invocable<FinishFunctor, Status>::value,
-      "RowFunctor must be invocable with Status.");
-  static_assert(
-      std::is_same<google::cloud::internal::invoke_result_t<RowFunctor, Row>,
-                   future<bool>>::value,
-      "RowFunctor should return a future<bool>.");
+  static_assert(internal::is_invocable<FinishFunctor, Status>::value,
+                "RowFunctor must be invocable with Status.");
+  static_assert(std::is_same<internal::invoke_result_t<RowFunctor, Row>,
+                             future<bool>>::value,
+                "RowFunctor should return a future<bool>.");
 
   static std::shared_ptr<AsyncRowReader> Create(
       CompletionQueue cq, std::shared_ptr<DataClient> client,

@@ -1377,8 +1377,8 @@ class ValidContextMdAsyncTest : public ::testing::Test {
 };
 
 TEST_F(ValidContextMdAsyncTest, AsyncCreateBackup) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
-      btadmin::CreateBackupRequest, google::longrunning::Operation>
+  bigtable::testing::MockAsyncFailingRpcFactory<btadmin::CreateBackupRequest,
+                                                google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncCreateBackup)
       .WillOnce(rpc_factory.Create(
@@ -1401,8 +1401,8 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateBackup) {
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncRestoreTable) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
-      btadmin::RestoreTableRequest, google::longrunning::Operation>
+  bigtable::testing::MockAsyncFailingRpcFactory<btadmin::RestoreTableRequest,
+                                                google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncRestoreTable)
       .WillOnce(rpc_factory.Create(

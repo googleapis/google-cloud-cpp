@@ -33,8 +33,7 @@ std::unique_ptr<RPCRetryPolicy> LimitedErrorCountRetryPolicy::clone() const {
 
 void LimitedErrorCountRetryPolicy::Setup(grpc::ClientContext&) const {}
 
-bool LimitedErrorCountRetryPolicy::OnFailure(
-    google::cloud::Status const& status) {
+bool LimitedErrorCountRetryPolicy::OnFailure(Status const& status) {
   return impl_.OnFailure(status);
 }
 
@@ -56,7 +55,7 @@ void LimitedTimeRetryPolicy::Setup(grpc::ClientContext& context) const {
   }
 }
 
-bool LimitedTimeRetryPolicy::OnFailure(google::cloud::Status const& status) {
+bool LimitedTimeRetryPolicy::OnFailure(Status const& status) {
   return impl_.OnFailure(status);
 }
 

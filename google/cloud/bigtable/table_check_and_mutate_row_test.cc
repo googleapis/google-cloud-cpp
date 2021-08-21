@@ -39,7 +39,7 @@ auto mock_check_and_mutate = [](grpc::Status const& status) {
                   google::bigtable::v2::CheckAndMutateRowResponse*) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.v2.Bigtable.CheckAndMutateRow",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     return status;
   };
 };

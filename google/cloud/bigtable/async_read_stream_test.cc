@@ -160,7 +160,7 @@ TEST_F(AsyncReadStreamTest, MetaFunctions) {
   static_assert(
       std::is_same<
           btproto::MutateRowsResponse,
-          google::cloud::internal::AsyncStreamingReadResponseType<
+          internal::AsyncStreamingReadResponseType<
               decltype(async_call), btproto::MutateRowsRequest>::type>::value,
       "Unexpected type for AsyncStreamingReadResponseType<>");
 }

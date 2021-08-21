@@ -114,8 +114,7 @@ class Cell {
        std::int64_t value, std::vector<std::string> labels)
       : Cell(std::forward<KeyType>(row_key), std::move(family_name),
              std::forward<ColumnType>(column_qualifier), timestamp,
-             google::cloud::internal::EncodeBigEndian(value),
-             std::move(labels)) {}
+             internal::EncodeBigEndian(value), std::move(labels)) {}
 
   /// Create a cell and fill it with data, but with empty labels.
   template <typename KeyType, typename ColumnType, typename ValueType>

@@ -29,8 +29,9 @@ future<std::vector<bigtable::FailedMutation>> AsyncRetryBulkApply::Create(
     std::shared_ptr<bigtable::DataClient> client,
     std::string const& app_profile_id, std::string const& table_name,
     bigtable::BulkMutation mut) {
-  if (mut.empty())
+  if (mut.empty()) {
     return make_ready_future(std::vector<bigtable::FailedMutation>{});
+  }
 
   std::shared_ptr<AsyncRetryBulkApply> bulk_apply(new AsyncRetryBulkApply(
       std::move(rpc_retry_policy), std::move(rpc_backoff_policy),

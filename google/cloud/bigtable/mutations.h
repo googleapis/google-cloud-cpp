@@ -77,7 +77,7 @@ Mutation SetCell(std::string family, ColumnType&& column,
   set_cell.set_column_qualifier(std::forward<ColumnType>(column));
   set_cell.set_timestamp_micros(
       std::chrono::duration_cast<std::chrono::microseconds>(timestamp).count());
-  set_cell.set_value(google::cloud::internal::EncodeBigEndian(value));
+  set_cell.set_value(internal::EncodeBigEndian(value));
   return m;
 }
 
@@ -110,7 +110,7 @@ Mutation SetCell(std::string family, ColumnType&& column, std::int64_t value) {
   set_cell.set_family_name(std::move(family));
   set_cell.set_column_qualifier(std::forward<ColumnType>(column));
   set_cell.set_timestamp_micros(ServerSetTimestamp());
-  set_cell.set_value(google::cloud::internal::EncodeBigEndian(value));
+  set_cell.set_value(internal::EncodeBigEndian(value));
   return m;
 }
 
@@ -393,7 +393,7 @@ class SingleRowMutation {
  */
 class FailedMutation {
  public:
-  FailedMutation(google::cloud::Status status, int index)
+  FailedMutation(Status status, int index)
       : status_(std::move(status)), original_index_(index) {}
 
   FailedMutation(google::rpc::Status const& status, int index)
@@ -406,14 +406,14 @@ class FailedMutation {
 
   //@{
   /// @name accessors
-  google::cloud::Status const& status() const { return status_; }
+  Status const& status() const { return status_; }
   int original_index() const { return original_index_; }
   //@}
 
   friend class BulkMutation;
 
  private:
-  google::cloud::Status status_;
+  Status status_;
   int original_index_;
 };
 
@@ -514,7 +514,7 @@ class BulkMutation {
 
   // Add a failed mutation to the batch.
   BulkMutation& emplace_back(FailedMutation fm) {
-    fm.status_ = google::cloud::Status();
+    fm.status_ = Status();
     return *this;
   }
 

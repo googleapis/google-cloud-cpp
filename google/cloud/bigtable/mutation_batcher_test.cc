@@ -71,7 +71,7 @@ struct Exchange {
 struct MutationState {
   bool admitted{false};
   bool completed{false};
-  google::cloud::Status completion_status;
+  Status completion_status;
 };
 
 class MutationStates {
@@ -171,7 +171,7 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
                                        grpc::CompletionQueue*) {
             EXPECT_STATUS_OK(IsContextMDValid(
                 *context, "google.bigtable.v2.Bigtable.MutateRows",
-                google::cloud::internal::ApiClientHeader()));
+                internal::ApiClientHeader()));
             EXPECT_EQ(exchange.req.size(), r.entries_size());
             for (std::size_t i = 0; i != exchange.req.size(); ++i) {
               btproto::MutateRowsRequest::Entry expected;
@@ -226,11 +226,10 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
       f.get();
       res->admitted = true;
     });
-    admission_and_completion.second.then(
-        [res](future<google::cloud::Status> status) {
-          res->completed = true;
-          res->completion_status = status.get();
-        });
+    admission_and_completion.second.then([res](future<Status> status) {
+      res->completed = true;
+      res->completion_status = status.get();
+    });
     return res;
   }
 

@@ -210,7 +210,7 @@ void MutationBatcher::OnBulkApplyDone(
       std::ostringstream os;
       os << "Index " << idx << " is out of range [0,"
          << batch.mutation_data.size() << ")";
-      google::cloud::internal::ThrowRuntimeError(std::move(os).str());
+      internal::ThrowRuntimeError(std::move(os).str());
     }
     MutationData& data = batch.mutation_data[idx];
     data.completion_promise.set_value(f.status());

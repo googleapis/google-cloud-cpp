@@ -75,7 +75,7 @@ auto create_list_instances_lambda =
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances",
-            google::cloud::internal::ApiClientHeader()));
+            internal::ApiClientHeader()));
         auto const project_name = "projects/" + kProjectId;
         EXPECT_EQ(project_name, request.parent());
         EXPECT_EQ(expected_token, request.page_token());
@@ -100,7 +100,7 @@ auto create_get_cluster_mock = []() {
             btadmin::Cluster* response) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableInstanceAdmin.GetCluster",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     EXPECT_NE(nullptr, response);
     response->set_name(request.name());
     return grpc::Status::OK;
@@ -113,7 +113,7 @@ auto create_get_policy_mock = []() {
             ::google::iam::v1::Policy* response) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableInstanceAdmin.GetIamPolicy",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     EXPECT_NE(nullptr, response);
     response->set_version(3);
     response->set_etag("random-tag");
@@ -127,7 +127,7 @@ auto create_policy_with_params = []() {
             ::google::iam::v1::Policy* response) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableInstanceAdmin.SetIamPolicy",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     EXPECT_NE(nullptr, response);
     *response = request.policy();
     return grpc::Status::OK;
@@ -147,7 +147,7 @@ auto create_list_clusters_lambda =
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.ListClusters",
-            google::cloud::internal::ApiClientHeader()));
+            internal::ApiClientHeader()));
         auto const instance_name =
             "projects/" + kProjectId + "/instances/" + instance_id;
         EXPECT_EQ(instance_name, request.parent());
@@ -187,8 +187,8 @@ struct MockRpcFactory {
         [expected_request, method](grpc::ClientContext* context,
                                    RequestType const& request,
                                    ResponseType* response) {
-          EXPECT_STATUS_OK(IsContextMDValid(
-              *context, method, google::cloud::internal::ApiClientHeader()));
+          EXPECT_STATUS_OK(
+              IsContextMDValid(*context, method, internal::ApiClientHeader()));
           RequestType expected;
           // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
           EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
@@ -278,7 +278,7 @@ TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context,
         "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   auto batch0 = create_list_instances_lambda("", "token-001", {"t0", "t1"});
@@ -396,7 +396,7 @@ TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
                                      btadmin::ListClustersResponse*) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableInstanceAdmin.ListClusters",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   std::string const& instance_id = "the-instance";
@@ -467,7 +467,7 @@ TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
                                      btadmin::Cluster*) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableInstanceAdmin.GetCluster",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
 
@@ -542,7 +542,7 @@ TEST_F(InstanceAdminTest, GetIamPolicyWithConditionsFails) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.GetIamPolicy",
-            google::cloud::internal::ApiClientHeader()));
+            internal::ApiClientHeader()));
         EXPECT_NE(nullptr, response);
         response->set_version(3);
         response->set_etag("random-tag");
@@ -584,7 +584,7 @@ TEST_F(InstanceAdminTest, GetIamPolicyRecoverableError) {
                                      iamproto::Policy*) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableInstanceAdmin.GetIamPolicy",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   auto mock_policy = create_get_policy_mock();
@@ -634,7 +634,7 @@ TEST_F(InstanceAdminTest, GetNativeIamPolicyRecoverableError) {
                                      iamproto::Policy*) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableInstanceAdmin.GetIamPolicy",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   auto mock_policy = create_get_policy_mock();
@@ -657,8 +657,8 @@ TEST_F(InstanceAdminTest, SetIamPolicy) {
   EXPECT_CALL(*client_, SetIamPolicy).WillOnce(mock_policy);
 
   std::string resource = "test-resource";
-  google::cloud::IamBindings iam_bindings =
-      google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
+  IamBindings iam_bindings =
+      IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
   auto policy = tested.SetIamPolicy(resource, iam_bindings, "test-tag");
   ASSERT_STATUS_OK(policy);
 
@@ -675,8 +675,8 @@ TEST_F(InstanceAdminTest, SetIamPolicyUnrecoverableError) {
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
 
   std::string resource = "test-resource";
-  google::cloud::IamBindings iam_bindings =
-      google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
+  IamBindings iam_bindings =
+      IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
   EXPECT_FALSE(tested.SetIamPolicy(resource, iam_bindings, "test-tag"));
 }
 
@@ -691,7 +691,7 @@ TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
                                      iamproto::Policy*) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableInstanceAdmin.SetIamPolicy",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   auto mock_policy = create_policy_with_params();
@@ -701,8 +701,8 @@ TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
       .WillOnce(mock_policy);
 
   std::string resource = "test-resource";
-  google::cloud::IamBindings iam_bindings =
-      google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
+  IamBindings iam_bindings =
+      IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
   auto policy = tested.SetIamPolicy(resource, iam_bindings, "test-tag");
   ASSERT_STATUS_OK(policy);
 
@@ -753,7 +753,7 @@ TEST_F(InstanceAdminTest, SetNativeIamPolicyRecoverableError) {
                                      iamproto::Policy*) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableInstanceAdmin.SetIamPolicy",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   auto mock_policy = create_policy_with_params();
@@ -784,7 +784,7 @@ TEST_F(InstanceAdminTest, TestIamPermissions) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.TestIamPermissions",
-            google::cloud::internal::ApiClientHeader()));
+            internal::ApiClientHeader()));
         EXPECT_NE(nullptr, response);
         std::vector<std::string> permissions = {"writer", "reader"};
         response->add_permissions(permissions[0]);
@@ -827,7 +827,7 @@ TEST_F(InstanceAdminTest, TestIamPermissionsRecoverableError) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context,
         "google.bigtable.admin.v2.BigtableInstanceAdmin.TestIamPermissions",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
 
@@ -838,7 +838,7 @@ TEST_F(InstanceAdminTest, TestIamPermissionsRecoverableError) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableInstanceAdmin.TestIamPermissions",
-            google::cloud::internal::ApiClientHeader()));
+            internal::ApiClientHeader()));
         EXPECT_NE(nullptr, response);
         std::vector<std::string> permissions = {"writer", "reader"};
         response->add_permissions(permissions[0]);
@@ -887,8 +887,8 @@ class ValidContextMdAsyncTest : public ::testing::Test {
 };
 
 TEST_F(ValidContextMdAsyncTest, CreateCluster) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
-      btadmin::CreateClusterRequest, google::longrunning::Operation>
+  bigtable::testing::MockAsyncFailingRpcFactory<btadmin::CreateClusterRequest,
+                                                google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncCreateCluster)
       .WillOnce(rpc_factory.Create(
@@ -908,8 +908,8 @@ TEST_F(ValidContextMdAsyncTest, CreateCluster) {
 }
 
 TEST_F(ValidContextMdAsyncTest, CreateInstance) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
-      btadmin::CreateInstanceRequest, google::longrunning::Operation>
+  bigtable::testing::MockAsyncFailingRpcFactory<btadmin::CreateInstanceRequest,
+                                                google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncCreateInstance)
       .WillOnce(rpc_factory.Create(
@@ -924,7 +924,7 @@ TEST_F(ValidContextMdAsyncTest, CreateInstance) {
 }
 
 TEST_F(ValidContextMdAsyncTest, UpdateAppProfile) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  bigtable::testing::MockAsyncFailingRpcFactory<
       btadmin::UpdateAppProfileRequest, google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncUpdateAppProfile)
@@ -940,8 +940,8 @@ TEST_F(ValidContextMdAsyncTest, UpdateAppProfile) {
 }
 
 TEST_F(ValidContextMdAsyncTest, UpdateCluster) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
-      btadmin::Cluster, google::longrunning::Operation>
+  bigtable::testing::MockAsyncFailingRpcFactory<btadmin::Cluster,
+                                                google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncUpdateCluster)
       .WillOnce(rpc_factory.Create(
@@ -959,7 +959,7 @@ TEST_F(ValidContextMdAsyncTest, UpdateCluster) {
 }
 
 TEST_F(ValidContextMdAsyncTest, UpdateInstance) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  bigtable::testing::MockAsyncFailingRpcFactory<
       btadmin::PartialUpdateInstanceRequest, google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncUpdateInstance)

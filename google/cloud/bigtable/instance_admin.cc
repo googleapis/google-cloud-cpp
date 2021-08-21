@@ -465,9 +465,7 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::GetIamPolicy(
       &InstanceAdminClient::GetIamPolicy, request,
       "InstanceAdmin::GetIamPolicy", status, Idempotency::kIdempotent);
 
-  if (!status.ok()) {
-    return MakeStatusFromRpcError(status);
-  }
+  if (!status.ok()) return MakeStatusFromRpcError(status);
 
   return ProtoToWrapper(std::move(proto));
 }
@@ -498,8 +496,8 @@ StatusOr<google::iam::v1::Policy> InstanceAdmin::GetNativeIamPolicy(
 }
 
 StatusOr<google::cloud::IamPolicy> InstanceAdmin::SetIamPolicy(
-    std::string const& instance_id,
-    google::cloud::IamBindings const& iam_bindings, std::string const& etag) {
+    std::string const& instance_id, IamBindings const& iam_bindings,
+    std::string const& etag) {
   grpc::Status status;
   auto rpc_policy = clone_rpc_retry_policy();
   auto backoff_policy = clone_rpc_backoff_policy();

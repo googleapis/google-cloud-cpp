@@ -173,7 +173,7 @@ TEST(MutationsTest, FailedMutation) {
   status.add_details()->PackFrom(debug_info);
 
   FailedMutation fm(std::move(status), 27);
-  EXPECT_EQ(google::cloud::StatusCode::kFailedPrecondition, fm.status().code());
+  EXPECT_EQ(StatusCode::kFailedPrecondition, fm.status().code());
   EXPECT_EQ("something failed", fm.status().message());
   EXPECT_FALSE(fm.status().message().empty());
   EXPECT_EQ(27, fm.original_index());

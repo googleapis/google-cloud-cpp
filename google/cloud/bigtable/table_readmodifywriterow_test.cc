@@ -45,7 +45,7 @@ auto create_rules_lambda = [](std::string const& expected_request_string,
              btproto::ReadModifyWriteRowResponse* response) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     btproto::ReadModifyWriteRowRequest expected_request;
     EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
         expected_request_string, &expected_request));
@@ -267,7 +267,7 @@ TEST_F(TableReadModifyWriteTest, UnrecoverableFailureTest) {
                          btproto::ReadModifyWriteRowResponse*) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow",
-            google::cloud::internal::ApiClientHeader()));
+            internal::ApiClientHeader()));
         return grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh");
       });
 

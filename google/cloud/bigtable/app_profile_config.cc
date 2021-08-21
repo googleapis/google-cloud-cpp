@@ -41,8 +41,7 @@ AppProfileConfig AppProfileConfig::SingleClusterRouting(
 }
 
 void AppProfileUpdateConfig::AddPathIfNotPresent(std::string field_name) {
-  if (!google::cloud::internal::Contains(proto_.update_mask().paths(),
-                                         field_name)) {
+  if (!internal::Contains(proto_.update_mask().paths(), field_name)) {
     proto_.mutable_update_mask()->add_paths(std::move(field_name));
   }
 }

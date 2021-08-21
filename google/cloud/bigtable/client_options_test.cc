@@ -316,7 +316,7 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutException) {
   ClientOptions client_options;
   EXPECT_EQ(
       client_options.SetGrpclbFallbackTimeout(std::chrono::hours(999)).code(),
-      google::cloud::StatusCode::kOutOfRange);
+      StatusCode::kOutOfRange);
 }
 
 TEST(ClientOptionsTest, SetCompressionAlgorithm) {

@@ -42,9 +42,8 @@ TEST(StorageVersionTest, Format) {
 
 /// @test Verify the version contains build metadata only if defined.
 TEST(StorageVersionTest, HasMetadataWhenDefined) {
-  if (!google::cloud::internal::build_metadata().empty()) {
-    EXPECT_THAT(version_string(),
-                HasSubstr("+" + google::cloud::internal::build_metadata()));
+  if (!internal::build_metadata().empty()) {
+    EXPECT_THAT(version_string(), HasSubstr("+" + internal::build_metadata()));
     return;
   }
   EXPECT_THAT(version_string(), Not(HasSubstr("+")));
