@@ -161,7 +161,7 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
                   google::longrunning::Operation>>(longrunning_reader_.get());
             });
     bigtable_internal::AsyncLongrunningOperation<testing::MockAdminClient,
-                                        SampleRowKeysResponse>
+                                                 SampleRowKeysResponse>
         operation(client_, std::move(op));
     auto fut = operation(cq_, std::move(context_));
 
@@ -252,7 +252,7 @@ TEST_F(AsyncLongrunningOperationTest, ImmediateSuccess) {
   OperationFinishedSuccessfully(op, placeholder_status);
 
   bigtable_internal::AsyncLongrunningOperation<testing::MockAdminClient,
-                                      SampleRowKeysResponse>
+                                               SampleRowKeysResponse>
       operation(client_, std::move(op));
   auto fut = operation(cq_, std::move(context_));
   EXPECT_TRUE(cq_impl_->empty());

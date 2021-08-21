@@ -79,8 +79,8 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
   // This is a hint we get about the total size, use it to save some memory
   // allocations.
   if (chunk.value_size() > 0) {
-    bigtable_internal::ReserveCellValue(cell_.value,
-                               static_cast<std::size_t>(chunk.value_size()));
+    bigtable_internal::ReserveCellValue(
+        cell_.value, static_cast<std::size_t>(chunk.value_size()));
   }
 
   // Last chunk in the cell has zero for value size
@@ -170,7 +170,7 @@ bigtable::Cell ReadRowsParser::MovePartialToCell() {
   // ReadRows v2 may reuse them in future chunks. See the CellChunk
   // message comments in bigtable.proto.
   bigtable::Cell cell(cell_.row, cell_.family, cell_.column, cell_.timestamp,
-            std::move(cell_.value), std::move(cell_.labels));
+                      std::move(cell_.value), std::move(cell_.labels));
   cell_.value.clear();
   return cell;
 }

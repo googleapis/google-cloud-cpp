@@ -144,8 +144,8 @@ Status TableAdmin::DeleteTable(std::string const& table_id) {
   return MakeStatusFromRpcError(status);
 }
 
-btadmin::CreateBackupRequest
-TableAdmin::CreateBackupParams::AsProto(std::string instance_name) const {
+btadmin::CreateBackupRequest TableAdmin::CreateBackupParams::AsProto(
+    std::string instance_name) const {
   btadmin::CreateBackupRequest proto;
   proto.set_parent(instance_name + "/clusters/" + cluster_id);
   proto.set_backup_id(backup_id);
@@ -162,15 +162,13 @@ StatusOr<btadmin::Backup> TableAdmin::CreateBackup(
   return AsyncCreateBackupImpl(cq, params).get();
 }
 
-future<StatusOr<btadmin::Backup>>
-TableAdmin::AsyncCreateBackupImpl(CompletionQueue& cq,
-                                  CreateBackupParams const& params) {
+future<StatusOr<btadmin::Backup>> TableAdmin::AsyncCreateBackupImpl(
+    CompletionQueue& cq, CreateBackupParams const& params) {
   auto request = params.AsProto(instance_name());
   MetadataUpdatePolicy metadata_update_policy(request.parent(),
                                               MetadataParamTypes::PARENT);
   auto client = client_;
-  return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<
-      btadmin::Backup>(
+  return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<btadmin::Backup>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
       clone_rpc_backoff_policy(),
       bigtable_internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
@@ -183,12 +181,12 @@ TableAdmin::AsyncCreateBackupImpl(CompletionQueue& cq,
       std::move(request), cq);
 }
 
-StatusOr<btadmin::Backup> TableAdmin::GetBackup(
-    std::string const& cluster_id, std::string const& backup_id) {
+StatusOr<btadmin::Backup> TableAdmin::GetBackup(std::string const& cluster_id,
+                                                std::string const& backup_id) {
   grpc::Status status;
   btadmin::GetBackupRequest request;
-  auto name = bigtable::BackupName(project(), instance_id(),
-                                                  cluster_id, backup_id);
+  auto name =
+      bigtable::BackupName(project(), instance_id(), cluster_id, backup_id);
   request.set_name(name);
 
   MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
@@ -204,8 +202,7 @@ StatusOr<btadmin::Backup> TableAdmin::GetBackup(
   return result;
 }
 
-btadmin::UpdateBackupRequest
-TableAdmin::UpdateBackupParams::AsProto(
+btadmin::UpdateBackupRequest TableAdmin::UpdateBackupParams::AsProto(
     std::string const& instance_name) const {
   btadmin::UpdateBackupRequest proto;
   proto.mutable_backup()->set_name(instance_name + "/clusters/" + cluster_id +
@@ -235,8 +232,7 @@ StatusOr<btadmin::Backup> TableAdmin::UpdateBackup(
   return result;
 }
 
-Status TableAdmin::DeleteBackup(
-    btadmin::Backup const& backup) {
+Status TableAdmin::DeleteBackup(btadmin::Backup const& backup) {
   grpc::Status status;
   btadmin::DeleteBackupRequest request;
   request.set_name(backup.name());
@@ -257,8 +253,8 @@ Status TableAdmin::DeleteBackup(std::string const& cluster_id,
                                 std::string const& backup_id) {
   grpc::Status status;
   btadmin::DeleteBackupRequest request;
-  request.set_name(bigtable::BackupName(project(), instance_id(),
-                                                       cluster_id, backup_id));
+  request.set_name(
+      bigtable::BackupName(project(), instance_id(), cluster_id, backup_id));
 
   MetadataUpdatePolicy metadata_update_policy(request.name(),
                                               MetadataParamTypes::NAME);
@@ -274,8 +270,8 @@ Status TableAdmin::DeleteBackup(std::string const& cluster_id,
   return {};
 }
 
-btadmin::ListBackupsRequest
-TableAdmin::ListBackupsParams::AsProto(std::string const& instance_name) const {
+btadmin::ListBackupsRequest TableAdmin::ListBackupsParams::AsProto(
+    std::string const& instance_name) const {
   btadmin::ListBackupsRequest proto;
   proto.set_parent(cluster_id ? instance_name + "/clusters/" + *cluster_id
                               : instance_name + "/clusters/-");
@@ -284,8 +280,8 @@ TableAdmin::ListBackupsParams::AsProto(std::string const& instance_name) const {
   return proto;
 }
 
-StatusOr<std::vector<btadmin::Backup>>
-TableAdmin::ListBackups(ListBackupsParams const& params) {
+StatusOr<std::vector<btadmin::Backup>> TableAdmin::ListBackups(
+    ListBackupsParams const& params) {
   grpc::Status status;
 
   // Copy the policies in effect for the operation.
@@ -320,8 +316,7 @@ TableAdmin::ListBackups(ListBackupsParams const& params) {
   return result;
 }
 
-btadmin::RestoreTableRequest
-TableAdmin::RestoreTableParams::AsProto(
+btadmin::RestoreTableRequest TableAdmin::RestoreTableParams::AsProto(
     std::string const& instance_name) const {
   btadmin::RestoreTableRequest proto;
   proto.set_parent(instance_name);
@@ -337,9 +332,8 @@ StatusOr<btadmin::Table> TableAdmin::RestoreTable(
   return AsyncRestoreTableImpl(cq, params).get();
 }
 
-future<StatusOr<btadmin::Table>>
-TableAdmin::AsyncRestoreTableImpl(CompletionQueue& cq,
-                                  RestoreTableParams const& params) {
+future<StatusOr<btadmin::Table>> TableAdmin::AsyncRestoreTableImpl(
+    CompletionQueue& cq, RestoreTableParams const& params) {
   return AsyncRestoreTableImpl(
       cq,
       RestoreTableFromInstanceParams{
@@ -362,14 +356,12 @@ StatusOr<btadmin::Table> TableAdmin::RestoreTable(
   return AsyncRestoreTableImpl(cq, std::move(params)).get();
 }
 
-future<StatusOr<btadmin::Table>>
-TableAdmin::AsyncRestoreTableImpl(CompletionQueue& cq,
-                                  RestoreTableFromInstanceParams params) {
+future<StatusOr<btadmin::Table>> TableAdmin::AsyncRestoreTableImpl(
+    CompletionQueue& cq, RestoreTableFromInstanceParams params) {
   MetadataUpdatePolicy metadata_update_policy(instance_name(),
                                               MetadataParamTypes::PARENT);
   auto client = client_;
-  return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<
-      btadmin::Table>(
+  return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<btadmin::Table>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
       clone_rpc_backoff_policy(),
       bigtable_internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
@@ -426,10 +418,9 @@ future<StatusOr<Consistency>> TableAdmin::WaitForConsistency(
   return AsyncWaitForConsistencyImpl(cq, table_id, consistency_token);
 }
 
-future<StatusOr<Consistency>>
-TableAdmin::AsyncWaitForConsistencyImpl(CompletionQueue& cq,
-                                        std::string const& table_id,
-                                        std::string const& consistency_token) {
+future<StatusOr<Consistency>> TableAdmin::AsyncWaitForConsistencyImpl(
+    CompletionQueue& cq, std::string const& table_id,
+    std::string const& consistency_token) {
   class AsyncWaitForConsistencyState
       : public std::enable_shared_from_this<AsyncWaitForConsistencyState> {
    public:
@@ -747,8 +738,7 @@ StatusOr<std::vector<std::string>> TableAdmin::TestIamPermissions(
 }
 
 std::string TableAdmin::InstanceName() const {
-  return bigtable::InstanceName(client_->project(),
-                                               instance_id_);
+  return bigtable::InstanceName(client_->project(), instance_id_);
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

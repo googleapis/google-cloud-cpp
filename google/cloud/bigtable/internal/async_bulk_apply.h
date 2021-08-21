@@ -42,7 +42,8 @@ class AsyncRetryBulkApply
     : public std::enable_shared_from_this<AsyncRetryBulkApply> {
  public:
   static future<std::vector<bigtable::FailedMutation>> Create(
-      CompletionQueue cq, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+      CompletionQueue cq,
+      std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
       std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
       bigtable::IdempotentMutationPolicy& idempotent_policy,
       bigtable::MetadataUpdatePolicy metadata_update_policy,
@@ -51,13 +52,14 @@ class AsyncRetryBulkApply
       bigtable::BulkMutation mut);
 
  private:
-  AsyncRetryBulkApply(std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
-                      std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
-                      bigtable::IdempotentMutationPolicy& idempotent_policy,
-                      bigtable::MetadataUpdatePolicy metadata_update_policy,
-                      std::shared_ptr<bigtable::DataClient> client,
-                      std::string const& app_profile_id,
-                      std::string const& table_name, bigtable::BulkMutation mut);
+  AsyncRetryBulkApply(
+      std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+      std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
+      bigtable::IdempotentMutationPolicy& idempotent_policy,
+      bigtable::MetadataUpdatePolicy metadata_update_policy,
+      std::shared_ptr<bigtable::DataClient> client,
+      std::string const& app_profile_id, std::string const& table_name,
+      bigtable::BulkMutation mut);
 
   void StartIteration(CompletionQueue cq);
   void OnRead(google::bigtable::v2::MutateRowsResponse response);

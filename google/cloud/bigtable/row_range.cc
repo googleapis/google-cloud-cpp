@@ -55,7 +55,8 @@ bool RowRange::IsEmpty() const {
   }
 
   // Special case of an open interval of two consecutive strings.
-  if (start_open && end_open && bigtable_internal::ConsecutiveRowKeys(*start, *end)) {
+  if (start_open && end_open &&
+      bigtable_internal::ConsecutiveRowKeys(*start, *end)) {
     return true;
   }
 

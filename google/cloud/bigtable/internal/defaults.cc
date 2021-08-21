@@ -83,7 +83,8 @@ Options DefaultOptions(Options opts) {
   auto instance_admin_emulator =
       google::cloud::internal::GetEnv("BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST");
   if (instance_admin_emulator) {
-    opts.set<bigtable::InstanceAdminEndpointOption>(*std::move(instance_admin_emulator));
+    opts.set<bigtable::InstanceAdminEndpointOption>(
+        *std::move(instance_admin_emulator));
   }
 
   if (!opts.has<bigtable::DataEndpointOption>()) {
@@ -93,7 +94,8 @@ Options DefaultOptions(Options opts) {
     opts.set<bigtable::AdminEndpointOption>("bigtableadmin.googleapis.com");
   }
   if (!opts.has<bigtable::InstanceAdminEndpointOption>()) {
-    opts.set<bigtable::InstanceAdminEndpointOption>("bigtableadmin.googleapis.com");
+    opts.set<bigtable::InstanceAdminEndpointOption>(
+        "bigtableadmin.googleapis.com");
   }
   if (!opts.has<GrpcCredentialOption>()) {
     opts.set<GrpcCredentialOption>(emulator ? grpc::InsecureChannelCredentials()

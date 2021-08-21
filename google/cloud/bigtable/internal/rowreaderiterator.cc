@@ -20,7 +20,8 @@ namespace cloud {
 namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
 
-RowReaderIterator::RowReaderIterator(bigtable::RowReader* owner) : owner_(owner) {
+RowReaderIterator::RowReaderIterator(bigtable::RowReader* owner)
+    : owner_(owner) {
   Advance();
 }
 

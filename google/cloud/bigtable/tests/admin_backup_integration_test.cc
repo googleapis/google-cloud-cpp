@@ -44,25 +44,20 @@ class AdminBackupIntegrationTest
   std::unique_ptr<InstanceAdmin> instance_admin_;
 
   void SetUp() override {
-    if (internal::GetEnv(
-            "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS")
+    if (internal::GetEnv("ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS")
             .value_or("") != "yes") {
       GTEST_SKIP();
     }
 
     TableIntegrationTest::SetUp();
 
-    std::shared_ptr<AdminClient> admin_client =
-        CreateDefaultAdminClient(
-            bigtable::testing::TableTestEnvironment::project_id(),
-            ClientOptions());
+    std::shared_ptr<AdminClient> admin_client = CreateDefaultAdminClient(
+        bigtable::testing::TableTestEnvironment::project_id(), ClientOptions());
     table_admin_ = absl::make_unique<TableAdmin>(
         admin_client, bigtable::testing::TableTestEnvironment::instance_id());
     auto instance_admin_client = CreateDefaultInstanceAdminClient(
-        bigtable::testing::TableTestEnvironment::project_id(),
-        ClientOptions());
-    instance_admin_ =
-        absl::make_unique<InstanceAdmin>(instance_admin_client);
+        bigtable::testing::TableTestEnvironment::project_id(), ClientOptions());
+    instance_admin_ = absl::make_unique<InstanceAdmin>(instance_admin_client);
   }
 };
 
@@ -82,10 +77,9 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
       << "Table (" << table_id << ") already exists."
       << " This is unexpected, as the table ids are generated at random.";
   // create table config
-  TableConfig table_config(
-      {{"fam", GC::MaxNumVersions(5)},
-       {"foo", GC::MaxAge(std::chrono::hours(24))}},
-      {"a1000", "a2000", "b3000", "m5000"});
+  TableConfig table_config({{"fam", GC::MaxNumVersions(5)},
+                            {"foo", GC::MaxAge(std::chrono::hours(24))}},
+                           {"a1000", "a2000", "b3000", "m5000"});
 
   // create table
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
@@ -116,9 +110,9 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
       google::protobuf::util::TimeUtil::GetCurrentTime() +
       google::protobuf::util::TimeUtil::HoursToDuration(12);
 
-  auto created_backup = table_admin_->CreateBackup(
-      {backup_cluster_id, backup_id, table_id,
-       internal::ToChronoTimePoint(expire_time)});
+  auto created_backup =
+      table_admin_->CreateBackup({backup_cluster_id, backup_id, table_id,
+                                  internal::ToChronoTimePoint(expire_time)});
   ASSERT_STATUS_OK(created_backup);
   EXPECT_EQ(created_backup->name(), backup_full_name);
 

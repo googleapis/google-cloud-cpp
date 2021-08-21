@@ -49,8 +49,7 @@ class AsyncBulkApplyTest : public bigtable::testing::TableTestFixture {
             DefaultRPCRetryPolicy(bigtable_internal::kBigtableLimits)),
         rpc_backoff_policy_(DefaultRPCBackoffPolicy(
             bigtable_internal::kBigtableTableAdminLimits)),
-        idempotent_mutation_policy_(
-            DefaultIdempotentMutationPolicy()),
+        idempotent_mutation_policy_(DefaultIdempotentMutationPolicy()),
         metadata_update_policy_("my_table", MetadataParamTypes::NAME) {}
 
   void SimulateIteration() {
@@ -89,10 +88,8 @@ TEST_F(AsyncBulkApplyTest, NoMutations) {
 
 TEST_F(AsyncBulkApplyTest, Success) {
   BulkMutation mut{
-      SingleRowMutation("foo2",
-                                  {SetCell("f", "c", 0_ms, "v2")}),
-      SingleRowMutation("foo3",
-                                  {SetCell("f", "c", 0_ms, "v3")}),
+      SingleRowMutation("foo2", {SetCell("f", "c", 0_ms, "v2")}),
+      SingleRowMutation("foo3", {SetCell("f", "c", 0_ms, "v3")}),
   };
 
   auto* reader =
@@ -142,10 +139,8 @@ TEST_F(AsyncBulkApplyTest, Success) {
 
 TEST_F(AsyncBulkApplyTest, PartialSuccessRetry) {
   BulkMutation mut{
-      SingleRowMutation("foo2",
-                                  {SetCell("f", "c", 0_ms, "v2")}),
-      SingleRowMutation("foo3",
-                                  {SetCell("f", "c", 0_ms, "v3")}),
+      SingleRowMutation("foo2", {SetCell("f", "c", 0_ms, "v2")}),
+      SingleRowMutation("foo3", {SetCell("f", "c", 0_ms, "v3")}),
   };
 
   auto* reader0 =
@@ -217,10 +212,8 @@ TEST_F(AsyncBulkApplyTest, PartialSuccessRetry) {
 
 TEST_F(AsyncBulkApplyTest, DefaultFailureRetry) {
   BulkMutation mut{
-      SingleRowMutation("foo2",
-                                  {SetCell("f", "c", 0_ms, "v2")}),
-      SingleRowMutation("foo3",
-                                  {SetCell("f", "c", 0_ms, "v3")}),
+      SingleRowMutation("foo2", {SetCell("f", "c", 0_ms, "v2")}),
+      SingleRowMutation("foo3", {SetCell("f", "c", 0_ms, "v3")}),
   };
 
   auto* reader0 =
@@ -297,10 +290,8 @@ TEST_F(AsyncBulkApplyTest, DefaultFailureRetry) {
 
 TEST_F(AsyncBulkApplyTest, TooManyFailures) {
   BulkMutation mut{
-      SingleRowMutation("foo2",
-                                  {SetCell("f", "c", 0_ms, "v2")}),
-      SingleRowMutation("foo3",
-                                  {SetCell("f", "c", 0_ms, "v3")}),
+      SingleRowMutation("foo2", {SetCell("f", "c", 0_ms, "v2")}),
+      SingleRowMutation("foo3", {SetCell("f", "c", 0_ms, "v3")}),
   };
 
   // We give up on the 3rd error.
@@ -346,10 +337,8 @@ TEST_F(AsyncBulkApplyTest, TooManyFailures) {
 
 TEST_F(AsyncBulkApplyTest, UsesBackoffPolicy) {
   BulkMutation mut{
-      SingleRowMutation("foo2",
-                                  {SetCell("f", "c", 0_ms, "v2")}),
-      SingleRowMutation("foo3",
-                                  {SetCell("f", "c", 0_ms, "v3")}),
+      SingleRowMutation("foo2", {SetCell("f", "c", 0_ms, "v2")}),
+      SingleRowMutation("foo3", {SetCell("f", "c", 0_ms, "v3")}),
   };
 
   auto grpc_error = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
@@ -415,10 +404,8 @@ TEST_F(AsyncBulkApplyTest, UsesBackoffPolicy) {
 
 TEST_F(AsyncBulkApplyTest, CancelDuringBackoff) {
   BulkMutation mut{
-      SingleRowMutation("foo2",
-                                  {SetCell("f", "c", 0_ms, "v2")}),
-      SingleRowMutation("foo3",
-                                  {SetCell("f", "c", 0_ms, "v3")}),
+      SingleRowMutation("foo2", {SetCell("f", "c", 0_ms, "v2")}),
+      SingleRowMutation("foo3", {SetCell("f", "c", 0_ms, "v3")}),
   };
 
   auto grpc_error = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");

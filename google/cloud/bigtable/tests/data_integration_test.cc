@@ -529,9 +529,8 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
       {});
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
 
-  std::shared_ptr<DataClient> data_client =
-      CreateDefaultDataClient(project_id(), instance_id(),
-                                        ClientOptions().enable_tracing("rpc"));
+  std::shared_ptr<DataClient> data_client = CreateDefaultDataClient(
+      project_id(), instance_id(), ClientOptions().enable_tracing("rpc"));
 
   Table table(data_client, table_id);
 
@@ -550,8 +549,8 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
 }
 
 TEST(ConnectionRefresh, Disabled) {
-  auto client_options = ClientOptions().set_max_conn_refresh_period(
-      std::chrono::seconds(0));
+  auto client_options =
+      ClientOptions().set_max_conn_refresh_period(std::chrono::seconds(0));
   auto data_client = CreateDefaultDataClient(
       testing::TableTestEnvironment::project_id(),
       testing::TableTestEnvironment::instance_id(), client_options);
@@ -592,11 +591,11 @@ TEST(ConnectionRefresh, Disabled) {
 }
 
 TEST(ConnectionRefresh, Frequent) {
-  auto data_client = CreateDefaultDataClient(
-      testing::TableTestEnvironment::project_id(),
-      testing::TableTestEnvironment::instance_id(),
-      ClientOptions().set_max_conn_refresh_period(
-          std::chrono::milliseconds(100)));
+  auto data_client =
+      CreateDefaultDataClient(testing::TableTestEnvironment::project_id(),
+                              testing::TableTestEnvironment::instance_id(),
+                              ClientOptions().set_max_conn_refresh_period(
+                                  std::chrono::milliseconds(100)));
 
   for (;;) {
     if (data_client->Channel()->GetState(false) == GRPC_CHANNEL_READY) {

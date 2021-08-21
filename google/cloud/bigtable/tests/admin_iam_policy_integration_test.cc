@@ -37,9 +37,9 @@ class AdminIAMPolicyIntegrationTest
   std::string service_account_;
 
   void SetUp() override {
-    service_account_ = internal::GetEnv(
-                           "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT")
-                           .value_or("");
+    service_account_ =
+        internal::GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT")
+            .value_or("");
     ASSERT_FALSE(service_account_.empty());
 
     TableIntegrationTest::SetUp();
@@ -66,10 +66,9 @@ TEST_F(AdminIAMPolicyIntegrationTest, SetGetTestIamAPIsTest) {
       << " This is unexpected, as the table ids are generated at random.";
 
   // create table config
-  TableConfig table_config(
-      {{"fam", GC::MaxNumVersions(5)},
-       {"foo", GC::MaxAge(std::chrono::hours(24))}},
-      {"a1000", "a2000", "b3000", "m5000"});
+  TableConfig table_config({{"fam", GC::MaxNumVersions(5)},
+                            {"foo", GC::MaxAge(std::chrono::hours(24))}},
+                           {"a1000", "a2000", "b3000", "m5000"});
 
   // create table
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));

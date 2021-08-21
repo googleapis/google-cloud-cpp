@@ -32,10 +32,11 @@ inline namespace BIGTABLE_CLIENT_NS {
 template <typename AsyncCallType, typename Request, typename Accumulator,
           typename CombiningFunction>
 future<StatusOr<Accumulator>> StartAsyncRetryMultiPage(
-    char const* location, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+    char const* location,
+    std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
     std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
-    bigtable::MetadataUpdatePolicy metadata_update_policy, AsyncCallType async_call,
-    Request request, Accumulator accumulator,
+    bigtable::MetadataUpdatePolicy metadata_update_policy,
+    AsyncCallType async_call, Request request, Accumulator accumulator,
     CombiningFunction combining_function, CompletionQueue cq);
 
 /**
@@ -77,10 +78,11 @@ class AsyncRetryMultiPageFuture {
   // a shared pointer. The lifetime is controlled by any pending operations in
   // the CompletionQueue.
   AsyncRetryMultiPageFuture(
-      char const* location, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+      char const* location,
+      std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
       std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
-      bigtable::MetadataUpdatePolicy metadata_update_policy, AsyncCallType async_call,
-      Request request, Accumulator accumulator,
+      bigtable::MetadataUpdatePolicy metadata_update_policy,
+      AsyncCallType async_call, Request request, Accumulator accumulator,
       CombiningFunction combining_function, CompletionQueue cq)
       : location_(location),
         rpc_retry_policy_(std::move(rpc_retry_policy)),
@@ -111,9 +113,10 @@ class AsyncRetryMultiPageFuture {
       return;
     }
     if (!self->rpc_retry_policy_->OnFailure(result.status())) {
-      char const* context = bigtable::RPCRetryPolicy::IsPermanentFailure(result.status())
-                                ? "permanent error"
-                                : "too many transient errors";
+      char const* context =
+          bigtable::RPCRetryPolicy::IsPermanentFailure(result.status())
+              ? "permanent error"
+              : "too many transient errors";
       self->final_result_.set_value(
           self->DetailedStatus(context, result.status()));
       return;
@@ -172,10 +175,11 @@ class AsyncRetryMultiPageFuture {
 
   friend future<StatusOr<Accumulator>> StartAsyncRetryMultiPage<
       AsyncCallType, Request, Accumulator, CombiningFunction>(
-      char const* location, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+      char const* location,
+      std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
       std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
-      bigtable::MetadataUpdatePolicy metadata_update_policy, AsyncCallType async_call,
-      Request request, Accumulator accumulator,
+      bigtable::MetadataUpdatePolicy metadata_update_policy,
+      AsyncCallType async_call, Request request, Accumulator accumulator,
       CombiningFunction combining_function, CompletionQueue cq);
 };
 
@@ -204,10 +208,11 @@ class AsyncRetryMultiPageFuture {
 template <typename AsyncCallType, typename Request, typename Accumulator,
           typename CombiningFunction>
 future<StatusOr<Accumulator>> StartAsyncRetryMultiPage(
-    char const* location, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+    char const* location,
+    std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
     std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
-    bigtable::MetadataUpdatePolicy metadata_update_policy, AsyncCallType async_call,
-    Request request, Accumulator accumulator,
+    bigtable::MetadataUpdatePolicy metadata_update_policy,
+    AsyncCallType async_call, Request request, Accumulator accumulator,
     CombiningFunction combining_function, CompletionQueue cq) {
   std::shared_ptr<AsyncRetryMultiPageFuture<AsyncCallType, Request, Accumulator,
                                             CombiningFunction>>

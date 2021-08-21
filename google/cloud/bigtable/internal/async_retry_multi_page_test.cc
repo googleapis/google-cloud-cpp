@@ -91,14 +91,15 @@ using ::google::bigtable::admin::v2::ListClustersResponse;
 class AsyncMultipageFutureTest : public ::testing::Test {
  public:
   AsyncMultipageFutureTest()
-      : rpc_retry_policy_(
-            bigtable::DefaultRPCRetryPolicy(bigtable_internal::kBigtableLimits)),
+      : rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy(
+            bigtable_internal::kBigtableLimits)),
         shared_backoff_policy_mock_(
             absl::make_unique<SharedBackoffPolicyMock>()),
         cq_impl_(new google::cloud::testing_util::FakeCompletionQueueImpl),
         cq_(cq_impl_),
         client_(new bigtable::testing::MockInstanceAdminClient),
-        metadata_update_policy_("my_instance", bigtable::MetadataParamTypes::NAME) {}
+        metadata_update_policy_("my_instance",
+                                bigtable::MetadataParamTypes::NAME) {}
 
   // Description of a single expected RPC exchange.
   struct Exchange {

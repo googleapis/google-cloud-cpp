@@ -30,8 +30,8 @@ future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncRowSampler::Create(
     CompletionQueue cq, std::shared_ptr<bigtable::DataClient> client,
     std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
     std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
-    bigtable::MetadataUpdatePolicy metadata_update_policy, std::string app_profile_id,
-    std::string table_name) {
+    bigtable::MetadataUpdatePolicy metadata_update_policy,
+    std::string app_profile_id, std::string table_name) {
   std::shared_ptr<AsyncRowSampler> sampler(new AsyncRowSampler(
       std::move(cq), std::move(client), std::move(rpc_retry_policy),
       std::move(rpc_backoff_policy), std::move(metadata_update_policy),
@@ -44,8 +44,8 @@ AsyncRowSampler::AsyncRowSampler(
     CompletionQueue cq, std::shared_ptr<bigtable::DataClient> client,
     std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
     std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
-    bigtable::MetadataUpdatePolicy metadata_update_policy, std::string app_profile_id,
-    std::string table_name)
+    bigtable::MetadataUpdatePolicy metadata_update_policy,
+    std::string app_profile_id, std::string table_name)
     : cq_(std::move(cq)),
       client_(std::move(client)),
       rpc_retry_policy_(std::move(rpc_retry_policy)),

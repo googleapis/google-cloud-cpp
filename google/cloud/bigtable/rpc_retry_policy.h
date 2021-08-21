@@ -148,7 +148,8 @@ class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
  */
 class LimitedTimeRetryPolicy : public RPCRetryPolicy {
  public:
-  explicit LimitedTimeRetryPolicy(bigtable_internal::RPCPolicyParameters defaults);
+  explicit LimitedTimeRetryPolicy(
+      bigtable_internal::RPCPolicyParameters defaults);
   template <typename DurationT>
   explicit LimitedTimeRetryPolicy(DurationT maximum_duration)
       : impl_(maximum_duration) {}
@@ -160,8 +161,8 @@ class LimitedTimeRetryPolicy : public RPCRetryPolicy {
   bool OnFailure(grpc::Status const& status) override;
 
  private:
-  using Impl =
-      google::cloud::internal::LimitedTimeRetryPolicy<bigtable_internal::SafeGrpcRetry>;
+  using Impl = google::cloud::internal::LimitedTimeRetryPolicy<
+      bigtable_internal::SafeGrpcRetry>;
   Impl impl_;
 };
 

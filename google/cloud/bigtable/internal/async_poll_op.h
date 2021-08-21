@@ -180,10 +180,11 @@ class PollAsyncOpFuture {
 
   friend future<StatusOr<
       typename PollableOperationRequestTraits<Operation>::ResponseType>>
-  StartAsyncPollOp<Operation>(char const* location,
-                              std::unique_ptr<bigtable::PollingPolicy> polling_policy,
-                              bigtable::MetadataUpdatePolicy metadata_update_policy,
-                              CompletionQueue cq, Operation operation);
+  StartAsyncPollOp<Operation>(
+      char const* location,
+      std::unique_ptr<bigtable::PollingPolicy> polling_policy,
+      bigtable::MetadataUpdatePolicy metadata_update_policy, CompletionQueue cq,
+      Operation operation);
 };
 
 /**

@@ -55,30 +55,28 @@ class AutoShutdownCQ {
   std::thread th_;
 };
 
-using TableCommandType = std::function<void(Table,
-                                            std::vector<std::string>)>;
+using TableCommandType = std::function<void(Table, std::vector<std::string>)>;
 
-Commands::value_type MakeCommandEntry(
-    std::string const& name, std::vector<std::string> const& args,
-    TableCommandType const& function);
+Commands::value_type MakeCommandEntry(std::string const& name,
+                                      std::vector<std::string> const& args,
+                                      TableCommandType const& function);
 
-using TableAdminCommandType = std::function<void(
-    TableAdmin, std::vector<std::string>)>;
+using TableAdminCommandType =
+    std::function<void(TableAdmin, std::vector<std::string>)>;
 
 Commands::value_type MakeCommandEntry(std::string const& name,
                                       std::vector<std::string> const& args,
                                       TableAdminCommandType const& function);
 
-using InstanceAdminCommandType = std::function<void(
-    InstanceAdmin, std::vector<std::string>)>;
+using InstanceAdminCommandType =
+    std::function<void(InstanceAdmin, std::vector<std::string>)>;
 
 Commands::value_type MakeCommandEntry(std::string const& name,
                                       std::vector<std::string> const& args,
                                       InstanceAdminCommandType const& function);
 
-using TableAsyncCommandType = std::function<void(Table,
-                                                 CompletionQueue,
-                                                 std::vector<std::string>)>;
+using TableAsyncCommandType =
+    std::function<void(Table, CompletionQueue, std::vector<std::string>)>;
 
 Commands::value_type MakeCommandEntry(std::string const& name,
                                       std::vector<std::string> const& args,

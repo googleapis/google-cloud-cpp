@@ -44,15 +44,16 @@ class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
       CompletionQueue cq, std::shared_ptr<bigtable::DataClient> client,
       std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
       std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
-      bigtable::MetadataUpdatePolicy metadata_update_policy, std::string app_profile_id,
-      std::string table_name);
+      bigtable::MetadataUpdatePolicy metadata_update_policy,
+      std::string app_profile_id, std::string table_name);
 
  private:
-  AsyncRowSampler(CompletionQueue cq, std::shared_ptr<bigtable::DataClient> client,
-                  std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
-                  std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
-                  bigtable::MetadataUpdatePolicy metadata_update_policy,
-                  std::string app_profile_id, std::string table_name);
+  AsyncRowSampler(
+      CompletionQueue cq, std::shared_ptr<bigtable::DataClient> client,
+      std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+      std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
+      bigtable::MetadataUpdatePolicy metadata_update_policy,
+      std::string app_profile_id, std::string table_name);
 
   void StartIteration();
   future<bool> OnRead(google::bigtable::v2::SampleRowKeysResponse response);

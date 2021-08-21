@@ -73,7 +73,8 @@ class AsyncRowReader : public std::enable_shared_from_this<
       Filter filter, std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
       std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
       MetadataUpdatePolicy metadata_update_policy,
-      std::unique_ptr<bigtable_internal::ReadRowsParserFactory> parser_factory) {
+      std::unique_ptr<bigtable_internal::ReadRowsParserFactory>
+          parser_factory) {
     std::shared_ptr<AsyncRowReader> res(new AsyncRowReader(
         std::move(cq), std::move(client), std::move(app_profile_id),
         std::move(table_name), std::move(on_row), std::move(on_finish),

@@ -27,10 +27,10 @@ namespace btproto = ::google::bigtable::v2;
 
 using ::google::cloud::internal::Idempotency;
 
-BulkMutatorState::BulkMutatorState(std::string const& app_profile_id,
-                                   std::string const& table_name,
-                                   bigtable::IdempotentMutationPolicy& idempotent_policy,
-                                   bigtable::BulkMutation mut) {
+BulkMutatorState::BulkMutatorState(
+    std::string const& app_profile_id, std::string const& table_name,
+    bigtable::IdempotentMutationPolicy& idempotent_policy,
+    bigtable::BulkMutation mut) {
   // Every time the client library calls MakeOneRequest(), the data in the
   // "pending_*" variables initializes the next request.  So in the constructor
   // we start by putting the data on the "pending_*" variables.
@@ -161,7 +161,8 @@ void BulkMutatorState::OnFinish(google::cloud::Status finish_status) {
   }
 }
 
-std::vector<bigtable::FailedMutation> BulkMutatorState::ConsumeAccumulatedFailures() {
+std::vector<bigtable::FailedMutation>
+BulkMutatorState::ConsumeAccumulatedFailures() {
   std::vector<bigtable::FailedMutation> res;
   res.swap(failures_);
   return res;

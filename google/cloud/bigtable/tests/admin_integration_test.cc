@@ -50,10 +50,8 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
     }
     TableIntegrationTest::SetUp();
 
-    std::shared_ptr<AdminClient> admin_client =
-        CreateDefaultAdminClient(
-            bigtable::testing::TableTestEnvironment::project_id(),
-            ClientOptions());
+    std::shared_ptr<AdminClient> admin_client = CreateDefaultAdminClient(
+        bigtable::testing::TableTestEnvironment::project_id(), ClientOptions());
     table_admin_ = absl::make_unique<TableAdmin>(
         admin_client, bigtable::testing::TableTestEnvironment::instance_id());
   }
@@ -173,10 +171,9 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTable) {
       << " This is unexpected, as the table ids are generated at random.";
 
   // create table config
-  TableConfig table_config(
-      {{"fam", GC::MaxNumVersions(5)},
-       {"foo", GC::MaxAge(std::chrono::hours(24))}},
-      {"a1000", "a2000", "b3000", "m5000"});
+  TableConfig table_config({{"fam", GC::MaxNumVersions(5)},
+                            {"foo", GC::MaxAge(std::chrono::hours(24))}},
+                           {"a1000", "a2000", "b3000", "m5000"});
 
   // create table
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
@@ -244,12 +241,11 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
   // Create a bigtable::InstanceAdmin and a bigtable::TableAdmin to create the
   // new instance and the new table.
-  auto instance_admin_client = CreateDefaultInstanceAdminClient(
-      project_id, ClientOptions());
+  auto instance_admin_client =
+      CreateDefaultInstanceAdminClient(project_id, ClientOptions());
   InstanceAdmin instance_admin(instance_admin_client);
 
-  auto admin_client =
-      CreateDefaultAdminClient(project_id, ClientOptions());
+  auto admin_client = CreateDefaultAdminClient(project_id, ClientOptions());
   TableAdmin table_admin(admin_client, id);
 
   // The instance configuration is involved, it needs two clusters, which must
@@ -257,12 +253,10 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
   // they must be in different zones. Also, the display name cannot be longer
   // than 30 characters.
   auto display_name = ("IT " + id).substr(0, 30);
-  auto cluster_config_1 =
-      ClusterConfig(bigtable::testing::TableTestEnvironment::zone_a(),
-                              3, ClusterConfig::HDD);
-  auto cluster_config_2 =
-      ClusterConfig(bigtable::testing::TableTestEnvironment::zone_b(),
-                              3, ClusterConfig::HDD);
+  auto cluster_config_1 = ClusterConfig(
+      bigtable::testing::TableTestEnvironment::zone_a(), 3, ClusterConfig::HDD);
+  auto cluster_config_2 = ClusterConfig(
+      bigtable::testing::TableTestEnvironment::zone_b(), 3, ClusterConfig::HDD);
   InstanceConfig config(
       id, display_name,
       {{id + "-c1", cluster_config_1}, {id + "-c2", cluster_config_2}});
@@ -273,8 +267,8 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
   // The table is going to be very simple, just one column family.
   std::string const family = "column_family";
-  TableConfig table_config = TableConfig(
-      {{family, GcRule::MaxNumVersions(10)}}, {});
+  TableConfig table_config =
+      TableConfig({{family, GcRule::MaxNumVersions(10)}}, {});
 
   // Create the new table.
   auto table_created = table_admin.CreateTable(random_table_id, table_config);
@@ -282,8 +276,7 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
   // We need to mutate the data in the table and then wait for those mutations
   // to propagate to both clusters. First create a `bigtable::Table` object.
-  auto data_client = CreateDefaultDataClient(
-      project_id, id, ClientOptions());
+  auto data_client = CreateDefaultDataClient(project_id, id, ClientOptions());
   Table table(data_client, random_table_id);
 
   // Insert some cells into the table.
@@ -323,10 +316,9 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
 
   std::string const table_id = RandomTableId();
 
-  std::shared_ptr<AdminClient> admin_client =
-      CreateDefaultAdminClient(
-          bigtable::testing::TableTestEnvironment::project_id(),
-          ClientOptions().enable_tracing("rpc"));
+  std::shared_ptr<AdminClient> admin_client = CreateDefaultAdminClient(
+      bigtable::testing::TableTestEnvironment::project_id(),
+      ClientOptions().enable_tracing("rpc"));
   auto table_admin = absl::make_unique<TableAdmin>(
       admin_client, bigtable::testing::TableTestEnvironment::instance_id());
 
@@ -340,10 +332,9 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
       << " This is unexpected, as the table ids are generated at random.";
 
   // create table config
-  TableConfig table_config(
-      {{"fam", GC::MaxNumVersions(5)},
-       {"foo", GC::MaxAge(std::chrono::hours(24))}},
-      {"a1000", "a2000", "b3000", "m5000"});
+  TableConfig table_config({{"fam", GC::MaxNumVersions(5)},
+                            {"foo", GC::MaxAge(std::chrono::hours(24))}},
+                           {"a1000", "a2000", "b3000", "m5000"});
 
   // create table
   ASSERT_STATUS_OK(table_admin->CreateTable(table_id, table_config));

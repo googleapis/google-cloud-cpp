@@ -244,8 +244,8 @@ class ClientOptions {
 
     if (ft_ms.count() > std::numeric_limits<int>::max()) {
       return Status(StatusCode::kOutOfRange,
-                                   "The supplied duration is larger than the "
-                                   "maximum value allowed by gRPC (INT_MAX)");
+                    "The supplied duration is larger than the "
+                    "maximum value allowed by gRPC (INT_MAX)");
     }
     auto fallback_timeout_ms = static_cast<int>(ft_ms.count());
     opts_.lookup<GrpcChannelArgumentsNativeOption>().SetGrpclbFallbackTimeout(
@@ -357,8 +357,7 @@ class ClientOptions {
    * be enabled by clients configured with this option.
    */
   bool tracing_enabled(std::string const& component) const {
-    return internal::Contains(
-        opts_.get<TracingComponentsOption>(), component);
+    return internal::Contains(opts_.get<TracingComponentsOption>(), component);
   }
 
   /// Enable tracing for @p component in clients configured with this object.
@@ -452,8 +451,7 @@ class ClientOptions {
    * it assumes responsibility for creating one or more threads blocked on
    * `CompletionQueue::Run()`.
    */
-  ClientOptions& DisableBackgroundThreads(
-      CompletionQueue const& cq);
+  ClientOptions& DisableBackgroundThreads(CompletionQueue const& cq);
 
   /**
    * Backwards compatibility alias

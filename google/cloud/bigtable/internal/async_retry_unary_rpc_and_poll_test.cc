@@ -57,10 +57,8 @@ class AsyncStartPollAfterRetryUnaryRpcTest
             std::chrono::hours(0),
         },
         polling_policy(bigtable::DefaultPollingPolicy(no_retries)),
-        rpc_retry_policy(
-            bigtable::DefaultRPCRetryPolicy(kBigtableLimits)),
-        rpc_backoff_policy(
-            bigtable::DefaultRPCBackoffPolicy(kBigtableLimits)),
+        rpc_retry_policy(bigtable::DefaultRPCRetryPolicy(kBigtableLimits)),
+        rpc_backoff_policy(bigtable::DefaultRPCBackoffPolicy(kBigtableLimits)),
         metadata_update_policy(
             "projects/" + k_project_id + "/instances/" + k_instance_id,
             bigtable::MetadataParamTypes::PARENT),

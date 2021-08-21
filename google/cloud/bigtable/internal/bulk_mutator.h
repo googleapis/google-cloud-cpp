@@ -116,7 +116,8 @@ class BulkMutatorState {
 class BulkMutator {
  public:
   BulkMutator(std::string const& app_profile_id, std::string const& table_name,
-              bigtable::IdempotentMutationPolicy& idempotent_policy, bigtable::BulkMutation mut);
+              bigtable::IdempotentMutationPolicy& idempotent_policy,
+              bigtable::BulkMutation mut);
 
   /// Return true if there are pending mutations in the mutator
   bool HasPendingMutations() const { return state_.HasPendingMutations(); }

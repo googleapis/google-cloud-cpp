@@ -105,13 +105,13 @@ std::string TableTestEnvironment::RandomInstanceId() {
 }
 
 void TableIntegrationTest::SetUp() {
-  admin_client_ = CreateDefaultAdminClient(
-      TableTestEnvironment::project_id(), ClientOptions());
+  admin_client_ = CreateDefaultAdminClient(TableTestEnvironment::project_id(),
+                                           ClientOptions());
   table_admin_ = absl::make_unique<TableAdmin>(
       admin_client_, TableTestEnvironment::instance_id());
-  data_client_ = CreateDefaultDataClient(
-      TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
-      ClientOptions());
+  data_client_ = CreateDefaultDataClient(TableTestEnvironment::project_id(),
+                                         TableTestEnvironment::instance_id(),
+                                         ClientOptions());
 
   // In production, we cannot use `DropAllRows()` to cleanup the table because
   // the integration tests sometimes consume all the 'DropRowRangeGroup' quota.
@@ -129,8 +129,7 @@ void TableIntegrationTest::SetUp() {
     if (!row) {
       break;
     }
-    bulk.emplace_back(
-        SingleRowMutation(row->row_key(), DeleteFromRow()));
+    bulk.emplace_back(SingleRowMutation(row->row_key(), DeleteFromRow()));
     if (bulk.size() > maximum_mutations) {
       break;
     }
@@ -156,10 +155,9 @@ Table TableIntegrationTest::GetTable() {
   return Table(data_client_, TableTestEnvironment::table_id());
 }
 
-std::vector<Cell> TableIntegrationTest::ReadRows(
-    Table& table, Filter filter) {
-  auto reader = table.ReadRows(
-      RowSet(RowRange::InfiniteRange()), std::move(filter));
+std::vector<Cell> TableIntegrationTest::ReadRows(Table& table, Filter filter) {
+  auto reader =
+      table.ReadRows(RowSet(RowRange::InfiniteRange()), std::move(filter));
   std::vector<Cell> result;
   for (auto const& row : reader) {
     EXPECT_STATUS_OK(row);
@@ -169,17 +167,17 @@ std::vector<Cell> TableIntegrationTest::ReadRows(
   return result;
 }
 
-std::vector<Cell> TableIntegrationTest::ReadRows(
-    std::string const& table_name, Filter filter) {
+std::vector<Cell> TableIntegrationTest::ReadRows(std::string const& table_name,
+                                                 Filter filter) {
   Table table(data_client_, table_name);
   return ReadRows(table, std::move(filter));
 }
 
-std::vector<Cell> TableIntegrationTest::ReadRows(
-    Table& table, std::int64_t rows_limit, Filter filter) {
-  auto reader =
-      table.ReadRows(RowSet(RowRange::InfiniteRange()),
-                     rows_limit, std::move(filter));
+std::vector<Cell> TableIntegrationTest::ReadRows(Table& table,
+                                                 std::int64_t rows_limit,
+                                                 Filter filter) {
+  auto reader = table.ReadRows(RowSet(RowRange::InfiniteRange()), rows_limit,
+                               std::move(filter));
   std::vector<Cell> result;
   for (auto const& row : reader) {
     EXPECT_STATUS_OK(row);
@@ -189,8 +187,7 @@ std::vector<Cell> TableIntegrationTest::ReadRows(
   return result;
 }
 
-std::vector<Cell> TableIntegrationTest::MoveCellsFromReader(
-    RowReader& reader) {
+std::vector<Cell> TableIntegrationTest::MoveCellsFromReader(RowReader& reader) {
   std::vector<Cell> result;
   for (auto const& row : reader) {
     EXPECT_STATUS_OK(row);
@@ -201,8 +198,8 @@ std::vector<Cell> TableIntegrationTest::MoveCellsFromReader(
 }
 
 /// A helper function to create a list of cells.
-void TableIntegrationTest::CreateCells(
-    Table& table, std::vector<Cell> const& cells) {
+void TableIntegrationTest::CreateCells(Table& table,
+                                       std::vector<Cell> const& cells) {
   std::map<RowKeyType, SingleRowMutation> mutations;
   for (auto const& cell : cells) {
     using std::chrono::duration_cast;
@@ -210,10 +207,10 @@ void TableIntegrationTest::CreateCells(
     using std::chrono::milliseconds;
     auto key = cell.row_key();
     auto inserted = mutations.emplace(key, SingleRowMutation(key));
-    inserted.first->second.emplace_back(SetCell(
-        cell.family_name(), cell.column_qualifier(),
-        duration_cast<milliseconds>(microseconds(cell.timestamp())),
-        cell.value()));
+    inserted.first->second.emplace_back(
+        SetCell(cell.family_name(), cell.column_qualifier(),
+                duration_cast<milliseconds>(microseconds(cell.timestamp())),
+                cell.value()));
   }
   BulkMutation bulk;
   for (auto& kv : mutations) {
@@ -238,8 +235,8 @@ std::vector<Cell> TableIntegrationTest::GetCellsIgnoringTimestamp(
   return return_cells;
 }
 
-void TableIntegrationTest::CheckEqualUnordered(
-    std::vector<Cell> expected, std::vector<Cell> actual) {
+void TableIntegrationTest::CheckEqualUnordered(std::vector<Cell> expected,
+                                               std::vector<Cell> actual) {
   std::sort(expected.begin(), expected.end());
   std::sort(actual.begin(), actual.end());
   EXPECT_THAT(actual, ::testing::ContainerEq(expected));
@@ -264,7 +261,8 @@ std::string TableIntegrationTest::RandomBackupId() {
 }  // namespace testing
 
 int CellCompare(Cell const& lhs, Cell const& rhs) {
-  auto compare_row_key = bigtable_internal::CompareRowKey(lhs.row_key(), rhs.row_key());
+  auto compare_row_key =
+      bigtable_internal::CompareRowKey(lhs.row_key(), rhs.row_key());
   if (compare_row_key != 0) {
     return compare_row_key;
   }
@@ -283,7 +281,8 @@ int CellCompare(Cell const& lhs, Cell const& rhs) {
   if (lhs.timestamp() > rhs.timestamp()) {
     return 1;
   }
-  auto compare_value = bigtable_internal::CompareCellValues(lhs.value(), rhs.value());
+  auto compare_value =
+      bigtable_internal::CompareCellValues(lhs.value(), rhs.value());
   if (compare_value != 0) {
     return compare_value;
   }

@@ -220,8 +220,7 @@ class Table {
             DefaultRPCBackoffPolicy(bigtable_internal::kBigtableLimits)),
         metadata_update_policy_(
             MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME)),
-        idempotent_mutation_policy_(
-            DefaultIdempotentMutationPolicy()),
+        idempotent_mutation_policy_(DefaultIdempotentMutationPolicy()),
         background_threads_(client_->BackgroundThreadsFactory()()) {}
 
   /**
@@ -657,8 +656,7 @@ class Table {
    */
   template <typename... Args>
   StatusOr<Row> ReadModifyWriteRow(std::string row_key,
-                                   ReadModifyWriteRule rule,
-                                   Args&&... rules) {
+                                   ReadModifyWriteRule rule, Args&&... rules) {
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_row_key(std::move(row_key));
 
@@ -705,9 +703,9 @@ class Table {
    * @snippet data_async_snippets.cc async read modify write
    */
   template <typename... Args>
-  future<StatusOr<Row>> AsyncReadModifyWriteRow(
-      std::string row_key, ReadModifyWriteRule rule,
-      Args&&... rules) {
+  future<StatusOr<Row>> AsyncReadModifyWriteRow(std::string row_key,
+                                                ReadModifyWriteRule rule,
+                                                Args&&... rules) {
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_row_key(std::move(row_key));
 

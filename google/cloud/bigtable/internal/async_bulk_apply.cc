@@ -21,14 +21,16 @@ namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
 
 future<std::vector<bigtable::FailedMutation>> AsyncRetryBulkApply::Create(
-    CompletionQueue cq, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+    CompletionQueue cq,
+    std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
     std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
     bigtable::IdempotentMutationPolicy& idempotent_policy,
     bigtable::MetadataUpdatePolicy metadata_update_policy,
     std::shared_ptr<bigtable::DataClient> client,
     std::string const& app_profile_id, std::string const& table_name,
     bigtable::BulkMutation mut) {
-  if (mut.empty()) return make_ready_future(std::vector<bigtable::FailedMutation>{});
+  if (mut.empty())
+    return make_ready_future(std::vector<bigtable::FailedMutation>{});
 
   std::shared_ptr<AsyncRetryBulkApply> bulk_apply(new AsyncRetryBulkApply(
       std::move(rpc_retry_policy), std::move(rpc_backoff_policy),

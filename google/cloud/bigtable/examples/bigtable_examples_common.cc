@@ -25,9 +25,7 @@ namespace bigtable {
 namespace examples {
 
 bool UsingEmulator() {
-  return !internal::GetEnv("BIGTABLE_EMULATOR_HOST")
-              .value_or("")
-              .empty();
+  return !internal::GetEnv("BIGTABLE_EMULATOR_HOST").value_or("").empty();
 }
 
 bool RunAdminIntegrationTests() {
@@ -37,14 +35,13 @@ bool RunAdminIntegrationTests() {
   // In production, we run the admin integration tests only on the nightly
   // builds to stay below the quota limits. Only this build should set the
   // following environment variable.
-  return internal::GetEnv(
-             "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS")
+  return internal::GetEnv("ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS")
              .value_or("") == "yes";
 }
 
-Commands::value_type MakeCommandEntry(
-    std::string const& name, std::vector<std::string> const& args,
-    TableCommandType const& function) {
+Commands::value_type MakeCommandEntry(std::string const& name,
+                                      std::vector<std::string> const& args,
+                                      TableCommandType const& function) {
   auto command = [=](std::vector<std::string> argv) {
     if ((argv.size() == 1 && argv[0] == "--help") ||
         argv.size() != 3 + args.size()) {
@@ -53,10 +50,8 @@ Commands::value_type MakeCommandEntry(
       if (!args.empty()) os << " " << absl::StrJoin(args, " ");
       throw Usage{std::move(os).str()};
     }
-    Table table(
-        CreateDefaultDataClient(
-            argv[0], argv[1], ClientOptions()),
-        argv[2]);
+    Table table(CreateDefaultDataClient(argv[0], argv[1], ClientOptions()),
+                argv[2]);
     argv.erase(argv.begin(), argv.begin() + 3);
     function(table, argv);
   };
@@ -75,10 +70,8 @@ Commands::value_type MakeCommandEntry(std::string const& name,
       if (!args.empty()) os << " " << absl::StrJoin(args, " ");
       throw Usage{std::move(os).str()};
     }
-    TableAdmin table(
-        CreateDefaultAdminClient(
-            argv[0], ClientOptions()),
-        argv[1]);
+    TableAdmin table(CreateDefaultAdminClient(argv[0], ClientOptions()),
+                     argv[1]);
     argv.erase(argv.begin(), argv.begin() + kFixedArguments);
     function(table, argv);
   };
@@ -98,8 +91,7 @@ Commands::value_type MakeCommandEntry(
       throw Usage{std::move(os).str()};
     }
     InstanceAdmin instance(
-        CreateDefaultInstanceAdminClient(
-            argv[0], ClientOptions()));
+        CreateDefaultInstanceAdminClient(argv[0], ClientOptions()));
     argv.erase(argv.begin(), argv.begin() + kFixedArguments);
     function(instance, argv);
   };
@@ -124,10 +116,8 @@ Commands::value_type MakeCommandEntry(std::string const& name,
       }
       throw Usage{std::move(os).str()};
     }
-    Table table(
-        CreateDefaultDataClient(
-            argv[0], argv[1], ClientOptions()),
-        argv[2]);
+    Table table(CreateDefaultDataClient(argv[0], argv[1], ClientOptions()),
+                argv[2]);
     CompletionQueue cq;
     std::thread t([&cq] { cq.Run(); });
     AutoShutdownCQ shutdown(cq, std::move(t));

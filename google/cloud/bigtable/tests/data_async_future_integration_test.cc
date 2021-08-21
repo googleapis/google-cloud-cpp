@@ -31,7 +31,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
 
   std::string const row_key = "key-000010";
   std::vector<Cell> created{{row_key, kFamily, "cc1", 1000, "v1000"},
-                                      {row_key, kFamily, "cc2", 2000, "v2000"}};
+                            {row_key, kFamily, "cc2", 2000, "v2000"}};
   SingleRowMutation mut(row_key);
   for (auto const& c : created) {
     mut.emplace_back(SetCell(
@@ -49,9 +49,8 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
   EXPECT_STATUS_OK(status);
 
   // Validate that the newly created cells are actually in the server.
-  std::vector<Cell> expected{
-      {row_key, kFamily, "cc1", 1000, "v1000"},
-      {row_key, kFamily, "cc2", 2000, "v2000"}};
+  std::vector<Cell> expected{{row_key, kFamily, "cc1", 1000, "v1000"},
+                             {row_key, kFamily, "cc2", 2000, "v2000"}};
 
   auto actual = ReadRows(table, Filter::PassAllFilter());
 
@@ -115,8 +114,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowPass) {
   CreateCells(table, created);
 
   auto fut = table.AsyncCheckAndMutateRow(
-      key, Filter::ValueRegex("v1000"),
-      {SetCell(kFamily, "c2", 0_ms, "v2000")},
+      key, Filter::ValueRegex("v1000"), {SetCell(kFamily, "c2", 0_ms, "v2000")},
       {SetCell(kFamily, "c3", 0_ms, "v3000")});
 
   // Block until the asynchronous operation completes. This is not what one
@@ -126,7 +124,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowPass) {
   EXPECT_STATUS_OK(status);
 
   std::vector<Cell> expected{{key, kFamily, "c1", 0, "v1000"},
-                                       {key, kFamily, "c2", 0, "v2000"}};
+                             {key, kFamily, "c2", 0, "v2000"}};
 
   auto actual = ReadRows(table, Filter::PassAllFilter());
 
@@ -141,10 +139,10 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowFail) {
   std::vector<Cell> created{{key, kFamily, "c1", 0, "v1000"}};
   CreateCells(table, created);
 
-  auto fut = table.AsyncCheckAndMutateRow(
-      key, Filter::ValueRegex("not-there"),
-      {SetCell(kFamily, "c2", 0_ms, "v2000")},
-      {SetCell(kFamily, "c3", 0_ms, "v3000")});
+  auto fut =
+      table.AsyncCheckAndMutateRow(key, Filter::ValueRegex("not-there"),
+                                   {SetCell(kFamily, "c2", 0_ms, "v2000")},
+                                   {SetCell(kFamily, "c3", 0_ms, "v3000")});
 
   // Block until the asynchronous operation completes. This is not what one
   // would do in a real application (the synchronous API is better in that
@@ -153,7 +151,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowFail) {
   EXPECT_STATUS_OK(status);
 
   std::vector<Cell> expected{{key, kFamily, "c1", 0, "v1000"},
-                                       {key, kFamily, "c3", 0, "v3000"}};
+                             {key, kFamily, "c3", 0, "v3000"}};
 
   auto actual = ReadRows(table, Filter::PassAllFilter());
 
@@ -174,9 +172,8 @@ TEST_F(DataAsyncFutureIntegrationTest,
   std::string const family3 = "family3";
   std::string const family4 = "family4";
 
-  std::vector<Cell> created{
-      {row_key1, family1, "column-id1", 1000, "v1000"},
-      {row_key1, family2, "column-id2", 2000, "v2000"}};
+  std::vector<Cell> created{{row_key1, family1, "column-id1", 1000, "v1000"},
+                            {row_key1, family2, "column-id2", 2000, "v2000"}};
 
   std::vector<Cell> expected_read{
       {row_key1, family1, "column-id1", 1000, "v1000"},
@@ -225,11 +222,10 @@ TEST_F(DataAsyncFutureIntegrationTest, TableReadRowsAllRows) {
   std::string const row_key3(1024, '3');    // a long key
   std::string const long_value(1024, 'v');  // a long value
 
-  std::vector<Cell> created{
-      {row_key1, "family1", "c1", 1000, "data1"},
-      {row_key1, "family1", "c2", 1000, "data2"},
-      {row_key2, "family1", "c1", 1000, ""},
-      {row_key3, "family1", "c1", 1000, long_value}};
+  std::vector<Cell> created{{row_key1, "family1", "c1", 1000, "data1"},
+                            {row_key1, "family1", "c2", 1000, "data2"},
+                            {row_key2, "family1", "c1", 1000, ""},
+                            {row_key3, "family1", "c1", 1000, long_value}};
 
   CreateCells(table, created);
 
@@ -247,8 +243,8 @@ TEST_F(DataAsyncFutureIntegrationTest, TableReadRowsAllRows) {
       [&stream_status_promise](Status const& stream_status) {
         stream_status_promise.set_value(stream_status);
       },
-      RowSet(RowRange::InfiniteRange()),
-      RowReader::NO_ROWS_LIMIT, Filter::PassAllFilter());
+      RowSet(RowRange::InfiniteRange()), RowReader::NO_ROWS_LIMIT,
+      Filter::PassAllFilter());
 
   auto stream_status = stream_status_promise.get_future().get();
   ASSERT_STATUS_OK(stream_status);
@@ -261,16 +257,13 @@ TEST_F(DataAsyncFutureIntegrationTest, TableReadRowTest) {
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
 
-  std::vector<Cell> created{
-      {row_key1, "family1", "c1", 1000, "v1000"},
-      {row_key2, "family1", "c2", 2000, "v2000"}};
-  std::vector<Cell> expected{
-      {row_key1, "family1", "c1", 1000, "v1000"}};
+  std::vector<Cell> created{{row_key1, "family1", "c1", 1000, "v1000"},
+                            {row_key2, "family1", "c2", 2000, "v2000"}};
+  std::vector<Cell> expected{{row_key1, "family1", "c1", 1000, "v1000"}};
 
   CreateCells(table, created);
 
-  auto row_cell =
-      table.AsyncReadRow(row_key1, Filter::PassAllFilter()).get();
+  auto row_cell = table.AsyncReadRow(row_key1, Filter::PassAllFilter()).get();
   ASSERT_STATUS_OK(row_cell);
   std::vector<Cell> actual;
   actual.emplace_back(row_cell->second.cells().at(0));

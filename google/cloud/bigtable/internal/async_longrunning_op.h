@@ -133,9 +133,11 @@ class AsyncLongrunningOperation {
  */
 template <typename Client, typename Response>
 future<StatusOr<Response>> StartAsyncLongrunningOp(
-    char const* location, std::unique_ptr<bigtable::PollingPolicy> polling_policy,
-    bigtable::MetadataUpdatePolicy metadata_update_policy, std::shared_ptr<Client> client,
-    CompletionQueue cq, google::longrunning::Operation operation) {
+    char const* location,
+    std::unique_ptr<bigtable::PollingPolicy> polling_policy,
+    bigtable::MetadataUpdatePolicy metadata_update_policy,
+    std::shared_ptr<Client> client, CompletionQueue cq,
+    google::longrunning::Operation operation) {
   return StartAsyncPollOp(location, std::move(polling_policy),
                           std::move(metadata_update_policy), std::move(cq),
                           AsyncLongrunningOperation<Client, Response>(

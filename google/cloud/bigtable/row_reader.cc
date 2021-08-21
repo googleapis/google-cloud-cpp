@@ -101,7 +101,9 @@ RowReader::iterator RowReader::begin() {
 
 // The name must be all lowercase to work with range-for loops.
 // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
-RowReader::iterator RowReader::end() { return bigtable_internal::RowReaderIterator(); }
+RowReader::iterator RowReader::end() {
+  return bigtable_internal::RowReaderIterator();
+}
 
 void RowReader::MakeRequest() {
   response_ = {};

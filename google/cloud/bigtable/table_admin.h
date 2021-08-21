@@ -144,10 +144,10 @@ class TableAdmin {
       : client_(std::move(client)),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
-        rpc_retry_policy_prototype_(
-            DefaultRPCRetryPolicy(bigtable_internal::kBigtableTableAdminLimits)),
-        rpc_backoff_policy_prototype_(
-            DefaultRPCBackoffPolicy(bigtable_internal::kBigtableTableAdminLimits)),
+        rpc_retry_policy_prototype_(DefaultRPCRetryPolicy(
+            bigtable_internal::kBigtableTableAdminLimits)),
+        rpc_backoff_policy_prototype_(DefaultRPCBackoffPolicy(
+            bigtable_internal::kBigtableTableAdminLimits)),
         metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
         polling_policy_prototype_(
             DefaultPollingPolicy(bigtable_internal::kBigtableTableAdminLimits)),
@@ -988,21 +988,19 @@ class TableAdmin {
 
   /// Return the fully qualified name of a table in this object's instance.
   std::string TableName(std::string const& table_id) const {
-    return bigtable::TableName(project(), instance_id(),
-                                              table_id);
+    return bigtable::TableName(project(), instance_id(), table_id);
   }
 
   /// Return the fully qualified name of a Cluster.
   std::string ClusterName(std::string const& cluster_id) const {
-    return bigtable::ClusterName(project(), instance_id(),
-                                                cluster_id);
+    return bigtable::ClusterName(project(), instance_id(), cluster_id);
   }
 
   /// Return the fully qualified name of a Backup.
   std::string BackupName(std::string const& cluster_id,
                          std::string const& backup_id) const {
-    return bigtable::BackupName(project(), instance_id(),
-                                               cluster_id, backup_id);
+    return bigtable::BackupName(project(), instance_id(), cluster_id,
+                                backup_id);
   }
 
  private:

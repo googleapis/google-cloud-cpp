@@ -233,8 +233,8 @@ struct MockRpcFactory {
         [expected_request, method](grpc::ClientContext* context,
                                    RequestType const& request,
                                    ResponseType* response) {
-          EXPECT_STATUS_OK(IsContextMDValid(
-              *context, method, internal::ApiClientHeader()));
+          EXPECT_STATUS_OK(
+              IsContextMDValid(*context, method, internal::ApiClientHeader()));
           if (response == nullptr) {
             return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
                                 "invalid call to MockRpcFactory::Create()");
@@ -668,8 +668,7 @@ TEST_F(TableAdminTest, UpdateBackupSimple) {
   EXPECT_TRUE(google::protobuf::util::TimeUtil::FromString(
       "2029-12-31T00:00:00.000-05:00", &expire_time));
   TableAdmin::UpdateBackupParams params(
-      "the-cluster", "the-backup",
-      internal::ToChronoTimePoint(expire_time));
+      "the-cluster", "the-backup", internal::ToChronoTimePoint(expire_time));
   tested.UpdateBackup(std::move(params));
 }
 
@@ -688,8 +687,7 @@ TEST_F(TableAdminTest, UpdateBackupUnrecoverableFailures) {
   EXPECT_TRUE(google::protobuf::util::TimeUtil::FromString(
       "2029-12-31T00:00:00.000-05:00", &expire_time));
   TableAdmin::UpdateBackupParams params(
-      "the-cluster", "the-backup",
-      internal::ToChronoTimePoint(expire_time));
+      "the-cluster", "the-backup", internal::ToChronoTimePoint(expire_time));
   EXPECT_FALSE(tested.UpdateBackup(std::move(params)));
 }
 
@@ -709,8 +707,7 @@ TEST_F(TableAdminTest, UpdateBackupTooManyFailures) {
   EXPECT_TRUE(google::protobuf::util::TimeUtil::FromString(
       "2029-12-31T00:00:00.000-05:00", &expire_time));
   TableAdmin::UpdateBackupParams params(
-      "the-cluster", "the-backup",
-      internal::ToChronoTimePoint(expire_time));
+      "the-cluster", "the-backup", internal::ToChronoTimePoint(expire_time));
   EXPECT_FALSE(tested.UpdateBackup(std::move(params)));
 }
 
@@ -1365,8 +1362,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
 
  protected:
   template <typename ResultType>
-  void FinishTest(
-      future<StatusOr<ResultType>> res_future) {
+  void FinishTest(future<StatusOr<ResultType>> res_future) {
     EXPECT_EQ(1U, cq_impl_->size());
     cq_impl_->SimulateCompletion(true);
     EXPECT_EQ(0U, cq_impl_->size());

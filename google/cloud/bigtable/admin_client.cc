@@ -136,8 +136,7 @@ class DefaultAdminClient : public AdminClient {
   // Introduce an early `private:` section because this type is used to define
   // the public interface, it should not be part of the public interface.
   struct AdminTraits {
-    static std::string const& Endpoint(
-        ClientOptions& options) {
+    static std::string const& Endpoint(ClientOptions& options) {
       return options.admin_endpoint();
     }
   };
@@ -148,8 +147,7 @@ class DefaultAdminClient : public AdminClient {
  public:
   using AdminStubPtr = Impl::StubPtr;
 
-  DefaultAdminClient(std::string project,
-                     ClientOptions options)
+  DefaultAdminClient(std::string project, ClientOptions options)
       : project_(std::move(project)), impl_(std::move(options)) {}
 
   std::string const& project() const override { return project_; }

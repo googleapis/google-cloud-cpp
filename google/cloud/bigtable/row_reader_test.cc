@@ -129,8 +129,7 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
   std::chrono::milliseconds OnCompletion(grpc::Status const& s) override {
     return OnCompletionHook(s);
   }
-  std::chrono::milliseconds OnCompletion(
-      Status const&) override {
+  std::chrono::milliseconds OnCompletion(Status const&) override {
     return std::chrono::milliseconds(0);
   }
 };
