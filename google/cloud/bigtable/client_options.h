@@ -184,7 +184,6 @@ class ClientOptions {
   ClientOptions& set_channel_arguments(
       grpc::ChannelArguments const& channel_arguments) {
     opts_.set<GrpcChannelArgumentsNativeOption>(channel_arguments);
-    opts_.unset<GrpcChannelArgumentsOption>();
     return *this;
   }
 
