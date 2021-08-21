@@ -50,14 +50,12 @@ static_assert(kDefaultMinRefreshPeriod <= kDefaultMaxRefreshPeriod,
 // The default value for GRPC_KEEPALIVE_TIME_MS, how long before a keepalive
 // ping is sent. A better name may have been "period", but consistency with the
 // gRPC naming seems valuable.
-auto constexpr kDefaultKeepaliveTime =
-    std::chrono::milliseconds(std::chrono::seconds(30));
+auto constexpr kDefaultKeepaliveTime = std::chrono::seconds(30);
 
 // The default value for GRPC_KEEPALIVE_TIMEOUT_MS, how long the sender (in
 // this case the Cloud Bigtable C++ client library) waits for an acknowledgement
 // for a keepalive ping.
-auto constexpr kDefaultKeepaliveTimeout =
-    std::chrono::milliseconds(std::chrono::seconds(10));
+auto constexpr kDefaultKeepaliveTimeout = std::chrono::seconds(10);
 
 }  // namespace
 
@@ -120,9 +118,10 @@ Options DefaultOptions(Options opts) {
     opts.set<MaxConnectionRefreshOption>(kDefaultMaxRefreshPeriod);
   }
 
-  using ms = std::chrono::milliseconds;
   using ::google::cloud::internal::GetIntChannelArgument;
-  using std::chrono::duration_cast;
+  auto c_arg = [](std::chrono::milliseconds ms) {
+    return static_cast<int>(ms.count());
+  };
   auto& args = opts.lookup<GrpcChannelArgumentsNativeOption>();
   if (!GetIntChannelArgument(args, GRPC_ARG_MAX_SEND_MESSAGE_LENGTH)) {
     args.SetMaxSendMessageSize(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH);
@@ -131,12 +130,10 @@ Options DefaultOptions(Options opts) {
     args.SetMaxReceiveMessageSize(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH);
   }
   if (!GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIME_MS)) {
-    args.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS,
-                duration_cast<ms>(kDefaultKeepaliveTime).count());
+    args.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS, c_arg(kDefaultKeepaliveTime));
   }
   if (!GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS)) {
-    args.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS,
-                duration_cast<ms>(kDefaultKeepaliveTimeout).count());
+    args.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS, c_arg(kDefaultKeepaliveTimeout));
   }
   // Inserts our user-agent string at the front.
   auto& products = opts.lookup<UserAgentProductsOption>();
