@@ -177,13 +177,13 @@ class ClientOptions {
 
   /// Access all the channel arguments.
   grpc::ChannelArguments channel_arguments() const {
-    return channel_arguments_;
+    return ::google::cloud::internal::MakeChannelArguments(opts_);
   }
 
   /// Set all the channel arguments.
   ClientOptions& set_channel_arguments(
       grpc::ChannelArguments const& channel_arguments) {
-    channel_arguments_ = channel_arguments;
+    opts_.set<GrpcChannelArgumentsNativeOption>(channel_arguments);
     return *this;
   }
 
@@ -196,7 +196,8 @@ class ClientOptions {
    *
    */
   void SetCompressionAlgorithm(grpc_compression_algorithm algorithm) {
-    channel_arguments_.SetCompressionAlgorithm(algorithm);
+    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetCompressionAlgorithm(
+        algorithm);
   }
 
   /**
@@ -245,7 +246,8 @@ class ClientOptions {
                                    "maximum value allowed by gRPC (INT_MAX)");
     }
     auto fallback_timeout_ms = static_cast<int>(ft_ms.count());
-    channel_arguments_.SetGrpclbFallbackTimeout(fallback_timeout_ms);
+    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetGrpclbFallbackTimeout(
+        fallback_timeout_ms);
     return google::cloud::Status();
   }
 
@@ -258,7 +260,8 @@ class ClientOptions {
    *
    */
   void SetUserAgentPrefix(grpc::string const& user_agent_prefix) {
-    channel_arguments_.SetUserAgentPrefix(user_agent_prefix);
+    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetUserAgentPrefix(
+        user_agent_prefix);
   }
 
   /**
@@ -270,7 +273,8 @@ class ClientOptions {
    *
    */
   void SetResourceQuota(grpc::ResourceQuota const& resource_quota) {
-    channel_arguments_.SetResourceQuota(resource_quota);
+    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetResourceQuota(
+        resource_quota);
   }
 
   /**
@@ -283,7 +287,8 @@ class ClientOptions {
    *
    */
   void SetMaxReceiveMessageSize(int size) {
-    channel_arguments_.SetMaxReceiveMessageSize(size);
+    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetMaxReceiveMessageSize(
+        size);
   }
 
   /**
@@ -295,7 +300,8 @@ class ClientOptions {
    *
    */
   void SetMaxSendMessageSize(int size) {
-    channel_arguments_.SetMaxSendMessageSize(size);
+    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetMaxSendMessageSize(
+        size);
   }
 
   /**
@@ -308,7 +314,8 @@ class ClientOptions {
    *
    */
   void SetLoadBalancingPolicyName(grpc::string const& lb_policy_name) {
-    channel_arguments_.SetLoadBalancingPolicyName(lb_policy_name);
+    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetLoadBalancingPolicyName(
+        lb_policy_name);
   }
 
   /**
@@ -320,7 +327,8 @@ class ClientOptions {
    *
    */
   void SetServiceConfigJSON(grpc::string const& service_config_json) {
-    channel_arguments_.SetServiceConfigJSON(service_config_json);
+    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetServiceConfigJSON(
+        service_config_json);
   }
 
   /**
@@ -332,7 +340,8 @@ class ClientOptions {
    *
    */
   void SetSslTargetNameOverride(grpc::string const& name) {
-    channel_arguments_.SetSslTargetNameOverride(name);
+    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetSslTargetNameOverride(
+        name);
   }
 
   /// Return the user agent prefix used by the library.
@@ -462,7 +471,6 @@ class ClientOptions {
     return opts_.get<InstanceAdminEndpointOption>();
   }
 
-  grpc::ChannelArguments channel_arguments_;
   std::string connection_pool_name_;
   Options opts_;
 };

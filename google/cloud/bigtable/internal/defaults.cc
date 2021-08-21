@@ -30,6 +30,8 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
+namespace {
+
 // As learned from experiments, idle gRPC connections enter IDLE state after 4m.
 auto constexpr kDefaultMaxRefreshPeriod =
     std::chrono::milliseconds(std::chrono::minutes(3));
@@ -41,6 +43,21 @@ auto constexpr kDefaultMinRefreshPeriod =
 
 static_assert(kDefaultMinRefreshPeriod <= kDefaultMaxRefreshPeriod,
               "The default period range must be valid");
+
+// For background information on gRPC keepalive pings, see
+//     https://github.com/grpc/grpc/blob/master/doc/keepalive.md
+
+// The default value for GRPC_KEEPALIVE_TIME_MS, how long before a keepalive
+// ping is sent. A better name may have been "period", but consistency with the
+// gRPC naming seems valuable.
+auto constexpr kDefaultKeepaliveTime = std::chrono::seconds(30);
+
+// The default value for GRPC_KEEPALIVE_TIMEOUT_MS, how long the sender (in
+// this case the Cloud Bigtable C++ client library) waits for an acknowledgement
+// for a keepalive ping.
+auto constexpr kDefaultKeepaliveTimeout = std::chrono::seconds(10);
+
+}  // namespace
 
 int DefaultConnectionPoolSize() {
   // For better resource utilization and greater throughput, it is recommended
@@ -100,6 +117,28 @@ Options DefaultOptions(Options opts) {
   if (!opts.has<MaxConnectionRefreshOption>()) {
     opts.set<MaxConnectionRefreshOption>(kDefaultMaxRefreshPeriod);
   }
+
+  using ::google::cloud::internal::GetIntChannelArgument;
+  auto c_arg = [](std::chrono::milliseconds ms) {
+    return static_cast<int>(ms.count());
+  };
+  auto& args = opts.lookup<GrpcChannelArgumentsNativeOption>();
+  if (!GetIntChannelArgument(args, GRPC_ARG_MAX_SEND_MESSAGE_LENGTH)) {
+    args.SetMaxSendMessageSize(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH);
+  }
+  if (!GetIntChannelArgument(args, GRPC_ARG_MAX_RECEIVE_MESSAGE_LENGTH)) {
+    args.SetMaxReceiveMessageSize(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH);
+  }
+  if (!GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIME_MS)) {
+    args.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS, c_arg(kDefaultKeepaliveTime));
+  }
+  if (!GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS)) {
+    args.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS, c_arg(kDefaultKeepaliveTimeout));
+  }
+  // Inserts our user-agent string at the front.
+  auto& products = opts.lookup<UserAgentProductsOption>();
+  products.insert(products.begin(),
+                  ::google::cloud::internal::UserAgentPrefix());
 
   return opts;
 }
