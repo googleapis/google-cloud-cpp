@@ -26,16 +26,15 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 
 template <typename AsyncCallType, typename Request, typename Accumulator,
           typename CombiningFunction>
 future<StatusOr<Accumulator>> StartAsyncRetryMultiPage(
-    char const* location, std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-    std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-    MetadataUpdatePolicy metadata_update_policy, AsyncCallType async_call,
+    char const* location, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+    std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
+    bigtable::MetadataUpdatePolicy metadata_update_policy, AsyncCallType async_call,
     Request request, Accumulator accumulator,
     CombiningFunction combining_function, CompletionQueue cq);
 
@@ -78,9 +77,9 @@ class AsyncRetryMultiPageFuture {
   // a shared pointer. The lifetime is controlled by any pending operations in
   // the CompletionQueue.
   AsyncRetryMultiPageFuture(
-      char const* location, std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-      MetadataUpdatePolicy metadata_update_policy, AsyncCallType async_call,
+      char const* location, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+      std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
+      bigtable::MetadataUpdatePolicy metadata_update_policy, AsyncCallType async_call,
       Request request, Accumulator accumulator,
       CombiningFunction combining_function, CompletionQueue cq)
       : location_(location),
@@ -112,7 +111,7 @@ class AsyncRetryMultiPageFuture {
       return;
     }
     if (!self->rpc_retry_policy_->OnFailure(result.status())) {
-      char const* context = RPCRetryPolicy::IsPermanentFailure(result.status())
+      char const* context = bigtable::RPCRetryPolicy::IsPermanentFailure(result.status())
                                 ? "permanent error"
                                 : "too many transient errors";
       self->final_result_.set_value(
@@ -159,10 +158,10 @@ class AsyncRetryMultiPageFuture {
   }
 
   char const* location_;
-  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
-  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
-  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_prototype_;
-  MetadataUpdatePolicy metadata_update_policy_;
+  std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy_;
+  std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy_;
+  std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy_prototype_;
+  bigtable::MetadataUpdatePolicy metadata_update_policy_;
   AsyncCallType async_call_;
   Request request_;
   Accumulator accumulator_;
@@ -173,9 +172,9 @@ class AsyncRetryMultiPageFuture {
 
   friend future<StatusOr<Accumulator>> StartAsyncRetryMultiPage<
       AsyncCallType, Request, Accumulator, CombiningFunction>(
-      char const* location, std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-      MetadataUpdatePolicy metadata_update_policy, AsyncCallType async_call,
+      char const* location, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+      std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
+      bigtable::MetadataUpdatePolicy metadata_update_policy, AsyncCallType async_call,
       Request request, Accumulator accumulator,
       CombiningFunction combining_function, CompletionQueue cq);
 };
@@ -205,9 +204,9 @@ class AsyncRetryMultiPageFuture {
 template <typename AsyncCallType, typename Request, typename Accumulator,
           typename CombiningFunction>
 future<StatusOr<Accumulator>> StartAsyncRetryMultiPage(
-    char const* location, std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-    std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-    MetadataUpdatePolicy metadata_update_policy, AsyncCallType async_call,
+    char const* location, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+    std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
+    bigtable::MetadataUpdatePolicy metadata_update_policy, AsyncCallType async_call,
     Request request, Accumulator accumulator,
     CombiningFunction combining_function, CompletionQueue cq) {
   std::shared_ptr<AsyncRetryMultiPageFuture<AsyncCallType, Request, Accumulator,
@@ -223,9 +222,8 @@ future<StatusOr<Accumulator>> StartAsyncRetryMultiPage(
   return future;
 }
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

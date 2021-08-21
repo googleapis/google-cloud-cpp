@@ -44,7 +44,7 @@ TEST_F(LoggingDataClientTest, MutateRow) {
 
   EXPECT_CALL(*mock, MutateRow).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingDataClient stub(
+  bigtable_internal::LoggingDataClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -62,7 +62,7 @@ TEST_F(LoggingDataClientTest, CheckAndMutateRow) {
 
   EXPECT_CALL(*mock, CheckAndMutateRow).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingDataClient stub(
+  bigtable_internal::LoggingDataClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -80,7 +80,7 @@ TEST_F(LoggingDataClientTest, ReadModifyWriteRow) {
 
   EXPECT_CALL(*mock, ReadModifyWriteRow).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingDataClient stub(
+  bigtable_internal::LoggingDataClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -102,7 +102,7 @@ TEST_F(LoggingDataClientTest, ReadRows) {
             grpc::ClientReaderInterface<btproto::ReadRowsResponse>>{};
       });
 
-  internal::LoggingDataClient stub(
+  bigtable_internal::LoggingDataClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -122,7 +122,7 @@ TEST_F(LoggingDataClientTest, SampleRowKeys) {
             grpc::ClientReaderInterface<btproto::SampleRowKeysResponse>>{};
       });
 
-  internal::LoggingDataClient stub(
+  bigtable_internal::LoggingDataClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -142,7 +142,7 @@ TEST_F(LoggingDataClientTest, MutateRows) {
             grpc::ClientReaderInterface<btproto::MutateRowsResponse>>{};
       });
 
-  internal::LoggingDataClient stub(
+  bigtable_internal::LoggingDataClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;

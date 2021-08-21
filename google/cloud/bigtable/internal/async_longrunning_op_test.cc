@@ -90,11 +90,11 @@ TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
   google::longrunning::Operation op_arg;
   op_arg.set_name("test_operation_id");
   auto polling_policy =
-      bigtable::DefaultPollingPolicy(internal::kBigtableLimits);
+      DefaultPollingPolicy(bigtable_internal::kBigtableLimits);
   auto metadata_update_policy =
       MetadataUpdatePolicy(op_arg.name(), MetadataParamTypes::NAME);
 
-  auto fut = internal::StartAsyncLongrunningOp<
+  auto fut = bigtable_internal::StartAsyncLongrunningOp<
       AdminClient, google::bigtable::v2::SampleRowKeysResponse>(
       __func__, polling_policy->clone(), metadata_update_policy, client, cq_,
       std::move(op_arg));
@@ -160,7 +160,7 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
               return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::longrunning::Operation>>(longrunning_reader_.get());
             });
-    internal::AsyncLongrunningOperation<testing::MockAdminClient,
+    bigtable_internal::AsyncLongrunningOperation<testing::MockAdminClient,
                                         SampleRowKeysResponse>
         operation(client_, std::move(op));
     auto fut = operation(cq_, std::move(context_));
@@ -176,7 +176,7 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
 
   std::shared_ptr<testing::MockAdminClient> client_;
   std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
-  bigtable::CompletionQueue cq_;
+  CompletionQueue cq_;
   std::unique_ptr<MockAsyncLongrunningOpReader> longrunning_reader_;
   std::unique_ptr<grpc::ClientContext> context_;
 };
@@ -251,7 +251,7 @@ TEST_F(AsyncLongrunningOperationTest, ImmediateSuccess) {
   grpc::Status placeholder_status;
   OperationFinishedSuccessfully(op, placeholder_status);
 
-  internal::AsyncLongrunningOperation<testing::MockAdminClient,
+  bigtable_internal::AsyncLongrunningOperation<testing::MockAdminClient,
                                       SampleRowKeysResponse>
       operation(client_, std::move(op));
   auto fut = operation(cq_, std::move(context_));

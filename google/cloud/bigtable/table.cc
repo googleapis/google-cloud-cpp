@@ -63,7 +63,7 @@ Row TransformReadModifyWriteRowResponse(Response& response) {
 
 }  // namespace
 
-using ClientUtils = bigtable::internal::UnaryClientUtils<DataClient>;
+using ClientUtils = bigtable_internal::UnaryClientUtils<DataClient>;
 
 static_assert(std::is_copy_assignable<bigtable::Table>::value,
               "bigtable::Table must be CopyAssignable");
@@ -159,7 +159,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
   auto retry_policy = clone_rpc_retry_policy();
   auto idempotent_policy = clone_idempotent_mutation_policy();
 
-  bigtable::internal::BulkMutator mutator(app_profile_id_, table_name_,
+  bigtable_internal::BulkMutator mutator(app_profile_id_, table_name_,
                                           *idempotent_policy, std::move(mut));
   while (mutator.HasPendingMutations()) {
     grpc::ClientContext client_context;
@@ -179,7 +179,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
 future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut) {
   auto cq = background_threads_->cq();
   auto mutation_policy = clone_idempotent_mutation_policy();
-  return internal::AsyncRetryBulkApply::Create(
+  return bigtable_internal::AsyncRetryBulkApply::Create(
       cq, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       *mutation_policy, clone_metadata_update_policy(), client_,
       app_profile_id_, table_name(), std::move(mut));
@@ -190,7 +190,7 @@ RowReader Table::ReadRows(RowSet row_set, Filter filter) {
       client_, app_profile_id_, table_name_, std::move(row_set),
       RowReader::NO_ROWS_LIMIT, std::move(filter), clone_rpc_retry_policy(),
       clone_rpc_backoff_policy(), metadata_update_policy_,
-      absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
+      absl::make_unique<bigtable_internal::ReadRowsParserFactory>());
 }
 
 RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
@@ -199,7 +199,7 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
       client_, app_profile_id_, table_name_, std::move(row_set), rows_limit,
       std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       metadata_update_policy_,
-      absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
+      absl::make_unique<bigtable_internal::ReadRowsParserFactory>());
 }
 
 StatusOr<std::pair<bool, Row>> Table::ReadRow(std::string row_key,
@@ -346,7 +346,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
 
 future<StatusOr<std::vector<bigtable::RowKeySample>>> Table::AsyncSampleRows() {
   auto cq = background_threads_->cq();
-  return internal::AsyncRowSampler::Create(
+  return bigtable_internal::AsyncRowSampler::Create(
       cq, client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       metadata_update_policy_, app_profile_id_, table_name_);
 }

@@ -145,12 +145,12 @@ class TableAdmin {
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
         rpc_retry_policy_prototype_(
-            DefaultRPCRetryPolicy(internal::kBigtableTableAdminLimits)),
+            DefaultRPCRetryPolicy(bigtable_internal::kBigtableTableAdminLimits)),
         rpc_backoff_policy_prototype_(
-            DefaultRPCBackoffPolicy(internal::kBigtableTableAdminLimits)),
+            DefaultRPCBackoffPolicy(bigtable_internal::kBigtableTableAdminLimits)),
         metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
         polling_policy_prototype_(
-            DefaultPollingPolicy(internal::kBigtableTableAdminLimits)),
+            DefaultPollingPolicy(bigtable_internal::kBigtableTableAdminLimits)),
         background_threads_(client_->BackgroundThreadsFactory()()) {}
 
   /**
@@ -816,7 +816,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_snippets.cc wait for consistency check
    */
-  google::cloud::future<StatusOr<Consistency>> WaitForConsistency(
+  future<StatusOr<Consistency>> WaitForConsistency(
       std::string const& table_id, std::string const& consistency_token);
 
   /**
@@ -988,20 +988,20 @@ class TableAdmin {
 
   /// Return the fully qualified name of a table in this object's instance.
   std::string TableName(std::string const& table_id) const {
-    return google::cloud::bigtable::TableName(project(), instance_id(),
+    return bigtable::TableName(project(), instance_id(),
                                               table_id);
   }
 
   /// Return the fully qualified name of a Cluster.
   std::string ClusterName(std::string const& cluster_id) const {
-    return google::cloud::bigtable::ClusterName(project(), instance_id(),
+    return bigtable::ClusterName(project(), instance_id(),
                                                 cluster_id);
   }
 
   /// Return the fully qualified name of a Backup.
   std::string BackupName(std::string const& cluster_id,
                          std::string const& backup_id) const {
-    return google::cloud::bigtable::BackupName(project(), instance_id(),
+    return bigtable::BackupName(project(), instance_id(),
                                                cluster_id, backup_id);
   }
 
@@ -1071,7 +1071,7 @@ class TableAdmin {
   std::string instance_name_;
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_prototype_;
   std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_prototype_;
-  bigtable::MetadataUpdatePolicy metadata_update_policy_;
+  MetadataUpdatePolicy metadata_update_policy_;
   std::shared_ptr<PollingPolicy const> polling_policy_prototype_;
   std::shared_ptr<BackgroundThreads> background_threads_;
 };

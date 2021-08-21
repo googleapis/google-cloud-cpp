@@ -36,16 +36,15 @@ using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::Contains;
 using ::testing::Not;
 namespace btadmin = ::google::bigtable::admin::v2;
-namespace bigtable = ::google::cloud::bigtable;
 
 class AdminBackupIntegrationTest
     : public bigtable::testing::TableIntegrationTest {
  protected:
-  std::unique_ptr<bigtable::TableAdmin> table_admin_;
-  std::unique_ptr<bigtable::InstanceAdmin> instance_admin_;
+  std::unique_ptr<TableAdmin> table_admin_;
+  std::unique_ptr<InstanceAdmin> instance_admin_;
 
   void SetUp() override {
-    if (google::cloud::internal::GetEnv(
+    if (internal::GetEnv(
             "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS")
             .value_or("") != "yes") {
       GTEST_SKIP();
@@ -53,24 +52,24 @@ class AdminBackupIntegrationTest
 
     TableIntegrationTest::SetUp();
 
-    std::shared_ptr<bigtable::AdminClient> admin_client =
-        bigtable::CreateDefaultAdminClient(
+    std::shared_ptr<AdminClient> admin_client =
+        CreateDefaultAdminClient(
             bigtable::testing::TableTestEnvironment::project_id(),
-            bigtable::ClientOptions());
-    table_admin_ = absl::make_unique<bigtable::TableAdmin>(
+            ClientOptions());
+    table_admin_ = absl::make_unique<TableAdmin>(
         admin_client, bigtable::testing::TableTestEnvironment::instance_id());
-    auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
+    auto instance_admin_client = CreateDefaultInstanceAdminClient(
         bigtable::testing::TableTestEnvironment::project_id(),
-        bigtable::ClientOptions());
+        ClientOptions());
     instance_admin_ =
-        absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
+        absl::make_unique<InstanceAdmin>(instance_admin_client);
   }
 };
 
 /// @test Verify that `bigtable::TableAdmin` Backup CRUD operations work as
 /// expected.
 TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
-  using GC = bigtable::GcRule;
+  using GC = GcRule;
   std::string const table_id = RandomTableId();
 
   // verify new table id in current table list
@@ -83,7 +82,7 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
       << "Table (" << table_id << ") already exists."
       << " This is unexpected, as the table ids are generated at random.";
   // create table config
-  bigtable::TableConfig table_config(
+  TableConfig table_config(
       {{"fam", GC::MaxNumVersions(5)},
        {"foo", GC::MaxAge(std::chrono::hours(24))}},
       {"a1000", "a2000", "b3000", "m5000"});
@@ -119,7 +118,7 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
 
   auto created_backup = table_admin_->CreateBackup(
       {backup_cluster_id, backup_id, table_id,
-       google::cloud::internal::ToChronoTimePoint(expire_time)});
+       internal::ToChronoTimePoint(expire_time)});
   ASSERT_STATUS_OK(created_backup);
   EXPECT_EQ(created_backup->name(), backup_full_name);
 
@@ -133,7 +132,7 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
       expire_time + google::protobuf::util::TimeUtil::HoursToDuration(12);
   auto updated_backup = table_admin_->UpdateBackup(
       {backup_cluster_id, backup_id,
-       google::cloud::internal::ToChronoTimePoint(updated_expire_time)});
+       internal::ToChronoTimePoint(updated_expire_time)});
 
   // get backup to verify update
   auto get_updated_backup =

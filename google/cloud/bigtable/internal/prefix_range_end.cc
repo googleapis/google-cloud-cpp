@@ -16,9 +16,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 
 std::string PrefixRangeEnd(std::string const& key) {
   auto pos = key.find_last_not_of('\xFF');
@@ -37,8 +36,7 @@ std::string PrefixRangeEnd(std::string const& key) {
   return result;
 }
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

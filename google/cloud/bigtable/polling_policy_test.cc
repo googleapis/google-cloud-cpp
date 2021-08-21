@@ -54,7 +54,7 @@ void CheckLimitedTime(PollingPolicy& tested) {
 /// @test A simple test for the LimitedTimeRetryPolicy.
 TEST(GenericPollingPolicy, Simple) {
   LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
-  ExponentialBackoffPolicy backoff(internal::kBigtableLimits);
+  ExponentialBackoffPolicy backoff(bigtable_internal::kBigtableLimits);
   GenericPollingPolicy<> tested(retry, backoff);
   CheckLimitedTime(tested);
 }
@@ -62,7 +62,7 @@ TEST(GenericPollingPolicy, Simple) {
 /// @test Test cloning for LimitedTimeRetryPolicy.
 TEST(GenericPollingPolicy, Clone) {
   LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
-  ExponentialBackoffPolicy backoff(internal::kBigtableLimits);
+  ExponentialBackoffPolicy backoff(bigtable_internal::kBigtableLimits);
   GenericPollingPolicy<> original(retry, backoff);
   auto tested = original.clone();
   CheckLimitedTime(*tested);
@@ -71,7 +71,7 @@ TEST(GenericPollingPolicy, Clone) {
 /// @test Verify that non-retryable errors cause an immediate failure.
 TEST(GenericPollingPolicy, OnNonRetryable) {
   LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
-  ExponentialBackoffPolicy backoff(internal::kBigtableLimits);
+  ExponentialBackoffPolicy backoff(bigtable_internal::kBigtableLimits);
   GenericPollingPolicy<> tested(retry, backoff);
   EXPECT_FALSE(
       static_cast<PollingPolicy&>(tested).OnFailure(CreatePermanentError()));
@@ -82,7 +82,7 @@ TEST(GenericPollingPolicy, OnNonRetryable) {
 /// @test Verify that IsPermanentError works.
 TEST(GenericPollingPolicy, IsPermanentError) {
   LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
-  ExponentialBackoffPolicy backoff(internal::kBigtableLimits);
+  ExponentialBackoffPolicy backoff(bigtable_internal::kBigtableLimits);
   GenericPollingPolicy<> tested(retry, backoff);
   EXPECT_TRUE(
       tested.IsPermanentError(Status(StatusCode::kPermissionDenied, "")));

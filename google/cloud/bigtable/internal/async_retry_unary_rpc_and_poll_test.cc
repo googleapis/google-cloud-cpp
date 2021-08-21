@@ -29,9 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 namespace {
 
 namespace btproto = ::google::bigtable::admin::v2;
@@ -59,14 +58,14 @@ class AsyncStartPollAfterRetryUnaryRpcTest
         },
         polling_policy(bigtable::DefaultPollingPolicy(no_retries)),
         rpc_retry_policy(
-            bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
+            bigtable::DefaultRPCRetryPolicy(kBigtableLimits)),
         rpc_backoff_policy(
-            bigtable::DefaultRPCBackoffPolicy(internal::kBigtableLimits)),
+            bigtable::DefaultRPCBackoffPolicy(kBigtableLimits)),
         metadata_update_policy(
             "projects/" + k_project_id + "/instances/" + k_instance_id,
-            MetadataParamTypes::PARENT),
-        client(std::make_shared<testing::MockInstanceAdminClient>(
-            ClientOptions().DisableBackgroundThreads(cq_))),
+            bigtable::MetadataParamTypes::PARENT),
+        client(std::make_shared<bigtable::testing::MockInstanceAdminClient>(
+            bigtable::ClientOptions().DisableBackgroundThreads(cq_))),
         create_cluster_reader(
             absl::make_unique<MockAsyncLongrunningOpReader>()),
         get_operation_reader(
@@ -143,10 +142,10 @@ class AsyncStartPollAfterRetryUnaryRpcTest
   future<StatusOr<btproto::Cluster>> SimulateCreateCluster() {
     btproto::CreateClusterRequest request;
     request.set_cluster_id("my_newly_created_cluster");
-    auto fut = internal::AsyncStartPollAfterRetryUnaryRpc<btproto::Cluster>(
+    auto fut = AsyncStartPollAfterRetryUnaryRpc<btproto::Cluster>(
         __func__, std::move(polling_policy), std::move(rpc_retry_policy),
         std::move(rpc_backoff_policy),
-        internal::ConstantIdempotencyPolicy(
+        ConstantIdempotencyPolicy(
             google::cloud::internal::Idempotency::kNonIdempotent),
         std::move(metadata_update_policy), client,
         [this](grpc::ClientContext* context,
@@ -166,12 +165,12 @@ class AsyncStartPollAfterRetryUnaryRpcTest
   std::string const k_instance_id;
   std::string const k_cluster_id;
   std::string const k_table_id;
-  internal::RPCPolicyParameters const no_retries;
-  std::unique_ptr<PollingPolicy> polling_policy;
-  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy;
-  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy;
-  MetadataUpdatePolicy metadata_update_policy;
-  std::shared_ptr<testing::MockInstanceAdminClient> client;
+  RPCPolicyParameters const no_retries;
+  std::unique_ptr<bigtable::PollingPolicy> polling_policy;
+  std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy;
+  std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy;
+  bigtable::MetadataUpdatePolicy metadata_update_policy;
+  std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client;
   std::unique_ptr<MockAsyncLongrunningOpReader> create_cluster_reader;
   std::unique_ptr<MockAsyncLongrunningOpReader> get_operation_reader;
 };
@@ -257,8 +256,7 @@ TEST_F(AsyncStartPollAfterRetryUnaryRpcTest, FinalErrorIsPassedOn) {
 }
 
 }  // namespace
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

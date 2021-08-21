@@ -518,8 +518,8 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
   std::string const table_id = RandomTableId();
 
   auto constexpr kTestMaxVersions = 10;
-  auto const test_gc_rule = bigtable::GcRule::MaxNumVersions(kTestMaxVersions);
-  bigtable::TableConfig table_config = bigtable::TableConfig(
+  auto const test_gc_rule = GcRule::MaxNumVersions(kTestMaxVersions);
+  TableConfig table_config = TableConfig(
       {
           {kFamily1, test_gc_rule},
           {kFamily2, test_gc_rule},
@@ -529,8 +529,8 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
       {});
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
 
-  std::shared_ptr<bigtable::DataClient> data_client =
-      bigtable::CreateDefaultDataClient(project_id(), instance_id(),
+  std::shared_ptr<DataClient> data_client =
+      CreateDefaultDataClient(project_id(), instance_id(),
                                         ClientOptions().enable_tracing("rpc"));
 
   Table table(data_client, table_id);
@@ -550,9 +550,9 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
 }
 
 TEST(ConnectionRefresh, Disabled) {
-  auto client_options = bigtable::ClientOptions().set_max_conn_refresh_period(
+  auto client_options = ClientOptions().set_max_conn_refresh_period(
       std::chrono::seconds(0));
-  auto data_client = bigtable::CreateDefaultDataClient(
+  auto data_client = CreateDefaultDataClient(
       testing::TableTestEnvironment::project_id(),
       testing::TableTestEnvironment::instance_id(), client_options);
   // In general, it is hard to show that something has *not* happened, at best
@@ -573,7 +573,7 @@ TEST(ConnectionRefresh, Disabled) {
     EXPECT_EQ(GRPC_CHANNEL_IDLE, channel->GetState(false));
   }
   // Make sure things still work.
-  bigtable::Table table(data_client, testing::TableTestEnvironment::table_id());
+  Table table(data_client, testing::TableTestEnvironment::table_id());
   std::string const row_key = "row-key-1";
   std::vector<Cell> created{{row_key, kFamily4, "c0", 1000, "v1000"},
                             {row_key, kFamily4, "c1", 2000, "v2000"}};
@@ -592,10 +592,10 @@ TEST(ConnectionRefresh, Disabled) {
 }
 
 TEST(ConnectionRefresh, Frequent) {
-  auto data_client = bigtable::CreateDefaultDataClient(
+  auto data_client = CreateDefaultDataClient(
       testing::TableTestEnvironment::project_id(),
       testing::TableTestEnvironment::instance_id(),
-      bigtable::ClientOptions().set_max_conn_refresh_period(
+      ClientOptions().set_max_conn_refresh_period(
           std::chrono::milliseconds(100)));
 
   for (;;) {
@@ -608,7 +608,7 @@ TEST(ConnectionRefresh, Frequent) {
   }
 
   // Make sure things still work.
-  bigtable::Table table(data_client, testing::TableTestEnvironment::table_id());
+  Table table(data_client, testing::TableTestEnvironment::table_id());
   std::string const row_key = "row-key-1";
   std::vector<Cell> created{{row_key, kFamily4, "c0", 1000, "v1000"},
                             {row_key, kFamily4, "c1", 2000, "v2000"}};

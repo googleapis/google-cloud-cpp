@@ -29,9 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 
 /**
  * Time after which we bail out waiting for a connection to become ready.
@@ -167,7 +166,7 @@ class CommonClient {
     return channel;
   }
 
-  ClientOptions& Options() { return options_; }
+  bigtable::ClientOptions& Options() { return options_; }
 
  private:
   /// Make sure the connections exit, and create them if needed.
@@ -244,7 +243,7 @@ class CommonClient {
 
   std::mutex mu_;
   std::size_t num_pending_refreshes_{};
-  ClientOptions options_;
+  bigtable::ClientOptions options_;
   std::vector<ChannelPtr> channels_;
   std::vector<StubPtr> stubs_;
   std::size_t current_index_;
@@ -259,9 +258,8 @@ class CommonClient {
   std::shared_ptr<ConnectionRefreshState> refresh_state_;
 };
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

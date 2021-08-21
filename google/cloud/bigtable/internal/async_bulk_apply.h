@@ -28,9 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 /**
  * Implement the retry loop for AsyncBulkApply.
  *
@@ -42,40 +41,39 @@ namespace internal {
 class AsyncRetryBulkApply
     : public std::enable_shared_from_this<AsyncRetryBulkApply> {
  public:
-  static future<std::vector<FailedMutation>> Create(
-      CompletionQueue cq, std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-      IdempotentMutationPolicy& idempotent_policy,
-      MetadataUpdatePolicy metadata_update_policy,
+  static future<std::vector<bigtable::FailedMutation>> Create(
+      CompletionQueue cq, std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+      std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
+      bigtable::IdempotentMutationPolicy& idempotent_policy,
+      bigtable::MetadataUpdatePolicy metadata_update_policy,
       std::shared_ptr<bigtable::DataClient> client,
       std::string const& app_profile_id, std::string const& table_name,
-      BulkMutation mut);
+      bigtable::BulkMutation mut);
 
  private:
-  AsyncRetryBulkApply(std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-                      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-                      IdempotentMutationPolicy& idempotent_policy,
-                      MetadataUpdatePolicy metadata_update_policy,
+  AsyncRetryBulkApply(std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+                      std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
+                      bigtable::IdempotentMutationPolicy& idempotent_policy,
+                      bigtable::MetadataUpdatePolicy metadata_update_policy,
                       std::shared_ptr<bigtable::DataClient> client,
                       std::string const& app_profile_id,
-                      std::string const& table_name, BulkMutation mut);
+                      std::string const& table_name, bigtable::BulkMutation mut);
 
   void StartIteration(CompletionQueue cq);
   void OnRead(google::bigtable::v2::MutateRowsResponse response);
   void OnFinish(CompletionQueue cq, google::cloud::Status const& status);
   void SetPromise();
 
-  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
-  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
-  MetadataUpdatePolicy metadata_update_policy_;
+  std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy_;
+  std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy_;
+  bigtable::MetadataUpdatePolicy metadata_update_policy_;
   std::shared_ptr<bigtable::DataClient> client_;
   BulkMutatorState state_;
-  promise<std::vector<FailedMutation>> promise_;
+  promise<std::vector<bigtable::FailedMutation>> promise_;
 };
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

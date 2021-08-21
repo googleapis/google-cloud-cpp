@@ -50,7 +50,7 @@ class DefaultDataClient : public DataClient {
     }
   };
 
-  using Impl = bigtable::internal::CommonClient<DataTraits, btproto::Bigtable>;
+  using Impl = bigtable_internal::CommonClient<DataTraits, btproto::Bigtable>;
 
  public:
   DefaultDataClient(std::string project, std::string instance,
@@ -205,7 +205,7 @@ std::shared_ptr<DataClient> CreateDefaultDataClient(
       std::move(project_id), std::move(instance_id), options);
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    client = std::make_shared<internal::LoggingDataClient>(
+    client = std::make_shared<bigtable_internal::LoggingDataClient>(
         std::move(client), options.tracing_options());
   }
   return client;

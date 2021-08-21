@@ -26,9 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 
 /// SFINAE matcher for `future<StatusOr<absl::optional<T>>>`, false branch.
 template <typename Future>
@@ -82,8 +81,8 @@ template <typename Operation>
 future<
     StatusOr<typename PollableOperationRequestTraits<Operation>::ResponseType>>
 StartAsyncPollOp(char const* location,
-                 std::unique_ptr<PollingPolicy> polling_policy,
-                 MetadataUpdatePolicy metadata_update_policy,
+                 std::unique_ptr<bigtable::PollingPolicy> polling_policy,
+                 bigtable::MetadataUpdatePolicy metadata_update_policy,
                  CompletionQueue cq, Operation operation);
 
 /**
@@ -100,8 +99,8 @@ class PollAsyncOpFuture {
   // a shared pointer. The lifetime is controlled by any pending operations in
   // the CompletionQueue.
   PollAsyncOpFuture(char const* location,
-                    std::unique_ptr<PollingPolicy> polling_policy,
-                    MetadataUpdatePolicy metadata_update_policy,
+                    std::unique_ptr<bigtable::PollingPolicy> polling_policy,
+                    bigtable::MetadataUpdatePolicy metadata_update_policy,
                     CompletionQueue cq, Operation operation)
       : location_(location),
         polling_policy_(std::move(polling_policy)),
@@ -173,8 +172,8 @@ class PollAsyncOpFuture {
   }
 
   char const* location_;
-  std::unique_ptr<PollingPolicy> polling_policy_;
-  MetadataUpdatePolicy metadata_update_policy_;
+  std::unique_ptr<bigtable::PollingPolicy> polling_policy_;
+  bigtable::MetadataUpdatePolicy metadata_update_policy_;
   CompletionQueue cq_;
   Operation operation_;
   promise<StatusOr<Response>> final_result_;
@@ -182,8 +181,8 @@ class PollAsyncOpFuture {
   friend future<StatusOr<
       typename PollableOperationRequestTraits<Operation>::ResponseType>>
   StartAsyncPollOp<Operation>(char const* location,
-                              std::unique_ptr<PollingPolicy> polling_policy,
-                              MetadataUpdatePolicy metadata_update_policy,
+                              std::unique_ptr<bigtable::PollingPolicy> polling_policy,
+                              bigtable::MetadataUpdatePolicy metadata_update_policy,
                               CompletionQueue cq, Operation operation);
 };
 
@@ -206,8 +205,8 @@ template <typename Operation>
 future<
     StatusOr<typename PollableOperationRequestTraits<Operation>::ResponseType>>
 StartAsyncPollOp(char const* location,
-                 std::unique_ptr<PollingPolicy> polling_policy,
-                 MetadataUpdatePolicy metadata_update_policy,
+                 std::unique_ptr<bigtable::PollingPolicy> polling_policy,
+                 bigtable::MetadataUpdatePolicy metadata_update_policy,
                  CompletionQueue cq, Operation operation) {
   auto req = std::shared_ptr<PollAsyncOpFuture<Operation>>(
       new PollAsyncOpFuture<Operation>(location, std::move(polling_policy),
@@ -217,9 +216,8 @@ StartAsyncPollOp(char const* location,
   return req->final_result_.get_future();
 }
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -24,9 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 /// An adapter to use `grpc::Status` with the `google::cloud::*Policies`.
 struct SafeGrpcRetry {
   static inline bool IsTransientFailure(google::cloud::StatusCode code) {
@@ -60,7 +59,10 @@ struct SafeGrpcRetry {
     return !IsOk(status) && !IsTransientFailure(status);
   }
 };
-}  // namespace internal
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable_internal
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
 
 /**
  * Define the interface for controlling how the Bigtable client
@@ -80,7 +82,7 @@ struct SafeGrpcRetry {
  */
 class RPCRetryPolicy {
  public:
-  using RetryableTraits = internal::SafeGrpcRetry;
+  using RetryableTraits = bigtable_internal::SafeGrpcRetry;
 
   virtual ~RPCRetryPolicy() = default;
 
@@ -109,17 +111,17 @@ class RPCRetryPolicy {
   virtual bool OnFailure(grpc::Status const& status) = 0;
 
   static bool IsPermanentFailure(google::cloud::Status const& status) {
-    return internal::SafeGrpcRetry::IsPermanentFailure(status);
+    return bigtable_internal::SafeGrpcRetry::IsPermanentFailure(status);
   }
   // TODO(#2344) - remove ::grpc::Status version.
   static bool IsPermanentFailure(grpc::Status const& status) {
-    return internal::SafeGrpcRetry::IsPermanentFailure(status);
+    return bigtable_internal::SafeGrpcRetry::IsPermanentFailure(status);
   }
 };
 
 /// Return an instance of the default RPCRetryPolicy.
 std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy(
-    internal::RPCPolicyParameters defaults);
+    bigtable_internal::RPCPolicyParameters defaults);
 
 /**
  * Implement a simple "count errors and then stop" retry policy.
@@ -137,7 +139,7 @@ class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
 
  private:
   using Impl = ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-      internal::SafeGrpcRetry>;
+      bigtable_internal::SafeGrpcRetry>;
   Impl impl_;
 };
 
@@ -146,7 +148,7 @@ class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
  */
 class LimitedTimeRetryPolicy : public RPCRetryPolicy {
  public:
-  explicit LimitedTimeRetryPolicy(internal::RPCPolicyParameters defaults);
+  explicit LimitedTimeRetryPolicy(bigtable_internal::RPCPolicyParameters defaults);
   template <typename DurationT>
   explicit LimitedTimeRetryPolicy(DurationT maximum_duration)
       : impl_(maximum_duration) {}
@@ -159,7 +161,7 @@ class LimitedTimeRetryPolicy : public RPCRetryPolicy {
 
  private:
   using Impl =
-      google::cloud::internal::LimitedTimeRetryPolicy<internal::SafeGrpcRetry>;
+      google::cloud::internal::LimitedTimeRetryPolicy<bigtable_internal::SafeGrpcRetry>;
   Impl impl_;
 };
 

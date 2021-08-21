@@ -55,12 +55,12 @@ bool RowRange::IsEmpty() const {
   }
 
   // Special case of an open interval of two consecutive strings.
-  if (start_open && end_open && internal::ConsecutiveRowKeys(*start, *end)) {
+  if (start_open && end_open && bigtable_internal::ConsecutiveRowKeys(*start, *end)) {
     return true;
   }
 
   // Compare the strings as byte vectors (careful with unsigned chars).
-  int cmp = internal::CompareRowKey(*start, *end);
+  int cmp = bigtable_internal::CompareRowKey(*start, *end);
   if (cmp == 0) {
     return start_open || end_open;
   }

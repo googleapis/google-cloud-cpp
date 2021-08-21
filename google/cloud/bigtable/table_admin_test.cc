@@ -110,7 +110,7 @@ auto create_list_tables_lambda =
                  btadmin::ListTablesResponse* response) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListTables",
-            google::cloud::internal::ApiClientHeader()));
+            internal::ApiClientHeader()));
         auto const instance_name =
             "projects/" + kProjectId + "/instances/" + kInstanceId;
         EXPECT_EQ(instance_name, request.parent());
@@ -136,7 +136,7 @@ auto create_get_policy_mock = []() {
             ::google::iam::v1::Policy* response) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     EXPECT_NE(nullptr, response);
     response->set_version(3);
     response->set_etag("random-tag");
@@ -150,7 +150,7 @@ auto create_get_policy_mock_for_backup = [](std::string const& backup_id) {
                      ::google::iam::v1::Policy* response) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy",
-        google::cloud::internal::ApiClientHeader(), backup_id));
+        internal::ApiClientHeader(), backup_id));
     EXPECT_NE(nullptr, response);
     response->set_version(3);
     response->set_etag("random-tag");
@@ -163,7 +163,7 @@ auto create_policy_with_params = []() {
             ::google::iam::v1::Policy* response) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableTableAdmin.SetIamPolicy",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     EXPECT_NE(nullptr, response);
     *response = request.policy();
     return grpc::Status::OK;
@@ -176,7 +176,7 @@ auto create_policy_with_params_for_backup = [](std::string const& backup_id) {
                      ::google::iam::v1::Policy* response) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableTableAdmin.SetIamPolicy",
-        google::cloud::internal::ApiClientHeader(), backup_id));
+        internal::ApiClientHeader(), backup_id));
     EXPECT_NE(nullptr, response);
     *response = request.policy();
     return grpc::Status::OK;
@@ -191,7 +191,7 @@ auto create_list_backups_lambda =
                  btadmin::ListBackupsResponse* response) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListBackups",
-            google::cloud::internal::ApiClientHeader()));
+            internal::ApiClientHeader()));
         auto const instance_name =
             "projects/" + kProjectId + "/instances/" + kInstanceId;
         auto const cluster_name = instance_name + "/clusters/-";
@@ -234,7 +234,7 @@ struct MockRpcFactory {
                                    RequestType const& request,
                                    ResponseType* response) {
           EXPECT_STATUS_OK(IsContextMDValid(
-              *context, method, google::cloud::internal::ApiClientHeader()));
+              *context, method, internal::ApiClientHeader()));
           if (response == nullptr) {
             return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
                                 "invalid call to MockRpcFactory::Create()");
@@ -282,7 +282,7 @@ TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
                                      btadmin::ListTablesResponse*) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListTables",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   auto batch0 = create_list_tables_lambda("", "token-001", {"t0", "t1"});
@@ -331,7 +331,7 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
                                      btadmin::ListTablesResponse*) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListTables",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   EXPECT_CALL(*client_, ListTables).WillRepeatedly(mock_recoverable_failure);
@@ -537,7 +537,7 @@ TEST_F(TableAdminTest, ListBackupsRecoverableFailures) {
                                      btadmin::ListBackupsResponse*) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListBackups",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   auto batch0 = create_list_backups_lambda("", "token-001", {"b0", "b1"});
@@ -586,7 +586,7 @@ TEST_F(TableAdminTest, ListBackupsTooManyFailures) {
                                      btadmin::ListBackupsResponse*) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListBackups",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   EXPECT_CALL(*client_, ListBackups).WillRepeatedly(mock_recoverable_failure);
@@ -669,7 +669,7 @@ TEST_F(TableAdminTest, UpdateBackupSimple) {
       "2029-12-31T00:00:00.000-05:00", &expire_time));
   TableAdmin::UpdateBackupParams params(
       "the-cluster", "the-backup",
-      google::cloud::internal::ToChronoTimePoint(expire_time));
+      internal::ToChronoTimePoint(expire_time));
   tested.UpdateBackup(std::move(params));
 }
 
@@ -689,7 +689,7 @@ TEST_F(TableAdminTest, UpdateBackupUnrecoverableFailures) {
       "2029-12-31T00:00:00.000-05:00", &expire_time));
   TableAdmin::UpdateBackupParams params(
       "the-cluster", "the-backup",
-      google::cloud::internal::ToChronoTimePoint(expire_time));
+      internal::ToChronoTimePoint(expire_time));
   EXPECT_FALSE(tested.UpdateBackup(std::move(params)));
 }
 
@@ -710,7 +710,7 @@ TEST_F(TableAdminTest, UpdateBackupTooManyFailures) {
       "2029-12-31T00:00:00.000-05:00", &expire_time));
   TableAdmin::UpdateBackupParams params(
       "the-cluster", "the-backup",
-      google::cloud::internal::ToChronoTimePoint(expire_time));
+      internal::ToChronoTimePoint(expire_time));
   EXPECT_FALSE(tested.UpdateBackup(std::move(params)));
 }
 
@@ -985,7 +985,7 @@ TEST_F(TableAdminTest, GetIamPolicyRecoverableError) {
                                      iamproto::Policy*) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   auto mock_policy = create_get_policy_mock();
@@ -1061,7 +1061,7 @@ TEST_F(TableAdminTest, SetIamPolicyRecoverableError) {
                                      iamproto::Policy*) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableTableAdmin.SetIamPolicy",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   auto mock_policy = create_policy_with_params();
@@ -1093,7 +1093,7 @@ TEST_F(TableAdminTest, TestIamPermissions) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableTableAdmin.TestIamPermissions",
-            google::cloud::internal::ApiClientHeader()));
+            internal::ApiClientHeader()));
         EXPECT_NE(nullptr, response);
         std::vector<std::string> permissions = {"writer", "reader"};
         response->add_permissions(permissions[0]);
@@ -1123,7 +1123,7 @@ TEST_F(TableAdminTest, TestIamPermissionsForBackup) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableTableAdmin.TestIamPermissions",
-            google::cloud::internal::ApiClientHeader(), backup_id));
+            internal::ApiClientHeader(), backup_id));
         EXPECT_NE(nullptr, response);
         std::vector<std::string> permissions = {"writer", "reader"};
         response->add_permissions(permissions[0]);
@@ -1166,7 +1166,7 @@ TEST_F(TableAdminTest, TestIamPermissionsRecoverableError) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context,
         "google.bigtable.admin.v2.BigtableTableAdmin.TestIamPermissions",
-        google::cloud::internal::ApiClientHeader()));
+        internal::ApiClientHeader()));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
 
@@ -1177,7 +1177,7 @@ TEST_F(TableAdminTest, TestIamPermissionsRecoverableError) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableTableAdmin.TestIamPermissions",
-            google::cloud::internal::ApiClientHeader()));
+            internal::ApiClientHeader()));
         EXPECT_NE(nullptr, response);
         std::vector<std::string> permissions = {"writer", "reader"};
         response->add_permissions(permissions[0]);
@@ -1236,7 +1236,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
       EXPECT_STATUS_OK(IsContextMDValid(
           *context,
           "google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency",
-          google::cloud::internal::ApiClientHeader()));
+          internal::ApiClientHeader()));
       EXPECT_EQ(
           "projects/the-project/instances/test-instance/tables/test-table",
           request.name());
@@ -1255,7 +1255,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
   std::shared_ptr<FakeCompletionQueueImpl> cq_impl(new FakeCompletionQueueImpl);
   CompletionQueue cq(cq_impl);
 
-  google::cloud::future<google::cloud::StatusOr<Consistency>> result =
+  future<StatusOr<Consistency>> result =
       table_admin.AsyncWaitForConsistencyImpl(cq, "test-table",
                                               "test-async-token");
 
@@ -1321,7 +1321,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencyFailure) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency",
-            google::cloud::internal::ApiClientHeader()));
+            internal::ApiClientHeader()));
         EXPECT_EQ(
             "projects/the-project/instances/test-instance/tables/test-table",
             request.name());
@@ -1333,7 +1333,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencyFailure) {
   std::shared_ptr<FakeCompletionQueueImpl> cq_impl(new FakeCompletionQueueImpl);
   CompletionQueue cq(cq_impl);
 
-  google::cloud::future<google::cloud::StatusOr<Consistency>> result =
+  future<StatusOr<Consistency>> result =
       table_admin.AsyncWaitForConsistencyImpl(cq, "test-table",
                                               "test-async-token");
 
@@ -1366,7 +1366,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
  protected:
   template <typename ResultType>
   void FinishTest(
-      google::cloud::future<google::cloud::StatusOr<ResultType>> res_future) {
+      future<StatusOr<ResultType>> res_future) {
     EXPECT_EQ(1U, cq_impl_->size());
     cq_impl_->SimulateCompletion(true);
     EXPECT_EQ(0U, cq_impl_->size());
@@ -1400,7 +1400,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateBackup) {
       "2029-12-31T00:00:00.000-05:00", &expire_time));
   TableAdmin::CreateBackupParams backup_config(
       "the-cluster", "the-backup", "the-table",
-      google::cloud::internal::ToChronoTimePoint(expire_time));
+      internal::ToChronoTimePoint(expire_time));
   FinishTest(table_admin_.AsyncCreateBackupImpl(cq_, backup_config));
 }
 

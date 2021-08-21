@@ -62,21 +62,21 @@ class RowReader {
             std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
             MetadataUpdatePolicy metadata_update_policy,
-            std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
+            std::unique_ptr<bigtable_internal::ReadRowsParserFactory> parser_factory);
 
   RowReader(std::shared_ptr<DataClient> client, std::string app_profile_id,
             std::string table_name, RowSet row_set, std::int64_t rows_limit,
             Filter filter, std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
             MetadataUpdatePolicy metadata_update_policy,
-            std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
+            std::unique_ptr<bigtable_internal::ReadRowsParserFactory> parser_factory);
 
   RowReader(RowReader&&) = default;
 
   ~RowReader();
 
-  using iterator = internal::RowReaderIterator;
-  friend class internal::RowReaderIterator;
+  using iterator = bigtable_internal::RowReaderIterator;
+  friend class bigtable_internal::RowReaderIterator;
 
   /**
    * Input iterator over rows in the response.
@@ -147,8 +147,8 @@ class RowReader {
 
   std::unique_ptr<grpc::ClientContext> context_;
 
-  std::unique_ptr<internal::ReadRowsParserFactory> parser_factory_;
-  std::unique_ptr<internal::ReadRowsParser> parser_;
+  std::unique_ptr<bigtable_internal::ReadRowsParserFactory> parser_factory_;
+  std::unique_ptr<bigtable_internal::ReadRowsParser> parser_;
   std::unique_ptr<
       grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>
       stream_;

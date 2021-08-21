@@ -21,17 +21,16 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 
 namespace btproto = ::google::bigtable::v2;
 
-future<StatusOr<std::vector<RowKeySample>>> AsyncRowSampler::Create(
-    CompletionQueue cq, std::shared_ptr<DataClient> client,
-    std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-    std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-    MetadataUpdatePolicy metadata_update_policy, std::string app_profile_id,
+future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncRowSampler::Create(
+    CompletionQueue cq, std::shared_ptr<bigtable::DataClient> client,
+    std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+    std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
+    bigtable::MetadataUpdatePolicy metadata_update_policy, std::string app_profile_id,
     std::string table_name) {
   std::shared_ptr<AsyncRowSampler> sampler(new AsyncRowSampler(
       std::move(cq), std::move(client), std::move(rpc_retry_policy),
@@ -42,10 +41,10 @@ future<StatusOr<std::vector<RowKeySample>>> AsyncRowSampler::Create(
 }
 
 AsyncRowSampler::AsyncRowSampler(
-    CompletionQueue cq, std::shared_ptr<DataClient> client,
-    std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-    std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-    MetadataUpdatePolicy metadata_update_policy, std::string app_profile_id,
+    CompletionQueue cq, std::shared_ptr<bigtable::DataClient> client,
+    std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+    std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
+    bigtable::MetadataUpdatePolicy metadata_update_policy, std::string app_profile_id,
     std::string table_name)
     : cq_(std::move(cq)),
       client_(std::move(client)),
@@ -85,7 +84,7 @@ void AsyncRowSampler::StartIteration() {
 future<bool> AsyncRowSampler::OnRead(btproto::SampleRowKeysResponse response) {
   if (stream_cancelled_) return make_ready_future(false);
 
-  RowKeySample row_sample;
+  bigtable::RowKeySample row_sample;
   row_sample.offset_bytes = response.offset_bytes();
   row_sample.row_key = std::move(*response.mutable_row_key());
   samples_.emplace_back(std::move(row_sample));
@@ -117,8 +116,7 @@ void AsyncRowSampler::OnFinish(Status const& status) {
   });
 }
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

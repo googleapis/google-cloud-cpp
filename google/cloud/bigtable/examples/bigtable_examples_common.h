@@ -40,7 +40,7 @@ bool RunAdminIntegrationTests();
 
 class AutoShutdownCQ {
  public:
-  AutoShutdownCQ(google::cloud::CompletionQueue cq, std::thread th)
+  AutoShutdownCQ(CompletionQueue cq, std::thread th)
       : cq_(std::move(cq)), th_(std::move(th)) {}
   ~AutoShutdownCQ() {
     cq_.Shutdown();
@@ -51,33 +51,33 @@ class AutoShutdownCQ {
   AutoShutdownCQ& operator=(AutoShutdownCQ&&) = delete;
 
  private:
-  google::cloud::CompletionQueue cq_;
+  CompletionQueue cq_;
   std::thread th_;
 };
 
-using TableCommandType = std::function<void(google::cloud::bigtable::Table,
+using TableCommandType = std::function<void(Table,
                                             std::vector<std::string>)>;
 
-google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
+Commands::value_type MakeCommandEntry(
     std::string const& name, std::vector<std::string> const& args,
     TableCommandType const& function);
 
 using TableAdminCommandType = std::function<void(
-    google::cloud::bigtable::TableAdmin, std::vector<std::string>)>;
+    TableAdmin, std::vector<std::string>)>;
 
 Commands::value_type MakeCommandEntry(std::string const& name,
                                       std::vector<std::string> const& args,
                                       TableAdminCommandType const& function);
 
 using InstanceAdminCommandType = std::function<void(
-    google::cloud::bigtable::InstanceAdmin, std::vector<std::string>)>;
+    InstanceAdmin, std::vector<std::string>)>;
 
 Commands::value_type MakeCommandEntry(std::string const& name,
                                       std::vector<std::string> const& args,
                                       InstanceAdminCommandType const& function);
 
-using TableAsyncCommandType = std::function<void(google::cloud::bigtable::Table,
-                                                 google::cloud::CompletionQueue,
+using TableAsyncCommandType = std::function<void(Table,
+                                                 CompletionQueue,
                                                  std::vector<std::string>)>;
 
 Commands::value_type MakeCommandEntry(std::string const& name,

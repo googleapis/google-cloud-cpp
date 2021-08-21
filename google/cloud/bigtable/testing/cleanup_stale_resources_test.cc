@@ -30,7 +30,7 @@ using ::testing::HasSubstr;
 using ::testing::ReturnRef;
 
 TEST(CleanupStaleResources, CleanupOldTables) {
-  using MockAdminClient = ::google::cloud::bigtable::testing::MockAdminClient;
+  using ::google::cloud::bigtable::testing::MockAdminClient;
   namespace btadmin = ::google::bigtable::admin::v2;
 
   auto const expired_tp =
@@ -60,7 +60,7 @@ TEST(CleanupStaleResources, CleanupOldTables) {
         return grpc::Status::OK;
       });
 
-  bigtable::TableAdmin admin(mock, instance_id);
+  TableAdmin admin(mock, instance_id);
   auto const name_1 = admin.TableName(id_1);
   auto const name_2 = admin.TableName(id_2);
   // Verify only `name_1` and `name_2` are deleted.
@@ -82,7 +82,7 @@ TEST(CleanupStaleResources, CleanupOldTables) {
 }
 
 TEST(CleanupStaleResources, CleanupStaleBackups) {
-  using MockAdminClient = ::google::cloud::bigtable::testing::MockAdminClient;
+  using ::google::cloud::bigtable::testing::MockAdminClient;
   using ::google::protobuf::util::TimeUtil;
   namespace btadmin = ::google::bigtable::admin::v2;
 
@@ -103,7 +103,7 @@ TEST(CleanupStaleResources, CleanupStaleBackups) {
   std::string const prefix = "project/" + project_id + "/instances/" +
                              instance_id + "/clusters/" + cluster_id +
                              "/backups/";
-  google::bigtable::admin::v2::Backup backup_2;
+  btadmin::Backup backup_2;
   backup_2.set_name(prefix + id_2);
   *backup_2.mutable_expire_time() =
       TimeUtil::GetCurrentTime() - TimeUtil::HoursToDuration(24 * 8);
@@ -116,7 +116,7 @@ TEST(CleanupStaleResources, CleanupStaleBackups) {
                     btadmin::ListBackupsResponse* response) {
         for (auto const& backup : {id_1, id_2, id_3, id_4, id_5}) {
           auto& b = *response->add_backups();
-          google::bigtable::admin::v2::Backup backup_1;
+          btadmin::Backup backup_1;
           b.set_name(prefix + backup);
         }
         response->clear_next_page_token();
@@ -149,8 +149,7 @@ TEST(CleanupStaleResources, CleanupStaleBackups) {
 }
 
 TEST(CleanupStaleResources, CleanupOldInstances) {
-  using MockAdminClient =
-      ::google::cloud::bigtable::testing::MockInstanceAdminClient;
+  using ::google::cloud::bigtable::testing::MockInstanceAdminClient;
   namespace btadmin = ::google::bigtable::admin::v2;
 
   auto const expired_tp =
@@ -164,7 +163,7 @@ TEST(CleanupStaleResources, CleanupOldInstances) {
 
   std::string const project_id = "test-project-id";
 
-  auto mock = std::make_shared<MockAdminClient>();
+  auto mock = std::make_shared<MockInstanceAdminClient>();
   EXPECT_CALL(*mock, project()).WillRepeatedly(ReturnRef(project_id));
 
   EXPECT_CALL(*mock, ListInstances)

@@ -30,7 +30,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
   auto table = GetTable();
 
   std::string const row_key = "key-000010";
-  std::vector<bigtable::Cell> created{{row_key, kFamily, "cc1", 1000, "v1000"},
+  std::vector<Cell> created{{row_key, kFamily, "cc1", 1000, "v1000"},
                                       {row_key, kFamily, "cc2", 2000, "v2000"}};
   SingleRowMutation mut(row_key);
   for (auto const& c : created) {
@@ -49,11 +49,11 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
   EXPECT_STATUS_OK(status);
 
   // Validate that the newly created cells are actually in the server.
-  std::vector<bigtable::Cell> expected{
+  std::vector<Cell> expected{
       {row_key, kFamily, "cc1", 1000, "v1000"},
       {row_key, kFamily, "cc2", 2000, "v2000"}};
 
-  auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
+  auto actual = ReadRows(table, Filter::PassAllFilter());
 
   CheckEqualUnordered(expected, actual);
 }
@@ -63,7 +63,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncBulkApply) {
 
   std::string const row_key1 = "key-000010";
   std::string const row_key2 = "key-000020";
-  std::map<std::string, std::vector<bigtable::Cell>> created{
+  std::map<std::string, std::vector<Cell>> created{
       {row_key1,
        {{row_key1, kFamily, "cc1", 1000, "vv10"},
         {row_key1, kFamily, "cc2", 2000, "vv20"}}},
@@ -93,7 +93,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncBulkApply) {
   fut_void.get();
 
   // Validate that the newly created cells are actually in the server.
-  std::vector<bigtable::Cell> expected;
+  std::vector<Cell> expected;
   for (auto const& row_cells : created) {
     auto const& cells = row_cells.second;
     for (auto const& c : cells) {
@@ -101,7 +101,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncBulkApply) {
     }
   }
 
-  auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
+  auto actual = ReadRows(table, Filter::PassAllFilter());
 
   CheckEqualUnordered(expected, actual);
 }
@@ -111,13 +111,13 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowPass) {
 
   std::string const key = "row-key";
 
-  std::vector<bigtable::Cell> created{{key, kFamily, "c1", 0, "v1000"}};
+  std::vector<Cell> created{{key, kFamily, "c1", 0, "v1000"}};
   CreateCells(table, created);
 
   auto fut = table.AsyncCheckAndMutateRow(
-      key, bigtable::Filter::ValueRegex("v1000"),
-      {bigtable::SetCell(kFamily, "c2", 0_ms, "v2000")},
-      {bigtable::SetCell(kFamily, "c3", 0_ms, "v3000")});
+      key, Filter::ValueRegex("v1000"),
+      {SetCell(kFamily, "c2", 0_ms, "v2000")},
+      {SetCell(kFamily, "c3", 0_ms, "v3000")});
 
   // Block until the asynchronous operation completes. This is not what one
   // would do in a real application (the synchronous API is better in that
@@ -125,10 +125,10 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowPass) {
   auto status = fut.get();
   EXPECT_STATUS_OK(status);
 
-  std::vector<bigtable::Cell> expected{{key, kFamily, "c1", 0, "v1000"},
+  std::vector<Cell> expected{{key, kFamily, "c1", 0, "v1000"},
                                        {key, kFamily, "c2", 0, "v2000"}};
 
-  auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
+  auto actual = ReadRows(table, Filter::PassAllFilter());
 
   CheckEqualUnordered(expected, actual);
 }
@@ -138,13 +138,13 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowFail) {
 
   std::string const key = "row-key";
 
-  std::vector<bigtable::Cell> created{{key, kFamily, "c1", 0, "v1000"}};
+  std::vector<Cell> created{{key, kFamily, "c1", 0, "v1000"}};
   CreateCells(table, created);
 
   auto fut = table.AsyncCheckAndMutateRow(
-      key, bigtable::Filter::ValueRegex("not-there"),
-      {bigtable::SetCell(kFamily, "c2", 0_ms, "v2000")},
-      {bigtable::SetCell(kFamily, "c3", 0_ms, "v3000")});
+      key, Filter::ValueRegex("not-there"),
+      {SetCell(kFamily, "c2", 0_ms, "v2000")},
+      {SetCell(kFamily, "c3", 0_ms, "v3000")});
 
   // Block until the asynchronous operation completes. This is not what one
   // would do in a real application (the synchronous API is better in that
@@ -152,10 +152,10 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowFail) {
   auto status = fut.get();
   EXPECT_STATUS_OK(status);
 
-  std::vector<bigtable::Cell> expected{{key, kFamily, "c1", 0, "v1000"},
+  std::vector<Cell> expected{{key, kFamily, "c1", 0, "v1000"},
                                        {key, kFamily, "c3", 0, "v3000"}};
 
-  auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
+  auto actual = ReadRows(table, Filter::PassAllFilter());
 
   CheckEqualUnordered(expected, actual);
 }
@@ -174,24 +174,24 @@ TEST_F(DataAsyncFutureIntegrationTest,
   std::string const family3 = "family3";
   std::string const family4 = "family4";
 
-  std::vector<bigtable::Cell> created{
+  std::vector<Cell> created{
       {row_key1, family1, "column-id1", 1000, "v1000"},
       {row_key1, family2, "column-id2", 2000, "v2000"}};
 
-  std::vector<bigtable::Cell> expected_read{
+  std::vector<Cell> expected_read{
       {row_key1, family1, "column-id1", 1000, "v1000"},
       {row_key1, family2, "column-id2", 2000, "v2000"},
       {row_key1, family1, "column-id1", 1000, "v1000" + add_suffix1},
       {row_key1, family2, "column-id2", 2000, "v2000" + add_suffix2},
       {row_key1, family3, "column-id3", 2000, add_suffix3}};
 
-  std::vector<bigtable::Cell> expected_return{
+  std::vector<Cell> expected_return{
       {row_key1, family1, "column-id1", 0, "v1000" + add_suffix1},
       {row_key1, family2, "column-id2", 0, "v2000" + add_suffix2},
       {row_key1, family3, "column-id3", 0, add_suffix3}};
 
   CreateCells(table, created);
-  using R = bigtable::ReadModifyWriteRule;
+  using R = ReadModifyWriteRule;
 
   auto fut = table.AsyncReadModifyWriteRow(
       row_key1, R::AppendValue(family1, "column-id1", add_suffix1),
@@ -208,7 +208,7 @@ TEST_F(DataAsyncFutureIntegrationTest,
   auto row_cells = GetCellsIgnoringTimestamp(row->cells());
   CheckEqualUnordered(GetCellsIgnoringTimestamp(expected_return), row_cells);
 
-  auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
+  auto actual = ReadRows(table, Filter::PassAllFilter());
   // The returned cells have the timestamps in microseconds and do not match
   // with the ones in the expected cells.
   auto actual_cells_ignore_timestamp = GetCellsIgnoringTimestamp(actual);
@@ -225,7 +225,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableReadRowsAllRows) {
   std::string const row_key3(1024, '3');    // a long key
   std::string const long_value(1024, 'v');  // a long value
 
-  std::vector<bigtable::Cell> created{
+  std::vector<Cell> created{
       {row_key1, "family1", "c1", 1000, "data1"},
       {row_key1, "family1", "c2", 1000, "data2"},
       {row_key2, "family1", "c1", 1000, ""},
@@ -235,7 +235,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableReadRowsAllRows) {
 
   std::promise<void> done;
 
-  std::vector<bigtable::Cell> actual;
+  std::vector<Cell> actual;
 
   promise<Status> stream_status_promise;
   table.AsyncReadRows(
@@ -247,7 +247,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableReadRowsAllRows) {
       [&stream_status_promise](Status const& stream_status) {
         stream_status_promise.set_value(stream_status);
       },
-      bigtable::RowSet(bigtable::RowRange::InfiniteRange()),
+      RowSet(RowRange::InfiniteRange()),
       RowReader::NO_ROWS_LIMIT, Filter::PassAllFilter());
 
   auto stream_status = stream_status_promise.get_future().get();
@@ -261,18 +261,18 @@ TEST_F(DataAsyncFutureIntegrationTest, TableReadRowTest) {
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
 
-  std::vector<bigtable::Cell> created{
+  std::vector<Cell> created{
       {row_key1, "family1", "c1", 1000, "v1000"},
       {row_key2, "family1", "c2", 2000, "v2000"}};
-  std::vector<bigtable::Cell> expected{
+  std::vector<Cell> expected{
       {row_key1, "family1", "c1", 1000, "v1000"}};
 
   CreateCells(table, created);
 
   auto row_cell =
-      table.AsyncReadRow(row_key1, bigtable::Filter::PassAllFilter()).get();
+      table.AsyncReadRow(row_key1, Filter::PassAllFilter()).get();
   ASSERT_STATUS_OK(row_cell);
-  std::vector<bigtable::Cell> actual;
+  std::vector<Cell> actual;
   actual.emplace_back(row_cell->second.cells().at(0));
 
   CheckEqualUnordered(expected, actual);

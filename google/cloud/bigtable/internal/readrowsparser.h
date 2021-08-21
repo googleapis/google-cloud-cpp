@@ -25,9 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 /**
  * Transforms a stream of chunks as returned by the ReadRows streaming
  * RPC into a sequence of rows.
@@ -78,16 +77,16 @@ class ReadRowsParser {
    *
    * @throws std::runtime_error if HasNext() is false.
    */
-  virtual Row Next(grpc::Status& status);
+  virtual bigtable::Row Next(grpc::Status& status);
 
  private:
   /// Holds partially formed data until a full Row is ready.
   struct ParseCell {
-    RowKeyType row;
+    bigtable::RowKeyType row;
     std::string family;
-    ColumnQualifierType column;
+    bigtable::ColumnQualifierType column;
     int64_t timestamp;
-    CellValueType value;
+    bigtable::CellValueType value;
     std::vector<std::string> labels;
   };
 
@@ -98,13 +97,13 @@ class ReadRowsParser {
    * when converting to a result cell, but the key, family and column
    * are copied, because they are possibly reused by following cells.
    */
-  Cell MovePartialToCell();
+  bigtable::Cell MovePartialToCell();
 
   /// Row key for the current row.
-  RowKeyType row_key_;
+  bigtable::RowKeyType row_key_;
 
   /// Parsed cells of a yet unfinished row.
-  std::vector<Cell> cells_;
+  std::vector<bigtable::Cell> cells_;
 
   /// Is the next incoming chunk the first in a cell?
   bool cell_first_chunk_{true};
@@ -113,7 +112,7 @@ class ReadRowsParser {
   ParseCell cell_;
 
   /// Set when a row is ready.
-  RowKeyType last_seen_row_key_;
+  bigtable::RowKeyType last_seen_row_key_;
 
   /// True iff cells_ make up a complete row.
   bool row_ready_{false};
@@ -132,9 +131,8 @@ class ReadRowsParserFactory {
     return absl::make_unique<ReadRowsParser>();
   }
 };
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

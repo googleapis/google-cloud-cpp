@@ -16,9 +16,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 
 bool ConsecutiveRowKeys(std::string const& a, std::string const& b) {
   // The only way for two strings to be consecutive is for the
@@ -31,8 +30,7 @@ bool ConsecutiveRowKeys(std::string const& a, std::string const& b) {
   }
   return b.compare(0, a.length(), a) == 0;
 }
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

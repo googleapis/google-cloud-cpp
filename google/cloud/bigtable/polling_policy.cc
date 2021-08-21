@@ -19,7 +19,7 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::unique_ptr<PollingPolicy> DefaultPollingPolicy(
-    internal::RPCPolicyParameters defaults) {
+    bigtable_internal::RPCPolicyParameters defaults) {
   return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy<>(defaults));
 }
 

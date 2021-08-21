@@ -59,18 +59,18 @@ void TableTestEnvironment::SetUp() {
 
   generator_ = google::cloud::internal::MakeDefaultPRNG();
 
-  auto admin_client = bigtable::CreateDefaultAdminClient(
+  auto admin_client = CreateDefaultAdminClient(
       TableTestEnvironment::project_id(), ClientOptions());
   auto table_admin =
-      bigtable::TableAdmin(admin_client, TableTestEnvironment::instance_id());
+      TableAdmin(admin_client, TableTestEnvironment::instance_id());
 
   std::string const family1 = "family1";
   std::string const family2 = "family2";
   std::string const family3 = "family3";
   std::string const family4 = "family4";
   auto constexpr kTestMaxVersions = 10;
-  auto const test_gc_rule = bigtable::GcRule::MaxNumVersions(kTestMaxVersions);
-  bigtable::TableConfig table_config = bigtable::TableConfig(
+  auto const test_gc_rule = GcRule::MaxNumVersions(kTestMaxVersions);
+  TableConfig table_config = TableConfig(
       {
           {family1, test_gc_rule},
           {family2, test_gc_rule},
@@ -84,10 +84,10 @@ void TableTestEnvironment::SetUp() {
 }
 
 void TableTestEnvironment::TearDown() {
-  auto admin_client = bigtable::CreateDefaultAdminClient(
+  auto admin_client = CreateDefaultAdminClient(
       TableTestEnvironment::project_id(), ClientOptions());
   auto table_admin =
-      bigtable::TableAdmin(admin_client, TableTestEnvironment::instance_id());
+      TableAdmin(admin_client, TableTestEnvironment::instance_id());
 
   ASSERT_STATUS_OK(table_admin.DeleteTable(table_id_));
 }
@@ -105,11 +105,11 @@ std::string TableTestEnvironment::RandomInstanceId() {
 }
 
 void TableIntegrationTest::SetUp() {
-  admin_client_ = bigtable::CreateDefaultAdminClient(
+  admin_client_ = CreateDefaultAdminClient(
       TableTestEnvironment::project_id(), ClientOptions());
-  table_admin_ = absl::make_unique<bigtable::TableAdmin>(
+  table_admin_ = absl::make_unique<TableAdmin>(
       admin_client_, TableTestEnvironment::instance_id());
-  data_client_ = bigtable::CreateDefaultDataClient(
+  data_client_ = CreateDefaultDataClient(
       TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
       ClientOptions());
 
@@ -130,7 +130,7 @@ void TableIntegrationTest::SetUp() {
       break;
     }
     bulk.emplace_back(
-        SingleRowMutation(row->row_key(), bigtable::DeleteFromRow()));
+        SingleRowMutation(row->row_key(), DeleteFromRow()));
     if (bulk.size() > maximum_mutations) {
       break;
     }
@@ -152,15 +152,15 @@ void TableIntegrationTest::SetUp() {
   }
 }
 
-bigtable::Table TableIntegrationTest::GetTable() {
-  return bigtable::Table(data_client_, TableTestEnvironment::table_id());
+Table TableIntegrationTest::GetTable() {
+  return Table(data_client_, TableTestEnvironment::table_id());
 }
 
-std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
-    bigtable::Table& table, bigtable::Filter filter) {
+std::vector<Cell> TableIntegrationTest::ReadRows(
+    Table& table, Filter filter) {
   auto reader = table.ReadRows(
-      bigtable::RowSet(bigtable::RowRange::InfiniteRange()), std::move(filter));
-  std::vector<bigtable::Cell> result;
+      RowSet(RowRange::InfiniteRange()), std::move(filter));
+  std::vector<Cell> result;
   for (auto const& row : reader) {
     EXPECT_STATUS_OK(row);
     std::copy(row->cells().begin(), row->cells().end(),
@@ -169,18 +169,18 @@ std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
   return result;
 }
 
-std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
-    std::string const& table_name, bigtable::Filter filter) {
-  bigtable::Table table(data_client_, table_name);
+std::vector<Cell> TableIntegrationTest::ReadRows(
+    std::string const& table_name, Filter filter) {
+  Table table(data_client_, table_name);
   return ReadRows(table, std::move(filter));
 }
 
-std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
-    bigtable::Table& table, std::int64_t rows_limit, bigtable::Filter filter) {
+std::vector<Cell> TableIntegrationTest::ReadRows(
+    Table& table, std::int64_t rows_limit, Filter filter) {
   auto reader =
-      table.ReadRows(bigtable::RowSet(bigtable::RowRange::InfiniteRange()),
+      table.ReadRows(RowSet(RowRange::InfiniteRange()),
                      rows_limit, std::move(filter));
-  std::vector<bigtable::Cell> result;
+  std::vector<Cell> result;
   for (auto const& row : reader) {
     EXPECT_STATUS_OK(row);
     std::copy(row->cells().begin(), row->cells().end(),
@@ -189,9 +189,9 @@ std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
   return result;
 }
 
-std::vector<bigtable::Cell> TableIntegrationTest::MoveCellsFromReader(
-    bigtable::RowReader& reader) {
-  std::vector<bigtable::Cell> result;
+std::vector<Cell> TableIntegrationTest::MoveCellsFromReader(
+    RowReader& reader) {
+  std::vector<Cell> result;
   for (auto const& row : reader) {
     EXPECT_STATUS_OK(row);
     std::move(row->cells().begin(), row->cells().end(),
@@ -202,20 +202,20 @@ std::vector<bigtable::Cell> TableIntegrationTest::MoveCellsFromReader(
 
 /// A helper function to create a list of cells.
 void TableIntegrationTest::CreateCells(
-    bigtable::Table& table, std::vector<bigtable::Cell> const& cells) {
-  std::map<RowKeyType, bigtable::SingleRowMutation> mutations;
+    Table& table, std::vector<Cell> const& cells) {
+  std::map<RowKeyType, SingleRowMutation> mutations;
   for (auto const& cell : cells) {
     using std::chrono::duration_cast;
     using std::chrono::microseconds;
     using std::chrono::milliseconds;
     auto key = cell.row_key();
-    auto inserted = mutations.emplace(key, bigtable::SingleRowMutation(key));
-    inserted.first->second.emplace_back(bigtable::SetCell(
+    auto inserted = mutations.emplace(key, SingleRowMutation(key));
+    inserted.first->second.emplace_back(SetCell(
         cell.family_name(), cell.column_qualifier(),
         duration_cast<milliseconds>(microseconds(cell.timestamp())),
         cell.value()));
   }
-  bigtable::BulkMutation bulk;
+  BulkMutation bulk;
   for (auto& kv : mutations) {
     bulk.emplace_back(std::move(kv.second));
   }
@@ -223,13 +223,13 @@ void TableIntegrationTest::CreateCells(
   ASSERT_THAT(failures, ::testing::IsEmpty());
 }
 
-std::vector<bigtable::Cell> TableIntegrationTest::GetCellsIgnoringTimestamp(
-    std::vector<bigtable::Cell> cells) {
+std::vector<Cell> TableIntegrationTest::GetCellsIgnoringTimestamp(
+    std::vector<Cell> cells) {
   // Create the expected_cells and actual_cells with same timestamp
-  std::vector<bigtable::Cell> return_cells;
+  std::vector<Cell> return_cells;
   std::transform(cells.begin(), cells.end(), std::back_inserter(return_cells),
                  [](Cell& cell) {
-                   return bigtable::Cell(
+                   return Cell(
                        std::move(cell.row_key()), std::move(cell.family_name()),
                        std::move(cell.column_qualifier()), 0,
                        std::move(cell.value()), std::move(cell.labels()));
@@ -239,7 +239,7 @@ std::vector<bigtable::Cell> TableIntegrationTest::GetCellsIgnoringTimestamp(
 }
 
 void TableIntegrationTest::CheckEqualUnordered(
-    std::vector<bigtable::Cell> expected, std::vector<bigtable::Cell> actual) {
+    std::vector<Cell> expected, std::vector<Cell> actual) {
   std::sort(expected.begin(), expected.end());
   std::sort(actual.begin(), actual.end());
   EXPECT_THAT(actual, ::testing::ContainerEq(expected));
@@ -263,8 +263,8 @@ std::string TableIntegrationTest::RandomBackupId() {
 
 }  // namespace testing
 
-int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
-  auto compare_row_key = internal::CompareRowKey(lhs.row_key(), rhs.row_key());
+int CellCompare(Cell const& lhs, Cell const& rhs) {
+  auto compare_row_key = bigtable_internal::CompareRowKey(lhs.row_key(), rhs.row_key());
   if (compare_row_key != 0) {
     return compare_row_key;
   }
@@ -272,7 +272,7 @@ int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
   if (compare_family_name != 0) {
     return compare_family_name;
   }
-  auto compare_column_qualifier = internal::CompareColumnQualifiers(
+  auto compare_column_qualifier = bigtable_internal::CompareColumnQualifiers(
       lhs.column_qualifier(), rhs.column_qualifier());
   if (compare_column_qualifier != 0) {
     return compare_column_qualifier;
@@ -283,7 +283,7 @@ int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
   if (lhs.timestamp() > rhs.timestamp()) {
     return 1;
   }
-  auto compare_value = internal::CompareCellValues(lhs.value(), rhs.value());
+  auto compare_value = bigtable_internal::CompareCellValues(lhs.value(), rhs.value());
   if (compare_value != 0) {
     return compare_value;
   }
@@ -310,7 +310,7 @@ bool operator<(Cell const& lhs, Cell const& rhs) {
  * This function is not used in this file, but it is used by GoogleTest; without
  * it, failing tests will output binary blobs instead of human-readable text.
  */
-void PrintTo(bigtable::Cell const& cell, std::ostream* os) {
+void PrintTo(Cell const& cell, std::ostream* os) {
   *os << "  row_key=" << cell.row_key() << ", family=" << cell.family_name()
       << ", column=" << cell.column_qualifier()
       << ", timestamp=" << cell.timestamp().count() << ", value=<"

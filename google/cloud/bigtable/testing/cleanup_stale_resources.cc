@@ -22,7 +22,7 @@ namespace cloud {
 namespace bigtable {
 namespace testing {
 
-Status CleanupStaleTables(google::cloud::bigtable::TableAdmin admin) {
+Status CleanupStaleTables(TableAdmin admin) {
   auto const threshold =
       std::chrono::system_clock::now() - std::chrono::hours(48);
   auto const max_table_id = RandomTableId(threshold);
@@ -43,7 +43,7 @@ Status CleanupStaleTables(google::cloud::bigtable::TableAdmin admin) {
   return Status{};
 }
 
-Status CleanupStaleBackups(google::cloud::bigtable::TableAdmin admin) {
+Status CleanupStaleBackups(TableAdmin admin) {
   auto const threshold =
       std::chrono::system_clock::now() - std::chrono::hours(48);
   auto const max_backup_id = RandomBackupId(threshold);
@@ -64,7 +64,7 @@ Status CleanupStaleBackups(google::cloud::bigtable::TableAdmin admin) {
   return Status{};
 }
 
-Status CleanupStaleInstances(google::cloud::bigtable::InstanceAdmin admin) {
+Status CleanupStaleInstances(InstanceAdmin admin) {
   auto const threshold =
       std::chrono::system_clock::now() - std::chrono::hours(48);
   auto const max_instance_id = RandomInstanceId(threshold);

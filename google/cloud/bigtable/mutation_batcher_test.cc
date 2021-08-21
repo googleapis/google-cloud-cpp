@@ -31,19 +31,18 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 namespace btproto = ::google::bigtable::v2;
-namespace bt = ::google::cloud::bigtable;
 
+using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::Not;
 using ::testing::WithParamInterface;
 
 std::size_t MutationSize(SingleRowMutation mut) {
-  google::bigtable::v2::MutateRowsRequest::Entry entry;
+  btproto::MutateRowsRequest::Entry entry;
   mut.MoveTo(&entry);
   return entry.ByteSizeLong();
 }
@@ -175,7 +174,7 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
                 google::cloud::internal::ApiClientHeader()));
             EXPECT_EQ(exchange.req.size(), r.entries_size());
             for (std::size_t i = 0; i != exchange.req.size(); ++i) {
-              google::bigtable::v2::MutateRowsRequest::Entry expected;
+              btproto::MutateRowsRequest::Entry expected;
               SingleRowMutation tmp(exchange.req[i]);
               tmp.MoveTo(&expected);
 
@@ -281,7 +280,7 @@ TEST(OptionsTest, StrictLimits) {
 
 TEST_F(MutationBatcherTest, TrivialTest) {
   std::vector<SingleRowMutation> mutations(
-      {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")})});
+      {SingleRowMutation("foo", {SetCell("fam", "col", 0_ms, "baz")})});
 
   ExpectInteraction({{{mutations[0]}, {ResultPiece({0}, {}, {})}}});
 
@@ -298,9 +297,9 @@ TEST_F(MutationBatcherTest, TrivialTest) {
 
 TEST_F(MutationBatcherTest, BatchIsFlushedImmediately) {
   std::vector<SingleRowMutation> mutations(
-      {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-       SingleRowMutation("foo2", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-       SingleRowMutation("foo3", {bt::SetCell("fam", "col", 0_ms, "baz")})});
+      {SingleRowMutation("foo", {SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo2", {SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo3", {SetCell("fam", "col", 0_ms, "baz")})});
   batcher_.reset(new MutationBatcher(table_, MutationBatcher::Options()
                                                  .SetMaxMutationsPerBatch(10)
                                                  .SetMaxSizePerBatch(2000)
@@ -341,12 +340,12 @@ TEST_P(MutationBatcherBoolParamTest, PerBatchLimitsAreObeyed) {
   // we'll try to schedule the next 3 (total 5 mutation in them), but only 2
   // will be admitted because there is a limit of 2 mutations.
   std::vector<SingleRowMutation> mutations(
-      {SingleRowMutation("foo1", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-       SingleRowMutation("foo2", {bt::SetCell("fam", "col", 0_ms, "baz"),
-                                  bt::SetCell("fam", "col2", 0_ms, "baz"),
-                                  bt::SetCell("fam", "col3", 0_ms, "baz")}),
-       SingleRowMutation("foo3", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-       SingleRowMutation("foo4", {bt::SetCell("fam", "col", 0_ms, "baz")})});
+      {SingleRowMutation("foo1", {SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo2", {SetCell("fam", "col", 0_ms, "baz"),
+                                  SetCell("fam", "col2", 0_ms, "baz"),
+                                  SetCell("fam", "col3", 0_ms, "baz")}),
+       SingleRowMutation("foo3", {SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo4", {SetCell("fam", "col", 0_ms, "baz")})});
 
   bool hit_batch_size_limit = GetParam();
 
@@ -415,9 +414,9 @@ INSTANTIATE_TEST_SUITE_P(SizeOrNumMutationsLimit, MutationBatcherBoolParamTest,
 
 TEST_F(MutationBatcherTest, RequestsWithManyMutationsAreRejected) {
   std::vector<SingleRowMutation> mutations(
-      {SingleRowMutation("foo", {bt::SetCell("fam", "col1", 0_ms, "baz"),
-                                 bt::SetCell("fam", "col2", 0_ms, "baz"),
-                                 bt::SetCell("fam", "col3", 0_ms, "baz")})});
+      {SingleRowMutation("foo", {SetCell("fam", "col1", 0_ms, "baz"),
+                                 SetCell("fam", "col2", 0_ms, "baz"),
+                                 SetCell("fam", "col3", 0_ms, "baz")})});
 
   batcher_.reset(new MutationBatcher(
       table_, MutationBatcher::Options().SetMaxMutationsPerBatch(2)));
@@ -431,10 +430,10 @@ TEST_F(MutationBatcherTest, RequestsWithManyMutationsAreRejected) {
 
 TEST_F(MutationBatcherTest, OutstandingMutationsAreCapped) {
   std::vector<SingleRowMutation> mutations(
-      {SingleRowMutation("foo", {bt::SetCell("fam", "col1", 0_ms, "baz")}),
-       SingleRowMutation("foo", {bt::SetCell("fam", "col1", 0_ms, "baz"),
-                                 bt::SetCell("fam", "col2", 0_ms, "baz"),
-                                 bt::SetCell("fam", "col3", 0_ms, "baz")})});
+      {SingleRowMutation("foo", {SetCell("fam", "col1", 0_ms, "baz")}),
+       SingleRowMutation("foo", {SetCell("fam", "col1", 0_ms, "baz"),
+                                 SetCell("fam", "col2", 0_ms, "baz"),
+                                 SetCell("fam", "col3", 0_ms, "baz")})});
 
   // The second mutation will go through alone. But it will not go through if
   // the first mutation is outstanding due to the outstanding mutations limit.
@@ -471,9 +470,9 @@ TEST_F(MutationBatcherTest, OutstandingMutationsAreCapped) {
 
 TEST_F(MutationBatcherTest, OutstandingMutationSizeIsCapped) {
   std::vector<SingleRowMutation> mutations(
-      {SingleRowMutation("foo", {bt::SetCell("fam", "col1", 0_ms, "baz")}),
-       SingleRowMutation("foo", {bt::SetCell("fam", "col1", 0_ms, "baz"),
-                                 bt::SetCell("fam", "col2", 0_ms, "baz")})});
+      {SingleRowMutation("foo", {SetCell("fam", "col1", 0_ms, "baz")}),
+       SingleRowMutation("foo", {SetCell("fam", "col1", 0_ms, "baz"),
+                                 SetCell("fam", "col2", 0_ms, "baz")})});
 
   // The second mutation will go through alone. But it will not go through if
   // the first mutation is outstanding due to the outstanding size limit.
@@ -511,7 +510,7 @@ TEST_F(MutationBatcherTest, OutstandingMutationSizeIsCapped) {
 
 TEST_F(MutationBatcherTest, LargeMutationsAreRejected) {
   std::vector<SingleRowMutation> mutations(
-      {SingleRowMutation("foo", {bt::SetCell("fam", "col3", 0_ms, "baz")})});
+      {SingleRowMutation("foo", {SetCell("fam", "col3", 0_ms, "baz")})});
 
   batcher_.reset(
       new MutationBatcher(table_, MutationBatcher::Options().SetMaxSizePerBatch(
@@ -536,9 +535,9 @@ TEST_F(MutationBatcherTest, RequestsWithNoMutationsAreRejected) {
 
 TEST_F(MutationBatcherTest, ErrorsArePropagated) {
   std::vector<SingleRowMutation> mutations(
-      {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-       SingleRowMutation("foo2", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-       SingleRowMutation("foo3", {bt::SetCell("fam", "col", 0_ms, "baz")})});
+      {SingleRowMutation("foo", {SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo2", {SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo3", {SetCell("fam", "col", 0_ms, "baz")})});
   batcher_.reset(
       new MutationBatcher(table_, MutationBatcher::Options().SetMaxBatches(1)));
 
@@ -572,11 +571,11 @@ TEST_F(MutationBatcherTest, ErrorsArePropagated) {
 
 TEST_F(MutationBatcherTest, SmallMutationsDontSkipPending) {
   std::vector<SingleRowMutation> mutations(
-      {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-       SingleRowMutation("foo2", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-       SingleRowMutation("foo3", {bt::SetCell("fam", "col1", 0_ms, "baz"),
-                                  bt::SetCell("fam", "col2", 0_ms, "baz")}),
-       SingleRowMutation("foo4", {bt::SetCell("fam", "col", 0_ms, "baz")})});
+      {SingleRowMutation("foo", {SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo2", {SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo3", {SetCell("fam", "col1", 0_ms, "baz"),
+                                  SetCell("fam", "col2", 0_ms, "baz")}),
+       SingleRowMutation("foo4", {SetCell("fam", "col", 0_ms, "baz")})});
   batcher_.reset(new MutationBatcher(
       table_,
       MutationBatcher::Options().SetMaxBatches(1).SetMaxMutationsPerBatch(2)));
@@ -644,9 +643,9 @@ TEST_F(MutationBatcherTest, SmallMutationsDontSkipPending) {
 // Test that waiting until all pending operations finish works in a simple case.
 TEST_F(MutationBatcherTest, WaitForNoPendingSimple) {
   std::vector<SingleRowMutation> mutations(
-      {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-       SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-       SingleRowMutation("baz", {bt::SetCell("fam", "col", 0_ms, "baz")})});
+      {SingleRowMutation("foo", {SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("bar", {SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("baz", {SetCell("fam", "col", 0_ms, "baz")})});
 
   batcher_.reset(new MutationBatcher(
       table_,
@@ -702,10 +701,10 @@ TEST_F(MutationBatcherTest, WaitForNoPendingSimple) {
 // Test that pending and failed mutations are properly accounted.
 TEST_F(MutationBatcherTest, WaitForNoPendingEdgeCases) {
   std::vector<SingleRowMutation> mutations(
-      {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-       SingleRowMutation("foo2", {bt::SetCell("fam", "col", 0_ms, "baz")}),
-       SingleRowMutation("foo3", {bt::SetCell("fam", "col", 0_ms, "baz"),
-                                  bt::SetCell("fam", "col", 0_ms, "baz")})});
+      {SingleRowMutation("foo", {SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo2", {SetCell("fam", "col", 0_ms, "baz")}),
+       SingleRowMutation("foo3", {SetCell("fam", "col", 0_ms, "baz"),
+                                  SetCell("fam", "col", 0_ms, "baz")})});
 
   batcher_.reset(new MutationBatcher(
       table_,
@@ -788,7 +787,7 @@ TEST_F(MutationBatcherTest, ApplyCompletesImmediately) {
   auto* batcher_raw_ptr = new ApplyInterceptingBatcher(table_);
   batcher_.reset(batcher_raw_ptr);
   std::vector<SingleRowMutation> mutations(
-      {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")})});
+      {SingleRowMutation("foo", {SetCell("fam", "col", 0_ms, "baz")})});
 
   auto* reader =
       new MockClientAsyncReaderInterface<btproto::MutateRowsResponse>;

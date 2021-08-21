@@ -78,7 +78,7 @@ class RPCBackoffPolicy {
 
 /// Return an instance of the default RPCBackoffPolicy.
 std::unique_ptr<RPCBackoffPolicy> DefaultRPCBackoffPolicy(
-    internal::RPCPolicyParameters defaults);
+    bigtable_internal::RPCPolicyParameters defaults);
 
 /**
  * Implement a simple exponential backoff policy.
@@ -86,7 +86,7 @@ std::unique_ptr<RPCBackoffPolicy> DefaultRPCBackoffPolicy(
 class ExponentialBackoffPolicy : public RPCBackoffPolicy {
  public:
   // NOLINTNEXTLINE(google-explicit-constructor)
-  ExponentialBackoffPolicy(internal::RPCPolicyParameters defaults);
+  ExponentialBackoffPolicy(bigtable_internal::RPCPolicyParameters defaults);
   template <typename DurationT1, typename DurationT2>
   ExponentialBackoffPolicy(DurationT1 initial_delay, DurationT2 maximum_delay)
       : impl_(initial_delay / 2, maximum_delay, 2.0) {}

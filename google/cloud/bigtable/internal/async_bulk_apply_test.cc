@@ -46,11 +46,11 @@ class AsyncBulkApplyTest : public bigtable::testing::TableTestFixture {
       : TableTestFixture(
             CompletionQueue(std::make_shared<FakeCompletionQueueImpl>())),
         rpc_retry_policy_(
-            bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
-        rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy(
-            internal::kBigtableTableAdminLimits)),
+            DefaultRPCRetryPolicy(bigtable_internal::kBigtableLimits)),
+        rpc_backoff_policy_(DefaultRPCBackoffPolicy(
+            bigtable_internal::kBigtableTableAdminLimits)),
         idempotent_mutation_policy_(
-            bigtable::DefaultIdempotentMutationPolicy()),
+            DefaultIdempotentMutationPolicy()),
         metadata_update_policy_("my_table", MetadataParamTypes::NAME) {}
 
   void SimulateIteration() {
@@ -77,9 +77,9 @@ std::vector<Status> StatusOnly(std::vector<FailedMutation> const& failures) {
 }
 
 TEST_F(AsyncBulkApplyTest, NoMutations) {
-  bigtable::BulkMutation mut;
+  BulkMutation mut;
 
-  auto bulk_apply_future = internal::AsyncRetryBulkApply::Create(
+  auto bulk_apply_future = bigtable_internal::AsyncRetryBulkApply::Create(
       cq_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
       *idempotent_mutation_policy_, metadata_update_policy_, client_,
       "my-app-profile", "my-table", std::move(mut));
@@ -88,11 +88,11 @@ TEST_F(AsyncBulkApplyTest, NoMutations) {
 }
 
 TEST_F(AsyncBulkApplyTest, Success) {
-  bigtable::BulkMutation mut{
-      bigtable::SingleRowMutation("foo2",
-                                  {bigtable::SetCell("f", "c", 0_ms, "v2")}),
-      bigtable::SingleRowMutation("foo3",
-                                  {bigtable::SetCell("f", "c", 0_ms, "v3")}),
+  BulkMutation mut{
+      SingleRowMutation("foo2",
+                                  {SetCell("f", "c", 0_ms, "v2")}),
+      SingleRowMutation("foo3",
+                                  {SetCell("f", "c", 0_ms, "v3")}),
   };
 
   auto* reader =
@@ -125,7 +125,7 @@ TEST_F(AsyncBulkApplyTest, Success) {
       })
       .RetiresOnSaturation();
 
-  auto bulk_apply_future = internal::AsyncRetryBulkApply::Create(
+  auto bulk_apply_future = bigtable_internal::AsyncRetryBulkApply::Create(
       cq_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
       *idempotent_mutation_policy_, metadata_update_policy_, client_,
       "my-app-profile", "my-table", std::move(mut));
@@ -141,11 +141,11 @@ TEST_F(AsyncBulkApplyTest, Success) {
 }
 
 TEST_F(AsyncBulkApplyTest, PartialSuccessRetry) {
-  bigtable::BulkMutation mut{
-      bigtable::SingleRowMutation("foo2",
-                                  {bigtable::SetCell("f", "c", 0_ms, "v2")}),
-      bigtable::SingleRowMutation("foo3",
-                                  {bigtable::SetCell("f", "c", 0_ms, "v3")}),
+  BulkMutation mut{
+      SingleRowMutation("foo2",
+                                  {SetCell("f", "c", 0_ms, "v2")}),
+      SingleRowMutation("foo3",
+                                  {SetCell("f", "c", 0_ms, "v3")}),
   };
 
   auto* reader0 =
@@ -196,7 +196,7 @@ TEST_F(AsyncBulkApplyTest, PartialSuccessRetry) {
             reader1);
       });
 
-  auto bulk_apply_future = internal::AsyncRetryBulkApply::Create(
+  auto bulk_apply_future = bigtable_internal::AsyncRetryBulkApply::Create(
       cq_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
       *idempotent_mutation_policy_, metadata_update_policy_, client_,
       "my-app-profile", "my-table", std::move(mut));
@@ -216,11 +216,11 @@ TEST_F(AsyncBulkApplyTest, PartialSuccessRetry) {
 }
 
 TEST_F(AsyncBulkApplyTest, DefaultFailureRetry) {
-  bigtable::BulkMutation mut{
-      bigtable::SingleRowMutation("foo2",
-                                  {bigtable::SetCell("f", "c", 0_ms, "v2")}),
-      bigtable::SingleRowMutation("foo3",
-                                  {bigtable::SetCell("f", "c", 0_ms, "v3")}),
+  BulkMutation mut{
+      SingleRowMutation("foo2",
+                                  {SetCell("f", "c", 0_ms, "v2")}),
+      SingleRowMutation("foo3",
+                                  {SetCell("f", "c", 0_ms, "v3")}),
   };
 
   auto* reader0 =
@@ -275,7 +275,7 @@ TEST_F(AsyncBulkApplyTest, DefaultFailureRetry) {
             reader1);
       });
 
-  auto bulk_apply_future = internal::AsyncRetryBulkApply::Create(
+  auto bulk_apply_future = bigtable_internal::AsyncRetryBulkApply::Create(
       cq_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
       *idempotent_mutation_policy_, metadata_update_policy_, client_,
       "my-app-profile", "my-table", std::move(mut));
@@ -296,11 +296,11 @@ TEST_F(AsyncBulkApplyTest, DefaultFailureRetry) {
 }
 
 TEST_F(AsyncBulkApplyTest, TooManyFailures) {
-  bigtable::BulkMutation mut{
-      bigtable::SingleRowMutation("foo2",
-                                  {bigtable::SetCell("f", "c", 0_ms, "v2")}),
-      bigtable::SingleRowMutation("foo3",
-                                  {bigtable::SetCell("f", "c", 0_ms, "v3")}),
+  BulkMutation mut{
+      SingleRowMutation("foo2",
+                                  {SetCell("f", "c", 0_ms, "v2")}),
+      SingleRowMutation("foo3",
+                                  {SetCell("f", "c", 0_ms, "v3")}),
   };
 
   // We give up on the 3rd error.
@@ -322,7 +322,7 @@ TEST_F(AsyncBulkApplyTest, TooManyFailures) {
       });
 
   auto limited_retry_policy = LimitedErrorCountRetryPolicy(kErrorCount);
-  auto bulk_apply_future = internal::AsyncRetryBulkApply::Create(
+  auto bulk_apply_future = bigtable_internal::AsyncRetryBulkApply::Create(
       cq_, limited_retry_policy.clone(), rpc_backoff_policy_->clone(),
       *idempotent_mutation_policy_, metadata_update_policy_, client_,
       "my-app-profile", "my-table", std::move(mut));
@@ -345,11 +345,11 @@ TEST_F(AsyncBulkApplyTest, TooManyFailures) {
 }
 
 TEST_F(AsyncBulkApplyTest, UsesBackoffPolicy) {
-  bigtable::BulkMutation mut{
-      bigtable::SingleRowMutation("foo2",
-                                  {bigtable::SetCell("f", "c", 0_ms, "v2")}),
-      bigtable::SingleRowMutation("foo3",
-                                  {bigtable::SetCell("f", "c", 0_ms, "v3")}),
+  BulkMutation mut{
+      SingleRowMutation("foo2",
+                                  {SetCell("f", "c", 0_ms, "v2")}),
+      SingleRowMutation("foo3",
+                                  {SetCell("f", "c", 0_ms, "v3")}),
   };
 
   auto grpc_error = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
@@ -397,7 +397,7 @@ TEST_F(AsyncBulkApplyTest, UsesBackoffPolicy) {
         return reader;
       });
 
-  auto bulk_apply_future = internal::AsyncRetryBulkApply::Create(
+  auto bulk_apply_future = bigtable_internal::AsyncRetryBulkApply::Create(
       cq_, rpc_retry_policy_->clone(), std::move(mock),
       *idempotent_mutation_policy_, metadata_update_policy_, client_,
       "my-app-profile", "my-table", std::move(mut));
@@ -414,11 +414,11 @@ TEST_F(AsyncBulkApplyTest, UsesBackoffPolicy) {
 }
 
 TEST_F(AsyncBulkApplyTest, CancelDuringBackoff) {
-  bigtable::BulkMutation mut{
-      bigtable::SingleRowMutation("foo2",
-                                  {bigtable::SetCell("f", "c", 0_ms, "v2")}),
-      bigtable::SingleRowMutation("foo3",
-                                  {bigtable::SetCell("f", "c", 0_ms, "v3")}),
+  BulkMutation mut{
+      SingleRowMutation("foo2",
+                                  {SetCell("f", "c", 0_ms, "v2")}),
+      SingleRowMutation("foo3",
+                                  {SetCell("f", "c", 0_ms, "v3")}),
   };
 
   auto grpc_error = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
@@ -445,7 +445,7 @@ TEST_F(AsyncBulkApplyTest, CancelDuringBackoff) {
         return reader;
       });
 
-  auto bulk_apply_future = internal::AsyncRetryBulkApply::Create(
+  auto bulk_apply_future = bigtable_internal::AsyncRetryBulkApply::Create(
       cq_, rpc_retry_policy_->clone(), std::move(mock),
       *idempotent_mutation_policy_, metadata_update_policy_, client_,
       "my-app-profile", "my-table", std::move(mut));

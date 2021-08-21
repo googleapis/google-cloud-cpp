@@ -46,7 +46,7 @@ class AsyncSampleRowKeysTest : public bigtable::testing::TableTestFixture {
       : TableTestFixture(
             CompletionQueue(std::make_shared<FakeCompletionQueueImpl>())),
         rpc_retry_policy_(
-            bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
+            DefaultRPCRetryPolicy(bigtable_internal::kBigtableLimits)),
         metadata_update_policy_("my_table", MetadataParamTypes::NAME) {}
 
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_;
@@ -278,7 +278,7 @@ TEST_F(AsyncSampleRowKeysTest, UsesBackoff) {
         return reader;
       });
 
-  auto samples_future = internal::AsyncRowSampler::Create(
+  auto samples_future = bigtable_internal::AsyncRowSampler::Create(
       cq_, client_, rpc_retry_policy_->clone(), std::move(mock),
       metadata_update_policy_, "my-app-profile", "my-table");
 
@@ -330,7 +330,7 @@ TEST_F(AsyncSampleRowKeysTest, CancelDuringBackoff) {
         return reader;
       });
 
-  auto samples_future = internal::AsyncRowSampler::Create(
+  auto samples_future = bigtable_internal::AsyncRowSampler::Create(
       cq_, client_, rpc_retry_policy_->clone(), std::move(mock),
       metadata_update_policy_, "my-app-profile", "my-table");
 

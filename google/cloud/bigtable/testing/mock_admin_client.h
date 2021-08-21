@@ -24,7 +24,7 @@ namespace cloud {
 namespace bigtable {
 namespace testing {
 
-class MockAdminClient : public bigtable::AdminClient {
+class MockAdminClient : public AdminClient {
  public:
   explicit MockAdminClient(ClientOptions options = {})
       : options_(std::move(options)) {}

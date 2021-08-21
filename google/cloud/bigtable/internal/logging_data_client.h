@@ -21,9 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 
 namespace btproto = ::google::bigtable::v2;
 
@@ -33,10 +32,10 @@ namespace btproto = ::google::bigtable::v2;
  * This implementation does not support multiple threads, or refresh
  * authorization tokens.  In other words, it is extremely bare bones.
  */
-class LoggingDataClient : public DataClient {
+class LoggingDataClient : public bigtable::DataClient {
  public:
-  LoggingDataClient(std::shared_ptr<google::cloud::bigtable::DataClient> child,
-                    google::cloud::TracingOptions options)
+  LoggingDataClient(std::shared_ptr<bigtable::DataClient> child,
+                    TracingOptions options)
       : child_(std::move(child)), tracing_options_(std::move(options)) {}
 
   std::string const& project_id() const override {
@@ -141,13 +140,12 @@ class LoggingDataClient : public DataClient {
     return child_->BackgroundThreadsFactory();
   }
 
-  std::shared_ptr<google::cloud::bigtable::DataClient> child_;
+  std::shared_ptr<bigtable::DataClient> child_;
   google::cloud::TracingOptions tracing_options_;
 };
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

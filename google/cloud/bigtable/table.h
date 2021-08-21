@@ -215,13 +215,13 @@ class Table {
         table_name_(TableName(client_, table_id)),
         table_id_(table_id),
         rpc_retry_policy_prototype_(
-            bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
+            DefaultRPCRetryPolicy(bigtable_internal::kBigtableLimits)),
         rpc_backoff_policy_prototype_(
-            bigtable::DefaultRPCBackoffPolicy(internal::kBigtableLimits)),
+            DefaultRPCBackoffPolicy(bigtable_internal::kBigtableLimits)),
         metadata_update_policy_(
             MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME)),
         idempotent_mutation_policy_(
-            bigtable::DefaultIdempotentMutationPolicy()),
+            DefaultIdempotentMutationPolicy()),
         background_threads_(client_->BackgroundThreadsFactory()()) {}
 
   /**
@@ -604,7 +604,7 @@ class Table {
    * @par Examples
    * @snippet data_snippets.cc sample row keys
    */
-  StatusOr<std::vector<bigtable::RowKeySample>> SampleRows();
+  StatusOr<std::vector<RowKeySample>> SampleRows();
 
   /**
    * Asynchronously obtains a sample of the row keys in the table, including
@@ -627,7 +627,7 @@ class Table {
    * @par Examples
    * @snippet data_async_snippets.cc async sample row keys
    */
-  future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncSampleRows();
+  future<StatusOr<std::vector<RowKeySample>>> AsyncSampleRows();
 
   /**
    * Atomically read and modify the row in the server, returning the
@@ -657,7 +657,7 @@ class Table {
    */
   template <typename... Args>
   StatusOr<Row> ReadModifyWriteRow(std::string row_key,
-                                   bigtable::ReadModifyWriteRule rule,
+                                   ReadModifyWriteRule rule,
                                    Args&&... rules) {
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_row_key(std::move(row_key));
@@ -666,7 +666,7 @@ class Table {
     // if the types do not match
     static_assert(
         absl::conjunction<
-            std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
+            std::is_convertible<Args, ReadModifyWriteRule>...>::value,
         "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
         "convertible to bigtable::ReadModifyWriteRule");
 
@@ -706,7 +706,7 @@ class Table {
    */
   template <typename... Args>
   future<StatusOr<Row>> AsyncReadModifyWriteRow(
-      std::string row_key, bigtable::ReadModifyWriteRule rule,
+      std::string row_key, ReadModifyWriteRule rule,
       Args&&... rules) {
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_row_key(std::move(row_key));
@@ -715,7 +715,7 @@ class Table {
     // if the types do not match
     static_assert(
         absl::conjunction<
-            std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
+            std::is_convertible<Args, ReadModifyWriteRule>...>::value,
         "The arguments passed to AsyncReadModifyWriteRow(row_key,...) must be "
         "convertible to bigtable::ReadModifyWriteRule");
 
@@ -805,7 +805,7 @@ class Table {
         std::move(on_row), std::move(on_finish), std::move(row_set), rows_limit,
         std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
         metadata_update_policy_,
-        absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
+        absl::make_unique<bigtable_internal::ReadRowsParserFactory>());
   }
 
   /**
@@ -856,7 +856,7 @@ class Table {
 
   template <typename... Args>
   void AddRules(google::bigtable::v2::ReadModifyWriteRowRequest& request,
-                bigtable::ReadModifyWriteRule rule, Args&&... args) {
+                ReadModifyWriteRule rule, Args&&... args) {
     *request.add_rules() = std::move(rule).as_proto();
     AddRules(request, std::forward<Args>(args)...);
   }

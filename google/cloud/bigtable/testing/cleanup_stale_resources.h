@@ -33,7 +33,7 @@ namespace testing {
  * times out, and (b) avoiding flakes caused by quota exhaustion is necessary
  * for healthy builds.
  */
-Status CleanupStaleTables(google::cloud::bigtable::TableAdmin admin);
+Status CleanupStaleTables(TableAdmin admin);
 
 /**
  * Remove stale test backups.
@@ -45,7 +45,7 @@ Status CleanupStaleTables(google::cloud::bigtable::TableAdmin admin);
  * times out, and (b) avoiding flakes caused by quota exhaustion is necessary
  * for healthy builds.
  */
-Status CleanupStaleBackups(google::cloud::bigtable::TableAdmin admin);
+Status CleanupStaleBackups(TableAdmin admin);
 
 /**
  * Remove stale test instances.
@@ -57,7 +57,7 @@ Status CleanupStaleBackups(google::cloud::bigtable::TableAdmin admin);
  * crashes or times out, and (b) avoiding flakes caused by quota exhaustion is
  * necessary for healthy builds.
  */
-Status CleanupStaleInstances(google::cloud::bigtable::InstanceAdmin admin);
+Status CleanupStaleInstances(InstanceAdmin admin);
 
 }  // namespace testing
 }  // namespace bigtable

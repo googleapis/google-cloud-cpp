@@ -131,25 +131,25 @@ namespace btadmin = ::google::bigtable::admin::v2;
  * should only reconnect on those errors that indicate the credentials or
  * connections need refreshing.
  */
-class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
+class DefaultAdminClient : public AdminClient {
  private:
   // Introduce an early `private:` section because this type is used to define
   // the public interface, it should not be part of the public interface.
   struct AdminTraits {
     static std::string const& Endpoint(
-        google::cloud::bigtable::ClientOptions& options) {
+        ClientOptions& options) {
       return options.admin_endpoint();
     }
   };
 
-  using Impl = ::google::cloud::bigtable::internal::CommonClient<
-      AdminTraits, btadmin::BigtableTableAdmin>;
+  using Impl =
+      bigtable_internal::CommonClient<AdminTraits, btadmin::BigtableTableAdmin>;
 
  public:
   using AdminStubPtr = Impl::StubPtr;
 
   DefaultAdminClient(std::string project,
-                     google::cloud::bigtable::ClientOptions options)
+                     ClientOptions options)
       : project_(std::move(project)), impl_(std::move(options)) {}
 
   std::string const& project() const override { return project_; }
@@ -452,7 +452,7 @@ std::shared_ptr<AdminClient> CreateDefaultAdminClient(
       std::make_shared<DefaultAdminClient>(std::move(project), options);
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    client = std::make_shared<internal::LoggingAdminClient>(
+    client = std::make_shared<bigtable_internal::LoggingAdminClient>(
         std::move(client), options.tracing_options());
   }
   return client;

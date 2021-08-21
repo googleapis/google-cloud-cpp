@@ -32,27 +32,26 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 /**
  * Objects of this class represent the state of receiving row keys via
  * AsyncSampleRows.
  */
 class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
  public:
-  static future<StatusOr<std::vector<RowKeySample>>> Create(
-      CompletionQueue cq, std::shared_ptr<DataClient> client,
-      std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-      MetadataUpdatePolicy metadata_update_policy, std::string app_profile_id,
+  static future<StatusOr<std::vector<bigtable::RowKeySample>>> Create(
+      CompletionQueue cq, std::shared_ptr<bigtable::DataClient> client,
+      std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+      std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
+      bigtable::MetadataUpdatePolicy metadata_update_policy, std::string app_profile_id,
       std::string table_name);
 
  private:
-  AsyncRowSampler(CompletionQueue cq, std::shared_ptr<DataClient> client,
-                  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-                  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-                  MetadataUpdatePolicy metadata_update_policy,
+  AsyncRowSampler(CompletionQueue cq, std::shared_ptr<bigtable::DataClient> client,
+                  std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+                  std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
+                  bigtable::MetadataUpdatePolicy metadata_update_policy,
                   std::string app_profile_id, std::string table_name);
 
   void StartIteration();
@@ -60,21 +59,20 @@ class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
   void OnFinish(Status const& status);
 
   CompletionQueue cq_;
-  std::shared_ptr<DataClient> client_;
-  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
-  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
-  MetadataUpdatePolicy metadata_update_policy_;
+  std::shared_ptr<bigtable::DataClient> client_;
+  std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy_;
+  std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy_;
+  bigtable::MetadataUpdatePolicy metadata_update_policy_;
   std::string app_profile_id_;
   std::string table_name_;
 
   bool stream_cancelled_;
-  std::vector<RowKeySample> samples_;
-  promise<StatusOr<std::vector<RowKeySample>>> promise_;
+  std::vector<bigtable::RowKeySample> samples_;
+  promise<StatusOr<std::vector<bigtable::RowKeySample>>> promise_;
 };
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

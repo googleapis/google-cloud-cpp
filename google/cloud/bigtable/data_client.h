@@ -24,16 +24,18 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
 // Forward declare some classes so we can be friends.
-class Table;
-namespace internal {
 class AsyncRetryBulkApply;
 class AsyncRowSampler;
 class BulkMutator;
 class LoggingDataClient;
-}  // namespace internal
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable_internal
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+class Table;
 
 /**
  * Connects to Cloud Bigtable's data manipulation APIs.
@@ -89,13 +91,13 @@ class DataClient {
   // classes that do use them friends.
  protected:
   friend class Table;
-  friend class internal::AsyncRetryBulkApply;
-  friend class internal::AsyncRowSampler;
-  friend class internal::BulkMutator;
+  friend class bigtable_internal::AsyncRetryBulkApply;
+  friend class bigtable_internal::AsyncRowSampler;
+  friend class bigtable_internal::BulkMutator;
   friend class RowReader;
   template <typename RowFunctor, typename FinishFunctor>
   friend class AsyncRowReader;
-  friend class internal::LoggingDataClient;
+  friend class bigtable_internal::LoggingDataClient;
 
   //@{
   /// @name the `google.bigtable.v2.Bigtable` wrappers.

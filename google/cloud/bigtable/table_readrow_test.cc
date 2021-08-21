@@ -61,7 +61,7 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
 
         EXPECT_STATUS_OK(
             IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows",
-                             google::cloud::internal::ApiClientHeader()));
+                             internal::ApiClientHeader()));
         EXPECT_EQ(1, req.rows().row_keys_size());
         EXPECT_EQ("r1", req.rows().row_keys(0));
         EXPECT_EQ(1, req.rows_limit());
@@ -69,7 +69,7 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
         return stream;
       });
 
-  auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter());
+  auto result = table_.ReadRow("r1", Filter::PassAllFilter());
   ASSERT_STATUS_OK(result);
   EXPECT_TRUE(std::get<0>(*result));
   auto row = std::get<1>(*result);
@@ -87,7 +87,7 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
 
         EXPECT_STATUS_OK(
             IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows",
-                             google::cloud::internal::ApiClientHeader()));
+                             internal::ApiClientHeader()));
         EXPECT_EQ(1, req.rows().row_keys_size());
         EXPECT_EQ("r1", req.rows().row_keys(0));
         EXPECT_EQ(1, req.rows_limit());
@@ -95,7 +95,7 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
         return stream;
       });
 
-  auto result = table_.ReadRow("r1", bigtable::Filter::PassAllFilter());
+  auto result = table_.ReadRow("r1", Filter::PassAllFilter());
   ASSERT_STATUS_OK(result);
   EXPECT_FALSE(std::get<0>(*result));
 }
@@ -113,11 +113,11 @@ TEST_F(TableReadRowTest, UnrecoverableFailure) {
 
         EXPECT_STATUS_OK(
             IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows",
-                             google::cloud::internal::ApiClientHeader()));
+                             internal::ApiClientHeader()));
         return stream;
       });
 
-  auto row = table_.ReadRow("r1", bigtable::Filter::PassAllFilter());
+  auto row = table_.ReadRow("r1", Filter::PassAllFilter());
   EXPECT_FALSE(row);
 }
 

@@ -26,9 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 /**
  * Helper functions to make (unary) gRPC calls under the right policies.
  *
@@ -212,9 +211,8 @@ struct UnaryClientUtils {
   }
 };
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

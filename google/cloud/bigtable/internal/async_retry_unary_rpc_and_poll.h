@@ -27,9 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 
 /**
  * Asynchronously start a longrunning operation (with retries) and poll its
@@ -58,11 +57,11 @@ namespace internal {
 template <typename Response, typename AsyncCallType, typename RequestType,
           typename IdempotencyPolicy, typename Client>
 future<StatusOr<Response>> AsyncStartPollAfterRetryUnaryRpc(
-    char const* location, std::unique_ptr<PollingPolicy> polling_policy,
-    std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-    std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+    char const* location, std::unique_ptr<bigtable::PollingPolicy> polling_policy,
+    std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
+    std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
     IdempotencyPolicy idempotent_policy,
-    MetadataUpdatePolicy metadata_update_policy, std::shared_ptr<Client> client,
+    bigtable::MetadataUpdatePolicy metadata_update_policy, std::shared_ptr<Client> client,
     AsyncCallType async_call, RequestType request, CompletionQueue cq) {
   static_assert(
       std::is_same<typename google::cloud::internal::AsyncCallResponseType<
@@ -70,7 +69,7 @@ future<StatusOr<Response>> AsyncStartPollAfterRetryUnaryRpc(
                    google::longrunning::Operation>::value,
       "async_call should return a google::longrunning::Operation");
   struct CallWrapper {
-    MetadataUpdatePolicy metadata_update_policy;
+    bigtable::MetadataUpdatePolicy metadata_update_policy;
     AsyncCallType async_call;
 
     google::cloud::internal::invoke_result_t<
@@ -99,12 +98,12 @@ future<StatusOr<Response>> AsyncStartPollAfterRetryUnaryRpc(
       std::string const policy_id = "operations/" + maybe_op->name();
       return StartAsyncLongrunningOp<Client, Response>(
           location, std::move(polling_policy),
-          MetadataUpdatePolicy(policy_id, MetadataParamTypes::NAME), client, cq,
+          bigtable::MetadataUpdatePolicy(policy_id, bigtable::MetadataParamTypes::NAME), client, cq,
           *std::move(maybe_op));
     }
 
     char const* location;
-    std::unique_ptr<PollingPolicy> polling_policy;
+    std::unique_ptr<bigtable::PollingPolicy> polling_policy;
     std::shared_ptr<Client> client;
     CompletionQueue cq;
   };
@@ -112,9 +111,8 @@ future<StatusOr<Response>> AsyncStartPollAfterRetryUnaryRpc(
                                             std::move(client), std::move(cq)});
 }
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

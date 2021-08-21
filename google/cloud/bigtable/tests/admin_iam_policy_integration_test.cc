@@ -28,7 +28,6 @@ namespace {
 using ::testing::Contains;
 using ::testing::Not;
 namespace btadmin = ::google::bigtable::admin::v2;
-namespace bigtable = ::google::cloud::bigtable;
 
 class AdminIAMPolicyIntegrationTest
     : public bigtable::testing::TableIntegrationTest {
@@ -38,7 +37,7 @@ class AdminIAMPolicyIntegrationTest
   std::string service_account_;
 
   void SetUp() override {
-    service_account_ = google::cloud::internal::GetEnv(
+    service_account_ = internal::GetEnv(
                            "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT")
                            .value_or("");
     ASSERT_FALSE(service_account_.empty());
@@ -53,7 +52,7 @@ class AdminIAMPolicyIntegrationTest
 
 /// @test Verify that IAM Policy APIs work as expected.
 TEST_F(AdminIAMPolicyIntegrationTest, SetGetTestIamAPIsTest) {
-  using GC = bigtable::GcRule;
+  using GC = GcRule;
   std::string const table_id = RandomTableId();
 
   // verify new table id in current table list
@@ -67,7 +66,7 @@ TEST_F(AdminIAMPolicyIntegrationTest, SetGetTestIamAPIsTest) {
       << " This is unexpected, as the table ids are generated at random.";
 
   // create table config
-  bigtable::TableConfig table_config(
+  TableConfig table_config(
       {{"fam", GC::MaxNumVersions(5)},
        {"foo", GC::MaxAge(std::chrono::hours(24))}},
       {"a1000", "a2000", "b3000", "m5000"});
@@ -75,7 +74,7 @@ TEST_F(AdminIAMPolicyIntegrationTest, SetGetTestIamAPIsTest) {
   // create table
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
 
-  auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
+  auto iam_policy = IamPolicy({IamBinding(
       "roles/bigtable.reader", {"serviceAccount:" + service_account_})});
 
   auto initial_policy = table_admin_->SetIamPolicy(table_id, iam_policy);

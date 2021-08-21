@@ -26,9 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 
 namespace {
 
@@ -76,25 +75,25 @@ int DefaultConnectionPoolSize() {
 Options DefaultOptions(Options opts) {
   auto emulator = google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST");
   if (emulator) {
-    opts.set<DataEndpointOption>(*emulator);
-    opts.set<AdminEndpointOption>(*emulator);
-    opts.set<InstanceAdminEndpointOption>(*emulator);
+    opts.set<bigtable::DataEndpointOption>(*emulator);
+    opts.set<bigtable::AdminEndpointOption>(*emulator);
+    opts.set<bigtable::InstanceAdminEndpointOption>(*emulator);
   }
 
   auto instance_admin_emulator =
       google::cloud::internal::GetEnv("BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST");
   if (instance_admin_emulator) {
-    opts.set<InstanceAdminEndpointOption>(*std::move(instance_admin_emulator));
+    opts.set<bigtable::InstanceAdminEndpointOption>(*std::move(instance_admin_emulator));
   }
 
-  if (!opts.has<DataEndpointOption>()) {
-    opts.set<DataEndpointOption>("bigtable.googleapis.com");
+  if (!opts.has<bigtable::DataEndpointOption>()) {
+    opts.set<bigtable::DataEndpointOption>("bigtable.googleapis.com");
   }
-  if (!opts.has<AdminEndpointOption>()) {
-    opts.set<AdminEndpointOption>("bigtableadmin.googleapis.com");
+  if (!opts.has<bigtable::AdminEndpointOption>()) {
+    opts.set<bigtable::AdminEndpointOption>("bigtableadmin.googleapis.com");
   }
-  if (!opts.has<InstanceAdminEndpointOption>()) {
-    opts.set<InstanceAdminEndpointOption>("bigtableadmin.googleapis.com");
+  if (!opts.has<bigtable::InstanceAdminEndpointOption>()) {
+    opts.set<bigtable::InstanceAdminEndpointOption>("bigtableadmin.googleapis.com");
   }
   if (!opts.has<GrpcCredentialOption>()) {
     opts.set<GrpcCredentialOption>(emulator ? grpc::InsecureChannelCredentials()
@@ -111,11 +110,11 @@ Options DefaultOptions(Options opts) {
   if (!opts.has<GrpcNumChannelsOption>()) {
     opts.set<GrpcNumChannelsOption>(DefaultConnectionPoolSize());
   }
-  if (!opts.has<MinConnectionRefreshOption>()) {
-    opts.set<MinConnectionRefreshOption>(kDefaultMinRefreshPeriod);
+  if (!opts.has<bigtable::MinConnectionRefreshOption>()) {
+    opts.set<bigtable::MinConnectionRefreshOption>(kDefaultMinRefreshPeriod);
   }
-  if (!opts.has<MaxConnectionRefreshOption>()) {
-    opts.set<MaxConnectionRefreshOption>(kDefaultMaxRefreshPeriod);
+  if (!opts.has<bigtable::MaxConnectionRefreshOption>()) {
+    opts.set<bigtable::MaxConnectionRefreshOption>(kDefaultMaxRefreshPeriod);
   }
 
   using ::google::cloud::internal::GetIntChannelArgument;
@@ -143,8 +142,7 @@ Options DefaultOptions(Options opts) {
   return opts;
 }
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

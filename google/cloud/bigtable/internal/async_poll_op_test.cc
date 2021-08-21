@@ -57,7 +57,7 @@ class AsyncPollOpTest : public bigtable::testing::TableTestFixture {
       : TableTestFixture(
             CompletionQueue(std::make_shared<FakeCompletionQueueImpl>())),
         polling_policy_(
-            bigtable::DefaultPollingPolicy(internal::kBigtableLimits)),
+            DefaultPollingPolicy(bigtable_internal::kBigtableLimits)),
         metadata_update_policy_("test_operation_id", MetadataParamTypes::NAME),
         client_(new testing::MockAdminClient(
             ClientOptions().DisableBackgroundThreads(cq_))) {}
@@ -88,9 +88,9 @@ TEST_F(AsyncPollOpTest, AsyncPollOpTestSuccess) {
   google::longrunning::Operation op_arg;
   op_arg.set_name("test_operation_id");
 
-  auto poll_op_future = internal::StartAsyncPollOp(
+  auto poll_op_future = bigtable_internal::StartAsyncPollOp(
       __func__, polling_policy_->clone(), metadata_update_policy_, cq_,
-      internal::AsyncLongrunningOperation<
+      bigtable_internal::AsyncLongrunningOperation<
           AdminClient, google::bigtable::v2::SampleRowKeysResponse>(
           client_, std::move(op_arg)));
 
@@ -126,9 +126,9 @@ TEST_F(AsyncPollOpTest, AsyncPollOpTestPermanentFailure) {
   google::longrunning::Operation op_arg;
   op_arg.set_name("test_operation_id");
 
-  auto poll_op_future = internal::StartAsyncPollOp(
+  auto poll_op_future = bigtable_internal::StartAsyncPollOp(
       __func__, polling_policy_->clone(), metadata_update_policy_, cq_,
-      internal::AsyncLongrunningOperation<
+      bigtable_internal::AsyncLongrunningOperation<
           AdminClient, google::bigtable::v2::SampleRowKeysResponse>(
           client_, std::move(op_arg)));
 
@@ -170,9 +170,9 @@ TEST_F(AsyncPollOpTest, AsyncPollOpTestPolicyExhausted) {
   google::longrunning::Operation op_arg;
   op_arg.set_name("test_operation_id");
 
-  auto poll_op_future = internal::StartAsyncPollOp(
+  auto poll_op_future = bigtable_internal::StartAsyncPollOp(
       __func__, polling.clone(), metadata_update_policy_, cq_,
-      internal::AsyncLongrunningOperation<
+      bigtable_internal::AsyncLongrunningOperation<
           AdminClient, google::bigtable::v2::SampleRowKeysResponse>(
           client_, std::move(op_arg)));
 

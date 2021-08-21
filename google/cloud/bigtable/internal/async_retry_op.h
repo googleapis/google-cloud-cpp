@@ -26,9 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 
 /**
  * An idempotent policy for `AsyncRetryOp` based on a pre-computed value.
@@ -56,9 +55,8 @@ class ConstantIdempotencyPolicy {
   google::cloud::internal::Idempotency idempotency_;
 };
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

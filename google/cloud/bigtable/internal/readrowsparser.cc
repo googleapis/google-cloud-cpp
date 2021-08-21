@@ -17,9 +17,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 using ::google::bigtable::v2::ReadRowsResponse_CellChunk;
 
 void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
@@ -72,7 +71,7 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
     using std::swap;
     swap(*chunk.mutable_value(), cell_.value);
   } else {
-    internal::AppendCellValue(cell_.value, chunk.value());
+    bigtable_internal::AppendCellValue(cell_.value, chunk.value());
   }
 
   cell_first_chunk_ = false;
@@ -80,7 +79,7 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
   // This is a hint we get about the total size, use it to save some memory
   // allocations.
   if (chunk.value_size() > 0) {
-    internal::ReserveCellValue(cell_.value,
+    bigtable_internal::ReserveCellValue(cell_.value,
                                static_cast<std::size_t>(chunk.value_size()));
   }
 
@@ -152,31 +151,30 @@ void ReadRowsParser::HandleEndOfStream(grpc::Status& status) {
 
 bool ReadRowsParser::HasNext() const { return row_ready_; }
 
-Row ReadRowsParser::Next(grpc::Status& status) {
+bigtable::Row ReadRowsParser::Next(grpc::Status& status) {
   if (!row_ready_) {
     status =
         grpc::Status(grpc::StatusCode::INTERNAL, "Next with row not ready");
-    return Row("", {});
+    return bigtable::Row("", {});
   }
   row_ready_ = false;
 
-  Row row(std::move(row_key_), std::move(cells_));
+  bigtable::Row row(std::move(row_key_), std::move(cells_));
   row_key_.clear();
 
   return row;
 }
 
-Cell ReadRowsParser::MovePartialToCell() {
+bigtable::Cell ReadRowsParser::MovePartialToCell() {
   // The row, family, and column are explicitly copied because the
   // ReadRows v2 may reuse them in future chunks. See the CellChunk
   // message comments in bigtable.proto.
-  Cell cell(cell_.row, cell_.family, cell_.column, cell_.timestamp,
+  bigtable::Cell cell(cell_.row, cell_.family, cell_.column, cell_.timestamp,
             std::move(cell_.value), std::move(cell_.labels));
   cell_.value.clear();
   return cell;
 }
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

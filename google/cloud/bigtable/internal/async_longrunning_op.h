@@ -26,9 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 
 /**
  * The operation passed to StartAsyncPollOp to implement longrunning operations.
@@ -134,8 +133,8 @@ class AsyncLongrunningOperation {
  */
 template <typename Client, typename Response>
 future<StatusOr<Response>> StartAsyncLongrunningOp(
-    char const* location, std::unique_ptr<PollingPolicy> polling_policy,
-    MetadataUpdatePolicy metadata_update_policy, std::shared_ptr<Client> client,
+    char const* location, std::unique_ptr<bigtable::PollingPolicy> polling_policy,
+    bigtable::MetadataUpdatePolicy metadata_update_policy, std::shared_ptr<Client> client,
     CompletionQueue cq, google::longrunning::Operation operation) {
   return StartAsyncPollOp(location, std::move(polling_policy),
                           std::move(metadata_update_policy), std::move(cq),
@@ -152,9 +151,8 @@ future<StatusOr<Response>> StartAsyncLongrunningOp(
       });
 }
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

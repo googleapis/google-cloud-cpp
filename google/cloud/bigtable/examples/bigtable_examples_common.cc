@@ -25,7 +25,7 @@ namespace bigtable {
 namespace examples {
 
 bool UsingEmulator() {
-  return !google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST")
+  return !internal::GetEnv("BIGTABLE_EMULATOR_HOST")
               .value_or("")
               .empty();
 }
@@ -37,12 +37,12 @@ bool RunAdminIntegrationTests() {
   // In production, we run the admin integration tests only on the nightly
   // builds to stay below the quota limits. Only this build should set the
   // following environment variable.
-  return google::cloud::internal::GetEnv(
+  return internal::GetEnv(
              "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS")
              .value_or("") == "yes";
 }
 
-google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
+Commands::value_type MakeCommandEntry(
     std::string const& name, std::vector<std::string> const& args,
     TableCommandType const& function) {
   auto command = [=](std::vector<std::string> argv) {
@@ -53,9 +53,9 @@ google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
       if (!args.empty()) os << " " << absl::StrJoin(args, " ");
       throw Usage{std::move(os).str()};
     }
-    google::cloud::bigtable::Table table(
-        google::cloud::bigtable::CreateDefaultDataClient(
-            argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
+    Table table(
+        CreateDefaultDataClient(
+            argv[0], argv[1], ClientOptions()),
         argv[2]);
     argv.erase(argv.begin(), argv.begin() + 3);
     function(table, argv);
@@ -75,9 +75,9 @@ Commands::value_type MakeCommandEntry(std::string const& name,
       if (!args.empty()) os << " " << absl::StrJoin(args, " ");
       throw Usage{std::move(os).str()};
     }
-    google::cloud::bigtable::TableAdmin table(
-        google::cloud::bigtable::CreateDefaultAdminClient(
-            argv[0], google::cloud::bigtable::ClientOptions()),
+    TableAdmin table(
+        CreateDefaultAdminClient(
+            argv[0], ClientOptions()),
         argv[1]);
     argv.erase(argv.begin(), argv.begin() + kFixedArguments);
     function(table, argv);
@@ -97,9 +97,9 @@ Commands::value_type MakeCommandEntry(
       if (!args.empty()) os << " " << absl::StrJoin(args, " ");
       throw Usage{std::move(os).str()};
     }
-    google::cloud::bigtable::InstanceAdmin instance(
-        google::cloud::bigtable::CreateDefaultInstanceAdminClient(
-            argv[0], google::cloud::bigtable::ClientOptions()));
+    InstanceAdmin instance(
+        CreateDefaultInstanceAdminClient(
+            argv[0], ClientOptions()));
     argv.erase(argv.begin(), argv.begin() + kFixedArguments);
     function(instance, argv);
   };
@@ -124,11 +124,11 @@ Commands::value_type MakeCommandEntry(std::string const& name,
       }
       throw Usage{std::move(os).str()};
     }
-    google::cloud::bigtable::Table table(
-        google::cloud::bigtable::CreateDefaultDataClient(
-            argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
+    Table table(
+        CreateDefaultDataClient(
+            argv[0], argv[1], ClientOptions()),
         argv[2]);
-    google::cloud::CompletionQueue cq;
+    CompletionQueue cq;
     std::thread t([&cq] { cq.Run(); });
     AutoShutdownCQ shutdown(cq, std::move(t));
     argv.erase(argv.begin(), argv.begin() + common.size());

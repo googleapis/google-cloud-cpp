@@ -21,7 +21,7 @@
 #include <sstream>
 
 namespace btadmin = ::google::bigtable::admin::v2;
-namespace bigtable = ::google::cloud::bigtable;
+namespace bigtable_internal = ::google::cloud::bigtable_internal;
 
 /**
  * In-memory implementation of `google.bigtable.admin.v2.InstanceAdmin`.
@@ -190,7 +190,7 @@ class InstanceAdminEmulator final
     instances_.erase(i->first);
 
     std::string prefix_successor =
-        bigtable::internal::PrefixRangeEnd(request->name());
+        bigtable_internal::PrefixRangeEnd(request->name());
     auto begin = clusters_.lower_bound(request->name());
     auto end = clusters_.upper_bound(prefix_successor);
     clusters_.erase(begin, end);

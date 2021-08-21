@@ -84,7 +84,7 @@ for lib in "${libraries[@]}"; do
     # namespace. See: https://en.wikipedia.org/wiki/Name_mangling
     report="cmake-out/compat_reports/${lib}/expected_to_actual/src_compat_report.html"
     if ! abi-compliance-checker \
-      -skip-internal-symbols "(8internal|17bigquery_internal|12iam_internal|15pubsub_internal|16spanner_internal)\d" \
+      -skip-internal-symbols "(8internal|17bigtable_internal|17bigquery_internal|12iam_internal|15pubsub_internal|16spanner_internal)\d" \
       -report-path "${report}" \
       -src -l "${lib}" \
       -old "cmake-out/${expected_dump_file}" \

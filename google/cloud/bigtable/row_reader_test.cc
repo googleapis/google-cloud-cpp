@@ -49,7 +49,7 @@ using ::testing::Return;
 using ::testing::SetArgPointee;
 using ::testing::SetArgReferee;
 
-class ReadRowsParserMock : public bigtable::internal::ReadRowsParser {
+class ReadRowsParserMock : public bigtable_internal::ReadRowsParser {
  public:
   MOCK_METHOD(void, HandleChunkHook,
               (ReadRowsResponse_CellChunk chunk, grpc::Status& status));
@@ -84,8 +84,8 @@ class ReadRowsParserMock : public bigtable::internal::ReadRowsParser {
 
 // Returns a preconfigured set of parsers, so expectations can be set on each.
 class ReadRowsParserMockFactory
-    : public bigtable::internal::ReadRowsParserFactory {
-  using ParserPtr = std::unique_ptr<bigtable::internal::ReadRowsParser>;
+    : public bigtable_internal::ReadRowsParserFactory {
+  using ParserPtr = std::unique_ptr<bigtable_internal::ReadRowsParser>;
 
  public:
   void AddParser(ParserPtr parser) { parsers_.emplace_back(std::move(parser)); }
@@ -94,7 +94,7 @@ class ReadRowsParserMockFactory
   ParserPtr Create() override {
     CreateHook();
     if (parsers_.empty()) {
-      return ParserPtr(new bigtable::internal::ReadRowsParser);
+      return ParserPtr(new bigtable_internal::ReadRowsParser);
     }
     ParserPtr parser = std::move(parsers_.front());
     parsers_.pop_front();
@@ -109,19 +109,19 @@ class RetryPolicyMock : public bigtable::RPCRetryPolicy {
  public:
   RetryPolicyMock() = default;
   std::unique_ptr<RPCRetryPolicy> clone() const override {
-    google::cloud::internal::ThrowRuntimeError("Mocks cannot be copied.");
+    internal::ThrowRuntimeError("Mocks cannot be copied.");
   }
 
   MOCK_METHOD(void, Setup, (grpc::ClientContext&), (const, override));
   MOCK_METHOD(bool, OnFailure, (grpc::Status const& status), (override));
-  bool OnFailure(google::cloud::Status const&) override { return true; }
+  bool OnFailure(Status const&) override { return true; }
 };
 
 class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
  public:
   BackoffPolicyMock() = default;
   std::unique_ptr<RPCBackoffPolicy> clone() const override {
-    google::cloud::internal::ThrowRuntimeError("Mocks cannot be copied.");
+    internal::ThrowRuntimeError("Mocks cannot be copied.");
   }
   void Setup(grpc::ClientContext&) const override {}
   MOCK_METHOD(std::chrono::milliseconds, OnCompletionHook,
@@ -130,7 +130,7 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
     return OnCompletionHook(s);
   }
   std::chrono::milliseconds OnCompletion(
-      google::cloud::Status const&) override {
+      Status const&) override {
     return std::chrono::milliseconds(0);
   }
 };
@@ -218,7 +218,7 @@ TEST_F(RowReaderTest, ReadOneRowAppProfileId) {
                               ReadRowsRequest const& req) {
         EXPECT_STATUS_OK(
             IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows",
-                             google::cloud::internal::ApiClientHeader()));
+                             internal::ApiClientHeader()));
         EXPECT_EQ(expected_id, req.app_profile_id());
         auto stream = absl::make_unique<MockReadRowsReader>(
             "google.bigtable.v2.Bigtable.ReadRows");

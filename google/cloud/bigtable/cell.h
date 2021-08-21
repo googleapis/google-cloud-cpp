@@ -160,7 +160,7 @@ class Cell {
    */
   template <typename T>
   StatusOr<T> decode_big_endian_integer() const {
-    return internal::DecodeBigEndianCellValue<T>(value_);
+    return bigtable_internal::DecodeBigEndianCellValue<T>(value_);
   }
 
   /// Return the labels applied to this cell by label transformer read filters.

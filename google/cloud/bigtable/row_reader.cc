@@ -65,7 +65,7 @@ RowReader::RowReader(
     std::unique_ptr<RPCRetryPolicy> retry_policy,
     std::unique_ptr<RPCBackoffPolicy> backoff_policy,
     MetadataUpdatePolicy metadata_update_policy,
-    std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
+    std::unique_ptr<bigtable_internal::ReadRowsParserFactory> parser_factory)
     : RowReader(std::move(client), std::string(""), std::move(table_name),
                 std::move(row_set), rows_limit, std::move(filter),
                 std::move(retry_policy), std::move(backoff_policy),
@@ -77,7 +77,7 @@ RowReader::RowReader(
     Filter filter, std::unique_ptr<RPCRetryPolicy> retry_policy,
     std::unique_ptr<RPCBackoffPolicy> backoff_policy,
     MetadataUpdatePolicy metadata_update_policy,
-    std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
+    std::unique_ptr<bigtable_internal::ReadRowsParserFactory> parser_factory)
     : client_(std::move(client)),
       app_profile_id_(std::move(app_profile_id)),
       table_name_(std::move(table_name)),
@@ -96,12 +96,12 @@ RowReader::RowReader(
 
 // The name must be all lowercase to work with range-for loops.
 RowReader::iterator RowReader::begin() {
-  return internal::RowReaderIterator(this);
+  return bigtable_internal::RowReaderIterator(this);
 }
 
 // The name must be all lowercase to work with range-for loops.
 // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
-RowReader::iterator RowReader::end() { return internal::RowReaderIterator(); }
+RowReader::iterator RowReader::end() { return bigtable_internal::RowReaderIterator(); }
 
 void RowReader::MakeRequest() {
   response_ = {};

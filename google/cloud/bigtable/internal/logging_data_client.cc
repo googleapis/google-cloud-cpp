@@ -21,9 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 
 namespace btproto = ::google::bigtable::v2;
 using ::google::cloud::internal::LogWrapper;
@@ -178,8 +177,7 @@ LoggingDataClient::PrepareAsyncMutateRows(
   return child_->PrepareAsyncMutateRows(context, request, cq);
 }
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

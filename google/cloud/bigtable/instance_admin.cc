@@ -37,7 +37,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 static_assert(std::is_copy_assignable<bigtable::InstanceAdmin>::value,
               "bigtable::InstanceAdmin must be CopyAssignable");
 
-using ClientUtils = bigtable::internal::UnaryClientUtils<InstanceAdminClient>;
+using ClientUtils = bigtable_internal::UnaryClientUtils<InstanceAdminClient>;
 using ::google::cloud::internal::Idempotency;
 
 StatusOr<InstanceList> InstanceAdmin::ListInstances() {
@@ -100,11 +100,11 @@ InstanceAdmin::AsyncCreateInstanceImpl(
                            kv.second.location());
   }
   std::shared_ptr<InstanceAdminClient> client(client_);
-  return internal::AsyncStartPollAfterRetryUnaryRpc<
+  return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<
       google::bigtable::admin::v2::Instance>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
       clone_rpc_backoff_policy(),
-      internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
+      bigtable_internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
       MetadataUpdatePolicy(project_name(), MetadataParamTypes::PARENT), client,
       [client](
           grpc::ClientContext* context,
@@ -137,11 +137,11 @@ InstanceAdmin::AsyncCreateClusterImpl(CompletionQueue& cq,
   request.set_cluster_id(cluster_id);
 
   std::shared_ptr<InstanceAdminClient> client(client_);
-  return internal::AsyncStartPollAfterRetryUnaryRpc<
+  return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<
       google::bigtable::admin::v2::Cluster>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
       clone_rpc_backoff_policy(),
-      internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
+      bigtable_internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
       MetadataUpdatePolicy(parent, MetadataParamTypes::PARENT), client,
       [client](grpc::ClientContext* context,
                google::bigtable::admin::v2::CreateClusterRequest const& request,
@@ -164,11 +164,11 @@ InstanceAdmin::AsyncUpdateInstanceImpl(
   auto request = std::move(instance_update_config).as_proto();
 
   std::shared_ptr<InstanceAdminClient> client(client_);
-  return internal::AsyncStartPollAfterRetryUnaryRpc<
+  return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<
       google::bigtable::admin::v2::Instance>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
       clone_rpc_backoff_policy(),
-      internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
+      bigtable_internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
       MetadataUpdatePolicy(name, MetadataParamTypes::INSTANCE_NAME), client,
       [client](grpc::ClientContext* context,
                google::bigtable::admin::v2::PartialUpdateInstanceRequest const&
@@ -302,11 +302,11 @@ InstanceAdmin::AsyncUpdateClusterImpl(CompletionQueue& cq,
   auto name = request.name();
 
   std::shared_ptr<InstanceAdminClient> client(client_);
-  return internal::AsyncStartPollAfterRetryUnaryRpc<
+  return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<
       google::bigtable::admin::v2::Cluster>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
       clone_rpc_backoff_policy(),
-      internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
+      bigtable_internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
       MetadataUpdatePolicy(name, MetadataParamTypes::NAME), client,
       [client](grpc::ClientContext* context,
                google::bigtable::admin::v2::Cluster const& request,
@@ -392,11 +392,11 @@ InstanceAdmin::AsyncUpdateAppProfileImpl(CompletionQueue& cq,
   request.mutable_app_profile()->set_name(name);
 
   std::shared_ptr<InstanceAdminClient> client(client_);
-  return internal::AsyncStartPollAfterRetryUnaryRpc<
+  return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<
       google::bigtable::admin::v2::AppProfile>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
       clone_rpc_backoff_policy(),
-      internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
+      bigtable_internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
       MetadataUpdatePolicy(name, MetadataParamTypes::APP_PROFILE_NAME), client,
       [client](
           grpc::ClientContext* context,

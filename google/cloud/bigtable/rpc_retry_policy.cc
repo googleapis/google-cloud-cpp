@@ -21,7 +21,7 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy(
-    internal::RPCPolicyParameters defaults) {
+    bigtable_internal::RPCPolicyParameters defaults) {
   return std::unique_ptr<RPCRetryPolicy>(
       new LimitedTimeRetryPolicy(defaults.maximum_retry_period));
 }
@@ -43,7 +43,7 @@ bool LimitedErrorCountRetryPolicy::OnFailure(grpc::Status const& status) {
 }
 
 LimitedTimeRetryPolicy::LimitedTimeRetryPolicy(
-    internal::RPCPolicyParameters defaults)
+    bigtable_internal::RPCPolicyParameters defaults)
     : impl_(defaults.maximum_retry_period) {}
 
 std::unique_ptr<RPCRetryPolicy> LimitedTimeRetryPolicy::clone() const {

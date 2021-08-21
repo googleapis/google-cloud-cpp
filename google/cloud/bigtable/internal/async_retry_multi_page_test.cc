@@ -25,9 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
@@ -93,13 +92,13 @@ class AsyncMultipageFutureTest : public ::testing::Test {
  public:
   AsyncMultipageFutureTest()
       : rpc_retry_policy_(
-            bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
+            bigtable::DefaultRPCRetryPolicy(bigtable_internal::kBigtableLimits)),
         shared_backoff_policy_mock_(
             absl::make_unique<SharedBackoffPolicyMock>()),
         cq_impl_(new google::cloud::testing_util::FakeCompletionQueueImpl),
         cq_(cq_impl_),
-        client_(new testing::MockInstanceAdminClient),
-        metadata_update_policy_("my_instance", MetadataParamTypes::NAME) {}
+        client_(new bigtable::testing::MockInstanceAdminClient),
+        metadata_update_policy_("my_instance", bigtable::MetadataParamTypes::NAME) {}
 
   // Description of a single expected RPC exchange.
   struct Exchange {
@@ -178,13 +177,13 @@ class AsyncMultipageFutureTest : public ::testing::Test {
   }
 
  protected:
-  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
+  std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy_;
   std::unique_ptr<SharedBackoffPolicyMock> shared_backoff_policy_mock_;
   std::shared_ptr<google::cloud::testing_util::FakeCompletionQueueImpl>
       cq_impl_;
   CompletionQueue cq_;
-  std::shared_ptr<testing::MockInstanceAdminClient> client_;
-  MetadataUpdatePolicy metadata_update_policy_;
+  std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
+  bigtable::MetadataUpdatePolicy metadata_update_policy_;
   std::vector<std::unique_ptr<MockAsyncListClustersReader>> readers_to_delete_;
 };
 
@@ -350,8 +349,7 @@ TEST_F(AsyncMultipageFutureTest, PermanentErrorsAreNotRetried) {
   EXPECT_EQ(StatusCode::kPermissionDenied, clusters.status().code());
 }
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

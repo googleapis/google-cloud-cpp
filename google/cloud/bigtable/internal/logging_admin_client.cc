@@ -21,9 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 
 namespace btadmin = ::google::bigtable::admin::v2;
 using ::google::cloud::internal::LogWrapper;
@@ -416,8 +415,7 @@ LoggingAdminClient::AsyncGetOperation(
       stub->AsyncGetOperation(context, request, cq).release());
 }
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

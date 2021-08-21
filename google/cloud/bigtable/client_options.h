@@ -34,11 +34,13 @@
 
 namespace google {
 namespace cloud {
+namespace bigtable_internal {
+inline namespace BIGTABLE_CLIENT_NS {
+struct InstanceAdminTraits;
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable_internal
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
-struct InstanceAdminTraits;
-}  // namespace internal
 
 /**
  * Configuration options for the Bigtable Client.
@@ -235,20 +237,20 @@ class ClientOptions {
    *
    */
   template <typename Rep, typename Period>
-  google::cloud::Status SetGrpclbFallbackTimeout(
+  Status SetGrpclbFallbackTimeout(
       std::chrono::duration<Rep, Period> fallback_timeout) {
     std::chrono::milliseconds ft_ms =
         std::chrono::duration_cast<std::chrono::milliseconds>(fallback_timeout);
 
     if (ft_ms.count() > std::numeric_limits<int>::max()) {
-      return google::cloud::Status(google::cloud::StatusCode::kOutOfRange,
+      return Status(StatusCode::kOutOfRange,
                                    "The supplied duration is larger than the "
                                    "maximum value allowed by gRPC (INT_MAX)");
     }
     auto fallback_timeout_ms = static_cast<int>(ft_ms.count());
     opts_.lookup<GrpcChannelArgumentsNativeOption>().SetGrpclbFallbackTimeout(
         fallback_timeout_ms);
-    return google::cloud::Status();
+    return Status();
   }
 
   /**
@@ -355,7 +357,7 @@ class ClientOptions {
    * be enabled by clients configured with this option.
    */
   bool tracing_enabled(std::string const& component) const {
-    return google::cloud::internal::Contains(
+    return internal::Contains(
         opts_.get<TracingComponentsOption>(), component);
   }
 
@@ -451,7 +453,7 @@ class ClientOptions {
    * `CompletionQueue::Run()`.
    */
   ClientOptions& DisableBackgroundThreads(
-      google::cloud::CompletionQueue const& cq);
+      CompletionQueue const& cq);
 
   /**
    * Backwards compatibility alias
@@ -463,7 +465,7 @@ class ClientOptions {
   BackgroundThreadsFactory background_threads_factory() const;
 
  private:
-  friend struct internal::InstanceAdminTraits;
+  friend struct bigtable_internal::InstanceAdminTraits;
   friend struct ClientOptionsTestTraits;
 
   /// Return the current endpoint for instance admin RPCs.

@@ -25,9 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 namespace {
 
 using ::google::bigtable::v2::ReadRowsResponse_CellChunk;
@@ -87,7 +86,7 @@ TEST(ReadRowsParserTest, SingleChunkSucceeds) {
   EXPECT_TRUE(status.ok());
   EXPECT_TRUE(parser.HasNext());
 
-  std::vector<google::cloud::bigtable::Row> rows;
+  std::vector<bigtable::Row> rows;
   rows.emplace_back(parser.Next(status));
   EXPECT_TRUE(status.ok());
   EXPECT_FALSE(parser.HasNext());
@@ -142,7 +141,7 @@ TEST(ReadRowsParserTest, NextWithNoDataThrows) {
 
 // **** Acceptance tests helpers ****
 // Can also be used by gtest to print Cell values
-void PrintTo(Cell const& c, std::ostream* os) {
+void PrintTo(bigtable::Cell const& c, std::ostream* os) {
   *os << "rk: " << std::string(c.row_key()) << "\n";
   *os << "fm: " << std::string(c.family_name()) << "\n";
   *os << "qual: " << std::string(c.column_qualifier()) << "\n";
@@ -157,7 +156,7 @@ void PrintTo(Cell const& c, std::ostream* os) {
   *os << "\n";
 }
 
-std::string CellToString(Cell const& cell) {
+std::string CellToString(bigtable::Cell const& cell) {
   std::stringstream ss;
   PrintTo(cell, &ss);
   return ss.str();
@@ -215,15 +214,14 @@ class AcceptanceTest : public ::testing::Test {
 
  private:
   ReadRowsParser parser_;
-  std::vector<google::cloud::bigtable::Row> rows_;
+  std::vector<bigtable::Row> rows_;
 };
 
 // Auto-generated acceptance tests
 #include "google/cloud/bigtable/internal/readrowsparser_acceptance_tests.inc"
 
 }  // namespace
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

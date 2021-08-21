@@ -40,7 +40,7 @@ namespace btadmin = ::google::bigtable::admin::v2;
 
 class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
  protected:
-  std::unique_ptr<bigtable::TableAdmin> table_admin_;
+  std::unique_ptr<TableAdmin> table_admin_;
 
   void SetUp() override {
     if (google::cloud::internal::GetEnv(
@@ -50,18 +50,18 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
     }
     TableIntegrationTest::SetUp();
 
-    std::shared_ptr<bigtable::AdminClient> admin_client =
-        bigtable::CreateDefaultAdminClient(
+    std::shared_ptr<AdminClient> admin_client =
+        CreateDefaultAdminClient(
             bigtable::testing::TableTestEnvironment::project_id(),
-            bigtable::ClientOptions());
-    table_admin_ = absl::make_unique<bigtable::TableAdmin>(
+            ClientOptions());
+    table_admin_ = absl::make_unique<TableAdmin>(
         admin_client, bigtable::testing::TableTestEnvironment::instance_id());
   }
 };
 
 TEST_F(AdminIntegrationTest, TableListWithMultipleTables) {
   std::vector<std::string> expected_table_list;
-  auto table_config = bigtable::TableConfig();
+  auto table_config = TableConfig();
 
   // Get the current list of tables.
   auto previous_table_list =
@@ -110,7 +110,7 @@ TEST_F(AdminIntegrationTest, DropRowsByPrefix) {
   std::string const row_key1 = row_key1_prefix + "-Key1";
   std::string const row_key1_1 = row_key1_prefix + "_1-Key1";
   std::string const row_key2 = row_key2_prefix + "-Key2";
-  std::vector<bigtable::Cell> created_cells{
+  std::vector<Cell> created_cells{
       {row_key1, "family1", "column_id1", 0, "v-c-0-0"},
       {row_key1, "family1", "column_id1", 1000, "v-c-0-1"},
       {row_key1, "family2", "column_id3", 2000, "v-c-0-2"},
@@ -119,7 +119,7 @@ TEST_F(AdminIntegrationTest, DropRowsByPrefix) {
       {row_key2, "family2", "column_id2", 2000, "v-c0-0-0"},
       {row_key2, "family3", "column_id3", 3000, "v-c1-0-2"},
   };
-  std::vector<bigtable::Cell> expected_cells{
+  std::vector<Cell> expected_cells{
       {row_key2, "family2", "column_id2", 2000, "v-c0-0-0"},
       {row_key2, "family3", "column_id3", 3000, "v-c1-0-2"}};
 
@@ -128,7 +128,7 @@ TEST_F(AdminIntegrationTest, DropRowsByPrefix) {
   // Delete all the records for a row
   EXPECT_STATUS_OK(table_admin_->DropRowsByPrefix(
       bigtable::testing::TableTestEnvironment::table_id(), row_key1_prefix));
-  auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
+  auto actual_cells = ReadRows(table, Filter::PassAllFilter());
 
   CheckEqualUnordered(expected_cells, actual_cells);
 }
@@ -139,7 +139,7 @@ TEST_F(AdminIntegrationTest, DropAllRows) {
   // Create a vector of cell which will be inserted into bigtable
   std::string const row_key1 = "DropRowKey1";
   std::string const row_key2 = "DropRowKey2";
-  std::vector<bigtable::Cell> created_cells{
+  std::vector<Cell> created_cells{
       {row_key1, "family1", "column_id1", 0, "v-c-0-0"},
       {row_key1, "family1", "column_id1", 1000, "v-c-0-1"},
       {row_key1, "family2", "column_id3", 2000, "v-c-0-2"},
@@ -152,14 +152,14 @@ TEST_F(AdminIntegrationTest, DropAllRows) {
   // Delete all the records from a table
   EXPECT_STATUS_OK(table_admin_->DropAllRows(
       bigtable::testing::TableTestEnvironment::table_id()));
-  auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
+  auto actual_cells = ReadRows(table, Filter::PassAllFilter());
 
   ASSERT_TRUE(actual_cells.empty());
 }
 
 /// @test Verify that `bigtable::TableAdmin` CRUD operations work as expected.
 TEST_F(AdminIntegrationTest, CreateListGetDeleteTable) {
-  using GC = bigtable::GcRule;
+  using GC = GcRule;
   std::string const table_id = RandomTableId();
 
   // verify new table id in current table list
@@ -173,14 +173,14 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTable) {
       << " This is unexpected, as the table ids are generated at random.";
 
   // create table config
-  bigtable::TableConfig table_config(
+  TableConfig table_config(
       {{"fam", GC::MaxNumVersions(5)},
        {"foo", GC::MaxAge(std::chrono::hours(24))}},
       {"a1000", "a2000", "b3000", "m5000"});
 
   // create table
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
-  bigtable::Table table(data_client_, table_id);
+  Table table(data_client_, table_id);
 
   // verify new table was created
   auto table_result = table_admin_->GetTable(table_id);
@@ -206,12 +206,12 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTable) {
   EXPECT_EQ(1, count_matching_families(*table_detailed, "foo"));
 
   // update table
-  std::vector<bigtable::ColumnFamilyModification> column_modification_list = {
-      bigtable::ColumnFamilyModification::Create(
+  std::vector<ColumnFamilyModification> column_modification_list = {
+      ColumnFamilyModification::Create(
           "newfam", GC::Intersection(GC::MaxAge(std::chrono::hours(7 * 24)),
                                      GC::MaxNumVersions(1))),
-      bigtable::ColumnFamilyModification::Update("fam", GC::MaxNumVersions(2)),
-      bigtable::ColumnFamilyModification::Drop("foo")};
+      ColumnFamilyModification::Update("fam", GC::MaxNumVersions(2)),
+      ColumnFamilyModification::Drop("foo")};
 
   auto table_modified =
       table_admin_->ModifyColumnFamilies(table_id, column_modification_list);
@@ -244,13 +244,13 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
   // Create a bigtable::InstanceAdmin and a bigtable::TableAdmin to create the
   // new instance and the new table.
-  auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
-      project_id, bigtable::ClientOptions());
-  bigtable::InstanceAdmin instance_admin(instance_admin_client);
+  auto instance_admin_client = CreateDefaultInstanceAdminClient(
+      project_id, ClientOptions());
+  InstanceAdmin instance_admin(instance_admin_client);
 
   auto admin_client =
-      bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions());
-  bigtable::TableAdmin table_admin(admin_client, id);
+      CreateDefaultAdminClient(project_id, ClientOptions());
+  TableAdmin table_admin(admin_client, id);
 
   // The instance configuration is involved, it needs two clusters, which must
   // be production clusters (and therefore have at least 3 nodes each), and
@@ -258,12 +258,12 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
   // than 30 characters.
   auto display_name = ("IT " + id).substr(0, 30);
   auto cluster_config_1 =
-      bigtable::ClusterConfig(bigtable::testing::TableTestEnvironment::zone_a(),
-                              3, bigtable::ClusterConfig::HDD);
+      ClusterConfig(bigtable::testing::TableTestEnvironment::zone_a(),
+                              3, ClusterConfig::HDD);
   auto cluster_config_2 =
-      bigtable::ClusterConfig(bigtable::testing::TableTestEnvironment::zone_b(),
-                              3, bigtable::ClusterConfig::HDD);
-  bigtable::InstanceConfig config(
+      ClusterConfig(bigtable::testing::TableTestEnvironment::zone_b(),
+                              3, ClusterConfig::HDD);
+  InstanceConfig config(
       id, display_name,
       {{id + "-c1", cluster_config_1}, {id + "-c2", cluster_config_2}});
 
@@ -273,8 +273,8 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
   // The table is going to be very simple, just one column family.
   std::string const family = "column_family";
-  bigtable::TableConfig table_config = bigtable::TableConfig(
-      {{family, bigtable::GcRule::MaxNumVersions(10)}}, {});
+  TableConfig table_config = TableConfig(
+      {{family, GcRule::MaxNumVersions(10)}}, {});
 
   // Create the new table.
   auto table_created = table_admin.CreateTable(random_table_id, table_config);
@@ -282,14 +282,14 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
   // We need to mutate the data in the table and then wait for those mutations
   // to propagate to both clusters. First create a `bigtable::Table` object.
-  auto data_client = bigtable::CreateDefaultDataClient(
-      project_id, id, bigtable::ClientOptions());
-  bigtable::Table table(data_client, random_table_id);
+  auto data_client = CreateDefaultDataClient(
+      project_id, id, ClientOptions());
+  Table table(data_client, random_table_id);
 
   // Insert some cells into the table.
   std::string const row_key1 = "check-consistency-row1";
   std::string const row_key2 = "check-consistency-row2";
-  std::vector<bigtable::Cell> created_cells{
+  std::vector<Cell> created_cells{
       {row_key1, family, "column1", 1000, "not interesting"},
       {row_key1, family, "column2", 1000, "not interesting"},
       {row_key1, family, "column1", 2000, "not interesting"},
@@ -305,11 +305,11 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
   // Wait until all the mutations before the `consistency_token` have propagated
   // everywhere.
-  google::cloud::future<google::cloud::StatusOr<bigtable::Consistency>> result =
+  google::cloud::future<google::cloud::StatusOr<Consistency>> result =
       table_admin.WaitForConsistency(random_table_id, *consistency_token);
   auto is_consistent = result.get();
   ASSERT_STATUS_OK(is_consistent);
-  EXPECT_EQ(bigtable::Consistency::kConsistent, *is_consistent);
+  EXPECT_EQ(Consistency::kConsistent, *is_consistent);
 
   // Cleanup the table and the instance.
   EXPECT_STATUS_OK(table_admin.DeleteTable(random_table_id));
@@ -318,16 +318,16 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
 /// @test Verify rpc logging for `bigtable::TableAdmin`
 TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
-  using GC = bigtable::GcRule;
+  using GC = GcRule;
   testing_util::ScopedLog log;
 
   std::string const table_id = RandomTableId();
 
-  std::shared_ptr<bigtable::AdminClient> admin_client =
-      bigtable::CreateDefaultAdminClient(
+  std::shared_ptr<AdminClient> admin_client =
+      CreateDefaultAdminClient(
           bigtable::testing::TableTestEnvironment::project_id(),
-          bigtable::ClientOptions().enable_tracing("rpc"));
-  auto table_admin = absl::make_unique<bigtable::TableAdmin>(
+          ClientOptions().enable_tracing("rpc"));
+  auto table_admin = absl::make_unique<TableAdmin>(
       admin_client, bigtable::testing::TableTestEnvironment::instance_id());
 
   // verify new table id in current table list
@@ -340,14 +340,14 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
       << " This is unexpected, as the table ids are generated at random.";
 
   // create table config
-  bigtable::TableConfig table_config(
+  TableConfig table_config(
       {{"fam", GC::MaxNumVersions(5)},
        {"foo", GC::MaxAge(std::chrono::hours(24))}},
       {"a1000", "a2000", "b3000", "m5000"});
 
   // create table
   ASSERT_STATUS_OK(table_admin->CreateTable(table_id, table_config));
-  bigtable::Table table(data_client_, table_id);
+  Table table(data_client_, table_id);
 
   // verify new table was created
   auto table_result = table_admin->GetTable(table_id);
@@ -373,12 +373,12 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   EXPECT_EQ(1, count_matching_families(*table_detailed, "foo"));
 
   // update table
-  std::vector<bigtable::ColumnFamilyModification> column_modification_list = {
-      bigtable::ColumnFamilyModification::Create(
+  std::vector<ColumnFamilyModification> column_modification_list = {
+      ColumnFamilyModification::Create(
           "newfam", GC::Intersection(GC::MaxAge(std::chrono::hours(7 * 24)),
                                      GC::MaxNumVersions(1))),
-      bigtable::ColumnFamilyModification::Update("fam", GC::MaxNumVersions(2)),
-      bigtable::ColumnFamilyModification::Drop("foo")};
+      ColumnFamilyModification::Update("fam", GC::MaxNumVersions(2)),
+      ColumnFamilyModification::Drop("foo")};
 
   auto table_modified =
       table_admin->ModifyColumnFamilies(table_id, column_modification_list);

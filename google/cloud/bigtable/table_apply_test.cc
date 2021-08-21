@@ -25,7 +25,6 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
-namespace bigtable = ::google::cloud::bigtable;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
@@ -36,7 +35,7 @@ auto mock_mutate_row = [](grpc::Status const& status) {
                   google::bigtable::v2::MutateRowResponse*) {
     EXPECT_STATUS_OK(
         IsContextMDValid(*context, "google.bigtable.v2.Bigtable.MutateRow",
-                         google::cloud::internal::ApiClientHeader()));
+                         internal::ApiClientHeader()));
     return status;
   };
 };
@@ -50,8 +49,8 @@ class TableApplyTest : public bigtable::testing::TableTestFixture {
 TEST_F(TableApplyTest, Simple) {
   EXPECT_CALL(*client_, MutateRow).WillOnce(mock_mutate_row(grpc::Status::OK));
 
-  auto status = table_.Apply(bigtable::SingleRowMutation(
-      "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
+  auto status = table_.Apply(SingleRowMutation(
+      "bar", {SetCell("fam", "col", 0_ms, "val")}));
   ASSERT_STATUS_OK(status);
 }
 
@@ -61,8 +60,8 @@ TEST_F(TableApplyTest, Failure) {
       .WillRepeatedly(mock_mutate_row(
           grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "uh-oh")));
 
-  auto status = table_.Apply(bigtable::SingleRowMutation(
-      "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
+  auto status = table_.Apply(SingleRowMutation(
+      "bar", {SetCell("fam", "col", 0_ms, "val")}));
   EXPECT_THAT(status, StatusIs(StatusCode::kFailedPrecondition));
 }
 
@@ -77,8 +76,8 @@ TEST_F(TableApplyTest, Retry) {
           grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(mock_mutate_row((grpc::Status::OK)));
 
-  auto status = table_.Apply(bigtable::SingleRowMutation(
-      "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
+  auto status = table_.Apply(SingleRowMutation(
+      "bar", {SetCell("fam", "col", 0_ms, "val")}));
   ASSERT_STATUS_OK(status);
 }
 
@@ -88,8 +87,8 @@ TEST_F(TableApplyTest, RetryIdempotent) {
       .WillRepeatedly(mock_mutate_row(
           grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
-  auto status = table_.Apply(bigtable::SingleRowMutation(
-      "not-idempotent", {bigtable::SetCell("fam", "col", "val")}));
+  auto status = table_.Apply(SingleRowMutation(
+      "not-idempotent", {SetCell("fam", "col", "val")}));
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 

@@ -21,9 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 
 /**
  * Implements a logging InstanceAdminClient.
@@ -291,9 +290,8 @@ class LoggingInstanceAdminClient
   google::cloud::TracingOptions tracing_options_;
 };
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

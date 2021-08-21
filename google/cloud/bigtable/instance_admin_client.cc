@@ -13,22 +13,25 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/instance_admin_client.h"
+#include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/internal/common_client.h"
 #include "google/cloud/bigtable/internal/logging_instance_admin_client.h"
 #include <google/longrunning/operations.grpc.pb.h>
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 /// Define what endpoint in ClientOptions is used for the InstanceAdminClient.
 struct InstanceAdminTraits {
-  static std::string const& Endpoint(ClientOptions& options) {
+  static std::string const& Endpoint(bigtable::ClientOptions& options) {
     return options.instance_admin_endpoint();
   }
 };
-}  // namespace internal
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable_internal
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
 
 namespace {
 /**
@@ -48,8 +51,8 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
  private:
   // Introduce an early `private:` section because this type is used to define
   // the public interface, it should not be part of the public interface.
-  using Impl = internal::CommonClient<
-      internal::InstanceAdminTraits,
+  using Impl = bigtable_internal::CommonClient<
+      bigtable_internal::InstanceAdminTraits,
       ::google::bigtable::admin::v2::BigtableInstanceAdmin>;
 
  public:
@@ -384,7 +387,7 @@ std::shared_ptr<InstanceAdminClient> CreateDefaultInstanceAdminClient(
       std::make_shared<DefaultInstanceAdminClient>(std::move(project), options);
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    client = std::make_shared<internal::LoggingInstanceAdminClient>(
+    client = std::make_shared<bigtable_internal::LoggingInstanceAdminClient>(
         std::move(client), options.tracing_options());
   }
   return client;

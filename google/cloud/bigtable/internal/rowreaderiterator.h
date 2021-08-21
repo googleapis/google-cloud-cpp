@@ -27,8 +27,11 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 // Forward declare the owner class of this iterator.
 class RowReader;
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
 
-namespace internal {
+namespace bigtable_internal {
+inline namespace BIGTABLE_CLIENT_NS {
 
 /**
  * The input iterator used to scan the rows in a RowReader.
@@ -38,13 +41,13 @@ class RowReaderIterator {
   //@{
   /// @name Iterator traits
   using iterator_category = std::input_iterator_tag;
-  using value_type = StatusOr<Row>;
+  using value_type = StatusOr<bigtable::Row>;
   using difference_type = std::ptrdiff_t;
   using pointer = value_type*;
   using reference = value_type&;
   //@}
 
-  explicit RowReaderIterator(RowReader* owner);
+  explicit RowReaderIterator(bigtable::RowReader* owner);
   RowReaderIterator() = default;
 
   RowReaderIterator& operator++();
@@ -68,9 +71,9 @@ class RowReaderIterator {
 
   void Advance();
   /// nullptr indicates end()
-  RowReader* owner_{};
+  bigtable::RowReader* owner_{};
   /// Current value of the iterator.
-  StatusOr<Row> row_;
+  StatusOr<bigtable::Row> row_;
 };
 
 inline bool operator==(RowReaderIterator const& lhs,
@@ -84,9 +87,8 @@ inline bool operator!=(RowReaderIterator const& lhs,
   return std::rel_ops::operator!=(lhs, rhs);
 }
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -29,9 +29,9 @@ inline namespace BIGTABLE_CLIENT_NS {
 ClientOptions::ClientOptions() : ClientOptions(Options{}) {}
 
 ClientOptions::ClientOptions(Options opts) {
-  ::google::cloud::internal::CheckExpectedOptions<
-      ClientOptionList, CommonOptionList, GrpcOptionList>(opts, __func__);
-  opts_ = internal::DefaultOptions(std::move(opts));
+  internal::CheckExpectedOptions<ClientOptionList, CommonOptionList,
+                                 GrpcOptionList>(opts, __func__);
+  opts_ = bigtable_internal::DefaultOptions(std::move(opts));
 }
 
 ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
@@ -43,25 +43,24 @@ ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
 // NOLINTNEXTLINE(readability-identifier-naming)
 ClientOptions& ClientOptions::set_connection_pool_size(std::size_t size) {
   opts_.set<GrpcNumChannelsOption>(
-      size == 0 ? internal::DefaultConnectionPoolSize() : int(size));
+      size == 0 ? bigtable_internal::DefaultConnectionPoolSize() : int(size));
   return *this;
 }
 
 std::string ClientOptions::UserAgentPrefix() {
-  return google::cloud::internal::UserAgentPrefix();
+  return internal::UserAgentPrefix();
 }
 
 ClientOptions& ClientOptions::DisableBackgroundThreads(
     google::cloud::CompletionQueue const& cq) {
   opts_.set<GrpcBackgroundThreadsFactoryOption>([cq] {
-    return absl::make_unique<
-        google::cloud::internal::CustomerSuppliedBackgroundThreads>(cq);
+    return absl::make_unique<internal::CustomerSuppliedBackgroundThreads>(cq);
   });
   return *this;
 }
 
 BackgroundThreadsFactory ClientOptions::background_threads_factory() const {
-  return google::cloud::internal::MakeBackgroundThreadsFactory(opts_);
+  return internal::MakeBackgroundThreadsFactory(opts_);
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

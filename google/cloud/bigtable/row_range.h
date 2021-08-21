@@ -83,7 +83,7 @@ class RowRange {
   /// Return a range that contains all the keys starting with @p prefix.
   template <typename T>
   static RowRange Prefix(T&& prefix) {
-    auto end = internal::PrefixRangeEnd(prefix);
+    auto end = bigtable_internal::PrefixRangeEnd(prefix);
     return RightOpen(std::forward<T>(prefix), std::move(end));
   }
 
@@ -94,7 +94,7 @@ class RowRange {
   static RowRange RightOpen(T&& begin, U&& end) {
     RowRange result;
     result.row_range_.set_start_key_closed(std::forward<T>(begin));
-    if (!internal::IsEmptyRowKey(end)) {
+    if (!bigtable_internal::IsEmptyRowKey(end)) {
       result.row_range_.set_end_key_open(std::forward<U>(end));
     }
     return result;
@@ -105,7 +105,7 @@ class RowRange {
   static RowRange LeftOpen(T&& begin, U&& end) {
     RowRange result;
     result.row_range_.set_start_key_open(std::forward<T>(begin));
-    if (!internal::IsEmptyRowKey(end)) {
+    if (!bigtable_internal::IsEmptyRowKey(end)) {
       result.row_range_.set_end_key_closed(std::forward<U>(end));
     }
     return result;
@@ -116,7 +116,7 @@ class RowRange {
   static RowRange Open(T&& begin, U&& end) {
     RowRange result;
     result.row_range_.set_start_key_open(std::forward<T>(begin));
-    if (!internal::IsEmptyRowKey(end)) {
+    if (!bigtable_internal::IsEmptyRowKey(end)) {
       result.row_range_.set_end_key_open(std::forward<U>(end));
     }
     return result;
@@ -127,7 +127,7 @@ class RowRange {
   static RowRange Closed(T&& begin, U&& end) {
     RowRange result;
     result.row_range_.set_start_key_closed(std::forward<T>(begin));
-    if (!internal::IsEmptyRowKey(end)) {
+    if (!bigtable_internal::IsEmptyRowKey(end)) {
       result.row_range_.set_end_key_closed(std::forward<U>(end));
     }
     return result;

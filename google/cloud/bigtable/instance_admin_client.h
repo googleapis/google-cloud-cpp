@@ -23,15 +23,17 @@
 
 namespace google {
 namespace cloud {
+namespace bigtable_internal {
+inline namespace BIGTABLE_CLIENT_NS {
+template <typename Client, typename Response>
+class AsyncLongrunningOperation;
+class LoggingInstanceAdminClient;
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable_internal
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 // Forward declare some classes so we can be friends.
 class InstanceAdmin;
-namespace internal {
-template <typename Client, typename Response>
-class AsyncLongrunningOperation;
-class LoggingInstanceAdminClient;
-}  // namespace internal
 
 /**
  * Connects to Cloud Bigtable's instance administration APIs.
@@ -89,8 +91,8 @@ class InstanceAdminClient {
  protected:
   friend class InstanceAdmin;
   template <typename Client, typename Response>
-  friend class internal::AsyncLongrunningOperation;
-  friend class internal::LoggingInstanceAdminClient;
+  friend class bigtable_internal::AsyncLongrunningOperation;
+  friend class bigtable_internal::LoggingInstanceAdminClient;
   //@{
   /// @name The `google.bigtable.v2.InstanceAdmin` wrappers.
   virtual grpc::Status ListInstances(

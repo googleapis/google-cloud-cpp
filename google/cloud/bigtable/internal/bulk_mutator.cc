@@ -20,9 +20,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 
 namespace btproto = ::google::bigtable::v2;
 
@@ -30,8 +29,8 @@ using ::google::cloud::internal::Idempotency;
 
 BulkMutatorState::BulkMutatorState(std::string const& app_profile_id,
                                    std::string const& table_name,
-                                   IdempotentMutationPolicy& idempotent_policy,
-                                   BulkMutation mut) {
+                                   bigtable::IdempotentMutationPolicy& idempotent_policy,
+                                   bigtable::BulkMutation mut) {
   // Every time the client library calls MakeOneRequest(), the data in the
   // "pending_*" variables initializes the next request.  So in the constructor
   // we start by putting the data on the "pending_*" variables.
@@ -152,24 +151,24 @@ void BulkMutatorState::OnFinish(google::cloud::Status finish_status) {
             "report it at "
             "https://github.com/googleapis/google-cloud-cpp/issues/new");
         failures_.emplace_back(
-            FailedMutation(status, annotation.original_index));
+            bigtable::FailedMutation(status, annotation.original_index));
       } else {
         failures_.emplace_back(
-            FailedMutation(last_status_, annotation.original_index));
+            bigtable::FailedMutation(last_status_, annotation.original_index));
       }
     }
     ++index;
   }
 }
 
-std::vector<FailedMutation> BulkMutatorState::ConsumeAccumulatedFailures() {
-  std::vector<FailedMutation> res;
+std::vector<bigtable::FailedMutation> BulkMutatorState::ConsumeAccumulatedFailures() {
+  std::vector<bigtable::FailedMutation> res;
   res.swap(failures_);
   return res;
 }
 
-std::vector<FailedMutation> BulkMutatorState::OnRetryDone() && {
-  std::vector<FailedMutation> result(std::move(failures_));
+std::vector<bigtable::FailedMutation> BulkMutatorState::OnRetryDone() && {
+  std::vector<bigtable::FailedMutation> result(std::move(failures_));
 
   auto size = pending_mutations_.mutable_entries()->size();
   for (int idx = 0; idx != size; idx++) {
@@ -192,8 +191,8 @@ std::vector<FailedMutation> BulkMutatorState::OnRetryDone() && {
 
 BulkMutator::BulkMutator(std::string const& app_profile_id,
                          std::string const& table_name,
-                         IdempotentMutationPolicy& idempotent_policy,
-                         BulkMutation mut)
+                         bigtable::IdempotentMutationPolicy& idempotent_policy,
+                         bigtable::BulkMutation mut)
     : state_(app_profile_id, table_name, idempotent_policy, std::move(mut)) {}
 
 grpc::Status BulkMutator::MakeOneRequest(bigtable::DataClient& client,
@@ -212,12 +211,11 @@ grpc::Status BulkMutator::MakeOneRequest(bigtable::DataClient& client,
   return grpc_status;
 }
 
-std::vector<FailedMutation> BulkMutator::OnRetryDone() && {
+std::vector<bigtable::FailedMutation> BulkMutator::OnRetryDone() && {
   return std::move(state_).OnRetryDone();
 }
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

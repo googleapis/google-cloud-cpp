@@ -44,7 +44,7 @@ TEST_F(LoggingAdminClientTest, CreateTable) {
 
   EXPECT_CALL(*mock, CreateTable).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -62,7 +62,7 @@ TEST_F(LoggingAdminClientTest, ListTables) {
 
   EXPECT_CALL(*mock, ListTables).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -80,7 +80,7 @@ TEST_F(LoggingAdminClientTest, GetTable) {
 
   EXPECT_CALL(*mock, GetTable).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -98,7 +98,7 @@ TEST_F(LoggingAdminClientTest, DeleteTable) {
 
   EXPECT_CALL(*mock, DeleteTable).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -116,7 +116,7 @@ TEST_F(LoggingAdminClientTest, CreateBackup) {
 
   EXPECT_CALL(*mock, CreateBackup).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -134,7 +134,7 @@ TEST_F(LoggingAdminClientTest, GetBackup) {
 
   EXPECT_CALL(*mock, GetBackup).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -152,7 +152,7 @@ TEST_F(LoggingAdminClientTest, UpdateBackup) {
 
   EXPECT_CALL(*mock, UpdateBackup).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -170,7 +170,7 @@ TEST_F(LoggingAdminClientTest, DeleteBackup) {
 
   EXPECT_CALL(*mock, DeleteBackup).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -188,7 +188,7 @@ TEST_F(LoggingAdminClientTest, ListBackups) {
 
   EXPECT_CALL(*mock, ListBackups).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -206,7 +206,7 @@ TEST_F(LoggingAdminClientTest, RestoreTable) {
 
   EXPECT_CALL(*mock, RestoreTable).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -224,7 +224,7 @@ TEST_F(LoggingAdminClientTest, ModifyColumnFamilies) {
 
   EXPECT_CALL(*mock, ModifyColumnFamilies).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -242,7 +242,7 @@ TEST_F(LoggingAdminClientTest, DropRowRange) {
 
   EXPECT_CALL(*mock, DropRowRange).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -260,7 +260,7 @@ TEST_F(LoggingAdminClientTest, GenerateConsistencyToken) {
 
   EXPECT_CALL(*mock, GenerateConsistencyToken).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -279,7 +279,7 @@ TEST_F(LoggingAdminClientTest, CheckConsistency) {
 
   EXPECT_CALL(*mock, CheckConsistency).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -297,7 +297,7 @@ TEST_F(LoggingAdminClientTest, GetOperation) {
 
   EXPECT_CALL(*mock, GetOperation).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -315,7 +315,7 @@ TEST_F(LoggingAdminClientTest, GetIamPolicy) {
 
   EXPECT_CALL(*mock, GetIamPolicy).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -333,7 +333,7 @@ TEST_F(LoggingAdminClientTest, SetIamPolicy) {
 
   EXPECT_CALL(*mock, SetIamPolicy).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;
@@ -351,7 +351,7 @@ TEST_F(LoggingAdminClientTest, TestIamPermissions) {
 
   EXPECT_CALL(*mock, TestIamPermissions).WillOnce(Return(grpc::Status()));
 
-  internal::LoggingAdminClient stub(
+  bigtable_internal::LoggingAdminClient stub(
       mock, TracingOptions{}.SetOptions("single_line_mode"));
 
   grpc::ClientContext context;

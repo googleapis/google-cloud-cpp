@@ -21,9 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 
 namespace btadmin = ::google::bigtable::admin::v2;
 
@@ -40,10 +39,10 @@ namespace btadmin = ::google::bigtable::admin::v2;
  * connections need refreshing.
  */
 
-class LoggingAdminClient : public google::cloud::bigtable::AdminClient {
+class LoggingAdminClient : public bigtable::AdminClient {
  public:
   LoggingAdminClient(
-      std::shared_ptr<google::cloud::bigtable::AdminClient> child,
+      std::shared_ptr<bigtable::AdminClient> child,
       google::cloud::TracingOptions options)
       : child_(std::move(child)), tracing_options_(std::move(options)) {}
 
@@ -64,9 +63,9 @@ class LoggingAdminClient : public google::cloud::bigtable::AdminClient {
                           btadmin::ListTablesResponse* response) override;
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::bigtable::admin::v2::ListTablesResponse>>
+      btadmin::ListTablesResponse>>
   AsyncListTables(grpc::ClientContext* context,
-                  google::bigtable::admin::v2::ListTablesRequest const& request,
+                  btadmin::ListTablesRequest const& request,
                   grpc::CompletionQueue* cq) override;
 
   grpc::Status GetTable(grpc::ClientContext* context,
@@ -74,9 +73,9 @@ class LoggingAdminClient : public google::cloud::bigtable::AdminClient {
                         btadmin::Table* response) override;
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::bigtable::admin::v2::Table>>
+      btadmin::Table>>
   AsyncGetTable(grpc::ClientContext* context,
-                google::bigtable::admin::v2::GetTableRequest const& request,
+                btadmin::GetTableRequest const& request,
                 grpc::CompletionQueue* cq) override;
 
   grpc::Status DeleteTable(grpc::ClientContext* context,
@@ -145,87 +144,87 @@ class LoggingAdminClient : public google::cloud::bigtable::AdminClient {
       google::iam::v1::TestIamPermissionsResponse* response) override;
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::bigtable::admin::v2::Table>>
+      btadmin::Table>>
   AsyncCreateTable(
       grpc::ClientContext* context,
-      google::bigtable::admin::v2::CreateTableRequest const& request,
+      btadmin::CreateTableRequest const& request,
       grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<
       ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>>
   AsyncDeleteTable(
       grpc::ClientContext* context,
-      google::bigtable::admin::v2::DeleteTableRequest const& request,
+      btadmin::DeleteTableRequest const& request,
       grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncCreateBackup(
       grpc::ClientContext* context,
-      google::bigtable::admin::v2::CreateBackupRequest const& request,
+      btadmin::CreateBackupRequest const& request,
       grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::bigtable::admin::v2::Backup>>
+      btadmin::Backup>>
   AsyncGetBackup(grpc::ClientContext* context,
-                 google::bigtable::admin::v2::GetBackupRequest const& request,
+                 btadmin::GetBackupRequest const& request,
                  grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::bigtable::admin::v2::Backup>>
+      btadmin::Backup>>
   AsyncUpdateBackup(
       grpc::ClientContext* context,
-      google::bigtable::admin::v2::UpdateBackupRequest const& request,
+      btadmin::UpdateBackupRequest const& request,
       grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
   AsyncDeleteBackup(
       grpc::ClientContext* context,
-      google::bigtable::admin::v2::DeleteBackupRequest const& request,
+      btadmin::DeleteBackupRequest const& request,
       grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::bigtable::admin::v2::ListBackupsResponse>>
+      btadmin::ListBackupsResponse>>
   AsyncListBackups(
       grpc::ClientContext* context,
-      google::bigtable::admin::v2::ListBackupsRequest const& request,
+      btadmin::ListBackupsRequest const& request,
       grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncRestoreTable(
       grpc::ClientContext* context,
-      google::bigtable::admin::v2::RestoreTableRequest const& request,
+      btadmin::RestoreTableRequest const& request,
       grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::bigtable::admin::v2::Table>>
+      btadmin::Table>>
   AsyncModifyColumnFamilies(
       grpc::ClientContext* context,
-      google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request,
+      btadmin::ModifyColumnFamiliesRequest const& request,
       grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
   AsyncDropRowRange(
       grpc::ClientContext* context,
-      google::bigtable::admin::v2::DropRowRangeRequest const& request,
+      btadmin::DropRowRangeRequest const& request,
       grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::bigtable::admin::v2::GenerateConsistencyTokenResponse>>
+      btadmin::GenerateConsistencyTokenResponse>>
   AsyncGenerateConsistencyToken(
       grpc::ClientContext* context,
-      google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
+      btadmin::GenerateConsistencyTokenRequest const&
           request,
       grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::bigtable::admin::v2::CheckConsistencyResponse>>
+      btadmin::CheckConsistencyResponse>>
   AsyncCheckConsistency(
       grpc::ClientContext* context,
-      google::bigtable::admin::v2::CheckConsistencyRequest const& request,
+      btadmin::CheckConsistencyRequest const& request,
       grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<
@@ -262,9 +261,8 @@ class LoggingAdminClient : public google::cloud::bigtable::AdminClient {
   google::cloud::TracingOptions tracing_options_;
 };
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

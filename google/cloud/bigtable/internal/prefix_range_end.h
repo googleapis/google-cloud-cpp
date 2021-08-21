@@ -20,9 +20,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
 /**
  * Return the end of the prefix range for @p key.
  *
@@ -33,9 +32,8 @@ namespace internal {
  */
 std::string PrefixRangeEnd(std::string const& key);
 
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 
