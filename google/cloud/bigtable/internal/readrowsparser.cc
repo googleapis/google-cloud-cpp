@@ -71,7 +71,7 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
     using std::swap;
     swap(*chunk.mutable_value(), cell_.value);
   } else {
-    bigtable_internal::AppendCellValue(cell_.value, chunk.value());
+    AppendCellValue(cell_.value, chunk.value());
   }
 
   cell_first_chunk_ = false;
@@ -79,8 +79,7 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
   // This is a hint we get about the total size, use it to save some memory
   // allocations.
   if (chunk.value_size() > 0) {
-    bigtable_internal::ReserveCellValue(
-        cell_.value, static_cast<std::size_t>(chunk.value_size()));
+    ReserveCellValue(cell_.value, static_cast<std::size_t>(chunk.value_size()));
   }
 
   // Last chunk in the cell has zero for value size

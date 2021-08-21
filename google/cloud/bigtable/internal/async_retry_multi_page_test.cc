@@ -91,8 +91,7 @@ using ::google::bigtable::admin::v2::ListClustersResponse;
 class AsyncMultipageFutureTest : public ::testing::Test {
  public:
   AsyncMultipageFutureTest()
-      : rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy(
-            bigtable_internal::kBigtableLimits)),
+      : rpc_retry_policy_(bigtable::DefaultRPCRetryPolicy(kBigtableLimits)),
         shared_backoff_policy_mock_(
             absl::make_unique<SharedBackoffPolicyMock>()),
         cq_impl_(new google::cloud::testing_util::FakeCompletionQueueImpl),

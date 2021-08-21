@@ -55,8 +55,7 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
   EXPECT_CALL(*client_, ReadRows).WillOnce(stream->MakeMockReturner());
 
-  auto reader =
-      table_.ReadRows(bigtable::RowSet(), bigtable::Filter::PassAllFilter());
+  auto reader = table_.ReadRows(RowSet(), Filter::PassAllFilter());
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -111,8 +110,7 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
 
   EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  auto reader =
-      table_.ReadRows(bigtable::RowSet(), bigtable::Filter::PassAllFilter());
+  auto reader = table_.ReadRows(RowSet(), Filter::PassAllFilter());
 
   auto it = reader.begin();
   EXPECT_NE(it, reader.end());
@@ -136,13 +134,11 @@ TEST_F(TableReadRowsTest, ReadRowsThrowsWhenTooManyErrors) {
     return stream;
   }));
 
-  auto table = bigtable::Table(
-      client_, "table_id", bigtable::LimitedErrorCountRetryPolicy(3),
-      bigtable::ExponentialBackoffPolicy(std::chrono::seconds(0),
-                                         std::chrono::seconds(0)),
-      bigtable::SafeIdempotentMutationPolicy());
-  auto reader =
-      table.ReadRows(bigtable::RowSet(), bigtable::Filter::PassAllFilter());
+  auto table = Table(client_, "table_id", LimitedErrorCountRetryPolicy(3),
+                     ExponentialBackoffPolicy(std::chrono::seconds(0),
+                                              std::chrono::seconds(0)),
+                     SafeIdempotentMutationPolicy());
+  auto reader = table.ReadRows(RowSet(), Filter::PassAllFilter());
 
   auto it = reader.begin();
   ASSERT_NE(reader.end(), it);

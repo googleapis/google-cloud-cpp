@@ -40,7 +40,7 @@ void SetCommonTableOperationRequest(Request& request,
 
 template <typename Response>
 Row TransformReadModifyWriteRowResponse(Response& response) {
-  std::vector<bigtable::Cell> cells;
+  std::vector<Cell> cells;
   auto& row = *response.mutable_row();
   for (auto& family : *row.mutable_families()) {
     for (auto& column : *family.mutable_columns()) {
@@ -48,10 +48,9 @@ Row TransformReadModifyWriteRowResponse(Response& response) {
         std::vector<std::string> labels;
         std::move(cell.mutable_labels()->begin(), cell.mutable_labels()->end(),
                   std::back_inserter(labels));
-        bigtable::Cell new_cell(row.key(), family.name(), column.qualifier(),
-                                cell.timestamp_micros(),
-                                std::move(*cell.mutable_value()),
-                                std::move(labels));
+        Cell new_cell(row.key(), family.name(), column.qualifier(),
+                      cell.timestamp_micros(), std::move(*cell.mutable_value()),
+                      std::move(labels));
 
         cells.emplace_back(std::move(new_cell));
       }
@@ -65,7 +64,7 @@ Row TransformReadModifyWriteRowResponse(Response& response) {
 
 using ClientUtils = bigtable_internal::UnaryClientUtils<DataClient>;
 
-static_assert(std::is_copy_assignable<bigtable::Table>::value,
+static_assert(std::is_copy_assignable<Table>::value,
               "bigtable::Table must be CopyAssignable");
 
 Status Table::Apply(SingleRowMutation mut) {
@@ -111,8 +110,8 @@ Status Table::Apply(SingleRowMutation mut) {
 }
 
 future<Status> Table::AsyncApply(SingleRowMutation mut) {
-  google::bigtable::v2::MutateRowRequest request;
-  SetCommonTableOperationRequest<google::bigtable::v2::MutateRowRequest>(
+  btproto::MutateRowRequest request;
+  SetCommonTableOperationRequest<btproto::MutateRowRequest>(
       request, app_profile_id_, table_name_);
   mut.MoveTo(request);
   auto context = absl::make_unique<grpc::ClientContext>();
@@ -121,11 +120,11 @@ future<Status> Table::AsyncApply(SingleRowMutation mut) {
   // mutations won't change as the retry loop executes, so we can just compute
   // it once and use a constant value for the loop.
   auto idempotent_mutation_policy = clone_idempotent_mutation_policy();
-  auto const is_idempotent = std::all_of(
-      request.mutations().begin(), request.mutations().end(),
-      [&idempotent_mutation_policy](google::bigtable::v2::Mutation const& m) {
-        return idempotent_mutation_policy->is_idempotent(m);
-      });
+  auto const is_idempotent =
+      std::all_of(request.mutations().begin(), request.mutations().end(),
+                  [&idempotent_mutation_policy](btproto::Mutation const& m) {
+                    return idempotent_mutation_policy->is_idempotent(m);
+                  });
 
   auto const idempotency =
       is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent;
@@ -138,13 +137,13 @@ future<Status> Table::AsyncApply(SingleRowMutation mut) {
              idempotency,
              [client, metadata_update_policy](
                  grpc::ClientContext* context,
-                 google::bigtable::v2::MutateRowRequest const& request,
+                 btproto::MutateRowRequest const& request,
                  grpc::CompletionQueue* cq) {
                metadata_update_policy.Setup(*context);
                return client->AsyncMutateRow(context, request, cq);
              },
              std::move(request))
-      .then([](future<StatusOr<google::bigtable::v2::MutateRowResponse>> r) {
+      .then([](future<StatusOr<btproto::MutateRowResponse>> r) {
         return r.get().status();
       });
 }
@@ -303,11 +302,11 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
 // as a std::vector<>. If the RPC fails, it will keep retrying until the
 // policies in effect tell us to stop. Note that each retry must clear the
 // samples otherwise the result is an inconsistent set of sample row keys.
-StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
+StatusOr<std::vector<RowKeySample>> Table::SampleRows() {
   // Copy the policies in effect for this operation.
   auto backoff_policy = clone_rpc_backoff_policy();
   auto retry_policy = clone_rpc_retry_policy();
-  std::vector<bigtable::RowKeySample> samples;
+  std::vector<RowKeySample> samples;
 
   // Build the RPC request for SampleRowKeys
   btproto::SampleRowKeysRequest request;
@@ -323,7 +322,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
 
     auto stream = client_->SampleRowKeys(&client_context, request);
     while (stream->Read(&response)) {
-      bigtable::RowKeySample row_sample;
+      RowKeySample row_sample;
       row_sample.offset_bytes = response.offset_bytes();
       row_sample.row_key = std::move(*response.mutable_row_key());
       samples.emplace_back(std::move(row_sample));
@@ -344,7 +343,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
   return samples;
 }
 
-future<StatusOr<std::vector<bigtable::RowKeySample>>> Table::AsyncSampleRows() {
+future<StatusOr<std::vector<RowKeySample>>> Table::AsyncSampleRows() {
   auto cq = background_threads_->cq();
   return bigtable_internal::AsyncRowSampler::Create(
       cq, client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
@@ -353,8 +352,7 @@ future<StatusOr<std::vector<bigtable::RowKeySample>>> Table::AsyncSampleRows() {
 
 StatusOr<Row> Table::ReadModifyWriteRowImpl(
     btproto::ReadModifyWriteRowRequest request) {
-  SetCommonTableOperationRequest<
-      ::google::bigtable::v2::ReadModifyWriteRowRequest>(
+  SetCommonTableOperationRequest<btproto::ReadModifyWriteRowRequest>(
       request, app_profile_id_, table_name_);
 
   grpc::Status status;
@@ -370,9 +368,8 @@ StatusOr<Row> Table::ReadModifyWriteRowImpl(
 }
 
 future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
-    ::google::bigtable::v2::ReadModifyWriteRowRequest request) {
-  SetCommonTableOperationRequest<
-      ::google::bigtable::v2::ReadModifyWriteRowRequest>(
+    btproto::ReadModifyWriteRowRequest request) {
+  SetCommonTableOperationRequest<btproto::ReadModifyWriteRowRequest>(
       request, app_profile_id_, table_name_);
 
   auto cq = background_threads_->cq();

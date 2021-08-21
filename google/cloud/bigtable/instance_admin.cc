@@ -34,7 +34,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-static_assert(std::is_copy_assignable<bigtable::InstanceAdmin>::value,
+static_assert(std::is_copy_assignable<InstanceAdmin>::value,
               "bigtable::InstanceAdmin must be CopyAssignable");
 
 using ClientUtils = bigtable_internal::UnaryClientUtils<InstanceAdminClient>;
@@ -90,9 +90,8 @@ future<StatusOr<btadmin::Instance>> InstanceAdmin::CreateInstance(
   return AsyncCreateInstanceImpl(cq, std::move(instance_config));
 }
 
-future<StatusOr<google::bigtable::admin::v2::Instance>>
-InstanceAdmin::AsyncCreateInstanceImpl(
-    CompletionQueue& cq, bigtable::InstanceConfig instance_config) {
+future<StatusOr<btadmin::Instance>> InstanceAdmin::AsyncCreateInstanceImpl(
+    CompletionQueue& cq, InstanceConfig instance_config) {
   auto request = std::move(instance_config).as_proto();
   request.set_parent(project_name());
   for (auto& kv : *request.mutable_clusters()) {
@@ -100,16 +99,14 @@ InstanceAdmin::AsyncCreateInstanceImpl(
                            kv.second.location());
   }
   std::shared_ptr<InstanceAdminClient> client(client_);
-  return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<
-      google::bigtable::admin::v2::Instance>(
+  return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<btadmin::Instance>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
       clone_rpc_backoff_policy(),
       bigtable_internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
       MetadataUpdatePolicy(project_name(), MetadataParamTypes::PARENT), client,
-      [client](
-          grpc::ClientContext* context,
-          google::bigtable::admin::v2::CreateInstanceRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [client](grpc::ClientContext* context,
+               btadmin::CreateInstanceRequest const& request,
+               grpc::CompletionQueue* cq) {
         return client->AsyncCreateInstance(context, request, cq);
       },
       std::move(request), cq);
@@ -123,11 +120,9 @@ future<StatusOr<btadmin::Cluster>> InstanceAdmin::CreateCluster(
                                 cluster_id);
 }
 
-future<StatusOr<google::bigtable::admin::v2::Cluster>>
-InstanceAdmin::AsyncCreateClusterImpl(CompletionQueue& cq,
-                                      ClusterConfig cluster_config,
-                                      std::string const& instance_id,
-                                      std::string const& cluster_id) {
+future<StatusOr<btadmin::Cluster>> InstanceAdmin::AsyncCreateClusterImpl(
+    CompletionQueue& cq, ClusterConfig cluster_config,
+    std::string const& instance_id, std::string const& cluster_id) {
   auto cluster = std::move(cluster_config).as_proto();
   cluster.set_location(project_name() + "/locations/" + cluster.location());
   btadmin::CreateClusterRequest request;
@@ -137,42 +132,38 @@ InstanceAdmin::AsyncCreateClusterImpl(CompletionQueue& cq,
   request.set_cluster_id(cluster_id);
 
   std::shared_ptr<InstanceAdminClient> client(client_);
-  return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<
-      google::bigtable::admin::v2::Cluster>(
+  return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<btadmin::Cluster>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
       clone_rpc_backoff_policy(),
       bigtable_internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
       MetadataUpdatePolicy(parent, MetadataParamTypes::PARENT), client,
       [client](grpc::ClientContext* context,
-               google::bigtable::admin::v2::CreateClusterRequest const& request,
+               btadmin::CreateClusterRequest const& request,
                grpc::CompletionQueue* cq) {
         return client->AsyncCreateCluster(context, request, cq);
       },
       std::move(request), cq);
 }
 
-future<StatusOr<google::bigtable::admin::v2::Instance>>
-InstanceAdmin::UpdateInstance(InstanceUpdateConfig instance_update_config) {
+future<StatusOr<btadmin::Instance>> InstanceAdmin::UpdateInstance(
+    InstanceUpdateConfig instance_update_config) {
   auto cq = background_threads_->cq();
   return AsyncUpdateInstanceImpl(cq, std::move(instance_update_config));
 }
 
-future<StatusOr<google::bigtable::admin::v2::Instance>>
-InstanceAdmin::AsyncUpdateInstanceImpl(
+future<StatusOr<btadmin::Instance>> InstanceAdmin::AsyncUpdateInstanceImpl(
     CompletionQueue& cq, InstanceUpdateConfig instance_update_config) {
   auto name = instance_update_config.GetName();
   auto request = std::move(instance_update_config).as_proto();
 
   std::shared_ptr<InstanceAdminClient> client(client_);
-  return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<
-      google::bigtable::admin::v2::Instance>(
+  return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<btadmin::Instance>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
       clone_rpc_backoff_policy(),
       bigtable_internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
       MetadataUpdatePolicy(name, MetadataParamTypes::INSTANCE_NAME), client,
       [client](grpc::ClientContext* context,
-               google::bigtable::admin::v2::PartialUpdateInstanceRequest const&
-                   request,
+               btadmin::PartialUpdateInstanceRequest const& request,
                grpc::CompletionQueue* cq) {
         return client->AsyncUpdateInstance(context, request, cq);
       },
@@ -289,27 +280,24 @@ StatusOr<ClusterList> InstanceAdmin::ListClusters(
   return result;
 }
 
-future<StatusOr<google::bigtable::admin::v2::Cluster>>
-InstanceAdmin::UpdateCluster(ClusterConfig cluster_config) {
+future<StatusOr<btadmin::Cluster>> InstanceAdmin::UpdateCluster(
+    ClusterConfig cluster_config) {
   auto cq = background_threads_->cq();
   return AsyncUpdateClusterImpl(cq, std::move(cluster_config));
 }
 
-future<StatusOr<google::bigtable::admin::v2::Cluster>>
-InstanceAdmin::AsyncUpdateClusterImpl(CompletionQueue& cq,
-                                      ClusterConfig cluster_config) {
+future<StatusOr<btadmin::Cluster>> InstanceAdmin::AsyncUpdateClusterImpl(
+    CompletionQueue& cq, ClusterConfig cluster_config) {
   auto request = std::move(cluster_config).as_proto();
   auto name = request.name();
 
   std::shared_ptr<InstanceAdminClient> client(client_);
-  return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<
-      google::bigtable::admin::v2::Cluster>(
+  return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<btadmin::Cluster>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
       clone_rpc_backoff_policy(),
       bigtable_internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
       MetadataUpdatePolicy(name, MetadataParamTypes::NAME), client,
-      [client](grpc::ClientContext* context,
-               google::bigtable::admin::v2::Cluster const& request,
+      [client](grpc::ClientContext* context, btadmin::Cluster const& request,
                grpc::CompletionQueue* cq) {
         return client->AsyncUpdateCluster(context, request, cq);
       },
@@ -382,26 +370,23 @@ future<StatusOr<btadmin::AppProfile>> InstanceAdmin::UpdateAppProfile(
                                    std::move(config));
 }
 
-future<StatusOr<google::bigtable::admin::v2::AppProfile>>
-InstanceAdmin::AsyncUpdateAppProfileImpl(CompletionQueue& cq,
-                                         std::string const& instance_id,
-                                         std::string const& profile_id,
-                                         AppProfileUpdateConfig config) {
+future<StatusOr<btadmin::AppProfile>> InstanceAdmin::AsyncUpdateAppProfileImpl(
+    CompletionQueue& cq, std::string const& instance_id,
+    std::string const& profile_id, AppProfileUpdateConfig config) {
   auto request = std::move(config).as_proto();
   auto name = AppProfileName(instance_id, profile_id);
   request.mutable_app_profile()->set_name(name);
 
   std::shared_ptr<InstanceAdminClient> client(client_);
   return bigtable_internal::AsyncStartPollAfterRetryUnaryRpc<
-      google::bigtable::admin::v2::AppProfile>(
+      btadmin::AppProfile>(
       __func__, clone_polling_policy(), clone_rpc_retry_policy(),
       clone_rpc_backoff_policy(),
       bigtable_internal::ConstantIdempotencyPolicy(Idempotency::kNonIdempotent),
       MetadataUpdatePolicy(name, MetadataParamTypes::APP_PROFILE_NAME), client,
-      [client](
-          grpc::ClientContext* context,
-          google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [client](grpc::ClientContext* context,
+               btadmin::UpdateAppProfileRequest const& request,
+               grpc::CompletionQueue* cq) {
         return client->AsyncUpdateAppProfile(context, request, cq);
       },
       std::move(request), cq);

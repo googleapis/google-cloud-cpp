@@ -18,7 +18,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-RowSet RowSet::Intersect(bigtable::RowRange const& range) const {
+RowSet RowSet::Intersect(RowRange const& range) const {
   // Special case: "all rows", return the argument range.
   if (row_set_.row_keys().empty() && row_set_.row_ranges().empty()) {
     return RowSet(range);
@@ -41,7 +41,7 @@ RowSet RowSet::Intersect(bigtable::RowRange const& range) const {
   // means "all rows", but we want "no rows".
   if (result.row_set_.row_keys().empty() &&
       result.row_set_.row_ranges().empty()) {
-    return RowSet(bigtable::RowRange::Empty());
+    return RowSet(RowRange::Empty());
   }
   return result;
 }

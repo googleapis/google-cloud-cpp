@@ -44,12 +44,11 @@ inline namespace BIGTABLE_CLIENT_NS {
  * `InstanceAdminClient` instances when possible.
  */
 
-class LoggingInstanceAdminClient
-    : public google::cloud::bigtable::InstanceAdminClient {
+class LoggingInstanceAdminClient : public bigtable::InstanceAdminClient {
  public:
   LoggingInstanceAdminClient(
-      std::shared_ptr<google::cloud::bigtable::InstanceAdminClient> child,
-      google::cloud::TracingOptions options)
+      std::shared_ptr<bigtable::InstanceAdminClient> child,
+      TracingOptions options)
       : child_(std::move(child)), tracing_options_(std::move(options)) {}
 
   std::string const& project() const override { return child_->project(); }
@@ -286,8 +285,8 @@ class LoggingInstanceAdminClient
     return child_->BackgroundThreadsFactory();
   }
 
-  std::shared_ptr<google::cloud::bigtable::InstanceAdminClient> child_;
-  google::cloud::TracingOptions tracing_options_;
+  std::shared_ptr<bigtable::InstanceAdminClient> child_;
+  TracingOptions tracing_options_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

@@ -63,7 +63,7 @@ class RowSet {
    * ranges that do not intersect with @p range, and keeps only the intersection
    * for those ranges that do intersect @p range.
    */
-  RowSet Intersect(bigtable::RowRange const& range) const;
+  RowSet Intersect(RowRange const& range) const;
 
   /**
    * Returns true if the set is empty.

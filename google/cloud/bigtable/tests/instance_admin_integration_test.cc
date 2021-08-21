@@ -65,17 +65,16 @@ class InstanceAdminIntegrationTest
                            .value_or("");
     ASSERT_FALSE(service_account_.empty());
 
-    auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
-        project_id_, bigtable::ClientOptions());
-    instance_admin_ =
-        absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
+    auto instance_admin_client =
+        CreateDefaultInstanceAdminClient(project_id_, ClientOptions());
+    instance_admin_ = absl::make_unique<InstanceAdmin>(instance_admin_client);
   }
 
   std::string project_id_;
   std::string zone_a_;
   std::string zone_b_;
   std::string service_account_;
-  std::unique_ptr<bigtable::InstanceAdmin> instance_admin_;
+  std::unique_ptr<InstanceAdmin> instance_admin_;
   google::cloud::internal::DefaultPRNG generator_ =
       google::cloud::internal::MakeDefaultPRNG();
 };
@@ -96,17 +95,15 @@ bool IsClusterPresent(std::vector<btadmin::Cluster> const& clusters,
       });
 }
 
-bigtable::InstanceConfig IntegrationTestConfig(
+InstanceConfig IntegrationTestConfig(
     std::string const& instance_id, std::string const& zone,
-    bigtable::InstanceConfig::InstanceType instance_type =
-        bigtable::InstanceConfig::DEVELOPMENT,
+    InstanceConfig::InstanceType instance_type = InstanceConfig::DEVELOPMENT,
     int32_t serve_node = 0) {
   // The description cannot exceed 30 characters
   auto display_name = ("IT " + instance_id).substr(0, 30);
-  auto cluster_config =
-      bigtable::ClusterConfig(zone, serve_node, bigtable::ClusterConfig::HDD);
-  bigtable::InstanceConfig config(instance_id, display_name,
-                                  {{instance_id + "-c1", cluster_config}});
+  auto cluster_config = ClusterConfig(zone, serve_node, ClusterConfig::HDD);
+  InstanceConfig config(instance_id, display_name,
+                        {{instance_id + "-c1", cluster_config}});
   config.set_type(instance_type);
   return config;
 }
@@ -120,10 +117,10 @@ TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
-  auto instance_config1 = IntegrationTestConfig(
-      id1, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3);
-  auto instance_config2 = IntegrationTestConfig(
-      id2, zone_b_, bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance_config1 =
+      IntegrationTestConfig(id1, zone_a_, InstanceConfig::PRODUCTION, 3);
+  auto instance_config2 =
+      IntegrationTestConfig(id2, zone_b_, InstanceConfig::PRODUCTION, 3);
   auto instance1_future = instance_admin_->CreateInstance(instance_config1);
   auto instance2_future = instance_admin_->CreateInstance(instance_config2);
   // Wait for instance creation
@@ -153,8 +150,8 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
-  auto instance_config = IntegrationTestConfig(
-      instance_id, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance_config = IntegrationTestConfig(instance_id, zone_a_,
+                                               InstanceConfig::PRODUCTION, 3);
   auto future = instance_admin_->CreateInstance(instance_config);
   auto actual = future.get();
   EXPECT_STATUS_OK(actual);
@@ -185,10 +182,10 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
               Not(Contains(EndsWith("/appProfiles/" + id2))));
 
   auto profile_1 = instance_admin_->CreateAppProfile(
-      instance_id, bigtable::AppProfileConfig::MultiClusterUseAny(id1));
+      instance_id, AppProfileConfig::MultiClusterUseAny(id1));
   ASSERT_STATUS_OK(profile_1);
   auto profile_2 = instance_admin_->CreateAppProfile(
-      instance_id, bigtable::AppProfileConfig::MultiClusterUseAny(id2));
+      instance_id, AppProfileConfig::MultiClusterUseAny(id2));
   ASSERT_STATUS_OK(profile_2);
 
   auto current_profiles = instance_admin_->ListAppProfiles(instance_id);
@@ -212,7 +209,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
 
   auto profile_updated_future = instance_admin_->UpdateAppProfile(
       instance_id, id2,
-      bigtable::AppProfileUpdateConfig().set_description("new description"));
+      AppProfileUpdateConfig().set_description("new description"));
 
   auto update_2 = profile_updated_future.get();
   auto detail_2_after_update = instance_admin_->GetAppProfile(instance_id, id2);
@@ -275,7 +272,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
   // update instance
   google::cloud::StatusOr<btadmin::Instance> instance_copy;
   instance_copy = *instance;
-  bigtable::InstanceUpdateConfig instance_update_config(std::move(*instance));
+  InstanceUpdateConfig instance_update_config(std::move(*instance));
   auto const updated_display_name = instance_id + " updated";
   instance_update_config.set_display_name(updated_display_name);
   auto instance_after =
@@ -303,8 +300,8 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   std::string const cluster_id = instance_id + "-cl2";
 
   // create instance prerequisites for cluster operations
-  auto instance_config = IntegrationTestConfig(
-      instance_id, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance_config = IntegrationTestConfig(instance_id, zone_a_,
+                                               InstanceConfig::PRODUCTION, 3);
   auto instance_details =
       instance_admin_->CreateInstance(instance_config).get();
   ASSERT_STATUS_OK(instance_details);
@@ -316,8 +313,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
       << "Cluster (" << cluster_id << ") already exists."
       << " This is unexpected, as the cluster ids are"
       << " generated at random.";
-  auto cluster_config =
-      bigtable::ClusterConfig(zone_b_, 3, bigtable::ClusterConfig::HDD);
+  auto cluster_config = ClusterConfig(zone_b_, 3, ClusterConfig::HDD);
   auto cluster =
       instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
           .get();
@@ -339,7 +335,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   // update the storage type
   cluster->set_serve_nodes(4);
   cluster->clear_state();
-  bigtable::ClusterConfig updated_cluster_config(std::move(*cluster));
+  ClusterConfig updated_cluster_config(std::move(*cluster));
   auto cluster_after_update =
       instance_admin_->UpdateCluster(std::move(updated_cluster_config)).get();
   auto check_cluster_after_update =
@@ -369,8 +365,8 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
   // create instance prerequisites for cluster operations
-  auto instance_config = IntegrationTestConfig(
-      instance_id, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance_config = IntegrationTestConfig(instance_id, zone_a_,
+                                               InstanceConfig::PRODUCTION, 3);
   auto instance_details =
       instance_admin_->CreateInstance(instance_config).get();
   ASSERT_STATUS_OK(instance_details);
@@ -403,13 +399,13 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamNativeAPIsTest) {
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
   // create instance prerequisites for cluster operations
-  auto instance_config = IntegrationTestConfig(
-      instance_id, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance_config = IntegrationTestConfig(instance_id, zone_a_,
+                                               InstanceConfig::PRODUCTION, 3);
   auto instance_details =
       instance_admin_->CreateInstance(instance_config).get();
   ASSERT_STATUS_OK(instance_details);
 
-  auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
+  auto iam_policy = IamPolicy({IamBinding(
       "roles/bigtable.reader", {"serviceAccount:" + service_account_})});
 
   auto initial_policy = instance_admin_->SetIamPolicy(instance_id, iam_policy);
@@ -437,10 +433,9 @@ TEST_F(InstanceAdminIntegrationTest,
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
-  auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
-      project_id_, bigtable::ClientOptions().enable_tracing("rpc"));
-  auto instance_admin =
-      absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
+  auto instance_admin_client = CreateDefaultInstanceAdminClient(
+      project_id_, ClientOptions().enable_tracing("rpc"));
+  auto instance_admin = absl::make_unique<InstanceAdmin>(instance_admin_client);
 
   // verify new instance id in list of instances
   auto instances_before = instance_admin->ListInstances();
@@ -472,7 +467,7 @@ TEST_F(InstanceAdminIntegrationTest,
   // update instance
   google::cloud::StatusOr<btadmin::Instance> instance_copy;
   instance_copy = *instance;
-  bigtable::InstanceUpdateConfig instance_update_config(std::move(*instance));
+  InstanceUpdateConfig instance_update_config(std::move(*instance));
   auto const updated_display_name = instance_id + " updated";
   instance_update_config.set_display_name(updated_display_name);
   auto instance_after =
@@ -501,9 +496,9 @@ TEST_F(InstanceAdminIntegrationTest,
 
 TEST_F(InstanceAdminIntegrationTest, CustomWorkers) {
   CompletionQueue cq;
-  auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
-      project_id_, bigtable::ClientOptions().DisableBackgroundThreads(cq));
-  instance_admin_ = absl::make_unique<bigtable::InstanceAdmin>(
+  auto instance_admin_client = CreateDefaultInstanceAdminClient(
+      project_id_, ClientOptions().DisableBackgroundThreads(cq));
+  instance_admin_ = absl::make_unique<InstanceAdmin>(
       instance_admin_client,
       *DefaultRPCRetryPolicy({std::chrono::seconds(1), std::chrono::seconds(1),
                               std::chrono::seconds(1)}));
@@ -514,7 +509,7 @@ TEST_F(InstanceAdminIntegrationTest, CustomWorkers) {
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
   auto instance_details_fut =
       instance_admin_->CreateInstance(IntegrationTestConfig(
-          instance_id, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3));
+          instance_id, zone_a_, InstanceConfig::PRODUCTION, 3));
 
   EXPECT_EQ(std::future_status::timeout,
             instance_details_fut.wait_for(std::chrono::milliseconds(100)));

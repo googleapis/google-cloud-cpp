@@ -42,7 +42,7 @@ namespace btadmin = ::google::bigtable::admin::v2;
 class LoggingAdminClient : public bigtable::AdminClient {
  public:
   LoggingAdminClient(std::shared_ptr<bigtable::AdminClient> child,
-                     google::cloud::TracingOptions options)
+                     TracingOptions options)
       : child_(std::move(child)), tracing_options_(std::move(options)) {}
 
   std::string const& project() const override { return child_->project(); }
@@ -240,8 +240,8 @@ class LoggingAdminClient : public bigtable::AdminClient {
     return child_->BackgroundThreadsFactory();
   }
 
-  std::shared_ptr<google::cloud::bigtable::AdminClient> child_;
-  google::cloud::TracingOptions tracing_options_;
+  std::shared_ptr<bigtable::AdminClient> child_;
+  TracingOptions tracing_options_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

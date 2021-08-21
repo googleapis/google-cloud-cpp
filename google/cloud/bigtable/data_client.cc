@@ -45,7 +45,7 @@ class DefaultDataClient : public DataClient {
   // Introduce an early `private:` section because this type is used to define
   // the public interface, it should not be part of the public interface.
   struct DataTraits {
-    static std::string const& Endpoint(bigtable::ClientOptions& options) {
+    static std::string const& Endpoint(ClientOptions& options) {
       return options.data_endpoint();
     }
   };

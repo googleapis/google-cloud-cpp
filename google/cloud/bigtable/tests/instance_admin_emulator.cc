@@ -20,8 +20,10 @@
 #include <grpcpp/grpcpp.h>
 #include <sstream>
 
+namespace {
 namespace btadmin = ::google::bigtable::admin::v2;
 namespace bigtable_internal = ::google::cloud::bigtable_internal;
+}  // namespace
 
 /**
  * In-memory implementation of `google.bigtable.admin.v2.InstanceAdmin`.

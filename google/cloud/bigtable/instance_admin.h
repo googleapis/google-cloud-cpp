@@ -174,21 +174,19 @@ class InstanceAdmin {
 
   /// Return the fully qualified name of the given instance_id.
   std::string InstanceName(std::string const& instance_id) const {
-    return google::cloud::bigtable::InstanceName(project_id(), instance_id);
+    return bigtable::InstanceName(project_id(), instance_id);
   }
 
   /// Return the fully qualified name of the given cluster_id in give
   /// instance_id.
   std::string ClusterName(std::string const& instance_id,
                           std::string const& cluster_id) const {
-    return google::cloud::bigtable::ClusterName(project_id(), instance_id,
-                                                cluster_id);
+    return bigtable::ClusterName(project_id(), instance_id, cluster_id);
   }
 
   std::string AppProfileName(std::string const& instance_id,
                              std::string const& profile_id) const {
-    return google::cloud::bigtable::AppProfileName(project_id(), instance_id,
-                                                   profile_id);
+    return bigtable::AppProfileName(project_id(), instance_id, profile_id);
   }
 
   /**

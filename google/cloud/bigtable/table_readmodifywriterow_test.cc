@@ -99,10 +99,8 @@ row {
       .WillOnce(mock_read_modify_write_row);
 
   auto row = table_.ReadModifyWriteRow(
-      row_key,
-      bigtable::ReadModifyWriteRule::AppendValue(family1, column_id1, "value1"),
-      bigtable::ReadModifyWriteRule::AppendValue(family1, column_id1,
-                                                 "-value2"));
+      row_key, ReadModifyWriteRule::AppendValue(family1, column_id1, "value1"),
+      ReadModifyWriteRule::AppendValue(family1, column_id1, "-value2"));
 
   ASSERT_STATUS_OK(row);
   EXPECT_EQ("response-row-key", row->row_key());
@@ -169,10 +167,9 @@ TEST_F(TableReadModifyWriteTest, MultipleIncrementAmountTest) {
       .WillOnce(mock_read_modify_write_row);
 
   auto row = table_.ReadModifyWriteRow(
-      row_key,
-      bigtable::ReadModifyWriteRule::IncrementAmount(family1, column_id1, 1000),
-      bigtable::ReadModifyWriteRule::IncrementAmount(family1, column_id2, 200),
-      bigtable::ReadModifyWriteRule::IncrementAmount(family2, column_id2, 400));
+      row_key, ReadModifyWriteRule::IncrementAmount(family1, column_id1, 1000),
+      ReadModifyWriteRule::IncrementAmount(family1, column_id2, 200),
+      ReadModifyWriteRule::IncrementAmount(family2, column_id2, 400));
 
   ASSERT_STATUS_OK(row);
   EXPECT_EQ("response-row-key", row->row_key());
@@ -243,11 +240,9 @@ TEST_F(TableReadModifyWriteTest, MultipleMixedRuleTest) {
       .WillOnce(mock_read_modify_write_row);
 
   auto row = table_.ReadModifyWriteRow(
-      row_key,
-      bigtable::ReadModifyWriteRule::IncrementAmount(family1, column_id1, 1000),
-      bigtable::ReadModifyWriteRule::AppendValue(family1, column_id2,
-                                                 "value_string"),
-      bigtable::ReadModifyWriteRule::IncrementAmount(family2, column_id2, 400));
+      row_key, ReadModifyWriteRule::IncrementAmount(family1, column_id1, 1000),
+      ReadModifyWriteRule::AppendValue(family1, column_id2, "value_string"),
+      ReadModifyWriteRule::IncrementAmount(family2, column_id2, 400));
 
   ASSERT_STATUS_OK(row);
   EXPECT_EQ("response-row-key", row->row_key());
@@ -268,8 +263,8 @@ TEST_F(TableReadModifyWriteTest, UnrecoverableFailureTest) {
 
   EXPECT_CALL(*client_, ReadModifyWriteRow)
       .WillRepeatedly([](grpc::ClientContext* context,
-                         google::bigtable::v2::ReadModifyWriteRowRequest const&,
-                         google::bigtable::v2::ReadModifyWriteRowResponse*) {
+                         btproto::ReadModifyWriteRowRequest const&,
+                         btproto::ReadModifyWriteRowResponse*) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow",
             google::cloud::internal::ApiClientHeader()));
@@ -277,10 +272,8 @@ TEST_F(TableReadModifyWriteTest, UnrecoverableFailureTest) {
       });
 
   EXPECT_FALSE(table_.ReadModifyWriteRow(
-      row_key,
-      bigtable::ReadModifyWriteRule::AppendValue(family1, column_id1, "value1"),
-      bigtable::ReadModifyWriteRule::AppendValue(family1, column_id1,
-                                                 "-value2")));
+      row_key, ReadModifyWriteRule::AppendValue(family1, column_id1, "value1"),
+      ReadModifyWriteRule::AppendValue(family1, column_id1, "-value2")));
 }
 
 }  // anonymous namespace

@@ -1412,8 +1412,8 @@ TEST_F(ValidContextMdAsyncTest, AsyncRestoreTable) {
             backup: "projects/the-project/instances/the-instance/clusters/the-cluster/backups/the-backup"
           )pb",
           "google.bigtable.admin.v2.BigtableTableAdmin.RestoreTable"));
-  bigtable::TableAdmin::RestoreTableParams params("restored-table",
-                                                  "the-cluster", "the-backup");
+  TableAdmin::RestoreTableParams params("restored-table", "the-cluster",
+                                        "the-backup");
   FinishTest(table_admin_.AsyncRestoreTableImpl(cq_, std::move(params)));
 }
 

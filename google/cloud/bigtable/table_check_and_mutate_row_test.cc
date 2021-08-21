@@ -49,10 +49,10 @@ TEST_F(TableCheckAndMutateRowTest, Simple) {
   EXPECT_CALL(*client_, CheckAndMutateRow)
       .WillOnce(mock_check_and_mutate(grpc::Status::OK));
 
-  auto mut = table_.CheckAndMutateRow(
-      "foo", bigtable::Filter::PassAllFilter(),
-      {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
-      {bigtable::SetCell("fam", "col", 0_ms, "it was false")});
+  auto mut =
+      table_.CheckAndMutateRow("foo", Filter::PassAllFilter(),
+                               {SetCell("fam", "col", 0_ms, "it was true")},
+                               {SetCell("fam", "col", 0_ms, "it was false")});
 
   ASSERT_STATUS_OK(mut);
 }
@@ -64,10 +64,10 @@ TEST_F(TableCheckAndMutateRowTest, Failure) {
       .WillRepeatedly(mock_check_and_mutate(
           grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
-  EXPECT_FALSE(table_.CheckAndMutateRow(
-      "foo", bigtable::Filter::PassAllFilter(),
-      {bigtable::SetCell("fam", "col", 0_ms, "it was true")},
-      {bigtable::SetCell("fam", "col", 0_ms, "it was false")}));
+  EXPECT_FALSE(
+      table_.CheckAndMutateRow("foo", Filter::PassAllFilter(),
+                               {SetCell("fam", "col", 0_ms, "it was true")},
+                               {SetCell("fam", "col", 0_ms, "it was false")}));
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
