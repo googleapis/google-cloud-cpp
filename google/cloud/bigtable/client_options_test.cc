@@ -77,6 +77,8 @@ TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
 TEST(ClientOptionsTest, OptionsConstructor) {
   using ms = std::chrono::milliseconds;
   using min = std::chrono::minutes;
+  auto channel_args = grpc::ChannelArguments();
+  channel_args.SetString("test-key-1", "value-1");
   auto credentials = grpc::InsecureChannelCredentials();
   auto options = ClientOptions(
       Options{}
@@ -90,7 +92,10 @@ TEST(ClientOptionsTest, OptionsConstructor) {
           .set<GrpcNumChannelsOption>(3)
           .set<MinConnectionRefreshOption>(ms(100))
           .set<MaxConnectionRefreshOption>(min(4))
-          .set<GrpcBackgroundThreadPoolSizeOption>(5));
+          .set<GrpcBackgroundThreadPoolSizeOption>(5)
+          .set<GrpcChannelArgumentsNativeOption>(channel_args)
+          .set<GrpcChannelArgumentsOption>({{"test-key-2", "value-2"}})
+          .set<UserAgentProductsOption>({"test-prefix"}));
 
   EXPECT_EQ("testdata.googleapis.com", options.data_endpoint());
   EXPECT_EQ("testadmin.googleapis.com", options.admin_endpoint());
@@ -103,6 +108,16 @@ TEST(ClientOptionsTest, OptionsConstructor) {
   EXPECT_EQ(ms(100), options.min_conn_refresh_period());
   EXPECT_EQ(min(4), options.max_conn_refresh_period());
   EXPECT_EQ(5U, options.background_thread_pool_size());
+  auto args = options.channel_arguments();
+  auto key1 = GetStringChannelArgument(args, "test-key-1");
+  ASSERT_TRUE(key1.has_value());
+  EXPECT_EQ("value-1", key1.value());
+  auto key2 = GetStringChannelArgument(args, "test-key-2");
+  ASSERT_TRUE(key2.has_value());
+  EXPECT_EQ("value-2", key2.value());
+  auto s = GetStringChannelArgument(args, GRPC_ARG_PRIMARY_USER_AGENT_STRING);
+  ASSERT_TRUE(s.has_value());
+  EXPECT_THAT(*s, HasSubstr("test-prefix"));
 }
 
 TEST(ClientOptionsTest, CustomBackgroundThreadsOption) {
