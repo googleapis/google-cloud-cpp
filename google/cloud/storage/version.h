@@ -27,9 +27,7 @@
       " instead. The function will be removed on 2022-04-01 or shortly "       \
       "after. See GitHub issue #5929 for more information.")
 
-#define STORAGE_CLIENT_NS                              \
-  GOOGLE_CLOUD_CPP_VEVAL(STORAGE_CLIENT_VERSION_MAJOR, \
-                         STORAGE_CLIENT_VERSION_MINOR)
+#define STORAGE_CLIENT_NS GOOGLE_CLOUD_CPP_NS
 
 namespace google {
 namespace cloud {
@@ -55,32 +53,24 @@ inline namespace STORAGE_CLIENT_NS {
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
-int constexpr version_major() { return STORAGE_CLIENT_VERSION_MAJOR; }
+int constexpr version_major() { return google::cloud::version_major(); }
 
 /**
  * Returns the Google Cloud Storage C++ Client minor version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
-int constexpr version_minor() { return STORAGE_CLIENT_VERSION_MINOR; }
+int constexpr version_minor() { return google::cloud::version_minor(); }
 
 /**
  * Returns the Google Cloud Storage C++ Client patch version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
-int constexpr version_patch() { return STORAGE_CLIENT_VERSION_PATCH; }
+int constexpr version_patch() { return google::cloud::version_patch(); }
 
 /// Returns a single integer representing the Major/Minor/Patch version.
-int constexpr version() {
-  static_assert(::google::cloud::version_major() == version_major(),
-                "Mismatched major version");
-  static_assert(::google::cloud::version_minor() == version_minor(),
-                "Mismatched minor version");
-  static_assert(::google::cloud::version_patch() == version_patch(),
-                "Mismatched patch version");
-  return ::google::cloud::version();
-}
+int constexpr version() { return google::cloud::version(); }
 
 /// Returns the version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string version_string();

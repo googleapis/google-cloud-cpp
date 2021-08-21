@@ -27,9 +27,7 @@
       " instead. The function will be removed on 2022-04-01 or shortly "       \
       "after. See GitHub issue #5929 for more information.")
 
-#define BIGTABLE_CLIENT_NS                              \
-  GOOGLE_CLOUD_CPP_VEVAL(BIGTABLE_CLIENT_VERSION_MAJOR, \
-                         BIGTABLE_CLIENT_VERSION_MINOR)
+#define BIGTABLE_CLIENT_NS GOOGLE_CLOUD_CPP_NS
 
 namespace google {
 namespace cloud {
@@ -55,32 +53,24 @@ inline namespace BIGTABLE_CLIENT_NS {
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
-int constexpr version_major() { return BIGTABLE_CLIENT_VERSION_MAJOR; }
+int constexpr version_major() { return google::cloud::version_major(); }
 
 /**
  * The Cloud Bigtable C++ Client minor version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
-int constexpr version_minor() { return BIGTABLE_CLIENT_VERSION_MINOR; }
+int constexpr version_minor() { return google::cloud::version_minor(); }
 
 /**
  * The Cloud Bigtable C++ Client patch version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
-int constexpr version_patch() { return BIGTABLE_CLIENT_VERSION_PATCH; }
+int constexpr version_patch() { return google::cloud::version_patch(); }
 
 /// A single integer representing the Major/Minor/Patch version.
-int constexpr version() {
-  static_assert(::google::cloud::version_major() == version_major(),
-                "Mismatched major version");
-  static_assert(::google::cloud::version_minor() == version_minor(),
-                "Mismatched minor version");
-  static_assert(::google::cloud::version_patch() == version_patch(),
-                "Mismatched patch version");
-  return ::google::cloud::version();
-}
+int constexpr version() { return google::cloud::version(); }
 
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string version_string();
