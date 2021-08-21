@@ -232,7 +232,8 @@ StatusOr<btadmin::Backup> TableAdmin::UpdateBackup(
   return result;
 }
 
-Status TableAdmin::DeleteBackup(btadmin::Backup const& backup) {
+Status TableAdmin::DeleteBackup(
+    google::bigtable::admin::v2::Backup const& backup) {
   grpc::Status status;
   btadmin::DeleteBackupRequest request;
   request.set_name(backup.name());
