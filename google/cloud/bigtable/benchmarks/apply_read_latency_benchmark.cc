@@ -20,56 +20,50 @@
 #include <iomanip>
 #include <sstream>
 
-/**
- * @file
- *
- * Measure the latency of `bigtable::Table::Apply()` and
- * `bigtable::Table::ReadRow()`.
- *
- * This benchmark measures the latency of `bigtable::Table::Apply()` and
- * `bigtable::Table::ReadRow()` on a "typical" table serving data.  The
- * benchmark:
- * - Creates a table with 10,000,000 rows, each row with a
- *   single column family.
- * - The column family contains 10 columns, each column filled with a random
- *   100 byte string.
- * - The name of the table starts with `perf`, followed by random characters.
- * - If there is a collision on the table name the benchmark aborts immediately.
- * - The benchmark populates the table during an initial phase.  The benchmark
- *   uses `BulkApply()` to populate the table, multiple threads to populate
- *   in parallel, and provides an initial split hint when creating the table.
- * - The benchmark reports the throughput of this bulk upload phase.
- *
- * After successfully uploading the initial data, the main phase of the
- * benchmark starts. During this phase the benchmark will:
- *
- * - The benchmark starts T threads, executing the following loop:
- * - Runs for S seconds, constantly executing this basic block:
- *   - Randomly, with 50% probability, pick if the next operation is an
- *     `Apply()` or a `ReadRow()`.
- *   - If the operation is a `ReadRow()` pick one of the 10,000,000 keys at
- *     random, with uniform probability, then perform the operation, record the
- *     latency and whether the operation was successful.
- *   - If the operation is an `Apply()`, pick new values for all the fields at
- *     random, then perform the operation, record the latency and whether the
- *     operation was successful.
- *
- * The test then waits for all the threads to finish and:
- *
- * - Collects the results from all the threads.
- * - Report the number of operations of each type, the total running time, and
- *   the effective throughput.
- * - Report the results, including p0 (minimum), p50, p90, p95, p99, p99.9, and
- *   p100 (maximum) latencies.
- * - Delete the table.
- * - Report the same results in CSV format to make analysis easier.
- *
- * Using a command-line parameter the benchmark can be configured to create a
- * local gRPC server that implements the Cloud Bigtable APIs used by the
- * benchmark.  If this parameter is not used the benchmark uses the default
- * configuration, that is, a production instance of Cloud Bigtable unless the
- * CLOUD_BIGTABLE_EMULATOR environment variable is set.
- */
+char const kDescription[] =
+    R"""( Measure the latency of `Table::Apply()` and `Table::ReadRow()`.
+
+This benchmark measures the latency of `Table::Apply()` and `Table::ReadRow()`
+on a "typical" table serving data.  The benchmark:
+- Creates a table with 10,000,000 rows, each row with a single column family.
+- The column family contains 10 columns, each column filled with a random 100
+  byte string.
+- If there is a collision on the table name the benchmark aborts immediately.
+- The benchmark populates the table during an initial phase.  The benchmark uses
+  `BulkApply()` to populate the table, multiple threads to populate in parallel,
+  and provides an initial split hint when creating the table.
+- The benchmark reports the throughput of this bulk upload phase.
+
+After successfully uploading the initial data, the main phase of the benchmark
+starts. During this phase the benchmark will:
+
+- The benchmark starts T threads, executing the following loop:
+- Runs for S seconds, constantly executing this basic block:
+  - Randomly, with 50% probability, pick if the next operation is an `Apply()`
+    or a `ReadRow()`.
+  - If the operation is a `ReadRow()` pick one of the 10,000,000 keys at random,
+    with uniform probability, then perform the operation, record the latency and
+    whether the operation was successful.
+  - If the operation is an `Apply()`, pick new values for all the fields at
+    random, then perform the operation, record the latency and whether the
+    operation was successful.
+
+The test then waits for all the threads to finish and:
+
+- Collects the results from all the threads.
+- Report the number of operations of each type, the total running time, and the
+  effective throughput.
+- Report the results, including p0 (minimum), p50, p90, p95, p99, p99.9, and
+  p100 (maximum) latencies.
+- Delete the table.
+- Report the same results in CSV format to make analysis easier.
+
+Using a command-line parameter the benchmark can be configured to create a local
+gRPC server that implements the Cloud Bigtable APIs used by the benchmark.  If
+this parameter is not used the benchmark uses the default configuration, that
+is, a production instance of Cloud Bigtable unless the CLOUD_BIGTABLE_EMULATOR
+environment variable is set.
+)""";
 
 /// Helper functions and types for the apply_read_latency_benchmark.
 namespace {
@@ -80,9 +74,9 @@ using bigtable::benchmarks::BenchmarkResult;
 using bigtable::benchmarks::FormatDuration;
 using bigtable::benchmarks::kColumnFamily;
 using bigtable::benchmarks::kNumFields;
-using bigtable::benchmarks::MakeBenchmarkSetup;
 using bigtable::benchmarks::MakeRandomMutation;
 using bigtable::benchmarks::OperationResult;
+using bigtable::benchmarks::ParseArgs;
 
 struct LatencyBenchmarkResult {
   BenchmarkResult apply_results;
@@ -103,13 +97,14 @@ constexpr int kBenchmarkProgressMarks = 4;
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
-  auto setup = MakeBenchmarkSetup("perf", argc, argv);
-  if (!setup) {
-    std::cerr << setup.status() << "\n";
+  auto options = ParseArgs(argc, argv, kDescription);
+  if (!options) {
+    std::cerr << options.status() << "\n";
     return -1;
   }
+  if (options->exit_after_parse) return 0;
 
-  Benchmark benchmark(*setup);
+  Benchmark benchmark(*options);
 
   // Create and populate the table for the benchmark.
   benchmark.CreateTable();
@@ -128,15 +123,15 @@ int main(int argc, char* argv[]) {
   auto latency_test_start = std::chrono::steady_clock::now();
   std::vector<std::future<google::cloud::StatusOr<LatencyBenchmarkResult>>>
       tasks;
-  for (int i = 0; i != setup->thread_count(); ++i) {
+  for (int i = 0; i != options->thread_count; ++i) {
     auto launch_policy = std::launch::async;
-    if (setup->thread_count() == 1) {
+    if (options->thread_count == 1) {
       // If the user requests only one thread, use the current thread.
       launch_policy = std::launch::deferred;
     }
     tasks.emplace_back(std::async(launch_policy, RunBenchmark,
-                                  std::ref(benchmark), setup->app_profile_id(),
-                                  setup->table_id(), setup->test_duration()));
+                                  std::ref(benchmark), options->app_profile_id,
+                                  options->table_id, options->test_duration));
   }
 
   // Wait for the threads and combine all the results.

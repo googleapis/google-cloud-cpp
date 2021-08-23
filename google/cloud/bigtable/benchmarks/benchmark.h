@@ -15,8 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BENCHMARKS_BENCHMARK_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BENCHMARKS_BENCHMARK_H
 
+#include "google/cloud/bigtable/benchmarks/benchmark_options.h"
+#include "google/cloud/bigtable/benchmarks/constants.h"
 #include "google/cloud/bigtable/benchmarks/embedded_server.h"
-#include "google/cloud/bigtable/benchmarks/setup.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/status_or.h"
@@ -46,7 +47,7 @@ struct BenchmarkResult {
  */
 class Benchmark {
  public:
-  explicit Benchmark(BenchmarkSetup setup);
+  explicit Benchmark(BenchmarkOptions options);
   ~Benchmark();
 
   Benchmark(Benchmark const&) = delete;
@@ -132,7 +133,7 @@ class Benchmark {
    */
   int KeyWidth() const;
 
-  BenchmarkSetup setup_;
+  BenchmarkOptions options_;
   int key_width_;
   bigtable::ClientOptions client_options_;
   std::unique_ptr<EmbeddedServer> server_;
@@ -162,6 +163,9 @@ struct FormatDuration {
  * @return the stream after printing.
  */
 std::ostream& operator<<(std::ostream& os, FormatDuration duration);
+
+google::cloud::StatusOr<BenchmarkOptions> ParseArgs(
+    int& argc, char* argv[], std::string const& description);
 
 }  // namespace benchmarks
 }  // namespace bigtable

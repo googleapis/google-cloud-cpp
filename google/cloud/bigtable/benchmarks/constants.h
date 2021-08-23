@@ -47,7 +47,7 @@ std::int64_t constexpr kBulkSize = 1000;
 /// The number of threads running the latency test.
 int constexpr kDefaultThreads = 8;
 
-/// How long does the test last by default.
+/// How many minutes the test lasts by default.
 int constexpr kDefaultTestDuration = 30;
 
 /// How many shards are used to populate the table.

@@ -26,26 +26,25 @@ namespace {
 using ::testing::HasSubstr;
 
 char arg0[] = "program";
-char arg1[] = "foo";
-char arg2[] = "bar";
-char arg3[] = "profile";
-char arg4[] = "4";
-char arg5[] = "300";
-char arg6[] = "10000";
-char arg7[] = "True";
+char arg1[] = "--project-id=foo";
+char arg2[] = "--instance-id=barquaz";
+char arg3[] = "--app-profile-id=profile";
+char arg4[] = "--thread-count=4";
+char arg5[] = "--test-duration=300s";
+char arg6[] = "--table-size=10000";
+char arg7[] = "--use-embedded-server=True";
 
 TEST(BenchmarkTest, Create) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  auto setup = MakeBenchmarkSetup("create", argc, argv);
-  ASSERT_STATUS_OK(setup);
+  auto options = ParseArgs(argc, argv, "");
+  ASSERT_STATUS_OK(options);
 
   {
-    Benchmark bm(*setup);
+    Benchmark bm(*options);
     EXPECT_EQ(0, bm.create_table_count());
     std::string table_id = bm.CreateTable();
     EXPECT_EQ(1, bm.create_table_count());
-    EXPECT_EQ(std::string("create-"), table_id.substr(0, 7));
 
     EXPECT_EQ(0, bm.delete_table_count());
     bm.DeleteTable();
@@ -57,10 +56,10 @@ TEST(BenchmarkTest, Create) {
 TEST(BenchmarkTest, Populate) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  auto setup = MakeBenchmarkSetup("populate", argc, argv);
-  ASSERT_STATUS_OK(setup);
+  auto options = ParseArgs(argc, argv, "");
+  ASSERT_STATUS_OK(options);
 
-  Benchmark bm(*setup);
+  Benchmark bm(*options);
   bm.CreateTable();
   EXPECT_EQ(0, bm.mutate_rows_count());
   bm.PopulateTable();
@@ -73,10 +72,10 @@ TEST(BenchmarkTest, Populate) {
 TEST(BenchmarkTest, MakeRandomKey) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  auto setup = MakeBenchmarkSetup("key", argc, argv);
-  ASSERT_STATUS_OK(setup);
+  auto options = ParseArgs(argc, argv, "");
+  ASSERT_STATUS_OK(options);
 
-  Benchmark bm(*setup);
+  Benchmark bm(*options);
   auto gen = google::cloud::internal::MakeDefaultPRNG();
 
   // First make sure that the keys are not always the same.
@@ -102,10 +101,10 @@ TEST(BenchmarkTest, MakeRandomKey) {
 TEST(BenchmarkTest, PrintThroughputResult) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  auto setup = MakeBenchmarkSetup("throughput", argc, argv);
-  ASSERT_STATUS_OK(setup);
+  auto options = ParseArgs(argc, argv, "");
+  ASSERT_STATUS_OK(options);
 
-  Benchmark bm(*setup);
+  Benchmark bm(*options);
   BenchmarkResult result{};
   result.elapsed = std::chrono::milliseconds(10000);
   result.row_count = 1230;
@@ -128,10 +127,10 @@ TEST(BenchmarkTest, PrintThroughputResult) {
 TEST(BenchmarkTest, PrintLatencyResult) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  auto setup = MakeBenchmarkSetup("latency", argc, argv);
-  ASSERT_STATUS_OK(setup);
+  auto options = ParseArgs(argc, argv, "");
+  ASSERT_STATUS_OK(options);
 
-  Benchmark bm(*setup);
+  Benchmark bm(*options);
   BenchmarkResult result{};
   result.elapsed = std::chrono::milliseconds(1000);
   result.row_count = 100;
@@ -163,10 +162,10 @@ TEST(BenchmarkTest, PrintLatencyResult) {
 TEST(BenchmarkTest, PrintCsv) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  auto setup = MakeBenchmarkSetup("latency", argc, argv);
-  ASSERT_STATUS_OK(setup);
+  auto options = ParseArgs(argc, argv, "");
+  ASSERT_STATUS_OK(options);
 
-  Benchmark bm(*setup);
+  Benchmark bm(*options);
   BenchmarkResult result{};
   result.elapsed = std::chrono::milliseconds(1000);
   result.row_count = 123;
