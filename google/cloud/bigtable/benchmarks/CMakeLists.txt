@@ -18,15 +18,15 @@ add_library(
     bigtable_benchmark_common # cmake-format: sort
     benchmark.cc
     benchmark.h
+    benchmark_options.cc
+    benchmark_options.h
     constants.h
     embedded_server.cc
     embedded_server.h
     mutation_batcher_throughput_options.cc
     mutation_batcher_throughput_options.h
     random_mutation.cc
-    random_mutation.h
-    setup.cc
-    setup.h)
+    random_mutation.h)
 target_link_libraries(
     bigtable_benchmark_common
     bigtable_client_testing
@@ -51,8 +51,7 @@ if (BUILD_TESTING)
         embedded_server_test.cc
         format_duration_test.cc
         mutation_batcher_throughput_options_test.cc
-        random_mutation_test.cc
-        setup_test.cc)
+        random_mutation_test.cc)
     export_list_to_bazel("bigtable_benchmarks_unit_tests.bzl"
                          "bigtable_benchmarks_unit_tests" YEAR 2020)
 

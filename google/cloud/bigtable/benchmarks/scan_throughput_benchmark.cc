@@ -19,40 +19,38 @@
 #include <iostream>
 #include <sstream>
 
-/**
- * @file
- *
- * Measure the throughput of `bigtable::Table::ReadRows()`.
- *
- * This benchmark measures the throughput of `bigtable::Table::ReadRows()` on a
- * "typical" table used for serving data.  The benchmark:
- * - Creates a table with 10,000,000 rows, each row with a single column family,
- *   but with 10 columns.
- * - The name of the table starts with `scant`, followed by random characters.
- * - If there is a collision on the table name the benchmark aborts immediately.
- * - The benchmark populates the table during an initial phase.  The benchmark
- *   uses `BulkApply()` to populate the table, multiple threads to populate
- *   in parallel, and provides an initial split hint when creating the table.
- * - The benchmark reports the throughput of this bulk upload phase.
- *
- * After successfully uploading the initial data, the main phase of the
- * benchmark starts. During this phase the benchmark will:
- *
- * - Execute the following block with different scan sizes:
- *   - Execute the following loop for S seconds:
- *     - Pick one of the 10,000,000 keys at random, with uniform probability.
- *     - Scan the number rows starting the the key selected above.
- *     - Go back and pick a new random key.
- *
- * The benchmark will report throughput in rows per second for each scans with
- * 100, 1,000 and 10,000 rows.
- *
- * Using a command-line parameter the benchmark can be configured to create a
- * local gRPC server that implements the Cloud Bigtable APIs used by the
- * benchmark.  If this parameter is not used, the benchmark uses the default
- * configuration, that is, a production instance of Cloud Bigtable unless the
- * CLOUD_BIGTABLE_EMULATOR environment variable is set.
- */
+char const kDescription[] =
+    R"""(Measure the throughput of `bigtable::Table::ReadRows()`.
+
+This benchmark measures the throughput of `bigtable::Table::ReadRows()` on a
+"typical" table used for serving data.  The benchmark:
+- Creates a table with 10,000,000 rows, each row with a single column family,
+  but with 10 columns.
+- The name of the table starts with `scant`, followed by random characters.
+- If there is a collision on the table name the benchmark aborts immediately.
+- The benchmark populates the table during an initial phase.  The benchmark
+  uses `BulkApply()` to populate the table, multiple threads to populate
+  in parallel, and provides an initial split hint when creating the table.
+- The benchmark reports the throughput of this bulk upload phase.
+
+After successfully uploading the initial data, the main phase of the
+benchmark starts. During this phase the benchmark will:
+
+- Execute the following block with different scan sizes:
+  - Execute the following loop for S seconds:
+    - Pick one of the 10,000,000 keys at random, with uniform probability.
+    - Scan the number rows starting the the key selected above.
+    - Go back and pick a new random key.
+
+The benchmark will report throughput in rows per second for each scans with
+100, 1,000 and 10,000 rows.
+
+Using a command-line parameter the benchmark can be configured to create a
+local gRPC server that implements the Cloud Bigtable APIs used by the
+benchmark.  If this parameter is not used, the benchmark uses the default
+configuration, that is, a production instance of Cloud Bigtable unless the
+CLOUD_BIGTABLE_EMULATOR environment variable is set.
+)""";
 
 /// Helper functions and types for the scan_throughput_benchmark.
 namespace {
@@ -75,13 +73,15 @@ BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
-  auto setup = bigtable::benchmarks::MakeBenchmarkSetup("scant", argc, argv);
-  if (!setup) {
-    std::cerr << setup.status() << "\n";
+  auto options =
+      bigtable::benchmarks::ParseArgs("scant", argc, argv, kDescription);
+  if (!options) {
+    std::cerr << options.status() << "\n";
     return -1;
   }
+  if (options->exit_after_parse) return 0;
 
-  Benchmark benchmark(*setup);
+  Benchmark benchmark(*options);
 
   // Create and populate the table for the benchmark.
   benchmark.CreateTable();
@@ -94,9 +94,9 @@ int main(int argc, char* argv[]) {
   for (auto scan_size : kScanSizes) {
     std::cout << "# Running benchmark [" << scan_size << "] " << std::flush;
     auto start = std::chrono::steady_clock::now();
-    auto combined = RunBenchmark(benchmark, data_client, setup->table_size(),
-                                 setup->app_profile_id(), setup->table_id(),
-                                 scan_size, setup->test_duration());
+    auto combined = RunBenchmark(benchmark, data_client, options->table_size,
+                                 options->app_profile_id, options->table_id,
+                                 scan_size, options->test_duration);
     using std::chrono::duration_cast;
     combined.elapsed = duration_cast<std::chrono::milliseconds>(
         std::chrono::steady_clock::now() - start);

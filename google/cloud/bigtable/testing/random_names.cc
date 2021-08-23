@@ -47,6 +47,18 @@ std::string RandomTableId(google::cloud::internal::DefaultPRNG& generator,
                       generator, size, "abcdefghijlkmnopqrstuvwxyz0123456789");
 }
 
+std::string RandomTableId(google::cloud::internal::DefaultPRNG& generator,
+                          std::string const& suffix,
+                          std::chrono::system_clock::time_point tp) {
+  auto const prefix = RandomTableId(tp);
+  auto size = static_cast<int>(kMaxTableIdLength - 1 - prefix.size() - 1 -
+                               suffix.size());
+  return prefix +
+         google::cloud::internal::Sample(
+             generator, size, "abcdefghijlkmnopqrstuvwxyz0123456789") +
+         suffix;
+}
+
 std::string RandomTableId(std::chrono::system_clock::time_point tp) {
   std::string date = google::cloud::internal::FormatUtcDate(tp);
   return "tbl-" + date + "-";

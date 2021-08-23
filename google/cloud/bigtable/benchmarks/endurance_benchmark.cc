@@ -18,40 +18,38 @@
 #include <iomanip>
 #include <sstream>
 
-/**
- * @file
- *
- * Measure the latency of `bigtable::Table::Apply()` and
- * `bigtable::Table::ReadRow()` on a long running program.
- *
- * This benchmark measures the latency of `bigtable::Table::Apply()` and
- * `bigtable::Table::ReadRow()` on a program running for many hours. The
- * benchmark:
- * - Creates an empty table with a single column family.
- * - The column family contains 10 columns, each column filled with a random
- *   100 byte string.
- * - The name of the table starts with `long`, followed by random characters.
- * - If there is a collision on the table name the benchmark aborts immediately.
- *
- * After successfully creating the table, the main phase of the benchmark
- * starts. During this phase the benchmark:
- *
- * - Starts T threads, executing the following loop:
- * - Runs for S seconds (typically hours), constantly executing this
- * basic block:
- *   - Select a row at random, read it.
- *   - Select a row at random, read it.
- *   - Select a row at random, write to it.
- *
- * The test then waits for all the threads to finish and reports effective
- * throughput.
- *
- * Using a command-line parameter the benchmark can be configured to create a
- * local gRPC server that implements the Cloud Bigtable APIs used by the
- * benchmark.  If this parameter is not used the benchmark uses the default
- * configuration, that is, a production instance of Cloud Bigtable unless the
- * CLOUD_BIGTABLE_EMULATOR environment variable is set.
- */
+char const kDescription[] =
+    R"""(Measure the latency of `bigtable::Table::Apply()` and
+`bigtable::Table::ReadRow()` on a long running program.
+
+This benchmark measures the latency of `bigtable::Table::Apply()` and
+`bigtable::Table::ReadRow()` on a program running for many hours. The
+benchmark:
+- Creates an empty table with a single column family.
+- The column family contains 10 columns, each column filled with a random
+  100 byte string.
+- The name of the table starts with `long`, followed by random characters.
+- If there is a collision on the table name the benchmark aborts immediately.
+
+After successfully creating the table, the main phase of the benchmark
+starts. During this phase the benchmark:
+
+- Starts T threads, executing the following loop:
+- Runs for S seconds (typically hours), constantly executing this
+basic block:
+  - Select a row at random, read it.
+  - Select a row at random, read it.
+  - Select a row at random, write to it.
+
+The test then waits for all the threads to finish and reports effective
+throughput.
+
+Using a command-line parameter the benchmark can be configured to create a
+local gRPC server that implements the Cloud Bigtable APIs used by the
+benchmark.  If this parameter is not used the benchmark uses the default
+configuration, that is, a production instance of Cloud Bigtable unless the
+CLOUD_BIGTABLE_EMULATOR environment variable is set.
+)""";
 
 /// Helper functions and types for the apply_read_latency_benchmark.
 namespace {
@@ -61,9 +59,9 @@ using bigtable::benchmarks::BenchmarkResult;
 using bigtable::benchmarks::FormatDuration;
 using bigtable::benchmarks::kColumnFamily;
 using bigtable::benchmarks::kNumFields;
-using bigtable::benchmarks::MakeBenchmarkSetup;
 using bigtable::benchmarks::MakeRandomMutation;
 using bigtable::benchmarks::OperationResult;
+using bigtable::benchmarks::ParseArgs;
 
 /// Run an iteration of the test, returns the number of operations.
 google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
@@ -73,13 +71,15 @@ google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
-  auto setup = bigtable::benchmarks::MakeBenchmarkSetup("long", argc, argv);
-  if (!setup) {
-    std::cerr << setup.status() << "\n";
+  auto options =
+      bigtable::benchmarks::ParseArgs("long", argc, argv, kDescription);
+  if (!options) {
+    std::cerr << options.status() << "\n";
     return -1;
   }
+  if (options->exit_after_parse) return 0;
 
-  Benchmark benchmark(*setup);
+  Benchmark benchmark(*options);
   // Create and populate the table for the benchmark.
   benchmark.CreateTable();
 
@@ -88,15 +88,15 @@ int main(int argc, char* argv[]) {
   auto latency_test_start = std::chrono::steady_clock::now();
   // NOLINTNEXTLINE(google-runtime-int)
   std::vector<std::future<google::cloud::StatusOr<long>>> tasks;
-  for (int i = 0; i != setup->thread_count(); ++i) {
+  for (int i = 0; i != options->thread_count; ++i) {
     auto launch_policy = std::launch::async;
-    if (setup->thread_count() == 1) {
+    if (options->thread_count == 1) {
       // If the user requests only one thread, use the current thread.
       launch_policy = std::launch::deferred;
     }
     tasks.emplace_back(std::async(launch_policy, RunBenchmark,
-                                  std::ref(benchmark), setup->app_profile_id(),
-                                  setup->table_id(), setup->test_duration()));
+                                  std::ref(benchmark), options->app_profile_id,
+                                  options->table_id, options->test_duration));
   }
 
   // Wait for the threads and combine all the results.
