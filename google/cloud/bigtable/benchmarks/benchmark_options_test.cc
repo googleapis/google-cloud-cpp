@@ -53,6 +53,7 @@ TEST(BenchmarkOptions, Defaults) {
       },
       "");
   ASSERT_STATUS_OK(options);
+  EXPECT_EQ("default", options->app_profile_id);
   EXPECT_EQ(kDefaultThreads, options->thread_count);
   EXPECT_EQ(kDefaultTableSize, options->table_size);
   EXPECT_EQ(std::chrono::seconds(kDefaultTestDuration * 60).count(),
@@ -93,18 +94,15 @@ TEST(BenchmarkOptions, Help) {
 TEST(BenchmarkOptions, Validate) {
   EXPECT_FALSE(ParseBenchmarkOptions({"self-test"}, ""));
   EXPECT_FALSE(ParseBenchmarkOptions({"self-test", "unused-1"}, ""));
-  EXPECT_FALSE(
-      ParseBenchmarkOptions({"self-test", "--project-id=a", "--instance-id=b",
-                             "--app-profile-id=c", "--thread-count=0"},
-                            ""));
-  EXPECT_FALSE(
-      ParseBenchmarkOptions({"self-test", "--project-id=a", "--instance-id=b",
-                             "--app-profile-id=c", "--table-size=0"},
-                            ""));
-  EXPECT_FALSE(
-      ParseBenchmarkOptions({"self-test", "--project-id=a", "--instance-id=b",
-                             "--app-profile-id=c", "--test-duration=0"},
-                            ""));
+  EXPECT_FALSE(ParseBenchmarkOptions(
+      {"self-test", "--project-id=a", "--instance-id=b", "--thread-count=0"},
+      ""));
+  EXPECT_FALSE(ParseBenchmarkOptions(
+      {"self-test", "--project-id=a", "--instance-id=b", "--table-size=0"},
+      ""));
+  EXPECT_FALSE(ParseBenchmarkOptions(
+      {"self-test", "--project-id=a", "--instance-id=b", "--test-duration=0"},
+      ""));
 }
 
 }  // namespace

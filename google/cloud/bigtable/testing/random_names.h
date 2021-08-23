@@ -28,12 +28,6 @@ std::string RandomTableId(google::cloud::internal::DefaultPRNG& generator,
                           std::chrono::system_clock::time_point tp =
                               std::chrono::system_clock::now());
 
-/// Create a random table ID given a PRNG generator and suffix.
-std::string RandomTableId(google::cloud::internal::DefaultPRNG& generator,
-                          std::string const& suffix,
-                          std::chrono::system_clock::time_point tp =
-                              std::chrono::system_clock::now());
-
 /// The prefix for tables created on the (UTC) day at @p tp.
 std::string RandomTableId(std::chrono::system_clock::time_point tp);
 
