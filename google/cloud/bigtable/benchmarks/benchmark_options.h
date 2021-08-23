@@ -25,27 +25,25 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace benchmarks {
-/**
- * The configuration data for a benchmark.
- */
+/// The configuration data for a benchmark.
 struct BenchmarkOptions {
   std::string project_id;
   std::string instance_id;
   std::string table_id;
   std::string start_time;
   std::string notes;
-  std::string app_profile_id;
-  int thread_count;
-  std::int64_t table_size;
-  std::chrono::seconds test_duration;
-  bool use_embedded_server;
-  int parallel_requests;
+  std::string app_profile_id = "default";
+  int thread_count = kDefaultThreads;
+  std::int64_t table_size = kDefaultTableSize;
+  std::chrono::seconds test_duration =
+      std::chrono::seconds(kDefaultTestDuration * 60);
+  bool use_embedded_server = false;
+  int parallel_requests = 10;
   bool exit_after_parse = false;
 };
 
 google::cloud::StatusOr<BenchmarkOptions> ParseBenchmarkOptions(
-    std::string const& suffix, std::vector<std::string> const& argv,
-    std::string const& description);
+    std::vector<std::string> const& argv, std::string const& description);
 
 }  // namespace benchmarks
 }  // namespace bigtable

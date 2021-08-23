@@ -18,25 +18,22 @@
 #include <iomanip>
 #include <sstream>
 
-char const kDescription[] =
-    R"""(Measure the latency of `bigtable::Table::Apply()` and
-`bigtable::Table::ReadRow()` on a long running program.
+const char kDescription[] =
+    R"""(Measure the latency of `Table::Apply()` and `Table::ReadRow()` on a
+long running program.
 
-This benchmark measures the latency of `bigtable::Table::Apply()` and
-`bigtable::Table::ReadRow()` on a program running for many hours. The
-benchmark:
+This benchmark measures the latency of `Apply()` and `ReadRow()` on a program
+running for many hours. The benchmark:
 - Creates an empty table with a single column family.
-- The column family contains 10 columns, each column filled with a random
-  100 byte string.
-- The name of the table starts with `long`, followed by random characters.
+- The column family contains 10 columns, each column filled with a random 100
+  byte string.
 - If there is a collision on the table name the benchmark aborts immediately.
 
-After successfully creating the table, the main phase of the benchmark
-starts. During this phase the benchmark:
+After successfully creating the table, the main phase of the benchmark starts.
+During this phase the benchmark:
 
 - Starts T threads, executing the following loop:
-- Runs for S seconds (typically hours), constantly executing this
-basic block:
+- Runs for S seconds (typically hours), constantly executing this basic block:
   - Select a row at random, read it.
   - Select a row at random, read it.
   - Select a row at random, write to it.
@@ -44,11 +41,11 @@ basic block:
 The test then waits for all the threads to finish and reports effective
 throughput.
 
-Using a command-line parameter the benchmark can be configured to create a
-local gRPC server that implements the Cloud Bigtable APIs used by the
-benchmark.  If this parameter is not used the benchmark uses the default
-configuration, that is, a production instance of Cloud Bigtable unless the
-CLOUD_BIGTABLE_EMULATOR environment variable is set.
+Using a command-line parameter the benchmark can be configured to create a local
+gRPC server that implements the Cloud Bigtable APIs used by the benchmark.  If
+this parameter is not used the benchmark uses the default configuration, that
+is, a production instance of Cloud Bigtable unless the CLOUD_BIGTABLE_EMULATOR
+environment variable is set.
 )""";
 
 /// Helper functions and types for the apply_read_latency_benchmark.
@@ -71,8 +68,7 @@ google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
-  auto options =
-      bigtable::benchmarks::ParseArgs("long", argc, argv, kDescription);
+  auto options = bigtable::benchmarks::ParseArgs(argc, argv, kDescription);
   if (!options) {
     std::cerr << options.status() << "\n";
     return -1;

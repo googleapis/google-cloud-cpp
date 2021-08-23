@@ -31,8 +31,7 @@ namespace benchmarks {
 using ::google::cloud::internal::GetEnv;
 
 google::cloud::StatusOr<BenchmarkOptions> ParseArgs(
-    std::string const& suffix, int& argc, char* argv[],
-    std::string const& description) {
+    int& argc, char* argv[], std::string const& description) {
   bool auto_run =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
           .value_or("") == "yes";
@@ -51,20 +50,20 @@ google::cloud::StatusOr<BenchmarkOptions> ParseArgs(
         GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID").value();
     // Table size must be > 10,000 or scan_throughput_benchmark crashes on
     // Windows
-    return ParseBenchmarkOptions(suffix,
-                                 {
-                                     std::string(argv[0]),
-                                     "--project-id=" + project_id,
-                                     "--instance-id=" + instance_id,
-                                     "--app-profile-id=default",
-                                     "--thread-count=1",
-                                     "--test-duration=1s",
-                                     "--table-size=11000",
-                                 },
-                                 description);
+    return ParseBenchmarkOptions(
+        {
+            std::string(argv[0]),
+            "--project-id=" + project_id,
+            "--instance-id=" + instance_id,
+            "--app-profile-id=default",
+            "--thread-count=1",
+            "--test-duration=1s",
+            "--table-size=11000",
+        },
+        description);
   }
 
-  return ParseBenchmarkOptions(suffix, {argv, argv + argc}, description);
+  return ParseBenchmarkOptions({argv, argv + argc}, description);
 }
 
 Benchmark::Benchmark(BenchmarkOptions options)

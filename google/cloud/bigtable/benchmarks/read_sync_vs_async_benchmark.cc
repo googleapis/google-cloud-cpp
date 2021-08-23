@@ -20,62 +20,59 @@
 #include <sstream>
 
 char const kDescription[] =
-    R"""(Measure the effective throughput of `bigtable::Table::ReadRow()` and
-`bigtable::Table::AsyncReadRow()`.
+    R"""(Measure the effective throughput of `Table::ReadRow()` and
+`Table::AsyncReadRow()`.
 
-This benchmark measures the effective throughput of dedicating N threads to
-read single rows from Cloud Bigtable via the C++ client library. The test
-creates N threads running `bigtable::Table::ReadRow()` requests, and a
-separate N threads running `bigtable::Table::AsyncReadRow()` requests.
-It runs these threads for S seconds and reports the total number of requests
-on each approach.
+This benchmark measures the effective throughput of dedicating N threads to read
+single rows from Cloud Bigtable via the C++ client library. The test creates N
+threads running `ReadRow()` requests, and a separate N threads running
+`AsyncReadRow()` requests. It runs these threads for S seconds and reports the
+total number of requests on each approach.
 
 More specifically, the benchmark:
 
 - Creates a table with 10,000,000 rows, each row with a single column family.
-- The column family contains 10 columns, each column filled with a random
-  100 byte string.
-- The name of the table starts with `perf`, followed by random characters.
+- The column family contains 10 columns, each column filled with a random 100
+  byte string.
 - If there is a collision on the table name the benchmark aborts immediately.
-- The benchmark populates the table during an initial phase.  The benchmark
-  uses `BulkApply()` to populate the table, multiple threads to populate
-  in parallel, and provides an initial split hint when creating the table.
+- The benchmark populates the table during an initial phase.  The benchmark uses
+  `BulkApply()` to populate the table, multiple threads to populate in parallel,
+  and provides an initial split hint when creating the table.
 - The benchmark reports the throughput of this bulk upload phase.
 
-After successfully uploading the initial data, the main phase of the
-benchmark starts. During this phase the benchmark will:
+After successfully uploading the initial data, the main phase of the benchmark
+starts. During this phase the benchmark will:
 
-- The benchmark starts N threads to test the throughput of
- `bigtable::Table::ReadRow()`, each thread executes the following loop for
-  S seconds:
+- The benchmark starts N threads to test the throughput of `ReadRow()`, each
+  thread executes the following loop for S seconds:
 - Pick one of the 10,000,000 keys at random, with uniform probability, then
   perform the operation, record the latency and whether the operation was
   successful.
 
 - The benchmark starts N threads to run a `CompletionQueue` event loop.
-- The test then picks K random keys, with uniform probability, then
-  starts an asynchronous `bigtable::Table::AsyncReadRow()` with that key.
+- The test then picks K random keys, with uniform probability, then starts an
+  asynchronous `AsyncReadRow()` with that key.
 - When the asynchronous operation completes it captures the latency for the
-  request.  If less than S seconds have elapsed since the beginning of the
-  test it starts another asynchronous read.
-- After S seconds the benchmark waits for any outstanding requests, and
-  shuts down the completion queue threads.
+  request.  If less than S seconds have elapsed since the beginning of the test
+  it starts another asynchronous read.
+- After S seconds the benchmark waits for any outstanding requests, and shuts
+  down the completion queue threads.
 
 The test then waits for all the threads to finish and:
 
 - Collects the results from all the threads.
-- Report the number of operations of each type, the total running time, and
-  the effective throughput.
+- Report the number of operations of each type, the total running time, and the
+  effective throughput.
 - Report the results, including p0 (minimum), p50, p90, p95, p99, p99.9, and
   p100 (maximum) latencies.
 - Delete the table.
 - Report the same results in CSV format to make analysis easier.
 
-Using a command-line parameter the benchmark can be configured to create a
-local gRPC server that implements the Cloud Bigtable APIs used by the
-benchmark.  If this parameter is not used the benchmark uses the default
-configuration, that is, a production instance of Cloud Bigtable unless the
-CLOUD_BIGTABLE_EMULATOR environment variable is set.
+Using a command-line parameter the benchmark can be configured to create a local
+gRPC server that implements the Cloud Bigtable APIs used by the benchmark.  If
+this parameter is not used the benchmark uses the default configuration, that
+is, a production instance of Cloud Bigtable unless the CLOUD_BIGTABLE_EMULATOR
+environment variable is set.
 )""";
 
 /// Helper functions and types for the apply_read_latency_benchmark.
@@ -141,7 +138,7 @@ constexpr int kBenchmarkProgressMarks = 4;
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
-  auto options = ParseArgs("perf", argc, argv, kDescription);
+  auto options = ParseArgs(argc, argv, kDescription);
   if (!options) {
     std::cerr << options.status() << "\n";
     return -1;

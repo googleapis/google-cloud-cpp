@@ -165,8 +165,8 @@ struct FormatDuration {
 std::ostream& operator<<(std::ostream& os, FormatDuration duration);
 
 google::cloud::StatusOr<BenchmarkOptions> ParseArgs(
-    std::string const& suffix, int& argc, char* argv[],
-    std::string const& description);
+    int& argc, char* argv[], std::string const& description);
+
 }  // namespace benchmarks
 }  // namespace bigtable
 }  // namespace cloud

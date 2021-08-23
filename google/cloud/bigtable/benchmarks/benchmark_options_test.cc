@@ -29,9 +29,7 @@ namespace benchmarks {
 namespace {
 
 TEST(BenchmarkOptions, Basic) {
-  auto const now = absl::FormatTime("%FT%TZ", absl::Now(), absl::UTCTimeZone());
   auto options = ParseBenchmarkOptions(
-      "suffix",
       {"self-test", "--project-id=test-project", "--instance-id=test-instance",
        "--app-profile-id=test-app-profile-id", "--table-size=10000",
        "--test-duration=300s", "--use-embedded-server=true"},
@@ -40,23 +38,20 @@ TEST(BenchmarkOptions, Basic) {
   EXPECT_FALSE(options->exit_after_parse);
   EXPECT_EQ("test-project", options->project_id);
   EXPECT_EQ("test-instance", options->instance_id);
-  EXPECT_EQ(now, options->start_time);
   EXPECT_EQ("test-app-profile-id", options->app_profile_id);
   EXPECT_EQ(10000, options->table_size);
   EXPECT_EQ(300, options->test_duration.count());
-  EXPECT_EQ(10, options->parallel_requests);
+  EXPECT_EQ(true, options->use_embedded_server);
 }
 
 TEST(BenchmarkOptions, Defaults) {
-  auto const re = std::regex(testing::RandomTableIdRegex());
-  auto options = ParseBenchmarkOptions("suffix",
-                                       {
-                                           "self-test",
-                                           "--project-id=a",
-                                           "--instance-id=b",
-                                           "--app-profile-id=c",
-                                       },
-                                       "");
+  auto options = ParseBenchmarkOptions(
+      {
+          "self-test",
+          "--project-id=a",
+          "--instance-id=b",
+      },
+      "");
   ASSERT_STATUS_OK(options);
   EXPECT_EQ(kDefaultThreads, options->thread_count);
   EXPECT_EQ(kDefaultTableSize, options->table_size);
@@ -64,41 +59,50 @@ TEST(BenchmarkOptions, Defaults) {
             options->test_duration.count());
   EXPECT_EQ(false, options->use_embedded_server);
   EXPECT_EQ(10, options->parallel_requests);
+}
+
+TEST(BenchmarkOptions, Initialization) {
+  auto const re = std::regex(testing::RandomTableIdRegex());
+  auto const now = absl::FormatTime("%FT%TZ", absl::Now(), absl::UTCTimeZone());
+  auto options = ParseBenchmarkOptions(
+      {
+          "self-test",
+          "--project-id=a",
+          "--instance-id=b",
+      },
+      "");
+  EXPECT_EQ(now, options->start_time);
   EXPECT_TRUE(std::regex_match(options->table_id, re));
   EXPECT_THAT(options->notes, ::testing::HasSubstr(bigtable::version_string()));
 }
 
 TEST(BenchmarkOptions, Description) {
   auto options = ParseBenchmarkOptions(
-      "suffix", {"self-test", "--description", "other-stuff"},
-      "Description for test");
+      {"self-test", "--description", "other-stuff"}, "Description for test");
   EXPECT_STATUS_OK(options);
   EXPECT_TRUE(options->exit_after_parse);
 }
 
 TEST(BenchmarkOptions, Help) {
-  auto options = ParseBenchmarkOptions(
-      "suffix", {"self-test", "--help", "other-stuff"}, "");
+  auto options =
+      ParseBenchmarkOptions({"self-test", "--help", "other-stuff"}, "");
   EXPECT_STATUS_OK(options);
   EXPECT_TRUE(options->exit_after_parse);
 }
 
 TEST(BenchmarkOptions, Validate) {
-  EXPECT_FALSE(ParseBenchmarkOptions("suffix", {"self-test"}, ""));
-  EXPECT_FALSE(ParseBenchmarkOptions("suffix", {"self-test", "unused-1"}, ""));
+  EXPECT_FALSE(ParseBenchmarkOptions({"self-test"}, ""));
+  EXPECT_FALSE(ParseBenchmarkOptions({"self-test", "unused-1"}, ""));
   EXPECT_FALSE(
-      ParseBenchmarkOptions("suffix",
-                            {"self-test", "--project-id=a", "--instance-id=b",
+      ParseBenchmarkOptions({"self-test", "--project-id=a", "--instance-id=b",
                              "--app-profile-id=c", "--thread-count=0"},
                             ""));
   EXPECT_FALSE(
-      ParseBenchmarkOptions("suffix",
-                            {"self-test", "--project-id=a", "--instance-id=b",
+      ParseBenchmarkOptions({"self-test", "--project-id=a", "--instance-id=b",
                              "--app-profile-id=c", "--table-size=0"},
                             ""));
   EXPECT_FALSE(
-      ParseBenchmarkOptions("suffix",
-                            {"self-test", "--project-id=a", "--instance-id=b",
+      ParseBenchmarkOptions({"self-test", "--project-id=a", "--instance-id=b",
                              "--app-profile-id=c", "--test-duration=0"},
                             ""));
 }

@@ -19,22 +19,20 @@
 #include <iostream>
 #include <sstream>
 
-char const kDescription[] =
-    R"""(Measure the throughput of `bigtable::Table::ReadRows()`.
+char const kDescription[] = R"""(Measure the throughput of `Table::ReadRows()`.
 
-This benchmark measures the throughput of `bigtable::Table::ReadRows()` on a
-"typical" table used for serving data.  The benchmark:
+This benchmark measures the throughput of `ReadRows()` on a "typical" table used
+for serving data.  The benchmark:
 - Creates a table with 10,000,000 rows, each row with a single column family,
   but with 10 columns.
-- The name of the table starts with `scant`, followed by random characters.
 - If there is a collision on the table name the benchmark aborts immediately.
-- The benchmark populates the table during an initial phase.  The benchmark
-  uses `BulkApply()` to populate the table, multiple threads to populate
-  in parallel, and provides an initial split hint when creating the table.
+- The benchmark populates the table during an initial phase. The benchmark uses
+  `BulkApply()` to populate the table, multiple threads to populate in parallel,
+  and provides an initial split hint when creating the table.
 - The benchmark reports the throughput of this bulk upload phase.
 
-After successfully uploading the initial data, the main phase of the
-benchmark starts. During this phase the benchmark will:
+After successfully uploading the initial data, the main phase of the benchmark
+starts. During this phase the benchmark will:
 
 - Execute the following block with different scan sizes:
   - Execute the following loop for S seconds:
@@ -42,14 +40,14 @@ benchmark starts. During this phase the benchmark will:
     - Scan the number rows starting the the key selected above.
     - Go back and pick a new random key.
 
-The benchmark will report throughput in rows per second for each scans with
-100, 1,000 and 10,000 rows.
+The benchmark will report throughput in rows per second for each scans with 100,
+1,000 and 10,000 rows.
 
-Using a command-line parameter the benchmark can be configured to create a
-local gRPC server that implements the Cloud Bigtable APIs used by the
-benchmark.  If this parameter is not used, the benchmark uses the default
-configuration, that is, a production instance of Cloud Bigtable unless the
-CLOUD_BIGTABLE_EMULATOR environment variable is set.
+Using a command-line parameter the benchmark can be configured to create a local
+gRPC server that implements the Cloud Bigtable APIs used by the benchmark.  If
+this parameter is not used, the benchmark uses the default configuration, that
+is, a production instance of Cloud Bigtable unless the CLOUD_BIGTABLE_EMULATOR
+environment variable is set.
 )""";
 
 /// Helper functions and types for the scan_throughput_benchmark.
@@ -73,8 +71,7 @@ BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
-  auto options =
-      bigtable::benchmarks::ParseArgs("scant", argc, argv, kDescription);
+  auto options = bigtable::benchmarks::ParseArgs(argc, argv, kDescription);
   if (!options) {
     std::cerr << options.status() << "\n";
     return -1;

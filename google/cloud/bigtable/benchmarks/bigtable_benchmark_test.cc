@@ -37,7 +37,7 @@ char arg7[] = "--use-embedded-server=True";
 TEST(BenchmarkTest, Create) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  auto options = ParseArgs("create", argc, argv, "");
+  auto options = ParseArgs(argc, argv, "");
   ASSERT_STATUS_OK(options);
 
   {
@@ -45,9 +45,6 @@ TEST(BenchmarkTest, Create) {
     EXPECT_EQ(0, bm.create_table_count());
     std::string table_id = bm.CreateTable();
     EXPECT_EQ(1, bm.create_table_count());
-    std::string suffix = "create";
-    EXPECT_EQ(suffix, table_id.substr(table_id.size() - suffix.size(),
-                                      table_id.size()));
 
     EXPECT_EQ(0, bm.delete_table_count());
     bm.DeleteTable();
@@ -59,7 +56,7 @@ TEST(BenchmarkTest, Create) {
 TEST(BenchmarkTest, Populate) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  auto options = ParseArgs("populate", argc, argv, "");
+  auto options = ParseArgs(argc, argv, "");
   ASSERT_STATUS_OK(options);
 
   Benchmark bm(*options);
@@ -75,7 +72,7 @@ TEST(BenchmarkTest, Populate) {
 TEST(BenchmarkTest, MakeRandomKey) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  auto options = ParseArgs("key", argc, argv, "");
+  auto options = ParseArgs(argc, argv, "");
   ASSERT_STATUS_OK(options);
 
   Benchmark bm(*options);
@@ -104,7 +101,7 @@ TEST(BenchmarkTest, MakeRandomKey) {
 TEST(BenchmarkTest, PrintThroughputResult) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  auto options = ParseArgs("throughput", argc, argv, "");
+  auto options = ParseArgs(argc, argv, "");
   ASSERT_STATUS_OK(options);
 
   Benchmark bm(*options);
@@ -130,7 +127,7 @@ TEST(BenchmarkTest, PrintThroughputResult) {
 TEST(BenchmarkTest, PrintLatencyResult) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  auto options = ParseArgs("latency", argc, argv, "");
+  auto options = ParseArgs(argc, argv, "");
   ASSERT_STATUS_OK(options);
 
   Benchmark bm(*options);
@@ -165,7 +162,7 @@ TEST(BenchmarkTest, PrintLatencyResult) {
 TEST(BenchmarkTest, PrintCsv) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  auto options = ParseArgs("latency", argc, argv, "");
+  auto options = ParseArgs(argc, argv, "");
   ASSERT_STATUS_OK(options);
 
   Benchmark bm(*options);

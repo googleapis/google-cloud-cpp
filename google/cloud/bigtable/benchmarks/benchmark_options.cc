@@ -49,27 +49,19 @@ using ::google::cloud::bigtable::testing::RandomTableId;
 using ::google::cloud::testing_util::BuildUsage;
 using ::google::cloud::testing_util::OptionDescriptor;
 using ::google::cloud::testing_util::OptionsParse;
+using ::google::cloud::testing_util::ParseBoolean;
 using ::google::cloud::testing_util::ParseDuration;
 
 google::cloud::StatusOr<BenchmarkOptions> ParseBenchmarkOptions(
-    std::string const& suffix, std::vector<std::string> const& argv,
-    std::string const& description) {
+    std::vector<std::string> const& argv, std::string const& description) {
   BenchmarkOptions options;
   bool wants_help = false;
   bool wants_description = false;
 
   options.start_time = FormattedStartTime();
   options.notes = FormattedAnnotations();
-
-  // An aggregate cannot have brace initializers for non static data members.
-  // So we set the "default" values here.
-  options.thread_count = kDefaultThreads;
-  options.table_size = kDefaultTableSize;
-  options.test_duration = std::chrono::seconds(kDefaultTestDuration * 60);
-  options.use_embedded_server = false;
-  options.parallel_requests = 10;
   auto generator = google::cloud::internal::MakeDefaultPRNG();
-  options.table_id = RandomTableId(generator, "-" + suffix);
+  options.table_id = RandomTableId(generator);
 
   std::vector<OptionDescriptor> desc{
       {"--help", "print usage information",
@@ -90,16 +82,13 @@ google::cloud::StatusOr<BenchmarkOptions> ParseBenchmarkOptions(
        [&options](std::string const& val) {
          options.test_duration = ParseDuration(val);
        }},
-      {"--table-size", "controls the maximum width of row keys",
+      {"--table-size", "the number of rows in the table",
        [&options](std::string const& val) {
          options.table_size = std::stol(val);
        }},
       {"--use-embedded-server", "whether to use the embedded Bigtable server",
        [&options](std::string const& val) {
-         std::string tmp = val;
-         std::transform(tmp.begin(), tmp.end(), tmp.begin(),
-                        [](char x) { return std::tolower(x); });
-         options.use_embedded_server = tmp == "true";
+         options.use_embedded_server = ParseBoolean(val).value_or("true");
        }},
   };
 
