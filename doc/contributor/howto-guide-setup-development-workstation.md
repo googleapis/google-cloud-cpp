@@ -148,10 +148,7 @@ Name this script `bazel-compile-commands.sh`, add it to `~/.local/bin` and
 ```console
 #!/bin/bash
 readonly TMP_DIR="$(mktemp -d "/tmp/bazel-compdb-temp-XXXXXXX")"
-cleanup() {
-  rm -rf "${TMP_DIR}"
-}
-trap cleanup EXIT
+trap "rm -rf ${TMP_DIR}" EXIT
 readonly REPO="https://github.com/grailbio/bazel-compilation-database"
 git clone --depth=1 "${REPO}" "${TMP_DIR}"
 CC=clang CXX=clang++ "${TMP_DIR}/generate.sh"
