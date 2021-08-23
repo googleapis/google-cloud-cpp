@@ -33,18 +33,14 @@ TEST(BenchmarkOptions, Basic) {
   auto options = ParseBenchmarkOptions(
       "suffix",
       {"self-test", "--project-id=test-project", "--instance-id=test-instance",
-       "--table-id=test-table", "--start-time=" + now, "--notes=test-notes",
        "--app-profile-id=test-app-profile-id", "--table-size=10000",
-       "--test-duration=300s", "--use-embedded-server=true",
-       "--parallel_requests=10", "--exit_after_parse=false"},
+       "--test-duration=300s", "--use-embedded-server=true"},
       "");
   ASSERT_STATUS_OK(options);
   EXPECT_FALSE(options->exit_after_parse);
   EXPECT_EQ("test-project", options->project_id);
   EXPECT_EQ("test-instance", options->instance_id);
-  EXPECT_EQ("test-table", options->table_id);
   EXPECT_EQ(now, options->start_time);
-  EXPECT_EQ("test-notes", options->notes);
   EXPECT_EQ("test-app-profile-id", options->app_profile_id);
   EXPECT_EQ(10000, options->table_size);
   EXPECT_EQ(300, options->test_duration.count());
@@ -58,12 +54,14 @@ TEST(BenchmarkOptions, Defaults) {
                                            "self-test",
                                            "--project-id=a",
                                            "--instance-id=b",
+                                           "--app-profile-id=c",
                                        },
                                        "");
+  ASSERT_STATUS_OK(options);
   EXPECT_EQ(kDefaultThreads, options->thread_count);
   EXPECT_EQ(kDefaultTableSize, options->table_size);
-  EXPECT_EQ(std::chrono::seconds(kDefaultTestDuration * 60),
-            options->test_duration);
+  EXPECT_EQ(std::chrono::seconds(kDefaultTestDuration * 60).count(),
+            options->test_duration.count());
   EXPECT_EQ(false, options->use_embedded_server);
   EXPECT_EQ(10, options->parallel_requests);
   EXPECT_TRUE(std::regex_match(options->table_id, re));
@@ -91,16 +89,22 @@ TEST(BenchmarkOptions, Validate) {
   EXPECT_FALSE(
       ParseBenchmarkOptions("suffix",
                             {"self-test", "--project-id=a", "--instance-id=b",
-                             "--app-profile-id=c", "--thread-count=-1"},
+                             "--app-profile-id=c", "--thread-count=0"},
                             ""));
   EXPECT_FALSE(
       ParseBenchmarkOptions("suffix",
                             {"self-test", "--project-id=a", "--instance-id=b",
-                             "--app-profile-id=c", "--table-size=-1"},
+                             "--app-profile-id=c", "--table-size=0"},
                             ""));
   EXPECT_FALSE(
       ParseBenchmarkOptions("suffix",
                             {"self-test", "--project-id=a", "--instance-id=b",
-                             "--app-profile-id=c", "--test-duration=-1"},
+                             "--app-profile-id=c", "--test-duration=0"},
                             ""));
 }
+
+}  // namespace
+}  // namespace benchmarks
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
