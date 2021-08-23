@@ -123,8 +123,12 @@ alternatives.
 ./ci/install-cloud-sdk.sh
 ```
 
-If you use an editor that uses `compile_commands.json` for autocomplete, there
-is a straight-forward way to generate it using Bazel. First, install Bazelisk:
+If you use an editor that uses `compile_commands.json` for autocomplete, one
+can generate it with CMake using
+[CMAKE_EXPORT_COMPILE_COMMANDS](https://cmake.org/cmake/help/latest/variable/CMAKE_EXPORT_COMPILE_COMMANDS.html).
+If you prefer using Bazel, the following steps will generate one for you.
+
+First, install Bazelisk:
 
 ```console
 go get github.com/bazelbuild/bazelisk
