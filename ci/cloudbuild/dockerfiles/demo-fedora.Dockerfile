@@ -107,7 +107,7 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/json
-RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.0.tar.gz | \
+RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
