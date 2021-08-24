@@ -157,7 +157,7 @@ void FilterLimitColFamilyRegex(google::cloud::bigtable::Table table,
   namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
-    cbt::Filter filter = cbt::Filter::FamilyRegex("stats_.*");
+    cbt::Filter filter = cbt::Filter::FamilyRegex("stats_.*$");
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
@@ -367,7 +367,7 @@ void FilterModifyApplyLabel(google::cloud::bigtable::Table table,
   namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
-    cbt::Filter filter = cbt::Filter::ApplyLabelTransformer("label-value");
+    cbt::Filter filter = cbt::Filter::ApplyLabelTransformer("labelled");
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
@@ -446,8 +446,8 @@ void FilterComposingCondition(google::cloud::bigtable::Table table,
     cbt::Filter filter = cbt::Filter::Condition(
         cbt::Filter::Chain(cbt::Filter::ValueRegex("true"),
                            cbt::Filter::ColumnRegex("data_plan_10gb")),
-        cbt::Filter::ApplyLabelTransformer("condition"),
-        cbt::Filter::StripValueTransformer());
+        cbt::Filter::ApplyLabelTransformer("passed-filter"),
+        cbt::Filter::ApplyLabelTransformer("filtered-out"));
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
@@ -477,6 +477,9 @@ void InsertTestData(google::cloud::bigtable::Table table,
   // This is not a code sample in the normal sense, we do not display this code
   // in the documentation. We use it to populate data in the table used to run
   // the actual examples during the CI builds.
+  //
+  // The data is from:
+  // https://cloud.google.com/bigtable/docs/using-filters#data
   namespace cbt = ::google::cloud::bigtable;
   cbt::BulkMutation bulk;
   auto const timestamp = milliseconds(hours(2));
@@ -568,9 +571,10 @@ void RunAll(std::vector<std::string> const& argv) {
 
   auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
   auto schema = admin.CreateTable(
-      table_id, cbt::TableConfig({{"stats_summary", cbt::GcRule::MaxNumVersions(10)},
-                                  {"cell_plan", cbt::GcRule::MaxNumVersions(10)}},
-                                 {}));
+      table_id,
+      cbt::TableConfig({{"stats_summary", cbt::GcRule::MaxNumVersions(10)},
+                        {"cell_plan", cbt::GcRule::MaxNumVersions(10)}},
+                       {}));
   if (!schema) throw std::runtime_error(schema.status().message());
 
   google::cloud::bigtable::Table table(
