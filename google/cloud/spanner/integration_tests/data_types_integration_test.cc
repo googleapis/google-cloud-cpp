@@ -220,15 +220,15 @@ TEST_F(DataTypeIntegrationTest, WriteReadDate) {
   EXPECT_THAT(*result, UnorderedElementsAreArray(data));
 }
 
-TEST_F(DataTypeIntegrationTest, WriteReadJSON) {
+TEST_F(DataTypeIntegrationTest, WriteReadJson) {
   // TODO(#6873): Remove this check when the emulator supports JSON.
   if (UsingEmulator()) GTEST_SKIP();
 
-  std::vector<JSON> const data = {
-      JSON(),                     //
-      JSON(R"("Hello world!")"),  //
-      JSON("42"),                 //
-      JSON("true"),               //
+  std::vector<Json> const data = {
+      Json(),                     //
+      Json(R"("Hello world!")"),  //
+      Json("42"),                 //
+      Json("true"),               //
   };
   auto result = WriteReadData(*client_, data, "JsonValue");
   ASSERT_STATUS_OK(result);
@@ -345,18 +345,18 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayDate) {
   EXPECT_THAT(*result, UnorderedElementsAreArray(data));
 }
 
-TEST_F(DataTypeIntegrationTest, WriteReadArrayJSON) {
+TEST_F(DataTypeIntegrationTest, WriteReadArrayJson) {
   // TODO(#6873): Remove this check when the emulator supports JSON.
   if (UsingEmulator()) GTEST_SKIP();
 
-  std::vector<std::vector<JSON>> const data = {
-      std::vector<JSON>{},
-      std::vector<JSON>{JSON()},
-      std::vector<JSON>{
-          JSON(),
-          JSON(R"("Hello world!")"),
-          JSON("42"),
-          JSON("true"),
+  std::vector<std::vector<Json>> const data = {
+      std::vector<Json>{},
+      std::vector<Json>{Json()},
+      std::vector<Json>{
+          Json(),
+          Json(R"("Hello world!")"),
+          Json("42"),
+          Json("true"),
       },
   };
   auto result = WriteReadData(*client_, data, "ArrayJsonValue");
@@ -446,7 +446,7 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithStruct) {
 }
 
 // Verify maximum JSON nesting.
-TEST_F(DataTypeIntegrationTest, JSONMaxNesting) {
+TEST_F(DataTypeIntegrationTest, JsonMaxNesting) {
   // TODO(#6873): Remove this check when the emulator supports JSON.
   if (UsingEmulator()) GTEST_SKIP();
 
@@ -464,12 +464,12 @@ TEST_F(DataTypeIntegrationTest, JSONMaxNesting) {
   // Nested arrays that match `k_spanner_json_max_nesting_level`.
   std::string good_json = bad_json.substr(1, bad_json.size() - 2);
 
-  std::vector<JSON> const good_data = {JSON(good_json)};
+  std::vector<Json> const good_data = {Json(good_json)};
   auto result = WriteReadData(*client_, good_data, "JsonValue");
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, UnorderedElementsAreArray(good_data));
 
-  std::vector<JSON> const bad_data = {JSON(bad_json)};
+  std::vector<Json> const bad_data = {Json(bad_json)};
   result = WriteReadData(*client_, bad_data, "JsonValue");
   // NOTE: The backend is currently dropping a more specific "Max nesting
   // of 100 had been exceeded [INVALID_ARGUMENT]" error, so expect this

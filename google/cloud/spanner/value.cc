@@ -233,7 +233,7 @@ bool Value::TypeProtoIs(Bytes const&, google::spanner::v1::Type const& type) {
   return type.code() == google::spanner::v1::TypeCode::BYTES;
 }
 
-bool Value::TypeProtoIs(JSON const&, google::spanner::v1::Type const& type) {
+bool Value::TypeProtoIs(Json const&, google::spanner::v1::Type const& type) {
   return type.code() == google::spanner::v1::TypeCode::JSON;
 }
 
@@ -275,7 +275,7 @@ google::spanner::v1::Type Value::MakeTypeProto(Bytes const&) {
   return t;
 }
 
-google::spanner::v1::Type Value::MakeTypeProto(JSON const&) {
+google::spanner::v1::Type Value::MakeTypeProto(Json const&) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::JSON);
   return t;
@@ -353,7 +353,7 @@ google::protobuf::Value Value::MakeValueProto(Bytes bytes) {
   return v;
 }
 
-google::protobuf::Value Value::MakeValueProto(JSON j) {
+google::protobuf::Value Value::MakeValueProto(Json j) {
   google::protobuf::Value v;
   v.set_string_value(std::string(std::move(j)));
   return v;
@@ -476,12 +476,12 @@ StatusOr<Bytes> Value::GetValue(Bytes const&, google::protobuf::Value const& pv,
   return *decoded;
 }
 
-StatusOr<JSON> Value::GetValue(JSON const&, google::protobuf::Value const& pv,
+StatusOr<Json> Value::GetValue(Json const&, google::protobuf::Value const& pv,
                                google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
     return Status(StatusCode::kUnknown, "missing JSON");
   }
-  return JSON(pv.string_value());
+  return Json(pv.string_value());
 }
 
 StatusOr<Numeric> Value::GetValue(Numeric const&,

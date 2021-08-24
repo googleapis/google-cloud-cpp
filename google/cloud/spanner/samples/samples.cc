@@ -1821,16 +1821,16 @@ void AddJsonColumn(google::cloud::spanner::DatabaseAdminClient client,
 //! [START spanner_update_data_with_json_column]
 void UpdateDataWithJson(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
-  auto venue19_details = spanner::JSON(R"""(
+  auto venue19_details = spanner::Json(R"""(
         {"rating": 9, "open": true}
       )""");  // object
-  auto venue4_details = spanner::JSON(R"""(
+  auto venue4_details = spanner::Json(R"""(
         [
           {"name": "room 1", "open": true},
           {"name": "room 2", "open": false}
         ]
       )""");  // array
-  auto venue42_details = spanner::JSON(R"""(
+  auto venue42_details = spanner::Json(R"""(
         {
           "name": null,
           "open": {"Monday": true, "Tuesday": false},
@@ -1858,7 +1858,7 @@ void UpdateDataWithJson(google::cloud::spanner::Client client) {
 // [START spanner_query_with_json_parameter]
 void QueryWithJsonParameter(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
-  auto rating9_details = spanner::JSON(R"""(
+  auto rating9_details = spanner::Json(R"""(
         {"rating": 9}
       )""");  // object
   spanner::SqlStatement select(
@@ -1867,7 +1867,7 @@ void QueryWithJsonParameter(google::cloud::spanner::Client client) {
       " WHERE JSON_VALUE(VenueDetails, '$.rating') ="
       "       JSON_VALUE(@details, '$.rating')",
       {{"details", spanner::Value(std::move(rating9_details))}});
-  using RowType = std::tuple<std::int64_t, absl::optional<spanner::JSON>>;
+  using RowType = std::tuple<std::int64_t, absl::optional<spanner::Json>>;
 
   auto rows = client.ExecuteQuery(select);
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {

@@ -23,47 +23,47 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-TEST(JSON, DefaultCtor) { EXPECT_EQ("null", std::string(JSON())); }
+TEST(Json, DefaultCtor) { EXPECT_EQ("null", std::string(Json())); }
 
-TEST(JSON, RegularSemantics) {
-  JSON j("true");
+TEST(Json, RegularSemantics) {
+  Json j("true");
 
   // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
-  JSON const copy1(j);
+  Json const copy1(j);
   EXPECT_EQ(copy1, j);
 
   // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
-  JSON const copy2 = j;
+  Json const copy2 = j;
   EXPECT_EQ(copy2, j);
 
-  JSON assign;
+  Json assign;
   assign = j;
   EXPECT_EQ(assign, j);
 }
 
-TEST(JSON, RelationalOperators) {
-  EXPECT_EQ(JSON("42"), JSON("42"));
-  EXPECT_NE(JSON("true"), JSON(R"("Hello world!")"));
+TEST(Json, RelationalOperators) {
+  EXPECT_EQ(Json("42"), Json("42"));
+  EXPECT_NE(Json("true"), Json(R"("Hello world!")"));
 
   // We do not even trim whitespace surrounding the JSON string.
-  EXPECT_NE(JSON(" true "), JSON("true"));
+  EXPECT_NE(Json(" true "), Json("true"));
 }
 
-TEST(JSON, RoundTrip) {
+TEST(Json, RoundTrip) {
   for (auto const& j : {"null", R"("Hello world!")", "42", "true"}) {
-    EXPECT_EQ(std::string(JSON(j)), j);
+    EXPECT_EQ(std::string(Json(j)), j);
   }
 }
 
-TEST(JSON, OutputStreaming) {
-  auto stream = [](JSON const& j) {
+TEST(Json, OutputStreaming) {
+  auto stream = [](Json const& j) {
     std::ostringstream ss;
     ss << j;
     return std::move(ss).str();
   };
 
   for (auto const& j :
-       {JSON(), JSON(R"("Hello world!")"), JSON("42"), JSON("true")}) {
+       {Json(), Json(R"("Hello world!")"), Json("42"), Json("true")}) {
     EXPECT_EQ(stream(j), std::string(j));
   }
 }

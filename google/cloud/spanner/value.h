@@ -64,7 +64,7 @@ inline namespace SPANNER_CLIENT_NS {
  * FLOAT64      | `double`
  * STRING       | `std::string`
  * BYTES        | `google::cloud::spanner::Bytes`
- * JSON         | `google::cloud::spanner::JSON`
+ * JSON         | `google::cloud::spanner::Json`
  * NUMERIC      | `google::cloud::spanner::Numeric`
  * TIMESTAMP    | `google::cloud::spanner::Timestamp`
  * DATE         | `absl::CivilDay`
@@ -191,7 +191,7 @@ class Value {
   /// @copydoc Value(bool)
   explicit Value(Bytes v) : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
-  explicit Value(JSON v) : Value(PrivateConstructor{}, std::move(v)) {}
+  explicit Value(Json v) : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
   explicit Value(Numeric v) : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
@@ -362,7 +362,7 @@ class Value {
   static bool TypeProtoIs(absl::CivilDay, google::spanner::v1::Type const&);
   static bool TypeProtoIs(std::string const&, google::spanner::v1::Type const&);
   static bool TypeProtoIs(Bytes const&, google::spanner::v1::Type const&);
-  static bool TypeProtoIs(JSON const&, google::spanner::v1::Type const&);
+  static bool TypeProtoIs(Json const&, google::spanner::v1::Type const&);
   static bool TypeProtoIs(Numeric const&, google::spanner::v1::Type const&);
   template <typename T>
   static bool TypeProtoIs(absl::optional<T>,
@@ -409,7 +409,7 @@ class Value {
   static google::spanner::v1::Type MakeTypeProto(double);
   static google::spanner::v1::Type MakeTypeProto(std::string const&);
   static google::spanner::v1::Type MakeTypeProto(Bytes const&);
-  static google::spanner::v1::Type MakeTypeProto(JSON const&);
+  static google::spanner::v1::Type MakeTypeProto(Json const&);
   static google::spanner::v1::Type MakeTypeProto(Numeric const&);
   static google::spanner::v1::Type MakeTypeProto(Timestamp);
   static google::spanner::v1::Type MakeTypeProto(CommitTimestamp);
@@ -470,7 +470,7 @@ class Value {
   static google::protobuf::Value MakeValueProto(double d);
   static google::protobuf::Value MakeValueProto(std::string s);
   static google::protobuf::Value MakeValueProto(Bytes b);
-  static google::protobuf::Value MakeValueProto(JSON j);
+  static google::protobuf::Value MakeValueProto(Json j);
   static google::protobuf::Value MakeValueProto(Numeric n);
   static google::protobuf::Value MakeValueProto(Timestamp ts);
   static google::protobuf::Value MakeValueProto(CommitTimestamp ts);
@@ -533,7 +533,7 @@ class Value {
                                         google::spanner::v1::Type const&);
   static StatusOr<Bytes> GetValue(Bytes const&, google::protobuf::Value const&,
                                   google::spanner::v1::Type const&);
-  static StatusOr<JSON> GetValue(JSON const&, google::protobuf::Value const&,
+  static StatusOr<Json> GetValue(Json const&, google::protobuf::Value const&,
                                  google::spanner::v1::Type const&);
   static StatusOr<Numeric> GetValue(Numeric const&,
                                     google::protobuf::Value const&,

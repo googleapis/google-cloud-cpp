@@ -30,23 +30,23 @@ inline namespace SPANNER_CLIENT_NS {
  * JavaScript Object Notation) defines a small set of formatting rules
  * for the portable representation of structured data. See RFC 7159.
  *
- * A `JSON` value can be constructed from, and converted to a `std::string`.
- * `JSON` values can be compared (by string) for equality, and streamed.
+ * A `Json` value can be constructed from, and converted to a `std::string`.
+ * `Json` values can be compared (by string) for equality, and streamed.
  *
  * There is no syntax checking of JSON strings in this interface. The user
- * is expected to only construct `JSON` values from well-formatted strings.
+ * is expected to only construct `Json` values from well-formatted strings.
  */
-class JSON {
+class Json {
  public:
   /// A null value.
-  JSON() : rep_("null") {}
+  Json() : rep_("null") {}
 
   /// Regular value type, supporting copy, assign, move.
   ///@{
-  JSON(JSON const&) = default;
-  JSON& operator=(JSON const&) = default;
-  JSON(JSON&&) = default;
-  JSON& operator=(JSON&&) = default;
+  Json(Json const&) = default;
+  Json& operator=(Json const&) = default;
+  Json(Json&&) = default;
+  Json& operator=(Json&&) = default;
   ///@}
 
   /**
@@ -54,7 +54,7 @@ class JSON {
    * here that the argument string is indeed well-formatted. Error detection
    * will be delayed until the value is passed to Spanner.
    */
-  explicit JSON(std::string s) : rep_(std::move(s)) {}
+  explicit Json(std::string s) : rep_(std::move(s)) {}
 
   /// Conversion to a JSON-formatted string.
   ///@{
@@ -68,16 +68,16 @@ class JSON {
 
 /// @name Relational operators
 ///@{
-inline bool operator==(JSON const& lhs, JSON const& rhs) {
+inline bool operator==(Json const& lhs, Json const& rhs) {
   return std::string(lhs) == std::string(rhs);
 }
-inline bool operator!=(JSON const& lhs, JSON const& rhs) {
+inline bool operator!=(Json const& lhs, Json const& rhs) {
   return !(lhs == rhs);
 }
 ///@}
 
 /// Outputs a JSON-formatted string to the provided stream.
-inline std::ostream& operator<<(std::ostream& os, JSON const& json) {
+inline std::ostream& operator<<(std::ostream& os, Json const& json) {
   return os << std::string(json);
 }
 
