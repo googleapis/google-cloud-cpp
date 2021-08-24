@@ -35,6 +35,7 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::AllOf;
 using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::ContainsRegex;
@@ -207,6 +208,12 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
           FirstName  STRING(1024),
           LastName   STRING(1024),
           SingerInfo BYTES(MAX)
+      )""");
+  if (!emulator_) {
+    // TODO(#6873): Remove this check when the emulator supports JSON.
+    statements.back().append(R"""(,SingerDetails JSON)""");
+  }
+  statements.back().append(R"""(
         ) PRIMARY KEY (SingerId)
       )""");
   auto metadata = client_.UpdateDatabase(database_, statements).get();
@@ -221,6 +228,47 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
     EXPECT_THAT(metadata->statements(), Contains(HasSubstr("ALTER DATABASE")));
   }
   EXPECT_FALSE(metadata->throttled());
+
+  // Verify that a JSON column cannot be used as an index.
+  statements.clear();
+  statements.emplace_back(R"""(
+        CREATE INDEX SingersByDetail
+          ON Singers(SingerDetails)
+      )""");
+  metadata = client_.UpdateDatabase(database_, statements).get();
+  if (!emulator_) {
+    // TODO(#6873): Remove this check when the emulator supports JSON.
+    EXPECT_THAT(metadata,
+                StatusIs(StatusCode::kFailedPrecondition,
+                         AllOf(HasSubstr("Index SingersByDetail"),
+                               HasSubstr("column of unsupported type JSON"))));
+  } else {
+    EXPECT_THAT(
+        metadata,
+        StatusIs(
+            StatusCode::kInvalidArgument,
+            AllOf(HasSubstr("Index SingersByDetail"),
+                  HasSubstr("column SingerDetails which does not exist"))));
+  }
+
+  // Verify that a JSON column cannot be used as a primary key.
+  statements.clear();
+  statements.emplace_back(R"""(
+        CREATE TABLE JsonKey (
+          Key JSON NOT NULL
+        ) PRIMARY KEY (Key)
+      )""");
+  metadata = client_.UpdateDatabase(database_, statements).get();
+  if (!emulator_) {
+    // TODO(#6873): Remove this check when the emulator supports JSON.
+    EXPECT_THAT(metadata,
+                StatusIs(StatusCode::kInvalidArgument,
+                         AllOf(HasSubstr("Key has type JSON"),
+                               HasSubstr("part of the primary key"))));
+  } else {
+    EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument,
+                                   HasSubstr("Encountered 'JSON'")));
+  }
 
   EXPECT_TRUE(DatabaseExists()) << "Database " << database_;
   auto drop_status = client_.DropDatabase(database_);

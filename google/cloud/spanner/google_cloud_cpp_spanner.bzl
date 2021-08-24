@@ -81,6 +81,7 @@ google_cloud_cpp_spanner_hdrs = [
     "internal/status_utils.h",
     "internal/transaction_impl.h",
     "internal/tuple_utils.h",
+    "json.h",
     "keys.h",
     "mutations.h",
     "numeric.h",

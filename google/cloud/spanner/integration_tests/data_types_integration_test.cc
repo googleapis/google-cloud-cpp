@@ -30,6 +30,9 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::HasSubstr;
 using ::testing::UnorderedElementsAreArray;
 
 absl::Time MakeTime(std::time_t sec, int nanos) {
@@ -217,6 +220,21 @@ TEST_F(DataTypeIntegrationTest, WriteReadDate) {
   EXPECT_THAT(*result, UnorderedElementsAreArray(data));
 }
 
+TEST_F(DataTypeIntegrationTest, WriteReadJson) {
+  // TODO(#6873): Remove this check when the emulator supports JSON.
+  if (UsingEmulator()) GTEST_SKIP();
+
+  std::vector<Json> const data = {
+      Json(),                     //
+      Json(R"("Hello world!")"),  //
+      Json("42"),                 //
+      Json("true"),               //
+  };
+  auto result = WriteReadData(*client_, data, "JsonValue");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+}
+
 TEST_F(DataTypeIntegrationTest, WriteReadNumeric) {
   // TODO(#5024): Remove this check when the emulator supports NUMERIC.
   if (UsingEmulator()) GTEST_SKIP();
@@ -327,6 +345,25 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayDate) {
   EXPECT_THAT(*result, UnorderedElementsAreArray(data));
 }
 
+TEST_F(DataTypeIntegrationTest, WriteReadArrayJson) {
+  // TODO(#6873): Remove this check when the emulator supports JSON.
+  if (UsingEmulator()) GTEST_SKIP();
+
+  std::vector<std::vector<Json>> const data = {
+      std::vector<Json>{},
+      std::vector<Json>{Json()},
+      std::vector<Json>{
+          Json(),
+          Json(R"("Hello world!")"),
+          Json("42"),
+          Json("true"),
+      },
+  };
+  auto result = WriteReadData(*client_, data, "ArrayJsonValue");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+}
+
 TEST_F(DataTypeIntegrationTest, WriteReadArrayNumeric) {
   // TODO(#5024): Remove this check when the emulator supports NUMERIC.
   if (UsingEmulator()) GTEST_SKIP();
@@ -406,6 +443,39 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithStruct) {
   auto const& v = std::get<0>(*row);
   EXPECT_EQ(1, v.size());
   EXPECT_EQ(data, v[0]);
+}
+
+// Verify maximum JSON nesting.
+TEST_F(DataTypeIntegrationTest, JsonMaxNesting) {
+  // TODO(#6873): Remove this check when the emulator supports JSON.
+  if (UsingEmulator()) GTEST_SKIP();
+
+  // The default value of the backend max-nesting-level flag.
+  int const k_spanner_json_max_nesting_level = 100;
+
+  // Nested arrays that exceed `k_spanner_json_max_nesting_level` by one.
+  std::string bad_json;
+  for (int i = 0; i != k_spanner_json_max_nesting_level + 1; ++i)
+    bad_json.append(1, '[');
+  bad_json.append("null");
+  for (int i = 0; i != k_spanner_json_max_nesting_level + 1; ++i)
+    bad_json.append(1, ']');
+
+  // Nested arrays that match `k_spanner_json_max_nesting_level`.
+  std::string good_json = bad_json.substr(1, bad_json.size() - 2);
+
+  std::vector<Json> const good_data = {Json(good_json)};
+  auto result = WriteReadData(*client_, good_data, "JsonValue");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, UnorderedElementsAreArray(good_data));
+
+  std::vector<Json> const bad_data = {Json(bad_json)};
+  result = WriteReadData(*client_, bad_data, "JsonValue");
+  // NOTE: The backend is currently dropping a more specific "Max nesting
+  // of 100 had been exceeded [INVALID_ARGUMENT]" error, so expect this
+  // expectation to change when that problem is fixed.
+  EXPECT_THAT(result, StatusIs(StatusCode::kFailedPrecondition,
+                               HasSubstr("Expected JSON")));
 }
 
 }  // namespace

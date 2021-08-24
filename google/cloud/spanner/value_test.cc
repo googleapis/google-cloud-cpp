@@ -140,6 +140,16 @@ TEST(Value, BasicSemantics) {
     TestBasicSemantics(v);
   }
 
+  for (auto const& x : std::vector<Json>{Json(), Json(R"("Hello world!")"),
+                                         Json("42"), Json("true")}) {
+    SCOPED_TRACE("Testing: JSON " + std::string(x));
+    TestBasicSemantics(x);
+    TestBasicSemantics(std::vector<Json>(5, x));
+    std::vector<absl::optional<Json>> v(5, x);
+    v.resize(10);
+    TestBasicSemantics(v);
+  }
+
   for (auto const& x : {
            MakeNumeric(-0.9e29).value(),
            MakeNumeric(-1).value(),
@@ -213,6 +223,7 @@ TEST(Value, Equality) {
       {Value(3.14), Value(42.0)},
       {Value("foo"), Value("bar")},
       {Value(Bytes("foo")), Value(Bytes("bar"))},
+      {Value(Json("42")), Value(Json("true"))},
       {Value(MakeNumeric(0).value()), Value(MakeNumeric(1).value())},
       {Value(absl::CivilDay(1970, 1, 1)), Value(absl::CivilDay(2020, 3, 15))},
       {Value(std::vector<double>{1.2, 3.4}),
@@ -368,6 +379,14 @@ TEST(Value, BytesRelationalOperators) {
 
   EXPECT_EQ(b1, b1);
   EXPECT_NE(b1, b2);
+}
+
+TEST(Value, JsonRelationalOperators) {
+  Json j1("42");
+  Json j2("true");
+
+  EXPECT_EQ(j1, j1);
+  EXPECT_NE(j1, j2);
 }
 
 TEST(Value, ConstructionFromLiterals) {
@@ -665,6 +684,17 @@ TEST(Value, ProtoConversionBytes) {
   }
 }
 
+TEST(Value, ProtoConversionJson) {
+  for (auto const& x : std::vector<Json>{Json(), Json(R"("Hello world!")"),
+                                         Json("42"), Json("true")}) {
+    Value const v(x);
+    auto const p = spanner_internal::ToProto(v);
+    EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
+    EXPECT_EQ(google::spanner::v1::TypeCode::JSON, p.first.code());
+    EXPECT_EQ(std::string(x), p.second.string_value());
+  }
+}
+
 TEST(Value, ProtoConversionNumeric) {
   for (auto const& x : std::vector<Numeric>{
            MakeNumeric(-0.9e29).value(),
@@ -861,6 +891,21 @@ TEST(Value, GetBadBytes) {
 
   SetProtoKind(v, 0.0);
   EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
+}
+
+TEST(Value, GetBadJson) {
+  Value v(Json("true"));
+  ClearProtoKind(v);
+  EXPECT_THAT(v.get<Json>(), Not(IsOk()));
+
+  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  EXPECT_THAT(v.get<Json>(), Not(IsOk()));
+
+  SetProtoKind(v, true);
+  EXPECT_THAT(v.get<Json>(), Not(IsOk()));
+
+  SetProtoKind(v, 0.0);
+  EXPECT_THAT(v.get<Json>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadNumeric) {
@@ -1073,6 +1118,8 @@ TEST(Value, OutputStream) {
       {Value("foo"), "foo", normal},
       {Value("NULL"), "NULL", normal},
       {Value(Bytes(std::string("DEADBEEF"))), R"(B"DEADBEEF")", normal},
+      {Value(Json()), "null", normal},
+      {Value(Json("true")), "true", normal},
       {Value(MakeNumeric(1234567890).value()), "1234567890", normal},
       {Value(absl::CivilDay()), "1970-01-01", normal},
       {Value(Timestamp()), "1970-01-01T00:00:00Z", normal},
@@ -1096,6 +1143,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<double>(), "NULL", normal},
       {MakeNullValue<std::string>(), "NULL", normal},
       {MakeNullValue<Bytes>(), "NULL", normal},
+      {MakeNullValue<Json>(), "NULL", normal},
       {MakeNullValue<Numeric>(), "NULL", normal},
       {MakeNullValue<absl::CivilDay>(), "NULL", normal},
       {MakeNullValue<Timestamp>(), "NULL", normal},
@@ -1109,6 +1157,7 @@ TEST(Value, OutputStream) {
       {Value(std::vector<double>{1.0, 2.0}), "[1.000, 2.000]", float4},
       {Value(std::vector<std::string>{"a", "b"}), R"(["a", "b"])", normal},
       {Value(std::vector<Bytes>{2}), R"([B"", B""])", normal},
+      {Value(std::vector<Json>{2}), R"([null, null])", normal},
       {Value(std::vector<Numeric>{2}), "[0, 0]", normal},
       {Value(std::vector<absl::CivilDay>{2}), "[1970-01-01, 1970-01-01]",
        normal},
@@ -1122,6 +1171,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::vector<double>>(), "NULL", normal},
       {MakeNullValue<std::vector<std::string>>(), "NULL", normal},
       {MakeNullValue<std::vector<Bytes>>(), "NULL", normal},
+      {MakeNullValue<std::vector<Json>>(), "NULL", normal},
       {MakeNullValue<std::vector<Numeric>>(), "NULL", normal},
       {MakeNullValue<std::vector<absl::CivilDay>>(), "NULL", normal},
       {MakeNullValue<std::vector<Timestamp>>(), "NULL", normal},
@@ -1165,7 +1215,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::tuple<bool, std::string>>(), "NULL", normal},
       {MakeNullValue<std::tuple<double, Bytes, Timestamp>>(), "NULL", normal},
       {MakeNullValue<std::tuple<Numeric, absl::CivilDay>>(), "NULL", normal},
-      {MakeNullValue<std::tuple<std::vector<bool>>>(), "NULL", normal},
+      {MakeNullValue<std::tuple<Json, std::vector<bool>>>(), "NULL", normal},
   };
 
   for (auto const& tc : test_case) {
@@ -1214,6 +1264,12 @@ TEST(Value, OutputStreamMatchesT) {
   // Bytes
   StreamMatchesValueStream(Bytes());
   StreamMatchesValueStream(Bytes("foo"));
+
+  // JSON
+  StreamMatchesValueStream(Json());
+  StreamMatchesValueStream(Json(R"("Hello world!")"));
+  StreamMatchesValueStream(Json("42"));
+  StreamMatchesValueStream(Json("true"));
 
   // Numeric
   StreamMatchesValueStream(MakeNumeric("999").value());
