@@ -52,6 +52,7 @@ bool Equal(google::spanner::v1::Type const& pt1,  // NOLINT(misc-no-recursion)
              pv1.number_value() == pv2.number_value();
     case google::spanner::v1::TypeCode::STRING:
     case google::spanner::v1::TypeCode::BYTES:
+    case google::spanner::v1::TypeCode::JSON:
     case google::spanner::v1::TypeCode::DATE:
     case google::spanner::v1::TypeCode::TIMESTAMP:
     case google::spanner::v1::TypeCode::NUMERIC:
@@ -141,6 +142,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     case google::spanner::v1::TypeCode::BYTES:
       return os << spanner_internal::BytesFromBase64(v.string_value()).value();
 
+    case google::spanner::v1::TypeCode::JSON:
     case google::spanner::v1::TypeCode::TIMESTAMP:
     case google::spanner::v1::TypeCode::NUMERIC:
       return os << v.string_value();
@@ -231,6 +233,10 @@ bool Value::TypeProtoIs(Bytes const&, google::spanner::v1::Type const& type) {
   return type.code() == google::spanner::v1::TypeCode::BYTES;
 }
 
+bool Value::TypeProtoIs(JSON const&, google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::JSON;
+}
+
 bool Value::TypeProtoIs(Numeric const&, google::spanner::v1::Type const& type) {
   return type.code() == google::spanner::v1::TypeCode::NUMERIC;
 }
@@ -266,6 +272,12 @@ google::spanner::v1::Type Value::MakeTypeProto(std::string const&) {
 google::spanner::v1::Type Value::MakeTypeProto(Bytes const&) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::BYTES);
+  return t;
+}
+
+google::spanner::v1::Type Value::MakeTypeProto(JSON const&) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::JSON);
   return t;
 }
 
@@ -338,6 +350,12 @@ google::protobuf::Value Value::MakeValueProto(std::string s) {
 google::protobuf::Value Value::MakeValueProto(Bytes bytes) {
   google::protobuf::Value v;
   v.set_string_value(spanner_internal::BytesToBase64(std::move(bytes)));
+  return v;
+}
+
+google::protobuf::Value Value::MakeValueProto(JSON j) {
+  google::protobuf::Value v;
+  v.set_string_value(std::string(std::move(j)));
   return v;
 }
 
@@ -456,6 +474,14 @@ StatusOr<Bytes> Value::GetValue(Bytes const&, google::protobuf::Value const& pv,
   auto decoded = spanner_internal::BytesFromBase64(pv.string_value());
   if (!decoded) return decoded.status();
   return *decoded;
+}
+
+StatusOr<JSON> Value::GetValue(JSON const&, google::protobuf::Value const& pv,
+                               google::spanner::v1::Type const&) {
+  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+    return Status(StatusCode::kUnknown, "missing JSON");
+  }
+  return JSON(pv.string_value());
 }
 
 StatusOr<Numeric> Value::GetValue(Numeric const&,

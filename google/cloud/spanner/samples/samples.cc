@@ -1802,6 +1802,83 @@ void QueryDataWithTimestamp(google::cloud::spanner::Client client) {
 }
 // [END spanner_query_data_with_timestamp_column]
 
+// [START spanner_add_json_column]
+void AddJsonColumn(google::cloud::spanner::DatabaseAdminClient client,
+                   std::string const& project_id,
+                   std::string const& instance_id,
+                   std::string const& database_id) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  auto metadata = client
+                      .UpdateDatabase(database, {R"""(
+                        ALTER TABLE Venues ADD COLUMN VenueDetails JSON)"""})
+                      .get();
+  if (!metadata) throw std::runtime_error(metadata.status().message());
+  std::cout << "`Venues` table altered, new DDL:\n" << metadata->DebugString();
+}
+// [END spanner_add_json_column]
+
+//! [START spanner_update_data_with_json_column]
+void UpdateDataWithJson(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  auto venue19_details = spanner::JSON(R"""(
+        {"rating": 9, "open": true}
+      )""");  // object
+  auto venue4_details = spanner::JSON(R"""(
+        [
+          {"name": "room 1", "open": true},
+          {"name": "room 2", "open": false}
+        ]
+      )""");  // array
+  auto venue42_details = spanner::JSON(R"""(
+        {
+          "name": null,
+          "open": {"Monday": true, "Tuesday": false},
+          "tags": ["large", "airy"]
+        }
+      )""");  // nested
+  auto update_venues =
+      spanner::UpdateMutationBuilder(
+          "Venues", {"VenueId", "VenueName", "VenueDetails", "LastUpdateTime"})
+          .EmplaceRow(19, "Venue 19", venue19_details,
+                      spanner::CommitTimestamp())
+          .EmplaceRow(4, "Venue 4", venue4_details, spanner::CommitTimestamp())
+          .EmplaceRow(42, "Venue 42", venue42_details,
+                      spanner::CommitTimestamp())
+          .Build();
+
+  auto commit_result = client.Commit(spanner::Mutations{update_venues});
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "Insert was successful [spanner_update_data_with_json_column]\n";
+}
+//! [END spanner_update_data_with_json_column]
+
+// [START spanner_query_with_json_parameter]
+void QueryWithJsonParameter(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  auto rating9_details = spanner::JSON(R"""(
+        {"rating": 9}
+      )""");  // object
+  spanner::SqlStatement select(
+      "SELECT VenueId, VenueDetails"
+      "  FROM Venues"
+      " WHERE JSON_VALUE(VenueDetails, '$.rating') ="
+      "       JSON_VALUE(@details, '$.rating')",
+      {{"details", spanner::Value(std::move(rating9_details))}});
+  using RowType = std::tuple<std::int64_t, absl::optional<spanner::JSON>>;
+
+  auto rows = client.ExecuteQuery(select);
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "VenueId: " << std::get<0>(*row) << ", ";
+    auto venue_details = std::get<1>(*row).value();
+    std::cout << "VenueDetails: " << venue_details << "\n";
+  }
+}
+// [END spanner_query_with_json_parameter]
+
 // [START spanner_add_numeric_column]
 void AddNumericColumn(google::cloud::spanner::DatabaseAdminClient client,
                       std::string const& project_id,
@@ -3298,6 +3375,9 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("insert-data-with-timestamp", InsertDataWithTimestamp),
       make_command_entry("update-data-with-timestamp", UpdateDataWithTimestamp),
       make_command_entry("query-data-with-timestamp", QueryDataWithTimestamp),
+      make_database_command_entry("add-json-column", AddJsonColumn),
+      make_command_entry("update-data-with-json", UpdateDataWithJson),
+      make_command_entry("query-for-json", QueryWithJsonParameter),
       make_database_command_entry("add-numeric-column", AddNumericColumn),
       make_command_entry("update-data-with-numeric", UpdateDataWithNumeric),
       make_command_entry("query-with-numeric-parameter",
@@ -3844,6 +3924,20 @@ void RunAll(bool emulator) {
   std::cout << "\nRunning spanner_query_data_with_timestamp_column sample"
             << std::endl;
   QueryDataWithTimestamp(client);
+
+  // TODO(#6873): Remove this check when the emulator supports JSON.
+  if (!emulator) {
+    std::cout << "\nRunning spanner_add_json_column sample" << std::endl;
+    AddJsonColumn(database_admin_client, project_id, instance_id, database_id);
+
+    std::cout << "\nRunning spanner_update_data_with_json_column sample"
+              << std::endl;
+    UpdateDataWithJson(client);
+
+    std::cout << "\nRunning spanner_query_with_json_parameter sample"
+              << std::endl;
+    QueryWithJsonParameter(client);
+  }
 
   // TODO(#5024): Remove this check when the emulator supports NUMERIC.
   if (!emulator) {

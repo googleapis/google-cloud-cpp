@@ -145,6 +145,7 @@ add_library(
     internal/transaction_impl.cc
     internal/transaction_impl.h
     internal/tuple_utils.h
+    json.h
     keys.cc
     keys.h
     mutations.cc
@@ -326,6 +327,7 @@ function (spanner_client_define_tests)
         internal/status_utils_test.cc
         internal/transaction_impl_test.cc
         internal/tuple_utils_test.cc
+        json_test.cc
         keys_test.cc
         mutations_test.cc
         numeric_test.cc
