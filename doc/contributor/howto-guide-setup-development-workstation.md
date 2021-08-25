@@ -123,6 +123,43 @@ alternatives.
 ./ci/install-cloud-sdk.sh
 ```
 
+If you use an editor that uses `compile_commands.json` for autocomplete, one
+can generate it with CMake using
+[CMAKE_EXPORT_COMPILE_COMMANDS](https://cmake.org/cmake/help/latest/variable/CMAKE_EXPORT_COMPILE_COMMANDS.html).
+If you prefer using Bazel, the following steps will generate one for you.
+
+First, install Bazelisk:
+
+```console
+go get github.com/bazelbuild/bazelisk
+# Alternatively, if you have Go 1.17 or later
+go install github.com/bazelbuild/bazelisk@latest
+```
+
+Add Go binaries to your PATH:
+
+```console
+export PATH=$PATH:$(go env GOPATH)/bin
+```
+
+Name this script `bazel-compile-commands.sh`, add it to `~/.local/bin` and
+`chmod +x` it:
+
+```console
+#!/bin/bash
+readonly TMP_DIR="$(mktemp -d "/tmp/bazel-compdb-temp-XXXXXXX")"
+trap "rm -rf ${TMP_DIR}" EXIT
+readonly REPO="https://github.com/grailbio/bazel-compilation-database"
+git clone --depth=1 "${REPO}" "${TMP_DIR}"
+CC=clang CXX=clang++ "${TMP_DIR}/generate.sh"
+```
+
+Then from the directory where you've cloned `google-cloud-cpp`:
+
+```console
+bazel-compile-commands.sh --sandbox_writable_path=$HOME/.ccache
+```
+
 ### Clone and compile `google-cloud-cpp`
 
 You may need to clone and compile the code as described
