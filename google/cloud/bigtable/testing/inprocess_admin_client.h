@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_INPROCESS_ADMIN_CLIENT_H
 
 #include "google/cloud/bigtable/admin_client.h"
-#include "google/cloud/bigtable/client_options.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <string>
@@ -231,12 +230,11 @@ class InProcessAdminClient : public bigtable::AdminClient {
 
  private:
   google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
-    return options_.background_threads_factory();
+    return google::cloud::internal::MakeBackgroundThreadsFactory();
   }
 
   std::string project_;
   std::shared_ptr<grpc::Channel> channel_;
-  ClientOptions options_;
 };
 
 }  // namespace testing
