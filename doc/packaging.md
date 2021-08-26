@@ -297,7 +297,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.1.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.10.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -504,7 +504,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.1.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.10.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -641,7 +641,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.1.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.10.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -794,7 +794,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.1.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.10.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -961,7 +961,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.1.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.10.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i \
         -e '1s/VERSION 3.8/VERSION 3.5/' \
@@ -1057,7 +1057,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.1.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.10.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1193,7 +1193,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.1.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.10.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1411,7 +1411,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.1.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.10.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i \
         -e '1s/VERSION 3.8/VERSION 3.5/' \
@@ -1565,7 +1565,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.1.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.10.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1755,7 +1755,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.1.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.10.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
