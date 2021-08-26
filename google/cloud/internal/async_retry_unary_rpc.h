@@ -158,6 +158,7 @@ class RetryAsyncUnaryRpc {
   /// Generate an error message
   Status DetailedStatus(char const* context, Status const& status) {
     std::string full_message = location_;
+    full_message += ' ';
     full_message += context;
     full_message += ", last error=";
     full_message += status.message();
