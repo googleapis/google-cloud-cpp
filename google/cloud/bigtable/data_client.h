@@ -176,7 +176,17 @@ class DataClient {
   //@}
 };
 
-/// Create the default implementation of ClientInterface.
+/// Create a new data client configured via @p options.
+std::shared_ptr<DataClient> MakeDataClient(std::string project_id,
+                                           std::string instance_id,
+                                           Options options = {});
+
+/**
+ * Create a new data client configured via @p options.
+ *
+ * @deprecated use the `MakeDataClient` method which accepts
+ * `google::cloud::Options` instead.
+ */
 std::shared_ptr<DataClient> CreateDefaultDataClient(std::string project_id,
                                                     std::string instance_id,
                                                     ClientOptions options);

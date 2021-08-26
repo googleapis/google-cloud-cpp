@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/data_client.h"
+#include "google/cloud/bigtable/internal/logging_data_client.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -39,6 +41,35 @@ TEST(DataClientTest, Default) {
   channel1 = data_client->Channel();
   EXPECT_TRUE(channel1);
   EXPECT_NE(channel0.get(), channel1.get());
+}
+
+TEST(DataClientTest, MakeClient) {
+  auto data_client = MakeDataClient("test-project", "test-instance",
+                                    Options{}.set<GrpcNumChannelsOption>(1));
+  ASSERT_TRUE(data_client);
+  EXPECT_EQ("test-project", data_client->project_id());
+  EXPECT_EQ("test-instance", data_client->instance_id());
+
+  auto channel0 = data_client->Channel();
+  EXPECT_TRUE(channel0);
+
+  auto channel1 = data_client->Channel();
+  EXPECT_EQ(channel0.get(), channel1.get());
+
+  data_client->reset();
+  channel1 = data_client->Channel();
+  EXPECT_TRUE(channel1);
+  EXPECT_NE(channel0.get(), channel1.get());
+}
+
+TEST(DataClientTest, Logging) {
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING", "rpc");
+
+  auto data_client = MakeDataClient("test-project", "test-instance");
+  ASSERT_TRUE(data_client);
+  ASSERT_TRUE(
+      dynamic_cast<internal::LoggingDataClient const*>(data_client.get()))
+      << "Should create LoggingDataClient";
 }
 
 }  // namespace

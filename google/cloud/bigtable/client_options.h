@@ -462,6 +462,16 @@ class ClientOptions {
   using BackgroundThreadsFactory = ::google::cloud::BackgroundThreadsFactory;
   BackgroundThreadsFactory background_threads_factory() const;
 
+  /// Consume this object and convert it to `Options`.
+  Options&& ToOptions() && {
+    if (!connection_pool_name_.empty()) {
+      opts_.lookup<
+          GrpcChannelArgumentsOption>()["cbt-c++/connection-pool-name"] =
+          std::move(connection_pool_name_);
+    }
+    return std::move(opts_);
+  };
+
  private:
   friend struct internal::InstanceAdminTraits;
   friend struct ClientOptionsTestTraits;

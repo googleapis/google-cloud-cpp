@@ -45,8 +45,8 @@ class DefaultDataClient : public DataClient {
   // Introduce an early `private:` section because this type is used to define
   // the public interface, it should not be part of the public interface.
   struct DataTraits {
-    static std::string const& Endpoint(bigtable::ClientOptions& options) {
-      return options.data_endpoint();
+    static std::string const& Endpoint(Options const& options) {
+      return options.get<DataEndpointOption>();
     }
   };
 
@@ -54,14 +54,10 @@ class DefaultDataClient : public DataClient {
 
  public:
   DefaultDataClient(std::string project, std::string instance,
-                    ClientOptions options)
+                    Options options = {})
       : project_(std::move(project)),
         instance_(std::move(instance)),
         impl_(std::move(options)) {}
-
-  DefaultDataClient(std::string project, std::string instance)
-      : DefaultDataClient(std::move(project), std::move(instance),
-                          ClientOptions()) {}
 
   std::string const& project_id() const override;
   std::string const& instance_id() const override;
@@ -186,7 +182,7 @@ class DefaultDataClient : public DataClient {
  private:
   /// The thread factory from `ClientOptions` this client was created with.
   google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
-    return impl_.Options().background_threads_factory();
+    return impl_.BackgroundThreadsFactory();
   }
 
   std::string project_;
@@ -198,17 +194,29 @@ std::string const& DefaultDataClient::project_id() const { return project_; }
 
 std::string const& DefaultDataClient::instance_id() const { return instance_; }
 
-std::shared_ptr<DataClient> CreateDefaultDataClient(
-    std::string project_id, std::string instance_id,
-    ClientOptions options) {  // NOLINT(performance-unnecessary-value-param)
+std::shared_ptr<DataClient> MakeDataClient(std::string project_id,
+                                           std::string instance_id,
+                                           Options options) {
+  options = internal::DefaultOptions(std::move(options));
+  bool tracing_enabled = google::cloud::internal::Contains(
+      options.get<TracingComponentsOption>(), "rpc");
+  auto tracing_options = options.get<GrpcTracingOptionsOption>();
+
   std::shared_ptr<DataClient> client = std::make_shared<DefaultDataClient>(
-      std::move(project_id), std::move(instance_id), options);
-  if (options.tracing_enabled("rpc")) {
+      std::move(project_id), std::move(instance_id), std::move(options));
+  if (tracing_enabled) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     client = std::make_shared<internal::LoggingDataClient>(
-        std::move(client), options.tracing_options());
+        std::move(client), std::move(tracing_options));
   }
   return client;
+}
+
+std::shared_ptr<DataClient> CreateDefaultDataClient(std::string project_id,
+                                                    std::string instance_id,
+                                                    ClientOptions options) {
+  return MakeDataClient(std::move(project_id), std::move(instance_id),
+                        std::move(options).ToOptions());
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

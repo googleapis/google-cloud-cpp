@@ -22,10 +22,10 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
-/// Define what endpoint in ClientOptions is used for the InstanceAdminClient.
+/// Define what endpoint in Options is used for the InstanceAdminClient.
 struct InstanceAdminTraits {
-  static std::string const& Endpoint(ClientOptions& options) {
-    return options.instance_admin_endpoint();
+  static std::string const& Endpoint(Options const& options) {
+    return options.get<InstanceAdminEndpointOption>();
   }
 };
 }  // namespace internal
@@ -55,7 +55,7 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
  public:
   using AdminStubPtr = Impl::StubPtr;
 
-  DefaultInstanceAdminClient(std::string project, ClientOptions options)
+  DefaultInstanceAdminClient(std::string project, Options options)
       : project_(std::move(project)), impl_(std::move(options)) {}
 
   std::string const& project() const override { return project_; }
@@ -369,25 +369,37 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
 
  private:
   google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
-    return impl_.Options().background_threads_factory();
+    return impl_.BackgroundThreadsFactory();
   }
 
   std::string project_;
   Impl impl_;
 };
+
 }  // anonymous namespace
 
-std::shared_ptr<InstanceAdminClient> CreateDefaultInstanceAdminClient(
-    std::string project,
-    ClientOptions options) {  // NOLINT(performance-unnecessary-value-param)
+std::shared_ptr<InstanceAdminClient> MakeInstanceAdminClient(
+    std::string project, Options options) {
+  options = internal::DefaultOptions(std::move(options));
+  bool tracing_enabled = google::cloud::internal::Contains(
+      options.get<TracingComponentsOption>(), "rpc");
+  auto tracing_options = options.get<GrpcTracingOptionsOption>();
+
   std::shared_ptr<InstanceAdminClient> client =
-      std::make_shared<DefaultInstanceAdminClient>(std::move(project), options);
-  if (options.tracing_enabled("rpc")) {
+      std::make_shared<DefaultInstanceAdminClient>(std::move(project),
+                                                   std::move(options));
+  if (tracing_enabled) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     client = std::make_shared<internal::LoggingInstanceAdminClient>(
-        std::move(client), options.tracing_options());
+        std::move(client), std::move(tracing_options));
   }
   return client;
+}
+
+std::shared_ptr<InstanceAdminClient> CreateDefaultInstanceAdminClient(
+    std::string project, ClientOptions options) {
+  return MakeInstanceAdminClient(std::move(project),
+                                 std::move(options).ToOptions());
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
