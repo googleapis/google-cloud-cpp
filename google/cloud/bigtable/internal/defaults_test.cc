@@ -30,14 +30,13 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
-
 namespace {
+
 using ::google::cloud::internal::GetIntChannelArgument;
 using ::google::cloud::internal::GetStringChannelArgument;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Contains;
 using ::testing::HasSubstr;
-}  // namespace
 
 TEST(OptionsTest, Defaults) {
   auto opts = DefaultOptions();
@@ -64,9 +63,10 @@ TEST(OptionsTest, Defaults) {
   EXPECT_EQ(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH, max_recv.value());
 
   // See `kDefaultKeepaliveTime`
+  // A value lower than 30s might lead to a "too_many_pings" error
   auto time = GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIME_MS);
   ASSERT_TRUE(time.has_value());
-  EXPECT_EQ(30000, time.value());
+  EXPECT_LE(30000, time.value());
 
   // See `kDefaultKeepaliveTimeout`
   auto timeout = GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS);
@@ -196,6 +196,7 @@ TEST(EndpointEnvTest, UserCredentialsOverrideEmulatorEnv) {
             typeid(opts.get<GrpcCredentialOption>()));
 }
 
+}  // namespace
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
