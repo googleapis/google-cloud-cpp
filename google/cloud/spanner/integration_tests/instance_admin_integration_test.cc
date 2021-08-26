@@ -20,6 +20,7 @@
 #include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <algorithm>
@@ -89,7 +90,8 @@ class CleanupStaleInstances : public ::testing::Environment {
 ::testing::Environment* const kCleanupEnv =
     ::testing::AddGlobalTestEnvironment(new CleanupStaleInstances);
 
-class InstanceAdminClientTest : public testing::Test {
+class InstanceAdminClientTest
+    : public ::google::cloud::testing_util::IntegrationTest {
  public:
   InstanceAdminClientTest()
       : generator_(internal::MakeDefaultPRNG()),
