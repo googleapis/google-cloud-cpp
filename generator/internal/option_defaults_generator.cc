@@ -75,7 +75,8 @@ Status OptionDefaultsGenerator::GenerateCc() {
   CcLocalIncludes(
       {vars("option_defaults_header_path"), vars("connection_header_path"),
        vars("options_header_path"), "google/cloud/common_options.h",
-       "google/cloud/grpc_options.h", "google/cloud/internal/getenv.h",
+       "google/cloud/connection_options.h", "google/cloud/grpc_options.h",
+       "google/cloud/internal/getenv.h",
        "google/cloud/internal/user_agent_prefix.h", "google/cloud/options.h"});
   CcSystemIncludes({"memory"});
   CcPrint("\n");
@@ -103,6 +104,12 @@ Status OptionDefaultsGenerator::GenerateCc() {
     "  }\n"},
    {"  if (!options.has<GrpcCredentialOption>()) {\n"
     "    options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());\n"
+    "  }\n"
+    "  if (!options.has<TracingComponentsOption>()) {\n"
+    "    options.set<TracingComponentsOption>(internal::DefaultTracingComponents());\n"
+    "  }\n"
+    "  if (!options.has<GrpcTracingOptionsOption>()) {\n"
+    "    options.set<GrpcTracingOptionsOption>(internal::DefaultTracingOptions());\n"
     "  }\n"
     "  auto& products = options.lookup<UserAgentProductsOption>();\n"
     "  products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());\n"

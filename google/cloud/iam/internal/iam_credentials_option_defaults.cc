@@ -20,6 +20,7 @@
 #include "google/cloud/iam/iam_credentials_connection.h"
 #include "google/cloud/iam/iam_credentials_options.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
@@ -42,6 +43,12 @@ Options IAMCredentialsDefaultOptions(Options options) {
   }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
+  }
+  if (!options.has<TracingComponentsOption>()) {
+    options.set<TracingComponentsOption>(internal::DefaultTracingComponents());
+  }
+  if (!options.has<GrpcTracingOptionsOption>()) {
+    options.set<GrpcTracingOptionsOption>(internal::DefaultTracingOptions());
   }
   auto& products = options.lookup<UserAgentProductsOption>();
   products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
