@@ -29,8 +29,7 @@ namespace testing {
  * Connects to Cloud Bigtable's administration APIs.
  *
  * This class is mainly for testing purpose, it enable use of a single embedded
- * server
- * for multiple test cases. This admin client uses a pre-defined channel.
+ * server for multiple test cases. This admin client uses a pre-defined channel.
  */
 class InProcessAdminClient : public bigtable::AdminClient {
  public:
