@@ -374,7 +374,7 @@ void WriteObject(google::cloud::storage::Client client,
 
 void WriteObjectFromMemory(google::cloud::storage::Client client,
                            std::vector<std::string> const& argv) {
-  //! [START storage_file_upload_from_memory]
+  //! [write object from memory] [START storage_file_upload_from_memory]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
@@ -394,7 +394,7 @@ void WriteObjectFromMemory(google::cloud::storage::Client client,
               << " its size is: " << metadata->size()
               << "\nFull metadata: " << *metadata << "\n";
   }
-  //! [END storage_file_upload_from_memory]
+  //! [write object from memory] [END storage_file_upload_from_memory]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
