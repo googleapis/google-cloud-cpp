@@ -18,6 +18,7 @@
 #include "google/cloud/storage/well_known_parameters.h"
 #include "google/cloud/internal/getenv.h"
 #include <iostream>
+#include <iterator>
 #include <map>
 #include <string>
 #include <thread>
@@ -266,7 +267,8 @@ void GetObjectMetadata(google::cloud::storage::Client client,
 
 void ReadObject(google::cloud::storage::Client client,
                 std::vector<std::string> const& argv) {
-  //! [read object] [START storage_download_file]
+  //! [read object] [storage_stream_file_download]
+  // [START storage_download_file]
   namespace gcs = ::google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
@@ -280,7 +282,8 @@ void ReadObject(google::cloud::storage::Client client,
 
     std::cout << "The object has " << count << " lines\n";
   }
-  //! [read object] [END storage_download_file]
+  // [END storage_download_file]
+  //! [read object] [storage_stream_file_download]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
@@ -305,6 +308,22 @@ void ReadObjectRange(google::cloud::storage::Client client,
   //! [read object range] [END storage_download_byte_range]
   (std::move(client), argv.at(0), argv.at(1), std::stoll(argv.at(2)),
    std::stoll(argv.at(3)));
+}
+
+void ReadObjectIntoMemory(google::cloud::storage::Client client,
+                          std::vector<std::string> const& argv) {
+  //! [read object into memory] [START storage_file_download_into_memory]
+  namespace gcs = ::google::cloud::storage;
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name) {
+    gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
+    std::string buffer{std::istream_iterator<char>(stream),
+                       std::istream_iterator<char>()};
+
+    std::cout << "The object has " << buffer.size() << " characters\n";
+  }
+  //! [read object into memory] [END storage_file_download_into_memory]
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void DeleteObject(google::cloud::storage::Client client,
@@ -351,6 +370,32 @@ void WriteObject(google::cloud::storage::Client client,
   }
   //! [write object] [END storage_stream_file_upload]
   (std::move(client), argv.at(0), argv.at(1), std::stoi(argv.at(2)));
+}
+
+void WriteObjectFromMemory(google::cloud::storage::Client client,
+                           std::vector<std::string> const& argv) {
+  //! [START storage_file_upload_from_memory]
+  namespace gcs = ::google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name) {
+    std::string const text = "Lorem ipsum dolor sit amet";
+    std::vector<std::string> v(100, text);
+    gcs::ObjectWriteStream stream =
+        client.WriteObject(bucket_name, object_name);
+
+    std::copy(v.begin(), v.end(), std::ostream_iterator<std::string>(stream));
+
+    stream.Close();
+
+    StatusOr<gcs::ObjectMetadata> metadata = std::move(stream).metadata();
+    if (!metadata) throw std::runtime_error(metadata.status().message());
+    std::cout << "Successfully wrote to object " << metadata->name()
+              << " its size is: " << metadata->size()
+              << "\nFull metadata: " << *metadata << "\n";
+  }
+  //! [END storage_file_upload_from_memory]
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void UpdateObjectMetadata(google::cloud::storage::Client client,
@@ -721,9 +766,13 @@ int main(int argc, char* argv[]) {
       make_entry("read-object", {"<object-name>"}, ReadObject),
       make_entry("read-object-range", {"<object-name>", "<start>", "<end>"},
                  ReadObjectRange),
+      make_entry("read-object-into-memory", {"<object-name>"},
+                 ReadObjectIntoMemory),
       make_entry("delete-object", {"<object-name>"}, DeleteObject),
       make_entry("write-object",
                  {"<object-name>", "<target-object-line-count>"}, WriteObject),
+      make_entry("write-object-from-memory", {"<object-name>"},
+                 WriteObjectFromMemory),
       make_entry("update-object-metadata",
                  {"<object-name>", "<key>", "<value>"}, UpdateObjectMetadata),
       make_entry("update-object-metadata", {"<object-name>"},
