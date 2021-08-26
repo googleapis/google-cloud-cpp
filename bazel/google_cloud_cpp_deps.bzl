@@ -155,9 +155,9 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_github_nlohmann_json",
             urls = [
-                "https://github.com/nlohmann/json/releases/download/v3.10.1/include.zip",
+                "https://github.com/nlohmann/json/releases/download/v3.10.2/include.zip",
             ],
-            sha256 = "144268f7f85afb0f0fbea7c796723c849724c975f9108ffdadde9ecedaa5f0b1",
+            sha256 = "61e605be15e88deeac4582aaf01c09d616f8302edde7adcaba9261ddc3b4ceca",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:nlohmann_json.BUILD",
         )
 
