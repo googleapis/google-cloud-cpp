@@ -33,13 +33,11 @@ namespace internal {
 namespace {
 
 // As learned from experiments, idle gRPC connections enter IDLE state after 4m.
-auto constexpr kDefaultMaxRefreshPeriod =
-    std::chrono::milliseconds(std::chrono::minutes(3));
+auto constexpr kDefaultMaxRefreshPeriod = std::chrono::minutes(3);
 
 // Applications with hundreds of clients seem to work better with a longer
 // delay for the initial refresh. As there is no particular rush, start with 1m.
-auto constexpr kDefaultMinRefreshPeriod =
-    std::chrono::milliseconds(std::chrono::minutes(1));
+auto constexpr kDefaultMinRefreshPeriod = std::chrono::minutes(1);
 
 static_assert(kDefaultMinRefreshPeriod <= kDefaultMaxRefreshPeriod,
               "The default period range must be valid");
@@ -111,11 +109,17 @@ Options DefaultOptions(Options opts) {
   if (!opts.has<GrpcNumChannelsOption>()) {
     opts.set<GrpcNumChannelsOption>(DefaultConnectionPoolSize());
   }
-  if (!opts.has<MinConnectionRefreshOption>()) {
-    opts.set<MinConnectionRefreshOption>(kDefaultMinRefreshPeriod);
-  }
-  if (!opts.has<MaxConnectionRefreshOption>()) {
-    opts.set<MaxConnectionRefreshOption>(kDefaultMaxRefreshPeriod);
+
+  bool has_min = opts.has<MinConnectionRefreshOption>();
+  bool has_max = opts.has<MaxConnectionRefreshOption>();
+  auto& min_val =
+      opts.lookup<MinConnectionRefreshOption>(kDefaultMinRefreshPeriod);
+  auto& max_val =
+      opts.lookup<MaxConnectionRefreshOption>(kDefaultMaxRefreshPeriod);
+  if (has_min) {
+    max_val = (std::max)(min_val, max_val);
+  } else if (has_max) {
+    min_val = (std::min)(min_val, max_val);
   }
 
   using ::google::cloud::internal::GetIntChannelArgument;

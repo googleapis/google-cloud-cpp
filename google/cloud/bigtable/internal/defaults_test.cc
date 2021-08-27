@@ -37,6 +37,11 @@ using ::google::cloud::internal::GetStringChannelArgument;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using secs = std::chrono::seconds;
+using mins = std::chrono::minutes;
+
+/// Gives us more informative errors
+int GetMs(std::chrono::milliseconds ms) { return static_cast<int>(ms.count()); }
 
 TEST(OptionsTest, Defaults) {
   auto opts = DefaultOptions();
@@ -75,8 +80,6 @@ TEST(OptionsTest, Defaults) {
 }
 
 TEST(OptionsTest, DefaultOptionsDoesNotOverride) {
-  using ms = std::chrono::milliseconds;
-  using min = std::chrono::minutes;
   auto channel_args = grpc::ChannelArguments();
   channel_args.SetString("test-key-1", "value-1");
   auto opts = DefaultOptions(
@@ -89,8 +92,6 @@ TEST(OptionsTest, DefaultOptionsDoesNotOverride) {
               TracingOptions{}.SetOptions("single_line_mode=F"))
           .set<TracingComponentsOption>({"test-component"})
           .set<GrpcNumChannelsOption>(3)
-          .set<MinConnectionRefreshOption>(ms(100))
-          .set<MaxConnectionRefreshOption>(min(4))
           .set<GrpcBackgroundThreadPoolSizeOption>(5)
           .set<GrpcChannelArgumentsNativeOption>(channel_args)
           .set<GrpcChannelArgumentsOption>({{"test-key-2", "value-2"}})
@@ -105,8 +106,6 @@ TEST(OptionsTest, DefaultOptionsDoesNotOverride) {
   EXPECT_FALSE(opts.get<GrpcTracingOptionsOption>().single_line_mode());
   EXPECT_THAT(opts.get<TracingComponentsOption>(), Contains("test-component"));
   EXPECT_EQ(3U, opts.get<GrpcNumChannelsOption>());
-  EXPECT_EQ(ms(100), opts.get<MinConnectionRefreshOption>());
-  EXPECT_EQ(min(4), opts.get<MaxConnectionRefreshOption>());
   EXPECT_EQ(5U, opts.get<GrpcBackgroundThreadPoolSizeOption>());
 
   auto args = google::cloud::internal::MakeChannelArguments(opts);
@@ -194,6 +193,49 @@ TEST(EndpointEnvTest, UserCredentialsOverrideEmulatorEnv) {
 
   EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
             typeid(opts.get<GrpcCredentialOption>()));
+}
+
+TEST(ConnectionRefreshRange, BothUnset) {
+  auto opts = DefaultOptions();
+
+  // See `kDefaultMinRefreshPeriod`
+  EXPECT_LT(GetMs(secs(15)), GetMs(opts.get<MinConnectionRefreshOption>()));
+  // See `kDefaultMaxRefreshPeriod`
+  EXPECT_GT(GetMs(mins(4)), GetMs(opts.get<MaxConnectionRefreshOption>()));
+}
+
+TEST(ConnectionRefreshRange, MinSetAboveMaxDefault) {
+  auto opts =
+      DefaultOptions(Options{}.set<MinConnectionRefreshOption>(mins(10)));
+
+  EXPECT_EQ(GetMs(mins(10)), GetMs(opts.get<MinConnectionRefreshOption>()));
+  EXPECT_EQ(GetMs(mins(10)), GetMs(opts.get<MaxConnectionRefreshOption>()));
+}
+
+TEST(ConnectionRefreshRange, MaxSetBelowMinDefault) {
+  auto opts =
+      DefaultOptions(Options{}.set<MaxConnectionRefreshOption>(secs(1)));
+
+  EXPECT_EQ(GetMs(secs(1)), GetMs(opts.get<MinConnectionRefreshOption>()));
+  EXPECT_EQ(GetMs(secs(1)), GetMs(opts.get<MaxConnectionRefreshOption>()));
+}
+
+TEST(ConnectionRefreshRange, BothSetValid) {
+  auto opts = DefaultOptions(Options{}
+                                 .set<MinConnectionRefreshOption>(secs(30))
+                                 .set<MaxConnectionRefreshOption>(mins(2)));
+
+  EXPECT_EQ(GetMs(secs(30)), GetMs(opts.get<MinConnectionRefreshOption>()));
+  EXPECT_EQ(GetMs(mins(2)), GetMs(opts.get<MaxConnectionRefreshOption>()));
+}
+
+TEST(ConnectionRefreshRange, BothSetInvalidUsesMax) {
+  auto opts = DefaultOptions(Options{}
+                                 .set<MinConnectionRefreshOption>(mins(2))
+                                 .set<MaxConnectionRefreshOption>(secs(30)));
+
+  EXPECT_EQ(GetMs(mins(2)), GetMs(opts.get<MinConnectionRefreshOption>()));
+  EXPECT_EQ(GetMs(mins(2)), GetMs(opts.get<MaxConnectionRefreshOption>()));
 }
 
 }  // namespace
