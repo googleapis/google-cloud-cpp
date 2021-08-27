@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_async_failing_rpc_factory.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 
 namespace google {
@@ -120,7 +121,11 @@ class ValidContextMdAsyncTest : public ::testing::Test {
       : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
         client_(new ::google::cloud::bigtable::testing::MockDataClient(
-            ClientOptions().DisableBackgroundThreads(cq_))) {
+            Options{}.set<GrpcBackgroundThreadsFactoryOption>([&] {
+              return absl::make_unique<
+                  google::cloud::internal::CustomerSuppliedBackgroundThreads>(
+                  cq_);
+            }))) {
     EXPECT_CALL(*client_, project_id())
         .WillRepeatedly(::testing::ReturnRef(kProjectId));
     EXPECT_CALL(*client_, instance_id())

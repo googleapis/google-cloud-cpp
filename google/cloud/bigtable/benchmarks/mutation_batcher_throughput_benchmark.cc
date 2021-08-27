@@ -145,7 +145,7 @@ int main(int argc, char* argv[]) {
   using ::google::cloud::internal::AutomaticallyCreatedBackgroundThreads;
   using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
 
-  cbt::TableAdmin admin(cbt::CreateDefaultAdminClient(options->project_id, {}),
+  cbt::TableAdmin admin(cbt::MakeAdminClient(options->project_id),
                         options->instance_id);
 
   int key_width = 0;
@@ -183,11 +183,11 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  auto opts = Options{}.set<google::cloud::GrpcBackgroundThreadPoolSizeOption>(
-      options->max_batches);
   auto table = cbt::Table(
-      cbt::CreateDefaultDataClient(options->project_id, options->instance_id,
-                                   cbt::ClientOptions(std::move(opts))),
+      cbt::MakeDataClient(
+          options->project_id, options->instance_id,
+          Options{}.set<google::cloud::GrpcBackgroundThreadPoolSizeOption>(
+              options->max_batches)),
       table_id);
 
   std::cout << "# Project ID: " << options->project_id

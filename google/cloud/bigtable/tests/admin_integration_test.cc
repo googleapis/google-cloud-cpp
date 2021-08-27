@@ -51,9 +51,8 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
     TableIntegrationTest::SetUp();
 
     std::shared_ptr<bigtable::AdminClient> admin_client =
-        bigtable::CreateDefaultAdminClient(
-            bigtable::testing::TableTestEnvironment::project_id(),
-            bigtable::ClientOptions());
+        bigtable::MakeAdminClient(
+            bigtable::testing::TableTestEnvironment::project_id());
     table_admin_ = absl::make_unique<bigtable::TableAdmin>(
         admin_client, bigtable::testing::TableTestEnvironment::instance_id());
   }
@@ -244,12 +243,10 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
   // Create a bigtable::InstanceAdmin and a bigtable::TableAdmin to create the
   // new instance and the new table.
-  auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
-      project_id, bigtable::ClientOptions());
+  auto instance_admin_client = bigtable::MakeInstanceAdminClient(project_id);
   bigtable::InstanceAdmin instance_admin(instance_admin_client);
 
-  auto admin_client =
-      bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions());
+  auto admin_client = bigtable::MakeAdminClient(project_id);
   bigtable::TableAdmin table_admin(admin_client, id);
 
   // The instance configuration is involved, it needs two clusters, which must
@@ -282,8 +279,7 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
   // We need to mutate the data in the table and then wait for those mutations
   // to propagate to both clusters. First create a `bigtable::Table` object.
-  auto data_client = bigtable::CreateDefaultDataClient(
-      project_id, id, bigtable::ClientOptions());
+  auto data_client = bigtable::MakeDataClient(project_id, id);
   bigtable::Table table(data_client, random_table_id);
 
   // Insert some cells into the table.
@@ -324,9 +320,9 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   std::string const table_id = RandomTableId();
 
   std::shared_ptr<bigtable::AdminClient> admin_client =
-      bigtable::CreateDefaultAdminClient(
+      bigtable::MakeAdminClient(
           bigtable::testing::TableTestEnvironment::project_id(),
-          bigtable::ClientOptions().enable_tracing("rpc"));
+          Options{}.set<TracingComponentsOption>({"rpc"}));
   auto table_admin = absl::make_unique<bigtable::TableAdmin>(
       admin_client, bigtable::testing::TableTestEnvironment::instance_id());
 

@@ -38,9 +38,8 @@ using ::google::cloud::bigtable::testing::TableTestEnvironment;
 using ::testing::IsEmpty;
 
 Table GetTable() {
-  return Table(CreateDefaultDataClient(TableTestEnvironment::project_id(),
-                                       TableTestEnvironment::instance_id(),
-                                       ClientOptions()),
+  return Table(MakeDataClient(TableTestEnvironment::project_id(),
+                              TableTestEnvironment::instance_id()),
                TableTestEnvironment::table_id());
 }
 
@@ -71,9 +70,9 @@ class SampleRowsIntegrationTest
     // Create kBatchSize * kBatchCount rows. Use a special client with tracing
     // disabled because it simply generates too much data.
     auto table =
-        Table(CreateDefaultDataClient(TableTestEnvironment::project_id(),
-                                      TableTestEnvironment::instance_id(),
-                                      ClientOptions().disable_tracing("rpc")),
+        Table(MakeDataClient(TableTestEnvironment::project_id(),
+                             TableTestEnvironment::instance_id(),
+                             Options{}.set<TracingComponentsOption>({"rpc"})),
               TableTestEnvironment::table_id());
 
     int constexpr kBatchCount = 10;

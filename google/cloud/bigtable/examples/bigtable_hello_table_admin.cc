@@ -46,9 +46,7 @@ void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
 
   // Connect to the Cloud Bigtable admin endpoint.
   //! [connect admin]
-  cbt::TableAdmin admin(
-      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions()),
-      instance_id);
+  cbt::TableAdmin admin(cbt::MakeAdminClient(project_id), instance_id);
   //! [connect admin]
 
   //! [create table]
@@ -134,9 +132,7 @@ void RunAll(std::vector<std::string> const& argv) {
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
                                .value();
 
-  cbt::TableAdmin admin(
-      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
-      instance_id);
+  cbt::TableAdmin admin(cbt::MakeAdminClient(project_id), instance_id);
 
   google::cloud::bigtable::testing::CleanupStaleTables(admin);
 

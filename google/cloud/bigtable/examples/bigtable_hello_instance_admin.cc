@@ -50,8 +50,7 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
 
   // Connect to the Cloud Bigtable admin endpoint.
   //! [connect instance admin]
-  cbt::InstanceAdmin instance_admin(
-      cbt::CreateDefaultInstanceAdminClient(project_id, cbt::ClientOptions()));
+  cbt::InstanceAdmin instance_admin(cbt::MakeInstanceAdminClient(project_id));
   //! [connect instance admin]
 
   //! [check instance exists]
@@ -179,8 +178,7 @@ void RunAll(std::vector<std::string> const& argv) {
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A")
           .value();
 
-  cbt::InstanceAdmin admin(
-      cbt::CreateDefaultInstanceAdminClient(project_id, cbt::ClientOptions{}));
+  cbt::InstanceAdmin admin(cbt::MakeInstanceAdminClient(project_id));
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   google::cloud::bigtable::testing::CleanupStaleInstances(admin);

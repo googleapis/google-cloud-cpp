@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/chrono_literals.h"
@@ -530,8 +531,8 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
 
   std::shared_ptr<bigtable::DataClient> data_client =
-      bigtable::CreateDefaultDataClient(project_id(), instance_id(),
-                                        ClientOptions().enable_tracing("rpc"));
+      bigtable::MakeDataClient(project_id(), instance_id(),
+                               Options{}.set<TracingComponentsOption>({"rpc"}));
 
   Table table(data_client, table_id);
 
@@ -550,11 +551,10 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
 }
 
 TEST(ConnectionRefresh, Disabled) {
-  auto client_options = bigtable::ClientOptions().set_max_conn_refresh_period(
-      std::chrono::seconds(0));
-  auto data_client = bigtable::CreateDefaultDataClient(
+  auto data_client = bigtable::MakeDataClient(
       testing::TableTestEnvironment::project_id(),
-      testing::TableTestEnvironment::instance_id(), client_options);
+      testing::TableTestEnvironment::instance_id(),
+      Options{}.set<MaxConnectionRefreshOption>(std::chrono::seconds(0)));
   // In general, it is hard to show that something has *not* happened, at best
   // we can show that its side-effects have not happened. In this case we want
   // to show that the channels have not been refreshed. A side-effect of
@@ -568,7 +568,7 @@ TEST(ConnectionRefresh, Disabled) {
   // superior way to write this test.
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-  for (std::size_t i = 0; i < client_options.connection_pool_size(); ++i) {
+  for (int i = 0; i < internal::DefaultConnectionPoolSize(); ++i) {
     auto channel = data_client->Channel();
     EXPECT_EQ(GRPC_CHANNEL_IDLE, channel->GetState(false));
   }
@@ -581,7 +581,7 @@ TEST(ConnectionRefresh, Disabled) {
   // After performing some operations, some of the channels should be in ready
   // state.
   auto check_if_some_channel_is_ready = [&] {
-    for (std::size_t i = 0; i < client_options.connection_pool_size(); ++i) {
+    for (int i = 0; i < internal::DefaultConnectionPoolSize(); ++i) {
       if (data_client->Channel()->GetState(false) == GRPC_CHANNEL_READY) {
         return true;
       }
@@ -592,11 +592,11 @@ TEST(ConnectionRefresh, Disabled) {
 }
 
 TEST(ConnectionRefresh, Frequent) {
-  auto data_client = bigtable::CreateDefaultDataClient(
-      testing::TableTestEnvironment::project_id(),
-      testing::TableTestEnvironment::instance_id(),
-      bigtable::ClientOptions().set_max_conn_refresh_period(
-          std::chrono::milliseconds(100)));
+  auto data_client =
+      bigtable::MakeDataClient(testing::TableTestEnvironment::project_id(),
+                               testing::TableTestEnvironment::instance_id(),
+                               Options{}.set<MaxConnectionRefreshOption>(
+                                   std::chrono::milliseconds(100)));
 
   for (;;) {
     if (data_client->Channel()->GetState(false) == GRPC_CHANNEL_READY) {

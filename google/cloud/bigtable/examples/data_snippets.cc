@@ -56,9 +56,8 @@ void ApplyRelaxedIdempotency(google::cloud::bigtable::Table const& table,
   namespace cbt = ::google::cloud::bigtable;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& table_id, std::string const& row_key) {
-    cbt::Table table(cbt::CreateDefaultDataClient(project_id, instance_id,
-                                                  cbt::ClientOptions()),
-                     table_id, cbt::AlwaysRetryMutationPolicy());
+    cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id,
+                     cbt::AlwaysRetryMutationPolicy());
     // Normally this is not retried on transient failures, because the operation
     // is not idempotent (each retry would set a different timestamp), in this
     // case it would, because the table is setup to always retry.
@@ -77,9 +76,8 @@ void ApplyCustomRetry(google::cloud::bigtable::Table const& table,
   namespace cbt = ::google::cloud::bigtable;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& table_id, std::string const& row_key) {
-    cbt::Table table(cbt::CreateDefaultDataClient(project_id, instance_id,
-                                                  cbt::ClientOptions()),
-                     table_id, cbt::LimitedErrorCountRetryPolicy(7));
+    cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id,
+                     cbt::LimitedErrorCountRetryPolicy(7));
     cbt::SingleRowMutation mutation(
         row_key, cbt::SetCell("fam", "some-column",
                               std::chrono::milliseconds(0), "some-value"));
@@ -342,8 +340,7 @@ void MutateDeleteColumns(std::vector<std::string> const& argv) {
   }
   //! [connect data]
   google::cloud::bigtable::Table table(
-      google::cloud::bigtable::CreateDefaultDataClient(
-          project_id, instance_id, google::cloud::bigtable::ClientOptions()),
+      google::cloud::bigtable::MakeDataClient(project_id, instance_id),
       table_id);
   //! [connect data]
 
@@ -402,8 +399,7 @@ void MutateDeleteRowsCommand(std::vector<std::string> const& argv) {
   auto const table_id = *it++;
   std::vector<std::string> rows(it, argv.cend());
   google::cloud::bigtable::Table table(
-      google::cloud::bigtable::CreateDefaultDataClient(
-          project_id, instance_id, google::cloud::bigtable::ClientOptions()),
+      google::cloud::bigtable::MakeDataClient(project_id, instance_id),
       table_id);
   MutateDeleteRows(table, std::move(rows));
 }
@@ -471,8 +467,7 @@ void MutateInsertUpdateRowsCommand(std::vector<std::string> const& argv) {
   auto const table_id = *it++;
   std::vector<std::string> rows(it, argv.cend());
   google::cloud::bigtable::Table table(
-      google::cloud::bigtable::CreateDefaultDataClient(
-          project_id, instance_id, google::cloud::bigtable::ClientOptions()),
+      google::cloud::bigtable::MakeDataClient(project_id, instance_id),
       table_id);
   MutateInsertUpdateRows(table, std::move(rows));
 }
@@ -697,14 +692,13 @@ void WriteConditionally(google::cloud::bigtable::Table table,
 void ConfigureConnectionPoolSize(std::vector<std::string> const& argv) {
   // [START bigtable_configure_connection_pool]
   namespace cbt = ::google::cloud::bigtable;
+  namespace gc = ::google::cloud;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& table_id) {
     auto constexpr kPoolSize = 10;
+    auto options = gc::Options{}.set<gc::GrpcNumChannelsOption>(kPoolSize);
     auto table = cbt::Table(
-        cbt::CreateDefaultDataClient(
-            project_id, instance_id,
-            cbt::ClientOptions().set_connection_pool_size(kPoolSize)),
-        table_id);
+        cbt::MakeDataClient(project_id, instance_id, options), table_id);
     std::cout << "Connected with channel pool size of " << kPoolSize << "\n";
   }
   // [END bigtable_configure_connection_pool]
@@ -722,9 +716,8 @@ void RunMutateExamples(google::cloud::bigtable::TableAdmin admin,
   if (!schema) throw std::runtime_error(schema.status().message());
 
   google::cloud::bigtable::Table table(
-      google::cloud::bigtable::CreateDefaultDataClient(
-          admin.project(), admin.instance_id(),
-          google::cloud::bigtable::ClientOptions()),
+      google::cloud::bigtable::MakeDataClient(admin.project(),
+                                              admin.instance_id()),
       table_id, cbt::AlwaysRetryMutationPolicy());
 
   std::cout << "Running MutateInsertUpdateRows() example [1]" << std::endl;
@@ -751,8 +744,7 @@ void RunWriteExamples(google::cloud::bigtable::TableAdmin admin,
   auto const project_id = admin.project();
   auto const instance_id = admin.instance_id();
   google::cloud::bigtable::Table table(
-      google::cloud::bigtable::CreateDefaultDataClient(
-          project_id, instance_id, google::cloud::bigtable::ClientOptions()),
+      google::cloud::bigtable::MakeDataClient(project_id, instance_id),
       table_id, cbt::AlwaysRetryMutationPolicy());
 
   std::cout << "Running WriteSimple() example" << std::endl;
@@ -779,9 +771,8 @@ void RunDataExamples(google::cloud::bigtable::TableAdmin admin,
   if (!schema) throw std::runtime_error(schema.status().message());
 
   google::cloud::bigtable::Table table(
-      google::cloud::bigtable::CreateDefaultDataClient(
-          admin.project(), admin.instance_id(),
-          google::cloud::bigtable::ClientOptions()),
+      google::cloud::bigtable::MakeDataClient(admin.project(),
+                                              admin.instance_id()),
       table_id, cbt::AlwaysRetryMutationPolicy());
 
   std::cout << "\nRunning ConfigureConnectionPoolSize()" << std::endl;
@@ -881,9 +872,7 @@ void RunAll(std::vector<std::string> const& argv) {
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
                                .value();
 
-  cbt::TableAdmin admin(
-      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
-      instance_id);
+  cbt::TableAdmin admin(cbt::MakeAdminClient(project_id), instance_id);
 
   // If a previous run of these samples crashes before cleaning up there may be
   // old tables left over. As there are quotas on the total number of tables we

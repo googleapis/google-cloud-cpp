@@ -59,8 +59,8 @@ void TableTestEnvironment::SetUp() {
 
   generator_ = google::cloud::internal::MakeDefaultPRNG();
 
-  auto admin_client = bigtable::CreateDefaultAdminClient(
-      TableTestEnvironment::project_id(), ClientOptions());
+  auto admin_client =
+      bigtable::MakeAdminClient(TableTestEnvironment::project_id());
   auto table_admin =
       bigtable::TableAdmin(admin_client, TableTestEnvironment::instance_id());
 
@@ -84,8 +84,8 @@ void TableTestEnvironment::SetUp() {
 }
 
 void TableTestEnvironment::TearDown() {
-  auto admin_client = bigtable::CreateDefaultAdminClient(
-      TableTestEnvironment::project_id(), ClientOptions());
+  auto admin_client =
+      bigtable::MakeAdminClient(TableTestEnvironment::project_id());
   auto table_admin =
       bigtable::TableAdmin(admin_client, TableTestEnvironment::instance_id());
 
@@ -105,13 +105,11 @@ std::string TableTestEnvironment::RandomInstanceId() {
 }
 
 void TableIntegrationTest::SetUp() {
-  admin_client_ = bigtable::CreateDefaultAdminClient(
-      TableTestEnvironment::project_id(), ClientOptions());
+  admin_client_ = bigtable::MakeAdminClient(TableTestEnvironment::project_id());
   table_admin_ = absl::make_unique<bigtable::TableAdmin>(
       admin_client_, TableTestEnvironment::instance_id());
-  data_client_ = bigtable::CreateDefaultDataClient(
-      TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
-      ClientOptions());
+  data_client_ = bigtable::MakeDataClient(TableTestEnvironment::project_id(),
+                                          TableTestEnvironment::instance_id());
 
   // In production, we cannot use `DropAllRows()` to cleanup the table because
   // the integration tests sometimes consume all the 'DropRowRangeGroup' quota.
