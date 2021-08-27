@@ -592,11 +592,12 @@ TEST(ConnectionRefresh, Disabled) {
 }
 
 TEST(ConnectionRefresh, Frequent) {
-  auto data_client =
-      bigtable::MakeDataClient(testing::TableTestEnvironment::project_id(),
-                               testing::TableTestEnvironment::instance_id(),
-                               Options{}.set<MaxConnectionRefreshOption>(
-                                   std::chrono::milliseconds(100)));
+  auto data_client = bigtable::MakeDataClient(
+      testing::TableTestEnvironment::project_id(),
+      testing::TableTestEnvironment::instance_id(),
+      Options{}
+          .set<MaxConnectionRefreshOption>(std::chrono::milliseconds(100))
+          .set<MinConnectionRefreshOption>(std::chrono::milliseconds(100)));
 
   for (;;) {
     if (data_client->Channel()->GetState(false) == GRPC_CHANNEL_READY) {
