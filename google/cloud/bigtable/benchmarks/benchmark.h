@@ -119,8 +119,7 @@ class Benchmark {
   int read_rows_count() const;
   //@}
 
-  /// Return a mutable reference to client options.
-  ClientOptions& ClientOptionsRef() { return client_options_; }
+  void DisableBackgroundThreads(CompletionQueue& cq);
 
  private:
   /// Populate the table rows in the range [@p begin, @p end)
@@ -135,7 +134,7 @@ class Benchmark {
 
   BenchmarkOptions options_;
   int key_width_;
-  bigtable::ClientOptions client_options_;
+  Options opts_;
   std::unique_ptr<EmbeddedServer> server_;
   std::thread server_thread_;
 };

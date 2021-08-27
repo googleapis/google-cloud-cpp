@@ -147,7 +147,7 @@ int main(int argc, char* argv[]) {
 
   Benchmark benchmark(*options);
   google::cloud::CompletionQueue cq;
-  benchmark.ClientOptionsRef().DisableBackgroundThreads(cq);
+  benchmark.DisableBackgroundThreads(cq);
 
   // Create and populate the table for the benchmark.
   benchmark.CreateTable();

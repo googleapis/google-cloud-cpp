@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/benchmarks/benchmark.h"
 #include "google/cloud/bigtable/benchmarks/random_mutation.h"
 #include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/getenv.h"
 #include <future>
 #include <iomanip>
@@ -68,7 +69,7 @@ google::cloud::StatusOr<BenchmarkOptions> ParseArgs(
 
 Benchmark::Benchmark(BenchmarkOptions options)
     : options_(std::move(options)), key_width_(KeyWidth()) {
-  auto opts = Options{}.set<GrpcNumChannelsOption>(options_.thread_count);
+  opts_.set<GrpcNumChannelsOption>(options_.thread_count);
   if (options_.use_embedded_server) {
     server_ = CreateEmbeddedServer();
     std::string address = server_->address();
@@ -76,12 +77,11 @@ Benchmark::Benchmark(BenchmarkOptions options)
               << "\n";
     server_thread_ = std::thread([this]() { server_->Wait(); });
 
-    opts.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+    opts_.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
         .set<DataEndpointOption>(address)
         .set<AdminEndpointOption>(address)
         .set<InstanceAdminEndpointOption>(address);
   }
-  client_options_ = ClientOptions(std::move(opts));
 }
 
 Benchmark::~Benchmark() {
@@ -98,7 +98,7 @@ Benchmark::~Benchmark() {
 std::string Benchmark::CreateTable() {
   // Create the table, with an initial split.
   bigtable::TableAdmin admin(
-      bigtable::CreateDefaultAdminClient(options_.project_id, client_options_),
+      bigtable::MakeAdminClient(options_.project_id, opts_),
       options_.instance_id);
 
   std::vector<std::string> splits{"user0", "user1", "user2", "user3", "user4",
@@ -112,7 +112,7 @@ std::string Benchmark::CreateTable() {
 
 void Benchmark::DeleteTable() {
   bigtable::TableAdmin admin(
-      bigtable::CreateDefaultAdminClient(options_.project_id, client_options_),
+      bigtable::MakeAdminClient(options_.project_id, opts_),
       options_.instance_id);
   auto status = admin.DeleteTable(options_.table_id);
   if (!status.ok()) {
@@ -122,8 +122,8 @@ void Benchmark::DeleteTable() {
 }
 
 std::shared_ptr<bigtable::DataClient> Benchmark::MakeDataClient() {
-  return bigtable::CreateDefaultDataClient(
-      options_.project_id, options_.instance_id, client_options_);
+  return bigtable::MakeDataClient(options_.project_id, options_.instance_id,
+                                  opts_);
 }
 
 google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTable() {
@@ -287,6 +287,13 @@ int Benchmark::read_rows_count() const {
     return 0;
   }
   return server_->read_rows_count();
+}
+
+void Benchmark::DisableBackgroundThreads(CompletionQueue& cq) {
+  opts_.set<GrpcBackgroundThreadsFactoryOption>([&cq] {
+    return absl::make_unique<
+        google::cloud::internal::CustomerSuppliedBackgroundThreads>(cq);
+  });
 }
 
 google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTableShard(
