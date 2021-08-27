@@ -15,12 +15,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_COMMON_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_COMMON_CLIENT_H
 
-#include "google/cloud/bigtable/client_options.h"
+#include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/connection_options.h"
 #include "google/cloud/internal/absl_flat_hash_map_quiet.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include <grpcpp/grpcpp.h>
 #include <chrono>
@@ -121,16 +123,16 @@ class CommonClient {
   using ChannelPtr = std::shared_ptr<grpc::Channel>;
   //@}
 
-  explicit CommonClient(bigtable::ClientOptions options)
-      : options_(std::move(options)),
+  explicit CommonClient(Options opts)
+      : opts_(std::move(opts)),
         current_index_(0),
         background_threads_(
             google::cloud::internal::DefaultBackgroundThreads(1)),
         refresh_cq_(
             std::make_shared<CompletionQueue>(background_threads_->cq())),
         refresh_state_(std::make_shared<ConnectionRefreshState>(
-            refresh_cq_, options_.min_conn_refresh_period(),
-            options_.max_conn_refresh_period())) {}
+            refresh_cq_, opts_.get<MinConnectionRefreshOption>(),
+            opts_.get<MaxConnectionRefreshOption>())) {}
 
   ~CommonClient() {
     // This will stop the refresh of the channels.
@@ -167,7 +169,9 @@ class CommonClient {
     return channel;
   }
 
-  ClientOptions& Options() { return options_; }
+  google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() {
+    return google::cloud::internal::MakeBackgroundThreadsFactory(opts_);
+  }
 
  private:
   /// Make sure the connections exit, and create them if needed.
@@ -208,16 +212,12 @@ class CommonClient {
     }
   }
 
-  ChannelPtr CreateChannel(std::size_t idx) {
-    auto args = options_.channel_arguments();
-    if (!options_.connection_pool_name().empty()) {
-      args.SetString("cbt-c++/connection-pool-name",
-                     options_.connection_pool_name());
-    }
-    args.SetInt("cbt-c++/connection-pool-id", static_cast<int>(idx));
-    auto res = grpc::CreateCustomChannel(Traits::Endpoint(options_),
-                                         options_.credentials(), args);
-    if (options_.max_conn_refresh_period().count() == 0) {
+  ChannelPtr CreateChannel(int idx) {
+    auto args = google::cloud::internal::MakeChannelArguments(opts_);
+    args.SetInt(GRPC_ARG_CHANNEL_ID, idx);
+    auto res = grpc::CreateCustomChannel(
+        Traits::Endpoint(opts_), opts_.get<GrpcCredentialOption>(), args);
+    if (opts_.get<MaxConnectionRefreshOption>().count() == 0) {
       return res;
     }
     ScheduleChannelRefresh(refresh_cq_, refresh_state_, res);
@@ -226,7 +226,7 @@ class CommonClient {
 
   std::vector<std::shared_ptr<grpc::Channel>> CreateChannelPool() {
     std::vector<std::shared_ptr<grpc::Channel>> result;
-    for (std::size_t i = 0; i != options_.connection_pool_size(); ++i) {
+    for (int i = 0; i != opts_.get<GrpcNumChannelsOption>(); ++i) {
       result.emplace_back(CreateChannel(i));
     }
     return result;
@@ -244,7 +244,7 @@ class CommonClient {
 
   std::mutex mu_;
   std::size_t num_pending_refreshes_{};
-  ClientOptions options_;
+  google::cloud::Options opts_;
   std::vector<ChannelPtr> channels_;
   std::vector<StubPtr> stubs_;
   std::size_t current_index_;

@@ -36,8 +36,10 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+class ClientOptions;
 namespace internal {
 struct InstanceAdminTraits;
+Options&& MakeOptions(ClientOptions&& o);
 }  // namespace internal
 
 /**
@@ -465,6 +467,7 @@ class ClientOptions {
  private:
   friend struct internal::InstanceAdminTraits;
   friend struct ClientOptionsTestTraits;
+  friend Options&& internal::MakeOptions(ClientOptions&&);
 
   /// Return the current endpoint for instance admin RPCs.
   std::string const& instance_admin_endpoint() const {

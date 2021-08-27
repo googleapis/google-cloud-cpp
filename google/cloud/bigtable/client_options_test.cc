@@ -14,13 +14,13 @@
 
 #include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/types/optional.h"
-#include "options.h"
 #include <gmock/gmock.h>
 #include <thread>
 
@@ -34,13 +34,11 @@ struct ClientOptionsTestTraits {
     return options.instance_admin_endpoint();
   }
 };
-
 namespace {
 using ::google::cloud::internal::GetIntChannelArgument;
 using ::google::cloud::internal::GetStringChannelArgument;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::HasSubstr;
-}  // namespace
 
 TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
   ClientOptions client_options;
@@ -161,6 +159,13 @@ TEST_F(ClientOptionsDefaultEndpointTest, Default) {
   EXPECT_EQ("testendpoint.googleapis.com", client_options.admin_endpoint());
   EXPECT_EQ("testendpoint.googleapis.com",
             GetInstanceAdminEndpoint(client_options));
+
+  // Just check `MakeOptions()` for endpoints here.
+  auto opts = internal::MakeOptions(std::move(client_options));
+  EXPECT_EQ("testendpoint.googleapis.com", opts.get<DataEndpointOption>());
+  EXPECT_EQ("testendpoint.googleapis.com", opts.get<AdminEndpointOption>());
+  EXPECT_EQ("testendpoint.googleapis.com",
+            opts.get<InstanceAdminEndpointOption>());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, WithCredentials) {
@@ -252,6 +257,10 @@ TEST(ClientOptionsTest, EditCredentials) {
       ClientOptions{}.SetCredentials(grpc::InsecureChannelCredentials());
   EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
             typeid(client_options.credentials()));
+
+  auto opts = internal::MakeOptions(std::move(client_options));
+  EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
+            typeid(opts.get<GrpcCredentialOption>()));
 }
 
 TEST(ClientOptionsTest, EditConnectionPoolName) {
@@ -259,6 +268,12 @@ TEST(ClientOptionsTest, EditConnectionPoolName) {
   auto& returned = client_options.set_connection_pool_name("foo");
   EXPECT_EQ(&returned, &client_options);
   EXPECT_EQ("foo", returned.connection_pool_name());
+
+  auto opts = internal::MakeOptions(std::move(client_options));
+  auto args = google::cloud::internal::MakeChannelArguments(opts);
+  auto name = GetStringChannelArgument(args, "cbt-c++/connection-pool-name");
+  ASSERT_TRUE(name.has_value());
+  EXPECT_EQ("foo", name);
 }
 
 TEST(ClientOptionsTest, EditConnectionPoolSize) {
@@ -266,6 +281,9 @@ TEST(ClientOptionsTest, EditConnectionPoolSize) {
   auto& returned = client_options.set_connection_pool_size(42);
   EXPECT_EQ(&returned, &client_options);
   EXPECT_EQ(42UL, returned.connection_pool_size());
+
+  auto opts = internal::MakeOptions(std::move(client_options));
+  EXPECT_EQ(42, opts.get<GrpcNumChannelsOption>());
 }
 
 TEST(ClientOptionsTest, ResetToDefaultConnectionPoolSize) {
@@ -293,8 +311,16 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutMS) {
   ClientOptions client_options;
   ASSERT_STATUS_OK(
       client_options.SetGrpclbFallbackTimeout(std::chrono::milliseconds(5)));
-  auto const actual = GetIntChannelArgument(
-      client_options.channel_arguments(), GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS);
+
+  auto args = client_options.channel_arguments();
+  auto actual =
+      GetIntChannelArgument(args, GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS);
+  ASSERT_TRUE(actual.has_value());
+  EXPECT_EQ(*actual, 5);
+
+  auto opts = internal::MakeOptions(std::move(client_options));
+  args = google::cloud::internal::MakeChannelArguments(opts);
+  actual = GetIntChannelArgument(args, GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, 5);
 }
@@ -304,8 +330,16 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutSec) {
   ClientOptions client_options;
   ASSERT_STATUS_OK(
       client_options.SetGrpclbFallbackTimeout(std::chrono::seconds(5)));
-  auto const actual = GetIntChannelArgument(
-      client_options.channel_arguments(), GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS);
+
+  auto args = client_options.channel_arguments();
+  auto actual =
+      GetIntChannelArgument(args, GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS);
+  ASSERT_TRUE(actual.has_value());
+  EXPECT_EQ(*actual, 5000);
+
+  auto opts = internal::MakeOptions(std::move(client_options));
+  args = google::cloud::internal::MakeChannelArguments(opts);
+  actual = GetIntChannelArgument(args, GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, 5000);
 }
@@ -322,9 +356,17 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutException) {
 TEST(ClientOptionsTest, SetCompressionAlgorithm) {
   ClientOptions client_options;
   client_options.SetCompressionAlgorithm(GRPC_COMPRESS_NONE);
-  auto const actual =
-      GetIntChannelArgument(client_options.channel_arguments(),
-                            GRPC_COMPRESSION_CHANNEL_DEFAULT_ALGORITHM);
+
+  auto args = client_options.channel_arguments();
+  auto actual =
+      GetIntChannelArgument(args, GRPC_COMPRESSION_CHANNEL_DEFAULT_ALGORITHM);
+  ASSERT_TRUE(actual.has_value());
+  EXPECT_EQ(*actual, GRPC_COMPRESS_NONE);
+
+  auto opts = internal::MakeOptions(std::move(client_options));
+  args = google::cloud::internal::MakeChannelArguments(opts);
+  actual =
+      GetIntChannelArgument(args, GRPC_COMPRESSION_CHANNEL_DEFAULT_ALGORITHM);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, GRPC_COMPRESS_NONE);
 }
@@ -332,8 +374,15 @@ TEST(ClientOptionsTest, SetCompressionAlgorithm) {
 TEST(ClientOptionsTest, SetLoadBalancingPolicyName) {
   ClientOptions client_options;
   client_options.SetLoadBalancingPolicyName("test-policy-name");
-  auto const actual = GetStringChannelArgument(
-      client_options.channel_arguments(), GRPC_ARG_LB_POLICY_NAME);
+
+  auto args = client_options.channel_arguments();
+  auto actual = GetStringChannelArgument(args, GRPC_ARG_LB_POLICY_NAME);
+  ASSERT_TRUE(actual.has_value());
+  EXPECT_EQ(*actual, "test-policy-name");
+
+  auto opts = internal::MakeOptions(std::move(client_options));
+  args = google::cloud::internal::MakeChannelArguments(opts);
+  actual = GetStringChannelArgument(args, GRPC_ARG_LB_POLICY_NAME);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, "test-policy-name");
 }
@@ -341,8 +390,15 @@ TEST(ClientOptionsTest, SetLoadBalancingPolicyName) {
 TEST(ClientOptionsTest, SetServiceConfigJSON) {
   ClientOptions client_options;
   client_options.SetServiceConfigJSON("test-config");
-  auto const actual = GetStringChannelArgument(
-      client_options.channel_arguments(), GRPC_ARG_SERVICE_CONFIG);
+
+  auto args = client_options.channel_arguments();
+  auto actual = GetStringChannelArgument(args, GRPC_ARG_SERVICE_CONFIG);
+  ASSERT_TRUE(actual.has_value());
+  EXPECT_EQ(*actual, "test-config");
+
+  auto opts = internal::MakeOptions(std::move(client_options));
+  args = google::cloud::internal::MakeChannelArguments(opts);
+  actual = GetStringChannelArgument(args, GRPC_ARG_SERVICE_CONFIG);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, "test-config");
 }
@@ -350,8 +406,16 @@ TEST(ClientOptionsTest, SetServiceConfigJSON) {
 TEST(ClientOptionsTest, SetUserAgentPrefix) {
   ClientOptions client_options;
   client_options.SetUserAgentPrefix("test_prefix");
-  auto const actual = GetStringChannelArgument(
-      client_options.channel_arguments(), GRPC_ARG_PRIMARY_USER_AGENT_STRING);
+
+  auto args = client_options.channel_arguments();
+  auto actual =
+      GetStringChannelArgument(args, GRPC_ARG_PRIMARY_USER_AGENT_STRING);
+  ASSERT_TRUE(actual.has_value());
+  EXPECT_THAT(*actual, HasSubstr("test_prefix"));
+
+  auto opts = internal::MakeOptions(std::move(client_options));
+  args = google::cloud::internal::MakeChannelArguments(opts);
+  actual = GetStringChannelArgument(args, GRPC_ARG_PRIMARY_USER_AGENT_STRING);
   ASSERT_TRUE(actual.has_value());
   EXPECT_THAT(*actual, HasSubstr("test_prefix"));
 }
@@ -359,8 +423,16 @@ TEST(ClientOptionsTest, SetUserAgentPrefix) {
 TEST(ClientOptionsTest, SetSslTargetNameOverride) {
   ClientOptions client_options;
   client_options.SetSslTargetNameOverride("test-name");
-  auto const actual = GetStringChannelArgument(
-      client_options.channel_arguments(), GRPC_SSL_TARGET_NAME_OVERRIDE_ARG);
+
+  auto args = client_options.channel_arguments();
+  auto actual =
+      GetStringChannelArgument(args, GRPC_SSL_TARGET_NAME_OVERRIDE_ARG);
+  ASSERT_TRUE(actual.has_value());
+  EXPECT_EQ(*actual, "test-name");
+
+  auto opts = internal::MakeOptions(std::move(client_options));
+  args = google::cloud::internal::MakeChannelArguments(opts);
+  actual = GetStringChannelArgument(args, GRPC_SSL_TARGET_NAME_OVERRIDE_ARG);
   ASSERT_TRUE(actual.has_value());
   EXPECT_EQ(*actual, "test-name");
 }
@@ -397,6 +469,10 @@ TEST(ClientOptionsTest, RefreshPeriod) {
   options.set_min_conn_refresh_period(ms(1000));
   EXPECT_EQ(1000, options.min_conn_refresh_period().count());
   EXPECT_EQ(5000, options.max_conn_refresh_period().count());
+
+  auto opts = internal::MakeOptions(std::move(options));
+  EXPECT_EQ(1000, opts.get<MinConnectionRefreshOption>().count());
+  EXPECT_EQ(5000, opts.get<MaxConnectionRefreshOption>().count());
 }
 
 TEST(ClientOptionsTest, TracingComponents) {
@@ -413,19 +489,36 @@ TEST(ClientOptionsTest, TracingComponents) {
   EXPECT_TRUE(options.tracing_enabled("baz"));
   options.disable_tracing("foo");
   EXPECT_FALSE(options.tracing_enabled("foo"));
+
+  // Check `MakeOptions()`
+  auto opts = internal::MakeOptions(std::move(options));
+  EXPECT_THAT(opts.get<TracingComponentsOption>(),
+              testing::UnorderedElementsAre("bar", "baz"));
 }
 
 TEST(ClientOptionsTest, DefaultTracingOptionsNoEnv) {
   ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_TRACING_OPTIONS", absl::nullopt);
-  auto options = ClientOptions().tracing_options();
-  EXPECT_EQ(TracingOptions(), options);
+
+  ClientOptions client_options;
+  auto tracing_options = client_options.tracing_options();
+  EXPECT_EQ(TracingOptions(), tracing_options);
+
+  auto opts = internal::MakeOptions(std::move(client_options));
+  tracing_options = opts.get<GrpcTracingOptionsOption>();
+  EXPECT_EQ(TracingOptions(), tracing_options);
 }
 
 TEST(ClientOptionsTest, DefaultTracingOptionsEnv) {
   ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_TRACING_OPTIONS",
                             "single_line_mode=F");
-  auto options = ClientOptions().tracing_options();
-  EXPECT_FALSE(options.single_line_mode());
+
+  ClientOptions client_options;
+  auto tracing_options = client_options.tracing_options();
+  EXPECT_FALSE(tracing_options.single_line_mode());
+
+  auto opts = internal::MakeOptions(std::move(client_options));
+  tracing_options = opts.get<GrpcTracingOptionsOption>();
+  EXPECT_FALSE(tracing_options.single_line_mode());
 }
 
 TEST(ClientOptionsTest, BackgroundThreadPoolSize) {
@@ -449,31 +542,48 @@ TEST(ClientOptionsTest, BackgroundThreadPoolSize) {
   tp = dynamic_cast<ThreadPool*>(background.get());
   ASSERT_NE(nullptr, tp);
   EXPECT_EQ(5U, tp->pool_size());
+
+  auto opts = internal::MakeOptions(std::move(options));
+  EXPECT_EQ(5U, opts.get<GrpcBackgroundThreadPoolSizeOption>());
+  EXPECT_FALSE(opts.has<GrpcBackgroundThreadsFactoryOption>());
 }
 
 TEST(ClientOptionsTest, CustomBackgroundThreads) {
+  auto check = [](CompletionQueue& cq,
+                  std::unique_ptr<BackgroundThreads> background) {
+    using ms = std::chrono::milliseconds;
+
+    // Schedule some work that cannot execute because there is no thread
+    // draining the completion queue.
+    promise<std::thread::id> p;
+    auto background_thread_id = p.get_future();
+    background->cq().RunAsync(
+        [&p](CompletionQueue&) { p.set_value(std::this_thread::get_id()); });
+    EXPECT_NE(std::future_status::ready, background_thread_id.wait_for(ms(10)));
+
+    // Verify we can create our own threads to drain the completion queue.
+    std::thread t([&cq] { cq.Run(); });
+    EXPECT_EQ(t.get_id(), background_thread_id.get());
+
+    cq.Shutdown();
+    t.join();
+  };
+
   CompletionQueue cq;
-  auto options = ClientOptions().DisableBackgroundThreads(cq);
-  auto background = options.background_threads_factory()();
+  auto client_options = ClientOptions().DisableBackgroundThreads(cq);
+  auto background = client_options.background_threads_factory()();
 
-  using ms = std::chrono::milliseconds;
+  check(cq, std::move(background));
 
-  // Schedule some work that cannot execute because there is no thread draining
-  // the completion queue.
-  promise<std::thread::id> p;
-  auto background_thread_id = p.get_future();
-  background->cq().RunAsync(
-      [&p](CompletionQueue&) { p.set_value(std::this_thread::get_id()); });
-  EXPECT_NE(std::future_status::ready, background_thread_id.wait_for(ms(10)));
+  cq = CompletionQueue();
+  client_options = ClientOptions().DisableBackgroundThreads(cq);
+  auto opts = internal::MakeOptions(std::move(client_options));
+  background = opts.get<GrpcBackgroundThreadsFactoryOption>()();
 
-  // Verify we can create our own threads to drain the completion queue.
-  std::thread t([&cq] { cq.Run(); });
-  EXPECT_EQ(t.get_id(), background_thread_id.get());
-
-  cq.Shutdown();
-  t.join();
+  check(cq, std::move(background));
 }
 
+}  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud

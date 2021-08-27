@@ -293,7 +293,16 @@ class AdminClient {
   //@}
 };
 
-/// Create a new admin client configured via @p options.
+/// Create a new table admin client configured via @p options.
+std::shared_ptr<AdminClient> MakeAdminClient(std::string project,
+                                             Options options = {});
+
+/**
+ * Create a new table admin client configured via @p options.
+ *
+ * @deprecated use the `MakeAdminClient` method which accepts
+ * `google::cloud::Options` instead.
+ */
 std::shared_ptr<AdminClient> CreateDefaultAdminClient(std::string project,
                                                       ClientOptions options);
 

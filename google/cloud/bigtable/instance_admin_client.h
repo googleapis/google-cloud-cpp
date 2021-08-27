@@ -327,7 +327,16 @@ class InstanceAdminClient {
   //@}
 };
 
-/// Create a new admin client configured via @p options.
+/// Create a new instance admin client configured via @p options.
+std::shared_ptr<InstanceAdminClient> MakeInstanceAdminClient(
+    std::string project, Options options = {});
+
+/**
+ * Create a new instance admin client configured via @p options.
+ *
+ * @deprecated use the `MakeInstanceAdminClient` method which accepts
+ * `google::cloud::Options` instead.
+ */
 std::shared_ptr<InstanceAdminClient> CreateDefaultInstanceAdminClient(
     std::string project, ClientOptions options);
 
