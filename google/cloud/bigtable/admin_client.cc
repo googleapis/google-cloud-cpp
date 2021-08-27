@@ -462,7 +462,8 @@ std::shared_ptr<AdminClient> MakeAdminClient(std::string project,
 
 std::shared_ptr<AdminClient> CreateDefaultAdminClient(std::string project,
                                                       ClientOptions options) {
-  return MakeAdminClient(std::move(project), std::move(options).ToOptions());
+  return MakeAdminClient(std::move(project),
+                         internal::MakeOptions(std::move(options)));
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

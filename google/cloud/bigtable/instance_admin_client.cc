@@ -399,7 +399,7 @@ std::shared_ptr<InstanceAdminClient> MakeInstanceAdminClient(
 std::shared_ptr<InstanceAdminClient> CreateDefaultInstanceAdminClient(
     std::string project, ClientOptions options) {
   return MakeInstanceAdminClient(std::move(project),
-                                 std::move(options).ToOptions());
+                                 internal::MakeOptions(std::move(options)));
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

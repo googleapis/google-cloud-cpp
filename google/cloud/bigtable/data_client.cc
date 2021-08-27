@@ -216,7 +216,7 @@ std::shared_ptr<DataClient> CreateDefaultDataClient(std::string project_id,
                                                     std::string instance_id,
                                                     ClientOptions options) {
   return MakeDataClient(std::move(project_id), std::move(instance_id),
-                        std::move(options).ToOptions());
+                        internal::MakeOptions(std::move(options)));
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

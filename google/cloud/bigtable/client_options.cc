@@ -25,6 +25,16 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+namespace internal {
+Options&& MakeOptions(ClientOptions&& o) {
+  if (!o.connection_pool_name_.empty()) {
+    o.opts_
+        .lookup<GrpcChannelArgumentsOption>()["cbt-c++/connection-pool-name"] =
+        std::move(o.connection_pool_name_);
+  }
+  return std::move(o.opts_);
+}
+}  // namespace internal
 
 ClientOptions::ClientOptions() : ClientOptions(Options{}) {}
 

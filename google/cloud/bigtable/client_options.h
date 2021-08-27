@@ -36,8 +36,11 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+class ClientOptions;
 namespace internal {
 struct InstanceAdminTraits;
+/// Consume this object and convert it to `Options`.
+Options&& MakeOptions(ClientOptions&& o);
 }  // namespace internal
 
 /**
@@ -462,19 +465,10 @@ class ClientOptions {
   using BackgroundThreadsFactory = ::google::cloud::BackgroundThreadsFactory;
   BackgroundThreadsFactory background_threads_factory() const;
 
-  /// Consume this object and convert it to `Options`.
-  Options&& ToOptions() && {
-    if (!connection_pool_name_.empty()) {
-      opts_.lookup<
-          GrpcChannelArgumentsOption>()["cbt-c++/connection-pool-name"] =
-          std::move(connection_pool_name_);
-    }
-    return std::move(opts_);
-  };
-
  private:
   friend struct internal::InstanceAdminTraits;
   friend struct ClientOptionsTestTraits;
+  friend Options&& internal::MakeOptions(ClientOptions&&);
 
   /// Return the current endpoint for instance admin RPCs.
   std::string const& instance_admin_endpoint() const {
