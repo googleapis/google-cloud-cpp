@@ -39,7 +39,6 @@ inline namespace BIGTABLE_CLIENT_NS {
 class ClientOptions;
 namespace internal {
 struct InstanceAdminTraits;
-/// Consume this object and convert it to `Options`.
 Options&& MakeOptions(ClientOptions&& o);
 }  // namespace internal
 
