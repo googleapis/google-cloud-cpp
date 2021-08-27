@@ -54,9 +54,7 @@ google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
       throw Usage{std::move(os).str()};
     }
     google::cloud::bigtable::Table table(
-        google::cloud::bigtable::CreateDefaultDataClient(
-            argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
-        argv[2]);
+        google::cloud::bigtable::MakeDataClient(argv[0], argv[1]), argv[2]);
     argv.erase(argv.begin(), argv.begin() + 3);
     function(table, argv);
   };
@@ -76,9 +74,7 @@ Commands::value_type MakeCommandEntry(std::string const& name,
       throw Usage{std::move(os).str()};
     }
     google::cloud::bigtable::TableAdmin table(
-        google::cloud::bigtable::CreateDefaultAdminClient(
-            argv[0], google::cloud::bigtable::ClientOptions()),
-        argv[1]);
+        google::cloud::bigtable::MakeAdminClient(argv[0]), argv[1]);
     argv.erase(argv.begin(), argv.begin() + kFixedArguments);
     function(table, argv);
   };
@@ -98,8 +94,7 @@ Commands::value_type MakeCommandEntry(
       throw Usage{std::move(os).str()};
     }
     google::cloud::bigtable::InstanceAdmin instance(
-        google::cloud::bigtable::CreateDefaultInstanceAdminClient(
-            argv[0], google::cloud::bigtable::ClientOptions()));
+        google::cloud::bigtable::MakeInstanceAdminClient(argv[0]));
     argv.erase(argv.begin(), argv.begin() + kFixedArguments);
     function(instance, argv);
   };
@@ -125,9 +120,7 @@ Commands::value_type MakeCommandEntry(std::string const& name,
       throw Usage{std::move(os).str()};
     }
     google::cloud::bigtable::Table table(
-        google::cloud::bigtable::CreateDefaultDataClient(
-            argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
-        argv[2]);
+        google::cloud::bigtable::MakeDataClient(argv[0], argv[1]), argv[2]);
     google::cloud::CompletionQueue cq;
     std::thread t([&cq] { cq.Run(); });
     AutoShutdownCQ shutdown(cq, std::move(t));

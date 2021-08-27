@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/status_or.h"
@@ -65,8 +66,7 @@ class InstanceAdminIntegrationTest
                            .value_or("");
     ASSERT_FALSE(service_account_.empty());
 
-    auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
-        project_id_, bigtable::ClientOptions());
+    auto instance_admin_client = bigtable::MakeInstanceAdminClient(project_id_);
     instance_admin_ =
         absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
   }
@@ -437,8 +437,8 @@ TEST_F(InstanceAdminIntegrationTest,
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
-  auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
-      project_id_, bigtable::ClientOptions().enable_tracing("rpc"));
+  auto instance_admin_client = bigtable::MakeInstanceAdminClient(
+      project_id_, Options{}.set<TracingComponentsOption>({"rpc"}));
   auto instance_admin =
       absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
 
@@ -501,8 +501,11 @@ TEST_F(InstanceAdminIntegrationTest,
 
 TEST_F(InstanceAdminIntegrationTest, CustomWorkers) {
   CompletionQueue cq;
-  auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
-      project_id_, bigtable::ClientOptions().DisableBackgroundThreads(cq));
+  auto instance_admin_client = bigtable::MakeInstanceAdminClient(
+      project_id_, Options{}.set<GrpcBackgroundThreadsFactoryOption>([&cq] {
+        return absl::make_unique<
+            google::cloud::internal::CustomerSuppliedBackgroundThreads>(cq);
+      }));
   instance_admin_ = absl::make_unique<bigtable::InstanceAdmin>(
       instance_admin_client,
       *DefaultRPCRetryPolicy({std::chrono::seconds(1), std::chrono::seconds(1),

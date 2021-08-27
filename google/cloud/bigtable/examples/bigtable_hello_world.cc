@@ -45,9 +45,7 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
 
   // Connect to the Cloud Bigtable Admin API.
   //! [connect admin] [START bigtable_hw_connect]
-  cbt::TableAdmin table_admin(
-      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions()),
-      instance_id);
+  cbt::TableAdmin table_admin(cbt::MakeAdminClient(project_id), instance_id);
   //! [connect admin] [END bigtable_hw_connect]
 
   //! [create table] [START bigtable_hw_create_table]
@@ -62,9 +60,7 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
 
   // Create an object to access the Cloud Bigtable Data API.
   //! [connect data]
-  cbt::Table table(cbt::CreateDefaultDataClient(project_id, instance_id,
-                                                cbt::ClientOptions()),
-                   table_id);
+  cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id);
   //! [connect data] [END bigtable_hw_create_table]
 
   // Modify (and create if necessary) a row.
@@ -149,9 +145,7 @@ void RunAll(std::vector<std::string> const& argv) {
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
                                .value();
 
-  cbt::TableAdmin admin(
-      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
-      instance_id);
+  cbt::TableAdmin admin(cbt::MakeAdminClient(project_id), instance_id);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);

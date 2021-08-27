@@ -44,9 +44,8 @@ void AccessToken(std::vector<std::string> const& argv) {
                                                          call_credentials);
     auto options = Options{}.set<GrpcCredentialOption>(credentials);
 
-    cbt::TableAdmin admin(
-        cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions(options)),
-        instance_id);
+    cbt::TableAdmin admin(cbt::MakeAdminClient(project_id, options),
+                          instance_id);
 
     auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
     if (!tables) throw std::runtime_error(tables.status().message());
@@ -87,9 +86,8 @@ void JWTAccessToken(std::vector<std::string> const& argv) {
                                                          call_credentials);
     auto options = Options{}.set<GrpcCredentialOption>(credentials);
 
-    cbt::TableAdmin admin(
-        cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions(options)),
-        instance_id);
+    cbt::TableAdmin admin(cbt::MakeAdminClient(project_id, options),
+                          instance_id);
 
     auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
     if (!tables) throw std::runtime_error(tables.status().message());
@@ -117,9 +115,8 @@ void GCECredentials(std::vector<std::string> const& argv) {
                                                          call_credentials);
     auto options = Options{}.set<GrpcCredentialOption>(credentials);
 
-    cbt::TableAdmin admin(
-        cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions(options)),
-        instance_id);
+    cbt::TableAdmin admin(cbt::MakeAdminClient(project_id, options),
+                          instance_id);
 
     auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
     if (!tables) throw std::runtime_error(tables.status().message());

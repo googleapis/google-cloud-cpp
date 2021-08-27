@@ -233,7 +233,7 @@ class Table {
    * @par Example
    * @code
    * using namespace std::chrono_literals; // assuming C++14.
-   * auto client = bigtable::CreateDefaultClient(...); // details omitted
+   * auto client = bigtable::MakeClient(...); // details omitted
    * bigtable::Table table(client, "my-table",
    *                       // Allow up to 20 minutes to retry operations
    *                       bigtable::LimitedTimeRetryPolicy(20min),
@@ -295,7 +295,7 @@ class Table {
    * @par Example
    * @code
    * using namespace std::chrono_literals; // assuming C++14.
-   * auto client = bigtable::CreateDefaultClient(...); // details omitted
+   * auto client = bigtable::MakeClient(...); // details omitted
    * bigtable::Table table(client, "app_id", "my-table",
    *                       // Allow up to 20 minutes to retry operations
    *                       bigtable::LimitedTimeRetryPolicy(20min),

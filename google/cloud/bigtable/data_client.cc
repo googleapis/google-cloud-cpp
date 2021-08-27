@@ -180,7 +180,6 @@ class DefaultDataClient : public DataClient {
   }
 
  private:
-  /// The thread factory from `ClientOptions` this client was created with.
   google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
     return impl_.BackgroundThreadsFactory();
   }

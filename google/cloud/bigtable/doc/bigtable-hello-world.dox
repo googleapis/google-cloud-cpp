@@ -34,7 +34,7 @@ The example uses the following headers:
 ## Connecting to Cloud Bigtable to manage tables
 
 To manage tables, connect to Cloud Bigtable using
-`bigtable::CreateDefaultAdminClient()`:
+`bigtable::MakeAdminClient()`:
 
 @snippet bigtable_hello_world.cc connect admin
 
@@ -59,7 +59,7 @@ Create a table with [TableAdmin::CreateTable()][TableAdmin-CreateTable]:
 ## Connecting to Cloud Bigtable to read and write data
 
 To read and write data, connect to Cloud Bigtable using
-`bigtable::CreateDefaultDataClient()`:
+`bigtable::MakeDataClient()`:
 
 @snippet bigtable_hello_world.cc connect data
 

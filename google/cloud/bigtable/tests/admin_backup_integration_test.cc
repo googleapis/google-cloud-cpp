@@ -54,14 +54,12 @@ class AdminBackupIntegrationTest
     TableIntegrationTest::SetUp();
 
     std::shared_ptr<bigtable::AdminClient> admin_client =
-        bigtable::CreateDefaultAdminClient(
-            bigtable::testing::TableTestEnvironment::project_id(),
-            bigtable::ClientOptions());
+        bigtable::MakeAdminClient(
+            bigtable::testing::TableTestEnvironment::project_id());
     table_admin_ = absl::make_unique<bigtable::TableAdmin>(
         admin_client, bigtable::testing::TableTestEnvironment::instance_id());
-    auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
-        bigtable::testing::TableTestEnvironment::project_id(),
-        bigtable::ClientOptions());
+    auto instance_admin_client = bigtable::MakeInstanceAdminClient(
+        bigtable::testing::TableTestEnvironment::project_id());
     instance_admin_ =
         absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
   }

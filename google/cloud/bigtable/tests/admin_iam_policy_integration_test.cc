@@ -44,8 +44,8 @@ class AdminIAMPolicyIntegrationTest
     ASSERT_FALSE(service_account_.empty());
 
     TableIntegrationTest::SetUp();
-    admin_client_ = CreateDefaultAdminClient(
-        testing::TableTestEnvironment::project_id(), ClientOptions());
+    admin_client_ =
+        MakeAdminClient(testing::TableTestEnvironment::project_id());
     table_admin_ = absl::make_unique<TableAdmin>(
         admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
   }

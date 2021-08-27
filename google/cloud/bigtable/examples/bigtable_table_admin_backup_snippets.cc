@@ -241,9 +241,7 @@ void RunAll(std::vector<std::string> const& argv) {
                               "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_CLUSTER_ID")
                               .value();
 
-  cbt::TableAdmin admin(
-      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
-      instance_id);
+  cbt::TableAdmin admin(cbt::MakeAdminClient(project_id), instance_id);
 
   // If a previous run of these samples crashes before cleaning up there may be
   // old tables left over. As there are quotas on the total number of tables we

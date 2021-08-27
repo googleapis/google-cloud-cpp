@@ -86,9 +86,7 @@ void TestIamPermissions(std::vector<std::string> const& argv) {
   std::vector<std::string> const permissions(it, argv.cend());
 
   google::cloud::bigtable::TableAdmin admin(
-      google::cloud::bigtable::CreateDefaultAdminClient(
-          project_id, google::cloud::bigtable::ClientOptions{}),
-      instance_id);
+      google::cloud::bigtable::MakeAdminClient(project_id), instance_id);
 
   //! [test iam permissions]
 
@@ -128,9 +126,7 @@ void RunAll(std::vector<std::string> const& argv) {
           "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT")
           .value();
 
-  cbt::TableAdmin admin(
-      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
-      instance_id);
+  cbt::TableAdmin admin(cbt::MakeAdminClient(project_id), instance_id);
 
   google::cloud::CompletionQueue cq;
   std::thread th([&cq] { cq.Run(); });

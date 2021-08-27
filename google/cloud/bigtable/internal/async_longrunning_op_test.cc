@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_async_response_reader.h"
@@ -63,7 +64,10 @@ class AsyncLongrunningOpFutureTest : public bigtable::testing::TableTestFixture,
 TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
   auto const success = GetParam();
   auto client = std::make_shared<testing::MockAdminClient>(
-      ClientOptions().DisableBackgroundThreads(cq_));
+      Options{}.set<GrpcBackgroundThreadsFactoryOption>([&] {
+        return absl::make_unique<
+            google::cloud::internal::CustomerSuppliedBackgroundThreads>(cq_);
+      }));
 
   auto longrunning_reader = absl::make_unique<MockAsyncLongrunningOpReader>();
   EXPECT_CALL(*longrunning_reader, Finish)

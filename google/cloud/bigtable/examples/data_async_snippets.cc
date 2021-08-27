@@ -326,9 +326,7 @@ void RunAll(std::vector<std::string> const& argv) {
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
                                .value();
 
-  cbt::TableAdmin admin(
-      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
-      instance_id);
+  cbt::TableAdmin admin(cbt::MakeAdminClient(project_id), instance_id);
 
   // If a previous run of these samples crashes before cleaning up there may be
   // old tables left over. As there are quotas on the total number of tables we
@@ -348,9 +346,8 @@ void RunAll(std::vector<std::string> const& argv) {
   if (!schema) throw std::runtime_error(schema.status().message());
 
   google::cloud::bigtable::Table table(
-      google::cloud::bigtable::CreateDefaultDataClient(
-          admin.project(), admin.instance_id(),
-          google::cloud::bigtable::ClientOptions()),
+      google::cloud::bigtable::MakeDataClient(admin.project(),
+                                              admin.instance_id()),
       table_id, cbt::AlwaysRetryMutationPolicy());
 
   std::cout << "\nRunning the AsyncApply() example" << std::endl;

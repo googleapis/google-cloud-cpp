@@ -513,8 +513,7 @@ void DeleteAppProfile(std::vector<std::string> const& argv) {
     }
   }
   google::cloud::bigtable::InstanceAdmin instance(
-      google::cloud::bigtable::CreateDefaultInstanceAdminClient(
-          argv[0], google::cloud::bigtable::ClientOptions()));
+      google::cloud::bigtable::MakeInstanceAdminClient(argv[0]));
 
   //! [delete app profile] [START bigtable_delete_app_profile]
   namespace cbt = ::google::cloud::bigtable;
@@ -590,8 +589,7 @@ void TestIamPermissions(std::vector<std::string> const& argv) {
   std::vector<std::string> const permissions(it, argv.cend());
 
   google::cloud::bigtable::InstanceAdmin instance(
-      google::cloud::bigtable::CreateDefaultInstanceAdminClient(
-          project_id, google::cloud::bigtable::ClientOptions()));
+      google::cloud::bigtable::MakeInstanceAdminClient(project_id));
 
   //! [test iam permissions]
   namespace cbt = ::google::cloud::bigtable;
@@ -634,8 +632,7 @@ void RunAll(std::vector<std::string> const& argv) {
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B")
           .value();
 
-  cbt::InstanceAdmin admin(
-      cbt::CreateDefaultInstanceAdminClient(project_id, cbt::ClientOptions{}));
+  cbt::InstanceAdmin admin(cbt::MakeInstanceAdminClient(project_id));
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   google::cloud::bigtable::testing::CleanupStaleInstances(admin);
