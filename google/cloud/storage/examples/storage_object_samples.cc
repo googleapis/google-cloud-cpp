@@ -267,8 +267,8 @@ void GetObjectMetadata(google::cloud::storage::Client client,
 
 void ReadObject(google::cloud::storage::Client client,
                 std::vector<std::string> const& argv) {
-  //! [read object] [storage_stream_file_download]
-  // [START storage_download_file]
+  //! [read object] [START storage_download_file]
+  // [START storage_stream_file_download]
   namespace gcs = ::google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
@@ -282,8 +282,8 @@ void ReadObject(google::cloud::storage::Client client,
 
     std::cout << "The object has " << count << " lines\n";
   }
-  // [END storage_download_file]
-  //! [read object] [storage_stream_file_download]
+  // [END storage_stream_file_download]
+  //! [read object] [END storage_download_file]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
