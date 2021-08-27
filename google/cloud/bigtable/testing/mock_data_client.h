@@ -26,8 +26,13 @@ namespace testing {
 
 class MockDataClient : public bigtable::DataClient {
  public:
-  explicit MockDataClient(ClientOptions options = {})
-      : options_(std::move(options)) {}
+  MockDataClient() = default;
+
+  explicit MockDataClient(Options options) : options_(std::move(options)) {}
+
+  /// @deprecated use constructor that takes `google::cloud::Options`
+  explicit MockDataClient(ClientOptions options)
+      : options_(internal::MakeOptions(std::move(options))) {}
 
   MOCK_METHOD(std::string const&, project_id, (), (const, override));
   MOCK_METHOD(std::string const&, instance_id, (), (const, override));
@@ -132,12 +137,11 @@ class MockDataClient : public bigtable::DataClient {
               (override));
 
  private:
-  /// The thread factory from `ClientOptions` this client was created with.
   google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
-    return options_.background_threads_factory();
+    return google::cloud::internal::MakeBackgroundThreadsFactory(options_);
   }
 
-  ClientOptions options_;
+  Options options_;
 };
 
 }  // namespace testing

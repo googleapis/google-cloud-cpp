@@ -26,8 +26,14 @@ namespace testing {
 
 class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
  public:
-  explicit MockInstanceAdminClient(ClientOptions options = {})
+  MockInstanceAdminClient() = default;
+
+  explicit MockInstanceAdminClient(Options options)
       : options_(std::move(options)) {}
+
+  /// @deprecated use constructor that takes `google::cloud::Options`
+  explicit MockInstanceAdminClient(ClientOptions options)
+      : options_(internal::MakeOptions(std::move(options))) {}
 
   MOCK_METHOD(std::string const&, project, (), (const, override));
   MOCK_METHOD(std::shared_ptr<grpc::Channel>, Channel, (), (override));
@@ -301,10 +307,10 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
 
  private:
   google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
-    return options_.background_threads_factory();
+    return google::cloud::internal::MakeBackgroundThreadsFactory(options_);
   }
 
-  ClientOptions options_;
+  Options options_;
 };
 
 }  // namespace testing
