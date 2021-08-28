@@ -111,11 +111,24 @@ Options DefaultOptions(Options opts) {
   if (!opts.has<GrpcNumChannelsOption>()) {
     opts.set<GrpcNumChannelsOption>(DefaultConnectionPoolSize());
   }
-  if (!opts.has<MinConnectionRefreshOption>()) {
+
+  auto const has_min = opts.has<MinConnectionRefreshOption>();
+  auto const has_max = opts.has<MaxConnectionRefreshOption>();
+  if (!has_min && !has_max) {
     opts.set<MinConnectionRefreshOption>(kDefaultMinRefreshPeriod);
-  }
-  if (!opts.has<MaxConnectionRefreshOption>()) {
     opts.set<MaxConnectionRefreshOption>(kDefaultMaxRefreshPeriod);
+  } else if (has_min && !has_max) {
+    opts.set<MaxConnectionRefreshOption>((std::max)(
+        opts.get<MinConnectionRefreshOption>(), kDefaultMaxRefreshPeriod));
+  } else if (!has_min && has_max) {
+    opts.set<MinConnectionRefreshOption>((std::min)(
+        opts.get<MaxConnectionRefreshOption>(), kDefaultMinRefreshPeriod));
+  } else {
+    // If the range is invalid, use the greater value as both the min and max
+    auto const p = opts.get<MinConnectionRefreshOption>();
+    if (p > opts.get<MaxConnectionRefreshOption>()) {
+      opts.set<MaxConnectionRefreshOption>(std::move(p));
+    }
   }
 
   using ::google::cloud::internal::GetIntChannelArgument;

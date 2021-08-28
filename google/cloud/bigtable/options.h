@@ -82,6 +82,9 @@ struct MinConnectionRefreshOption {
  * Maximum time in ms to refresh connections.
  *
  * The server will disconnect idle connections before this time.
+ *
+ * @note If this value is less than the value of `MinConnectionRefreshOption`,
+ * it will be set to the value of `MinConnectionRefreshOption`.
  */
 struct MaxConnectionRefreshOption {
   using Type = std::chrono::milliseconds;
