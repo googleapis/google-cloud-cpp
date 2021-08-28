@@ -33,11 +33,13 @@ namespace internal {
 namespace {
 
 // As learned from experiments, idle gRPC connections enter IDLE state after 4m.
-auto constexpr kDefaultMaxRefreshPeriod = std::chrono::minutes(3);
+auto constexpr kDefaultMaxRefreshPeriod =
+    std::chrono::milliseconds(std::chrono::minutes(3));
 
 // Applications with hundreds of clients seem to work better with a longer
 // delay for the initial refresh. As there is no particular rush, start with 1m.
-auto constexpr kDefaultMinRefreshPeriod = std::chrono::minutes(1);
+auto constexpr kDefaultMinRefreshPeriod =
+    std::chrono::milliseconds(std::chrono::minutes(1));
 
 static_assert(kDefaultMinRefreshPeriod <= kDefaultMaxRefreshPeriod,
               "The default period range must be valid");
@@ -110,16 +112,23 @@ Options DefaultOptions(Options opts) {
     opts.set<GrpcNumChannelsOption>(DefaultConnectionPoolSize());
   }
 
-  bool has_min = opts.has<MinConnectionRefreshOption>();
-  bool has_max = opts.has<MaxConnectionRefreshOption>();
-  auto& min_val =
-      opts.lookup<MinConnectionRefreshOption>(kDefaultMinRefreshPeriod);
-  auto& max_val =
-      opts.lookup<MaxConnectionRefreshOption>(kDefaultMaxRefreshPeriod);
-  if (has_min) {
-    max_val = (std::max)(min_val, max_val);
-  } else if (has_max) {
-    min_val = (std::min)(min_val, max_val);
+  auto const has_min = opts.has<MinConnectionRefreshOption>();
+  auto const has_max = opts.has<MaxConnectionRefreshOption>();
+  if (!has_min && !has_max) {
+    opts.set<MinConnectionRefreshOption>(kDefaultMinRefreshPeriod);
+    opts.set<MaxConnectionRefreshOption>(kDefaultMaxRefreshPeriod);
+  } else if (has_min && !has_max) {
+    opts.set<MaxConnectionRefreshOption>((std::max)(
+        opts.get<MinConnectionRefreshOption>(), kDefaultMaxRefreshPeriod));
+  } else if (!has_min && has_max) {
+    opts.set<MinConnectionRefreshOption>((std::min)(
+        opts.get<MaxConnectionRefreshOption>(), kDefaultMinRefreshPeriod));
+  } else {
+    // If the range is invalid, use the greater value as both the min and max
+    auto const p = opts.get<MinConnectionRefreshOption>();
+    if (p > opts.get<MaxConnectionRefreshOption>()) {
+      opts.set<MaxConnectionRefreshOption>(std::move(p));
+    }
   }
 
   using ::google::cloud::internal::GetIntChannelArgument;
