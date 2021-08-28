@@ -40,9 +40,6 @@ using ::testing::HasSubstr;
 using secs = std::chrono::seconds;
 using mins = std::chrono::minutes;
 
-/// Gives us more informative errors
-int GetMs(std::chrono::milliseconds ms) { return static_cast<int>(ms.count()); }
-
 TEST(OptionsTest, Defaults) {
   auto opts = DefaultOptions();
   EXPECT_EQ("bigtable.googleapis.com", opts.get<DataEndpointOption>());
@@ -199,25 +196,31 @@ TEST(ConnectionRefreshRange, BothUnset) {
   auto opts = DefaultOptions();
 
   // See `kDefaultMinRefreshPeriod`
-  EXPECT_LT(GetMs(secs(15)), GetMs(opts.get<MinConnectionRefreshOption>()));
+  EXPECT_LT(absl::FromChrono(secs(15)),
+            absl::FromChrono(opts.get<MinConnectionRefreshOption>()));
   // See `kDefaultMaxRefreshPeriod`
-  EXPECT_GT(GetMs(mins(4)), GetMs(opts.get<MaxConnectionRefreshOption>()));
+  EXPECT_GT(absl::FromChrono(mins(4)),
+            absl::FromChrono(opts.get<MaxConnectionRefreshOption>()));
 }
 
 TEST(ConnectionRefreshRange, MinSetAboveMaxDefault) {
   auto opts =
       DefaultOptions(Options{}.set<MinConnectionRefreshOption>(mins(10)));
 
-  EXPECT_EQ(GetMs(mins(10)), GetMs(opts.get<MinConnectionRefreshOption>()));
-  EXPECT_EQ(GetMs(mins(10)), GetMs(opts.get<MaxConnectionRefreshOption>()));
+  EXPECT_EQ(absl::FromChrono(mins(10)),
+            absl::FromChrono(opts.get<MinConnectionRefreshOption>()));
+  EXPECT_EQ(absl::FromChrono(mins(10)),
+            absl::FromChrono(opts.get<MaxConnectionRefreshOption>()));
 }
 
 TEST(ConnectionRefreshRange, MaxSetBelowMinDefault) {
   auto opts =
       DefaultOptions(Options{}.set<MaxConnectionRefreshOption>(secs(1)));
 
-  EXPECT_EQ(GetMs(secs(1)), GetMs(opts.get<MinConnectionRefreshOption>()));
-  EXPECT_EQ(GetMs(secs(1)), GetMs(opts.get<MaxConnectionRefreshOption>()));
+  EXPECT_EQ(absl::FromChrono(secs(1)),
+            absl::FromChrono(opts.get<MinConnectionRefreshOption>()));
+  EXPECT_EQ(absl::FromChrono(secs(1)),
+            absl::FromChrono(opts.get<MaxConnectionRefreshOption>()));
 }
 
 TEST(ConnectionRefreshRange, BothSetValid) {
@@ -225,8 +228,10 @@ TEST(ConnectionRefreshRange, BothSetValid) {
                                  .set<MinConnectionRefreshOption>(secs(30))
                                  .set<MaxConnectionRefreshOption>(mins(2)));
 
-  EXPECT_EQ(GetMs(secs(30)), GetMs(opts.get<MinConnectionRefreshOption>()));
-  EXPECT_EQ(GetMs(mins(2)), GetMs(opts.get<MaxConnectionRefreshOption>()));
+  EXPECT_EQ(absl::FromChrono(secs(30)),
+            absl::FromChrono(opts.get<MinConnectionRefreshOption>()));
+  EXPECT_EQ(absl::FromChrono(mins(2)),
+            absl::FromChrono(opts.get<MaxConnectionRefreshOption>()));
 }
 
 TEST(ConnectionRefreshRange, BothSetInvalidUsesMax) {
@@ -234,8 +239,10 @@ TEST(ConnectionRefreshRange, BothSetInvalidUsesMax) {
                                  .set<MinConnectionRefreshOption>(mins(2))
                                  .set<MaxConnectionRefreshOption>(secs(30)));
 
-  EXPECT_EQ(GetMs(mins(2)), GetMs(opts.get<MinConnectionRefreshOption>()));
-  EXPECT_EQ(GetMs(mins(2)), GetMs(opts.get<MaxConnectionRefreshOption>()));
+  EXPECT_EQ(absl::FromChrono(mins(2)),
+            absl::FromChrono(opts.get<MinConnectionRefreshOption>()));
+  EXPECT_EQ(absl::FromChrono(mins(2)),
+            absl::FromChrono(opts.get<MaxConnectionRefreshOption>()));
 }
 
 }  // namespace
