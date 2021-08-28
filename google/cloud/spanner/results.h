@@ -59,14 +59,14 @@ using ExecutionPlan = ::google::spanner::v1::QueryPlan;
  * Represents the stream of `Rows` returned from `spanner::Client::Read()` or
  * `spanner::Client::ExecuteQuery()`.
  *
- * A `RowStream` object is a range defined by the [Input
- * Iterators][input-iterator] returned from its `begin()` and `end()` members.
- * Callers may directly iterate a `RowStream` instance, which will return a
- * sequence of `StatusOr<Row>` objects.
+ * This is a range defined by the [Input Iterators][input-iterator] returned
+ * from its `begin()` and `end()` members. Callers may directly iterate the
+ * `RowStream` instance, which will return a sequence of `StatusOr<Row>`
+ * objects.
  *
- * For convenience, callers may wrap a `RowStream` instance in a
- * `StreamOf<std::tuple<...>>` object, which will automatically parse each
- * `Row` into a `std::tuple` with the specified types.
+ * For convenience, callers may wrap instances in a `StreamOf<std::tuple<...>>`
+ * object, which will automatically parse each `Row` into a `std::tuple` with
+ * the specified types.
  *
  * [input-iterator]: https://en.cppreference.com/w/cpp/named_req/InputIterator
  */
@@ -140,14 +140,14 @@ class DmlResult {
  * Represents the stream of `Rows` and profile stats returned from
  * `spanner::Client::ProfileQuery()`.
  *
- * A `RowStream` object is a range defined by the [Input
- * Iterators][input-iterator] returned from its `begin()` and `end()` members.
- * Callers may directly iterate a `RowStream` instance, which will return a
- * sequence of `StatusOr<Row>` objects.
+ * This is a range defined by the [Input Iterators][input-iterator] returned
+ * from its `begin()` and `end()` members. Callers may directly iterate the
+ * `ProfileQueryResult` instance, which will return a sequence of
+ * `StatusOr<Row>` objects.
  *
- * For convenience, callers may wrap a `RowStream` instance in a
- * `StreamOf<std::tuple<...>>` object, which will automatically parse each
- * `Row` into a `std::tuple` with the specified types.
+ * For convenience, callers may wrap instances in a `StreamOf<std::tuple<...>>`
+ * object, which will automatically parse each `Row` into a `std::tuple` with
+ * the specified types.
  *
  * [input-iterator]: https://en.cppreference.com/w/cpp/named_req/InputIterator
  *

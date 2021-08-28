@@ -61,7 +61,8 @@ StreamRange<T> MakeStreamRange(StreamReader<T>);
 }  // namespace internal
 
 /**
- * A `StreamRange<T>` puts a range-like interface on a stream of `T` objects.
+ * A `StreamRange<T>` is a range of `StatusOr<T>` where the end-of-stream is
+ * indicated by a non-OK `Status`.
  *
  * Callers can iterate the range using its `begin()` and `end()` members to
  * access iterators that will work with any normal C++ constructs and
@@ -77,8 +78,8 @@ StreamRange<T> MakeStreamRange(StreamReader<T>);
  * StreamRange<int> MakeRangeFromOneTo(int n);
  *
  * StreamRange<int> sr = MakeRangeFromOneTo(10);
- * for (int x : sr) {
- *   std::cout << x << "\n";
+ * for (StatusOr<int> const& x : sr) {
+ *   std::cout << *x << "\n";
  * }
  * @endcode
  *
@@ -209,8 +210,8 @@ class StreamRange {
    *   return Status{};
    * };
    * StreamRange<int> sr(std::move(reader));
-   * for (int x : sr) {
-   *   std::cout << x << "\n";
+   * for (StatusOr<int> const& x : sr) {
+   *   std::cout << *x << "\n";
    * }
    * @endcode
    *
