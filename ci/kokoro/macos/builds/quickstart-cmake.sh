@@ -20,6 +20,7 @@ source "$(dirname "$0")/../../../lib/init.sh"
 source module ci/lib/io.sh
 source module ci/etc/integration-tests-config.sh
 source module ci/etc/quickstart-config.sh
+source module ci/etc/vcpkg-config.sh
 
 io::log_h2 "Using CMake version"
 cmake --version
@@ -32,7 +33,7 @@ brew list --versions pkg-config || brew install pkg-config
 vcpkg_dir="${HOME}/vcpkg-quickstart"
 mkdir -p "${vcpkg_dir}"
 io::log "Downloading vcpkg into ${vcpkg_dir}..."
-curl -sSL "https://github.com/microsoft/vcpkg/archive/7e396645d919f463ef6f0f2ad6a8c5272c1f9b27.tar.gz" |
+curl -sSL "https://github.com/microsoft/vcpkg/archive/${VCPKG_RELEASE_VERSION}.tar.gz" |
   tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
 (
   cd "${vcpkg_dir}"
