@@ -38,7 +38,7 @@ $IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
 $HasBuildCache = (Test-Path env:BUILD_CACHE)
 
 $project_root = (Get-Item -Path ".\" -Verbose).FullName
-$vcpkg_config="${project_root}\ci\etc\vcpkg_config.ps1"
+$vcpkg_config="${project_root}\ci\etc\vcpkg-config.ps1"
 . "$vcpkg_config"
 $vcpkg_base = "vcpkg"
 $packages = @("zlib", "openssl",
