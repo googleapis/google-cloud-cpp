@@ -34,45 +34,6 @@ include(GoogleCloudCppCommon)
 
 add_library(
     google_cloud_cpp_spanner # cmake-format: sort
-    admin/database_admin_client.cc
-    admin/database_admin_client.h
-    admin/database_admin_connection.cc
-    admin/database_admin_connection.h
-    admin/database_admin_connection_idempotency_policy.cc
-    admin/database_admin_connection_idempotency_policy.h
-    admin/database_admin_options.h
-    admin/instance_admin_client.cc
-    admin/instance_admin_client.h
-    admin/instance_admin_connection.cc
-    admin/instance_admin_connection.h
-    admin/instance_admin_connection_idempotency_policy.cc
-    admin/instance_admin_connection_idempotency_policy.h
-    admin/instance_admin_options.h
-    admin/internal/database_admin_auth_decorator.cc
-    admin/internal/database_admin_auth_decorator.h
-    admin/internal/database_admin_logging_decorator.cc
-    admin/internal/database_admin_logging_decorator.h
-    admin/internal/database_admin_metadata_decorator.cc
-    admin/internal/database_admin_metadata_decorator.h
-    admin/internal/database_admin_option_defaults.cc
-    admin/internal/database_admin_option_defaults.h
-    admin/internal/database_admin_stub.cc
-    admin/internal/database_admin_stub.h
-    admin/internal/database_admin_stub_factory.cc
-    admin/internal/database_admin_stub_factory.h
-    admin/internal/instance_admin_auth_decorator.cc
-    admin/internal/instance_admin_auth_decorator.h
-    admin/internal/instance_admin_logging_decorator.cc
-    admin/internal/instance_admin_logging_decorator.h
-    admin/internal/instance_admin_metadata_decorator.cc
-    admin/internal/instance_admin_metadata_decorator.h
-    admin/internal/instance_admin_option_defaults.cc
-    admin/internal/instance_admin_option_defaults.h
-    admin/internal/instance_admin_stub.cc
-    admin/internal/instance_admin_stub.h
-    admin/internal/instance_admin_stub_factory.cc
-    admin/internal/instance_admin_stub_factory.h
-    admin/retry_traits.h
     backoff_policy.h
     backup.cc
     backup.h
@@ -222,12 +183,9 @@ create_bazel_config(google_cloud_cpp_spanner YEAR "2019")
 add_library(google_cloud_cpp_spanner_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_spanner_mocks
-    INTERFACE
-        ${CMAKE_CURRENT_SOURCE_DIR}/admin/mocks/mock_database_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/admin/mocks/mock_instance_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_database_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_instance_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_spanner_connection.h)
+    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_database_admin_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_instance_admin_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_spanner_connection.h)
 target_link_libraries(
     google_cloud_cpp_spanner_mocks
     INTERFACE google-cloud-cpp::spanner GTest::gmock_main GTest::gmock

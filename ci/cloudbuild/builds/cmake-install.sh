@@ -64,8 +64,6 @@ expected_dirs=(
   ./include/google/cloud/logging/mocks
   ./include/google/cloud/pubsub/internal
   ./include/google/cloud/pubsub/mocks
-  ./include/google/cloud/spanner/admin/internal
-  ./include/google/cloud/spanner/admin/mocks
   ./include/google/cloud/spanner/internal
   ./include/google/cloud/spanner/mocks
   ./include/google/cloud/speech/v1
