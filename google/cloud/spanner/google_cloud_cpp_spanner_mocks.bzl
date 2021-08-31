@@ -17,8 +17,6 @@
 """Automatically generated source lists for google_cloud_cpp_spanner_mocks - DO NOT EDIT."""
 
 google_cloud_cpp_spanner_mocks_hdrs = [
-    "admin/mocks/mock_database_admin_connection.h",
-    "admin/mocks/mock_instance_admin_connection.h",
     "mocks/mock_database_admin_connection.h",
     "mocks/mock_instance_admin_connection.h",
     "mocks/mock_spanner_connection.h",

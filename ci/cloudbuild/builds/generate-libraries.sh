@@ -43,6 +43,7 @@ find google/cloud -path google/cloud/bigtable -prune -o \
   -path google/cloud/grpc_utils -prune -o \
   -path google/cloud/internal -prune -o \
   -path google/cloud/pubsub -prune -o \
+  -path google/cloud/spanner -prune -o \
   -path google/cloud/storage -prune -o \
   -path google/cloud/testing_util -prune -o \
   \( -name '*.cc' -o -name '*.h' \) -exec clang-format -i {} \;
