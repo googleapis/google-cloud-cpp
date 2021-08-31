@@ -93,7 +93,7 @@ https://cloud.google.com/docs/authentication/production
 
    ```bash
    cd $HOME/vcpkg
-   ./vcpkg install google-cloud-cpp
+   ./vcpkg install google-cloud-cpp[core,spanner]
    ```
 
    Note that, as it is often the case with C++ libraries, compiling these
