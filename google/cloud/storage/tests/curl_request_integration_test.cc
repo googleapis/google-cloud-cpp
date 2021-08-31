@@ -565,6 +565,34 @@ TEST(CurlRequestTest, Logging) {
   EXPECT_THAT(log_messages, HasSubstr("curl(Recv Data)"));
 }
 
+TEST(CurlRequestTest, HandlesReleasedOnError) {
+  auto constexpr kTestPoolSize = 8;
+  auto factory =
+      std::make_shared<PooledCurlHandleFactory>(kTestPoolSize, Options{});
+  ASSERT_EQ(0, factory->CurrentHandleCount());
+  ASSERT_EQ(0, factory->CurrentMultiHandleCount());
+
+  CurlRequestBuilder builder("https://localhost:1/get", factory);
+  auto response = std::move(builder).BuildRequest().MakeRequest(std::string{});
+  ASSERT_THAT(response, Not(IsOk()));
+  // Assuming there was an error the CURL* handle should not be returned to the
+  // pool.
+  EXPECT_EQ(0, factory->CurrentHandleCount());
+}
+
+TEST(CurlRequestTest, HandlesReusedOnSuccess) {
+  auto constexpr kTestPoolSize = 8;
+  auto factory =
+      std::make_shared<PooledCurlHandleFactory>(kTestPoolSize, Options{});
+  ASSERT_EQ(0, factory->CurrentHandleCount());
+  ASSERT_EQ(0, factory->CurrentMultiHandleCount());
+
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/get", factory);
+  auto response = std::move(builder).BuildRequest().MakeRequest(std::string{});
+  ASSERT_THAT(response, IsOk());
+  EXPECT_EQ(1, factory->CurrentHandleCount());
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

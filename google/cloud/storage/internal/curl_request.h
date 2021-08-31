@@ -35,9 +35,7 @@ extern "C" size_t CurlRequestOnHeaderData(char* contents, size_t size,
 class CurlRequest {
  public:
   CurlRequest() = default;
-  ~CurlRequest() {
-    if (factory_) factory_->CleanupHandle(std::move(handle_));
-  }
+  ~CurlRequest();
 
   CurlRequest(CurlRequest&&) = default;
   CurlRequest& operator=(CurlRequest&&) = default;
@@ -55,6 +53,9 @@ class CurlRequest {
   StatusOr<HttpResponse> MakeUploadRequest(ConstBufferSequence payload);
 
  private:
+  /// Handle a libcurl error during the request.
+  Status OnError(Status status);
+
   StatusOr<HttpResponse> MakeRequestImpl();
 
   friend class CurlRequestBuilder;

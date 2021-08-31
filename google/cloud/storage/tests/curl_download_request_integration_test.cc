@@ -226,7 +226,7 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnError) {
 
   CurlRequestBuilder request("https://localhost:1/get", factory);
   auto download = std::move(request).BuildDownloadRequest();
-  // Perform a series of very small `.Read()` calls. This will force the
+  // This `.Read()` call fails as the endpoint is invalid.
   char buffer[4096];
   auto read = download->Read(buffer, sizeof(buffer));
   ASSERT_THAT(read, Not(IsOk()));
