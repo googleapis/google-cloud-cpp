@@ -78,7 +78,6 @@
 * feat(storage): add additional examples ([#7224](https://github.com/googleapis/google-cloud-cpp/pull/7224))
 * feat(storage): aggregate upload benchmark ([#7190](https://github.com/googleapis/google-cloud-cpp/pull/7190))
 * fix(GCS+gRPC): quickstart build with Bazel+Windows ([#7147](https://github.com/googleapis/google-cloud-cpp/pull/7147))
-* refactor(storage): isolate header parsing to REST ([#7137](https://github.com/googleapis/google-cloud-cpp/pull/7137))
 * fix(storage): release handles for oauth2 refresh ([#7136](https://github.com/googleapis/google-cloud-cpp/pull/7136))
 * fix(GCS+gRPC): return status on stream closure ([#7128](https://github.com/googleapis/google-cloud-cpp/pull/7128))
 * feat(storage): make benchmark more robust on stalls ([#7113](https://github.com/googleapis/google-cloud-cpp/pull/7113))
@@ -106,7 +105,6 @@
 
 * feat(common): add GrpcChannelArgumentsNativeOption ([#7194](https://github.com/googleapis/google-cloud-cpp/pull/7194))
 * feat(common): capture thread that creates log record ([#7119](https://github.com/googleapis/google-cloud-cpp/pull/7119))
-
 
 ## v1.30.1 - 2021-08
 
