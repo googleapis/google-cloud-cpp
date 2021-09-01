@@ -119,7 +119,10 @@ void DeleteResumableUpload(google::cloud::storage::Client client,
               << "\n";
 
     auto status = client.DeleteResumableUpload(stream.resumable_session_id());
-    if (!status.ok()) throw std::runtime_error(status.message());
+    if (!status.ok() && status.code() != google::cloud::StatusCode::kNotFound) {
+      throw std::runtime_error(status.message());
+    }
+    // kNotFound implies it was already deleted, maybe as a result of a retry.
     std::cout << "Deleted resumable upload: " << stream.resumable_session_id()
               << "\n";
 
