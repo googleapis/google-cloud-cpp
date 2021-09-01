@@ -25,7 +25,7 @@ if (NOT (CMAKE_VERSION VERSION_LESS 3.15))
 endif ()
 project(
     google-cloud-cpp
-    VERSION 1.31.0
+    VERSION 1.32.0
     LANGUAGES CXX C)
 
 # Configure the Compiler options, we use C++11 features by default.
