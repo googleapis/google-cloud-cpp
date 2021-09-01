@@ -52,9 +52,47 @@
   the call site. See [#5929] for more details.
 </details>
 
-## v1.31.0 - TBD
+## v1.32.0 - TBD
 
-## [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
+## v1.31.0 - 2021-09
+
+### [BigQuery](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigquery/README.md)
+
+* feat(generator): add default tracing components and options ([#7219](https://github.com/googleapis/google-cloud-cpp/pull/7219))
+
+### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
+
+* feat(bigtable): add Make(Data,Admin,InstanceAdmin)Client methods that take Options ([#7226](https://github.com/googleapis/google-cloud-cpp/pull/7226))
+
+### [IAM](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/README.md)
+
+* feat(generator): add default tracing components and options ([#7219](https://github.com/googleapis/google-cloud-cpp/pull/7219))
+
+### [Pub/Sub](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/README.md)
+
+* feat(pubsub): support Topic retention duration ([#7196](https://github.com/googleapis/google-cloud-cpp/pull/7196))
+
+### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
+
+* fix: release CurlRequest handles on error ([#7244](https://github.com/googleapis/google-cloud-cpp/pull/7244))
+* feat(storage): add additional examples ([#7224](https://github.com/googleapis/google-cloud-cpp/pull/7224))
+* feat(storage): aggregate upload benchmark ([#7190](https://github.com/googleapis/google-cloud-cpp/pull/7190))
+* fix(GCS+gRPC): quickstart build with Bazel+Windows ([#7147](https://github.com/googleapis/google-cloud-cpp/pull/7147))
+* refactor(storage): isolate header parsing to REST ([#7137](https://github.com/googleapis/google-cloud-cpp/pull/7137))
+* fix(storage): release handles for oauth2 refresh ([#7136](https://github.com/googleapis/google-cloud-cpp/pull/7136))
+* fix(GCS+gRPC): return status on stream closure ([#7128](https://github.com/googleapis/google-cloud-cpp/pull/7128))
+* feat(storage): make benchmark more robust on stalls ([#7113](https://github.com/googleapis/google-cloud-cpp/pull/7113))
+* feat(GCS+gRPC): timeout downloads in benchmark ([#7112](https://github.com/googleapis/google-cloud-cpp/pull/7112))
+* feat(GCS+gRPC): initial support for download timeouts ([#7108](https://github.com/googleapis/google-cloud-cpp/pull/7108))
+
+### [Spanner](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/spanner/README.md)
+
+* feat(spanner): support for JSON as a column type ([#7212](https://github.com/googleapis/google-cloud-cpp/pull/7212))
+* feat(spanner): tagging support ([#7154](https://github.com/googleapis/google-cloud-cpp/pull/7154))
+* feat(spanner): send session-refresh request at low priority ([#7140](https://github.com/googleapis/google-cloud-cpp/pull/7140))
+* fix(spanner): fix Client::OverlayQueryOptions() to merge correctly ([#7118](https://github.com/googleapis/google-cloud-cpp/pull/7118))
+
+### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
 
 **BREAKING CHANGES**:
 
@@ -63,6 +101,12 @@
   `Status` and break invariants of the `StatusOr` class. This function was
   removed. If your code previously relied on `sor.status() = new_status` you
   should change it to `sor = new_status`. ([#7150](https://github.com/googleapis/google-cloud-cpp/pull/7150))
+
+**OTHER CHANGES**:
+
+* feat(common): add GrpcChannelArgumentsNativeOption ([#7194](https://github.com/googleapis/google-cloud-cpp/pull/7194))
+* feat(common): capture thread that creates log record ([#7119](https://github.com/googleapis/google-cloud-cpp/pull/7119))
+
 
 ## v1.30.1 - 2021-08
 
