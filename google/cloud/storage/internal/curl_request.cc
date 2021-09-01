@@ -64,6 +64,10 @@ extern "C" std::size_t CurlRequestOnReadData(char* ptr, std::size_t size,
   return v->OnRead(ptr, size, nitems);
 }
 
+CurlRequest::~CurlRequest() {
+  if (factory_) factory_->CleanupHandle(std::move(handle_));
+}
+
 StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) {
   handle_.SetOption(CURLOPT_UPLOAD, 0L);
   if (!payload.empty()) {
@@ -90,6 +94,14 @@ StatusOr<HttpResponse> CurlRequest::MakeUploadRequest(
   return MakeRequestImpl();
 }
 
+Status CurlRequest::OnError(Status status) {
+  // When there is a transfer error the handle is suspect. It could be pointing
+  // to an invalid host, a host that is slow and trickling data, or otherwise in
+  // a bad state. Release the handle, but do not return it to the pool.
+  auto handle = std::move(handle_);
+  return status;
+}
+
 StatusOr<HttpResponse> CurlRequest::MakeRequestImpl() {
   // We get better performance using a slightly larger buffer (128KiB) than the
   // default buffer size set by libcurl (16KiB)
@@ -111,7 +123,7 @@ StatusOr<HttpResponse> CurlRequest::MakeRequestImpl() {
   handle_.SetOption(CURLOPT_HEADERFUNCTION, &CurlRequestOnHeaderData);
   handle_.SetOption(CURLOPT_HEADERDATA, this);
   auto status = handle_.EasyPerform();
-  if (!status.ok()) return status;
+  if (!status.ok()) return OnError(std::move(status));
 
   if (logging_enabled_) handle_.FlushDebug(__func__);
   auto code = handle_.GetResponseCode();
