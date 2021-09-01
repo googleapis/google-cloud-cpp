@@ -64,7 +64,6 @@ TEST(BenchmarkOptions, Defaults) {
 
 TEST(BenchmarkOptions, Initialization) {
   auto const re = std::regex(testing::RandomTableIdRegex());
-  auto const now = absl::FormatTime("%FT%TZ", absl::Now(), absl::UTCTimeZone());
   auto options = ParseBenchmarkOptions(
       {
           "self-test",
@@ -72,7 +71,6 @@ TEST(BenchmarkOptions, Initialization) {
           "--instance-id=b",
       },
       "");
-  EXPECT_EQ(now, options->start_time);
   EXPECT_TRUE(std::regex_match(options->table_id, re));
   EXPECT_THAT(options->notes, ::testing::HasSubstr(bigtable::version_string()));
 }
