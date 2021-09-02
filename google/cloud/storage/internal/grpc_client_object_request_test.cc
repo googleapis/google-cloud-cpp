@@ -317,7 +317,7 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestSimple) {
 
   ResumableUploadRequest req("test-bucket", "test-object");
 
-  auto actual = GrpcClient::ToProto(req);
+  auto actual = GrpcClient::ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -371,7 +371,7 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestAllFields) {
       EncryptionKey::FromBinaryKey("01234567"),
       KmsKeyName("test-kms-key-name"));
 
-  auto actual = GrpcClient::ToProto(req);
+  auto actual = GrpcClient::ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -417,7 +417,7 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestWithObjectMetadataFields) {
           .set_temporary_hold(true)
           .set_acl(std::move(acls))));
 
-  auto actual = GrpcClient::ToProto(req);
+  auto actual = GrpcClient::ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -445,7 +445,7 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestSimple) {
 
   ReadObjectRangeRequest req("test-bucket", "test-object");
 
-  auto const actual = GrpcClient::ToProto(req);
+  auto const actual = GrpcClient::ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -483,7 +483,7 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestAllFields) {
       UserProject("test-user-project"), QuotaUser("test-quota-user"),
       UserIp("test-user-ip"), EncryptionKey::FromBinaryKey("01234567"));
 
-  auto const actual = GrpcClient::ToProto(req);
+  auto const actual = GrpcClient::ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -500,7 +500,7 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLast) {
   ReadObjectRangeRequest req("test-bucket", "test-object");
   req.set_multiple_options(ReadLast(2000));
 
-  auto const actual = GrpcClient::ToProto(req);
+  auto const actual = GrpcClient::ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -515,7 +515,7 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLastZero) {
   ReadObjectRangeRequest req("test-bucket", "test-object");
   req.set_multiple_options(ReadLast(0));
 
-  auto const actual = GrpcClient::ToProto(req);
+  auto const actual = GrpcClient::ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 
   auto client = GrpcClient::Create(DefaultOptionsGrpc(

@@ -201,12 +201,12 @@ class GrpcClient : public RawClient,
       InsertObjectMediaRequest const& request);
   static ResumableUploadResponse FromProto(
       google::storage::v2::WriteObjectResponse const&);
-  static google::storage::v2::StartResumableWriteRequest ToProto(
+  static StatusOr<google::storage::v2::StartResumableWriteRequest> ToProto(
       ResumableUploadRequest const& request);
   static google::storage::v2::QueryWriteStatusRequest ToProto(
       QueryResumableUploadRequest const& request);
 
-  static google::storage::v2::ReadObjectRequest ToProto(
+  static StatusOr<google::storage::v2::ReadObjectRequest> ToProto(
       ReadObjectRangeRequest const& request);
 
   static std::string Crc32cFromProto(std::uint32_t);
