@@ -47,6 +47,7 @@ using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::google::cloud::storage::testing::WriteBase64AsBinary;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::An;
 using ::testing::AtLeast;
 using ::testing::HasSubstr;
@@ -138,7 +139,7 @@ void CheckInfoYieldsExpectedAssertion(ServiceAccountCredentialsInfo const& info,
   std::string expected_header =
       "Content-Type: application/x-www-form-urlencoded";
   EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)));
-  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
+  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint(), _, _))
       .Times(1);
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
       .WillRepeatedly([](std::string const& s) -> std::unique_ptr<char[]> {
@@ -209,7 +210,7 @@ TEST_F(ServiceAccountCredentialsTest,
       });
   EXPECT_CALL(*mock_builder, AddHeader(An<std::string const&>()))
       .Times(AtLeast(1));
-  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
+  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint(), _, _))
       .Times(AtLeast(1));
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
       .WillRepeatedly([](std::string const& s) -> std::unique_ptr<char[]> {
@@ -435,7 +436,7 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
       "Content-Type: application/x-www-form-urlencoded";
   EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)))
       .Times(AtLeast(1));
-  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
+  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint(), _, _))
       .Times(AtLeast(1));
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
       .WillRepeatedly([](std::string const& s) -> std::unique_ptr<char[]> {
@@ -463,6 +464,51 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
   ASSERT_STATUS_OK(authorization_header);
   EXPECT_EQ("Authorization: Mock-Type mock-token-value-20000",
             *authorization_header);
+}
+
+/// @test Verify that the options are used in the constructor.
+TEST_F(ServiceAccountCredentialsTest, UsesCARootsInfo) {
+  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  ASSERT_STATUS_OK(info);
+
+  auto mock_builder = MockHttpRequestBuilder::mock_;
+  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce([&] {
+    MockHttpRequest result;
+    EXPECT_CALL(*result.mock, MakeRequest).WillOnce([](std::string const&) {
+      nlohmann::json response{{"token_type", "Mock-Type"},
+                              {"access_token", "fake-token"},
+                              {"expires_in", 3600}};
+      return HttpResponse{200, response.dump(), {}};
+    });
+    return result;
+  });
+
+  // This is the key check in this test, verify the constructor is called with
+  // the right parameters.
+  auto const cainfo = std::string{"fake-cainfo-path-aka-roots-pem"};
+  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint(),
+                                         absl::make_optional(cainfo), _))
+      .Times(AtLeast(1));
+
+  auto const expected_header =
+      std::string{"Content-Type: application/x-www-form-urlencoded"};
+  EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)))
+      .Times(AtLeast(1));
+  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
+      .WillRepeatedly([](std::string const& s) -> std::unique_ptr<char[]> {
+        EXPECT_EQ(kGrantParamUnescaped, s);
+        auto t = std::unique_ptr<char[]>(new char[sizeof(kGrantParamEscaped)]);
+        std::copy(kGrantParamEscaped,
+                  kGrantParamEscaped + sizeof(kGrantParamEscaped), t.get());
+        return t;
+      });
+
+  ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
+      *info, ChannelOptions().set_ssl_root_path(cainfo));
+  // Call Refresh to obtain the access token for our authorization header.
+  auto authorization_header = credentials.AuthorizationHeader();
+  ASSERT_STATUS_OK(authorization_header);
+  EXPECT_EQ("Authorization: Mock-Type fake-token", *authorization_header);
 }
 
 /// @test Verify that we can create sign blobs using a service account.
