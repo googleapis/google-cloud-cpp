@@ -54,6 +54,16 @@
 
 ## v1.32.0 - TBD
 
+### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
+
+**BREAKING CHANGES:**
+
+* We have removed the code generated from `storage/v1` protos. These protos were
+  not GA themselves, and the underlying service will be disabled in the near
+  future. Furthermore, the library that used them (the GCS+gRPC plugin) is
+  clearly labeled `experimental`.  Regardless, we apologize if this causes you
+  inconvenience or additional work.
+
 ## v1.31.0 - 2021-09
 
 ### [BigQuery](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigquery/README.md)
