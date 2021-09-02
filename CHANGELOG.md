@@ -64,6 +64,12 @@
   clearly labeled `experimental`.  Regardless, we apologize if this causes you
   inconvenience or additional work.
 
+## v1.31.1 - 2021-09
+
+### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
+
+* fix(storage): use CA info options in credentials ([#7263](https://github.com/googleapis/google-cloud-cpp/pull/7263))
+
 ## v1.31.0 - 2021-09
 
 ### [BigQuery](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigquery/README.md)
