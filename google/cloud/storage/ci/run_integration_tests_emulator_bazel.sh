@@ -85,7 +85,7 @@ printf '{"name": "%s"}' "${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME
   curl -X POST -H "Content-Type: application/json" --data-binary @- \
     "${CLOUD_STORAGE_EMULATOR_ENDPOINT}/storage/v1/b?project=${GOOGLE_CLOUD_PROJECT}"
 
-TESTBENCH_SHA="$(pip show googleapis-storage-testbench | sha256)"
+TESTBENCH_SHA="$(pip show googleapis-storage-testbench | sha256sum)"
 emulator_args=(
   "--test_env=TESTBENCH_SHA=${TESTBENCH_SHA}"
   "--test_env=CLOUD_STORAGE_EMULATOR_ENDPOINT=${CLOUD_STORAGE_EMULATOR_ENDPOINT}"
