@@ -324,9 +324,11 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
         std::chrono::system_clock::now() +
         backwards_compatibility_options_.download_stall_timeout());
   }
+  auto proto_request = ToProto(request);
+  if (!proto_request) return std::move(proto_request).status();
   return std::unique_ptr<ObjectReadSource>(
       absl::make_unique<GrpcObjectReadSource>(
-          stub_->ReadObject(std::move(context), ToProto(request))));
+          stub_->ReadObject(std::move(context), *proto_request)));
 }
 
 StatusOr<ListObjectsResponse> GrpcClient::ListObjects(
@@ -365,8 +367,11 @@ GrpcClient::CreateResumableSession(ResumableUploadRequest const& request) {
     }
   }
 
+  auto proto_request = ToProto(request);
+  if (!proto_request) return std::move(proto_request).status();
+
   grpc::ClientContext context;
-  auto response = stub_->StartResumableWrite(context, ToProto(request));
+  auto response = stub_->StartResumableWrite(context, *proto_request);
   if (!response.ok()) return std::move(response).status();
 
   auto self = shared_from_this();
@@ -808,7 +813,6 @@ ObjectAccessControl GrpcClient::FromProto(
     google::storage::v2::ObjectAccessControl acl,
     std::string const& bucket_name, std::string const& object_name,
     std::uint64_t generation) {
-  // TODO(#6982) - receive bucket, object, and generation as parameters
   ObjectAccessControl result;
   result.kind_ = "storage#objectAccessControl";
   result.bucket_ = bucket_name;
@@ -939,9 +943,11 @@ ResumableUploadResponse GrpcClient::FromProto(
   return response;
 }
 
-google::storage::v2::StartResumableWriteRequest GrpcClient::ToProto(
+StatusOr<google::storage::v2::StartResumableWriteRequest> GrpcClient::ToProto(
     ResumableUploadRequest const& request) {
   google::storage::v2::StartResumableWriteRequest result;
+  auto status = SetCommonObjectParameters(result, request);
+  if (!status.ok()) return status;
 
   auto& object_spec = *result.mutable_write_object_spec();
   auto& resource = *object_spec.mutable_resource();
@@ -951,8 +957,6 @@ google::storage::v2::StartResumableWriteRequest GrpcClient::ToProto(
   SetGenerationConditions(object_spec, request);
   SetMetagenerationConditions(object_spec, request);
   SetCommonParameters(result, request);
-  // TODO(#6982) - return a StatusOr object
-  (void)SetCommonObjectParameters(result, request);
 
   resource.set_bucket("projects/_/buckets/" + request.bucket_name());
   resource.set_name(request.object_name());
@@ -967,9 +971,11 @@ google::storage::v2::QueryWriteStatusRequest GrpcClient::ToProto(
   return r;
 }
 
-google::storage::v2::ReadObjectRequest GrpcClient::ToProto(
+StatusOr<google::storage::v2::ReadObjectRequest> GrpcClient::ToProto(
     ReadObjectRangeRequest const& request) {
   google::storage::v2::ReadObjectRequest r;
+  auto status = SetCommonObjectParameters(r, request);
+  if (!status.ok()) return status;
   r.set_object(request.object_name());
   r.set_bucket("projects/_/buckets/" + request.bucket_name());
   if (request.HasOption<Generation>()) {
@@ -995,8 +1001,6 @@ google::storage::v2::ReadObjectRequest GrpcClient::ToProto(
   }
   SetGenerationConditions(r, request);
   SetMetagenerationConditions(r, request);
-  // TODO(#6982) - return a StatusOr object
-  SetCommonObjectParameters(r, request);
   SetCommonParameters(r, request);
 
   return r;
