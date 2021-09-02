@@ -56,7 +56,7 @@ class GrpcClient : public RawClient,
   // them is very different from the standard retry loop. Also note that these
   // are virtual functions only because we need to override them in the unit
   // tests.
-  // TODO(#6982) - rename InsertStream to WriteStream.
+  // TODO(#6982) - rename WriteObjectStream to WriteStream.
   using InsertStream = ::google::cloud::internal::StreamingWriteRpc<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;

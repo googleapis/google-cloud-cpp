@@ -51,7 +51,7 @@ std::vector<std::shared_ptr<StorageStub>> AsPlainStubs(
   return std::vector<std::shared_ptr<StorageStub>>(mocks.begin(), mocks.end());
 }
 
-std::unique_ptr<StorageStub::ObjectMediaStream> MakeObjectMediaStream(
+std::unique_ptr<StorageStub::ReadObjectStream> MakeReadObjectStream(
     std::unique_ptr<grpc::ClientContext>,
     google::storage::v2::ReadObjectRequest const&) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
@@ -60,7 +60,7 @@ std::unique_ptr<StorageStub::ObjectMediaStream> MakeObjectMediaStream(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
 }
 
-std::unique_ptr<StorageStub::InsertStream> MakeInsertStream(
+std::unique_ptr<StorageStub::WriteObjectStream> MakeInsertStream(
     std::unique_ptr<grpc::ClientContext>) {
   using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
       google::storage::v2::WriteObjectRequest,
@@ -69,19 +69,19 @@ std::unique_ptr<StorageStub::InsertStream> MakeInsertStream(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
 }
 
-TEST(StorageAuthTest, GetObjectMedia) {
+TEST(StorageAuthTest, ReadObject) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
-      EXPECT_CALL(*m, GetObjectMedia).WillOnce(MakeObjectMediaStream);
+      EXPECT_CALL(*m, ReadObject).WillOnce(MakeReadObjectStream);
     }
   }
 
   StorageRoundRobin under_test(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
     google::storage::v2::ReadObjectRequest request;
-    auto response = under_test.GetObjectMedia(
+    auto response = under_test.ReadObject(
         absl::make_unique<grpc::ClientContext>(), request);
     auto v = response->Read();
     ASSERT_TRUE(absl::holds_alternative<Status>(v));
@@ -89,19 +89,19 @@ TEST(StorageAuthTest, GetObjectMedia) {
   }
 }
 
-TEST(StorageAuthTest, InsertObjectMedia) {
+TEST(StorageAuthTest, WriteObject) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
-      EXPECT_CALL(*m, InsertObjectMedia).WillOnce(MakeInsertStream);
+      EXPECT_CALL(*m, WriteObject).WillOnce(MakeInsertStream);
     }
   }
 
   StorageRoundRobin under_test(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
     auto response =
-        under_test.InsertObjectMedia(absl::make_unique<grpc::ClientContext>());
+        under_test.WriteObject(absl::make_unique<grpc::ClientContext>());
     EXPECT_THAT(response->Close(), StatusIs(StatusCode::kPermissionDenied));
   }
 }

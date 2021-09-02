@@ -47,7 +47,7 @@ std::shared_ptr<GrpcAuthenticationStrategy> MakeMockAuth() {
   return auth;
 }
 
-std::unique_ptr<StorageStub::ObjectMediaStream> MakeObjectMediaStream(
+std::unique_ptr<StorageStub::ReadObjectStream> MakeObjectMediaStream(
     std::unique_ptr<grpc::ClientContext>,
     google::storage::v2::ReadObjectRequest const&) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
@@ -56,7 +56,7 @@ std::unique_ptr<StorageStub::ObjectMediaStream> MakeObjectMediaStream(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
 }
 
-std::unique_ptr<StorageStub::InsertStream> MakeInsertStream(
+std::unique_ptr<StorageStub::WriteObjectStream> MakeInsertStream(
     std::unique_ptr<grpc::ClientContext>) {
   using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
       google::storage::v2::WriteObjectRequest,
@@ -74,34 +74,34 @@ std::unique_ptr<StorageStub::InsertStream> MakeInsertStream(
 
 TEST(StorageAuthTest, GetObjectMedia) {
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, GetObjectMedia).WillOnce(MakeObjectMediaStream);
+  EXPECT_CALL(*mock, ReadObject).WillOnce(MakeObjectMediaStream);
 
   auto under_test = StorageAuth(MakeMockAuth(), mock);
   google::storage::v2::ReadObjectRequest request;
-  auto auth_failure = under_test.GetObjectMedia(
-      absl::make_unique<grpc::ClientContext>(), request);
+  auto auth_failure =
+      under_test.ReadObject(absl::make_unique<grpc::ClientContext>(), request);
   auto v = auth_failure->Read();
   ASSERT_TRUE(absl::holds_alternative<Status>(v));
   EXPECT_THAT(absl::get<Status>(v), StatusIs(StatusCode::kInvalidArgument));
 
-  auto auth_success = under_test.GetObjectMedia(
-      absl::make_unique<grpc::ClientContext>(), request);
+  auto auth_success =
+      under_test.ReadObject(absl::make_unique<grpc::ClientContext>(), request);
   v = auth_success->Read();
   ASSERT_TRUE(absl::holds_alternative<Status>(v));
   EXPECT_THAT(absl::get<Status>(v), StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(StorageAuthTest, InsertObjectMedia) {
+TEST(StorageAuthTest, WriteObject) {
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, InsertObjectMedia).WillOnce(MakeInsertStream);
+  EXPECT_CALL(*mock, WriteObject).WillOnce(MakeInsertStream);
 
   auto under_test = StorageAuth(MakeMockAuth(), mock);
   auto auth_failure =
-      under_test.InsertObjectMedia(absl::make_unique<grpc::ClientContext>());
+      under_test.WriteObject(absl::make_unique<grpc::ClientContext>());
   EXPECT_THAT(auth_failure->Close(), StatusIs(StatusCode::kInvalidArgument));
 
   auto auth_success =
-      under_test.InsertObjectMedia(absl::make_unique<grpc::ClientContext>());
+      under_test.WriteObject(absl::make_unique<grpc::ClientContext>());
   EXPECT_THAT(auth_success->Close(), StatusIs(StatusCode::kPermissionDenied));
 }
 

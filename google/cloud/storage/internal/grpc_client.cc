@@ -169,7 +169,7 @@ GrpcClient::GrpcClient(std::shared_ptr<StorageStub> stub, Options const& opts)
 
 std::unique_ptr<GrpcClient::InsertStream> GrpcClient::CreateUploadWriter(
     std::unique_ptr<grpc::ClientContext> context) {
-  return stub_->InsertObjectMedia(std::move(context));
+  return stub_->WriteObject(std::move(context));
 }
 
 StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
@@ -260,8 +260,7 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
   if (!r) return std::move(r).status();
   auto proto_request = *r;
 
-  auto stream =
-      stub_->InsertObjectMedia(absl::make_unique<grpc::ClientContext>());
+  auto stream = stub_->WriteObject(absl::make_unique<grpc::ClientContext>());
 
   auto const& contents = request.contents();
   auto const contents_size = static_cast<std::int64_t>(contents.size());
@@ -327,7 +326,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
   }
   return std::unique_ptr<ObjectReadSource>(
       absl::make_unique<GrpcObjectReadSource>(
-          stub_->GetObjectMedia(std::move(context), ToProto(request))));
+          stub_->ReadObject(std::move(context), ToProto(request))));
 }
 
 StatusOr<ListObjectsResponse> GrpcClient::ListObjects(

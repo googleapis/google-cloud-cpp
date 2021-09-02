@@ -33,11 +33,11 @@ class StorageAuth : public StorageStub {
       : auth_(std::move(auth)), child_(std::move(child)) {}
   ~StorageAuth() override = default;
 
-  std::unique_ptr<ObjectMediaStream> GetObjectMedia(
+  std::unique_ptr<ReadObjectStream> ReadObject(
       std::unique_ptr<grpc::ClientContext> context,
       google::storage::v2::ReadObjectRequest const& request) override;
 
-  std::unique_ptr<InsertStream> InsertObjectMedia(
+  std::unique_ptr<WriteObjectStream> WriteObject(
       std::unique_ptr<grpc::ClientContext> context) override;
 
   StatusOr<google::storage::v2::StartResumableWriteResponse>
