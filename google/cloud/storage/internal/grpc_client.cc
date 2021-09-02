@@ -167,7 +167,7 @@ GrpcClient::GrpcClient(std::shared_ptr<StorageStub> stub, Options const& opts)
       background_(MakeBackgroundThreadsFactory(opts)()),
       stub_(std::move(stub)) {}
 
-std::unique_ptr<GrpcClient::InsertStream> GrpcClient::CreateUploadWriter(
+std::unique_ptr<GrpcClient::WriteObjectStream> GrpcClient::CreateUploadWriter(
     std::unique_ptr<grpc::ClientContext> context) {
   return stub_->WriteObject(std::move(context));
 }
@@ -180,7 +180,7 @@ StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
 
   ResumableUploadResponse response;
   response.upload_state = ResumableUploadResponse::kInProgress;
-  // TODO(#6982) / TODO(#6880) - cleanup the committed_byte vs. size thing
+  // TODO(#6880) - cleanup the committed_byte vs. size thing
   if (status->has_committed_size() && status->committed_size()) {
     response.last_committed_byte =
         static_cast<std::uint64_t>(status->committed_size());
@@ -926,7 +926,7 @@ ResumableUploadResponse GrpcClient::FromProto(
   ResumableUploadResponse response;
   response.upload_state = ResumableUploadResponse::kInProgress;
   if (p.has_committed_size() && p.committed_size() > 0) {
-    // TODO(#6982) / TODO(#6880) - cleanup the committed_byte vs. size thing
+    // TODO(#6880) - cleanup the committed_byte vs. size thing
     response.last_committed_byte =
         static_cast<std::uint64_t>(p.committed_size()) - 1;
   } else {

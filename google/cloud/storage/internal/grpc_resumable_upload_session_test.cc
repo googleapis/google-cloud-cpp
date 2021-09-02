@@ -32,7 +32,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
 using ::testing::Return;
 
-class MockInsertStream : public GrpcClient::InsertStream {
+class MockInsertStream : public GrpcClient::WriteObjectStream {
  public:
   MOCK_METHOD(bool, Write,
               (google::storage::v2::WriteObjectRequest const&,
@@ -53,8 +53,9 @@ class MockGrpcClient : public GrpcClient {
       : GrpcClient(DefaultOptionsGrpc(Options{}.set<GrpcCredentialOption>(
             grpc::InsecureChannelCredentials()))) {}
 
-  MOCK_METHOD(std::unique_ptr<GrpcClient::InsertStream>, CreateUploadWriter,
-              (std::unique_ptr<grpc::ClientContext>), (override));
+  MOCK_METHOD(std::unique_ptr<GrpcClient::WriteObjectStream>,
+              CreateUploadWriter, (std::unique_ptr<grpc::ClientContext>),
+              (override));
   MOCK_METHOD(StatusOr<ResumableUploadResponse>, QueryResumableUpload,
               (QueryResumableUploadRequest const&), (override));
 };
@@ -101,7 +102,7 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
               return true;
             });
         EXPECT_CALL(*writer, Close()).WillOnce(Return(MockCloseSuccess(size)));
-        return std::unique_ptr<GrpcClient::InsertStream>(writer.release());
+        return std::unique_ptr<GrpcClient::WriteObjectStream>(writer.release());
       })
       .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
         auto writer = absl::make_unique<MockInsertStream>();
@@ -119,7 +120,7 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
             });
         EXPECT_CALL(*writer, Close())
             .WillOnce(Return(MockCloseSuccess(2 * size)));
-        return std::unique_ptr<GrpcClient::InsertStream>(writer.release());
+        return std::unique_ptr<GrpcClient::WriteObjectStream>(writer.release());
       });
 
   auto upload = session.UploadChunk({{payload}});
@@ -171,7 +172,7 @@ TEST(GrpcResumableUploadSessionTest, SingleStreamForLargeChunks) {
           return MockCloseSuccess(expected_write_offset);
         });
 
-        return std::unique_ptr<GrpcClient::InsertStream>(writer.release());
+        return std::unique_ptr<GrpcClient::WriteObjectStream>(writer.release());
       });
 
   auto upload = session.UploadChunk({{payload}});
@@ -211,7 +212,7 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
         EXPECT_CALL(*writer, Close)
             .WillOnce(Return(
                 MockCloseError(Status(StatusCode::kUnavailable, "try again"))));
-        return std::unique_ptr<GrpcClient::InsertStream>(writer.release());
+        return std::unique_ptr<GrpcClient::WriteObjectStream>(writer.release());
       })
       .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
         auto writer = absl::make_unique<MockInsertStream>();
@@ -225,7 +226,7 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
               return true;
             });
         EXPECT_CALL(*writer, Close).WillOnce(Return(MockCloseSuccess(size)));
-        return std::unique_ptr<GrpcClient::InsertStream>(writer.release());
+        return std::unique_ptr<GrpcClient::WriteObjectStream>(writer.release());
       });
 
   EXPECT_CALL(*mock, QueryResumableUpload)
@@ -280,7 +281,7 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
             .WillOnce(Return(
                 MockCloseError(Status(StatusCode::kUnavailable, "try again"))));
 
-        return std::unique_ptr<GrpcClient::InsertStream>(writer.release());
+        return std::unique_ptr<GrpcClient::WriteObjectStream>(writer.release());
       })
       .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
         auto writer = absl::make_unique<MockInsertStream>();
@@ -296,7 +297,7 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
             });
         EXPECT_CALL(*writer, Close).WillOnce(Return(MockCloseSuccess(size)));
 
-        return std::unique_ptr<GrpcClient::InsertStream>(writer.release());
+        return std::unique_ptr<GrpcClient::WriteObjectStream>(writer.release());
       });
 
   ResumableUploadResponse const resume_response{
