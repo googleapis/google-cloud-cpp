@@ -43,6 +43,11 @@ class CurlHandleFactory {
 
   virtual std::string LastClientIpAddress() const = 0;
 
+  // For testing and debug only, we do not need anything more elaborate as this
+  // class is in `internal::`.
+  virtual absl::optional<std::string> cainfo() const = 0;
+  virtual absl::optional<std::string> capath() const = 0;
+
  protected:
   // Only virtual for testing purposes.
   virtual void SetCurlStringOption(CURL* handle, CURLoption option_tag,
@@ -79,6 +84,9 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
     std::lock_guard<std::mutex> lk(mu_);
     return last_client_ip_address_;
   }
+
+  absl::optional<std::string> cainfo() const override { return cainfo_; }
+  absl::optional<std::string> capath() const override { return capath_; }
 
  private:
   void SetCurlOptions(CURL* handle);
@@ -123,6 +131,9 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
     std::lock_guard<std::mutex> lk(mu_);
     return multi_handles_.size();
   }
+
+  absl::optional<std::string> cainfo() const override { return cainfo_; }
+  absl::optional<std::string> capath() const override { return capath_; }
 
  private:
   void SetCurlOptions(CURL* handle);
