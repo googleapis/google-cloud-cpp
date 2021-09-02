@@ -13,18 +13,19 @@
 @REM limitations under the License.
 
 REM Install Bazelisk.
+@echo %date% %time%
+@cd github\google-cloud-cpp
 @powershell -exec bypass ci\kokoro\windows\install-bazelisk.ps1
 @if NOT ERRORLEVEL 0 exit /b 1
 
 REM Change PATH to install the Bazelisk version we just installed
-set PATH=C:\bin;%PATH%
+@set PATH=C:\bin;%PATH%
 
 REM Configure the environment to use MSVC %MSVC_VERSION% and then switch to PowerShell.
 call "c:\Program Files (x86)\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC\Auxiliary\Build\vcvars64.bat"
 
 REM The remaining of the build script is implemented in PowerShell.
-echo %date% %time%
-cd github\google-cloud-cpp
+@echo %date% %time%
 powershell -exec bypass ci\kokoro\windows\build.ps1
 if NOT ERRORLEVEL 0 exit /b 1
 
