@@ -28,7 +28,7 @@ source module ci/lib/io.sh
 
 # To run the integration tests we need to install the dependencies for the storage emulator
 export PATH="${HOME}/.local/bin:${PATH}"
-python3 -m pip install --quiet --user -r "${PROJECT_ROOT}/google/cloud/storage/emulator/requirements.txt"
+python3 -m pip install --quiet --user "git+git://github.com/googleapis/storage-testbench@v0.4.0"
 
 # Some of the tests will need a valid roots.pem file.
 rm -f /dev/shm/roots.pem
@@ -171,10 +171,6 @@ function integration::bazel_with_emulators() {
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"
   "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}"
-
-  io::log_h2 "Running Storage Emulator integration tests"
-  "google/cloud/storage/emulator/ci/run_integration_tests_bazel.sh" \
-    bazel "${args[@]}"
 
   io::log_h2 "Running Storage integration tests (with emulator)"
   "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \

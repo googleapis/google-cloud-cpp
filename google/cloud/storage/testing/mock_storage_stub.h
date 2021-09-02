@@ -27,19 +27,19 @@ class MockStorageStub : public internal::StorageStub {
  public:
   MOCK_METHOD(std::unique_ptr<ObjectMediaStream>, GetObjectMedia,
               (std::unique_ptr<grpc::ClientContext>,
-               google::storage::v1::GetObjectMediaRequest const&),
+               google::storage::v2::ReadObjectRequest const&),
               (override));
   MOCK_METHOD(std::unique_ptr<InsertStream>, InsertObjectMedia,
               (std::unique_ptr<grpc::ClientContext>), (override));
-  MOCK_METHOD(StatusOr<google::storage::v1::StartResumableWriteResponse>,
+  MOCK_METHOD(StatusOr<google::storage::v2::StartResumableWriteResponse>,
               StartResumableWrite,
               (grpc::ClientContext&,
-               google::storage::v1::StartResumableWriteRequest const&),
+               google::storage::v2::StartResumableWriteRequest const&),
               (override));
-  MOCK_METHOD(StatusOr<google::storage::v1::QueryWriteStatusResponse>,
+  MOCK_METHOD(StatusOr<google::storage::v2::QueryWriteStatusResponse>,
               QueryWriteStatus,
               (grpc::ClientContext&,
-               google::storage::v1::QueryWriteStatusRequest const&),
+               google::storage::v2::QueryWriteStatusRequest const&),
               (override));
 };
 
@@ -47,17 +47,18 @@ class MockInsertStream : public internal::StorageStub::InsertStream {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(bool, Write,
-              (google::storage::v1::InsertObjectRequest const&,
+              (google::storage::v2::WriteObjectRequest const&,
                grpc::WriteOptions),
               (override));
-  MOCK_METHOD(StatusOr<google::storage::v1::Object>, Close, (), (override));
+  MOCK_METHOD(StatusOr<google::storage::v2::WriteObjectResponse>, Close, (),
+              (override));
 };
 
 class MockObjectMediaStream : public internal::StorageStub::ObjectMediaStream {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   using ReadResultType =
-      absl::variant<Status, google::storage::v1::GetObjectMediaResponse>;
+      absl::variant<Status, google::storage::v2::ReadObjectResponse>;
   MOCK_METHOD(ReadResultType, Read, (), (override));
   MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
               (), (const, override));

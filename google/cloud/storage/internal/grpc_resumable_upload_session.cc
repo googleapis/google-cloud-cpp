@@ -24,10 +24,10 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 static_assert(
-    (google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES %
+    (google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES %
      UploadChunkRequest::kChunkSizeQuantum) == 0,
     "Expected maximum insert request size to be a multiple of chunk quantum");
-static_assert(google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES >
+static_assert(google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES >
                   UploadChunkRequest::kChunkSizeQuantum * 2,
               "Expected maximum insert request size to be greater than twice "
               "the chunk quantum");
@@ -83,14 +83,14 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
   auto writer = client_->CreateUploadWriter(std::move(context));
 
   std::size_t const maximum_chunk_size =
-      google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
+      google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
   std::string chunk;
   chunk.reserve(maximum_chunk_size);
   auto flush_chunk = [&](bool has_more) {
     if (chunk.size() < maximum_chunk_size && has_more) return true;
     if (chunk.empty() && !final_chunk) return true;
 
-    google::storage::v1::InsertObjectRequest request;
+    google::storage::v2::WriteObjectRequest request;
     request.set_upload_id(session_id_params_.upload_id);
     request.set_write_offset(
         static_cast<google::protobuf::int64>(next_expected_));
@@ -101,7 +101,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
     data.set_content(std::move(chunk));
     chunk.clear();
     chunk.reserve(maximum_chunk_size);
-    data.mutable_crc32c()->set_value(crc32c::Crc32c(data.content()));
+    data.set_crc32c(crc32c::Crc32c(data.content()));
 
     auto options = grpc::WriteOptions();
     if (final_chunk && !has_more) {
@@ -114,8 +114,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
       if (!hashes.crc32c.empty()) {
         auto crc32c = GrpcClient::Crc32cToProto(hashes.crc32c);
         if (crc32c) {
-          request.mutable_object_checksums()->mutable_crc32c()->set_value(
-              *std::move(crc32c));
+          request.mutable_object_checksums()->set_crc32c(*std::move(crc32c));
         }
       }
       request.set_finish_write(true);
@@ -125,7 +124,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
     if (!writer->Write(request, options)) return false;
     // After the first message, clear the object specification and checksums,
     // there is no need to resend it.
-    request.clear_insert_object_spec();
+    request.clear_write_object_spec();
     request.clear_object_checksums();
 
     next_expected_ += n;
@@ -140,13 +139,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
       return last_response_;
     }
     done_ = final_chunk;
-    last_response_ = ResumableUploadResponse{
-        {},
-        next_expected_ - 1,
-        GrpcClient::FromProto(*std::move(result)),
-        final_chunk ? ResumableUploadResponse::kDone
-                    : ResumableUploadResponse::kInProgress,
-        {}};
+    last_response_ = GrpcClient::FromProto(*std::move(result));
     return last_response_;
   };
 

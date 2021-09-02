@@ -94,7 +94,7 @@ TEST_P(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
-  // Create a iostream to read the object back.
+  // Create an iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
@@ -116,7 +116,7 @@ TEST_P(ObjectInsertIntegrationTest, XmlInsertWithNonUrlSafeName) {
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
-  // Create a iostream to read the object back.
+  // Create an iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
@@ -138,13 +138,15 @@ TEST_P(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
-  // Create a iostream to read the object back.
+  // Create an iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertWithMD5) {
+  // TODO(#6982) - restore this test when production is fixed
+  if (!UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -161,13 +163,15 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithMD5) {
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
-  // Create a iostream to read the object back.
+  // Create an iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
+  // TODO(#6982) - restore this test when production is fixed
+  if (!UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -184,13 +188,15 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
-  // Create a iostream to read the object back.
+  // Create an iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 }
 
 TEST_P(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
+  // TODO(#6982) - restore this test when production is fixed
+  if (!UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -207,7 +213,7 @@ TEST_P(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
-  // Create a iostream to read the object back.
+  // Create an iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
@@ -235,7 +241,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithMetadata) {
   EXPECT_EQ("test-value", meta->metadata("test-key"));
   EXPECT_EQ("text/plain", meta->content_type());
 
-  // Create a iostream to read the object back.
+  // Create an iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);

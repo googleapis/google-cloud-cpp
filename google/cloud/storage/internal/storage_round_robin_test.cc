@@ -53,9 +53,9 @@ std::vector<std::shared_ptr<StorageStub>> AsPlainStubs(
 
 std::unique_ptr<StorageStub::ObjectMediaStream> MakeObjectMediaStream(
     std::unique_ptr<grpc::ClientContext>,
-    google::storage::v1::GetObjectMediaRequest const&) {
+    google::storage::v2::ReadObjectRequest const&) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
-      google::storage::v1::GetObjectMediaResponse>;
+      google::storage::v2::ReadObjectResponse>;
   return absl::make_unique<ErrorStream>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
 }
@@ -63,7 +63,8 @@ std::unique_ptr<StorageStub::ObjectMediaStream> MakeObjectMediaStream(
 std::unique_ptr<StorageStub::InsertStream> MakeInsertStream(
     std::unique_ptr<grpc::ClientContext>) {
   using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
-      google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
+      google::storage::v2::WriteObjectRequest,
+      google::storage::v2::WriteObjectResponse>;
   return absl::make_unique<ErrorStream>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
 }
@@ -79,7 +80,7 @@ TEST(StorageAuthTest, GetObjectMedia) {
 
   StorageRoundRobin under_test(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
-    google::storage::v1::GetObjectMediaRequest request;
+    google::storage::v2::ReadObjectRequest request;
     auto response = under_test.GetObjectMedia(
         absl::make_unique<grpc::ClientContext>(), request);
     auto v = response->Read();
@@ -117,7 +118,7 @@ TEST(StorageAuthTest, StartResumableWrite) {
 
   StorageRoundRobin under_test(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
-    google::storage::v1::StartResumableWriteRequest request;
+    google::storage::v2::StartResumableWriteRequest request;
     grpc::ClientContext ctx;
     auto response = under_test.StartResumableWrite(ctx, request);
     EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
@@ -136,7 +137,7 @@ TEST(StorageAuthTest, QueryWriteStatus) {
 
   StorageRoundRobin under_test(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
-    google::storage::v1::QueryWriteStatusRequest request;
+    google::storage::v2::QueryWriteStatusRequest request;
     grpc::ClientContext ctx;
     auto response = under_test.QueryWriteStatus(ctx, request);
     EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));

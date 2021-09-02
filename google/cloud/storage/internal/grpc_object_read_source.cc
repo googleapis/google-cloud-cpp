@@ -66,7 +66,7 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
       result.response.headers.insert(metadata.begin(), metadata.end());
       self.stream_ = nullptr;
     }
-    void operator()(google::storage::v1::GetObjectMediaResponse response) {
+    void operator()(google::storage::v2::ReadObjectResponse response) {
       // The google.storage.v1.Storage documentation says this field can be
       // empty.
       if (response.has_checksummed_data()) {

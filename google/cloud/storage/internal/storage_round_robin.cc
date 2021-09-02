@@ -23,7 +23,7 @@ namespace internal {
 std::unique_ptr<StorageStub::ObjectMediaStream>
 StorageRoundRobin::GetObjectMedia(
     std::unique_ptr<grpc::ClientContext> context,
-    google::storage::v1::GetObjectMediaRequest const& request) {
+    google::storage::v2::ReadObjectRequest const& request) {
   return Child()->GetObjectMedia(std::move(context), request);
 }
 
@@ -32,17 +32,17 @@ std::unique_ptr<StorageStub::InsertStream> StorageRoundRobin::InsertObjectMedia(
   return Child()->InsertObjectMedia(std::move(context));
 }
 
-StatusOr<google::storage::v1::StartResumableWriteResponse>
+StatusOr<google::storage::v2::StartResumableWriteResponse>
 StorageRoundRobin::StartResumableWrite(
     grpc::ClientContext& context,
-    google::storage::v1::StartResumableWriteRequest const& request) {
+    google::storage::v2::StartResumableWriteRequest const& request) {
   return Child()->StartResumableWrite(context, request);
 }
 
-StatusOr<google::storage::v1::QueryWriteStatusResponse>
+StatusOr<google::storage::v2::QueryWriteStatusResponse>
 StorageRoundRobin::QueryWriteStatus(
     grpc::ClientContext& context,
-    google::storage::v1::QueryWriteStatusRequest const& request) {
+    google::storage::v2::QueryWriteStatusRequest const& request) {
   return Child()->QueryWriteStatus(context, request);
 }
 

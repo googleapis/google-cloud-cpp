@@ -35,18 +35,18 @@ class StorageAuth : public StorageStub {
 
   std::unique_ptr<ObjectMediaStream> GetObjectMedia(
       std::unique_ptr<grpc::ClientContext> context,
-      google::storage::v1::GetObjectMediaRequest const& request) override;
+      google::storage::v2::ReadObjectRequest const& request) override;
 
   std::unique_ptr<InsertStream> InsertObjectMedia(
       std::unique_ptr<grpc::ClientContext> context) override;
 
-  StatusOr<google::storage::v1::StartResumableWriteResponse>
+  StatusOr<google::storage::v2::StartResumableWriteResponse>
   StartResumableWrite(
       grpc::ClientContext& context,
-      google::storage::v1::StartResumableWriteRequest const& request) override;
-  StatusOr<google::storage::v1::QueryWriteStatusResponse> QueryWriteStatus(
+      google::storage::v2::StartResumableWriteRequest const& request) override;
+  StatusOr<google::storage::v2::QueryWriteStatusResponse> QueryWriteStatus(
       grpc::ClientContext& context,
-      google::storage::v1::QueryWriteStatusRequest const& request) override;
+      google::storage::v2::QueryWriteStatusRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

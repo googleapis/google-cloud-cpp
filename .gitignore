@@ -23,6 +23,3 @@ cmake-build-*/
 # Ignore Visual Studio Code files
 .vsbuild/
 .vscode/
-
-google/cloud/storage/emulator/**/__pycache__/
-google/cloud/storage/emulator/**/*.pyc
