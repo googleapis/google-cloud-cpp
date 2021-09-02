@@ -180,7 +180,8 @@ class ServiceAccountCredentials : public Credentials {
  private:
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() {
     HttpRequestBuilderType request_builder(
-        info_.token_uri, storage::internal::GetDefaultCurlHandleFactory());
+        info_.token_uri,
+        storage::internal::GetDefaultCurlHandleFactory(options_));
     request_builder.AddHeader(
         "Content-Type: application/x-www-form-urlencoded");
     // This is the value of grant_type for JSON-formatted service account
