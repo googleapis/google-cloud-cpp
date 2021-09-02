@@ -32,7 +32,7 @@ class StorageStubImpl : public StorageStub {
       : impl_(std::move(impl)) {}
   ~StorageStubImpl() override = default;
 
-  std::unique_ptr<ObjectMediaStream> GetObjectMedia(
+  std::unique_ptr<ReadObjectStream> ReadObject(
       std::unique_ptr<grpc::ClientContext> context,
       google::storage::v2::ReadObjectRequest const& request) override {
     using ::google::cloud::internal::StreamingReadRpcImpl;
@@ -42,7 +42,7 @@ class StorageStubImpl : public StorageStub {
         std::move(context), std::move(stream));
   }
 
-  std::unique_ptr<InsertStream> InsertObjectMedia(
+  std::unique_ptr<WriteObjectStream> WriteObject(
       std::unique_ptr<grpc::ClientContext> context) override {
     using ::google::cloud::internal::StreamingWriteRpcImpl;
     using ResponseType = ::google::storage::v2::WriteObjectResponse;

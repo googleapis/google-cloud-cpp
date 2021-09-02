@@ -25,11 +25,11 @@ namespace testing {
 
 class MockStorageStub : public internal::StorageStub {
  public:
-  MOCK_METHOD(std::unique_ptr<ObjectMediaStream>, GetObjectMedia,
+  MOCK_METHOD(std::unique_ptr<ReadObjectStream>, ReadObject,
               (std::unique_ptr<grpc::ClientContext>,
                google::storage::v2::ReadObjectRequest const&),
               (override));
-  MOCK_METHOD(std::unique_ptr<InsertStream>, InsertObjectMedia,
+  MOCK_METHOD(std::unique_ptr<WriteObjectStream>, WriteObject,
               (std::unique_ptr<grpc::ClientContext>), (override));
   MOCK_METHOD(StatusOr<google::storage::v2::StartResumableWriteResponse>,
               StartResumableWrite,
@@ -43,7 +43,7 @@ class MockStorageStub : public internal::StorageStub {
               (override));
 };
 
-class MockInsertStream : public internal::StorageStub::InsertStream {
+class MockInsertStream : public internal::StorageStub::WriteObjectStream {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(bool, Write,
@@ -54,7 +54,7 @@ class MockInsertStream : public internal::StorageStub::InsertStream {
               (override));
 };
 
-class MockObjectMediaStream : public internal::StorageStub::ObjectMediaStream {
+class MockObjectMediaStream : public internal::StorageStub::ReadObjectStream {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   using ReadResultType =

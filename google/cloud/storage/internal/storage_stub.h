@@ -32,18 +32,16 @@ class StorageStub {
  public:
   virtual ~StorageStub() = default;
 
-  // TODO(#6982) - update the name of this stream
-  using ObjectMediaStream = ::google::cloud::internal::StreamingReadRpc<
+  using ReadObjectStream = ::google::cloud::internal::StreamingReadRpc<
       google::storage::v2::ReadObjectResponse>;
-  virtual std::unique_ptr<ObjectMediaStream> GetObjectMedia(
+  virtual std::unique_ptr<ReadObjectStream> ReadObject(
       std::unique_ptr<grpc::ClientContext> context,
       google::storage::v2::ReadObjectRequest const& request) = 0;
 
-  // TODO(#6982) - update the name of this stream
-  using InsertStream = ::google::cloud::internal::StreamingWriteRpc<
+  using WriteObjectStream = ::google::cloud::internal::StreamingWriteRpc<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;
-  virtual std::unique_ptr<InsertStream> InsertObjectMedia(
+  virtual std::unique_ptr<WriteObjectStream> WriteObject(
       std::unique_ptr<grpc::ClientContext> context) = 0;
 
   virtual StatusOr<google::storage::v2::StartResumableWriteResponse>

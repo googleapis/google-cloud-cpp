@@ -69,7 +69,7 @@ TEST(GrpcClientInsertObjectMediaTest, Small) {
   ASSERT_TRUE(TextFormat::ParseFromString(kWriteRequestText, &write_request));
 
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, InsertObjectMedia)
+  EXPECT_CALL(*mock, WriteObject)
       .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
         auto stream = absl::make_unique<MockInsertStream>();
         EXPECT_CALL(*stream, Write(IsProtoEqual(write_request), _))

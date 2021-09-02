@@ -20,24 +20,24 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-std::unique_ptr<StorageStub::ObjectMediaStream> StorageAuth::GetObjectMedia(
+std::unique_ptr<StorageStub::ReadObjectStream> StorageAuth::ReadObject(
     std::unique_ptr<grpc::ClientContext> context,
     google::storage::v2::ReadObjectRequest const& request) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::storage::v2::ReadObjectResponse>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
-  return child_->GetObjectMedia(std::move(context), request);
+  return child_->ReadObject(std::move(context), request);
 }
 
-std::unique_ptr<StorageStub::InsertStream> StorageAuth::InsertObjectMedia(
+std::unique_ptr<StorageStub::WriteObjectStream> StorageAuth::WriteObject(
     std::unique_ptr<grpc::ClientContext> context) {
   using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
-  return child_->InsertObjectMedia(std::move(context));
+  return child_->WriteObject(std::move(context));
 }
 
 StatusOr<google::storage::v2::StartResumableWriteResponse>
