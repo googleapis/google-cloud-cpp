@@ -145,7 +145,7 @@ TEST_P(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertWithMD5) {
-  // TODO(#6982) - restore this test when production is fixed
+  // TODO(#7257) - restore this test when production is fixed
   if (!UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -170,7 +170,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithMD5) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
-  // TODO(#6982) - restore this test when production is fixed
+  // TODO(#7257) - restore this test when production is fixed
   if (!UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -195,7 +195,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
-  // TODO(#6982) - restore this test when production is fixed
+  // TODO(#7257) - restore this test when production is fixed
   if (!UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);

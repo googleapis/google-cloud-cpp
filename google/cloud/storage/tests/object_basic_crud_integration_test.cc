@@ -72,7 +72,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
       Projection("full"));
   ASSERT_STATUS_OK(get_meta);
 
-  // TODO(#6982) - cleanup after production is fixed.
+  // TODO(#7257) - cleanup after production is fixed.
   if (UsingGrpc()) {
     // The metadata returned by gRPC (InsertObject) doesn't contain the `acl`,
     // `etag`, `media_link`, or `self_link` fields. Just compare field by field:
