@@ -24,13 +24,11 @@
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/big_endian.h"
-#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/log.h"
-#include "absl/algorithm/container.h"
 #include "absl/strings/str_split.h"
 #include "absl/time/time.h"
 #include <crc32c/crc32c.h>
@@ -177,17 +175,23 @@ std::unique_ptr<GrpcClient::InsertStream> GrpcClient::CreateUploadWriter(
 StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
     QueryResumableUploadRequest const& request) {
   grpc::ClientContext context;
-  auto response = stub_->QueryWriteStatus(context, ToProto(request));
-  if (!response) return std::move(response).status();
+  auto status = stub_->QueryWriteStatus(context, ToProto(request));
+  if (!status) return std::move(status).status();
 
-  return ResumableUploadResponse{
-      {},
-      static_cast<std::uint64_t>(response->committed_size()),
-      // TODO(b/146890058) - `response` should include the object metadata.
-      ObjectMetadata{},
-      response->complete() ? ResumableUploadResponse::kDone
-                           : ResumableUploadResponse::kInProgress,
-      {}};
+  ResumableUploadResponse response;
+  response.upload_state = ResumableUploadResponse::kInProgress;
+  // TODO(#6982) / TODO(#6880) - cleanup the committed_byte vs. size thing
+  if (status->has_committed_size() && status->committed_size()) {
+    response.last_committed_byte =
+        static_cast<std::uint64_t>(status->committed_size());
+  } else {
+    response.last_committed_byte = 0;
+  }
+  if (status->has_resource()) {
+    response.payload = FromProto(status->resource());
+    response.upload_state = ResumableUploadResponse::kDone;
+  }
+  return response;
 }
 
 ClientOptions const& GrpcClient::client_options() const {
@@ -262,7 +266,7 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
   auto const& contents = request.contents();
   auto const contents_size = static_cast<std::int64_t>(contents.size());
   std::int64_t const maximum_buffer_size =
-      google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
+      google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
 
   // This loop must run at least once because we need to send at least one
   // Write() call for empty objects.
@@ -273,7 +277,7 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
     data.set_content(
         contents.substr(static_cast<std::string::size_type>(offset),
                         static_cast<std::string::size_type>(n)));
-    data.mutable_crc32c()->set_value(crc32c::Crc32c(data.content()));
+    data.set_crc32c(crc32c::Crc32c(data.content()));
 
     if (offset + n >= contents_size) {
       proto_request.set_finish_write(true);
@@ -283,13 +287,14 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
     if (!stream->Write(proto_request, grpc::WriteOptions{})) break;
     // After the first message, clear the object specification and checksums,
     // there is no need to resend it.
-    proto_request.clear_insert_object_spec();
+    proto_request.clear_write_object_spec();
     proto_request.clear_object_checksums();
   }
 
   auto response = stream->Close();
   if (!response) return std::move(response).status();
-  return FromProto(*std::move(response));
+  if (response->has_resource()) return FromProto(response->resource());
+  return ObjectMetadata{};
 }
 
 StatusOr<ObjectMetadata> GrpcClient::CopyObject(CopyObjectRequest const&) {
@@ -547,38 +552,30 @@ void SetCommonParameters(GrpcRequest& request, StorageRequest const& req) {
   // the `UserIp` value into the `quota_user` field, and overwrite it if
   // `QuotaUser` is also set. A bit bizarre, but at least it is backwards
   // compatible.
-  if (req.template HasOption<UserIp>()) {
-    request.mutable_common_request_params()->set_quota_user(
-        req.template GetOption<UserIp>().value());
-  }
-  if (req.template HasOption<QuotaUser>()) {
-    request.mutable_common_request_params()->set_quota_user(
-        req.template GetOption<QuotaUser>().value());
-  }
+  // TODO(#6982) - figure out the story for QuotaUser
   // TODO(#4215) - what do we do with FieldMask, as the representation for
-  // `fields` is different.
+  //   `fields` is different.
 }
 
 template <typename GrpcRequest, typename StorageRequest>
-void SetCommonObjectParameters(GrpcRequest& request,
-                               StorageRequest const& req) {
+Status SetCommonObjectParameters(GrpcRequest& request,
+                                 StorageRequest const& req) {
   if (req.template HasOption<EncryptionKey>()) {
     auto data = req.template GetOption<EncryptionKey>().value();
+    auto key_bytes = Base64Decode(data.key);
+    if (!key_bytes) return std::move(key_bytes).status();
+    auto key_sha256_bytes = Base64Decode(data.sha256);
+    if (!key_sha256_bytes) return std::move(key_sha256_bytes).status();
+
     request.mutable_common_object_request_params()->set_encryption_algorithm(
         std::move(data.algorithm));
-    request.mutable_common_object_request_params()->set_encryption_key(
-        std::move(data.key));
-    request.mutable_common_object_request_params()->set_encryption_key_sha256(
-        std::move(data.sha256));
+    request.mutable_common_object_request_params()->set_encryption_key_bytes(
+        std::string{key_bytes->begin(), key_bytes->end()});
+    request.mutable_common_object_request_params()
+        ->set_encryption_key_sha256_bytes(
+            std::string{key_sha256_bytes->begin(), key_sha256_bytes->end()});
   }
-}
-
-template <typename GrpcRequest, typename StorageRequest>
-void SetProjection(GrpcRequest& request, StorageRequest const& req) {
-  if (req.template HasOption<Projection>()) {
-    request.set_projection(
-        GrpcClient::ToProto(req.template GetOption<Projection>()));
-  }
+  return Status{};
 }
 
 template <typename GrpcRequest>
@@ -589,7 +586,7 @@ struct GetPredefinedAcl {
 template <
     typename GrpcRequest, typename StorageRequest,
     typename std::enable_if<
-        std::is_same<google::storage::v1::CommonEnums::PredefinedObjectAcl,
+        std::is_same<google::storage::v2::PredefinedObjectAcl,
                      google::cloud::internal::invoke_result_t<
                          GetPredefinedAcl<GrpcRequest>, GrpcRequest>>::value,
         int>::type = 0>
@@ -613,11 +610,11 @@ template <typename GrpcRequest, typename StorageRequest>
 void SetMetagenerationConditions(GrpcRequest& request,
                                  StorageRequest const& req) {
   if (req.template HasOption<IfMetagenerationMatch>()) {
-    request.mutable_if_metageneration_match()->set_value(
+    request.set_if_metageneration_match(
         req.template GetOption<IfMetagenerationMatch>().value());
   }
   if (req.template HasOption<IfMetagenerationNotMatch>()) {
-    request.mutable_if_metageneration_not_match()->set_value(
+    request.set_if_metageneration_not_match(
         req.template GetOption<IfMetagenerationNotMatch>().value());
   }
 }
@@ -625,17 +622,17 @@ void SetMetagenerationConditions(GrpcRequest& request,
 template <typename GrpcRequest, typename StorageRequest>
 void SetGenerationConditions(GrpcRequest& request, StorageRequest const& req) {
   if (req.template HasOption<IfGenerationMatch>()) {
-    request.mutable_if_generation_match()->set_value(
+    request.set_if_generation_match(
         req.template GetOption<IfGenerationMatch>().value());
   }
   if (req.template HasOption<IfGenerationNotMatch>()) {
-    request.mutable_if_generation_not_match()->set_value(
+    request.set_if_generation_not_match(
         req.template GetOption<IfGenerationNotMatch>().value());
   }
 }
 
 template <typename StorageRequest>
-void SetResourceOptions(google::storage::v1::Object& resource,
+void SetResourceOptions(google::storage::v2::Object& resource,
                         StorageRequest const& request) {
   if (request.template HasOption<ContentEncoding>()) {
     resource.set_content_encoding(
@@ -646,12 +643,12 @@ void SetResourceOptions(google::storage::v1::Object& resource,
         request.template GetOption<ContentType>().value());
   }
   if (request.template HasOption<KmsKeyName>()) {
-    resource.set_kms_key_name(request.template GetOption<KmsKeyName>().value());
+    resource.set_kms_key(request.template GetOption<KmsKeyName>().value());
   }
 }
 
 template <typename StorageRequest>
-void SetObjectMetadata(google::storage::v1::Object& resource,
+void SetObjectMetadata(google::storage::v2::Object& resource,
                        StorageRequest const& req) {
   if (!req.template HasOption<WithObjectMetadata>()) {
     return;
@@ -676,7 +673,7 @@ void SetObjectMetadata(google::storage::v1::Object& resource,
     resource.set_content_type(metadata.content_type());
   }
   if (metadata.event_based_hold()) {
-    resource.mutable_event_based_hold()->set_value(metadata.event_based_hold());
+    resource.set_event_based_hold(metadata.event_based_hold());
   }
 
   for (auto const& kv : metadata.metadata()) {
@@ -690,47 +687,56 @@ void SetObjectMetadata(google::storage::v1::Object& resource,
 }
 
 CustomerEncryption GrpcClient::FromProto(
-    google::storage::v1::Object::CustomerEncryption rhs) {
+    google::storage::v2::Object::CustomerEncryption rhs) {
   CustomerEncryption result;
   result.encryption_algorithm = std::move(*rhs.mutable_encryption_algorithm());
   result.key_sha256 = std::move(*rhs.mutable_key_sha256());
   return result;
 }
 
-google::storage::v1::Object::CustomerEncryption GrpcClient::ToProto(
+google::storage::v2::Object::CustomerEncryption GrpcClient::ToProto(
     CustomerEncryption rhs) {
-  google::storage::v1::Object::CustomerEncryption result;
+  google::storage::v2::Object::CustomerEncryption result;
   result.set_encryption_algorithm(std::move(rhs.encryption_algorithm));
   result.set_key_sha256(std::move(rhs.key_sha256));
   return result;
 }
 
-ObjectMetadata GrpcClient::FromProto(google::storage::v1::Object object) {
+ObjectMetadata GrpcClient::FromProto(google::storage::v2::Object object) {
+  auto bucket_id = [](google::storage::v2::Object const& object) {
+    auto const& bucket_name = object.bucket();
+    auto const pos = bucket_name.find_last_of('/');
+    if (pos == std::string::npos) return bucket_name;
+    return bucket_name.substr(pos + 1);
+  };
+
   ObjectMetadata metadata;
-  metadata.etag_ = std::move(*object.mutable_etag());
-  metadata.id_ = std::move(*object.mutable_id());
   metadata.kind_ = "storage#object";
-  metadata.metageneration_ = object.metageneration();
+  metadata.bucket_ = bucket_id(object);
   metadata.name_ = std::move(*object.mutable_name());
+  metadata.generation_ = object.generation();
+  metadata.id_ = metadata.bucket() + "/" + metadata.name() + "#" +
+                 std::to_string(metadata.generation());
+  metadata.metageneration_ = object.metageneration();
   if (object.has_owner()) {
     metadata.owner_ = FromProto(*object.mutable_owner());
   }
   metadata.storage_class_ = std::move(*object.mutable_storage_class());
-  if (object.has_time_created()) {
+  if (object.has_create_time()) {
     metadata.time_created_ =
-        google::cloud::internal::ToChronoTimePoint(object.time_created());
+        google::cloud::internal::ToChronoTimePoint(object.create_time());
   }
-  if (object.has_updated()) {
+  if (object.has_update_time()) {
     metadata.updated_ =
-        google::cloud::internal::ToChronoTimePoint(object.updated());
+        google::cloud::internal::ToChronoTimePoint(object.update_time());
   }
   std::vector<ObjectAccessControl> acl;
   acl.reserve(object.acl_size());
   for (auto& item : *object.mutable_acl()) {
-    acl.push_back(FromProto(std::move(item)));
+    acl.push_back(FromProto(std::move(item), metadata.bucket(), metadata.name(),
+                            metadata.generation()));
   }
   metadata.acl_ = std::move(acl);
-  metadata.bucket_ = std::move(*object.mutable_bucket());
   metadata.cache_control_ = std::move(*object.mutable_cache_control());
   metadata.component_count_ = object.component_count();
   metadata.content_disposition_ =
@@ -738,52 +744,55 @@ ObjectMetadata GrpcClient::FromProto(google::storage::v1::Object object) {
   metadata.content_encoding_ = std::move(*object.mutable_content_encoding());
   metadata.content_language_ = std::move(*object.mutable_content_language());
   metadata.content_type_ = std::move(*object.mutable_content_type());
-  if (object.has_crc32c()) {
-    metadata.crc32c_ = Crc32cFromProto(object.crc32c());
+  if (object.has_checksums()) {
+    if (object.checksums().has_crc32c()) {
+      metadata.crc32c_ = Crc32cFromProto(object.checksums().crc32c());
+    }
+    if (!object.checksums().md5_hash().empty()) {
+      metadata.md5_hash_ = MD5FromProto(object.checksums().md5_hash());
+    }
   }
   if (object.has_customer_encryption()) {
     metadata.customer_encryption_ =
         FromProto(std::move(*object.mutable_customer_encryption()));
   }
   if (object.has_event_based_hold()) {
-    metadata.event_based_hold_ = object.event_based_hold().value();
+    metadata.event_based_hold_ = object.event_based_hold();
   }
-  metadata.generation_ = object.generation();
-  metadata.kms_key_name_ = std::move(*object.mutable_kms_key_name());
-  metadata.md5_hash_ = object.md5_hash();
+  metadata.kms_key_name_ = std::move(*object.mutable_kms_key());
+
   for (auto const& kv : object.metadata()) {
     metadata.metadata_[kv.first] = kv.second;
   }
-  if (object.has_retention_expiration_time()) {
+  if (object.has_retention_expire_time()) {
     metadata.retention_expiration_time_ =
         google::cloud::internal::ToChronoTimePoint(
-            object.retention_expiration_time());
+            object.retention_expire_time());
   }
   metadata.size_ = static_cast<std::uint64_t>(object.size());
   metadata.temporary_hold_ = object.temporary_hold();
-  if (object.has_time_deleted()) {
+  if (object.has_delete_time()) {
     metadata.time_deleted_ =
-        google::cloud::internal::ToChronoTimePoint(object.time_deleted());
+        google::cloud::internal::ToChronoTimePoint(object.delete_time());
   }
-  if (object.has_time_storage_class_updated()) {
+  if (object.has_update_storage_class_time()) {
     metadata.time_storage_class_updated_ =
         google::cloud::internal::ToChronoTimePoint(
-            object.time_storage_class_updated());
+            object.update_storage_class_time());
   }
-  // TODO(#4893) - support customTime for GCS+gRPC
+  if (object.has_custom_time()) {
+    metadata.custom_time_ =
+        google::cloud::internal::ToChronoTimePoint(object.custom_time());
+  }
 
   return metadata;
 }
 
-google::storage::v1::ObjectAccessControl GrpcClient::ToProto(
+google::storage::v2::ObjectAccessControl GrpcClient::ToProto(
     ObjectAccessControl const& acl) {
-  google::storage::v1::ObjectAccessControl result;
+  google::storage::v2::ObjectAccessControl result;
   result.set_role(acl.role());
-  result.set_etag(acl.etag());
   result.set_id(acl.id());
-  result.set_bucket(acl.bucket());
-  result.set_object(acl.object());
-  result.set_generation(acl.generation());
   result.set_entity(acl.entity());
   result.set_entity_id(acl.entity_id());
   result.set_email(acl.email());
@@ -797,16 +806,20 @@ google::storage::v1::ObjectAccessControl GrpcClient::ToProto(
 }
 
 ObjectAccessControl GrpcClient::FromProto(
-    google::storage::v1::ObjectAccessControl acl) {
+    google::storage::v2::ObjectAccessControl acl,
+    std::string const& bucket_name, std::string const& object_name,
+    std::uint64_t generation) {
+  // TODO(#6982) - receive bucket, object, and generation as parameters
   ObjectAccessControl result;
-  result.bucket_ = std::move(*acl.mutable_bucket());
+  result.kind_ = "storage#objectAccessControl";
+  result.bucket_ = bucket_name;
+  result.object_ = object_name;
+  result.generation_ = generation;
   result.domain_ = std::move(*acl.mutable_domain());
   result.email_ = std::move(*acl.mutable_email());
   result.entity_ = std::move(*acl.mutable_entity());
   result.entity_id_ = std::move(*acl.mutable_entity_id());
-  result.etag_ = std::move(*acl.mutable_etag());
   result.id_ = std::move(*acl.mutable_id());
-  result.kind_ = "storage#objectAccessControl";
   if (acl.has_project_team()) {
     result.project_team_ = ProjectTeam{
         std::move(*acl.mutable_project_team()->mutable_project_number()),
@@ -815,82 +828,67 @@ ObjectAccessControl GrpcClient::FromProto(
   }
   result.role_ = std::move(*acl.mutable_role());
   result.self_link_.clear();
-  result.object_ = std::move(*acl.mutable_object());
-  result.generation_ = acl.generation();
 
   return result;
 }
 
-google::storage::v1::Owner GrpcClient::ToProto(Owner rhs) {
-  google::storage::v1::Owner result;
+google::storage::v2::Owner GrpcClient::ToProto(Owner rhs) {
+  google::storage::v2::Owner result;
   *result.mutable_entity() = std::move(rhs.entity);
   *result.mutable_entity_id() = std::move(rhs.entity_id);
   return result;
 }
 
-Owner GrpcClient::FromProto(google::storage::v1::Owner rhs) {
+Owner GrpcClient::FromProto(google::storage::v2::Owner rhs) {
   Owner result;
   result.entity = std::move(*rhs.mutable_entity());
   result.entity_id = std::move(*rhs.mutable_entity_id());
   return result;
 }
 
-google::storage::v1::CommonEnums::Projection GrpcClient::ToProto(
-    Projection const& p) {
-  if (p.value() == Projection::NoAcl().value()) {
-    return google::storage::v1::CommonEnums::NO_ACL;
-  }
-  if (p.value() == Projection::Full().value()) {
-    return google::storage::v1::CommonEnums::FULL;
-  }
-  GCP_LOG(ERROR) << "Unknown projection value " << p;
-  return google::storage::v1::CommonEnums::FULL;
-}
-
-google::storage::v1::CommonEnums::PredefinedObjectAcl GrpcClient::ToProtoObject(
+google::storage::v2::PredefinedObjectAcl GrpcClient::ToProtoObject(
     PredefinedAcl const& acl) {
   if (acl.value() == PredefinedAcl::BucketOwnerFullControl().value()) {
-    return google::storage::v1::CommonEnums::
-        OBJECT_ACL_BUCKET_OWNER_FULL_CONTROL;
+    return google::storage::v2::OBJECT_ACL_BUCKET_OWNER_FULL_CONTROL;
   }
   if (acl.value() == PredefinedAcl::BucketOwnerRead().value()) {
-    return google::storage::v1::CommonEnums::OBJECT_ACL_BUCKET_OWNER_READ;
+    return google::storage::v2::OBJECT_ACL_BUCKET_OWNER_READ;
   }
   if (acl.value() == PredefinedAcl::AuthenticatedRead().value()) {
-    return google::storage::v1::CommonEnums::OBJECT_ACL_AUTHENTICATED_READ;
+    return google::storage::v2::OBJECT_ACL_AUTHENTICATED_READ;
   }
   if (acl.value() == PredefinedAcl::Private().value()) {
-    return google::storage::v1::CommonEnums::OBJECT_ACL_PRIVATE;
+    return google::storage::v2::OBJECT_ACL_PRIVATE;
   }
   if (acl.value() == PredefinedAcl::ProjectPrivate().value()) {
-    return google::storage::v1::CommonEnums::OBJECT_ACL_PROJECT_PRIVATE;
+    return google::storage::v2::OBJECT_ACL_PROJECT_PRIVATE;
   }
   if (acl.value() == PredefinedAcl::PublicRead().value()) {
-    return google::storage::v1::CommonEnums::OBJECT_ACL_PUBLIC_READ;
+    return google::storage::v2::OBJECT_ACL_PUBLIC_READ;
   }
   if (acl.value() == PredefinedAcl::PublicReadWrite().value()) {
     GCP_LOG(ERROR) << "Invalid predefinedAcl value " << acl;
-    return google::storage::v1::CommonEnums::PREDEFINED_OBJECT_ACL_UNSPECIFIED;
+    return google::storage::v2::PREDEFINED_OBJECT_ACL_UNSPECIFIED;
   }
   GCP_LOG(ERROR) << "Unknown predefinedAcl value " << acl;
-  return google::storage::v1::CommonEnums::PREDEFINED_OBJECT_ACL_UNSPECIFIED;
+  return google::storage::v2::PREDEFINED_OBJECT_ACL_UNSPECIFIED;
 }
 
-StatusOr<google::storage::v1::InsertObjectRequest> GrpcClient::ToProto(
+StatusOr<google::storage::v2::WriteObjectRequest> GrpcClient::ToProto(
     InsertObjectMediaRequest const& request) {
-  google::storage::v1::InsertObjectRequest r;
-  auto& object_spec = *r.mutable_insert_object_spec();
+  google::storage::v2::WriteObjectRequest r;
+  auto& object_spec = *r.mutable_write_object_spec();
   auto& resource = *object_spec.mutable_resource();
   SetResourceOptions(resource, request);
   SetObjectMetadata(resource, request);
   SetPredefinedAcl(object_spec, request);
   SetGenerationConditions(object_spec, request);
   SetMetagenerationConditions(object_spec, request);
-  SetProjection(object_spec, request);
-  SetCommonObjectParameters(r, request);
+  auto status = SetCommonObjectParameters(r, request);
+  if (!status.ok()) return status;
   SetCommonParameters(r, request);
 
-  resource.set_bucket(request.bucket_name());
+  resource.set_bucket("projects/_/buckets/" + request.bucket_name());
   resource.set_name(request.object_name());
   r.set_write_offset(0);
 
@@ -904,11 +902,11 @@ StatusOr<google::storage::v1::InsertObjectRequest> GrpcClient::ToProto(
     auto as_proto =
         Crc32cToProto(request.GetOption<Crc32cChecksumValue>().value());
     if (!as_proto.ok()) return std::move(as_proto).status();
-    checksums.mutable_crc32c()->set_value(*as_proto);
+    checksums.set_crc32c(*as_proto);
   } else if (request.GetOption<DisableCrc32cChecksum>().value_or(false)) {
     // Nothing to do, the option is disabled (mostly useful in tests).
   } else {
-    checksums.mutable_crc32c()->set_value(crc32c::Crc32c(request.contents()));
+    checksums.set_crc32c(crc32c::Crc32c(request.contents()));
   }
 
   if (request.HasOption<MD5HashValue>()) {
@@ -924,39 +922,57 @@ StatusOr<google::storage::v1::InsertObjectRequest> GrpcClient::ToProto(
   return r;
 }
 
-google::storage::v1::StartResumableWriteRequest GrpcClient::ToProto(
-    ResumableUploadRequest const& request) {
-  google::storage::v1::StartResumableWriteRequest result;
+ResumableUploadResponse GrpcClient::FromProto(
+    google::storage::v2::WriteObjectResponse const& p) {
+  ResumableUploadResponse response;
+  response.upload_state = ResumableUploadResponse::kInProgress;
+  if (p.has_committed_size() && p.committed_size() > 0) {
+    // TODO(#6982) / TODO(#6880) - cleanup the committed_byte vs. size thing
+    response.last_committed_byte =
+        static_cast<std::uint64_t>(p.committed_size()) - 1;
+  } else {
+    response.last_committed_byte = 0;
+  }
+  if (p.has_resource()) {
+    response.payload = FromProto(p.resource());
+    response.upload_state = ResumableUploadResponse::kDone;
+  }
+  return response;
+}
 
-  auto& object_spec = *result.mutable_insert_object_spec();
+google::storage::v2::StartResumableWriteRequest GrpcClient::ToProto(
+    ResumableUploadRequest const& request) {
+  google::storage::v2::StartResumableWriteRequest result;
+
+  auto& object_spec = *result.mutable_write_object_spec();
   auto& resource = *object_spec.mutable_resource();
   SetResourceOptions(resource, request);
   SetObjectMetadata(resource, request);
   SetPredefinedAcl(object_spec, request);
   SetGenerationConditions(object_spec, request);
   SetMetagenerationConditions(object_spec, request);
-  SetProjection(object_spec, request);
   SetCommonParameters(result, request);
-  SetCommonObjectParameters(result, request);
+  // TODO(#6982) - return a StatusOr object
+  (void)SetCommonObjectParameters(result, request);
 
-  resource.set_bucket(request.bucket_name());
+  resource.set_bucket("projects/_/buckets/" + request.bucket_name());
   resource.set_name(request.object_name());
 
   return result;
 }
 
-google::storage::v1::QueryWriteStatusRequest GrpcClient::ToProto(
+google::storage::v2::QueryWriteStatusRequest GrpcClient::ToProto(
     QueryResumableUploadRequest const& request) {
-  google::storage::v1::QueryWriteStatusRequest r;
+  google::storage::v2::QueryWriteStatusRequest r;
   r.set_upload_id(request.upload_session_url());
   return r;
 }
 
-google::storage::v1::GetObjectMediaRequest GrpcClient::ToProto(
+google::storage::v2::ReadObjectRequest GrpcClient::ToProto(
     ReadObjectRangeRequest const& request) {
-  google::storage::v1::GetObjectMediaRequest r;
+  google::storage::v2::ReadObjectRequest r;
   r.set_object(request.object_name());
-  r.set_bucket(request.bucket_name());
+  r.set_bucket("projects/_/buckets/" + request.bucket_name());
   if (request.HasOption<Generation>()) {
     r.set_generation(request.GetOption<Generation>().value());
   }
@@ -980,15 +996,15 @@ google::storage::v1::GetObjectMediaRequest GrpcClient::ToProto(
   }
   SetGenerationConditions(r, request);
   SetMetagenerationConditions(r, request);
+  // TODO(#6982) - return a StatusOr object
   SetCommonObjectParameters(r, request);
   SetCommonParameters(r, request);
 
   return r;
 }
 
-std::string GrpcClient::Crc32cFromProto(
-    google::protobuf::UInt32Value const& v) {
-  auto endian_encoded = google::cloud::internal::EncodeBigEndian(v.value());
+std::string GrpcClient::Crc32cFromProto(std::uint32_t v) {
+  auto endian_encoded = google::cloud::internal::EncodeBigEndian(v);
   return Base64Encode(endian_encoded);
 }
 
@@ -1000,20 +1016,19 @@ StatusOr<std::uint32_t> GrpcClient::Crc32cToProto(std::string const& v) {
 }
 
 std::string GrpcClient::MD5FromProto(std::string const& v) {
-  if (v.empty()) return {};
-  auto binary = internal::HexDecode(v);
-  return internal::Base64Encode(binary);
+  return internal::Base64Encode(v);
 }
 
 StatusOr<std::string> GrpcClient::MD5ToProto(std::string const& v) {
   if (v.empty()) return {};
   auto binary = internal::Base64Decode(v);
   if (!binary) return std::move(binary).status();
-  return internal::HexEncode(*binary);
+  return std::string{binary->begin(), binary->end()};
 }
 
 std::string GrpcClient::ComputeMD5Hash(std::string const& payload) {
-  return internal::HexEncode(internal::MD5Hash(payload));
+  auto b = internal::MD5Hash(payload);
+  return std::string{b.begin(), b.end()};
 }
 
 }  // namespace internal

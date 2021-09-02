@@ -41,7 +41,7 @@ start_emulator
 # `storage_bucket_samples` binary is missing the examples that use said bucket
 # are missing too.
 printf '{"name": "%s"}' "${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}" |
-  curl -X POST -H "Content-Type: application/json" --data-binary @- \
+  curl -s -X POST -H "Content-Type: application/json" --data-binary @- \
     "${CLOUD_STORAGE_EMULATOR_ENDPOINT}/storage/v1/b?project=${GOOGLE_CLOUD_PROJECT}"
 
 ctest -R "^storage_" "${ctest_args[@]}"

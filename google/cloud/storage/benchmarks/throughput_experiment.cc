@@ -24,7 +24,7 @@
 #include "absl/algorithm/container.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/str_split.h"
-#include <google/storage/v1/storage.grpc.pb.h>
+#include <google/storage/v2/storage.grpc.pb.h>
 #include <curl/curl.h>
 #include <vector>
 
@@ -275,7 +275,7 @@ std::shared_ptr<grpc::ChannelInterface> CreateGcsChannel(int thread_id) {
 class DownloadObjectRawGrpc : public ThroughputExperiment {
  public:
   explicit DownloadObjectRawGrpc(int thread_id)
-      : stub_(google::storage::v1::Storage::NewStub(
+      : stub_(google::storage::v2::Storage::NewStub(
             CreateGcsChannel(thread_id))) {}
   ~DownloadObjectRawGrpc() override = default;
 
@@ -283,12 +283,12 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
                        std::string const& object_name,
                        ThroughputExperimentConfig const& config) override {
     auto timer = Timer::PerThread();
-    google::storage::v1::GetObjectMediaRequest request;
+    google::storage::v2::ReadObjectRequest request;
     request.set_bucket(bucket_name);
     request.set_object(object_name);
     grpc::ClientContext context;
-    auto stream = stub_->GetObjectMedia(&context, request);
-    google::storage::v1::GetObjectMediaResponse response;
+    auto stream = stub_->ReadObject(&context, request);
+    google::storage::v2::ReadObjectResponse response;
     std::int64_t bytes_received = 0;
     while (stream->Read(&response)) {
       if (response.has_checksummed_data()) {
@@ -312,7 +312,7 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
   }
 
  private:
-  std::unique_ptr<google::storage::v1::Storage::StubInterface> stub_;
+  std::unique_ptr<google::storage::v2::Storage::StubInterface> stub_;
 };
 
 }  // namespace

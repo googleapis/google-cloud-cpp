@@ -33,21 +33,21 @@ using ::google::cloud::storage::testing::MockObjectMediaStream;
 using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
-using ::google::storage::v1::GetObjectMediaRequest;
+using ::google::storage::v2::ReadObjectRequest;
 using ::testing::NotNull;
 
 /// @test Verify downloads have a default timeout.
 TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
-  auto constexpr kExpectedRequestText = R"pb(bucket: "test-bucket"
-                                             object: "test-object")pb";
-  google::storage::v1::GetObjectMediaRequest expected_request;
+  auto constexpr kExpectedRequestText =
+      R"pb(bucket: "projects/_/buckets/test-bucket" object: "test-object")pb";
+  ReadObjectRequest expected_request;
   ASSERT_TRUE(
       TextFormat::ParseFromString(kExpectedRequestText, &expected_request));
 
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObjectMedia)
       .WillOnce([&](std::unique_ptr<grpc::ClientContext> context,
-                    GetObjectMediaRequest const& request) {
+                    ReadObjectRequest const& request) {
         EXPECT_THAT(request, IsProtoEqual(expected_request));
         auto const timeout =
             context->deadline() - std::chrono::system_clock::now();
@@ -67,9 +67,9 @@ TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
 
 /// @test Verify options can configured a non-default timeout.
 TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
-  auto constexpr kExpectedRequestText = R"pb(bucket: "test-bucket"
-                                             object: "test-object")pb";
-  google::storage::v1::GetObjectMediaRequest expected_request;
+  auto constexpr kExpectedRequestText =
+      R"pb(bucket: "projects/_/buckets/test-bucket" object: "test-object")pb";
+  ReadObjectRequest expected_request;
   ASSERT_TRUE(
       TextFormat::ParseFromString(kExpectedRequestText, &expected_request));
 
@@ -78,7 +78,7 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObjectMedia)
       .WillOnce([&](std::unique_ptr<grpc::ClientContext> context,
-                    GetObjectMediaRequest const& request) {
+                    ReadObjectRequest const& request) {
         EXPECT_THAT(request, IsProtoEqual(expected_request));
         auto const timeout =
             context->deadline() - std::chrono::system_clock::now();

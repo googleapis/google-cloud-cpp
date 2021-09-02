@@ -31,8 +31,8 @@ cc_library(
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
-        "@com_google_googleapis//google/storage/v1:storage_cc_grpc",
-        "@com_google_googleapis//google/storage/v1:storage_cc_proto",
+        "@com_google_googleapis//google/storage/v2:storage_cc_grpc",
+        "@com_google_googleapis//google/storage/v2:storage_cc_proto",
     ],
 )
 

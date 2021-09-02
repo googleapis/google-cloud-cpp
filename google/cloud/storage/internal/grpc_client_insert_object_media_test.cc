@@ -41,27 +41,31 @@ using ::testing::Return;
 /// @verify that small objects are inserted with a single Write() call.
 TEST(GrpcClientInsertObjectMediaTest, Small) {
   auto constexpr kResponseText =
-      R"pb(bucket: "test-bucket" name: "test-object" generation: 12345)pb";
-  google::storage::v1::Object response;
+      R"pb(resource {
+             bucket: "test-bucket"
+             name: "test-object"
+             generation: 12345
+           })pb";
+  google::storage::v2::WriteObjectResponse response;
   ASSERT_TRUE(TextFormat::ParseFromString(kResponseText, &response));
 
   auto constexpr kWriteRequestText = R"pb(
-    insert_object_spec {
-      resource: { bucket: "test-bucket" name: "test-object" }
+    write_object_spec {
+      resource: { bucket: "projects/_/buckets/test-bucket" name: "test-object" }
     }
     checksummed_data {
       content: "The quick brown fox jumps over the lazy dog"
       # grpc_client_object_request_test.cc documents this magic value
-      crc32c { value: 0x22620404 }
+      crc32c: 0x22620404
       # MD5 is disabled by default
     }
     object_checksums {
-      crc32c { value: 0x22620404 }
+      crc32c: 0x22620404
       # MD5 is disabled by default
     }
     finish_write: true
   )pb";
-  google::storage::v1::InsertObjectRequest write_request;
+  google::storage::v2::WriteObjectRequest write_request;
   ASSERT_TRUE(TextFormat::ParseFromString(kWriteRequestText, &write_request));
 
   auto mock = std::make_shared<MockStorageStub>();
