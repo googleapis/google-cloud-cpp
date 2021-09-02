@@ -167,9 +167,9 @@ GrpcClient::GrpcClient(std::shared_ptr<StorageStub> stub, Options const& opts)
       background_(MakeBackgroundThreadsFactory(opts)()),
       stub_(std::move(stub)) {}
 
-std::unique_ptr<GrpcClient::InsertStream> GrpcClient::CreateUploadWriter(
+std::unique_ptr<GrpcClient::WriteObjectStream> GrpcClient::CreateUploadWriter(
     std::unique_ptr<grpc::ClientContext> context) {
-  return stub_->InsertObjectMedia(std::move(context));
+  return stub_->WriteObject(std::move(context));
 }
 
 StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
@@ -180,7 +180,7 @@ StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
 
   ResumableUploadResponse response;
   response.upload_state = ResumableUploadResponse::kInProgress;
-  // TODO(#6982) / TODO(#6880) - cleanup the committed_byte vs. size thing
+  // TODO(#6880) - cleanup the committed_byte vs. size thing
   if (status->has_committed_size() && status->committed_size()) {
     response.last_committed_byte =
         static_cast<std::uint64_t>(status->committed_size());
@@ -260,8 +260,7 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
   if (!r) return std::move(r).status();
   auto proto_request = *r;
 
-  auto stream =
-      stub_->InsertObjectMedia(absl::make_unique<grpc::ClientContext>());
+  auto stream = stub_->WriteObject(absl::make_unique<grpc::ClientContext>());
 
   auto const& contents = request.contents();
   auto const contents_size = static_cast<std::int64_t>(contents.size());
@@ -327,7 +326,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
   }
   return std::unique_ptr<ObjectReadSource>(
       absl::make_unique<GrpcObjectReadSource>(
-          stub_->GetObjectMedia(std::move(context), ToProto(request))));
+          stub_->ReadObject(std::move(context), ToProto(request))));
 }
 
 StatusOr<ListObjectsResponse> GrpcClient::ListObjects(
@@ -927,7 +926,7 @@ ResumableUploadResponse GrpcClient::FromProto(
   ResumableUploadResponse response;
   response.upload_state = ResumableUploadResponse::kInProgress;
   if (p.has_committed_size() && p.committed_size() > 0) {
-    // TODO(#6982) / TODO(#6880) - cleanup the committed_byte vs. size thing
+    // TODO(#6880) - cleanup the committed_byte vs. size thing
     response.last_committed_byte =
         static_cast<std::uint64_t>(p.committed_size()) - 1;
   } else {

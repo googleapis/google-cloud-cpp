@@ -45,7 +45,7 @@ TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
       TextFormat::ParseFromString(kExpectedRequestText, &expected_request));
 
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, GetObjectMedia)
+  EXPECT_CALL(*mock, ReadObject)
       .WillOnce([&](std::unique_ptr<grpc::ClientContext> context,
                     ReadObjectRequest const& request) {
         EXPECT_THAT(request, IsProtoEqual(expected_request));
@@ -76,7 +76,7 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
   auto const configured_timeout = std::chrono::seconds(3);
 
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, GetObjectMedia)
+  EXPECT_CALL(*mock, ReadObject)
       .WillOnce([&](std::unique_ptr<grpc::ClientContext> context,
                     ReadObjectRequest const& request) {
         EXPECT_THAT(request, IsProtoEqual(expected_request));

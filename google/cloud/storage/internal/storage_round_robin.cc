@@ -20,16 +20,15 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-std::unique_ptr<StorageStub::ObjectMediaStream>
-StorageRoundRobin::GetObjectMedia(
+std::unique_ptr<StorageStub::ReadObjectStream> StorageRoundRobin::ReadObject(
     std::unique_ptr<grpc::ClientContext> context,
     google::storage::v2::ReadObjectRequest const& request) {
-  return Child()->GetObjectMedia(std::move(context), request);
+  return Child()->ReadObject(std::move(context), request);
 }
 
-std::unique_ptr<StorageStub::InsertStream> StorageRoundRobin::InsertObjectMedia(
+std::unique_ptr<StorageStub::WriteObjectStream> StorageRoundRobin::WriteObject(
     std::unique_ptr<grpc::ClientContext> context) {
-  return Child()->InsertObjectMedia(std::move(context));
+  return Child()->WriteObject(std::move(context));
 }
 
 StatusOr<google::storage::v2::StartResumableWriteResponse>
