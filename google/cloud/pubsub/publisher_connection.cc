@@ -138,13 +138,12 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
     if (options.message_ordering()) {
       auto factory = [topic, options, sink, cq](std::string const& key) {
         return BatchingPublisherConnection::Create(
-            std::move(topic), std::move(options), key,
-            SequentialBatchSink::Create(std::move(sink)), std::move(cq));
+            topic, options, key, SequentialBatchSink::Create(sink), cq);
       };
       return OrderingKeyPublisherConnection::Create(std::move(factory));
     }
     return RejectsWithOrderingKey::Create(BatchingPublisherConnection::Create(
-        topic, options, {}, std::move(sink), std::move(cq)));
+        std::move(topic), options, {}, std::move(sink), std::move(cq)));
   };
   auto connection = make_connection();
   if (options.full_publisher_rejects() || options.full_publisher_blocks()) {
