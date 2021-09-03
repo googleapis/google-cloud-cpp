@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/grpc_plugin.h"
+#include "google/cloud/storage/internal/grpc_configure_client_context.h"
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
 #include "google/cloud/storage/internal/grpc_resumable_upload_session.h"
 #include "google/cloud/storage/internal/openssl_util.h"
@@ -175,6 +176,7 @@ std::unique_ptr<GrpcClient::WriteObjectStream> GrpcClient::CreateUploadWriter(
 StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
     QueryResumableUploadRequest const& request) {
   grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
   auto status = stub_->QueryWriteStatus(context, ToProto(request));
   if (!status) return std::move(status).status();
 
@@ -277,7 +279,13 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
   if (!r) return std::move(r).status();
   auto proto_request = *r;
 
-  auto stream = stub_->WriteObject(absl::make_unique<grpc::ClientContext>());
+  auto context = absl::make_unique<grpc::ClientContext>();
+  // The REST response is just the object metadata (aka the "resource"). In the
+  // gRPC response the object metadata is in a "resource" field. Passing an
+  // extra prefix to ApplyQueryParameters sends the right filtering instructions
+  // to the gRPC API.
+  ApplyQueryParameters(*context, request, "resource");
+  auto stream = stub_->WriteObject(std::move(context));
 
   auto const& contents = request.contents();
   auto const contents_size = static_cast<std::int64_t>(contents.size());
@@ -336,6 +344,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
         "ReadLast(0) is invalid in REST and produces incorrect output in gRPC");
   }
   auto context = absl::make_unique<grpc::ClientContext>();
+  ApplyQueryParameters(*context, request);
   if (backwards_compatibility_options_.download_stall_timeout().count() != 0) {
     context->set_deadline(
         std::chrono::system_clock::now() +
@@ -386,6 +395,7 @@ GrpcClient::CreateResumableSession(ResumableUploadRequest const& request) {
   if (!proto_request) return std::move(proto_request).status();
 
   grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
   auto response = stub_->StartResumableWrite(context, *proto_request);
   if (!response.ok()) return std::move(response).status();
 
@@ -547,16 +557,6 @@ void SetCommonParameters(GrpcRequest& request, StorageRequest const& req) {
     request.mutable_common_request_params()->set_user_project(
         req.template GetOption<UserProject>().value());
   }
-  // The gRPC has a single field for the `QuotaUser` parameter, while the JSON
-  // API has two:
-  //    https://cloud.google.com/storage/docs/json_api/v1/parameters#quotaUser
-  // Fortunately the semantics are to use `quotaUser` if set, so we can set
-  // the `UserIp` value into the `quota_user` field, and overwrite it if
-  // `QuotaUser` is also set. A bit bizarre, but at least it is backwards
-  // compatible.
-  // TODO(#6982) - figure out the story for QuotaUser
-  // TODO(#4215) - what do we do with FieldMask, as the representation for
-  //   `fields` is different.
 }
 
 template <typename GrpcRequest, typename StorageRequest>

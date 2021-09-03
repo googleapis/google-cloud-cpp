@@ -19,6 +19,7 @@
 google_cloud_cpp_storage_grpc_hdrs = [
     "grpc_plugin.h",
     "internal/grpc_client.h",
+    "internal/grpc_configure_client_context.h",
     "internal/grpc_object_read_source.h",
     "internal/grpc_resumable_upload_session.h",
     "internal/grpc_resumable_upload_session_url.h",
