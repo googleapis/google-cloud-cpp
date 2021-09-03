@@ -144,7 +144,7 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
       return OrderingKeyPublisherConnection::Create(std::move(factory));
     }
     return RejectsWithOrderingKey::Create(BatchingPublisherConnection::Create(
-        std::move(topic), std::move(options), {}, sink, std::move(cq)));
+        std::move(topic), options, {}, sink, std::move(cq)));
   };
   auto connection = make_connection();
   if (options.full_publisher_rejects() || options.full_publisher_blocks()) {
