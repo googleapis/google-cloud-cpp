@@ -15,4 +15,4 @@
 #
 # Common configuration parameters.
 #
-$env:VCPKG_RELEASE_VERSION="7e396645d919f463ef6f0f2ad6a8c5272c1f9b27"
+$env:VCPKG_RELEASE_VERSION="7e7bcf89171b7ed84ece845b1fa596a018e462f2"
