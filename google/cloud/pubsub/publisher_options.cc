@@ -17,14 +17,6 @@
 
 namespace google {
 namespace cloud {
-namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
-Options&& MakeOptions(pubsub::PublisherOptions&& o) {
-  return std::move(o.opts_);
-}
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
-}  // namespace pubsub_internal
-
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 

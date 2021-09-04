@@ -261,6 +261,16 @@ class PublisherOptions {
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
+
+namespace pubsub_internal {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+
+inline Options&& MakeOptions(pubsub::PublisherOptions&& o) {
+  return std::move(o.opts_);
+}
+
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
 
