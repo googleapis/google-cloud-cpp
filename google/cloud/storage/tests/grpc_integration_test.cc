@@ -242,13 +242,16 @@ TEST_P(GrpcIntegrationTest, FieldFilter) {
 
   auto metadata = client->InsertObject(
       bucket_name(), object_name, LoremIpsum(), IfGenerationMatch(0),
-      Fields("resource(bucket,name,generation,contentType)"));
+      ContentType("text/plain"), ContentEncoding("utf-8"),
+      Fields("bucket,name,generation,contentType"));
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
   // If the Fields() filter works, then size() would be 0
   if (!UsingEmulator()) {
     EXPECT_EQ(metadata->size(), 0);
+    EXPECT_EQ(metadata->content_type(), "text/plain");
+    EXPECT_EQ(metadata->content_encoding(), "");
   }
 }
 

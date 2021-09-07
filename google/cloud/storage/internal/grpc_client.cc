@@ -176,7 +176,7 @@ std::unique_ptr<GrpcClient::WriteObjectStream> GrpcClient::CreateUploadWriter(
 StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
     QueryResumableUploadRequest const& request) {
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  ApplyQueryParameters(context, request, "resource");
   auto status = stub_->QueryWriteStatus(context, ToProto(request));
   if (!status) return std::move(status).status();
 
@@ -395,7 +395,7 @@ GrpcClient::CreateResumableSession(ResumableUploadRequest const& request) {
   if (!proto_request) return std::move(proto_request).status();
 
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
+  ApplyQueryParameters(context, request, "resource");
   auto response = stub_->StartResumableWrite(context, *proto_request);
   if (!response.ok()) return std::move(response).status();
 
