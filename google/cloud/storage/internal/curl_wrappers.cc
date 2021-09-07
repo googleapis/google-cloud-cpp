@@ -32,27 +32,6 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
-// The Google Cloud Storage C++ client library depends on libcurl, which depends
-// on many different SSL libraries, depending on the library the library needs
-// to take action to be thread-safe. More details can be found here:
-//
-//     https://curl.haxx.se/libcurl/c/threadsafe.html
-//
-std::once_flag ssl_locking_initialized;
-
-// libcurl recommends turning on CURLOPT_NOSIGNAL for multi-threaded
-// applications: "Note that setting CURLOPT_NOSIGNAL to 0L will not work in a
-// threaded situation as there will be race where libcurl risks restoring the
-// former signal handler while another thread should still ignore it."
-//
-// libcurl further recommends that we setup our own signal handler for SIGPIPE
-// when using multiple threads: "When CURLOPT_NOSIGNAL is set to 1L, your
-// application needs to deal with the risk of a SIGPIPE (that at least the
-// OpenSSL backend can trigger)".
-//
-//     https://curl.haxx.se/libcurl/c/threadsafe.html
-//
-std::once_flag sigpipe_handler_initialized;
 
 #if LIBRESSL_VERSION_NUMBER
 // LibreSSL calls itself OpenSSL > 2.0, but it really is based on SSL 1.0.2
@@ -257,10 +236,32 @@ std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
 
 void CurlInitializeOnce(Options const& options) {
   static CurlInitializer curl_initializer;
-  std::call_once(ssl_locking_initialized, InitializeSslLocking,
-                 options.get<EnableCurlSslLockingOption>());
-  std::call_once(sigpipe_handler_initialized, InitializeSigPipeHandler,
-                 options.get<EnableCurlSigpipeHandlerOption>());
+  static bool const kInitialized = [&options]() {
+    // The Google Cloud Storage C++ client library depends on libcurl, which
+    // depends on many different SSL libraries, depending on the library the
+    // library needs to take action to be thread-safe. More details can be
+    // found here:
+    //
+    //     https://curl.haxx.se/libcurl/c/threadsafe.html
+    //
+    InitializeSslLocking(options.get<EnableCurlSslLockingOption>());
+
+    // libcurl recommends turning on CURLOPT_NOSIGNAL for multi-threaded
+    // applications: "Note that setting CURLOPT_NOSIGNAL to 0L will not work in
+    // a threaded situation as there will be race where libcurl risks restoring
+    // the former signal handler while another thread should still ignore it."
+    //
+    // libcurl further recommends that we setup our own signal handler for
+    // SIGPIPE when using multiple threads: "When CURLOPT_NOSIGNAL is set to
+    // 1L, your application needs to deal with the risk of a SIGPIPE (that at
+    // least the OpenSSL backend can trigger)".
+    //
+    //     https://curl.haxx.se/libcurl/c/threadsafe.html
+    //
+    InitializeSigPipeHandler(options.get<EnableCurlSigpipeHandlerOption>());
+    return true;
+  }();
+  static_cast<void>(kInitialized);
 }
 
 }  // namespace internal

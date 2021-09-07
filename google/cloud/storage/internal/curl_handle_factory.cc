@@ -19,8 +19,6 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-std::once_flag default_curl_handle_factory_initialized;
-std::shared_ptr<CurlHandleFactory> default_curl_handle_factory;
 
 void CurlHandleFactory::SetCurlStringOption(CURL* handle, CURLoption option_tag,
                                             char const* value) {
@@ -28,10 +26,9 @@ void CurlHandleFactory::SetCurlStringOption(CURL* handle, CURLoption option_tag,
 }
 
 std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory() {
-  std::call_once(default_curl_handle_factory_initialized, [] {
-    default_curl_handle_factory = std::make_shared<DefaultCurlHandleFactory>();
-  });
-  return default_curl_handle_factory;
+  static auto const* const kFactory =
+      new auto(std::make_shared<DefaultCurlHandleFactory>());
+  return *kFactory;
 }
 
 std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory(
