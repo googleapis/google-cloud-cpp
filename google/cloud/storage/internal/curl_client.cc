@@ -160,102 +160,6 @@ Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
   return Status();
 }
 
-template <typename RequestType>
-StatusOr<std::unique_ptr<ResumableUploadSession>>
-CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
-  auto session_id =
-      request.template GetOption<UseResumableUploadSession>().value_or("");
-  if (!session_id.empty()) {
-    return RestoreResumableSession(session_id);
-  }
-
-  CurlRequestBuilder builder(
-      upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
-  auto status = SetupBuilderCommon(builder, "POST");
-  if (!status.ok()) {
-    return status;
-  }
-
-  // In most cases we use `SetupBuilder()` to setup all these options in the
-  // request. But in this case we cannot because that might also set
-  // `Content-Type` to the wrong value. Instead we have to explicitly list all
-  // the options here. Somebody could write a clever meta-function to say
-  // "set all the options except `ContentType`, but I think that is going to be
-  // very hard to understand.
-  builder.AddOption(request.template GetOption<EncryptionKey>());
-  builder.AddOption(request.template GetOption<IfGenerationMatch>());
-  builder.AddOption(request.template GetOption<IfGenerationNotMatch>());
-  builder.AddOption(request.template GetOption<IfMetagenerationMatch>());
-  builder.AddOption(request.template GetOption<IfMetagenerationNotMatch>());
-  builder.AddOption(request.template GetOption<KmsKeyName>());
-  builder.AddOption(request.template GetOption<PredefinedAcl>());
-  builder.AddOption(request.template GetOption<Projection>());
-  builder.AddOption(request.template GetOption<UserProject>());
-  builder.AddOption(request.template GetOption<CustomHeader>());
-  builder.AddOption(request.template GetOption<Fields>());
-  builder.AddOption(request.template GetOption<IfMatchEtag>());
-  builder.AddOption(request.template GetOption<IfNoneMatchEtag>());
-  builder.AddOption(request.template GetOption<QuotaUser>());
-  builder.AddOption(request.template GetOption<UploadContentLength>());
-  SetupBuilderUserIp(builder, request);
-
-  builder.AddQueryParameter("uploadType", "resumable");
-  builder.AddHeader("Content-Type: application/json; charset=UTF-8");
-  nlohmann::json resource;
-  if (request.template HasOption<WithObjectMetadata>()) {
-    resource = ObjectMetadataJsonForInsert(
-        request.template GetOption<WithObjectMetadata>().value());
-  }
-  if (request.template HasOption<ContentEncoding>()) {
-    resource["contentEncoding"] =
-        request.template GetOption<ContentEncoding>().value();
-  }
-  if (request.template HasOption<ContentType>()) {
-    resource["contentType"] = request.template GetOption<ContentType>().value();
-  }
-  if (request.template HasOption<Crc32cChecksumValue>()) {
-    resource["crc32c"] =
-        request.template GetOption<Crc32cChecksumValue>().value();
-  }
-  if (request.template HasOption<MD5HashValue>()) {
-    resource["md5Hash"] = request.template GetOption<MD5HashValue>().value();
-  }
-
-  if (resource.empty()) {
-    builder.AddQueryParameter("name", request.object_name());
-  } else {
-    resource["name"] = request.object_name();
-  }
-
-  std::string request_payload;
-  if (!resource.empty()) {
-    request_payload = resource.dump();
-  }
-  builder.AddHeader("Content-Length: " +
-                    std::to_string(request_payload.size()));
-  auto http_response = builder.BuildRequest().MakeRequest(request_payload);
-  if (!http_response.ok()) {
-    return std::move(http_response).status();
-  }
-  if (http_response->status_code >= HttpStatusCode::kMinNotSuccess) {
-    return AsStatus(*http_response);
-  }
-  auto response =
-      ResumableUploadResponse::FromHttpResponse(*std::move(http_response));
-  if (!response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->upload_session_url.empty()) {
-    std::ostringstream os;
-    os << __func__ << " - invalid server response, parsed to " << *response;
-    return Status(StatusCode::kInternal, std::move(os).str());
-  }
-  return std::unique_ptr<ResumableUploadSession>(
-      absl::make_unique<CurlResumableUploadSession>(
-          shared_from_this(), std::move(response->upload_session_url),
-          std::move(request.template GetOption<CustomHeader>())));
-}
-
 CurlClient::CurlClient(google::cloud::Options options)
     : opts_(std::move(options)),
       backwards_compatibility_options_(
@@ -718,7 +622,91 @@ StatusOr<RewriteObjectResponse> CurlClient::RewriteObject(
 
 StatusOr<std::unique_ptr<ResumableUploadSession>>
 CurlClient::CreateResumableSession(ResumableUploadRequest const& request) {
-  return CreateResumableSessionGeneric(request);
+  auto session_id = request.GetOption<UseResumableUploadSession>().value_or("");
+  if (!session_id.empty()) {
+    return RestoreResumableSession(session_id);
+  }
+
+  CurlRequestBuilder builder(
+      upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
+  auto status = SetupBuilderCommon(builder, "POST");
+  if (!status.ok()) {
+    return status;
+  }
+
+  // In most cases we use `SetupBuilder()` to set up all these options in the
+  // request. But in this case we cannot because that might also set
+  // `Content-Type` to the wrong value. Instead, we have to explicitly list all
+  // the options here. Somebody could write a clever meta-function to say
+  // "set all the options except `ContentType`, but I think that is going to be
+  // very hard to understand.
+  builder.AddOption(request.GetOption<EncryptionKey>());
+  builder.AddOption(request.GetOption<IfGenerationMatch>());
+  builder.AddOption(request.GetOption<IfGenerationNotMatch>());
+  builder.AddOption(request.GetOption<IfMetagenerationMatch>());
+  builder.AddOption(request.GetOption<IfMetagenerationNotMatch>());
+  builder.AddOption(request.GetOption<KmsKeyName>());
+  builder.AddOption(request.GetOption<PredefinedAcl>());
+  builder.AddOption(request.GetOption<Projection>());
+  builder.AddOption(request.GetOption<UserProject>());
+  builder.AddOption(request.GetOption<CustomHeader>());
+  builder.AddOption(request.GetOption<Fields>());
+  builder.AddOption(request.GetOption<IfMatchEtag>());
+  builder.AddOption(request.GetOption<IfNoneMatchEtag>());
+  builder.AddOption(request.GetOption<QuotaUser>());
+  builder.AddOption(request.GetOption<UploadContentLength>());
+  SetupBuilderUserIp(builder, request);
+
+  builder.AddQueryParameter("uploadType", "resumable");
+  builder.AddHeader("Content-Type: application/json; charset=UTF-8");
+  nlohmann::json resource;
+  if (request.HasOption<WithObjectMetadata>()) {
+    resource = ObjectMetadataJsonForInsert(
+        request.GetOption<WithObjectMetadata>().value());
+  }
+  if (request.HasOption<ContentEncoding>()) {
+    resource["contentEncoding"] = request.GetOption<ContentEncoding>().value();
+  }
+  if (request.HasOption<ContentType>()) {
+    resource["contentType"] = request.GetOption<ContentType>().value();
+  }
+  if (request.HasOption<Crc32cChecksumValue>()) {
+    resource["crc32c"] = request.GetOption<Crc32cChecksumValue>().value();
+  }
+  if (request.HasOption<MD5HashValue>()) {
+    resource["md5Hash"] = request.GetOption<MD5HashValue>().value();
+  }
+
+  if (resource.empty()) {
+    builder.AddQueryParameter("name", request.object_name());
+  } else {
+    resource["name"] = request.object_name();
+  }
+
+  std::string request_payload;
+  if (!resource.empty()) request_payload = resource.dump();
+
+  builder.AddHeader("Content-Length: " +
+                    std::to_string(request_payload.size()));
+  auto http_response = builder.BuildRequest().MakeRequest(request_payload);
+  if (!http_response.ok()) {
+    return std::move(http_response).status();
+  }
+  if (http_response->status_code >= HttpStatusCode::kMinNotSuccess) {
+    return AsStatus(*http_response);
+  }
+  auto response =
+      ResumableUploadResponse::FromHttpResponse(*std::move(http_response));
+  if (!response.ok()) return std::move(response).status();
+  if (response->upload_session_url.empty()) {
+    std::ostringstream os;
+    os << __func__ << " - invalid server response, parsed to " << *response;
+    return Status(StatusCode::kInternal, std::move(os).str());
+  }
+  return std::unique_ptr<ResumableUploadSession>(
+      absl::make_unique<CurlResumableUploadSession>(
+          shared_from_this(), std::move(response->upload_session_url),
+          request.GetOption<CustomHeader>()));
 }
 
 StatusOr<std::unique_ptr<ResumableUploadSession>>
