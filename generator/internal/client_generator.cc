@@ -176,27 +176,26 @@ Status ClientGenerator::GenerateHeader() {
         auto get_method_name = get_iam_policy_extension_->name();
         HeaderPrint({
             PredicatedFragment<void>(""),
-            {"  /**\n"
-             "   * Updates the IAM policy for @p resource using an"
-             " optimistic concurrency control loop.\n"
-             "   *\n"
-             "   * The loop fetches the current policy for @p resource, and"
-             " passes it to @p updater, which should return the new policy."
-             " This new policy should use the current etag so that the"
-             " read-modify-write cycle can detect races and rerun the update"
-             " when there is a mismatch. If the new policy does not have an"
-             " etag, the existing policy will be blindly overwritten. If"
-             " @p updater does not yield a policy, the control loop is"
-             " terminated and kCancelled is returned.\n"
-             "   *\n"
-             "   * @param resource  Required. The resource for which the"
-             " policy is being specified. See the operation documentation"
-             " for the appropriate value for this field.\n"
-             "   * @param updater  Required. Functor to map the current policy"
-             " to a new one.\n"
-             "   * @param options  Optional. Options to control the loop."
-             " Expected options are:\n"
-             "   *       - `$service_name$BackoffPolicyOption`\n"},
+            {R"""(  /**
+   * Updates the IAM policy for @p resource using an optimistic concurrency
+   * control loop.
+   *
+   * The loop fetches the current policy for @p resource, and passes it to @p
+   * updater, which should return the new policy. This new policy should use the
+   * current etag so that the read-modify-write cycle can detect races and rerun
+   * the update when there is a mismatch. If the new policy does not have an
+   * etag, the existing policy will be blindly overwritten. If @p updater does
+   * not yield a policy, the control loop is terminated and kCancelled is
+   * returned.
+   *
+   * @param resource  Required. The resource for which the policy is being
+   * specified. See the operation documentation for the appropriate value for
+   * this field.
+   * @param updater  Required. Functor to map the current policy to a new one.
+   * @param options  Optional. Options to control the loop. Expected options
+   * are:
+   *       - `$service_name$BackoffPolicyOption`
+)"""},
             {"   * @return " + response_type + "\n"},
             {"   */\n"},
             {"  StatusOr<" + response_type + ">\n"},
