@@ -224,10 +224,6 @@ class CurlClient : public RawClient,
   StatusOr<ObjectMetadata> InsertObjectMediaSimple(
       InsertObjectMediaRequest const& request);
 
-  template <typename RequestType>
-  StatusOr<std::unique_ptr<ResumableUploadSession>>
-  CreateResumableSessionGeneric(RequestType const& request);
-
   google::cloud::Options opts_;
   ClientOptions backwards_compatibility_options_;
   std::string const x_goog_api_client_header_;
