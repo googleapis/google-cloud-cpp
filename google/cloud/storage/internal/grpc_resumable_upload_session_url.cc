@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_resumable_upload_session_url.h"
-#include "google/cloud/storage/internal/grpc_resumable_upload_session_url.pb.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "absl/strings/match.h"
 #include <cstring>
@@ -24,19 +23,11 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-using ::google::storage::v1::internal::GrpcResumableUploadSessionUrl;
-
 auto constexpr kUriScheme = "grpc://";
 
 std::string EncodeGrpcResumableUploadSessionUrl(
     ResumableUploadSessionGrpcParams const& upload_session_params) {
-  GrpcResumableUploadSessionUrl proto;
-  proto.set_bucket_name(upload_session_params.bucket_name);
-  proto.set_object_name(upload_session_params.object_name);
-  proto.set_upload_id(upload_session_params.upload_id);
-  std::string proto_rep;
-  proto.SerializeToString(&proto_rep);
-  return kUriScheme + UrlsafeBase64Encode(proto_rep);
+  return kUriScheme + UrlsafeBase64Encode(upload_session_params.upload_id);
 }
 
 StatusOr<ResumableUploadSessionGrpcParams> DecodeGrpcResumableUploadSessionUrl(
@@ -51,15 +42,8 @@ StatusOr<ResumableUploadSessionGrpcParams> DecodeGrpcResumableUploadSessionUrl(
   auto const payload = upload_session_url.substr(std::strlen(kUriScheme));
   auto decoded_vec = UrlsafeBase64Decode(payload);
   if (!decoded_vec) return std::move(decoded_vec).status();
-  std::string decoded(decoded_vec->begin(), decoded_vec->end());
-
-  GrpcResumableUploadSessionUrl proto;
-  if (!proto.ParseFromString(decoded)) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Malformed gRPC resumable upload session URL");
-  }
   return ResumableUploadSessionGrpcParams{
-      proto.bucket_name(), proto.object_name(), proto.upload_id()};
+      std::string(decoded_vec->begin(), decoded_vec->end())};
 }
 
 bool IsGrpcResumableSessionUrl(std::string const& upload_session_url) {

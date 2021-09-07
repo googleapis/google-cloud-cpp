@@ -26,18 +26,6 @@ GOOGLE_CLOUD_STORAGE_WIN_COPTS = [
 load(":google_cloud_cpp_storage.bzl", "google_cloud_cpp_storage_hdrs", "google_cloud_cpp_storage_srcs")
 load(":google_cloud_cpp_storage_grpc.bzl", "google_cloud_cpp_storage_grpc_hdrs", "google_cloud_cpp_storage_grpc_srcs")
 
-proto_library(
-    name = "grpc_resumable_session_url_proto",
-    srcs = [
-        "internal/grpc_resumable_upload_session_url.proto",
-    ],
-)
-
-cc_proto_library(
-    name = "grpc_resumable_session_url_cc_proto",
-    deps = [":grpc_resumable_session_url_proto"],
-)
-
 cc_library(
     name = "google_cloud_cpp_storage_grpc",
     srcs = google_cloud_cpp_storage_grpc_srcs,
@@ -49,7 +37,6 @@ cc_library(
     defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"],
     deps = [
         ":google_cloud_cpp_storage",
-        ":grpc_resumable_session_url_cc_proto",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@boringssl//:crypto",
         "@boringssl//:ssl",

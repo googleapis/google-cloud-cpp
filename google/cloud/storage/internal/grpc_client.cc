@@ -390,9 +390,8 @@ GrpcClient::CreateResumableSession(ResumableUploadRequest const& request) {
   if (!response.ok()) return std::move(response).status();
 
   auto self = shared_from_this();
-  return std::unique_ptr<ResumableUploadSession>(new GrpcResumableUploadSession(
-      self, request,
-      {request.bucket_name(), request.object_name(), response->upload_id()}));
+  return std::unique_ptr<ResumableUploadSession>(
+      new GrpcResumableUploadSession(self, request, {response->upload_id()}));
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(
