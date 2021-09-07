@@ -56,9 +56,11 @@ MATCHER_P(MatchesPayload, value, "Checks whether payload matches a value") {
 TEST(CurlResumableUploadSessionTest, Simple) {
   auto mock = MockCurlClient::Create();
   std::string test_url = "http://invalid.example.com/not-used-in-mock";
-  auto const header = CustomHeader("x-test-custom", "custom-value");
   ResumableUploadRequest request("test-bucket", "test-object");
-  request.set_option(header);
+  request.set_multiple_options(CustomHeader("x-test-custom", "custom-value"),
+                               Fields("fields"), QuotaUser("quota-user"),
+                               UserIp("user-ip"), IfMatchEtag("etag"),
+                               IfNoneMatchEtag("none-match-etag"));
   CurlResumableUploadSession session(mock, request, test_url);
 
   std::string const payload = "test payload";
@@ -69,7 +71,13 @@ TEST(CurlResumableUploadSessionTest, Simple) {
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce([&](UploadChunkRequest const& request) {
         EXPECT_EQ(request.GetOption<CustomHeader>().value_or(""),
-                  header.value());
+                  "custom-value");
+        EXPECT_EQ(request.GetOption<Fields>().value_or(""), "fields");
+        EXPECT_EQ(request.GetOption<QuotaUser>().value_or(""), "quota-user");
+        EXPECT_EQ(request.GetOption<UserIp>().value_or(""), "user-ip");
+        EXPECT_EQ(request.GetOption<IfMatchEtag>().value_or(""), "etag");
+        EXPECT_EQ(request.GetOption<IfNoneMatchEtag>().value_or(""),
+                  "none-match-etag");
         EXPECT_EQ(test_url, request.upload_session_url());
         EXPECT_THAT(request.payload(), MatchesPayload(payload));
         EXPECT_EQ(0, request.source_size());
@@ -103,9 +111,11 @@ TEST(CurlResumableUploadSessionTest, Reset) {
   auto mock = MockCurlClient::Create();
   std::string url1 = "http://invalid.example.com/not-used-in-mock-1";
   std::string url2 = "http://invalid.example.com/not-used-in-mock-2";
-  auto const header = CustomHeader("x-test-custom", "custom-value");
   ResumableUploadRequest request("test-bucket", "test-object");
-  request.set_option(header);
+  request.set_multiple_options(CustomHeader("x-test-custom", "custom-value"),
+                               Fields("fields"), QuotaUser("quota-user"),
+                               UserIp("user-ip"), IfMatchEtag("etag"),
+                               IfNoneMatchEtag("none-match-etag"));
   CurlResumableUploadSession session(mock, request, url1);
 
   std::string const payload = "test payload";
@@ -126,7 +136,13 @@ TEST(CurlResumableUploadSessionTest, Reset) {
   EXPECT_CALL(*mock, QueryResumableUpload)
       .WillOnce([&](QueryResumableUploadRequest const& request) {
         EXPECT_EQ(request.GetOption<CustomHeader>().value_or(""),
-                  header.value());
+                  "custom-value");
+        EXPECT_EQ(request.GetOption<Fields>().value_or(""), "fields");
+        EXPECT_EQ(request.GetOption<QuotaUser>().value_or(""), "quota-user");
+        EXPECT_EQ(request.GetOption<UserIp>().value_or(""), "user-ip");
+        EXPECT_EQ(request.GetOption<IfMatchEtag>().value_or(""), "etag");
+        EXPECT_EQ(request.GetOption<IfNoneMatchEtag>().value_or(""),
+                  "none-match-etag");
         EXPECT_EQ(url1, request.upload_session_url());
         return make_status_or(resume_response);
       });
