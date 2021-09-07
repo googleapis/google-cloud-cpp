@@ -37,6 +37,7 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Not;
@@ -274,7 +275,7 @@ TEST_F(IamIntegrationTest, GetIamPolicyFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetIamPolicy")));
 }
 
-TEST_F(IamIntegrationTest, SetIamPolicySuccess) {
+TEST_F(IamIntegrationTest, SetIamPolicySuccessOrAborted) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
   auto client = IAMClient(MakeIAMConnection());
   ::google::iam::v1::Policy policy;
@@ -282,7 +283,7 @@ TEST_F(IamIntegrationTest, SetIamPolicySuccess) {
       absl::StrCat("projects/", iam_project_, "/serviceAccounts/",
                    iam_service_account_),
       policy);
-  EXPECT_STATUS_OK(response);
+  EXPECT_THAT(response, AnyOf(IsOk(), StatusIs(StatusCode::kAborted)));
 }
 
 TEST_F(IamIntegrationTest, SetIamPolicyFailure) {
