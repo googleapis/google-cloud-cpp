@@ -33,9 +33,10 @@ static_assert(google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES >
               "the chunk quantum");
 
 GrpcResumableUploadSession::GrpcResumableUploadSession(
-    std::shared_ptr<GrpcClient> client,
+    std::shared_ptr<GrpcClient> client, ResumableUploadRequest request,
     ResumableUploadSessionGrpcParams session_id_params)
     : client_(std::move(client)),
+      request_(std::move(request)),
       session_id_params_(std::move(session_id_params)),
       session_url_(EncodeGrpcResumableUploadSessionUrl(session_id_params_)) {}
 

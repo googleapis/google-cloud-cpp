@@ -23,7 +23,7 @@ namespace internal {
 StatusOr<ResumableUploadResponse> CurlResumableUploadSession::UploadChunk(
     ConstBufferSequence const& buffers) {
   UploadChunkRequest request(session_id_, next_expected_, buffers);
-  request.set_option(custom_header());
+  request.set_multiple_options(request_.GetOption<CustomHeader>());
   auto result = client_->UploadChunk(request);
   Update(result, TotalBytes(buffers));
   return result;
@@ -33,7 +33,7 @@ StatusOr<ResumableUploadResponse> CurlResumableUploadSession::UploadFinalChunk(
     ConstBufferSequence const& buffers, std::uint64_t upload_size,
     HashValues const& /*full_object_hashes*/) {
   UploadChunkRequest request(session_id_, next_expected_, buffers, upload_size);
-  request.set_option(custom_header());
+  request.set_multiple_options(request_.GetOption<CustomHeader>());
   auto result = client_->UploadChunk(request);
   Update(result, TotalBytes(buffers));
   return result;
@@ -41,6 +41,7 @@ StatusOr<ResumableUploadResponse> CurlResumableUploadSession::UploadFinalChunk(
 
 StatusOr<ResumableUploadResponse> CurlResumableUploadSession::ResetSession() {
   QueryResumableUploadRequest request(session_id_);
+  request.set_multiple_options(request_.GetOption<CustomHeader>());
   auto result = client_->QueryResumableUpload(request);
   Update(result, 0);
   return result;

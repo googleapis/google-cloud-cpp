@@ -379,15 +379,6 @@ RetryClient::CreateResumableSession(ResumableUploadRequest const& request) {
           std::move(backoff_policy)));
 }
 
-StatusOr<std::unique_ptr<ResumableUploadSession>>
-RetryClient::RestoreResumableSession(std::string const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  return MakeCall(*retry_policy, *backoff_policy, Idempotency::kIdempotent,
-                  *client_, &RawClient::RestoreResumableSession, request,
-                  __func__);
-}
-
 StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
   auto retry_policy = retry_policy_prototype_->clone();

@@ -73,8 +73,9 @@ StatusOr<google::storage::v2::WriteObjectResponse> MockCloseError(Status s) {
 
 TEST(GrpcResumableUploadSessionTest, Simple) {
   auto mock = MockGrpcClient::Create();
+  ResumableUploadRequest request("test-bucket", "test-object");
   GrpcResumableUploadSession session(
-      mock, {"test-bucket", "test-object", "test-upload-id"});
+      mock, request, {"test-bucket", "test-object", "test-upload-id"});
 
   std::string const payload = "test payload";
   auto const size = payload.size();
@@ -138,8 +139,9 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
 
 TEST(GrpcResumableUploadSessionTest, SingleStreamForLargeChunks) {
   auto mock = MockGrpcClient::Create();
+  ResumableUploadRequest request("test-bucket", "test-object");
   GrpcResumableUploadSession session(
-      mock, {"test-bucket", "test-object", "test-upload-id"});
+      mock, request, {"test-bucket", "test-object", "test-upload-id"});
 
   auto rng = google::cloud::internal::MakeDefaultPRNG();
   auto const payload = MakeRandomData(rng, 8 * 1024 * 1024L);
@@ -190,8 +192,9 @@ TEST(GrpcResumableUploadSessionTest, SingleStreamForLargeChunks) {
 
 TEST(GrpcResumableUploadSessionTest, Reset) {
   auto mock = MockGrpcClient::Create();
+  ResumableUploadRequest request("test-bucket", "test-object");
   GrpcResumableUploadSession session(
-      mock, {"test-bucket", "test-object", "test-upload-id"});
+      mock, request, {"test-bucket", "test-object", "test-upload-id"});
 
   std::string const payload = "test payload";
   auto const size = payload.size();
@@ -257,8 +260,9 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
 
 TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
   auto mock = MockGrpcClient::Create();
+  ResumableUploadRequest request("test-bucket", "test-object");
   GrpcResumableUploadSession session(
-      mock, {"test-bucket", "test-object", "test-upload-id"});
+      mock, request, {"test-bucket", "test-object", "test-upload-id"});
 
   std::string const payload = "test payload";
   auto const size = payload.size();

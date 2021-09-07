@@ -101,8 +101,10 @@ class RawClient {
       RewriteObjectRequest const&) = 0;
   virtual StatusOr<std::unique_ptr<ResumableUploadSession>>
   CreateResumableSession(ResumableUploadRequest const& request) = 0;
+  /// @deprecated this function is no longer used, see #7282 for details.
+  GOOGLE_CLOUD_CPP_STORAGE_RESTORE_UPLOAD_DEPRECATED()
   virtual StatusOr<std::unique_ptr<ResumableUploadSession>>
-  RestoreResumableSession(std::string const& session_id) = 0;
+  RestoreResumableSession(std::string const& session_id);
   virtual StatusOr<EmptyResponse> DeleteResumableUpload(
       DeleteResumableUploadRequest const& request) = 0;
   //@}

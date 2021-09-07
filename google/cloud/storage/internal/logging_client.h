@@ -78,8 +78,6 @@ class LoggingClient : public RawClient {
       RewriteObjectRequest const&) override;
   StatusOr<std::unique_ptr<ResumableUploadSession>> CreateResumableSession(
       ResumableUploadRequest const& request) override;
-  StatusOr<std::unique_ptr<ResumableUploadSession>> RestoreResumableSession(
-      std::string const& request) override;
   StatusOr<EmptyResponse> DeleteResumableUpload(
       DeleteResumableUploadRequest const& request) override;
 

@@ -213,12 +213,6 @@ LoggingClient::CreateResumableSession(ResumableUploadRequest const& request) {
           std::move(result).value()));
 }
 
-StatusOr<std::unique_ptr<ResumableUploadSession>>
-LoggingClient::RestoreResumableSession(std::string const& request) {
-  return MakeCallNoResponseLogging(
-      *client_, &RawClient::RestoreResumableSession, request, __func__);
-}
-
 StatusOr<EmptyResponse> LoggingClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
   return MakeCall(*client_, &RawClient::DeleteResumableUpload, request,

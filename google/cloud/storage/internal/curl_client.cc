@@ -225,6 +225,18 @@ StatusOr<ResumableUploadResponse> CurlClient::QueryResumableUpload(
   return AsStatus(*response);
 }
 
+StatusOr<std::unique_ptr<ResumableUploadSession>>
+CurlClient::FullyRestoreResumableSession(ResumableUploadRequest const& request,
+                                         std::string const& session_id) {
+  auto session = absl::make_unique<CurlResumableUploadSession>(
+      shared_from_this(), request, session_id);
+  auto response = session->ResetSession();
+  if (response.status().ok()) {
+    return std::unique_ptr<ResumableUploadSession>(std::move(session));
+  }
+  return std::move(response).status();
+}
+
 StatusOr<ListBucketsResponse> CurlClient::ListBuckets(
     ListBucketsRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b", storage_factory_);
@@ -624,15 +636,13 @@ StatusOr<std::unique_ptr<ResumableUploadSession>>
 CurlClient::CreateResumableSession(ResumableUploadRequest const& request) {
   auto session_id = request.GetOption<UseResumableUploadSession>().value_or("");
   if (!session_id.empty()) {
-    return RestoreResumableSession(session_id);
+    return FullyRestoreResumableSession(request, session_id);
   }
 
   CurlRequestBuilder builder(
       upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
   auto status = SetupBuilderCommon(builder, "POST");
-  if (!status.ok()) {
-    return status;
-  }
+  if (!status.ok()) return status;
 
   // In most cases we use `SetupBuilder()` to set up all these options in the
   // request. But in this case we cannot because that might also set
@@ -705,19 +715,8 @@ CurlClient::CreateResumableSession(ResumableUploadRequest const& request) {
   }
   return std::unique_ptr<ResumableUploadSession>(
       absl::make_unique<CurlResumableUploadSession>(
-          shared_from_this(), std::move(response->upload_session_url),
-          request.GetOption<CustomHeader>()));
-}
-
-StatusOr<std::unique_ptr<ResumableUploadSession>>
-CurlClient::RestoreResumableSession(std::string const& session_id) {
-  auto session = absl::make_unique<CurlResumableUploadSession>(
-      shared_from_this(), session_id);
-  auto response = session->ResetSession();
-  if (response.status().ok()) {
-    return std::unique_ptr<ResumableUploadSession>(std::move(session));
-  }
-  return std::move(response).status();
+          shared_from_this(), request,
+          std::move(response->upload_session_url)));
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteResumableUpload(

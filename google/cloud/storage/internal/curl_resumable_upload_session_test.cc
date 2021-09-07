@@ -56,7 +56,10 @@ MATCHER_P(MatchesPayload, value, "Checks whether payload matches a value") {
 TEST(CurlResumableUploadSessionTest, Simple) {
   auto mock = MockCurlClient::Create();
   std::string test_url = "http://invalid.example.com/not-used-in-mock";
-  CurlResumableUploadSession session(mock, test_url);
+  auto const header = CustomHeader("x-test-custom", "custom-value");
+  ResumableUploadRequest request("test-bucket", "test-object");
+  request.set_option(header);
+  CurlResumableUploadSession session(mock, request, test_url);
 
   std::string const payload = "test payload";
   auto const size = payload.size();
@@ -65,6 +68,8 @@ TEST(CurlResumableUploadSessionTest, Simple) {
   EXPECT_EQ(0, session.next_expected_byte());
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce([&](UploadChunkRequest const& request) {
+        EXPECT_EQ(request.GetOption<CustomHeader>().value_or(""),
+                  header.value());
         EXPECT_EQ(test_url, request.upload_session_url());
         EXPECT_THAT(request.payload(), MatchesPayload(payload));
         EXPECT_EQ(0, request.source_size());
@@ -98,7 +103,10 @@ TEST(CurlResumableUploadSessionTest, Reset) {
   auto mock = MockCurlClient::Create();
   std::string url1 = "http://invalid.example.com/not-used-in-mock-1";
   std::string url2 = "http://invalid.example.com/not-used-in-mock-2";
-  CurlResumableUploadSession session(mock, url1);
+  auto const header = CustomHeader("x-test-custom", "custom-value");
+  ResumableUploadRequest request("test-bucket", "test-object");
+  request.set_option(header);
+  CurlResumableUploadSession session(mock, request, url1);
 
   std::string const payload = "test payload";
   auto const size = payload.size();
@@ -117,6 +125,8 @@ TEST(CurlResumableUploadSessionTest, Reset) {
       url2, 2 * size - 1, {}, ResumableUploadResponse::kInProgress, {}};
   EXPECT_CALL(*mock, QueryResumableUpload)
       .WillOnce([&](QueryResumableUploadRequest const& request) {
+        EXPECT_EQ(request.GetOption<CustomHeader>().value_or(""),
+                  header.value());
         EXPECT_EQ(url1, request.upload_session_url());
         return make_status_or(resume_response);
       });
@@ -143,7 +153,8 @@ TEST(CurlResumableUploadSessionTest, SessionUpdatedInChunkUpload) {
   auto mock = MockCurlClient::Create();
   std::string url1 = "http://invalid.example.com/not-used-in-mock-1";
   std::string url2 = "http://invalid.example.com/not-used-in-mock-2";
-  CurlResumableUploadSession session(mock, url1);
+  ResumableUploadRequest request("test-bucket", "test-object");
+  CurlResumableUploadSession session(mock, request, url1);
 
   std::string const payload = "test payload";
   auto const size = payload.size();
@@ -172,7 +183,8 @@ TEST(CurlResumableUploadSessionTest, SessionUpdatedInChunkUpload) {
 TEST(CurlResumableUploadSessionTest, Empty) {
   auto mock = MockCurlClient::Create();
   std::string test_url = "http://invalid.example.com/not-used-in-mock";
-  CurlResumableUploadSession session(mock, test_url);
+  ResumableUploadRequest request("test-bucket", "test-object");
+  CurlResumableUploadSession session(mock, request, test_url);
 
   std::string const payload{};
   auto const size = payload.size();

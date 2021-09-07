@@ -30,7 +30,7 @@ namespace internal {
 class GrpcResumableUploadSession : public ResumableUploadSession {
  public:
   explicit GrpcResumableUploadSession(
-      std::shared_ptr<GrpcClient> client,
+      std::shared_ptr<GrpcClient> client, ResumableUploadRequest request,
       ResumableUploadSessionGrpcParams session_id_params);
 
   StatusOr<ResumableUploadResponse> UploadChunk(
@@ -61,6 +61,7 @@ class GrpcResumableUploadSession : public ResumableUploadSession {
                                                   HashValues const& hashes);
 
   std::shared_ptr<GrpcClient> client_;
+  ResumableUploadRequest request_;
   ResumableUploadSessionGrpcParams session_id_params_;
   std::string session_url_;
 

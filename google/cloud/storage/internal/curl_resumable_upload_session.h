@@ -30,12 +30,12 @@ namespace internal {
  */
 class CurlResumableUploadSession : public ResumableUploadSession {
  public:
-  explicit CurlResumableUploadSession(
-      std::shared_ptr<CurlClient> client, std::string session_id,
-      CustomHeader custom_header = CustomHeader())
+  explicit CurlResumableUploadSession(std::shared_ptr<CurlClient> client,
+                                      ResumableUploadRequest request,
+                                      std::string session_id)
       : client_(std::move(client)),
-        session_id_(std::move(session_id)),
-        custom_header_(std::move(custom_header)) {}
+        request_(std::move(request)),
+        session_id_(std::move(session_id)) {}
 
   StatusOr<ResumableUploadResponse> UploadChunk(
       ConstBufferSequence const& buffers) override;
@@ -50,8 +50,6 @@ class CurlResumableUploadSession : public ResumableUploadSession {
 
   std::string const& session_id() const override { return session_id_; }
 
-  CustomHeader const& custom_header() const { return custom_header_; }
-
   bool done() const override { return done_; }
 
   StatusOr<ResumableUploadResponse> const& last_response() const override {
@@ -63,8 +61,8 @@ class CurlResumableUploadSession : public ResumableUploadSession {
               std::size_t chunk_size);
 
   std::shared_ptr<CurlClient> client_;
+  ResumableUploadRequest request_;
   std::string session_id_;
-  CustomHeader custom_header_;
   std::uint64_t next_expected_ = 0;
   bool done_ = false;
   StatusOr<ResumableUploadResponse> last_response_;
