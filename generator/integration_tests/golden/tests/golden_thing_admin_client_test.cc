@@ -17,6 +17,7 @@
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "generator/integration_tests/golden/golden_thing_admin_options.h"
 #include "generator/integration_tests/golden/mocks/mock_golden_thing_admin_connection.h"
 #include <google/iam/v1/policy.pb.h>
 #include <google/protobuf/util/field_mask_util.h>
@@ -29,10 +30,12 @@ namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 TEST(GoldenThingAdminClientTest, CopyMoveEquality) {
   auto conn1 = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
@@ -267,6 +270,167 @@ TEST(GoldenThingAdminClientTest, SetIamPolicy) {
   *request.mutable_policy() = google::iam::v1::Policy{};
   response = client.SetIamPolicy(request);
   EXPECT_STATUS_OK(response);
+}
+
+TEST(GoldenThingAdminClientTest, SetIamPolicyUpdater) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  std::string expected_database =
+      "/projects/test-project/instances/test-instance/databases/test-db";
+  std::string etag_old = "\007\005\313\113\361\351\232\005";
+  std::string etag_new = "\007\005\313\113\366\143\244\343";
+  EXPECT_CALL(*mock, GetIamPolicy)
+      .WillOnce([expected_database,
+                 etag_old](::google::iam::v1::GetIamPolicyRequest const& r) {
+        EXPECT_EQ(expected_database, r.resource());
+        google::iam::v1::Policy response;
+        response.set_etag(etag_old);
+        return response;
+      });
+  EXPECT_CALL(*mock, SetIamPolicy)
+      .WillOnce([expected_database, etag_old,
+                 etag_new](::google::iam::v1::SetIamPolicyRequest const& r) {
+        EXPECT_EQ(expected_database, r.resource());
+        EXPECT_EQ(etag_old, r.policy().etag());
+        google::iam::v1::Policy response = r.policy();
+        response.set_etag(etag_new);
+        return response;
+      });
+  GoldenThingAdminClient client(std::move(mock));
+  auto response = client.SetIamPolicy(
+      expected_database, [etag_old](::google::iam::v1::Policy policy) {
+        EXPECT_EQ(etag_old, policy.etag());
+        return policy;
+      });
+  ASSERT_THAT(response, IsOk());
+  EXPECT_EQ(response->etag(), etag_new);
+}
+
+TEST(GoldenThingAdminClientTest, SetIamPolicyUpdaterGetFailure) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  std::string expected_database =
+      "/projects/test-project/instances/test-instance/databases/test-db";
+  EXPECT_CALL(*mock, GetIamPolicy)
+      .WillOnce(
+          [expected_database](::google::iam::v1::GetIamPolicyRequest const& r) {
+            EXPECT_EQ(expected_database, r.resource());
+            return Status(StatusCode::kPermissionDenied, "uh-oh");
+          });
+  GoldenThingAdminClient client(std::move(mock));
+  auto response = client.SetIamPolicy(expected_database,
+                                      [](::google::iam::v1::Policy policy) {
+                                        EXPECT_TRUE(false);
+                                        return policy;
+                                      });
+  ASSERT_THAT(response, Not(IsOk()));
+  EXPECT_THAT(response,
+              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+}
+
+TEST(GoldenThingAdminClientTest, SetIamPolicyUpdaterCancelled) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  std::string expected_database =
+      "/projects/test-project/instances/test-instance/databases/test-db";
+  std::string etag_old = "\007\005\313\113\374\306\126\007";
+  EXPECT_CALL(*mock, GetIamPolicy)
+      .WillOnce([expected_database,
+                 etag_old](::google::iam::v1::GetIamPolicyRequest const& r) {
+        EXPECT_EQ(expected_database, r.resource());
+        google::iam::v1::Policy response;
+        response.set_etag(etag_old);
+        return response;
+      });
+  GoldenThingAdminClient client(std::move(mock));
+  auto response = client.SetIamPolicy(
+      expected_database, [etag_old](::google::iam::v1::Policy const& policy) {
+        EXPECT_EQ(etag_old, policy.etag());
+        return absl::nullopt;
+      });
+  ASSERT_THAT(response, Not(IsOk()));
+  EXPECT_THAT(response, StatusIs(StatusCode::kCancelled));
+}
+
+TEST(GoldenThingAdminClientTest, SetIamPolicyUpdaterSetFailure) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  std::string expected_database =
+      "/projects/test-project/instances/test-instance/databases/test-db";
+  std::string etag_old = "\007\005\313\113\377\272\224\367";
+  EXPECT_CALL(*mock, GetIamPolicy)
+      .WillOnce([expected_database,
+                 etag_old](::google::iam::v1::GetIamPolicyRequest const& r) {
+        EXPECT_EQ(expected_database, r.resource());
+        google::iam::v1::Policy response;
+        response.set_etag(etag_old);
+        return response;
+      });
+  EXPECT_CALL(*mock, SetIamPolicy)
+      .WillOnce([expected_database,
+                 etag_old](::google::iam::v1::SetIamPolicyRequest const& r) {
+        EXPECT_EQ(expected_database, r.resource());
+        EXPECT_EQ(etag_old, r.policy().etag());
+        return Status(StatusCode::kPermissionDenied, "uh-oh");
+      });
+  GoldenThingAdminClient client(std::move(mock));
+  auto response = client.SetIamPolicy(
+      expected_database, [etag_old](::google::iam::v1::Policy policy) {
+        EXPECT_EQ(etag_old, policy.etag());
+        return policy;
+      });
+  ASSERT_THAT(response, Not(IsOk()));
+  EXPECT_THAT(response,
+              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+}
+
+TEST(GoldenThingAdminClientTest, SetIamPolicyUpdaterRerun) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  std::string expected_database =
+      "/projects/test-project/instances/test-instance/databases/test-db";
+  std::string etag_old = "\007\005\313\114\002\240\006\225";
+  std::string etag_new = "\007\005\313\114\005\046\113\243";
+  std::string etag_rerun = "\007\005\313\114\007\252\023\045";
+  EXPECT_CALL(*mock, GetIamPolicy)
+      .WillOnce([expected_database,
+                 etag_old](::google::iam::v1::GetIamPolicyRequest const& r) {
+        EXPECT_EQ(expected_database, r.resource());
+        google::iam::v1::Policy response;
+        response.set_etag(etag_old);
+        return response;
+      })
+      .WillOnce([expected_database,
+                 etag_new](::google::iam::v1::GetIamPolicyRequest const& r) {
+        EXPECT_EQ(expected_database, r.resource());
+        google::iam::v1::Policy response;
+        response.set_etag(etag_new);
+        return response;
+      });
+  EXPECT_CALL(*mock, SetIamPolicy)
+      .WillOnce([expected_database,
+                 etag_old](::google::iam::v1::SetIamPolicyRequest const& r) {
+        EXPECT_EQ(expected_database, r.resource());
+        EXPECT_EQ(etag_old, r.policy().etag());
+        return Status(StatusCode::kAborted,
+                      "There were concurrent policy changes."
+                      " Please retry the whole read-modify-write with "
+                      "exponential backoff.");
+      })
+      .WillOnce([expected_database, etag_new,
+                 etag_rerun](::google::iam::v1::SetIamPolicyRequest const& r) {
+        EXPECT_EQ(expected_database, r.resource());
+        EXPECT_EQ(etag_new, r.policy().etag());
+        google::iam::v1::Policy response = r.policy();
+        response.set_etag(etag_rerun);
+        return response;
+      });
+  GoldenThingAdminClient client(std::move(mock));
+  auto options = Options{}.set<GoldenThingAdminBackoffPolicyOption>(
+      ExponentialBackoffPolicy(std::chrono::seconds::zero(),
+                               std::chrono::seconds::zero(), 2)
+          .clone());
+  auto response = client.SetIamPolicy(
+      expected_database,
+      [](::google::iam::v1::Policy policy) { return policy; },
+      std::move(options));
+  ASSERT_THAT(response, IsOk());
+  EXPECT_EQ(response->etag(), etag_rerun);
 }
 
 TEST(GoldenThingAdminClientTest, GetIamPolicy) {

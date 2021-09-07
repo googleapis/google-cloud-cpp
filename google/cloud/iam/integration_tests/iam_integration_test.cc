@@ -287,10 +287,29 @@ TEST_F(IamIntegrationTest, SetIamPolicySuccess) {
 
 TEST_F(IamIntegrationTest, SetIamPolicyFailure) {
   auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
-  auto response = client.SetIamPolicy("", {});
+  auto response = client.SetIamPolicy("", ::google::iam::v1::Policy{});
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("SetIamPolicy")));
+}
+
+TEST_F(IamIntegrationTest, SetIamPolicyUpdaterSuccess) {
+  if (!RunQuotaLimitedTests()) GTEST_SKIP();
+  auto client = IAMClient(MakeIAMConnection());
+  auto response = client.SetIamPolicy(
+      absl::StrCat("projects/", iam_project_, "/serviceAccounts/",
+                   iam_service_account_),
+      [](::google::iam::v1::Policy policy) { return policy; });
+  EXPECT_THAT(response, IsOk());
+}
+
+TEST_F(IamIntegrationTest, SetIamPolicyUpdaterCancelled) {
+  auto client = IAMClient(MakeIAMConnection());
+  auto response = client.SetIamPolicy(
+      absl::StrCat("projects/", iam_project_, "/serviceAccounts/",
+                   iam_service_account_),
+      [](::google::iam::v1::Policy const&) { return absl::nullopt; });
+  EXPECT_THAT(response, StatusIs(StatusCode::kCancelled));
 }
 
 TEST_F(IamIntegrationTest, TestIamPermissionsSuccess) {

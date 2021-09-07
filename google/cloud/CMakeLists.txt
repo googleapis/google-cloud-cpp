@@ -120,6 +120,7 @@ add_library(
     iam_bindings.h
     iam_policy.cc
     iam_policy.h
+    iam_updater.h
     internal/absl_flat_hash_map_quiet.h
     internal/absl_str_cat_quiet.h
     internal/absl_str_join_quiet.h
