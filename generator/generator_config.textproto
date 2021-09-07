@@ -41,3 +41,20 @@ service {
   product_path: "google/cloud/logging"
   initial_copyright_year: "2021"
 }
+
+# Spanner
+service {
+  service_proto_path: "google/spanner/admin/database/v1/spanner_database_admin.proto"
+  product_path: "google/cloud/spanner/admin"
+  initial_copyright_year: "2021"
+  service_endpoint_env_var: "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT"
+  emulator_endpoint_env_var: "SPANNER_EMULATOR_HOST"
+}
+
+service {
+  service_proto_path: "google/spanner/admin/instance/v1/spanner_instance_admin.proto"
+  product_path: "google/cloud/spanner/admin"
+  initial_copyright_year: "2021"
+  service_endpoint_env_var: "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT"
+  emulator_endpoint_env_var: "SPANNER_EMULATOR_HOST"
+}
