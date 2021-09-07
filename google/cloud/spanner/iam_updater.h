@@ -16,18 +16,27 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_IAM_UPDATER_H
 
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/optional.h"
-#include "absl/types/optional.h"
-#include <google/iam/v1/policy.pb.h>
-#include <functional>
+#include "google/cloud/iam_updater.h"
 
 namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
-using IamUpdater = std::function<absl::optional<google::iam::v1::Policy>(
-    google::iam::v1::Policy)>;
+/**
+ * Type alias for google::cloud::IamUpdater.
+ *
+ * Used in the `SetIamPolicy()` read-modify-write cycle of the Spanner admin
+ * clients, `DatabaseAdminClient` and `InstanceAdminClient`, in order to avoid
+ * race conditions.
+ *
+ * The updater is called with a recently fetched policy, and should either
+ * return an empty optional if no changes are required, or return a new policy
+ * to be set. In the latter case the control loop will always set the `etag`
+ * of the new policy to that of the recently fetched one. A failure to update
+ * then indicates a race, and the process will repeat.
+ */
+using IamUpdater = ::google::cloud::IamUpdater;
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

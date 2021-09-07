@@ -24,6 +24,8 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/cloud/iam_updater.h"
+#include "google/cloud/options.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
@@ -160,6 +162,30 @@ class GoldenThingAdminClient {
    */
   StatusOr<google::iam::v1::Policy>
   SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy);
+
+  /**
+   * Updates the IAM policy for @p resource using an optimistic concurrency
+   * control loop.
+   *
+   * The loop fetches the current policy for @p resource, and passes it to @p
+   * updater, which should return the new policy. This new policy should use the
+   * current etag so that the read-modify-write cycle can detect races and rerun
+   * the update when there is a mismatch. If the new policy does not have an
+   * etag, the existing policy will be blindly overwritten. If @p updater does
+   * not yield a policy, the control loop is terminated and kCancelled is
+   * returned.
+   *
+   * @param resource  Required. The resource for which the policy is being
+   * specified. See the operation documentation for the appropriate value for
+   * this field.
+   * @param updater  Required. Functor to map the current policy to a new one.
+   * @param options  Optional. Options to control the loop. Expected options
+   * are:
+   *       - `GoldenThingAdminBackoffPolicyOption`
+   * @return google::iam::v1::Policy
+   */
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options options = {});
 
   /**
    * Gets the access control policy for a database or backup resource.

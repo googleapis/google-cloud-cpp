@@ -33,7 +33,29 @@ ClientGenerator::ClientGenerator(
     google::protobuf::compiler::GeneratorContext* context)
     : ServiceCodeGenerator("client_header_path", "client_cc_path",
                            service_descriptor, std::move(service_vars),
-                           std::move(service_method_vars), context) {}
+                           std::move(service_method_vars), context) {
+  // Remember if there are methods from google.iam.v1.GetIamPolicyRequest and
+  // google.iam.v1.SetIamPolicyRequest to google.iam.v1.Policy with signature
+  // extensions. If so, we'll generate a "set" wrapper method to help prevent
+  // simultaneous updates of a policy from overwriting each other.
+  for (google::protobuf::MethodDescriptor const& method : methods()) {
+    auto const& method_signature_extension =
+        method.options().GetRepeatedExtension(google::api::method_signature);
+    if (method.output_type()->full_name() == "google.iam.v1.Policy") {
+      auto const& input_type = method.input_type()->full_name();
+      for (auto const& extension : method_signature_extension) {
+        if (input_type == "google.iam.v1.GetIamPolicyRequest" &&
+            extension == "resource") {
+          get_iam_policy_extension_ = &method;
+        }
+        if (input_type == "google.iam.v1.SetIamPolicyRequest" &&
+            extension == "resource,policy") {
+          set_iam_policy_extension_ = &method;
+        }
+      }
+    }
+  }
+}
 
 Status ClientGenerator::GenerateHeader() {
   HeaderPrint(CopyrightLicenseFileHeader());
@@ -51,6 +73,10 @@ Status ClientGenerator::GenerateHeader() {
   HeaderLocalIncludes({vars("connection_header_path"), "google/cloud/future.h",
                        "google/cloud/polling_policy.h",
                        "google/cloud/status_or.h", "google/cloud/version.h"});
+  if (get_iam_policy_extension_ && set_iam_policy_extension_) {
+    HeaderLocalIncludes(
+        {"google/cloud/iam_updater.h", "google/cloud/options.h"});
+  }
   HeaderSystemIncludes(MethodSignatureWellKnownProtobufTypeIncludes());
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
@@ -142,6 +168,43 @@ Status ClientGenerator::GenerateHeader() {
                },
                IsStreamingRead)},
           __FILE__, __LINE__);
+
+      if (get_iam_policy_extension_ && set_iam_policy_extension_ == &method) {
+        auto response_type = ProtoNameToCppName(
+            set_iam_policy_extension_->output_type()->full_name());
+        auto set_method_name = set_iam_policy_extension_->name();
+        auto get_method_name = get_iam_policy_extension_->name();
+        HeaderPrint({
+            PredicatedFragment<void>(""),
+            {R"""(  /**
+   * Updates the IAM policy for @p resource using an optimistic concurrency
+   * control loop.
+   *
+   * The loop fetches the current policy for @p resource, and passes it to @p
+   * updater, which should return the new policy. This new policy should use the
+   * current etag so that the read-modify-write cycle can detect races and rerun
+   * the update when there is a mismatch. If the new policy does not have an
+   * etag, the existing policy will be blindly overwritten. If @p updater does
+   * not yield a policy, the control loop is terminated and kCancelled is
+   * returned.
+   *
+   * @param resource  Required. The resource for which the policy is being
+   * specified. See the operation documentation for the appropriate value for
+   * this field.
+   * @param updater  Required. Functor to map the current policy to a new one.
+   * @param options  Optional. Options to control the loop. Expected options
+   * are:
+   *       - `$service_name$BackoffPolicyOption`
+)"""},
+            {"   * @return " + response_type + "\n"},
+            {"   */\n"},
+            {"  StatusOr<" + response_type + ">\n"},
+            {"  " + set_method_name},
+            {"(std::string const& resource,"
+             " IamUpdater const& updater,"
+             " Options options = {});\n\n"},
+        });
+      }
     }
   }
 
@@ -227,6 +290,11 @@ Status ClientGenerator::GenerateCc() {
   // includes
   CcLocalIncludes({vars("client_header_path")});
   CcSystemIncludes({"memory"});
+  if (get_iam_policy_extension_ && set_iam_policy_extension_) {
+    CcLocalIncludes(
+        {vars("options_header_path"), vars("option_defaults_header_path")});
+    CcSystemIncludes({"thread"});
+  }
   CcPrint("\n");
 
   auto result = CcOpenNamespaces();
@@ -305,6 +373,47 @@ Status ClientGenerator::GenerateCc() {
                },
                IsStreamingRead)},
           __FILE__, __LINE__);
+
+      if (get_iam_policy_extension_ && set_iam_policy_extension_ == &method) {
+        auto response_type = ProtoNameToCppName(
+            set_iam_policy_extension_->output_type()->full_name());
+        auto set_method_name = set_iam_policy_extension_->name();
+        auto get_method_name = get_iam_policy_extension_->name();
+        CcPrint({
+            PredicatedFragment<void>(""),
+            {"StatusOr<" + response_type + ">\n"},
+            {"$client_class_name$::" + set_method_name},
+            {"(std::string const& resource,"
+             " IamUpdater const& updater,"
+             " Options options) {\n"
+             "  internal::CheckExpectedOptions<$service_name$"
+             "BackoffPolicyOption>(options, __func__);\n"
+             "  options = $product_internal_namespace$::$service_name$"
+             "DefaultOptions(std::move(options));\n"
+             "  auto backoff_policy = options.get<$service_name$"
+             "BackoffPolicyOption>()->clone();\n"
+             "  for (;;) {\n"},
+            {"    auto recent = " + get_method_name + "(resource);\n"},
+            {"    if (!recent) {\n"
+             "      return recent.status();\n"
+             "    }\n"
+             "    auto policy = updater(*std::move(recent));\n"
+             "    if (!policy) {\n"
+             "      return Status(StatusCode::kCancelled,"
+             " \"updater did not yield a policy\");\n"
+             "    }\n"},
+            {"    auto result = " + set_method_name +
+             "(resource, *std::move(policy));\n"},
+            {"    if (result || result.status().code() != StatusCode::kAborted)"
+             " {\n"
+             "      return result;\n"
+             "    }\n"
+             "    std::this_thread::sleep_for("
+             "backoff_policy->OnCompletion());\n"
+             "  }\n"
+             "}\n\n"},
+        });
+      }
     }
   }
 

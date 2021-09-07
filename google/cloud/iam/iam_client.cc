@@ -17,7 +17,10 @@
 // source: google/iam/admin/v1/iam.proto
 
 #include "google/cloud/iam/iam_client.h"
+#include "google/cloud/iam/iam_options.h"
+#include "google/cloud/iam/internal/iam_option_defaults.h"
 #include <memory>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -112,6 +115,28 @@ StatusOr<google::iam::v1::Policy> IAMClient::SetIamPolicy(
   request.set_resource(resource);
   *request.mutable_policy() = policy;
   return connection_->SetIamPolicy(request);
+}
+
+StatusOr<google::iam::v1::Policy> IAMClient::SetIamPolicy(
+    std::string const& resource, IamUpdater const& updater, Options options) {
+  internal::CheckExpectedOptions<IAMBackoffPolicyOption>(options, __func__);
+  options = iam_internal::IAMDefaultOptions(std::move(options));
+  auto backoff_policy = options.get<IAMBackoffPolicyOption>()->clone();
+  for (;;) {
+    auto recent = GetIamPolicy(resource);
+    if (!recent) {
+      return recent.status();
+    }
+    auto policy = updater(*std::move(recent));
+    if (!policy) {
+      return Status(StatusCode::kCancelled, "updater did not yield a policy");
+    }
+    auto result = SetIamPolicy(resource, *std::move(policy));
+    if (result || result.status().code() != StatusCode::kAborted) {
+      return result;
+    }
+    std::this_thread::sleep_for(backoff_policy->OnCompletion());
+  }
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
