@@ -74,7 +74,7 @@ TEST(GrpcConfigureClientContext, ApplyQueryParametersQuotaUserAndUserIp) {
       {ReadObjectRangeRequest("b", "o").set_option(
            QuotaUser("test-only-quota-user")),
        "test-only-quota-user"},
-\  };
+  };
 
   for (auto const& test : cases) {
     auto description = [&test] {
