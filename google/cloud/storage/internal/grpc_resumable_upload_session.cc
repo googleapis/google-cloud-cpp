@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_resumable_upload_session.h"
+#include "google/cloud/storage/internal/grpc_configure_client_context.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "absl/memory/memory.h"
 #include <crc32c/crc32c.h>
@@ -81,6 +82,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
     ConstBufferSequence buffers, bool final_chunk, HashValues const& hashes) {
   // TODO(#4216) - set the timeout
   auto context = absl::make_unique<grpc::ClientContext>();
+  ApplyQueryParameters(*context, request_, "resource");
   auto writer = client_->CreateUploadWriter(std::move(context));
 
   std::size_t const maximum_chunk_size =

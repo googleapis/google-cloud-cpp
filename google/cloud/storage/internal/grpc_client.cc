@@ -201,16 +201,12 @@ GrpcClient::FullyRestoreResumableSession(ResumableUploadRequest const& request,
                                          std::string const& upload_url) {
   auto self = shared_from_this();
   auto upload_session_params = DecodeGrpcResumableUploadSessionUrl(upload_url);
-  if (!upload_session_params) {
-    return upload_session_params.status();
-  }
+  if (!upload_session_params) return std::move(upload_session_params).status();
   auto session = std::unique_ptr<ResumableUploadSession>(
       new GrpcResumableUploadSession(self, request, *upload_session_params));
   auto response = session->ResetSession();
-  if (response.status().ok()) {
-    return session;
-  }
-  return std::move(response).status();
+  if (!response) std::move(response).status();
+  return session;
 }
 
 ClientOptions const& GrpcClient::client_options() const {
