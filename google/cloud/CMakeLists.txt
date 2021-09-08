@@ -120,7 +120,6 @@ add_library(
     iam_bindings.h
     iam_policy.cc
     iam_policy.h
-    iam_updater.h
     internal/absl_flat_hash_map_quiet.h
     internal/absl_str_cat_quiet.h
     internal/absl_str_join_quiet.h
@@ -392,6 +391,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         grpc_utils/completion_queue.h
         grpc_utils/grpc_error_delegate.h
         grpc_utils/version.h
+        iam_updater.h
         internal/async_connection_ready.cc
         internal/async_connection_ready.h
         internal/async_long_running_operation.h
