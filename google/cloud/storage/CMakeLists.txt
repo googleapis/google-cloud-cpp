@@ -32,8 +32,7 @@ set(DOXYGEN_EXCLUDE_PATTERNS
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "storage_benchmarks")
 
 # Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::storage_protos
-                                  google_cloud_cpp_storage_internal_protos)
+set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::storage_protos)
 
 include(GoogleCloudCppCommon)
 
@@ -313,17 +312,6 @@ install(
 
 if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     find_package(gRPC REQUIRED)
-    google_cloud_cpp_proto_library(
-        google_cloud_cpp_storage_internal_protos
-        internal/grpc_resumable_upload_session_url.proto PROTO_PATH_DIRECTORIES
-        ${CMAKE_CURRENT_SOURCE_DIR}/internal LOCAL_INCLUDE)
-    add_library(google-cloud-cpp::internal-storage-protos ALIAS
-                google_cloud_cpp_storage_internal_protos)
-    set_target_properties(
-        google_cloud_cpp_storage_internal_protos
-        PROPERTIES EXPORT_NAME "google-cloud-cpp::internal-storage-protos"
-                   VERSION ${PROJECT_VERSION} SOVERSION
-                                              ${PROJECT_VERSION_MAJOR})
     add_library(
         google_cloud_cpp_storage_grpc
         grpc_plugin.cc
@@ -349,7 +337,6 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         PUBLIC google-cloud-cpp::storage
                google-cloud-cpp::grpc_utils
                google-cloud-cpp::common
-               google_cloud_cpp_storage_internal_protos
                google-cloud-cpp::storage_protos
                nlohmann_json::nlohmann_json
                gRPC::grpc++
@@ -378,20 +365,14 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
     create_bazel_config(google_cloud_cpp_storage_grpc)
 else ()
-    add_library(google_cloud_cpp_storage_internal_protos INTERFACE)
     add_library(google_cloud_cpp_storage_grpc INTERFACE)
 
     set_target_properties(
         google_cloud_cpp_storage_grpc
         PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage-grpc")
-    set_target_properties(
-        google_cloud_cpp_storage_internal_protos
-        PROPERTIES EXPORT_NAME "google-cloud-cpp::internal-storage-protos")
 endif (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 add_library(google-cloud-cpp::experimental-storage-grpc ALIAS
             google_cloud_cpp_storage_grpc)
-add_library(google-cloud-cpp::internal-storage-protos ALIAS
-            google_cloud_cpp_storage_internal_protos)
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CPP_PC_NAME "The GCS (Google Cloud Storage) gRPC plugin")
@@ -407,8 +388,7 @@ string(
            " google_cloud_cpp_common"
            " libcurl"
            " openssl")
-string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage_grpc"
-              " -lgoogle_cloud_cpp_storage_internal_protos")
+string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage_grpc")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
@@ -648,7 +628,6 @@ endif ()
 
 install(
     TARGETS google_cloud_cpp_storage google_cloud_cpp_storage_grpc
-            google_cloud_cpp_storage_internal_protos
     EXPORT storage-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
@@ -661,7 +640,6 @@ install(
 # duplication).
 install(
     TARGETS google_cloud_cpp_storage google_cloud_cpp_storage_grpc
-            google_cloud_cpp_storage_internal_protos
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development
             NAMELINK_ONLY

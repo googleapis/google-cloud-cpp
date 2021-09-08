@@ -318,9 +318,9 @@ TEST_P(GrpcClientFailuresTest, CreateResumableSession) {
 }
 
 TEST_P(GrpcClientFailuresTest, DeleteResumableUpload) {
-  auto actual = client_->DeleteResumableUpload(DeleteResumableUploadRequest(
-      EncodeGrpcResumableUploadSessionUrl(ResumableUploadSessionGrpcParams{
-          "test-bucket", "test-object", "test-upload-id"})));
+  auto actual = client_->DeleteResumableUpload(
+      DeleteResumableUploadRequest(EncodeGrpcResumableUploadSessionUrl(
+          ResumableUploadSessionGrpcParams{"test-upload-id"})));
   EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable,
                                      StatusCode::kUnimplemented)));
 }

@@ -38,8 +38,6 @@ namespace internal {
 
 /// Parameters that should be bundled with a resumable upload session ID.
 struct ResumableUploadSessionGrpcParams {
-  std::string bucket_name;
-  std::string object_name;
   std::string upload_id;
 };
 

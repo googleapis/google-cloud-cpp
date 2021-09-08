@@ -25,14 +25,11 @@ namespace internal {
 namespace {
 
 TEST(GrpcUploadSessionTest, SimpleEncodeDecode) {
-  ResumableUploadSessionGrpcParams input{"test-bucket", "test-object",
-                                         "some-upload-id"};
+  ResumableUploadSessionGrpcParams input{"some-upload-id"};
   auto encoded = EncodeGrpcResumableUploadSessionUrl(input);
   ASSERT_TRUE(IsGrpcResumableSessionUrl(encoded));
   auto decoded = DecodeGrpcResumableUploadSessionUrl(encoded);
   ASSERT_STATUS_OK(decoded) << "Failed to decode url: " << encoded;
-  EXPECT_EQ(input.bucket_name, decoded->bucket_name);
-  EXPECT_EQ(input.object_name, decoded->object_name);
   EXPECT_EQ(input.upload_id, decoded->upload_id);
 }
 
@@ -45,14 +42,6 @@ TEST(GrpcUploadSessionTest, MalformedUri) {
   EXPECT_EQ(StatusCode::kInvalidArgument, res.status().code());
   EXPECT_THAT(res.status().message(),
               ::testing::HasSubstr("different implementation"));
-}
-
-TEST(GrpcUploadSessionTest, MalformedProto) {
-  auto res = DecodeGrpcResumableUploadSessionUrl(
-      "grpc://" + UrlsafeBase64Encode("somerubbish"));
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInvalidArgument, res.status().code());
-  EXPECT_THAT(res.status().message(), ::testing::HasSubstr("Malformed gRPC"));
 }
 
 }  // namespace
