@@ -27,6 +27,7 @@ google_cloud_cpp_grpc_utils_hdrs = [
     "grpc_utils/completion_queue.h",
     "grpc_utils/grpc_error_delegate.h",
     "grpc_utils/version.h",
+    "iam_updater.h",
     "internal/async_connection_ready.h",
     "internal/async_long_running_operation.h",
     "internal/async_polling_loop.h",
