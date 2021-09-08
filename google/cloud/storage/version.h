@@ -27,6 +27,13 @@
       " instead. The function will be removed on 2022-04-01 or shortly "       \
       "after. See GitHub issue #5929 for more information.")
 
+#define GOOGLE_CLOUD_CPP_STORAGE_RESTORE_UPLOAD_DEPRECATED()                   \
+  GOOGLE_CLOUD_CPP_DEPRECATED(                                                 \
+      "this function is not used within the library. There was never a need"   \
+      " to mock this function, but it is preserved to avoid breaking existing" \
+      " applications. The function may be removed after 2022-10-01, more"      \
+      " details on GitHub issue #7282.")
+
 #define STORAGE_CLIENT_NS GOOGLE_CLOUD_CPP_NS
 
 namespace google {

@@ -53,9 +53,9 @@ class GrpcClient : public RawClient,
   /// @name Implement the ResumableSession operations.
   // Note that these member functions are not inherited from RawClient, they are
   // called only by `GrpcResumableUploadSession`, because the retry loop for
-  // them is very different from the standard retry loop. Also note that these
-  // are virtual functions only because we need to override them in the unit
-  // tests.
+  // them is very different from the standard retry loop. Also note that some of
+  // these member functions are virtual, but only because we need to override
+  // them in the *library* unit tests.
   using WriteObjectStream = ::google::cloud::internal::StreamingWriteRpc<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;
@@ -63,6 +63,9 @@ class GrpcClient : public RawClient,
       std::unique_ptr<grpc::ClientContext> context);
   virtual StatusOr<ResumableUploadResponse> QueryResumableUpload(
       QueryResumableUploadRequest const&);
+  StatusOr<std::unique_ptr<ResumableUploadSession>>
+  FullyRestoreResumableSession(ResumableUploadRequest const& request,
+                               std::string const& upload_url);
   //@}
 
   ClientOptions const& client_options() const override;
@@ -113,8 +116,6 @@ class GrpcClient : public RawClient,
       RewriteObjectRequest const&) override;
   StatusOr<std::unique_ptr<ResumableUploadSession>> CreateResumableSession(
       ResumableUploadRequest const& request) override;
-  StatusOr<std::unique_ptr<ResumableUploadSession>> RestoreResumableSession(
-      std::string const& upload_url) override;
   StatusOr<EmptyResponse> DeleteResumableUpload(
       DeleteResumableUploadRequest const& request) override;
 

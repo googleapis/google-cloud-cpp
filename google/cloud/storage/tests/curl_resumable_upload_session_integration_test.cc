@@ -124,7 +124,8 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
   ASSERT_STATUS_OK(response.status());
 
   StatusOr<std::unique_ptr<ResumableUploadSession>> session =
-      client->RestoreResumableSession((*old_session)->session_id());
+      client->FullyRestoreResumableSession(request,
+                                           (*old_session)->session_id());
   EXPECT_EQ(contents.size(), (*session)->next_expected_byte());
   old_session->reset();
 

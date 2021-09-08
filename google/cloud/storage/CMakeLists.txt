@@ -174,6 +174,7 @@ add_library(
     internal/patch_builder.h
     internal/policy_document_request.cc
     internal/policy_document_request.h
+    internal/raw_client.cc
     internal/raw_client.h
     internal/raw_client_wrapper_utils.h
     internal/resumable_upload_session.cc

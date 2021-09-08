@@ -194,6 +194,23 @@ StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
   return response;
 }
 
+StatusOr<std::unique_ptr<ResumableUploadSession>>
+GrpcClient::FullyRestoreResumableSession(ResumableUploadRequest const& request,
+                                         std::string const& upload_url) {
+  auto self = shared_from_this();
+  auto upload_session_params = DecodeGrpcResumableUploadSessionUrl(upload_url);
+  if (!upload_session_params) {
+    return upload_session_params.status();
+  }
+  auto session = std::unique_ptr<ResumableUploadSession>(
+      new GrpcResumableUploadSession(self, request, *upload_session_params));
+  auto response = session->ResetSession();
+  if (response.status().ok()) {
+    return session;
+  }
+  return std::move(response).status();
+}
+
 ClientOptions const& GrpcClient::client_options() const {
   return backwards_compatibility_options_;
 }
@@ -360,11 +377,9 @@ StatusOr<RewriteObjectResponse> GrpcClient::RewriteObject(
 
 StatusOr<std::unique_ptr<ResumableUploadSession>>
 GrpcClient::CreateResumableSession(ResumableUploadRequest const& request) {
-  if (request.HasOption<UseResumableUploadSession>()) {
-    auto session_id = request.GetOption<UseResumableUploadSession>().value();
-    if (!session_id.empty()) {
-      return RestoreResumableSession(session_id);
-    }
+  auto session_id = request.GetOption<UseResumableUploadSession>().value_or("");
+  if (!session_id.empty()) {
+    return FullyRestoreResumableSession(request, session_id);
   }
 
   auto proto_request = ToProto(request);
@@ -376,24 +391,8 @@ GrpcClient::CreateResumableSession(ResumableUploadRequest const& request) {
 
   auto self = shared_from_this();
   return std::unique_ptr<ResumableUploadSession>(new GrpcResumableUploadSession(
-      self,
+      self, request,
       {request.bucket_name(), request.object_name(), response->upload_id()}));
-}
-
-StatusOr<std::unique_ptr<ResumableUploadSession>>
-GrpcClient::RestoreResumableSession(std::string const& upload_url) {
-  auto self = shared_from_this();
-  auto upload_session_params = DecodeGrpcResumableUploadSessionUrl(upload_url);
-  if (!upload_session_params) {
-    return upload_session_params.status();
-  }
-  auto session = std::unique_ptr<ResumableUploadSession>(
-      new GrpcResumableUploadSession(self, *upload_session_params));
-  auto response = session->ResetSession();
-  if (response.status().ok()) {
-    return session;
-  }
-  return std::move(response).status();
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(

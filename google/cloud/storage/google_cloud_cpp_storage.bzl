@@ -191,6 +191,7 @@ google_cloud_cpp_storage_srcs = [
     "internal/openssl_util.cc",
     "internal/patch_builder.cc",
     "internal/policy_document_request.cc",
+    "internal/raw_client.cc",
     "internal/resumable_upload_session.cc",
     "internal/retry_client.cc",
     "internal/retry_object_read_source.cc",

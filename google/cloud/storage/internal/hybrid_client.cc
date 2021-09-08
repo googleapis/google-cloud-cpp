@@ -148,14 +148,6 @@ HybridClient::CreateResumableSession(ResumableUploadRequest const& request) {
   return grpc_->CreateResumableSession(request);
 }
 
-StatusOr<std::unique_ptr<ResumableUploadSession>>
-HybridClient::RestoreResumableSession(std::string const& upload_id) {
-  if (internal::IsGrpcResumableSessionUrl(upload_id)) {
-    return grpc_->RestoreResumableSession(upload_id);
-  }
-  return curl_->RestoreResumableSession(upload_id);
-}
-
 StatusOr<EmptyResponse> HybridClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
   if (internal::IsGrpcResumableSessionUrl(request.upload_session_url())) {
