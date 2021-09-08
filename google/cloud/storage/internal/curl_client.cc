@@ -231,10 +231,8 @@ CurlClient::FullyRestoreResumableSession(ResumableUploadRequest const& request,
   auto session = absl::make_unique<CurlResumableUploadSession>(
       shared_from_this(), request, session_id);
   auto response = session->ResetSession();
-  if (response.status().ok()) {
-    return std::unique_ptr<ResumableUploadSession>(std::move(session));
-  }
-  return std::move(response).status();
+  if (!response) std::move(response).status();
+  return std::unique_ptr<ResumableUploadSession>(std::move(session));
 }
 
 StatusOr<ListBucketsResponse> CurlClient::ListBuckets(
