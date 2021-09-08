@@ -258,8 +258,11 @@ void SetIamPolicy(std::vector<std::string> const& argv) {
   namespace iam = ::google::cloud::iam;
   [](std::string const& name) {
     iam::IAMClient client(iam::MakeIAMConnection());
-    google::iam::v1::Policy policy;
-    auto response = client.SetIamPolicy(name, policy);
+    auto response =
+        client.SetIamPolicy(name, [](google::iam::v1::Policy policy) {
+          // change the policy, e.g., add/remove/edit a binding
+          return policy;
+        });
     if (!response) throw std::runtime_error(response.status().message());
     std::cout << "Policy successfully set: " << response->DebugString() << "\n";
   }
