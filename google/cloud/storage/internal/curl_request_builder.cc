@@ -29,7 +29,7 @@ char const* InitialQueryParameterSeparator(std::string const& url) {
   if (url.find('?') != std::string::npos) return "&";
   return "?";
 }
-} // namespace
+}  // namespace
 
 #ifndef GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE
 #define GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE (128 * 1024)
