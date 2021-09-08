@@ -24,6 +24,12 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+namespace {
+char const* InitialQueryParameterSeparator(std::string const& url) {
+  if (url.find('?') != std::string::npos) return "&";
+  return "?";
+}
+} // namespace
 
 #ifndef GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE
 #define GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE (128 * 1024)
@@ -35,7 +41,7 @@ CurlRequestBuilder::CurlRequestBuilder(
       handle_(factory_->CreateHandle()),
       headers_(nullptr, &curl_slist_free_all),
       url_(std::move(base_url)),
-      query_parameter_separator_("?"),
+      query_parameter_separator_(InitialQueryParameterSeparator(url_)),
       logging_enabled_(false),
       download_stall_timeout_(0) {}
 

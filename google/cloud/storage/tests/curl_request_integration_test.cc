@@ -89,6 +89,24 @@ TEST(CurlRequestTest, SimpleGET) {
   EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
 }
 
+TEST(CurlRequestTest, AddParametersToComplexUrl) {
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/get?foo=foo-value",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  builder.AddQueryParameter("bar", "bar-value");
+  builder.AddQueryParameter("baz", "baz-value");
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("charsets: utf-8");
+
+  auto response = RetryMakeRequest(builder.BuildRequest());
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(200, response->status_code);
+  auto parsed = nlohmann::json::parse(response->payload);
+  auto args = parsed["args"];
+  EXPECT_EQ("foo-value", args["foo"].get<std::string>());
+  EXPECT_EQ("bar-value", args["bar"].get<std::string>());
+  EXPECT_EQ("baz-value", args["baz"].get<std::string>());
+}
+
 TEST(CurlRequestTest, FailedGET) {
   // This test fails if somebody manages to run a https server on port 0 (you
   // can't, but just documenting the assumptions in this test).
