@@ -38,6 +38,10 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::internal::GetEnv;
+using ::testing::IsEmpty;
+using ::testing::Not;
+
 // When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
 // actually just run against the regular GCS REST API. That is fine.
 class GrpcIntegrationTest
@@ -51,12 +55,18 @@ class GrpcIntegrationTest
     std::string const grpc_config_value = GetParam();
     google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
                                     grpc_config_value);
-    project_id_ =
-        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-    ASSERT_FALSE(project_id_.empty()) << "GOOGLE_CLOUD_PROJECT is not set";
+    project_id_ = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+    ASSERT_THAT(project_id_, Not(IsEmpty()))
+        << "GOOGLE_CLOUD_PROJECT is not set";
+
+    bucket_name_ =
+        GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
+    ASSERT_THAT(bucket_name_, Not(IsEmpty()))
+        << "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME is not set";
   }
 
   std::string project_id() const { return project_id_; }
+  std::string bucket_name() const { return bucket_name_; }
 
   std::string MakeEntityName() {
     // We always use the viewers for the project because it is known to exist.
@@ -65,7 +75,7 @@ class GrpcIntegrationTest
 
  private:
   std::string project_id_;
-  std::string topic_name_;
+  std::string bucket_name_;
   testing_util::ScopedEnvironment grpc_config_;
 };
 
@@ -209,6 +219,40 @@ TEST_P(GrpcIntegrationTest, StreamLargeChunks) {
   ScheduleForDelete(stream.metadata().value());
 
   EXPECT_EQ(2 * desired_size, stream.metadata()->size());
+}
+
+TEST_P(GrpcIntegrationTest, QuotaUser) {
+  auto client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+
+  auto metadata =
+      client->InsertObject(bucket_name(), object_name, LoremIpsum(),
+                           IfGenerationMatch(0), QuotaUser("test-only"));
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+}
+
+TEST_P(GrpcIntegrationTest, FieldFilter) {
+  auto client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+
+  auto metadata = client->InsertObject(
+      bucket_name(), object_name, LoremIpsum(), IfGenerationMatch(0),
+      ContentType("text/plain"), ContentEncoding("utf-8"),
+      Fields("bucket,name,generation,contentType"));
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+
+  // If the Fields() filter works, then size() would be 0
+  if (!UsingEmulator()) {
+    EXPECT_EQ(metadata->size(), 0);
+    EXPECT_EQ(metadata->content_type(), "text/plain");
+    EXPECT_EQ(metadata->content_encoding(), "");
+  }
 }
 
 INSTANTIATE_TEST_SUITE_P(GrpcIntegrationMediaTest, GrpcIntegrationTest,

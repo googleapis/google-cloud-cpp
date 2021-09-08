@@ -22,6 +22,7 @@ storage_client_grpc_unit_tests = [
     "internal/grpc_client_object_request_test.cc",
     "internal/grpc_client_read_object_test.cc",
     "internal/grpc_client_test.cc",
+    "internal/grpc_configure_client_context_test.cc",
     "internal/grpc_object_read_source_test.cc",
     "internal/grpc_resumable_upload_session_test.cc",
     "internal/grpc_resumable_upload_session_url_test.cc",

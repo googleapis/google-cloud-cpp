@@ -19,6 +19,7 @@
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <grpcpp/client_context.h>
+#include <map>
 #include <string>
 
 namespace google {
@@ -51,6 +52,18 @@ Status IsContextMDValid(
     std::string const& api_client_header,
     absl::optional<std::string> const& resource_name = {},
     absl::optional<std::string> const& resource_prefix_header = {});
+
+/**
+ * GetMetadata from `ClientContext`.
+ *
+ * `ClientContext` doesn't give access to the metadata, but `ServerContext`
+ * does. In order to transform the `ClientContext` into `ServerContext`
+ * we spin up a server and a client and send some garbage with this context.
+ *
+ * @note this invalidates the @p context parameter.
+ */
+std::multimap<std::string, std::string> GetMetadata(
+    grpc::ClientContext& context);
 
 }  // namespace testing_util
 }  // namespace GOOGLE_CLOUD_CPP_NS
