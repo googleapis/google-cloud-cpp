@@ -39,7 +39,8 @@ auto constexpr kBackoffScaling = 2.0;
 Options BigQueryReadDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_BIGQUERY_READ_ENDPOINT");
-    options.set<EndpointOption>(env ? *env : "bigquerystorage.googleapis.com");
+    options.set<EndpointOption>(
+        env && !env->empty() ? *env : "bigquerystorage.googleapis.com");
   }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());

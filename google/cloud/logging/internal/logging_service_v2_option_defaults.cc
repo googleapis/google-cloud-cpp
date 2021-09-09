@@ -39,7 +39,8 @@ auto constexpr kBackoffScaling = 2.0;
 Options LoggingServiceV2DefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_LOGGING_SERVICE_V2_ENDPOINT");
-    options.set<EndpointOption>(env ? *env : "logging.googleapis.com");
+    options.set<EndpointOption>(
+        env && !env->empty() ? *env : "logging.googleapis.com");
   }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
