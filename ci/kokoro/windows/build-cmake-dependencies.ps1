@@ -38,8 +38,7 @@ $IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
 $HasBuildCache = (Test-Path env:BUILD_CACHE)
 
 $project_root = (Get-Item -Path ".\" -Verbose).FullName
-$vcpkg_config="${project_root}\ci\etc\vcpkg-config.ps1"
-. "$vcpkg_config"
+$vcpkg_version = Get-Content -Path "${project_root}\ci\etc\vcpkg-commit.txt"
 $vcpkg_base = "vcpkg"
 $packages = @("zlib", "openssl",
               "protobuf", "c-ares", "benchmark",
@@ -52,7 +51,6 @@ if ($args.count -ge 1) {
     $vcpkg_flags=("--triplet", "${env:VCPKG_TRIPLET}")
 }
 $vcpkg_dir = "cmake-out\${vcpkg_base}"
-$vcpkg_version = ${env:VCPKG_RELEASE_VERSION}
 $Env:VCPKG_FEATURE_FLAGS = "-manifests"
 
 New-Item -ItemType Directory -Path "cmake-out" -ErrorAction SilentlyContinue
