@@ -43,7 +43,7 @@ substitutions:
   _TRIGGER_TYPE: 'manual'
   _LOGS_BUCKET: 'cloud-cpp-community-publiclogs'
 
-timeout: 7200s
+timeout: 9000s
 tags: [
   '${_TRIGGER_TYPE}',
   '${_BUILD_NAME}',
