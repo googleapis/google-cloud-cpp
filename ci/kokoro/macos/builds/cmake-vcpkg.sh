@@ -18,7 +18,6 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../../lib/init.sh"
 source module ci/etc/integration-tests-config.sh
-source module ci/etc/vcpkg-config.sh
 source module ci/lib/io.sh
 
 readonly SOURCE_DIR="."
@@ -40,7 +39,8 @@ brew list --versions ninja || brew install ninja
 vcpkg_dir="${HOME}/vcpkg-quickstart"
 mkdir -p "${vcpkg_dir}"
 io::log "Downloading vcpkg into ${vcpkg_dir}..."
-curl -sSL "https://github.com/microsoft/vcpkg/archive/${VCPKG_RELEASE_VERSION}.tar.gz" |
+VCPKG_COMMIT="$(<ci/etc/vcpkg-commit.txt)"
+curl -sSL "https://github.com/microsoft/vcpkg/archive/${VCPKG_COMMIT}.tar.gz" |
   tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
 (
   cd "${vcpkg_dir}"
