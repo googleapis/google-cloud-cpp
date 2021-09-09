@@ -209,7 +209,7 @@ struct MaximumCurlSocketSendSizeOption {
  * transfer as this may indicate a network glitch.
  *
  * For large requests (e.g. downloads in the GiB to TiB range) this is a better
- * configuration parameter than a simple parameter, as the transfers will take
+ * configuration parameter than a simple timeout, as the transfers will take
  * minutes or hours to complete. Relying on a timeout value for them would not
  * work, as the timeout would be too large to be useful. For small requests,
  * this is as effective as a timeout parameter, but maybe unfamiliar and thus
