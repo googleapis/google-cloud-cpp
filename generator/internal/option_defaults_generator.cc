@@ -95,7 +95,7 @@ Status OptionDefaultsGenerator::GenerateCc() {
   {{"Options $service_name$DefaultOptions(Options options) {\n"
     "  if (!options.has<EndpointOption>()) {\n"
     "    auto env = internal::GetEnv(\"$service_endpoint_env_var$\");\n"
-    "    options.set<EndpointOption>(env ? *env : \"$service_endpoint$\");\n"
+    "    options.set<EndpointOption>(env && !env->empty() ? *env : \"$service_endpoint$\");\n"
     "  }\n"},
    {[this]{return vars("emulator_endpoint_env_var").empty();}, "",
     "  if (auto emulator = internal::GetEnv(\"$emulator_endpoint_env_var$\")) {\n"

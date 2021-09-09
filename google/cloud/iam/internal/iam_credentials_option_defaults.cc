@@ -39,7 +39,8 @@ auto constexpr kBackoffScaling = 2.0;
 Options IAMCredentialsDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_ENDPOINT");
-    options.set<EndpointOption>(env ? *env : "iamcredentials.googleapis.com");
+    options.set<EndpointOption>(
+        env && !env->empty() ? *env : "iamcredentials.googleapis.com");
   }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
