@@ -202,15 +202,27 @@ struct MaximumCurlSocketSendSizeOption {
 };
 
 /**
- * Sets the "stall" timeout.
+ * Sets the transfer stall timeout.
  *
- * If the download "stalls", i.e., no bytes are received for a significant
- * period, it may be better to restart the download as this may indicate a
- * network glitch.
+ * If a transfer (upload, download, or request) *stalls*, i.e., no bytes are
+ * sent or received for a significant period, it may be better to restart the
+ * transfer as this may indicate a network glitch.
+ *
+ * For large requests (e.g. downloads in the GiB to TiB range) this is a better
+ * configuration parameter than a simple parameter, as the transfers will take
+ * minutes or hours to complete. Relying on a timeout value for them would not
+ * work, as the timeout would be too large to be useful. For small requests,
+ * this is as effective as a timeout parameter, but maybe unfamiliar and thus
+ * harder to reason about.
  */
-struct DownloadStallTimeoutOption {
+struct TransferStallTimeoutOption {
   using Type = std::chrono::seconds;
 };
+
+/**
+ * @deprecated Please use TransferStallTimeoutOption instead
+ */
+using DownloadStallTimeoutOption = TransferStallTimeoutOption;
 
 /// Set the retry policy for a GCS client.
 struct RetryPolicyOption {
@@ -234,7 +246,7 @@ using ClientOptionList = ::google::cloud::OptionList<
     DownloadBufferSizeOption, UploadBufferSizeOption,
     EnableCurlSslLockingOption, EnableCurlSigpipeHandlerOption,
     MaximumCurlSocketRecvSizeOption, MaximumCurlSocketSendSizeOption,
-    DownloadStallTimeoutOption, RetryPolicyOption, BackoffPolicyOption,
+    TransferStallTimeoutOption, RetryPolicyOption, BackoffPolicyOption,
     IdempotencyPolicyOption, CARootsFilePathOption,
     storage_experimental::HttpVersionOption>;
 

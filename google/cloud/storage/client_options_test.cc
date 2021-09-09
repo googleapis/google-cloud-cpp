@@ -324,7 +324,7 @@ TEST_F(ClientOptionsTest, MakeOptionsFromDefault) {
   EXPECT_TRUE(opts.has<EnableCurlSigpipeHandlerOption>());
   EXPECT_EQ(0, opts.get<MaximumCurlSocketSendSizeOption>());
   EXPECT_EQ(0, opts.get<MaximumCurlSocketRecvSizeOption>());
-  EXPECT_LT(0, opts.get<DownloadStallTimeoutOption>().count());
+  EXPECT_LT(0, opts.get<TransferStallTimeoutOption>().count());
   EXPECT_THAT(opts.get<CARootsFilePathOption>(), IsEmpty());
 }
 
