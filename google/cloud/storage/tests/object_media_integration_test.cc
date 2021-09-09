@@ -612,7 +612,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
 
   Client client(
       Options{}
-          .set<DownloadStallTimeoutOption>(std::chrono::seconds(3))
+          .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
           .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(3).clone()));
 
   auto object_name = MakeRandomObjectName();
@@ -642,7 +642,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
 
   Client client(
       Options{}
-          .set<DownloadStallTimeoutOption>(std::chrono::seconds(3))
+          .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
           .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(10).clone()));
 
   auto object_name = MakeRandomObjectName();
@@ -678,7 +678,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
 
   Client client(
       Options{}
-          .set<DownloadStallTimeoutOption>(std::chrono::seconds(3))
+          .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
           .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(5).clone()));
 
   auto object_name = MakeRandomObjectName();

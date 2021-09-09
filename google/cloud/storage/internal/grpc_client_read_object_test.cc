@@ -88,7 +88,7 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
       });
 
   auto client = GrpcClient::CreateMock(
-      mock, Options{}.set<DownloadStallTimeoutOption>(configured_timeout));
+      mock, Options{}.set<TransferStallTimeoutOption>(configured_timeout));
   auto stream =
       client->ReadObject(ReadObjectRangeRequest("test-bucket", "test-object"));
   ASSERT_STATUS_OK(stream);

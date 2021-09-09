@@ -251,10 +251,10 @@ class ClientOptions {
    * The default value is 2 minutes. Can be disabled by setting the value to 0.
    */
   std::chrono::seconds download_stall_timeout() const {
-    return opts_.get<DownloadStallTimeoutOption>();
+    return opts_.get<TransferStallTimeoutOption>();
   }
   ClientOptions& set_download_stall_timeout(std::chrono::seconds v) {
-    opts_.set<DownloadStallTimeoutOption>(std::move(v));
+    opts_.set<TransferStallTimeoutOption>(std::move(v));
     return *this;
   }
   //@}
