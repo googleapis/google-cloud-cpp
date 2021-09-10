@@ -133,7 +133,7 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<spanner_admin::DatabaseAdminConnection>
 MakeDatabaseAdminConnection(std::shared_ptr<DatabaseAdminStub> stub,
-                            Options options = {});
+                            Options options);
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace spanner_admin_internal

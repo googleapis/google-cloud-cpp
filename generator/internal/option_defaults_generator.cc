@@ -52,7 +52,7 @@ Status OptionDefaultsGenerator::GenerateHeader() {
   if (!result.ok()) return result;
 
   HeaderPrint(  // clang-format off
-    "Options $service_name$DefaultOptions(Options options = {});\n\n");
+    "Options $service_name$DefaultOptions(Options options);\n\n");
   //clang-format on
 
   HeaderCloseNamespaces();

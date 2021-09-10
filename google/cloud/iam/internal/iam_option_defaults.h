@@ -27,7 +27,7 @@ namespace cloud {
 namespace iam_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-Options IAMDefaultOptions(Options options = {});
+Options IAMDefaultOptions(Options options);
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace iam_internal

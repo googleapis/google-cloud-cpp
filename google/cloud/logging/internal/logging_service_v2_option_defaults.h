@@ -27,7 +27,7 @@ namespace cloud {
 namespace logging_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-Options LoggingServiceV2DefaultOptions(Options options = {});
+Options LoggingServiceV2DefaultOptions(Options options);
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace logging_internal

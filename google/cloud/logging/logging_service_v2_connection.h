@@ -82,7 +82,7 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<logging::LoggingServiceV2Connection>
 MakeLoggingServiceV2Connection(std::shared_ptr<LoggingServiceV2Stub> stub,
-                               Options options = {});
+                               Options options);
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace logging_internal

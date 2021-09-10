@@ -164,7 +164,7 @@ Status ConnectionGenerator::GenerateHeader() {
       "std::shared_ptr<$product_namespace$::$connection_class_name$>\n"
       "Make$connection_class_name$(\n"
       "    std::shared_ptr<$stub_class_name$> stub,\n"
-      "    Options options = {});\n\n");
+      "    Options options);\n\n");
   // clang-format on
   HeaderCloseNamespaces();
 
