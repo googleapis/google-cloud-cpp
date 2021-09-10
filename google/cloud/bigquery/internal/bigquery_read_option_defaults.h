@@ -27,7 +27,7 @@ namespace cloud {
 namespace bigquery_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-Options BigQueryReadDefaultOptions(Options options = {});
+Options BigQueryReadDefaultOptions(Options options);
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace bigquery_internal

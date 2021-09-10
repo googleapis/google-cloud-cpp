@@ -120,7 +120,7 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 std::shared_ptr<golden::GoldenThingAdminConnection>
 MakeGoldenThingAdminConnection(
     std::shared_ptr<GoldenThingAdminStub> stub,
-    Options options = {});
+    Options options);
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal

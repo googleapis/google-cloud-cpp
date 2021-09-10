@@ -27,7 +27,7 @@ namespace cloud {
 namespace spanner_admin_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-Options DatabaseAdminDefaultOptions(Options options = {});
+Options DatabaseAdminDefaultOptions(Options options);
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace spanner_admin_internal

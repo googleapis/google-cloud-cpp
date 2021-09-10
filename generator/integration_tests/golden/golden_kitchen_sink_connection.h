@@ -88,7 +88,7 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 std::shared_ptr<golden::GoldenKitchenSinkConnection>
 MakeGoldenKitchenSinkConnection(
     std::shared_ptr<GoldenKitchenSinkStub> stub,
-    Options options = {});
+    Options options);
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal

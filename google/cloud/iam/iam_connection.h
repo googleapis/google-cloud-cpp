@@ -149,7 +149,7 @@ namespace iam_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<iam::IAMConnection> MakeIAMConnection(
-    std::shared_ptr<IAMStub> stub, Options options = {});
+    std::shared_ptr<IAMStub> stub, Options options);
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace iam_internal

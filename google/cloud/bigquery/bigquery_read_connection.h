@@ -84,7 +84,7 @@ namespace bigquery_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<bigquery::BigQueryReadConnection> MakeBigQueryReadConnection(
-    std::shared_ptr<BigQueryReadStub> stub, Options options = {});
+    std::shared_ptr<BigQueryReadStub> stub, Options options);
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace bigquery_internal
