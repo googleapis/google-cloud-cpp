@@ -145,9 +145,9 @@ std::shared_ptr<StorageStub> CreateStorageStub(CompletionQueue cq,
   return stub;
 }
 
-std::shared_ptr<GrpcClient> GrpcClient::Create(Options const& opts) {
+std::shared_ptr<GrpcClient> GrpcClient::Create(Options opts) {
   // Cannot use std::make_shared<> as the constructor is private.
-  return std::shared_ptr<GrpcClient>(new GrpcClient(opts));
+  return std::shared_ptr<GrpcClient>(new GrpcClient(std::move(opts)));
 }
 
 std::shared_ptr<GrpcClient> GrpcClient::CreateMock(
@@ -156,20 +156,26 @@ std::shared_ptr<GrpcClient> GrpcClient::CreateMock(
       new GrpcClient(std::move(stub), DefaultOptionsGrpc(std::move(opts))));
 }
 
-GrpcClient::GrpcClient(Options const& opts)
-    : backwards_compatibility_options_(
-          MakeBackwardsCompatibleClientOptions(opts)),
-      background_(MakeBackgroundThreadsFactory(opts)()),
-      stub_(CreateStorageStub(background_->cq(), opts)) {}
+GrpcClient::GrpcClient(Options opts)
+    : options_(std::move(opts)),
+      backwards_compatibility_options_(
+          MakeBackwardsCompatibleClientOptions(options_)),
+      background_(MakeBackgroundThreadsFactory(options_)()),
+      stub_(CreateStorageStub(background_->cq(), options_)) {}
 
-GrpcClient::GrpcClient(std::shared_ptr<StorageStub> stub, Options const& opts)
-    : backwards_compatibility_options_(
-          MakeBackwardsCompatibleClientOptions(opts)),
-      background_(MakeBackgroundThreadsFactory(opts)()),
+GrpcClient::GrpcClient(std::shared_ptr<StorageStub> stub, Options opts)
+    : options_(std::move(opts)),
+      backwards_compatibility_options_(
+          MakeBackwardsCompatibleClientOptions(options_)),
+      background_(MakeBackgroundThreadsFactory(options_)()),
       stub_(std::move(stub)) {}
 
 std::unique_ptr<GrpcClient::WriteObjectStream> GrpcClient::CreateUploadWriter(
     std::unique_ptr<grpc::ClientContext> context) {
+  auto const timeout = options_.get<TransferStallTimeoutOption>();
+  if (timeout.count() != 0) {
+    context->set_deadline(std::chrono::system_clock::now() + timeout);
+  }
   return stub_->WriteObject(std::move(context));
 }
 
@@ -177,6 +183,10 @@ StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
     QueryResumableUploadRequest const& request) {
   grpc::ClientContext context;
   ApplyQueryParameters(context, request, "resource");
+  auto const timeout = options_.get<TransferStallTimeoutOption>();
+  if (timeout.count() != 0) {
+    context.set_deadline(std::chrono::system_clock::now() + timeout);
+  }
   auto status = stub_->QueryWriteStatus(context, ToProto(request));
   if (!status) return std::move(status).status();
 
@@ -341,10 +351,9 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
   }
   auto context = absl::make_unique<grpc::ClientContext>();
   ApplyQueryParameters(*context, request);
-  if (backwards_compatibility_options_.download_stall_timeout().count() != 0) {
-    context->set_deadline(
-        std::chrono::system_clock::now() +
-        backwards_compatibility_options_.download_stall_timeout());
+  auto const timeout = options_.get<TransferStallTimeoutOption>();
+  if (timeout.count() != 0) {
+    context->set_deadline(std::chrono::system_clock::now() + timeout);
   }
   auto proto_request = ToProto(request);
   if (!proto_request) return std::move(proto_request).status();
@@ -392,6 +401,10 @@ GrpcClient::CreateResumableSession(ResumableUploadRequest const& request) {
 
   grpc::ClientContext context;
   ApplyQueryParameters(context, request, "resource");
+  auto const timeout = options_.get<TransferStallTimeoutOption>();
+  if (timeout.count() != 0) {
+    context.set_deadline(std::chrono::system_clock::now() + timeout);
+  }
   auto response = stub_->StartResumableWrite(context, *proto_request);
   if (!response.ok()) return std::move(response).status();
 

@@ -80,7 +80,6 @@ GrpcResumableUploadSession::last_response() const {
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
     ConstBufferSequence buffers, bool final_chunk, HashValues const& hashes) {
-  // TODO(#4216) - set the timeout
   auto context = absl::make_unique<grpc::ClientContext>();
   ApplyQueryParameters(*context, request_, "resource");
   auto writer = client_->CreateUploadWriter(std::move(context));
