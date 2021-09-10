@@ -41,7 +41,8 @@ class StorageStub;
 class GrpcClient : public RawClient,
                    public std::enable_shared_from_this<GrpcClient> {
  public:
-  static std::shared_ptr<GrpcClient> Create(Options const& opts);
+  // Creates a new instance, assumes the options have all default values set.
+  static std::shared_ptr<GrpcClient> Create(Options opts);
 
   // This is used to create a client from a mocked StorageStub.
   static std::shared_ptr<GrpcClient> CreateMock(
@@ -217,10 +218,11 @@ class GrpcClient : public RawClient,
   static std::string ComputeMD5Hash(std::string const& payload);
 
  protected:
-  explicit GrpcClient(Options const& opts);
-  explicit GrpcClient(std::shared_ptr<StorageStub> stub, Options const& opts);
+  explicit GrpcClient(Options opts);
+  explicit GrpcClient(std::shared_ptr<StorageStub> stub, Options opts);
 
  private:
+  Options options_;
   ClientOptions backwards_compatibility_options_;
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<StorageStub> stub_;
