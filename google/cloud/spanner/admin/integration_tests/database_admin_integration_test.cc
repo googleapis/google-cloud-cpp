@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/database.h"
-#include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/testing/instance_location.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
@@ -21,6 +21,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/kms_key_name.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -55,7 +56,8 @@ class DatabaseAdminClientTest
   // and `database_` until `SetUp()`.
   DatabaseAdminClientTest()
       : instance_("placeholder", "placeholder"),
-        database_(instance_, "placeholder") {}
+        database_(instance_, "placeholder"),
+        client_(spanner_admin::MakeDatabaseAdminConnection()) {}
 
   void SetUp() override {
     using ::google::cloud::internal::GetEnv;
@@ -89,7 +91,7 @@ class DatabaseAdminClientTest
   // Does `database_` exist in `instance_`?
   bool DatabaseExists() {
     auto full_name = database_.FullName();
-    for (auto const& database : client_.ListDatabases(instance_)) {
+    for (auto const& database : client_.ListDatabases(instance_.FullName())) {
       EXPECT_STATUS_OK(database);
       if (!database) break;
       if (database->name() == full_name) return true;
@@ -100,7 +102,7 @@ class DatabaseAdminClientTest
   Instance instance_;
   std::string location_;
   Database database_;
-  DatabaseAdminClient client_;
+  spanner_admin::DatabaseAdminClient client_;
   bool emulator_;
   std::string test_iam_service_account_;
 };
@@ -118,13 +120,17 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
                                     "the database id is selected at random.";
 
   auto database =
-      client_.CreateDatabase(database_, /*extra_statements=*/{}).get();
+      client_
+          .CreateDatabase(
+              database_.instance().FullName(),
+              absl::StrCat("CREATE DATABASE `", database_.database_id(), "`"))
+          .get();
   ASSERT_STATUS_OK(database);
   EXPECT_THAT(database->name(), EndsWith(database_.database_id()));
   EXPECT_FALSE(database->has_encryption_config());
   EXPECT_THAT(database->encryption_info(), IsEmpty());
 
-  auto get_result = client_.GetDatabase(database_);
+  auto get_result = client_.GetDatabase(database_.FullName());
   ASSERT_STATUS_OK(get_result);
   EXPECT_EQ(database->name(), get_result->name());
   EXPECT_FALSE(get_result->has_encryption_config());
@@ -140,7 +146,7 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   }
 
   if (!emulator_) {
-    auto current_policy = client_.GetIamPolicy(database_);
+    auto current_policy = client_.GetIamPolicy(database_.FullName());
     ASSERT_STATUS_OK(current_policy);
     EXPECT_EQ(0, current_policy->bindings_size());
 
@@ -152,7 +158,8 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
     binding.set_role(reader_role);
     *binding.add_members() = expected_member;
 
-    auto updated_policy = client_.SetIamPolicy(database_, *current_policy);
+    auto updated_policy =
+        client_.SetIamPolicy(database_.FullName(), *current_policy);
     ASSERT_THAT(updated_policy, AnyOf(IsOk(), StatusIs(StatusCode::kAborted)));
     if (updated_policy) {
       EXPECT_EQ(1, updated_policy->bindings_size());
@@ -164,7 +171,8 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
 
     // Perform a different update using the the OCC loop API:
     updated_policy = client_.SetIamPolicy(
-        database_, [this, &writer_role](google::iam::v1::Policy current) {
+        database_.FullName(),
+        [this, &writer_role](google::iam::v1::Policy current) {
           std::string const expected_member =
               "serviceAccount:" + test_iam_service_account_;
           auto& binding = *current.add_bindings();
@@ -180,19 +188,19 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
               updated_policy->bindings().Get(1).members().Get(0));
 
     // Fetch the Iam Policy again.
-    current_policy = client_.GetIamPolicy(database_);
+    current_policy = client_.GetIamPolicy(database_.FullName());
     ASSERT_STATUS_OK(current_policy);
     EXPECT_THAT(*updated_policy, IsProtoEqual(*current_policy));
 
-    auto test_iam_permission_result =
-        client_.TestIamPermissions(database_, {"spanner.databases.read"});
+    auto test_iam_permission_result = client_.TestIamPermissions(
+        database_.FullName(), {"spanner.databases.read"});
     ASSERT_STATUS_OK(test_iam_permission_result);
     ASSERT_EQ(1, test_iam_permission_result->permissions_size());
     ASSERT_EQ("spanner.databases.read",
               test_iam_permission_result->permissions(0));
   }
 
-  auto get_ddl_result = client_.GetDatabaseDdl(database_);
+  auto get_ddl_result = client_.GetDatabaseDdl(database_.FullName());
   ASSERT_STATUS_OK(get_ddl_result);
   EXPECT_EQ(0, get_ddl_result->statements_size());
 
@@ -216,7 +224,8 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   statements.back().append(R"""(
         ) PRIMARY KEY (SingerId)
       )""");
-  auto metadata = client_.UpdateDatabase(database_, statements).get();
+  auto metadata =
+      client_.UpdateDatabaseDdl(database_.FullName(), statements).get();
   ASSERT_STATUS_OK(metadata);
   EXPECT_THAT(metadata->database(), EndsWith(database_.database_id()));
   EXPECT_EQ(statements.size(), metadata->statements_size());
@@ -235,7 +244,7 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
         CREATE INDEX SingersByDetail
           ON Singers(SingerDetails)
       )""");
-  metadata = client_.UpdateDatabase(database_, statements).get();
+  metadata = client_.UpdateDatabaseDdl(database_.FullName(), statements).get();
   if (!emulator_) {
     // TODO(#6873): Remove this check when the emulator supports JSON.
     EXPECT_THAT(metadata,
@@ -258,7 +267,7 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
           Key JSON NOT NULL
         ) PRIMARY KEY (Key)
       )""");
-  metadata = client_.UpdateDatabase(database_, statements).get();
+  metadata = client_.UpdateDatabaseDdl(database_.FullName(), statements).get();
   if (!emulator_) {
     // TODO(#6873): Remove this check when the emulator supports JSON.
     EXPECT_THAT(metadata,
@@ -271,7 +280,7 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   }
 
   EXPECT_TRUE(DatabaseExists()) << "Database " << database_;
-  auto drop_status = client_.DropDatabase(database_);
+  auto drop_status = client_.DropDatabase(database_.FullName());
   EXPECT_STATUS_OK(drop_status);
   EXPECT_FALSE(DatabaseExists()) << "Database " << database_;
 }
@@ -279,13 +288,14 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
 /// @test Verify setting version_retention_period via CreateDatabase().
 TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodCreate) {
   // Set the version_retention_period via CreateDatabase().
-  auto database =
-      client_
-          .CreateDatabase(
-              database_,
-              {absl::StrCat("ALTER DATABASE `", database_.database_id(),
-                            "` SET OPTIONS (version_retention_period='7d')")})
-          .get();
+  google::spanner::admin::database::v1::CreateDatabaseRequest creq;
+  creq.set_parent(database_.instance().FullName());
+  creq.set_create_statement(
+      absl::StrCat("CREATE DATABASE `", database_.database_id(), "`"));
+  creq.add_extra_statements(
+      absl::StrCat("ALTER DATABASE `", database_.database_id(),
+                   "` SET OPTIONS (version_retention_period='7d')"));
+  auto database = client_.CreateDatabase(creq).get();
   if (emulator_) {
     // TODO(#5479): Awaiting emulator support for version_retention_period.
     EXPECT_THAT(database, Not(IsOk()));
@@ -296,7 +306,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodCreate) {
   EXPECT_EQ("7d", database->version_retention_period());
 
   // Verify that version_retention_period is returned from GetDatabase().
-  auto get = client_.GetDatabase(database_);
+  auto get = client_.GetDatabase(database_.FullName());
   ASSERT_THAT(get, IsOk());
   EXPECT_EQ(database->name(), get->name());
   EXPECT_EQ("7d", get->version_retention_period());
@@ -307,7 +317,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodCreate) {
   EXPECT_LE(MakeTimestamp(get->create_time()).value(),
             MakeTimestamp(get->earliest_version_time()).value());
 
-  auto drop = client_.DropDatabase(database_);
+  auto drop = client_.DropDatabase(database_.FullName());
   EXPECT_THAT(drop, IsOk());
 }
 
@@ -315,21 +325,26 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodCreate) {
 TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodCreateFailure) {
   // Set an invalid version_retention_period (zero) via CreateDatabase(),
   // and verify that an error is returned.
-  auto database =
-      client_
-          .CreateDatabase(
-              database_,
-              {absl::StrCat("ALTER DATABASE `", database_.database_id(),
-                            "` SET OPTIONS (version_retention_period='0')")})
-          .get();
+  google::spanner::admin::database::v1::CreateDatabaseRequest creq;
+  creq.set_parent(database_.instance().FullName());
+  creq.set_create_statement(
+      absl::StrCat("CREATE DATABASE `", database_.database_id(), "`"));
+  creq.add_extra_statements(
+      absl::StrCat("ALTER DATABASE `", database_.database_id(),
+                   "` SET OPTIONS (version_retention_period='0')"));
+  auto database = client_.CreateDatabase(creq).get();
   EXPECT_THAT(database, Not(IsOk()));
 }
 
-/// @test Verify setting version_retention_period via UpdateDatabase().
+/// @test Verify setting version_retention_period via UpdateDatabaseDdl().
 TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
   // Create the database.
   auto database =
-      client_.CreateDatabase(database_, /*extra_statements=*/{}).get();
+      client_
+          .CreateDatabase(
+              database_.instance().FullName(),
+              absl::StrCat("CREATE DATABASE `", database_.database_id(), "`"))
+          .get();
   ASSERT_THAT(database, IsOk());
   EXPECT_EQ(database_.FullName(), database->name());
   if (emulator_) {
@@ -339,11 +354,11 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
     EXPECT_NE("", database->version_retention_period());  // default value
   }
 
-  // Set the version_retention_period via UpdateDatabase().
+  // Set the version_retention_period via UpdateDatabaseDdl().
   auto update =
       client_
-          .UpdateDatabase(
-              database_,
+          .UpdateDatabaseDdl(
+              database_.FullName(),
               {absl::StrCat("ALTER DATABASE `", database_.database_id(),
                             "` SET OPTIONS (version_retention_period='7d')")})
           .get();
@@ -358,7 +373,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
   }
 
   // Verify that version_retention_period is returned from GetDatabase().
-  auto get = client_.GetDatabase(database_);
+  auto get = client_.GetDatabase(database_.FullName());
   ASSERT_THAT(get, IsOk());
   EXPECT_EQ(database->name(), get->name());
   if (emulator_) {
@@ -370,7 +385,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
 
   // Verify that version_retention_period is returned via ListDatabases().
   auto list_db = [&] {
-    for (auto const& db : client_.ListDatabases(instance_)) {
+    for (auto const& db : client_.ListDatabases(instance_.FullName())) {
       if (db && db->name() == database_.FullName()) return db;
     }
     return StatusOr<google::spanner::admin::database::v1::Database>{
@@ -386,7 +401,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
   }
 
   // Verify that version_retention_period is returned from GetDatabaseDdl().
-  auto ddl = client_.GetDatabaseDdl(database_);
+  auto ddl = client_.GetDatabaseDdl(database_.FullName());
   ASSERT_THAT(ddl, IsOk());
   if (emulator_) {
     // TODO(#5479): Awaiting emulator support for version_retention_period.
@@ -395,15 +410,19 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
                 Contains(ContainsRegex("version_retention_period *= *'7d'")));
   }
 
-  auto drop = client_.DropDatabase(database_);
+  auto drop = client_.DropDatabase(database_.FullName());
   EXPECT_THAT(drop, IsOk());
 }
 
-/// @test Verify setting bad version_retention_period via UpdateDatabase().
+/// @test Verify setting bad version_retention_period via UpdateDatabaseDdl().
 TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdateFailure) {
   // Create the database.
   auto database =
-      client_.CreateDatabase(database_, /*extra_statements=*/{}).get();
+      client_
+          .CreateDatabase(
+              database_.instance().FullName(),
+              absl::StrCat("CREATE DATABASE `", database_.database_id(), "`"))
+          .get();
   ASSERT_THAT(database, IsOk());
   EXPECT_EQ(database_.FullName(), database->name());
   if (emulator_) {
@@ -413,7 +432,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdateFailure) {
     EXPECT_NE("", database->version_retention_period());  // default value
   }
 
-  auto get0 = client_.GetDatabase(database_);
+  auto get0 = client_.GetDatabase(database_.FullName());
   ASSERT_THAT(get0, IsOk());
   EXPECT_EQ(database->name(), get0->name());
   if (emulator_) {
@@ -423,24 +442,24 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdateFailure) {
     EXPECT_NE("", get0->version_retention_period());  // default value
   }
 
-  // Set an invalid version_retention_period (zero) via UpdateDatabase(),
+  // Set an invalid version_retention_period (zero) via UpdateDatabaseDdl(),
   // and verify that an error is returned.
   auto update =
       client_
-          .UpdateDatabase(
-              database_,
+          .UpdateDatabaseDdl(
+              database_.FullName(),
               {absl::StrCat("ALTER DATABASE `", database_.database_id(),
                             "` SET OPTIONS (version_retention_period='0')")})
           .get();
   EXPECT_THAT(update, Not(IsOk()));
 
   // Also verify that version_retention_period was NOT changed.
-  auto get = client_.GetDatabase(database_);
+  auto get = client_.GetDatabase(database_.FullName());
   ASSERT_THAT(get, IsOk());
   EXPECT_EQ(database->name(), get->name());
   EXPECT_EQ(get0->version_retention_period(), get->version_retention_period());
 
-  auto drop = client_.DropDatabase(database_);
+  auto drop = client_.DropDatabase(database_.FullName());
   EXPECT_THAT(drop, IsOk());
 }
 
@@ -449,10 +468,12 @@ TEST_F(DatabaseAdminClientTest, CreateWithEncryptionKey) {
   if (emulator_) GTEST_SKIP() << "emulator does not support CMEK";
   KmsKeyName encryption_key(instance_.project_id(), location_, kKeyRing,
                             kKeyName);
-  auto database = client_
-                      .CreateDatabase(database_, /*extra_statements=*/{},
-                                      CustomerManagedEncryption(encryption_key))
-                      .get();
+  google::spanner::admin::database::v1::CreateDatabaseRequest creq;
+  creq.set_parent(database_.instance().FullName());
+  creq.set_create_statement(
+      absl::StrCat("CREATE DATABASE `", database_.database_id(), "`"));
+  creq.mutable_encryption_config()->set_kms_key_name(encryption_key.FullName());
+  auto database = client_.CreateDatabase(creq).get();
   ASSERT_STATUS_OK(database);
   EXPECT_EQ(database->name(), database_.FullName());
   EXPECT_TRUE(database->has_encryption_config());
@@ -461,7 +482,7 @@ TEST_F(DatabaseAdminClientTest, CreateWithEncryptionKey) {
               encryption_key.FullName());
   }
 
-  auto get_result = client_.GetDatabase(database_);
+  auto get_result = client_.GetDatabase(database_.FullName());
   ASSERT_STATUS_OK(get_result);
   EXPECT_EQ(database->name(), get_result->name());
   EXPECT_TRUE(get_result->has_encryption_config());
@@ -472,7 +493,8 @@ TEST_F(DatabaseAdminClientTest, CreateWithEncryptionKey) {
 
   // Verify that encryption config is returned via ListDatabases().
   auto list_db = [&] {
-    for (auto const& db : client_.ListDatabases(database_.instance())) {
+    for (auto const& db :
+         client_.ListDatabases(database_.instance().FullName())) {
       if (db && db->name() == database_.FullName()) return db;
     }
     return StatusOr<google::spanner::admin::database::v1::Database>{
@@ -485,7 +507,7 @@ TEST_F(DatabaseAdminClientTest, CreateWithEncryptionKey) {
               encryption_key.FullName());
   }
 
-  EXPECT_STATUS_OK(client_.DropDatabase(database_));
+  EXPECT_STATUS_OK(client_.DropDatabase(database_.FullName()));
 }
 
 // @test Verify creating a database fails if a nonexistent encryption key is
@@ -494,11 +516,13 @@ TEST_F(DatabaseAdminClientTest, CreateWithNonexistentEncryptionKey) {
   if (emulator_) GTEST_SKIP() << "emulator does not support CMEK";
   KmsKeyName nonexistent_encryption_key(instance_.project_id(), location_,
                                         kKeyRing, "ceci-n-est-pas-une-cle");
-  auto database =
-      client_
-          .CreateDatabase(database_, /*extra_statements=*/{},
-                          CustomerManagedEncryption(nonexistent_encryption_key))
-          .get();
+  google::spanner::admin::database::v1::CreateDatabaseRequest creq;
+  creq.set_parent(database_.instance().FullName());
+  creq.set_create_statement(
+      absl::StrCat("CREATE DATABASE `", database_.database_id(), "`"));
+  creq.mutable_encryption_config()->set_kms_key_name(
+      nonexistent_encryption_key.FullName());
+  auto database = client_.CreateDatabase(creq).get();
   EXPECT_THAT(database, StatusIs(StatusCode::kFailedPrecondition,
                                  HasSubstr("KMS Key provided is not usable")));
 }

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/admin/instance_admin_client.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
-#include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/testing/cleanup_stale_instances.h"
 #include "google/cloud/spanner/testing/pick_instance_config.h"
 #include "google/cloud/spanner/testing/random_instance_name.h"
@@ -95,7 +95,7 @@ class InstanceAdminClientTest
  public:
   InstanceAdminClientTest()
       : generator_(internal::MakeDefaultPRNG()),
-        client_(MakeInstanceAdminConnection()) {
+        client_(spanner_admin::MakeInstanceAdminConnection()) {
     static_cast<void>(kCleanupEnv);
   }
 
@@ -118,7 +118,7 @@ class InstanceAdminClientTest
   }
 
   internal::DefaultPRNG generator_;
-  InstanceAdminClient client_;
+  spanner_admin::InstanceAdminClient client_;
 };
 
 /// @test Verify the basic read operations for instances work.
@@ -127,14 +127,15 @@ TEST_F(InstanceAdminClientTest, InstanceReadOperations) {
   ASSERT_FALSE(in.project_id().empty());
   ASSERT_FALSE(in.instance_id().empty());
 
-  auto instance = client_.GetInstance(in);
+  auto instance = client_.GetInstance(in.FullName());
   ASSERT_STATUS_OK(instance);
   EXPECT_EQ(instance->name(), in.FullName());
   EXPECT_NE(instance->node_count(), 0);
 
   auto instance_names = [&in, this]() mutable {
     std::vector<std::string> names;
-    for (auto const& instance : client_.ListInstances(in.project_id(), "")) {
+    auto const parent = "projects/" + in.project_id();
+    for (auto const& instance : client_.ListInstances(parent)) {
       EXPECT_STATUS_OK(instance);
       if (!instance) break;
       names.push_back(instance->name());
@@ -194,7 +195,7 @@ TEST_F(InstanceAdminClientTest, InstanceCRUDOperations) {
     }
   }
 
-  EXPECT_STATUS_OK(client_.DeleteInstance(in));
+  EXPECT_STATUS_OK(client_.DeleteInstance(in.FullName()));
 }
 
 TEST_F(InstanceAdminClientTest, InstanceConfig) {
@@ -203,8 +204,8 @@ TEST_F(InstanceAdminClientTest, InstanceConfig) {
 
   auto instance_config_names = [&project_id, this]() mutable {
     std::vector<std::string> names;
-    for (auto const& instance_config :
-         client_.ListInstanceConfigs(project_id)) {
+    auto const parent = "projects/" + project_id;
+    for (auto const& instance_config : client_.ListInstanceConfigs(parent)) {
       EXPECT_STATUS_OK(instance_config);
       if (!instance_config) break;
       names.push_back(instance_config->name());
@@ -232,28 +233,28 @@ TEST_F(InstanceAdminClientTest, InstanceIam) {
                    .value_or("")
                    .empty());
 
-  auto actual_policy = client_.GetIamPolicy(in);
+  auto actual_policy = client_.GetIamPolicy(in.FullName());
   ASSERT_STATUS_OK(actual_policy);
   EXPECT_FALSE(actual_policy->etag().empty());
 
   if (RunSlowInstanceTests()) {
     // Set the policy to the existing value of the policy. While this
     // changes nothing, it tests all the code in the client library.
-    auto updated_policy = client_.SetIamPolicy(in, *actual_policy);
+    auto updated_policy = client_.SetIamPolicy(in.FullName(), *actual_policy);
     ASSERT_THAT(updated_policy, AnyOf(IsOk(), StatusIs(StatusCode::kAborted)));
     if (updated_policy) {
       EXPECT_FALSE(updated_policy->etag().empty());
     }
 
     // Repeat the test using the OCC API.
-    updated_policy =
-        client_.SetIamPolicy(in, [](google::iam::v1::Policy p) { return p; });
+    updated_policy = client_.SetIamPolicy(
+        in.FullName(), [](google::iam::v1::Policy p) { return p; });
     ASSERT_STATUS_OK(updated_policy);
-    EXPECT_FALSE(actual_policy->etag().empty());
+    EXPECT_FALSE(updated_policy->etag().empty());
   }
 
   auto actual = client_.TestIamPermissions(
-      in, {"spanner.databases.list", "spanner.databases.get"});
+      in.FullName(), {"spanner.databases.list", "spanner.databases.get"});
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(
       actual->permissions(),
