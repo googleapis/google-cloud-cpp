@@ -62,6 +62,8 @@ class GrpcObjectReadSource : public ObjectReadSource {
   // In some cases the gRPC response may contain more data than the buffer
   // provided by the application. This buffer stores any excess results.
   std::string spill_;
+  // The current portion of `spill_` that has not been consumed.
+  absl::string_view spill_view_;
 
   // The status of the request.
   google::cloud::Status status_;
