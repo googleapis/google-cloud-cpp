@@ -74,8 +74,8 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
       if (response.has_checksummed_data()) {
         // Sometimes protobuf bytes are not strings, but the explicit conversion
         // always works.
-        self.spill_ = std::string(std::move(
-            *response.mutable_checksummed_data()->mutable_content()));
+        self.spill_ = std::string(
+            std::move(*response.mutable_checksummed_data()->mutable_content()));
         self.spill_view_ = update_buf(self.spill_);
       }
       if (response.has_object_checksums()) {
