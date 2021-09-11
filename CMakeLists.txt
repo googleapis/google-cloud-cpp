@@ -34,9 +34,8 @@ set(GOOGLE_CLOUD_CPP_CXX_STANDARD
     CACHE STRING "Unused. Prefer CMAKE_CXX_STANDARD")
 mark_as_advanced(GOOGLE_CLOUD_CPP_CXX_STANDARD)
 
-set(CMAKE_CXX_STANDARD
-    11
-    CACHE STRING "Configure the C++ standard version for all targets.")
+# Allow applications to override the CMAKE_CXX_STANDARD, but if not set use 11.
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if (NOT ("${GOOGLE_CLOUD_CPP_CXX_STANDARD}" STREQUAL ""))
