@@ -60,14 +60,12 @@ Options LoggingServiceV2DefaultOptions(Options options) {
             std::chrono::minutes(30))
             .clone());
   }
-
   if (!options.has<logging::LoggingServiceV2BackoffPolicyOption>()) {
     options.set<logging::LoggingServiceV2BackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-
   if (!options
            .has<logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>()) {
     options.set<logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>(

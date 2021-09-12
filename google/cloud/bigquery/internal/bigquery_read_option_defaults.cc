@@ -59,14 +59,12 @@ Options BigQueryReadDefaultOptions(Options options) {
         bigquery::BigQueryReadLimitedTimeRetryPolicy(std::chrono::minutes(30))
             .clone());
   }
-
   if (!options.has<bigquery::BigQueryReadBackoffPolicyOption>()) {
     options.set<bigquery::BigQueryReadBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-
   if (!options.has<bigquery::BigQueryReadConnectionIdempotencyPolicyOption>()) {
     options.set<bigquery::BigQueryReadConnectionIdempotencyPolicyOption>(
         bigquery::MakeDefaultBigQueryReadConnectionIdempotencyPolicy());
