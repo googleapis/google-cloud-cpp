@@ -483,8 +483,8 @@ TEST_F(BackupTest, CreateBackupWithFutureVersionTime) {
 TEST_F(BackupTest, BackupTestWithCMEK) {
   if (!RunSlowBackupTests() || Emulator()) GTEST_SKIP();
 
-  auto instance_id =
-      spanner_testing::PickRandomInstance(generator_, ProjectId());
+  auto instance_id = spanner_testing::PickRandomInstance(
+      generator_, ProjectId(), "NOT name:/instances/test-instance-mr-");
   ASSERT_STATUS_OK(instance_id);
   Instance in(ProjectId(), *instance_id);
 
