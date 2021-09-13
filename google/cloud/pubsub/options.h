@@ -71,7 +71,7 @@ struct MaximumHoldTimeOption {
  * @note Application developers should keep in mind that Cloud Pub/Sub
  *    sets [limits][pubsub-quota-link] on the size of a batch (1,000 messages)
  *    The library makes no attempt to validate the value provided in this
- *    function.
+ *    option.
  *
  * [pubsub-quota-link]: https://cloud.google.com/pubsub/quotas#resource_limits
  */
@@ -85,7 +85,7 @@ struct MaximumBatchMessagesOption {
  * @note Application developers should keep in mind that Cloud Pub/Sub
  *    sets [limits][pubsub-quota-link] on the size of a batch (10MB). The
  *    library makes no attempt to validate the value provided in this
- *    function.
+ *    option.
  *
  * [pubsub-quota-link]: https://cloud.google.com/pubsub/quotas#resource_limits
  */

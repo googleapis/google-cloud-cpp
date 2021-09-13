@@ -61,6 +61,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 class PublisherOptions {
  public:
   PublisherOptions() : PublisherOptions(Options{}) {}
+
   /**
    * Initialize the publisher options.
    *
