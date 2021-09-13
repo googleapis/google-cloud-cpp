@@ -30,7 +30,7 @@ inline namespace SPANNER_CLIENT_NS {
  *
  * A Cloud Spanner backup is identified by an `Instance` and a `backup_id`.
  *
- * @note this class makes no effort to validate the components of the
+ * @note This class makes no effort to validate the components of the
  *     backup name. It is the application's responsibility to provide valid
  *     project, instance, and backup ids. Passing invalid values will not be
  *     checked until the backup name is used in a RPC to spanner.

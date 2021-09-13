@@ -42,7 +42,7 @@ namespace testing_util {
  * @param resource_prefix_header if specified, this is the expected value for
  *     the google-cloud-resource-prefix metadata header.
  *
- * @warning the `context` will be destroyed and shouldn't be used after passing
+ * @warning The `context` will be destroyed and shouldn't be used after passing
  *     it to this function.
  *
  * @return an OK status if the `context` is properly set up
@@ -60,7 +60,7 @@ Status IsContextMDValid(
  * does. In order to transform the `ClientContext` into `ServerContext`
  * we spin up a server and a client and send some garbage with this context.
  *
- * @note this invalidates the @p context parameter.
+ * @note This invalidates the @p context parameter.
  */
 std::multimap<std::string, std::string> GetMetadata(
     grpc::ClientContext& context);

@@ -77,7 +77,7 @@ void StreamingReadRpcReportUnhandledError(Status const& status,
 /**
  * Implement `StreamingReadRpc<ResponseType>` using the gRPC abstractions.
  *
- * @note this class is thread compatible, but it is not thread safe. It should
+ * @note This class is thread compatible, but it is not thread safe. It should
  *   not be used from multiple threads at the same time.
  */
 template <typename ResponseType>

@@ -79,7 +79,7 @@ class TraitBasedRetryPolicy : public RetryPolicy {
  public:
   ///@{
   /**
-   * @name type traits
+   * @name Type traits
    */
   /// The traits describing which errors are permanent failures
   using RetryableTraits = RetryableTraitsP;

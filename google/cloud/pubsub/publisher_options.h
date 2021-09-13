@@ -67,12 +67,12 @@ class PublisherOptions {
   /**
    * Sets the maximum hold time for the messages.
    *
-   * @note while this function accepts durations in arbitrary precision, the
+   * @note While this function accepts durations in arbitrary precision, the
    *     implementation depends on the granularity of your OS timers. It is
    *     possible that messages are held for slightly longer times than the
    *     value set here.
    *
-   * @note the first message in a batch starts the hold time counter. New
+   * @note The first message in a batch starts the hold time counter. New
    *     messages do not extend the life of the batch. For example, if you have
    *     set the holding time to 10 milliseconds, start a batch with message 1,
    *     and publish a second message 5 milliseconds later, the second message

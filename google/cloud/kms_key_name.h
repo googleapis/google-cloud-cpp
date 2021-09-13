@@ -37,7 +37,7 @@ StatusOr<KmsKeyName> MakeKmsKeyName(std::string full_name);
  * A KMS key is identified by its `project_id`, `location`, `key_ring`,
  * and `kms_key_name`.
  *
- * @note this class makes no effort to validate the components of the key,
+ * @note This class makes no effort to validate the components of the key,
  *     It is the application's responsibility to provide a valid project id,
  *     location, key ring, and KMS key name. Passing invalid values will not
  *     be checked until the key is used in a RPC.

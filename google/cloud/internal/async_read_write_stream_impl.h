@@ -160,7 +160,7 @@ using PrepareAsyncReadWriteRpc = absl::FunctionRef<
 /**
  * Make an asynchronous streaming read/write RPC using `CompletionQueue`.
  *
- * @note in the past we would have made this a member function of the
+ * @note In the past we would have made this a member function of the
  *     `CompletionQueue` class. We want to avoid this as (a) we are not certain
  *     this is the long term API we want to expose, (b) once in the public
  *     `CompletionQueue` class it is hard to remove member functions.  Placing

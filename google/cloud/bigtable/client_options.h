@@ -431,7 +431,7 @@ class ClientOptions {
   /**
    * Set the number of background threads.
    *
-   * @note this value is not used if `DisableBackgroundThreads()` is called.
+   * @note This value is not used if `DisableBackgroundThreads()` is called.
    */
   ClientOptions& set_background_thread_pool_size(std::size_t s) {
     opts_.set<GrpcBackgroundThreadPoolSizeOption>(s);

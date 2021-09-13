@@ -47,7 +47,7 @@ class PolicyDocumentRequest {
   /**
    * Creates the string to be signed.
    *
-   * @note unlike signed URLs, policy documents are base64-encoded before
+   * @note Unlike signed URLs, policy documents are base64-encoded before
    * being signed.
    */
   std::string StringToSign() const;
@@ -92,7 +92,7 @@ class PolicyDocumentV4Request {
   /**
    * Creates the string to be signed.
    *
-   * @note unlike signed URLs, policy documents are base64-encoded before
+   * @note Unlike signed URLs, policy documents are base64-encoded before
    * being signed.
    */
   std::string StringToSign() const;

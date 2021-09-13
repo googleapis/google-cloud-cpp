@@ -504,7 +504,7 @@ class Table {
    * @param row_key the row to read.
    * @param filter a filter expression, can be used to select a subset of the
    *     column families and columns in the row.
-   * @returns a tuple, the first element is a boolean, with value `false` if the
+   * @returns A tuple, the first element is a boolean, with value `false` if the
    *     row does not exist.  If the first element is `true` the second element
    *     has the contents of the Row.  Note that the contents may be empty
    *     if the filter expression removes all column families and columns.
@@ -818,7 +818,7 @@ class Table {
    * @param row_key the row to read.
    * @param filter a filter expression, can be used to select a subset of the
    *     column families and columns in the row.
-   * @returns a future satisfied when the operation completes, fails
+   * @returns A future satisfied when the operation completes, fails
    *     permanently or keeps failing transiently, but the retry policy has been
    *     exhausted. The future will return a tuple. The first element is a
    *     boolean, with value `false` if the row does not exist.  If the first
