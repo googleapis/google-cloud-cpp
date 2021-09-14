@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "absl/functional/function_ref.h"
+#include "absl/strings/string_view.h"
 #include <algorithm>
 
 namespace google {
@@ -40,23 +41,24 @@ StatusOr<HttpResponse> GrpcObjectReadSource::Close() {
 StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
                                                       std::size_t n) {
   std::size_t offset = 0;
-  auto update_buf = [&offset, buf, n](std::string source) {
+  auto update_buf = [&offset, buf, n](absl::string_view source) {
     if (source.empty()) return source;
     auto const nbytes = std::min(n - offset, source.size());
-    std::copy(source.data(), source.data() + nbytes, buf + offset);
+    auto const* end = source.data() + nbytes;
+    std::copy(source.data(), end, buf + offset);
     offset += nbytes;
-    source.erase(0, nbytes);
-    return source;
+    return absl::string_view(end, source.size() - nbytes);
   };
+
+  using BufferUpdater = absl::FunctionRef<absl::string_view(absl::string_view)>;
   struct Visitor {
-    Visitor(GrpcObjectReadSource& source,
-            absl::FunctionRef<std::string(std::string)> update)
+    Visitor(GrpcObjectReadSource& source, BufferUpdater update)
         : self(source), update_buf(std::move(update)) {
       result.response.status_code = HttpStatusCode::kContinue;
     }
 
     GrpcObjectReadSource& self;
-    absl::FunctionRef<std::string(std::string)> update_buf;
+    BufferUpdater update_buf;
     ReadSourceResult result;
 
     void operator()(Status s) {
@@ -72,8 +74,9 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
       if (response.has_checksummed_data()) {
         // Sometimes protobuf bytes are not strings, but the explicit conversion
         // always works.
-        self.spill_ = update_buf(std::string(std::move(
-            *response.mutable_checksummed_data()->mutable_content())));
+        self.spill_ = std::string(
+            std::move(*response.mutable_checksummed_data()->mutable_content()));
+        self.spill_view_ = update_buf(self.spill_);
       }
       if (response.has_object_checksums()) {
         auto const& checksums = response.object_checksums();
@@ -94,7 +97,7 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
     }
   };
 
-  spill_ = update_buf(std::move(spill_));
+  spill_view_ = update_buf(spill_view_);
   Visitor visitor{*this, update_buf};
   while (offset < n && stream_) {
     absl::visit(visitor, stream_->Read());
