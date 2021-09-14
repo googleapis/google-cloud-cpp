@@ -1056,7 +1056,7 @@ void RestoreDatabaseWithEncryptionKey(
                                             database_id);
   google::cloud::spanner::Backup backup(database.instance(), backup_id);
   google::spanner::admin::database::v1::RestoreDatabaseRequest request;
-  request.set_parent(database.instance().instance_id());
+  request.set_parent(database.instance().FullName());
   request.set_database_id(database.database_id());
   request.set_backup(backup.FullName());
   request.mutable_encryption_config()->set_encryption_type(
