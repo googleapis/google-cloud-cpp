@@ -97,7 +97,7 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
     }
   };
 
-  spill_view_ = update_buf(std::move(spill_view_));
+  spill_view_ = update_buf(spill_view_);
   Visitor visitor{*this, update_buf};
   while (offset < n && stream_) {
     absl::visit(visitor, stream_->Read());
