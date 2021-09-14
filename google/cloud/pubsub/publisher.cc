@@ -19,9 +19,8 @@ namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-Publisher::Publisher(
-    std::shared_ptr<PublisherConnection> connection,
-    PublisherOptions)  // NOLINT(performance-unnecessary-value-param)
+Publisher::Publisher(std::shared_ptr<PublisherConnection> connection,
+                     PublisherOptions const&)
     : connection_(std::move(connection)) {}
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

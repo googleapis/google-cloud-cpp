@@ -110,7 +110,7 @@ TEST(PublisherOptions, MakeOptions) {
                .set_maximum_pending_bytes(444)
                .enable_message_ordering();
 
-  auto opts = pubsub_internal::MakeOptions(b);
+  auto opts = pubsub_internal::MakeOptions(std::move(b));
   EXPECT_EQ(std::chrono::seconds(12), opts.get<MaximumHoldTimeOption>());
   EXPECT_EQ(10, opts.get<MaximumBatchMessagesOption>());
   EXPECT_EQ(123, opts.get<MaximumBatchBytesOption>());
@@ -119,17 +119,17 @@ TEST(PublisherOptions, MakeOptions) {
   EXPECT_EQ(true, opts.get<MessageOrderingOption>());
 
   auto ignored = PublisherOptions{}.set_full_publisher_ignored();
-  opts = pubsub_internal::MakeOptions(ignored);
+  opts = pubsub_internal::MakeOptions(std::move(ignored));
   EXPECT_EQ(FullPublisherAction::kIgnored,
             opts.get<FullPublisherActionOption>());
 
   auto rejects = PublisherOptions{}.set_full_publisher_rejects();
-  opts = pubsub_internal::MakeOptions(rejects);
+  opts = pubsub_internal::MakeOptions(std::move(rejects));
   EXPECT_EQ(FullPublisherAction::kRejects,
             opts.get<FullPublisherActionOption>());
 
   auto blocks = PublisherOptions{}.set_full_publisher_blocks();
-  opts = pubsub_internal::MakeOptions(blocks);
+  opts = pubsub_internal::MakeOptions(std::move(blocks));
   EXPECT_EQ(FullPublisherAction::kBlocks,
             opts.get<FullPublisherActionOption>());
 }
