@@ -86,15 +86,24 @@ class GenericPollingPolicy : public PollingPolicy {
   }
 
   bool OnFailure(google::cloud::Status const& status) override {
-    return retry_policy_.OnFailure(status);
+    return maybe_deref(retry_policy_).OnFailure(status);
   }
 
   std::chrono::milliseconds WaitPeriod() override {
-    return backoff_policy_.OnCompletion();
+    return maybe_deref(backoff_policy_).OnCompletion();
   }
   //@}
 
  private:
+  template <typename T>
+  T& maybe_deref(T& v) {
+    return v;
+  }
+  template <typename T>
+  T& maybe_deref(std::shared_ptr<T>& v) {
+    return *v;
+  }
+
   Retry retry_policy_;
   Backoff backoff_policy_;
 };

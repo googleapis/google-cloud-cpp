@@ -119,24 +119,21 @@ Status OptionDefaultsGenerator::GenerateCc() {
     "        $product_namespace$::$limited_time_retry_policy_name$(\n"
     "            std::chrono::minutes(30)).clone());\n"
     "  }\n"
-    "\n"
     "  if (!options.has<$product_namespace$::$service_name$BackoffPolicyOption>()) {\n"
     "    options.set<$product_namespace$::$service_name$BackoffPolicyOption>(\n"
     "        ExponentialBackoffPolicy(std::chrono::seconds(1),\n"
     "            std::chrono::minutes(5), kBackoffScaling).clone());\n"
-    "  }\n"
-    "\n"},
+    "  }\n"},
    {[this]{return HasLongrunningMethod();},
     "  if (!options.has<$product_namespace$::$service_name$PollingPolicyOption>()) {\n"
     "    options.set<$product_namespace$::$service_name$PollingPolicyOption>(\n"
-    "        GenericPollingPolicy<$product_namespace$::$limited_time_retry_policy_name$,\n"
-    "        ExponentialBackoffPolicy>(\n"
-    "            $product_namespace$::$limited_time_retry_policy_name$(\n"
-    "                std::chrono::minutes(30)),\n"
-    "                ExponentialBackoffPolicy(std::chrono::seconds(10),\n"
-    "                    std::chrono::minutes(5), kBackoffScaling)).clone());\n"
-    "  }\n"
-    "\n", ""},
+    "        GenericPollingPolicy<\n"
+    "            $product_namespace$::$retry_policy_name$Option::Type,\n"
+    "            $product_namespace$::$service_name$BackoffPolicyOption::Type>(\n"
+    "            options.get<$product_namespace$::$retry_policy_name$Option>()->clone(),\n"
+    "            options.get<$product_namespace$::$service_name$BackoffPolicyOption>()->clone())\n"
+    "            .clone());\n"
+    "  }\n", ""},
    {"  if (!options.has<$product_namespace$::$idempotency_class_name$Option>()) {\n"
     "    options.set<$product_namespace$::$idempotency_class_name$Option>(\n"
     "        $product_namespace$::MakeDefault$idempotency_class_name$());\n"

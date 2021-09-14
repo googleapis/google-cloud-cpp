@@ -59,14 +59,12 @@ Options IAMCredentialsDefaultOptions(Options options) {
         iam::IAMCredentialsLimitedTimeRetryPolicy(std::chrono::minutes(30))
             .clone());
   }
-
   if (!options.has<iam::IAMCredentialsBackoffPolicyOption>()) {
     options.set<iam::IAMCredentialsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-
   if (!options.has<iam::IAMCredentialsConnectionIdempotencyPolicyOption>()) {
     options.set<iam::IAMCredentialsConnectionIdempotencyPolicyOption>(
         iam::MakeDefaultIAMCredentialsConnectionIdempotencyPolicy());

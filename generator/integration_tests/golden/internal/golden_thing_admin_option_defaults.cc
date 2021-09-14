@@ -62,23 +62,20 @@ Options GoldenThingAdminDefaultOptions(Options options) {
         golden::GoldenThingAdminLimitedTimeRetryPolicy(
             std::chrono::minutes(30)).clone());
   }
-
   if (!options.has<golden::GoldenThingAdminBackoffPolicyOption>()) {
     options.set<golden::GoldenThingAdminBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
             std::chrono::minutes(5), kBackoffScaling).clone());
   }
-
   if (!options.has<golden::GoldenThingAdminPollingPolicyOption>()) {
     options.set<golden::GoldenThingAdminPollingPolicyOption>(
-        GenericPollingPolicy<golden::GoldenThingAdminLimitedTimeRetryPolicy,
-        ExponentialBackoffPolicy>(
-            golden::GoldenThingAdminLimitedTimeRetryPolicy(
-                std::chrono::minutes(30)),
-                ExponentialBackoffPolicy(std::chrono::seconds(10),
-                    std::chrono::minutes(5), kBackoffScaling)).clone());
+        GenericPollingPolicy<
+            golden::GoldenThingAdminRetryPolicyOption::Type,
+            golden::GoldenThingAdminBackoffPolicyOption::Type>(
+            options.get<golden::GoldenThingAdminRetryPolicyOption>()->clone(),
+            options.get<golden::GoldenThingAdminBackoffPolicyOption>()->clone())
+            .clone());
   }
-
   if (!options.has<golden::GoldenThingAdminConnectionIdempotencyPolicyOption>()) {
     options.set<golden::GoldenThingAdminConnectionIdempotencyPolicyOption>(
         golden::MakeDefaultGoldenThingAdminConnectionIdempotencyPolicy());

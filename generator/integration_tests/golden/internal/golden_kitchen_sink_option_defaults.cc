@@ -62,13 +62,11 @@ Options GoldenKitchenSinkDefaultOptions(Options options) {
         golden::GoldenKitchenSinkLimitedTimeRetryPolicy(
             std::chrono::minutes(30)).clone());
   }
-
   if (!options.has<golden::GoldenKitchenSinkBackoffPolicyOption>()) {
     options.set<golden::GoldenKitchenSinkBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
             std::chrono::minutes(5), kBackoffScaling).clone());
   }
-
   if (!options.has<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()) {
     options.set<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>(
         golden::MakeDefaultGoldenKitchenSinkConnectionIdempotencyPolicy());
