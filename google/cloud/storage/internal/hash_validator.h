@@ -59,7 +59,7 @@ class HashValidator {
   /**
    * Compute the final hash values.
    *
-   * @returns The two hashes, expected is the locally computed value, actual is
+   * @returns the two hashes. Expected is the locally computed value, actual is
    *   the value reported by the service. Note that this can be empty for
    *   validators that disable validation.
    */

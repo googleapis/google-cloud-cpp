@@ -504,7 +504,7 @@ class Table {
    * @param row_key the row to read.
    * @param filter a filter expression, can be used to select a subset of the
    *     column families and columns in the row.
-   * @returns A tuple, the first element is a boolean, with value `false` if the
+   * @returns a tuple, the first element is a boolean, with value `false` if the
    *     row does not exist.  If the first element is `true` the second element
    *     has the contents of the Row.  Note that the contents may be empty
    *     if the filter expression removes all column families and columns.
@@ -588,10 +588,9 @@ class Table {
   /**
    * Sample of the row keys in the table, including approximate data sizes.
    *
-   * @returns Note that the sample may only include one element for small
-   *     tables.  In addition, the sample may include row keys that do not exist
-   *     on the table, and may include the empty row key to indicate
-   *     "end of table".
+   * @note The sample may only include one element for small tables.  In
+   *     addition, the sample may include row keys that do not exist on the
+   *     table, and may include the empty row key to indicate "end of table".
    *
    * @par Idempotency
    * This operation is always treated as idempotent.
@@ -610,11 +609,11 @@ class Table {
    * Asynchronously obtains a sample of the row keys in the table, including
    * approximate data sizes.
    *
-   * @returns A future, that becomes satisfied when the operation completes.
-   *     Note that the sample may only include one element for small tables.
-   *     In addition, the sample may include row keys that do not exist on
-   *     the table, and may include the empty row key to indicate "end of
-   *     table".
+   * @returns a future, that becomes satisfied when the operation completes.
+   *
+   * @note The sample may only include one element for small tables. In
+   *     addition, the sample may include row keys that do not exist on the
+   *     table, and may include the empty row key to indicate "end of table".
    *
    * @par Idempotency
    * This operation is always treated as idempotent.
@@ -642,7 +641,7 @@ class Table {
    *     and add the value provided.
    *     Both rules accept the family and column identifier to modify.
    * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
-   * @returns The new contents of all modified cells.
+   * @returns the new contents of all modified cells.
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
@@ -691,7 +690,7 @@ class Table {
    *     and add the value provided.
    *     Both rules accept the family and column identifier to modify.
    * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
-   * @returns A future, that becomes satisfied when the operation completes,
+   * @returns a future, that becomes satisfied when the operation completes,
    *     at that point the future has the contents of all modified cells.
    *
    * @par Idempotency
@@ -818,7 +817,7 @@ class Table {
    * @param row_key the row to read.
    * @param filter a filter expression, can be used to select a subset of the
    *     column families and columns in the row.
-   * @returns A future satisfied when the operation completes, fails
+   * @returns a future satisfied when the operation completes, fails
    *     permanently or keeps failing transiently, but the retry policy has been
    *     exhausted. The future will return a tuple. The first element is a
    *     boolean, with value `false` if the row does not exist.  If the first
