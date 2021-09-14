@@ -26,7 +26,7 @@ namespace {
 using ms = std::chrono::milliseconds;
 
 TEST(OptionsTest, PublisherDefaults) {
-  auto opts = DefaultPublisherOptions();
+  auto opts = DefaultPublisherOptions(Options{});
   EXPECT_EQ(ms(10), opts.get<pubsub::MaximumHoldTimeOption>());
   EXPECT_EQ(100, opts.get<pubsub::MaximumBatchMessagesOption>());
   EXPECT_EQ(1024 * 1024L, opts.get<pubsub::MaximumBatchBytesOption>());

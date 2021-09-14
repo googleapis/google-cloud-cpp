@@ -33,7 +33,7 @@ class PublisherOptions;
 
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
-Options&& MakeOptions(pubsub::PublisherOptions&&);
+Options MakeOptions(pubsub::PublisherOptions);
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 
@@ -256,7 +256,7 @@ class PublisherOptions {
   //@}
 
  private:
-  friend Options&& pubsub_internal::MakeOptions(PublisherOptions&&);
+  friend Options pubsub_internal::MakeOptions(PublisherOptions);
   Options opts_;
 };
 
@@ -266,7 +266,7 @@ class PublisherOptions {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-inline Options&& MakeOptions(pubsub::PublisherOptions&& o) {
+inline Options MakeOptions(pubsub::PublisherOptions o) {
   return std::move(o.opts_);
 }
 

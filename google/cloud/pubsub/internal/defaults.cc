@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/options.h"
 #include <chrono>
+#include <limits>
 
 namespace google {
 namespace cloud {

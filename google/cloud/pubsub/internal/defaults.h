@@ -23,7 +23,7 @@ namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-Options DefaultPublisherOptions(Options opts = {});
+Options DefaultPublisherOptions(Options opts);
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
