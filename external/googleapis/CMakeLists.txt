@@ -14,8 +14,6 @@
 # limitations under the License.
 # ~~~
 
-cmake_minimum_required(VERSION 3.5)
-
 # Give application developers a hook to configure the version and hash
 # downloaded from GitHub.
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
@@ -25,7 +23,7 @@ set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
     "127d7ef9c8803ab246ec3c7ab83489ae386d74766725477c444c5ea8948cb9e5")
 
 set(EXTERNAL_GOOGLEAPIS_SOURCE
-    "${CMAKE_BINARY_DIR}/external/googleapis/src/googleapis_download")
+    "${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download")
 
 set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/api/http.proto"
@@ -165,7 +163,7 @@ include(ExternalProject)
 ExternalProject_Add(
     googleapis_download
     EXCLUDE_FROM_ALL ON
-    PREFIX "${CMAKE_BINARY_DIR}/external/googleapis"
+    PREFIX "${PROJECT_BINARY_DIR}/external/googleapis"
     URL ${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL}
     URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256}
     PATCH_COMMAND
