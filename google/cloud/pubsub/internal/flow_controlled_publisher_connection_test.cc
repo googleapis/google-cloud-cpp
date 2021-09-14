@@ -165,7 +165,8 @@ std::shared_ptr<FlowControlledPublisherConnection> TestFlowControl(
             return publish.PushBack("Publish()");
           });
 
-  auto under_test = FlowControlledPublisherConnection::Create(options, mock);
+  auto under_test =
+      FlowControlledPublisherConnection::Create(std::move(options), mock);
 
   auto publisher_task = [&](int iterations) {
     for (int i = 0; i != iterations; ++i) {

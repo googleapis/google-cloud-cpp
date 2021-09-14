@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,18 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/publisher.h"
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULTS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULTS_H
+
+#include "google/cloud/pubsub/version.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
-namespace pubsub {
+namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-Publisher::Publisher(std::shared_ptr<PublisherConnection> connection,
-                     PublisherOptions const&)
-    : connection_(std::move(connection)) {}
+Options DefaultPublisherOptions(Options opts);
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
-}  // namespace pubsub
+}  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULTS_H
