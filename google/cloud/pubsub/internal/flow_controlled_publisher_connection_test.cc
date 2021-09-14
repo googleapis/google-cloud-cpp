@@ -204,6 +204,33 @@ TEST(FlowControlledPublisherConnection, BlockOnMessages) {
   EXPECT_LE(actual->max_pending_messages(), kExpectedMaxMessages);
 }
 
+TEST(FlowControlledPublisherConnection, NoDeadlockOnPublish) {
+  AsyncSequencer<StatusOr<std::string>> publish;
+  auto mock = std::make_shared<MockPublisherConnection>();
+  EXPECT_CALL(*mock, Publish)
+      .WillOnce([&](pubsub::PublisherConnection::PublishParams const&) {
+        return publish.PushBack("Publish()");
+      })
+      .WillOnce([&](pubsub::PublisherConnection::PublishParams const&) {
+        publish.PopFront().set_value(make_status_or(std::string("fake-ack-0")));
+        return publish.PushBack("Publish()");
+      });
+
+  auto under_test = FlowControlledPublisherConnection::Create(
+      pubsub::PublisherOptions{}, mock);
+
+  auto p0 = under_test->Publish({MakeTestMessage(kMessageSize)});
+  auto p1 = under_test->Publish({MakeTestMessage(kMessageSize)});
+
+  publish.PopFront().set_value(make_status_or(std::string("fake-ack-1")));
+  auto a0 = p0.get();
+  auto a1 = p1.get();
+  ASSERT_THAT(a0, IsOk());
+  ASSERT_THAT(a1, IsOk());
+  EXPECT_EQ(*a0, "fake-ack-0");
+  EXPECT_EQ(*a1, "fake-ack-1");
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
