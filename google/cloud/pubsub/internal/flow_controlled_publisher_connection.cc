@@ -37,17 +37,16 @@ future<StatusOr<std::string>> FlowControlledPublisherConnection::Publish(
   }
   ++pending_messages_;
   pending_bytes_ += message_size;
-  auto w = WeakFromThis();
-  auto r = child_->Publish(std::move(p));
   max_pending_messages_ = (std::max)(max_pending_messages_, pending_messages_);
   max_pending_bytes_ = (std::max)(max_pending_bytes_, pending_bytes_);
   lk.unlock();
-  r = r.then([w, message_size](future<StatusOr<std::string>> f) {
-    if (auto self = w.lock()) self->OnPublish(message_size);
-    return f.get();
-  });
-  lk.lock();
-  return r;
+  // child_ does not need be locked because it is a `const` member variable.
+  auto w = WeakFromThis();
+  return child_->Publish(std::move(p))
+      .then([w, message_size](future<StatusOr<std::string>> f) {
+        if (auto self = w.lock()) self->OnPublish(message_size);
+        return f.get();
+      });
 }
 
 void FlowControlledPublisherConnection::Flush(FlushParams p) {
