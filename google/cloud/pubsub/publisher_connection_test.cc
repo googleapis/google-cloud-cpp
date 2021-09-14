@@ -122,14 +122,24 @@ TEST(PublisherConnectionTest, FlowControl) {
   Topic const topic("test-project", "test-topic");
   testing_util::ScopedLog log;
 
-  AsyncSequencer<void> publish;
+  std::mutex mu;
+  std::condition_variable cv;
+  auto constexpr kMessageCount = 4;
   int publish_count = 0;
+  int received_count = 0;
+
+  AsyncSequencer<void> publish;
   EXPECT_CALL(*mock, AsyncPublish)
       .Times(AtLeast(1))
       .WillRepeatedly([&](google::cloud::CompletionQueue&,
                           std::unique_ptr<grpc::ClientContext>,
                           google::pubsub::v1::PublishRequest const& request) {
+        {
+          std::lock_guard<std::mutex> lk(mu);
+          received_count += request.messages_size();
+        }
         ++publish_count;
+        cv.notify_all();
         return publish.PushBack().then([request](future<void>) {
           google::pubsub::v1::PublishResponse response;
           for (auto const& m : request.messages()) {
@@ -143,11 +153,11 @@ TEST(PublisherConnectionTest, FlowControl) {
       topic,
       PublisherOptions{}
           .set_full_publisher_rejects()
-          .set_maximum_pending_messages(4),
+          .set_maximum_pending_messages(kMessageCount),
       ConnectionOptions{}, mock, pubsub_testing::TestRetryPolicy(),
       pubsub_testing::TestBackoffPolicy());
 
-  std::vector<future<StatusOr<std::string>>> pending(4);
+  std::vector<future<StatusOr<std::string>>> pending(kMessageCount);
   std::generate(pending.begin(), pending.end(), [publisher] {
     return publisher->Publish({MessageBuilder{}.SetData("test-only").Build()});
   });
@@ -155,6 +165,13 @@ TEST(PublisherConnectionTest, FlowControl) {
   EXPECT_THAT(rejected.get(), StatusIs(StatusCode::kFailedPrecondition));
 
   publisher->Flush({});
+
+  // Wait until we have received all of the messages before we start satisfying
+  // any promises. This might not be the typical program flow, but we are only
+  // trying to test that the Publisher rejects new messages when it is full.
+  std::unique_lock<std::mutex> lk(mu);
+  cv.wait(lk, [&received_count] { return received_count == kMessageCount; });
+
   for (int i = 0; i < publish_count; ++i) {
     publish.PopFront().set_value();
   }
