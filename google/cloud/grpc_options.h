@@ -96,7 +96,7 @@ struct GrpcTracingOptionsOption {
 /**
  * The size of the background thread pool
  *
- * @note this is ingored if `GrpcBackgroundThreadsFactoryOption` is set.
+ * @note This is ignored if `GrpcBackgroundThreadsFactoryOption` is set.
  */
 struct GrpcBackgroundThreadPoolSizeOption {
   using Type = std::size_t;

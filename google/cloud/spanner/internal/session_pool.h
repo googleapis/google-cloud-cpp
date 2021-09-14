@@ -108,7 +108,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   /**
    * Construct a `SessionPool`.
    *
-   * @warning must call Initialize() once immediately after the constructor.
+   * @warning Must call Initialize() once immediately after the constructor.
    */
   SessionPool(spanner::Database db,
               std::vector<std::shared_ptr<SpannerStub>> stubs,

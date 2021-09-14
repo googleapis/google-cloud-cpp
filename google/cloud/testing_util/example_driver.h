@@ -46,7 +46,7 @@ using Commands = std::map<std::string, CommandType>;
 /**
  * Drive the execution of code examples for the Cloud C++ client libraries.
  *
- * @note the examples always assume that exceptions are enabled. We prefer
+ * @note The examples always assume that exceptions are enabled. We prefer
  * clarity over portability for example code.
  *
  * We often (ideally always) write examples showing how to use each key API in

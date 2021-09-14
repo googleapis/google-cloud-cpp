@@ -30,7 +30,7 @@ inline namespace SPANNER_CLIENT_NS {
  *
  * A Cloud Spanner instance is identified by its `project_id` and `instance_id`.
  *
- * @note this class makes no effort to validate the components of the
+ * @note This class makes no effort to validate the components of the
  *     database name. It is the application's responsibility to provide valid
  *     project, and instance ids. Passing invalid values will not be checked
  *     until the instance name is used in a RPC to spanner.

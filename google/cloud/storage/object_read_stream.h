@@ -127,7 +127,7 @@ class ObjectReadStream : public std::basic_istream<char> {
   /**
    * The headers (if any) returned by the service. For debugging only.
    *
-   * @warning the contents of these headers may change without notice. Unless
+   * @warning The contents of these headers may change without notice. Unless
    *     documented in the API, headers may be removed or added by the service.
    *     Also note that the client library uses both the XML and JSON API,
    *     choosing between them based on the feature set (some functionality is

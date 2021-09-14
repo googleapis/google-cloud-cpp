@@ -435,7 +435,7 @@ class TupleStream {
  *
  * @snippet samples.cc stream-of
  *
- * @note ownership of the @p range is not transferred, so it must outlive the
+ * @note Ownership of the @p range is not transferred, so it must outlive the
  *     returned `TupleStream`.
  *
  * @tparam RowRange must be a range defined by `RowStreamIterator`s.

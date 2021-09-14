@@ -32,7 +32,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * Applications use this class to perform operations on
  * [Cloud Pub/Sub][pubsub-doc-link].
  *
- * @warning the Cloud Pub/Sub schema API and the C++ client library for the
+ * @warning The Cloud Pub/Sub schema API and the C++ client library for the
  *     Cloud Pub/Sub schema APIs are experimental. They are subject to change,
  *     including complete removal, without notice.
  *

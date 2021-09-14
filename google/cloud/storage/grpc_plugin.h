@@ -59,12 +59,12 @@ struct GrpcPluginOption {
 /**
  * Create a `google::cloud::storage::Client` object configured to use gRPC.
  *
- * @note the Credentials parameter in the configuration is ignored. The gRPC
+ * @note The Credentials parameter in the configuration is ignored. The gRPC
  *     client only supports Google Default Credentials.
  *
  * @param opts the configuration parameters for the Client.
  *
- * @warning this is an experimental feature, and subject to change without
+ * @warning This is an experimental feature, and subject to change without
  *     notice.
  *
  * @par Example storage_grpc_samples.cc grpc-read-write
