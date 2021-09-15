@@ -3869,6 +3869,15 @@ void RunAll(bool emulator) {
                        DatabaseAdminBackoffPolicyOption>(
                   google::cloud::spanner::ExponentialBackoffPolicy(
                       std::chrono::seconds(1), std::chrono::minutes(1), 2.0)
+                      .clone())
+              .set<google::cloud::spanner_admin::
+                       DatabaseAdminPollingPolicyOption>(
+                  google::cloud::spanner::GenericPollingPolicy<>(
+                      google::cloud::spanner::LimitedTimeRetryPolicy(
+                          std::chrono::hours(2)),
+                      google::cloud::spanner::ExponentialBackoffPolicy(
+                          std::chrono::seconds(1), std::chrono::minutes(1),
+                          2.0))
                       .clone())));
 
   RunAllSlowInstanceTests(instance_admin_client, database_admin_client,

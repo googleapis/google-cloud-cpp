@@ -87,6 +87,12 @@ class BackupTest : public ::google::cloud::testing_util::IntegrationTest {
                 .set<spanner_admin::DatabaseAdminBackoffPolicyOption>(
                     ExponentialBackoffPolicy(std::chrono::seconds(1),
                                              std::chrono::minutes(1), 2.0)
+                        .clone())
+                .set<spanner_admin::DatabaseAdminPollingPolicyOption>(
+                    GenericPollingPolicy<>(
+                        LimitedTimeRetryPolicy(std::chrono::hours(2)),
+                        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                                 std::chrono::minutes(1), 2.0))
                         .clone()))) {}
 
  protected:
