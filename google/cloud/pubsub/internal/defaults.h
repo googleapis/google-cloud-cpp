@@ -23,7 +23,11 @@ namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
+std::size_t DefaultMaxConcurrency();
+
 Options DefaultPublisherOptions(Options opts);
+
+Options DefaultSubscriberOptions(Options opts);
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal

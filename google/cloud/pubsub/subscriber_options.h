@@ -15,12 +15,26 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_OPTIONS_H
 
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/version.h"
+#include "google/cloud/options.h"
 #include <chrono>
 #include <thread>
 
 namespace google {
 namespace cloud {
+namespace pubsub {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+class SubscriberOptions;
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub
+
+namespace pubsub_internal {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+Options MakeOptions(pubsub::SubscriberOptions);
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub_internal
+
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
@@ -79,7 +93,20 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  */
 class SubscriberOptions {
  public:
-  SubscriberOptions() = default;
+  SubscriberOptions() : SubscriberOptions(Options{}) {}
+
+  /**
+   * Initialize the subscriber options.
+   *
+   * Expected options are any of the types in the `SubscriberOptionList`
+   *
+   * @note Unrecognized options will be ignored. To debug issues with options
+   *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and
+   *     unexpected options will be logged.
+   *
+   * @param opts configuration options
+   */
+  explicit SubscriberOptions(Options opts);
 
   /**
    * The maximum deadline for each incoming message.
@@ -96,11 +123,13 @@ class SubscriberOptions {
    *     deadline for all the messages is extended repeatedly. Only once the
    *     message is delivered to a callback does the deadline become immutable.
    */
-  std::chrono::seconds max_deadline_time() const { return max_deadline_time_; }
+  std::chrono::seconds max_deadline_time() const {
+    return opts_.get<MaxDeadlineTimeOption>();
+  }
 
   /// Set the maximum deadline for incoming messages.
   SubscriberOptions& set_max_deadline_time(std::chrono::seconds d) {
-    max_deadline_time_ = d;
+    opts_.set<MaxDeadlineTimeOption>(d);
     return *this;
   }
 
@@ -121,7 +150,7 @@ class SubscriberOptions {
    */
   SubscriberOptions& set_max_deadline_extension(std::chrono::seconds extension);
   std::chrono::seconds max_deadline_extension() const {
-    return max_deadline_extension_;
+    return opts_.get<MaxDeadlineExtensionOption>();
   }
 
   /**
@@ -140,7 +169,7 @@ class SubscriberOptions {
    */
   SubscriberOptions& set_max_outstanding_messages(std::int64_t message_count);
   std::int64_t max_outstanding_messages() const {
-    return max_outstanding_messages_;
+    return opts_.get<MaxOutstandingMessagesOption>();
   }
 
   /**
@@ -158,7 +187,9 @@ class SubscriberOptions {
    *     numbers to make the number of bytes unlimited.
    */
   SubscriberOptions& set_max_outstanding_bytes(std::int64_t bytes);
-  std::int64_t max_outstanding_bytes() const { return max_outstanding_bytes_; }
+  std::int64_t max_outstanding_bytes() const {
+    return opts_.get<MaxOutstandingBytesOption>();
+  }
 
   /**
    * Set the maximum callback concurrency.
@@ -184,7 +215,9 @@ class SubscriberOptions {
   SubscriberOptions& set_max_concurrency(std::size_t v);
 
   /// Maximum number of callbacks scheduled by the library at a time.
-  std::size_t max_concurrency() const { return max_concurrency_; }
+  std::size_t max_concurrency() const {
+    return opts_.get<MaxConcurrencyOption>();
+  }
 
   /**
    * Control how often the session polls for automatic shutdowns.
@@ -196,30 +229,30 @@ class SubscriberOptions {
    * if the CQ has shutdown. This controls how often this polling happens.
    */
   SubscriberOptions& set_shutdown_polling_period(std::chrono::milliseconds v) {
-    shutdown_polling_period_ = v;
+    opts_.set<ShutdownPollingPeriodOption>(v);
     return *this;
   }
   std::chrono::milliseconds shutdown_polling_period() const {
-    return shutdown_polling_period_;
+    return opts_.get<ShutdownPollingPeriodOption>();
   }
 
  private:
-  static std::size_t DefaultMaxConcurrency() {
-    auto constexpr kDefaultMaxConcurrency = 4;
-    auto const n = std::thread::hardware_concurrency();
-    return n == 0 ? kDefaultMaxConcurrency : n;
-  }
-
-  std::chrono::seconds max_deadline_time_ = std::chrono::seconds(0);
-  std::chrono::seconds max_deadline_extension_ = std::chrono::seconds(600);
-  std::int64_t max_outstanding_messages_ = 1000;
-  std::int64_t max_outstanding_bytes_ = 100 * 1024 * 1024L;
-  std::size_t max_concurrency_ = DefaultMaxConcurrency();
-  std::chrono::milliseconds shutdown_polling_period_ = std::chrono::seconds(5);
+  friend Options pubsub_internal::MakeOptions(SubscriberOptions);
+  Options opts_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
+
+namespace pubsub_internal {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+
+inline Options MakeOptions(pubsub::SubscriberOptions o) {
+  return std::move(o.opts_);
+}
+
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
 
