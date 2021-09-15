@@ -17,7 +17,6 @@
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/testing/instance_location.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
-#include "google/cloud/spanner/testing/policies.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
@@ -74,9 +73,16 @@ class BackupTest : public ::google::cloud::testing_util::IntegrationTest {
   BackupTest()
       : generator_(google::cloud::internal::MakeDefaultPRNG()),
         database_admin_client_(MakeDatabaseAdminConnection(
-            ConnectionOptions{}, spanner_testing::TestRetryPolicy(),
-            spanner_testing::TestBackoffPolicy(),
-            spanner_testing::TestPollingPolicy())) {}
+            ConnectionOptions{},
+            LimitedTimeRetryPolicy(std::chrono::minutes(60)).clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(1), 2.0)
+                .clone(),
+            GenericPollingPolicy<>(
+                LimitedTimeRetryPolicy(std::chrono::minutes(60)),
+                ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                         std::chrono::minutes(1), 2.0))
+                .clone())) {}
 
  protected:
   google::cloud::internal::DefaultPRNG generator_;
