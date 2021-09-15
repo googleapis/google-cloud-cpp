@@ -60,7 +60,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  *     and publish a second message 5 milliseconds later, the second message
  *     will be flushed approximately 5 milliseconds after it is published.
  */
-struct MaximumHoldTimeOption {
+struct MaxHoldTimeOption {
   using Type = std::chrono::microseconds;
 };
 
@@ -74,7 +74,7 @@ struct MaximumHoldTimeOption {
  *
  * [pubsub-quota-link]: https://cloud.google.com/pubsub/quotas#resource_limits
  */
-struct MaximumBatchMessagesOption {
+struct MaxBatchMessagesOption {
   using Type = std::size_t;
 };
 
@@ -88,7 +88,7 @@ struct MaximumBatchMessagesOption {
  *
  * [pubsub-quota-link]: https://cloud.google.com/pubsub/quotas#resource_limits
  */
-struct MaximumBatchBytesOption {
+struct MaxBatchBytesOption {
   using Type = std::size_t;
 };
 
@@ -103,7 +103,7 @@ struct MaximumBatchBytesOption {
  * messages they can tolerate in this pending state, and may prefer to block
  * or reject messages.
  */
-struct MaximumPendingMessagesOption {
+struct MaxPendingMessagesOption {
   using Type = std::size_t;
 };
 
@@ -118,7 +118,7 @@ struct MaximumPendingMessagesOption {
  * messages they can tolerate in this pending state, and may prefer to block
  * or reject messages.
  */
-struct MaximumPendingBytesOption {
+struct MaxPendingBytesOption {
   using Type = std::size_t;
 };
 
@@ -156,10 +156,9 @@ struct FullPublisherActionOption {
 
 /// The list of options specific to publishers
 using PublisherOptionList =
-    OptionList<MaximumHoldTimeOption, MaximumBatchMessagesOption,
-               MaximumBatchBytesOption, MaximumPendingMessagesOption,
-               MaximumPendingBytesOption, MessageOrderingOption,
-               FullPublisherActionOption>;
+    OptionList<MaxHoldTimeOption, MaxBatchMessagesOption, MaxBatchBytesOption,
+               MaxPendingMessagesOption, MaxPendingBytesOption,
+               MessageOrderingOption, FullPublisherActionOption>;
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub

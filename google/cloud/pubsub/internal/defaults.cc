@@ -24,21 +24,21 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 Options DefaultPublisherOptions(Options opts) {
-  if (!opts.has<pubsub::MaximumHoldTimeOption>()) {
-    opts.set<pubsub::MaximumHoldTimeOption>(std::chrono::milliseconds(10));
+  if (!opts.has<pubsub::MaxHoldTimeOption>()) {
+    opts.set<pubsub::MaxHoldTimeOption>(std::chrono::milliseconds(10));
   }
-  if (!opts.has<pubsub::MaximumBatchMessagesOption>()) {
-    opts.set<pubsub::MaximumBatchMessagesOption>(100);
+  if (!opts.has<pubsub::MaxBatchMessagesOption>()) {
+    opts.set<pubsub::MaxBatchMessagesOption>(100);
   }
-  if (!opts.has<pubsub::MaximumBatchBytesOption>()) {
-    opts.set<pubsub::MaximumBatchBytesOption>(1024 * 1024L);
+  if (!opts.has<pubsub::MaxBatchBytesOption>()) {
+    opts.set<pubsub::MaxBatchBytesOption>(1024 * 1024L);
   }
-  if (!opts.has<pubsub::MaximumPendingBytesOption>()) {
-    opts.set<pubsub::MaximumPendingBytesOption>(
+  if (!opts.has<pubsub::MaxPendingBytesOption>()) {
+    opts.set<pubsub::MaxPendingBytesOption>(
         (std::numeric_limits<std::size_t>::max)());
   }
-  if (!opts.has<pubsub::MaximumPendingMessagesOption>()) {
-    opts.set<pubsub::MaximumPendingMessagesOption>(
+  if (!opts.has<pubsub::MaxPendingMessagesOption>()) {
+    opts.set<pubsub::MaxPendingMessagesOption>(
         (std::numeric_limits<std::size_t>::max)());
   }
   if (!opts.has<pubsub::MessageOrderingOption>()) {

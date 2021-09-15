@@ -82,11 +82,11 @@ TEST(PublisherOptions, FullPublisherAction) {
 TEST(PublisherOptions, OptionsConstructor) {
   auto const b = PublisherOptions(
       Options{}
-          .set<MaximumHoldTimeOption>(std::chrono::seconds(12))
-          .set<MaximumBatchMessagesOption>(10)
-          .set<MaximumBatchBytesOption>(123)
-          .set<MaximumPendingMessagesOption>(4)
-          .set<MaximumPendingBytesOption>(444)
+          .set<MaxHoldTimeOption>(std::chrono::seconds(12))
+          .set<MaxBatchMessagesOption>(10)
+          .set<MaxBatchBytesOption>(123)
+          .set<MaxPendingMessagesOption>(4)
+          .set<MaxPendingBytesOption>(444)
           .set<MessageOrderingOption>(true)
           .set<FullPublisherActionOption>(FullPublisherAction::kRejects));
 
@@ -111,11 +111,11 @@ TEST(PublisherOptions, MakeOptions) {
                .enable_message_ordering();
 
   auto opts = pubsub_internal::MakeOptions(std::move(b));
-  EXPECT_EQ(std::chrono::seconds(12), opts.get<MaximumHoldTimeOption>());
-  EXPECT_EQ(10, opts.get<MaximumBatchMessagesOption>());
-  EXPECT_EQ(123, opts.get<MaximumBatchBytesOption>());
-  EXPECT_EQ(4, opts.get<MaximumPendingMessagesOption>());
-  EXPECT_EQ(444, opts.get<MaximumPendingBytesOption>());
+  EXPECT_EQ(std::chrono::seconds(12), opts.get<MaxHoldTimeOption>());
+  EXPECT_EQ(10, opts.get<MaxBatchMessagesOption>());
+  EXPECT_EQ(123, opts.get<MaxBatchBytesOption>());
+  EXPECT_EQ(4, opts.get<MaxPendingMessagesOption>());
+  EXPECT_EQ(444, opts.get<MaxPendingBytesOption>());
   EXPECT_EQ(true, opts.get<MessageOrderingOption>());
 
   auto ignored = PublisherOptions{}.set_full_publisher_ignored();

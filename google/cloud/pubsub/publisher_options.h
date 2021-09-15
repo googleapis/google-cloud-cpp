@@ -88,7 +88,7 @@ class PublisherOptions {
    * [quota limits]: https://cloud.google.com/pubsub/quotas#resource_limits
    */
   std::chrono::microseconds maximum_hold_time() const {
-    return opts_.get<MaximumHoldTimeOption>();
+    return opts_.get<MaxHoldTimeOption>();
   }
 
   /**
@@ -108,13 +108,13 @@ class PublisherOptions {
   template <typename Rep, typename Period>
   PublisherOptions& set_maximum_hold_time(
       std::chrono::duration<Rep, Period> v) {
-    opts_.set<MaximumHoldTimeOption>(
+    opts_.set<MaxHoldTimeOption>(
         std::chrono::duration_cast<std::chrono::microseconds>(v));
     return *this;
   }
 
   std::size_t maximum_batch_message_count() const {
-    return opts_.get<MaximumBatchMessagesOption>();
+    return opts_.get<MaxBatchMessagesOption>();
   }
 
   /**
@@ -128,12 +128,12 @@ class PublisherOptions {
    * [pubsub-quota-link]: https://cloud.google.com/pubsub/quotas#resource_limits
    */
   PublisherOptions& set_maximum_batch_message_count(std::size_t v) {
-    opts_.set<MaximumBatchMessagesOption>(v);
+    opts_.set<MaxBatchMessagesOption>(v);
     return *this;
   }
 
   std::size_t maximum_batch_bytes() const {
-    return opts_.get<MaximumBatchBytesOption>();
+    return opts_.get<MaxBatchBytesOption>();
   }
 
   /**
@@ -147,7 +147,7 @@ class PublisherOptions {
    * [pubsub-quota-link]: https://cloud.google.com/pubsub/quotas#resource_limits
    */
   PublisherOptions& set_maximum_batch_bytes(std::size_t v) {
-    opts_.set<MaximumBatchBytesOption>(v);
+    opts_.set<MaxBatchBytesOption>(v);
     return *this;
   }
   //@}
@@ -205,21 +205,21 @@ class PublisherOptions {
 
   /// Flow control based on pending bytes.
   PublisherOptions& set_maximum_pending_bytes(std::size_t v) {
-    opts_.set<MaximumPendingBytesOption>(v);
+    opts_.set<MaxPendingBytesOption>(v);
     return *this;
   }
 
   /// Flow control based on pending messages.
   PublisherOptions& set_maximum_pending_messages(std::size_t v) {
-    opts_.set<MaximumPendingMessagesOption>(v);
+    opts_.set<MaxPendingMessagesOption>(v);
     return *this;
   }
 
   std::size_t maximum_pending_bytes() const {
-    return opts_.get<MaximumPendingBytesOption>();
+    return opts_.get<MaxPendingBytesOption>();
   }
   std::size_t maximum_pending_messages() const {
-    return opts_.get<MaximumPendingMessagesOption>();
+    return opts_.get<MaxPendingMessagesOption>();
   }
 
   /// The current action for a full publisher
