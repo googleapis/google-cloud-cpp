@@ -154,11 +154,120 @@ struct FullPublisherActionOption {
   using Type = FullPublisherAction;
 };
 
-/// The list of options specific to publishers
+/// The list of options specific to publishers.
 using PublisherOptionList =
     OptionList<MaxHoldTimeOption, MaxBatchMessagesOption, MaxBatchBytesOption,
                MaxPendingMessagesOption, MaxPendingBytesOption,
                MessageOrderingOption, FullPublisherActionOption>;
+
+/**
+ * The maximum deadline for each incoming message.
+ *
+ * Configure how long the application has to respond (ACK or NACK) to an
+ * incoming message. Note that this might be longer, or shorter, than the
+ * deadline configured in the server-side subscription.
+ *
+ * The value `0` is reserved to leave the deadline unmodified and just use the
+ * server-side configuration.
+ *
+ * @note The deadline applies to each message as it is delivered to the
+ *     application, thus, if the library receives a batch of N messages their
+ *     deadline for all the messages is extended repeatedly. Only once the
+ *     message is delivered to a callback does the deadline become immutable.
+ */
+struct MaxDeadlineTimeOption {
+  using Type = std::chrono::seconds;
+};
+
+/**
+ * The maximum time by which the deadline for each incoming message is extended.
+ *
+ * The Cloud Pub/Sub C++ client library will extend the deadline by at most this
+ * amount, while waiting for an ack or nack. The default extension is 10
+ * minutes. An application may wish to reduce this extension so that the Pub/Sub
+ * service will resend a message sooner when it does not hear back from a
+ * Subscriber.
+ *
+ * The value is clamped between 10 seconds and 10 minutes.
+ */
+struct MaxDeadlineExtensionOption {
+  using Type = std::chrono::seconds;
+};
+
+/**
+ * The maximum number of outstanding messages per streaming pull.
+ *
+ * The Cloud Pub/Sub C++ client library uses streaming pull requests to receive
+ * messages from the service. The service will stop delivering messages if this
+ * many messages or more have neither been acknowledged nor rejected.
+ *
+ * If a negative or 0 value is supplied, the number of messages will be
+ * unlimited.
+ *
+ * @par Example
+ * @snippet samples.cc subscriber-flow-control
+ */
+struct MaxOutstandingMessagesOption {
+  using Type = std::int64_t;
+};
+
+/**
+ * The maximum number of outstanding bytes per streaming pull.
+ *
+ * The Cloud Pub/Sub C++ client library uses streaming pull requests to receive
+ * messages from the service. The service will stop delivering messages if this
+ * many bytes or more worth of messages have not been acknowledged nor rejected.
+ *
+ * If a negative or 0 value is supplied, the number of bytes will be unlimited.
+ *
+ * @par Example
+ * @snippet samples.cc subscriber-flow-control
+ */
+struct MaxOutstandingBytesOption {
+  using Type = std::int64_t;
+};
+
+/**
+ * The maximum callback concurrency.
+ *
+ * The Cloud Pub/Sub C++ client library will schedule parallel callbacks as long
+ * as the number of outstanding callbacks is less than this maximum.
+ *
+ * Note that this controls the number of callbacks *scheduled*, not the number
+ * of callbacks actually executing at a time. The application needs to create
+ * (or configure) the background threads pool with enough parallelism to execute
+ * more than one callback at a time.
+ *
+ * Some applications may want to share a thread pool across many subscriptions,
+ * the additional level of control (scheduled vs. running callbacks) allows
+ * applications, for example, to ensure that at most `K` threads in the pool are
+ * used by any given subscription.
+ *
+ * @par Example
+ * @snippet samples.cc subscriber-concurrency
+ */
+struct MaxConcurrencyOption {
+  using Type = std::size_t;
+};
+
+/**
+ * How often the session polls for automatic shutdowns.
+ *
+ * Applications can shutdown a session by calling `.cancel()` on the returned
+ * `future<Status>`.  In addition, applications can fire & forget a session,
+ * which is only shutdown once the completion queue servicing the session shuts
+ * down. In this latter case the session polls periodically to detect if the CQ
+ * has shutdown. This controls how often this polling happens.
+ */
+struct ShutdownPollingPeriodOption {
+  using Type = std::chrono::milliseconds;
+};
+
+/// The list of options specific to subscribers.
+using SubscriberOptionList =
+    OptionList<MaxDeadlineTimeOption, MaxDeadlineExtensionOption,
+               MaxOutstandingMessagesOption, MaxOutstandingBytesOption,
+               MaxConcurrencyOption, ShutdownPollingPeriodOption>;
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub

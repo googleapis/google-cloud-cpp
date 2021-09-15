@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/subscriber_options.h"
+#include "google/cloud/pubsub/options.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 #include <chrono>
 
@@ -22,7 +24,9 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-using seconds = std::chrono::seconds;
+using std::chrono::seconds;
+using ::testing::Contains;
+using ::testing::HasSubstr;
 
 TEST(SubscriberOptionsTest, Default) {
   SubscriberOptions const options{};
@@ -66,6 +70,48 @@ TEST(SubscriberOptionsTest, SetConcurrency) {
   // 0 resets to default
   options.set_max_concurrency(0);
   EXPECT_EQ(SubscriberOptions{}.max_concurrency(), options.max_concurrency());
+}
+
+TEST(SubscriberOptionsTest, OptionsConstructor) {
+  auto const options =
+      SubscriberOptions(Options{}
+                            .set<MaxDeadlineTimeOption>(seconds(2))
+                            .set<MaxDeadlineExtensionOption>(seconds(30))
+                            .set<MaxOutstandingMessagesOption>(4)
+                            .set<MaxOutstandingBytesOption>(5)
+                            .set<MaxConcurrencyOption>(6));
+
+  EXPECT_EQ(seconds(2), options.max_deadline_time());
+  EXPECT_EQ(seconds(30), options.max_deadline_extension());
+  EXPECT_EQ(4, options.max_outstanding_messages());
+  EXPECT_EQ(5, options.max_outstanding_bytes());
+  EXPECT_EQ(6, options.max_concurrency());
+}
+
+TEST(SubscriberOptionsTest, ExpectedOptionsCheck) {
+  struct NonOption {
+    using Type = bool;
+  };
+
+  testing_util::ScopedLog log;
+  auto options = SubscriberOptions(Options{}.set<NonOption>(true));
+  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("Unexpected option")));
+}
+
+TEST(SubscriberOptionsTest, MakeOptions) {
+  auto options = SubscriberOptions{}
+                     .set_max_deadline_time(seconds(2))
+                     .set_max_deadline_extension(seconds(30))
+                     .set_max_outstanding_messages(4)
+                     .set_max_outstanding_bytes(5)
+                     .set_max_concurrency(6);
+
+  auto opts = pubsub_internal::MakeOptions(std::move(options));
+  EXPECT_EQ(seconds(2), opts.get<MaxDeadlineTimeOption>());
+  EXPECT_EQ(seconds(30), opts.get<MaxDeadlineExtensionOption>());
+  EXPECT_EQ(4, opts.get<MaxOutstandingMessagesOption>());
+  EXPECT_EQ(5, opts.get<MaxOutstandingBytesOption>());
+  EXPECT_EQ(6, opts.get<MaxConcurrencyOption>());
 }
 
 }  // namespace
