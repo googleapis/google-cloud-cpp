@@ -13,29 +13,42 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/instance.h"
-#include <array>
+#include <ostream>
+#include <regex>
 
 namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
+Instance::Instance(Project project, std::string instance_id)
+    : project_(std::move(project)), instance_id_(std::move(instance_id)) {}
+
 Instance::Instance(std::string project_id, std::string instance_id)
-    : project_id_(std::move(project_id)),
-      instance_id_(std::move(instance_id)) {}
+    : Instance(Project(std::move(project_id)), std::move(instance_id)) {}
 
 std::string Instance::FullName() const {
-  return "projects/" + project_id_ + "/instances/" + instance_id_;
+  return project_.FullName() + "/instances/" + instance_id_;
 }
 
 bool operator==(Instance const& a, Instance const& b) {
-  return a.project_id_ == b.project_id_ && a.instance_id_ == b.instance_id_;
+  return a.project_ == b.project_ && a.instance_id_ == b.instance_id_;
 }
 
 bool operator!=(Instance const& a, Instance const& b) { return !(a == b); }
 
-std::ostream& operator<<(std::ostream& os, Instance const& dn) {
-  return os << dn.FullName();
+std::ostream& operator<<(std::ostream& os, Instance const& in) {
+  return os << in.FullName();
+}
+
+StatusOr<Instance> MakeInstance(std::string const& full_name) {
+  std::regex re("projects/([^/]+)/instances/([^/]+)");
+  std::smatch matches;
+  if (!std::regex_match(full_name, matches, re)) {
+    return Status(StatusCode::kInvalidArgument,
+                  "Improperly formatted Instance: " + full_name);
+  }
+  return Instance(Project(std::move(matches[1])), std::move(matches[2]));
 }
 
 }  // namespace SPANNER_CLIENT_NS
