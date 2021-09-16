@@ -28,13 +28,11 @@ using std::chrono::seconds;
 
 TEST(OptionsTest, PublisherDefaults) {
   auto opts = DefaultPublisherOptions(Options{});
-  EXPECT_EQ(ms(10), opts.get<pubsub::MaxHoldTimeOption>());
-  EXPECT_EQ(100, opts.get<pubsub::MaxBatchMessagesOption>());
-  EXPECT_EQ(1024 * 1024L, opts.get<pubsub::MaxBatchBytesOption>());
-  EXPECT_EQ((std::numeric_limits<std::size_t>::max)(),
-            opts.get<pubsub::MaxPendingBytesOption>());
-  EXPECT_EQ((std::numeric_limits<std::size_t>::max)(),
-            opts.get<pubsub::MaxPendingMessagesOption>());
+  EXPECT_LT(0, opts.get<pubsub::MaxHoldTimeOption>().count());
+  EXPECT_LT(0L, opts.get<pubsub::MaxBatchMessagesOption>());
+  EXPECT_LT(0L, opts.get<pubsub::MaxBatchBytesOption>());
+  EXPECT_LT(0L, opts.get<pubsub::MaxPendingBytesOption>());
+  EXPECT_LT(0L, opts.get<pubsub::MaxPendingMessagesOption>());
   EXPECT_EQ(false, opts.get<pubsub::MessageOrderingOption>());
   EXPECT_EQ(pubsub::FullPublisherAction::kBlocks,
             opts.get<pubsub::FullPublisherActionOption>());
