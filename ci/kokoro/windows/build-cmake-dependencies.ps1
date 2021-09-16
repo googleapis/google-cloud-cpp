@@ -144,8 +144,6 @@ if ($LastExitCode) {
 
 ForEach($_ in (1, 2, 3)) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Warmup vcpkg [$_]"
-    # Additional dependencies, these are not downloaded by `bazel fetch ...`,
-    # but are needed to compile the code
     &"${vcpkg_dir}\vcpkg.exe" install ${vcpkg_flags} "crc32c"
     if ($LastExitCode -eq 0) {
         break
@@ -164,18 +162,6 @@ foreach ($pkg in $packages) {
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) vcpkg list"
 &"${vcpkg_dir}\vcpkg.exe" list
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cleanup vcpkg buildtrees"
-Get-ChildItem -Recurse -File `
-        -ErrorAction SilentlyContinue `
-        -Path "buildtrees" | `
-    Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
-    Get-CimInstance -Class CIM_LogicalDisk | `
-        Select-Object -Property DeviceID, DriveType, VolumeName, `
-            @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
-            @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
 
 # Do not update the vcpkg cache on PRs, it might dirty the cache for any
 # PRs running in parallel, and it is a waste of time in most cases.
