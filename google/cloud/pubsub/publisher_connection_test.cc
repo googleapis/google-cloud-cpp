@@ -170,7 +170,7 @@ TEST(PublisherConnectionTest, FlowControl) {
   // any promises. This might not be the typical program flow, but we are only
   // trying to test that the Publisher rejects new messages when it is full.
   std::unique_lock<std::mutex> lk(mu);
-  cv.wait(lk, [&received_count] { return received_count == kMessageCount; });
+  cv.wait(lk, [&] { return received_count == kMessageCount; });
 
   for (int i = 0; i < publish_count; ++i) {
     publish.PopFront().set_value();
