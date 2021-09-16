@@ -238,8 +238,8 @@ struct MaxOutstandingBytesOption {
  * (or configure) the background threads pool with enough parallelism to execute
  * more than one callback at a time.
  *
- * Some applications may want to share a thread pool across many subscriptions,
- * the additional level of control (scheduled vs. running callbacks) allows
+ * Some applications may want to share a thread pool across many subscriptions.
+ * The additional level of control (scheduled vs. running callbacks) allows
  * applications, for example, to ensure that at most `K` threads in the pool are
  * used by any given subscription.
  *
