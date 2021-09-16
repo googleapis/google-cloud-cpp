@@ -130,7 +130,7 @@ TEST(PublisherOptions, MakeOptions) {
   EXPECT_EQ(123, opts.get<MaxBatchBytesOption>());
   EXPECT_EQ(4, opts.get<MaxPendingMessagesOption>());
   EXPECT_EQ(444, opts.get<MaxPendingBytesOption>());
-  EXPECT_EQ(true, opts.get<MessageOrderingOption>());
+  EXPECT_TRUE(opts.get<MessageOrderingOption>());
 
   auto ignored = PublisherOptions{}.set_full_publisher_ignored();
   opts = pubsub_internal::MakeOptions(std::move(ignored));
