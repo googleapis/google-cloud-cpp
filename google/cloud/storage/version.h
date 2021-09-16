@@ -27,8 +27,7 @@
       " instead. The function will be removed on 2022-04-01 or shortly "       \
       "after. See GitHub issue #5929 for more information.")
 
-// TODO(#7283) - restore deprecated WARNING on MSVC
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && _MSC_VER < 1929
 #define GOOGLE_CLOUD_CPP_STORAGE_RESTORE_UPLOAD_DEPRECATED() /**/
 #else
 #define GOOGLE_CLOUD_CPP_STORAGE_RESTORE_UPLOAD_DEPRECATED()                   \
