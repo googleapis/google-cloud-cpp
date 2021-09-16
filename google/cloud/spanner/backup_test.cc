@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/backup.h"
-#include "google/cloud/spanner/testing/matchers.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <sstream>
 
@@ -22,6 +22,10 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
+
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::Eq;
 
 TEST(Backup, Basics) {
   Instance in("p1", "i1");
@@ -56,6 +60,30 @@ TEST(Backup, OutputStream) {
   std::ostringstream os;
   os << backup;
   EXPECT_EQ("projects/p1/instances/i1/backups/b1", os.str());
+}
+
+TEST(Backup, MakeBackup) {
+  auto constexpr kValidBackupName = "projects/p1/instances/i1/backups/b1";
+  auto bu = MakeBackup(kValidBackupName);
+  ASSERT_THAT(bu, IsOk());
+  EXPECT_THAT(bu->FullName(), Eq(kValidBackupName));
+
+  for (std::string invalid : {
+           "",
+           "projects/",
+           "projects/p1",
+           "projects/p1/instances/",
+           "projects/p1/instances/i1",
+           "projects/p1/instances/i1/backups",
+           "projects/p1/instances/i1/backups/",
+           "/projects/p1/instances/i1/backups/b1",
+           "projects/p1/instances/i1/backups/b1/",
+           "projects/p1/instances/i1/backups/b1/etc",
+       }) {
+    auto bu = MakeBackup(invalid);
+    EXPECT_THAT(bu, StatusIs(StatusCode::kInvalidArgument,
+                             "Improperly formatted Backup: " + invalid));
+  }
 }
 
 }  // namespace

@@ -13,15 +13,20 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/instance.h"
-#include "google/cloud/spanner/testing/matchers.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <sstream>
+#include <string>
 
 namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
+
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::Eq;
 
 TEST(Instance, Basics) {
   Instance in("p1", "i1");
@@ -53,6 +58,27 @@ TEST(Instance, OutputStream) {
   std::ostringstream os;
   os << in;
   EXPECT_EQ("projects/p1/instances/i1", os.str());
+}
+
+TEST(Instance, MakeInstance) {
+  auto constexpr kValidInstanceName = "projects/p1/instances/i1";
+  auto in = MakeInstance(kValidInstanceName);
+  ASSERT_THAT(in, IsOk());
+  EXPECT_THAT(in->FullName(), Eq(kValidInstanceName));
+
+  for (std::string invalid : {
+           "",
+           "projects/",
+           "projects/p1",
+           "projects/p1/instances/",
+           "/projects/p1/instances/i1",
+           "projects/p1/instances/i1/",
+           "projects/p1/instances/i1/etc",
+       }) {
+    auto in = MakeInstance(invalid);
+    EXPECT_THAT(in, StatusIs(StatusCode::kInvalidArgument,
+                             "Improperly formatted Instance: " + invalid));
+  }
 }
 
 }  // namespace

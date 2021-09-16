@@ -185,6 +185,8 @@ add_library(
     options.cc
     options.h
     polling_policy.h
+    project.cc
+    project.h
     status.cc
     status.h
     status_or.h
@@ -285,6 +287,7 @@ if (BUILD_TESTING)
         kms_key_name_test.cc
         log_test.cc
         options_test.cc
+        project_test.cc
         status_or_test.cc
         status_test.cc
         stream_range_test.cc

@@ -17,7 +17,8 @@
 
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/version.h"
-#include <ostream>
+#include "google/cloud/status_or.h"
+#include <iosfwd>
 #include <string>
 
 namespace google {
@@ -26,7 +27,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 /**
- * This class identifies a Cloud Spanner Backup
+ * This class identifies a Cloud Spanner Backup.
  *
  * A Cloud Spanner backup is identified by an `Instance` and a `backup_id`.
  *
@@ -37,8 +38,10 @@ inline namespace SPANNER_CLIENT_NS {
  */
 class Backup {
  public:
-  /// Constructs a Backup object identified by the given @p backup_id and
-  /// @p instance.
+  /*
+   * Constructs a Backup object identified by the given @p instance and
+   * @p backup_id.
+   */
   Backup(Instance instance, std::string backup_id);
 
   /// @name Copy and move
@@ -49,15 +52,17 @@ class Backup {
   Backup& operator=(Backup&&) = default;
   //@}
 
+  /// Returns the `Instance` containing this backup.
+  Instance const& instance() const { return instance_; }
+
+  /// Returns the Backup ID.
+  std::string const& backup_id() const { return backup_id_; }
+
   /**
    * Returns the fully qualified backup name as a string of the form:
    * "projects/<project-id>/instances/<instance-id>/backups/<backup-id>"
    */
   std::string FullName() const;
-
-  /// Returns the `Instance` containing this backup.
-  Instance const& instance() const { return instance_; }
-  std::string const& backup_id() const { return backup_id_; }
 
   /// @name Equality operators
   //@{
@@ -66,12 +71,18 @@ class Backup {
   //@}
 
   /// Output the `FullName()` format.
-  friend std::ostream& operator<<(std::ostream& os, Backup const& bn);
+  friend std::ostream& operator<<(std::ostream&, Backup const&);
 
  private:
   Instance instance_;
   std::string backup_id_;
 };
+
+/**
+ * Constructs a `Backup` from the given @p full_name.
+ * Returns a non-OK Status if `full_name` is improperly formed.
+ */
+StatusOr<Backup> MakeBackup(std::string const& full_name);
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

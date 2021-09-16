@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/backup.h"
+#include <ostream>
+#include <regex>
 
 namespace google {
 namespace cloud {
@@ -32,8 +34,19 @@ bool operator==(Backup const& a, Backup const& b) {
 
 bool operator!=(Backup const& a, Backup const& b) { return !(a == b); }
 
-std::ostream& operator<<(std::ostream& os, Backup const& bn) {
-  return os << bn.FullName();
+std::ostream& operator<<(std::ostream& os, Backup const& bu) {
+  return os << bu.FullName();
+}
+
+StatusOr<Backup> MakeBackup(std::string const& full_name) {
+  std::regex re("projects/([^/]+)/instances/([^/]+)/backups/([^/]+)");
+  std::smatch matches;
+  if (!std::regex_match(full_name, matches, re)) {
+    return Status(StatusCode::kInvalidArgument,
+                  "Improperly formatted Backup: " + full_name);
+  }
+  return Backup(Instance(std::move(matches[1]), std::move(matches[2])),
+                std::move(matches[3]));
 }
 
 }  // namespace SPANNER_CLIENT_NS
