@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/publisher_options.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -20,6 +21,9 @@ namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
+
+using ::testing::Contains;
+using ::testing::HasSubstr;
 
 TEST(PublisherOptions, Setters) {
   auto const b0 = PublisherOptions{};
@@ -101,6 +105,16 @@ TEST(PublisherOptions, OptionsConstructor) {
   EXPECT_TRUE(b.full_publisher_rejects());
 }
 
+TEST(PublisherOptions, ExpectedOptionsCheck) {
+  struct NonOption {
+    using Type = bool;
+  };
+
+  testing_util::ScopedLog log;
+  auto b = PublisherOptions(Options{}.set<NonOption>(true));
+  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("Unexpected option")));
+}
+
 TEST(PublisherOptions, MakeOptions) {
   auto b = PublisherOptions{}
                .set_maximum_hold_time(std::chrono::seconds(12))
@@ -116,7 +130,7 @@ TEST(PublisherOptions, MakeOptions) {
   EXPECT_EQ(123, opts.get<MaxBatchBytesOption>());
   EXPECT_EQ(4, opts.get<MaxPendingMessagesOption>());
   EXPECT_EQ(444, opts.get<MaxPendingBytesOption>());
-  EXPECT_EQ(true, opts.get<MessageOrderingOption>());
+  EXPECT_TRUE(opts.get<MessageOrderingOption>());
 
   auto ignored = PublisherOptions{}.set_full_publisher_ignored();
   opts = pubsub_internal::MakeOptions(std::move(ignored));

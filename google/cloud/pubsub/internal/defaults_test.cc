@@ -35,7 +35,7 @@ TEST(OptionsTest, PublisherDefaults) {
             opts.get<pubsub::MaxPendingBytesOption>());
   EXPECT_EQ((std::numeric_limits<std::size_t>::max)(),
             opts.get<pubsub::MaxPendingMessagesOption>());
-  EXPECT_EQ(false, opts.get<pubsub::MessageOrderingOption>());
+  EXPECT_FALSE(opts.get<pubsub::MessageOrderingOption>());
   EXPECT_EQ(pubsub::FullPublisherAction::kBlocks,
             opts.get<pubsub::FullPublisherActionOption>());
 }
@@ -57,7 +57,7 @@ TEST(OptionsTest, UserSetPublisherOptions) {
   EXPECT_EQ(2U, opts.get<pubsub::MaxBatchBytesOption>());
   EXPECT_EQ(3U, opts.get<pubsub::MaxPendingBytesOption>());
   EXPECT_EQ(4U, opts.get<pubsub::MaxPendingMessagesOption>());
-  EXPECT_EQ(true, opts.get<pubsub::MessageOrderingOption>());
+  EXPECT_TRUE(opts.get<pubsub::MessageOrderingOption>());
   EXPECT_EQ(pubsub::FullPublisherAction::kIgnored,
             opts.get<pubsub::FullPublisherActionOption>());
 }
@@ -65,11 +65,10 @@ TEST(OptionsTest, UserSetPublisherOptions) {
 TEST(OptionsTest, SubscriberDefaults) {
   auto opts = DefaultSubscriberOptions(Options{});
   EXPECT_EQ(seconds(0), opts.get<pubsub::MaxDeadlineTimeOption>());
-  EXPECT_LE(seconds(10), opts.get<pubsub::MaxDeadlineExtensionOption>());
-  EXPECT_GE(seconds(600), opts.get<pubsub::MaxDeadlineExtensionOption>());
-  EXPECT_LT(0, opts.get<pubsub::MaxOutstandingMessagesOption>());
-  EXPECT_LT(0, opts.get<pubsub::MaxOutstandingBytesOption>());
-  EXPECT_LT(0, opts.get<pubsub::MaxConcurrencyOption>());
+  EXPECT_EQ(seconds(600), opts.get<pubsub::MaxDeadlineExtensionOption>());
+  EXPECT_EQ(1000, opts.get<pubsub::MaxOutstandingMessagesOption>());
+  EXPECT_EQ(100 * 1024 * 1024L, opts.get<pubsub::MaxOutstandingBytesOption>());
+  EXPECT_EQ(DefaultMaxConcurrency(), opts.get<pubsub::MaxConcurrencyOption>());
 }
 
 TEST(OptionsTest, SubscriberConstraints) {
