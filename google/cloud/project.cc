@@ -22,9 +22,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 
 Project::Project(std::string project_id) : project_id_(std::move(project_id)) {}
 
-std::string Project::FullName() const {
-  return "projects/" + project_id_;
-}
+std::string Project::FullName() const { return "projects/" + project_id_; }
 
 bool operator==(Project const& a, Project const& b) {
   return a.project_id_ == b.project_id_;
