@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
-#include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
@@ -51,13 +52,18 @@ class RpcFailureThresholdTest
 
     std::cout << "Creating database [" << database_id << "] and table "
               << std::flush;
-    DatabaseAdminClient admin_client;
-    auto database_future =
-        admin_client.CreateDatabase(*db_, {R"""(CREATE TABLE Singers (
-                                SingerId   INT64 NOT NULL,
-                                FirstName  STRING(1024),
-                                LastName   STRING(1024)
-                             ) PRIMARY KEY (SingerId))"""});
+    spanner_admin::DatabaseAdminClient admin_client(
+        spanner_admin::MakeDatabaseAdminConnection());
+    google::spanner::admin::database::v1::CreateDatabaseRequest request;
+    request.set_parent(db_->instance().FullName());
+    request.set_create_statement(
+        absl::StrCat("CREATE DATABASE `", db_->database_id(), "`"));
+    request.add_extra_statements(R"""(CREATE TABLE Singers (
+                                         SingerId   INT64 NOT NULL,
+                                         FirstName  STRING(1024),
+                                         LastName   STRING(1024)
+                                      ) PRIMARY KEY (SingerId))""");
+    auto database_future = admin_client.CreateDatabase(request);
     int i = 0;
     int const timeout = 120;
     while (++i < timeout) {
@@ -79,8 +85,9 @@ class RpcFailureThresholdTest
       return;
     }
     std::cout << "Dropping database " << db_->database_id() << std::flush;
-    DatabaseAdminClient admin_client;
-    auto drop_status = admin_client.DropDatabase(*db_);
+    spanner_admin::DatabaseAdminClient admin_client(
+        spanner_admin::MakeDatabaseAdminConnection());
+    auto drop_status = admin_client.DropDatabase(db_->FullName());
     std::cout << " DONE\n";
     EXPECT_STATUS_OK(drop_status);
   }

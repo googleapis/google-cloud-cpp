@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/benchmarks/benchmarks_config.h"
 #include "google/cloud/spanner/client.h"
-#include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
@@ -1347,32 +1347,31 @@ int main(int argc, char* argv[]) {
   // print everything out.
   std::cout << config << std::flush;
 
-  google::cloud::spanner::DatabaseAdminClient admin_client;
-  std::vector<std::string> additional_statements = [&available, generator] {
-    std::vector<std::string> statements;
-    for (auto const& kv : available) {
-      // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-      if (google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST")
-              .has_value()) {
-        auto pos = kv.first.rfind("-numeric");
-        if (pos != std::string::npos) {
-          continue;
-        }
-      }
-      auto experiment = kv.second(generator);
-      auto s = experiment->AdditionalDdlStatement();
-      if (s.empty()) continue;
-      statements.push_back(std::move(s));
-    }
-    return statements;
-  }();
+  google::cloud::spanner_admin::DatabaseAdminClient admin_client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
 
   std::cout << "# Waiting for database creation to complete " << std::flush;
+  google::spanner::admin::database::v1::CreateDatabaseRequest request;
+  request.set_parent(database.instance().FullName());
+  request.set_create_statement(
+      absl::StrCat("CREATE DATABASE `", database.database_id(), "`"));
+  for (auto const& kv : available) {
+    // TODO(#5024): Remove this check when the emulator supports NUMERIC.
+    if (google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value()) {
+      auto pos = kv.first.rfind("-numeric");
+      if (pos != std::string::npos) {
+        continue;
+      }
+    }
+    auto experiment = kv.second(generator);
+    auto s = experiment->AdditionalDdlStatement();
+    if (s.empty()) continue;
+    request.add_extra_statements(std::move(s));
+  }
   google::cloud::StatusOr<google::spanner::admin::database::v1::Database> db;
   int constexpr kMaxCreateDatabaseRetries = 3;
   for (int retry = 0; retry <= kMaxCreateDatabaseRetries; ++retry) {
-    auto create_future =
-        admin_client.CreateDatabase(database, additional_statements);
+    auto create_future = admin_client.CreateDatabase(request);
     for (;;) {
       auto status = create_future.wait_for(std::chrono::seconds(1));
       if (status == std::future_status::ready) break;
@@ -1419,7 +1418,7 @@ int main(int argc, char* argv[]) {
   }
 
   if (!user_specified_database) {
-    auto drop = admin_client.DropDatabase(database);
+    auto drop = admin_client.DropDatabase(database.FullName());
     if (!drop.ok()) {
       std::cerr << "# Error dropping database: " << drop << "\n";
     }

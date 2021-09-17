@@ -13,8 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/testing/cleanup_stale_databases.h"
-#include "google/cloud/spanner/mocks/mock_database_admin_connection.h"
+#include "google/cloud/spanner/admin/mocks/mock_database_admin_connection.h"
+#include "google/cloud/spanner/database.h"
+#include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -25,7 +28,8 @@ namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-using ::google::cloud::spanner_mocks::MockDatabaseAdminConnection;
+using ::google::cloud::spanner_admin_mocks::MockDatabaseAdminConnection;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::UnorderedElementsAreArray;
 namespace gcsa = ::google::spanner::admin::database::v1;
@@ -36,12 +40,9 @@ TEST(CleanupStaleDatabases, Empty) {
   spanner::Instance const expected_instance("test-project", "test-instance");
   EXPECT_CALL(*mock, ListDatabases)
       .WillOnce(
-          [&expected_instance](
-              spanner::DatabaseAdminConnection::ListDatabasesParams const& p) {
-            EXPECT_EQ(expected_instance, p.instance);
-
-            return google::cloud::internal::MakePaginationRange<
-                google::cloud::spanner::ListDatabaseRange>(
+          [&expected_instance](gcsa::ListDatabasesRequest const& request) {
+            EXPECT_EQ(request.parent(), expected_instance.FullName());
+            return internal::MakePaginationRange<StreamRange<gcsa::Database>>(
                 gcsa::ListDatabasesRequest{},
                 [](gcsa::ListDatabasesRequest const&) {
                   gcsa::ListDatabasesResponse response;
@@ -52,10 +53,10 @@ TEST(CleanupStaleDatabases, Empty) {
                 });
           });
 
-  spanner::DatabaseAdminClient client(mock);
+  spanner_admin::DatabaseAdminClient client(mock);
   auto status = CleanupStaleDatabases(client, "test-project", "test-instance",
                                       std::chrono::system_clock::now());
-  EXPECT_STATUS_OK(status);
+  EXPECT_THAT(status, IsOk());
 }
 
 TEST(CleanupStaleDatabases, ListError) {
@@ -63,12 +64,9 @@ TEST(CleanupStaleDatabases, ListError) {
   spanner::Instance const expected_instance("test-project", "test-instance");
   EXPECT_CALL(*mock, ListDatabases)
       .WillOnce(
-          [&expected_instance](
-              spanner::DatabaseAdminConnection::ListDatabasesParams const& p) {
-            EXPECT_EQ(expected_instance, p.instance);
-
-            return google::cloud::internal::MakePaginationRange<
-                google::cloud::spanner::ListDatabaseRange>(
+          [&expected_instance](gcsa::ListDatabasesRequest const& request) {
+            EXPECT_EQ(request.parent(), expected_instance.FullName());
+            return internal::MakePaginationRange<StreamRange<gcsa::Database>>(
                 gcsa::ListDatabasesRequest{},
                 [](gcsa::ListDatabasesRequest const&) {
                   return StatusOr<gcsa::ListDatabasesResponse>(
@@ -79,7 +77,7 @@ TEST(CleanupStaleDatabases, ListError) {
                 });
           });
 
-  spanner::DatabaseAdminClient client(mock);
+  spanner_admin::DatabaseAdminClient client(mock);
   auto status = CleanupStaleDatabases(client, "test-project", "test-instance",
                                       std::chrono::system_clock::now());
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied, "uh-oh"));
@@ -87,7 +85,7 @@ TEST(CleanupStaleDatabases, ListError) {
 
 TEST(CleanupStaleDatabases, RemovesMatching) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  auto generator = google::cloud::internal::DefaultPRNG({});
+  auto generator = internal::DefaultPRNG({});
   auto const now = std::chrono::system_clock::now();
   auto const day = std::chrono::hours(24);
   std::vector<std::string> expect_dropped{
@@ -107,51 +105,48 @@ TEST(CleanupStaleDatabases, RemovesMatching) {
 
   spanner::Instance const expected_instance("test-project", "test-instance");
   EXPECT_CALL(*mock, ListDatabases)
-      .WillOnce(
-          [&](spanner::DatabaseAdminConnection::ListDatabasesParams const& p) {
-            EXPECT_EQ(expected_instance, p.instance);
-
-            return google::cloud::internal::MakePaginationRange<
-                google::cloud::spanner::ListDatabaseRange>(
-                gcsa::ListDatabasesRequest{},
-                [&](gcsa::ListDatabasesRequest const&) {
-                  gcsa::ListDatabasesResponse response;
-                  for (auto const& id : expect_dropped) {
-                    gcsa::Database db;
-                    db.set_name(
-                        spanner::Database(expected_instance, id).FullName());
-                    *response.add_databases() = std::move(db);
-                  }
-                  for (auto const& id : expect_not_dropped) {
-                    gcsa::Database db;
-                    db.set_name(
-                        spanner::Database(expected_instance, id).FullName());
-                    *response.add_databases() = std::move(db);
-                  }
-                  return StatusOr<gcsa::ListDatabasesResponse>(response);
-                },
-                [](gcsa::ListDatabasesResponse const& r) {
-                  return std::vector<gcsa::Database>{r.databases().begin(),
-                                                     r.databases().end()};
-                });
-          });
+      .WillOnce([&](gcsa::ListDatabasesRequest const& request) {
+        EXPECT_EQ(request.parent(), expected_instance.FullName());
+        return internal::MakePaginationRange<StreamRange<gcsa::Database>>(
+            gcsa::ListDatabasesRequest{},
+            [&](gcsa::ListDatabasesRequest const&) {
+              gcsa::ListDatabasesResponse response;
+              for (auto const& id : expect_dropped) {
+                gcsa::Database db;
+                db.set_name(
+                    spanner::Database(expected_instance, id).FullName());
+                *response.add_databases() = std::move(db);
+              }
+              for (auto const& id : expect_not_dropped) {
+                gcsa::Database db;
+                db.set_name(
+                    spanner::Database(expected_instance, id).FullName());
+                *response.add_databases() = std::move(db);
+              }
+              return StatusOr<gcsa::ListDatabasesResponse>(response);
+            },
+            [](gcsa::ListDatabasesResponse const& r) {
+              return std::vector<gcsa::Database>{r.databases().begin(),
+                                                 r.databases().end()};
+            });
+      });
 
   std::vector<std::string> dropped;
   EXPECT_CALL(*mock, DropDatabase)
-      .WillRepeatedly(
-          [&](spanner::DatabaseAdminConnection::DropDatabaseParams const& p) {
-            EXPECT_EQ(p.database.instance(), expected_instance);
-            dropped.push_back(p.database.database_id());
-            // Errors should be ignored and the loop should continue.
-            return Status{StatusCode::kPermissionDenied, "uh-oh"};
-          });
+      .WillRepeatedly([&](gcsa::DropDatabaseRequest const& request) {
+        auto db = spanner::MakeDatabase(request.database()).value();
+        EXPECT_EQ(expected_instance, db.instance());
+        dropped.push_back(db.database_id());
+        // Errors should be ignored and the loop should continue.
+        return Status{StatusCode::kPermissionDenied, "uh-oh"};
+      });
 
-  spanner::DatabaseAdminClient client(mock);
+  spanner_admin::DatabaseAdminClient client(mock);
   auto status = CleanupStaleDatabases(client, "test-project", "test-instance",
                                       now - 2 * day);
-  EXPECT_STATUS_OK(status);
-  EXPECT_THAT(expect_dropped,
-              UnorderedElementsAreArray(dropped.begin(), dropped.end()));
+  EXPECT_THAT(status, IsOk());
+  EXPECT_THAT(dropped, UnorderedElementsAreArray(expect_dropped.begin(),
+                                                 expect_dropped.end()));
 }
 
 }  // namespace

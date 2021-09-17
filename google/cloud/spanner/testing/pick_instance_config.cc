@@ -13,7 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/testing/pick_instance_config.h"
-#include "google/cloud/spanner/instance_admin_client.h"
+#include "google/cloud/spanner/admin/instance_admin_client.h"
+#include "google/cloud/project.h"
 #include <regex>
 
 namespace google {
@@ -24,13 +25,15 @@ inline namespace SPANNER_CLIENT_NS {
 std::string PickInstanceConfig(
     std::string const& project_id, std::regex const& filter_regex,
     google::cloud::internal::DefaultPRNG& generator) {
-  spanner::InstanceAdminClient client(spanner::MakeInstanceAdminConnection());
+  spanner_admin::InstanceAdminClient client(
+      spanner_admin::MakeInstanceAdminConnection());
   std::string instance_config_name{};
   auto instance_configs =
       [&client, &instance_config_name, &project_id,
        &filter_regex]() mutable -> std::vector<std::string> {
     std::vector<std::string> ret;
-    for (auto const& instance_config : client.ListInstanceConfigs(project_id)) {
+    for (auto const& instance_config :
+         client.ListInstanceConfigs(Project(project_id).FullName())) {
       if (!instance_config) return ret;
       if (instance_config_name.empty()) {
         instance_config_name = instance_config->name();
