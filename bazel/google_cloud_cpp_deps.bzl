@@ -30,11 +30,11 @@ def google_cloud_cpp_deps():
     if "rules_cc" not in native.existing_rules():
         http_archive(
             name = "rules_cc",
-            strip_prefix = "rules_cc-d66a13e2a01630afcafc4ba411d83e291ecf02bd",
+            strip_prefix = "rules_cc-dd2758b96dc8f9f4add81eaa4154b7e3d8be6873",
             urls = [
-                "https://github.com/bazelbuild/rules_cc/archive/d66a13e2a01630afcafc4ba411d83e291ecf02bd.tar.gz",
+                "https://github.com/bazelbuild/rules_cc/archive/dd2758b96dc8f9f4add81eaa4154b7e3d8be6873.tar.gz",
             ],
-            sha256 = "3cde212ccda3ba152897e7fd354c42eba275878b6d98fe4f2125c684a73f3842",
+            sha256 = "67571de4070cff615f7232281d8b12d8400976d21c19d8274386ab02799269fb",
         )
 
     # Load Abseil
