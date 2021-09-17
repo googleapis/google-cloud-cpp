@@ -63,10 +63,11 @@ TEST(Backup, OutputStream) {
 }
 
 TEST(Backup, MakeBackup) {
-  auto constexpr kValidBackupName = "projects/p1/instances/i1/backups/b1";
-  auto bu = MakeBackup(kValidBackupName);
+  auto const k_valid_backup_name =
+      Backup(Instance(Project("p1"), "i1"), "b1").FullName();
+  auto bu = MakeBackup(k_valid_backup_name);
   ASSERT_THAT(bu, IsOk());
-  EXPECT_THAT(bu->FullName(), Eq(kValidBackupName));
+  EXPECT_THAT(bu->FullName(), Eq(k_valid_backup_name));
 
   for (std::string invalid : {
            "",

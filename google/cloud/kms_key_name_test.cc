@@ -36,11 +36,11 @@ TEST(KmsKeyNameTest, FromComponents) {
 }
 
 TEST(KmsKeyNameTest, MakeKmsKeyName) {
-  auto constexpr kValidKeyNameName =
-      "projects/p1/locations/l1/keyRings/r1/cryptoKeys/n1";
-  auto valid_key = MakeKmsKeyName(kValidKeyNameName);
+  auto const k_valid_key_name_name =
+      KmsKeyName("p1", "l1", "r1", "n1").FullName();
+  auto valid_key = MakeKmsKeyName(k_valid_key_name_name);
   ASSERT_THAT(valid_key, IsOk());
-  EXPECT_THAT(valid_key->FullName(), Eq(kValidKeyNameName));
+  EXPECT_THAT(valid_key->FullName(), Eq(k_valid_key_name_name));
 
   for (std::string invalid : {
            "projects/p1/locations/l1/keyRings/r1/carlosKey/n1",

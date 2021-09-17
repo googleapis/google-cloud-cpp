@@ -61,10 +61,10 @@ TEST(Instance, OutputStream) {
 }
 
 TEST(Instance, MakeInstance) {
-  auto constexpr kValidInstanceName = "projects/p1/instances/i1";
-  auto in = MakeInstance(kValidInstanceName);
+  auto const k_valid_instance_name = Instance(Project("p1"), "i1").FullName();
+  auto in = MakeInstance(k_valid_instance_name);
   ASSERT_THAT(in, IsOk());
-  EXPECT_THAT(in->FullName(), Eq(kValidInstanceName));
+  EXPECT_THAT(in->FullName(), Eq(k_valid_instance_name));
 
   for (std::string invalid : {
            "",

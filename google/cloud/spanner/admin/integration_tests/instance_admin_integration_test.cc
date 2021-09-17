@@ -106,9 +106,8 @@ class InstanceAdminClientTest
       // but if we are running against the emulator we're happy to create one.
       Instance in(ProjectId(), InstanceId());
       auto create_instance_request =
-          CreateInstanceRequestBuilder(in,
-                                       "projects/" + in.project_id() +
-                                           "/instanceConfigs/emulator-config")
+          CreateInstanceRequestBuilder(
+              in, in.project().FullName() + "/instanceConfigs/emulator-config")
               .Build();
       auto instance = client_.CreateInstance(create_instance_request).get();
       if (!instance) {
@@ -134,7 +133,7 @@ TEST_F(InstanceAdminClientTest, InstanceReadOperations) {
 
   auto instance_names = [&in, this]() mutable {
     std::vector<std::string> names;
-    auto const parent = "projects/" + in.project_id();
+    auto const parent = in.project().FullName();
     for (auto const& instance : client_.ListInstances(parent)) {
       EXPECT_STATUS_OK(instance);
       if (!instance) break;
@@ -204,7 +203,7 @@ TEST_F(InstanceAdminClientTest, InstanceConfig) {
 
   auto instance_config_names = [&project_id, this]() mutable {
     std::vector<std::string> names;
-    auto const parent = "projects/" + project_id;
+    auto const parent = Project(project_id).FullName();
     for (auto const& instance_config : client_.ListInstanceConfigs(parent)) {
       EXPECT_STATUS_OK(instance_config);
       if (!instance_config) break;

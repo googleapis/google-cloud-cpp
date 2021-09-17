@@ -56,10 +56,10 @@ TEST(Project, OutputStream) {
 }
 
 TEST(Project, MakeProject) {
-  auto constexpr kValidProjectName = "projects/p1";
-  auto p = MakeProject(kValidProjectName);
+  auto const k_valid_project_name = Project("p1").FullName();
+  auto p = MakeProject(k_valid_project_name);
   ASSERT_THAT(p, IsOk());
-  EXPECT_THAT(p->FullName(), Eq(kValidProjectName));
+  EXPECT_THAT(p->FullName(), Eq(k_valid_project_name));
 
   for (std::string invalid : {
            "",

@@ -64,10 +64,11 @@ TEST(Database, OutputStream) {
 }
 
 TEST(Database, MakeDatabase) {
-  auto constexpr kValidDatabaseName = "projects/p1/instances/i1/databases/d1";
-  auto db = MakeDatabase(kValidDatabaseName);
+  auto const k_valid_database_name =
+      Database(Instance(Project("p1"), "i1"), "d1").FullName();
+  auto db = MakeDatabase(k_valid_database_name);
   ASSERT_THAT(db, IsOk());
-  EXPECT_THAT(db->FullName(), Eq(kValidDatabaseName));
+  EXPECT_THAT(db->FullName(), Eq(k_valid_database_name));
 
   for (std::string invalid : {
            "",

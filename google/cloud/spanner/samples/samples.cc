@@ -34,6 +34,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/kms_key_name.h"
 #include "google/cloud/log.h"
+#include "google/cloud/project.h"
 #include "absl/time/time.h"
 #include "absl/types/optional.h"
 #include <chrono>
@@ -78,8 +79,9 @@ void CreateInstance(google::cloud::spanner_admin::InstanceAdminClient client,
   namespace spanner = ::google::cloud::spanner;
   spanner::Instance in(project_id, instance_id);
 
+  auto project = google::cloud::Project(project_id);
   std::string instance_config =
-      "projects/" + project_id + "/instanceConfigs/" + config;
+      project.FullName() + "/instanceConfigs/" + config;
   auto instance =
       client
           .CreateInstance(
@@ -102,8 +104,9 @@ void CreateInstanceWithProcessingUnits(
   namespace spanner = ::google::cloud::spanner;
   spanner::Instance in(project_id, instance_id);
 
+  auto project = google::cloud::Project(project_id);
   std::string instance_config =
-      "projects/" + project_id + "/instanceConfigs/" + config;
+      project.FullName() + "/instanceConfigs/" + config;
   auto instance =
       client
           .CreateInstance(
@@ -195,8 +198,9 @@ void ListInstanceConfigs(
     google::cloud::spanner_admin::InstanceAdminClient client,
     std::string const& project_id) {
   int count = 0;
+  auto project = google::cloud::Project(project_id);
   for (auto const& instance_config :
-       client.ListInstanceConfigs("projects/" + project_id)) {
+       client.ListInstanceConfigs(project.FullName())) {
     if (!instance_config) {
       throw std::runtime_error(instance_config.status().message());
     }
@@ -223,8 +227,9 @@ void ListInstanceConfigsCommand(std::vector<std::string> argv) {
 void GetInstanceConfig(google::cloud::spanner_admin::InstanceAdminClient client,
                        std::string const& project_id,
                        std::string const& instance_config_name) {
+  auto project = google::cloud::Project(project_id);
   auto instance_config = client.GetInstanceConfig(
-      "projects/" + project_id + "/instanceConfigs/" + instance_config_name);
+      project.FullName() + "/instanceConfigs/" + instance_config_name);
   if (!instance_config) {
     throw std::runtime_error(instance_config.status().message());
   }
@@ -249,7 +254,8 @@ void GetInstanceConfigCommand(std::vector<std::string> argv) {
 void ListInstances(google::cloud::spanner_admin::InstanceAdminClient client,
                    std::string const& project_id) {
   int count = 0;
-  for (auto const& instance : client.ListInstances("projects/" + project_id)) {
+  auto project = google::cloud::Project(project_id);
+  for (auto const& instance : client.ListInstances(project.FullName())) {
     if (!instance) throw std::runtime_error(instance.status().message());
     ++count;
     std::cout << "Instance [" << count << "]:\n" << instance->DebugString();
@@ -3069,8 +3075,8 @@ void CustomInstanceAdminPolicies(std::vector<std::string> argv) {
 
     // Use the client as usual.
     std::cout << "Available configs for project " << project_id << "\n";
-    for (auto const& cfg :
-         client.ListInstanceConfigs("projects/" + project_id)) {
+    auto project = google::cloud::Project(project_id);
+    for (auto const& cfg : client.ListInstanceConfigs(project.FullName())) {
       if (!cfg) throw std::runtime_error(cfg.status().message());
       std::cout << cfg->name() << "\n";
     }
@@ -3585,8 +3591,8 @@ std::string PickConfig(google::cloud::spanner_admin::InstanceAdminClient client,
   std::vector<std::string> const excluded{"regional-us-central1",
                                           "regional-us-east1"};
 
-  std::string const config_prefix =
-      "projects/" + project_id + "/instanceConfigs/";
+  auto project = google::cloud::Project(project_id);
+  std::string const config_prefix = project.FullName() + "/instanceConfigs/";
 
   // Log the config names to aid in troubleshooting. This is only used during
   // an AutoRun() invocation, so it will not pollute the output for users.
@@ -3596,7 +3602,7 @@ std::string PickConfig(google::cloud::spanner_admin::InstanceAdminClient client,
   std::string first;
   int i = 0;
   for (auto const& instance_config :
-       client.ListInstanceConfigs("projects/" + project_id)) {
+       client.ListInstanceConfigs(project.FullName())) {
     if (!instance_config) break;
     if (instance_config->name().rfind(config_prefix, 0) != 0) continue;
     auto const config = instance_config->name().substr(config_prefix.size());
