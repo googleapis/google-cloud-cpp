@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/testing/instance_location.h"
-#include "google/cloud/spanner/instance_admin_client.h"
+#include "google/cloud/spanner/admin/instance_admin_client.h"
 
 namespace google {
 namespace cloud {
@@ -21,8 +21,9 @@ namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 
 StatusOr<std::string> InstanceLocation(spanner::Instance const& in) {
-  spanner::InstanceAdminClient client(spanner::MakeInstanceAdminConnection());
-  auto instance = client.GetInstance(in);
+  spanner_admin::InstanceAdminClient client(
+      spanner_admin::MakeInstanceAdminConnection());
+  auto instance = client.GetInstance(in.FullName());
   if (!instance) return std::move(instance).status();
   auto instance_config = client.GetInstanceConfig(instance->config());
   if (!instance_config) return std::move(instance_config).status();

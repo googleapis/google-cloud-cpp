@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_PICK_INSTANCE_CONFIG_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_PICK_INSTANCE_CONFIG_H
 
-#include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/random.h"
 #include <regex>
