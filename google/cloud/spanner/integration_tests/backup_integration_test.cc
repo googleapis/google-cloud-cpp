@@ -93,8 +93,8 @@ class BackupTest : public ::google::cloud::testing_util::IntegrationTest {
 TEST_F(BackupTest, BackupTest) {
   if (!RunSlowBackupTests() || Emulator()) GTEST_SKIP();
 
-  auto instance_id =
-      spanner_testing::PickRandomInstance(generator_, ProjectId());
+  auto instance_id = spanner_testing::PickRandomInstance(
+      generator_, ProjectId(), "labels.restore-database-partition:legacy");
   ASSERT_STATUS_OK(instance_id);
   Instance in(ProjectId(), *instance_id);
   Database db(in, spanner_testing::RandomDatabaseName(generator_));
@@ -203,8 +203,8 @@ TEST_F(BackupTest, BackupTest) {
 TEST_F(BackupTest, CreateBackupWithVersionTime) {
   if (!RunSlowBackupTests()) GTEST_SKIP();
 
-  auto instance_id =
-      spanner_testing::PickRandomInstance(generator_, ProjectId());
+  auto instance_id = spanner_testing::PickRandomInstance(
+      generator_, ProjectId(), "labels.restore-database-partition:legacy");
   ASSERT_THAT(instance_id, IsOk()) << instance_id.status();
   Instance in(ProjectId(), *instance_id);
   Database db(in, spanner_testing::RandomDatabaseName(generator_));
@@ -420,7 +420,9 @@ TEST_F(BackupTest, BackupTestWithCMEK) {
   if (!RunSlowBackupTests() || Emulator()) GTEST_SKIP();
 
   auto instance_id = spanner_testing::PickRandomInstance(
-      generator_, ProjectId(), "NOT name:/instances/test-instance-mr-");
+      generator_, ProjectId(),
+      "labels.restore-database-partition:legacy"
+      " NOT name:/instances/test-instance-mr-");
   ASSERT_STATUS_OK(instance_id);
   Instance in(ProjectId(), *instance_id);
 
