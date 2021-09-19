@@ -20,7 +20,6 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-
 namespace internal {
 
 grpc::ChannelArguments MakeChannelArguments(Options const& opts) {
@@ -62,17 +61,16 @@ absl::optional<std::string> GetStringChannelArgument(
 }
 
 BackgroundThreadsFactory MakeBackgroundThreadsFactory(Options const& opts) {
-  if (opts.has<GrpcBackgroundThreadsFactoryOption>())
+  if (opts.has<GrpcBackgroundThreadsFactoryOption>()) {
     return opts.get<GrpcBackgroundThreadsFactoryOption>();
+  }
   auto const s = opts.get<GrpcBackgroundThreadPoolSizeOption>();
   return [s] {
-    return absl::make_unique<
-        ::google::cloud::internal::AutomaticallyCreatedBackgroundThreads>(s);
+    return absl::make_unique<AutomaticallyCreatedBackgroundThreads>(s);
   };
 }
 
 }  // namespace internal
-
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
