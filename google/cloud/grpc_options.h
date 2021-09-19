@@ -140,14 +140,14 @@ absl::optional<std::string> GetStringChannelArgument(
     grpc::ChannelArguments const& args, std::string const& key);
 
 /**
- * Returns a factory for generating `BackgroundThreads`. If
- * `GrpcBackgroundThreadsFactoryOption` is unset, it will return a thread pool
- * of size `GrpcBackgroundThreadPoolSizeOption`.
+ * Returns a factory for generating `BackgroundThreads`.
+ *
+ * If `GrpcBackgroundThreadsFactoryOption` is unset, it will return a thread
+ * pool of size `GrpcBackgroundThreadPoolSizeOption`.
  */
 BackgroundThreadsFactory MakeBackgroundThreadsFactory(Options const& opts = {});
 
 }  // namespace internal
-
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
