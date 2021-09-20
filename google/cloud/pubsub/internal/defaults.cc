@@ -13,8 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/defaults.h"
+#include "google/cloud/pubsub/internal/default_retry_policies.h"
 #include "google/cloud/pubsub/options.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/connection_options.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/options.h"
+#include "default_retry_policies.h"
 #include <chrono>
 #include <limits>
 #include <thread>
@@ -25,16 +32,59 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 using std::chrono::seconds;
+using ms = std::chrono::milliseconds;
 
-std::size_t DefaultMaxConcurrency() {
-  auto constexpr kDefaultMaxConcurrency = 4;
+std::size_t DefaultThreadCount() {
+  auto constexpr kDefaultThreadCount = 4;
   auto const n = std::thread::hardware_concurrency();
-  return n == 0 ? kDefaultMaxConcurrency : n;
+  return n == 0 ? kDefaultThreadCount : n;
+}
+
+Options DefaultCommonOptions(Options opts) {
+  auto emulator = internal::GetEnv("PUBSUB_EMULATOR_HOST");
+  if (emulator.has_value()) {
+    opts.set<EndpointOption>(*emulator).set<GrpcCredentialOption>(
+        grpc::InsecureChannelCredentials());
+  }
+  if (!opts.has<EndpointOption>()) {
+    opts.set<EndpointOption>("pubsub.googleapis.com");
+  }
+  if (!opts.has<GrpcCredentialOption>()) {
+    opts.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
+  }
+  if (!opts.has<GrpcNumChannelsOption>()) {
+    opts.set<GrpcNumChannelsOption>(static_cast<int>(DefaultThreadCount()));
+  }
+  if (!opts.has<TracingComponentsOption>()) {
+    opts.set<TracingComponentsOption>(internal::DefaultTracingComponents());
+  }
+  if (!opts.has<GrpcTracingOptionsOption>()) {
+    opts.set<GrpcTracingOptionsOption>(internal::DefaultTracingOptions());
+  }
+  if (!opts.has<pubsub::RetryPolicyOption>()) {
+    opts.set<pubsub::RetryPolicyOption>(DefaultRetryPolicy()->clone());
+  }
+  if (!opts.has<pubsub::BackoffPolicyOption>()) {
+    opts.set<pubsub::BackoffPolicyOption>(DefaultBackoffPolicy()->clone());
+  }
+  if (opts.get<GrpcBackgroundThreadPoolSizeOption>() == 0) {
+    opts.set<GrpcBackgroundThreadPoolSizeOption>(DefaultThreadCount());
+  }
+
+  // Enforce Constraints
+  auto& num_channels = opts.lookup<GrpcNumChannelsOption>();
+  num_channels = (std::max)(num_channels, 1);
+
+  // Inserts our user-agent string at the front.
+  auto& products = opts.lookup<UserAgentProductsOption>();
+  products.insert(products.begin(), internal::UserAgentPrefix());
+
+  return opts;
 }
 
 Options DefaultPublisherOptions(Options opts) {
   if (!opts.has<pubsub::MaxHoldTimeOption>()) {
-    opts.set<pubsub::MaxHoldTimeOption>(std::chrono::milliseconds(10));
+    opts.set<pubsub::MaxHoldTimeOption>(ms(10));
   }
   if (!opts.has<pubsub::MaxBatchMessagesOption>()) {
     opts.set<pubsub::MaxBatchMessagesOption>(100);
@@ -58,7 +108,7 @@ Options DefaultPublisherOptions(Options opts) {
         pubsub::FullPublisherAction::kBlocks);
   }
 
-  return opts;
+  return DefaultCommonOptions(std::move(opts));
 }
 
 Options DefaultSubscriberOptions(Options opts) {
@@ -74,11 +124,21 @@ Options DefaultSubscriberOptions(Options opts) {
   if (!opts.has<pubsub::MaxOutstandingBytesOption>()) {
     opts.set<pubsub::MaxOutstandingBytesOption>(100 * 1024 * 1024L);
   }
-  if (!opts.has<pubsub::MaxConcurrencyOption>()) {
-    opts.set<pubsub::MaxConcurrencyOption>(DefaultMaxConcurrency());
+  if (opts.get<pubsub::MaxConcurrencyOption>() == 0) {
+    opts.set<pubsub::MaxConcurrencyOption>(DefaultThreadCount());
   }
   if (!opts.has<pubsub::ShutdownPollingPeriodOption>()) {
     opts.set<pubsub::ShutdownPollingPeriodOption>(seconds(5));
+  }
+  // Subscribers are special: by default we want to retry essentially forever
+  // because (a) the service will disconnect the streaming pull from time to
+  // time, but that is not a "failure", (b) applications can change this
+  // behavior if they need, and this is easier than some hard-coded "treat these
+  // disconnects as non-failures" code.
+  if (!opts.has<pubsub::RetryPolicyOption>()) {
+    opts.set<pubsub::RetryPolicyOption>(
+        std::make_shared<pubsub::LimitedErrorCountRetryPolicy>(
+            (std::numeric_limits<int>::max)()));
   }
 
   // Enforce constraints
@@ -91,11 +151,7 @@ Options DefaultSubscriberOptions(Options opts) {
   auto& bytes = opts.lookup<pubsub::MaxOutstandingBytesOption>();
   bytes = std::max<std::int64_t>(0, bytes);
 
-  if (opts.get<pubsub::MaxConcurrencyOption>() == 0) {
-    opts.set<pubsub::MaxConcurrencyOption>(DefaultMaxConcurrency());
-  }
-
-  return opts;
+  return DefaultCommonOptions(std::move(opts));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

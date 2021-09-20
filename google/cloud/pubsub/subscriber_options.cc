@@ -49,8 +49,8 @@ SubscriberOptions& SubscriberOptions::set_max_outstanding_bytes(
 }
 
 SubscriberOptions& SubscriberOptions::set_max_concurrency(std::size_t v) {
-  opts_.set<MaxConcurrencyOption>(
-      v == 0 ? pubsub_internal::DefaultMaxConcurrency() : v);
+  opts_.set<MaxConcurrencyOption>(v == 0 ? pubsub_internal::DefaultThreadCount()
+                                         : v);
   return *this;
 }
 

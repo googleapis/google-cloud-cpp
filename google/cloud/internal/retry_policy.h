@@ -136,6 +136,7 @@ class LimitedErrorCountRetryPolicy
   bool IsExhausted() const override {
     return failure_count_ > maximum_failures_;
   }
+  int maximum_failures() const { return maximum_failures_; }
 
  protected:
   void OnFailureImpl() override { ++failure_count_; }

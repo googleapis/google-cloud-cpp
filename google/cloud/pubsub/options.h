@@ -38,6 +38,8 @@
  * @see `google::cloud::GrpcOptionList`
  */
 
+#include "google/cloud/pubsub/backoff_policy.h"
+#include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/options.h"
 #include <chrono>
@@ -46,6 +48,19 @@ namespace google {
 namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+
+/// The retry policy
+struct RetryPolicyOption {
+  using Type = std::shared_ptr<pubsub::RetryPolicy>;
+};
+
+/// The backoff policy
+struct BackoffPolicyOption {
+  using Type = std::shared_ptr<pubsub::BackoffPolicy>;
+};
+
+/// The list of all "policy" options.
+using PolicyOptionList = OptionList<RetryPolicyOption, BackoffPolicyOption>;
 
 /**
  * The maximum hold time for the messages.
