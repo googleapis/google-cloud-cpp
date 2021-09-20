@@ -23,9 +23,7 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::Eq;
 
 TEST(Project, Basics) {
   Project p("p1");
@@ -56,10 +54,8 @@ TEST(Project, OutputStream) {
 }
 
 TEST(Project, MakeProject) {
-  auto const k_valid_project_name = Project("p1").FullName();
-  auto p = MakeProject(k_valid_project_name);
-  ASSERT_THAT(p, IsOk());
-  EXPECT_THAT(p->FullName(), Eq(k_valid_project_name));
+  auto p = Project("p1");
+  EXPECT_EQ(p, MakeProject(p.FullName()).value());
 
   for (std::string invalid : {
            "",

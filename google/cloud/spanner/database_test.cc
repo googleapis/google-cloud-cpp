@@ -24,9 +24,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::Eq;
 
 TEST(Database, Basics) {
   Instance in("p1", "i1");
@@ -64,11 +62,8 @@ TEST(Database, OutputStream) {
 }
 
 TEST(Database, MakeDatabase) {
-  auto const k_valid_database_name =
-      Database(Instance(Project("p1"), "i1"), "d1").FullName();
-  auto db = MakeDatabase(k_valid_database_name);
-  ASSERT_THAT(db, IsOk());
-  EXPECT_THAT(db->FullName(), Eq(k_valid_database_name));
+  auto db = Database(Instance(Project("p1"), "i1"), "d1");
+  EXPECT_EQ(db, MakeDatabase(db.FullName()).value());
 
   for (std::string invalid : {
            "",
