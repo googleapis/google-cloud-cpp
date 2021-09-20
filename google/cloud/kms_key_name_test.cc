@@ -25,7 +25,6 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::Eq;
 
 TEST(KmsKeyNameTest, FromComponents) {
   KmsKeyName key("test-project", "some-location", "a-key-ring", "a-key-name");
@@ -36,11 +35,8 @@ TEST(KmsKeyNameTest, FromComponents) {
 }
 
 TEST(KmsKeyNameTest, MakeKmsKeyName) {
-  auto constexpr kValidKeyNameName =
-      "projects/p1/locations/l1/keyRings/r1/cryptoKeys/n1";
-  auto valid_key = MakeKmsKeyName(kValidKeyNameName);
-  ASSERT_THAT(valid_key, IsOk());
-  EXPECT_THAT(valid_key->FullName(), Eq(kValidKeyNameName));
+  auto key = KmsKeyName("p1", "l1", "r1", "n1");
+  EXPECT_EQ(key, MakeKmsKeyName(key.FullName()).value());
 
   for (std::string invalid : {
            "projects/p1/locations/l1/keyRings/r1/carlosKey/n1",

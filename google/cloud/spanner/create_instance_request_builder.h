@@ -51,7 +51,7 @@ class CreateInstanceRequestBuilder {
    * The display_name is set to a default value of in.instance_id().
    */
   CreateInstanceRequestBuilder(Instance const& in, std::string config) {
-    request_.set_parent("projects/" + in.project_id());
+    request_.set_parent(in.project().FullName());
     request_.set_instance_id(in.instance_id());
     request_.mutable_instance()->set_name(in.FullName());
     request_.mutable_instance()->set_display_name(in.instance_id());

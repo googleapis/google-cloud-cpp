@@ -22,12 +22,12 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 TEST(UpdateInstanceRequestBuilder, Constructors) {
-  std::string expected_name = "projects/test-project/instances/test-instance";
+  Instance in(Project("test-project"), "test-instance");
+  std::string expected_name = in.FullName();
   UpdateInstanceRequestBuilder builder(expected_name);
   auto req = builder.Build();
   EXPECT_EQ(expected_name, req.instance().name());
 
-  Instance in("test-project", "test-instance");
   builder = UpdateInstanceRequestBuilder(in);
   req = builder.Build();
   EXPECT_EQ(expected_name, req.instance().name());
@@ -43,12 +43,13 @@ TEST(UpdateInstanceRequestBuilder, Constructors) {
 }
 
 TEST(UpdateInstanceRequestBuilder, AddLabels) {
-  std::string expected_name = "projects/test-project/instances/test-instance";
+  Instance in(Project("test-project"), "test-instance");
+  std::string expected_name = in.FullName();
   std::string expected_display_name =
       "projects/test-project/instances/test-display-name";
   google::spanner::admin::instance::v1::Instance instance;
   instance.set_name(expected_name);
-  instance.set_display_name("projects/test-project/insance/old-display-name");
+  instance.set_display_name("projects/test-project/instances/old-display-name");
   instance.set_node_count(1);
   instance.mutable_labels()->insert({"key", "value"});
   auto builder = UpdateInstanceRequestBuilder(instance);
@@ -70,12 +71,13 @@ TEST(UpdateInstanceRequestBuilder, AddLabels) {
 }
 
 TEST(UpdateInstanceRequestBuilder, AddLabelsRvalueReference) {
-  std::string expected_name = "projects/test-project/instances/test-instance";
+  Instance in(Project("test-project"), "test-instance");
+  std::string expected_name = in.FullName();
   std::string expected_display_name =
       "projects/test-project/instances/test-display-name";
   google::spanner::admin::instance::v1::Instance instance;
   instance.set_name(expected_name);
-  instance.set_display_name("projects/test-project/insance/old-display-name");
+  instance.set_display_name("projects/test-project/instances/old-display-name");
   instance.set_node_count(1);
   instance.mutable_labels()->insert({"key", "value"});
   auto req = UpdateInstanceRequestBuilder(instance)
@@ -97,12 +99,13 @@ TEST(UpdateInstanceRequestBuilder, AddLabelsRvalueReference) {
 }
 
 TEST(UpdateInstanceRequestBuilder, SetLabels) {
-  std::string expected_name = "projects/test-project/instances/test-instance";
+  Instance in(Project("test-project"), "test-instance");
+  std::string expected_name = in.FullName();
   std::string expected_display_name =
       "projects/test-project/instances/test-display-name";
   google::spanner::admin::instance::v1::Instance instance;
   instance.set_name(expected_name);
-  instance.set_display_name("projects/test-project/insance/old-display-name");
+  instance.set_display_name("projects/test-project/instances/old-display-name");
   instance.set_node_count(1);
   instance.mutable_labels()->insert({"key", "value"});
   auto builder = UpdateInstanceRequestBuilder(instance);
@@ -124,12 +127,13 @@ TEST(UpdateInstanceRequestBuilder, SetLabels) {
 }
 
 TEST(UpdateInstanceRequestBuilder, SetLabelsRvalueReference) {
-  std::string expected_name = "projects/test-project/instances/test-instance";
+  Instance in(Project("test-project"), "test-instance");
+  std::string expected_name = in.FullName();
   std::string expected_display_name =
       "projects/test-project/instances/test-display-name";
   google::spanner::admin::instance::v1::Instance instance;
   instance.set_name(expected_name);
-  instance.set_display_name("projects/test-project/insance/old-display-name");
+  instance.set_display_name("projects/test-project/instances/old-display-name");
   instance.set_node_count(1);
   instance.mutable_labels()->insert({"key", "value"});
   auto req = UpdateInstanceRequestBuilder(instance)

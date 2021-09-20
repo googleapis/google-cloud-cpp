@@ -24,9 +24,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::Eq;
 
 TEST(Instance, Basics) {
   Instance in("p1", "i1");
@@ -61,10 +59,8 @@ TEST(Instance, OutputStream) {
 }
 
 TEST(Instance, MakeInstance) {
-  auto constexpr kValidInstanceName = "projects/p1/instances/i1";
-  auto in = MakeInstance(kValidInstanceName);
-  ASSERT_THAT(in, IsOk());
-  EXPECT_THAT(in->FullName(), Eq(kValidInstanceName));
+  auto in = Instance(Project("p1"), "i1");
+  EXPECT_EQ(in, MakeInstance(in.FullName()).value());
 
   for (std::string invalid : {
            "",

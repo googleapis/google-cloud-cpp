@@ -23,9 +23,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::Eq;
 
 TEST(Backup, Basics) {
   Instance in("p1", "i1");
@@ -63,10 +61,8 @@ TEST(Backup, OutputStream) {
 }
 
 TEST(Backup, MakeBackup) {
-  auto constexpr kValidBackupName = "projects/p1/instances/i1/backups/b1";
-  auto bu = MakeBackup(kValidBackupName);
-  ASSERT_THAT(bu, IsOk());
-  EXPECT_THAT(bu->FullName(), Eq(kValidBackupName));
+  auto bu = Backup(Instance(Project("p1"), "i1"), "b1");
+  EXPECT_EQ(bu, MakeBackup(bu.FullName()).value());
 
   for (std::string invalid : {
            "",

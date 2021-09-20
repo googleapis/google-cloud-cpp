@@ -73,10 +73,12 @@ class MetadataSpannerStubTest : public ::testing::Test {
     grpc::ClientContext context;
     Request request;
     request.set_session(
-        "projects/test-project-id/"
-        "instances/test-instance-id/"
-        "databases/test-database-id/"
-        "sessions/test-session-id");
+        google::cloud::spanner::Database(
+            google::cloud::spanner::Instance(
+                google::cloud::Project("test-project-id"), "test-instance-id"),
+            "test-database-id")
+            .FullName() +
+        "/sessions/test-session-id");
     auto result = (stub.*member_function)(context, request);
     ExpectTransientError(result);
   }
@@ -137,10 +139,12 @@ TEST_F(MetadataSpannerStubTest, GetSession) {
   grpc::ClientContext context;
   spanner_proto::GetSessionRequest request;
   request.set_name(
-      "projects/test-project-id/"
-      "instances/test-instance-id/"
-      "databases/test-database-id/"
-      "sessions/test-session-id");
+      google::cloud::spanner::Database(
+          google::cloud::spanner::Instance(
+              google::cloud::Project("test-project-id"), "test-instance-id"),
+          "test-database-id")
+          .FullName() +
+      "/sessions/test-session-id");
   auto status = stub.GetSession(context, request);
   EXPECT_EQ(TransientError(), status.status());
 }
@@ -177,10 +181,12 @@ TEST_F(MetadataSpannerStubTest, DeleteSession) {
   grpc::ClientContext context;
   spanner_proto::DeleteSessionRequest request;
   request.set_name(
-      "projects/test-project-id/"
-      "instances/test-instance-id/"
-      "databases/test-database-id/"
-      "sessions/test-session-id");
+      google::cloud::spanner::Database(
+          google::cloud::spanner::Instance(
+              google::cloud::Project("test-project-id"), "test-instance-id"),
+          "test-database-id")
+          .FullName() +
+      "/sessions/test-session-id");
   auto status = stub.DeleteSession(context, request);
   EXPECT_EQ(TransientError(), status);
 }
@@ -204,10 +210,12 @@ TEST_F(MetadataSpannerStubTest, ExecuteStreamingSql) {
   grpc::ClientContext context;
   spanner_proto::ExecuteSqlRequest request;
   request.set_session(
-      "projects/test-project-id/"
-      "instances/test-instance-id/"
-      "databases/test-database-id/"
-      "sessions/test-session-id");
+      google::cloud::spanner::Database(
+          google::cloud::spanner::Instance(
+              google::cloud::Project("test-project-id"), "test-instance-id"),
+          "test-database-id")
+          .FullName() +
+      "/sessions/test-session-id");
   auto result = stub.ExecuteStreamingSql(context, request);
   EXPECT_FALSE(result);
 }
@@ -231,10 +239,12 @@ TEST_F(MetadataSpannerStubTest, StreamingRead) {
   grpc::ClientContext context;
   spanner_proto::ReadRequest request;
   request.set_session(
-      "projects/test-project-id/"
-      "instances/test-instance-id/"
-      "databases/test-database-id/"
-      "sessions/test-session-id");
+      google::cloud::spanner::Database(
+          google::cloud::spanner::Instance(
+              google::cloud::Project("test-project-id"), "test-instance-id"),
+          "test-database-id")
+          .FullName() +
+      "/sessions/test-session-id");
   auto result = stub.StreamingRead(context, request);
   EXPECT_FALSE(result);
 }
