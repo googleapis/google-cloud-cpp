@@ -21,6 +21,7 @@ google_cloud_cpp_pubsub_hdrs = [
     "application_callback.h",
     "backoff_policy.h",
     "connection_options.h",
+    "internal/backwards_compatibility_type.h",
     "internal/batch_sink.h",
     "internal/batching_publisher_connection.h",
     "internal/create_channel.h",

@@ -44,6 +44,7 @@ add_library(
     backoff_policy.h
     connection_options.cc
     connection_options.h
+    internal/backwards_compatibility_type.h
     internal/batch_sink.h
     internal/batching_publisher_connection.cc
     internal/batching_publisher_connection.h

@@ -13,12 +13,21 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
+#include "google/cloud/pubsub/options.h"
 #include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
 namespace pubsub_testing {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+
+Options TestOptions() {
+  return Options{}
+      .set<pubsub::RetryPolicyOption>(
+          pubsub_testing::TestRetryPolicy()->clone())
+      .set<pubsub::BackoffPolicyOption>(
+          pubsub_testing::TestBackoffPolicy()->clone());
+}
 
 std::unique_ptr<pubsub::RetryPolicy const> TestRetryPolicy() {
   return absl::make_unique<pubsub::LimitedErrorCountRetryPolicy>(3);

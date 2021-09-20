@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,31 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_CREATE_CHANNEL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_CREATE_CHANNEL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BACKWARDS_COMPATIBILITY_TYPE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BACKWARDS_COMPATIBILITY_TYPE_H
 
-#include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/version.h"
-#include <grpcpp/grpcpp.h>
-#include <memory>
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-/// Create a gRPC channel with the right configuration.
-std::shared_ptr<grpc::Channel> CreateChannel(Options const& opts,
-                                             int channel_id);
-
-// TODO(#6306) - Remove this method when we are done with it.
-/// Create a gRPC channel with the right configuration.
-std::shared_ptr<grpc::Channel> CreateChannel(pubsub::ConnectionOptions options,
-                                             int channel_id);
+/**
+ * This is a non-constructible type. It is used to disambiguate overloaded
+ * methods that are passed an empty initializer list.
+ *
+ * See `MakeTopicAdminConnection()` for an example use case.
+ */
+struct BackwardsCompatibilityTypePleaseIgnore {
+  BackwardsCompatibilityTypePleaseIgnore() = delete;
+  BackwardsCompatibilityTypePleaseIgnore(
+      const BackwardsCompatibilityTypePleaseIgnore&) = delete;
+  BackwardsCompatibilityTypePleaseIgnore(
+      BackwardsCompatibilityTypePleaseIgnore&&) = delete;
+};
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_CREATE_CHANNEL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BACKWARDS_COMPATIBILITY_TYPE_H
