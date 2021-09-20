@@ -14,8 +14,14 @@
 
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/options.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/connection_options.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/user_agent_prefix.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <chrono>
+#include <limits>
 
 namespace google {
 namespace cloud {
@@ -24,7 +30,96 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ms = std::chrono::milliseconds;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using std::chrono::seconds;
+using ::testing::Contains;
+using ::testing::ElementsAre;
+using ::testing::HasSubstr;
+
+TEST(OptionsTest, SetEmulatorEnvOverrides) {
+  ScopedEnvironment emulator("PUBSUB_EMULATOR_HOST", "override-test-endpoint");
+  auto opts = DefaultCommonOptions(
+      Options{}
+          .set<EndpointOption>("ignored-endpoint")
+          .set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials()));
+  EXPECT_EQ("override-test-endpoint", opts.get<EndpointOption>());
+  EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
+            typeid(opts.get<GrpcCredentialOption>()));
+}
+
+TEST(OptionsTest, UnsetEmulatorEnv) {
+  ScopedEnvironment emulator("PUBSUB_EMULATOR_HOST", absl::nullopt);
+  auto opts = DefaultCommonOptions(
+      Options{}
+          .set<EndpointOption>("used-endpoint")
+          .set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials()));
+  EXPECT_EQ("used-endpoint", opts.get<EndpointOption>());
+  EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
+            typeid(opts.get<GrpcCredentialOption>()));
+}
+
+TEST(OptionsTest, CommonDefaults) {
+  auto opts = DefaultCommonOptions(Options{});
+  EXPECT_EQ("pubsub.googleapis.com", opts.get<EndpointOption>());
+  EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
+            typeid(opts.get<GrpcCredentialOption>()));
+  EXPECT_EQ(static_cast<int>(DefaultThreadCount()),
+            opts.get<GrpcNumChannelsOption>());
+  EXPECT_EQ(internal::DefaultTracingComponents(),
+            opts.get<TracingComponentsOption>());
+  EXPECT_EQ(internal::DefaultTracingOptions(),
+            opts.get<GrpcTracingOptionsOption>());
+  EXPECT_TRUE(opts.has<pubsub::RetryPolicyOption>());
+  EXPECT_TRUE(opts.has<pubsub::BackoffPolicyOption>());
+  EXPECT_EQ(DefaultThreadCount(),
+            opts.get<GrpcBackgroundThreadPoolSizeOption>());
+  EXPECT_THAT(opts.get<UserAgentProductsOption>(),
+              ElementsAre(internal::UserAgentPrefix()));
+}
+
+TEST(OptionsTest, CommonConstraints) {
+  auto opts = DefaultCommonOptions(Options{}.set<GrpcNumChannelsOption>(-1));
+  EXPECT_LT(0, opts.get<GrpcNumChannelsOption>());
+
+  opts = DefaultCommonOptions(Options{}.set<GrpcNumChannelsOption>(0));
+  EXPECT_LT(0, opts.get<GrpcNumChannelsOption>());
+}
+
+TEST(OptionsTest, UserSetCommonOptions) {
+  auto channel_args = grpc::ChannelArguments();
+  channel_args.SetString("test-key-1", "value-1");
+  auto opts = DefaultCommonOptions(
+      Options{}
+          .set<EndpointOption>("test-endpoint")
+          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+          .set<GrpcTracingOptionsOption>(
+              TracingOptions{}.SetOptions("single_line_mode=F"))
+          .set<TracingComponentsOption>({"test-component"})
+          .set<GrpcNumChannelsOption>(3)
+          .set<GrpcBackgroundThreadPoolSizeOption>(5)
+          .set<GrpcChannelArgumentsNativeOption>(channel_args)
+          .set<GrpcChannelArgumentsOption>({{"test-key-2", "value-2"}})
+          .set<UserAgentProductsOption>({"test-prefix"}));
+
+  EXPECT_EQ(typeid(grpc::InsecureChannelCredentials()),
+            typeid(opts.get<GrpcCredentialOption>()));
+  EXPECT_FALSE(opts.get<GrpcTracingOptionsOption>().single_line_mode());
+  EXPECT_THAT(opts.get<TracingComponentsOption>(), Contains("test-component"));
+  EXPECT_EQ(3U, opts.get<GrpcNumChannelsOption>());
+  EXPECT_EQ(5U, opts.get<GrpcBackgroundThreadPoolSizeOption>());
+
+  auto args = internal::MakeChannelArguments(opts);
+  auto key1 = internal::GetStringChannelArgument(args, "test-key-1");
+  ASSERT_TRUE(key1.has_value());
+  EXPECT_EQ("value-1", key1.value());
+  auto key2 = internal::GetStringChannelArgument(args, "test-key-2");
+  ASSERT_TRUE(key2.has_value());
+  EXPECT_EQ("value-2", key2.value());
+  auto s = internal::GetStringChannelArgument(
+      args, GRPC_ARG_PRIMARY_USER_AGENT_STRING);
+  ASSERT_TRUE(s.has_value());
+  EXPECT_THAT(*s, HasSubstr("test-prefix"));
+}
 
 TEST(OptionsTest, PublisherDefaults) {
   auto opts = DefaultPublisherOptions(Options{});
@@ -68,7 +163,12 @@ TEST(OptionsTest, SubscriberDefaults) {
   EXPECT_EQ(seconds(600), opts.get<pubsub::MaxDeadlineExtensionOption>());
   EXPECT_EQ(1000, opts.get<pubsub::MaxOutstandingMessagesOption>());
   EXPECT_EQ(100 * 1024 * 1024L, opts.get<pubsub::MaxOutstandingBytesOption>());
-  EXPECT_EQ(DefaultMaxConcurrency(), opts.get<pubsub::MaxConcurrencyOption>());
+  EXPECT_EQ(DefaultThreadCount(), opts.get<pubsub::MaxConcurrencyOption>());
+
+  auto* retry = dynamic_cast<pubsub::LimitedErrorCountRetryPolicy*>(
+      opts.get<pubsub::RetryPolicyOption>().get());
+  ASSERT_NE(nullptr, retry);
+  EXPECT_EQ((std::numeric_limits<int>::max)(), retry->maximum_failures());
 }
 
 TEST(OptionsTest, SubscriberConstraints) {
@@ -80,7 +180,7 @@ TEST(OptionsTest, SubscriberConstraints) {
 
   EXPECT_EQ(0, opts.get<pubsub::MaxOutstandingMessagesOption>());
   EXPECT_EQ(0, opts.get<pubsub::MaxOutstandingBytesOption>());
-  EXPECT_EQ(DefaultMaxConcurrency(), opts.get<pubsub::MaxConcurrencyOption>());
+  EXPECT_EQ(DefaultThreadCount(), opts.get<pubsub::MaxConcurrencyOption>());
 
   opts = DefaultSubscriberOptions(
       Options{}.set<pubsub::MaxDeadlineExtensionOption>(seconds(5)));

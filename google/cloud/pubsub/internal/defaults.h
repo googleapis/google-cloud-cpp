@@ -23,7 +23,9 @@ namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-std::size_t DefaultMaxConcurrency();
+std::size_t DefaultThreadCount();
+
+Options DefaultCommonOptions(Options opts);
 
 Options DefaultPublisherOptions(Options opts);
 
