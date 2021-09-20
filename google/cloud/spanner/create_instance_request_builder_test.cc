@@ -24,7 +24,6 @@ inline namespace SPANNER_CLIENT_NS {
 
 TEST(CreateInstanceRequestBuilder, DefaultValues) {
   Instance in(Project("test-project"), "test-instance");
-  std::string expected_name = in.FullName();
   std::string expected_config =
       in.project().FullName() + "/instanceConfigs/test-config";
   std::string const& expected_display_name = in.instance_id();
@@ -32,7 +31,7 @@ TEST(CreateInstanceRequestBuilder, DefaultValues) {
   auto req = builder.Build();
   EXPECT_EQ(in.project().FullName(), req.parent());
   EXPECT_EQ(in.instance_id(), req.instance_id());
-  EXPECT_EQ(expected_name, req.instance().name());
+  EXPECT_EQ(in.FullName(), req.instance().name());
   EXPECT_EQ(expected_config, req.instance().config());
   EXPECT_EQ(1, req.instance().node_count());
   EXPECT_EQ(0, req.instance().labels_size());
@@ -41,7 +40,6 @@ TEST(CreateInstanceRequestBuilder, DefaultValues) {
 
 TEST(CreateInstanceRequestBuilder, RvalueReference) {
   Instance in(Project("test-project"), "test-instance");
-  std::string expected_name = in.FullName();
   std::string expected_config =
       in.project().FullName() + "/instanceConfigs/test-config";
   std::string expected_display_name = "test-display-name";
@@ -53,7 +51,7 @@ TEST(CreateInstanceRequestBuilder, RvalueReference) {
                  .Build();
   EXPECT_EQ(in.project().FullName(), req.parent());
   EXPECT_EQ(in.instance_id(), req.instance_id());
-  EXPECT_EQ(expected_name, req.instance().name());
+  EXPECT_EQ(in.FullName(), req.instance().name());
   EXPECT_EQ(expected_config, req.instance().config());
   EXPECT_EQ(1, req.instance().node_count());
   EXPECT_EQ(1, req.instance().labels_size());
@@ -63,7 +61,6 @@ TEST(CreateInstanceRequestBuilder, RvalueReference) {
 
 TEST(CreateInstanceRequestBuilder, Lvalue) {
   Instance in(Project("test-project"), "test-instance");
-  std::string expected_name = in.FullName();
   std::string expected_config =
       in.project().FullName() + "/instanceConfigs/test-config";
   std::string expected_display_name = "test-display-name";
@@ -75,7 +72,7 @@ TEST(CreateInstanceRequestBuilder, Lvalue) {
                  .Build();
   EXPECT_EQ(in.project().FullName(), req.parent());
   EXPECT_EQ(in.instance_id(), req.instance_id());
-  EXPECT_EQ(expected_name, req.instance().name());
+  EXPECT_EQ(in.FullName(), req.instance().name());
   EXPECT_EQ(expected_config, req.instance().config());
   EXPECT_EQ(500, req.instance().processing_units());
   EXPECT_EQ(1, req.instance().labels_size());
