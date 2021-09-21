@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "schema_admin_connection.h"
+#include "google/cloud/pubsub/schema_admin_connection.h"
 #include "google/cloud/pubsub/internal/default_retry_policies.h"
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/schema_logging.h"
