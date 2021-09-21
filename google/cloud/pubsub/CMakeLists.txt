@@ -44,7 +44,6 @@ add_library(
     backoff_policy.h
     connection_options.cc
     connection_options.h
-    internal/backwards_compatibility_type.h
     internal/batch_sink.h
     internal/batching_publisher_connection.cc
     internal/batching_publisher_connection.h
@@ -60,6 +59,7 @@ add_library(
     internal/emulator_overrides.h
     internal/flow_controlled_publisher_connection.cc
     internal/flow_controlled_publisher_connection.h
+    internal/non_constructible.h
     internal/ordering_key_publisher_connection.cc
     internal/ordering_key_publisher_connection.h
     internal/publisher_logging.cc

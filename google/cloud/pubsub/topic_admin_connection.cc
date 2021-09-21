@@ -287,8 +287,7 @@ ListTopicSnapshotsRange TopicAdminConnection::ListTopicSnapshots(
 }
 
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
-    std::initializer_list<
-        pubsub_internal::BackwardsCompatibilityTypePleaseIgnore>) {
+    std::initializer_list<pubsub_internal::NonConstructible>) {
   return MakeTopicAdminConnection();
 }
 

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BACKWARDS_COMPATIBILITY_TYPE_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BACKWARDS_COMPATIBILITY_TYPE_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_NON_CONSTRUCTIBLE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_NON_CONSTRUCTIBLE_H
 
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/options.h"
@@ -24,17 +24,16 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
- * This is a non-constructible type. It is used to disambiguate overloaded
- * methods that are passed an empty initializer list.
+ * A type that is not constructible.
  *
- * See `MakeTopicAdminConnection()` for an example use case.
+ * This type can be used to disallow the instantiation of an object. We might
+ * use it, for example, to disambiguate overloaded methods that are passed an
+ * empty initializer list.
  */
-struct BackwardsCompatibilityTypePleaseIgnore {
-  BackwardsCompatibilityTypePleaseIgnore() = delete;
-  BackwardsCompatibilityTypePleaseIgnore(
-      const BackwardsCompatibilityTypePleaseIgnore&) = delete;
-  BackwardsCompatibilityTypePleaseIgnore(
-      BackwardsCompatibilityTypePleaseIgnore&&) = delete;
+struct NonConstructible {
+  NonConstructible() = delete;
+  NonConstructible(const NonConstructible&) = delete;
+  NonConstructible(NonConstructible&&) = delete;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
@@ -42,4 +41,4 @@ struct BackwardsCompatibilityTypePleaseIgnore {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BACKWARDS_COMPATIBILITY_TYPE_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_NON_CONSTRUCTIBLE_H

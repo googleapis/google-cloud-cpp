@@ -17,7 +17,7 @@
 
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
-#include "google/cloud/pubsub/internal/backwards_compatibility_type.h"
+#include "google/cloud/pubsub/internal/non_constructible.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/subscription.h"
@@ -162,13 +162,14 @@ class TopicAdminConnection {
 /**
  * Creates a new `TopicAdminConnection` object to work with `TopicAdminClient`.
  *
- * @warning This method exists solely for backwards compatibility. It prevents
- *     existing code, which calls `MakeTopicAdminConnection({})` from breaking,
- *     due to ambiguity. Please use `MakeTopicAdminConnection()` instead.
+ * @note This method exists solely for backwards compatibility. It prevents
+ *     existing code that calls `MakeTopicAdminConnection({})` from breaking,
+ *     due to ambiguity.
+ *
+ * @deprecated Please use `MakeTopicAdminConnection()` instead.
  */
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
-    std::initializer_list<
-        pubsub_internal::BackwardsCompatibilityTypePleaseIgnore>);
+    std::initializer_list<pubsub_internal::NonConstructible>);
 
 /**
  * Creates a new `TopicAdminConnection` object to work with `TopicAdminClient`.
@@ -221,6 +222,9 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
  *     RPCs attempted.
  * @param backoff_policy controls the backoff behavior between retry attempts,
  *     typically some form of exponential backoff with jitter.
+ *
+ * @deprecated Please use the `MakeTopicAdminConnection` method that accepts
+ *     `google::cloud::Options` instead.
  */
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
     ConnectionOptions const& options,
