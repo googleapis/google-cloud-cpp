@@ -104,7 +104,7 @@ TEST_F(BackupTest, BackupTest) {
   auto create_time =
       MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
 
-  auto expire_time = MakeTimestamp(create_time + absl::Hours(7)).value();
+  auto expire_time = MakeTimestamp(create_time + absl::Hours(12)).value();
   auto backup_future =
       database_admin_client_.CreateBackup(db, db.database_id(), expire_time);
 
@@ -189,7 +189,7 @@ TEST_F(BackupTest, BackupTest) {
       1, std::count(backup_names.begin(), backup_names.end(), backup->name()))
       << "Backup " << backup->name() << " not found in the backup list.";
 
-  auto new_expire_time = MakeTimestamp(create_time + absl::Hours(8)).value();
+  auto new_expire_time = MakeTimestamp(create_time + absl::Hours(16)).value();
   auto updated_backup =
       database_admin_client_.UpdateBackupExpireTime(*backup, new_expire_time);
   EXPECT_STATUS_OK(updated_backup);
@@ -256,7 +256,7 @@ TEST_F(BackupTest, CreateBackupWithVersionTime) {
     EXPECT_LT(version_times[0], version_times[1]);
     // Create a backup when Counters[version_key] == 0.
     auto version_time = version_times[0];
-    auto expire_time = MakeTimestamp(create_time + absl::Hours(8)).value();
+    auto expire_time = MakeTimestamp(create_time + absl::Hours(12)).value();
     auto backup =
         database_admin_client_
             .CreateBackup(db, db.database_id(), expire_time, version_time)
@@ -363,7 +363,7 @@ TEST_F(BackupTest, CreateBackupWithExpiredVersionTime) {
       MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
   // version_time too far in the past (outside the version_retention_period).
   auto version_time = MakeTimestamp(create_time - absl::Hours(2)).value();
-  auto expire_time = MakeTimestamp(create_time + absl::Hours(8)).value();
+  auto expire_time = MakeTimestamp(create_time + absl::Hours(12)).value();
   auto backup =
       database_admin_client_
           .CreateBackup(db, db.database_id(), expire_time, version_time)
@@ -401,7 +401,7 @@ TEST_F(BackupTest, CreateBackupWithFutureVersionTime) {
       MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
   // version_time in the future.
   auto version_time = MakeTimestamp(create_time + absl::Hours(2)).value();
-  auto expire_time = MakeTimestamp(create_time + absl::Hours(8)).value();
+  auto expire_time = MakeTimestamp(create_time + absl::Hours(12)).value();
   auto backup =
       database_admin_client_
           .CreateBackup(db, db.database_id(), expire_time, version_time)
@@ -455,7 +455,7 @@ TEST_F(BackupTest, BackupTestWithCMEK) {
 
   auto create_time =
       MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
-  auto expire_time = MakeTimestamp(create_time + absl::Hours(7)).value();
+  auto expire_time = MakeTimestamp(create_time + absl::Hours(12)).value();
   auto backup = database_admin_client_
                     .CreateBackup(db, db.database_id(), expire_time,
                                   absl::nullopt, encryption_config)
