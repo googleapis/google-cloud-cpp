@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
+#include "google/cloud/pubsub/internal/non_constructible.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/snapshot.h"
@@ -25,6 +26,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
+#include <initializer_list>
 #include <memory>
 #include <string>
 
@@ -61,13 +63,12 @@ using ListSnapshotsRange =
  * A connection to Cloud Pub/Sub for subscription-related administrative
  * operations.
  *
- * This interface defines pure-virtual methods for each of the user-facing
- * overload sets in `SubscriberAdminClient`. That is, all of
- * `SubscriberAdminClient`'s `CreateSubscription()` overloads will forward to
- * the one pure-virtual `CreateSubscription()` method declared in this
- * interface, and similar for `SubscriberClient`'s other methods. This allows
- * users to inject custom behavior (e.g., with a Google Mock object) in a
- * `SubscriberClient` object for use in their own tests.
+ * This interface defines pure-virtual functions for each of the user-facing
+ * overload sets in `SubscriptionAdminClient`. That is, all of
+ * `SubscriptionAdminClient` overloads will forward to the one pure-virtual
+ * function declared in this interface. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) in a `SubscriptionAdminClient`
+ * object for use in their own tests.
  *
  * To create a concrete instance that connects you to the real Cloud Pub/Sub
  * service, see `MakeSubscriptionAdminConnection()`.
@@ -185,16 +186,57 @@ class SubscriptionAdminConnection {
 };
 
 /**
- * Returns an SubscriberConnection object to work with Cloud Pub/Sub subscriber
- * APIs.
+ * Creates a new `SubscriptionAdminConnection` object to work with
+ * `SubscriptionAdminClient`.
  *
- * The `SubscriberConnection` class is not intended for direct use in
- * applications, it is provided for applications wanting to mock the
- * `SubscriberClient` behavior in their tests.
+ * @note This function exists solely for backwards compatibility. It prevents
+ *     existing code that calls `MakeSubscriptionAdminConnection({})` from
+ *     breaking, due to ambiguity.
+ *
+ * @deprecated Please use `MakeSubscriptionAdminConnection()` instead.
+ */
+std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
+    std::initializer_list<pubsub_internal::NonConstructible>);
+
+/**
+ * Creates a new `SubscriptionAdminConnection` object to work with
+ * `SubscriptionAdminClient`.
+ *
+ * The `SubscriptionAdminConnection` class is provided for applications wanting
+ * to mock the `SubscriptionAdminClient` behavior in their tests. It is not
+ * intended for direct use.
  *
  * @par Performance
  * Creating a new `SubscriptionAdminConnection` is relatively expensive. This
- * typically initiate connections to the service, and therefore these objects
+ * typically initiates connections to the service, and therefore these objects
+ * should be shared and reused when possible. Note that gRPC reuses existing OS
+ * resources (sockets) whenever possible, so applications may experience better
+ * performance on the second (and subsequent) calls to this function with the
+ * same `Options` from `GrpcOptionList` and `CommonOptionList`. However, this
+ * behavior is not guaranteed and applications should not rely on it.
+ *
+ * @see `SubscriptionAdminClient`
+ *
+ * @param opts The options to use for this call. Expected options are any of
+ *     the types in the following option lists.
+ *       - `google::cloud::CommonOptionList`
+ *       - `google::cloud::GrpcOptionList`
+ *       - `google::cloud::pubsub::PolicyOptionList`
+ */
+std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
+    Options opts = {});
+
+/**
+ * Creates a new `SubscriptionAdminConnection` object to work with
+ * `SubscriptionAdminClient`.
+ *
+ * The `SubscriptionAdminConnection` class is not intended for direct use in
+ * applications, it is provided for applications wanting to mock the
+ * `SubscriptionAdminClient` behavior in their tests.
+ *
+ * @par Performance
+ * Creating a new `SubscriptionAdminConnection` is relatively expensive. This
+ * typically initiates connections to the service, and therefore these objects
  * should be shared and reused when possible. Note that gRPC reuses existing OS
  * resources (sockets) whenever possible, so applications may experience better
  * performance on the second (and subsequent) calls to this function with the
@@ -203,15 +245,18 @@ class SubscriptionAdminConnection {
  *
  * @see `SubscriberConnection`
  *
- * @param options (optional) configure the `SubscriberConnection` created by
- *     this function.
+ * @param options (optional) configure the `SubscriptionAdminConnection` created
+ * by this function.
  * @param retry_policy control for how long (or how many times) are retryable
  *     RPCs attempted.
  * @param backoff_policy controls the backoff behavior between retry attempts,
  *     typically some form of exponential backoff with jitter.
+ *
+ * @deprecated Please use the `MakeSubscriptionAdminConnection` function that
+ *     accepts `google::cloud::Options` instead.
  */
 std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
-    ConnectionOptions const& options = ConnectionOptions(),
+    ConnectionOptions const& option,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy = {},
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy = {});
 
@@ -222,11 +267,8 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::shared_ptr<pubsub::SubscriptionAdminConnection>
-MakeSubscriptionAdminConnection(
-    pubsub::ConnectionOptions const& options,
-    std::shared_ptr<SubscriberStub> stub,
-    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
+MakeSubscriptionAdminConnection(Options const& opts,
+                                std::shared_ptr<SubscriberStub> stub);
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
