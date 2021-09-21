@@ -297,7 +297,8 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(Options opts) {
   opts = pubsub_internal::DefaultCommonOptions(std::move(opts));
   auto stub =
       pubsub_internal::CreateDefaultPublisherStub(opts, /*channel_id=*/0);
-  return pubsub_internal::MakeTopicAdminConnection(opts, std::move(stub));
+  return pubsub_internal::MakeTopicAdminConnection(std::move(opts),
+                                                   std::move(stub));
 }
 
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
