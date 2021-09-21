@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/flow_controlled_publisher_connection.h"
+#include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/mocks/mock_publisher_connection.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -47,10 +48,12 @@ TEST(FlowControlledPublisherConnection, FullPublisherIgnored) {
   EXPECT_CALL(*mock, ResumePublish).Times(1);
 
   auto under_test = FlowControlledPublisherConnection::Create(
-      pubsub::PublisherOptions{}
-          .set_maximum_pending_bytes(128 * 1024)
-          .set_maximum_pending_messages(8)
-          .set_full_publisher_ignored(),
+      DefaultPublisherOptions(
+          Options{}
+              .set<pubsub::MaxPendingBytesOption>(128 * 1024)
+              .set<pubsub::MaxPendingMessagesOption>(8)
+              .set<pubsub::FullPublisherActionOption>(
+                  pubsub::FullPublisherAction::kIgnored)),
       mock);
   under_test->Flush({});
   under_test->ResumePublish({"test-ordering-key"});
@@ -74,9 +77,11 @@ TEST(FlowControlledPublisherConnection, RejectOnBytes) {
           });
 
   auto under_test = FlowControlledPublisherConnection::Create(
-      pubsub::PublisherOptions{}
-          .set_full_publisher_rejects()
-          .set_maximum_pending_bytes(128 * 1024),
+      DefaultPublisherOptions(
+          Options{}
+              .set<pubsub::MaxPendingBytesOption>(128 * 1024)
+              .set<pubsub::FullPublisherActionOption>(
+                  pubsub::FullPublisherAction::kRejects)),
       mock);
   auto m0 = under_test->Publish({MakeTestMessage(64 * 1024)});
   auto m1 = under_test->Publish({MakeTestMessage(64 * 1024)});
@@ -99,10 +104,12 @@ TEST(FlowControlledPublisherConnection, RejectOnMessages) {
           });
 
   auto under_test = FlowControlledPublisherConnection::Create(
-      pubsub::PublisherOptions{}
-          .set_full_publisher_rejects()
-          .set_maximum_pending_messages(4)
-          .set_maximum_pending_bytes(128 * 1024),
+      DefaultPublisherOptions(
+          Options{}
+              .set<pubsub::MaxPendingBytesOption>(128 * 1024)
+              .set<pubsub::MaxPendingMessagesOption>(4)
+              .set<pubsub::FullPublisherActionOption>(
+                  pubsub::FullPublisherAction::kRejects)),
       mock);
 
   auto m0 = under_test->Publish({MakeTestMessage(128)});
@@ -135,10 +142,11 @@ TEST(FlowControlledPublisherConnection, AcceptsAtLeastOne) {
           });
 
   auto under_test = FlowControlledPublisherConnection::Create(
-      pubsub::PublisherOptions{}
-          .set_full_publisher_rejects()
-          .set_maximum_pending_messages(0)
-          .set_maximum_pending_bytes(0),
+      DefaultPublisherOptions(Options{}
+                                  .set<pubsub::MaxPendingBytesOption>(0)
+                                  .set<pubsub::MaxPendingMessagesOption>(0)
+                                  .set<pubsub::FullPublisherActionOption>(
+                                      pubsub::FullPublisherAction::kRejects)),
       mock);
 
   auto m0 = under_test->Publish({MakeTestMessage(128)});
@@ -156,7 +164,7 @@ auto constexpr kExpectedMaxMessages = 4;
 auto constexpr kExpectedMaxBytes = kExpectedMaxMessages * kMessageSize;
 
 std::shared_ptr<FlowControlledPublisherConnection> TestFlowControl(
-    pubsub::PublisherOptions options) {
+    Options opts) {
   AsyncSequencer<StatusOr<std::string>> publish;
   auto mock = std::make_shared<MockPublisherConnection>();
   EXPECT_CALL(*mock, Publish)
@@ -166,7 +174,7 @@ std::shared_ptr<FlowControlledPublisherConnection> TestFlowControl(
           });
 
   auto under_test =
-      FlowControlledPublisherConnection::Create(std::move(options), mock);
+      FlowControlledPublisherConnection::Create(std::move(opts), mock);
 
   auto publisher_task = [&](int iterations) {
     for (int i = 0; i != iterations; ++i) {
@@ -189,18 +197,20 @@ std::shared_ptr<FlowControlledPublisherConnection> TestFlowControl(
 }
 
 TEST(FlowControlledPublisherConnection, BlockOnBytes) {
-  auto const actual =
-      TestFlowControl(pubsub::PublisherOptions{}
-                          .set_full_publisher_blocks()
-                          .set_maximum_pending_bytes(kExpectedMaxBytes));
+  auto const actual = TestFlowControl(DefaultPublisherOptions(
+      Options{}
+          .set<pubsub::FullPublisherActionOption>(
+              pubsub::FullPublisherAction::kBlocks)
+          .set<pubsub::MaxPendingBytesOption>(kExpectedMaxBytes)));
   EXPECT_LE(actual->max_pending_bytes(), kExpectedMaxBytes);
 }
 
 TEST(FlowControlledPublisherConnection, BlockOnMessages) {
-  auto const actual =
-      TestFlowControl(pubsub::PublisherOptions{}
-                          .set_full_publisher_blocks()
-                          .set_maximum_pending_messages(kExpectedMaxMessages));
+  auto const actual = TestFlowControl(DefaultPublisherOptions(
+      Options{}
+          .set<pubsub::FullPublisherActionOption>(
+              pubsub::FullPublisherAction::kBlocks)
+          .set<pubsub::MaxPendingMessagesOption>(kExpectedMaxMessages)));
   EXPECT_LE(actual->max_pending_messages(), kExpectedMaxMessages);
 }
 
@@ -217,7 +227,7 @@ TEST(FlowControlledPublisherConnection, NoDeadlockOnPublish) {
       });
 
   auto under_test = FlowControlledPublisherConnection::Create(
-      pubsub::PublisherOptions{}, mock);
+      DefaultPublisherOptions(Options{}), mock);
 
   auto p0 = under_test->Publish({MakeTestMessage(kMessageSize)});
   auto p1 = under_test->Publish({MakeTestMessage(kMessageSize)});

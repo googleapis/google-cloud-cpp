@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
+#include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/testing/mock_batch_sink.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/random.h"
@@ -87,9 +88,10 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
   auto const ordering_key = std::string{};
   auto publisher = BatchingPublisherConnection::Create(
       topic,
-      pubsub::PublisherOptions{}
-          .set_maximum_batch_message_count(4)
-          .set_maximum_hold_time(kMaxHoldTime),
+      DefaultPublisherOptions(
+          Options{}
+              .set<pubsub::MaxBatchMessagesOption>(4)
+              .set<pubsub::MaxHoldTimeOption>(kMaxHoldTime)),
       ordering_key, mock, background.cq());
 
   // We expect the responses to be satisfied in the context of the completion
@@ -149,10 +151,11 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageCount) {
   auto const ordering_key = std::string{};
   auto publisher = BatchingPublisherConnection::Create(
       topic,
-      pubsub::PublisherOptions{}
-          .set_maximum_batch_message_count(2)
-          .set_maximum_hold_time(kMaxHoldTime)
-          .set_maximum_batch_bytes(kMaxBytes),
+      DefaultPublisherOptions(
+          Options{}
+              .set<pubsub::MaxBatchMessagesOption>(2)
+              .set<pubsub::MaxBatchBytesOption>(kMaxBytes)
+              .set<pubsub::MaxHoldTimeOption>(kMaxHoldTime)),
       ordering_key, mock, background.cq());
   auto r0 =
       publisher
@@ -203,10 +206,11 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
   auto const ordering_key = std::string{};
   auto publisher = BatchingPublisherConnection::Create(
       topic,
-      pubsub::PublisherOptions{}
-          .set_maximum_batch_message_count(4)
-          .set_maximum_batch_bytes(max_bytes)
-          .set_maximum_hold_time(kMaxHoldTime),
+      DefaultPublisherOptions(
+          Options{}
+              .set<pubsub::MaxBatchMessagesOption>(4)
+              .set<pubsub::MaxBatchBytesOption>(max_bytes)
+              .set<pubsub::MaxHoldTimeOption>(kMaxHoldTime)),
       ordering_key, mock, background.cq());
   auto r0 = publisher->Publish({m0}).then([](future<StatusOr<std::string>> f) {
     auto r = f.get();
@@ -261,9 +265,10 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSizeLargeMessageBreak) {
   auto const ordering_key = std::string{};
   auto publisher = BatchingPublisherConnection::Create(
       topic,
-      pubsub::PublisherOptions{}
-          .set_maximum_batch_message_count(100)
-          .set_maximum_batch_bytes(kBatchLimit),
+      DefaultPublisherOptions(
+          Options{}
+              .set<pubsub::MaxBatchMessagesOption>(100)
+              .set<pubsub::MaxBatchBytesOption>(kBatchLimit)),
       ordering_key, mock, cq);
   std::vector<future<Status>> results;
   for (int i = 0; i != 3; ++i) {
@@ -338,9 +343,10 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSizeOversizedSingleton) {
   auto const ordering_key = std::string{};
   auto publisher = BatchingPublisherConnection::Create(
       topic,
-      pubsub::PublisherOptions{}
-          .set_maximum_batch_message_count(100)
-          .set_maximum_batch_bytes(kBatchLimit),
+      DefaultPublisherOptions(
+          Options{}
+              .set<pubsub::MaxBatchMessagesOption>(100)
+              .set<pubsub::MaxBatchBytesOption>(kBatchLimit)),
       ordering_key, mock, cq);
   std::vector<future<Status>> results;
   auto publish_single = [&] {
@@ -404,9 +410,10 @@ TEST(BatchingPublisherConnectionTest, BatchTorture) {
   auto const ordering_key = std::string{};
   auto publisher = BatchingPublisherConnection::Create(
       topic,
-      pubsub::PublisherOptions{}
-          .set_maximum_batch_message_count(kMaxMessages)
-          .set_maximum_batch_bytes(kMaxPayload),
+      DefaultPublisherOptions(
+          Options{}
+              .set<pubsub::MaxBatchMessagesOption>(kMaxMessages)
+              .set<pubsub::MaxBatchBytesOption>(kMaxPayload)),
       ordering_key, mock, background.cq());
 
   auto worker = [&](int iterations) {
@@ -455,9 +462,10 @@ TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
   CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
       topic,
-      pubsub::PublisherOptions{}
-          .set_maximum_hold_time(std::chrono::milliseconds(5))
-          .set_maximum_batch_message_count(4),
+      DefaultPublisherOptions(
+          Options{}
+              .set<pubsub::MaxBatchMessagesOption>(4)
+              .set<pubsub::MaxHoldTimeOption>(std::chrono::milliseconds(5))),
       /*ordering_key=*/{}, mock, cq);
   auto r0 =
       publisher
@@ -519,9 +527,10 @@ TEST(BatchingPublisherConnectionTest, BatchByFlush) {
       topic,
       // Set the batching constraints to be so generous that they are *not*
       // triggered
-      pubsub::PublisherOptions{}
-          .set_maximum_hold_time(std::chrono::milliseconds(5))
-          .set_maximum_batch_message_count(4),
+      DefaultPublisherOptions(
+          Options{}
+              .set<pubsub::MaxBatchMessagesOption>(4)
+              .set<pubsub::MaxHoldTimeOption>(std::chrono::milliseconds(5))),
       ordering_key, mock, cq);
 
   std::vector<future<void>> results;
@@ -577,7 +586,8 @@ TEST(BatchingPublisherConnectionTest, HandleError) {
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads bg;
   auto const ordering_key = std::string{};
   auto publisher = BatchingPublisherConnection::Create(
-      topic, pubsub::PublisherOptions{}.set_maximum_batch_message_count(2),
+      topic,
+      DefaultPublisherOptions(Options{}.set<pubsub::MaxBatchMessagesOption>(2)),
       ordering_key, mock, bg.cq());
   auto r0 = publisher->Publish(
       {pubsub::MessageBuilder{}.SetData("test-data-0").Build()});
@@ -602,7 +612,8 @@ TEST(BatchingPublisherConnectionTest, HandleInvalidResponse) {
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
   auto publisher = BatchingPublisherConnection::Create(
-      topic, pubsub::PublisherOptions{}.set_maximum_batch_message_count(2),
+      topic,
+      DefaultPublisherOptions(Options{}.set<pubsub::MaxBatchMessagesOption>(2)),
       "test-ordering-key", mock, background.cq());
   auto r0 = publisher->Publish(
       {pubsub::MessageBuilder{}.SetData("test-data-0").Build()});
@@ -635,7 +646,8 @@ TEST(BatchingPublisherConnectionTest, HandleErrorWithOrderingPartialBatch) {
   google::cloud::CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
       topic,
-      pubsub::PublisherOptions{}.set_maximum_batch_message_count(kBatchSize),
+      DefaultPublisherOptions(
+          Options{}.set<pubsub::MaxBatchMessagesOption>(kBatchSize)),
       ordering_key, mock, cq);
   std::vector<future<StatusOr<std::string>>> results;
   // Create a full batch (by message count) and a partial batch.
@@ -693,9 +705,10 @@ TEST(BatchingPublisherConnectionTest, HandleErrorWithOrderingResume) {
   google::cloud::CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
       topic,
-      pubsub::PublisherOptions{}
-          .set_maximum_batch_message_count(kBatchSize)
-          .set_maximum_hold_time(kMaxHoldTime),
+      DefaultPublisherOptions(
+          Options{}
+              .set<pubsub::MaxBatchMessagesOption>(kBatchSize)
+              .set<pubsub::MaxHoldTimeOption>(kMaxHoldTime)),
       ordering_key, mock, cq);
   std::vector<future<StatusOr<std::string>>> results;
   // Create a full batch (by size).

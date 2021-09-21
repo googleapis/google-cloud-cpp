@@ -51,7 +51,7 @@ struct Batch {
 
 future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
     PublishParams p) {
-  auto const bytes = pubsub_internal::MessageSize(p.message);
+  auto const bytes = MessageSize(p.message);
   std::unique_lock<std::mutex> lk(mu_);
   do {
     if (!corked_on_status_.ok()) return CorkedError();
@@ -59,9 +59,9 @@ future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
     // otherwise the message may be dropped.
     if (waiters_.empty()) break;
     auto const has_bytes_capacity =
-        current_bytes_ + bytes <= options_.maximum_batch_bytes();
+        current_bytes_ + bytes <= opts_.get<pubsub::MaxBatchBytesOption>();
     auto const has_messages_capacity =
-        waiters_.size() < options_.maximum_batch_message_count();
+        waiters_.size() < opts_.get<pubsub::MaxBatchMessagesOption>();
     // If there is enough room just add the message below.
     if (has_bytes_capacity && has_messages_capacity) break;
     // We need to flush the existing batch, that will release the lock, and then
@@ -70,7 +70,7 @@ future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
     lk = std::unique_lock<std::mutex>(mu_);
   } while (true);
 
-  auto proto = pubsub_internal::ToProto(std::move(p.message));
+  auto proto = ToProto(std::move(p.message));
   waiters_.emplace_back();
   auto f = waiters_.back().get_future();
 
@@ -126,8 +126,9 @@ void BatchingPublisherConnection::HandleError(Status const& status) {
 
 void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
   auto const too_many_messages =
-      waiters_.size() >= options_.maximum_batch_message_count();
-  auto const too_many_bytes = current_bytes_ >= options_.maximum_batch_bytes();
+      waiters_.size() >= opts_.get<pubsub::MaxBatchMessagesOption>();
+  auto const too_many_bytes =
+      current_bytes_ >= opts_.get<pubsub::MaxBatchBytesOption>();
   if (too_many_messages || too_many_bytes) {
     FlushImpl(std::move(lk));
     return;
@@ -137,7 +138,7 @@ void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
   // to set it again.
   if (pending_.messages_size() != 1) return;
   auto const expiration = batch_expiration_ =
-      std::chrono::system_clock::now() + options_.maximum_hold_time();
+      std::chrono::system_clock::now() + opts_.get<pubsub::MaxHoldTimeOption>();
   lk.unlock();
   // We need a weak_ptr<> because this class owns the completion queue,
   // creating a lambda with a shared_ptr<> owning this class would create a
@@ -186,7 +187,7 @@ void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
   request.Swap(&pending_);
   // Reserve enough capacity for the next batch.
   pending_.mutable_messages()->Reserve(
-      static_cast<int>(options_.maximum_batch_message_count()));
+      static_cast<int>(opts_.get<pubsub::MaxBatchMessagesOption>()));
   current_bytes_ = 0;
   lk.unlock();
 

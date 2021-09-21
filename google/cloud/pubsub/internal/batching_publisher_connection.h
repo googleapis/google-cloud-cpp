@@ -34,11 +34,10 @@ class BatchingPublisherConnection
       public std::enable_shared_from_this<BatchingPublisherConnection> {
  public:
   static std::shared_ptr<BatchingPublisherConnection> Create(
-      pubsub::Topic topic, pubsub::PublisherOptions options,
-      std::string ordering_key, std::shared_ptr<BatchSink> sink,
-      google::cloud::CompletionQueue cq) {
+      pubsub::Topic topic, Options opts, std::string ordering_key,
+      std::shared_ptr<BatchSink> sink, CompletionQueue cq) {
     return std::shared_ptr<BatchingPublisherConnection>(
-        new BatchingPublisherConnection(std::move(topic), std::move(options),
+        new BatchingPublisherConnection(std::move(topic), std::move(opts),
                                         std::move(ordering_key),
                                         std::move(sink), std::move(cq)));
   }
@@ -50,14 +49,13 @@ class BatchingPublisherConnection
   void HandleError(Status const& status);
 
  private:
-  explicit BatchingPublisherConnection(pubsub::Topic topic,
-                                       pubsub::PublisherOptions options,
+  explicit BatchingPublisherConnection(pubsub::Topic topic, Options opts,
                                        std::string ordering_key,
                                        std::shared_ptr<BatchSink> sink,
-                                       google::cloud::CompletionQueue cq)
+                                       CompletionQueue cq)
       : topic_(std::move(topic)),
         topic_full_name_(topic_.FullName()),
-        options_(std::move(options)),
+        opts_(std::move(opts)),
         ordering_key_(std::move(ordering_key)),
         sink_(std::move(sink)),
         cq_(std::move(cq)) {}
@@ -71,10 +69,10 @@ class BatchingPublisherConnection
 
   pubsub::Topic const topic_;
   std::string const topic_full_name_;
-  pubsub::PublisherOptions const options_;
+  Options const opts_;
   std::string const ordering_key_;
   std::shared_ptr<BatchSink> const sink_;
-  google::cloud::CompletionQueue cq_;
+  CompletionQueue cq_;
 
   std::mutex mu_;
   std::vector<promise<StatusOr<std::string>>> waiters_;

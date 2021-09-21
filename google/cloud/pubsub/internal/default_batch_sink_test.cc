@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/default_batch_sink.h"
+#include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/pubsub/topic.h"
@@ -32,6 +33,13 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
 using ::testing::HasSubstr;
 using ::testing::Unused;
+
+std::shared_ptr<DefaultBatchSink> MakeTestBatchSink(
+    std::shared_ptr<PublisherStub> mock, CompletionQueue cq) {
+  return DefaultBatchSink::Create(
+      std::move(mock), std::move(cq),
+      DefaultPublisherOptions(pubsub_testing::MakeTestOptions()));
+}
 
 pubsub::Topic TestTopic() {
   return pubsub::Topic("test-project", "test-topic");
@@ -69,9 +77,7 @@ TEST(DefaultBatchSinkTest, BasicWithRetry) {
       });
 
   internal::AutomaticallyCreatedBackgroundThreads background;
-  auto uut = DefaultBatchSink::Create(mock, background.cq(),
-                                      pubsub_testing::TestRetryPolicy(),
-                                      pubsub_testing::TestBackoffPolicy());
+  auto uut = MakeTestBatchSink(mock, background.cq());
 
   auto response = uut->AsyncPublish(MakeRequest(3)).get();
   ASSERT_THAT(response, IsOk());
@@ -88,9 +94,7 @@ TEST(DefaultBatchSinkTest, PermanentError) {
   });
 
   internal::AutomaticallyCreatedBackgroundThreads background;
-  auto uut = DefaultBatchSink::Create(mock, background.cq(),
-                                      pubsub_testing::TestRetryPolicy(),
-                                      pubsub_testing::TestBackoffPolicy());
+  auto uut = MakeTestBatchSink(mock, background.cq());
 
   auto response = uut->AsyncPublish(MakeRequest(3)).get();
   ASSERT_THAT(response,
@@ -107,9 +111,7 @@ TEST(DefaultBatchSinkTest, TooManyTransients) {
       });
 
   internal::AutomaticallyCreatedBackgroundThreads background;
-  auto uut = DefaultBatchSink::Create(mock, background.cq(),
-                                      pubsub_testing::TestRetryPolicy(),
-                                      pubsub_testing::TestBackoffPolicy());
+  auto uut = MakeTestBatchSink(mock, background.cq());
 
   auto response = uut->AsyncPublish(MakeRequest(3)).get();
   ASSERT_THAT(response,
