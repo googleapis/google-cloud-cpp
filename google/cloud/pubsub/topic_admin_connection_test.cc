@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/topic_admin_connection.h"
+#include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/pubsub/topic_builder.h"
@@ -29,13 +30,19 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-using ::google::cloud::pubsub_testing::TestBackoffPolicy;
-using ::google::cloud::pubsub_testing::TestRetryPolicy;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
+
+std::shared_ptr<pubsub::TopicAdminConnection> MakeTestTopicAdminConnection(
+    std::shared_ptr<pubsub_internal::PublisherStub> mock, Options opts = {}) {
+  opts = pubsub_internal::DefaultCommonOptions(
+      pubsub_testing::MakeTestOptions(std::move(opts)));
+  return pubsub_internal::MakeTopicAdminConnection(std::move(opts),
+                                                   std::move(mock));
+}
 
 TEST(TopicAdminConnectionTest, Create) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
@@ -49,8 +56,7 @@ TEST(TopicAdminConnectionTest, Create) {
             return make_status_or(request);
           });
 
-  auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
-      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
+  auto topic_admin = MakeTestTopicAdminConnection(mock);
   auto const expected = TopicBuilder(topic).BuildCreateRequest();
   auto response = topic_admin->CreateTopic({expected});
   ASSERT_STATUS_OK(response);
@@ -72,8 +78,7 @@ TEST(TopicAdminConnectionTest, Metadata) {
         return make_status_or(request);
       });
 
-  auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
-      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
+  auto topic_admin = MakeTestTopicAdminConnection(mock);
   auto const expected = TopicBuilder(topic).BuildCreateRequest();
   auto response = topic_admin->CreateTopic({expected});
   ASSERT_STATUS_OK(response);
@@ -94,8 +99,7 @@ TEST(TopicAdminConnectionTest, Get) {
         return make_status_or(expected);
       });
 
-  auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
-      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
+  auto topic_admin = MakeTestTopicAdminConnection(mock);
   auto response = topic_admin->GetTopic({topic});
   ASSERT_STATUS_OK(response);
   EXPECT_THAT(*response, IsProtoEqual(expected));
@@ -116,8 +120,7 @@ TEST(TopicAdminConnectionTest, Update) {
         return make_status_or(expected);
       });
 
-  auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
-      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
+  auto topic_admin = MakeTestTopicAdminConnection(mock);
   auto response =
       topic_admin->UpdateTopic({TopicBuilder(topic)
                                     .add_label("test-key", "test-value")
@@ -141,8 +144,7 @@ TEST(TopicAdminConnectionTest, List) {
         return make_status_or(response);
       });
 
-  auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
-      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
+  auto topic_admin = MakeTestTopicAdminConnection(mock);
   std::vector<std::string> topic_names;
   for (auto& t : topic_admin->ListTopics({"projects/test-project-id"})) {
     ASSERT_STATUS_OK(t);
@@ -170,9 +172,8 @@ TEST(TopicAdminConnectionTest, DeleteWithLogging) {
         return Status{};
       });
 
-  auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
-      ConnectionOptions{}.enable_tracing("rpc"), mock, TestRetryPolicy(),
-      TestBackoffPolicy());
+  auto topic_admin = MakeTestTopicAdminConnection(
+      mock, Options{}.set<TracingComponentsOption>({"rpc"}));
   auto response = topic_admin->DeleteTopic({topic});
   ASSERT_STATUS_OK(response);
 
@@ -193,9 +194,8 @@ TEST(TopicAdminConnectionTest, DetachSubscription) {
                 google::pubsub::v1::DetachSubscriptionResponse{});
           });
 
-  auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
-      ConnectionOptions{}.enable_tracing("rpc"), mock, TestRetryPolicy(),
-      TestBackoffPolicy());
+  auto topic_admin = MakeTestTopicAdminConnection(
+      mock, Options{}.set<TracingComponentsOption>({"rpc"}));
   auto response = topic_admin->DetachSubscription({subscription});
   ASSERT_STATUS_OK(response);
 }
@@ -216,8 +216,7 @@ TEST(TopicAdminConnectionTest, ListSubscriptions) {
         return make_status_or(response);
       });
 
-  auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
-      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
+  auto topic_admin = MakeTestTopicAdminConnection(mock);
   std::vector<std::string> names;
   for (auto& t : topic_admin->ListTopicSubscriptions({topic_name})) {
     ASSERT_STATUS_OK(t);
@@ -243,8 +242,7 @@ TEST(TopicAdminConnectionTest, ListSnapshots) {
             return make_status_or(response);
           });
 
-  auto topic_admin = pubsub_internal::MakeTopicAdminConnection(
-      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
+  auto topic_admin = MakeTestTopicAdminConnection(mock);
   std::vector<std::string> names;
   for (auto& t : topic_admin->ListTopicSnapshots({topic_name})) {
     ASSERT_STATUS_OK(t);

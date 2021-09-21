@@ -123,6 +123,12 @@ class DefaultPublisherStub : public PublisherStub {
   std::unique_ptr<google::pubsub::v1::Publisher::StubInterface> grpc_stub_;
 };
 
+std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(Options const& opts,
+                                                          int channel_id) {
+  return std::make_shared<DefaultPublisherStub>(
+      google::pubsub::v1::Publisher::NewStub(CreateChannel(opts, channel_id)));
+}
+
 std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
     pubsub::ConnectionOptions options, int channel_id) {
   return std::make_shared<DefaultPublisherStub>(

@@ -14,12 +14,15 @@
 
 #include "google/cloud/pubsub/topic_admin_connection.h"
 #include "google/cloud/pubsub/internal/default_retry_policies.h"
+#include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/publisher_logging.h"
 #include "google/cloud/pubsub/internal/publisher_metadata.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
+#include <initializer_list>
 #include <memory>
 
 namespace google {
@@ -221,18 +224,16 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
 }  // namespace
 
 std::shared_ptr<pubsub::TopicAdminConnection> MakeTopicAdminConnection(
-    pubsub::ConnectionOptions const& options,
-    std::shared_ptr<PublisherStub> stub,
-    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
+    Options const& opts, std::shared_ptr<PublisherStub> stub) {
   stub = std::make_shared<pubsub_internal::PublisherMetadata>(std::move(stub));
-  if (options.tracing_enabled("rpc")) {
+  if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<pubsub_internal::PublisherLogging>(
-        std::move(stub), options.tracing_options());
+        std::move(stub), opts.get<GrpcTracingOptionsOption>());
   }
   return std::make_shared<TopicAdminConnectionImpl>(
-      std::move(stub), std::move(retry_policy), std::move(backoff_policy));
+      std::move(stub), opts.get<pubsub::RetryPolicyOption>()->clone(),
+      opts.get<pubsub::BackoffPolicyOption>()->clone());
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
@@ -286,16 +287,27 @@ ListTopicSnapshotsRange TopicAdminConnection::ListTopicSnapshots(
 }
 
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
+    std::initializer_list<pubsub_internal::NonConstructible>) {
+  return MakeTopicAdminConnection();
+}
+
+std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(Options opts) {
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 PolicyOptionList>(opts, __func__);
+  opts = pubsub_internal::DefaultCommonOptions(std::move(opts));
+  auto stub =
+      pubsub_internal::CreateDefaultPublisherStub(opts, /*channel_id=*/0);
+  return pubsub_internal::MakeTopicAdminConnection(opts, std::move(stub));
+}
+
+std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
     ConnectionOptions const& options,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
-  auto stub =
-      pubsub_internal::CreateDefaultPublisherStub(options, /*channel_id=*/0);
-  if (!retry_policy) retry_policy = pubsub_internal::DefaultRetryPolicy();
-  if (!backoff_policy) backoff_policy = pubsub_internal::DefaultBackoffPolicy();
-  return pubsub_internal::MakeTopicAdminConnection(options, std::move(stub),
-                                                   std::move(retry_policy),
-                                                   std::move(backoff_policy));
+  auto opts = internal::MakeOptions(options);
+  if (retry_policy) opts.set<RetryPolicyOption>(retry_policy->clone());
+  if (backoff_policy) opts.set<BackoffPolicyOption>(backoff_policy->clone());
+  return MakeTopicAdminConnection(std::move(opts));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

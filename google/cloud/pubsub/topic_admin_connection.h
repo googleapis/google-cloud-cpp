@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
+#include "google/cloud/pubsub/internal/non_constructible.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/subscription.h"
@@ -72,9 +73,9 @@ using ListTopicSnapshotsRange =
 /**
  * A connection to Cloud Pub/Sub for topic-related administrative operations.
  *
- * This interface defines pure-virtual methods for each of the user-facing
+ * This interface defines pure-virtual functions for each of the user-facing
  * overload sets in `TopicAdminClient`. That is, all of `TopicAdminClient`'s
- * overloads will forward to the one pure-virtual method declared in this
+ * overloads will forward to the one pure-virtual function declared in this
  * interface. This allows users to inject custom behavior (e.g., with a Google
  * Mock object) in a `TopicAdminClient` object for use in their own tests.
  *
@@ -161,6 +162,45 @@ class TopicAdminConnection {
 /**
  * Creates a new `TopicAdminConnection` object to work with `TopicAdminClient`.
  *
+ * @note This function exists solely for backwards compatibility. It prevents
+ *     existing code that calls `MakeTopicAdminConnection({})` from breaking,
+ *     due to ambiguity.
+ *
+ * @deprecated Please use `MakeTopicAdminConnection()` instead.
+ */
+std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
+    std::initializer_list<pubsub_internal::NonConstructible>);
+
+/**
+ * Creates a new `TopicAdminConnection` object to work with `TopicAdminClient`.
+ *
+ * The `TopicAdminConnection` class is provided for applications wanting to mock
+ * the `TopicAdminClient` behavior in their tests. It is not intended for direct
+ * use.
+ *
+ * @par Performance
+ * Creating a new `TopicAdminConnection` is relatively expensive. This typically
+ * initiates connections to the service, and therefore these objects should be
+ * shared and reused when possible. Note that gRPC reuses existing OS resources
+ * (sockets) whenever possible, so applications may experience better
+ * performance on the second (and subsequent) calls to this function with the
+ * same `Options` from `GrpcOptionList` and `CommonOptionList`. However, this
+ * behavior is not guaranteed and applications should not rely on it.
+ *
+ * @see `TopicAdminClient`
+ *
+ * @param opts The options to use for this call. Expected options are any
+ *     of the types in the following option lists.
+ *       - `google::cloud::CommonOptionList`
+ *       - `google::cloud::GrpcOptionList`
+ *       - `google::cloud::pubsub::PolicyOptionList`
+ */
+std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
+    Options opts = {});
+
+/**
+ * Creates a new `TopicAdminConnection` object to work with `TopicAdminClient`.
+ *
  * The `TopicAdminConnection` class is provided for applications wanting to mock
  * the `TopicAdminClient` behavior in their tests. It is not intended for direct
  * use.
@@ -176,15 +216,18 @@ class TopicAdminConnection {
  *
  * @see `TopicAdminClient`
  *
- * @param options (optional) configure the `PublisherConnection` created by
+ * @param options (optional) configure the `TopicAdminConnection` created by
  *     this function.
  * @param retry_policy control for how long (or how many times) are retryable
  *     RPCs attempted.
  * @param backoff_policy controls the backoff behavior between retry attempts,
  *     typically some form of exponential backoff with jitter.
+ *
+ * @deprecated Please use the `MakeTopicAdminConnection` function that accepts
+ *     `google::cloud::Options` instead.
  */
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
-    ConnectionOptions const& options = ConnectionOptions(),
+    ConnectionOptions const& options,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy = {},
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy = {});
 
@@ -195,10 +238,7 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::shared_ptr<pubsub::TopicAdminConnection> MakeTopicAdminConnection(
-    pubsub::ConnectionOptions const& options,
-    std::shared_ptr<PublisherStub> stub,
-    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
+    Options const& opts, std::shared_ptr<PublisherStub> stub);
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
