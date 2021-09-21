@@ -193,6 +193,12 @@ class DefaultSubscriberStub : public SubscriberStub {
   std::unique_ptr<google::pubsub::v1::Subscriber::StubInterface> grpc_stub_;
 };
 
+std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(Options const& opts,
+                                                            int channel_id) {
+  return std::make_shared<DefaultSubscriberStub>(
+      google::pubsub::v1::Subscriber::NewStub(CreateChannel(opts, channel_id)));
+}
+
 std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
     pubsub::ConnectionOptions options, int channel_id) {
   return std::make_shared<DefaultSubscriberStub>(

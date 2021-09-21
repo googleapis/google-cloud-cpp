@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
 #include "google/cloud/pubsub/publisher.h"
 #include "google/cloud/pubsub/subscriber.h"
@@ -106,7 +107,8 @@ TEST_F(SubscriberIntegrationTest, RawStub) {
   auto publisher = Publisher(MakePublisherConnection(topic_, {}));
 
   internal::AutomaticallyCreatedBackgroundThreads background(4);
-  auto stub = pubsub_internal::CreateDefaultSubscriberStub({}, 0);
+  auto stub = pubsub_internal::CreateDefaultSubscriberStub(
+      pubsub_internal::DefaultCommonOptions({}), 0);
   google::pubsub::v1::StreamingPullRequest request;
   request.set_client_id("test-client-0001");
   request.set_subscription(subscription_.FullName());
@@ -183,7 +185,8 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
       pubsub::ConnectionOptions{}.set_background_thread_pool_size(2)));
 
   internal::AutomaticallyCreatedBackgroundThreads background(4);
-  auto stub = pubsub_internal::CreateDefaultSubscriberStub({}, 0);
+  auto stub = pubsub_internal::CreateDefaultSubscriberStub(
+      pubsub_internal::DefaultCommonOptions({}), 0);
 
   auto shutdown = std::make_shared<pubsub_internal::SessionShutdownManager>();
   auto source =

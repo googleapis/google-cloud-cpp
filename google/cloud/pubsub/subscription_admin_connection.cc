@@ -14,8 +14,11 @@
 
 #include "google/cloud/pubsub/subscription_admin_connection.h"
 #include "google/cloud/pubsub/internal/default_retry_policies.h"
+#include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/subscriber_logging.h"
 #include "google/cloud/pubsub/internal/subscriber_metadata.h"
+#include "google/cloud/pubsub/internal/subscriber_stub.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include <memory>
@@ -247,20 +250,19 @@ class SubscriptionAdminConnectionImpl
 }  // namespace
 
 std::shared_ptr<pubsub::SubscriptionAdminConnection>
-MakeSubscriptionAdminConnection(
-    pubsub::ConnectionOptions const& options,
-    std::shared_ptr<SubscriberStub> stub,
-    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
+MakeSubscriptionAdminConnection(Options const& opts,
+                                std::shared_ptr<SubscriberStub> stub) {
   stub = std::make_shared<SubscriberMetadata>(std::move(stub));
-  if (options.tracing_enabled("rpc")) {
+  auto const& tracing = opts.get<TracingComponentsOption>();
+  if (internal::Contains(tracing, "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<pubsub_internal::SubscriberLogging>(
-        std::move(stub), options.tracing_options(),
-        options.tracing_enabled("rpc-streams"));
+    stub = std::make_shared<SubscriberLogging>(
+        std::move(stub), opts.get<GrpcTracingOptionsOption>(),
+        internal::Contains(tracing, "rpc-streams"));
   }
   return std::make_shared<SubscriptionAdminConnectionImpl>(
-      std::move(stub), std::move(retry_policy), std::move(backoff_policy));
+      std::move(stub), opts.get<pubsub::RetryPolicyOption>()->clone(),
+      opts.get<pubsub::BackoffPolicyOption>()->clone());
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
@@ -270,15 +272,29 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
-    ConnectionOptions const& options,
+    std::initializer_list<pubsub_internal::NonConstructible>) {
+  return MakeSubscriptionAdminConnection();
+}
+
+std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
+    Options opts) {
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 PolicyOptionList>(opts, __func__);
+  opts = pubsub_internal::DefaultCommonOptions(std::move(opts));
+  auto stub =
+      pubsub_internal::CreateDefaultSubscriberStub(opts, /*channel_id=*/0);
+  return pubsub_internal::MakeSubscriptionAdminConnection(std::move(opts),
+                                                          std::move(stub));
+}
+
+std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
+    pubsub::ConnectionOptions const& options,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
-  if (!retry_policy) retry_policy = pubsub_internal::DefaultRetryPolicy();
-  if (!backoff_policy) backoff_policy = pubsub_internal::DefaultBackoffPolicy();
-  return pubsub_internal::MakeSubscriptionAdminConnection(
-      options,
-      pubsub_internal::CreateDefaultSubscriberStub(options, /*channel_id=*/0),
-      std::move(retry_policy), std::move(backoff_policy));
+  auto opts = internal::MakeOptions(options);
+  if (retry_policy) opts.set<RetryPolicyOption>(retry_policy->clone());
+  if (backoff_policy) opts.set<BackoffPolicyOption>(backoff_policy->clone());
+  return MakeSubscriptionAdminConnection(std::move(opts));
 }
 
 SubscriptionAdminConnection::~SubscriptionAdminConnection() = default;
