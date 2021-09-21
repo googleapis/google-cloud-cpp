@@ -17,10 +17,10 @@
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/subscriber_logging.h"
 #include "google/cloud/pubsub/internal/subscriber_metadata.h"
+#include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
-#include "internal/subscriber_stub.h"
 #include <memory>
 
 namespace google {

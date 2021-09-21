@@ -246,7 +246,7 @@ std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
  * @see `SubscriberConnection`
  *
  * @param options (optional) configure the `SubscriptionAdminConnection` created
- * by this function.
+ *     by this function.
  * @param retry_policy control for how long (or how many times) are retryable
  *     RPCs attempted.
  * @param backoff_policy controls the backoff behavior between retry attempts,
@@ -256,7 +256,7 @@ std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
  *     accepts `google::cloud::Options` instead.
  */
 std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
-    ConnectionOptions const& option,
+    ConnectionOptions const& options,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy = {},
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy = {});
 
