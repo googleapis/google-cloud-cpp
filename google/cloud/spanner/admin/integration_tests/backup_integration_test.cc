@@ -119,7 +119,7 @@ TEST_F(BackupTest, BackupTest) {
   auto create_time =
       MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
 
-  auto expire_time = MakeTimestamp(create_time + absl::Hours(7)).value();
+  auto expire_time = MakeTimestamp(create_time + absl::Hours(12)).value();
   google::spanner::admin::database::v1::CreateBackupRequest breq;
   breq.set_parent(db.instance().FullName());
   breq.set_backup_id(db.database_id());
@@ -220,7 +220,7 @@ TEST_F(BackupTest, BackupTest) {
       1, std::count(backup_names.begin(), backup_names.end(), backup->name()))
       << "Backup " << backup->name() << " not found in the backup list.";
 
-  auto new_expire_time = MakeTimestamp(create_time + absl::Hours(8)).value();
+  auto new_expire_time = MakeTimestamp(create_time + absl::Hours(16)).value();
   google::spanner::admin::database::v1::UpdateBackupRequest ureq;
   ureq.mutable_backup()->set_name(backup->name());
   *ureq.mutable_backup()->mutable_expire_time() =
@@ -295,7 +295,7 @@ TEST_F(BackupTest, CreateBackupWithVersionTime) {
     EXPECT_LT(version_times[0], version_times[1]);
     // Create a backup when Counters[version_key] == 0.
     auto version_time = version_times[0];
-    auto expire_time = MakeTimestamp(create_time + absl::Hours(8)).value();
+    auto expire_time = MakeTimestamp(create_time + absl::Hours(12)).value();
     google::spanner::admin::database::v1::CreateBackupRequest breq;
     breq.set_parent(db.instance().FullName());
     breq.set_backup_id(db.database_id());
@@ -413,7 +413,7 @@ TEST_F(BackupTest, CreateBackupWithExpiredVersionTime) {
       MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
   // version_time too far in the past (outside the version_retention_period).
   auto version_time = MakeTimestamp(create_time - absl::Hours(2)).value();
-  auto expire_time = MakeTimestamp(create_time + absl::Hours(8)).value();
+  auto expire_time = MakeTimestamp(create_time + absl::Hours(12)).value();
   google::spanner::admin::database::v1::CreateBackupRequest breq;
   breq.set_parent(db.instance().FullName());
   breq.set_backup_id(db.database_id());
@@ -459,7 +459,7 @@ TEST_F(BackupTest, CreateBackupWithFutureVersionTime) {
       MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
   // version_time in the future.
   auto version_time = MakeTimestamp(create_time + absl::Hours(2)).value();
-  auto expire_time = MakeTimestamp(create_time + absl::Hours(8)).value();
+  auto expire_time = MakeTimestamp(create_time + absl::Hours(12)).value();
   google::spanner::admin::database::v1::CreateBackupRequest breq;
   breq.set_parent(db.instance().FullName());
   breq.set_backup_id(db.database_id());
@@ -519,7 +519,7 @@ TEST_F(BackupTest, BackupTestWithCMEK) {
 
   auto create_time =
       MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
-  auto expire_time = MakeTimestamp(create_time + absl::Hours(7)).value();
+  auto expire_time = MakeTimestamp(create_time + absl::Hours(12)).value();
   google::spanner::admin::database::v1::CreateBackupRequest breq;
   breq.set_parent(db.instance().FullName());
   breq.set_backup_id(db.database_id());
