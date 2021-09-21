@@ -21,12 +21,16 @@ namespace cloud {
 namespace pubsub_testing {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-Options TestOptions() {
-  return Options{}
-      .set<pubsub::RetryPolicyOption>(
-          pubsub_testing::TestRetryPolicy()->clone())
-      .set<pubsub::BackoffPolicyOption>(
-          pubsub_testing::TestBackoffPolicy()->clone());
+Options MakeTestOptions(Options opts) {
+  if (!opts.has<pubsub::RetryPolicyOption>()) {
+    opts.set<pubsub::RetryPolicyOption>(
+        pubsub_testing::TestRetryPolicy()->clone());
+  }
+  if (!opts.has<pubsub::BackoffPolicyOption>()) {
+    opts.set<pubsub::BackoffPolicyOption>(
+        pubsub_testing::TestBackoffPolicy()->clone());
+  }
+  return opts;
 }
 
 std::unique_ptr<pubsub::RetryPolicy const> TestRetryPolicy() {

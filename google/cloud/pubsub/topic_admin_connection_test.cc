@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/topic_admin_connection.h"
+#include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/pubsub/topic_builder.h"
@@ -21,7 +22,6 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
-#include "internal/defaults.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -39,7 +39,7 @@ using ::testing::Return;
 std::shared_ptr<pubsub::TopicAdminConnection> MakeTestTopicAdminConnection(
     std::shared_ptr<pubsub_internal::PublisherStub> mock, Options opts = {}) {
   opts = pubsub_internal::DefaultCommonOptions(
-      internal::MergeOptions(pubsub_testing::TestOptions(), std::move(opts)));
+      pubsub_testing::MakeTestOptions(std::move(opts)));
   return pubsub_internal::MakeTopicAdminConnection(std::move(opts),
                                                    std::move(mock));
 }

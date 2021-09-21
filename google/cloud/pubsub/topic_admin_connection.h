@@ -164,8 +164,7 @@ class TopicAdminConnection {
  *
  * @warning This method exists solely for backwards compatibility. It prevents
  *     existing code, which calls `MakeTopicAdminConnection({})` from breaking,
- *     due to ambiguity. Please use the `MakeTopicAdminConnection` method which
- *     accepts `google::cloud::Options` instead.
+ *     due to ambiguity. Please use `MakeTopicAdminConnection()` instead.
  */
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
     std::initializer_list<
@@ -180,7 +179,7 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
  *
  * @par Performance
  * Creating a new `TopicAdminConnection` is relatively expensive. This typically
- * initiate connections to the service, and therefore these objects should be
+ * initiates connections to the service, and therefore these objects should be
  * shared and reused when possible. Note that gRPC reuses existing OS resources
  * (sockets) whenever possible, so applications may experience better
  * performance on the second (and subsequent) calls to this function with the

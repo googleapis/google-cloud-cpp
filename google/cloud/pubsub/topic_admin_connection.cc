@@ -22,6 +22,7 @@
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
+#include <initializer_list>
 #include <memory>
 
 namespace google {
