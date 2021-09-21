@@ -17,12 +17,14 @@
 
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
+#include "google/cloud/pubsub/internal/non_constructible.h"
 #include "google/cloud/pubsub/internal/schema_stub.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/schema.pb.h>
+#include <initializer_list>
 #include <memory>
 
 namespace google {
@@ -45,9 +47,9 @@ using ListSchemasRange =
 /**
  * A connection to Cloud Pub/Sub for schema-related administrative operations.
  *
- * This interface defines pure-virtual methods for each of the user-facing
+ * This interface defines pure-virtual functions for each of the user-facing
  * overload sets in `SchemaAdminClient`. That is, all of `SchemaAdminClient`'s
- * overloads will forward to the one pure-virtual method declared in this
+ * overloads will forward to the one pure-virtual function declared in this
  * interface. This allows users to inject custom behavior (e.g., with a Google
  * Mock object) in a `SchemaAdminClient` object for use in their own tests.
  *
@@ -93,6 +95,47 @@ class SchemaAdminConnection {
  * Creates a new `SchemaAdminConnection` object to work with
  * `SchemaAdminClient`.
  *
+ * @note This function exists solely for backwards compatibility. It prevents
+ *     existing code that calls `MakeSchemaAdminConnection({})` from breaking,
+ *     due to ambiguity.
+ *
+ * @deprecated Please use `MakeSchemaAdminConnection()` instead.
+ */
+std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
+    std::initializer_list<pubsub_internal::NonConstructible>);
+
+/**
+ * Creates a new `SchemaAdminConnection` object to work with
+ * `SchemaAdminClient`.
+ *
+ * The `SchemaAdminConnection` class is provided for applications wanting to
+ * mock the `SchemaAdminClient` behavior in their tests. It is not intended for
+ * direct use.
+ *
+ * @par Performance
+ * Creating a new `SchemaAdminConnection` is relatively expensive. This
+ * typically initiates connections to the service, and therefore these objects
+ * should be shared and reused when possible. Note that gRPC reuses existing OS
+ * resources (sockets) whenever possible, so applications may experience better
+ * performance on the second (and subsequent) calls to this function with the
+ * same `Options` from `GrpcOptionList` and `CommonOptionList`. However, this
+ * behavior is not guaranteed and applications should not rely on it.
+ *
+ * @see `SchemaAdminClient`
+ *
+ * @param opts The options to use for this call. Expected options are any of
+ *     the types in the following option lists.
+ *       - `google::cloud::CommonOptionList`
+ *       - `google::cloud::GrpcOptionList`
+ *       - `google::cloud::pubsub::PolicyOptionList`
+ */
+std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
+    Options opts = {});
+
+/**
+ * Creates a new `SchemaAdminConnection` object to work with
+ * `SchemaAdminClient`.
+ *
  * The `SchemaAdminConnection` class is provided for applications wanting to
  * mock the `SchemaAdminClient` behavior in their tests. It is not intended for
  * direct use.
@@ -114,9 +157,12 @@ class SchemaAdminConnection {
  *     RPCs attempted.
  * @param backoff_policy controls the backoff behavior between retry attempts,
  *     typically some form of exponential backoff with jitter.
+ *
+ * @deprecated Please use the `MakeSchemaAdminConnection` function that accepts
+ *     `google::cloud::Options` instead.
  */
 std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
-    pubsub::ConnectionOptions const& options = pubsub::ConnectionOptions(),
+    pubsub::ConnectionOptions const& options,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy = {},
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy = {});
 
@@ -127,9 +173,7 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::shared_ptr<pubsub::SchemaAdminConnection> MakeSchemaAdminConnection(
-    pubsub::ConnectionOptions const& options, std::shared_ptr<SchemaStub> stub,
-    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
+    Options const& opts, std::shared_ptr<SchemaStub> stub);
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal

@@ -12,11 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "schema_admin_connection.h"
+#include "google/cloud/pubsub/schema_admin_connection.h"
 #include "google/cloud/pubsub/internal/default_retry_policies.h"
+#include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/schema_logging.h"
 #include "google/cloud/pubsub/internal/schema_metadata.h"
 #include "google/cloud/pubsub/internal/schema_stub.h"
+#include "google/cloud/pubsub/options.h"
+#include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include <memory>
@@ -140,17 +143,16 @@ class SchemaAdminConnectionImpl : public pubsub::SchemaAdminConnection {
 }  // namespace
 
 std::shared_ptr<pubsub::SchemaAdminConnection> MakeSchemaAdminConnection(
-    pubsub::ConnectionOptions const& options, std::shared_ptr<SchemaStub> stub,
-    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
+    Options const& opts, std::shared_ptr<SchemaStub> stub) {
   stub = std::make_shared<SchemaMetadata>(std::move(stub));
-  if (options.tracing_enabled("rpc")) {
+  if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<SchemaLogging>(std::move(stub),
-                                           options.tracing_options());
+    stub = std::make_shared<SchemaLogging>(
+        std::move(stub), opts.get<GrpcTracingOptionsOption>());
   }
   return std::make_shared<SchemaAdminConnectionImpl>(
-      std::move(stub), std::move(retry_policy), std::move(backoff_policy));
+      std::move(stub), opts.get<pubsub::RetryPolicyOption>()->clone(),
+      opts.get<pubsub::BackoffPolicyOption>()->clone());
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
@@ -162,16 +164,27 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 SchemaAdminConnection::~SchemaAdminConnection() = default;
 
 std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
+    std::initializer_list<pubsub_internal::NonConstructible>) {
+  return MakeSchemaAdminConnection();
+}
+
+std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(Options opts) {
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 PolicyOptionList>(opts, __func__);
+  opts = pubsub_internal::DefaultCommonOptions(std::move(opts));
+  auto stub = pubsub_internal::CreateDefaultSchemaStub(opts, /*channel_id=*/0);
+  return pubsub_internal::MakeSchemaAdminConnection(std::move(opts),
+                                                    std::move(stub));
+}
+
+std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
     pubsub::ConnectionOptions const& options,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
-  auto stub =
-      pubsub_internal::CreateDefaultSchemaStub(options, /*channel_id=*/0);
-  if (!retry_policy) retry_policy = pubsub_internal::DefaultRetryPolicy();
-  if (!backoff_policy) backoff_policy = pubsub_internal::DefaultBackoffPolicy();
-  return pubsub_internal::MakeSchemaAdminConnection(options, std::move(stub),
-                                                    std::move(retry_policy),
-                                                    std::move(backoff_policy));
+  auto opts = internal::MakeOptions(options);
+  if (retry_policy) opts.set<RetryPolicyOption>(retry_policy->clone());
+  if (backoff_policy) opts.set<BackoffPolicyOption>(backoff_policy->clone());
+  return MakeSchemaAdminConnection(std::move(opts));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
