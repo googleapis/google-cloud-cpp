@@ -99,7 +99,7 @@ class PublisherStub {
 std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(Options const& opts,
                                                           int channel_id);
 
-// TODO(#6306) - Remove this method when we are done with it.
+// TODO(#6306) - Remove this function when we are done with it.
 /**
  * Creates a PublisherStub configured with @p options and @p channel_id.
  *

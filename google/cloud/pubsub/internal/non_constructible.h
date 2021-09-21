@@ -27,7 +27,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * A type that is not constructible.
  *
  * This type can be used to disallow the instantiation of an object. We might
- * use it, for example, to disambiguate overloaded methods that are passed an
+ * use it, for example, to disambiguate overloaded functions that are passed an
  * empty initializer list.
  */
 struct NonConstructible {

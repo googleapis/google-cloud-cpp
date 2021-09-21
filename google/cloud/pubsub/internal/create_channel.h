@@ -29,7 +29,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 std::shared_ptr<grpc::Channel> CreateChannel(Options const& opts,
                                              int channel_id);
 
-// TODO(#6306) - Remove this method when we are done with it.
+// TODO(#6306) - Remove this function when we are done with it.
 /// Create a gRPC channel with the right configuration.
 std::shared_ptr<grpc::Channel> CreateChannel(pubsub::ConnectionOptions options,
                                              int channel_id);

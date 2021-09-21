@@ -73,9 +73,9 @@ using ListTopicSnapshotsRange =
 /**
  * A connection to Cloud Pub/Sub for topic-related administrative operations.
  *
- * This interface defines pure-virtual methods for each of the user-facing
+ * This interface defines pure-virtual functions for each of the user-facing
  * overload sets in `TopicAdminClient`. That is, all of `TopicAdminClient`'s
- * overloads will forward to the one pure-virtual method declared in this
+ * overloads will forward to the one pure-virtual function declared in this
  * interface. This allows users to inject custom behavior (e.g., with a Google
  * Mock object) in a `TopicAdminClient` object for use in their own tests.
  *
@@ -162,7 +162,7 @@ class TopicAdminConnection {
 /**
  * Creates a new `TopicAdminConnection` object to work with `TopicAdminClient`.
  *
- * @note This method exists solely for backwards compatibility. It prevents
+ * @note This function exists solely for backwards compatibility. It prevents
  *     existing code that calls `MakeTopicAdminConnection({})` from breaking,
  *     due to ambiguity.
  *
@@ -223,7 +223,7 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
  * @param backoff_policy controls the backoff behavior between retry attempts,
  *     typically some form of exponential backoff with jitter.
  *
- * @deprecated Please use the `MakeTopicAdminConnection` method that accepts
+ * @deprecated Please use the `MakeTopicAdminConnection` function that accepts
  *     `google::cloud::Options` instead.
  */
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
