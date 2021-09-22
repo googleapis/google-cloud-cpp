@@ -26,7 +26,7 @@ namespace cloud {
 namespace pubsub_testing {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-Options MakeTestOptions(Options opts);
+Options MakeTestOptions(Options opts = {});
 
 std::unique_ptr<pubsub::RetryPolicy const> TestRetryPolicy();
 

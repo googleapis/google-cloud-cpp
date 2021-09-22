@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/publisher_connection.h"
+#include "google/cloud/pubsub/internal/defaults.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/internal/api_client_header.h"
@@ -35,6 +37,17 @@ using ::testing::AtLeast;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 
+std::shared_ptr<PublisherConnection> MakeTestPublisherConnection(
+    Topic topic, std::shared_ptr<pubsub_internal::PublisherStub> mock,
+    Options opts = {}) {
+  opts = pubsub_internal::DefaultPublisherOptions(
+      pubsub_testing::MakeTestOptions(std::move(opts)));
+  std::vector<std::shared_ptr<pubsub_internal::PublisherStub>> children{
+      std::move(mock)};
+  return MakePublisherConnection(std::move(topic), std::move(opts),
+                                 std::move(children));
+}
+
 TEST(PublisherConnectionTest, Basic) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   Topic const topic("test-project", "test-topic");
@@ -51,9 +64,7 @@ TEST(PublisherConnectionTest, Basic) {
         return make_ready_future(make_status_or(response));
       });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, {}, {}, mock, pubsub_testing::TestRetryPolicy(),
-      pubsub_testing::TestBackoffPolicy());
+  auto publisher = MakeTestPublisherConnection(topic, mock);
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
@@ -80,9 +91,8 @@ TEST(PublisherConnectionTest, Metadata) {
         return make_ready_future(make_status_or(response));
       });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, {}, ConnectionOptions{}.enable_tracing("rpc"), mock,
-      pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
+  auto publisher = MakeTestPublisherConnection(
+      topic, mock, Options{}.set<TracingComponentsOption>({"rpc"}));
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
@@ -106,9 +116,8 @@ TEST(PublisherConnectionTest, Logging) {
         return make_ready_future(make_status_or(response));
       });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, {}, ConnectionOptions{}.enable_tracing("rpc"), mock,
-      pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
+  auto publisher = MakeTestPublisherConnection(
+      topic, mock, Options{}.set<TracingComponentsOption>({"rpc"}));
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
@@ -149,13 +158,11 @@ TEST(PublisherConnectionTest, FlowControl) {
         });
       });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(
-      topic,
-      PublisherOptions{}
-          .set_full_publisher_rejects()
-          .set_maximum_pending_messages(kMessageCount),
-      ConnectionOptions{}, mock, pubsub_testing::TestRetryPolicy(),
-      pubsub_testing::TestBackoffPolicy());
+  auto publisher = MakeTestPublisherConnection(
+      topic, mock,
+      Options{}
+          .set<FullPublisherActionOption>(FullPublisherAction::kRejects)
+          .set<MaxPendingMessagesOption>(kMessageCount));
 
   std::vector<future<StatusOr<std::string>>> pending(kMessageCount);
   std::generate(pending.begin(), pending.end(), [publisher] {
@@ -196,9 +203,8 @@ TEST(PublisherConnectionTest, OrderingKey) {
         return make_ready_future(make_status_or(response));
       });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, PublisherOptions{}.enable_message_ordering(), {}, mock,
-      pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
+  auto publisher = MakeTestPublisherConnection(
+      topic, mock, Options{}.set<MessageOrderingOption>(true));
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
@@ -210,9 +216,7 @@ TEST(PublisherConnectionTest, OrderingKeyWithoutMessageOrdering) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   Topic const topic("test-project", "test-topic");
 
-  auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, PublisherOptions{}, {}, mock, pubsub_testing::TestRetryPolicy(),
-      pubsub_testing::TestBackoffPolicy());
+  auto publisher = MakeTestPublisherConnection(topic, mock);
   auto response = publisher
                       ->Publish({MessageBuilder{}
                                      .SetOrderingKey("test-ordering-key-0")
@@ -236,9 +240,7 @@ TEST(PublisherConnectionTest, HandleInvalidResponse) {
         return make_ready_future(make_status_or(response));
       });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, {}, {}, mock, pubsub_testing::TestRetryPolicy(),
-      pubsub_testing::TestBackoffPolicy());
+  auto publisher = MakeTestPublisherConnection(topic, mock);
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
@@ -263,9 +265,7 @@ TEST(PublisherConnectionTest, HandleTooManyFailures) {
             Status(StatusCode::kUnavailable, "try-again")));
       });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, PublisherOptions{}, {}, mock, pubsub_testing::TestRetryPolicy(),
-      pubsub_testing::TestBackoffPolicy());
+  auto publisher = MakeTestPublisherConnection(topic, mock);
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-message-0").Build()})
           .get();
@@ -285,9 +285,7 @@ TEST(PublisherConnectionTest, HandlePermanentError) {
             Status(StatusCode::kPermissionDenied, "uh-oh")));
       });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, {}, {}, mock, pubsub_testing::TestRetryPolicy(),
-      pubsub_testing::TestBackoffPolicy());
+  auto publisher = MakeTestPublisherConnection(topic, mock);
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-message-0").Build()})
           .get();
@@ -307,10 +305,10 @@ TEST(PublisherConnectionTest, HandleTransientDisabledRetry) {
             Status(StatusCode::kUnavailable, "try-again")));
       });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, PublisherOptions{}, {}, mock,
-      pubsub::LimitedErrorCountRetryPolicy(/*maximum_failures=*/0).clone(),
-      pubsub_testing::TestBackoffPolicy());
+  auto publisher = MakeTestPublisherConnection(
+      topic, mock,
+      Options{}.set<RetryPolicyOption>(
+          LimitedErrorCountRetryPolicy(/*maximum_failures=*/0).clone()));
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-message-0").Build()})
           .get();
@@ -340,9 +338,7 @@ TEST(PublisherConnectionTest, HandleTransientEnabledRetry) {
         return make_ready_future(make_status_or(response));
       });
 
-  auto publisher = pubsub_internal::MakePublisherConnection(
-      topic, PublisherOptions{}, {}, mock, pubsub_testing::TestRetryPolicy(),
-      pubsub_testing::TestBackoffPolicy());
+  auto publisher = MakeTestPublisherConnection(topic, mock);
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();

@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
+#include "google/cloud/pubsub/internal/non_constructible.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/publisher_options.h"
@@ -25,6 +26,7 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
+#include <initializer_list>
 #include <string>
 #include <vector>
 
@@ -81,9 +83,50 @@ class PublisherConnection {
 /**
  * Creates a new `PublisherConnection` object to work with `Publisher`.
  *
+ * @note This function exists solely for backwards compatibility. It prevents
+ *     existing code that calls `MakePublisherConnection(topic, {})` from
+ *     breaking, due to ambiguity.
+ *
+ * @deprecated Please use `MakePublisherConnection(topic)` instead.
+ */
+std::shared_ptr<PublisherConnection> MakePublisherConnection(
+    Topic topic, std::initializer_list<pubsub_internal::NonConstructible>);
+
+/**
+ * Creates a new `PublisherConnection` object to work with `Publisher`.
+ *
+ * The `PublisherConnection` class is provided for applications wanting to mock
+ * the `Publisher` behavior in their tests. It is not intended for direct use.
+ *
+ * @par Performance
+ * Creating a new `PublisherConnection` is relatively expensive. This typically
+ * initiates connections to the service, and therefore these objects should be
+ * shared and reused when possible. Note that gRPC reuses existing OS resources
+ * (sockets) whenever possible, so applications may experience better
+ * performance on the second (and subsequent) calls to this function with the
+ * same `Options` from `GrpcOptionList` and `CommonOptionList`. However, this
+ * behavior is not guaranteed and applications should not rely on it.
+ *
+ * @see `PublisherConnection`
+ *
+ * @param topic the Cloud Pub/Sub topic used by the returned
+ *     `PublisherConnection`.
+ * @param opts The options to use for this call. Expected options are any of
+ *     the types in the following option lists.
+ *       - `google::cloud::CommonOptionList`
+ *       - `google::cloud::GrpcOptionList`
+ *       - `google::cloud::pubsub::PolicyOptionList`
+ *       - `google::cloud::pubsub::PublisherOptionList`
+ */
+std::shared_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
+                                                             Options opts = {});
+
+/**
+ * Creates a new `PublisherConnection` object to work with `Publisher`.
+ *
  * The `PublisherConnection` class is not intended for direct use in
  * applications, it is provided for applications wanting to mock the
- * `PublisherClient` behavior in their tests.
+ * `Publisher` behavior in their tests.
  *
  * @par Performance
  * Creating a new `PublisherConnection` is relatively expensive. This typically
@@ -102,11 +145,12 @@ class PublisherConnection {
  *     returned connection.
  * @param connection_options (optional) general configuration for this
  *    connection, this type is also used to configure `pubsub::Subscriber`.
- * @param retry_policy (optional) configure the retry loop. This is only used
- *    if `retry_publish_failures()` is enabled in @p options.
+ * @param retry_policy (optional) configure the retry loop.
  * @param backoff_policy (optional) configure the backoff period between
- *    retries. This is only used if `retry_publish_failures()` is enabled in
- *    @p options.
+ *    retries.
+ *
+ * @deprecated Please use the `MakePublisherConnection` method which accepts
+ *     `google::cloud::Options` instead.
  */
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
     Topic topic, PublisherOptions options,
@@ -121,18 +165,8 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
-    pubsub::Topic topic, pubsub::PublisherOptions options,
-    pubsub::ConnectionOptions connection_options,
-    std::shared_ptr<PublisherStub> stub,
-    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
-
-std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
-    pubsub::Topic topic, pubsub::PublisherOptions options,
-    pubsub::ConnectionOptions connection_options,
-    std::vector<std::shared_ptr<PublisherStub>> stubs,
-    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
+    pubsub::Topic topic, Options opts,
+    std::vector<std::shared_ptr<PublisherStub>> stubs);
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
