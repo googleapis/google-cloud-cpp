@@ -61,11 +61,8 @@ class AsyncPollOpTest : public bigtable::testing::TableTestFixture {
             bigtable::DefaultPollingPolicy(internal::kBigtableLimits)),
         metadata_update_policy_("test_operation_id", MetadataParamTypes::NAME),
         client_(new testing::MockAdminClient(
-            Options{}.set<GrpcBackgroundThreadsFactoryOption>([&] {
-              return absl::make_unique<
-                  google::cloud::internal::CustomerSuppliedBackgroundThreads>(
-                  cq_);
-            }))) {}
+            Options{}.set<GrpcBackgroundThreadsFactoryOption>(
+                CustomBackgroundThreads(cq_)))) {}
 
   std::shared_ptr<PollingPolicy const> polling_policy_;
   MetadataUpdatePolicy metadata_update_policy_;

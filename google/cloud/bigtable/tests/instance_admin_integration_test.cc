@@ -502,10 +502,8 @@ TEST_F(InstanceAdminIntegrationTest,
 TEST_F(InstanceAdminIntegrationTest, CustomWorkers) {
   CompletionQueue cq;
   auto instance_admin_client = bigtable::MakeInstanceAdminClient(
-      project_id_, Options{}.set<GrpcBackgroundThreadsFactoryOption>([&cq] {
-        return absl::make_unique<
-            google::cloud::internal::CustomerSuppliedBackgroundThreads>(cq);
-      }));
+      project_id_, Options{}.set<GrpcBackgroundThreadsFactoryOption>(
+                       CustomBackgroundThreads(cq)));
   instance_admin_ = absl::make_unique<bigtable::InstanceAdmin>(
       instance_admin_client,
       *DefaultRPCRetryPolicy({std::chrono::seconds(1), std::chrono::seconds(1),

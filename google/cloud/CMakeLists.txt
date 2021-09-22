@@ -382,6 +382,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         google_cloud_cpp_grpc_utils # cmake-format: sort
         async_operation.h
         background_threads.h
+        background_threads_factory.cc
+        background_threads_factory.h
         completion_queue.cc
         completion_queue.h
         connection_options.cc
@@ -533,6 +535,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         # List the unit tests, then setup the targets and dependencies.
         set(google_cloud_cpp_grpc_utils_unit_tests
             # cmake-format: sort
+            background_threads_factory_test.cc
             completion_queue_test.cc
             connection_options_test.cc
             grpc_error_delegate_test.cc

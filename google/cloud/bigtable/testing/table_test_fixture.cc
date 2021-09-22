@@ -44,10 +44,8 @@ google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(
 
 std::shared_ptr<MockDataClient> TableTestFixture::SetupMockClient() {
   auto client = std::make_shared<MockDataClient>(
-      Options{}.set<GrpcBackgroundThreadsFactoryOption>([&] {
-        return absl::make_unique<
-            google::cloud::internal::CustomerSuppliedBackgroundThreads>(cq_);
-      }));
+      Options{}.set<GrpcBackgroundThreadsFactoryOption>(
+          CustomBackgroundThreads(cq_)));
   EXPECT_CALL(*client, project_id())
       .WillRepeatedly(::testing::ReturnRef(project_id_));
   EXPECT_CALL(*client, instance_id())

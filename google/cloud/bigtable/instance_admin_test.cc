@@ -866,11 +866,8 @@ class ValidContextMdAsyncTest : public ::testing::Test {
       : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
         client_(new MockAdminClient(
-            Options{}.set<GrpcBackgroundThreadsFactoryOption>([&] {
-              return absl::make_unique<
-                  google::cloud::internal::CustomerSuppliedBackgroundThreads>(
-                  cq_);
-            }))) {
+            Options{}.set<GrpcBackgroundThreadsFactoryOption>(
+                CustomBackgroundThreads(cq_)))) {
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     instance_admin_ = absl::make_unique<InstanceAdmin>(client_);
   }

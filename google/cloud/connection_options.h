@@ -24,6 +24,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include "background_threads_factory.h"
 #include <grpcpp/grpcpp.h>
 #include <functional>
 #include <memory>
@@ -228,9 +229,7 @@ class ConnectionOptions {
    */
   ConnectionOptions& DisableBackgroundThreads(
       google::cloud::CompletionQueue const& cq) {
-    background_threads_factory_ = [cq] {
-      return absl::make_unique<internal::CustomerSuppliedBackgroundThreads>(cq);
-    };
+    background_threads_factory_ = CustomBackgroundThreads(cq);
     return *this;
   }
 

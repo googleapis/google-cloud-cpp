@@ -17,6 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 google_cloud_cpp_grpc_utils_unit_tests = [
+    "background_threads_factory_test.cc",
     "completion_queue_test.cc",
     "connection_options_test.cc",
     "grpc_error_delegate_test.cc",

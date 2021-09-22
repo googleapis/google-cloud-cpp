@@ -64,10 +64,8 @@ class AsyncLongrunningOpFutureTest : public bigtable::testing::TableTestFixture,
 TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
   auto const success = GetParam();
   auto client = std::make_shared<testing::MockAdminClient>(
-      Options{}.set<GrpcBackgroundThreadsFactoryOption>([&] {
-        return absl::make_unique<
-            google::cloud::internal::CustomerSuppliedBackgroundThreads>(cq_);
-      }));
+      Options{}.set<GrpcBackgroundThreadsFactoryOption>(
+          CustomBackgroundThreads(cq_)));
 
   auto longrunning_reader = absl::make_unique<MockAsyncLongrunningOpReader>();
   EXPECT_CALL(*longrunning_reader, Finish)

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_OPTIONS_H
 
 #include "google/cloud/background_threads.h"
+#include "google/cloud/background_threads_factory.h"
 #include "google/cloud/options.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
@@ -102,8 +103,6 @@ struct GrpcBackgroundThreadPoolSizeOption {
   using Type = std::size_t;
 };
 
-using BackgroundThreadsFactory =
-    std::function<std::unique_ptr<BackgroundThreads>()>;
 /**
  * Changes the `BackgroundThreadsFactory`.
  *

@@ -290,10 +290,7 @@ int Benchmark::read_rows_count() const {
 }
 
 void Benchmark::DisableBackgroundThreads(CompletionQueue& cq) {
-  opts_.set<GrpcBackgroundThreadsFactoryOption>([&cq] {
-    return absl::make_unique<
-        google::cloud::internal::CustomerSuppliedBackgroundThreads>(cq);
-  });
+  opts_.set<GrpcBackgroundThreadsFactoryOption>(CustomBackgroundThreads(cq));
 }
 
 google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTableShard(

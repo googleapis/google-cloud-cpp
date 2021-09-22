@@ -121,11 +121,8 @@ class ValidContextMdAsyncTest : public ::testing::Test {
       : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
         client_(new ::google::cloud::bigtable::testing::MockDataClient(
-            Options{}.set<GrpcBackgroundThreadsFactoryOption>([&] {
-              return absl::make_unique<
-                  google::cloud::internal::CustomerSuppliedBackgroundThreads>(
-                  cq_);
-            }))) {
+            Options{}.set<GrpcBackgroundThreadsFactoryOption>(
+                CustomBackgroundThreads(cq_)))) {
     EXPECT_CALL(*client_, project_id())
         .WillRepeatedly(::testing::ReturnRef(kProjectId));
     EXPECT_CALL(*client_, instance_id())
