@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscription_session.h"
+#include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/testing/fake_streaming_pull.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
@@ -37,19 +38,14 @@ using ::testing::AtLeast;
 using ::testing::AtMost;
 using ::testing::InSequence;
 
-future<Status> CreateTestingSubscriptionSession(
-    pubsub::Subscription const& subscription,
-    pubsub::SubscriberOptions const& options,
-    std::shared_ptr<pubsub_internal::SubscriberStub> const& stub,
-    CompletionQueue const& executor,
+future<Status> CreateTestSubscriptionSession(
+    pubsub::Subscription const& subscription, Options opts,
+    std::shared_ptr<SubscriberStub> const& mock, CompletionQueue const& cq,
     pubsub::SubscriberConnection::SubscribeParams p) {
-  using us = std::chrono::microseconds;
-  return CreateSubscriptionSession(
-      subscription, options, stub, executor, "test-client-id", std::move(p),
-      pubsub::LimitedErrorCountRetryPolicy(3).clone(),
-      pubsub::ExponentialBackoffPolicy(
-          /*initial_delay=*/us(10), /*maximum_delay=*/us(20), /*scaling=*/2.0)
-          .clone());
+  opts = DefaultSubscriberOptions(
+      pubsub_testing::MakeTestOptions(std::move(opts)));
+  return CreateSubscriptionSession(subscription, std::move(opts), mock, cq,
+                                   "test-client-id", std::move(p));
 }
 
 /// @test Verify callbacks are scheduled in the background threads.
@@ -162,9 +158,9 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
     std::move(h).ack();
   };
 
-  auto response = CreateTestingSubscriptionSession(
-      subscription, pubsub::SubscriberOptions{}.set_max_concurrency(1), mock,
-      cq, {handler});
+  auto response = CreateTestSubscriptionSession(
+      subscription, Options{}.set<pubsub::MaxConcurrencyOption>(1), mock, cq,
+      {handler});
   {
     std::unique_lock<std::mutex> lk(ack_id_mu);
     ack_id_cv.wait(lk, [&] { return expected_ack_id >= kAckCount; });
@@ -214,9 +210,9 @@ TEST(SubscriptionSessionTest, SequencedCallbacks) {
 
   google::cloud::CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
-  auto response = CreateTestingSubscriptionSession(
-      subscription, pubsub::SubscriberOptions{}.set_max_concurrency(1), mock,
-      cq, {handler});
+  auto response = CreateTestSubscriptionSession(
+      subscription, Options{}.set<pubsub::MaxConcurrencyOption>(1), mock, cq,
+      {handler});
   enough_messages.get_future()
       .then([&](future<void>) { response.cancel(); })
       .get();
@@ -259,12 +255,12 @@ TEST(SubscriptionSessionTest, ShutdownNackCallbacks) {
   };
 
   google::cloud::CompletionQueue cq;
-  auto response = CreateTestingSubscriptionSession(
+  auto response = CreateTestSubscriptionSession(
       subscription,
-      pubsub::SubscriberOptions{}
-          .set_max_outstanding_messages(1)
-          .set_max_outstanding_bytes(1)
-          .set_max_deadline_time(std::chrono::seconds(60)),
+      Options{}
+          .set<pubsub::MaxOutstandingMessagesOption>(1)
+          .set<pubsub::MaxOutstandingBytesOption>(1)
+          .set<pubsub::MaxDeadlineTimeOption>(std::chrono::seconds(60)),
       mock, cq, {handler});
   // Setup the system to cancel after the second message.
   auto done = enough_messages.get_future().then(
@@ -315,10 +311,8 @@ TEST(SubscriptionSessionTest, ShutdownWaitsFutures) {
       std::move(h).ack();
     };
 
-    auto session = CreateSubscriptionSession(
-        subscription, pubsub::SubscriberOptions{}, mock, background.cq(),
-        "fake-client-id", {handler}, pubsub_testing::TestRetryPolicy(),
-        pubsub_testing::TestBackoffPolicy());
+    auto session = CreateTestSubscriptionSession(subscription, Options{}, mock,
+                                                 background.cq(), {handler});
     got_one.get_future()
         .then([&session](future<void>) { session.cancel(); })
         .get();
@@ -387,9 +381,8 @@ TEST(SubscriptionSessionTest, ShutdownWaitsConditionVars) {
       std::move(h).ack();
     };
 
-    auto session = CreateSubscriptionSession(
-        subscription, {}, mock, background.cq(), "fake-client-id", {handler},
-        pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
+    auto session = CreateTestSubscriptionSession(subscription, Options{}, mock,
+                                                 background.cq(), {handler});
     {
       std::unique_lock<std::mutex> lk(mu);
       cv.wait(lk, [&] { return ack_count >= kMaximumAcks; });
@@ -460,11 +453,10 @@ TEST(SubscriptionSessionTest, ShutdownWaitsEarlyAcks) {
       cv.notify_one();
     };
 
-    auto session = CreateSubscriptionSession(
+    auto session = CreateTestSubscriptionSession(
         subscription,
-        pubsub::SubscriberOptions{}.set_max_concurrency(2 * kMessageCount),
-        mock, background.cq(), "fake-client-id", {handler},
-        pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
+        Options{}.set<pubsub::MaxConcurrencyOption>(2 * kMessageCount), mock,
+        background.cq(), {handler});
     {
       std::unique_lock<std::mutex> lk(mu);
       cv.wait(lk, [&] { return ack_count >= kMessageCount; });
@@ -532,15 +524,14 @@ TEST(SubscriptionSessionTest, FireAndForget) {
         if (++ack_count % kMessageCount == 0) cv.notify_one();
       };
 
-      (void)CreateSubscriptionSession(
+      (void)CreateTestSubscriptionSession(
           subscription,
-          pubsub::SubscriberOptions{}
-              .set_max_outstanding_messages(kMessageCount / 2)
-              .set_max_concurrency(kMessageCount / 2)
-              .set_shutdown_polling_period(std::chrono::milliseconds(20)),
-          mock, background.cq(), "fake-client-id", {handler},
-          pubsub_testing::TestRetryPolicy(),
-          pubsub_testing::TestBackoffPolicy())
+          Options{}
+              .set<pubsub::MaxOutstandingMessagesOption>(kMessageCount / 2)
+              .set<pubsub::MaxConcurrencyOption>(kMessageCount / 2)
+              .set<pubsub::ShutdownPollingPeriodOption>(
+                  std::chrono::milliseconds(20)),
+          mock, background.cq(), {handler})
           .then([&](future<Status> f) {
             std::unique_lock<std::mutex> lk(mu);
             status = f.get();
@@ -616,12 +607,11 @@ TEST(SubscriptionSessionTest, FireAndForgetShutdown) {
   internal::AutomaticallyCreatedBackgroundThreads background(1);
   {
     auto handler = [&](pubsub::Message const&, pubsub::AckHandler) {};
-    (void)CreateSubscriptionSession(
+    (void)CreateTestSubscriptionSession(
         subscription,
-        pubsub::SubscriberOptions{}.set_shutdown_polling_period(
+        Options{}.set<pubsub::ShutdownPollingPeriodOption>(
             std::chrono::milliseconds(100)),
-        mock, background.cq(), "fake-client-id", {handler},
-        pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy())
+        mock, background.cq(), {handler})
         .then([&shutdown_completed](future<Status> f) {
           shutdown_completed.set_value(f.get());
         });
