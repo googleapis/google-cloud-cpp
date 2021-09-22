@@ -14,6 +14,9 @@
 
 #include "google/cloud/background_threads_factory.h"
 #include <gmock/gmock.h>
+#include <chrono>
+#include <future>
+#include <thread>
 
 namespace google {
 namespace cloud {
