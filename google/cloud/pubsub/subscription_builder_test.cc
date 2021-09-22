@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "subscription_builder.h"
+#include "google/cloud/pubsub/subscription_builder.h"
 #include "google/cloud/pubsub/topic_builder.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>

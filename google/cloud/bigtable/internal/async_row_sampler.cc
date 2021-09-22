@@ -15,8 +15,8 @@
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "absl/memory/memory.h"
-#include "grpcpp/client_context.h"
-#include "grpcpp/completion_queue.h"
+#include <grpcpp/client_context.h>
+#include <grpcpp/completion_queue.h>
 #include <chrono>
 
 namespace google {

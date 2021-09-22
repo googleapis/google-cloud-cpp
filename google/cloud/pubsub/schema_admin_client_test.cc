@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "schema_admin_client.h"
+#include "google/cloud/pubsub/schema_admin_client.h"
 #include "google/cloud/pubsub/mocks/mock_schema_admin_connection.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"

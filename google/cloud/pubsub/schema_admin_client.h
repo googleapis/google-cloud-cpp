@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SCHEMA_ADMIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SCHEMA_ADMIN_CLIENT_H
 
+#include "google/cloud/pubsub/schema.h"
+#include "google/cloud/pubsub/schema_admin_connection.h"
 #include "google/cloud/pubsub/version.h"
-#include "schema.h"
-#include "schema_admin_connection.h"
 #include <memory>
 #include <string>
 

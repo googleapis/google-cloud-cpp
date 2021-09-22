@@ -21,7 +21,6 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/options.h"
-#include "default_retry_policies.h"
 #include <chrono>
 #include <limits>
 #include <thread>
