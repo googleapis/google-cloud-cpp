@@ -28,10 +28,6 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 Options MakeTestOptions(Options opts = {});
 
-std::unique_ptr<pubsub::RetryPolicy const> TestRetryPolicy();
-
-std::unique_ptr<pubsub::BackoffPolicy const> TestBackoffPolicy();
-
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_testing
 }  // namespace cloud

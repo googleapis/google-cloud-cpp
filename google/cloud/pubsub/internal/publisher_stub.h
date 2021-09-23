@@ -99,16 +99,6 @@ class PublisherStub {
 std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(Options const& opts,
                                                           int channel_id);
 
-// TODO(#6306) - Remove this function when we are done with it.
-/**
- * Creates a PublisherStub configured with @p options and @p channel_id.
- *
- * @p channel_id should be unique among all stubs in the same Connection pool,
- * to ensure they use different underlying connections.
- */
-std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
-    pubsub::ConnectionOptions options, int channel_id);
-
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud

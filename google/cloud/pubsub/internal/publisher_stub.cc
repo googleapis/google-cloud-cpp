@@ -129,13 +129,6 @@ std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(Options const& opts,
       google::pubsub::v1::Publisher::NewStub(CreateChannel(opts, channel_id)));
 }
 
-std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
-    pubsub::ConnectionOptions options, int channel_id) {
-  return std::make_shared<DefaultPublisherStub>(
-      google::pubsub::v1::Publisher::NewStub(
-          CreateChannel(std::move(options), channel_id)));
-}
-
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud

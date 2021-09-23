@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/defaults.h"
-#include "google/cloud/pubsub/internal/default_retry_policies.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/connection_options.h"
@@ -61,10 +60,14 @@ Options DefaultCommonOptions(Options opts) {
     opts.set<GrpcTracingOptionsOption>(internal::DefaultTracingOptions());
   }
   if (!opts.has<pubsub::RetryPolicyOption>()) {
-    opts.set<pubsub::RetryPolicyOption>(DefaultRetryPolicy()->clone());
+    opts.set<pubsub::RetryPolicyOption>(
+        pubsub::LimitedTimeRetryPolicy(std::chrono::seconds(60)).clone());
   }
   if (!opts.has<pubsub::BackoffPolicyOption>()) {
-    opts.set<pubsub::BackoffPolicyOption>(DefaultBackoffPolicy()->clone());
+    opts.set<pubsub::BackoffPolicyOption>(
+        pubsub::ExponentialBackoffPolicy(std::chrono::milliseconds(100),
+                                         std::chrono::seconds(60), 1.3)
+            .clone());
   }
   if (opts.get<GrpcBackgroundThreadPoolSizeOption>() == 0) {
     opts.set<GrpcBackgroundThreadPoolSizeOption>(DefaultThreadCount());
@@ -136,8 +139,8 @@ Options DefaultSubscriberOptions(Options opts) {
   // disconnects as non-failures" code.
   if (!opts.has<pubsub::RetryPolicyOption>()) {
     opts.set<pubsub::RetryPolicyOption>(
-        std::make_shared<pubsub::LimitedErrorCountRetryPolicy>(
-            (std::numeric_limits<int>::max)()));
+        pubsub::LimitedErrorCountRetryPolicy((std::numeric_limits<int>::max)())
+            .clone());
   }
 
   // Enforce constraints
