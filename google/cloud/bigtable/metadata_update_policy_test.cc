@@ -75,7 +75,7 @@ TEST_F(MetadataUpdatePolicyTest, SimpleDefault) {
   EXPECT_THAT(created.api_client_header(), HasSubstr("gl-cpp/"));
   EXPECT_THAT(created.api_client_header(), HasSubstr("gccl/"));
   EXPECT_THAT(created.api_client_header(),
-              ::testing::AnyOf(HasSubstr("-noex-"), HasSubstr("-ex-")));
+              AnyOf(HasSubstr("-noex-"), HasSubstr("-ex-")));
 }
 
 }  // namespace

@@ -26,6 +26,9 @@ namespace cloud {
 namespace bigtable {
 namespace testing {
 
+using ::testing::ContainerEq;
+using ::testing::IsEmpty;
+
 std::string TableTestEnvironment::project_id_;
 std::string TableTestEnvironment::instance_id_;
 std::string TableTestEnvironment::zone_a_;
@@ -218,7 +221,7 @@ void TableIntegrationTest::CreateCells(
     bulk.emplace_back(std::move(kv.second));
   }
   auto failures = table.BulkApply(std::move(bulk));
-  ASSERT_THAT(failures, ::testing::IsEmpty());
+  ASSERT_THAT(failures, IsEmpty());
 }
 
 std::vector<bigtable::Cell> TableIntegrationTest::GetCellsIgnoringTimestamp(
@@ -240,7 +243,7 @@ void TableIntegrationTest::CheckEqualUnordered(
     std::vector<bigtable::Cell> expected, std::vector<bigtable::Cell> actual) {
   std::sort(expected.begin(), expected.end());
   std::sort(actual.begin(), actual.end());
-  EXPECT_THAT(actual, ::testing::ContainerEq(expected));
+  EXPECT_THAT(actual, ContainerEq(expected));
 }
 
 std::string TableIntegrationTest::RandomTableId() {

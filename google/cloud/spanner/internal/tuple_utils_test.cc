@@ -22,6 +22,8 @@ namespace cloud {
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 
+using ::testing::ElementsAre;
+
 TEST(TupleUtils, IsTuple) {
   using T0 = std::tuple<>;
   static_assert(IsTuple<T0>::value, "");
@@ -56,7 +58,7 @@ TEST(TupleUtils, ForEachMultipleTypes) {
   auto tup = std::make_tuple(true, 42);
   std::vector<std::string> v;
   ForEach(tup, Stringify{}, v);
-  EXPECT_THAT(v, testing::ElementsAre("1", "42"));
+  EXPECT_THAT(v, ElementsAre("1", "42"));
 }
 
 TEST(TupleUtils, ForEachMutate) {

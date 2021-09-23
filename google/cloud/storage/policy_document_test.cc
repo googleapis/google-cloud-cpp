@@ -24,6 +24,9 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
+
+using ::testing::IsSubsetOf;
+
 PolicyDocument CreatePolicyDocumentForTest() {
   PolicyDocument result;
   result.expiration =
@@ -88,7 +91,7 @@ TEST(PolicyDocumentTests, Parsing) {
 TEST(PolicyDocumentTests, StartsWith) {
   auto condition = PolicyDocumentCondition::StartsWith("key", "");
   std::vector<std::string> subset = {"starts-with", "$key", ""};
-  EXPECT_THAT(subset, ::testing::IsSubsetOf(condition));
+  EXPECT_THAT(subset, IsSubsetOf(condition));
 }
 
 /**
@@ -98,7 +101,7 @@ TEST(PolicyDocumentTests, StartsWith) {
 TEST(PolicyDocumentTests, ExactMatchObject) {
   auto condition = PolicyDocumentCondition::ExactMatch("bucket", "travel-maps");
   std::vector<std::string> subset = {"eq", "$bucket", "travel-maps"};
-  EXPECT_THAT(subset, ::testing::IsSubsetOf(condition));
+  EXPECT_THAT(subset, IsSubsetOf(condition));
 }
 
 /// @test Verify that PolicyDocumentCondition::ExactMatchObject works as
@@ -107,7 +110,7 @@ TEST(PolicyDocumentTests, ExactMatch) {
   auto condition =
       PolicyDocumentCondition::ExactMatchObject("Content-Type", "image/jpeg");
   std::vector<std::string> subset = {"Content-Type", "image/jpeg"};
-  EXPECT_THAT(subset, ::testing::IsSubsetOf(condition));
+  EXPECT_THAT(subset, IsSubsetOf(condition));
 }
 
 /**
@@ -117,7 +120,7 @@ TEST(PolicyDocumentTests, ExactMatch) {
 TEST(PolicyDocumentTests, ContentLengthRange) {
   auto condition = PolicyDocumentCondition::ContentLengthRange(0, 42);
   std::vector<std::string> subset = {"content-length-range", "0", "42"};
-  EXPECT_THAT(subset, ::testing::IsSubsetOf(condition));
+  EXPECT_THAT(subset, IsSubsetOf(condition));
 }
 
 /// @test Verify that PolicyDocumentCondition comparisons work as expected.

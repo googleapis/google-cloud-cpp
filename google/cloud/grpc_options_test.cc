@@ -29,6 +29,7 @@ namespace {
 
 using ::testing::Contains;
 using ::testing::ContainsRegex;
+using ::testing::IsEmpty;
 using ::testing::NotNull;
 using ThreadPool = internal::AutomaticallyCreatedBackgroundThreads;
 
@@ -189,7 +190,7 @@ TEST(GrpcOptionList, Expected) {
                   .set<GrpcBackgroundThreadPoolSizeOption>({})
                   .set<GrpcBackgroundThreadsFactoryOption>({});
   internal::CheckExpectedOptions<GrpcOptionList>(opts, "caller");
-  EXPECT_THAT(log.ExtractLines(), testing::IsEmpty());
+  EXPECT_THAT(log.ExtractLines(), IsEmpty());
 }
 
 TEST(GrpcOptionList, Unexpected) {

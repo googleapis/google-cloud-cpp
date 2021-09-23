@@ -28,6 +28,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
@@ -122,8 +123,8 @@ TEST(ObjectRequestsTest, ParseListResponse) {
 
   auto actual = ListObjectsResponse::FromHttpResponse(text).value();
   EXPECT_EQ("some-token-42", actual.next_page_token);
-  EXPECT_THAT(actual.items, ::testing::ElementsAre(o1, o2));
-  EXPECT_THAT(actual.prefixes, ::testing::ElementsAre("foo/", "qux/"));
+  EXPECT_THAT(actual.items, ElementsAre(o1, o2));
+  EXPECT_THAT(actual.prefixes, ElementsAre("foo/", "qux/"));
 }
 
 TEST(ObjectRequestsTest, ParseListResponseFailure) {

@@ -174,7 +174,7 @@ TEST(ListBucketsResponseTest, Parse) {
 
   auto actual = ListBucketsResponse::FromHttpResponse(text).value();
   EXPECT_EQ("some-token-42", actual.next_page_token);
-  EXPECT_THAT(actual.items, ::testing::ElementsAre(b1, b2));
+  EXPECT_THAT(actual.items, ElementsAre(b1, b2));
 }
 
 TEST(ListBucketsResponseTest, ParseFailure) {

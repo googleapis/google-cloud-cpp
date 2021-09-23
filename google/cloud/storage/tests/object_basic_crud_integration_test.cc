@@ -37,6 +37,7 @@ namespace {
 using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::Contains;
 using ::testing::Not;
+using ::testing::UnorderedElementsAreArray;
 using ObjectBasicCRUDIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 
@@ -138,7 +139,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
         };
     auto expected = acl_to_string_vector(update.acl());
     auto actual = acl_to_string_vector(updated_meta->acl());
-    EXPECT_THAT(expected, ::testing::UnorderedElementsAreArray(actual));
+    EXPECT_THAT(expected, UnorderedElementsAreArray(actual));
   }
   EXPECT_EQ(update.cache_control(), updated_meta->cache_control())
       << *updated_meta;
