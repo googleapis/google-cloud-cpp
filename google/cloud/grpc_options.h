@@ -124,7 +124,8 @@ struct GrpcBackgroundThreadsFactoryOption {
 using GrpcOptionList =
     OptionList<GrpcCredentialOption, GrpcNumChannelsOption,
                GrpcChannelArgumentsOption, GrpcChannelArgumentsNativeOption,
-               GrpcTracingOptionsOption, GrpcBackgroundThreadsFactoryOption>;
+               GrpcTracingOptionsOption, GrpcBackgroundThreadPoolSizeOption,
+               GrpcBackgroundThreadsFactoryOption>;
 
 namespace internal {
 

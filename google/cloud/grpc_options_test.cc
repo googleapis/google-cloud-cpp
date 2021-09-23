@@ -180,10 +180,16 @@ TEST(GrpcOptionList, GrpcBackgroundThreadPoolSizeIgnored) {
 
 TEST(GrpcOptionList, Expected) {
   testing_util::ScopedLog log;
-  Options opts;
-  opts.set<GrpcNumChannelsOption>(42);
+  auto opts = Options{}
+                  .set<GrpcCredentialOption>({})
+                  .set<GrpcNumChannelsOption>({})
+                  .set<GrpcChannelArgumentsOption>({})
+                  .set<GrpcChannelArgumentsNativeOption>({})
+                  .set<GrpcTracingOptionsOption>({})
+                  .set<GrpcBackgroundThreadPoolSizeOption>({})
+                  .set<GrpcBackgroundThreadsFactoryOption>({});
   internal::CheckExpectedOptions<GrpcOptionList>(opts, "caller");
-  EXPECT_TRUE(log.ExtractLines().empty());
+  EXPECT_THAT(log.ExtractLines(), testing::IsEmpty());
 }
 
 TEST(GrpcOptionList, Unexpected) {
