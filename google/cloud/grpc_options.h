@@ -112,15 +112,10 @@ struct GrpcBackgroundThreadPoolSizeOption {
 /**
  * The `CompletionQueue` to use for background gRPC work.
  *
- * Connections need to perform background work on behalf of the application.
- * Normally they just create a background thread and a `CompletionQueue` for
- * this work, but the application may need more fine-grained control of their
- * threads.
- *
- * It is assumed that if an application sets this option, the application is
- * already running the `CompletionQueue` on a thread pool it has created. The
- * client library will not create any background threads or attempt to call
- * `CompletionQueue::Run()`.
+ * If this option is set, the library will use the supplied `CompletionQueue`
+ * instead of its own. The caller is responsible for making sure there are
+ * thread(s) servicing this `CompletionQueue`. The client library will not
+ * create any background threads or attempt to call `CompletionQueue::Run()`.
  *
  * @note `GrpcBackgroundThreadPoolSizeOption`, `GrpcCompletionQueueOption`, and
  *     `GrpcBackgroundThreadsFactoryOption` are mutually exclusive.
