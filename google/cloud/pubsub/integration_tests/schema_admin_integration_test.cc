@@ -29,14 +29,17 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-using ::google::cloud::pubsub_testing::TestBackoffPolicy;
-using ::google::cloud::pubsub_testing::TestRetryPolicy;
+using ::google::cloud::pubsub_testing::MakeTestOptions;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::Not;
+
+SchemaAdminClient MakeTestSchemaAdminClient() {
+  return SchemaAdminClient(MakeSchemaAdminConnection(MakeTestOptions()));
+}
 
 using SchemaAdminIntegrationTest =
     ::google::cloud::testing_util::IntegrationTest;
@@ -46,8 +49,7 @@ TEST_F(SchemaAdminIntegrationTest, SchemaCRUD) {
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_FALSE(project_id.empty());
 
-  auto schema_admin =
-      SchemaAdminClient(MakeSchemaAdminConnection(pubsub::ConnectionOptions{}));
+  auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection());
 
   auto constexpr kTestAvroSchema = R"js({
      "type": "record",
@@ -93,8 +95,7 @@ TEST_F(SchemaAdminIntegrationTest, SchemaCRUD) {
 
 TEST_F(SchemaAdminIntegrationTest, CreateSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
-      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));
+  auto schema_admin = MakeTestSchemaAdminClient();
   google::pubsub::v1::CreateSchemaRequest request;
   auto response = schema_admin.CreateSchema(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -102,8 +103,7 @@ TEST_F(SchemaAdminIntegrationTest, CreateSchema) {
 
 TEST_F(SchemaAdminIntegrationTest, GetSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
-      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));
+  auto schema_admin = MakeTestSchemaAdminClient();
   auto response = schema_admin.GetSchema(
       Schema("--invalid-project--", "--invalid-schema--"));
   EXPECT_THAT(response, Not(IsOk()));
@@ -111,8 +111,7 @@ TEST_F(SchemaAdminIntegrationTest, GetSchema) {
 
 TEST_F(SchemaAdminIntegrationTest, ListSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
-      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));
+  auto schema_admin = MakeTestSchemaAdminClient();
   auto response = schema_admin.ListSchemas("--invalid-project");
   auto i = response.begin();
   ASSERT_FALSE(i == response.end());
@@ -121,8 +120,7 @@ TEST_F(SchemaAdminIntegrationTest, ListSchema) {
 
 TEST_F(SchemaAdminIntegrationTest, DeleteSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
-      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));
+  auto schema_admin = MakeTestSchemaAdminClient();
   auto response = schema_admin.DeleteSchema(
       Schema("--invalid-project--", "--invalid-schema--"));
   EXPECT_THAT(response, Not(IsOk()));
@@ -130,8 +128,7 @@ TEST_F(SchemaAdminIntegrationTest, DeleteSchema) {
 
 TEST_F(SchemaAdminIntegrationTest, ValidateSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
-      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));
+  auto schema_admin = MakeTestSchemaAdminClient();
   auto response = schema_admin.ValidateSchema("--invalid-project--",
                                               google::pubsub::v1::Schema{});
   EXPECT_THAT(response, Not(IsOk()));
@@ -139,8 +136,7 @@ TEST_F(SchemaAdminIntegrationTest, ValidateSchema) {
 
 TEST_F(SchemaAdminIntegrationTest, ValidateMessage) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
-      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));
+  auto schema_admin = MakeTestSchemaAdminClient();
   google::pubsub::v1::ValidateMessageRequest request;
   auto response = schema_admin.ValidateMessage(request);
   EXPECT_THAT(response, Not(IsOk()));
