@@ -30,6 +30,7 @@ namespace {
 using ::testing::Contains;
 using ::testing::ContainsRegex;
 using ::testing::IsEmpty;
+using ::testing::IsNull;
 using ::testing::NotNull;
 using ThreadPool = internal::AutomaticallyCreatedBackgroundThreads;
 
@@ -162,6 +163,48 @@ TEST(GrpcOptionList, GrpcBackgroundThreadPoolSizeOption) {
   EXPECT_EQ(4U, tp->pool_size());
 }
 
+TEST(GrpcOptionList, GrpcCompletionQueueOption) {
+  using ms = std::chrono::milliseconds;
+  CompletionQueue cq;
+  auto background = internal::MakeBackgroundThreadsFactory(
+      Options{}.set<GrpcCompletionQueueOption>(cq))();
+
+  // Schedule some work that cannot execute because there is no thread draining
+  // the completion queue.
+  promise<std::thread::id> p;
+  auto background_thread_id = p.get_future();
+  background->cq().RunAsync(
+      [&p](CompletionQueue&) { p.set_value(std::this_thread::get_id()); });
+  EXPECT_NE(std::future_status::ready, background_thread_id.wait_for(ms(10)));
+
+  // Verify we can create our own threads to drain the completion queue.
+  std::thread t([&cq] { cq.Run(); });
+  EXPECT_EQ(t.get_id(), background_thread_id.get());
+
+  cq.Shutdown();
+  t.join();
+}
+
+// Verify that the `GrpcCompletionQueueOption` takes precedence over the
+// `GrpcBackgroundThreadsFactoryOption` when both are set.
+TEST(GrpcOptionList, GrpcBackgroundThreadsFactoryIgnored) {
+  auto f = [] { return absl::make_unique<ThreadPool>(); };
+  auto threads = internal::MakeBackgroundThreadsFactory(
+      Options{}
+          .set<GrpcCompletionQueueOption>(CompletionQueue{})
+          // This value will be ignored because a `CompletionQueue` is supplied
+          .set<GrpcBackgroundThreadsFactoryOption>(f))();
+
+  // The two options return different classes derived from `BackgroundThreads`.
+  // Simply check that the type we received is what we expect from
+  // `GrpcCompletionQueueOption` and not `GrpcBackgroundThreadsFactoryOption`.
+  auto* custom_tp =
+      dynamic_cast<internal::CustomerSuppliedBackgroundThreads*>(threads.get());
+  EXPECT_THAT(custom_tp, NotNull());
+  auto* default_tp = dynamic_cast<ThreadPool*>(threads.get());
+  EXPECT_THAT(default_tp, IsNull());
+}
+
 // Verify that the `GrpcBackgroundThreadsFactoryOption` takes precedence over
 // the `GrpcBackgroundThreadPoolSizeOption` when both are set.
 TEST(GrpcOptionList, GrpcBackgroundThreadPoolSizeIgnored) {
@@ -188,6 +231,7 @@ TEST(GrpcOptionList, Expected) {
                   .set<GrpcChannelArgumentsNativeOption>({})
                   .set<GrpcTracingOptionsOption>({})
                   .set<GrpcBackgroundThreadPoolSizeOption>({})
+                  .set<GrpcCompletionQueueOption>({})
                   .set<GrpcBackgroundThreadsFactoryOption>({});
   internal::CheckExpectedOptions<GrpcOptionList>(opts, "caller");
   EXPECT_THAT(log.ExtractLines(), IsEmpty());

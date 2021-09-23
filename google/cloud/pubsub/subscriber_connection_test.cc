@@ -51,10 +51,7 @@ std::shared_ptr<SubscriberConnection> MakeTestSubscriberConnection(
 }
 
 Options UserSuppliedThreadsOption(CompletionQueue const& cq) {
-  return Options{}.set<GrpcBackgroundThreadsFactoryOption>([cq] {
-    return absl::make_unique<
-        google::cloud::internal::CustomerSuppliedBackgroundThreads>(cq);
-  });
+  return Options{}.set<GrpcCompletionQueueOption>(cq);
 }
 
 TEST(SubscriberConnectionTest, Basic) {

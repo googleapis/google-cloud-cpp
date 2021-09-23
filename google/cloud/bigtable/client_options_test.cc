@@ -578,7 +578,8 @@ TEST(ClientOptionsTest, CustomBackgroundThreads) {
   cq = CompletionQueue();
   client_options = ClientOptions().DisableBackgroundThreads(cq);
   auto opts = internal::MakeOptions(std::move(client_options));
-  background = opts.get<GrpcBackgroundThreadsFactoryOption>()();
+  background =
+      google::cloud::internal::MakeBackgroundThreadsFactory(std::move(opts))();
 
   check(cq, std::move(background));
 }

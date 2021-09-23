@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_OPTIONS_H
 
 #include "google/cloud/background_threads.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/options.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
@@ -96,10 +97,36 @@ struct GrpcTracingOptionsOption {
 /**
  * The size of the background thread pool
  *
- * @note This is ignored if `GrpcBackgroundThreadsFactoryOption` is set.
+ * These threads are created by the client library to run a `CompletionQueue`
+ * which performs background work for gRPC.
+ *
+ * @note `GrpcBackgroundThreadPoolSizeOption`, `GrpcCompletionQueueOption`, and
+ *     `GrpcBackgroundThreadsFactoryOption` are mutually exclusive. This option
+ *     will be ignored if either `GrpcCompletionQueueOption` or
+ *     `GrpcBackgroundThreadsFactoryOption` are set.
  */
 struct GrpcBackgroundThreadPoolSizeOption {
   using Type = std::size_t;
+};
+
+/**
+ * The `CompletionQueue` to use for background gRPC work.
+ *
+ * Connections need to perform background work on behalf of the application.
+ * Normally they just create a background thread and a `CompletionQueue` for
+ * this work, but the application may need more fine-grained control of their
+ * threads.
+ *
+ * It is assumed that if an application sets this option, the application is
+ * already running the `CompletionQueue` on a thread pool it has created. The
+ * client library will not create any background threads or attempt to call
+ * `CompletionQueue::Run()`.
+ *
+ * @note `GrpcBackgroundThreadPoolSizeOption`, `GrpcCompletionQueueOption`, and
+ *     `GrpcBackgroundThreadsFactoryOption` are mutually exclusive.
+ */
+struct GrpcCompletionQueueOption {
+  using Type = CompletionQueue;
 };
 
 using BackgroundThreadsFactory =
@@ -110,9 +137,15 @@ using BackgroundThreadsFactory =
  * Connections need to perform background work on behalf of the application.
  * Normally they just create a background thread and a `CompletionQueue` for
  * this work, but the application may need more fine-grained control of their
- * threads. In this case the application can provide its own
- * `BackgroundThreadsFactory` and it assumes responsibility for creating one or
- * more threads blocked on its `CompletionQueue::Run()`.
+ * threads.
+ *
+ * In this case the application can provide its own `BackgroundThreadsFactory`
+ * and it assumes responsibility for creating one or more threads blocked on its
+ * `CompletionQueue::Run()`.
+ *
+ * @note `GrpcBackgroundThreadPoolSizeOption`, `GrpcCompletionQueueOption`, and
+ *     `GrpcBackgroundThreadsFactoryOption` are mutually exclusive. This option
+ *     will be ignored if `GrpcCompletionQueueOption` is set.
  */
 struct GrpcBackgroundThreadsFactoryOption {
   using Type = BackgroundThreadsFactory;
@@ -125,7 +158,7 @@ using GrpcOptionList =
     OptionList<GrpcCredentialOption, GrpcNumChannelsOption,
                GrpcChannelArgumentsOption, GrpcChannelArgumentsNativeOption,
                GrpcTracingOptionsOption, GrpcBackgroundThreadPoolSizeOption,
-               GrpcBackgroundThreadsFactoryOption>;
+               GrpcCompletionQueueOption, GrpcBackgroundThreadsFactoryOption>;
 
 namespace internal {
 
