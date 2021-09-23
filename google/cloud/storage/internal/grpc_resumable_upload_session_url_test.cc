@@ -24,6 +24,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::testing::HasSubstr;
+
 TEST(GrpcUploadSessionTest, SimpleEncodeDecode) {
   ResumableUploadSessionGrpcParams input{"some-upload-id"};
   auto encoded = EncodeGrpcResumableUploadSessionUrl(input);
@@ -40,8 +42,7 @@ TEST(GrpcUploadSessionTest, MalformedUri) {
   auto res = DecodeGrpcResumableUploadSessionUrl("");
   ASSERT_FALSE(res);
   EXPECT_EQ(StatusCode::kInvalidArgument, res.status().code());
-  EXPECT_THAT(res.status().message(),
-              ::testing::HasSubstr("different implementation"));
+  EXPECT_THAT(res.status().message(), HasSubstr("different implementation"));
 }
 
 }  // namespace

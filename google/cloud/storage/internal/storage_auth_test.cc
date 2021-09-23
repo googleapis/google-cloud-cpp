@@ -108,8 +108,7 @@ TEST(StorageAuthTest, WriteObject) {
 TEST(StorageAuthTest, StartResumableWrite) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, StartResumableWrite)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto under_test = StorageAuth(MakeMockAuth(), mock);
   google::storage::v2::StartResumableWriteRequest request;
@@ -126,8 +125,7 @@ TEST(StorageAuthTest, StartResumableWrite) {
 TEST(StorageAuthTest, QueryWriteStatus) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, QueryWriteStatus)
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto under_test = StorageAuth(MakeMockAuth(), mock);
   google::storage::v2::QueryWriteStatusRequest request;

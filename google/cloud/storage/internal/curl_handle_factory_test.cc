@@ -23,6 +23,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 
 // Version of DefaultCurlHandleFactory that keeps track of what calls have been
@@ -80,7 +81,7 @@ TEST(CurlHandleFactoryTest, DefaultFactoryChannelOptionsCallsSetOptions) {
   auto const expected = std::make_pair(CURLOPT_CAINFO, std::string("foo"));
 
   object_under_test.CreateHandle();
-  EXPECT_THAT(object_under_test.set_options_, testing::ElementsAre(expected));
+  EXPECT_THAT(object_under_test.set_options_, ElementsAre(expected));
 }
 
 TEST(CurlHandleFactoryTest, PooledFactoryNoChannelOptionsDoesntCallSetOptions) {
@@ -98,14 +99,14 @@ TEST(CurlHandleFactoryTest, PooledFactoryChannelOptionsCallsSetOptions) {
 
   {
     object_under_test.CreateHandle();
-    EXPECT_THAT(object_under_test.set_options_, testing::ElementsAre(expected));
+    EXPECT_THAT(object_under_test.set_options_, ElementsAre(expected));
   }
   // the above should have left the handle in the cache. Check that cached
   // handles get their options set again.
   object_under_test.set_options_.clear();
 
   object_under_test.CreateHandle();
-  EXPECT_THAT(object_under_test.set_options_, testing::ElementsAre(expected));
+  EXPECT_THAT(object_under_test.set_options_, ElementsAre(expected));
 }
 
 }  // namespace

@@ -28,6 +28,8 @@ namespace bigtable {
 namespace benchmarks {
 namespace {
 
+using ::testing::HasSubstr;
+
 TEST(BenchmarkOptions, Basic) {
   auto options = ParseBenchmarkOptions(
       {"self-test", "--project-id=test-project", "--instance-id=test-instance",
@@ -72,7 +74,7 @@ TEST(BenchmarkOptions, Initialization) {
       },
       "");
   EXPECT_TRUE(std::regex_match(options->table_id, re));
-  EXPECT_THAT(options->notes, ::testing::HasSubstr(bigtable::version_string()));
+  EXPECT_THAT(options->notes, HasSubstr(bigtable::version_string()));
 }
 
 TEST(BenchmarkOptions, Description) {

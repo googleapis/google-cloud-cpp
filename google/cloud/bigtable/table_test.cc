@@ -26,6 +26,7 @@ namespace {
 
 namespace btproto = ::google::bigtable::v2;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
+using ::testing::HasSubstr;
 
 /// Define types and functions used in the tests.
 namespace {
@@ -94,21 +95,21 @@ TEST_F(TableTest, MoveAssignment) {
 TEST_F(TableTest, ChangeOnePolicy) {
   Table table(client_, "some-table", AlwaysRetryMutationPolicy());
   EXPECT_EQ("", table.app_profile_id());
-  EXPECT_THAT(table.table_name(), ::testing::HasSubstr("some-table"));
+  EXPECT_THAT(table.table_name(), HasSubstr("some-table"));
 }
 
 TEST_F(TableTest, ChangePolicies) {
   Table table(client_, "some-table", AlwaysRetryMutationPolicy(),
               LimitedErrorCountRetryPolicy(42));
   EXPECT_EQ("", table.app_profile_id());
-  EXPECT_THAT(table.table_name(), ::testing::HasSubstr("some-table"));
+  EXPECT_THAT(table.table_name(), HasSubstr("some-table"));
 }
 
 TEST_F(TableTest, ConstructorWithAppProfileAndPolicies) {
   Table table(client_, "test-profile-id", "some-table",
               AlwaysRetryMutationPolicy(), LimitedErrorCountRetryPolicy(42));
   EXPECT_EQ("test-profile-id", table.app_profile_id());
-  EXPECT_THAT(table.table_name(), ::testing::HasSubstr("some-table"));
+  EXPECT_THAT(table.table_name(), HasSubstr("some-table"));
 }
 
 std::string const kProjectId = "the-project";

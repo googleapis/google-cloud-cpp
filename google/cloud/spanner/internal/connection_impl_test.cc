@@ -2302,8 +2302,7 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
           "CAFEDEAD", "", "test-session-name", "DEADBEEF", "table",
           spanner::KeySet::All(), {"UserId", "UserName"}, read_options)};
 
-  EXPECT_THAT(*result, testing::UnorderedPointwise(testing::Eq(),
-                                                   expected_read_partitions));
+  EXPECT_THAT(*result, UnorderedPointwise(Eq(), expected_read_partitions));
 }
 
 TEST(ConnectionImplTest, PartitionReadPermanentFailure) {
@@ -2406,8 +2405,7 @@ TEST(ConnectionImplTest, PartitionQuerySuccess) {
       spanner_internal::MakeQueryPartition("CAFEDEAD", "", "test-session-name",
                                            "DEADBEEF", sql_statement)};
 
-  EXPECT_THAT(*result, testing::UnorderedPointwise(testing::Eq(),
-                                                   expected_query_partitions));
+  EXPECT_THAT(*result, UnorderedPointwise(Eq(), expected_query_partitions));
 }
 
 TEST(ConnectionImplTest, PartitionQueryPermanentFailure) {

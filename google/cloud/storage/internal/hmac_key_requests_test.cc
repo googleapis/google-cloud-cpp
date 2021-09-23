@@ -25,6 +25,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
@@ -165,7 +166,7 @@ TEST(HmacKeysRequestsTest, ParseListResponse) {
 
   auto actual = ListHmacKeysResponse::FromHttpResponse(text).value();
   EXPECT_EQ("some-token-42", actual.next_page_token);
-  EXPECT_THAT(actual.items, ::testing::ElementsAre(key1, key2));
+  EXPECT_THAT(actual.items, ElementsAre(key1, key2));
 }
 
 TEST(HmacKeysRequestsTest, ParseListResponseFailure) {

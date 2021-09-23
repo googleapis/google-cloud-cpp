@@ -24,6 +24,12 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
+
+using ::testing::ElementsAre;
+using ::testing::HasSubstr;
+using ::testing::Not;
+using ::testing::UnorderedElementsAre;
+
 LifecycleRule CreateLifecycleRuleForTest() {
   std::string text = R"""({
       "condition": {
@@ -51,8 +57,8 @@ TEST(LifecycleRuleTest, LifecycleRuleActionStream) {
   std::ostringstream os;
   os << action;
   auto actual = os.str();
-  EXPECT_THAT(actual, ::testing::HasSubstr("SetStorageClass"));
-  EXPECT_THAT(actual, ::testing::HasSubstr("STANDARD"));
+  EXPECT_THAT(actual, HasSubstr("SetStorageClass"));
+  EXPECT_THAT(actual, HasSubstr("STANDARD"));
 }
 
 /// @test Verify that LifecycleRule::DeleteAction() works as expected.
@@ -106,13 +112,13 @@ TEST(LifecycleRuleTest, ConditionStream) {
   std::ostringstream os;
   os << condition;
   auto actual = os.str();
-  EXPECT_THAT(actual, ::testing::HasSubstr("age=42"));
-  EXPECT_THAT(actual, ::testing::HasSubstr("num_newer_versions=7"));
-  EXPECT_THAT(actual,
-              ::testing::HasSubstr(
-                  "matches_storage_class=[NEARLINE, STANDARD, REGIONAL]"));
-  EXPECT_THAT(actual, ::testing::Not(::testing::HasSubstr("created_before")));
-  EXPECT_THAT(actual, ::testing::Not(::testing::HasSubstr("is_live")));
+  EXPECT_THAT(actual, HasSubstr("age=42"));
+  EXPECT_THAT(actual, HasSubstr("num_newer_versions=7"));
+  EXPECT_THAT(
+      actual,
+      HasSubstr("matches_storage_class=[NEARLINE, STANDARD, REGIONAL]"));
+  EXPECT_THAT(actual, Not(HasSubstr("created_before")));
+  EXPECT_THAT(actual, Not(HasSubstr("is_live")));
 }
 
 /// @test Verify that LifecycleRule::MaxAge() works as expected.
@@ -157,9 +163,9 @@ TEST(LifecycleRuleTest, MatchesStorageClasses) {
   auto condition = LifecycleRule::MatchesStorageClasses(
       {storage_class::Standard(), storage_class::Regional()});
   ASSERT_TRUE(condition.matches_storage_class.has_value());
-  EXPECT_THAT(*condition.matches_storage_class,
-              ::testing::ElementsAre(storage_class::Standard(),
-                                     storage_class::Regional()));
+  EXPECT_THAT(
+      *condition.matches_storage_class,
+      ElementsAre(storage_class::Standard(), storage_class::Regional()));
 }
 
 /// @test Verify that LifecycleRule::MatchesStorageClasses works as expected.
@@ -170,8 +176,8 @@ TEST(LifecycleRuleTest, MatchesStorageClassesIterator) {
       LifecycleRule::MatchesStorageClasses(classes.begin(), classes.end());
   ASSERT_TRUE(condition.matches_storage_class.has_value());
   EXPECT_THAT(*condition.matches_storage_class,
-              ::testing::UnorderedElementsAre(storage_class::Standard(),
-                                              storage_class::Regional()));
+              UnorderedElementsAre(storage_class::Standard(),
+                                   storage_class::Regional()));
 }
 
 /// @test LifecycleRule::MatchesStorageClassStandard.
@@ -331,7 +337,7 @@ TEST(LifecycleRuleTest, ConditionConjunctionIsLiveInvalid) {
       try {
         LifecycleRule::ConditionConjunction(c1, c2);
       } catch (std::exception const& ex) {
-        EXPECT_THAT(ex.what(), ::testing::HasSubstr("LifecycleRule"));
+        EXPECT_THAT(ex.what(), HasSubstr("LifecycleRule"));
         throw;
       },
       std::invalid_argument);
@@ -369,8 +375,8 @@ TEST(LifecycleRuleTest, ConditionConjunctionMatchesStorageClass) {
   auto condition = LifecycleRule::ConditionConjunction(c1, c2);
   ASSERT_TRUE(condition.matches_storage_class.has_value());
   EXPECT_THAT(*condition.matches_storage_class,
-              ::testing::UnorderedElementsAre(storage_class::Standard(),
-                                              storage_class::Nearline()));
+              UnorderedElementsAre(storage_class::Standard(),
+                                   storage_class::Nearline()));
 }
 
 /// @test Verify that LifecycleRule::ConditionConjunction() works as expected.
@@ -435,10 +441,10 @@ TEST(LifecycleRuleTest, ConditionConjunctionMultiple) {
   ASSERT_TRUE(condition.num_newer_versions.has_value());
   EXPECT_EQ(7, *condition.num_newer_versions);
   ASSERT_TRUE(condition.matches_storage_class.has_value());
-  EXPECT_THAT(*condition.matches_storage_class,
-              ::testing::UnorderedElementsAre(storage_class::Nearline(),
-                                              storage_class::Standard(),
-                                              storage_class::Regional()));
+  EXPECT_THAT(
+      *condition.matches_storage_class,
+      UnorderedElementsAre(storage_class::Nearline(), storage_class::Standard(),
+                           storage_class::Regional()));
 }
 
 /// @test Verify that LifecycleRule parsing works as expected.
@@ -469,10 +475,10 @@ TEST(LifecycleRuleTest, LifecycleRuleStream) {
   std::ostringstream os;
   os << rule;
   auto actual = os.str();
-  EXPECT_THAT(actual, ::testing::HasSubstr("age=42"));
-  EXPECT_THAT(actual, ::testing::HasSubstr("NEARLINE"));
-  EXPECT_THAT(actual, ::testing::HasSubstr("days_since_custom_time="));
-  EXPECT_THAT(actual, ::testing::HasSubstr("custom_time_before="));
+  EXPECT_THAT(actual, HasSubstr("age=42"));
+  EXPECT_THAT(actual, HasSubstr("NEARLINE"));
+  EXPECT_THAT(actual, HasSubstr("days_since_custom_time="));
+  EXPECT_THAT(actual, HasSubstr("custom_time_before="));
 }
 
 }  // namespace

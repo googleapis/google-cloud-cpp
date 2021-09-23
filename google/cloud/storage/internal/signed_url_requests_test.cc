@@ -26,6 +26,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 
 TEST(V2SignedUrlRequests, Sign) {
@@ -86,7 +87,7 @@ TEST(V2SignedUrlRequests, SigningAccount) {
   ASSERT_TRUE(request.signing_account_delegates().has_value());
   EXPECT_EQ("another-account@example.com", request.signing_account().value());
   EXPECT_THAT(request.signing_account_delegates().value(),
-              ::testing::ElementsAre("test-delegate1", "test-delegate2"));
+              ElementsAre("test-delegate1", "test-delegate2"));
 }
 
 TEST(V2SignedUrlRequests, SignEscaped) {
@@ -245,7 +246,7 @@ TEST(V4SignUrlRequest, SigningAccount) {
   ASSERT_TRUE(request.signing_account_delegates().has_value());
   EXPECT_EQ("another-account@example.com", request.signing_account().value());
   EXPECT_THAT(request.signing_account_delegates().value(),
-              ::testing::ElementsAre("test-delegate1", "test-delegate2"));
+              ElementsAre("test-delegate1", "test-delegate2"));
 }
 
 TEST(V4SignedUrlRequests, CanonicalQueryStringBasic) {

@@ -26,6 +26,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::ElementsAre;
 
 TEST(PolicyDocumentRequest, SigningAccount) {
   PolicyDocumentRequest request;
@@ -39,7 +40,7 @@ TEST(PolicyDocumentRequest, SigningAccount) {
   ASSERT_TRUE(request.signing_account_delegates().has_value());
   EXPECT_EQ("another-account@example.com", request.signing_account().value());
   EXPECT_THAT(request.signing_account_delegates().value(),
-              ::testing::ElementsAre("test-delegate1", "test-delegate2"));
+              ElementsAre("test-delegate1", "test-delegate2"));
 }
 
 TEST(PolicyDocumentV4Request, SigningAccount) {
@@ -54,7 +55,7 @@ TEST(PolicyDocumentV4Request, SigningAccount) {
   ASSERT_TRUE(request.signing_account_delegates().has_value());
   EXPECT_EQ("another-account@example.com", request.signing_account().value());
   EXPECT_THAT(request.signing_account_delegates().value(),
-              ::testing::ElementsAre("test-delegate1", "test-delegate2"));
+              ElementsAre("test-delegate1", "test-delegate2"));
 }
 
 TEST(PostPolicyV4EscapeTest, OnlyAscii) {
