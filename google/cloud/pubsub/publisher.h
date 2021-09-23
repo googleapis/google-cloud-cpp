@@ -121,7 +121,7 @@ class Publisher {
    *
    * Note that the message may be batched, depending on the Publisher's
    * configuration. It could be delayed until the batch has enough messages,
-   * or enough data, or enough time has elapsed. See the `PublisherOptions`
+   * or enough data, or enough time has elapsed. See the `PublisherOptionList`
    * documentation for more details.
    *
    * @par Idempotency
@@ -170,9 +170,8 @@ class Publisher {
    * Resumes publishing after an error.
    *
    * If the publisher options have message ordering enabled (see
-   * `PublisherOptions::message_ordering()`) all messages for a key that
-   * experience failure will be rejected until the application calls this
-   * function.
+   * `MessageOrderingOption`) all messages for a key that experience failure
+   * will be rejected until the application calls this function.
    *
    * @par Idempotency
    * This function never initiates a remote RPC, so there are no considerations

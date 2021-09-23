@@ -44,9 +44,9 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * To minimize I/O overhead we batch the Ack/Nack responses from the application
  * into larger `Write()` requests. Some test set these numbers to different
  * values, and in the future we may expose them to the application via
- * `pubsub::SubscriberOptions`. For now they are only available in
- * `pubsub_internal` because it is always easy to add new APIs later vs.
- * removing these any APIs or accessors.
+ * `Options` from the `pubsub::SubscriberOptionList`. For now they are only
+ * available in `pubsub_internal` because it is always easy to add new APIs
+ * later vs. removing these any APIs or accessors.
  */
 struct AckBatchingConfig {
   AckBatchingConfig() = default;
