@@ -30,8 +30,7 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-using ::google::cloud::pubsub_testing::TestBackoffPolicy;
-using ::google::cloud::pubsub_testing::TestRetryPolicy;
+using ::google::cloud::pubsub_testing::MakeTestOptions;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::ScopedEnvironment;
@@ -42,6 +41,10 @@ using ::testing::Not;
 
 bool UsingEmulator() {
   return google::cloud::internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
+}
+
+TopicAdminClient MakeTestTopicAdminClient() {
+  return TopicAdminClient(MakeTopicAdminConnection(MakeTestOptions()));
 }
 
 using TopicAdminIntegrationTest =
@@ -66,8 +69,7 @@ TEST_F(TopicAdminIntegrationTest, TopicCRUD) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   Topic topic(project_id, pubsub_testing::RandomTopicId(generator));
 
-  auto publisher =
-      TopicAdminClient(MakeTopicAdminConnection(ConnectionOptions{}));
+  auto publisher = TopicAdminClient(MakeTopicAdminConnection());
 
   EXPECT_THAT(topic_names(publisher, project_id),
               Not(Contains(topic.FullName())));
@@ -102,8 +104,7 @@ TEST_F(TopicAdminIntegrationTest, TopicCRUD) {
 
 TEST_F(TopicAdminIntegrationTest, CreateTopicFailure) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto publisher = TopicAdminClient(
-      MakeTopicAdminConnection({}, TestRetryPolicy(), TestBackoffPolicy()));
+  auto publisher = MakeTestTopicAdminClient();
   auto create_response = publisher.CreateTopic(
       TopicBuilder(Topic("invalid-project", "invalid-topic")));
   ASSERT_FALSE(create_response);
@@ -111,16 +112,14 @@ TEST_F(TopicAdminIntegrationTest, CreateTopicFailure) {
 
 TEST_F(TopicAdminIntegrationTest, GetTopicFailure) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto publisher = TopicAdminClient(
-      MakeTopicAdminConnection({}, TestRetryPolicy(), TestBackoffPolicy()));
+  auto publisher = MakeTestTopicAdminClient();
   auto response = publisher.GetTopic(Topic("invalid-project", "invalid-topic"));
   ASSERT_FALSE(response);
 }
 
 TEST_F(TopicAdminIntegrationTest, UpdateTopicFailure) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto publisher = TopicAdminClient(
-      MakeTopicAdminConnection({}, TestRetryPolicy(), TestBackoffPolicy()));
+  auto publisher = MakeTestTopicAdminClient();
   auto response = publisher.UpdateTopic(
       TopicBuilder(Topic("invalid-project", "invalid-topic")));
   ASSERT_FALSE(response);
@@ -128,8 +127,7 @@ TEST_F(TopicAdminIntegrationTest, UpdateTopicFailure) {
 
 TEST_F(TopicAdminIntegrationTest, ListTopicsFailure) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto publisher = TopicAdminClient(
-      MakeTopicAdminConnection({}, TestRetryPolicy(), TestBackoffPolicy()));
+  auto publisher = MakeTestTopicAdminClient();
   auto list = publisher.ListTopics("--invalid-project--");
   auto i = list.begin();
   EXPECT_FALSE(i == list.end());
@@ -138,8 +136,7 @@ TEST_F(TopicAdminIntegrationTest, ListTopicsFailure) {
 
 TEST_F(TopicAdminIntegrationTest, DeleteTopicFailure) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto publisher = TopicAdminClient(
-      MakeTopicAdminConnection({}, TestRetryPolicy(), TestBackoffPolicy()));
+  auto publisher = MakeTestTopicAdminClient();
   auto delete_response =
       publisher.DeleteTopic(Topic("invalid-project", "invalid-topic"));
   ASSERT_FALSE(delete_response.ok());
@@ -147,8 +144,7 @@ TEST_F(TopicAdminIntegrationTest, DeleteTopicFailure) {
 
 TEST_F(TopicAdminIntegrationTest, DetachSubscriptionFailure) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto publisher = TopicAdminClient(
-      MakeTopicAdminConnection({}, TestRetryPolicy(), TestBackoffPolicy()));
+  auto publisher = MakeTestTopicAdminClient();
   auto response = publisher.DetachSubscription(
       Subscription("invalid-project", "invalid-subscription"));
   ASSERT_FALSE(response.ok());
@@ -156,8 +152,7 @@ TEST_F(TopicAdminIntegrationTest, DetachSubscriptionFailure) {
 
 TEST_F(TopicAdminIntegrationTest, ListTopicSubscriptionsFailure) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto publisher = TopicAdminClient(
-      MakeTopicAdminConnection({}, TestRetryPolicy(), TestBackoffPolicy()));
+  auto publisher = MakeTestTopicAdminClient();
   auto list = publisher.ListTopicSubscriptions(
       Topic("invalid-project", "invalid-topic"));
   auto i = list.begin();
@@ -167,8 +162,7 @@ TEST_F(TopicAdminIntegrationTest, ListTopicSubscriptionsFailure) {
 
 TEST_F(TopicAdminIntegrationTest, ListTopicSnapshotsFailure) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto publisher = TopicAdminClient(
-      MakeTopicAdminConnection({}, TestRetryPolicy(), TestBackoffPolicy()));
+  auto publisher = MakeTestTopicAdminClient();
   auto list =
       publisher.ListTopicSnapshots(Topic("invalid-project", "invalid-topic"));
   auto i = list.begin();

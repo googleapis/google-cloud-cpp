@@ -104,7 +104,7 @@ class SubscriberIntegrationTest
 };
 
 TEST_F(SubscriberIntegrationTest, RawStub) {
-  auto publisher = Publisher(MakePublisherConnection(topic_, {}));
+  auto publisher = Publisher(MakePublisherConnection(topic_));
 
   internal::AutomaticallyCreatedBackgroundThreads background(4);
   auto stub = pubsub_internal::CreateDefaultSubscriberStub(
@@ -181,8 +181,7 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
   };
 
   auto publisher = Publisher(MakePublisherConnection(
-      topic_, {},
-      pubsub::ConnectionOptions{}.set_background_thread_pool_size(2)));
+      topic_, Options{}.set<GrpcBackgroundThreadPoolSizeOption>(2)));
 
   internal::AutomaticallyCreatedBackgroundThreads background(4);
   auto stub = pubsub_internal::CreateDefaultSubscriberStub(
@@ -262,7 +261,7 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
 }
 
 TEST_F(SubscriberIntegrationTest, PublishPullAck) {
-  auto publisher = Publisher(MakePublisherConnection(topic_, {}));
+  auto publisher = Publisher(MakePublisherConnection(topic_));
   auto subscriber = Subscriber(MakeSubscriberConnection(subscription_));
 
   std::mutex mu;
@@ -317,7 +316,7 @@ TEST_F(SubscriberIntegrationTest, FireAndForget) {
   std::vector<Status> publish_errors;
   auto constexpr kMinimumMessages = 10;
 
-  auto publisher = Publisher(MakePublisherConnection(topic_, {}));
+  auto publisher = Publisher(MakePublisherConnection(topic_));
   auto subscriber = Subscriber(MakeSubscriberConnection(subscription_));
   {
     (void)subscriber
@@ -364,7 +363,7 @@ TEST_F(SubscriberIntegrationTest, FireAndForget) {
 }
 
 TEST_F(SubscriberIntegrationTest, ReportNotFound) {
-  auto publisher = Publisher(MakePublisherConnection(topic_, {}));
+  auto publisher = Publisher(MakePublisherConnection(topic_));
   auto const not_found_id = pubsub_testing::RandomSubscriptionId(generator_);
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
@@ -381,7 +380,7 @@ TEST_F(SubscriberIntegrationTest, ReportNotFound) {
 
 TEST_F(SubscriberIntegrationTest, PublishOrdered) {
   auto publisher = Publisher(MakePublisherConnection(
-      topic_, pubsub::PublisherOptions{}.enable_message_ordering()));
+      topic_, Options{}.set<MessageOrderingOption>(true)));
   auto subscriber = Subscriber(MakeSubscriberConnection(ordered_subscription_));
 
   struct SampleData {

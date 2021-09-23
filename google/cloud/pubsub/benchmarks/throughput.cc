@@ -17,6 +17,7 @@
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -211,27 +212,28 @@ void PrintResult(std::string const& operation, int iteration,
 }
 
 pubsub::Publisher CreatePublisher(Config const& config) {
-  auto publisher_options =
-      pubsub::PublisherOptions{}
-          .set_maximum_batch_message_count(config.publisher_max_batch_size)
-          .set_maximum_batch_bytes(
-              static_cast<std::size_t>(config.publisher_max_batch_bytes));
-  auto connection_options =
-      pubsub::ConnectionOptions{}.set_channel_pool_domain("Publisher");
+  namespace gc = ::google::cloud;
+  auto options =
+      gc::Options{}
+          .set<pubsub::MaxBatchMessagesOption>(config.publisher_max_batch_size)
+          .set<pubsub::MaxBatchBytesOption>(
+              static_cast<std::size_t>(config.publisher_max_batch_bytes))
+          .set<gc::GrpcChannelArgumentsOption>(
+              {{GRPC_ARG_CHANNEL_POOL_DOMAIN, "Publisher"}});
   if (!config.endpoint.empty()) {
-    connection_options.set_endpoint(config.endpoint);
+    options.set<gc::EndpointOption>(config.endpoint);
   }
   if (config.publisher_io_threads != 0) {
-    connection_options.set_background_thread_pool_size(
+    options.set<gc::GrpcBackgroundThreadPoolSizeOption>(
         config.publisher_io_threads);
   }
   if (config.publisher_io_channels != 0) {
-    connection_options.set_num_channels(config.publisher_io_channels);
+    options.set<google::cloud::GrpcNumChannelsOption>(
+        config.publisher_io_channels);
   }
 
   return pubsub::Publisher(pubsub::MakePublisherConnection(
-      pubsub::Topic(config.project_id, config.topic_id),
-      std::move(publisher_options), std::move(connection_options)));
+      pubsub::Topic(config.project_id, config.topic_id), std::move(options)));
 }
 
 std::atomic<std::int64_t> send_count{0};
@@ -404,28 +406,31 @@ void PublisherTask(Config const& config) {
 }
 
 pubsub::Subscriber CreateSubscriber(Config const& config) {
-  auto subscriber_options =
-      pubsub::SubscriberOptions{}
-          .set_max_outstanding_messages(
+  namespace gc = ::google::cloud;
+  auto options =
+      gc::Options{}
+          .set<pubsub::MaxOutstandingMessagesOption>(
               config.subscriber_max_outstanding_messages)
-          .set_max_outstanding_bytes(config.subscriber_max_outstanding_bytes)
-          .set_max_concurrency(config.subscriber_max_concurrency);
-  auto connection_options =
-      pubsub::ConnectionOptions{}.set_channel_pool_domain("Subscriber");
+          .set<pubsub::MaxOutstandingBytesOption>(
+              config.subscriber_max_outstanding_bytes)
+          .set<pubsub::MaxConcurrencyOption>(config.subscriber_max_concurrency)
+          .set<gc::GrpcChannelArgumentsOption>(
+              {{GRPC_ARG_CHANNEL_POOL_DOMAIN, "Subscriber"}});
   if (!config.endpoint.empty()) {
-    connection_options.set_endpoint(config.endpoint);
+    options.set<gc::EndpointOption>(config.endpoint);
   }
   if (config.subscriber_io_threads != 0) {
-    connection_options.set_background_thread_pool_size(
+    options.set<gc::GrpcBackgroundThreadPoolSizeOption>(
         config.subscriber_io_threads);
   }
   if (config.subscriber_io_channels != 0) {
-    connection_options.set_num_channels(config.subscriber_io_channels);
+    options.set<google::cloud::GrpcNumChannelsOption>(
+        config.subscriber_io_channels);
   }
 
   return pubsub::Subscriber(pubsub::MakeSubscriberConnection(
       pubsub::Subscription(config.project_id, config.subscription_id),
-      std::move(subscriber_options), std::move(connection_options)));
+      std::move(options)));
 }
 
 void SubscriberTask(Config const& config) {
