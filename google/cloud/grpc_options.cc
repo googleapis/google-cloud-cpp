@@ -61,6 +61,12 @@ absl::optional<std::string> GetStringChannelArgument(
 }
 
 BackgroundThreadsFactory MakeBackgroundThreadsFactory(Options const& opts) {
+  if (opts.has<GrpcCompletionQueueOption>()) {
+    auto const& cq = opts.get<GrpcCompletionQueueOption>();
+    return [cq] {
+      return absl::make_unique<CustomerSuppliedBackgroundThreads>(cq);
+    };
+  }
   if (opts.has<GrpcBackgroundThreadsFactoryOption>()) {
     return opts.get<GrpcBackgroundThreadsFactoryOption>();
   }
