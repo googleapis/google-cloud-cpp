@@ -157,6 +157,11 @@ void DiffStorageClass(BucketMetadataPatchBuilder& builder,
   }
 }
 
+void DiffRpo(BucketMetadataPatchBuilder& builder, BucketMetadata const& o,
+             BucketMetadata const& u) {
+  if (o.rpo() != u.rpo()) builder.SetRpo(u.rpo());
+}
+
 void DiffVersioning(BucketMetadataPatchBuilder& builder,
                     BucketMetadata const& o, BucketMetadata const& u) {
   if (o.versioning() == u.versioning()) return;
@@ -193,6 +198,7 @@ BucketMetadataPatchBuilder DiffBucketMetadata(BucketMetadata const& original,
   DiffLogging(builder, original, updated);
   DiffName(builder, original, updated);
   DiffRetentionPolicy(builder, original, updated);
+  DiffRpo(builder, original, updated);
   DiffStorageClass(builder, original, updated);
   DiffVersioning(builder, original, updated);
   DiffWebsite(builder, original, updated);
@@ -340,7 +346,8 @@ StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
   if (json.count("bindings") != 0) {
     if (!json["bindings"].is_array()) {
       std::ostringstream os;
-      os << "Invalid IamPolicy payload, expected array for 'bindings' field."
+      os << "Invalid IamPolicy payload, expected array for 'bindings' "
+            "field."
          << "  payload=" << payload;
       return Status(StatusCode::kInvalidArgument, os.str());
     }

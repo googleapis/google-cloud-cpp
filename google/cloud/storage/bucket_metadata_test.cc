@@ -151,6 +151,7 @@ BucketMetadata CreateBucketMetadataForTest() {
           "isLocked": false,
           "retentionPeriod": 86400
       },
+      "rpo": "DEFAULT",
       "selfLink": "https://storage.googleapis.com/storage/v1/b/test-bucket",
       "storageClass": "STANDARD",
       "timeCreated": "2018-05-19T19:31:14Z",
@@ -269,6 +270,9 @@ TEST(BucketMetadataTest, Parse) {
             actual.retention_policy().retention_period);
   EXPECT_FALSE(actual.retention_policy().is_locked);
 
+  // rpo
+  EXPECT_EQ("DEFAULT", actual.rpo());
+
   EXPECT_EQ("https://storage.googleapis.com/storage/v1/b/test-bucket",
             actual.self_link());
   EXPECT_EQ(storage_class::Standard(), actual.storage_class());
@@ -349,6 +353,9 @@ TEST(BucketMetadataTest, IOStream) {
       actual,
       HasSubstr("retention_policy.effective_time=2018-10-01T12:34:56Z"));
   EXPECT_THAT(actual, HasSubstr("retention_policy.is_locked=false"));
+
+  // rpo()
+  EXPECT_THAT(actual, HasSubstr("rpo=DEFAULT"));
 
   // versioning()
   EXPECT_THAT(actual, HasSubstr("versioning.enabled=true"));
@@ -459,6 +466,10 @@ TEST(BucketMetadataTest, ToJsonString) {
       {"retentionPeriod", 86400},
   };
   EXPECT_EQ(expected_retention_policy, actual["retentionPolicy"]);
+
+  // rpo()
+  EXPECT_TRUE(actual.contains("rpo"));
+  EXPECT_EQ("DEFAULT", actual.value("rpo", ""));
 
   // storage_class()
   ASSERT_EQ("STANDARD", actual.value("storageClass", ""));
@@ -760,6 +771,17 @@ TEST(BucketMetadataTest, ResetRetentionPolicy) {
   std::ostringstream os;
   os << copy;
   EXPECT_THAT(os.str(), Not(HasSubstr("retention_policy.")));
+}
+
+/// @test Verify we can change the retention policy in BucketMetadata.
+TEST(BucketMetadataTest, SetRPO) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  copy.set_rpo("ASYNC_TURBO");
+  EXPECT_NE(expected, copy);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), HasSubstr("rpo=ASYNC_TURBO"));
 }
 
 /// @test Verify we can clear the versioning field in BucketMetadata.
@@ -1146,6 +1168,27 @@ TEST(BucketMetadataPatchBuilder, ResetRetentionPolicy) {
   auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("retentionPolicy")) << json;
   ASSERT_TRUE(json["retentionPolicy"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetRpo) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetRpo("ASYNC_TURBO");
+
+  auto actual = builder.BuildPatch();
+  auto json = nlohmann::json::parse(actual);
+  ASSERT_TRUE(json.contains("rpo")) << json;
+  ASSERT_TRUE(json["rpo"].is_string()) << json;
+  EXPECT_EQ("ASYNC_TURBO", json.value("rpo", "")) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, ResetRpo) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetRpo();
+
+  auto actual = builder.BuildPatch();
+  auto json = nlohmann::json::parse(actual);
+  ASSERT_TRUE(json.contains("rpo")) << json;
+  ASSERT_TRUE(json["rpo"].is_null()) << json;
 }
 
 TEST(BucketMetadataPatchBuilder, SetStorageClass) {

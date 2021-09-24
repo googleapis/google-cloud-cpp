@@ -600,6 +600,18 @@ TEST(PatchBucketRequestTest, DiffResetRetentionPolicy) {
   EXPECT_EQ(expected, patch);
 }
 
+TEST(PatchBucketRequestTest, DiffSetRpo) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.set_rpo(RpoDefault());
+  BucketMetadata updated = original;
+  updated.set_rpo(RpoAsyncTurbo());
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({"rpo": "ASYNC_TURBO"})""");
+  EXPECT_EQ(expected, patch);
+}
+
 TEST(PatchBucketRequestTest, DiffSetStorageClass) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.set_storage_class(storage_class::Standard());

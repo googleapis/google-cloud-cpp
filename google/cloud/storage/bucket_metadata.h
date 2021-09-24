@@ -436,6 +436,12 @@ inline bool operator>=(BucketRetentionPolicy const& lhs,
 
 std::ostream& operator<<(std::ostream& os, BucketRetentionPolicy const& rhs);
 
+/// A helper function to avoid typos in the RPO configuration
+inline std::string RpoDefault() { return "DEFAULT"; }
+
+/// A helper function to avoid typos in the RPO configuration
+inline std::string RpoAsyncTurbo() { return "ASYNC_TURBO"; }
+
 /**
  * The versioning configuration for a Bucket.
  *
@@ -818,6 +824,17 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   }
   //@}
 
+  //@{
+  /**
+   * @name Accessors and modifiers for the Recovery Point Objective.
+   */
+  std::string const& rpo() const { return rpo_; }
+  BucketMetadata& set_rpo(std::string v) {
+    rpo_ = std::move(v);
+    return *this;
+  }
+  //@}
+
   using CommonMetadata::storage_class;
   BucketMetadata& set_storage_class(std::string v) {
     CommonMetadata::set_storage_class(std::move(v));
@@ -893,6 +910,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   absl::optional<BucketLogging> logging_;
   std::int64_t project_number_ = 0;
   absl::optional<BucketRetentionPolicy> retention_policy_;
+  std::string rpo_;
   absl::optional<BucketVersioning> versioning_;
   absl::optional<BucketWebsite> website_;
 };
@@ -976,6 +994,9 @@ class BucketMetadataPatchBuilder {
         retention_period, std::chrono::system_clock::time_point{}, false});
   }
   BucketMetadataPatchBuilder& ResetRetentionPolicy();
+
+  BucketMetadataPatchBuilder& SetRpo(std::string const& v);
+  BucketMetadataPatchBuilder& ResetRpo();
 
   BucketMetadataPatchBuilder& SetStorageClass(std::string const& v);
   BucketMetadataPatchBuilder& ResetStorageClass();
