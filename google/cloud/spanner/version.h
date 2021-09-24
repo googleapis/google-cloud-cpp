@@ -16,8 +16,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_VERSION_H
 
 #include "google/cloud/spanner/version_info.h"
+#include "google/cloud/internal/attributes.h"
 #include "google/cloud/version.h"
 #include <string>
+
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED(name)                 \
+  GOOGLE_CLOUD_CPP_DEPRECATED(                                              \
+      "google::cloud::spanner::" name                                       \
+      " is deprecated, and will be removed on or shortly after 2022-10-01." \
+      " Please use google::cloud::spanner_admin::" name                     \
+      " instead. See GitHub issue #7356 for more information.")
 
 #define SPANNER_CLIENT_NS GOOGLE_CLOUD_CPP_NS
 

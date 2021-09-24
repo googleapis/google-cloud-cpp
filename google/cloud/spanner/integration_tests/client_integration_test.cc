@@ -14,7 +14,6 @@
 
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
-#include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/internal/getenv.h"

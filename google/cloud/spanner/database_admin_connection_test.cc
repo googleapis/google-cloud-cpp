@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// TODO(#7356): Remove this file after the deprecation period expires
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/database_admin_connection.h"
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/options.h"

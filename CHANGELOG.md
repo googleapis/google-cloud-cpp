@@ -52,6 +52,20 @@
   the call site. See [#5929] for more details.
 </details>
 
+<details>
+<summary>2022-10-01: retiring legacy Spanner admin APIs</summary>
+<br>
+
+* On 2022-10-01 (or shortly after) we are planning to remove the hand-written
+  versions of the Spanner admin APIs. These have been superseded by versions
+  generated automatically from the service definitions. The new APIs can be
+  found in the [`google/cloud/spanner/admin` tree](https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/spanner/admin)
+  and within the `google::cloud::spanner_admin` namespace. Starting with
+  the v1.32.0 release, and depending on your compiler settings, using these
+  classes/functions may elicit a deprecation warning. See [#7356] for more
+  details.
+</details>
+
 ## v1.32.0 - TBD
 
 ### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
