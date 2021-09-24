@@ -56,10 +56,10 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * this class is not guaranteed to work.
  *
  * @par Background Threads
- * This class uses the background threads configured via `ConnectionOptions`.
- * Applications can create their own pool of background threads by (a) creating
- * their own #google::cloud::v1::CompletionQueue, (b) setting this completion
- * queue in `pubsub::ConnectionOptions::DisableBackgroundThreads()`, and (c)
+ * This class uses the background threads configured via the `Options` from
+ * `GrpcOptionList`. Applications can create their own pool of background
+ * threads by (a) creating their own #google::cloud::v1::CompletionQueue, (b)
+ * passing this completion queue as a `GrpcCompletionQueueOption`, and (c)
  * attaching any number of threads to the completion queue.
  *
  * @par Example: using a custom thread pool
