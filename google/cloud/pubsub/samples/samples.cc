@@ -1355,6 +1355,8 @@ void CustomThreadPoolPublisher(std::vector<std::string> const& argv) {
   //! [custom-thread-pool-publisher]
   namespace pubsub = ::google::cloud::pubsub;
   using ::google::cloud::future;
+  using ::google::cloud::GrpcCompletionQueueOption;
+  using ::google::cloud::Options;
   using ::google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     // Create our own completion queue to run the background activity, such as
@@ -1369,8 +1371,7 @@ void CustomThreadPoolPublisher(std::vector<std::string> const& argv) {
 
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
     auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
-        std::move(topic), pubsub::PublisherOptions{},
-        pubsub::ConnectionOptions{}.DisableBackgroundThreads(cq)));
+        std::move(topic), Options{}.set<GrpcCompletionQueueOption>(cq)));
 
     std::vector<future<void>> ids;
     for (char const* data : {"1", "2", "3", "go!"}) {
@@ -1616,6 +1617,8 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
   //! [custom-thread-pool-subscriber]
   namespace pubsub = ::google::cloud::pubsub;
   using ::google::cloud::future;
+  using ::google::cloud::GrpcCompletionQueueOption;
+  using ::google::cloud::Options;
   using ::google::cloud::StatusOr;
   [](std::string project_id, std::string subscription_id) {
     // Create our own completion queue to run the background activity.
@@ -1629,8 +1632,7 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
 
     auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
         pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
-        pubsub::SubscriberOptions{},
-        pubsub::ConnectionOptions{}.DisableBackgroundThreads(cq)));
+        Options{}.set<GrpcCompletionQueueOption>(cq)));
 
     // Because this is an example we want to exit eventually, use a mutex and
     // condition variable to notify the current thread and stop the example.
