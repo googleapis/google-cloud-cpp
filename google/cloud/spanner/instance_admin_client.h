@@ -61,7 +61,8 @@ inline namespace SPANNER_CLIENT_NS {
  * [spanner-doc-link]:
  * https://cloud.google.com/spanner/docs/api-libraries-overview
  */
-class InstanceAdminClient {
+class GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED("InstanceAdminClient")
+    InstanceAdminClient {
  public:
   explicit InstanceAdminClient(std::shared_ptr<InstanceAdminConnection> conn)
       : conn_(std::move(conn)) {}

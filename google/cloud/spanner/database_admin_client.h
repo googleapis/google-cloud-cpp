@@ -114,7 +114,8 @@ inline namespace SPANNER_CLIENT_NS {
  * [database-doc-link]:
  * https://cloud.google.com/spanner/docs/schema-and-data-model
  */
-class DatabaseAdminClient {
+class GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED("DatabaseAdminClient")
+    DatabaseAdminClient {
  public:
   explicit DatabaseAdminClient(
       ConnectionOptions const& options = ConnectionOptions());
