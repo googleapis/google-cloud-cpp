@@ -249,7 +249,6 @@ void ToJsonAcl(nlohmann::json& json, BucketMetadata const& meta) {
 
 void ToJsonCors(nlohmann::json& json, BucketMetadata const& meta) {
   if (meta.cors().empty()) return;
-
   nlohmann::json value;
   for (CorsEntry const& v : meta.cors()) {
     nlohmann::json cors_as_json;
@@ -370,7 +369,6 @@ void ToJsonLocationType(nlohmann::json& json, BucketMetadata const& meta) {
 
 void ToJsonLogging(nlohmann::json& json, BucketMetadata const& meta) {
   if (!meta.has_logging()) return;
-
   nlohmann::json value;
   SetIfNotEmpty(value, "logBucket", meta.logging().log_bucket);
   SetIfNotEmpty(value, "logObjectPrefix", meta.logging().log_object_prefix);
