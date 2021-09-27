@@ -217,7 +217,7 @@ struct BucketIamConfiguration {
 //@{
 /// @name Public Access Prevention helper functions
 inline std::string PublicAccessPreventionEnforced() { return "enforced"; }
-inline std::string PublicAccessInherited() { return "inherited"; }
+inline std::string PublicAccessPreventionInherited() { return "inherited"; }
 inline std::string PublicAccessPreventionUnspecified() { return "unspecified"; }
 //@}
 
