@@ -17,9 +17,9 @@
 #include "google/cloud/storage/internal/common_metadata_parser.h"
 #include "google/cloud/storage/internal/lifecycle_rule_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
-#include "absl/functional/function_ref.h"
 #include "absl/strings/str_format.h"
 #include <nlohmann/json.hpp>
+#include <functional>
 
 namespace google {
 namespace cloud {
@@ -410,8 +410,7 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
     return Status(StatusCode::kInvalidArgument, __func__);
   }
 
-  using Parser =
-      absl::FunctionRef<Status(BucketMetadata&, nlohmann::json const&)>;
+  using Parser = std::function<Status(BucketMetadata&, nlohmann::json const&)>;
   Parser parsers[] = {
       [](BucketMetadata& meta, nlohmann::json const& json) {
         return CommonMetadataParser<BucketMetadata>::FromJson(meta, json);
