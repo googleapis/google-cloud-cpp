@@ -29,7 +29,8 @@ RUN apt-get update && \
 
 # #### Abseil
 
-# We need a recent version of Abseil.
+# Debian 11 ships with Abseil==20200923.3.  Unfortunately, the current gRPC version needs
+# Abseil>=20210324.
 
 # ```bash
 WORKDIR /var/tmp/build/abseil-cpp
@@ -70,29 +71,18 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
 
 # #### nlohmann_json library
 
-# The project depends on the nlohmann_json library. We use CMake to
-# install it as this installs the necessary CMake configuration files.
-# Note that this is a header-only library, and often installed manually.
-# This leaves your environment without support for CMake pkg-config.
+# Debian 11 also ships with nlohmann-json==3.9.1, which is recent enough for our needs:
 
 # ```bash
-WORKDIR /var/tmp/build/json
-RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.2.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_SHARED_LIBS=yes \
-      -DBUILD_TESTING=OFF \
-      -H. -Bcmake-out/nlohmann/json && \
-    cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
-    ldconfig
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y nlohmann-json3-dev
 # ```
 
 # #### Protobuf
 
 # Unless you are only using the Google Cloud Storage library the project
 # needs Protobuf and gRPC. Unfortunately the version of Protobuf that ships
-# with Debian 10 is not recent enough to support the protos published by
+# with Debian 11 is not recent enough to support the protos published by
 # Google Cloud. We need to build from source:
 
 # ```bash
