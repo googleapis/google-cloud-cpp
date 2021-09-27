@@ -38,7 +38,8 @@ namespace internal {
 struct BucketMetadataParser;
 class GrpcClient;
 // TODO(#7365) - remove once PAP reaches GA
-absl::optional<std::string> const& NormalizePap(absl::optional<std::string> const& pap);
+absl::optional<std::string> const& NormalizePap(
+    absl::optional<std::string> const& pap);
 }  // namespace internal
 
 /**

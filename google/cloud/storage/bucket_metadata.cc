@@ -31,8 +31,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 absl::optional<std::string> const& NormalizePap(
     absl::optional<std::string> const& pap) {
-  static auto const* normalized = new absl::optional<std::string>(
-    PublicAccessInherited());
+  static auto const* normalized =
+      new absl::optional<std::string>(PublicAccessInherited());
   if (!pap.has_value()) return pap;
   if (*pap == PublicAccessPreventionUnspecified()) return pap;
   return *normalized;
