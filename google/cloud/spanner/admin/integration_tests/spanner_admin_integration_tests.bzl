@@ -17,6 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 spanner_admin_integration_tests = [
+    "backup_extra_integration_test.cc",
     "backup_integration_test.cc",
     "database_admin_integration_test.cc",
     "instance_admin_integration_test.cc",
