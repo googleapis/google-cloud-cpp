@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -70,9 +70,10 @@ bool Emulator() {
   return emulator;
 }
 
-class BackupTest : public ::google::cloud::testing_util::IntegrationTest {
+class BackupExtraIntegrationTest
+    : public ::google::cloud::testing_util::IntegrationTest {
  public:
-  BackupTest()
+  BackupExtraIntegrationTest()
       : generator_(google::cloud::internal::MakeDefaultPRNG()),
         database_admin_client_(MakeDatabaseAdminConnection(
             ConnectionOptions{},
@@ -92,7 +93,7 @@ class BackupTest : public ::google::cloud::testing_util::IntegrationTest {
 };
 
 /// @test Verify creating/restoring a backup with a valid version_time.
-TEST_F(BackupTest, CreateBackupWithVersionTime) {
+TEST_F(BackupExtraIntegrationTest, BackupRestoreWithVersionTime) {
   if (!RunSlowBackupTests()) GTEST_SKIP();
 
   auto instance_id = spanner_testing::PickRandomInstance(
@@ -233,7 +234,7 @@ TEST_F(BackupTest, CreateBackupWithVersionTime) {
 }
 
 /// @test Verify creating a backup with an expired version_time fails.
-TEST_F(BackupTest, CreateBackupWithExpiredVersionTime) {
+TEST_F(BackupExtraIntegrationTest, BackupWithExpiredVersionTime) {
   auto instance_id =
       spanner_testing::PickRandomInstance(generator_, ProjectId());
   ASSERT_THAT(instance_id, IsOk()) << instance_id.status();
@@ -271,7 +272,7 @@ TEST_F(BackupTest, CreateBackupWithExpiredVersionTime) {
 }
 
 /// @test Verify creating a backup with a future version_time fails.
-TEST_F(BackupTest, CreateBackupWithFutureVersionTime) {
+TEST_F(BackupExtraIntegrationTest, BackupWithFutureVersionTime) {
   auto instance_id =
       spanner_testing::PickRandomInstance(generator_, ProjectId());
   ASSERT_THAT(instance_id, IsOk()) << instance_id.status();
@@ -309,7 +310,7 @@ TEST_F(BackupTest, CreateBackupWithFutureVersionTime) {
 }
 
 /// @test Tests backup/restore with Customer Managed Encryption Key
-TEST_F(BackupTest, BackupTestWithCMEK) {
+TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
   if (!RunSlowBackupTests() || Emulator()) GTEST_SKIP();
 
   auto instance_id = spanner_testing::PickRandomInstance(

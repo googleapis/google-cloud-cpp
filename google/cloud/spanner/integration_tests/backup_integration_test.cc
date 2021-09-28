@@ -60,9 +60,10 @@ bool Emulator() {
   return emulator;
 }
 
-class BackupTest : public ::google::cloud::testing_util::IntegrationTest {
+class BackupIntegrationTest
+    : public ::google::cloud::testing_util::IntegrationTest {
  public:
-  BackupTest()
+  BackupIntegrationTest()
       : generator_(google::cloud::internal::MakeDefaultPRNG()),
         database_admin_client_(MakeDatabaseAdminConnection(
             ConnectionOptions{},
@@ -82,7 +83,7 @@ class BackupTest : public ::google::cloud::testing_util::IntegrationTest {
 };
 
 /// @test Backup related integration tests.
-TEST_F(BackupTest, BackupTest) {
+TEST_F(BackupIntegrationTest, BackupRestore) {
   if (!RunSlowBackupTests() || Emulator()) GTEST_SKIP();
 
   auto instance_id = spanner_testing::PickRandomInstance(
