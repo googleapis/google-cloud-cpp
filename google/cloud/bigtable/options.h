@@ -81,7 +81,9 @@ struct MinConnectionRefreshOption {
 /**
  * Maximum time in ms to refresh connections.
  *
- * The server will disconnect idle connections before this time.
+ * The server will disconnect idle connections before this time. The
+ * connections will not be automatically refreshed in the background if this
+ * value is set to `0`.
  *
  * @note If this value is less than the value of `MinConnectionRefreshOption`,
  * it will be set to the value of `MinConnectionRefreshOption`.
