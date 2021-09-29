@@ -19,6 +19,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
+#include <functional>
 #include <thread>
 
 namespace google {
@@ -65,10 +66,10 @@ class KeyFileIntegrationTest
 };
 
 StatusOr<internal::HttpResponse> RetryHttpRequest(
-    internal::CurlRequest request) {
+    std::function<internal::CurlRequest()> const& factory) {
   StatusOr<internal::HttpResponse> response;
   for (int i = 0; i != 3; ++i) {
-    response = request.MakeRequest({});
+    response = factory().MakeRequest({});
     if (response) return response;
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }
@@ -96,10 +97,13 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
-  internal::CurlRequestBuilder builder(
-      *signed_url, storage::internal::GetDefaultCurlHandleFactory());
+  auto factory = [&] {
+    internal::CurlRequestBuilder builder(
+        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
+    return builder.BuildRequest();
+  };
 
-  auto response = RetryHttpRequest(builder.BuildRequest());
+  auto response = RetryHttpRequest(factory);
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
 
@@ -127,10 +131,13 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
-  internal::CurlRequestBuilder builder(
-      *signed_url, storage::internal::GetDefaultCurlHandleFactory());
+  auto factory = [&] {
+    internal::CurlRequestBuilder builder(
+        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
+    return builder.BuildRequest();
+  };
 
-  auto response = RetryHttpRequest(builder.BuildRequest());
+  auto response = RetryHttpRequest(factory);
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
 

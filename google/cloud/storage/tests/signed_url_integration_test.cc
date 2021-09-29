@@ -19,6 +19,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
+#include <functional>
 #include <thread>
 
 namespace google {
@@ -47,10 +48,11 @@ class SignedUrlIntegrationTest
 };
 
 StatusOr<internal::HttpResponse> RetryHttpRequest(
-    internal::CurlRequest request, std::string const& payload = {}) {
+    std::function<internal::CurlRequest()> const& factory,
+    std::string const& payload = {}) {
   StatusOr<internal::HttpResponse> response;
   for (int i = 0; i != 3; ++i) {
-    response = request.MakeRequest(payload);
+    response = factory().MakeRequest(payload);
     if (response) return response;
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }
@@ -78,10 +80,13 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlGet) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
-  internal::CurlRequestBuilder builder(
-      *signed_url, storage::internal::GetDefaultCurlHandleFactory());
+  auto factory = [&] {
+    internal::CurlRequestBuilder builder(
+        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
+    return builder.BuildRequest();
+  };
 
-  auto response = RetryHttpRequest(builder.BuildRequest());
+  auto response = RetryHttpRequest(factory);
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
 
@@ -104,12 +109,15 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlPut) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
-  internal::CurlRequestBuilder builder(
-      *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-  builder.SetMethod("PUT");
-  builder.AddHeader("content-type: application/octet-stream");
+  auto factory = [&] {
+    internal::CurlRequestBuilder builder(
+        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
+    builder.SetMethod("PUT");
+    builder.AddHeader("content-type: application/octet-stream");
+    return builder.BuildRequest();
+  };
 
-  auto response = RetryHttpRequest(builder.BuildRequest(), expected);
+  auto response = RetryHttpRequest(factory, expected);
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
 
@@ -142,10 +150,13 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlGet) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
-  internal::CurlRequestBuilder builder(
-      *signed_url, storage::internal::GetDefaultCurlHandleFactory());
+  auto factory = [&] {
+    internal::CurlRequestBuilder builder(
+        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
+    return builder.BuildRequest();
+  };
 
-  auto response = RetryHttpRequest(builder.BuildRequest());
+  auto response = RetryHttpRequest(factory);
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
 
@@ -167,11 +178,14 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlPut) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
-  internal::CurlRequestBuilder builder(
-      *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-  builder.SetMethod("PUT");
+  auto factory = [&] {
+    internal::CurlRequestBuilder builder(
+        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
+    builder.SetMethod("PUT");
+    return builder.BuildRequest();
+  };
 
-  auto response = RetryHttpRequest(builder.BuildRequest(), expected);
+  auto response = RetryHttpRequest(factory, expected);
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
 
