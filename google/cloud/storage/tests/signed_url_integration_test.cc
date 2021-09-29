@@ -83,7 +83,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlGet) {
   auto factory = [&] {
     internal::CurlRequestBuilder builder(
         *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryHttpRequest(factory);
@@ -114,7 +114,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlPut) {
         *signed_url, storage::internal::GetDefaultCurlHandleFactory());
     builder.SetMethod("PUT");
     builder.AddHeader("content-type: application/octet-stream");
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryHttpRequest(factory, expected);
@@ -153,7 +153,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlGet) {
   auto factory = [&] {
     internal::CurlRequestBuilder builder(
         *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryHttpRequest(factory);
@@ -182,7 +182,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlPut) {
     internal::CurlRequestBuilder builder(
         *signed_url, storage::internal::GetDefaultCurlHandleFactory());
     builder.SetMethod("PUT");
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryHttpRequest(factory, expected);

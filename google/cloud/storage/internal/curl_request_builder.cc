@@ -45,7 +45,7 @@ CurlRequestBuilder::CurlRequestBuilder(
       logging_enabled_(false),
       transfer_stall_timeout_(0) {}
 
-CurlRequest CurlRequestBuilder::BuildRequest() {
+CurlRequest CurlRequestBuilder::BuildRequest() && {
   ValidateBuilderState(__func__);
   CurlRequest request;
   request.url_ = std::move(url_);

@@ -58,7 +58,8 @@ class MinimalIamCredentialsRestImpl : public MinimalIamCredentialsRest {
         {"scope", request.scopes},
         {"lifetime", std::to_string(request.lifetime.count()) + "s"},
     };
-    auto response = builder.BuildRequest().MakeRequest(payload.dump());
+    auto response =
+        std::move(builder).BuildRequest().MakeRequest(payload.dump());
     if (!response) return std::move(response).status();
     if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
       return AsStatus(*response);

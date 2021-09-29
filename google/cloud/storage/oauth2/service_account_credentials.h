@@ -179,22 +179,20 @@ class ServiceAccountCredentials : public Credentials {
 
  private:
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() {
-    HttpRequestBuilderType request_builder(
+    HttpRequestBuilderType builder(
         info_.token_uri,
         storage::internal::GetDefaultCurlHandleFactory(options_));
-    request_builder.AddHeader(
-        "Content-Type: application/x-www-form-urlencoded");
+    builder.AddHeader("Content-Type: application/x-www-form-urlencoded");
     // This is the value of grant_type for JSON-formatted service account
     // keyfiles downloaded from Cloud Console.
     std::string grant_type("grant_type=");
     grant_type +=
-        request_builder
-            .MakeEscapedString("urn:ietf:params:oauth:grant-type:jwt-bearer")
+        builder.MakeEscapedString("urn:ietf:params:oauth:grant-type:jwt-bearer")
             .get();
 
     auto payload =
         CreateServiceAccountRefreshPayload(info_, grant_type, clock_.now());
-    auto response = request_builder.BuildRequest().MakeRequest(payload);
+    auto response = std::move(builder).BuildRequest().MakeRequest(payload);
     if (!response) return std::move(response).status();
     if (response->status_code >= 300) return AsStatus(*response);
     return ParseServiceAccountRefreshResponse(*response, clock_.now());

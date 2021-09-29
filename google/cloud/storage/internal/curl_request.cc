@@ -68,7 +68,7 @@ CurlRequest::~CurlRequest() {
   if (factory_) factory_->CleanupHandle(std::move(handle_));
 }
 
-StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) {
+StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) && {
   handle_.SetOption(CURLOPT_UPLOAD, 0L);
   if (!payload.empty()) {
     handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload.length());
@@ -78,7 +78,7 @@ StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) {
 }
 
 StatusOr<HttpResponse> CurlRequest::MakeUploadRequest(
-    ConstBufferSequence payload) {
+    ConstBufferSequence payload) && {
   handle_.SetOption(CURLOPT_UPLOAD, 0L);
   if (payload.empty()) return MakeRequestImpl();
   if (payload.size() == 1) {

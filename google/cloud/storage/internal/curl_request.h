@@ -47,10 +47,10 @@ class CurlRequest {
    *
    * @return The response HTTP error code, the headers and an empty payload.
    */
-  StatusOr<HttpResponse> MakeRequest(std::string const& payload);
+  StatusOr<HttpResponse> MakeRequest(std::string const& payload) &&;
 
   /// @copydoc MakeRequest(std::string const&)
-  StatusOr<HttpResponse> MakeUploadRequest(ConstBufferSequence payload);
+  StatusOr<HttpResponse> MakeUploadRequest(ConstBufferSequence payload) &&;
 
  private:
   /// Handle a libcurl error during the request.

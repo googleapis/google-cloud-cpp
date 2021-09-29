@@ -100,7 +100,7 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
   auto factory = [&] {
     internal::CurlRequestBuilder builder(
         *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryHttpRequest(factory);
@@ -134,7 +134,7 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
   auto factory = [&] {
     internal::CurlRequestBuilder builder(
         *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryHttpRequest(factory);
