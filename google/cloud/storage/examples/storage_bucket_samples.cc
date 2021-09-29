@@ -377,28 +377,26 @@ void SetPublicAccessPreventionEnforced(google::cloud::storage::Client client,
   (std::move(client), argv.at(0));
 }
 
-void SetPublicAccessPreventionUnspecified(
-    google::cloud::storage::Client client,
-    std::vector<std::string> const& argv) {
+void SetPublicAccessPreventionInherited(google::cloud::storage::Client client,
+                                        std::vector<std::string> const& argv) {
   // [START storage_set_public_access_prevention_unspecified]
+  // [START storage_set_public_access_prevention_inherited]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     gcs::BucketIamConfiguration configuration;
     configuration.public_access_prevention =
-        gcs::PublicAccessPreventionUnspecified();
-    StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
+        gcs::PublicAccessPreventionInherited();
+    auto updated = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().SetIamConfiguration(
                          std::move(configuration)));
+    if (!updated) throw std::runtime_error(updated.status().message());
 
-    if (!updated_metadata) {
-      throw std::runtime_error(updated_metadata.status().message());
-    }
-
-    std::cout << "Public Access Prevention is set to 'unspecified' for "
-              << updated_metadata->name() << "\n";
+    std::cout << "Public Access Prevention is set to 'inherited' for "
+              << updated->name() << "\n";
   }
   // [END storage_set_public_access_prevention_unspecified]
+  // [END storage_set_public_access_prevention_inherited]
   (std::move(client), argv.at(0));
 }
 
@@ -575,9 +573,9 @@ void RunAll(std::vector<std::string> const& argv) {
             << std::endl;
   SetPublicAccessPreventionEnforced(client, {bucket_name});
 
-  std::cout << "\nRunning SetPublicAccessPreventionUnspecified() example"
+  std::cout << "\nRunning SetPublicAccessPreventionInherited() example"
             << std::endl;
-  SetPublicAccessPreventionUnspecified(client, {bucket_name});
+  SetPublicAccessPreventionInherited(client, {bucket_name});
 
   std::cout << "\nRunning GetPublicAccessPrevention() example" << std::endl;
   GetPublicAccessPrevention(client, {bucket_name});
@@ -654,8 +652,8 @@ int main(int argc, char* argv[]) {
                  DisableUniformBucketLevelAccess),
       make_entry("get-uniform-bucket-level-access", {},
                  GetUniformBucketLevelAccess),
-      make_entry("set-public-access-prevention-unspecified", {},
-                 SetPublicAccessPreventionUnspecified),
+      make_entry("set-public-access-prevention-inherited", {},
+                 SetPublicAccessPreventionInherited),
       make_entry("set-public-access-prevention-enforced", {},
                  SetPublicAccessPreventionEnforced),
       make_entry("get-public-access-prevention", {}, GetPublicAccessPrevention),
