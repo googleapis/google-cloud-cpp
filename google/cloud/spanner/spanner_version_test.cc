@@ -43,6 +43,7 @@ TEST(SpannerVersionTest, Format) {
 /// @test Verify the version does not contain build info for release builds.
 TEST(SpannerVersionTest, NoBuildInfoInRelease) {
   if (!google::cloud::internal::build_metadata().empty()) {
+    EXPECT_THAT(google::cloud::internal::build_metadata(), Not(HasSubstr("@")));
     EXPECT_THAT(VersionString(),
                 HasSubstr("+" + google::cloud::internal::build_metadata()));
     return;
