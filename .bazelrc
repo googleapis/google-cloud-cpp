@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# NOTE: This file is not loaded if google-cloud-cpp is built as part of a
+# larger project.
+
 # To workaround a bug in Bazel [1], gRPC requires this flag on macOS builds,
 # and there is (AFAIK) no way to "inherit" their definitions.
 #   [1]: https://github.com/bazelbuild/bazel/issues/4341
