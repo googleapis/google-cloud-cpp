@@ -30,7 +30,7 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 GoldenKitchenSinkMetadata::GoldenKitchenSinkMetadata(
     std::shared_ptr<GoldenKitchenSinkStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader()) {}
+      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 GoldenKitchenSinkMetadata::GenerateAccessToken(

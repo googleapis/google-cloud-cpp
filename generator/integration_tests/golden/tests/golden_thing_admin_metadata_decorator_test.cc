@@ -32,7 +32,8 @@ using ::google::cloud::testing_util::IsContextMDValid;
 class MetadataDecoratorTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    expected_api_client_header_ = google::cloud::internal::ApiClientHeader();
+    expected_api_client_header_ =
+        google::cloud::internal::ApiClientHeader("generator");
     mock_ = std::make_shared<MockGoldenThingAdminStub>();
   }
 

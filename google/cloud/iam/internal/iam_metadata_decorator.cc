@@ -29,7 +29,8 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 IAMMetadata::IAMMetadata(std::shared_ptr<IAMStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader()) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
 IAMMetadata::ListServiceAccounts(
