@@ -42,7 +42,7 @@ using ::testing::StartsWith;
 
 std::string HttpBinEndpoint() {
   return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT")
-      .value_or("https://nghttp2.org/httpbin");
+      .value_or("https://httpbin.org");
 }
 
 // The integration tests sometimes flake (e.g. DNS failures) if we do not have a
