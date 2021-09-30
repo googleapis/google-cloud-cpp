@@ -137,14 +137,12 @@ class ComputeEngineCredentials : public Credentials {
     std::string metadata_server_hostname =
         google::cloud::storage::internal::GceMetadataHostname();
 
-    HttpRequestBuilderType request_builder(
+    HttpRequestBuilderType builder(
         std::move("http://" + metadata_server_hostname + path),
         storage::internal::GetDefaultCurlHandleFactory());
-    request_builder.AddHeader("metadata-flavor: Google");
-    if (recursive) {
-      request_builder.AddQueryParameter("recursive", "true");
-    }
-    return request_builder.BuildRequest().MakeRequest(std::string{});
+    builder.AddHeader("metadata-flavor: Google");
+    if (recursive) builder.AddQueryParameter("recursive", "true");
+    return std::move(builder).BuildRequest().MakeRequest(std::string{});
   }
 
   /**

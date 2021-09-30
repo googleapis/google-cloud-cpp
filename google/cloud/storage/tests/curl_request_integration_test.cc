@@ -84,7 +84,7 @@ TEST(CurlRequestTest, SimpleGET) {
     builder.AddQueryParameter("bar", "bar1==bar2=");
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("charsets: utf-8");
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryMakeRequest(factory);
@@ -105,7 +105,7 @@ TEST(CurlRequestTest, AddParametersToComplexUrl) {
     builder.AddQueryParameter("baz", "baz-value");
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("charsets: utf-8");
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
   auto response = RetryMakeRequest(factory);
   ASSERT_STATUS_OK(response);
@@ -123,7 +123,7 @@ TEST(CurlRequestTest, FailedGET) {
   CurlRequestBuilder builder("https://localhost:1/",
                              storage::internal::GetDefaultCurlHandleFactory());
 
-  auto response = builder.BuildRequest().MakeRequest({});
+  auto response = std::move(builder).BuildRequest().MakeRequest({});
   EXPECT_THAT(response, Not(IsOk()));
 }
 
@@ -155,7 +155,7 @@ TEST(CurlRequestTest, SimplePOST) {
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("Content-Type: application/x-www-form-urlencoded");
     builder.AddHeader("charsets: utf-8");
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryMakeRequest(factory, data);
@@ -190,7 +190,7 @@ TEST(CurlRequestTest, MultiBufferPUT) {
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("Content-Type: application/octet-stream");
     builder.AddHeader("charsets: utf-8");
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryMakeUploadRequest(factory, data);
@@ -210,7 +210,7 @@ TEST(CurlRequestTest, MultiBufferEmptyPUT) {
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("Content-Type: application/octet-stream");
     builder.AddHeader("charsets: utf-8");
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryMakeRequest(factory);
@@ -251,7 +251,7 @@ TEST(CurlRequestTest, MultiBufferLargePUT) {
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("Content-Type: application/octet-stream");
     builder.AddHeader("charsets: utf-8");
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryMakeUploadRequest(factory, data);
@@ -270,7 +270,7 @@ TEST(CurlRequestTest, Handle404) {
         storage::internal::GetDefaultCurlHandleFactory());
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("charsets: utf-8");
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryMakeRequest(factory);
@@ -286,7 +286,7 @@ TEST(CurlRequestTest, HandleTeapot) {
         storage::internal::GetDefaultCurlHandleFactory());
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("charsets: utf-8");
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryMakeRequest(factory);
@@ -310,7 +310,7 @@ TEST(CurlRequestTest, CheckResponseHeaders) {
         storage::internal::GetDefaultCurlHandleFactory());
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("charsets: utf-8");
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryMakeRequest(factory);
@@ -338,7 +338,7 @@ TEST(CurlRequestTest, UserAgent) {
     builder.ApplyClientOptions(options);
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("charsets: utf-8");
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryMakeRequest(factory);
@@ -378,7 +378,7 @@ TEST(CurlRequestTest, HttpVersion) {
       builder.ApplyClientOptions(options);
       builder.AddHeader("Accept: application/json");
       builder.AddHeader("charsets: utf-8");
-      return builder.BuildRequest();
+      return std::move(builder).BuildRequest();
     };
 
     auto response = RetryMakeRequest(factory);
@@ -397,7 +397,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersProjection) {
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("charsets: utf-8");
     builder.AddOption(storage::Projection("full"));
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryMakeRequest(factory);
@@ -423,7 +423,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersUserProject) {
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("charsets: utf-8");
     builder.AddOption(storage::UserProject("a-project"));
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryMakeRequest(factory);
@@ -449,7 +449,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfGenerationMatch) {
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("charsets: utf-8");
     builder.AddOption(storage::IfGenerationMatch(42));
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryMakeRequest(factory);
@@ -475,7 +475,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfGenerationNotMatch) {
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("charsets: utf-8");
     builder.AddOption(storage::IfGenerationNotMatch(42));
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryMakeRequest(factory);
@@ -501,7 +501,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfMetagenerationMatch) {
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("charsets: utf-8");
     builder.AddOption(storage::IfMetagenerationMatch(42));
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryMakeRequest(factory);
@@ -527,7 +527,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfMetagenerationNotMatch) {
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("charsets: utf-8");
     builder.AddOption(storage::IfMetagenerationNotMatch(42));
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryMakeRequest(factory);
@@ -555,7 +555,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersMultiple) {
     builder.AddOption(storage::UserProject("user-project-id"));
     builder.AddOption(storage::IfMetagenerationMatch(7));
     builder.AddOption(storage::IfGenerationNotMatch(42));
-    return builder.BuildRequest();
+    return std::move(builder).BuildRequest();
   };
 
   auto response = RetryMakeRequest(factory);
@@ -605,7 +605,7 @@ TEST(CurlRequestTest, Logging) {
       builder.AddHeader("Accept: application/json");
       builder.AddHeader("charsets: utf-8");
       builder.AddHeader("x-test-header: foo");
-      return builder.BuildRequest();
+      return std::move(builder).BuildRequest();
     };
 
     auto response = RetryMakeRequest(factory, "this is some text");

@@ -94,17 +94,17 @@ class AuthorizedUserCredentials : public Credentials {
 
  private:
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() {
-    HttpRequestBuilderType request_builder(
+    HttpRequestBuilderType builder(
         info_.token_uri,
         storage::internal::GetDefaultCurlHandleFactory(options_));
     std::string payload("grant_type=refresh_token");
     payload += "&client_id=";
-    payload += request_builder.MakeEscapedString(info_.client_id).get();
+    payload += builder.MakeEscapedString(info_.client_id).get();
     payload += "&client_secret=";
-    payload += request_builder.MakeEscapedString(info_.client_secret).get();
+    payload += builder.MakeEscapedString(info_.client_secret).get();
     payload += "&refresh_token=";
-    payload += request_builder.MakeEscapedString(info_.refresh_token).get();
-    auto response = request_builder.BuildRequest().MakeRequest(payload);
+    payload += builder.MakeEscapedString(info_.refresh_token).get();
+    auto response = std::move(builder).BuildRequest().MakeRequest(payload);
     if (!response) return std::move(response).status();
     if (response->status_code >= 300) return AsStatus(*response);
     return ParseAuthorizedUserRefreshResponse(*response, clock_.now());
