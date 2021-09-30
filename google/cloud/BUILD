@@ -21,11 +21,12 @@ genrule(
     srcs = ["internal/build_info.cc.in"],
     outs = ["internal/build_info.cc"],
     cmd = """
-V=$$(git rev-parse --short HEAD 2>/dev/null || echo "unknown");
+V=$$(sed -n -e 's/^STABLE_GIT_COMMIT  *//p' bazel-out/stable-status.txt)
 sed -e "s;@CMAKE_CXX_FLAGS@;$(CC_FLAGS);" \
     -e "s;\\$${CMAKE_CXX_FLAGS_.*};$(COMPILATION_MODE);" \
-    -e "s;@GOOGLE_CLOUD_CPP_GIT_HEAD@;$${V};" < $< > $@
+    -e "s;@GOOGLE_CLOUD_CPP_BUILD_METADATA@;$${V:-unknown};" < $< > $@
   """,
+    stamp = True,
     toolchains = [
         "@bazel_tools//tools/cpp:current_cc_toolchain",
         "@bazel_tools//tools/cpp:cc_flags",

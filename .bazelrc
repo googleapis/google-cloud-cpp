@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# NOTE: This file is not loaded if google-cloud-cpp is built as part of a
+# larger project.
+
 # To workaround a bug in Bazel [1], gRPC requires this flag on macOS builds,
 # and there is (AFAIK) no way to "inherit" their definitions.
 #   [1]: https://github.com/bazelbuild/bazel/issues/4341
@@ -20,6 +23,14 @@ build --copt=-DGRPC_BAZEL_BUILD
 # Do not create the convenience links, they are inconvenient when the build runs
 # inside a docker image.
 build --experimental_convenience_symlinks=ignore
+
+# Use host-OS-specific config lines from bazelrc files.
+build --enable_platform_specific_config=true
+
+# Specify a binary that Bazel runs before each build. The program can report
+# information about the status of the workspace, such as the current source
+# control revision.
+build:linux --workspace_status_command=bazel/workspace_status_command.sh
 
 # Clang Sanitizers, use with (for example):
 #
