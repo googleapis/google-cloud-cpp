@@ -170,7 +170,7 @@ TEST(BucketMetadataTest, NormalizePap) {
   EXPECT_EQ(internal::NormalizePap(absl::nullopt), absl::nullopt);
   EXPECT_EQ(internal::NormalizePap(PublicAccessPreventionInherited()),
             PublicAccessPreventionInherited());
-  EXPECT_EQ(internal::NormalizePap(PublicAccessPreventionUnspecified()),
+  EXPECT_EQ(internal::NormalizePap("unspecified"),
             PublicAccessPreventionInherited());
   EXPECT_EQ(internal::NormalizePap(PublicAccessPreventionEnforced()),
             PublicAccessPreventionEnforced());

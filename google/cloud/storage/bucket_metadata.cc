@@ -33,9 +33,8 @@ absl::optional<std::string> const& NormalizePap(
     absl::optional<std::string> const& pap) {
   static auto const* normalized =
       new absl::optional<std::string>(PublicAccessPreventionInherited());
-  if (!pap.has_value()) return pap;
-  if (*pap == PublicAccessPreventionUnspecified()) return *normalized;
-  return pap;
+  if (!pap.has_value() || *pap != "unspecified") return pap;
+  return *normalized;
 }
 }  // namespace internal
 

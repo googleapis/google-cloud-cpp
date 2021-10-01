@@ -218,6 +218,7 @@ struct BucketIamConfiguration {
 /// @name Public Access Prevention helper functions
 inline std::string PublicAccessPreventionEnforced() { return "enforced"; }
 inline std::string PublicAccessPreventionInherited() { return "inherited"; }
+GOOGLE_CLOUD_CPP_DEPRECATED("Use PublicAccessPreventionInherited()")
 inline std::string PublicAccessPreventionUnspecified() { return "unspecified"; }
 //@}
 
