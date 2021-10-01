@@ -71,10 +71,6 @@
 
 ## v1.32.0 - 2021-10
 
-### [BigQuery](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigquery/README.md)
-
-* feat(generator): generate a SetIamPolicy() overload with an OCC loop ([#7276](https://github.com/googleapis/google-cloud-cpp/pull/7276))
-
 ### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
 
 * docs(bigtable): add documentation for no channel refreshes ([#7373](https://github.com/googleapis/google-cloud-cpp/pull/7373))
@@ -88,7 +84,8 @@
 
 * feat(pubsub): use `google::cloud::Options` to configure the library.
   `pubsub::PublisherOptions`, `pubsub::SubscriberOptions`, and related
-  functions are deprecated. We have not set a date to remove them.
+  functions are deprecated. We have not set a date to remove them, but if
+  we ever do we plan to give you one year's notice.
 * fix(pubsub): avoid deadlocks in publish flow control ([#7313](https://github.com/googleapis/google-cloud-cpp/pull/7313))
 * fix(pubsub): dont std::move PublisherOptions that we are still using ([#7270](https://github.com/googleapis/google-cloud-cpp/pull/7270))
 
