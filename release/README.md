@@ -97,12 +97,12 @@ The `publish-docs` build should start automatically when you create the release
 branch. This build will upload the docs for the new release to the following
 URLs:
 
-* https://googleapis.dev/cpp/google-cloud-biquery/latest/
+* https://googleapis.dev/cpp/google-cloud-bigquery/latest/
 * https://googleapis.dev/cpp/google-cloud-bigtable/latest/
 * https://googleapis.dev/cpp/google-cloud-iam/latest/
 * https://googleapis.dev/cpp/google-cloud-pubsub/latest/
-* https://googleapis.dev/cpp/google-cloud-storage/latest/
 * https://googleapis.dev/cpp/google-cloud-spanner/latest/
+* https://googleapis.dev/cpp/google-cloud-storage/latest/
 * https://googleapis.dev/cpp/google-cloud-common/latest/
 
 It can take up to an hour after the build finishes for the new docs to show up
