@@ -71,25 +71,25 @@
 
 ## v1.32.0 - 2021-10
 
+### [BigQuery](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigquery/README.md)
+
+* feat(generator): generate a SetIamPolicy() overload with an OCC loop ([#7276](https://github.com/googleapis/google-cloud-cpp/pull/7276))
+
 ### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
 
 * docs(bigtable): add documentation for no channel refreshes ([#7373](https://github.com/googleapis/google-cloud-cpp/pull/7373))
 
 ### [IAM](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/README.md)
 
+* feat(generator): generate a SetIamPolicy() overload with an OCC loop ([#7276](https://github.com/googleapis/google-cloud-cpp/pull/7276))
 * doc(iam): use SetIamPolicy() read-modify-write loop in sample ([#7288](https://github.com/googleapis/google-cloud-cpp/pull/7288))
 
 ### [Pub/Sub](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/README.md)
 
-* feat(pubsub): configure SubscriberConnection with Options ([#7342](https://github.com/googleapis/google-cloud-cpp/pull/7342))
-* feat(pubsub): configure PublisherConnection with Options ([#7341](https://github.com/googleapis/google-cloud-cpp/pull/7341))
-* feat(pubsub): configure SubscriptionAdminConnection with Options ([#7339](https://github.com/googleapis/google-cloud-cpp/pull/7339))
-* feat(pubsub): configure SchemaAdminConnection with Options ([#7338](https://github.com/googleapis/google-cloud-cpp/pull/7338))
-* feat(pubsub): configure TopicAdminConnection with Options ([#7336](https://github.com/googleapis/google-cloud-cpp/pull/7336))
-* feat(pubsub): add policy options; default common options ([#7335](https://github.com/googleapis/google-cloud-cpp/pull/7335))
-* feat(pubsub): introduce SubscriberOptionList ([#7319](https://github.com/googleapis/google-cloud-cpp/pull/7319))
+* feat(pubsub): use `google::cloud::Options` to configure the library.
+  `pubsub::PublisherOptions`, `pubsub::SubscriberOptions`, and related
+  functions are deprecated. We have not set a date to remove them.
 * fix(pubsub): avoid deadlocks in publish flow control ([#7313](https://github.com/googleapis/google-cloud-cpp/pull/7313))
-* feat(pubsub): introduce PublisherOptionList (g::c::Options) ([#7308](https://github.com/googleapis/google-cloud-cpp/pull/7308))
 * fix(pubsub): dont std::move PublisherOptions that we are still using ([#7270](https://github.com/googleapis/google-cloud-cpp/pull/7270))
 
 ### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
@@ -112,24 +112,21 @@
 * feat(GCS+gRPC): support timeouts for all requests ([#7299](https://github.com/googleapis/google-cloud-cpp/pull/7299))
 * feat(storage): support timeouts for all requests ([#7295](https://github.com/googleapis/google-cloud-cpp/pull/7295))
 * feat(storage): use generic parameters when resuming uploads ([#7292](https://github.com/googleapis/google-cloud-cpp/pull/7292))
-* feat(storage): support base URLs with existing query parameters ([#7291](https://github.com/googleapis/google-cloud-cpp/pull/7291))
 * feat(GCS+gRPC): implement standard parameters ([#7272](https://github.com/googleapis/google-cloud-cpp/pull/7272))
 * fix(storage): use CA info options in credentials ([#7261](https://github.com/googleapis/google-cloud-cpp/pull/7261))
-* feat(storage)!: move GCS+gRPC to v2/ protos ([#7254](https://github.com/googleapis/google-cloud-cpp/pull/7254))
 * doc(storage): handle kNotFound in example ([#7252](https://github.com/googleapis/google-cloud-cpp/pull/7252))
 
 ### [Spanner](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/spanner/README.md)
 
+* feat(generator): generate a SetIamPolicy() overload with an OCC loop ([#7276](https://github.com/googleapis/google-cloud-cpp/pull/7276))
 * feat(spanner): add factory functions for instance/database/backup ([#7321](https://github.com/googleapis/google-cloud-cpp/pull/7321))
 * doc(spanner): convert Spanner samples to use the generated admin APIs ([#7311](https://github.com/googleapis/google-cloud-cpp/pull/7311))
 * feat(spanner): add generated admin APIs ([#7285](https://github.com/googleapis/google-cloud-cpp/pull/7285))
 
 ### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
 
-* feat(generator): add "generator" to API client header "gccl" semver ([#7383](https://github.com/googleapis/google-cloud-cpp/pull/7383))
 * fix: substitute build metadata (git commit) in bazel builds ([#7378](https://github.com/googleapis/google-cloud-cpp/pull/7378))
 * feat(common): add ability to supply a user-run CQ to gRPC options ([#7354](https://github.com/googleapis/google-cloud-cpp/pull/7354))
-* feat(generator): generate a SetIamPolicy() overload with an OCC loop ([#7276](https://github.com/googleapis/google-cloud-cpp/pull/7276))
 
 ## v1.31.1 - 2021-09
 
