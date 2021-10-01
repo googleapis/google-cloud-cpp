@@ -78,8 +78,8 @@ sections=(
   "Firestore,google/cloud/firestore"
   "IAM,google/cloud/iam"
   "Pub/Sub,google/cloud/pubsub"
-  "Storage,google/cloud/storage"
   "Spanner,google/cloud/spanner"
+  "Storage,google/cloud/storage"
 )
 
 # Adds a section for "Common Libraries", which excludes the previous sections.
