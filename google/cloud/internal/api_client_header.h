@@ -23,8 +23,11 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
+/// Return the semantic versioning string (https://semver.org/).
+std::string ApiClientVersion(std::string const& build_identifier);
+
 /// Return the value for the x-goog-api-client header (aka metadata).
-std::string ApiClientHeader();
+std::string ApiClientHeader(std::string const& build_identifier = "");
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS

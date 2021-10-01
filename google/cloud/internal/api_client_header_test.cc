@@ -25,14 +25,16 @@ namespace {
 using ::testing::HasSubstr;
 
 TEST(ApiClientHeaderTest, Basic) {
-  auto actual = ApiClientHeader();
-
-  EXPECT_THAT(actual, HasSubstr("gccl/" + version_string()));
-  EXPECT_THAT(actual,
-              HasSubstr("gl-cpp/" + google::cloud::internal::CompilerId() +
-                        "-" + google::cloud::internal::CompilerVersion() + "-" +
-                        google::cloud::internal::CompilerFeatures() + "-" +
-                        google::cloud::internal::LanguageVersion()));
+  for (auto const& build_identifier : {"", "build-identifier"}) {
+    auto actual = ApiClientHeader(build_identifier);
+    EXPECT_THAT(actual,
+                HasSubstr("gl-cpp/" + google::cloud::internal::CompilerId() +
+                          "-" + google::cloud::internal::CompilerVersion() +
+                          "-" + google::cloud::internal::CompilerFeatures() +
+                          "-" + google::cloud::internal::LanguageVersion()));
+    EXPECT_THAT(actual,
+                HasSubstr("gccl/" + ApiClientVersion(build_identifier)));
+  }
 }
 
 }  // namespace

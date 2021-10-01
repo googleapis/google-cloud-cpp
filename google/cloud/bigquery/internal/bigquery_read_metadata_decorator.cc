@@ -30,7 +30,8 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 BigQueryReadMetadata::BigQueryReadMetadata(
     std::shared_ptr<BigQueryReadStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader()) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
 BigQueryReadMetadata::CreateReadSession(

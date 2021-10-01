@@ -30,7 +30,8 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 InstanceAdminMetadata::InstanceAdminMetadata(
     std::shared_ptr<InstanceAdminStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader()) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
 InstanceAdminMetadata::ListInstanceConfigs(

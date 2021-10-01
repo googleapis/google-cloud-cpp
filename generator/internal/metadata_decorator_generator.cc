@@ -155,7 +155,7 @@ Status MetadataDecoratorGenerator::GenerateCc() {
     "$metadata_class_name$::$metadata_class_name$(\n"
     "    std::shared_ptr<$stub_class_name$> child)\n"
     "    : child_(std::move(child)),\n"
-    "      api_client_header_(google::cloud::internal::ApiClientHeader()) {}\n"
+    "      api_client_header_(google::cloud::internal::ApiClientHeader(\"generator\")) {}\n"
     "\n");
   // clang-format on
 
