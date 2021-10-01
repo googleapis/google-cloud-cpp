@@ -385,6 +385,10 @@ void ToJsonRetentionPolicy(nlohmann::json& json, BucketMetadata const& meta) {
       {"retentionPeriod", meta.retention_policy().retention_period.count()}};
 }
 
+void ToJsonRpo(nlohmann::json& json, BucketMetadata const& meta) {
+  SetIfNotEmpty(json, "rpo", meta.rpo());
+}
+
 void ToJsonStorageClass(nlohmann::json& json, BucketMetadata const& meta) {
   SetIfNotEmpty(json, "storageClass", meta.storage_class());
 }
@@ -461,6 +465,10 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
         return ParseRetentionPolicy(meta.retention_policy_, json);
       },
       [](BucketMetadata& meta, nlohmann::json const& json) {
+        meta.rpo_ = json.value("rpo", "");
+        return Status{};
+      },
+      [](BucketMetadata& meta, nlohmann::json const& json) {
         return ParseVersioning(meta.versioning_, json);
       },
       [](BucketMetadata& meta, nlohmann::json const& json) {
@@ -498,6 +506,7 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
   ToJsonLogging(json, meta);
   ToJsonName(json, meta);
   ToJsonRetentionPolicy(json, meta);
+  ToJsonRpo(json, meta);
   ToJsonStorageClass(json, meta);
   ToJsonVersioning(json, meta);
   ToJsonWebsite(json, meta);

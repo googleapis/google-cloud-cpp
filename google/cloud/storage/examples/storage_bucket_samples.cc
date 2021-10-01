@@ -428,6 +428,75 @@ void GetPublicAccessPrevention(google::cloud::storage::Client client,
   (std::move(client), argv.at(0));
 }
 
+void CreateBucketAsyncTurbo(google::cloud::storage::Client client,
+                            std::vector<std::string> const& argv) {
+  // [START storage_create_bucket_turbo_replication]
+  namespace gcs = ::google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string const& bucket_name) {
+    auto bucket =
+        client.CreateBucket(bucket_name, gcs::BucketMetadata()
+                                             .set_rpo(gcs::RpoAsyncTurbo())
+                                             .set_location("NAM4"));
+    if (!bucket) throw std::runtime_error(bucket.status().message());
+
+    std::cout << "Created bucket " << bucket->name() << " with RPO set to "
+              << bucket->rpo() << " in " << bucket->location() << ".\n";
+  }
+  // // [END storage_create_bucket_turbo_replication]
+  (std::move(client), argv.at(0));
+}
+
+void SetRpoAsyncTurbo(google::cloud::storage::Client client,
+                      std::vector<std::string> const& argv) {
+  // [START storage_set_turbo_replication_async_turbo]
+  namespace gcs = ::google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string const& bucket_name) {
+    auto updated = client.PatchBucket(
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetRpo(gcs::RpoAsyncTurbo()));
+    if (!updated) throw std::runtime_error(updated.status().message());
+
+    std::cout << "RPO is set to 'ASYNC_TURBO' for " << updated->name() << "\n";
+  }
+  // [END storage_set_turbo_replication_async_turbo]
+  (std::move(client), argv.at(0));
+}
+
+void SetRpoDefault(google::cloud::storage::Client client,
+                   std::vector<std::string> const& argv) {
+  // [START storage_set_turbo_replication_default]
+  namespace gcs = ::google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string const& bucket_name) {
+    auto updated = client.PatchBucket(
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetRpo(gcs::RpoDefault()));
+    if (!updated) throw std::runtime_error(updated.status().message());
+
+    std::cout << "RPO is set to 'default' for " << updated->name() << "\n";
+  }
+  // [END storage_set_turbo_replication_default]
+  (std::move(client), argv.at(0));
+}
+
+void GetRpo(google::cloud::storage::Client client,
+            std::vector<std::string> const& argv) {
+  // [START storage_get_turbo_replication]
+  namespace gcs = ::google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string const& bucket_name) {
+    auto metadata = client.GetBucketMetadata(bucket_name);
+    if (!metadata) throw std::runtime_error(metadata.status().message());
+
+    std::cout << "RPO is " << metadata->rpo() << " for bucket "
+              << metadata->name() << "\n";
+  }
+  // [END storage_get_turbo_replication]
+  (std::move(client), argv.at(0));
+}
+
 void AddBucketLabel(google::cloud::storage::Client client,
                     std::vector<std::string> const& argv) {
   //! [add bucket label] [START storage_add_bucket_label]
@@ -523,8 +592,10 @@ void RunAll(std::vector<std::string> const& argv) {
   });
   auto const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
+
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const bucket_name = examples::MakeRandomBucketName(generator);
+  auto const rpo_bucket_name = examples::MakeRandomBucketName(generator);
   auto client = gcs::Client();
 
   // This is the only example that cleans up stale buckets. The examples run in
@@ -580,6 +651,18 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning GetPublicAccessPrevention() example" << std::endl;
   GetPublicAccessPrevention(client, {bucket_name});
 
+  std::cout << "\nRunning CreateBucketAsyncTurbo() example" << std::endl;
+  CreateBucketAsyncTurbo(client, {rpo_bucket_name});
+
+  std::cout << "\nRunning GetRpo() example" << std::endl;
+  GetRpo(client, {rpo_bucket_name});
+
+  std::cout << "\nRunning SetRpoDefault() example" << std::endl;
+  SetRpoDefault(client, {rpo_bucket_name});
+
+  std::cout << "\nRunning SetRpoAsyncTurbo() example" << std::endl;
+  SetRpoAsyncTurbo(client, {rpo_bucket_name});
+
   std::cout << "\nRunning AddBucketLabel() example" << std::endl;
   AddBucketLabel(client, {bucket_name, "test-label", "test-label-value"});
 
@@ -613,6 +696,9 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning DeleteBucket() example [3]" << std::endl;
   DeleteBucket(client, {bucket_name});
+
+  std::cout << "\nRunning DeleteBucket() example [4]" << std::endl;
+  DeleteBucket(client, {rpo_bucket_name});
 }
 
 }  // anonymous namespace
@@ -657,6 +743,10 @@ int main(int argc, char* argv[]) {
       make_entry("set-public-access-prevention-enforced", {},
                  SetPublicAccessPreventionEnforced),
       make_entry("get-public-access-prevention", {}, GetPublicAccessPrevention),
+      make_entry("create-bucket-async-turbo", {}, CreateBucketAsyncTurbo),
+      make_entry("set-rpo-default", {}, SetRpoDefault),
+      make_entry("set-rpo-async-turn", {}, SetRpoAsyncTurbo),
+      make_entry("get-rpo", {}, GetRpo),
       make_entry("add-bucket-label", {"<label-key>", "<label-value>"},
                  AddBucketLabel),
       make_entry("get-bucket-labels", {}, GetBucketLabels),
