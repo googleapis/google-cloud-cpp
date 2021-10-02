@@ -106,6 +106,39 @@ TEST(LimitedErrorCountRetryPolicy, OnNonRetryable) {
   EXPECT_FALSE(tested.OnFailure(CreatePermanentError()));
 }
 
+TEST(TransientInternalError, Basic) {
+  EXPECT_TRUE(internal::IsTransientInternalError(
+      Status(StatusCode::kInternal, "Received RST_STREAM with error code 2")));
+  EXPECT_TRUE(internal::IsTransientInternalError(
+      Status(StatusCode::kInternal,
+             "HTTP/2 error code: INTERNAL_ERROR\nReceived Rst Stream")));
+  EXPECT_TRUE(internal::IsTransientInternalError(
+      Status(StatusCode::kInternal,
+             "Received unexpected EOS on DATA frame from server")));
+  EXPECT_FALSE(internal::IsTransientInternalError(Status(
+      StatusCode::kInternal, "Some error we definitely should not retry!")));
+
+  auto invalid_codes = {StatusCode::kOk,
+                        StatusCode::kCancelled,
+                        StatusCode::kUnknown,
+                        StatusCode::kInvalidArgument,
+                        StatusCode::kDeadlineExceeded,
+                        StatusCode::kNotFound,
+                        StatusCode::kAlreadyExists,
+                        StatusCode::kPermissionDenied,
+                        StatusCode::kUnauthenticated,
+                        StatusCode::kResourceExhausted,
+                        StatusCode::kFailedPrecondition,
+                        StatusCode::kAborted,
+                        StatusCode::kOutOfRange,
+                        StatusCode::kUnimplemented,
+                        StatusCode::kUnavailable,
+                        StatusCode::kDataLoss};
+  for (auto c : invalid_codes) {
+    EXPECT_FALSE(internal::IsTransientInternalError(Status(c, "RST_STREAM")));
+  }
+}
+
 /// @test Verify that certain known internal errors are retryable.
 TEST(TransientInternalError, RstStreamRetried) {
   EXPECT_FALSE(internal::SafeGrpcRetry::IsTransientFailure(
