@@ -124,8 +124,6 @@ namespace {
  */
 class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
  private:
-  // Introduce an early `private:` section because this type is used to define
-  // the public interface, it should not be part of the public interface.
   struct AdminTraits {
     static std::string const& Endpoint(Options const& options) {
       return options.get<AdminEndpointOption>();
@@ -136,8 +134,6 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
       AdminTraits, btadmin::BigtableTableAdmin>;
 
  public:
-  using AdminStubPtr = Impl::StubPtr;
-
   DefaultAdminClient(std::string project, Options options)
       : project_(std::move(project)), impl_(std::move(options)) {}
 

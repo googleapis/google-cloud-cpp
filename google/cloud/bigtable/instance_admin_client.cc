@@ -21,22 +21,13 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
-/// Define what endpoint in Options is used for the InstanceAdminClient.
-struct InstanceAdminTraits {
-  static std::string const& Endpoint(Options const& options) {
-    return options.get<InstanceAdminEndpointOption>();
-  }
-};
-}  // namespace internal
-
 namespace {
 
 namespace btadmin = ::google::bigtable::admin::v2;
 
 /**
- * An AdminClient for single-threaded programs that refreshes credentials on all
- * gRPC errors.
+ * An InstanceAdminClient for single-threaded programs that refreshes
+ * credentials on all gRPC errors.
  *
  * This class should not be used by multiple threads, it makes no attempt to
  * protect its critical sections.  While it is rare that the admin interface
@@ -49,19 +40,21 @@ namespace btadmin = ::google::bigtable::admin::v2;
  */
 class DefaultInstanceAdminClient : public InstanceAdminClient {
  private:
-  // Introduce an early `private:` section because this type is used to define
-  // the public interface, it should not be part of the public interface.
-  using Impl = internal::CommonClient<internal::InstanceAdminTraits,
-                                      btadmin::BigtableInstanceAdmin>;
+  struct InstanceAdminTraits {
+    static std::string const& Endpoint(Options const& options) {
+      return options.get<InstanceAdminEndpointOption>();
+    }
+  };
+
+  using Impl = ::google::cloud::bigtable::internal::CommonClient<
+      InstanceAdminTraits, btadmin::BigtableInstanceAdmin>;
 
  public:
-  using AdminStubPtr = Impl::StubPtr;
-
   DefaultInstanceAdminClient(std::string project, Options options)
       : project_(std::move(project)), impl_(std::move(options)) {}
 
   std::string const& project() const override { return project_; }
-  Impl::ChannelPtr Channel() override { return impl_.Channel(); }
+  std::shared_ptr<grpc::Channel> Channel() override { return impl_.Channel(); }
   void reset() override { return impl_.reset(); }
 
   grpc::Status ListInstances(
@@ -338,10 +331,6 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
         google::longrunning::Operation>>(
         stub->AsyncGetOperation(context, request, cq).release());
   }
-
-  DefaultInstanceAdminClient(DefaultInstanceAdminClient const&) = delete;
-  DefaultInstanceAdminClient& operator=(DefaultInstanceAdminClient const&) =
-      delete;
 
  private:
   google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {

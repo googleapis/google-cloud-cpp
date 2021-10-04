@@ -44,8 +44,6 @@ namespace {
  */
 class DefaultDataClient : public DataClient {
  private:
-  // Introduce an early `private:` section because this type is used to define
-  // the public interface, it should not be part of the public interface.
   struct DataTraits {
     static std::string const& Endpoint(Options const& options) {
       return options.get<DataEndpointOption>();
