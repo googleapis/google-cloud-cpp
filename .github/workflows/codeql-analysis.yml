@@ -1,0 +1,85 @@
+name: "CodeQL"
+
+on:
+  # Run the analysis once every 24 hours. The actual time does not matter
+  # that much, start with a time that allows for easier troubleshooting.
+  schedule:
+    - cron: '00 22 * * *'
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'cpp' ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Checkout vcpkg
+        uses: actions/checkout@v2
+        with:
+          path: "build/vcpkg"
+          repository: "microsoft/vcpkg"
+          fetch-depth: 0
+      - name: Checkout pinned vcpkg version
+        run: >
+          git -C build/vcpkg checkout -q $(<ci/etc/vcpkg-commit.txt)
+      - name: cache-vcpkg
+        id: cache-vcpkg
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/vcpkg
+            ~/.ccache
+          key: |
+            codeql-analysis-6-${{ hashFiles('vcpkg.json') }}-${{ hashFiles('build/vcpkg/versions/baseline.json') }}
+          restore-keys: |
+            codeql-analysis-
+      - name: install tools
+        run: sudo apt install ninja-build ccache
+      - name: bootstrap vcpkg
+        working-directory: "build/vcpkg"
+        run: |
+          CC="ccache gcc" CXX="ccache g++" ./bootstrap-vcpkg.sh -disableMetrics
+
+      # Compile the dependencies of `google-cloud-cpp` (if needed) before
+      # enabling the CodeQL scan, otherwise all the code in the deps would be
+      # scanned too. Note that most of the time this uses the vcpkg binary
+      # cache.
+      - name: bootstrap vcpkg packages
+        run: >
+          build/vcpkg/vcpkg install \
+            --x-manifest-root . \
+            --feature-flags=versions \
+            --clean-after-build
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Build
+        # The build configuration is specifically tweaked for CodeQL analysis:
+        #    - We disable the tests because I (coryan) think that any security
+        #      vulnerabilities in the tests are irrelevant *and* compiling with
+        #      the tests takes over 3h.
+        #    - We disable ccache because the CodeQL scan only scans the code
+        #      that is actually compiled. Any cached compilation would be
+        #      excluded from the DB
+        run: >
+          cmake -GNinja -S . -B build/output \
+            -DCMAKE_TOOLCHAIN_FILE=build/vcpkg/scripts/buildsystems/vcpkg.cmake \
+            -DBUILD_TESTING=OFF \
+            -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF && \
+          cmake --build build/output
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
