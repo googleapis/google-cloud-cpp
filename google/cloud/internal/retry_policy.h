@@ -205,6 +205,12 @@ class LimitedTimeRetryPolicy : public TraitBasedRetryPolicy<RetryablePolicy> {
   std::chrono::system_clock::time_point deadline_;
 };
 
+/**
+ * Returns `true` for gRPC error messages, with status code: `kInternal`, that
+ * are known to be retryable across all services.
+ */
+bool IsTransientInternalError(Status const& status);
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

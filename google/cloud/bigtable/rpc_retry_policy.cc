@@ -21,22 +21,6 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
-bool IsTransientInternalError(Status const& status) {
-  // Treat the unexpected termination of the gRPC connection as retryable.
-  // There is no explicit indication of this, but it will result in an
-  // INTERNAL status with one of the `kTransientFailureMessages`.
-  if (status.code() == StatusCode::kInternal) {
-    static constexpr char const* kTransientFailureMessages[] = {
-        "RST_STREAM", "Received Rst Stream",
-        "Received unexpected EOS on DATA frame from server"};
-    for (auto const& message : kTransientFailureMessages) {
-      if (absl::StrContains(status.message(), message)) return true;
-    }
-  }
-  return false;
-}
-}  // namespace internal
 
 std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy(
     internal::RPCPolicyParameters defaults) {

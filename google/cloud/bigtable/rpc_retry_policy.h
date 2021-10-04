@@ -28,12 +28,6 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
-/**
- * Returns `true` for gRPC error messages, with status code: `kInternal`, that
- * are known to be retryable across all services.
- */
-bool IsTransientInternalError(Status const& status);
-
 /// An adapter to use `grpc::Status` with the `google::cloud::*Policies`.
 struct SafeGrpcRetry {
   static inline bool IsOk(google::cloud::Status const& status) {
@@ -43,7 +37,7 @@ struct SafeGrpcRetry {
     auto const code = status.code();
     return code == StatusCode::kAborted || code == StatusCode::kUnavailable ||
            code == StatusCode::kDeadlineExceeded ||
-           IsTransientInternalError(status);
+           google::cloud::internal::IsTransientInternalError(status);
   }
   static inline bool IsPermanentFailure(google::cloud::Status const& status) {
     return !IsOk(status) && !IsTransientFailure(status);

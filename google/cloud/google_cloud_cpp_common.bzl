@@ -97,6 +97,7 @@ google_cloud_cpp_common_srcs = [
     "internal/log_impl.cc",
     "internal/parse_rfc3339.cc",
     "internal/random.cc",
+    "internal/retry_policy.cc",
     "internal/setenv.cc",
     "internal/strerror.cc",
     "internal/throw_delegate.cc",
