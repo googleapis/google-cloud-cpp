@@ -29,6 +29,9 @@ jobs:
         run: >
           GIT_SHA=$(<ci/etc/vcpkg-commit.txt);
           export GIT_SHA
+      - name: Debug vcpkg version
+        run: >
+          echo "GIT_SHA=${{env.GIT_SHA}}"
       - name: Checkout vcpkg
         uses: actions/checkout@v2
         with:
