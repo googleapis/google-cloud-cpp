@@ -39,16 +39,6 @@ namespace btadmin = ::google::bigtable::admin::v2;
  * connections need refreshing.
  */
 class DefaultInstanceAdminClient : public InstanceAdminClient {
- private:
-  struct InstanceAdminTraits {
-    static std::string const& Endpoint(Options const& options) {
-      return options.get<InstanceAdminEndpointOption>();
-    }
-  };
-
-  using Impl = ::google::cloud::bigtable::internal::CommonClient<
-      InstanceAdminTraits, btadmin::BigtableInstanceAdmin>;
-
  public:
   DefaultInstanceAdminClient(std::string project, Options options)
       : project_(std::move(project)), impl_(std::move(options)) {}
@@ -337,8 +327,14 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
     return impl_.BackgroundThreadsFactory();
   }
 
+  struct Traits {
+    static std::string const& Endpoint(Options const& options) {
+      return options.get<InstanceAdminEndpointOption>();
+    }
+  };
+
   std::string project_;
-  Impl impl_;
+  internal::CommonClient<Traits, btadmin::BigtableInstanceAdmin> impl_;
 };
 
 }  // anonymous namespace

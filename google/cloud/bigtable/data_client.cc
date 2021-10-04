@@ -43,17 +43,6 @@ namespace {
  * authorization tokens.  In other words, it is extremely bare bones.
  */
 class DefaultDataClient : public DataClient {
- private:
-  struct DataTraits {
-    static std::string const& Endpoint(Options const& options) {
-      return options.get<DataEndpointOption>();
-    }
-  };
-
-  using Impl =
-      ::google::cloud::bigtable::internal::CommonClient<DataTraits,
-                                                        btproto::Bigtable>;
-
  public:
   DefaultDataClient(std::string project, std::string instance,
                     Options options = {})
@@ -180,9 +169,15 @@ class DefaultDataClient : public DataClient {
     return impl_.BackgroundThreadsFactory();
   }
 
+  struct Traits {
+    static std::string const& Endpoint(Options const& options) {
+      return options.get<DataEndpointOption>();
+    }
+  };
+
   std::string project_;
   std::string instance_;
-  Impl impl_;
+  internal::CommonClient<Traits, btproto::Bigtable> impl_;
 };
 
 }  // namespace

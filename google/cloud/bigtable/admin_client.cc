@@ -123,16 +123,6 @@ namespace {
  * connections need refreshing.
  */
 class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
- private:
-  struct AdminTraits {
-    static std::string const& Endpoint(Options const& options) {
-      return options.get<AdminEndpointOption>();
-    }
-  };
-
-  using Impl = ::google::cloud::bigtable::internal::CommonClient<
-      AdminTraits, btadmin::BigtableTableAdmin>;
-
  public:
   DefaultAdminClient(std::string project, Options options)
       : project_(std::move(project)), impl_(std::move(options)) {}
@@ -404,8 +394,14 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
     return impl_.BackgroundThreadsFactory();
   }
 
+  struct Traits {
+    static std::string const& Endpoint(Options const& options) {
+      return options.get<AdminEndpointOption>();
+    }
+  };
+
   std::string project_;
-  Impl impl_;
+  internal::CommonClient<Traits, btadmin::BigtableTableAdmin> impl_;
 };
 
 }  // namespace
