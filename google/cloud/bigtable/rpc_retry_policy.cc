@@ -14,7 +14,6 @@
 
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "absl/strings/match.h"
 #include <sstream>
 
 namespace google {
