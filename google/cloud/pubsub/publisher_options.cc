@@ -22,7 +22,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 PublisherOptions::PublisherOptions(Options opts) {
   internal::CheckExpectedOptions<PublisherOptionList>(opts, __func__);
-  opts_ = pubsub_internal::DefaultPublisherOptions(std::move(opts));
+  opts_ = pubsub_internal::DefaultPublisherOptionsOnly(std::move(opts));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
