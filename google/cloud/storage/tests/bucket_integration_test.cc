@@ -104,8 +104,7 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
 
   StatusOr<BucketMetadata> get_meta = client->GetBucketMetadata(bucket_name);
   ASSERT_STATUS_OK(get_meta);
-  // TODO(#....) - the default RPO value is changing and the code is rolling
-  //     out.
+  // TODO(#7403) - the default RPO value is changing during initial rollouts.
   insert_meta->set_rpo("");
   get_meta->set_rpo("");
   EXPECT_EQ(*insert_meta, *get_meta);
