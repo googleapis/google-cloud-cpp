@@ -38,7 +38,6 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 class ClientOptions;
 namespace internal {
-struct InstanceAdminTraits;
 Options&& MakeOptions(ClientOptions&& o);
 }  // namespace internal
 
@@ -465,7 +464,6 @@ class ClientOptions {
   BackgroundThreadsFactory background_threads_factory() const;
 
  private:
-  friend struct internal::InstanceAdminTraits;
   friend struct ClientOptionsTestTraits;
   friend Options&& internal::MakeOptions(ClientOptions&&);
 

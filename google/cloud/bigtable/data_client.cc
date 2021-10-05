@@ -18,21 +18,23 @@
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/log.h"
 
-namespace btproto = ::google::bigtable::v2;
-
 namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 
-std::unique_ptr<::grpc::ClientAsyncReaderInterface<
-    ::google::bigtable::v2::SampleRowKeysResponse>>
+namespace btproto = ::google::bigtable::v2;
+
+std::unique_ptr<
+    ::grpc::ClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
-DataClient::PrepareAsyncSampleRowKeys(
-    ::grpc::ClientContext*, ::google::bigtable::v2::SampleRowKeysRequest const&,
-    ::grpc::CompletionQueue*) {
+DataClient::PrepareAsyncSampleRowKeys(grpc::ClientContext*,
+                                      btproto::SampleRowKeysRequest const&,
+                                      grpc::CompletionQueue*) {
   return nullptr;
 }
+
+namespace {
 
 /**
  * Implement a simple DataClient.
@@ -41,17 +43,6 @@ DataClient::PrepareAsyncSampleRowKeys(
  * authorization tokens.  In other words, it is extremely bare bones.
  */
 class DefaultDataClient : public DataClient {
- private:
-  // Introduce an early `private:` section because this type is used to define
-  // the public interface, it should not be part of the public interface.
-  struct DataTraits {
-    static std::string const& Endpoint(Options const& options) {
-      return options.get<DataEndpointOption>();
-    }
-  };
-
-  using Impl = bigtable::internal::CommonClient<DataTraits, btproto::Bigtable>;
-
  public:
   DefaultDataClient(std::string project, std::string instance,
                     Options options = {})
@@ -59,8 +50,8 @@ class DefaultDataClient : public DataClient {
         instance_(std::move(instance)),
         impl_(std::move(options)) {}
 
-  std::string const& project_id() const override;
-  std::string const& instance_id() const override;
+  std::string const& project_id() const override { return project_; };
+  std::string const& instance_id() const override { return instance_; };
 
   std::shared_ptr<grpc::Channel> Channel() override { return impl_.Channel(); }
   void reset() override { impl_.reset(); }
@@ -87,11 +78,10 @@ class DefaultDataClient : public DataClient {
   }
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::bigtable::v2::CheckAndMutateRowResponse>>
-  AsyncCheckAndMutateRow(
-      grpc::ClientContext* context,
-      google::bigtable::v2::CheckAndMutateRowRequest const& request,
-      grpc::CompletionQueue* cq) override {
+      btproto::CheckAndMutateRowResponse>>
+  AsyncCheckAndMutateRow(grpc::ClientContext* context,
+                         btproto::CheckAndMutateRowRequest const& request,
+                         grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncCheckAndMutateRow(context, request, cq);
   }
 
@@ -103,11 +93,10 @@ class DefaultDataClient : public DataClient {
   }
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::bigtable::v2::ReadModifyWriteRowResponse>>
-  AsyncReadModifyWriteRow(
-      grpc::ClientContext* context,
-      google::bigtable::v2::ReadModifyWriteRowRequest const& request,
-      grpc::CompletionQueue* cq) override {
+      btproto::ReadModifyWriteRowResponse>>
+  AsyncReadModifyWriteRow(grpc::ClientContext* context,
+                          btproto::ReadModifyWriteRowRequest const& request,
+                          grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncReadModifyWriteRow(context, request, cq);
   }
 
@@ -119,16 +108,15 @@ class DefaultDataClient : public DataClient {
 
   std::unique_ptr<grpc::ClientAsyncReaderInterface<btproto::ReadRowsResponse>>
   AsyncReadRows(grpc::ClientContext* context,
-                google::bigtable::v2::ReadRowsRequest const& request,
+                btproto::ReadRowsRequest const& request,
                 grpc::CompletionQueue* cq, void* tag) override {
     return impl_.Stub()->AsyncReadRows(context, request, cq, tag);
   }
 
-  std::unique_ptr<::grpc::ClientAsyncReaderInterface<
-      ::google::bigtable::v2::ReadRowsResponse>>
-  PrepareAsyncReadRows(::grpc::ClientContext* context,
-                       ::google::bigtable::v2::ReadRowsRequest const& request,
-                       ::grpc::CompletionQueue* cq) override {
+  std::unique_ptr<::grpc::ClientAsyncReaderInterface<btproto::ReadRowsResponse>>
+  PrepareAsyncReadRows(grpc::ClientContext* context,
+                       btproto::ReadRowsRequest const& request,
+                       grpc::CompletionQueue* cq) override {
     return impl_.Stub()->PrepareAsyncReadRows(context, request, cq);
   }
 
@@ -138,21 +126,19 @@ class DefaultDataClient : public DataClient {
     return impl_.Stub()->SampleRowKeys(context, request);
   }
 
-  std::unique_ptr<::grpc::ClientAsyncReaderInterface<
-      ::google::bigtable::v2::SampleRowKeysResponse>>
-  AsyncSampleRowKeys(
-      ::grpc::ClientContext* context,
-      ::google::bigtable::v2::SampleRowKeysRequest const& request,
-      ::grpc::CompletionQueue* cq, void* tag) override {
+  std::unique_ptr<
+      ::grpc::ClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>
+  AsyncSampleRowKeys(grpc::ClientContext* context,
+                     btproto::SampleRowKeysRequest const& request,
+                     grpc::CompletionQueue* cq, void* tag) override {
     return impl_.Stub()->AsyncSampleRowKeys(context, request, cq, tag);
   }
 
-  std::unique_ptr<::grpc::ClientAsyncReaderInterface<
-      ::google::bigtable::v2::SampleRowKeysResponse>>
-  PrepareAsyncSampleRowKeys(
-      ::grpc::ClientContext* context,
-      ::google::bigtable::v2::SampleRowKeysRequest const& request,
-      ::grpc::CompletionQueue* cq) override {
+  std::unique_ptr<
+      ::grpc::ClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>
+  PrepareAsyncSampleRowKeys(grpc::ClientContext* context,
+                            btproto::SampleRowKeysRequest const& request,
+                            grpc::CompletionQueue* cq) override {
     return impl_.Stub()->PrepareAsyncSampleRowKeys(context, request, cq);
   }
 
@@ -162,20 +148,19 @@ class DefaultDataClient : public DataClient {
     return impl_.Stub()->MutateRows(context, request);
   }
 
-  std::unique_ptr<::grpc::ClientAsyncReaderInterface<
-      ::google::bigtable::v2::MutateRowsResponse>>
-  AsyncMutateRows(::grpc::ClientContext* context,
-                  ::google::bigtable::v2::MutateRowsRequest const& request,
-                  ::grpc::CompletionQueue* cq, void* tag) override {
+  std::unique_ptr<
+      ::grpc::ClientAsyncReaderInterface<btproto::MutateRowsResponse>>
+  AsyncMutateRows(grpc::ClientContext* context,
+                  btproto::MutateRowsRequest const& request,
+                  grpc::CompletionQueue* cq, void* tag) override {
     return impl_.Stub()->AsyncMutateRows(context, request, cq, tag);
   }
 
-  std::unique_ptr<::grpc::ClientAsyncReaderInterface<
-      ::google::bigtable::v2::MutateRowsResponse>>
-  PrepareAsyncMutateRows(
-      ::grpc::ClientContext* context,
-      ::google::bigtable::v2::MutateRowsRequest const& request,
-      ::grpc::CompletionQueue* cq) override {
+  std::unique_ptr<
+      ::grpc::ClientAsyncReaderInterface<btproto::MutateRowsResponse>>
+  PrepareAsyncMutateRows(grpc::ClientContext* context,
+                         btproto::MutateRowsRequest const& request,
+                         grpc::CompletionQueue* cq) override {
     return impl_.Stub()->PrepareAsyncMutateRows(context, request, cq);
   }
 
@@ -184,14 +169,18 @@ class DefaultDataClient : public DataClient {
     return impl_.BackgroundThreadsFactory();
   }
 
+  struct Traits {
+    static std::string const& Endpoint(Options const& options) {
+      return options.get<DataEndpointOption>();
+    }
+  };
+
   std::string project_;
   std::string instance_;
-  Impl impl_;
+  internal::CommonClient<Traits, btproto::Bigtable> impl_;
 };
 
-std::string const& DefaultDataClient::project_id() const { return project_; }
-
-std::string const& DefaultDataClient::instance_id() const { return instance_; }
+}  // namespace
 
 std::shared_ptr<DataClient> MakeDataClient(std::string project_id,
                                            std::string instance_id,
