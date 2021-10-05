@@ -85,8 +85,7 @@ Options DefaultCommonOptions(Options opts) {
 }
 
 Options DefaultPublisherOptions(Options opts) {
-  opts = DefaultPublisherOptionsOnly(std::move(opts));
-  return DefaultCommonOptions(std::move(opts));
+  return DefaultCommonOptions(DefaultPublisherOptionsOnly(std::move(opts)));
 }
 
 Options DefaultPublisherOptionsOnly(Options opts) {
@@ -119,8 +118,7 @@ Options DefaultPublisherOptionsOnly(Options opts) {
 }
 
 Options DefaultSubscriberOptions(Options opts) {
-  opts = DefaultSubscriberOptionsOnly(std::move(opts));
-  return DefaultCommonOptions(std::move(opts));
+  return DefaultCommonOptions(DefaultSubscriberOptionsOnly(std::move(opts)));
 }
 
 Options DefaultSubscriberOptionsOnly(Options opts) {
