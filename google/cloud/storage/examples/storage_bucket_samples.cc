@@ -604,7 +604,7 @@ void RunAll(std::vector<std::string> const& argv) {
   auto const create_time_limit =
       std::chrono::system_clock::now() - std::chrono::hours(48);
   std::cout << "\nRemoving stale buckets for examples" << std::endl;
-  examples::RemoveStaleBuckets(client, "cloud-cpp-test-examples",
+  examples::RemoveStaleBuckets(client, "cloud-cpp-testing-examples",
                                create_time_limit);
 
   std::cout << "\nRunning ListBucketsForProject() example" << std::endl;
