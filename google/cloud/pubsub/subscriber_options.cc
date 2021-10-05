@@ -25,7 +25,7 @@ using seconds = std::chrono::seconds;
 
 SubscriberOptions::SubscriberOptions(Options opts) {
   internal::CheckExpectedOptions<SubscriberOptionList>(opts, __func__);
-  opts_ = pubsub_internal::DefaultSubscriberOptions(std::move(opts));
+  opts_ = pubsub_internal::DefaultSubscriberOptionsOnly(std::move(opts));
 }
 
 SubscriberOptions& SubscriberOptions::set_max_deadline_extension(
