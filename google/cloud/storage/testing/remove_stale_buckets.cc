@@ -20,16 +20,28 @@ namespace cloud {
 namespace storage {
 namespace testing {
 
-Status RemoveBucketAndContents(google::cloud::storage::Client client,
-                               std::string const& bucket_name) {
+Status RemoveBucketAndContents(
+    google::cloud::storage::Client client,
+    google::cloud::storage::BucketMetadata const& bucket) {
+  storage::UserProject project;
+  if (bucket.has_billing() && bucket.billing().requester_pays) {
+    project = storage::UserProject(std::to_string(bucket.project_number()));
+  }
   // List all the objects and versions, and then delete each.
-  for (auto o : client.ListObjects(bucket_name, Versions(true))) {
+  for (auto o : client.ListObjects(bucket.name(), Versions(true), project)) {
     if (!o) return std::move(o).status();
-    auto status = client.DeleteObject(bucket_name, o->name(),
-                                      Generation(o->generation()));
+    auto status = client.DeleteObject(bucket.name(), o->name(),
+                                      Generation(o->generation()), project);
     if (!status.ok()) return status;
   }
-  return client.DeleteBucket(bucket_name);
+  return client.DeleteBucket(bucket.name(), project);
+}
+
+Status RemoveBucketAndContents(google::cloud::storage::Client client,
+                               std::string const& bucket_name) {
+  auto bucket = client.GetBucketMetadata(bucket_name);
+  if (!bucket) return std::move(bucket).status();
+  return RemoveBucketAndContents(std::move(client), *bucket);
 }
 
 Status RemoveStaleBuckets(
@@ -40,7 +52,7 @@ Status RemoveStaleBuckets(
     if (!bucket) return std::move(bucket).status();
     if (!std::regex_match(bucket->name(), re)) continue;
     if (bucket->time_created() > created_time_limit) continue;
-    (void)RemoveBucketAndContents(client, bucket->name());
+    (void)RemoveBucketAndContents(client, *bucket);
   }
   return {};
 }

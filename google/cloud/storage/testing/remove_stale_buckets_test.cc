@@ -69,6 +69,9 @@ TEST(CleanupStaleBucketsTest, RemoveBucketContents) {
         response.items.push_back(CreateObject("baz", 1));
         return response;
       });
+  EXPECT_CALL(*mock, GetBucketMetadata)
+      .WillOnce(
+          Return(make_status_or(BucketMetadata{}.set_name("fake-bucket"))));
   auto client = internal::ClientImplDetails::CreateWithoutDecorations(mock);
   auto const actual = RemoveBucketAndContents(client, "fake-bucket");
   EXPECT_STATUS_OK(actual);
