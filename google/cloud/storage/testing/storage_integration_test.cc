@@ -17,6 +17,7 @@
 #include "google/cloud/storage/grpc_plugin.h"
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/testing/random_names.h"
+#include "google/cloud/storage/testing/remove_stale_buckets.h"
 #include "google/cloud/internal/getenv.h"
 
 namespace google {
@@ -48,7 +49,7 @@ StorageIntegrationTest::~StorageIntegrationTest() {
                                Generation(o.generation()));
   }
   for (auto& b : buckets_to_delete_) {
-    (void)client->DeleteBucket(b.name());
+    (void)RemoveBucketAndContents(*client, b);
   }
 }
 
