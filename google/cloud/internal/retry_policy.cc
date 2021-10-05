@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/retry_policy.h"
 #include "absl/strings/match.h"
+#include <algorithm>
 
 namespace google {
 namespace cloud {
