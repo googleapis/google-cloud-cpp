@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/publisher_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 
@@ -146,6 +147,9 @@ TEST(PublisherOptions, MakeOptions) {
   opts = pubsub_internal::MakeOptions(std::move(blocks));
   EXPECT_EQ(FullPublisherAction::kBlocks,
             opts.get<FullPublisherActionOption>());
+
+  // Ensure that we are not setting any extra options
+  EXPECT_FALSE(opts.has<GrpcCredentialOption>());
 }
 
 }  // namespace

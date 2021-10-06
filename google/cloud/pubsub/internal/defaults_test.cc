@@ -207,6 +207,55 @@ TEST(OptionsTest, UserSetSubscriberOptions) {
   EXPECT_EQ(6, opts.get<pubsub::MaxConcurrencyOption>());
 }
 
+TEST(OptionsTest, DefaultSubscriberOnly) {
+  // Ensure that we do not set common options
+  auto opts = DefaultSubscriberOptionsOnly(Options{});
+  EXPECT_FALSE(opts.has<GrpcCredentialOption>());
+  EXPECT_FALSE(opts.has<EndpointOption>());
+  EXPECT_FALSE(opts.has<GrpcCredentialOption>());
+  EXPECT_FALSE(opts.has<GrpcNumChannelsOption>());
+  EXPECT_FALSE(opts.has<TracingComponentsOption>());
+  EXPECT_FALSE(opts.has<GrpcTracingOptionsOption>());
+  EXPECT_FALSE(opts.has<pubsub::BackoffPolicyOption>());
+  EXPECT_FALSE(opts.has<GrpcBackgroundThreadPoolSizeOption>());
+  EXPECT_FALSE(opts.has<UserAgentProductsOption>());
+
+  // Ensure that we do set common options
+  opts = DefaultSubscriberOptions(Options{});
+  EXPECT_TRUE(opts.has<GrpcCredentialOption>());
+  EXPECT_TRUE(opts.has<EndpointOption>());
+  EXPECT_TRUE(opts.has<GrpcCredentialOption>());
+  EXPECT_TRUE(opts.has<GrpcNumChannelsOption>());
+  EXPECT_TRUE(opts.has<TracingComponentsOption>());
+  EXPECT_TRUE(opts.has<GrpcTracingOptionsOption>());
+  EXPECT_TRUE(opts.has<GrpcBackgroundThreadPoolSizeOption>());
+  EXPECT_TRUE(opts.has<UserAgentProductsOption>());
+}
+
+TEST(OptionsTest, DefaultPublisherOnly) {
+  // Ensure that we do not set common options
+  auto opts = DefaultPublisherOptionsOnly(Options{});
+  EXPECT_FALSE(opts.has<GrpcCredentialOption>());
+  EXPECT_FALSE(opts.has<EndpointOption>());
+  EXPECT_FALSE(opts.has<GrpcCredentialOption>());
+  EXPECT_FALSE(opts.has<GrpcNumChannelsOption>());
+  EXPECT_FALSE(opts.has<TracingComponentsOption>());
+  EXPECT_FALSE(opts.has<GrpcTracingOptionsOption>());
+  EXPECT_FALSE(opts.has<GrpcBackgroundThreadPoolSizeOption>());
+  EXPECT_FALSE(opts.has<UserAgentProductsOption>());
+
+  // Ensure that we do set common options
+  opts = DefaultPublisherOptions(Options{});
+  EXPECT_TRUE(opts.has<GrpcCredentialOption>());
+  EXPECT_TRUE(opts.has<EndpointOption>());
+  EXPECT_TRUE(opts.has<GrpcCredentialOption>());
+  EXPECT_TRUE(opts.has<GrpcNumChannelsOption>());
+  EXPECT_TRUE(opts.has<TracingComponentsOption>());
+  EXPECT_TRUE(opts.has<GrpcTracingOptionsOption>());
+  EXPECT_TRUE(opts.has<GrpcBackgroundThreadPoolSizeOption>());
+  EXPECT_TRUE(opts.has<UserAgentProductsOption>());
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal

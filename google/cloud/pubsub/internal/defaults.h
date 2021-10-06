@@ -29,7 +29,11 @@ Options DefaultCommonOptions(Options opts);
 
 Options DefaultPublisherOptions(Options opts);
 
+Options DefaultPublisherOptionsOnly(Options opts);
+
 Options DefaultSubscriberOptions(Options opts);
+
+Options DefaultSubscriberOptionsOnly(Options opts);
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
