@@ -49,12 +49,12 @@ std::string HttpBinEndpoint() {
 // retry loop.
 StatusOr<HttpResponse> RetryMakeRequest(
     std::function<CurlRequest()> const& request_factory,
-    std::string const& payload = {}) {
+    std::string const& payload = {}, int expected_status = 200) {
   auto delay = std::chrono::seconds(1);
   StatusOr<HttpResponse> response;
   for (auto i = 0; i != 3; ++i) {
     response = request_factory().MakeRequest(payload);
-    if (response) return response;
+    if (response && response->status_code == expected_status) return response;
     std::this_thread::sleep_for(delay);
     delay *= 2;
   }
@@ -63,12 +63,13 @@ StatusOr<HttpResponse> RetryMakeRequest(
 
 StatusOr<HttpResponse> RetryMakeUploadRequest(
     std::function<CurlRequest()> const& request_factory,
-    std::vector<absl::Span<char const>> const& payload) {
+    std::vector<absl::Span<char const>> const& payload,
+    int expected_status = 200) {
   auto delay = std::chrono::seconds(1);
   StatusOr<HttpResponse> response;
   for (auto i = 0; i != 3; ++i) {
     response = request_factory().MakeUploadRequest(payload);
-    if (response) return response;
+    if (response && response->status_code == expected_status) return response;
     std::this_thread::sleep_for(delay);
     delay *= 2;
   }
@@ -89,7 +90,7 @@ TEST(CurlRequestTest, SimpleGET) {
 
   auto response = RetryMakeRequest(factory);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
+  ASSERT_EQ(200, response->status_code) << "response=" << *response;
   auto parsed = nlohmann::json::parse(response->payload);
   auto args = parsed["args"];
   EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
@@ -109,7 +110,7 @@ TEST(CurlRequestTest, AddParametersToComplexUrl) {
   };
   auto response = RetryMakeRequest(factory);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
+  ASSERT_EQ(200, response->status_code) << "response=" << *response;
   auto parsed = nlohmann::json::parse(response->payload);
   auto args = parsed["args"];
   EXPECT_EQ("foo-value", args["foo"].get<std::string>());
@@ -160,7 +161,7 @@ TEST(CurlRequestTest, SimplePOST) {
 
   auto response = RetryMakeRequest(factory, data);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
+  ASSERT_EQ(200, response->status_code) << "response=" << *response;
   auto parsed = nlohmann::json::parse(response->payload);
   auto form = parsed["form"];
   EXPECT_EQ("foo1&foo2 foo3", form["foo"].get<std::string>());
@@ -195,7 +196,7 @@ TEST(CurlRequestTest, MultiBufferPUT) {
 
   auto response = RetryMakeUploadRequest(factory, data);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
+  ASSERT_EQ(200, response->status_code) << "response=" << *response;
   auto parsed = nlohmann::json::parse(response->payload);
   EXPECT_EQ("line 1\nline 2\nline 3\n", parsed["data"]);
 }
@@ -215,7 +216,7 @@ TEST(CurlRequestTest, MultiBufferEmptyPUT) {
 
   auto response = RetryMakeRequest(factory);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
+  ASSERT_EQ(200, response->status_code) << "response=" << *response;
   auto parsed = nlohmann::json::parse(response->payload);
   EXPECT_TRUE(parsed["data"].get<std::string>().empty());
 }
@@ -256,7 +257,7 @@ TEST(CurlRequestTest, MultiBufferLargePUT) {
 
   auto response = RetryMakeUploadRequest(factory, data);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
+  ASSERT_EQ(200, response->status_code) << "response=" << *response;
   auto parsed = nlohmann::json::parse(response->payload);
   std::vector<std::string> const actual = absl::StrSplit(
       parsed["data"].get<std::string>(), '\n', absl::SkipEmpty());
@@ -273,9 +274,9 @@ TEST(CurlRequestTest, Handle404) {
     return std::move(builder).BuildRequest();
   };
 
-  auto response = RetryMakeRequest(factory);
+  auto response = RetryMakeRequest(factory, {}, 404);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(404, response->status_code);
+  ASSERT_EQ(404, response->status_code) << "response=" << *response;
 }
 
 /// @test Verify the payload for error status is included in the return value.
@@ -289,9 +290,9 @@ TEST(CurlRequestTest, HandleTeapot) {
     return std::move(builder).BuildRequest();
   };
 
-  auto response = RetryMakeRequest(factory);
+  auto response = RetryMakeRequest(factory, {}, 418);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(418, response->status_code);
+  ASSERT_EQ(418, response->status_code) << "response=" << *response;
   EXPECT_THAT(response->payload, HasSubstr("[ teapot ]"));
 }
 
@@ -315,7 +316,7 @@ TEST(CurlRequestTest, CheckResponseHeaders) {
 
   auto response = RetryMakeRequest(factory);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
+  ASSERT_EQ(200, response->status_code) << "response=" << *response;
   EXPECT_EQ(1, response->headers.count("x-test-empty"));
   EXPECT_EQ("", response->headers.find("x-test-empty")->second);
   EXPECT_LE(1U, response->headers.count("x-test-foo"));
@@ -343,7 +344,7 @@ TEST(CurlRequestTest, UserAgent) {
 
   auto response = RetryMakeRequest(factory);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
+  ASSERT_EQ(200, response->status_code) << "response=" << *response;
   auto payload = nlohmann::json::parse(response->payload);
   ASSERT_EQ(1U, payload.count("headers"));
   auto headers = payload["headers"];
@@ -383,7 +384,7 @@ TEST(CurlRequestTest, HttpVersion) {
 
     auto response = RetryMakeRequest(factory);
     ASSERT_STATUS_OK(response);
-    EXPECT_EQ(200, response->status_code);
+    ASSERT_EQ(200, response->status_code) << "response=" << *response;
     EXPECT_THAT(response->headers, Contains(Pair(StartsWith(test.prefix), "")));
   }
 }
@@ -402,7 +403,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersProjection) {
 
   auto response = RetryMakeRequest(factory);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
+  ASSERT_EQ(200, response->status_code) << "response=" << *response;
   auto parsed = nlohmann::json::parse(response->payload);
   auto args = parsed["args"];
   EXPECT_EQ("full", args.value("projection", ""));
@@ -428,7 +429,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersUserProject) {
 
   auto response = RetryMakeRequest(factory);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
+  ASSERT_EQ(200, response->status_code) << "response=" << *response;
   auto parsed = nlohmann::json::parse(response->payload);
   auto args = parsed["args"];
   EXPECT_EQ("a-project", args.value("userProject", ""));
@@ -454,7 +455,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfGenerationMatch) {
 
   auto response = RetryMakeRequest(factory);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
+  ASSERT_EQ(200, response->status_code) << "response=" << *response;
   auto parsed = nlohmann::json::parse(response->payload);
   auto args = parsed["args"];
   EXPECT_EQ("42", args.value("ifGenerationMatch", ""));
@@ -480,7 +481,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfGenerationNotMatch) {
 
   auto response = RetryMakeRequest(factory);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
+  ASSERT_EQ(200, response->status_code) << "response=" << *response;
   auto parsed = nlohmann::json::parse(response->payload);
   auto args = parsed["args"];
   EXPECT_EQ("42", args.value("ifGenerationNotMatch", ""));
@@ -506,7 +507,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfMetagenerationMatch) {
 
   auto response = RetryMakeRequest(factory);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
+  ASSERT_EQ(200, response->status_code) << "response=" << *response;
   auto parsed = nlohmann::json::parse(response->payload);
   auto args = parsed["args"];
   EXPECT_EQ("42", args.value("ifMetagenerationMatch", ""));
@@ -532,7 +533,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfMetagenerationNotMatch) {
 
   auto response = RetryMakeRequest(factory);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
+  ASSERT_EQ(200, response->status_code) << "response=" << *response;
   auto parsed = nlohmann::json::parse(response->payload);
   auto args = parsed["args"];
   EXPECT_EQ("42", args.value("ifMetagenerationNotMatch", ""));
@@ -560,7 +561,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersMultiple) {
 
   auto response = RetryMakeRequest(factory);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
+  ASSERT_EQ(200, response->status_code) << "response=" << *response;
   auto parsed = nlohmann::json::parse(response->payload);
   auto args = parsed["args"];
   EXPECT_EQ("user-project-id", args.value("userProject", ""));
@@ -610,7 +611,7 @@ TEST(CurlRequestTest, Logging) {
 
     auto response = RetryMakeRequest(factory, "this is some text");
     ASSERT_STATUS_OK(response);
-    EXPECT_EQ(200, response->status_code);
+    ASSERT_EQ(200, response->status_code) << "response=" << *response;
   }
 
   google::cloud::LogSink::Instance().RemoveBackend(backend_id);
