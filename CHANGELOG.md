@@ -73,7 +73,7 @@
 
 ### [Pub/Sub](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/README.md)
 
-* fix(pubsub): do not overwrite ConnectionOptions ([#7406](https://github.com/googleapis/google-cloud-cpp/pull/7406))
+* fix(pubsub): respect non-default values in `pubsub::ConnectionOptions` ([#7406](https://github.com/googleapis/google-cloud-cpp/pull/7406))
 
 ## v1.32.0 - 2021-10
 
