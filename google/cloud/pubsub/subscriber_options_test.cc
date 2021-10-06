@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/subscriber_options.h"
 #include "google/cloud/pubsub/options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -112,6 +113,9 @@ TEST(SubscriberOptionsTest, MakeOptions) {
   EXPECT_EQ(4, opts.get<MaxOutstandingMessagesOption>());
   EXPECT_EQ(5, opts.get<MaxOutstandingBytesOption>());
   EXPECT_EQ(6, opts.get<MaxConcurrencyOption>());
+
+  // Ensure that we are not setting any extra options
+  EXPECT_FALSE(opts.has<GrpcCredentialOption>());
 }
 
 }  // namespace

@@ -85,6 +85,10 @@ Options DefaultCommonOptions(Options opts) {
 }
 
 Options DefaultPublisherOptions(Options opts) {
+  return DefaultCommonOptions(DefaultPublisherOptionsOnly(std::move(opts)));
+}
+
+Options DefaultPublisherOptionsOnly(Options opts) {
   if (!opts.has<pubsub::MaxHoldTimeOption>()) {
     opts.set<pubsub::MaxHoldTimeOption>(ms(10));
   }
@@ -110,10 +114,14 @@ Options DefaultPublisherOptions(Options opts) {
         pubsub::FullPublisherAction::kBlocks);
   }
 
-  return DefaultCommonOptions(std::move(opts));
+  return opts;
 }
 
 Options DefaultSubscriberOptions(Options opts) {
+  return DefaultCommonOptions(DefaultSubscriberOptionsOnly(std::move(opts)));
+}
+
+Options DefaultSubscriberOptionsOnly(Options opts) {
   if (!opts.has<pubsub::MaxDeadlineTimeOption>()) {
     opts.set<pubsub::MaxDeadlineTimeOption>(seconds(0));
   }
@@ -153,7 +161,7 @@ Options DefaultSubscriberOptions(Options opts) {
   auto& bytes = opts.lookup<pubsub::MaxOutstandingBytesOption>();
   bytes = std::max<std::int64_t>(0, bytes);
 
-  return DefaultCommonOptions(std::move(opts));
+  return opts;
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
