@@ -69,6 +69,12 @@
 
 ## v1.33.0 - TBD
 
+## v1.32.1 - 2021-10
+
+### [Pub/Sub](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/README.md)
+
+* fix(pubsub): do not overwrite ConnectionOptions ([#7406](https://github.com/googleapis/google-cloud-cpp/pull/7406))
+
 ## v1.32.0 - 2021-10
 
 ### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
