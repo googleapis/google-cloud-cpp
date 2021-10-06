@@ -98,18 +98,17 @@ std::vector<int> BulkMutatorState::OnRead(
     auto const index = static_cast<std::size_t>(entry.index());
     auto& annotation = annotations_[index];
     annotation.has_mutation_result = true;
-    auto const& status = entry.status();
-    auto const code = static_cast<grpc::StatusCode>(status.code());
+    auto const status = MakeStatusFromRpcError(entry.status());
     // Successful responses are not even recorded, this class only reports
     // the failures.  The data for successful responses is discarded, because
     // this class takes ownership in the constructor.
-    if (grpc::StatusCode::OK == code) {
+    if (status.ok()) {
       res.push_back(annotation.original_index);
       continue;
     }
     auto& original = *mutations_.mutable_entries(static_cast<int>(index));
     // Failed responses are handled according to the current policies.
-    if (SafeGrpcRetry::IsTransientFailure(code) &&
+    if (SafeGrpcRetry::IsTransientFailure(status) &&
         (annotation.idempotency == Idempotency::kIdempotent)) {
       // Retryable requests are saved in the pending mutations, along with the
       // mapping from their index in pending_mutations_ to the original

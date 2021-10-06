@@ -20,6 +20,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+
 std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy(
     internal::RPCPolicyParameters defaults) {
   return std::unique_ptr<RPCRetryPolicy>(
