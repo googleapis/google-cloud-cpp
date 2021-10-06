@@ -71,7 +71,8 @@ bool HasRoutingHeader(google::protobuf::MethodDescriptor const& method);
  *
  * https://google.aip.dev/client-libraries/4233
  */
-google::cloud::optional<std::pair<std::string, std::string>>
+google::cloud::optional<
+    std::pair<std::string, google::protobuf::Descriptor const*>>
 DeterminePagination(google::protobuf::MethodDescriptor const& method);
 
 /**

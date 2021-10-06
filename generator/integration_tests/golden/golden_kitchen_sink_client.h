@@ -161,6 +161,7 @@ class GoldenKitchenSinkClient {
    *      "organizations/[ORGANIZATION_ID]"
    *      "billingAccounts/[BILLING_ACCOUNT_ID]"
    *      "folders/[FOLDER_ID]"
+   * @return std::string
    */
   StreamRange<std::string>
   ListLogs(std::string const& parent);
@@ -238,6 +239,7 @@ class GoldenKitchenSinkClient {
    * Only logs that have entries are listed.
    *
    * @param request [google::test::admin::database::v1::ListLogsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L956)
+   * @return std::string
    */
   StreamRange<std::string>
   ListLogs(google::test::admin::database::v1::ListLogsRequest request);

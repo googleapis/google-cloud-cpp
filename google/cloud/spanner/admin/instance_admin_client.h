@@ -90,6 +90,8 @@ class InstanceAdminClient {
    * @param parent  Required. The name of the project for which a list of
    * supported instance configurations is requested. Values are of the form
    *  `projects/<project>`.
+   * @return
+   * [google::spanner::admin::instance::v1::InstanceConfig](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304)
    */
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
   ListInstanceConfigs(std::string const& parent);
@@ -110,6 +112,8 @@ class InstanceAdminClient {
    *
    * @param parent  Required. The name of the project for which a list of
    * instances is requested. Values are of the form `projects/<project>`.
+   * @return
+   * [google::spanner::admin::instance::v1::Instance](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328)
    */
   StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
       std::string const& parent);
@@ -338,6 +342,8 @@ class InstanceAdminClient {
    *
    * @param request
    * [google::spanner::admin::instance::v1::ListInstanceConfigsRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L415)
+   * @return
+   * [google::spanner::admin::instance::v1::InstanceConfig](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304)
    */
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
   ListInstanceConfigs(
@@ -361,6 +367,8 @@ class InstanceAdminClient {
    *
    * @param request
    * [google::spanner::admin::instance::v1::ListInstancesRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L499)
+   * @return
+   * [google::spanner::admin::instance::v1::Instance](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328)
    */
   StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
       google::spanner::admin::instance::v1::ListInstancesRequest request);

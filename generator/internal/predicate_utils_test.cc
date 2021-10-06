@@ -380,7 +380,7 @@ TEST(PredicateUtilsTest, PaginationSuccess) {
       DeterminePagination(*service_file_descriptor->service(0)->method(0));
   EXPECT_TRUE(result.has_value());
   EXPECT_EQ(result->first, "repeated_field");
-  EXPECT_EQ(result->second, "google.protobuf.Bar");
+  EXPECT_EQ(result->second->full_name(), "google.protobuf.Bar");
 }
 
 TEST(PredicateUtilsTest, PaginationNoPageSize) {
@@ -598,7 +598,7 @@ TEST(PredicateUtilsTest, PaginationExactlyOneRepatedStringResponse) {
       DeterminePagination(*service_file_descriptor->service(0)->method(0));
   EXPECT_TRUE(result.has_value());
   EXPECT_EQ(result->first, "repeated_field");
-  EXPECT_EQ(result->second, "string");
+  EXPECT_EQ(result->second, nullptr);
 }
 
 class StringSourceTree : public google::protobuf::compiler::SourceTree {
