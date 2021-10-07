@@ -28,5 +28,6 @@ google_cloud_cpp_testing_grpc_hdrs = [
 google_cloud_cpp_testing_grpc_srcs = [
     "fake_completion_queue_impl.cc",
     "is_proto_equal.cc",
+    "mock_grpc_authentication_strategy.cc",
     "validate_metadata.cc",
 ]

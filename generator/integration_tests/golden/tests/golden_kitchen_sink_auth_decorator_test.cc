@@ -27,25 +27,10 @@ namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
-using ::google::cloud::internal::GrpcAuthenticationStrategy;
 using ::google::cloud::internal::StreamingReadRpcError;
-using ::google::cloud::testing_util::MockAuthenticationStrategy;
+using ::google::cloud::testing_util::MakeTypicalMockAuth;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::IsNull;
-
-std::shared_ptr<GrpcAuthenticationStrategy> MakeMockAuth() {
-  auto auth = std::make_shared<MockAuthenticationStrategy>();
-  EXPECT_CALL(*auth, ConfigureContext)
-      .WillOnce([](grpc::ClientContext&) {
-        return Status(StatusCode::kInvalidArgument, "cannot-set-credentials");
-      })
-      .WillOnce([](grpc::ClientContext& context) {
-        context.set_credentials(
-            grpc::AccessTokenCredentials("test-only-invalid"));
-        return Status{};
-      });
-  return auth;
-}
 
 // The general pattern of these test is to make two requests, both of which
 // return an error. The first one because the auth strategy fails, the second
@@ -57,7 +42,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, GenerateAccessToken) {
       .WillOnce(
           ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
-  auto under_test = GoldenKitchenSinkAuth(MakeMockAuth(), mock);
+  auto under_test = GoldenKitchenSinkAuth(MakeTypicalMockAuth(), mock);
   ::google::test::admin::database::v1::GenerateAccessTokenRequest request;
   grpc::ClientContext ctx;
   auto auth_failure = under_test.GenerateAccessToken(ctx, request);
@@ -75,7 +60,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, GenerateIdToken) {
       .WillOnce(
           ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
-  auto under_test = GoldenKitchenSinkAuth(MakeMockAuth(), mock);
+  auto under_test = GoldenKitchenSinkAuth(MakeTypicalMockAuth(), mock);
   ::google::test::admin::database::v1::GenerateIdTokenRequest request;
   grpc::ClientContext ctx;
   auto auth_failure = under_test.GenerateIdToken(ctx, request);
@@ -93,7 +78,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, WriteLogEntries) {
       .WillOnce(
           ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
-  auto under_test = GoldenKitchenSinkAuth(MakeMockAuth(), mock);
+  auto under_test = GoldenKitchenSinkAuth(MakeTypicalMockAuth(), mock);
   ::google::test::admin::database::v1::WriteLogEntriesRequest request;
   grpc::ClientContext ctx;
   auto auth_failure = under_test.WriteLogEntries(ctx, request);
@@ -111,7 +96,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, ListLogs) {
       .WillOnce(
           ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
-  auto under_test = GoldenKitchenSinkAuth(MakeMockAuth(), mock);
+  auto under_test = GoldenKitchenSinkAuth(MakeTypicalMockAuth(), mock);
   ::google::test::admin::database::v1::ListLogsRequest request;
   grpc::ClientContext ctx;
   auto auth_failure = under_test.ListLogs(ctx, request);
@@ -134,7 +119,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, TailLogEntries) {
             Status(StatusCode::kPermissionDenied, "uh-oh"));
       });
 
-  auto under_test = GoldenKitchenSinkAuth(MakeMockAuth(), mock);
+  auto under_test = GoldenKitchenSinkAuth(MakeTypicalMockAuth(), mock);
   ::google::test::admin::database::v1::TailLogEntriesRequest request;
   grpc::ClientContext ctx;
   auto auth_failure = under_test.TailLogEntries(
@@ -156,7 +141,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, ListServiceAccountKeys) {
       .WillOnce(
           ::testing::Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
-  auto under_test = GoldenKitchenSinkAuth(MakeMockAuth(), mock);
+  auto under_test = GoldenKitchenSinkAuth(MakeTypicalMockAuth(), mock);
   ::google::test::admin::database::v1::ListServiceAccountKeysRequest request;
   grpc::ClientContext ctx;
   auto auth_failure = under_test.ListServiceAccountKeys(ctx, request);

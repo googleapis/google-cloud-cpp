@@ -35,6 +35,27 @@ class MockAuthenticationStrategy
               (override));
 };
 
+/**
+ * Create and set expectations a mock authentication strategy.
+ *
+ * Many of our tests initialize a MockAuthenticationStrategy and set up the same
+ * expectations, namely that the test will use the strategy twice, and the
+ * first time it will fail with `kInvalidArgument`, while the second time
+ * will set the call credentials in the client context.
+ *
+ * This function refactors that set up so we don't have to cut&paste it in too
+ * many tests.
+ */
+std::shared_ptr<MockAuthenticationStrategy> MakeTypicalMockAuth();
+
+/**
+ * Create and set expectations a mock authentication strategy.
+ *
+ * Like MakeTypicalMockAuth() but set the expectations for an asynchronous
+ * request.
+ */
+std::shared_ptr<MockAuthenticationStrategy> MakeTypicalAsyncMockAuth();
+
 }  // namespace testing_util
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
