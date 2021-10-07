@@ -398,6 +398,9 @@ std::string FormatMethodCommentsFromRpcComments(
         "   * @return $method_longrunning_deduced_return_doxygen_link$\n";
   } else if (!IsResponseTypeEmpty(method) && !IsPaginated(method)) {
     return_comment_string = "   * @return $method_return_doxygen_link$\n";
+  } else if (IsPaginated(method)) {
+    return_comment_string =
+        "   * @return $method_paginated_return_doxygen_link$\n";
   }
 
   return absl::StrCat("  /**\n   *", doxygen_formatted_function_comments, "\n",
@@ -539,9 +542,16 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
       // Add exception to AIP-4233 for response types that have exactly one
       // repeated field that is of primitive type string.
       method_vars["range_output_type"] =
-          pagination_info->second == "string"
+          pagination_info->second == nullptr
               ? "std::string"
-              : ProtoNameToCppName(pagination_info->second);
+              : ProtoNameToCppName(pagination_info->second->full_name());
+      if (pagination_info->second) {
+        method_vars["method_paginated_return_doxygen_link"] =
+            FormatDoxygenLink(*pagination_info->second,
+                              service_vars.at("googleapis_commit_hash"));
+      } else {
+        method_vars["method_paginated_return_doxygen_link"] = "std::string";
+      }
     }
     SetMethodSignatureMethodVars(method, method_vars);
     SetResourceRoutingMethodVars(method, method_vars);

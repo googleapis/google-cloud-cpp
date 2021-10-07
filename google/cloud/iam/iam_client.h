@@ -83,6 +83,8 @@ class IAMClient {
    *
    * @param name  Required. The resource name of the project associated with the
    * service accounts, such as `projects/my-project-123`.
+   * @return
+   * [google::iam::admin::v1::ServiceAccount](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/admin/v1/iam.proto#L461)
    */
   StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
       std::string const& name);
@@ -331,6 +333,8 @@ class IAMClient {
    * resource format. For example, a Cloud Platform project with id `my-project`
    * will be named
    *  `//cloudresourcemanager.googleapis.com/projects/my-project`.
+   * @return
+   * [google::iam::admin::v1::Role](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/admin/v1/iam.proto#L1004)
    */
   StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
       std::string const& full_resource_name);
@@ -341,6 +345,8 @@ class IAMClient {
    *
    * @param request
    * [google::iam::admin::v1::ListServiceAccountsRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/admin/v1/iam.proto#L544)
+   * @return
+   * [google::iam::admin::v1::ServiceAccount](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/admin/v1/iam.proto#L461)
    */
   StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
       google::iam::admin::v1::ListServiceAccountsRequest request);
@@ -592,6 +598,8 @@ class IAMClient {
    *
    * @param request
    * [google::iam::admin::v1::QueryGrantableRolesRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/admin/v1/iam.proto#L1062)
+   * @return
+   * [google::iam::admin::v1::Role](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/admin/v1/iam.proto#L1004)
    */
   StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
       google::iam::admin::v1::QueryGrantableRolesRequest request);
@@ -602,6 +610,8 @@ class IAMClient {
    *
    * @param request
    * [google::iam::admin::v1::ListRolesRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/admin/v1/iam.proto#L1093)
+   * @return
+   * [google::iam::admin::v1::Role](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/admin/v1/iam.proto#L1004)
    */
   StreamRange<google::iam::admin::v1::Role> ListRoles(
       google::iam::admin::v1::ListRolesRequest request);
@@ -685,6 +695,8 @@ class IAMClient {
    *
    * @param request
    * [google::iam::admin::v1::QueryTestablePermissionsRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/admin/v1/iam.proto#L1361)
+   * @return
+   * [google::iam::admin::v1::Permission](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/iam/admin/v1/iam.proto#L1306)
    */
   StreamRange<google::iam::admin::v1::Permission> QueryTestablePermissions(
       google::iam::admin::v1::QueryTestablePermissionsRequest request);

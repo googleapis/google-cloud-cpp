@@ -73,6 +73,8 @@ class DatabaseAdminClient {
    *
    * @param parent  Required. The instance whose databases should be listed.
    *  Values are of the form `projects/<project>/instances/<instance>`.
+   * @return
+   * [google::spanner::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/database/v1/spanner_database_admin.proto#L326)
    */
   StreamRange<google::spanner::admin::database::v1::Database> ListDatabases(
       std::string const& parent);
@@ -328,6 +330,8 @@ class DatabaseAdminClient {
    *
    * @param parent  Required. The instance to list backups from.  Values are of
    * the form `projects/<project>/instances/<instance>`.
+   * @return
+   * [google::spanner::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/database/v1/backup.proto#L36)
    */
   StreamRange<google::spanner::admin::database::v1::Backup> ListBackups(
       std::string const& parent);
@@ -381,6 +385,8 @@ class DatabaseAdminClient {
    *
    * @param parent  Required. The instance of the database operations.
    *  Values are of the form `projects/<project>/instances/<instance>`.
+   * @return
+   * [google::longrunning::Operation](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/longrunning/operations.proto#L128)
    */
   StreamRange<google::longrunning::Operation> ListDatabaseOperations(
       std::string const& parent);
@@ -399,6 +405,8 @@ class DatabaseAdminClient {
    *
    * @param parent  Required. The instance of the backup operations. Values are
    * of the form `projects/<project>/instances/<instance>`.
+   * @return
+   * [google::longrunning::Operation](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/longrunning/operations.proto#L128)
    */
   StreamRange<google::longrunning::Operation> ListBackupOperations(
       std::string const& parent);
@@ -408,6 +416,8 @@ class DatabaseAdminClient {
    *
    * @param request
    * [google::spanner::admin::database::v1::ListDatabasesRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/database/v1/spanner_database_admin.proto#L413)
+   * @return
+   * [google::spanner::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/database/v1/spanner_database_admin.proto#L326)
    */
   StreamRange<google::spanner::admin::database::v1::Database> ListDatabases(
       google::spanner::admin::database::v1::ListDatabasesRequest request);
@@ -608,6 +618,8 @@ class DatabaseAdminClient {
    *
    * @param request
    * [google::spanner::admin::database::v1::ListBackupsRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/database/v1/backup.proto#L228)
+   * @return
+   * [google::spanner::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/database/v1/backup.proto#L36)
    */
   StreamRange<google::spanner::admin::database::v1::Backup> ListBackups(
       google::spanner::admin::database::v1::ListBackupsRequest request);
@@ -653,6 +665,8 @@ class DatabaseAdminClient {
    *
    * @param request
    * [google::spanner::admin::database::v1::ListDatabaseOperationsRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/database/v1/spanner_database_admin.proto#L611)
+   * @return
+   * [google::longrunning::Operation](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/longrunning/operations.proto#L128)
    */
   StreamRange<google::longrunning::Operation> ListDatabaseOperations(
       google::spanner::admin::database::v1::ListDatabaseOperationsRequest
@@ -672,6 +686,8 @@ class DatabaseAdminClient {
    *
    * @param request
    * [google::spanner::admin::database::v1::ListBackupOperationsRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/spanner/admin/database/v1/backup.proto#L300)
+   * @return
+   * [google::longrunning::Operation](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/longrunning/operations.proto#L128)
    */
   StreamRange<google::longrunning::Operation> ListBackupOperations(
       google::spanner::admin::database::v1::ListBackupOperationsRequest

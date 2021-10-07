@@ -29,7 +29,8 @@ using ::google::protobuf::FieldDescriptor;
 using ::google::protobuf::MethodDescriptor;
 
 // https://google.aip.dev/client-libraries/4233
-google::cloud::optional<std::pair<std::string, std::string>>
+google::cloud::optional<
+    std::pair<std::string, google::protobuf::Descriptor const*>>
 DeterminePagination(google::protobuf::MethodDescriptor const& method) {
   std::string paginated_type;
   Descriptor const* request_message = method.input_type();
@@ -50,7 +51,7 @@ DeterminePagination(google::protobuf::MethodDescriptor const& method) {
 
   std::vector<std::tuple<std::string, Descriptor const*, int>>
       repeated_message_fields;
-  std::vector<std::pair<std::string, std::string>> repeated_string_fields;
+  std::vector<std::pair<std::string, Descriptor const*>> repeated_string_fields;
   for (int i = 0; i < response_message->field_count(); ++i) {
     FieldDescriptor const* field = response_message->field(i);
     if (field->is_repeated() &&
@@ -60,7 +61,7 @@ DeterminePagination(google::protobuf::MethodDescriptor const& method) {
     }
     if (field->is_repeated() && field->type() == FieldDescriptor::TYPE_STRING) {
       repeated_string_fields.emplace_back(
-          std::make_pair(field->name(), "string"));
+          std::make_pair(field->name(), nullptr));
     }
   }
 
@@ -86,7 +87,7 @@ DeterminePagination(google::protobuf::MethodDescriptor const& method) {
     }
   }
   return std::make_pair(std::get<0>(repeated_message_fields[0]),
-                        std::get<1>(repeated_message_fields[0])->full_name());
+                        std::get<1>(repeated_message_fields[0]));
 }
 
 bool IsPaginated(google::protobuf::MethodDescriptor const& method) {

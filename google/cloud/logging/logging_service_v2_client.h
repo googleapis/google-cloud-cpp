@@ -172,6 +172,8 @@ class LoggingServiceV2Client {
    *  `LogEntry.timestamp` (oldest first), and the second option returns entries
    *  in order of decreasing timestamps (newest first).  Entries with equal
    *  timestamps are returned in order of their `insert_id` values.
+   * @return
+   * [google::logging::v2::LogEntry](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/logging/v2/log_entry.proto#L42)
    */
   StreamRange<google::logging::v2::LogEntry> ListLogEntries(
       std::vector<std::string> const& resource_names, std::string const& filter,
@@ -186,6 +188,7 @@ class LoggingServiceV2Client {
    *      "organizations/[ORGANIZATION_ID]"
    *      "billingAccounts/[BILLING_ACCOUNT_ID]"
    *      "folders/[FOLDER_ID]"
+   * @return std::string
    */
   StreamRange<std::string> ListLogs(std::string const& parent);
 
@@ -225,6 +228,8 @@ class LoggingServiceV2Client {
    *
    * @param request
    * [google::logging::v2::ListLogEntriesRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/logging/v2/logging.proto#L257)
+   * @return
+   * [google::logging::v2::LogEntry](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/logging/v2/log_entry.proto#L42)
    */
   StreamRange<google::logging::v2::LogEntry> ListLogEntries(
       google::logging::v2::ListLogEntriesRequest request);
@@ -234,6 +239,8 @@ class LoggingServiceV2Client {
    *
    * @param request
    * [google::logging::v2::ListMonitoredResourceDescriptorsRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/logging/v2/logging.proto#L331)
+   * @return
+   * [google::api::MonitoredResourceDescriptor](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/api/monitored_resource.proto#L40)
    */
   StreamRange<google::api::MonitoredResourceDescriptor>
   ListMonitoredResourceDescriptors(
@@ -245,6 +252,7 @@ class LoggingServiceV2Client {
    *
    * @param request
    * [google::logging::v2::ListLogsRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/logging/v2/logging.proto#L356)
+   * @return std::string
    */
   StreamRange<std::string> ListLogs(
       google::logging::v2::ListLogsRequest request);

@@ -70,6 +70,7 @@ class GoldenThingAdminClient {
    *
    * @param parent  Required. The instance whose databases should be listed.
    *  Values are of the form `projects/<project>/instances/<instance>`.
+   * @return [google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
    */
   StreamRange<google::test::admin::database::v1::Database>
   ListDatabases(std::string const& parent);
@@ -301,6 +302,7 @@ class GoldenThingAdminClient {
    *
    * @param parent  Required. The instance to list backups from.  Values are of the
    *  form `projects/<project>/instances/<instance>`.
+   * @return [google::test::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L36)
    */
   StreamRange<google::test::admin::database::v1::Backup>
   ListBackups(std::string const& parent);
@@ -352,6 +354,7 @@ class GoldenThingAdminClient {
    *
    * @param parent  Required. The instance of the database operations.
    *  Values are of the form `projects/<project>/instances/<instance>`.
+   * @return [google::longrunning::Operation](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/longrunning/operations.proto#L128)
    */
   StreamRange<google::longrunning::Operation>
   ListDatabaseOperations(std::string const& parent);
@@ -370,6 +373,7 @@ class GoldenThingAdminClient {
    *
    * @param parent  Required. The instance of the backup operations. Values are of
    *  the form `projects/<project>/instances/<instance>`.
+   * @return [google::longrunning::Operation](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/longrunning/operations.proto#L128)
    */
   StreamRange<google::longrunning::Operation>
   ListBackupOperations(std::string const& parent);
@@ -378,6 +382,7 @@ class GoldenThingAdminClient {
    * Lists Cloud Test databases.
    *
    * @param request [google::test::admin::database::v1::ListDatabasesRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L377)
+   * @return [google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
    */
   StreamRange<google::test::admin::database::v1::Database>
   ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request);
@@ -544,6 +549,7 @@ class GoldenThingAdminClient {
    * starting from the most recent `create_time`.
    *
    * @param request [google::test::admin::database::v1::ListBackupsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L203)
+   * @return [google::test::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L36)
    */
   StreamRange<google::test::admin::database::v1::Backup>
   ListBackups(google::test::admin::database::v1::ListBackupsRequest request);
@@ -584,6 +590,7 @@ class GoldenThingAdminClient {
    * and pending operations.
    *
    * @param request [google::test::admin::database::v1::ListDatabaseOperationsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L553)
+   * @return [google::longrunning::Operation](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/longrunning/operations.proto#L128)
    */
   StreamRange<google::longrunning::Operation>
   ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest request);
@@ -601,6 +608,7 @@ class GoldenThingAdminClient {
    * from the most recently started operation.
    *
    * @param request [google::test::admin::database::v1::ListBackupOperationsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L274)
+   * @return [google::longrunning::Operation](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/longrunning/operations.proto#L128)
    */
   StreamRange<google::longrunning::Operation>
   ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest request);
