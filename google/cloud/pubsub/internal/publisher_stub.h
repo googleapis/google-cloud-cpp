@@ -99,6 +99,12 @@ class PublisherStub {
 std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(Options const& opts,
                                                           int channel_id);
 
+/**
+ * Create a PublisherStub using a pre-configured channel.
+ */
+std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
+    std::shared_ptr<grpc::Channel> channel);
+
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
