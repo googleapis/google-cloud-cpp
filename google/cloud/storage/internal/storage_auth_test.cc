@@ -25,27 +25,12 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::google::cloud::internal::GrpcAuthenticationStrategy;
 using ::google::cloud::storage::testing::MockStorageStub;
-using ::google::cloud::testing_util::MockAuthenticationStrategy;
+using ::google::cloud::testing_util::MakeTypicalMockAuth;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::IsNull;
 using ::testing::Not;
 using ::testing::Return;
-
-std::shared_ptr<GrpcAuthenticationStrategy> MakeMockAuth() {
-  auto auth = std::make_shared<MockAuthenticationStrategy>();
-  EXPECT_CALL(*auth, ConfigureContext)
-      .WillOnce([](grpc::ClientContext&) {
-        return Status(StatusCode::kInvalidArgument, "cannot-set-credentials");
-      })
-      .WillOnce([](grpc::ClientContext& context) {
-        context.set_credentials(
-            grpc::AccessTokenCredentials("test-only-invalid"));
-        return Status{};
-      });
-  return auth;
-}
 
 std::unique_ptr<StorageStub::ReadObjectStream> MakeObjectMediaStream(
     std::unique_ptr<grpc::ClientContext>,
@@ -76,7 +61,7 @@ TEST(StorageAuthTest, GetObjectMedia) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, ReadObject).WillOnce(MakeObjectMediaStream);
 
-  auto under_test = StorageAuth(MakeMockAuth(), mock);
+  auto under_test = StorageAuth(MakeTypicalMockAuth(), mock);
   google::storage::v2::ReadObjectRequest request;
   auto auth_failure =
       under_test.ReadObject(absl::make_unique<grpc::ClientContext>(), request);
@@ -95,7 +80,7 @@ TEST(StorageAuthTest, WriteObject) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, WriteObject).WillOnce(MakeInsertStream);
 
-  auto under_test = StorageAuth(MakeMockAuth(), mock);
+  auto under_test = StorageAuth(MakeTypicalMockAuth(), mock);
   auto auth_failure =
       under_test.WriteObject(absl::make_unique<grpc::ClientContext>());
   EXPECT_THAT(auth_failure->Close(), StatusIs(StatusCode::kInvalidArgument));
@@ -110,7 +95,7 @@ TEST(StorageAuthTest, StartResumableWrite) {
   EXPECT_CALL(*mock, StartResumableWrite)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
-  auto under_test = StorageAuth(MakeMockAuth(), mock);
+  auto under_test = StorageAuth(MakeTypicalMockAuth(), mock);
   google::storage::v2::StartResumableWriteRequest request;
   grpc::ClientContext ctx;
   auto auth_failure = under_test.StartResumableWrite(ctx, request);
@@ -127,7 +112,7 @@ TEST(StorageAuthTest, QueryWriteStatus) {
   EXPECT_CALL(*mock, QueryWriteStatus)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
-  auto under_test = StorageAuth(MakeMockAuth(), mock);
+  auto under_test = StorageAuth(MakeTypicalMockAuth(), mock);
   google::storage::v2::QueryWriteStatusRequest request;
   grpc::ClientContext ctx;
   auto auth_failure = under_test.QueryWriteStatus(ctx, request);
