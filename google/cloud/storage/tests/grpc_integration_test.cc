@@ -68,11 +68,6 @@ class GrpcIntegrationTest
   std::string project_id() const { return project_id_; }
   std::string bucket_name() const { return bucket_name_; }
 
-  std::string MakeEntityName() {
-    // We always use the viewers for the project because it is known to exist.
-    return "project-viewers-" + project_id_;
-  }
-
  private:
   std::string project_id_;
   std::string bucket_name_;
