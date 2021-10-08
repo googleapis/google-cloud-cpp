@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/pubsub/version.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
@@ -37,6 +38,7 @@ using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::Contains;
+using ::testing::IsEmpty;
 using ::testing::Not;
 
 bool UsingEmulator() {
@@ -50,34 +52,35 @@ TopicAdminClient MakeTestTopicAdminClient() {
 using TopicAdminIntegrationTest =
     ::google::cloud::testing_util::IntegrationTest;
 
+StatusOr<std::vector<std::string>> TopicNames(TopicAdminClient client,
+                                              std::string const& project_id) {
+  std::vector<std::string> names;
+  for (auto& topic : client.ListTopics(project_id)) {
+    if (!topic) return std::move(topic).status();
+    names.push_back(std::move(*topic->mutable_name()));
+  }
+  return names;
+}
+
 TEST_F(TopicAdminIntegrationTest, TopicCRUD) {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  ASSERT_FALSE(project_id.empty());
-
-  auto topic_names = [](TopicAdminClient client,
-                        std::string const& project_id) {
-    std::vector<std::string> names;
-    for (auto& topic : client.ListTopics(project_id)) {
-      EXPECT_STATUS_OK(topic);
-      if (!topic) break;
-      names.push_back(topic->name());
-    }
-    return names;
-  };
+  ASSERT_THAT(project_id, Not(IsEmpty()));
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   Topic topic(project_id, pubsub_testing::RandomTopicId(generator));
 
   auto publisher = TopicAdminClient(MakeTopicAdminConnection());
-
-  EXPECT_THAT(topic_names(publisher, project_id),
-              Not(Contains(topic.FullName())));
+  auto names = TopicNames(publisher, project_id);
+  ASSERT_STATUS_OK(names);
+  EXPECT_THAT(*names, Not(Contains(topic.FullName())));
 
   auto create_response = publisher.CreateTopic(TopicBuilder(topic));
   ASSERT_THAT(create_response,
               AnyOf(IsOk(), StatusIs(StatusCode::kAlreadyExists)));
-  EXPECT_THAT(topic_names(publisher, project_id), Contains(topic.FullName()));
+  names = TopicNames(publisher, project_id);
+  ASSERT_STATUS_OK(names);
+  EXPECT_THAT(*names, Contains(topic.FullName()));
 
   auto get_response = publisher.GetTopic(topic);
   ASSERT_STATUS_OK(get_response);
@@ -98,8 +101,20 @@ TEST_F(TopicAdminIntegrationTest, TopicCRUD) {
 
   auto delete_response = publisher.DeleteTopic(topic);
   EXPECT_THAT(delete_response, AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
-  EXPECT_THAT(topic_names(publisher, project_id),
-              Not(Contains(topic.FullName())));
+  names = TopicNames(publisher, project_id);
+  ASSERT_STATUS_OK(names);
+  EXPECT_THAT(*names, Not(Contains(topic.FullName())));
+}
+
+TEST_F(TopicAdminIntegrationTest, UnifiedCredentials) {
+  auto project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  ASSERT_THAT(project_id, Not(IsEmpty()));
+  auto credentials = UsingEmulator() ? MakeInsecureCredentials()
+                                     : MakeGoogleDefaultCredentials();
+  auto client = TopicAdminClient(MakeTopicAdminConnection(
+      Options{}.set<UnifiedCredentialsOption>(std::move(credentials))));
+  ASSERT_STATUS_OK(TopicNames(client, project_id));
 }
 
 TEST_F(TopicAdminIntegrationTest, CreateTopicFailure) {

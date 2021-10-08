@@ -58,6 +58,8 @@ add_library(
     internal/non_constructible.h
     internal/ordering_key_publisher_connection.cc
     internal/ordering_key_publisher_connection.h
+    internal/publisher_auth.cc
+    internal/publisher_auth.h
     internal/publisher_logging.cc
     internal/publisher_logging.h
     internal/publisher_metadata.cc
@@ -236,6 +238,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/defaults_test.cc
         internal/flow_controlled_publisher_connection_test.cc
         internal/ordering_key_publisher_connection_test.cc
+        internal/publisher_auth_test.cc
         internal/publisher_logging_test.cc
         internal/publisher_metadata_test.cc
         internal/publisher_round_robin_test.cc

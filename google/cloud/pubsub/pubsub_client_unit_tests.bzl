@@ -23,6 +23,7 @@ pubsub_client_unit_tests = [
     "internal/defaults_test.cc",
     "internal/flow_controlled_publisher_connection_test.cc",
     "internal/ordering_key_publisher_connection_test.cc",
+    "internal/publisher_auth_test.cc",
     "internal/publisher_logging_test.cc",
     "internal/publisher_metadata_test.cc",
     "internal/publisher_round_robin_test.cc",
