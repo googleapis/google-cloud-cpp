@@ -123,6 +123,10 @@ class SubscriberStub {
       google::pubsub::v1::SeekRequest const& request) = 0;
 };
 
+/// Create a SubscriberStub using a pre-configured channel.
+std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
+    std::shared_ptr<grpc::Channel> channel);
+
 /**
  * Creates a SubscriberStub configured with @p opts and @p channel_id.
  *
