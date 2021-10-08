@@ -246,6 +246,19 @@ struct CARootsFilePathOption {
   using Type = std::string;
 };
 
+namespace internal {
+
+/**
+ * Use an insecure channel for AccessToken authentication.
+ *
+ * This is useful when testing against emulators, where it is impossible to
+ * create a secure channel.
+ */
+struct UseInsecureChannelOption {
+  using Type = bool;
+};
+
+}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
