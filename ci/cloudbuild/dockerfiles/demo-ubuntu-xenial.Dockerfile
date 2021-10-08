@@ -152,7 +152,7 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/json
-RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.2.tar.gz | \
+RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i \
         -e '1s/VERSION 3.8/VERSION 3.5/' \
