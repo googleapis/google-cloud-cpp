@@ -23,12 +23,12 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+
 /**
  * Well-known status codes with `grpc::StatusCode`-compatible values.
  *
  * The semantics of these values are documented in:
  *     https://grpc.io/grpc/cpp/classgrpc_1_1_status.html
- *
  */
 enum class StatusCode {
   /// Not an error; returned on success.
@@ -56,10 +56,19 @@ std::string StatusCodeToString(StatusCode code);
 std::ostream& operator<<(std::ostream& os, StatusCode code);
 
 /**
- * Reports error code and details from a remote request.
+ * Represents success or an error with info about the error.
+
+ * This class is typically used to indicate whether or not a function or other
+ * operation completed successfully. Success is indicated by an "OK" status
+ * (`StatusCode::kOk`), and the `.ok()` method will return true. Any non-OK
+ * `Status` is considered an error. Users can inspect the error using the
+ * `.code()` and `.message()` member functions, or they can simply stream the
+ * `Status` object, and it will print itself in some human readable way (the
+ * streamed format may change over time and you should *not* depend on the
+ * specific format of a streamed `Status` object remaining unchanged).
  *
- * This class is modeled after `grpc::Status`, it contains the status code and
- * error message (if applicable) from a JSON request.
+ * This is a regular value type that can be copied, moved, compared for
+ * equality, and streamed.
  */
 class Status {
  public:
