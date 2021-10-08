@@ -110,10 +110,16 @@ TEST_F(TopicAdminIntegrationTest, UnifiedCredentials) {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_THAT(project_id, Not(IsEmpty()));
-  auto credentials = UsingEmulator() ? MakeInsecureCredentials()
-                                     : MakeGoogleDefaultCredentials();
-  auto client = TopicAdminClient(MakeTopicAdminConnection(
-      Options{}.set<UnifiedCredentialsOption>(std::move(credentials))));
+  auto options =
+      Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
+  if (UsingEmulator()) {
+    options = Options{}
+                  .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
+                      "test-only-invalid", std::chrono::system_clock::now() +
+                                               std::chrono::minutes(15)))
+                  .set<internal::UseInsecureChannelOption>(true);
+  }
+  auto client = TopicAdminClient(MakeTopicAdminConnection(std::move(options)));
   ASSERT_STATUS_OK(TopicNames(client, project_id));
 }
 

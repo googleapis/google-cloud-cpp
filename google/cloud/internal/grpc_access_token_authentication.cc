@@ -21,14 +21,16 @@ namespace internal {
 
 GrpcAccessTokenAuthentication::GrpcAccessTokenAuthentication(
     AccessToken const& access_token, Options const& opts)
-    : credentials_(grpc::AccessTokenCredentials(access_token.token)) {
+    : credentials_(grpc::AccessTokenCredentials(access_token.token)),
+      use_insecure_channel_(opts.get<UseInsecureChannelOption>()) {
   auto cainfo = LoadCAInfo(opts);
   if (cainfo) ssl_options_.pem_root_certs = std::move(*cainfo);
 }
 
 std::shared_ptr<grpc::Channel> GrpcAccessTokenAuthentication::CreateChannel(
     std::string const& endpoint, grpc::ChannelArguments const& arguments) {
-  auto credentials = grpc::SslCredentials(ssl_options_);
+  auto credentials = use_insecure_channel_ ? grpc::InsecureChannelCredentials()
+                                           : grpc::SslCredentials(ssl_options_);
   return grpc::CreateCustomChannel(endpoint, credentials, arguments);
 }
 

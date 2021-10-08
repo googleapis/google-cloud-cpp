@@ -42,6 +42,7 @@ class GrpcAccessTokenAuthentication : public GrpcAuthenticationStrategy {
  private:
   std::shared_ptr<grpc::CallCredentials> credentials_;
   grpc::SslCredentialsOptions ssl_options_;
+  bool use_insecure_channel_;
 };
 
 }  // namespace internal
