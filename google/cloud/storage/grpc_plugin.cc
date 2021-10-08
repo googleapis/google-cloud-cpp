@@ -23,17 +23,19 @@ namespace storage_experimental {
 inline namespace STORAGE_CLIENT_NS {
 
 namespace {
-bool UseGrpcForMetadata() {
-  auto v =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG")
-          .value_or("");
-  return v.find("metadata") != std::string::npos;
+absl::optional<std::string> GrpcConfig() {
+  return google::cloud::internal::GetEnv(
+      "GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG");
 }
 }  // namespace
 
 google::cloud::storage::Client DefaultGrpcClient(Options opts) {
   opts = google::cloud::storage::internal::DefaultOptionsGrpc(std::move(opts));
-  if (UseGrpcForMetadata()) {
+  auto config = GrpcConfig();
+  if (config.value_or("none") == "none") {
+    return google::cloud::storage::Client(std::move(opts));
+  }
+  if (config.value_or("") == "metadata") {
     return storage::internal::ClientImplDetails::CreateClient(
         storage::internal::GrpcClient::Create(opts));
   }

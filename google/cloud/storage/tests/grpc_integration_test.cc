@@ -256,7 +256,7 @@ TEST_P(GrpcIntegrationTest, FieldFilter) {
 }
 
 INSTANTIATE_TEST_SUITE_P(GrpcIntegrationMediaTest, GrpcIntegrationTest,
-                         ::testing::Values("media"));
+                         ::testing::Values("none"));
 
 }  // namespace
 }  // namespace internal
