@@ -33,6 +33,7 @@ pubsub_client_unit_tests = [
     "internal/sequential_batch_sink_test.cc",
     "internal/session_shutdown_manager_test.cc",
     "internal/streaming_subscription_batch_source_test.cc",
+    "internal/subscriber_auth_test.cc",
     "internal/subscriber_logging_test.cc",
     "internal/subscriber_metadata_test.cc",
     "internal/subscriber_round_robin_test.cc",

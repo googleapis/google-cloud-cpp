@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/pubsub/version.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
@@ -40,6 +41,7 @@ using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::Contains;
+using ::testing::IsEmpty;
 using ::testing::Not;
 
 bool UsingEmulator() {
@@ -54,21 +56,20 @@ SubscriptionAdminClient MakeTestSubscriptionAdminClient() {
 using SubscriptionAdminIntegrationTest =
     ::google::cloud::testing_util::IntegrationTest;
 
+StatusOr<std::vector<std::string>> SubscriptionNames(
+    SubscriptionAdminClient client, std::string const& project_id) {
+  std::vector<std::string> names;
+  for (auto& subscription : client.ListSubscriptions(project_id)) {
+    if (!subscription) return std::move(subscription).status();
+    names.push_back(subscription->name());
+  }
+  return names;
+}
+
 TEST_F(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_FALSE(project_id.empty());
-
-  auto subscription_names = [](SubscriptionAdminClient client,
-                               std::string const& project_id) {
-    std::vector<std::string> names;
-    for (auto& subscription : client.ListSubscriptions(project_id)) {
-      EXPECT_STATUS_OK(subscription);
-      if (!subscription) break;
-      names.push_back(subscription->name());
-    }
-    return names;
-  };
 
   auto snapshot_names = [](SubscriptionAdminClient client,
                            std::string const& project_id) {
@@ -90,8 +91,9 @@ TEST_F(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   auto subscription_admin =
       SubscriptionAdminClient(MakeSubscriptionAdminConnection());
 
-  EXPECT_THAT(subscription_names(subscription_admin, project_id),
-              Not(Contains(subscription.FullName())));
+  auto names = SubscriptionNames(subscription_admin, project_id);
+  ASSERT_STATUS_OK(names);
+  EXPECT_THAT(*names, Not(Contains(subscription.FullName())));
 
   auto topic_metadata = topic_admin.CreateTopic(TopicBuilder(topic));
   ASSERT_THAT(topic_metadata,
@@ -125,9 +127,9 @@ TEST_F(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
                         std::chrono::seconds(kTestDeadlineSeconds)));
   ASSERT_STATUS_OK(update_response);
   EXPECT_EQ(kTestDeadlineSeconds, update_response->ack_deadline_seconds());
-
-  EXPECT_THAT(subscription_names(subscription_admin, project_id),
-              Contains(subscription.FullName()));
+  names = SubscriptionNames(subscription_admin, project_id);
+  ASSERT_STATUS_OK(names);
+  EXPECT_THAT(*names, Contains(subscription.FullName()));
 
   auto modify_push_config_response = subscription_admin.ModifyPushSubscription(
       subscription, PushConfigBuilder{});
@@ -194,8 +196,27 @@ TEST_F(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   auto delete_response = subscription_admin.DeleteSubscription(subscription);
   EXPECT_THAT(delete_response, AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
 
-  EXPECT_THAT(subscription_names(subscription_admin, project_id),
-              Not(Contains(subscription.FullName())));
+  names = SubscriptionNames(subscription_admin, project_id);
+  ASSERT_STATUS_OK(names);
+  EXPECT_THAT(*names, Not(Contains(subscription.FullName())));
+}
+
+TEST_F(SubscriptionAdminIntegrationTest, UnifiedCredentials) {
+  auto project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  ASSERT_THAT(project_id, Not(IsEmpty()));
+  auto options =
+      Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
+  if (UsingEmulator()) {
+    options = Options{}
+                  .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
+                      "test-only-invalid", std::chrono::system_clock::now() +
+                                               std::chrono::minutes(15)))
+                  .set<internal::UseInsecureChannelOption>(true);
+  }
+  auto client = SubscriptionAdminClient(
+      MakeSubscriptionAdminConnection(std::move(options)));
+  ASSERT_STATUS_OK(SubscriptionNames(client, project_id));
 }
 
 TEST_F(SubscriptionAdminIntegrationTest, CreateSubscriptionFailure) {

@@ -193,10 +193,16 @@ class DefaultSubscriberStub : public SubscriberStub {
   std::unique_ptr<google::pubsub::v1::Subscriber::StubInterface> grpc_stub_;
 };
 
+/// Create a SubscriberStub using a pre-configured channel.
+std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
+    std::shared_ptr<grpc::Channel> channel) {
+  return std::make_shared<DefaultSubscriberStub>(
+      google::pubsub::v1::Subscriber::NewStub(std::move(channel)));
+}
+
 std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(Options const& opts,
                                                             int channel_id) {
-  return std::make_shared<DefaultSubscriberStub>(
-      google::pubsub::v1::Subscriber::NewStub(CreateChannel(opts, channel_id)));
+  return CreateDefaultSubscriberStub(CreateChannel(opts, channel_id));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

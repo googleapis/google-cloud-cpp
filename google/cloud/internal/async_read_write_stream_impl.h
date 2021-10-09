@@ -178,6 +178,38 @@ MakeStreamingReadWriteRpc(
       std::move(cq_impl), std::move(context), std::move(stream));
 }
 
+/**
+ * A streaming read-write RPC returning a fixed error.
+ *
+ * This is used when the library cannot even start the streaming RPC, for
+ * example, because setting up the credentials for the call failed.  One could
+ * return `StatusOr<std::unique_ptr<StreamingWriteRpc<A, B>>` in such cases, but
+ * the receiving code must deal with streams that fail anyway. It seems more
+ * elegant to represent the error as part of the stream.
+ */
+template <typename Request, typename Response>
+class AsyncStreamingReadWriteRpcError
+    : public AsyncStreamingReadWriteRpc<Request, Response> {
+ public:
+  explicit AsyncStreamingReadWriteRpcError(Status status)
+      : status_(std::move(status)) {}
+  ~AsyncStreamingReadWriteRpcError() override = default;
+
+  void Cancel() override {}
+  future<bool> Start() override { return make_ready_future(false); }
+  future<absl::optional<Response>> Read() override {
+    return make_ready_future<absl::optional<Response>>(absl::nullopt);
+  }
+  future<bool> Write(Request const&, grpc::WriteOptions) override {
+    return make_ready_future(false);
+  }
+  future<bool> WritesDone() override { return make_ready_future(false); }
+  future<Status> Finish() override { return make_ready_future(status_); }
+
+ private:
+  Status status_;
+};
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

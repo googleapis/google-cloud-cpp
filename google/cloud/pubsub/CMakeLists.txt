@@ -82,6 +82,8 @@ add_library(
     internal/session_shutdown_manager.h
     internal/streaming_subscription_batch_source.cc
     internal/streaming_subscription_batch_source.h
+    internal/subscriber_auth.cc
+    internal/subscriber_auth.h
     internal/subscriber_logging.cc
     internal/subscriber_logging.h
     internal/subscriber_metadata.cc
@@ -248,6 +250,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/sequential_batch_sink_test.cc
         internal/session_shutdown_manager_test.cc
         internal/streaming_subscription_batch_source_test.cc
+        internal/subscriber_auth_test.cc
         internal/subscriber_logging_test.cc
         internal/subscriber_metadata_test.cc
         internal/subscriber_round_robin_test.cc
