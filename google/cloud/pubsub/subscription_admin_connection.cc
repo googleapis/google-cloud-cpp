@@ -251,7 +251,7 @@ class SubscriptionAdminConnectionImpl
   std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
 };
 
-// Decorates a TopicAdminStub. This works for both mock and real stubs.
+// Decorates a SubscriptionAdminStub. This works for both mock and real stubs.
 std::shared_ptr<pubsub_internal::SubscriberStub> DecorateSubscriptionAdminStub(
     Options const& opts,
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
