@@ -90,11 +90,10 @@ class DefaultSchemaStub : public SchemaStub {
 };
 }  // namespace
 
-std::shared_ptr<SchemaStub> CreateDefaultSchemaStub(Options const& opts,
-                                                    int channel_id) {
+std::shared_ptr<SchemaStub> CreateDefaultSchemaStub(
+    std::shared_ptr<grpc::Channel> channel) {
   return std::make_shared<DefaultSchemaStub>(
-      google::pubsub::v1::SchemaService::NewStub(
-          CreateChannel(opts, channel_id)));
+      google::pubsub::v1::SchemaService::NewStub(std::move(channel)));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

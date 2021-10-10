@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/schema_admin_client.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -35,7 +36,12 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
+using ::testing::IsEmpty;
 using ::testing::Not;
+
+bool UsingEmulator() {
+  return google::cloud::internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
+}
 
 SchemaAdminClient MakeTestSchemaAdminClient() {
   return SchemaAdminClient(MakeSchemaAdminConnection(MakeTestOptions()));
@@ -91,6 +97,26 @@ TEST_F(SchemaAdminIntegrationTest, SchemaCRUD) {
 
   auto deleted = schema_admin.DeleteSchema(schema);
   EXPECT_THAT(deleted, IsOk());
+}
+
+TEST_F(SchemaAdminIntegrationTest, UnifiedCredentials) {
+  auto project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  ASSERT_THAT(project_id, Not(IsEmpty()));
+  auto options =
+      Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
+  if (UsingEmulator()) {
+    options = Options{}
+                  .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
+                      "test-only-invalid", std::chrono::system_clock::now() +
+                                               std::chrono::minutes(15)))
+                  .set<internal::UseInsecureChannelOption>(true);
+  }
+  auto client =
+      SchemaAdminClient(MakeSchemaAdminConnection(std::move(options)));
+  for (auto&& r : client.ListSchemas(project_id)) {
+    EXPECT_THAT(r, IsOk());
+  }
 }
 
 TEST_F(SchemaAdminIntegrationTest, CreateSchema) {

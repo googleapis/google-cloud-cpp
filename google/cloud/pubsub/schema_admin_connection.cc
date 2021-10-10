@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/schema_admin_connection.h"
 #include "google/cloud/pubsub/internal/defaults.h"
+#include "google/cloud/pubsub/internal/schema_auth.h"
 #include "google/cloud/pubsub/internal/schema_logging.h"
 #include "google/cloud/pubsub/internal/schema_metadata.h"
 #include "google/cloud/pubsub/internal/schema_stub.h"
@@ -35,10 +36,12 @@ using ::google::cloud::internal::RetryLoop;
 class SchemaAdminConnectionImpl : public pubsub::SchemaAdminConnection {
  public:
   explicit SchemaAdminConnectionImpl(
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<pubsub_internal::SchemaStub> stub,
       std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
       std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy)
-      : stub_(std::move(stub)),
+      : background_(std::move(background)),
+        stub_(std::move(stub)),
         retry_policy_(std::move(retry_policy)),
         backoff_policy_(std::move(backoff_policy)) {}
 
@@ -135,22 +138,41 @@ class SchemaAdminConnectionImpl : public pubsub::SchemaAdminConnection {
   }
 
  private:
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<pubsub_internal::SchemaStub> stub_;
   std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
   std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
 };
+
+// Decorates a SchemaAdminStub. This works for both mock and real stubs.
+std::shared_ptr<pubsub_internal::SchemaStub> DecorateSchemaAdminStub(
+    Options const& opts,
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    std::shared_ptr<SchemaStub> stub) {
+  if (auth->RequiresConfigureContext()) {
+    stub = std::make_shared<pubsub_internal::SchemaAuth>(std::move(auth),
+                                                         std::move(stub));
+  }
+  stub = std::make_shared<pubsub_internal::SchemaMetadata>(std::move(stub));
+  if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
+    stub = std::make_shared<pubsub_internal::SchemaLogging>(
+        std::move(stub), opts.get<GrpcTracingOptionsOption>());
+  }
+  return stub;
+}
+
 }  // namespace
 
 std::shared_ptr<pubsub::SchemaAdminConnection> MakeSchemaAdminConnection(
     Options const& opts, std::shared_ptr<SchemaStub> stub) {
-  stub = std::make_shared<SchemaMetadata>(std::move(stub));
-  if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
-    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<SchemaLogging>(
-        std::move(stub), opts.get<GrpcTracingOptionsOption>());
-  }
+  auto background = internal::MakeBackgroundThreadsFactory(opts)();
+  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
+      google::cloud::MakeInsecureCredentials(), background->cq(), opts);
+  stub = DecorateSchemaAdminStub(opts, std::move(auth), std::move(stub));
   return std::make_shared<SchemaAdminConnectionImpl>(
-      std::move(stub), opts.get<pubsub::RetryPolicyOption>()->clone(),
+      std::move(background), std::move(stub),
+      opts.get<pubsub::RetryPolicyOption>()->clone(),
       opts.get<pubsub::BackoffPolicyOption>()->clone());
 }
 
@@ -171,9 +193,20 @@ std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(Options opts) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  PolicyOptionList>(opts, __func__);
   opts = pubsub_internal::DefaultCommonOptions(std::move(opts));
-  auto stub = pubsub_internal::CreateDefaultSchemaStub(opts, /*channel_id=*/0);
-  return pubsub_internal::MakeSchemaAdminConnection(std::move(opts),
-                                                    std::move(stub));
+
+  auto background = internal::MakeBackgroundThreadsFactory(opts)();
+  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
+      background->cq(), opts);
+
+  auto stub = pubsub_internal::CreateDefaultSchemaStub(auth->CreateChannel(
+      opts.get<EndpointOption>(), internal::MakeChannelArguments(opts)));
+
+  stub = pubsub_internal::DecorateSchemaAdminStub(opts, std::move(auth),
+                                                  std::move(stub));
+  return std::make_shared<pubsub_internal::SchemaAdminConnectionImpl>(
+      std::move(background), std::move(stub),
+      opts.get<pubsub::RetryPolicyOption>()->clone(),
+      opts.get<pubsub::BackoffPolicyOption>()->clone());
 }
 
 std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(

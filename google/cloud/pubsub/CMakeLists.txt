@@ -70,6 +70,8 @@ add_library(
     internal/publisher_stub.h
     internal/rejects_with_ordering_key.cc
     internal/rejects_with_ordering_key.h
+    internal/schema_auth.cc
+    internal/schema_auth.h
     internal/schema_logging.cc
     internal/schema_logging.h
     internal/schema_metadata.cc
@@ -245,6 +247,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/publisher_metadata_test.cc
         internal/publisher_round_robin_test.cc
         internal/rejects_with_ordering_key_test.cc
+        internal/schema_auth_test.cc
         internal/schema_logging_test.cc
         internal/schema_metadata_test.cc
         internal/sequential_batch_sink_test.cc
