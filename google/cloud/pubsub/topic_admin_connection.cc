@@ -319,15 +319,8 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(Options opts) {
   opts = pubsub_internal::DefaultCommonOptions(std::move(opts));
 
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
-  auto auth = [&] {
-    if (opts.has<google::cloud::UnifiedCredentialsOption>()) {
-      return google::cloud::internal::CreateAuthenticationStrategy(
-          opts.get<google::cloud::UnifiedCredentialsOption>(), background->cq(),
-          opts);
-    }
-    return google::cloud::internal::CreateAuthenticationStrategy(
-        opts.get<google::cloud::GrpcCredentialOption>());
-  }();
+  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
+      background->cq(), opts);
 
   auto stub = pubsub_internal::CreateDefaultPublisherStub(auth->CreateChannel(
       opts.get<EndpointOption>(), internal::MakeChannelArguments(opts)));

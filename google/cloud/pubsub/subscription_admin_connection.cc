@@ -303,15 +303,8 @@ std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
                                  PolicyOptionList>(opts, __func__);
   opts = pubsub_internal::DefaultCommonOptions(std::move(opts));
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
-  auto auth = [&] {
-    if (opts.has<google::cloud::UnifiedCredentialsOption>()) {
-      return google::cloud::internal::CreateAuthenticationStrategy(
-          opts.get<google::cloud::UnifiedCredentialsOption>(), background->cq(),
-          opts);
-    }
-    return google::cloud::internal::CreateAuthenticationStrategy(
-        opts.get<google::cloud::GrpcCredentialOption>());
-  }();
+  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
+      background->cq(), opts);
   auto stub = pubsub_internal::CreateDefaultSubscriberStub(auth->CreateChannel(
       opts.get<EndpointOption>(), internal::MakeChannelArguments(opts)));
   stub = pubsub_internal::DecorateSubscriptionAdminStub(opts, std::move(auth),

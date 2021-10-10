@@ -94,15 +94,8 @@ Status StubFactoryGenerator::GenerateCc() {
   CcPrint(R"""(std::shared_ptr<$stub_class_name$>
 CreateDefault$stub_class_name$(
     google::cloud::CompletionQueue cq, Options const& options) {
-  auto auth = [&] {
-    if (options.has<google::cloud::UnifiedCredentialsOption>()) {
-      return google::cloud::internal::CreateAuthenticationStrategy(
-          options.get<google::cloud::UnifiedCredentialsOption>(), std::move(cq),
-          options);
-    }
-    return google::cloud::internal::CreateAuthenticationStrategy(
-        options.get<google::cloud::GrpcCredentialOption>());
-  }();
+  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
+      std::move(cq), options);
   auto channel = auth->CreateChannel(
     options.get<EndpointOption>(), internal::MakeChannelArguments(options));
   auto service_grpc_stub = $grpc_stub_fqn$::NewStub(channel);)""");

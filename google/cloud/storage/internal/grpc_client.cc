@@ -118,19 +118,10 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
   return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
 }
 
-std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
-    CompletionQueue cq, Options const& opts) {
-  if (opts.has<UnifiedCredentialsOption>()) {
-    return google::cloud::internal::CreateAuthenticationStrategy(
-        opts.get<UnifiedCredentialsOption>(), std::move(cq), opts);
-  }
-  return google::cloud::internal::CreateAuthenticationStrategy(
-      opts.get<google::cloud::GrpcCredentialOption>());
-}
-
 std::shared_ptr<StorageStub> CreateStorageStub(CompletionQueue cq,
                                                Options const& opts) {
-  auto auth = CreateAuthenticationStrategy(std::move(cq), opts);
+  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
+      std::move(cq), opts);
   std::vector<std::shared_ptr<StorageStub>> children(
       (std::max)(1, opts.get<GrpcNumChannelsOption>()));
   int id = 0;
