@@ -28,7 +28,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  * [pubsub::SchemaAdminConnection][mocked-link]
  *
  * [mocked-link]: @ref
- * google::cloud::pubsub::ignore_this_inline_ns::SchemaAdminConnection
+ * google::cloud::pubsub::omit_this_inline_ns::SchemaAdminConnection
  */
 class MockSchemaAdminConnection : public pubsub::SchemaAdminConnection {
  public:

@@ -53,7 +53,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
  * contains the expected result. Please consult the
  * [`StatusOr<T>`
- * documentation](#google::cloud::ignore_this_inline_ns::StatusOr) for more
+ * documentation](#google::cloud::omit_this_inline_ns::StatusOr) for more
  * details.
  *
  * [pubsub-doc-link]: https://cloud.google.com/pubsub/docs

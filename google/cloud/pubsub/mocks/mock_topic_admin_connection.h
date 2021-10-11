@@ -27,7 +27,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  * A googlemock-based mock for [pubsub::TopicAdminConnection][mocked-link]
  *
  * [mocked-link]: @ref
- * google::cloud::pubsub::ignore_this_inline_ns::TopicAdminConnection
+ * google::cloud::pubsub::omit_this_inline_ns::TopicAdminConnection
  */
 class MockTopicAdminConnection : public pubsub::TopicAdminConnection {
  public:

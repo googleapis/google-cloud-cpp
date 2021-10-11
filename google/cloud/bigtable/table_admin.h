@@ -73,7 +73,7 @@ enum class Consistency {
  * return a `google::cloud::Status` indicating success or the details of the
  * error Please consult the
  * [`StatusOr<T>`
- * documentation](#google::cloud::ignore_this_inline_ns::StatusOr) for more
+ * documentation](#google::cloud::omit_this_inline_ns::StatusOr) for more
  * details.
  *
  * @code
@@ -122,7 +122,7 @@ enum class Consistency {
  * @see https://cloud.google.com/bigtable/docs/reference/service-apis-overview
  *     for an overview of the underlying Cloud Bigtable API.
  *
- * @see #google::cloud::ignore_this_inline_ns::StatusOr for a description of the
+ * @see #google::cloud::omit_this_inline_ns::StatusOr for a description of the
  * error reporting class used by this library.
  *
  * @see `LimitedTimeRetryPolicy` and `LimitedErrorCountRetryPolicy` for
