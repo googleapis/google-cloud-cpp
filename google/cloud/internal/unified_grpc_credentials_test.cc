@@ -36,6 +36,27 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::IsEmpty;
 
+TEST(UnifiedGrpcCredentialsTest, GrpcCredentialOption) {
+  CompletionQueue cq;
+  auto result = CreateAuthenticationStrategy(
+      cq,
+      Options{}.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials()));
+  EXPECT_FALSE(result->RequiresConfigureContext());
+}
+
+TEST(UnifiedGrpcCredentialsTest, UnifiedCredentialsOption) {
+  auto const expiration =
+      std::chrono::system_clock::now() + std::chrono::hours(1);
+  CompletionQueue cq;
+  auto result = CreateAuthenticationStrategy(
+      cq, Options{}
+              .set<UnifiedCredentialsOption>(
+                  MakeAccessTokenCredentials("test-token", expiration))
+              .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials()));
+  // Verify `UnifiedCredentialsOption` is used before `GrpcCredentialOption`
+  EXPECT_TRUE(result->RequiresConfigureContext());
+}
+
 TEST(UnifiedGrpcCredentialsTest, WithGrpcCredentials) {
   auto result =
       CreateAuthenticationStrategy(grpc::InsecureChannelCredentials());

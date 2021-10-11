@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/grpc_access_token_authentication.h"
 #include "google/cloud/internal/grpc_channel_credentials_authentication.h"
 #include "google/cloud/internal/grpc_impersonate_service_account.h"
@@ -26,6 +27,17 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
+
+std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
+    google::cloud::CompletionQueue cq, Options const& options) {
+  if (options.has<google::cloud::UnifiedCredentialsOption>()) {
+    return google::cloud::internal::CreateAuthenticationStrategy(
+        options.get<google::cloud::UnifiedCredentialsOption>(), std::move(cq),
+        options);
+  }
+  return google::cloud::internal::CreateAuthenticationStrategy(
+      options.get<google::cloud::GrpcCredentialOption>());
+}
 
 std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     std::shared_ptr<Credentials> const& credentials, CompletionQueue cq,

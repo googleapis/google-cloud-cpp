@@ -42,6 +42,9 @@ class GrpcAuthenticationStrategy {
 };
 
 std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
+    google::cloud::CompletionQueue cq, Options const& options);
+
+std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     std::shared_ptr<Credentials> const& credentials, CompletionQueue cq,
     Options options = {});
 
