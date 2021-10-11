@@ -402,6 +402,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/async_polling_loop.cc
         internal/async_polling_loop.h
         internal/async_read_stream_impl.h
+        internal/async_read_write_stream_auth.h
         internal/async_read_write_stream_impl.h
         internal/async_retry_loop.h
         internal/async_retry_unary_rpc.h
@@ -541,6 +542,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/async_connection_ready_test.cc
             internal/async_long_running_operation_test.cc
             internal/async_polling_loop_test.cc
+            internal/async_read_write_stream_auth_test.cc
             internal/async_read_write_stream_impl_test.cc
             internal/async_retry_loop_test.cc
             internal/async_retry_unary_rpc_test.cc
