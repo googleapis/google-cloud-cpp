@@ -285,7 +285,7 @@ Status ServiceCodeGenerator::OpenNamespaces(Printer& p, NamespaceType ns_type) {
   }
   namespaces_ = BuildNamespaces(service_vars_["product_path"], ns_type);
   for (auto const& nspace : namespaces_) {
-    if (nspace == "GOOGLE_CLOUD_CPP_GENERATED_NS") {
+    if (nspace == "GOOGLE_CLOUD_CPP_NS") {
       p.Print("inline namespace $namespace$ {\n", "namespace", nspace);
     } else {
       p.Print("namespace $namespace$ {\n", "namespace", nspace);

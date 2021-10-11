@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 
 GoldenThingAdminAuth::GoldenThingAdminAuth(
@@ -238,7 +238,7 @@ future<Status> GoldenThingAdminAuth::AsyncCancelOperation(
         return child->AsyncCancelOperation(cq, *std::move(context), request);
       });
 }
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

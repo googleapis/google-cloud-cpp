@@ -31,7 +31,7 @@
 namespace google {
 namespace cloud {
 namespace iam {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Creates and manages Identity and Access Management (IAM) resources.
@@ -737,7 +737,7 @@ class IAMClient {
   std::shared_ptr<IAMConnection> connection_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam
 }  // namespace cloud
 }  // namespace google

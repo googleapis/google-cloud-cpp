@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace golden {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /// Option to use with `google::cloud::Options`.
 struct GoldenThingAdminRetryPolicyOption {
@@ -57,7 +57,7 @@ using GoldenThingAdminPolicyOptionList =
                GoldenThingAdminPollingPolicyOption,
                GoldenThingAdminConnectionIdempotencyPolicyOption>;
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google

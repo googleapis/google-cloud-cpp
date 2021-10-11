@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace logging_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class LoggingServiceV2Logging : public LoggingServiceV2Stub {
  public:
@@ -66,7 +66,7 @@ class LoggingServiceV2Logging : public LoggingServiceV2Stub {
   std::set<std::string> components_;
 };  // LoggingServiceV2Logging
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace logging_internal
 }  // namespace cloud
 }  // namespace google

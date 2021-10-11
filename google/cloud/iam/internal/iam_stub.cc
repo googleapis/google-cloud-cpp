@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace iam_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 IAMStub::~IAMStub() = default;
 
@@ -345,7 +345,7 @@ StatusOr<google::iam::admin::v1::LintPolicyResponse> DefaultIAMStub::LintPolicy(
   return response;
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

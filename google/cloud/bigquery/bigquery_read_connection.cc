@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace bigquery {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 BigQueryReadConnection::~BigQueryReadConnection() = default;
 
@@ -152,7 +152,7 @@ std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
                                                       std::move(stub), options);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigquery
 }  // namespace cloud
 }  // namespace google
@@ -160,7 +160,7 @@ std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
 namespace google {
 namespace cloud {
 namespace bigquery_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<bigquery::BigQueryReadConnection> MakeBigQueryReadConnection(
     std::shared_ptr<BigQueryReadStub> stub, Options options) {
@@ -170,7 +170,7 @@ std::shared_ptr<bigquery::BigQueryReadConnection> MakeBigQueryReadConnection(
       std::move(options));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigquery_internal
 }  // namespace cloud
 }  // namespace google

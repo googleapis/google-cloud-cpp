@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace golden {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 using ::google::cloud::golden_internal::MockGoldenThingAdminStub;
@@ -1166,7 +1166,7 @@ TEST(GoldenThingAdminClientTest, ListBackupOperationsTooManyFailures) {
 }
 
 }  // namespace
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google

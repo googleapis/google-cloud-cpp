@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace golden {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 GoldenThingAdminConnection::~GoldenThingAdminConnection() = default;
 
@@ -553,7 +553,7 @@ std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
       std::move(background), std::move(stub), options);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google
@@ -561,7 +561,7 @@ std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<golden::GoldenThingAdminConnection>
 MakeGoldenThingAdminConnection(
@@ -572,7 +572,7 @@ MakeGoldenThingAdminConnection(
       std::move(stub), std::move(options));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

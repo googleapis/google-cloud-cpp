@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace bigquery_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class BigQueryReadMetadata : public BigQueryReadStub {
  public:
@@ -58,7 +58,7 @@ class BigQueryReadMetadata : public BigQueryReadStub {
   std::string api_client_header_;
 };  // BigQueryReadMetadata
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigquery_internal
 }  // namespace cloud
 }  // namespace google

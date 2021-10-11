@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_admin_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class InstanceAdminAuth : public InstanceAdminStub {
  public:
@@ -106,7 +106,7 @@ class InstanceAdminAuth : public InstanceAdminStub {
   std::shared_ptr<InstanceAdminStub> child_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google

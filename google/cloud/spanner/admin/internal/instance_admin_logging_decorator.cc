@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_admin_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 InstanceAdminLogging::InstanceAdminLogging(
     std::shared_ptr<InstanceAdminStub> child, TracingOptions tracing_options,
@@ -187,7 +187,7 @@ future<Status> InstanceAdminLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google

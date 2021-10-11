@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 
 GoldenKitchenSinkAuth::GoldenKitchenSinkAuth(
@@ -81,7 +81,7 @@ StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> Gold
   if (!status.ok()) return status;
   return child_->ListServiceAccountKeys(context, request);
 }
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

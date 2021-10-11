@@ -31,7 +31,7 @@
 namespace google {
 namespace cloud {
 namespace iam {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using IAMCredentialsRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
@@ -67,7 +67,7 @@ class IAMCredentialsConnection {
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     Options options = {});
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam
 }  // namespace cloud
 }  // namespace google
@@ -75,12 +75,12 @@ std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
 namespace google {
 namespace cloud {
 namespace iam_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<iam::IAMCredentialsConnection> MakeIAMCredentialsConnection(
     std::shared_ptr<IAMCredentialsStub> stub, Options options);
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace iam_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class IAMLogging : public IAMStub {
  public:
@@ -166,7 +166,7 @@ class IAMLogging : public IAMStub {
   std::set<std::string> components_;
 };  // IAMLogging
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

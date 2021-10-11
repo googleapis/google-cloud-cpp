@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 GoldenThingAdminStub::~GoldenThingAdminStub() = default;
 
@@ -285,7 +285,7 @@ future<Status> DefaultGoldenThingAdminStub::AsyncCancelOperation(
       });
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

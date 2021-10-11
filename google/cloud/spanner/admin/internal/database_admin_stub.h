@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_admin_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class DatabaseAdminStub {
  public:
@@ -258,7 +258,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google
