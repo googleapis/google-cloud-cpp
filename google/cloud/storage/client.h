@@ -110,7 +110,7 @@ struct ClientImplDetails;
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
  * contains the expected result. Please consult the
- * [`StatusOr<T>` documentation](#google::cloud::ignore_inline_ns::StatusOr) for more details.
+ * [`StatusOr<T>` documentation](#google::cloud::ignore_this_inline_ns::StatusOr) for more details.
  *
  * @code
  * namespace gcs = google::cloud::storage;
@@ -181,7 +181,7 @@ struct ClientImplDetails;
  * @see https://cloud.google.com/docs/authentication/production for details
  *     about Application Default %Credentials.
  *
- * @see #google::cloud::ignore_inline_ns::StatusOr.
+ * @see #google::cloud::ignore_this_inline_ns::StatusOr.
  *
  * @see `LimitedTimeRetryPolicy` and `LimitedErrorCountRetryPolicy` for
  * alternative retry policies.
@@ -622,7 +622,7 @@ class Client {
   }
 
   /**
-   * Fetches the [IAM policy](@ref google::cloud::ignore_inline_ns::IamPolicy) for a Bucket.
+   * Fetches the [IAM policy](@ref google::cloud::ignore_this_inline_ns::IamPolicy) for a Bucket.
    *
    * Google Cloud Identity & Access Management (IAM) lets administrators
    * authorize who can take action on specific resources, including Google
@@ -654,7 +654,7 @@ class Client {
    * @par Example
    * Use #GetNativeBucketIamPolicy() instead.
    *
-   * @see #google::cloud::ignore_inline_ns::IamPolicy for details about the `IamPolicy` class.
+   * @see #google::cloud::ignore_this_inline_ns::IamPolicy for details about the `IamPolicy` class.
    */
   template <typename... Options>
   GOOGLE_CLOUD_CPP_STORAGE_IAM_DEPRECATED("GetNativeBucketIamPolicy")
@@ -666,7 +666,7 @@ class Client {
   }
 
   /**
-   * Fetches the native [IAM policy](@ref google::cloud::ignore_inline_ns::IamPolicy) for a
+   * Fetches the native [IAM policy](@ref google::cloud::ignore_this_inline_ns::IamPolicy) for a
    * Bucket.
    *
    * Google Cloud Identity & Access Management (IAM) lets administrators
@@ -695,7 +695,7 @@ class Client {
    * @par Example
    * @snippet storage_bucket_iam_samples.cc native get bucket iam policy
    *
-   * @see #google::cloud::ignore_inline_ns::IamPolicy for details about the `IamPolicy` class.
+   * @see #google::cloud::ignore_this_inline_ns::IamPolicy for details about the `IamPolicy` class.
    */
   template <typename... Options>
   StatusOr<NativeIamPolicy> GetNativeBucketIamPolicy(
@@ -706,7 +706,7 @@ class Client {
   }
 
   /**
-   * Sets the [IAM Policy](@ref google::cloud::ignore_inline_ns::IamPolicy) for a Bucket.
+   * Sets the [IAM Policy](@ref google::cloud::ignore_this_inline_ns::IamPolicy) for a Bucket.
    *
    * Google Cloud Identity & Access Management (IAM) lets administrators
    * authorize who can take action on specific resources, including Google
@@ -748,7 +748,7 @@ class Client {
    * @par Example: adding a new member
    * Use #GetNativeBucketIamPolicy() instead.
    *
-   * @see #google::cloud::ignore_inline_ns::IamPolicy for details about the `IamPolicy` class.
+   * @see #google::cloud::ignore_this_inline_ns::IamPolicy for details about the `IamPolicy` class.
    */
   template <typename... Options>
   GOOGLE_CLOUD_CPP_STORAGE_IAM_DEPRECATED("SetNativeBucketIamPolicy")
@@ -761,7 +761,7 @@ class Client {
   }
 
   /**
-   * Sets the native [IAM Policy](@ref google::cloud::ignore_inline_ns::IamPolicy) for a
+   * Sets the native [IAM Policy](@ref google::cloud::ignore_this_inline_ns::IamPolicy) for a
    * Bucket.
    *
    * Google Cloud Identity & Access Management (IAM) lets administrators
@@ -803,7 +803,7 @@ class Client {
    * @par Example: removing a IAM member
    * @snippet storage_bucket_iam_samples.cc native remove bucket iam member
    *
-   * @see #google::cloud::ignore_inline_ns::IamPolicy for details about the `IamPolicy` class.
+   * @see #google::cloud::ignore_this_inline_ns::IamPolicy for details about the `IamPolicy` class.
    */
   template <typename... Options>
   StatusOr<NativeIamPolicy> SetNativeBucketIamPolicy(

@@ -122,22 +122,22 @@ Here is the full example
 
 @snippet bigtable_hello_table_admin.cc all code
 
-[GcRule]:                  @ref google::cloud::bigtable::ignore_inline_ns::GcRule
-[GcRule-MaxAge]:           @ref google::cloud::bigtable::ignore_inline_ns::GcRule::MaxAge()
-[GcRule-MaxNumVersions]:   @ref google::cloud::bigtable::ignore_inline_ns::GcRule::MaxNumVersions()
-[GcRule-Union]:            @ref google::cloud::bigtable::ignore_inline_ns::GcRule::Union()
-[GcRule-Intersection]:     @ref google::cloud::bigtable::ignore_inline_ns::GcRule::Intersection()
-[ColumnFamilyModification-Create]: @ref google::cloud::bigtable::ignore_inline_ns::ColumnFamilyModification::Create()
-[ColumnFamilyModification-Update]: @ref google::cloud::bigtable::ignore_inline_ns::ColumnFamilyModification::Update()
-[ColumnFamilyModification-Drop]: @ref google::cloud::bigtable::ignore_inline_ns::ColumnFamilyModification::Drop()
-[TableAdmin]:              @ref google::cloud::bigtable::ignore_inline_ns::TableAdmin
-[TableAdmin-CreateTable]:  @ref google::cloud::bigtable::ignore_inline_ns::TableAdmin::CreateTable()
-[TableAdmin-DeleteTable]:  @ref google::cloud::bigtable::ignore_inline_ns::TableAdmin::DeleteTable()
-[TableAdmin-GetTable]:     @ref google::cloud::bigtable::ignore_inline_ns::TableAdmin::GetTable()
-[TableAdmin-ListTables]:   @ref google::cloud::bigtable::ignore_inline_ns::TableAdmin::ListTables()
-[TableAdmin-ModifyColumnFamilies]:  @ref google::cloud::bigtable::ignore_inline_ns::TableAdmin::ModifyColumnFamilies()
-[TableAdmin-DropAllRows]:  @ref google::cloud::bigtable::ignore_inline_ns::TableAdmin::DropAllRows()
-[TableAdmin-DropRowsByPrefix]:  @ref google::cloud::bigtable::ignore_inline_ns::TableAdmin::DropRowsByPrefix()
+[GcRule]:                  @ref google::cloud::bigtable::ignore_this_inline_ns::GcRule
+[GcRule-MaxAge]:           @ref google::cloud::bigtable::ignore_this_inline_ns::GcRule::MaxAge()
+[GcRule-MaxNumVersions]:   @ref google::cloud::bigtable::ignore_this_inline_ns::GcRule::MaxNumVersions()
+[GcRule-Union]:            @ref google::cloud::bigtable::ignore_this_inline_ns::GcRule::Union()
+[GcRule-Intersection]:     @ref google::cloud::bigtable::ignore_this_inline_ns::GcRule::Intersection()
+[ColumnFamilyModification-Create]: @ref google::cloud::bigtable::ignore_this_inline_ns::ColumnFamilyModification::Create()
+[ColumnFamilyModification-Update]: @ref google::cloud::bigtable::ignore_this_inline_ns::ColumnFamilyModification::Update()
+[ColumnFamilyModification-Drop]: @ref google::cloud::bigtable::ignore_this_inline_ns::ColumnFamilyModification::Drop()
+[TableAdmin]:              @ref google::cloud::bigtable::ignore_this_inline_ns::TableAdmin
+[TableAdmin-CreateTable]:  @ref google::cloud::bigtable::ignore_this_inline_ns::TableAdmin::CreateTable()
+[TableAdmin-DeleteTable]:  @ref google::cloud::bigtable::ignore_this_inline_ns::TableAdmin::DeleteTable()
+[TableAdmin-GetTable]:     @ref google::cloud::bigtable::ignore_this_inline_ns::TableAdmin::GetTable()
+[TableAdmin-ListTables]:   @ref google::cloud::bigtable::ignore_this_inline_ns::TableAdmin::ListTables()
+[TableAdmin-ModifyColumnFamilies]:  @ref google::cloud::bigtable::ignore_this_inline_ns::TableAdmin::ModifyColumnFamilies()
+[TableAdmin-DropAllRows]:  @ref google::cloud::bigtable::ignore_this_inline_ns::TableAdmin::DropAllRows()
+[TableAdmin-DropRowsByPrefix]:  @ref google::cloud::bigtable::ignore_this_inline_ns::TableAdmin::DropRowsByPrefix()
 
 [TableView-proto]: https://cloud.google.com/bigtable/docs/reference/admin/rpc/google.bigtable.admin.v2#google.bigtable.admin.v2.Table.View
 */
