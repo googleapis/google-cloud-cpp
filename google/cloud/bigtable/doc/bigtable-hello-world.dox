@@ -124,19 +124,19 @@ Here is the full example
 
 @snippet bigtable_hello_world.cc all code
 
-[Filter]:          @ref google::cloud::bigtable::v1::Filter
-[InstanceAdmin]:   @ref google::cloud::bigtable::v1::InstanceAdmin
-[Mutation]:        @ref google::cloud::bigtable::v1::Mutation
-[Row]:             @ref google::cloud::bigtable::v1::Row
-[RowRange]:        @ref google::cloud::bigtable::v1::RowRange
-[RowSet]:          @ref google::cloud::bigtable::v1::RowSet
-[Table]:           @ref google::cloud::bigtable::v1::Table
-[Table-Apply]:     @ref google::cloud::bigtable::v1::Table::Apply
-[Table-BulkApply]: @ref google::cloud::bigtable::v1::Table::BulkApply
-[Table-ReadRow]:   @ref google::cloud::bigtable::v1::Table::ReadRow
-[Table-ReadRows]:  @ref google::cloud::bigtable::v1::Table::ReadRows
-[TableAdmin]:      @ref google::cloud::bigtable::v1::TableAdmin
-[TableAdmin-CreateTable]:  @ref google::cloud::bigtable::v1::TableAdmin::CreateTable
-[TableAdmin-DeleteTable]:  @ref google::cloud::bigtable::v1::TableAdmin::DeleteTable
+[Filter]:          @ref google::cloud::bigtable::ignore_inline_ns::Filter
+[InstanceAdmin]:   @ref google::cloud::bigtable::ignore_inline_ns::InstanceAdmin
+[Mutation]:        @ref google::cloud::bigtable::ignore_inline_ns::Mutation
+[Row]:             @ref google::cloud::bigtable::ignore_inline_ns::Row
+[RowRange]:        @ref google::cloud::bigtable::ignore_inline_ns::RowRange
+[RowSet]:          @ref google::cloud::bigtable::ignore_inline_ns::RowSet
+[Table]:           @ref google::cloud::bigtable::ignore_inline_ns::Table
+[Table-Apply]:     @ref google::cloud::bigtable::ignore_inline_ns::Table::Apply
+[Table-BulkApply]: @ref google::cloud::bigtable::ignore_inline_ns::Table::BulkApply
+[Table-ReadRow]:   @ref google::cloud::bigtable::ignore_inline_ns::Table::ReadRow
+[Table-ReadRows]:  @ref google::cloud::bigtable::ignore_inline_ns::Table::ReadRows
+[TableAdmin]:      @ref google::cloud::bigtable::ignore_inline_ns::TableAdmin
+[TableAdmin-CreateTable]:  @ref google::cloud::bigtable::ignore_inline_ns::TableAdmin::CreateTable
+[TableAdmin-DeleteTable]:  @ref google::cloud::bigtable::ignore_inline_ns::TableAdmin::DeleteTable
 
 */
