@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * Define the interfaces to create filter expressions.
  *
@@ -695,7 +695,7 @@ class Filter {
   google::bigtable::v2::RowFilter filter_;
 };
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

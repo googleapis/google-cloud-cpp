@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 struct ClientOptionsTestTraits {
   static std::string const& InstanceAdminEndpoint(
       ClientOptions const& options) {
@@ -585,7 +585,7 @@ TEST(ClientOptionsTest, CustomBackgroundThreads) {
 }
 
 }  // namespace
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

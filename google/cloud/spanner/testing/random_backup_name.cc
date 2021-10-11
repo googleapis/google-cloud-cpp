@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 std::string RandomBackupName(google::cloud::internal::DefaultPRNG& generator) {
   // A backup ID must be between 2 and 60 characters, fitting the regular
   // expression `[a-z][a-z0-9_\-]*[a-z0-9]`
@@ -31,7 +31,7 @@ std::string RandomBackupName(google::cloud::internal::DefaultPRNG& generator) {
              generator, 1, "abcdefghijlkmnopqrstuvwxyz0123456789");
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

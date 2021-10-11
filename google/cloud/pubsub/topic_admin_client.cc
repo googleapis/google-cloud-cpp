@@ -17,13 +17,13 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 TopicAdminClient::TopicAdminClient(
     std::shared_ptr<TopicAdminConnection> connection)
     : connection_(std::move(connection)) {}
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

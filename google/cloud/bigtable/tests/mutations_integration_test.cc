@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
@@ -441,7 +441,7 @@ TEST_F(MutationIntegrationTest, DeleteFromRowTest) {
 // Test Cases Finished
 
 }  // namespace
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

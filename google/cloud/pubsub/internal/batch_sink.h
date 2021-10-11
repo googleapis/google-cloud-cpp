@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Define the interface to push message batches to Cloud Pub/Sub.
@@ -46,7 +46,7 @@ class BatchSink {
   virtual void ResumePublish(std::string const& ordering_key) = 0;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

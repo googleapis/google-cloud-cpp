@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 google::iam::v1::Policy IamPolicy(
     std::initializer_list<google::iam::v1::Binding> bindings, std::string etag,
     std::int32_t version) {
@@ -59,7 +59,7 @@ void RemoveBindingFromPolicy(
       });
 }
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

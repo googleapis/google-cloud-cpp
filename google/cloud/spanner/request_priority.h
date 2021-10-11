@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 // The relative priority for requests.
 enum class RequestPriority {
@@ -29,7 +29,7 @@ enum class RequestPriority {
   kHigh,
 };
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

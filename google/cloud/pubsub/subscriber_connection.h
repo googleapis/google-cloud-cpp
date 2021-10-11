@@ -34,7 +34,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * A connection to the Cloud Pub/Sub service to receive events.
@@ -155,17 +155,17 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy = {},
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy = {});
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub
 
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
     pubsub::Subscription subscription, Options opts,
     std::vector<std::shared_ptr<SubscriberStub>> stubs);
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

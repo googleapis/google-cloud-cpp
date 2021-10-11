@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 /**
  * Parses a boolean field, even if it is represented by a string type in the
@@ -79,7 +79,7 @@ StatusOr<std::chrono::system_clock::time_point> ParseTimestampField(
     nlohmann::json const& json, char const* field_name);
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * Sets the user IP on an operation for quota enforcement purposes.
  *
@@ -226,7 +226,7 @@ class GenericRequest
 };
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

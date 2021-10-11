@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * Provide a pre-computed MD5 hash value.
  *
@@ -125,7 +125,7 @@ struct DisableCrc32cChecksum
   static char const* name() { return "disable-crc32c-checksum"; }
 };
 
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

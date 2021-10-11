@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class SubscriptionLeaseManagement
     : public SubscriptionBatchSource,
@@ -105,7 +105,7 @@ class SubscriptionLeaseManagement
   future<void> refresh_timer_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

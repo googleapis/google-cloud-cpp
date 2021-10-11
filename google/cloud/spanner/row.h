@@ -32,20 +32,20 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 class Row;
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 spanner::Row MakeRow(std::vector<spanner::Value>,
                      std::shared_ptr<std::vector<std::string> const>);
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * A `Row` is a sequence of columns each with a name and an associated `Value`.
@@ -173,7 +173,7 @@ class Row {
   ///@}
 
  private:
-  friend Row spanner_internal::SPANNER_CLIENT_NS::MakeRow(
+  friend Row spanner_internal::GOOGLE_CLOUD_CPP_NS::MakeRow(
       std::vector<spanner::Value>,
       std::shared_ptr<std::vector<std::string> const>);
   struct ExtractValue {
@@ -477,7 +477,7 @@ auto GetSingularRow(RowRange&& range) -> typename std::decay<
   return row;
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

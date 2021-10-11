@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * A SpannerStub that decorates the ClientContext with the right metadata.
@@ -105,7 +105,7 @@ class MetadataSpannerStub : public SpannerStub {
   std::string resource_prefix_header_;
 };
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

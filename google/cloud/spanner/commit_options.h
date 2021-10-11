@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Set options on calls to `spanner::Client::Commit()`.
@@ -80,7 +80,7 @@ class CommitOptions {
   absl::optional<std::string> transaction_tag_;
 };
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 google::type::Expr Expression(std::string expression, std::string title,
                               std::string description, std::string location) {
   google::type::Expr expr;
@@ -43,7 +43,7 @@ std::ostream& operator<<(std::ostream& stream, google::type::Expr const& e) {
   return stream;
 }
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

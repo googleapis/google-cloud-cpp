@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 StatusOr<std::string> PostPolicyV4Escape(std::string const& utf8_bytes);
@@ -153,7 +153,7 @@ class PolicyDocumentV4Request {
 std::ostream& operator<<(std::ostream& os, PolicyDocumentV4Request const& r);
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

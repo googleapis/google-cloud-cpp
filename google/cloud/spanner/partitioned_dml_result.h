@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * The result of executing a Partitioned DML query.
@@ -31,7 +31,7 @@ struct PartitionedDmlResult {
   std::int64_t row_count_lower_bound;
 };
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

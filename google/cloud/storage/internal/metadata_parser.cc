@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 StatusOr<bool> ParseBoolField(nlohmann::json const& json,
                               char const* field_name) {
@@ -114,7 +114,7 @@ StatusOr<std::chrono::system_clock::time_point> ParseTimestampField(
 }
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

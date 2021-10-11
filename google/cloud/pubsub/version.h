@@ -18,6 +18,9 @@
 #include "google/cloud/pubsub/version_info.h"
 #include "google/cloud/version.h"
 
+// This preprocessor symbol is deprecated and should never be used anywhere. It
+// exists solely for backward compatibility to avoid breaking anyone who may
+// have been using it.
 #define GOOGLE_CLOUD_CPP_PUBSUB_NS GOOGLE_CLOUD_CPP_NS
 
 namespace google {
@@ -38,8 +41,7 @@ namespace pubsub {
  * `pubsub::Foo` in their source, but the symbols are versioned, i.e., the
  * symbol becomes `pubsub::v1::Foo`.
  */
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+inline namespace GOOGLE_CLOUD_CPP_NS {}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

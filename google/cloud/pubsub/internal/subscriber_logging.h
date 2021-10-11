@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class SubscriberLogging : public SubscriberStub {
  public:
@@ -124,7 +124,7 @@ class LoggingAsyncPullStream : public SubscriberStub::AsyncPullStream {
   std::string request_id_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

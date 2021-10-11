@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
@@ -313,7 +313,7 @@ TEST(InstanceAdminClientTest, TestIamPermissions) {
 }
 
 }  // namespace
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 Status AsStatus(HttpResponse const& http_response) {
@@ -140,7 +140,7 @@ std::ostream& operator<<(std::ostream& os, HttpResponse const& rhs) {
 }
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

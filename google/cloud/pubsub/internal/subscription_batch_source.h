@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using BatchCallback =
     std::function<void(StatusOr<google::pubsub::v1::StreamingPullResponse>)>;
@@ -83,7 +83,7 @@ class SubscriptionBatchSource {
                             std::chrono::seconds extension) = 0;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

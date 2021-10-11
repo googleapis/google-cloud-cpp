@@ -32,14 +32,14 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 future<Status> CreateSubscriptionSession(
     pubsub::Subscription const& subscription, Options const& opts,
     std::shared_ptr<SubscriberStub> const& stub, CompletionQueue const& cq,
     std::string client_id, pubsub::SubscriberConnection::SubscribeParams p);
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

@@ -32,7 +32,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * Objects of this class pack single row mutations into bulk mutations.
  *
@@ -314,7 +314,7 @@ class MutationBatcher {
   std::vector<NoMorePendingPromise> no_more_pending_promises_;
 };
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

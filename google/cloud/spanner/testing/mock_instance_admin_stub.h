@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class MockInstanceAdminStub
     : public google::cloud::spanner_internal::InstanceAdminStub {
@@ -91,7 +91,7 @@ class MockInstanceAdminStub
               (override));
 };
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 std::unique_ptr<IdempotencyPolicy> AlwaysRetryIdempotencyPolicy::clone() const {
   return absl::make_unique<AlwaysRetryIdempotencyPolicy>(*this);
 }
@@ -531,7 +531,7 @@ bool StrictIdempotencyPolicy::IsIdempotent(
   return true;
 }
 
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

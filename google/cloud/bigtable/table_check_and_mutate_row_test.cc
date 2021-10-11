@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsContextMDValid;
@@ -72,7 +72,7 @@ TEST_F(TableCheckAndMutateRowTest, Failure) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 }  // anonymous namespace
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

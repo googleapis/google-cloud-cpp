@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /// The base class for backoff policies.
 using BackoffPolicy = ::google::cloud::internal::BackoffPolicy;
@@ -30,7 +30,7 @@ using BackoffPolicy = ::google::cloud::internal::BackoffPolicy;
 using ExponentialBackoffPolicy =
     google::cloud::internal::ExponentialBackoffPolicy;
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

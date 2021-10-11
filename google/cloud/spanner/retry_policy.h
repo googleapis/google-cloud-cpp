@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /// Define the gRPC status code semantics for retrying requests.
 struct SafeGrpcRetry {
@@ -67,11 +67,11 @@ struct SafeTransactionRerun {
     return !IsOk(status) && !IsTransientFailure(status);
   }
 };
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /// The base class for retry policies.
 using RetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
@@ -101,7 +101,7 @@ using LimitedErrorCountTransactionRerunPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         spanner_internal::SafeTransactionRerun>;
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

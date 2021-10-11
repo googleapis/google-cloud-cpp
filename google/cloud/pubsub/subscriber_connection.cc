@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 SubscriberConnection::~SubscriberConnection() = default;
 
@@ -74,11 +74,11 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
   return MakeSubscriberConnection(std::move(subscription), std::move(opts));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub
 
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
  public:
@@ -133,7 +133,7 @@ std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
       std::move(subscription), std::move(opts), std::move(stub));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

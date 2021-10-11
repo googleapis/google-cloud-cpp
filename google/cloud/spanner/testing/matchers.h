@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /// Verifies a `Transaction` has the expected Session and ID/tag.
 MATCHER_P3(
@@ -66,7 +66,7 @@ MATCHER_P3(
       });
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

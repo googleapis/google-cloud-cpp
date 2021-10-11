@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 namespace gcsa = ::google::spanner::admin::database::v1;
 
@@ -634,11 +634,11 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
   return MakeDatabaseAdminConnection(std::move(opts));
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<spanner::DatabaseAdminConnection>
 MakeDatabaseAdminConnectionForTesting(std::shared_ptr<DatabaseAdminStub> stub,
@@ -648,7 +648,7 @@ MakeDatabaseAdminConnectionForTesting(std::shared_ptr<DatabaseAdminStub> stub,
       std::move(stub), std::move(opts));
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

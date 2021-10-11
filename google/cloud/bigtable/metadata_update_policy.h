@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * Define the class for governing x-goog-request-params metadata value.
  *
@@ -102,7 +102,7 @@ class MetadataUpdatePolicy {
   std::string api_client_header_;
 };
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

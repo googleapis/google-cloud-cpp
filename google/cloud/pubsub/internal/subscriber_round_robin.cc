@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 StatusOr<google::pubsub::v1::Subscription>
 SubscriberRoundRobin::CreateSubscription(
@@ -125,7 +125,7 @@ std::shared_ptr<SubscriberStub> SubscriberRoundRobin::Child() {
   return child;
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

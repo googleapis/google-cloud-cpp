@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 void SubscriptionMessageQueue::Start(MessageCallback cb) {
   std::unique_lock<std::mutex> lk(mu_);
@@ -173,7 +173,7 @@ void SubscriptionMessageQueue::HandlerDone(std::string const& ack_id) {
   DrainQueue(std::move(lk));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

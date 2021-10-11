@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 SequentialBatchSink::SequentialBatchSink(
     std::shared_ptr<pubsub_internal::BatchSink> sink)
@@ -96,7 +96,7 @@ void SequentialBatchSink::OnPublish(Status s) {
       .then(MoveCaptureRequest{WeakFromThis(), std::move(pr.promise)});
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

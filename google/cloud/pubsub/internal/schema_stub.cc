@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 class DefaultSchemaStub : public SchemaStub {
@@ -96,7 +96,7 @@ std::shared_ptr<SchemaStub> CreateDefaultSchemaStub(
       google::pubsub::v1::SchemaService::NewStub(std::move(channel)));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

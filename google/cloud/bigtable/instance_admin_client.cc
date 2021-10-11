@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 namespace btadmin = ::google::bigtable::admin::v2;
@@ -363,7 +363,7 @@ std::shared_ptr<InstanceAdminClient> CreateDefaultInstanceAdminClient(
                                  internal::MakeOptions(std::move(options)));
 }
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

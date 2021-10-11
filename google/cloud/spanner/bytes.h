@@ -26,13 +26,13 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 struct BytesInternals;
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * A representation of the Spanner BYTES type: variable-length binary data.
@@ -82,19 +82,19 @@ class Bytes {
   friend std::ostream& operator<<(std::ostream& os, Bytes const& bytes);
 
  private:
-  friend struct spanner_internal::SPANNER_CLIENT_NS::BytesInternals;
+  friend struct spanner_internal::GOOGLE_CLOUD_CPP_NS::BytesInternals;
 
   std::string base64_rep_;  // valid base64 representation
 };
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 StatusOr<spanner::Bytes> BytesFromBase64(std::string input);
 std::string BytesToBase64(spanner::Bytes b);
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 
 }  // namespace cloud

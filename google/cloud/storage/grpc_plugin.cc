@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace storage_experimental {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 namespace {
 absl::optional<std::string> GrpcConfig() {
@@ -43,7 +43,7 @@ google::cloud::storage::Client DefaultGrpcClient(Options opts) {
       storage::internal::HybridClient::Create(opts));
 }
 
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage_experimental
 }  // namespace cloud
 }  // namespace google

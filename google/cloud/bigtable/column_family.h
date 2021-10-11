@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * Implement a thin wrapper around google::bigtable::admin::v2::GcRule.
  *
@@ -220,7 +220,7 @@ class ColumnFamilyModification {
   ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest::Modification mod_;
 };
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

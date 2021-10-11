@@ -27,13 +27,13 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 struct TransactionInternals;
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * The representation of a Cloud Spanner transaction.
@@ -161,7 +161,7 @@ class Transaction {
 
  private:
   // Friendship for access by internal helpers.
-  friend struct spanner_internal::SPANNER_CLIENT_NS::TransactionInternals;
+  friend struct spanner_internal::GOOGLE_CLOUD_CPP_NS::TransactionInternals;
 
   // Construction of a single-use transaction.
   explicit Transaction(SingleUseOptions opts);
@@ -203,11 +203,11 @@ inline Transaction MakeReadWriteTransaction(
   return Transaction(txn, std::move(opts));
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 struct TransactionInternals {
   template <typename T>
@@ -254,7 +254,7 @@ inline spanner::Transaction MakeTransactionFromIds(
       std::move(transaction_tag));
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

@@ -43,7 +43,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 struct SessionPoolFriendForTest;
 
 // An option for the Clock that the session pool will use. This is an injection
@@ -205,7 +205,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   ChannelVec::iterator next_dissociated_stub_channel_;  // GUARDED_BY(mu_)
 };
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

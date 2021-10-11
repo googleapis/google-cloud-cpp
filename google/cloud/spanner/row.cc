@@ -23,16 +23,16 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 spanner::Row MakeRow(std::vector<spanner::Value> values,
                      std::shared_ptr<std::vector<std::string> const> columns) {
   return spanner::Row(std::move(values), std::move(columns));
 }
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 Row MakeTestRow(std::vector<std::pair<std::string, Value>> pairs) {
   auto values = std::vector<Value>{};
   auto columns = std::make_shared<std::vector<std::string>>();
@@ -113,7 +113,7 @@ bool operator!=(RowStreamIterator const& a, RowStreamIterator const& b) {
   return !(a == b);
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

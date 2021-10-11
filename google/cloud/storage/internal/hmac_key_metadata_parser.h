@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 struct HmacKeyMetadataParser {
   static StatusOr<HmacKeyMetadata> FromJson(nlohmann::json const& json);
@@ -31,7 +31,7 @@ struct HmacKeyMetadataParser {
 };
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

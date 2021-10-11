@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 namespace gcsa = ::google::spanner::admin::instance::v1;
 using ::google::cloud::internal::LogWrapper;
@@ -158,7 +158,7 @@ future<Status> InstanceAdminLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

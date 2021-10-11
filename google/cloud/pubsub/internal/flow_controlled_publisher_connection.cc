@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 StatusOr<std::string> RejectMessage() {
   return Status(StatusCode::kFailedPrecondition, "Publisher is full");
@@ -66,7 +66,7 @@ void FlowControlledPublisherConnection::OnPublish(std::size_t message_size) {
   cv_.notify_all();
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

@@ -25,13 +25,13 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 struct QueryPartitionInternals;
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Serializes an instance of `QueryPartition` to a string of bytes.
@@ -114,7 +114,7 @@ class QueryPartition {
 
  private:
   friend class QueryPartitionTester;
-  friend struct spanner_internal::SPANNER_CLIENT_NS::QueryPartitionInternals;
+  friend struct spanner_internal::GOOGLE_CLOUD_CPP_NS::QueryPartitionInternals;
   friend StatusOr<std::string> SerializeQueryPartition(
       QueryPartition const& query_partition);
   friend StatusOr<QueryPartition> DeserializeQueryPartition(
@@ -137,12 +137,12 @@ class QueryPartition {
   SqlStatement sql_statement_;
 };
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 
 // Internal implementation details that callers should not use.
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 struct QueryPartitionInternals {
   static spanner::QueryPartition MakeQueryPartition(
@@ -178,7 +178,7 @@ inline spanner::Connection::SqlParams MakeSqlParams(
   return QueryPartitionInternals::MakeSqlParams(query_partition);
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

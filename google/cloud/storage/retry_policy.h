@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 /// Defines what error codes are permanent errors.
 struct StatusTraits {
@@ -56,7 +56,7 @@ using BackoffPolicy = ::google::cloud::internal::BackoffPolicy;
 using ExponentialBackoffPolicy =
     ::google::cloud::internal::ExponentialBackoffPolicy;
 
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

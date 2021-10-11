@@ -25,15 +25,15 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 template <typename Op>
 class WriteMutationBuilder;
 class DeleteMutationBuilder;
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * A wrapper for Cloud Spanner mutations.
@@ -85,8 +85,8 @@ class Mutation {
   google::spanner::v1::Mutation& proto() & { return m_; }
 
   template <typename Op>
-  friend class spanner_internal::SPANNER_CLIENT_NS::WriteMutationBuilder;
-  friend class spanner_internal::SPANNER_CLIENT_NS::DeleteMutationBuilder;
+  friend class spanner_internal::GOOGLE_CLOUD_CPP_NS::WriteMutationBuilder;
+  friend class spanner_internal::GOOGLE_CLOUD_CPP_NS::DeleteMutationBuilder;
   explicit Mutation(google::spanner::v1::Mutation m) : m_(std::move(m)) {}
 
   google::spanner::v1::Mutation m_;
@@ -98,13 +98,13 @@ class Mutation {
  */
 using Mutations = std::vector<Mutation>;
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 
 // This namespace contains implementation details. It is not part of the public
 // API, and subject to change without notice.
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 template <typename Op>
 class WriteMutationBuilder {
@@ -192,11 +192,11 @@ class DeleteMutationBuilder {
   spanner::Mutation m_;
 };
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * A helper class to construct "insert" mutations.
@@ -370,7 +370,7 @@ inline Mutation MakeDeleteMutation(std::string table_name, KeySet keys) {
   return DeleteMutationBuilder(std::move(table_name), std::move(keys)).Build();
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

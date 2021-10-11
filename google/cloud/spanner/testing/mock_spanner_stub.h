@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
  public:
@@ -130,7 +130,7 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
               (override));
 };
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

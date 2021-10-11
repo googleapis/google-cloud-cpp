@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * A simple `Clock` class that can be overridden for testing.
@@ -55,7 +55,7 @@ using SteadyClock =
 using SystemClock =
     ::google::cloud::spanner_internal::Clock<std::chrono::system_clock>;
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

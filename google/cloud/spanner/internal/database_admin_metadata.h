@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * Implements the metadata Decorator for DatabaseAdminStub.
  */
@@ -139,7 +139,7 @@ class DatabaseAdminMetadata : public DatabaseAdminStub {
   std::string api_client_header_;
 };
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

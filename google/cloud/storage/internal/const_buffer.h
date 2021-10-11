@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 /// Represent a memory range. Use to upload with low copying
@@ -43,7 +43,7 @@ inline std::size_t TotalBytes(ConstBufferSequence const& s) {
 void PopFrontBytes(ConstBufferSequence& s, std::size_t count);
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -40,13 +40,13 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 struct ValueInternals;
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * The Value class represents a type-safe, nullable Spanner value.
@@ -648,7 +648,7 @@ class Value {
   Value(google::spanner::v1::Type t, google::protobuf::Value v)
       : type_(std::move(t)), value_(std::move(v)) {}
 
-  friend struct spanner_internal::SPANNER_CLIENT_NS::ValueInternals;
+  friend struct spanner_internal::GOOGLE_CLOUD_CPP_NS::ValueInternals;
 
   google::spanner::v1::Type type_;
   google::protobuf::Value value_;
@@ -666,11 +666,11 @@ Value MakeNullValue() {
   return Value(absl::optional<T>{});
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 struct ValueInternals {
   static spanner::Value FromProto(google::spanner::v1::Type t,
@@ -694,7 +694,7 @@ inline std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(
   return ValueInternals::ToProto(std::move(v));
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

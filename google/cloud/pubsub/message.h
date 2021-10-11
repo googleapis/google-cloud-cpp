@@ -26,24 +26,24 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 class Message;
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub
 
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 ::google::pubsub::v1::PubsubMessage const& ToProto(pubsub::Message const&);
 ::google::pubsub::v1::PubsubMessage&& ToProto(pubsub::Message&&);
 pubsub::Message FromProto(::google::pubsub::v1::PubsubMessage);
 
 /// Estimate the size of a message.
 std::size_t MessageSize(pubsub::Message const&);
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 class MessageBuilder;
 
 /**
@@ -261,11 +261,11 @@ class MessageBuilder {
   google::pubsub::v1::PubsubMessage proto_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub
 
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 inline ::google::pubsub::v1::PubsubMessage const& ToProto(
     pubsub::Message const& m) {
   return m.proto_;
@@ -285,7 +285,7 @@ inline std::size_t MessageSize(pubsub::Message const& m) {
 
 std::size_t MessageProtoSize(::google::pubsub::v1::PubsubMessage const& m);
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using ::google::cloud::internal::Base64Decoder;
 
@@ -53,11 +53,11 @@ std::ostream& operator<<(std::ostream& os, Bytes const& bytes) {
   return os << "\"";
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 struct BytesInternals {
   static spanner::Bytes Create(std::string rep) {
     spanner::Bytes bytes;
@@ -82,7 +82,7 @@ std::string BytesToBase64(spanner::Bytes b) {
   return BytesInternals::GetRep(std::move(b));
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_testing {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /// Generate a random topic ID.
 std::string RandomTopicId(google::cloud::internal::DefaultPRNG& generator,
@@ -41,7 +41,7 @@ std::string RandomSnapshotId(google::cloud::internal::DefaultPRNG& generator,
 std::string RandomSchemaId(google::cloud::internal::DefaultPRNG& generator,
                            std::string const& prefix = {});
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_testing
 }  // namespace cloud
 }  // namespace google

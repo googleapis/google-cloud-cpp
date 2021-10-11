@@ -27,6 +27,9 @@
       " instead. The function will be removed on 2022-04-01 or shortly "       \
       "after. See GitHub issue #5929 for more information.")
 
+// This preprocessor symbol is deprecated and should never be used anywhere. It
+// exists solely for backward compatibility to avoid breaking anyone who may
+// have been using it.
 #define BIGTABLE_CLIENT_NS GOOGLE_CLOUD_CPP_NS
 
 namespace google {
@@ -47,7 +50,7 @@ namespace bigtable {
  * Note that, consistent with the semver.org guidelines, the v0 version makes
  * no guarantees with respect to backwards compatibility.
  */
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * The Cloud Bigtable C++ Client major version.
  *
@@ -75,7 +78,7 @@ int constexpr version() { return google::cloud::version(); }
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string version_string();
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

@@ -38,7 +38,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * A concrete `Connection` subclass that uses gRPC to actually talk to a real
@@ -170,7 +170,7 @@ class ConnectionImpl : public spanner::Connection {
   TracingOptions tracing_options_;
 };
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

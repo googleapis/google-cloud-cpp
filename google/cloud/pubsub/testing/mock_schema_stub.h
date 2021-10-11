@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_testing {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * A class to mock pubsub_internal::SchemaStub
@@ -59,7 +59,7 @@ class MockSchemaStub : public pubsub_internal::SchemaStub {
               (override));
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_testing
 }  // namespace cloud
 }  // namespace google

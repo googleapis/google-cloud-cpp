@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 namespace btproto = ::google::bigtable::v2;
@@ -216,7 +216,7 @@ std::vector<FailedMutation> BulkMutator::OnRetryDone() && {
 }
 
 }  // namespace internal
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 std::uint64_t InitialOffset(OffsetDirection const& offset_direction,
@@ -124,7 +124,7 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
 }
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

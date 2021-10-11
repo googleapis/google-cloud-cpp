@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /// Specify the initial configuration for an application profile.
 class AppProfileConfig {
  public:
@@ -119,7 +119,7 @@ class AppProfileUpdateConfig {
   google::bigtable::admin::v2::UpdateAppProfileRequest proto_;
 };
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 /**
  * Requests the list of buckets for a project.
@@ -305,7 +305,7 @@ std::ostream& operator<<(std::ostream& os,
                          LockBucketRetentionPolicyRequest const& r);
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 auto constexpr kExpiration = std::chrono::hours(1);
@@ -80,7 +80,7 @@ std::string SelfSigningServiceAccountCredentials::KeyId() const {
 }
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

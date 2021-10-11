@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * This class identifies a Cloud Spanner Database.
@@ -98,7 +98,7 @@ class Database {
  */
 StatusOr<Database> MakeDatabase(std::string const& full_name);
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

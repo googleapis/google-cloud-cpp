@@ -33,7 +33,7 @@ namespace btadmin = ::google::bigtable::admin::v2;
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 static_assert(std::is_copy_assignable<bigtable::InstanceAdmin>::value,
               "bigtable::InstanceAdmin must be CopyAssignable");
 
@@ -644,7 +644,7 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::ProtoToWrapper(
   return result;
 }
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

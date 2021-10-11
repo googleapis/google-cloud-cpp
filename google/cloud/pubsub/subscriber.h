@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * Receive messages from the Cloud Pub/Sub service.
  *
@@ -135,7 +135,7 @@ class Subscriber {
   std::shared_ptr<SubscriberConnection> connection_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

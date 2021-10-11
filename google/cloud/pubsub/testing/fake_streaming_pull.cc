@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_testing {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using ::testing::AtLeast;
 using ::testing::AtMost;
@@ -87,7 +87,7 @@ std::unique_ptr<pubsub_testing::MockAsyncPullStream> FakeAsyncStreamingPull(
   return stream;
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_testing
 }  // namespace cloud
 }  // namespace google

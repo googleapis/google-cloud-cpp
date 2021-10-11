@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * A helper class to track (and debug) `SubscriptionSession`'s shutdown process
@@ -122,7 +122,7 @@ class SessionShutdownManager {
   std::unordered_map<std::string, int> ops_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

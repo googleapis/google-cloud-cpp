@@ -28,7 +28,7 @@ namespace cloud {
 /// Define classes to mock the Cloud Spanner C++ client APIs.
 namespace spanner_mocks {
 /// An inlined versioned namespace to avoid dependency diamonds.
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * A class to mock `google::cloud::spanner::Connection`.
@@ -79,7 +79,7 @@ class MockResultSetSource : public spanner_internal::ResultSourceInterface {
               (const, override));
 };
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_mocks
 }  // namespace cloud
 }  // namespace google

@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Returns an `Options` with the appropriate defaults for Spanner.
@@ -54,7 +54,7 @@ Options DefaultOptions(Options opts = {});
  */
 Options DefaultAdminOptions(Options opts = {});
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

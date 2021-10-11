@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 namespace spanner_proto = ::google::spanner::v1;
@@ -246,7 +246,7 @@ TEST(ProfileDmlResult, ExecutionStats) {
 }
 
 }  // namespace
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

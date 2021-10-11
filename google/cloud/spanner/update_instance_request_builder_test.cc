@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 TEST(UpdateInstanceRequestBuilder, Constructors) {
   Instance in(Project("test-project"), "test-instance");
@@ -154,7 +154,7 @@ TEST(UpdateInstanceRequestBuilder, SetLabelsRvalueReference) {
       "labels", req.field_mask()));
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

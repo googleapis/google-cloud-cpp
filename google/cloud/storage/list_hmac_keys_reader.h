@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * A range to paginate over the HmacKeys for a project.
@@ -35,7 +35,7 @@ using ListHmacKeysReader =
 
 using ListHmacKeysIterator = ListHmacKeysReader::iterator;
 
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

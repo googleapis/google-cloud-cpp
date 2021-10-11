@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 /// @test Verify SessionShutdownManager works correctly.
@@ -60,7 +60,7 @@ TEST(SessionShutdownManagerTest, Basic) {
 }
 
 }  // namespace
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

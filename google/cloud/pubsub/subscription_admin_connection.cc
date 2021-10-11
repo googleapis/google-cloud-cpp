@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 using ::google::cloud::internal::Idempotency;
@@ -286,11 +286,11 @@ MakeSubscriptionAdminConnection(Options const& opts,
       opts.get<pubsub::BackoffPolicyOption>()->clone());
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
     std::initializer_list<pubsub_internal::NonConstructible>) {
@@ -392,7 +392,7 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminConnection::Seek(
   return Status{StatusCode::kUnimplemented, "needs-override"};
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

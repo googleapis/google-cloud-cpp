@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 class ResultSourceInterface {
  public:
   virtual ~ResultSourceInterface() = default;
@@ -38,11 +38,11 @@ class ResultSourceInterface {
   virtual absl::optional<google::spanner::v1::ResultSetStats> Stats() const = 0;
 };
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Contains a hierarchical representation of the operations the database server
@@ -249,7 +249,7 @@ class ProfileDmlResult {
  private:
   std::unique_ptr<spanner_internal::ResultSourceInterface> source_;
 };
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

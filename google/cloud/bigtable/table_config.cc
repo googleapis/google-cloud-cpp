@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 // NOLINTNEXTLINE(readability-identifier-naming)
 ::google::bigtable::admin::v2::CreateTableRequest TableConfig::as_proto() && {
   // As a challenge, we implement the strong exception guarantee in this
@@ -62,7 +62,7 @@ constexpr TableConfig::TimestampGranularity TableConfig::MILLIS;  // NOLINT
 constexpr TableConfig::TimestampGranularity
     TableConfig::TIMESTAMP_GRANULARITY_UNSPECIFIED;  // NOLINT
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
