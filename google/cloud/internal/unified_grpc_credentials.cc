@@ -29,6 +29,17 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
+    google::cloud::CompletionQueue cq, Options const& options) {
+  if (options.has<google::cloud::UnifiedCredentialsOption>()) {
+    return google::cloud::internal::CreateAuthenticationStrategy(
+        options.get<google::cloud::UnifiedCredentialsOption>(), std::move(cq),
+        options);
+  }
+  return google::cloud::internal::CreateAuthenticationStrategy(
+      options.get<google::cloud::GrpcCredentialOption>());
+}
+
+std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     std::shared_ptr<Credentials> const& credentials, CompletionQueue cq,
     Options options) {
   struct Visitor : public CredentialsVisitor {
@@ -74,17 +85,6 @@ absl::optional<std::string> LoadCAInfo(Options const& opts) {
   if (!opts.has<CARootsFilePathOption>()) return absl::nullopt;
   std::ifstream is(opts.get<CARootsFilePathOption>());
   return std::string{std::istreambuf_iterator<char>{is.rdbuf()}, {}};
-}
-
-std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
-    google::cloud::CompletionQueue cq, Options const& options) {
-  if (options.has<google::cloud::UnifiedCredentialsOption>()) {
-    return google::cloud::internal::CreateAuthenticationStrategy(
-        options.get<google::cloud::UnifiedCredentialsOption>(), std::move(cq),
-        options);
-  }
-  return google::cloud::internal::CreateAuthenticationStrategy(
-      options.get<google::cloud::GrpcCredentialOption>());
 }
 
 }  // namespace internal
