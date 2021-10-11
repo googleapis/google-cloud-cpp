@@ -26,7 +26,8 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * A googlemock-based mock for [pubsub::SubscriberConnection][mocked-link]
  *
- * [mocked-link]: @ref google::cloud::pubsub::v1::SubscriberConnection
+ * [mocked-link]: @ref
+ * google::cloud::pubsub::ignore_this_inline_ns::SubscriberConnection
  *
  * @see @ref subscriber-mock for an example using this class.
  */
