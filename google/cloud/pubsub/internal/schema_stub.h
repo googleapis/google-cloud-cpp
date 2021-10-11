@@ -71,13 +71,10 @@ class SchemaStub {
 };
 
 /**
- * Creates a SchemaStub configured with @p opts and @p channel_id.
- *
- * @p channel_id should be unique among all stubs in the same Connection pool,
- * to ensure they use different underlying connections.
+ * Creates a SchemaStub with a pre-configured channel.
  */
-std::shared_ptr<SchemaStub> CreateDefaultSchemaStub(Options const& opts,
-                                                    int channel_id);
+std::shared_ptr<SchemaStub> CreateDefaultSchemaStub(
+    std::shared_ptr<grpc::Channel> channel);
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal

@@ -28,6 +28,7 @@ pubsub_client_unit_tests = [
     "internal/publisher_metadata_test.cc",
     "internal/publisher_round_robin_test.cc",
     "internal/rejects_with_ordering_key_test.cc",
+    "internal/schema_auth_test.cc",
     "internal/schema_logging_test.cc",
     "internal/schema_metadata_test.cc",
     "internal/sequential_batch_sink_test.cc",
