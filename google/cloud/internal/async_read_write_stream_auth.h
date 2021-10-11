@@ -28,10 +28,12 @@ namespace internal {
 
 template <typename Request, typename Response>
 class AsyncStreamingReadWriteRpcAuth
-    : public AsyncStreamingReadWriteRpc<Request, Response> {
+    : public AsyncStreamingReadWriteRpc<Request, Response>,
+      public std::enable_shared_from_this<
+          AsyncStreamingReadWriteRpcAuth<Request, Response>> {
  public:
   using StreamFactory = std::function<
-      std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>>(
+      std::shared_ptr<AsyncStreamingReadWriteRpc<Request, Response>>(
           std::unique_ptr<grpc::ClientContext>)>;
 
   AsyncStreamingReadWriteRpcAuth(
@@ -49,17 +51,12 @@ class AsyncStreamingReadWriteRpcAuth
   future<bool> Start() override {
     using Result = StatusOr<std::unique_ptr<grpc::ClientContext>>;
 
+    auto weak =
+        std::weak_ptr<AsyncStreamingReadWriteRpcAuth>(this->shared_from_this());
     return auth_->AsyncConfigureContext(std::move(context_))
-        .then([this](future<Result> f) mutable {
-          auto context = f.get();
-          if (!context) {
-            stream_ = absl::make_unique<
-                AsyncStreamingReadWriteRpcError<Request, Response>>(
-                std::move(context).status());
-            return make_ready_future(false);
-          }
-          stream_ = factory_(*std::move(context));
-          return stream_->Start();
+        .then([weak](future<Result> f) mutable {
+          if (auto self = weak.lock()) return self->OnStart(f.get());
+          return make_ready_future(false);
         });
   }
 
@@ -89,10 +86,21 @@ class AsyncStreamingReadWriteRpcAuth
   }
 
  private:
+  future<bool> OnStart(StatusOr<std::unique_ptr<grpc::ClientContext>> context) {
+    if (!context) {
+      stream_ =
+          absl::make_unique<AsyncStreamingReadWriteRpcError<Request, Response>>(
+              std::move(context).status());
+      return make_ready_future(false);
+    }
+    stream_ = factory_(*std::move(context));
+    return stream_->Start();
+  }
+
   std::unique_ptr<grpc::ClientContext> context_;
   std::shared_ptr<GrpcAuthenticationStrategy> auth_;
   StreamFactory factory_;
-  std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>> stream_;
+  std::shared_ptr<AsyncStreamingReadWriteRpc<Request, Response>> stream_;
 };
 
 }  // namespace internal

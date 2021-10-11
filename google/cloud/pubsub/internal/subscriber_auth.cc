@@ -69,7 +69,7 @@ Status SubscriberAuth::ModifyPushConfig(
   return child_->ModifyPushConfig(context, request);
 }
 
-std::unique_ptr<SubscriberStub::AsyncPullStream>
+std::shared_ptr<SubscriberStub::AsyncPullStream>
 SubscriberAuth::AsyncStreamingPull(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -84,8 +84,8 @@ SubscriberAuth::AsyncStreamingPull(
     return child->AsyncStreamingPull(cq, std::move(ctx), request);
   };
   auto factory = StreamAuth::StreamFactory(std::move(call));
-  return absl::make_unique<StreamAuth>(std::move(context), auth_,
-                                       std::move(factory));
+  return std::make_shared<StreamAuth>(std::move(context), auth_,
+                                      std::move(factory));
 }
 
 future<Status> SubscriberAuth::AsyncAcknowledge(

@@ -325,7 +325,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartUnexpected) {
       .WillRepeatedly([](google::cloud::CompletionQueue&,
                          std::unique_ptr<grpc::ClientContext>,
                          google::pubsub::v1::StreamingPullRequest const&) {
-        return std::unique_ptr<SubscriberStub::AsyncPullStream>{};
+        return std::shared_ptr<SubscriberStub::AsyncPullStream>{};
       });
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
