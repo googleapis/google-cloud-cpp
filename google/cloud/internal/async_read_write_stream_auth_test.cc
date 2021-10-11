@@ -57,7 +57,10 @@ TEST(AsyncStreamReadWriteAuth, Start) {
   auto factory = [](std::unique_ptr<grpc::ClientContext>) {
     auto mock = absl::make_unique<MockStream>();
     EXPECT_CALL(*mock, Start).WillOnce([] { return make_ready_future(true); });
-    EXPECT_CALL(*mock, Write).WillOnce([] { return make_ready_future(true); });
+    EXPECT_CALL(*mock, Write)
+        .WillOnce([](FakeRequest const&, grpc::WriteOptions) {
+          return make_ready_future(true);
+        });
     EXPECT_CALL(*mock, Read).WillOnce([] {
       return make_ready_future(absl::make_optional(FakeResponse{"k0", "v0"}));
     });
