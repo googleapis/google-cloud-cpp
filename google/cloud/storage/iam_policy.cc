@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 template <typename Functor>
 Status IsOfTypeIfPresent(nlohmann::json const& json,
@@ -469,7 +469,7 @@ std::ostream& operator<<(std::ostream& os, NativeIamPolicy const& rhs) {
   return os << "}, etag=" << rhs.etag() << "}";
 }
 
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

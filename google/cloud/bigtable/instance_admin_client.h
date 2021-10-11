@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 // Forward declare some classes so we can be friends.
 class InstanceAdmin;
 namespace internal {
@@ -340,7 +340,7 @@ std::shared_ptr<InstanceAdminClient> MakeInstanceAdminClient(
 std::shared_ptr<InstanceAdminClient> CreateDefaultInstanceAdminClient(
     std::string project, ClientOptions options);
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

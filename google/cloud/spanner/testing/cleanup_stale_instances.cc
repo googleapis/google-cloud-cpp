@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 Status CleanupStaleInstances(std::string const& project_id,
                              std::regex const& instance_name_regex) {
@@ -68,7 +68,7 @@ Status CleanupStaleInstances(std::string const& project_id,
   return Status();
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

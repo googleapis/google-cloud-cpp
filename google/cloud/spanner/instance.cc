@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 Instance::Instance(Project project, std::string instance_id)
     : project_(std::move(project)), instance_id_(std::move(instance_id)) {}
@@ -51,7 +51,7 @@ StatusOr<Instance> MakeInstance(std::string const& full_name) {
   return Instance(Project(std::move(matches[1])), std::move(matches[2]));
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

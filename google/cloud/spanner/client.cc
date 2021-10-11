@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 RowStream Client::Read(std::string table, KeySet keys,
                        std::vector<std::string> columns,
@@ -362,11 +362,11 @@ std::shared_ptr<Connection> MakeConnection(
   return MakeConnection(db, std::move(opts));
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 // Returns a QueryOptions that has each attribute set according to the
 // preferred/fallback/environment hierarchy.
@@ -414,7 +414,7 @@ spanner::QueryOptions OverlayQueryOptions(
   return opts;
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

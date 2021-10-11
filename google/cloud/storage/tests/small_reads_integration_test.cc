@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 class SmallReadsIntegrationTest
@@ -131,7 +131,7 @@ TEST_F(SmallReadsIntegrationTest, ReadFullByChar) {
 }
 
 }  // anonymous namespace
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

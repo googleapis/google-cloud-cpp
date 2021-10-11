@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 // These we cannot change because they are part of the public API.
 // NOLINTNEXTLINE(readability-identifier-naming)
 MetadataParamTypes const MetadataParamTypes::PARENT("parent");
@@ -48,7 +48,7 @@ void MetadataUpdatePolicy::Setup(grpc::ClientContext& context) const {
   context.AddMetadata(std::string("x-goog-api-client"), api_client_header());
 }
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

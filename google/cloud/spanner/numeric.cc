@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 namespace {
 
@@ -231,11 +231,11 @@ StatusOr<spanner::Numeric> MakeNumeric(std::string s, int exponent) {
   return MakeNumeric(std::move(s));
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 constexpr std::size_t Numeric::kIntPrec;
 constexpr std::size_t Numeric::kFracPrec;
@@ -255,7 +255,7 @@ StatusOr<Numeric> MakeNumeric(double d) {
   return spanner_internal::MakeNumeric(std::move(s));
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

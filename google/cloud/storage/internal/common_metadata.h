@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /// A simple wrapper for the `owner` field in `internal::CommonMetadata`.
 struct Owner {
   std::string entity;
@@ -142,7 +142,7 @@ inline bool operator!=(CommonMetadata<T> const& lhs,
 }
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

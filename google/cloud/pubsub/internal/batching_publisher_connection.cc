@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 // A helper callable to handle a response, it is a bit large for a lambda, and
 // we need move-capture anyways.
@@ -196,7 +196,7 @@ void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
   sink_->AsyncPublish(std::move(request)).then(std::move(batch));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

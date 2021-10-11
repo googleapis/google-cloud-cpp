@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 /**
  * Represents a request for the `ObjectAccessControls: list` API.
@@ -166,7 +166,7 @@ class PatchObjectAclRequest
 std::ostream& operator<<(std::ostream& os, PatchObjectAclRequest const& r);
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

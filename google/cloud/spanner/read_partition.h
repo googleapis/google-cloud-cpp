@@ -26,13 +26,13 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 struct ReadPartitionInternals;
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Serializes an instance of `ReadPartition` to a string of bytes.
@@ -117,7 +117,7 @@ class ReadPartition {
 
  private:
   friend class ReadPartitionTester;
-  friend struct spanner_internal::SPANNER_CLIENT_NS::ReadPartitionInternals;
+  friend struct spanner_internal::GOOGLE_CLOUD_CPP_NS::ReadPartitionInternals;
   friend StatusOr<std::string> SerializeReadPartition(
       ReadPartition const& read_partition);
   friend StatusOr<ReadPartition> DeserializeReadPartition(
@@ -143,12 +143,12 @@ class ReadPartition {
   google::spanner::v1::ReadRequest proto_;
 };
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 
 // Internal implementation details that callers should not use.
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 struct ReadPartitionInternals {
   static spanner::ReadPartition MakeReadPartition(
@@ -194,7 +194,7 @@ inline spanner::Connection::ReadParams MakeReadParams(
   return ReadPartitionInternals::MakeReadParams(read_partition);
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

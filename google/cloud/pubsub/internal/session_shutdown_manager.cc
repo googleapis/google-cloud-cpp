@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::string FormatOps(std::unordered_map<std::string, int> const& ops) {
   std::ostringstream os;
@@ -89,7 +89,7 @@ void SessionShutdownManager::SignalOnShutdown(std::unique_lock<std::mutex> lk) {
   p.set_value(std::move(s));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

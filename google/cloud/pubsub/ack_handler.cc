@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 static_assert(!std::is_copy_assignable<AckHandler>::value,
               "AckHandler should not be CopyAssignable");
@@ -35,7 +35,7 @@ AckHandler::~AckHandler() {
 
 AckHandler::Impl::~Impl() = default;
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

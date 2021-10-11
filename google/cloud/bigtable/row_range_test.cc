@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 namespace btproto = ::google::bigtable::v2;
@@ -736,7 +736,7 @@ TEST(RowRangeTest, IntersectEndingAtEndingAt) {
 }
 
 }  // namespace
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

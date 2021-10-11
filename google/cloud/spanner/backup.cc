@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 Backup::Backup(Instance instance, std::string backup_id)
     : instance_(std::move(instance)), backup_id_(std::move(backup_id)) {}
@@ -49,7 +49,7 @@ StatusOr<Backup> MakeBackup(std::string const& full_name) {
                 std::move(matches[3]));
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 struct ObjectMetadataParser {
   static StatusOr<ObjectMetadata> FromJson(nlohmann::json const& json);
@@ -47,7 +47,7 @@ nlohmann::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta);
 //@}
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

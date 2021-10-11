@@ -33,7 +33,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 /**
  * Objects of this class represent the state of receiving row keys via
@@ -73,7 +73,7 @@ class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
 };
 
 }  // namespace internal
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

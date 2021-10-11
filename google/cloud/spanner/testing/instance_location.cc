@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 StatusOr<std::string> InstanceLocation(spanner::Instance const& in) {
   spanner_admin::InstanceAdminClient client(
@@ -34,7 +34,7 @@ StatusOr<std::string> InstanceLocation(spanner::Instance const& in) {
                 in.FullName() + ": No default_leader_location for replicas");
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

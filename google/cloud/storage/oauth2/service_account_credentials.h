@@ -37,7 +37,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 namespace oauth2 {
 /// Object to hold information used to instantiate an ServiceAccountCredentials.
@@ -206,7 +206,7 @@ class ServiceAccountCredentials : public Credentials {
 };
 
 }  // namespace oauth2
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

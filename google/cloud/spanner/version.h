@@ -27,6 +27,9 @@
       " Please use google::cloud::spanner_admin::" name                     \
       " instead. See GitHub issue #7356 for more information.")
 
+// This preprocessor symbol is deprecated and should never be used anywhere. It
+// exists solely for backward compatibility to avoid breaking anyone who may
+// have been using it.
 #define SPANNER_CLIENT_NS GOOGLE_CLOUD_CPP_NS
 
 namespace google {
@@ -47,7 +50,7 @@ namespace spanner {
  * `spanner::Foo` in their source, but the symbols are versioned, i.e., the
  * symbol becomes `spanner::v1::Foo`.
  */
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * The Cloud spanner C++ Client major version.
  */
@@ -69,7 +72,7 @@ int constexpr Version() { return google::cloud::version(); }
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string VersionString();
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

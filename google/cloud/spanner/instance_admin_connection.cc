@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 namespace gcsa = ::google::spanner::admin::instance::v1;
 namespace giam = ::google::iam::v1;
@@ -299,11 +299,11 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
   return MakeInstanceAdminConnection(std::move(opts));
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<spanner::InstanceAdminConnection>
 MakeInstanceAdminConnectionForTesting(std::shared_ptr<InstanceAdminStub> stub,
@@ -313,7 +313,7 @@ MakeInstanceAdminConnectionForTesting(std::shared_ptr<InstanceAdminStub> stub,
       std::move(stub), std::move(opts));
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

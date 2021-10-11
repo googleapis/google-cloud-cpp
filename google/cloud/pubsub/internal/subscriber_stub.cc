@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class DefaultSubscriberStub : public SubscriberStub {
  public:
@@ -205,7 +205,7 @@ std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(Options const& opts,
   return CreateDefaultSubscriberStub(CreateChannel(opts, channel_id));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

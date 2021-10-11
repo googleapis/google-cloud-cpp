@@ -25,7 +25,7 @@ namespace btproto = ::google::bigtable::v2;
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using ::google::cloud::internal::Idempotency;
 
@@ -454,7 +454,7 @@ future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRow(std::string row_key,
   return handler->GetFuture();
 }
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

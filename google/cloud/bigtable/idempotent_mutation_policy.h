@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Defines the interface to control which mutations are idempotent and therefore
@@ -82,7 +82,7 @@ class AlwaysRetryMutationPolicy : public IdempotentMutationPolicy {
       google::bigtable::v2::CheckAndMutateRowRequest const&) override;
 };
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

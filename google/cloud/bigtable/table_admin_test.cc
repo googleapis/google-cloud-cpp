@@ -32,7 +32,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class TableAdminTester {
  public:
@@ -1422,7 +1422,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncRestoreTable) {
 }
 
 }  // namespace
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

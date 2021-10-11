@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /// Publish message batches using a stub, with retries, but no queueing.
 class DefaultBatchSink : public BatchSink {
@@ -55,7 +55,7 @@ class DefaultBatchSink : public BatchSink {
   std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

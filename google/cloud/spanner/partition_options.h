@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Options passed to `Client::PartitionRead` or `Client::PartitionQuery`.
@@ -63,14 +63,14 @@ inline bool operator!=(PartitionOptions const& a, PartitionOptions const& b) {
   return !(a == b);
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 
 // Internal implementation details that callers should not use.
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 google::spanner::v1::PartitionOptions ToProto(spanner::PartitionOptions const&);
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 absl::optional<Timestamp> GetReadTimestamp(
@@ -101,7 +101,7 @@ absl::optional<spanner::ExecutionPlan> ProfileDmlResult::ExecutionPlan() const {
   return GetExecutionPlan(source_);
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

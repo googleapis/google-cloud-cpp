@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::string PickInstanceConfig(
     std::string const& project_id, std::regex const& filter_regex,
@@ -52,7 +52,7 @@ std::string PickInstanceConfig(
   return instance_config_name;
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

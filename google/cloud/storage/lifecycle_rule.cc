@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 std::ostream& operator<<(std::ostream& os, LifecycleRuleAction const& rhs) {
   return os << "LifecycleRuleAction={" << rhs.type << ", " << rhs.storage_class
             << "}";
@@ -202,7 +202,7 @@ std::ostream& operator<<(std::ostream& os, LifecycleRule const& rhs) {
             << ", action=" << rhs.action() << "}";
 }
 
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

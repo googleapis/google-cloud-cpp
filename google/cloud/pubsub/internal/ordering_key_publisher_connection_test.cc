@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 TEST(OrderingKeyPublisherConnectionTest, Publish) {
@@ -76,7 +76,7 @@ TEST(OrderingKeyPublisherConnectionTest, Publish) {
 }
 
 }  // namespace
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 struct LifecycleRuleParser;
 class GrpcClient;
@@ -355,7 +355,7 @@ inline bool operator>=(LifecycleRule const& lhs, LifecycleRule const& rhs) {
 }
 
 std::ostream& operator<<(std::ostream& os, LifecycleRule const& rhs);
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

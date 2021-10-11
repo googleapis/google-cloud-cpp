@@ -46,7 +46,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /// The endpoint for data operations.
 struct DataEndpointOption {
@@ -98,7 +98,7 @@ using ClientOptionList =
                InstanceAdminEndpointOption, MinConnectionRefreshOption,
                MaxConnectionRefreshOption>;
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

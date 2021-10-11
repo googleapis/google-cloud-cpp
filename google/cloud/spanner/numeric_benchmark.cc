@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 // Run on (96 X 2000.17 MHz CPU s)
@@ -121,7 +121,7 @@ void BM_NumericToInteger(benchmark::State& state) {
 BENCHMARK(BM_NumericToInteger);
 
 }  // namespace
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

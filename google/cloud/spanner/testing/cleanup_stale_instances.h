@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Delete any instances (and their backups) within the project @p project_id
@@ -36,7 +36,7 @@ inline namespace SPANNER_CLIENT_NS {
 Status CleanupStaleInstances(std::string const& project_id,
                              std::regex const& instance_name_regex);
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

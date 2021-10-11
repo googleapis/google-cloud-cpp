@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 SubscriptionAdminClient::SubscriptionAdminClient(
     std::shared_ptr<SubscriptionAdminConnection> connection)
@@ -41,7 +41,7 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminClient::Seek(
   return connection_->Seek({std::move(request)});
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

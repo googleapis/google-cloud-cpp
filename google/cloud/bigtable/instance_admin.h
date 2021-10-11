@@ -38,7 +38,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * Implements the APIs to administer Cloud Bigtable instances.
  *
@@ -779,7 +779,7 @@ class InstanceAdmin {
   std::shared_ptr<BackgroundThreads> background_threads_;
 };
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

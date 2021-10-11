@@ -39,7 +39,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /// The result of checking replication against a given token.
 enum class Consistency {
   /// Some of the mutations created before the consistency token have not been
@@ -1076,7 +1076,7 @@ class TableAdmin {
   std::shared_ptr<BackgroundThreads> background_threads_;
 };
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

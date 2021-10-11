@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 Status MergeChunk(google::protobuf::Value& value,  // NOLINT(misc-no-recursion)
                   google::protobuf::Value&& chunk) {
@@ -73,7 +73,7 @@ Status MergeChunk(google::protobuf::Value& value,  // NOLINT(misc-no-recursion)
   return Status(StatusCode::kUnknown, "unknown Value type");
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

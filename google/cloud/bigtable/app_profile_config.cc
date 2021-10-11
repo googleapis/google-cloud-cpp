@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 AppProfileConfig AppProfileConfig::MultiClusterUseAny(std::string profile_id) {
   AppProfileConfig tmp;
   tmp.proto_.set_app_profile_id(std::move(profile_id));
@@ -56,7 +56,7 @@ void AppProfileUpdateConfig::RemoveIfPresent(std::string const& field_name) {
   paths.erase(i);
 }
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /// Specify the initial configuration for a new instance.
 class InstanceConfig {
  public:
@@ -81,7 +81,7 @@ class InstanceConfig {
   google::bigtable::admin::v2::CreateInstanceRequest proto_;
 };
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using ::testing::ElementsAre;
 
@@ -68,7 +68,7 @@ TEST(TupleUtils, ForEachMutate) {
   EXPECT_EQ(tup, std::make_tuple(2, 3, 4));
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

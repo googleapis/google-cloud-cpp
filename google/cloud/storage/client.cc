@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 static_assert(std::is_copy_constructible<storage::Client>::value,
               "storage::Client must be constructible");
@@ -514,7 +514,7 @@ Status ScopedDeleter::ExecuteDelete() {
 
 }  // namespace internal
 
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
