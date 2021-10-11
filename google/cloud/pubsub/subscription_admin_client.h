@@ -53,7 +53,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
  * contains the expected result. Please consult the
- * [`StatusOr<T>` documentation](#google::cloud::v1::StatusOr) for more details.
+ * [`StatusOr<T>` documentation](#google::cloud::ignore_inline_ns::StatusOr) for more details.
  *
  * [pubsub-doc-link]: https://cloud.google.com/pubsub/docs
  */

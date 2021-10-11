@@ -87,7 +87,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
- * contains the expected result. Please consult the #google::cloud::v1::StatusOr
+ * contains the expected result. Please consult the #google::cloud::ignore_inline_ns::StatusOr
  * documentation for more details.
  *
  * @par Batching Configuration Example
