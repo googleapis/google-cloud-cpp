@@ -14,11 +14,13 @@
 
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
+#include "google/cloud/pubsub/internal/create_channel.h"
 #include "google/cloud/pubsub/internal/default_batch_sink.h"
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/flow_controlled_publisher_connection.h"
 #include "google/cloud/pubsub/internal/non_constructible.h"
 #include "google/cloud/pubsub/internal/ordering_key_publisher_connection.h"
+#include "google/cloud/pubsub/internal/publisher_auth.h"
 #include "google/cloud/pubsub/internal/publisher_logging.h"
 #include "google/cloud/pubsub/internal/publisher_metadata.h"
 #include "google/cloud/pubsub/internal/publisher_round_robin.h"
@@ -55,6 +57,57 @@ class ContainingPublisherConnection : public PublisherConnection {
   std::shared_ptr<BackgroundThreads> background_;
   std::shared_ptr<PublisherConnection> child_;
 };
+
+std::shared_ptr<pubsub_internal::PublisherStub> DecoratePublisherStub(
+    Options const& opts,
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    std::vector<std::shared_ptr<pubsub_internal::PublisherStub>> children) {
+  std::shared_ptr<pubsub_internal::PublisherStub> stub =
+      std::make_shared<pubsub_internal::PublisherRoundRobin>(
+          std::move(children));
+  if (auth->RequiresConfigureContext()) {
+    stub = std::make_shared<pubsub_internal::PublisherAuth>(std::move(auth),
+                                                            std::move(stub));
+  }
+  stub = std::make_shared<pubsub_internal::PublisherMetadata>(std::move(stub));
+  if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
+    stub = std::make_shared<pubsub_internal::PublisherLogging>(
+        std::move(stub), opts.get<GrpcTracingOptionsOption>());
+  }
+  return stub;
+}
+
+std::shared_ptr<pubsub::PublisherConnection> ConnectionFromDecoratedStub(
+    pubsub::Topic topic, Options opts,
+    std::shared_ptr<BackgroundThreads> background,
+    std::shared_ptr<pubsub_internal::PublisherStub> stub) {
+  auto make_connection = [&]() -> std::shared_ptr<pubsub::PublisherConnection> {
+    auto cq = background->cq();
+    std::shared_ptr<pubsub_internal::BatchSink> sink =
+        pubsub_internal::DefaultBatchSink::Create(stub, cq, opts);
+    if (opts.get<pubsub::MessageOrderingOption>()) {
+      auto factory = [topic, opts, sink, cq](std::string const& key) {
+        return pubsub_internal::BatchingPublisherConnection::Create(
+            topic, opts, key,
+            pubsub_internal::SequentialBatchSink::Create(sink), cq);
+      };
+      return pubsub_internal::OrderingKeyPublisherConnection::Create(
+          std::move(factory));
+    }
+    return pubsub_internal::RejectsWithOrderingKey::Create(
+        pubsub_internal::BatchingPublisherConnection::Create(
+            std::move(topic), opts, {}, std::move(sink), std::move(cq)));
+  };
+  auto connection = make_connection();
+  if (opts.get<pubsub::FullPublisherActionOption>() !=
+      pubsub::FullPublisherAction::kIgnored) {
+    connection = pubsub_internal::FlowControlledPublisherConnection::Create(
+        std::move(opts), std::move(connection));
+  }
+  return std::make_shared<pubsub::ContainingPublisherConnection>(
+      std::move(background), std::move(connection));
+}
 }  // namespace
 
 PublisherConnection::~PublisherConnection() = default;
@@ -81,14 +134,21 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
                                  PolicyOptionList, PublisherOptionList>(
       opts, __func__);
   opts = pubsub_internal::DefaultPublisherOptions(std::move(opts));
+
+  auto background = internal::MakeBackgroundThreadsFactory(opts)();
+  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
+      background->cq(), opts);
   std::vector<std::shared_ptr<pubsub_internal::PublisherStub>> children(
       opts.get<GrpcNumChannelsOption>());
   int id = 0;
-  std::generate(children.begin(), children.end(), [&id, &opts] {
-    return pubsub_internal::CreateDefaultPublisherStub(opts, id++);
+  std::generate(children.begin(), children.end(), [&id, &opts, &auth] {
+    return pubsub_internal::CreateDefaultPublisherStub(
+        auth->CreateChannel(opts.get<EndpointOption>(),
+                            pubsub_internal::MakeChannelArguments(opts, id++)));
   });
-  return pubsub_internal::MakePublisherConnection(
-      std::move(topic), std::move(opts), std::move(children));
+  auto stub = DecoratePublisherStub(opts, std::move(auth), std::move(children));
+  return ConnectionFromDecoratedStub(std::move(topic), std::move(opts),
+                                     std::move(background), std::move(stub));
 }
 
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
@@ -112,38 +172,14 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
     pubsub::Topic topic, Options opts,
     std::vector<std::shared_ptr<PublisherStub>> stubs) {
-  if (stubs.empty()) return nullptr;
-  std::shared_ptr<PublisherStub> stub =
-      std::make_shared<PublisherRoundRobin>(std::move(stubs));
-  stub = std::make_shared<PublisherMetadata>(std::move(stub));
-  if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
-    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<PublisherLogging>(
-        std::move(stub), opts.get<GrpcTracingOptionsOption>());
-  }
-
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
-  auto make_connection = [&]() -> std::shared_ptr<pubsub::PublisherConnection> {
-    auto cq = background->cq();
-    std::shared_ptr<BatchSink> sink = DefaultBatchSink::Create(stub, cq, opts);
-    if (opts.get<pubsub::MessageOrderingOption>()) {
-      auto factory = [topic, opts, sink, cq](std::string const& key) {
-        return BatchingPublisherConnection::Create(
-            topic, opts, key, SequentialBatchSink::Create(sink), cq);
-      };
-      return OrderingKeyPublisherConnection::Create(std::move(factory));
-    }
-    return RejectsWithOrderingKey::Create(BatchingPublisherConnection::Create(
-        std::move(topic), opts, {}, std::move(sink), std::move(cq)));
-  };
-  auto connection = make_connection();
-  if (opts.get<pubsub::FullPublisherActionOption>() !=
-      pubsub::FullPublisherAction::kIgnored) {
-    connection = FlowControlledPublisherConnection::Create(
-        std::move(opts), std::move(connection));
-  }
-  return std::make_shared<pubsub::ContainingPublisherConnection>(
-      std::move(background), std::move(connection));
+  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
+      background->cq(), opts);
+  auto stub =
+      pubsub::DecoratePublisherStub(opts, std::move(auth), std::move(stubs));
+  return pubsub::ConnectionFromDecoratedStub(std::move(topic), std::move(opts),
+                                             std::move(background),
+                                             std::move(stub));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

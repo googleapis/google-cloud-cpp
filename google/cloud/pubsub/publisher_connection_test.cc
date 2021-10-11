@@ -42,10 +42,8 @@ std::shared_ptr<PublisherConnection> MakeTestPublisherConnection(
     Options opts = {}) {
   opts = pubsub_internal::DefaultPublisherOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
-  std::vector<std::shared_ptr<pubsub_internal::PublisherStub>> children{
-      std::move(mock)};
-  return MakePublisherConnection(std::move(topic), std::move(opts),
-                                 std::move(children));
+  return pubsub_internal::MakePublisherConnection(
+      std::move(topic), std::move(opts), {std::move(mock)});
 }
 
 TEST(PublisherConnectionTest, Basic) {
