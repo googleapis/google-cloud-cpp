@@ -29,6 +29,10 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 std::shared_ptr<grpc::Channel> CreateChannel(Options const& opts,
                                              int channel_id);
 
+/// Initialize Channel Arguments configured by @p opts and @p channel_id
+grpc::ChannelArguments MakeChannelArguments(Options const& opts,
+                                            int channel_id);
+
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
