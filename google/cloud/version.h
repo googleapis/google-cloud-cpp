@@ -33,12 +33,10 @@
   GOOGLE_CLOUD_CPP_VEVAL(GOOGLE_CLOUD_CPP_VERSION_MAJOR, \
                          GOOGLE_CLOUD_CPP_VERSION_MINOR)
 
-#define GOOGLE_CLOUD_CPP_GENERATED_VCONCAT(Ma, Mi) gcpcxxV##Ma
-#define GOOGLE_CLOUD_CPP_GENERATED_VEVAL(Ma, Mi) \
-  GOOGLE_CLOUD_CPP_GENERATED_VCONCAT(Ma, Mi)
-#define GOOGLE_CLOUD_CPP_GENERATED_NS                              \
-  GOOGLE_CLOUD_CPP_GENERATED_VEVAL(GOOGLE_CLOUD_CPP_VERSION_MAJOR, \
-                                   GOOGLE_CLOUD_CPP_VERSION_MINOR)
+// This preprocessor symbol is deprecated and should never be used anywhere. It
+// exists solely for backward compatibility to avoid breaking anyone who may
+// have been using it.
+#define GOOGLE_CLOUD_CPP_GENERATED_NS GOOGLE_CLOUD_CPP_NS
 
 namespace google {
 /**
