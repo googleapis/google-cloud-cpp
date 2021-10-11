@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_admin_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class DatabaseAdminMetadata : public DatabaseAdminStub {
  public:
@@ -142,7 +142,7 @@ class DatabaseAdminMetadata : public DatabaseAdminStub {
   std::string api_client_header_;
 };  // DatabaseAdminMetadata
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google

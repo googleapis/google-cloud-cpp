@@ -32,7 +32,7 @@
 namespace google {
 namespace cloud {
 namespace logging {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using LoggingServiceV2RetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
@@ -70,7 +70,7 @@ class LoggingServiceV2Connection {
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
     Options options = {});
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace logging
 }  // namespace cloud
 }  // namespace google
@@ -78,13 +78,13 @@ std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
 namespace google {
 namespace cloud {
 namespace logging_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<logging::LoggingServiceV2Connection>
 MakeLoggingServiceV2Connection(std::shared_ptr<LoggingServiceV2Stub> stub,
                                Options options);
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace logging_internal
 }  // namespace cloud
 }  // namespace google

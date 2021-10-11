@@ -32,7 +32,7 @@
 namespace google {
 namespace cloud {
 namespace golden {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using GoldenKitchenSinkRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     golden_internal::GoldenKitchenSinkRetryTraits>;
@@ -75,7 +75,7 @@ class GoldenKitchenSinkConnection {
 std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
     Options options = {});
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google
@@ -83,14 +83,14 @@ std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<golden::GoldenKitchenSinkConnection>
 MakeGoldenKitchenSinkConnection(
     std::shared_ptr<GoldenKitchenSinkStub> stub,
     Options options);
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_admin_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 InstanceAdminAuth::InstanceAdminAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -176,7 +176,7 @@ future<Status> InstanceAdminAuth::AsyncCancelOperation(
       });
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google

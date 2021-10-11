@@ -31,7 +31,7 @@
 namespace google {
 namespace cloud {
 namespace iam_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<IAMCredentialsStub> CreateDefaultIAMCredentialsStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -58,7 +58,7 @@ std::shared_ptr<IAMCredentialsStub> CreateDefaultIAMCredentialsStub(
   return stub;
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

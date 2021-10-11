@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace iam_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 IAMCredentialsMetadata::IAMCredentialsMetadata(
     std::shared_ptr<IAMCredentialsStub> child)
@@ -71,7 +71,7 @@ void IAMCredentialsMetadata::SetMetadata(grpc::ClientContext& context,
   context.AddMetadata("x-goog-api-client", api_client_header_);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

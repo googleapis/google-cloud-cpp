@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace iam_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /// Define the gRPC status code semantics for retrying requests.
 struct IAMCredentialsRetryTraits {
   static inline bool IsPermanentFailure(google::cloud::Status const& status) {
@@ -39,7 +39,7 @@ struct IAMRetryTraits {
   }
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

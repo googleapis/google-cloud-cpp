@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace logging {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /// Option to use with `google::cloud::Options`.
 struct LoggingServiceV2RetryPolicyOption {
@@ -51,7 +51,7 @@ using LoggingServiceV2PolicyOptionList =
                LoggingServiceV2BackoffPolicyOption,
                LoggingServiceV2ConnectionIdempotencyPolicyOption>;
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace logging
 }  // namespace cloud
 }  // namespace google

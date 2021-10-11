@@ -30,12 +30,12 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<GoldenKitchenSinkStub> CreateDefaultGoldenKitchenSinkStub(
     google::cloud::CompletionQueue cq, Options const& options);
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 
 class GoldenThingAdminAuth : public GoldenThingAdminStub {
@@ -126,7 +126,7 @@ class GoldenThingAdminAuth : public GoldenThingAdminStub {
   std::shared_ptr<GoldenThingAdminStub> child_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

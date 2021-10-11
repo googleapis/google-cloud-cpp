@@ -35,7 +35,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_admin {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using InstanceAdminRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
@@ -96,7 +96,7 @@ class InstanceAdminConnection {
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     Options options = {});
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_admin
 }  // namespace cloud
 }  // namespace google
@@ -104,13 +104,13 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
 namespace google {
 namespace cloud {
 namespace spanner_admin_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<spanner_admin::InstanceAdminConnection>
 MakeInstanceAdminConnection(std::shared_ptr<InstanceAdminStub> stub,
                             Options options);
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google

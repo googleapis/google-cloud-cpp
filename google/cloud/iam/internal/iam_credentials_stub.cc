@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace iam_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 IAMCredentialsStub::~IAMCredentialsStub() = default;
 
@@ -79,7 +79,7 @@ DefaultIAMCredentialsStub::SignJwt(
   return response;
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

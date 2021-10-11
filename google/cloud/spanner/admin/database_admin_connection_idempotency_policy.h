@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_admin {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class DatabaseAdminConnectionIdempotencyPolicy {
  public:
@@ -106,7 +106,7 @@ class DatabaseAdminConnectionIdempotencyPolicy {
 std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy>
 MakeDefaultDatabaseAdminConnectionIdempotencyPolicy();
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_admin
 }  // namespace cloud
 }  // namespace google
