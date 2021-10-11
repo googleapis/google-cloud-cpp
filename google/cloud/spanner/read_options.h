@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /// Options passed to `Client::Read` or `Client::PartitionRead`.
 struct ReadOptions {
@@ -62,7 +62,7 @@ inline bool operator!=(ReadOptions const& lhs, ReadOptions const& rhs) {
   return !(lhs == rhs);
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

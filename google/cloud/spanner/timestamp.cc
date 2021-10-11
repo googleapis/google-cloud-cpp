@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 namespace {
 
@@ -84,11 +84,11 @@ std::ostream& operator<<(std::ostream& os, Timestamp ts) {
   return os << spanner_internal::TimestampToRFC3339(ts);
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 namespace {
 
@@ -118,7 +118,7 @@ std::string TimestampToRFC3339(spanner::Timestamp ts) {
   return absl::FormatTime(kFormatSpec, t, absl::UTCTimeZone());
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

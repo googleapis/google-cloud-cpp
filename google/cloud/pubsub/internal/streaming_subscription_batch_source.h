@@ -36,7 +36,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Configuration parameters to batch Ack/Nack responses.
@@ -174,7 +174,7 @@ class StreamingSubscriptionBatchSource
 std::ostream& operator<<(std::ostream& os,
                          StreamingSubscriptionBatchSource::StreamState s);
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

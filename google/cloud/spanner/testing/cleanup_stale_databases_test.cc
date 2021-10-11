@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 using ::google::cloud::spanner_admin_mocks::MockDatabaseAdminConnection;
@@ -150,7 +150,7 @@ TEST(CleanupStaleDatabases, RemovesMatching) {
 }
 
 }  // namespace
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

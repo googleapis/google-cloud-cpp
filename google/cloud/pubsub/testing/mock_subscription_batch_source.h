@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_testing {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class MockSubscriptionBatchSource
     : public pubsub_internal::SubscriptionBatchSource {
@@ -41,7 +41,7 @@ class MockSubscriptionBatchSource
               (override));
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_testing
 }  // namespace cloud
 }  // namespace google

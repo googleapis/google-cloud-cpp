@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 StatusOr<std::string> PickRandomInstance(
     google::cloud::internal::DefaultPRNG& generator,
@@ -81,7 +81,7 @@ StatusOr<std::string> PickRandomInstance(
   return instance_ids[random_index(generator)];
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

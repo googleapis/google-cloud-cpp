@@ -16,7 +16,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 // The names for these constants are taken from the proto, and follow the
 // conventions from proto files.
 
@@ -27,7 +27,7 @@ constexpr ClusterConfig::StorageType ClusterConfig::SSD;
 // NOLINTNEXTLINE(readability-identifier-naming)
 constexpr ClusterConfig::StorageType ClusterConfig::HDD;
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

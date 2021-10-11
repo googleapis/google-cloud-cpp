@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 StatusOr<google::pubsub::v1::Schema> SchemaAuth::CreateSchema(
     grpc::ClientContext& context,
@@ -69,7 +69,7 @@ SchemaAuth::ValidateMessage(
   return child_->ValidateMessage(context, request);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

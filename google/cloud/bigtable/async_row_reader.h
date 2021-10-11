@@ -39,7 +39,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * Objects of this class represent the state of reading rows via AsyncReadRows.
  *
@@ -424,7 +424,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
   int recursion_level_;
 };
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

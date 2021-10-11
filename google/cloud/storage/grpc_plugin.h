@@ -28,7 +28,7 @@ namespace cloud {
  * change without notice, including removal.
  */
 namespace storage_experimental {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Low-level experimental settings for the GCS+gRPC plugin.
@@ -71,7 +71,7 @@ struct GrpcPluginOption {
  */
 google::cloud::storage::Client DefaultGrpcClient(Options opts = {});
 
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage_experimental
 }  // namespace cloud
 }  // namespace google

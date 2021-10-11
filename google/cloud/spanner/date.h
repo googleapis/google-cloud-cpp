@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Represents a date in the proleptic Gregorian calendar as a triple of
@@ -35,7 +35,7 @@ inline namespace SPANNER_CLIENT_NS {
  */
 using Date = ::absl::CivilDay;
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

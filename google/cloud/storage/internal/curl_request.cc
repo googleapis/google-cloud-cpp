@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 extern "C" size_t CurlRequestOnWriteData(char* ptr, size_t size, size_t nmemb,
@@ -153,7 +153,7 @@ std::size_t CurlRequest::OnHeaderData(char* contents, std::size_t size,
 }
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

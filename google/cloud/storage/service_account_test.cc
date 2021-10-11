@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
@@ -60,7 +60,7 @@ TEST(ServiceAccountTest, IOStream) {
   EXPECT_THAT(actual, HasSubstr("service-123@example.com"));
 }
 }  // namespace
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

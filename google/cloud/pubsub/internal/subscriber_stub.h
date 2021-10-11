@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Define the interface for the gRPC wrapper.
@@ -136,7 +136,7 @@ std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
 std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(Options const& opts,
                                                             int channel_id);
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

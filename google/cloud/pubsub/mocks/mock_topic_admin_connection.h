@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_mocks {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * A googlemock-based mock for [pubsub::TopicAdminConnection][mocked-link]
@@ -54,7 +54,7 @@ class MockTopicAdminConnection : public pubsub::TopicAdminConnection {
               (ListTopicSnapshotsParams), (override));
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_mocks
 }  // namespace cloud
 }  // namespace google

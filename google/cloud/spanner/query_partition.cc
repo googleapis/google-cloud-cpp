@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 QueryPartition::QueryPartition(std::string transaction_id,
                                std::string transaction_tag,
@@ -98,7 +98,7 @@ StatusOr<QueryPartition> DeserializeQueryPartition(
   return query_partition;
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

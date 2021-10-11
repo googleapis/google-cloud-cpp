@@ -38,6 +38,9 @@
       " details on GitHub issue #7282.")
 #endif  // _MSC_VER
 
+// This preprocessor symbol is deprecated and should never be used anywhere. It
+// exists solely for backward compatibility to avoid breaking anyone who may
+// have been using it.
 #define STORAGE_CLIENT_NS GOOGLE_CLOUD_CPP_NS
 
 namespace google {
@@ -58,7 +61,7 @@ namespace storage {
  * Note that, consistent with the semver.org guidelines, the v0 version makes
  * no guarantees with respect to backwards compatibility.
  */
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * Returns the Google Cloud Storage C++ Client major version.
  *
@@ -89,7 +92,7 @@ std::string version_string();
 /// Returns the value for `x-goog-api-client` header.
 std::string x_goog_api_client();
 
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

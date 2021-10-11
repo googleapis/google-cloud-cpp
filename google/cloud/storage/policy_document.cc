@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 std::ostream& operator<<(std::ostream& os, PolicyDocumentCondition const& rhs) {
   return os << "PolicyDocumentCondition=["
             << absl::StrJoin(rhs.elements(), ", ") << "]";
@@ -75,7 +75,7 @@ std::ostream& operator<<(std::ostream& os, PolicyDocumentV4Result const& rhs) {
             << ", policy=" << rhs.policy << ", signature=" << rhs.signature
             << ", signing_algorithm=" << rhs.signing_algorithm << "}";
 }
-}  // namespace STORAGE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

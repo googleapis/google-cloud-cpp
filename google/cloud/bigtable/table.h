@@ -39,7 +39,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /// The branch taken by a Table::CheckAndMutateRow operation.
 enum class MutationBranch {
   /// The predicate provided to CheckAndMutateRow did not match and the
@@ -910,7 +910,7 @@ class Table {
   std::shared_ptr<BackgroundThreads> background_threads_;
 };
 
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

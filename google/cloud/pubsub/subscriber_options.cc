@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using seconds = std::chrono::seconds;
 
@@ -54,7 +54,7 @@ SubscriberOptions& SubscriberOptions::set_max_concurrency(std::size_t v) {
   return *this;
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

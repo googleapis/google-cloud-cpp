@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 // RowReader::iterator must satisfy the requirements of an InputIterator.
 static_assert(
     std::is_same<std::iterator_traits<RowReader::iterator>::iterator_category,
@@ -248,7 +248,7 @@ RowReader::~RowReader() {
   // Make sure we don't leave open streams.
   Cancel();
 }
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

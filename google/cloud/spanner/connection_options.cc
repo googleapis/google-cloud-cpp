@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::string ConnectionOptionsTraits::default_endpoint() {
   return spanner_internal::DefaultOptions().get<EndpointOption>();
@@ -39,7 +39,7 @@ int ConnectionOptionsTraits::default_num_channels() {
   return kNumChannels;
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

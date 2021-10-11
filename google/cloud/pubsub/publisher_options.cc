@@ -18,14 +18,14 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 PublisherOptions::PublisherOptions(Options opts) {
   internal::CheckExpectedOptions<PublisherOptionList>(opts, __func__);
   opts_ = pubsub_internal::DefaultPublisherOptionsOnly(std::move(opts));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

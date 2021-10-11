@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 /// SFINAE matcher for `future<StatusOr<absl::optional<T>>>`, false branch.
@@ -218,7 +218,7 @@ StartAsyncPollOp(char const* location,
 }
 
 }  // namespace internal
-}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

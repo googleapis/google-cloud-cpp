@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_testing {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class MockSubscriptionMessageSource
     : public pubsub_internal::SubscriptionMessageSource {
@@ -35,7 +35,7 @@ class MockSubscriptionMessageSource
   MOCK_METHOD(void, NackMessage, (std::string const& ack_id), (override));
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_testing
 }  // namespace cloud
 }  // namespace google

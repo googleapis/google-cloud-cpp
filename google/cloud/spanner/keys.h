@@ -24,13 +24,13 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 struct KeySetInternals;
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * A `Key` is a collection of `Value` objects where the i'th value corresponds
@@ -200,18 +200,18 @@ class KeySet {
   ///@}
 
  private:
-  friend struct spanner_internal::SPANNER_CLIENT_NS::KeySetInternals;
+  friend struct spanner_internal::GOOGLE_CLOUD_CPP_NS::KeySetInternals;
   explicit KeySet(google::spanner::v1::KeySet proto)
       : proto_(std::move(proto)) {}
 
   google::spanner::v1::KeySet proto_;
 };
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 struct KeySetInternals {
   static ::google::spanner::v1::KeySet ToProto(spanner::KeySet&& ks) {
     return std::move(ks.proto_);
@@ -230,7 +230,7 @@ inline spanner::KeySet FromProto(::google::spanner::v1::KeySet ks) {
   return KeySetInternals::FromProto(std::move(ks));
 }
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

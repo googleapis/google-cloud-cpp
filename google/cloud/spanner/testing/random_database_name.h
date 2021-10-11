@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-inline namespace SPANNER_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /// Create a random database name given a PRNG generator.
 std::string RandomDatabaseName(google::cloud::internal::DefaultPRNG& generator,
@@ -37,7 +37,7 @@ std::string RandomDatabasePrefixRegex();
 // The prefix for databases created on the (UTC) day at @p tp.
 std::string RandomDatabasePrefix(std::chrono::system_clock::time_point tp);
 
-}  // namespace SPANNER_CLIENT_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

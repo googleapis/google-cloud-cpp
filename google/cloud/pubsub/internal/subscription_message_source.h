@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using MessageCallback =
     std::function<void(google::pubsub::v1::ReceivedMessage)>;
@@ -70,7 +70,7 @@ class SubscriptionMessageSource {
   virtual void NackMessage(std::string const& ack_id) = 0;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
