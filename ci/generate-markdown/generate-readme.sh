@@ -205,6 +205,11 @@ policy described at https://cloud.google.com/terms.
 * Any file or symbol with `Impl` or `impl` in its name is **not part of our
   public API**.
 * Any symbol with `experimental` in its name is not part of the public API.
+* You should avoid naming our inline namespaces and instead rely on them being
+  a transparent versioning mechanism that you almost certainly don't care
+  about. If you do spell out specific inline namespace names, your code will be
+  tightly coupled with that specific version and will likely break when
+  upgrading to a new version of our library.
 
 ## Beyond the C++ API
 
