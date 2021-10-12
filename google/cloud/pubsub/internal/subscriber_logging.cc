@@ -92,7 +92,7 @@ Status SubscriberLogging::ModifyPushConfig(
       context, request, __func__, tracing_options_);
 }
 
-std::unique_ptr<SubscriberStub::AsyncPullStream>
+std::shared_ptr<SubscriberStub::AsyncPullStream>
 SubscriberLogging::AsyncStreamingPull(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -103,8 +103,8 @@ SubscriberLogging::AsyncStreamingPull(
                  << " << request=" << DebugString(request, tracing_options_);
   auto stream = child_->AsyncStreamingPull(cq, std::move(context), request);
   if (!trace_streams_) return stream;
-  return absl::make_unique<LoggingAsyncPullStream>(
-      std::move(stream), tracing_options_, request_id);
+  return std::make_shared<LoggingAsyncPullStream>(std::move(stream),
+                                                  tracing_options_, request_id);
 }
 
 future<Status> SubscriberLogging::AsyncAcknowledge(
@@ -201,7 +201,7 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriberLogging::Seek(
 }
 
 LoggingAsyncPullStream::LoggingAsyncPullStream(
-    std::unique_ptr<SubscriberStub::AsyncPullStream> child,
+    std::shared_ptr<SubscriberStub::AsyncPullStream> child,
     TracingOptions tracing_options, std::string request_id)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),

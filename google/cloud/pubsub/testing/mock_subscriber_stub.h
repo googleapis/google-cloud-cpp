@@ -61,7 +61,7 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
                google::pubsub::v1::ModifyPushConfigRequest const& request),
               (override));
 
-  MOCK_METHOD(std::unique_ptr<pubsub_internal::SubscriberStub::AsyncPullStream>,
+  MOCK_METHOD(std::shared_ptr<pubsub_internal::SubscriberStub::AsyncPullStream>,
               AsyncStreamingPull,
               (google::cloud::CompletionQueue&,
                std::unique_ptr<grpc::ClientContext>,

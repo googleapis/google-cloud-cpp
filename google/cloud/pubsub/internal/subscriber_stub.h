@@ -76,7 +76,7 @@ class SubscriberStub {
       google::pubsub::v1::StreamingPullResponse>;
 
   /// Start a bi-directional stream to read messages and send ack/nacks.
-  virtual std::unique_ptr<AsyncPullStream> AsyncStreamingPull(
+  virtual std::shared_ptr<AsyncPullStream> AsyncStreamingPull(
       google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
       google::pubsub::v1::StreamingPullRequest const& request) = 0;
 

@@ -70,7 +70,7 @@ Status SubscriberMetadata::ModifyPushConfig(
   return child_->ModifyPushConfig(context, request);
 }
 
-std::unique_ptr<SubscriberStub::AsyncPullStream>
+std::shared_ptr<SubscriberStub::AsyncPullStream>
 SubscriberMetadata::AsyncStreamingPull(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,

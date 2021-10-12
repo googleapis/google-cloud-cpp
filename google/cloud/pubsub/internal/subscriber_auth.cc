@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscriber_auth.h"
+#include "google/cloud/internal/async_read_write_stream_auth.h"
 
 namespace google {
 namespace cloud {
@@ -68,19 +69,23 @@ Status SubscriberAuth::ModifyPushConfig(
   return child_->ModifyPushConfig(context, request);
 }
 
-std::unique_ptr<SubscriberStub::AsyncPullStream>
+std::shared_ptr<SubscriberStub::AsyncPullStream>
 SubscriberAuth::AsyncStreamingPull(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::pubsub::v1::StreamingPullRequest const& request) {
-  using ErrorStream =
-      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
-          google::pubsub::v1::StreamingPullRequest,
-          google::pubsub::v1::StreamingPullResponse>;
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
+      google::pubsub::v1::StreamingPullRequest,
+      google::pubsub::v1::StreamingPullResponse>;
 
-  auto status = auth_->ConfigureContext(*context);
-  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
-  return child_->AsyncStreamingPull(cq, std::move(context), request);
+  auto child = child_;
+  auto call = [child, cq,
+               request](std::unique_ptr<grpc::ClientContext> ctx) mutable {
+    return child->AsyncStreamingPull(cq, std::move(ctx), request);
+  };
+  auto factory = StreamAuth::StreamFactory(std::move(call));
+  return std::make_shared<StreamAuth>(std::move(context), auth_,
+                                      std::move(factory));
 }
 
 future<Status> SubscriberAuth::AsyncAcknowledge(
