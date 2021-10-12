@@ -33,7 +33,7 @@ namespace cloud {
  */
 namespace pubsub {
 /**
- * The inlined, versioned namespace for the Cloud Pubsub C++ client APIs.
+ * Versioned inline namespace that users should generally avoid spelling.
  *
  * Applications may need to link multiple versions of the Cloud pubsub C++
  * client, for example, if they link a library that uses an older version of

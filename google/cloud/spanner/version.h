@@ -42,7 +42,7 @@ namespace cloud {
  */
 namespace spanner {
 /**
- * The inlined, versioned namespace for the Cloud Spanner C++ client APIs.
+ * Versioned inline namespace that users should generally avoid spelling.
  *
  * Applications may need to link multiple versions of the Cloud spanner C++
  * client, for example, if they link a library that uses an older version of

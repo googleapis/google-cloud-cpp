@@ -39,7 +39,7 @@ namespace cloud {
  */
 namespace bigtable {
 /**
- * The inlined, versioned namespace for the Cloud Bigtable C++ client APIs.
+ * Versioned inline namespace that users should generally avoid spelling.
  *
  * Applications may need to link multiple versions of the Cloud Bigtable C++
  * client, for example, if they link a library that uses an older version of

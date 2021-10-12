@@ -23,6 +23,7 @@ namespace cloud {
  * Contains all the Cloud C++ gRPC Utilities APIs.
  */
 namespace grpc_utils {
+/// Versioned inline namespace that users should generally avoid spelling.
 inline namespace GOOGLE_CLOUD_CPP_NS {
 using ::google::cloud::version;
 using ::google::cloud::version_major;

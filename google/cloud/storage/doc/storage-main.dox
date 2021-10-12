@@ -152,8 +152,8 @@ The library automatically retries requests that fail with transient errors, and
 follows the
 [recommended practice](https://cloud.google.com/storage/docs/exponential-backoff)
 to backoff between retries. Application developers can override the default
-[retry](@ref google::cloud::storage::v1::RetryPolicy) and
-[backoff](@ref google::cloud::storage::v1::BackoffPolicy) policies:
+[retry](@ref google::cloud::storage::omit_this_inline_ns::RetryPolicy) and
+[backoff](@ref google::cloud::storage::omit_this_inline_ns::BackoffPolicy) policies:
 
 @snippet storage_object_samples.cc insert object modified retry
 
@@ -163,20 +163,20 @@ period between retries.
 
 By default the library retries all operations, even those that are not
 idempotent. Application developers can override the
-[idempotency policy](@ref google::cloud::storage::v1::Client::Client)
+[idempotency policy](@ref google::cloud::storage::omit_this_inline_ns::Client::Client)
 to follow a more conservative approach:
 
 @snippet storage_object_samples.cc insert object strict idempotency
 
-@see [LimitedTimeRetryPolicy](@ref google::cloud::storage::v1::LimitedTimeRetryPolicy)
-   and [LimitedErrorCountRetryPolicy](@ref google::cloud::storage::v1::LimitedErrorCountRetryPolicy)
+@see [LimitedTimeRetryPolicy](@ref google::cloud::storage::omit_this_inline_ns::LimitedTimeRetryPolicy)
+   and [LimitedErrorCountRetryPolicy](@ref google::cloud::storage::omit_this_inline_ns::LimitedErrorCountRetryPolicy)
    for alternative retry policies.
 
-@see [ExponentialBackoffPolicy](@ref google::cloud::storage::v1::ExponentialBackoffPolicy)
+@see [ExponentialBackoffPolicy](@ref google::cloud::storage::omit_this_inline_ns::ExponentialBackoffPolicy)
    to configure different parameters for the exponential backoff policy.
 
-@see [AlwaysRetryIdempotencyPolicy](@ref google::cloud::storage::v1::AlwaysRetryIdempotencyPolicy)
-   and [StrictIdempotencyPolicy](@ref google::cloud::storage::v1::StrictIdempotencyPolicy)
+@see [AlwaysRetryIdempotencyPolicy](@ref google::cloud::storage::omit_this_inline_ns::AlwaysRetryIdempotencyPolicy)
+   and [StrictIdempotencyPolicy](@ref google::cloud::storage::omit_this_inline_ns::StrictIdempotencyPolicy)
    for alternative idempotency policies.
 
 ### Next Steps
@@ -192,11 +192,11 @@ good places to continue learning about the library.
 <!-- @ref storage-grpc "Using the GCS+gRPC plugin" -->
 
 
-[Client]: @ref google::cloud::storage::v1::Client
-[ReadObject]: @ref google::cloud::storage::v1::Client::ReadObject()
-[WriteObject]: @ref google::cloud::storage::v1::Client::WriteObject()
-[ListObjects]: @ref google::cloud::storage::v1::Client::ListObjects()
-[DeleteObject]: @ref google::cloud::storage::v1::Client::DeleteObject()
+[Client]: @ref google::cloud::storage::omit_this_inline_ns::Client
+[ReadObject]: @ref google::cloud::storage::omit_this_inline_ns::Client::ReadObject()
+[WriteObject]: @ref google::cloud::storage::omit_this_inline_ns::Client::WriteObject()
+[ListObjects]: @ref google::cloud::storage::omit_this_inline_ns::Client::ListObjects()
+[DeleteObject]: @ref google::cloud::storage::omit_this_inline_ns::Client::DeleteObject()
 
 
 [gcs-quickstart]: https://cloud.google.com/storage/docs/quickstarts 'GCS Quickstarts'

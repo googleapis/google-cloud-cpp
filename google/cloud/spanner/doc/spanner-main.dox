@@ -137,8 +137,8 @@ there is no value.
 The library automatically retries requests that fail with transient errors, and
 follows the recommended practices with respect to backoff between retries.
 Application developers can override the default
-[retry](@ref google::cloud::spanner::v1::RetryPolicy) and
-[backoff](@ref google::cloud::spanner::v1::BackoffPolicy) policies.
+[retry](@ref google::cloud::spanner::omit_this_inline_ns::RetryPolicy) and
+[backoff](@ref google::cloud::spanner::omit_this_inline_ns::BackoffPolicy) policies.
 
 The default policies are to continue retrying for up to 15 minutes, and to
 use truncated (at 5 minutes) exponential backoff, doubling the maximum backoff
@@ -146,11 +146,11 @@ period between retries.
 
 @snippet samples.cc custom-retry-policy
 
-@see [LimitedTimeRetryPolicy](@ref google::cloud::spanner::v1::LimitedTimeRetryPolicy)
-   and [LimitedErrorCountRetryPolicy](@ref google::cloud::spanner::v1::LimitedErrorCountRetryPolicy)
+@see [LimitedTimeRetryPolicy](@ref google::cloud::spanner::omit_this_inline_ns::LimitedTimeRetryPolicy)
+   and [LimitedErrorCountRetryPolicy](@ref google::cloud::spanner::omit_this_inline_ns::LimitedErrorCountRetryPolicy)
    for alternative retry policies.
 
-@see [ExponentialBackoffPolicy](@ref google::cloud::spanner::v1::ExponentialBackoffPolicy)
+@see [ExponentialBackoffPolicy](@ref google::cloud::spanner::omit_this_inline_ns::ExponentialBackoffPolicy)
    to configure different parameters for the exponential backoff policy.
 
 ## Next Steps

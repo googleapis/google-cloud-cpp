@@ -37,7 +37,8 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * A googlemock-based mock for [pubsub::AckHandler::Impl][mocked-link]
  *
- * [mocked-link]: @ref google::cloud::pubsub::v1::AckHandler::Impl
+ * [mocked-link]: @ref
+ * google::cloud::pubsub::omit_this_inline_ns::AckHandler::Impl
  *
  * @see @ref subscriber-mock for an example using this class.
  */

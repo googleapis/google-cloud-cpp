@@ -44,7 +44,7 @@ namespace google {
  */
 namespace cloud {
 /**
- * The Google Cloud C++ Library inlined, versioned namespace.
+ * Versioned inline namespace that users should generally avoid spelling.
  *
  * Applications may need to link multiple versions of the Google Cloud C++
  * Libraries, for example, if they link a library that uses an older version of

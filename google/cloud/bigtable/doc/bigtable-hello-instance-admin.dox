@@ -114,17 +114,17 @@ Here is the full example
 
 @snippet bigtable_hello_instance_admin.cc all code
 
-[InstanceAdmin]:                 @ref google::cloud::bigtable::v1::InstanceAdmin
-[InstanceAdmin-CreateInstance]:  @ref google::cloud::bigtable::v1::InstanceAdmin::CreateInstance()
-[InstanceAdmin-ListInstances]:   @ref google::cloud::bigtable::v1::InstanceAdmin::ListInstances()
-[InstanceAdmin-GetInstance]:     @ref google::cloud::bigtable::v1::InstanceAdmin::GetInstance()
-[InstanceAdmin-DeleteInstance]:  @ref google::cloud::bigtable::v1::InstanceAdmin::DeleteInstance()
-[InstanceAdmin-CreateCluster]:   @ref google::cloud::bigtable::v1::InstanceAdmin::CreateCluster()
-[InstanceAdmin-GetCluster]:      @ref google::cloud::bigtable::v1::InstanceAdmin::GetCluster()
-[InstanceAdmin-UpdateCluster]:   @ref google::cloud::bigtable::v1::InstanceAdmin::UpdateCluster()
-[InstanceAdmin-DeleteCluster]:   @ref google::cloud::bigtable::v1::InstanceAdmin::DeleteCluster()
-[InstanceAdmin-ListClusters]:    @ref google::cloud::bigtable::v1::InstanceAdmin::ListClusters()
-[InstanceConfig]:   @ref google::cloud::bigtable::v1::InstanceConfig
+[InstanceAdmin]:                 @ref google::cloud::bigtable::omit_this_inline_ns::InstanceAdmin
+[InstanceAdmin-CreateInstance]:  @ref google::cloud::bigtable::omit_this_inline_ns::InstanceAdmin::CreateInstance()
+[InstanceAdmin-ListInstances]:   @ref google::cloud::bigtable::omit_this_inline_ns::InstanceAdmin::ListInstances()
+[InstanceAdmin-GetInstance]:     @ref google::cloud::bigtable::omit_this_inline_ns::InstanceAdmin::GetInstance()
+[InstanceAdmin-DeleteInstance]:  @ref google::cloud::bigtable::omit_this_inline_ns::InstanceAdmin::DeleteInstance()
+[InstanceAdmin-CreateCluster]:   @ref google::cloud::bigtable::omit_this_inline_ns::InstanceAdmin::CreateCluster()
+[InstanceAdmin-GetCluster]:      @ref google::cloud::bigtable::omit_this_inline_ns::InstanceAdmin::GetCluster()
+[InstanceAdmin-UpdateCluster]:   @ref google::cloud::bigtable::omit_this_inline_ns::InstanceAdmin::UpdateCluster()
+[InstanceAdmin-DeleteCluster]:   @ref google::cloud::bigtable::omit_this_inline_ns::InstanceAdmin::DeleteCluster()
+[InstanceAdmin-ListClusters]:    @ref google::cloud::bigtable::omit_this_inline_ns::InstanceAdmin::ListClusters()
+[InstanceConfig]:   @ref google::cloud::bigtable::omit_this_inline_ns::InstanceConfig
 
 [ListInstancesResponse-proto]: https://cloud.google.com/bigtable/docs/reference/admin/rpc/google.bigtable.admin.v2#google.bigtable.admin.v2.ListInstancesResponse
 [ListClustersResponse-proto]: https://cloud.google.com/bigtable/docs/reference/admin/rpc/google.bigtable.admin.v2#google.bigtable.admin.v2.ListClustersResponse
