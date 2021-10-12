@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace iam_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 IAMCredentialsAuth::IAMCredentialsAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -65,7 +65,7 @@ IAMCredentialsAuth::SignJwt(
   if (!status.ok()) return status;
   return child_->SignJwt(context, request);
 }
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

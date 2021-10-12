@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace logging {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
@@ -116,7 +116,7 @@ TEST_F(LoggingIntegrationTest, ListLogsFailure) {
 }
 
 }  // namespace
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace logging
 }  // namespace cloud
 }  // namespace google

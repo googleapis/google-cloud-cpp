@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_admin {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using ::google::cloud::internal::Idempotency;
 
@@ -146,7 +146,7 @@ MakeDefaultDatabaseAdminConnectionIdempotencyPolicy() {
   return absl::make_unique<DefaultDatabaseAdminConnectionIdempotencyPolicy>();
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_admin
 }  // namespace cloud
 }  // namespace google

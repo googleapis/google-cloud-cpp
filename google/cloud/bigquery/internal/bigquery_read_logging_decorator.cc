@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace bigquery_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 BigQueryReadLogging::BigQueryReadLogging(
     std::shared_ptr<BigQueryReadStub> child, TracingOptions tracing_options,
@@ -83,7 +83,7 @@ BigQueryReadLogging::SplitReadStream(
       context, request, __func__, tracing_options_);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigquery_internal
 }  // namespace cloud
 }  // namespace google

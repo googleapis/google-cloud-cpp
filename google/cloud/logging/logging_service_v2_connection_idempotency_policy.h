@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace logging {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class LoggingServiceV2ConnectionIdempotencyPolicy {
  public:
@@ -57,7 +57,7 @@ class LoggingServiceV2ConnectionIdempotencyPolicy {
 std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>
 MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy();
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace logging
 }  // namespace cloud
 }  // namespace google

@@ -95,28 +95,28 @@ TEST(BuildNamespaces, NoDirectoryPathInternal) {
   auto result = BuildNamespaces("/", NamespaceType::kInternal);
   ASSERT_EQ(result.size(), 4);
   EXPECT_THAT(result, ElementsAre("google", "cloud", "_internal",
-                                  "GOOGLE_CLOUD_CPP_GENERATED_NS"));
+                                  "GOOGLE_CLOUD_CPP_NS"));
 }
 
 TEST(BuildNamespaces, OneDirectoryPathInternal) {
   auto result = BuildNamespaces("one/", NamespaceType::kInternal);
   ASSERT_EQ(result.size(), 4);
   EXPECT_THAT(result, ElementsAre("google", "cloud", "one_internal",
-                                  "GOOGLE_CLOUD_CPP_GENERATED_NS"));
+                                  "GOOGLE_CLOUD_CPP_NS"));
 }
 
 TEST(BuildNamespaces, TwoDirectoryPathInternal) {
   auto result = BuildNamespaces("unusual/product/", NamespaceType::kInternal);
   ASSERT_EQ(result.size(), 4);
   EXPECT_THAT(result, ElementsAre("google", "cloud", "unusual_product_internal",
-                                  "GOOGLE_CLOUD_CPP_GENERATED_NS"));
+                                  "GOOGLE_CLOUD_CPP_NS"));
 }
 
 TEST(BuildNamespaces, TwoDirectoryPathNotInternal) {
   auto result = BuildNamespaces("unusual/product/");
   ASSERT_EQ(result.size(), 4);
   EXPECT_THAT(result, ElementsAre("google", "cloud", "unusual_product",
-                                  "GOOGLE_CLOUD_CPP_GENERATED_NS"));
+                                  "GOOGLE_CLOUD_CPP_NS"));
 }
 
 TEST(BuildNamespaces, ThreeDirectoryPathInternal) {
@@ -124,21 +124,21 @@ TEST(BuildNamespaces, ThreeDirectoryPathInternal) {
       BuildNamespaces("google/cloud/spanner/", NamespaceType::kInternal);
   ASSERT_EQ(result.size(), 4);
   EXPECT_THAT(result, ElementsAre("google", "cloud", "spanner_internal",
-                                  "GOOGLE_CLOUD_CPP_GENERATED_NS"));
+                                  "GOOGLE_CLOUD_CPP_NS"));
 }
 
 TEST(BuildNamespaces, ThreeDirectoryPathMocks) {
   auto result = BuildNamespaces("google/cloud/spanner/", NamespaceType::kMocks);
   ASSERT_EQ(result.size(), 4);
   EXPECT_THAT(result, ElementsAre("google", "cloud", "spanner_mocks",
-                                  "GOOGLE_CLOUD_CPP_GENERATED_NS"));
+                                  "GOOGLE_CLOUD_CPP_NS"));
 }
 
 TEST(BuildNamespaces, ThreeDirectoryPathNotInternal) {
   auto result = BuildNamespaces("google/cloud/translation/");
   ASSERT_EQ(result.size(), 4);
   EXPECT_THAT(result, ElementsAre("google", "cloud", "translation",
-                                  "GOOGLE_CLOUD_CPP_GENERATED_NS"));
+                                  "GOOGLE_CLOUD_CPP_NS"));
 }
 
 TEST(BuildNamespaces, FourDirectoryPathInternal) {
@@ -146,14 +146,14 @@ TEST(BuildNamespaces, FourDirectoryPathInternal) {
       BuildNamespaces("google/cloud/foo/bar/baz/", NamespaceType::kInternal);
   ASSERT_EQ(result.size(), 4);
   EXPECT_THAT(result, ElementsAre("google", "cloud", "foo_bar_baz_internal",
-                                  "GOOGLE_CLOUD_CPP_GENERATED_NS"));
+                                  "GOOGLE_CLOUD_CPP_NS"));
 }
 
 TEST(BuildNamespaces, FourDirectoryPathNotInternal) {
   auto result = BuildNamespaces("google/cloud/foo/bar/baz/");
   ASSERT_EQ(result.size(), 4);
   EXPECT_THAT(result, ElementsAre("google", "cloud", "foo_bar_baz",
-                                  "GOOGLE_CLOUD_CPP_GENERATED_NS"));
+                                  "GOOGLE_CLOUD_CPP_NS"));
 }
 
 TEST(ProcessCommandLineArgs, NoProductPath) {

@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace iam {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using ::google::cloud::internal::Idempotency;
 
@@ -175,7 +175,7 @@ MakeDefaultIAMConnectionIdempotencyPolicy() {
   return absl::make_unique<DefaultIAMConnectionIdempotencyPolicy>();
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam
 }  // namespace cloud
 }  // namespace google

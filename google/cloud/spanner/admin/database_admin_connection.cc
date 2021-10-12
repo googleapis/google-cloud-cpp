@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_admin {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 DatabaseAdminConnection::~DatabaseAdminConnection() = default;
 
@@ -601,7 +601,7 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
       std::move(background), std::move(stub), options);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_admin
 }  // namespace cloud
 }  // namespace google
@@ -609,7 +609,7 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
 namespace google {
 namespace cloud {
 namespace spanner_admin_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<spanner_admin::DatabaseAdminConnection>
 MakeDatabaseAdminConnection(std::shared_ptr<DatabaseAdminStub> stub,
@@ -620,7 +620,7 @@ MakeDatabaseAdminConnection(std::shared_ptr<DatabaseAdminStub> stub,
       std::move(options));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google

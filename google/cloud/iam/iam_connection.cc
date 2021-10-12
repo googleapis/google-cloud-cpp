@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace iam {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 IAMConnection::~IAMConnection() = default;
 
@@ -665,7 +665,7 @@ std::shared_ptr<IAMConnection> MakeIAMConnection(Options options) {
                                              std::move(stub), options);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam
 }  // namespace cloud
 }  // namespace google
@@ -673,7 +673,7 @@ std::shared_ptr<IAMConnection> MakeIAMConnection(Options options) {
 namespace google {
 namespace cloud {
 namespace iam_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<iam::IAMConnection> MakeIAMConnection(
     std::shared_ptr<IAMStub> stub, Options options) {
@@ -683,7 +683,7 @@ std::shared_ptr<iam::IAMConnection> MakeIAMConnection(
       std::move(options));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

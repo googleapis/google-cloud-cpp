@@ -32,7 +32,7 @@
 namespace google {
 namespace cloud {
 namespace iam {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using IAMRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     iam_internal::IAMRetryTraits>;
@@ -138,7 +138,7 @@ class IAMConnection {
 
 std::shared_ptr<IAMConnection> MakeIAMConnection(Options options = {});
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam
 }  // namespace cloud
 }  // namespace google
@@ -146,12 +146,12 @@ std::shared_ptr<IAMConnection> MakeIAMConnection(Options options = {});
 namespace google {
 namespace cloud {
 namespace iam_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<iam::IAMConnection> MakeIAMConnection(
     std::shared_ptr<IAMStub> stub, Options options);
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

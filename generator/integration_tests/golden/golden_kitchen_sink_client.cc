@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace golden {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 GoldenKitchenSinkClient::GoldenKitchenSinkClient(std::shared_ptr<GoldenKitchenSinkConnection> connection) : connection_(std::move(connection)) {}
 GoldenKitchenSinkClient::~GoldenKitchenSinkClient() = default;
@@ -107,7 +107,7 @@ GoldenKitchenSinkClient::ListServiceAccountKeys(google::test::admin::database::v
   return connection_->ListServiceAccountKeys(request);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google

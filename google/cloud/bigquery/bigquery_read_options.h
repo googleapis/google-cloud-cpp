@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace bigquery {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /// Option to use with `google::cloud::Options`.
 struct BigQueryReadRetryPolicyOption {
@@ -50,7 +50,7 @@ using BigQueryReadPolicyOptionList =
     OptionList<BigQueryReadRetryPolicyOption, BigQueryReadBackoffPolicyOption,
                BigQueryReadConnectionIdempotencyPolicyOption>;
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigquery
 }  // namespace cloud
 }  // namespace google

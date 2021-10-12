@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace golden {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 void GoldenKitchenSinkTailLogEntriesStreamingUpdater(
     ::google::test::admin::database::v1::TailLogEntriesResponse const&,
@@ -25,7 +25,7 @@ void GoldenKitchenSinkTailLogEntriesStreamingUpdater(
   // implementation here
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google

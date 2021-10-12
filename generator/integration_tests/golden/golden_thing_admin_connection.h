@@ -35,7 +35,7 @@
 namespace google {
 namespace cloud {
 namespace golden {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using GoldenThingAdminRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     golden_internal::GoldenThingAdminRetryTraits>;
@@ -107,7 +107,7 @@ class GoldenThingAdminConnection {
 std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
     Options options = {});
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google
@@ -115,14 +115,14 @@ std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<golden::GoldenThingAdminConnection>
 MakeGoldenThingAdminConnection(
     std::shared_ptr<GoldenThingAdminStub> stub,
     Options options);
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_admin {
-inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /// Option to use with `google::cloud::Options`.
 struct InstanceAdminRetryPolicyOption {
@@ -56,7 +56,7 @@ using InstanceAdminPolicyOptionList =
                InstanceAdminPollingPolicyOption,
                InstanceAdminConnectionIdempotencyPolicyOption>;
 
-}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_admin
 }  // namespace cloud
 }  // namespace google
