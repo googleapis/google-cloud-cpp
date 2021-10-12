@@ -46,9 +46,9 @@ namespace spanner {
  *
  * Applications may need to link multiple versions of the Cloud spanner C++
  * client, for example, if they link a library that uses an older version of
- * the client than they do.  This namespace is inlined, so applications can use
- * `spanner::Foo` in their source, but the symbols are versioned, i.e., the
- * symbol becomes `spanner::v1::Foo`.
+ * the client than they do. This namespace is inlined, so applications can and
+ * should generally use `spanner::Foo` in their source, but the symbols are
+ * versioned, i.e., the symbol becomes something like `spanner::vXYZ::Foo`.
  */
 inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
@@ -73,6 +73,8 @@ int constexpr Version() { return google::cloud::version(); }
 std::string VersionString();
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
+/// @deprecated Do not use `v1` or the inline namespace in your code.
+namespace v1 = GOOGLE_CLOUD_CPP_NS;
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

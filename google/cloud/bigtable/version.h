@@ -43,12 +43,9 @@ namespace bigtable {
  *
  * Applications may need to link multiple versions of the Cloud Bigtable C++
  * client, for example, if they link a library that uses an older version of
- * the client than they do.  This namespace is inlined, so applications can use
- * `bigtable::Foo` in their source, but the symbols are versioned, i.e., the
- * symbol becomes `bigtable::v1::Foo`.
- *
- * Note that, consistent with the semver.org guidelines, the v0 version makes
- * no guarantees with respect to backwards compatibility.
+ * the client than they do. This namespace is inlined, so applications can and
+ * should generally use `bigtable::Foo` in their source, but the symbols are
+ * versioned, i.e., the symbol becomes something like `bigtable::vXYZ::Foo`.
  */
 inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
@@ -79,6 +76,8 @@ int constexpr version() { return google::cloud::version(); }
 std::string version_string();
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
+/// @deprecated Do not use `v1` or the inline namespace in your code.
+namespace v1 = GOOGLE_CLOUD_CPP_NS;
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

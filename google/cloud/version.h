@@ -27,11 +27,12 @@
       "deprecated and will be be removed on 2022-04-01 or shortly "        \
       "after. See GitHub issue #5929 for more information.")
 
-#define GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi) v##Ma
-#define GOOGLE_CLOUD_CPP_VEVAL(Ma, Mi) GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi)
+#define GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi, Pa) v##Ma##_##Mi##_##Pa
+#define GOOGLE_CLOUD_CPP_VEVAL(Ma, Mi, Pa) GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi, Pa)
 #define GOOGLE_CLOUD_CPP_NS                              \
   GOOGLE_CLOUD_CPP_VEVAL(GOOGLE_CLOUD_CPP_VERSION_MAJOR, \
-                         GOOGLE_CLOUD_CPP_VERSION_MINOR)
+                         GOOGLE_CLOUD_CPP_VERSION_MINOR, \
+                         GOOGLE_CLOUD_CPP_VERSION_PATCH)
 
 // This preprocessor symbol is deprecated and should never be used anywhere. It
 // exists solely for backward compatibility to avoid breaking anyone who may
@@ -48,12 +49,10 @@ namespace cloud {
  *
  * Applications may need to link multiple versions of the Google Cloud C++
  * Libraries, for example, if they link a library that uses an older version of
- * the libraries than they do.  This namespace is inlined, so applications can
- * use `google::cloud::Foo` in their source, but the symbols are versioned,
- * i.e., the symbol becomes `google::cloud::v1::Foo`.
- *
- * Note that, consistent with the semver.org guidelines, the v0 version makes
- * no guarantees with respect to backwards compatibility.
+ * the libraries than they do. This namespace is inlined, so applications can
+ * and should generally use `google::cloud::Foo` in their source, but the
+ * symbols are versioned, i.e., the symbol becomes something like
+ * `google::cloud::vXYZ::Foo`.
  */
 inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
@@ -97,6 +96,8 @@ int constexpr version() {
 std::string version_string();
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
+/// @deprecated Do not use `v1` or the inline namespace in your code.
+namespace v1 = GOOGLE_CLOUD_CPP_NS;
 }  // namespace cloud
 }  // namespace google
 

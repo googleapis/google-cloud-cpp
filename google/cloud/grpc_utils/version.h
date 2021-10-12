@@ -30,6 +30,8 @@ using ::google::cloud::version_minor;
 using ::google::cloud::version_patch;
 using ::google::cloud::version_string;
 }  // namespace GOOGLE_CLOUD_CPP_NS
+/// @deprecated Do not use `v1` or the inline namespace in your code.
+namespace v1 = GOOGLE_CLOUD_CPP_NS;
 }  // namespace grpc_utils
 }  // namespace cloud
 }  // namespace google
