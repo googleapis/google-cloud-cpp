@@ -69,6 +69,20 @@
 
 ## v1.33.0 - TBD
 
+**BREAKING CHANGES:**
+
+* We changed the format of the inline namespace name that we use for versioning
+  each release. Previously the inline namespace was always `v1`, and now it
+  will change with each release and include the release's major, minor, and
+  patch numbers. We also added an aliases to avoid breaking users who were
+  spelling the previous `v1` inline namespace name. Note: that [**you should
+  avoid spelling inline namespace names in your code**][link-support]. Doing so
+  will tightly couple you to a specific library version and will cause you
+  trouble when upgrading. See [#5976][link-5976] for more details.
+
+[link-5976]: https://github.com/googleapis/google-cloud-cpp/issues/5976
+[link-support]: https://github.com/googleapis/google-cloud-cpp/blob/main/README.md#support
+
 ## v1.32.1 - 2021-10
 
 ### [Pub/Sub](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/README.md)
