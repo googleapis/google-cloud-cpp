@@ -50,7 +50,7 @@ namespace cloud {
  */
 namespace storage {
 /**
- * The Google Cloud Storage C++ client APIs inlined, versioned namespace.
+ * Versioned inline namespace that users should generally avoid spelling.
  *
  * Applications may need to link multiple versions of the Google Cloud Storage
  * C++ client, for example, if they link a library that uses an older version of
