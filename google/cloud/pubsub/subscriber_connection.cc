@@ -32,6 +32,7 @@ namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
+
 class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
  public:
   explicit SubscriberConnectionImpl(
@@ -150,7 +151,6 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
     pubsub::Subscription subscription, Options opts,
     std::vector<std::shared_ptr<SubscriberStub>> stubs) {
-  if (stubs.empty()) return nullptr;
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       background->cq(), opts);
