@@ -24,8 +24,9 @@ namespace google {
 namespace cloud {
 namespace spanner_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-spanner::Row MakeRow(std::vector<spanner::Value> values,
-                     std::shared_ptr<std::vector<std::string> const> columns) {
+spanner::Row RowFriend::MakeRow(
+    std::vector<spanner::Value> values,
+    std::shared_ptr<std::vector<std::string> const> columns) {
   return spanner::Row(std::move(values), std::move(columns));
 }
 }  // namespace GOOGLE_CLOUD_CPP_NS
@@ -40,7 +41,8 @@ Row MakeTestRow(std::vector<std::pair<std::string, Value>> pairs) {
     values.emplace_back(std::move(p.second));
     columns->emplace_back(std::move(p.first));
   }
-  return spanner_internal::MakeRow(std::move(values), std::move(columns));
+  return spanner_internal::RowFriend::MakeRow(std::move(values),
+                                              std::move(columns));
 }
 
 Row::Row() : Row({}, std::make_shared<std::vector<std::string>>()) {}
