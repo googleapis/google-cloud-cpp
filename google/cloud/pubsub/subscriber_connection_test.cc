@@ -46,8 +46,8 @@ std::shared_ptr<SubscriberConnection> MakeTestSubscriberConnection(
       pubsub_testing::MakeTestOptions(std::move(opts)));
   std::vector<std::shared_ptr<pubsub_internal::SubscriberStub>> children{
       std::move(mock)};
-  return MakeSubscriberConnection(std::move(subscription), std::move(opts),
-                                  std::move(children));
+  return MakeTestSubscriberConnection(std::move(subscription), std::move(opts),
+                                      std::move(children));
 }
 
 Options UserSuppliedThreadsOption(CompletionQueue const& cq) {

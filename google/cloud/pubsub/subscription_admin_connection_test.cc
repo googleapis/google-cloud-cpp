@@ -44,8 +44,8 @@ MakeTestSubscriptionAdminConnection(
     std::shared_ptr<pubsub_internal::SubscriberStub> mock, Options opts = {}) {
   opts = pubsub_internal::DefaultCommonOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
-  return pubsub_internal::MakeSubscriptionAdminConnection(std::move(opts),
-                                                          std::move(mock));
+  return pubsub_internal::MakeTestSubscriptionAdminConnection(std::move(opts),
+                                                              std::move(mock));
 }
 
 TEST(SubscriptionAdminConnectionTest, Create) {

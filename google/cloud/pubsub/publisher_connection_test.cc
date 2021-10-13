@@ -42,7 +42,7 @@ std::shared_ptr<PublisherConnection> MakeTestPublisherConnection(
     Options opts = {}) {
   opts = pubsub_internal::DefaultPublisherOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
-  return pubsub_internal::MakePublisherConnection(
+  return pubsub_internal::MakeTestPublisherConnection(
       std::move(topic), std::move(opts), {std::move(mock)});
 }
 

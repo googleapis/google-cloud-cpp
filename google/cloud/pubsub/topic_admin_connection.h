@@ -237,7 +237,7 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
-std::shared_ptr<pubsub::TopicAdminConnection> MakeTopicAdminConnection(
+std::shared_ptr<pubsub::TopicAdminConnection> MakeTestTopicAdminConnection(
     Options const& opts, std::shared_ptr<PublisherStub> stub);
 
 }  // namespace GOOGLE_CLOUD_CPP_NS

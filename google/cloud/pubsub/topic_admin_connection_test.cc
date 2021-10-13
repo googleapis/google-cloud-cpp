@@ -40,8 +40,8 @@ std::shared_ptr<pubsub::TopicAdminConnection> MakeTestTopicAdminConnection(
     std::shared_ptr<pubsub_internal::PublisherStub> mock, Options opts = {}) {
   opts = pubsub_internal::DefaultCommonOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
-  return pubsub_internal::MakeTopicAdminConnection(std::move(opts),
-                                                   std::move(mock));
+  return pubsub_internal::MakeTestTopicAdminConnection(std::move(opts),
+                                                       std::move(mock));
 }
 
 TEST(TopicAdminConnectionTest, Create) {
