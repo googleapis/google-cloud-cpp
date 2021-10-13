@@ -23,6 +23,7 @@ message ServiceConfiguration {
   repeated string omitted_rpcs = 4;
   string service_endpoint_env_var = 5;
   string emulator_endpoint_env_var = 6;
+  string compat_inline_namespace_alias = 7;
 }
 
 message GeneratorConfiguration {

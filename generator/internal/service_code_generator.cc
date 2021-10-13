@@ -212,7 +212,9 @@ Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {
 }
 
 void ServiceCodeGenerator::HeaderCloseNamespaces() {
-  CloseNamespaces(header_);
+  auto it = service_vars_.find("compat_inline_namespace_alias");
+  std::string const& alias = it != service_vars_.end() ? it->second : "";
+  CloseNamespaces(header_, alias);
   HeaderPrint("\n");
 }
 
@@ -285,19 +287,27 @@ Status ServiceCodeGenerator::OpenNamespaces(Printer& p, NamespaceType ns_type) {
   }
   namespaces_ = BuildNamespaces(service_vars_["product_path"], ns_type);
   for (auto const& nspace : namespaces_) {
-    if (nspace == "GOOGLE_CLOUD_CPP_NS") {
-      p.Print("inline namespace $namespace$ {\n", "namespace", nspace);
-    } else {
-      p.Print("namespace $namespace$ {\n", "namespace", nspace);
-    }
+    if (nspace == "GOOGLE_CLOUD_CPP_NS") p.Print("inline ");
+    p.Print("namespace $namespace$ {\n", "namespace", nspace);
   }
   p.Print("\n");
   return {};
 }
 
-void ServiceCodeGenerator::CloseNamespaces(Printer& p) {
+void ServiceCodeGenerator::CloseNamespaces(Printer& p,
+                                           std::string const& compat_alias) {
   for (auto iter = namespaces_.rbegin(); iter != namespaces_.rend(); ++iter) {
     p.Print("}  // namespace $namespace$\n", "namespace", *iter);
+    if (*iter == "GOOGLE_CLOUD_CPP_NS" && !compat_alias.empty()) {
+      p.Print(
+          "/// @deprecated Do not spell the `$alias$` inline namespace.\n"
+          "///   Simply omit the inline namespace name instead.\n"
+          "///   This alias will be removed after 2022-11. See\n"
+          "///   https://github.com/googleapis/google-cloud-cpp/issues/5976.\n",
+          "alias", compat_alias);
+      p.Print("namespace $alias$ = GOOGLE_CLOUD_CPP_NS;\n", "alias",
+              compat_alias);
+    }
   }
 }
 

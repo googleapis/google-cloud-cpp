@@ -247,6 +247,15 @@ TEST(ProcessCommandLineArgs, EmulatorEndpointEnvVar) {
   EXPECT_THAT(*result, Contains(Pair("service_endpoint_env_var", "")));
 }
 
+TEST(ProcessCommandLineArgs, CompatInlineNamespaceAlias) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/spanner/,googleapis_commit_hash=foo"
+      ",compat_inline_namespace_alias=oldname");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result,
+              Contains(Pair("compat_inline_namespace_alias", "oldname")));
+}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud

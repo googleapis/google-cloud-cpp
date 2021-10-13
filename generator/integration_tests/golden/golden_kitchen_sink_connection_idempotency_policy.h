@@ -58,6 +58,11 @@ std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>
     MakeDefaultGoldenKitchenSinkConnectionIdempotencyPolicy();
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
+/// @deprecated Do not spell the `compat_alias` inline namespace.
+///   Simply omit the inline namespace name instead.
+///   This alias will be removed after 2022-11. See
+///   https://github.com/googleapis/google-cloud-cpp/issues/5976.
+namespace compat_alias = GOOGLE_CLOUD_CPP_NS;
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google
