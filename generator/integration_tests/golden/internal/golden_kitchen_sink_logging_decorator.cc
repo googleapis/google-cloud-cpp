@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GoldenKitchenSinkLogging::GoldenKitchenSinkLogging(
     std::shared_ptr<GoldenKitchenSinkStub> child,
@@ -116,7 +116,7 @@ GoldenKitchenSinkLogging::ListServiceAccountKeys(
       context, request, __func__, tracing_options_);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

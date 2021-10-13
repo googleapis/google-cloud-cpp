@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class GoldenKitchenSinkLogging : public GoldenKitchenSinkStub {
  public:
@@ -69,7 +69,7 @@ class GoldenKitchenSinkLogging : public GoldenKitchenSinkStub {
   std::set<std::string> components_;
 };  // GoldenKitchenSinkLogging
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

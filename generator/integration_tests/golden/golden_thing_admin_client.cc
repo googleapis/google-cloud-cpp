@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace golden {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GoldenThingAdminClient::GoldenThingAdminClient(std::shared_ptr<GoldenThingAdminConnection> connection) : connection_(std::move(connection)) {}
 GoldenThingAdminClient::~GoldenThingAdminClient() = default;
@@ -265,7 +265,7 @@ GoldenThingAdminClient::ListBackupOperations(google::test::admin::database::v1::
   return connection_->ListBackupOperations(std::move(request));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google
