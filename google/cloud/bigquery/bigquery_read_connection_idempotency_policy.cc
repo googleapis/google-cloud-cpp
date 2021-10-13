@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace bigquery {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using ::google::cloud::internal::Idempotency;
 
@@ -62,7 +62,7 @@ MakeDefaultBigQueryReadConnectionIdempotencyPolicy() {
   return absl::make_unique<DefaultBigQueryReadConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigquery
 }  // namespace cloud
 }  // namespace google

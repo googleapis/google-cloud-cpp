@@ -33,7 +33,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_admin {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Cloud Spanner Instance Admin API
@@ -552,7 +552,7 @@ class InstanceAdminClient {
   std::shared_ptr<InstanceAdminConnection> connection_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_admin
 }  // namespace cloud
 }  // namespace google

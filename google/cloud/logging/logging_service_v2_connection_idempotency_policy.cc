@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace logging {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using ::google::cloud::internal::Idempotency;
 
@@ -74,7 +74,7 @@ MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy() {
       DefaultLoggingServiceV2ConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace logging
 }  // namespace cloud
 }  // namespace google

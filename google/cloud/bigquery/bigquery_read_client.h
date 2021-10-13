@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace bigquery {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * BigQuery Read API.
@@ -195,7 +195,7 @@ class BigQueryReadClient {
   std::shared_ptr<BigQueryReadConnection> connection_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigquery
 }  // namespace cloud
 }  // namespace google

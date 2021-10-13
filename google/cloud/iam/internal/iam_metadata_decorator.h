@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace iam_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class IAMMetadata : public IAMStub {
  public:
@@ -164,7 +164,7 @@ class IAMMetadata : public IAMStub {
   std::string api_client_header_;
 };  // IAMMetadata
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace bigquery_mocks {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class MockBigQueryReadConnection : public bigquery::BigQueryReadConnection {
  public:
@@ -50,7 +50,7 @@ class MockBigQueryReadConnection : public bigquery::BigQueryReadConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigquery_mocks
 }  // namespace cloud
 }  // namespace google

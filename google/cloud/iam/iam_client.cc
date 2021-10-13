@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace iam {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 IAMClient::IAMClient(std::shared_ptr<IAMConnection> connection)
     : connection_(std::move(connection)) {}
@@ -295,7 +295,7 @@ StatusOr<google::iam::admin::v1::LintPolicyResponse> IAMClient::LintPolicy(
   return connection_->LintPolicy(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam
 }  // namespace cloud
 }  // namespace google

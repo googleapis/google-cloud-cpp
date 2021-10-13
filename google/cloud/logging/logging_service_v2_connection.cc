@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace logging {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 LoggingServiceV2Connection::~LoggingServiceV2Connection() = default;
 
@@ -250,7 +250,7 @@ std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
       std::move(background), std::move(stub), options);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace logging
 }  // namespace cloud
 }  // namespace google
@@ -258,7 +258,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace google {
 namespace cloud {
 namespace logging_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<logging::LoggingServiceV2Connection>
 MakeLoggingServiceV2Connection(std::shared_ptr<LoggingServiceV2Stub> stub,
@@ -269,7 +269,7 @@ MakeLoggingServiceV2Connection(std::shared_ptr<LoggingServiceV2Stub> stub,
       std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace logging_internal
 }  // namespace cloud
 }  // namespace google

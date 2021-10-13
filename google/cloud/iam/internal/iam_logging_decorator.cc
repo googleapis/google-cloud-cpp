@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace iam_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 IAMLogging::IAMLogging(std::shared_ptr<IAMStub> child,
                        TracingOptions tracing_options,
@@ -347,7 +347,7 @@ StatusOr<google::iam::admin::v1::LintPolicyResponse> IAMLogging::LintPolicy(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

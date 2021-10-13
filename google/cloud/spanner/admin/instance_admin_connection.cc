@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_admin {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 InstanceAdminConnection::~InstanceAdminConnection() = default;
 
@@ -370,7 +370,7 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
       std::move(background), std::move(stub), options);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_admin
 }  // namespace cloud
 }  // namespace google
@@ -378,7 +378,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace google {
 namespace cloud {
 namespace spanner_admin_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<spanner_admin::InstanceAdminConnection>
 MakeInstanceAdminConnection(std::shared_ptr<InstanceAdminStub> stub,
@@ -389,7 +389,7 @@ MakeInstanceAdminConnection(std::shared_ptr<InstanceAdminStub> stub,
       std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google

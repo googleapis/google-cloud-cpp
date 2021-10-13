@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace iam_mocks {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class MockIAMConnection : public iam::IAMConnection {
  public:
@@ -154,7 +154,7 @@ class MockIAMConnection : public iam::IAMConnection {
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam_mocks
 }  // namespace cloud
 }  // namespace google
