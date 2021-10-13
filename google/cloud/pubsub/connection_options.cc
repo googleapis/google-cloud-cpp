@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::string ConnectionOptionsTraits::default_endpoint() {
   return "pubsub.googleapis.com";
@@ -34,7 +34,7 @@ int ConnectionOptionsTraits::default_num_channels() {
   return ncores == 0 ? 4 : static_cast<int>(ncores);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

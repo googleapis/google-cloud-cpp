@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 class AckHandlerImpl : public pubsub::AckHandler::Impl {
  public:
@@ -118,7 +118,7 @@ void SubscriptionConcurrencyControl::OnMessageAsync(
   shutdown_manager_->FinishedOperation("callback");
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

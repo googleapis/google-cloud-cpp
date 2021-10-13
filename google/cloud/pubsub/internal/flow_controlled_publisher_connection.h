@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class FlowControlledPublisherConnection
     : public pubsub::PublisherConnection,
@@ -97,7 +97,7 @@ class FlowControlledPublisherConnection
   std::size_t max_pending_messages_ = 0;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

@@ -41,7 +41,8 @@ namespace pubsub {
  * `pubsub::Foo` in their source, but the symbols are versioned, i.e., the
  * symbol becomes `pubsub::v1::Foo`.
  */
-inline namespace GOOGLE_CLOUD_CPP_NS {}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

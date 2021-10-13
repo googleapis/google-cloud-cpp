@@ -21,13 +21,13 @@
 namespace google {
 namespace cloud {
 namespace pubsub_testing {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::unique_ptr<pubsub_testing::MockAsyncPullStream> FakeAsyncStreamingPull(
     google::cloud::CompletionQueue& cq, std::unique_ptr<grpc::ClientContext>,
     google::pubsub::v1::StreamingPullRequest const&);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_testing
 }  // namespace cloud
 }  // namespace google

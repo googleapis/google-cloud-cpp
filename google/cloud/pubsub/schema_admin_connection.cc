@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::Idempotency;
@@ -200,11 +200,11 @@ std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
   return MakeSchemaAdminConnection(std::move(opts));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
 
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<pubsub::SchemaAdminConnection> MakeTestSchemaAdminConnection(
     Options const& opts, std::shared_ptr<SchemaStub> stub) {
@@ -219,7 +219,7 @@ std::shared_ptr<pubsub::SchemaAdminConnection> MakeTestSchemaAdminConnection(
       opts.get<pubsub::BackoffPolicyOption>()->clone());
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

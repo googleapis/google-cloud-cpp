@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 future<StatusOr<std::string>> OrderingKeyPublisherConnection::Publish(
     PublishParams p) {
@@ -51,7 +51,7 @@ OrderingKeyPublisherConnection::GetChild(std::string const& ordering_key) {
   return i.first->second;
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
