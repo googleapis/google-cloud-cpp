@@ -26,7 +26,7 @@
 
 namespace google {
 namespace cloud {
-namespace pubsub_internal {
+namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
@@ -148,7 +148,7 @@ class SchemaAdminConnectionImpl : public pubsub::SchemaAdminConnection {
 std::shared_ptr<pubsub_internal::SchemaStub> DecorateSchemaAdminStub(
     Options const& opts,
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
-    std::shared_ptr<SchemaStub> stub) {
+    std::shared_ptr<pubsub_internal::SchemaStub> stub) {
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<pubsub_internal::SchemaAuth>(std::move(auth),
                                                          std::move(stub));
@@ -163,24 +163,6 @@ std::shared_ptr<pubsub_internal::SchemaStub> DecorateSchemaAdminStub(
 }
 
 }  // namespace
-
-std::shared_ptr<pubsub::SchemaAdminConnection> MakeSchemaAdminConnection(
-    Options const& opts, std::shared_ptr<SchemaStub> stub) {
-  auto background = internal::MakeBackgroundThreadsFactory(opts)();
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      google::cloud::MakeInsecureCredentials(), background->cq(), opts);
-  stub = DecorateSchemaAdminStub(opts, std::move(auth), std::move(stub));
-  return std::make_shared<SchemaAdminConnectionImpl>(
-      std::move(background), std::move(stub),
-      opts.get<pubsub::RetryPolicyOption>()->clone(),
-      opts.get<pubsub::BackoffPolicyOption>()->clone());
-}
-
-}  // namespace GOOGLE_CLOUD_CPP_NS
-}  // namespace pubsub_internal
-
-namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 
 SchemaAdminConnection::~SchemaAdminConnection() = default;
 
@@ -201,9 +183,8 @@ std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(Options opts) {
   auto stub = pubsub_internal::CreateDefaultSchemaStub(auth->CreateChannel(
       opts.get<EndpointOption>(), internal::MakeChannelArguments(opts)));
 
-  stub = pubsub_internal::DecorateSchemaAdminStub(opts, std::move(auth),
-                                                  std::move(stub));
-  return std::make_shared<pubsub_internal::SchemaAdminConnectionImpl>(
+  stub = DecorateSchemaAdminStub(opts, std::move(auth), std::move(stub));
+  return std::make_shared<SchemaAdminConnectionImpl>(
       std::move(background), std::move(stub),
       opts.get<pubsub::RetryPolicyOption>()->clone(),
       opts.get<pubsub::BackoffPolicyOption>()->clone());
@@ -221,5 +202,24 @@ std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub
+
+namespace pubsub_internal {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+
+std::shared_ptr<pubsub::SchemaAdminConnection> MakeSchemaAdminConnection(
+    Options const& opts, std::shared_ptr<SchemaStub> stub) {
+  auto background = internal::MakeBackgroundThreadsFactory(opts)();
+  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
+      google::cloud::MakeInsecureCredentials(), background->cq(), opts);
+  stub =
+      pubsub::DecorateSchemaAdminStub(opts, std::move(auth), std::move(stub));
+  return std::make_shared<pubsub::SchemaAdminConnectionImpl>(
+      std::move(background), std::move(stub),
+      opts.get<pubsub::RetryPolicyOption>()->clone(),
+      opts.get<pubsub::BackoffPolicyOption>()->clone());
+}
+
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

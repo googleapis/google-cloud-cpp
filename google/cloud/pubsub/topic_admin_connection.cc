@@ -28,7 +28,7 @@
 
 namespace google {
 namespace cloud {
-namespace pubsub_internal {
+namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
@@ -230,7 +230,7 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
 std::shared_ptr<pubsub_internal::PublisherStub> DecorateTopicAdminStub(
     Options const& opts,
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
-    std::shared_ptr<PublisherStub> stub) {
+    std::shared_ptr<pubsub_internal::PublisherStub> stub) {
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<pubsub_internal::PublisherAuth>(std::move(auth),
                                                             std::move(stub));
@@ -245,24 +245,6 @@ std::shared_ptr<pubsub_internal::PublisherStub> DecorateTopicAdminStub(
 }
 
 }  // namespace
-
-std::shared_ptr<pubsub::TopicAdminConnection> MakeTopicAdminConnection(
-    Options const& opts, std::shared_ptr<PublisherStub> stub) {
-  auto background = internal::MakeBackgroundThreadsFactory(opts)();
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      google::cloud::MakeInsecureCredentials(), background->cq(), opts);
-  stub = DecorateTopicAdminStub(opts, std::move(auth), std::move(stub));
-  return std::make_shared<TopicAdminConnectionImpl>(
-      std::move(background), std::move(stub),
-      opts.get<pubsub::RetryPolicyOption>()->clone(),
-      opts.get<pubsub::BackoffPolicyOption>()->clone());
-}
-
-}  // namespace GOOGLE_CLOUD_CPP_NS
-}  // namespace pubsub_internal
-
-namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 
 TopicAdminConnection::~TopicAdminConnection() = default;
 
@@ -325,9 +307,8 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(Options opts) {
   auto stub = pubsub_internal::CreateDefaultPublisherStub(auth->CreateChannel(
       opts.get<EndpointOption>(), internal::MakeChannelArguments(opts)));
 
-  stub = pubsub_internal::DecorateTopicAdminStub(opts, std::move(auth),
-                                                 std::move(stub));
-  return std::make_shared<pubsub_internal::TopicAdminConnectionImpl>(
+  stub = DecorateTopicAdminStub(opts, std::move(auth), std::move(stub));
+  return std::make_shared<TopicAdminConnectionImpl>(
       std::move(background), std::move(stub),
       opts.get<pubsub::RetryPolicyOption>()->clone(),
       opts.get<pubsub::BackoffPolicyOption>()->clone());
@@ -345,5 +326,23 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub
+
+namespace pubsub_internal {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+
+std::shared_ptr<pubsub::TopicAdminConnection> MakeTopicAdminConnection(
+    Options const& opts, std::shared_ptr<PublisherStub> stub) {
+  auto background = internal::MakeBackgroundThreadsFactory(opts)();
+  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
+      google::cloud::MakeInsecureCredentials(), background->cq(), opts);
+  stub = pubsub::DecorateTopicAdminStub(opts, std::move(auth), std::move(stub));
+  return std::make_shared<pubsub::TopicAdminConnectionImpl>(
+      std::move(background), std::move(stub),
+      opts.get<pubsub::RetryPolicyOption>()->clone(),
+      opts.get<pubsub::BackoffPolicyOption>()->clone());
+}
+
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
