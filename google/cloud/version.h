@@ -38,7 +38,21 @@
 // have been using it.
 #define GOOGLE_CLOUD_CPP_GENERATED_NS GOOGLE_CLOUD_CPP_NS
 
-#define GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN inline namespace v1 {
+/**
+ * Versioned inline namespace that users should generally avoid spelling.
+ *
+ * The actual inline namespace name will change with each release, and if you
+ * use it your code will be tightly coupled to a specific release. Omitting the
+ * inline namespace name will make upgrading to newer releases easier.
+ *
+ * However, applications may need to link multiple versions of the Google Cloud
+ * C++ Libraries, for example, if they link a library that uses an older
+ * version of the libraries than they do. This namespace is inlined, so
+ * applications can use `google::cloud::Foo` in their source, but the symbols
+ * are versioned, i.e., the symbol becomes `google::cloud::vXYZ::Foo`.
+ */
+#define GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN \
+  inline namespace GOOGLE_CLOUD_CPP_NS {
 #define GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END }
 
 namespace google {
