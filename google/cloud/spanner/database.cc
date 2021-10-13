@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 Database::Database(Instance instance, std::string database_id)
     : instance_(std::move(instance)), database_id_(std::move(database_id)) {}
@@ -54,7 +54,7 @@ StatusOr<Database> MakeDatabase(std::string const& full_name) {
                   std::move(matches[3]));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

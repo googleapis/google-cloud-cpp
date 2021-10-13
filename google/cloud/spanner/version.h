@@ -50,7 +50,7 @@ namespace spanner {
  * `spanner::Foo` in their source, but the symbols are versioned, i.e., the
  * symbol becomes `spanner::v1::Foo`.
  */
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * The Cloud spanner C++ Client major version.
  */
@@ -72,7 +72,7 @@ int constexpr Version() { return google::cloud::version(); }
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string VersionString();
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

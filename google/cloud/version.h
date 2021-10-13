@@ -38,6 +38,9 @@
 // have been using it.
 #define GOOGLE_CLOUD_CPP_GENERATED_NS GOOGLE_CLOUD_CPP_NS
 
+#define GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN inline namespace v1 {
+#define GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END }
+
 namespace google {
 /**
  * Contains all the Google Cloud C++ Library APIs.
@@ -55,7 +58,7 @@ namespace cloud {
  * Note that, consistent with the semver.org guidelines, the v0 version makes
  * no guarantees with respect to backwards compatibility.
  */
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * The Google Cloud Storage C++ Client major version.
  *
@@ -96,7 +99,7 @@ int constexpr version() {
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string version_string();
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

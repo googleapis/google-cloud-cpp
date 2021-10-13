@@ -99,7 +99,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Concatenate two pre-processor tokens.
 #define GOOGLE_CLOUD_CPP_PP_CONCAT(a, b) a##b
 
@@ -462,7 +462,7 @@ class Logger<false> {
 namespace internal {
 std::shared_ptr<LogBackend> DefaultLogBackend();
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

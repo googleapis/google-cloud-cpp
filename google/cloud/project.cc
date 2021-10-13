@@ -18,7 +18,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 Project::Project(std::string project_id) : project_id_(std::move(project_id)) {}
 
@@ -44,6 +44,6 @@ StatusOr<Project> MakeProject(std::string const& full_name) {
   return Project(std::move(matches[1]));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

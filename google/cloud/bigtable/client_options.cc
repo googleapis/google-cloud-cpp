@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 Options&& MakeOptions(ClientOptions&& o) {
   if (!o.connection_pool_name_.empty()) {
@@ -71,7 +71,7 @@ BackgroundThreadsFactory ClientOptions::background_threads_factory() const {
   return google::cloud::internal::MakeBackgroundThreadsFactory(opts_);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

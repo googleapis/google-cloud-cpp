@@ -21,11 +21,11 @@
 namespace google {
 namespace cloud {
 namespace grpc_utils {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Use a type alias to maintain API backwards compatibility.
 using CompletionQueue = ::google::cloud::CompletionQueue;
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace grpc_utils
 }  // namespace cloud
 }  // namespace google

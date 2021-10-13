@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace iam {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IAMCredentialsClient::IAMCredentialsClient(
     std::shared_ptr<IAMCredentialsConnection> connection)
@@ -101,7 +101,7 @@ IAMCredentialsClient::SignJwt(
   return connection_->SignJwt(request);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam
 }  // namespace cloud
 }  // namespace google

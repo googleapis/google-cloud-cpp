@@ -24,13 +24,13 @@ namespace cloud {
  */
 namespace grpc_utils {
 /// Versioned inline namespace that users should generally avoid spelling.
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using ::google::cloud::version;
 using ::google::cloud::version_major;
 using ::google::cloud::version_minor;
 using ::google::cloud::version_patch;
 using ::google::cloud::version_string;
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace grpc_utils
 }  // namespace cloud
 }  // namespace google

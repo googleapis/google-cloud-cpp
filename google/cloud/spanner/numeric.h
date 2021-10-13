@@ -30,14 +30,14 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class Numeric;  // defined below
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 
 // Internal implementation details that callers should not use.
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 StatusOr<spanner::Numeric> MakeNumeric(std::string s);
 
 // Like `std::to_string`, but also supports Abseil 128-bit integers.
@@ -52,11 +52,11 @@ std::string ToString(absl::uint128 value);
 Status DataLoss(std::string message);
 StatusOr<spanner::Numeric> MakeNumeric(std::string s, int exponent);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * A representation of the Spanner NUMERIC type: an exact numeric value with
@@ -285,7 +285,7 @@ StatusOr<T> ToInteger(  // NOLINT(misc-no-recursion)
 }
 ///@}
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

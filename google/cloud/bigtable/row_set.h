@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Represent a (possibly non-continuous) set of row keys.
  *
@@ -95,7 +95,7 @@ class RowSet {
 
   ::google::bigtable::v2::RowSet row_set_;
 };
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

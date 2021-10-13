@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Defines the type for row keys.
  *
@@ -47,7 +47,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 using RowKeyType =
     std::decay<decltype(std::declval<google::bigtable::v2::Row>().key())>::type;
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

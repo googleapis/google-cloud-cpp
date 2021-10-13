@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_admin {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatabaseAdminClient::DatabaseAdminClient(
     std::shared_ptr<DatabaseAdminConnection> connection)
@@ -298,7 +298,7 @@ DatabaseAdminClient::ListBackupOperations(
   return connection_->ListBackupOperations(std::move(request));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_admin
 }  // namespace cloud
 }  // namespace google

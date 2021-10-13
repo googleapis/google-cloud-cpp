@@ -28,7 +28,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Implement ISO/IEC TS 19571:2016 `future<T>`.
  */
@@ -212,7 +212,7 @@ inline future<typename internal::make_ready_return<T>::type> make_ready_future(
   return p.get_future();
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

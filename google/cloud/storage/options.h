@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace storage_experimental {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Set the HTTP version used by the client.
  *
@@ -47,11 +47,11 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 struct HttpVersionOption {
   using Type = std::string;
 };
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 /// This is only intended for testing against staging or development versions
 /// of the service. It is not for public use.
@@ -250,7 +250,7 @@ using ClientOptionList = ::google::cloud::OptionList<
     IdempotencyPolicyOption, CARootsFilePathOption,
     storage_experimental::HttpVersionOption>;
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

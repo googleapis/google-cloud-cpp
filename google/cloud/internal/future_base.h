@@ -26,7 +26,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// A helper class to initialize promises to a null state.
 struct null_promise_t {  // NOLINT(readability-identifier-naming)
 };
@@ -203,7 +203,7 @@ class promise_base {  // NOLINT(readability-identifier-naming)
 };
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // Defined below.
 template <typename T>
@@ -247,7 +247,7 @@ StreamRange<T> MakeStreamRange(StreamReader<T> reader) {
 
 }  // namespace internal
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

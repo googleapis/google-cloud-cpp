@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// Create a new PartialResultSetReader given a resume token value.
 using PartialResultSetReaderFactory =
@@ -66,7 +66,7 @@ class PartialResultSetResume : public PartialResultSetReader {
   absl::optional<Status> last_status_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

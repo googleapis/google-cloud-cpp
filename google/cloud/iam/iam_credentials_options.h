@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace iam {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// Option to use with `google::cloud::Options`.
 struct IAMCredentialsRetryPolicyOption {
@@ -51,7 +51,7 @@ using IAMCredentialsPolicyOptionList =
                IAMCredentialsBackoffPolicyOption,
                IAMCredentialsConnectionIdempotencyPolicyOption>;
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam
 }  // namespace cloud
 }  // namespace google

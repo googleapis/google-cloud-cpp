@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Select one of the instances in @p project_id to run tests on.
@@ -34,7 +34,7 @@ StatusOr<std::string> PickRandomInstance(
     google::cloud::internal::DefaultPRNG& generator,
     std::string const& project_id, std::string const& filter = "");
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

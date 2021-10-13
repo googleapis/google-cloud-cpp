@@ -61,7 +61,7 @@ namespace storage {
  * Note that, consistent with the semver.org guidelines, the v0 version makes
  * no guarantees with respect to backwards compatibility.
  */
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Returns the Google Cloud Storage C++ Client major version.
  *
@@ -92,7 +92,7 @@ std::string version_string();
 /// Returns the value for `x-goog-api-client` header.
 std::string x_goog_api_client();
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

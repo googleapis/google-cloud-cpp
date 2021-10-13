@@ -24,7 +24,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Holds a value or a `Status` indicating why there is no value.
@@ -283,7 +283,7 @@ StatusOr<T> make_status_or(T rhs) {
   return StatusOr<T>(std::move(rhs));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

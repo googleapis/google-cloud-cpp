@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::string PredefinedAcl::HeaderName() const {
   static auto const* const kMapping = new std::map<std::string, std::string>({
       {"authenticatedRead", "authenticated-read"},
@@ -34,7 +34,7 @@ std::string PredefinedAcl::HeaderName() const {
   }
   return loc->second;
 }
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

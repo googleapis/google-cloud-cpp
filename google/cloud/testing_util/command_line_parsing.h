@@ -24,7 +24,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
 
 std::int64_t constexpr kKiB = 1024;
@@ -78,7 +78,7 @@ std::vector<std::string> OptionsParse(std::vector<OptionDescriptor> const& desc,
 std::string FormatSize(std::uintmax_t size);
 
 }  // namespace testing_util
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

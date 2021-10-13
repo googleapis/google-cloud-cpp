@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace logging {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Service for ingesting and querying logs.
@@ -261,7 +261,7 @@ class LoggingServiceV2Client {
   std::shared_ptr<LoggingServiceV2Connection> connection_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging
 }  // namespace cloud
 }  // namespace google

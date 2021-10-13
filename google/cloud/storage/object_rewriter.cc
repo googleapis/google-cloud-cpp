@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ObjectRewriter::ObjectRewriter(std::shared_ptr<internal::RawClient> client,
                                internal::RewriteObjectRequest request)
     : client_(std::move(client)),
@@ -43,7 +43,7 @@ StatusOr<RewriteProgress> ObjectRewriter::Iterate() {
   return progress_;
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

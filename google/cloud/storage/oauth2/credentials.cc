@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
 
 StatusOr<std::vector<std::uint8_t>> Credentials::SignBlob(
@@ -27,7 +27,7 @@ StatusOr<std::vector<std::uint8_t>> Credentials::SignBlob(
 }
 
 }  // namespace oauth2
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

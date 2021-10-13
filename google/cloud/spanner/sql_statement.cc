@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SqlStatementProto SqlStatementInternals::ToProto(spanner::SqlStatement s) {
   ::google::spanner::v1::ExecuteBatchDmlRequest::Statement statement_proto;
   statement_proto.set_sql(std::move(s.statement_));
@@ -33,11 +33,11 @@ SqlStatementProto SqlStatementInternals::ToProto(spanner::SqlStatement s) {
   }
   return statement_proto;
 }
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::vector<std::string> SqlStatement::ParameterNames() const {
   std::vector<std::string> keys;
@@ -65,7 +65,7 @@ std::ostream& operator<<(std::ostream& os, SqlStatement const& stmt) {
   return os;
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

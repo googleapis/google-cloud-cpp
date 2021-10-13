@@ -21,7 +21,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
 /**
  * Verify that a given functor raises `T` and run a test if it does.
@@ -108,7 +108,7 @@ inline void ExpectNoException(std::function<void()> const& expression) {
 }
 
 }  // namespace testing_util
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // ListObjectsReader::iterator must satisfy the requirements of an
 // InputIterator.
 static_assert(
@@ -59,7 +59,7 @@ static_assert(
     "++it when it is of ListObjectsReader::iterator type must be a "
     "ListObjectsReader::iterator &>");
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

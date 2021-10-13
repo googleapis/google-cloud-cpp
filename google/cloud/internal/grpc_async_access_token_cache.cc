@@ -16,7 +16,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 auto constexpr kUseSlack = std::chrono::seconds(30);
@@ -96,6 +96,6 @@ void GrpcAsyncAccessTokenCache::OnRefresh(future<StatusOr<AccessToken>> f) {
 }
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

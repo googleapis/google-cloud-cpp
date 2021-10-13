@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_admin_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class DatabaseAdminLogging : public DatabaseAdminStub {
  public:
@@ -145,7 +145,7 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
   std::set<std::string> components_;
 };  // DatabaseAdminLogging
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google

@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace bigquery_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class BigQueryReadStub {
  public:
@@ -85,7 +85,7 @@ class DefaultBigQueryReadStub : public BigQueryReadStub {
       grpc_stub_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
 }  // namespace cloud
 }  // namespace google

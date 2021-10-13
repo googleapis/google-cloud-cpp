@@ -22,7 +22,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Used in the `SetIamPolicy()` read-modify-write cycles where an `etag` helps
@@ -41,7 +41,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 using IamUpdater = std::function<absl::optional<google::iam::v1::Policy>(
     google::iam::v1::Policy)>;
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
