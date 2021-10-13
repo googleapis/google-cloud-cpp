@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace bigquery_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BigQueryReadAuth::BigQueryReadAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -61,7 +61,7 @@ BigQueryReadAuth::SplitReadStream(
   if (!status.ok()) return status;
   return child_->SplitReadStream(context, request);
 }
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
 }  // namespace cloud
 }  // namespace google

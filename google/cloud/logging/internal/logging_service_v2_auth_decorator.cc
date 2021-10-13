@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace logging_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LoggingServiceV2Auth::LoggingServiceV2Auth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -73,7 +73,7 @@ StatusOr<google::logging::v2::ListLogsResponse> LoggingServiceV2Auth::ListLogs(
   if (!status.ok()) return status;
   return child_->ListLogs(context, request);
 }
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_internal
 }  // namespace cloud
 }  // namespace google

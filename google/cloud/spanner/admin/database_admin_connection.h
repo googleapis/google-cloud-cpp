@@ -35,7 +35,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_admin {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using DatabaseAdminRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
@@ -121,7 +121,7 @@ class DatabaseAdminConnection {
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     Options options = {});
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_admin
 }  // namespace cloud
 }  // namespace google
@@ -129,13 +129,13 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
 namespace google {
 namespace cloud {
 namespace spanner_admin_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<spanner_admin::DatabaseAdminConnection>
 MakeDatabaseAdminConnection(std::shared_ptr<DatabaseAdminStub> stub,
                             Options options);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google

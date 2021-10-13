@@ -32,7 +32,7 @@
 namespace google {
 namespace cloud {
 namespace bigquery {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using BigQueryReadRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
@@ -73,7 +73,7 @@ class BigQueryReadConnection {
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
     Options options = {});
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
 }  // namespace cloud
 }  // namespace google
@@ -81,12 +81,12 @@ std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
 namespace google {
 namespace cloud {
 namespace bigquery_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<bigquery::BigQueryReadConnection> MakeBigQueryReadConnection(
     std::shared_ptr<BigQueryReadStub> stub, Options options);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
 }  // namespace cloud
 }  // namespace google

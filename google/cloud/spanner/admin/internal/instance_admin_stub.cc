@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_admin_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 InstanceAdminStub::~InstanceAdminStub() = default;
 
@@ -192,7 +192,7 @@ future<Status> DefaultInstanceAdminStub::AsyncCancelOperation(
       });
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google

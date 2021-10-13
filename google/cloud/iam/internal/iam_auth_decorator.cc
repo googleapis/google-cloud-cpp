@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace iam_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IAMAuth::IAMAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -247,7 +247,7 @@ StatusOr<google::iam::admin::v1::LintPolicyResponse> IAMAuth::LintPolicy(
   if (!status.ok()) return status;
   return child_->LintPolicy(context, request);
 }
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google
