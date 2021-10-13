@@ -39,8 +39,10 @@ class Row;
 
 namespace spanner_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-spanner::Row MakeRow(std::vector<spanner::Value>,
-                     std::shared_ptr<std::vector<std::string> const>);
+struct RowFriend {
+  static spanner::Row MakeRow(std::vector<spanner::Value>,
+                              std::shared_ptr<std::vector<std::string> const>);
+};
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace spanner_internal
 
@@ -173,9 +175,7 @@ class Row {
   ///@}
 
  private:
-  friend Row spanner_internal::GOOGLE_CLOUD_CPP_NS::MakeRow(
-      std::vector<spanner::Value>,
-      std::shared_ptr<std::vector<std::string> const>);
+  friend struct spanner_internal::RowFriend;
   struct ExtractValue {
     Status& status;
     template <typename T, typename It>
@@ -232,7 +232,7 @@ Row MakeTestRow(Ts&&... ts) {
     columns->emplace_back(std::to_string(i));
   }
   std::vector<Value> v{Value(std::forward<Ts>(ts))...};
-  return spanner_internal::MakeRow(std::move(v), std::move(columns));
+  return spanner_internal::RowFriend::MakeRow(std::move(v), std::move(columns));
 }
 
 /**

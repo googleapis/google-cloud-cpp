@@ -85,8 +85,8 @@ class Mutation {
   google::spanner::v1::Mutation& proto() & { return m_; }
 
   template <typename Op>
-  friend class spanner_internal::GOOGLE_CLOUD_CPP_NS::WriteMutationBuilder;
-  friend class spanner_internal::GOOGLE_CLOUD_CPP_NS::DeleteMutationBuilder;
+  friend class spanner_internal::WriteMutationBuilder;
+  friend class spanner_internal::DeleteMutationBuilder;
   explicit Mutation(google::spanner::v1::Mutation m) : m_(std::move(m)) {}
 
   google::spanner::v1::Mutation m_;

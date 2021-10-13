@@ -132,8 +132,7 @@ class Numeric {
   }
 
  private:
-  friend StatusOr<Numeric> spanner_internal::GOOGLE_CLOUD_CPP_NS::MakeNumeric(
-      std::string s);
+  friend StatusOr<Numeric> spanner_internal::MakeNumeric(std::string s);
   explicit Numeric(std::string rep) : rep_(std::move(rep)) {}
   std::string rep_;  // a valid and canonical NUMERIC representation
 };

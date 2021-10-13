@@ -114,7 +114,7 @@ class QueryPartition {
 
  private:
   friend class QueryPartitionTester;
-  friend struct spanner_internal::GOOGLE_CLOUD_CPP_NS::QueryPartitionInternals;
+  friend struct spanner_internal::QueryPartitionInternals;
   friend StatusOr<std::string> SerializeQueryPartition(
       QueryPartition const& query_partition);
   friend StatusOr<QueryPartition> DeserializeQueryPartition(

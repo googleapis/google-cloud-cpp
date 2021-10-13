@@ -108,7 +108,7 @@ class SqlStatement {
   friend std::ostream& operator<<(std::ostream& os, SqlStatement const& stmt);
 
  private:
-  friend struct spanner_internal::GOOGLE_CLOUD_CPP_NS::SqlStatementInternals;
+  friend struct spanner_internal::SqlStatementInternals;
 
   std::string statement_;
   ParamType params_;

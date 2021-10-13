@@ -648,7 +648,7 @@ class Value {
   Value(google::spanner::v1::Type t, google::protobuf::Value v)
       : type_(std::move(t)), value_(std::move(v)) {}
 
-  friend struct spanner_internal::GOOGLE_CLOUD_CPP_NS::ValueInternals;
+  friend struct spanner_internal::ValueInternals;
 
   google::spanner::v1::Type type_;
   google::protobuf::Value value_;

@@ -76,7 +76,7 @@ StatusOr<spanner::Row> PartialResultSetSource::NextRow() {
     ++iter;
   }
   buffer_.erase(buffer_.begin(), iter);
-  return MakeRow(std::move(values), columns_);
+  return RowFriend::MakeRow(std::move(values), columns_);
 }
 
 PartialResultSetSource::~PartialResultSetSource() {
