@@ -200,7 +200,7 @@ class KeySet {
   ///@}
 
  private:
-  friend struct spanner_internal::GOOGLE_CLOUD_CPP_NS::KeySetInternals;
+  friend struct spanner_internal::KeySetInternals;
   explicit KeySet(google::spanner::v1::KeySet proto)
       : proto_(std::move(proto)) {}
 

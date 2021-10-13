@@ -117,7 +117,7 @@ class ReadPartition {
 
  private:
   friend class ReadPartitionTester;
-  friend struct spanner_internal::GOOGLE_CLOUD_CPP_NS::ReadPartitionInternals;
+  friend struct spanner_internal::ReadPartitionInternals;
   friend StatusOr<std::string> SerializeReadPartition(
       ReadPartition const& read_partition);
   friend StatusOr<ReadPartition> DeserializeReadPartition(

@@ -173,7 +173,7 @@ class Row {
   ///@}
 
  private:
-  friend Row spanner_internal::GOOGLE_CLOUD_CPP_NS::MakeRow(
+  friend Row spanner_internal::MakeRow(
       std::vector<spanner::Value>,
       std::shared_ptr<std::vector<std::string> const>);
   struct ExtractValue {

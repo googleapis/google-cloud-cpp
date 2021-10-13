@@ -82,7 +82,7 @@ class Bytes {
   friend std::ostream& operator<<(std::ostream& os, Bytes const& bytes);
 
  private:
-  friend struct spanner_internal::GOOGLE_CLOUD_CPP_NS::BytesInternals;
+  friend struct spanner_internal::BytesInternals;
 
   std::string base64_rep_;  // valid base64 representation
 };

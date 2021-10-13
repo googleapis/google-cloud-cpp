@@ -161,7 +161,7 @@ class Transaction {
 
  private:
   // Friendship for access by internal helpers.
-  friend struct spanner_internal::GOOGLE_CLOUD_CPP_NS::TransactionInternals;
+  friend struct spanner_internal::TransactionInternals;
 
   // Construction of a single-use transaction.
   explicit Transaction(SingleUseOptions opts);
