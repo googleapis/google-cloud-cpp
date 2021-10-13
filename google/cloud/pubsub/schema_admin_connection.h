@@ -172,7 +172,7 @@ std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
-std::shared_ptr<pubsub::SchemaAdminConnection> MakeSchemaAdminConnection(
+std::shared_ptr<pubsub::SchemaAdminConnection> MakeTestSchemaAdminConnection(
     Options const& opts, std::shared_ptr<SchemaStub> stub);
 
 }  // namespace GOOGLE_CLOUD_CPP_NS

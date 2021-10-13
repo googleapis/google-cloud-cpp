@@ -43,8 +43,8 @@ std::shared_ptr<SchemaAdminConnection> MakeTestSchemaAdminConnection(
     std::shared_ptr<pubsub_internal::SchemaStub> mock, Options opts = {}) {
   opts = pubsub_internal::DefaultCommonOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
-  return pubsub_internal::MakeSchemaAdminConnection(std::move(opts),
-                                                    std::move(mock));
+  return pubsub_internal::MakeTestSchemaAdminConnection(std::move(opts),
+                                                        std::move(mock));
 }
 
 TEST(SchemaAdminConnectionTest, Create) {

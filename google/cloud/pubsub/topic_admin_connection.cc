@@ -330,11 +330,11 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
-std::shared_ptr<pubsub::TopicAdminConnection> MakeTopicAdminConnection(
+std::shared_ptr<pubsub::TopicAdminConnection> MakeTestTopicAdminConnection(
     Options const& opts, std::shared_ptr<PublisherStub> stub) {
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      google::cloud::MakeInsecureCredentials(), background->cq(), opts);
+      background->cq(), opts);
   stub = pubsub::DecorateTopicAdminStub(opts, std::move(auth), std::move(stub));
   return std::make_shared<pubsub::TopicAdminConnectionImpl>(
       std::move(background), std::move(stub),

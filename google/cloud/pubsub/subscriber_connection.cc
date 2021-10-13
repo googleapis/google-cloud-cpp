@@ -148,7 +148,7 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
-std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
+std::shared_ptr<pubsub::SubscriberConnection> MakeTestSubscriberConnection(
     pubsub::Subscription subscription, Options opts,
     std::vector<std::shared_ptr<SubscriberStub>> stubs) {
   auto background = internal::MakeBackgroundThreadsFactory(opts)();

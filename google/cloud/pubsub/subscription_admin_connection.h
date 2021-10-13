@@ -267,8 +267,8 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<pubsub::SubscriptionAdminConnection>
-MakeSubscriptionAdminConnection(Options const& opts,
-                                std::shared_ptr<SubscriberStub> stub);
+MakeTestSubscriptionAdminConnection(Options const& opts,
+                                    std::shared_ptr<SubscriberStub> stub);
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace pubsub_internal

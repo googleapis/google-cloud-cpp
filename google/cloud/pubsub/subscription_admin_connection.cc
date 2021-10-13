@@ -379,11 +379,11 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<pubsub::SubscriptionAdminConnection>
-MakeSubscriptionAdminConnection(Options const& opts,
-                                std::shared_ptr<SubscriberStub> stub) {
+MakeTestSubscriptionAdminConnection(Options const& opts,
+                                    std::shared_ptr<SubscriberStub> stub) {
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      google::cloud::MakeInsecureCredentials(), background->cq(), opts);
+      background->cq(), opts);
   stub = pubsub::DecorateSubscriptionAdminStub(opts, std::move(auth),
                                                std::move(stub));
   return std::make_shared<pubsub::SubscriptionAdminConnectionImpl>(

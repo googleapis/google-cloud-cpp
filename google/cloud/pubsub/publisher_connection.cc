@@ -169,7 +169,7 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
-std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
+std::shared_ptr<pubsub::PublisherConnection> MakeTestPublisherConnection(
     pubsub::Topic topic, Options opts,
     std::vector<std::shared_ptr<PublisherStub>> stubs) {
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
