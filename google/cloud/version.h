@@ -48,7 +48,8 @@
  */
 #define GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN \
   inline namespace GOOGLE_CLOUD_CPP_NS {
-#define GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END }
+#define GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END \
+  }  // namespace GOOGLE_CLOUD_CPP_NS
 
 // This preprocessor symbol is deprecated and should never be used anywhere. It
 // exists solely for backward compatibility to avoid breaking anyone who may
