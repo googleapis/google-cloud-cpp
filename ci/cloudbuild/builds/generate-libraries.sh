@@ -39,7 +39,6 @@ bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
 io::log_h2 "Formatting generated code"
 find google/cloud -path google/cloud/bigtable -prune -o \
   -path google/cloud/examples -prune -o \
-  -path google/cloud/firestore -prune -o \
   -path google/cloud/grpc_utils -prune -o \
   -path google/cloud/internal -prune -o \
   -path google/cloud/pubsub -prune -o \

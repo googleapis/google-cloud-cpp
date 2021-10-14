@@ -100,6 +100,13 @@ versioned inline namespace.
 
 [storage-dox-link]: https://googleapis.dev/cpp/google-cloud-storage/latest/
 
+### Firestore
+
+**BREAKING CHANGE**: The _experimental_ Firestore support library that used to
+live in this repo at `google/cloud/firestore` has been removed in favor of the
+canonical library at https://firebase.google.com/docs/reference/cpp. For more
+info see [#7443](https://github.com/googleapis/google-cloud-cpp/issues/7443).
+
 ## v1.32.1 - 2021-10
 
 ### [Pub/Sub](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/README.md)

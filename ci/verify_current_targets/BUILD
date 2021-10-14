@@ -19,7 +19,6 @@ licenses(["notice"])  # Apache 2.0
 CURRENT_TARGETS = [
     ":bigquery",
     ":bigtable",
-    ":experimental-firestore",
     ":iam",
     ":experimental-logging",
     ":experimental-logging-mocks",

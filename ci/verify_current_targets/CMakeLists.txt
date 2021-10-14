@@ -31,7 +31,7 @@ set(ga_libraries # cmake-format: sortable
 
 # Add experimental (non-GA) libraries here.
 set(experimental_libraries # cmake-format: sortable
-                           firestore logging)
+                           logging)
 
 # CMake can use pkg-config to find dependencies. We recommend using CMake
 # targets, but we want to verify our pkg-config files remain usable and

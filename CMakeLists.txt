@@ -158,8 +158,6 @@ option(GOOGLE_CLOUD_CPP_ENABLE_SPANNER "Enable building the Spanner library."
        ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_STORAGE "Enable building the Storage library."
        ON)
-option(GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE
-       "Enable building the Firestore library." ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_PUBSUB "Enable building the Pub/Sub library." ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_IAM "Enable building the IAM library." ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_LOGGING "Enable building the Logging library."
@@ -170,7 +168,7 @@ option(GOOGLE_CLOUD_CPP_ENABLE_GENERATOR "Enable building the generator." OFF)
 # passing a comma-separated list, i.e
 # `-DGOOGLE_CLOUD_CPP_ENABLE=spanner,storage`.
 set(GOOGLE_CLOUD_CPP_ENABLE
-    "bigtable;bigquery;iam;firestore;logging;pubsub;spanner;storage"
+    "bigtable;bigquery;iam;logging;pubsub;spanner;storage"
     CACHE STRING "The list of libraries to build.")
 string(REPLACE "," ";" GOOGLE_CLOUD_CPP_ENABLE "${GOOGLE_CLOUD_CPP_ENABLE}")
 
@@ -179,7 +177,6 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_SPANNER)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
-mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_PUBSUB)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_IAM)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_LOGGING)

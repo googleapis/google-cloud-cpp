@@ -25,7 +25,6 @@ DEPRECATED_TARGETS = [
     "google/cloud:google_cloud_cpp_common",
     "google/cloud:google_cloud_cpp_grpc_utils",
     "google/cloud/bigtable:bigtable_client",
-    "google/cloud/firestore:firestore_client",
     "google/cloud/pubsub:pubsub_client",
     "google/cloud/spanner:spanner_client",
     "google/cloud/storage:storage_client",

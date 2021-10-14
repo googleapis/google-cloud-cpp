@@ -31,7 +31,6 @@ find_package(Threads REQUIRED)
 # backwards compatibility. If you need to change the test, there is good chance
 # you are breaking something.
 find_package(bigtable_client REQUIRED)
-find_package(firestore_client REQUIRED)
 find_package(storage_client REQUIRED)
 find_package(spanner_client REQUIRED)
 find_package(pubsub_client REQUIRED)
@@ -60,13 +59,11 @@ add_test_case(t030 bigtable_client)
 add_test_case(t040 bigtable::client)
 add_test_case(t050 bigtable_protos google_cloud_cpp_common)
 add_test_case(t060 bigtable::protos google_cloud_cpp_common)
-add_test_case(t070 firestore_client google_cloud_cpp_common)
-add_test_case(t080 firestore::client google_cloud_cpp_common)
-add_test_case(t090 googleapis-c++::pubsub_client)
-add_test_case(t100 pubsub_client)
-add_test_case(t120 storage_client)
-add_test_case(t130 googleapis-c++::spanner_client)
-add_test_case(t140 spanner_client)
+add_test_case(t070 googleapis-c++::pubsub_client)
+add_test_case(t080 pubsub_client)
+add_test_case(t090 storage_client)
+add_test_case(t100 googleapis-c++::spanner_client)
+add_test_case(t110 spanner_client)
 
 # TODO(#5726) - DO NOT CHANGE THESE MODULE NAMES These module names are expected
 # to remain usable until we have retired them.  This is a test for backwards
@@ -79,11 +76,6 @@ foreach (module ${pkg_config_modules})
     pkg_check_modules(${module} IMPORTED_TARGET REQUIRED ${module})
     add_test_case(test_pc_${module} PkgConfig::${module})
 endforeach ()
-
-# This one is special because it does not depend on google_cloud_cpp_common.
-pkg_check_modules(firestore_client IMPORTED_TARGET REQUIRED firestore_client)
-add_test_case(test_pc_firestore_client PkgConfig::firestore_client
-              PkgConfig::google_cloud_cpp_common)
 
 # TODO(#5726) - DO NOT CHANGE THESE TARGET NAMES These target names are expected
 # to remain usable until we have retired them.  This is a test for backwards

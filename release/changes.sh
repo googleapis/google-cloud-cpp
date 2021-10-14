@@ -75,7 +75,6 @@ last_tag="$(git describe --tags --abbrev=0 upstream/main)"
 sections=(
   "BigQuery,google/cloud/bigquery"
   "Bigtable,google/cloud/bigtable"
-  "Firestore,google/cloud/firestore"
   "IAM,google/cloud/iam"
   "Pub/Sub,google/cloud/pubsub"
   "Spanner,google/cloud/spanner"
