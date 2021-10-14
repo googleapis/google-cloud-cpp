@@ -41,16 +41,7 @@ namespace cloud {
  * Contains all the Cloud Spanner C++ client types and functions.
  */
 namespace spanner {
-/**
- * Versioned inline namespace that users should generally avoid spelling.
- *
- * Applications may need to link multiple versions of the Cloud spanner C++
- * client, for example, if they link a library that uses an older version of
- * the client than they do.  This namespace is inlined, so applications can use
- * `spanner::Foo` in their source, but the symbols are versioned, i.e., the
- * symbol becomes `spanner::v1::Foo`.
- */
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * The Cloud spanner C++ Client major version.
  */
@@ -72,7 +63,7 @@ int constexpr Version() { return google::cloud::version(); }
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string VersionString();
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

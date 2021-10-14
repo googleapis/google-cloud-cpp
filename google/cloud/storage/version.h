@@ -49,19 +49,7 @@ namespace cloud {
  * Contains all the Google Cloud Storage C++ client APIs.
  */
 namespace storage {
-/**
- * Versioned inline namespace that users should generally avoid spelling.
- *
- * Applications may need to link multiple versions of the Google Cloud Storage
- * C++ client, for example, if they link a library that uses an older version of
- * the client than they do.  This namespace is inlined, so applications can use
- * `storage::Foo` in their source, but the symbols are versioned, i.e., the
- * symbol becomes `storage::v1::Foo`.
- *
- * Note that, consistent with the semver.org guidelines, the v0 version makes
- * no guarantees with respect to backwards compatibility.
- */
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Returns the Google Cloud Storage C++ Client major version.
  *
@@ -92,7 +80,7 @@ std::string version_string();
 /// Returns the value for `x-goog-api-client` header.
 std::string x_goog_api_client();
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
