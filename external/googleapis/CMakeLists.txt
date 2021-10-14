@@ -597,6 +597,7 @@ target_link_libraries(
            google-cloud-cpp::api_metric_protos
            google-cloud-cpp::api_monitored_resource_protos
            google-cloud-cpp::api_resource_protos
+           google-cloud-cpp::longrunning_operations_protos
            google-cloud-cpp::rpc_status_protos
            google-cloud-cpp::type_calendar_period_protos)
 
