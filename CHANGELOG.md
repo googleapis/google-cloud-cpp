@@ -102,7 +102,7 @@ versioned inline namespace.
 
 ### Firestore
 
-**BREAKING CHANGE**: The experimental Firestore support library that used to
+**BREAKING CHANGE**: The _experimental_ Firestore support library that used to
 live in this repo at `google/cloud/firestore` has been removed in favor of the
 canonical library at https://firebase.google.com/docs/reference/cpp. For more
 info see [#7443](https://github.com/googleapis/google-cloud-cpp/issues/7443).
