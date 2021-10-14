@@ -17,10 +17,10 @@
 # Give application developers a hook to configure the version and hash
 # downloaded from GitHub.
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
-    "https://github.com/googleapis/googleapis/archive/ed739492993c4a99629b6430affdd6c0fb59d435.tar.gz"
+    "https://github.com/googleapis/googleapis/archive/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49.tar.gz"
 )
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
-    "127d7ef9c8803ab246ec3c7ab83489ae386d74766725477c444c5ea8948cb9e5")
+    "74d6c8d2bf028a8eb72da84c88a433b345c07f0b8db41d0ac02ef85154e7aa59")
 
 set(EXTERNAL_GOOGLEAPIS_SOURCE
     "${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download")
@@ -62,8 +62,10 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/cloud/bigquery/logging/v1/audit_data.proto"
     "google/cloud/bigquery/storage/v1/arrow.proto"
     "google/cloud/bigquery/storage/v1/avro.proto"
+    "google/cloud/bigquery/storage/v1/protobuf.proto"
     "google/cloud/bigquery/storage/v1/storage.proto"
     "google/cloud/bigquery/storage/v1/stream.proto"
+    "google/cloud/bigquery/storage/v1/table.proto"
     "google/cloud/bigquery/v2/encryption_config.proto"
     "google/cloud/bigquery/v2/model.proto"
     "google/cloud/bigquery/v2/model_reference.proto"
@@ -365,8 +367,10 @@ google_cloud_cpp_grpcpp_library(
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/logging/v1/audit_data.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/arrow.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/avro.proto"
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/protobuf.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/storage.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/stream.proto"
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/table.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/v2/encryption_config.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/v2/model.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/v2/model_reference.proto"
@@ -593,6 +597,7 @@ target_link_libraries(
            google-cloud-cpp::api_metric_protos
            google-cloud-cpp::api_monitored_resource_protos
            google-cloud-cpp::api_resource_protos
+           google-cloud-cpp::longrunning_operations_protos
            google-cloud-cpp::rpc_status_protos
            google-cloud-cpp::type_calendar_period_protos)
 

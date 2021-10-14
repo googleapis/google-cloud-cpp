@@ -80,7 +80,7 @@ class BigQueryReadClient {
    * limits are enforced based on the number of pre-filtered rows, so some
    * filters can lead to lopsided assignments.
    *
-   * Read sessions automatically expire 24 hours after they are created and do
+   * Read sessions automatically expire 6 hours after they are created and do
    * not require manual clean-up by the caller.
    *
    * @param parent  Required. The request project that owns the session, in the
@@ -94,7 +94,7 @@ class BigQueryReadClient {
    * greater than the current system max limit of 1,000. Streams must be read
    * starting from offset 0.
    * @return
-   * [google::cloud::bigquery::storage::v1::ReadSession](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/cloud/bigquery/storage/v1/stream.proto#L46)
+   * [google::cloud::bigquery::storage::v1::ReadSession](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/cloud/bigquery/storage/v1/stream.proto#L47)
    */
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       std::string const& parent,
@@ -115,7 +115,7 @@ class BigQueryReadClient {
    * from Read. Requesting a larger offset is undefined. If not specified, start
    * reading from offset zero.
    * @return
-   * [google::cloud::bigquery::storage::v1::ReadRowsResponse](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/cloud/bigquery/storage/v1/storage.proto#L184)
+   * [google::cloud::bigquery::storage::v1::ReadRowsResponse](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/cloud/bigquery/storage/v1/storage.proto#L304)
    */
   StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
       std::string const& read_stream, std::int64_t offset);
@@ -138,13 +138,13 @@ class BigQueryReadClient {
    * limits are enforced based on the number of pre-filtered rows, so some
    * filters can lead to lopsided assignments.
    *
-   * Read sessions automatically expire 24 hours after they are created and do
+   * Read sessions automatically expire 6 hours after they are created and do
    * not require manual clean-up by the caller.
    *
    * @param request
-   * [google::cloud::bigquery::storage::v1::CreateReadSessionRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/cloud/bigquery/storage/v1/storage.proto#L109)
+   * [google::cloud::bigquery::storage::v1::CreateReadSessionRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/cloud/bigquery/storage/v1/storage.proto#L229)
    * @return
-   * [google::cloud::bigquery::storage::v1::ReadSession](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/cloud/bigquery/storage/v1/stream.proto#L46)
+   * [google::cloud::bigquery::storage::v1::ReadSession](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/cloud/bigquery/storage/v1/stream.proto#L47)
    */
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
@@ -160,9 +160,9 @@ class BigQueryReadClient {
    * state of the stream.
    *
    * @param request
-   * [google::cloud::bigquery::storage::v1::ReadRowsRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/cloud/bigquery/storage/v1/storage.proto#L134)
+   * [google::cloud::bigquery::storage::v1::ReadRowsRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/cloud/bigquery/storage/v1/storage.proto#L254)
    * @return
-   * [google::cloud::bigquery::storage::v1::ReadRowsResponse](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/cloud/bigquery/storage/v1/storage.proto#L184)
+   * [google::cloud::bigquery::storage::v1::ReadRowsResponse](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/cloud/bigquery/storage/v1/storage.proto#L304)
    */
   StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
       google::cloud::bigquery::storage::v1::ReadRowsRequest const& request);
@@ -182,9 +182,9 @@ class BigQueryReadClient {
    * completion.
    *
    * @param request
-   * [google::cloud::bigquery::storage::v1::SplitReadStreamRequest](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/cloud/bigquery/storage/v1/storage.proto#L219)
+   * [google::cloud::bigquery::storage::v1::SplitReadStreamRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/cloud/bigquery/storage/v1/storage.proto#L339)
    * @return
-   * [google::cloud::bigquery::storage::v1::SplitReadStreamResponse](https://github.com/googleapis/googleapis/blob/ed739492993c4a99629b6430affdd6c0fb59d435/google/cloud/bigquery/storage/v1/storage.proto#L239)
+   * [google::cloud::bigquery::storage::v1::SplitReadStreamResponse](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/cloud/bigquery/storage/v1/storage.proto#L359)
    */
   StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
   SplitReadStream(

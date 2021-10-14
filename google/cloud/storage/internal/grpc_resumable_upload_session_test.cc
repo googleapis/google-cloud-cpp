@@ -61,9 +61,9 @@ class MockGrpcClient : public GrpcClient {
 };
 
 StatusOr<google::storage::v2::WriteObjectResponse> MockCloseSuccess(
-    std::uint64_t committed_size) {
+    std::uint64_t persisted_size) {
   google::storage::v2::WriteObjectResponse response;
-  response.set_committed_size(committed_size);
+  response.set_persisted_size(persisted_size);
   return response;
 }
 
