@@ -26,8 +26,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * A googlemock-based mock for [pubsub::TopicAdminConnection][mocked-link]
  *
- * [mocked-link]: @ref
- * google::cloud::pubsub::omit_this_inline_ns::TopicAdminConnection
+ * [mocked-link]: @ref google::cloud::pubsub::TopicAdminConnection
  */
 class MockTopicAdminConnection : public pubsub::TopicAdminConnection {
  public:
