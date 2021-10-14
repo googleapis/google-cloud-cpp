@@ -55,7 +55,6 @@ expected_dirs=(
   ./include/google/cloud/bigtable/internal
   ./include/google/cloud/dialogflow/v2
   ./include/google/cloud/dialogflow/v2beta1
-  ./include/google/cloud/firestore
   ./include/google/cloud/grpc_utils
   ./include/google/cloud/iam/internal
   ./include/google/cloud/iam/mocks
@@ -89,11 +88,9 @@ expected_dirs=(
   ./include/google/storage/v2
   ./include/google/type
   ./lib64/cmake/bigtable_client
-  ./lib64/cmake/firestore_client
   ./lib64/cmake/google_cloud_cpp_bigquery
   ./lib64/cmake/google_cloud_cpp_bigtable
   ./lib64/cmake/google_cloud_cpp_common
-  ./lib64/cmake/google_cloud_cpp_firestore
   ./lib64/cmake/google_cloud_cpp_googleapis
   ./lib64/cmake/google_cloud_cpp_grpc_utils
   ./lib64/cmake/google_cloud_cpp_iam
