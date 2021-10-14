@@ -179,7 +179,7 @@ class GrpcClient : public RawClient,
   StatusOr<EmptyResponse> DeleteNotification(
       DeleteNotificationRequest const&) override;
 
-  static google::storage::v2::Object::CustomerEncryption ToProto(
+  static StatusOr<google::storage::v2::Object::CustomerEncryption> ToProto(
       CustomerEncryption rhs);
   static CustomerEncryption FromProto(
       google::storage::v2::Object::CustomerEncryption rhs);

@@ -184,9 +184,9 @@ StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
   ResumableUploadResponse response;
   response.upload_state = ResumableUploadResponse::kInProgress;
   // TODO(#6880) - cleanup the committed_byte vs. size thing
-  if (status->has_committed_size() && status->committed_size()) {
+  if (status->has_persisted_size() && status->persisted_size()) {
     response.last_committed_byte =
-        static_cast<std::uint64_t>(status->committed_size());
+        static_cast<std::uint64_t>(status->persisted_size());
   } else {
     response.last_committed_byte = 0;
   }
@@ -650,10 +650,10 @@ void SetResourceOptions(google::storage::v2::Object& resource,
 }
 
 template <typename StorageRequest>
-void SetObjectMetadata(google::storage::v2::Object& resource,
-                       StorageRequest const& req) {
+Status SetObjectMetadata(google::storage::v2::Object& resource,
+                         StorageRequest const& req) {
   if (!req.template HasOption<WithObjectMetadata>()) {
-    return;
+    return Status{};
   }
   auto metadata = req.template GetOption<WithObjectMetadata>().value();
   if (!metadata.content_encoding().empty()) {
@@ -686,21 +686,31 @@ void SetObjectMetadata(google::storage::v2::Object& resource,
     resource.set_storage_class(metadata.storage_class());
   }
   resource.set_temporary_hold(metadata.temporary_hold());
+
+  if (metadata.has_customer_encryption()) {
+    auto encryption = GrpcClient::ToProto(metadata.customer_encryption());
+    if (!encryption) return std::move(encryption).status();
+    *resource.mutable_customer_encryption() = *std::move(encryption);
+  }
+  return Status{};
 }
 
 CustomerEncryption GrpcClient::FromProto(
     google::storage::v2::Object::CustomerEncryption rhs) {
   CustomerEncryption result;
   result.encryption_algorithm = std::move(*rhs.mutable_encryption_algorithm());
-  result.key_sha256 = std::move(*rhs.mutable_key_sha256());
+  result.key_sha256 = Base64Encode(rhs.key_sha256_bytes());
   return result;
 }
 
-google::storage::v2::Object::CustomerEncryption GrpcClient::ToProto(
+StatusOr<google::storage::v2::Object::CustomerEncryption> GrpcClient::ToProto(
     CustomerEncryption rhs) {
+  auto key_sha256 = Base64Decode(rhs.key_sha256);
+  if (!key_sha256) return std::move(key_sha256).status();
   google::storage::v2::Object::CustomerEncryption result;
   result.set_encryption_algorithm(std::move(rhs.encryption_algorithm));
-  result.set_key_sha256(std::move(rhs.key_sha256));
+  result.set_key_sha256_bytes(
+      std::string(key_sha256->begin(), key_sha256->end()));
   return result;
 }
 
@@ -881,11 +891,12 @@ StatusOr<google::storage::v2::WriteObjectRequest> GrpcClient::ToProto(
   auto& object_spec = *r.mutable_write_object_spec();
   auto& resource = *object_spec.mutable_resource();
   SetResourceOptions(resource, request);
-  SetObjectMetadata(resource, request);
+  auto status = SetObjectMetadata(resource, request);
+  if (!status.ok()) return status;
   SetPredefinedAcl(object_spec, request);
   SetGenerationConditions(object_spec, request);
   SetMetagenerationConditions(object_spec, request);
-  auto status = SetCommonObjectParameters(r, request);
+  status = SetCommonObjectParameters(r, request);
   if (!status.ok()) return status;
   SetCommonParameters(r, request);
 
@@ -927,10 +938,10 @@ ResumableUploadResponse GrpcClient::FromProto(
     google::storage::v2::WriteObjectResponse const& p) {
   ResumableUploadResponse response;
   response.upload_state = ResumableUploadResponse::kInProgress;
-  if (p.has_committed_size() && p.committed_size() > 0) {
+  if (p.has_persisted_size() && p.persisted_size() > 0) {
     // TODO(#6880) - cleanup the committed_byte vs. size thing
     response.last_committed_byte =
-        static_cast<std::uint64_t>(p.committed_size()) - 1;
+        static_cast<std::uint64_t>(p.persisted_size()) - 1;
   } else {
     response.last_committed_byte = 0;
   }
@@ -950,7 +961,8 @@ StatusOr<google::storage::v2::StartResumableWriteRequest> GrpcClient::ToProto(
   auto& object_spec = *result.mutable_write_object_spec();
   auto& resource = *object_spec.mutable_resource();
   SetResourceOptions(resource, request);
-  SetObjectMetadata(resource, request);
+  status = SetObjectMetadata(resource, request);
+  if (!status.ok()) return status;
   SetPredefinedAcl(object_spec, request);
   SetGenerationConditions(object_spec, request);
   SetMetagenerationConditions(object_spec, request);

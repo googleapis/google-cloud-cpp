@@ -88,7 +88,7 @@ TEST(GrpcClientFromProto, ObjectSimple) {
     }
     customer_encryption: {
       encryption_algorithm: "test-encryption-algorithm"
-      key_sha256: "test-key-sha256"
+      key_sha256_bytes: "01234567"
     }
 )""",
                                                             &input));
@@ -139,7 +139,7 @@ TEST(GrpcClientFromProto, ObjectSimple) {
     },
     "customerEncryption": {
       "encryptionAlgorithm": "test-encryption-algorithm",
-      "keySha256": "test-key-sha256"
+      "keySha256": "MDEyMzQ1Njc="
     }
 })""");
   EXPECT_STATUS_OK(expected);
@@ -151,16 +151,17 @@ TEST(GrpcClientFromProto, ObjectSimple) {
 TEST(GrpcClientFromProto, ObjectCustomerEncryptionRoundtrip) {
   auto constexpr kText = R"pb(
     encryption_algorithm: "test-encryption-algorithm"
-    key_sha256: "test-key-sha256"
+    key_sha256_bytes: "01234567"
   )pb";
   google::storage::v2::Object::CustomerEncryption start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
   auto const expected =
-      CustomerEncryption{"test-encryption-algorithm", "test-key-sha256"};
+      CustomerEncryption{"test-encryption-algorithm", "MDEyMzQ1Njc="};
   auto const middle = GrpcClient::FromProto(start);
   EXPECT_EQ(middle, expected);
   auto const end = GrpcClient::ToProto(middle);
-  EXPECT_THAT(end, IsProtoEqual(start));
+  ASSERT_STATUS_OK(end);
+  EXPECT_THAT(*end, IsProtoEqual(start));
 }
 
 TEST(GrpcClientFromProto, OwnerRoundtrip) {
