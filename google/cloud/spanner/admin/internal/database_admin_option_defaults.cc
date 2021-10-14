@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_admin_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -90,7 +90,7 @@ Options DatabaseAdminDefaultOptions(Options options) {
   return options;
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google

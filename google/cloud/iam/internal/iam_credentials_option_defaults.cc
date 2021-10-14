@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace iam_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -73,7 +73,7 @@ Options IAMCredentialsDefaultOptions(Options options) {
   return options;
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

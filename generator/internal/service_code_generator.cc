@@ -286,7 +286,7 @@ Status ServiceCodeGenerator::OpenNamespaces(Printer& p, NamespaceType ns_type) {
   namespaces_ = BuildNamespaces(service_vars_["product_path"], ns_type);
   for (auto const& nspace : namespaces_) {
     if (nspace == "GOOGLE_CLOUD_CPP_NS") {
-      p.Print("inline namespace $namespace$ {\n", "namespace", nspace);
+      p.Print("GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN\n");
     } else {
       p.Print("namespace $namespace$ {\n", "namespace", nspace);
     }
@@ -297,7 +297,11 @@ Status ServiceCodeGenerator::OpenNamespaces(Printer& p, NamespaceType ns_type) {
 
 void ServiceCodeGenerator::CloseNamespaces(Printer& p) {
   for (auto iter = namespaces_.rbegin(); iter != namespaces_.rend(); ++iter) {
-    p.Print("}  // namespace $namespace$\n", "namespace", *iter);
+    if (*iter == "GOOGLE_CLOUD_CPP_NS") {
+      p.Print("GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END\n");
+    } else {
+      p.Print("}  // namespace $namespace$\n", "namespace", *iter);
+    }
   }
 }
 

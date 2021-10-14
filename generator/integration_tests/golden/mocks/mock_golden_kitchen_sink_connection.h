@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace golden_mocks {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockGoldenKitchenSinkConnection : public golden::GoldenKitchenSinkConnection {
  public:
@@ -55,7 +55,7 @@ class MockGoldenKitchenSinkConnection : public golden::GoldenKitchenSinkConnecti
 
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_mocks
 }  // namespace cloud
 }  // namespace google
