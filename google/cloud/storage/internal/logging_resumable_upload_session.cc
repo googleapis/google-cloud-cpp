@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 StatusOr<ResumableUploadResponse> LoggingResumableUploadSession::UploadChunk(
@@ -94,7 +94,7 @@ LoggingResumableUploadSession::last_response() const {
 bool LoggingResumableUploadSession::done() const { return session_->done(); }
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

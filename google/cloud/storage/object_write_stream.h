@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// Represents the headers returned in a streaming upload or download operation.
 using HeadersMap = std::multimap<std::string, std::string>;
@@ -306,7 +306,7 @@ class ObjectWriteStream : public std::basic_ostream<char> {
   std::string payload_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

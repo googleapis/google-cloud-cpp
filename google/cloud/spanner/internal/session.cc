@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SessionHolder MakeDissociatedSessionHolder(std::string session_name) {
   return SessionHolder(
@@ -25,7 +25,7 @@ SessionHolder MakeDissociatedSessionHolder(std::string session_name) {
       std::default_delete<Session>());
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

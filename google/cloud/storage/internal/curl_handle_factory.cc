@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 void CurlHandleFactory::SetCurlStringOption(CURL* handle, CURLoption option_tag,
@@ -159,7 +159,7 @@ void PooledCurlHandleFactory::SetCurlOptions(CURL* handle) {
 }
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

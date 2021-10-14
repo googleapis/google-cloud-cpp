@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<google::pubsub::v1::Subscription> SubscriberAuth::CreateSubscription(
     grpc::ClientContext& context,
@@ -167,7 +167,7 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriberAuth::Seek(
   return child_->Seek(context, request);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

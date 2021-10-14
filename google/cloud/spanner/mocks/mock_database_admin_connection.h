@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_mocks {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * A class to mock `google::cloud::spanner::DatabaseAdminConnection`.
@@ -72,7 +72,7 @@ class MockDatabaseAdminConnection
               (ListDatabaseOperationsParams), (override));
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_mocks
 }  // namespace cloud
 }  // namespace google

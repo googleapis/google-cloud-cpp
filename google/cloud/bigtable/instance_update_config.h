@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using Instance = ::google::bigtable::admin::v2::Instance;
 
 /// Specify the initial configuration for updating an instance.
@@ -127,7 +127,7 @@ class InstanceUpdateConfig {
   google::bigtable::admin::v2::PartialUpdateInstanceRequest proto_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

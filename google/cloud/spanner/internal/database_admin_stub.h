@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Defines the low-level interface for database administration RPCs.
  */
@@ -150,7 +150,7 @@ class DatabaseAdminStub {
 std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
     Options const& opts);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

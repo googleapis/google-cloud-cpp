@@ -32,7 +32,7 @@ namespace pubsub_mocks {
  * `pubsub::Foo` in their source, but the symbols are versioned, i.e., the
  * symbol becomes `pubsub::v1::Foo`.
  */
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * A googlemock-based mock for [pubsub::AckHandler::Impl][mocked-link]
@@ -50,7 +50,7 @@ class MockAckHandler : public pubsub::AckHandler::Impl {
   MOCK_METHOD(std::int32_t, delivery_attempt, (), (const, override));
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_mocks
 }  // namespace cloud
 }  // namespace google

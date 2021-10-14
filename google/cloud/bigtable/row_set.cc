@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RowSet RowSet::Intersect(bigtable::RowRange const& range) const {
   // Special case: "all rows", return the argument range.
   if (row_set_.row_keys().empty() && row_set_.row_ranges().empty()) {
@@ -59,7 +59,7 @@ bool RowSet::IsEmpty() const {
   // (meaning "all rows").
   return row_set_.row_ranges_size() > 0;
 }
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

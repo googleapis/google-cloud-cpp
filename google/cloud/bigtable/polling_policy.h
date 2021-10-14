@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Define the interface for providing asynchronous repetitive call rules
  *
@@ -146,7 +146,7 @@ class GenericPollingPolicy : public PollingPolicy {
 std::unique_ptr<PollingPolicy> DefaultPollingPolicy(
     internal::RPCPolicyParameters defaults);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

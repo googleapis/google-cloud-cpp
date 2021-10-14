@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * A class that represents a Session.
@@ -88,7 +88,7 @@ using SessionHolder = std::shared_ptr<Session>;
  */
 SessionHolder MakeDissociatedSessionHolder(std::string session_name);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

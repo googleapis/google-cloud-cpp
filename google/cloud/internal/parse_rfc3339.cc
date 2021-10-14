@@ -17,7 +17,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 StatusOr<std::chrono::system_clock::time_point> ParseRfc3339(
     std::string const& timestamp) {
@@ -32,6 +32,6 @@ StatusOr<std::chrono::system_clock::time_point> ParseRfc3339(
 }
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

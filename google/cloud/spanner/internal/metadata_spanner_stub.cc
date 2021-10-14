@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace spanner_proto = ::google::spanner::v1;
 
@@ -169,7 +169,7 @@ void MetadataSpannerStub::SetMetadata(grpc::ClientContext& context,
   context.AddMetadata("google-cloud-resource-prefix", resource_prefix_header_);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

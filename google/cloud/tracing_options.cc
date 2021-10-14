@@ -20,7 +20,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 absl::optional<bool> ParseBoolean(std::string const& str) {
@@ -70,6 +70,6 @@ TracingOptions& TracingOptions::SetOptions(std::string const& str) {
   return *this;
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

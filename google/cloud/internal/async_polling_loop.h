@@ -27,7 +27,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 using AsyncPollLongRunningOperation =
@@ -128,7 +128,7 @@ future<StatusOr<google::longrunning::Operation>> AsyncPollingLoop(
     std::unique_ptr<PollingPolicy> polling_policy, std::string location);
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

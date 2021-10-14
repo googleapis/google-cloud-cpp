@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::size_t MessageProtoSize(::google::pubsub::v1::PubsubMessage const& m) {
   // see https://cloud.google.com/pubsub/pricing
   auto constexpr kTimestampOverhead = 20;
@@ -33,11 +33,11 @@ std::size_t MessageProtoSize(::google::pubsub::v1::PubsubMessage const& m) {
   }
   return s;
 }
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::chrono::system_clock::time_point Message::publish_time() const {
   return google::cloud::internal::ToChronoTimePoint(proto_.publish_time());
@@ -62,7 +62,7 @@ std::ostream& operator<<(std::ostream& os, Message const& rhs) {
   return os << text;
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SchemaAdminClient::SchemaAdminClient(
     std::shared_ptr<SchemaAdminConnection> connection)
@@ -143,7 +143,7 @@ SchemaAdminClient::ValidateMessage(
   return connection_->ValidateMessage(request);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

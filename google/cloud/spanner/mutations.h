@@ -25,15 +25,15 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 template <typename Op>
 class WriteMutationBuilder;
 class DeleteMutationBuilder;
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * A wrapper for Cloud Spanner mutations.
@@ -98,13 +98,13 @@ class Mutation {
  */
 using Mutations = std::vector<Mutation>;
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 
 // This namespace contains implementation details. It is not part of the public
 // API, and subject to change without notice.
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 template <typename Op>
 class WriteMutationBuilder {
@@ -192,11 +192,11 @@ class DeleteMutationBuilder {
   spanner::Mutation m_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * A helper class to construct "insert" mutations.
@@ -370,7 +370,7 @@ inline Mutation MakeDeleteMutation(std::string table_name, KeySet keys) {
   return DeleteMutationBuilder(std::move(table_name), std::move(keys)).Build();
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

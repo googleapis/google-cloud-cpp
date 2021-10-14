@@ -21,7 +21,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 class GrpcChannelCredentialsAuthentication : public GrpcAuthenticationStrategy {
@@ -44,7 +44,7 @@ class GrpcChannelCredentialsAuthentication : public GrpcAuthenticationStrategy {
 };
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

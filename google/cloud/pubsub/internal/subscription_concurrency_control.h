@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class SubscriptionConcurrencyControl
     : public std::enable_shared_from_this<SubscriptionConcurrencyControl> {
@@ -78,7 +78,7 @@ class SubscriptionConcurrencyControl
   std::size_t messages_requested_ = 0;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

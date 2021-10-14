@@ -22,7 +22,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 void IamBindings::AddMember(std::string const& role, std::string member) {
   bindings_[role].emplace(std::move(member));
 }
@@ -95,6 +95,6 @@ std::ostream& operator<<(std::ostream& os, IamBindings const& rhs) {
   return os << "}";
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

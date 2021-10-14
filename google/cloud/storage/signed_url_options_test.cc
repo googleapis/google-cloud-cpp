@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 TEST(SignedUrlOptions, QueryParameters) {
   auto mp = [](char const* k, char const* v) {
@@ -47,7 +47,7 @@ TEST(SignedUrlOptions, QueryParameters) {
             WithUserProject("test-project").value());
 }
 }  // namespace
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // Cloud Bigtable doesn't accept more than this in a single request.
 auto constexpr kBigtableMutationLimit = 100000;
@@ -284,7 +284,7 @@ void MutationBatcher::SatisfyPromises(
   }
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

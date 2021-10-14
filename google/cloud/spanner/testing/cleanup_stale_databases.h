@@ -23,14 +23,14 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 Status CleanupStaleDatabases(
     google::cloud::spanner_admin::DatabaseAdminClient admin_client,
     std::string const& project_id, std::string const& instance_id,
     std::chrono::system_clock::time_point tp);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

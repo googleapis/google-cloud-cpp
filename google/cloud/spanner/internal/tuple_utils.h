@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // The implementation for `IsTuple<T>` (below).
 template <typename T>
@@ -80,7 +80,7 @@ typename std::enable_if<(I < TupleSize<T>::value), void>::type ForEach(
                  std::forward<Args>(args)...);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

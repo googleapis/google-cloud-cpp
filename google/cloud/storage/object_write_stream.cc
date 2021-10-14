@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 std::unique_ptr<internal::ObjectWriteStreambuf> MakeErrorStreambuf() {
   return absl::make_unique<internal::ObjectWriteStreambuf>(
@@ -108,7 +108,7 @@ void ObjectWriteStream::Suspend() && {
   tmp.buf_.reset();
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 #ifndef CURL_AT_LEAST_VERSION
@@ -69,7 +69,7 @@ bool SslLibraryNeedsLocking(std::string const& curl_ssl_id);
 long VersionToCurlCode(std::string const& v);  // NOLINT(google-runtime-int)
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

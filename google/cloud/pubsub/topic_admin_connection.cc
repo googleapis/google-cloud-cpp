@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::Idempotency;
@@ -324,11 +324,11 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
   return MakeTopicAdminConnection(std::move(opts));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
 
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<pubsub::TopicAdminConnection> MakeTestTopicAdminConnection(
     Options const& opts, std::shared_ptr<PublisherStub> stub) {
@@ -342,7 +342,7 @@ std::shared_ptr<pubsub::TopicAdminConnection> MakeTestTopicAdminConnection(
       opts.get<pubsub::BackoffPolicyOption>()->clone());
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

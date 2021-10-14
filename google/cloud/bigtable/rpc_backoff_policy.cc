@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::unique_ptr<RPCBackoffPolicy> DefaultRPCBackoffPolicy(
     internal::RPCPolicyParameters defaults) {
   return std::unique_ptr<RPCBackoffPolicy>(new ExponentialBackoffPolicy(
@@ -45,7 +45,7 @@ std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion(
   return impl_.OnCompletion();
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

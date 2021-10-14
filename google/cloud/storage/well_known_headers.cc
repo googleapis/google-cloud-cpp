@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::ostream& operator<<(std::ostream& os, CustomHeader const& rhs) {
   if (!rhs.has_value()) {
     return os;
@@ -77,7 +77,7 @@ std::ostream& operator<<(std::ostream& os, SourceEncryptionKey const& rhs) {
   return os << prefix << "*: <not set>";
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace gcsa = ::google::spanner::admin::database::v1;
 
@@ -222,7 +222,7 @@ ListDatabaseOperationsRange DatabaseAdminClient::ListDatabaseOperations(
   return conn_->ListDatabaseOperations({std::move(in), std::move(filter)});
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

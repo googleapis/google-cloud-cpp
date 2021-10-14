@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 bool operator==(ObjectAccessControl const& lhs,
                 ObjectAccessControl const& rhs) {
   // Start with id, generation, object, bucket, etag because they should fail
@@ -44,7 +44,7 @@ std::ostream& operator<<(std::ostream& os, ObjectAccessControl const& rhs) {
   return os << ", role=" << rhs.role() << ", self_link=" << rhs.self_link()
             << "}";
 }
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

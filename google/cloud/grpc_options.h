@@ -26,7 +26,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * The gRPC credentials used by clients configured with this object.
@@ -177,7 +177,7 @@ absl::optional<std::string> GetStringChannelArgument(
 BackgroundThreadsFactory MakeBackgroundThreadsFactory(Options const& opts = {});
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

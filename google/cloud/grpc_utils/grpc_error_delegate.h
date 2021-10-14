@@ -21,9 +21,9 @@
 namespace google {
 namespace cloud {
 namespace grpc_utils {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using ::google::cloud::MakeStatusFromRpcError;
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace grpc_utils
 }  // namespace cloud
 }  // namespace google

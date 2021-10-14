@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<std::unique_ptr<ResultSourceInterface>> PartialResultSetSource::Create(
     std::unique_ptr<PartialResultSetReader> reader) {
@@ -179,7 +179,7 @@ Status PartialResultSetSource::ReadFromStream() {
   return {};  // OK
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
