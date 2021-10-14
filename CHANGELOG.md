@@ -67,6 +67,27 @@
   details.
 </details>
 
+<details>
+<summary>2022-11-01: remove `v1` and `gcpcxxV1` backward compatibility aliases</summary>
+<br>
+
+* On 2022-11-01 (or shortly after) we will remove the inline namespace aliases
+  of `v1` and `gcpcxxV1` that are declared in `google/cloud/version.h`. These
+  aliases exist because we changed the format of our inline namespace name to
+  include the major, minor, and patch numbers for each release, and we didn't
+  want to break users. Our Doxygen documentation was mistakenly recommending
+  that users include the inline namespace names in their code, but this was
+  also fixed to now recommend against doing so. Users should generally omit the
+  name of our versioned inline namespace name because that will tightly couple
+  their code to a specific release, and will make upgrading to newer versions
+  more difficult. Instead, users should simply omit the inline namespace name,
+  for example, instead of ~`google::cloud::v1::Status`~ use
+  `google::cloud::Status`. Please update your code to avoid naming the `v1` and
+  `gcpcxxV1` inline namespace names before 2022-11-01. For more info, see
+  https://github.com/googleapis/google-cloud-cpp/issues/7463 and
+  https://github.com/googleapis/google-cloud-cpp/issues/5976.
+</details>
+
 ## v1.33.0 - TBD
 
 ## v1.32.1 - 2021-10
