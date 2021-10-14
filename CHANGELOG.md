@@ -69,19 +69,13 @@
 
 ## v1.33.0 - TBD
 
-**ATTENTION**: Users should generally **NOT** spell the name of our versioned
-inline namespace in their code, as doing so will tightly couple your code to a
-specific version of our library and will make upgrades more difficult for you.
-Previously, this version was `v1` (but it will change in the future), and so
-you may have some code that references, say, ~`google::cloud::v1::Status`~
-(WRONG) and you should instead prefer `google::cloud::Status` (omit the
-versioned inline namespace name).
-
-Our Doxygen documentation (e.g. [Storage docs][storage-dox-link]) was
-incorrectly showing the versioned inline namespace name for our symbols,
-implicitly suggesting that users should spell this inline namespace in their
-own code. This mistake was fixed and our Doxygen documentation no longer shows
-the versioned inline namespace name.
+**ATTENTION**: Our Doxygen documentation (e.g. [Storage
+docs][storage-dox-link]) was incorrectly showing the versioned inline namespace
+name for our symbols (it was `v1`), implicitly suggesting that users should
+spell this inline namespace in their own code. This mistake was fixed and our
+Doxygen documentation no longer shows the versioned inline namespace name, now
+showing users how to correctly spell our symbol names without referencing the
+versioned inline namespace.
 
 [storage-dox-link]: https://googleapis.dev/cpp/google-cloud-storage/latest/
 
