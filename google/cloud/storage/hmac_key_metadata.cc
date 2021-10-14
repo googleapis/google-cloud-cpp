@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::ostream& operator<<(std::ostream& os, HmacKeyMetadata const& rhs) {
   return os << "HmacKeyMetadata={id=" << rhs.id() << ", kind=" << rhs.kind()
             << ", access_id=" << rhs.access_id() << ", etag=" << rhs.etag()
@@ -30,7 +30,7 @@ std::ostream& operator<<(std::ostream& os, HmacKeyMetadata const& rhs) {
             << google::cloud::internal::FormatRfc3339(rhs.updated()) << "}";
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

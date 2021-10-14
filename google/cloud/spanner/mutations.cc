@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 bool operator==(Mutation const& lhs, Mutation const& rhs) {
   google::protobuf::util::MessageDifferencer diff;
@@ -30,7 +30,7 @@ void PrintTo(Mutation const& m, std::ostream* os) {
   *os << "Mutation={" << m.m_.DebugString() << "}";
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

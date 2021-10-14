@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
@@ -131,11 +131,11 @@ Transaction::Transaction(std::string session_id, std::string transaction_id,
 
 Transaction::~Transaction() = default;
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 spanner::Transaction TransactionInternals::MakeTransactionFromIds(
     std::string session_id, std::string transaction_id,
@@ -144,7 +144,7 @@ spanner::Transaction TransactionInternals::MakeTransactionFromIds(
                               std::move(transaction_tag));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

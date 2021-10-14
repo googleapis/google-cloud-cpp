@@ -50,7 +50,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // clang-format off
 /**
@@ -722,11 +722,11 @@ std::shared_ptr<Connection> MakeConnection(
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 spanner::QueryOptions OverlayQueryOptions(
     spanner::QueryOptions const& preferred,
@@ -734,7 +734,7 @@ spanner::QueryOptions OverlayQueryOptions(
     absl::optional<std::string> const& optimizer_version_env,
     absl::optional<std::string> const& optimizer_statistics_package_env);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

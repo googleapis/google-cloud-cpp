@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * An input range to stream all the instances in a Cloud project.
@@ -271,18 +271,18 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// Internal-only factory that allows us to inject mock stubs for testing.
 std::shared_ptr<spanner::InstanceAdminConnection>
 MakeInstanceAdminConnectionForTesting(
     std::shared_ptr<InstanceAdminStub> base_stub, Options opts);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 
 }  // namespace cloud

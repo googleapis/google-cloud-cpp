@@ -20,7 +20,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 /// Return the semantic versioning string (https://semver.org/).
@@ -30,7 +30,7 @@ std::string ApiClientVersion(std::string const& build_identifier);
 std::string ApiClientHeader(std::string const& build_identifier = "");
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

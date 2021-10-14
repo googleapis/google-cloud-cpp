@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DefaultBatchSink::DefaultBatchSink(std::shared_ptr<PublisherStub> stub,
                                    CompletionQueue cq, Options const& opts)
@@ -43,7 +43,7 @@ DefaultBatchSink::AsyncPublish(google::pubsub::v1::PublishRequest request) {
 
 void DefaultBatchSink::ResumePublish(std::string const&) {}
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

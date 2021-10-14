@@ -18,7 +18,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 absl::Time ToAbslTime(google::protobuf::Timestamp const& proto) {
@@ -57,6 +57,6 @@ google::protobuf::Timestamp ToProtoTimestamp(
 }
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

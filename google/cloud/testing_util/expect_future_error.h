@@ -22,7 +22,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
 /**
  * Verify that a given functor raises `std::future_error` with the right error
@@ -51,7 +51,7 @@ void ExpectFutureError(Functor functor, std::future_errc code) {
 }
 
 }  // namespace testing_util
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

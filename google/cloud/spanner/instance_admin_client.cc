@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<google::spanner::admin::instance::v1::Instance>
 InstanceAdminClient::GetInstance(Instance const& in) {
@@ -123,7 +123,7 @@ InstanceAdminClient::TestIamPermissions(Instance const& in,
   return conn_->TestIamPermissions({in.FullName(), std::move(permissions)});
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

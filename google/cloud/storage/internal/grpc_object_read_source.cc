@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 using HeadersMap = std::multimap<std::string, std::string>;
@@ -109,7 +109,7 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
 }
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

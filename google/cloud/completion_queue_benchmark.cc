@@ -22,7 +22,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 // Run on (96 X 2000.15 MHz CPU s)
@@ -127,6 +127,6 @@ BENCHMARK(BM_CompletionQueueRunAsync)
     ->Complexity(benchmark::oN);
 
 }  // namespace
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

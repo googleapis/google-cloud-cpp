@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::unique_ptr<RPCRetryPolicy> DefaultRPCRetryPolicy(
     internal::RPCPolicyParameters defaults) {
@@ -65,7 +65,7 @@ bool LimitedTimeRetryPolicy::OnFailure(grpc::Status const& status) {
   return impl_.OnFailure(MakeStatusFromRpcError(status));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

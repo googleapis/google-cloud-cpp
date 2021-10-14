@@ -26,13 +26,13 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 struct SqlStatementInternals;
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Represents a potentially parameterized SQL statement.
  *
@@ -114,12 +114,12 @@ class SqlStatement {
   ParamType params_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 
 // Internal implementation details that callers should not use.
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // Use this proto type because it conveniently wraps all three attributes
 // required to represent a SQL statement.
 using SqlStatementProto =
@@ -132,7 +132,7 @@ struct SqlStatementInternals {
 inline SqlStatementProto ToProto(spanner::SqlStatement s) {
   return SqlStatementInternals::ToProto(std::move(s));
 }
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 void AssertOptionSuccessImpl(
     CURLcode e, CURLoption opt, char const* where,
@@ -176,7 +176,7 @@ class CurlHandle {
 };
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

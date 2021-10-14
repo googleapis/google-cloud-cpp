@@ -22,7 +22,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 // This header re-implements some of C++14's <tuple> header.
@@ -66,7 +66,7 @@ typename ApplyRes<F, typename std::decay<Tuple>::type>::type apply(F&& f,
 }
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

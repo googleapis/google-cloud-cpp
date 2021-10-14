@@ -44,7 +44,7 @@ template <typename Exception>
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 void ThrowInvalidArgument(char const* msg) {
@@ -94,6 +94,6 @@ void ThrowLogicError(std::string const& msg) {
 }
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -27,7 +27,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Simplified view of multiple roles and their members for IAM.
  *
@@ -208,7 +208,7 @@ inline bool operator>=(IamBindings const& lhs, IamBindings const& rhs) {
 
 std::ostream& operator<<(std::ostream& os, IamBindings const& rhs);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ms = std::chrono::milliseconds;
@@ -257,7 +257,7 @@ TEST(OptionsTest, DefaultPublisherOnly) {
 }
 
 }  // namespace
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

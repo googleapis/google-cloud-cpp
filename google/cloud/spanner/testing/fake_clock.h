@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * A fake clock intended for use in tests.
@@ -64,7 +64,7 @@ using FakeSteadyClock = FakeClock<google::cloud::spanner_internal::SteadyClock>;
 
 using FakeSystemClock = FakeClock<google::cloud::spanner_internal::SystemClock>;
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

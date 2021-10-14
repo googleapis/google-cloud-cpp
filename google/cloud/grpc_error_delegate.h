@@ -23,7 +23,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Creates a google::cloud::Status from a grpc::Status.
  */
@@ -44,7 +44,7 @@ google::cloud::Status MakeStatusFromRpcError(grpc::StatusCode code,
  */
 google::cloud::Status MakeStatusFromRpcError(google::rpc::Status const& status);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

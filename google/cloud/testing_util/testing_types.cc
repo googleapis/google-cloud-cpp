@@ -16,7 +16,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
 
 int Observable::default_constructor_ = 0;
@@ -28,6 +28,6 @@ int Observable::move_assignment_ = 0;
 int Observable::destructor_ = 0;
 
 }  // namespace testing_util
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -23,7 +23,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 static_assert(sizeof(Severity) == sizeof(int),
               "Expected Severity to be represented as an int");
@@ -224,6 +224,6 @@ std::shared_ptr<LogBackend> DefaultLogBackend() {
 }
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

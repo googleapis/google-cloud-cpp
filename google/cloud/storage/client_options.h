@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ClientOptions;
 namespace internal {
 std::string JsonEndpoint(Options const&);
@@ -275,7 +275,7 @@ class ClientOptions {
   std::string user_agent_prefix_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SubscriberMetadata::SubscriberMetadata(std::shared_ptr<SubscriberStub> child)
     : child_(std::move(child)),
@@ -144,7 +144,7 @@ void SubscriberMetadata::SetMetadata(grpc::ClientContext& context,
   context.AddMetadata("x-goog-api-client", x_goog_api_client_);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

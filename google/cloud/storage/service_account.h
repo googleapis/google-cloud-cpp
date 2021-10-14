@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 struct ServiceAccountParser;
 }  // namespace internal
@@ -72,7 +72,7 @@ inline bool operator>=(ServiceAccount const& lhs, ServiceAccount const& rhs) {
 
 std::ostream& operator<<(std::ostream& os, ServiceAccount const& rhs);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

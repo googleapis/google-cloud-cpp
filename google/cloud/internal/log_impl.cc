@@ -17,7 +17,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 void StdClogBackend::Process(LogRecord const& lr) {
@@ -54,6 +54,6 @@ void CircularBufferBackend::FlushImpl(std::unique_lock<std::mutex> /*lk*/) {
 }
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

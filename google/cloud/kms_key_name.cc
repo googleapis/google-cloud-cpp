@@ -18,7 +18,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 KmsKeyName::KmsKeyName(std::string const& project_id,
                        std::string const& location, std::string const& key_ring,
@@ -46,6 +46,6 @@ StatusOr<KmsKeyName> MakeKmsKeyName(std::string const& full_name) {
                     std::move(matches[3]), std::move(matches[4]));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

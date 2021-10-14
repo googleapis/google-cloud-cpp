@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -262,7 +262,7 @@ TEST(Message, SizeEstimation) {
 }
 
 }  // namespace
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

@@ -33,7 +33,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
 /// A helper struct that contains service account metadata.
 struct ServiceAccountMetadata {
@@ -201,7 +201,7 @@ class ComputeEngineCredentials : public Credentials {
 };
 
 }  // namespace oauth2
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

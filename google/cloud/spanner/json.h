@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * A simple representation for the Spanner JSON type: a lightweight,
@@ -81,7 +81,7 @@ inline std::ostream& operator<<(std::ostream& os, Json const& json) {
   return os << std::string(json);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

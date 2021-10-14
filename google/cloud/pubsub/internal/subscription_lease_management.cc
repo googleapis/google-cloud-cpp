@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::chrono::seconds constexpr SubscriptionLeaseManagement::kMinimumAckDeadline;
 std::chrono::seconds constexpr SubscriptionLeaseManagement::kAckDeadlineSlack;
@@ -161,7 +161,7 @@ void SubscriptionLeaseManagement::NackAll(std::unique_lock<std::mutex> lk) {
   BulkNack(std::move(ack_ids));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

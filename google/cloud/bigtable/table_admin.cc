@@ -29,7 +29,7 @@ namespace btadmin = ::google::bigtable::admin::v2;
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 static_assert(std::is_copy_constructible<bigtable::TableAdmin>::value,
               "bigtable::TableAdmin must be constructible");
 static_assert(std::is_copy_assignable<bigtable::TableAdmin>::value,
@@ -751,7 +751,7 @@ std::string TableAdmin::InstanceName() const {
                                                instance_id_);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

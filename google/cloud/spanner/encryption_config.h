@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Use the per-operation default encryption:
@@ -60,7 +60,7 @@ class CustomerManagedEncryption {
 using EncryptionConfig = absl::variant<DefaultEncryption, GoogleEncryption,
                                        CustomerManagedEncryption>;
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// Create a gRPC channel with the right configuration.
 std::shared_ptr<grpc::Channel> CreateChannel(Options const& opts,
@@ -33,7 +33,7 @@ std::shared_ptr<grpc::Channel> CreateChannel(Options const& opts,
 grpc::ChannelArguments MakeChannelArguments(Options const& opts,
                                             int channel_id);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

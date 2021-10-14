@@ -18,7 +18,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
 
 std::vector<std::string> ScopedLog::Backend::ExtractLines() {
@@ -41,6 +41,6 @@ void ScopedLog::Backend::Process(LogRecord const& lr) {
 void ScopedLog::Backend::ProcessWithOwnership(LogRecord lr) { Process(lr); }
 
 }  // namespace testing_util
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

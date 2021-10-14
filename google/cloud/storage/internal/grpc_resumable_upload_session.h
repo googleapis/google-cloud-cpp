@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 /// Implements the ResumableUploadSession interface for a gRPC client.
 class GrpcResumableUploadSession : public ResumableUploadSession {
@@ -70,7 +70,7 @@ class GrpcResumableUploadSession : public ResumableUploadSession {
   StatusOr<ResumableUploadResponse> last_response_;
 };
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

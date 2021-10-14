@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Type alias for google::cloud::IamUpdater.
@@ -38,7 +38,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  */
 using IamUpdater = ::google::cloud::IamUpdater;
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

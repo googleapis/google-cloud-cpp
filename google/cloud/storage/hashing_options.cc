@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::string ComputeMD5Hash(std::string const& payload) {
   return internal::Base64Encode(internal::MD5Hash(payload));
@@ -33,7 +33,7 @@ std::string ComputeCrc32cChecksum(std::string const& payload) {
   return internal::Base64Encode(hash);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

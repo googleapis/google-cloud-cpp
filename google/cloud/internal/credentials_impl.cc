@@ -16,7 +16,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 void CredentialsVisitor::dispatch(Credentials& credentials,
@@ -34,6 +34,6 @@ ImpersonateServiceAccountConfig::ImpersonateServiceAccountConfig(
       delegates_(std::move(opts.lookup<DelegatesOption>())) {}
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

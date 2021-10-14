@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * CreateInstanceRequestBuilder is a builder class for
@@ -129,7 +129,7 @@ class CreateInstanceRequestBuilder {
   google::spanner::admin::instance::v1::CreateInstanceRequest request_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

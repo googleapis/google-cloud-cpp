@@ -52,7 +52,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Option for `google::cloud::Options` to set a `spanner::RetryPolicy`.
@@ -175,7 +175,7 @@ struct RequestTagOption {
  */
 using RequestOptionList = OptionList<RequestPriorityOption, RequestTagOption>;
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

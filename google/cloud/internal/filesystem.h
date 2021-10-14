@@ -22,7 +22,7 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 enum class file_type {
@@ -171,7 +171,7 @@ std::uintmax_t file_size(std::string const& path, std::error_code& ec) noexcept;
 std::string PathAppend(std::string const& directory, std::string const& path);
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

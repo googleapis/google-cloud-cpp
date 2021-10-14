@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ReadPartition::ReadPartition(std::string transaction_id,
                              std::string transaction_tag,
@@ -117,7 +117,7 @@ StatusOr<ReadPartition> DeserializeReadPartition(
   return ReadPartition(std::move(proto));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

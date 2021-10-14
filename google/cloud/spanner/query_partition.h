@@ -25,13 +25,13 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 struct QueryPartitionInternals;
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 
 namespace spanner {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Serializes an instance of `QueryPartition` to a string of bytes.
@@ -137,12 +137,12 @@ class QueryPartition {
   SqlStatement sql_statement_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 
 // Internal implementation details that callers should not use.
 namespace spanner_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 struct QueryPartitionInternals {
   static spanner::QueryPartition MakeQueryPartition(
@@ -178,7 +178,7 @@ inline spanner::Connection::SqlParams MakeSqlParams(
   return QueryPartitionInternals::MakeSqlParams(query_partition);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<google::pubsub::v1::Topic> PublisherAuth::CreateTopic(
     grpc::ClientContext& context, google::pubsub::v1::Topic const& request) {
@@ -104,7 +104,7 @@ PublisherAuth::AsyncPublish(google::cloud::CompletionQueue& cq,
       });
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

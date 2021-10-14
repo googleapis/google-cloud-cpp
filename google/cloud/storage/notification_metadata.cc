@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::string NotificationMetadata::JsonPayloadForInsert() const {
   // Required fields, always include them, even if empty.
   nlohmann::json json{
@@ -77,7 +77,7 @@ std::ostream& operator<<(std::ostream& os, NotificationMetadata const& rhs) {
             << "}";
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

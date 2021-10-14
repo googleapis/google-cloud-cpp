@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Builds requests to create or update a Cloud Pub/Sub topic.
@@ -134,7 +134,7 @@ class TopicBuilder {
   std::set<std::string> paths_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

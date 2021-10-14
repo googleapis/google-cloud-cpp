@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// Pick one instance_config from a list given a PRNG generator, project_id,
 /// and a regex for filtering, if none matches the filter, it will return the
@@ -32,7 +32,7 @@ std::string PickInstanceConfig(std::string const& project_id,
                                std::regex const& filter_regex,
                                google::cloud::internal::DefaultPRNG& generator);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

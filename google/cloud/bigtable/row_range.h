@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Define the interfaces to create row key ranges.
  *
@@ -201,7 +201,7 @@ inline bool operator!=(RowRange const& lhs, RowRange const& rhs) {
 
 /// Print a human-readable representation of the range, mostly for testing.
 std::ostream& operator<<(std::ostream& os, RowRange const& x);
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

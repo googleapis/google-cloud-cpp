@@ -35,7 +35,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 class ContainingPublisherConnection : public PublisherConnection {
  public:
@@ -163,11 +163,11 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(
   return MakePublisherConnection(std::move(topic), std::move(opts));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
 
 namespace pubsub_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<pubsub::PublisherConnection> MakeTestPublisherConnection(
     pubsub::Topic topic, Options opts,
@@ -182,7 +182,7 @@ std::shared_ptr<pubsub::PublisherConnection> MakeTestPublisherConnection(
                                              std::move(stub));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
