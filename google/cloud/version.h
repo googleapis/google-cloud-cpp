@@ -27,11 +27,12 @@
       "deprecated and will be be removed on 2022-04-01 or shortly "        \
       "after. See GitHub issue #5929 for more information.")
 
-#define GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi) v##Ma
-#define GOOGLE_CLOUD_CPP_VEVAL(Ma, Mi) GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi)
+#define GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi, Pa) v##Ma##_##Mi##_##Pa
+#define GOOGLE_CLOUD_CPP_VEVAL(Ma, Mi, Pa) GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi, Pa)
 #define GOOGLE_CLOUD_CPP_NS                              \
   GOOGLE_CLOUD_CPP_VEVAL(GOOGLE_CLOUD_CPP_VERSION_MAJOR, \
-                         GOOGLE_CLOUD_CPP_VERSION_MINOR)
+                         GOOGLE_CLOUD_CPP_VERSION_MINOR, \
+                         GOOGLE_CLOUD_CPP_VERSION_PATCH)
 
 /**
  * Versioned inline namespace that users should generally avoid spelling.
@@ -49,7 +50,9 @@
 #define GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN \
   inline namespace GOOGLE_CLOUD_CPP_NS {
 #define GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END \
-  }  // namespace GOOGLE_CLOUD_CPP_NS
+  } /* namespace GOOGLE_CLOUD_CPP_NS */       \
+  namespace v1 = GOOGLE_CLOUD_CPP_NS;         \
+  namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;
 
 // This preprocessor symbol is deprecated and should never be used anywhere. It
 // exists solely for backward compatibility to avoid breaking anyone who may

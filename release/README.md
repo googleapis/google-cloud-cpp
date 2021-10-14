@@ -20,22 +20,6 @@ enumerated below.
 Before beginning the release process, verify all CI builds are passing on
 the `main` branch. This is displayed in the GitHub page for the project.
 
-### Update the API baseline
-
-Run the `check-api` build to update the API baseline. Once you cut the release
-any new APIs are, well, released, and we should think carefully about removing
-them.
-
-```bash
-ci/cloudbuild/build.sh -t check-api-pr --docker
-```
-
-The updated ABI dump files will be left in the `ci/abi-dumps` folder.
-
-This may take a while, leave it running while you perform the next step. You
-can, but are not required to, send a single PR to update the baseline and the
-`CHANGELOG.md` file.
-
 ### Update CHANGELOG.md
 
 To update the top-level [`CHANGELOG.md`] file, you run the script
@@ -118,8 +102,11 @@ send the PR for review against `main`. You need to:
 - Update the version number in the top-level `CMakeLists.txt` file.
 - Run the cmake configuration step, which will update the
   `google/cloud/internal/version_info.h` file. Hint: Running
-  `ci/cloudbuild/build.sh --docker --trigger clang-tidy-pr` will do this, and
-  you can `CTRL-C` the build after CMake's configure step is finished.
+  `ci/cloudbuild/build.sh -t clang-tidy-pr` will do this, and you can `CTRL-C`
+  the build after CMake's configure step is finished.
+- Update the ABI baseline to include the new version numbers in the inline
+  namespace by running `ci/cloudbuild/build.sh -t check-api-pr`, which will
+  leave the updated files in `ci/abi-dumps`.
 
 **NOTE:** The Renovate bot will automatically update the Bazel deps in the
 quickstart `WORKSPACE` files after it sees the new release published. Watch for
