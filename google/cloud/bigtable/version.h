@@ -38,19 +38,7 @@ namespace cloud {
  * Contains all the Cloud Bigtable C++ client APIs.
  */
 namespace bigtable {
-/**
- * Versioned inline namespace that users should generally avoid spelling.
- *
- * Applications may need to link multiple versions of the Cloud Bigtable C++
- * client, for example, if they link a library that uses an older version of
- * the client than they do.  This namespace is inlined, so applications can use
- * `bigtable::Foo` in their source, but the symbols are versioned, i.e., the
- * symbol becomes `bigtable::v1::Foo`.
- *
- * Note that, consistent with the semver.org guidelines, the v0 version makes
- * no guarantees with respect to backwards compatibility.
- */
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * The Cloud Bigtable C++ Client major version.
  *
@@ -78,7 +66,7 @@ int constexpr version() { return google::cloud::version(); }
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string version_string();
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

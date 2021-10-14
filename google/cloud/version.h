@@ -61,19 +61,7 @@ namespace google {
  * Contains all the Google Cloud C++ Library APIs.
  */
 namespace cloud {
-/**
- * Versioned inline namespace that users should generally avoid spelling.
- *
- * Applications may need to link multiple versions of the Google Cloud C++
- * Libraries, for example, if they link a library that uses an older version of
- * the libraries than they do.  This namespace is inlined, so applications can
- * use `google::cloud::Foo` in their source, but the symbols are versioned,
- * i.e., the symbol becomes `google::cloud::v1::Foo`.
- *
- * Note that, consistent with the semver.org guidelines, the v0 version makes
- * no guarantees with respect to backwards compatibility.
- */
-inline namespace GOOGLE_CLOUD_CPP_NS {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * The Google Cloud Storage C++ Client major version.
  *
@@ -114,7 +102,7 @@ int constexpr version() {
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string version_string();
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
