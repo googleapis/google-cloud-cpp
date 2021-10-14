@@ -27,8 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * A googlemock-based mock for [pubsub::PublisherConnection][mocked-link]
  *
- * [mocked-link]: @ref
- * google::cloud::pubsub::omit_this_inline_ns::PublisherConnection
+ * [mocked-link]: @ref google::cloud::pubsub::PublisherConnection
  *
  * @see @ref publisher-mock for an example using this class.
  */

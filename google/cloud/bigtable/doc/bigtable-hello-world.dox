@@ -124,19 +124,19 @@ Here is the full example
 
 @snippet bigtable_hello_world.cc all code
 
-[Filter]:          @ref google::cloud::bigtable::omit_this_inline_ns::Filter
-[InstanceAdmin]:   @ref google::cloud::bigtable::omit_this_inline_ns::InstanceAdmin
-[Mutation]:        @ref google::cloud::bigtable::omit_this_inline_ns::Mutation
-[Row]:             @ref google::cloud::bigtable::omit_this_inline_ns::Row
-[RowRange]:        @ref google::cloud::bigtable::omit_this_inline_ns::RowRange
-[RowSet]:          @ref google::cloud::bigtable::omit_this_inline_ns::RowSet
-[Table]:           @ref google::cloud::bigtable::omit_this_inline_ns::Table
-[Table-Apply]:     @ref google::cloud::bigtable::omit_this_inline_ns::Table::Apply
-[Table-BulkApply]: @ref google::cloud::bigtable::omit_this_inline_ns::Table::BulkApply
-[Table-ReadRow]:   @ref google::cloud::bigtable::omit_this_inline_ns::Table::ReadRow
-[Table-ReadRows]:  @ref google::cloud::bigtable::omit_this_inline_ns::Table::ReadRows
-[TableAdmin]:      @ref google::cloud::bigtable::omit_this_inline_ns::TableAdmin
-[TableAdmin-CreateTable]:  @ref google::cloud::bigtable::omit_this_inline_ns::TableAdmin::CreateTable
-[TableAdmin-DeleteTable]:  @ref google::cloud::bigtable::omit_this_inline_ns::TableAdmin::DeleteTable
+[Filter]:          @ref google::cloud::bigtable::Filter
+[InstanceAdmin]:   @ref google::cloud::bigtable::InstanceAdmin
+[Mutation]:        @ref google::cloud::bigtable::Mutation
+[Row]:             @ref google::cloud::bigtable::Row
+[RowRange]:        @ref google::cloud::bigtable::RowRange
+[RowSet]:          @ref google::cloud::bigtable::RowSet
+[Table]:           @ref google::cloud::bigtable::Table
+[Table-Apply]:     @ref google::cloud::bigtable::Table::Apply
+[Table-BulkApply]: @ref google::cloud::bigtable::Table::BulkApply
+[Table-ReadRow]:   @ref google::cloud::bigtable::Table::ReadRow
+[Table-ReadRows]:  @ref google::cloud::bigtable::Table::ReadRows
+[TableAdmin]:      @ref google::cloud::bigtable::TableAdmin
+[TableAdmin-CreateTable]:  @ref google::cloud::bigtable::TableAdmin::CreateTable
+[TableAdmin-DeleteTable]:  @ref google::cloud::bigtable::TableAdmin::DeleteTable
 
 */

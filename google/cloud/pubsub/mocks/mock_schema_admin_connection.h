@@ -27,8 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A googlemock-based mock for
  * [pubsub::SchemaAdminConnection][mocked-link]
  *
- * [mocked-link]: @ref
- * google::cloud::pubsub::omit_this_inline_ns::SchemaAdminConnection
+ * [mocked-link]: @ref google::cloud::pubsub::SchemaAdminConnection
  */
 class MockSchemaAdminConnection : public pubsub::SchemaAdminConnection {
  public:

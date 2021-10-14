@@ -41,10 +41,10 @@ snippets on how to call the function. The snippets for
 [ListObjects()][ListObjects], and [DeleteObject()][DeleteObject] are
 good places to continue learning about the library.
 
-[Client]: @ref google::cloud::storage::omit_this_inline_ns::Client
-[ReadObject]: @ref google::cloud::storage::omit_this_inline_ns::Client::ReadObject()
-[WriteObject]: @ref google::cloud::storage::omit_this_inline_ns::Client::WriteObject()
-[ListObjects]: @ref google::cloud::storage::omit_this_inline_ns::Client::ListObjects()
-[DeleteObject]: @ref google::cloud::storage::omit_this_inline_ns::Client::DeleteObject()
+[Client]: @ref google::cloud::storage::Client
+[ReadObject]: @ref google::cloud::storage::Client::ReadObject()
+[WriteObject]: @ref google::cloud::storage::Client::WriteObject()
+[ListObjects]: @ref google::cloud::storage::Client::ListObjects()
+[DeleteObject]: @ref google::cloud::storage::Client::DeleteObject()
 
 */

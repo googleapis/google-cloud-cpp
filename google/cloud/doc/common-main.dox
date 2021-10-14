@@ -6,16 +6,15 @@
 This library contains common components shared by all the Google Cloud C++
 Client Libraries. Including:
 
-- [Status](@ref google::cloud::omit_this_inline_ns::Status) error codes and details from an
+- [Status](@ref google::cloud::Status) error codes and details from an
   operation.
-- [StatusOr<T>](@ref google::cloud::omit_this_inline_ns::StatusOr) returns a value on success
+- [StatusOr<T>](@ref google::cloud::StatusOr) returns a value on success
   and a `Status` on error.
-- [future<T>](@ref google::cloud::omit_this_inline_ns::future) and
-  [promise<T>](@ref google::cloud::omit_this_inline_ns::promise) futures (a holder that will
-  receive a value asynchronously) and promises (the counterpart of a future,
-  where values are stored asynchronously). They satisfy the API for
-  `std::future` and `std::promise`, and add support for callbacks and
-  cancellation.
+- [future<T>](@ref google::cloud::future) and
+  [promise<T>](@ref google::cloud::promise) futures (a holder that will receive
+  a value asynchronously) and promises (the counterpart of a future, where
+  values are stored asynchronously). They satisfy the API for `std::future` and
+  `std::promise`, and add support for callbacks and cancellation.
 
 @warning The symbols in the `google::cloud::internal` namespace are
 implementation details and subject to change and/or removal without notice.

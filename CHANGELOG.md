@@ -69,6 +69,16 @@
 
 ## v1.33.0 - TBD
 
+**ATTENTION**: Our Doxygen documentation (e.g. [Storage
+docs][storage-dox-link]) was incorrectly showing the versioned inline namespace
+name for our symbols (it was `v1`), implicitly suggesting that users should
+spell this inline namespace in their own code. This mistake was fixed and our
+Doxygen documentation no longer shows the versioned inline namespace name, now
+showing users how to correctly spell our symbol names without referencing the
+versioned inline namespace.
+
+[storage-dox-link]: https://googleapis.dev/cpp/google-cloud-storage/latest/
+
 ## v1.32.1 - 2021-10
 
 ### [Pub/Sub](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/README.md)
