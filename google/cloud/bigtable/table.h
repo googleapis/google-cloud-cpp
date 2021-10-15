@@ -404,11 +404,30 @@ class Table {
   /**
    * Attempts to apply mutations to multiple rows.
    *
-   * @param mut the mutations, note that this function takes
-   *     ownership (and then discards) the data in the mutation. In general, a
-   *     `BulkMutation` can modify multiple rows, and the modifications for each
-   *     row can change (or create) multiple cells, across different columns and
-   *     column families.
+   * These mutations are applied in bulk, in a single `MutateRowsRequest` RPC.
+   * Failures are handled on a per mutation basis. If the result of a mutation
+   * is a permanent (non-retryable) error, or if a non-idempotent mutation fails
+   * for any reason, the mutation will not be retried. Only idempotent mutations
+   * that encounter transient (retryable) errors can be retried. These mutations
+   * are collected and retried in bulk. This function will continue to retry any
+   * remaining errors until this class's retry policy is exhausted.
+   *
+   * It is possible that some mutations may not be attempted at all. These
+   * mutations are considered failing and will be returned.
+   *
+   * @note The retry policy is only impacted by the result of the gRPC stream.
+   *     Let's say you have a `LimitedErrorCountRetryPolicy` of 2. If an
+   *     idempotent mutation fails with a retryable error and the stream itself
+   *     succeeds, it may be retried more than 2 times. Only when the stream
+   *     fails twice will we give up and consider the mutation to be failed.
+   *
+   * @note This function takes ownership (and then discards) the data in the
+   *     mutation. In general, a `BulkMutation` can modify multiple rows, and
+   *     the modifications for each row can change (or create) multiple cells,
+   *     across different columns and column families.
+   *
+   * @param mut the mutations
+   * @returns a list of failed mutations
    *
    * @par Idempotency
    * This operation is idempotent if the provided mutations are idempotent. Note
@@ -428,15 +447,31 @@ class Table {
   /**
    * Makes asynchronous attempts to apply mutations to multiple rows.
    *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
+   * These mutations are applied in bulk, in a single `MutateRowsRequest` RPC.
+   * Failures are handled on a per mutation basis. If the result of a mutation
+   * is a permanent (non-retryable) error, or if a non-idempotent mutation fails
+   * for any reason, the mutation will not be retried. Only idempotent mutations
+   * that encounter transient (retryable) errors can be retried. These mutations
+   * are collected and retried in bulk. This function will continue to retry any
+   * remaining errors until this class's retry policy is exhausted.
    *
-   * @param mut the mutations, note that this function takes
-   *     ownership (and then discards) the data in the mutation. In general, a
-   *     `BulkMutation` can modify multiple rows, and the modifications for each
-   *     row can change (or create) multiple cells, across different columns and
-   *     column families.
+   * It is possible that some mutations may not be attempted at all. These
+   * mutations are considered failing and will be returned.
+   *
+   * @note The retry policy is only impacted by the result of the gRPC stream.
+   *     Let's say you have a `LimitedErrorCountRetryPolicy` of 2. If an
+   *     idempotent mutation fails with a retryable error and the stream itself
+   *     succeeds, it may be retried more than 2 times. Only when the stream
+   *     fails twice will we give up and consider the mutation to be failed.
+   *
+   * @note This function takes ownership (and then discards) the data in the
+   *     mutation. In general, a `BulkMutation` can modify multiple rows, and
+   *     the modifications for each row can change (or create) multiple cells,
+   *     across different columns and column families.
+   *
+   * @param mut the mutations
+   * @returns a future to be filled with a list of failed mutations, when the
+   *     operation is complete.
    *
    * @par Idempotency
    * This operation is idempotent if the provided mutations are idempotent. Note
