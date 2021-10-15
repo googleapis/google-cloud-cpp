@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) try {
   // Create a namespace alias to make the code easier to read.
   namespace pubsub = ::google::cloud::pubsub;
   auto publisher = pubsub::Publisher(
-      pubsub::MakePublisherConnection(pubsub::Topic(project_id, topic_id), {}));
+      pubsub::MakePublisherConnection(pubsub::Topic(project_id, topic_id)));
   auto id =
       publisher
           .Publish(pubsub::MessageBuilder{}.SetData("Hello World!").Build())
