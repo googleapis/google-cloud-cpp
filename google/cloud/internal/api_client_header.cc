@@ -22,11 +22,6 @@ namespace internal {
 
 std::string ApiClientVersion(std::string const& build_identifier) {
   auto client_library_version = version_string();
-  if (!client_library_version.empty() && client_library_version[0] == 'v') {
-    // Remove the leading 'v'. Without it, version_string() is a valid
-    // SemVer string: "<major>.<minor>.<patch>[-<prerelease>][+<build>]".
-    client_library_version.erase(0, 1);
-  }
   if (!build_identifier.empty()) {
     auto pos = client_library_version.find('+');
     client_library_version.append(1, pos == std::string::npos ? '+' : '.');
