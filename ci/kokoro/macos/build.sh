@@ -105,7 +105,7 @@ curl -sSL --retry 10 -o "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}" \
 
 # The CA roots are outdated in some Kokoro macOS machines. Use Google's
 # `root.pem` file for any remaining downloads.
-echo "cacert ${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}" >> $HOME/.curlrc
+echo "cacert ${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}" >>"${HOME}/.curlrc"
 
 io::log_h1 "Downloading cache"
 readonly CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
