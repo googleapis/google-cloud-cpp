@@ -54,16 +54,6 @@ class BulkMutatorState {
   /// Handle the result of a `Finish()` operation on the MutateRows() RPC.
   void OnFinish(google::cloud::Status finish_status);
 
-  /**
-   * Return the permanently failed mutations.
-   *
-   * This will return all the mutations which we've learned are definite
-   * failures since since the last call to this member function.
-   *
-   * Whatever is returned, will not be returned by `OnRetryDone()`.
-   */
-  std::vector<FailedMutation> ConsumeAccumulatedFailures();
-
   /// Terminate the retry loop and return all the failures.
   std::vector<FailedMutation> OnRetryDone() &&;
 

@@ -161,12 +161,6 @@ void BulkMutatorState::OnFinish(google::cloud::Status finish_status) {
   }
 }
 
-std::vector<FailedMutation> BulkMutatorState::ConsumeAccumulatedFailures() {
-  std::vector<FailedMutation> res;
-  res.swap(failures_);
-  return res;
-}
-
 std::vector<FailedMutation> BulkMutatorState::OnRetryDone() && {
   std::vector<FailedMutation> result(std::move(failures_));
 
