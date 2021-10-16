@@ -215,6 +215,7 @@ if [[ "${LOCAL_FLAG}" = "true" ]]; then
   printf "%10s %s\n" "gcc:" "$(gcc --version 2>&1 | head -1)"
   printf "%10s %s\n" "clang:" "$(clang --version 2>&1 | head -1)"
   printf "%10s %s\n" "cc:" "$(cc --version 2>&1 | head -1)"
+  printf "%10s %s\n" "cmake:" "$(cmake --version 2>&1 | head -1)"
   io::log_h1 "Starting local build: ${BUILD_FLAG}"
   readonly TIMEFORMAT="==> 🕑 ${BUILD_FLAG} completed in %R seconds"
   time "${PROGRAM_DIR}/builds/${BUILD_FLAG}.sh"
