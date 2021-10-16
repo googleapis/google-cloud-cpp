@@ -23,6 +23,7 @@ directory.
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 [ninja-build]: https://ninja-build.org/
 [ccmake]: https://cmake.org/cmake/help/latest/manual/ccmake.1.html
+[issues-5489]: https://github.com/googleapis/google-cloud-cpp/issues/5849
 
 There are two primary ways of obtaining `google-cloud-cpp`. You can use git:
 
@@ -64,9 +65,9 @@ platforms.
 
 ## Common Configuration Variables for CMake
 
-As it is often the case, the CMake build can be configured using a number of
+As is often the case, the CMake build can be configured using a number of
 options and command-line flags.  A full treatment of these options is outside
-the scope of this document, but a few highlights:
+the scope of this document, but here are a few highlights:
 
 * Consider using `-GNinja` to switch the generator from `make` (or msbuild on
   Windows) to [`ninja`][ninja-build]. In our experience `ninja` takes better
@@ -75,12 +76,12 @@ the scope of this document, but a few highlights:
   package managers.
 * If you use the default generator, consider appending `-- -j ${NCPU}` to the
   build command, where `NCPU` is an environment variable set to the number of
-  processors on your system. On Linux, you can obtain this information using
-  the `nproc` command or `sysctl -n hw.physicalcpu` on macOS.
-* By default, CMake compiles the `google-cloud-cpp` as static libraries, the
+  processors on your system. You can obtain this information using
+  the `nproc` command on Linux, or `sysctl -n hw.physicalcpu` on macOS.
+* By default, CMake compiles the `google-cloud-cpp` as static libraries. The
   standard `-DBUILD_SHARED_LIBS=ON` option can be used to switch this to shared
-  libraries.  Having said this, on Windows, there are known issues with DLLs
-  and protos.
+  libraries.  Having said this, on Windows there are [known issues][issues-5489]
+  with DLLs and generated protos.
 * You can compile a subset of the libraries using
   `-DGOOGLE_CLOUD_CPP_ENABLE=lib1,lib2`.
 
