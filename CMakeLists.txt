@@ -35,7 +35,15 @@ set(GOOGLE_CLOUD_CPP_CXX_STANDARD
 mark_as_advanced(GOOGLE_CLOUD_CPP_CXX_STANDARD)
 
 # Allow applications to override the CMAKE_CXX_STANDARD, but if not set use 11.
-set(CMAKE_CXX_STANDARD 11)
+if (NOT CMAKE_CXX_STANDARD)
+    set(CMAKE_CXX_STANDARD 11)
+endif ()
+if (CMAKE_CXX_STANDARD VERSION_LESS 11)
+    message(
+        FATAL_ERROR
+            "CMAKE_CXX_STANDARD must be >= 11, was ${CMAKE_CXX_STANDARD}")
+endif ()
+
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if (NOT ("${GOOGLE_CLOUD_CPP_CXX_STANDARD}" STREQUAL ""))
