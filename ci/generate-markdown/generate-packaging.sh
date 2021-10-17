@@ -43,6 +43,9 @@ directory.
   [setup a development workstation][howto-setup-dev-workstation].
 
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
+[ninja-build]: https://ninja-build.org/
+[ccmake]: https://cmake.org/cmake/help/latest/manual/ccmake.1.html
+[issues-5489]: https://github.com/googleapis/google-cloud-cpp/issues/5849
 
 There are two primary ways of obtaining `google-cloud-cpp`. You can use git:
 
@@ -66,13 +69,6 @@ tar -xf ${VERSION}.tar.gz -C $HOME/google-cloud-cpp --strip=1
 <!-- This is an automatically generated file -->
 <!-- Make changes in ci/generate-markdown/generate-packaging.sh -->
 
-By default `google-cloud-cpp` libraries download and compile all their
-dependencies ([see below](#required-libraries) for a complete list). This makes
-it easier for users to "take the library for a spin", and works well for users
-that "Live at Head", but does not work for package maintainers or users that
-prefer to compile their dependencies once and install them in `/usr/local/` or
-a similar directory.
-
 This document provides instructions to install the dependencies of
 `google-cloud-cpp`.
 
@@ -85,114 +81,42 @@ cmake -H. -Bcmake-out -DBUILD_TESTING=OFF -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
 cmake --build cmake-out --target install
 ```
 
-You may choose to parallelize the build by appending `-- -j ${NCPU}` to the
-build command, where `NCPU` is an environment variable set to the number of
-processors on your system. On Linux, you can obtain this information using the
-`nproc` command or `sysctl -n hw.physicalcpu` on Mac.
-
 Unfortunately getting your system to this state may require multiple steps,
 the following sections describe how to install `google-cloud-cpp` on several
 platforms.
 
-## Using `google-cloud-cpp` in CMake-based projects.
+## Common Configuration Variables for CMake
 
-Once you have installed `google-cloud-cpp` you can use the libraries from
-your own projects using `find_package()` in your `CMakeLists.txt` file:
+As is often the case, the CMake build can be configured using a number of
+options and command-line flags.  A full treatment of these options is outside
+the scope of this document, but here are a few highlights:
 
-```CMake
-cmake_minimum_required(VERSION 3.5)
+* Consider using `-GNinja` to switch the generator from `make` (or msbuild on
+  Windows) to [`ninja`][ninja-build]. In our experience `ninja` takes better
+  advantage of multi-core machines. Be aware that `ninja` is often not
+  installed in development workstations, but it is available through most
+  package managers.
+* If you use the default generator, consider appending `-- -j ${NCPU}` to the
+  build command, where `NCPU` is an environment variable set to the number of
+  processors on your system. You can obtain this information using
+  the `nproc` command on Linux, or `sysctl -n hw.physicalcpu` on macOS.
+* By default, CMake compiles the `google-cloud-cpp` as static libraries. The
+  standard `-DBUILD_SHARED_LIBS=ON` option can be used to switch this to shared
+  libraries.  Having said this, on Windows there are [known issues][issues-5489]
+  with DLLs and generated protos.
+* You can compile a subset of the libraries using
+  `-DGOOGLE_CLOUD_CPP_ENABLE=lib1,lib2`.
 
-find_package(google_cloud_cpp_storage REQUIRED)
+To find out about other configuration options, consider using
+[`ccmake`][ccmake], or `cmake -L`.
 
-add_executable(my_program my_program.cc)
-target_link_libraries(my_program google-cloud-cpp::storage)
-```
+## Using `google-cloud-cpp` after it is installed
 
-You can use a similar `CMakeLists.txt` to use the Cloud Bigtable C++ client:
-
-```CMake
-cmake_minimum_required(VERSION 3.5)
-
-find_package(google_cloud_cpp_bigtable REQUIRED)
-
-add_executable(my_program my_program.cc)
-target_link_libraries(my_program google-cloud-cpp::bigtable)
-```
-
-## Using `google-cloud-cpp` in Make-based projects.
-
-Once you have installed `google-cloud-cpp` you can use the libraries in your
-own Make-based projects using `pkg-config`:
-
-```Makefile
-GCS_CXXFLAGS   := $(shell pkg-config storage_client --cflags)
-GCS_CXXLDFLAGS := $(shell pkg-config storage_client --libs-only-L)
-GCS_LIBS       := $(shell pkg-config storage_client --libs-only-l)
-
-my_storage_program: my_storage_program.cc
-        $(CXX) $(CXXFLAGS) $(GCS_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(GCS_LIBS)
-
-CBT_CXXFLAGS   := $(shell pkg-config bigtable_client --cflags)
-CBT_CXXLDFLAGS := $(shell pkg-config bigtable_client --libs-only-L)
-CBT_LIBS       := $(shell pkg-config bigtable_client --libs-only-l)
-
-my_bigtable_program: my_bigtable_program.cc
-        $(CXX) $(CXXFLAGS) $(CBT_CXXFLAGS) $(CBT_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
-```
-
-## Using `google-cloud-cpp` in Bazel-based projects.
-
-If you use `Bazel` for your builds you do not need to install
-`google-cloud-cpp`. We provide a Starlark function to automatically download and
-compile `google-cloud-cpp` as part of you Bazel build. Add the following
-commands to your `WORKSPACE` file:
-
-```Python
-# Update the version and SHA256 digest as needed.
-http_archive(
-    name = "com_github_googleapis_google_cloud_cpp",
-    url = "http://github.com/googleapis/google-cloud-cpp/archive/v1.19.0.tar.gz",
-    strip_prefix = "google-cloud-cpp-1.19.0",
-    sha256 = "33eb349cf5f033704a4299b0ac57e3a8b4973ca92f4491aef822bfeb41e69d27",
-)
-
-load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
-google_cloud_cpp_deps()
-# Have to manually call the corresponding function for gRPC:
-#   https://github.com/bazelbuild/bazel/issues/1550
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
-grpc_deps()
-load("@upb//bazel:workspace_deps.bzl", "upb_deps")
-upb_deps()
-load("@build_bazel_rules_apple//apple:repositories.bzl", "apple_rules_dependencies")
-apple_rules_dependencies()
-load("@build_bazel_apple_support//lib:repositories.bzl", "apple_support_dependencies")
-apple_support_dependencies()
-```
-
-Then you can link the libraries from your `BUILD` files:
-
-```Python
-cc_binary(
-    name = "bigtable_install_test",
-    srcs = [
-        "bigtable_install_test.cc",
-    ],
-    deps = [
-        "@com_github_googleapis_google_cloud_cpp//google/cloud/bigtable:bigtable_client",
-    ],
-)
-
-cc_binary(
-    name = "storage_install_test",
-    srcs = [
-        "storage_install_test.cc",
-    ],
-    deps = [
-        "@com_github_googleapis_google_cloud_cpp//google/cloud/storage:storage_client",
-    ],
-)
-```
+Once installed, follow any of the [quickstart guides](/README.md#quickstart) to
+use `google-cloud-cpp` in your CMake or Make-based project. If you are planning
+to use Bazel for your own project, there is no need to install
+`google-cloud-cpp`, we provide Bazel `BUILD` files for this purpose. The
+quickstart guides also cover this use-case.
 
 ## Required Libraries
 
@@ -221,7 +145,7 @@ instructions include steps to install these indirect dependencies too.
 
 When possible, the instructions below prefer to use pre-packaged versions of
 these libraries and their dependencies. In some cases the packages do not exist,
-or the package versions are too old to support `google-cloud-cpp`. If this is
+or the packaged versions are too old to support `google-cloud-cpp`. If this is
 the case, the instructions describe how you can manually download and install
 these dependencies.
 END_OF_PREAMBLE
