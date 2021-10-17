@@ -162,7 +162,6 @@ DOCKER_DISTROS=(
   "demo-opensuse-leap.Dockerfile,openSUSE (Leap)"
   "demo-ubuntu-focal.Dockerfile,Ubuntu (20.04 LTS - Focal Fossa)"
   "demo-ubuntu-bionic.Dockerfile,Ubuntu (18.04 LTS - Bionic Beaver)"
-  "demo-ubuntu-xenial.Dockerfile,Ubuntu (16.04 LTS - Xenial Xerus)"
   "demo-debian-bullseye.Dockerfile,Debian (11 - Bullseye)"
   "demo-debian-buster.Dockerfile,Debian (10 - Buster)"
   "demo-debian-stretch.Dockerfile,Debian (9 - Stretch)"
