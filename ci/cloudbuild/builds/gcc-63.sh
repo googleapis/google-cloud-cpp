@@ -19,8 +19,8 @@ set -euo pipefail
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
 
-# We run this test in a docker image that includes the oldest gcc that we
-# support, which happens to be 5.4 currently.
+# We run this test in a docker image that includes the oldest GCC that we
+# support, which happens to be 6.3 currently.
 export CC=gcc
 export CXX=g++
 
