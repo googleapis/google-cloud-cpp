@@ -90,6 +90,10 @@
 
 ## v1.33.0 - TBD
 
+> :warning: In this release we have stopped testing with Ubuntu:16.04 as this
+> distribution is no longer supported by Google Cloud. We will gladly consider,
+> but do not commit to accepting, patches to fix build problems on the platform.
+
 **ATTENTION**: Our Doxygen documentation (e.g. [Storage
 docs][storage-dox-link]) was incorrectly showing the versioned inline namespace
 name for our symbols (it was `v1`), implicitly suggesting that users should
