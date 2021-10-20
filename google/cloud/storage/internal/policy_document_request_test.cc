@@ -78,8 +78,7 @@ TEST(PostPolicyV4EscapeTest, Simple) {
   EXPECT_EQ("\127\065abcd$", *PostPolicyV4Escape("\127\065abcd$"));
   auto constexpr kUtf8Text = u8"\\\b\f\n\r\t\v\u0080\u0119";
   auto input = std::string{kUtf8Text, kUtf8Text + 11};
-  EXPECT_EQ("\\\\b\\f\\n\\r\\t\\v\\u0080\\u0119",
-            *PostPolicyV4Escape(input));
+  EXPECT_EQ("\\\\b\\f\\n\\r\\t\\v\\u0080\\u0119", *PostPolicyV4Escape(input));
 #else   // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THAT(PostPolicyV4Escape("ąę"), StatusIs(StatusCode::kUnimplemented));
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
