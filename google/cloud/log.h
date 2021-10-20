@@ -436,7 +436,7 @@ class Logger {
 template <>
 class Logger<false> {
  public:
-  Logger<false>(Severity severity, char const*, char const*, int, LogSink&)
+  Logger(Severity severity, char const*, char const*, int, LogSink&)
       : severity_(severity) {}
 
   ~Logger() {
