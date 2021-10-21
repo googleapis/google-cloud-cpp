@@ -127,7 +127,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/protobuf
-RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.18.1.tar.gz | \
+RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.19.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
