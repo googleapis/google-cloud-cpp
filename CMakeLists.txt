@@ -34,7 +34,8 @@ set(GOOGLE_CLOUD_CPP_CXX_STANDARD
     CACHE STRING "Unused. Prefer CMAKE_CXX_STANDARD")
 mark_as_advanced(GOOGLE_CLOUD_CPP_CXX_STANDARD)
 
-# Allow applications to override the CMAKE_CXX_STANDARD, but if not set use 14.
+# Allow applications to override the CMAKE_CXX_STANDARD. If the application
+# developer does not provide a value, use C++14.
 if (NOT CMAKE_CXX_STANDARD)
     set(CMAKE_CXX_STANDARD 14)
 endif ()
