@@ -595,9 +595,10 @@ void ChangeObjectCustomTime(google::cloud::storage::Client client,
 google::cloud::storage::Client StorageRetries(std::vector<std::string> const&) {
   //! [START storage_configure_retries]
   namespace gcs = ::google::cloud::storage;
-  // Create a client that:
   return gcs::Client(
       google::cloud::Options{}
+
+          // Creates a client with the following configuration:
           // Retries only idempotent operations.
           .set<gcs::IdempotencyPolicyOption>(
               gcs::StrictIdempotencyPolicy().clone())
