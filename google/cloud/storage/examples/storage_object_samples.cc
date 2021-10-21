@@ -592,6 +592,32 @@ void ChangeObjectCustomTime(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+google::cloud::storage::Client StorageRetries(std::vector<std::string> const&) {
+  //! [START storage_configure_retries]
+  namespace gcs = ::google::cloud::storage;
+  // Create a client that:
+  return gcs::Client(
+      google::cloud::Options{}
+          // Retries all operations, regardless of their idempotency
+          .set<gcs::IdempotencyPolicyOption>(
+              gcs::AlwaysRetryIdempotencyPolicy().clone())
+          // On error, it backs off for 1 second, then 3 seconds, then 9
+          // seconds, etc. If the backoff time reaches (or exceeds) 2 minutes
+          // it stops growing and becomes 2 minutes. The strategy introduces
+          // jitter around the backoff delay.
+          .set<gcs::BackoffPolicyOption>(
+              gcs::ExponentialBackoffPolicy(
+                  /*initial_delay=*/std::chrono::seconds(1),
+                  /*maximum_delay=*/std::chrono::minutes(2),
+                  /*scaling=*/3.0)
+                  .clone())
+          // Retries all operations for up to 5 minutes, including any backoff
+          // time.
+          .set<gcs::RetryPolicyOption>(
+              gcs::LimitedTimeRetryPolicy(std::chrono::minutes(5)).clone()));
+  //! [END storage_configure_retries]
+}
+
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
@@ -722,6 +748,9 @@ void RunAll(std::vector<std::string> const& argv) {
   InsertObjectModifiedRetry(client,
                             {bucket_name, object_name_retry, object_media});
   DeleteObject(client, {bucket_name, object_name_retry});
+
+  std::cout << "\nRunning StorageRetries() example" << std::endl;
+  (void)StorageRetries({});
 
   if (!examples::UsingEmulator()) std::this_thread::sleep_until(pause);
   (void)examples::RemoveBucketAndContents(client, bucket_name);
