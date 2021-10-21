@@ -59,6 +59,7 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
+      -DCMAKE_CXX_STANDARD=14 \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
@@ -73,6 +74,7 @@ WORKDIR /var/tmp/build
 RUN curl -sSL https://github.com/google/googletest/archive/release-1.11.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
+      -DCMAKE_CXX_STANDARD=14 \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
       -H. -Bcmake-out/googletest && \
@@ -85,6 +87,7 @@ WORKDIR /var/tmp/build
 RUN curl -sSL https://github.com/google/benchmark/archive/v1.6.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
+        -DCMAKE_CXX_STANDARD=14 \
         -DCMAKE_BUILD_TYPE="Release" \
         -DBUILD_SHARED_LIBS=yes \
         -DBENCHMARK_ENABLE_TESTING=OFF \
@@ -97,6 +100,7 @@ WORKDIR /var/tmp/build
 RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
+      -DCMAKE_CXX_STANDARD=14 \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DCRC32C_BUILD_TESTS=OFF \
@@ -111,6 +115,7 @@ WORKDIR /var/tmp/build
 RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
+      -DCMAKE_CXX_STANDARD=14 \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
@@ -123,6 +128,7 @@ WORKDIR /var/tmp/build/protobuf
 RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.18.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
+        -DCMAKE_CXX_STANDARD=14 \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
@@ -136,6 +142,7 @@ RUN dnf makecache && dnf install -y c-ares-devel re2-devel
 RUN curl -sSL https://github.com/grpc/grpc/archive/v1.41.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
+        -DCMAKE_CXX_STANDARD=14 \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
         -DgRPC_INSTALL=ON \

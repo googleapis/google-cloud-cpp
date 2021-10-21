@@ -90,6 +90,11 @@
 
 ## v1.33.0 - TBD
 
+> :warning: In this release we have changed the default C++ version in the CMake
+> builds from C++11 to C++14.  All the compilers we test with (GCC >= 6,
+> CLang >= 6, MSVC >= 2017) use C++14 **by default**. We continue to compile
+> and test our code with C++11.
+
 > :warning: In this release we have stopped testing with Ubuntu:16.04 as this
 > distribution is no longer supported by Google Cloud. We will gladly consider,
 > but do not commit to accepting, patches to fix build problems on the platform.

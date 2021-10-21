@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/row_reader.h"
-#include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/internal/api_client_header.h"
@@ -94,7 +93,7 @@ class ReadRowsParserMockFactory
   ParserPtr Create() override {
     CreateHook();
     if (parsers_.empty()) {
-      return ParserPtr(new bigtable::internal::ReadRowsParser);
+      return absl::make_unique<bigtable::internal::ReadRowsParser>();
     }
     ParserPtr parser = std::move(parsers_.front());
     parsers_.pop_front();
