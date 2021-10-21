@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace bigquery {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 void BigQueryReadReadRowsStreamingUpdater(
     ::google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
@@ -25,7 +25,7 @@ void BigQueryReadReadRowsStreamingUpdater(
   request.set_offset(request.offset() + response.row_count());
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace bigquery
 }  // namespace cloud
 }  // namespace google

@@ -17,54 +17,47 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
-Timer::Timer(CpuAccounting accounting)
-    : accounting_(accounting), start_(std::chrono::steady_clock::now()) {
 #if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-  (void)getrusage(RUsageWho(), &start_usage_);
+namespace {
+int rusage_who() {
+#if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
+  return RUSAGE_THREAD;
+#else
+  return RUSAGE_SELF;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
+}
+}  // namespace
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
+
+void Timer::Start() {
+#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
+  (void)getrusage(rusage_who(), &start_usage_);
+#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
+  start_ = std::chrono::steady_clock::now();
 }
 
-Timer::Snapshot Timer::Sample() const {
-  auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(
+void Timer::Stop() {
+  elapsed_time_ = std::chrono::duration_cast<std::chrono::microseconds>(
       std::chrono::steady_clock::now() - start_);
-#if !GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-  return Snapshot{elapsed, std::chrono::microseconds()};
-#else
+
+#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
   auto as_usec = [](timeval const& tv) {
     return std::chrono::microseconds(std::chrono::seconds(tv.tv_sec)) +
            std::chrono::microseconds(tv.tv_usec);
   };
 
   struct rusage now {};
-  (void)getrusage(RUsageWho(), &now);
-  auto const utime = as_usec(now.ru_utime) - as_usec(start_usage_.ru_utime);
-  auto const stime = as_usec(now.ru_stime) - as_usec(start_usage_.ru_stime);
-  return Snapshot{elapsed, utime + stime};
-#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-}
-
-std::string Timer::Annotations() const {
-#if !GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-  return "# No usage annotations are available";
-#else
-  auto usage = Sample();
-
-  auto as_usec = [](timeval const& tv) {
-    return std::chrono::microseconds(std::chrono::seconds(tv.tv_sec)) +
-           std::chrono::microseconds(tv.tv_usec);
-  };
-
-  struct rusage now {};
-  (void)getrusage(RUsageWho(), &now);
+  (void)getrusage(rusage_who(), &now);
   auto utime = as_usec(now.ru_utime) - as_usec(start_usage_.ru_utime);
   auto stime = as_usec(now.ru_stime) - as_usec(start_usage_.ru_stime);
+  cpu_time_ = utime + stime;
   double cpu_fraction = 0;
-  if (usage.elapsed_time.count() != 0) {
-    cpu_fraction = static_cast<double>(usage.cpu_time.count()) /
-                   static_cast<double>(usage.elapsed_time.count());
+  if (elapsed_time_.count() != 0) {
+    cpu_fraction = static_cast<double>(cpu_time_.count()) /
+                   static_cast<double>(elapsed_time_.count());
   }
   now.ru_minflt -= start_usage_.ru_minflt;
   now.ru_majflt -= start_usage_.ru_majflt;
@@ -76,18 +69,9 @@ std::string Timer::Annotations() const {
   now.ru_nsignals -= start_usage_.ru_nsignals;
   now.ru_nvcsw -= start_usage_.ru_nvcsw;
   now.ru_nivcsw -= start_usage_.ru_nivcsw;
-#if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
-  std::string accounting =
-      accounting_ == CpuAccounting::kPerThread ? "per-thread" : "per-process";
-#else
-  std::string accounting = accounting_ == CpuAccounting::kPerThread
-                               ? "per-thread (but unsupported)"
-                               : "per-process";
-#endif  //  GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
 
   std::ostringstream os;
-  os << "# accounting                   =" << accounting
-     << "# user time                    =" << utime.count() << " us\n"
+  os << "# user time                    =" << utime.count() << " us\n"
      << "# system time                  =" << stime.count() << " us\n"
      << "# CPU fraction                 =" << cpu_fraction << "\n"
      << "# maximum resident set size    =" << now.ru_maxrss << " KiB\n"
@@ -103,12 +87,12 @@ std::string Timer::Annotations() const {
      << "# IPC messages received        =" << now.ru_msgrcv << "\n"
      << "# signals received             =" << now.ru_nsignals << "\n"
      << "# voluntary context switches   =" << now.ru_nvcsw << "\n"
-     << "# involuntary context switches =" << now.ru_nivcsw;
-  return std::move(os).str();
+     << "# involuntary context switches =" << now.ru_nivcsw << "\n";
+  annotations_ = std::move(os).str();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 }
 
-bool Timer::SupportsPerThreadUsage() {
+bool Timer::SupportPerThreadUsage() {
 #if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
   return true;
 #else
@@ -116,17 +100,7 @@ bool Timer::SupportsPerThreadUsage() {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
 }
 
-int Timer::RUsageWho() const {
-#if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
-  return accounting_ == CpuAccounting::kPerThread ? RUSAGE_THREAD : RUSAGE_SELF;
-#elif GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-  return RUSAGE_SELF;
-#else
-  return 0;  // unused, so any value would do.
-#endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
-}
-
 }  // namespace testing_util
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

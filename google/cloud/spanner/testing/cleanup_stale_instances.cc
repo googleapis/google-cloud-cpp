@@ -13,32 +13,33 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/testing/cleanup_stale_instances.h"
-#include "google/cloud/spanner/admin/database_admin_client.h"
-#include "google/cloud/spanner/admin/instance_admin_client.h"
+#include "google/cloud/spanner/database_admin_client.h"
+#include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/format_time_point.h"
-#include "google/cloud/project.h"
 #include <chrono>
 #include <vector>
 
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 Status CleanupStaleInstances(std::string const& project_id,
                              std::regex const& instance_name_regex) {
-  Project project(project_id);
-  spanner_admin::InstanceAdminClient instance_admin_client(
-      spanner_admin::MakeInstanceAdminConnection());
-  std::vector<std::string> instances = [&]() -> std::vector<std::string> {
-    std::vector<std::string> instances;
+  spanner::DatabaseAdminClient database_admin_client(
+      spanner::MakeDatabaseAdminConnection());
+  spanner::InstanceAdminClient instance_admin_client(
+      spanner::MakeInstanceAdminConnection());
+  std::vector<std::string> instance_ids = [&]() -> std::vector<std::string> {
+    std::vector<std::string> instance_ids;
     for (auto const& instance :
-         instance_admin_client.ListInstances(project.FullName())) {
+         instance_admin_client.ListInstances(project_id, {})) {
       if (!instance) break;
       auto name = instance->name();
       std::smatch m;
       if (std::regex_match(name, m, instance_name_regex)) {
+        auto instance_id = m[1];
         auto date_str = m[2];
         auto cutoff_date =
             google::cloud::internal::FormatRfc3339(
@@ -46,29 +47,28 @@ Status CleanupStaleInstances(std::string const& project_id,
                 .substr(0, 10);
         // Compare the strings
         if (date_str < cutoff_date) {
-          instances.push_back(name);
+          instance_ids.push_back(instance_id);
         }
       }
     }
-    return instances;
+    return instance_ids;
   }();
   // Let it fail if we have too many leaks.
-  if (instances.size() > 20) {
+  if (instance_ids.size() > 20) {
     return Status(StatusCode::kInternal, "too many stale instances");
   }
-  spanner_admin::DatabaseAdminClient database_admin_client(
-      spanner_admin::MakeDatabaseAdminConnection());
   // We ignore failures here.
-  for (auto const& instance : instances) {
-    for (auto const& backup : database_admin_client.ListBackups(instance)) {
-      database_admin_client.DeleteBackup(backup->name());
+  for (auto const& id_to_delete : instance_ids) {
+    google::cloud::spanner::Instance in(project_id, id_to_delete);
+    for (auto const& b : database_admin_client.ListBackups(in, {})) {
+      database_admin_client.DeleteBackup(b.value());
     }
-    instance_admin_client.DeleteInstance(instance);
+    instance_admin_client.DeleteInstance(in);
   }
   return Status();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

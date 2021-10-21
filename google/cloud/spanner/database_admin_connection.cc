@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO(#7356): Remove this file after the deprecation period expires
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/database_admin_connection.h"
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/options.h"
@@ -29,12 +27,12 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 namespace gcsa = ::google::spanner::admin::database::v1;
 
-using ::google::cloud::internal::Idempotency;
-using ::google::cloud::internal::RetryLoop;
+using google::cloud::internal::Idempotency;
+using google::cloud::internal::RetryLoop;
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
@@ -125,7 +123,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
             opts.get<SpannerBackoffPolicyOption>()->clone()),
         polling_policy_prototype_(
             opts.get<SpannerPollingPolicyOption>()->clone()),
-        background_threads_(internal::MakeBackgroundThreadsFactory(opts)()) {}
+        background_threads_(opts.get<GrpcBackgroundThreadsFactoryOption>()()) {}
 
   ~DatabaseAdminConnectionImpl() override = default;
 
@@ -634,11 +632,11 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
   return MakeDatabaseAdminConnection(std::move(opts));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 std::shared_ptr<spanner::DatabaseAdminConnection>
 MakeDatabaseAdminConnectionForTesting(std::shared_ptr<DatabaseAdminStub> stub,
@@ -648,7 +646,7 @@ MakeDatabaseAdminConnectionForTesting(std::shared_ptr<DatabaseAdminStub> stub,
       std::move(stub), std::move(opts));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

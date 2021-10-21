@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 TEST(GoldenKitchenSinkDefaultOptions, DefaultEndpoint) {
@@ -33,14 +33,16 @@ TEST(GoldenKitchenSinkDefaultOptions, DefaultEndpoint) {
 }
 
 TEST(GoldenKitchenSinkDefaultOptions, EnvVarEndpoint) {
-  internal::SetEnv("GOLDEN_KITCHEN_SINK_ENDPOINT", "foo.googleapis.com");
+  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_KITCHEN_SINK_ENDPOINT",
+                   "foo.googleapis.com");
   Options options;
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
   EXPECT_EQ("foo.googleapis.com", updated_options.get<EndpointOption>());
 }
 
 TEST(GoldenKitchenSinkDefaultOptions, OptionEndpoint) {
-  internal::SetEnv("GOLDEN_KITCHEN_SINK_ENDPOINT", "foo.googleapis.com");
+  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_KITCHEN_SINK_ENDPOINT",
+                   "foo.googleapis.com");
   Options options;
   options.set<EndpointOption>("bar.googleapis.com");
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
@@ -48,7 +50,7 @@ TEST(GoldenKitchenSinkDefaultOptions, OptionEndpoint) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

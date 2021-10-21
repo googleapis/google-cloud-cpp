@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 class SmallReadsIntegrationTest
@@ -84,54 +84,8 @@ TEST_F(SmallReadsIntegrationTest, Repro5096) {
   }
 }
 
-TEST_F(SmallReadsIntegrationTest, ReadFullSingleRead) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-  auto const contents = LoremIpsum();
-
-  // Create a small object, read it all in the first .read() call
-  auto meta = client->InsertObject(bucket_name_, object_name, contents,
-                                   IfGenerationMatch(0));
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-
-  std::vector<char> buffer(2 * contents.size());
-  auto reader = client->ReadObject(bucket_name_, object_name);
-  reader.read(buffer.data(), static_cast<std::streamsize>(buffer.size()));
-  ASSERT_GT(reader.gcount(), 0);
-  auto const size = static_cast<std::size_t>(reader.gcount());
-  EXPECT_TRUE(reader.eof());
-  EXPECT_TRUE(reader.fail());
-  EXPECT_FALSE(reader.bad());
-  ASSERT_STATUS_OK(reader.status());
-  EXPECT_EQ(contents, std::string(buffer.data(), size));
-}
-
-TEST_F(SmallReadsIntegrationTest, ReadFullByChar) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  // Create a small object, read it all in the first .read() call
-  auto meta = client->InsertObject(bucket_name_, object_name, LoremIpsum(),
-                                   IfGenerationMatch(0));
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-
-  auto reader = client->ReadObject(bucket_name_, object_name);
-  auto actual = std::string{std::istreambuf_iterator<char>(reader), {}};
-  ASSERT_STATUS_OK(reader.status());
-  EXPECT_FALSE(reader.eof());
-  EXPECT_FALSE(reader.fail());
-  EXPECT_TRUE(reader.good());
-  EXPECT_EQ(LoremIpsum(), actual);
-}
-
 }  // anonymous namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 TEST(StatusUtils, SessionNotFound) {
@@ -36,7 +36,7 @@ TEST(StatusUtils, SessionNotFound) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

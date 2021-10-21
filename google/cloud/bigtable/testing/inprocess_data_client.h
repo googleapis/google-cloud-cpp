@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_INPROCESS_DATA_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_INPROCESS_DATA_CLIENT_H
 
+#include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/data_client.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <string>
@@ -29,7 +30,8 @@ namespace testing {
  * manipulation APIs.
  *
  * This class is mainly for testing purpose, it enable use of a single embedded
- * server for multiple test cases. This dataclient uses a pre-defined channel.
+ * server
+ * for multiple test cases. This dataclient uses a pre-defined channel.
  */
 class InProcessDataClient : public bigtable::DataClient {
  public:
@@ -133,13 +135,14 @@ class InProcessDataClient : public bigtable::DataClient {
   //@}
 
  private:
-  google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
-    return google::cloud::internal::MakeBackgroundThreadsFactory();
+  ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() override {
+    return options_.background_threads_factory();
   }
 
   std::string project_;
   std::string instance_;
   std::shared_ptr<grpc::Channel> channel_;
+  ClientOptions options_;
 };
 
 }  // namespace testing

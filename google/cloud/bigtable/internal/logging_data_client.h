@@ -22,10 +22,10 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-namespace btproto = ::google::bigtable::v2;
+namespace btproto = google::bigtable::v2;
 
 /**
  * Implement a logging DataClient.
@@ -137,7 +137,7 @@ class LoggingDataClient : public DataClient {
       ::grpc::CompletionQueue* cq) override;
 
  private:
-  google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
+  ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() override {
     return child_->BackgroundThreadsFactory();
   }
 
@@ -146,7 +146,7 @@ class LoggingDataClient : public DataClient {
 };
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

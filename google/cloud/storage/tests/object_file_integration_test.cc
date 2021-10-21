@@ -26,13 +26,12 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
-using ::testing::ElementsAreArray;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Not;
@@ -251,7 +250,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileBinary) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(actual.empty());
   EXPECT_EQ(expected.size(), actual.size()) << " meta=" << *meta;
-  EXPECT_THAT(actual, ElementsAreArray(expected));
+  EXPECT_THAT(actual, ::testing::ElementsAreArray(expected));
 
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
@@ -656,7 +655,7 @@ TEST_F(ObjectFileIntegrationTest, ResumableUploadFileCustomHeader) {
 }
 
 }  // anonymous namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

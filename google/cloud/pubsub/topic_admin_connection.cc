@@ -13,37 +13,31 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/topic_admin_connection.h"
-#include "google/cloud/pubsub/internal/create_channel.h"
-#include "google/cloud/pubsub/internal/defaults.h"
-#include "google/cloud/pubsub/internal/publisher_auth.h"
+#include "google/cloud/pubsub/internal/default_retry_policies.h"
 #include "google/cloud/pubsub/internal/publisher_logging.h"
 #include "google/cloud/pubsub/internal/publisher_metadata.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
-#include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
-#include <initializer_list>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsub_internal {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-using ::google::cloud::internal::Idempotency;
-using ::google::cloud::internal::RetryLoop;
+using google::cloud::internal::Idempotency;
+using google::cloud::internal::RetryLoop;
 
 class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
  public:
   explicit TopicAdminConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<pubsub_internal::PublisherStub> stub,
       std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
       std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
+      : stub_(std::move(stub)),
         retry_policy_(std::move(retry_policy)),
         backoff_policy_(std::move(backoff_policy)) {}
 
@@ -220,31 +214,32 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
   }
 
  private:
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<pubsub_internal::PublisherStub> stub_;
   std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
   std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
 };
+}  // namespace
 
-// Decorates a TopicAdminStub. This works for both mock and real stubs.
-std::shared_ptr<pubsub_internal::PublisherStub> DecorateTopicAdminStub(
-    Options const& opts,
-    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
-    std::shared_ptr<pubsub_internal::PublisherStub> stub) {
-  if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<pubsub_internal::PublisherAuth>(std::move(auth),
-                                                            std::move(stub));
-  }
+std::shared_ptr<pubsub::TopicAdminConnection> MakeTopicAdminConnection(
+    pubsub::ConnectionOptions const& options,
+    std::shared_ptr<PublisherStub> stub,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
   stub = std::make_shared<pubsub_internal::PublisherMetadata>(std::move(stub));
-  if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
+  if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<pubsub_internal::PublisherLogging>(
-        std::move(stub), opts.get<GrpcTracingOptionsOption>());
+        std::move(stub), options.tracing_options());
   }
-  return stub;
+  return std::make_shared<TopicAdminConnectionImpl>(
+      std::move(stub), std::move(retry_policy), std::move(backoff_policy));
 }
 
-}  // namespace
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub_internal
+
+namespace pubsub {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 TopicAdminConnection::~TopicAdminConnection() = default;
 
@@ -291,58 +286,19 @@ ListTopicSnapshotsRange TopicAdminConnection::ListTopicSnapshots(
 }
 
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
-    std::initializer_list<pubsub_internal::NonConstructible>) {
-  return MakeTopicAdminConnection();
-}
-
-std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(Options opts) {
-  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 PolicyOptionList>(opts, __func__);
-  opts = pubsub_internal::DefaultCommonOptions(std::move(opts));
-
-  auto background = internal::MakeBackgroundThreadsFactory(opts)();
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      background->cq(), opts);
-
-  auto stub = pubsub_internal::CreateDefaultPublisherStub(auth->CreateChannel(
-      opts.get<EndpointOption>(), internal::MakeChannelArguments(opts)));
-
-  stub = DecorateTopicAdminStub(opts, std::move(auth), std::move(stub));
-  return std::make_shared<TopicAdminConnectionImpl>(
-      std::move(background), std::move(stub),
-      opts.get<pubsub::RetryPolicyOption>()->clone(),
-      opts.get<pubsub::BackoffPolicyOption>()->clone());
-}
-
-std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
     ConnectionOptions const& options,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
-  auto opts = internal::MakeOptions(options);
-  if (retry_policy) opts.set<RetryPolicyOption>(retry_policy->clone());
-  if (backoff_policy) opts.set<BackoffPolicyOption>(backoff_policy->clone());
-  return MakeTopicAdminConnection(std::move(opts));
+  auto stub =
+      pubsub_internal::CreateDefaultPublisherStub(options, /*channel_id=*/0);
+  if (!retry_policy) retry_policy = pubsub_internal::DefaultRetryPolicy();
+  if (!backoff_policy) backoff_policy = pubsub_internal::DefaultBackoffPolicy();
+  return pubsub_internal::MakeTopicAdminConnection(options, std::move(stub),
+                                                   std::move(retry_policy),
+                                                   std::move(backoff_policy));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
-
-namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<pubsub::TopicAdminConnection> MakeTestTopicAdminConnection(
-    Options const& opts, std::shared_ptr<PublisherStub> stub) {
-  auto background = internal::MakeBackgroundThreadsFactory(opts)();
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      background->cq(), opts);
-  stub = pubsub::DecorateTopicAdminStub(opts, std::move(auth), std::move(stub));
-  return std::make_shared<pubsub::TopicAdminConnectionImpl>(
-      std::move(background), std::move(stub),
-      opts.get<pubsub::RetryPolicyOption>()->clone(),
-      opts.get<pubsub::BackoffPolicyOption>()->clone());
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

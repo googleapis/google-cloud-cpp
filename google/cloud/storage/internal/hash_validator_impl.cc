@@ -13,36 +13,20 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/hash_validator_impl.h"
+#include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/internal/big_endian.h"
+#include <crc32c/crc32c.h>
 
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+MD5HashValidator::MD5HashValidator() : context_{} { MD5_Init(&context_); }
 
-HashValidator::Result NullHashValidator::Finish(HashValues computed) && {
-  return Result{{}, std::move(computed), false};
-}
-
-void CompositeValidator::ProcessMetadata(ObjectMetadata const& meta) {
-  a_->ProcessMetadata(meta);
-  b_->ProcessMetadata(meta);
-}
-
-void CompositeValidator::ProcessHashValues(HashValues const& values) {
-  a_->ProcessHashValues(values);
-  b_->ProcessHashValues(values);
-}
-
-HashValidator::Result CompositeValidator::Finish(HashValues computed) && {
-  auto a = std::move(*a_).Finish(computed);
-  auto b = std::move(*b_).Finish(std::move(computed));
-
-  a.received = Merge(std::move(a.received), std::move(b.received));
-  a.computed = Merge(std::move(a.computed), std::move(b.computed));
-  a.is_mismatch = a.is_mismatch || b.is_mismatch;
-  return a;
+void MD5HashValidator::Update(char const* buf, std::size_t n) {
+  MD5_Update(&context_, buf, n);
 }
 
 void MD5HashValidator::ProcessMetadata(ObjectMetadata const& meta) {
@@ -55,15 +39,36 @@ void MD5HashValidator::ProcessMetadata(ObjectMetadata const& meta) {
   received_hash_ = meta.md5_hash();
 }
 
-void MD5HashValidator::ProcessHashValues(HashValues const& values) {
-  if (!values.md5.empty()) received_hash_ = values.md5;
+void MD5HashValidator::ProcessHeader(std::string const& key,
+                                     std::string const& value) {
+  if (key != "x-goog-hash") {
+    return;
+  }
+  char const prefix[] = "md5=";
+  auto constexpr kPrefixLen = sizeof(prefix) - 1;
+  auto pos = value.find(prefix);
+  if (pos == std::string::npos) {
+    return;
+  }
+  auto end = value.find(',', pos);
+  if (end == std::string::npos) {
+    received_hash_ = value.substr(pos + kPrefixLen);
+    return;
+  }
+  received_hash_ = value.substr(pos + kPrefixLen, end - pos - kPrefixLen);
 }
 
-HashValidator::Result MD5HashValidator::Finish(HashValues computed) && {
-  if (received_hash_.empty()) return Result{{}, std::move(computed), false};
-  auto is_mismatch = (received_hash_ != computed.md5);
-  HashValues received{/*.crc32c=*/{}, /*.md5=*/std::move(received_hash_)};
-  return Result{std::move(received), std::move(computed), is_mismatch};
+HashValidator::Result MD5HashValidator::Finish() && {
+  std::string hash(MD5_DIGEST_LENGTH, ' ');
+  MD5_Final(reinterpret_cast<unsigned char*>(&hash[0]), &context_);
+  auto computed = Base64Encode(hash);
+  bool is_mismatch = !received_hash_.empty() && (received_hash_ != computed);
+  return Result{std::move(received_hash_), std::move(computed), is_mismatch};
+}
+
+void Crc32cHashValidator::Update(char const* buf, std::size_t n) {
+  current_ =
+      crc32c::Extend(current_, reinterpret_cast<std::uint8_t const*>(buf), n);
 }
 
 void Crc32cHashValidator::ProcessMetadata(ObjectMetadata const& meta) {
@@ -76,19 +81,34 @@ void Crc32cHashValidator::ProcessMetadata(ObjectMetadata const& meta) {
   received_hash_ = meta.crc32c();
 }
 
-void Crc32cHashValidator::ProcessHashValues(HashValues const& values) {
-  if (!values.crc32c.empty()) received_hash_ = values.crc32c;
+void Crc32cHashValidator::ProcessHeader(std::string const& key,
+                                        std::string const& value) {
+  if (key != "x-goog-hash") {
+    return;
+  }
+  char const prefix[] = "crc32c=";
+  auto constexpr kPrefixLen = sizeof(prefix) - 1;
+  auto pos = value.find(prefix);
+  if (pos == std::string::npos) {
+    return;
+  }
+  auto end = value.find(',', pos);
+  if (end == std::string::npos) {
+    received_hash_ = value.substr(pos + kPrefixLen);
+    return;
+  }
+  received_hash_ = value.substr(pos + kPrefixLen, end - pos - kPrefixLen);
 }
 
-HashValidator::Result Crc32cHashValidator::Finish(HashValues computed) && {
-  if (received_hash_.empty()) return Result{{}, std::move(computed), false};
-  auto is_mismatch = (received_hash_ != computed.crc32c);
-  HashValues received{/*.crc32c=*/std::move(received_hash_), /*.md5=*/{}};
-  return Result{std::move(received), std::move(computed), is_mismatch};
+HashValidator::Result Crc32cHashValidator::Finish() && {
+  std::string const hash = google::cloud::internal::EncodeBigEndian(current_);
+  auto computed = Base64Encode(hash);
+  bool is_mismatch = !received_hash_.empty() && (received_hash_ != computed);
+  return Result{std::move(received_hash_), std::move(computed), is_mismatch};
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

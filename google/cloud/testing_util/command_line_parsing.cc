@@ -22,7 +22,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
 // This parser does not validate the input fully, but it is good enough for our
@@ -108,7 +108,7 @@ std::string Basename(std::string const& path) {
 std::string BuildUsage(std::vector<OptionDescriptor> const& desc,
                        std::string const& command_path) {
   std::ostringstream os;
-  os << "Usage: " << Basename(command_path) << " [options]\n";
+  os << "Usage: " << Basename(command_path) << " [options] <region>\n";
   for (auto const& d : desc) {
     os << "    " << d.option << ": " << d.help << "\n";
   }
@@ -120,6 +120,7 @@ std::vector<std::string> OptionsParse(std::vector<OptionDescriptor> const& desc,
   if (argv.empty()) {
     return argv;
   }
+  std::string const usage = BuildUsage(desc, argv[0]);
 
   auto next_arg = argv.begin() + 1;
   while (next_arg != argv.end()) {
@@ -153,6 +154,6 @@ std::vector<std::string> OptionsParse(std::vector<OptionDescriptor> const& desc,
 }
 
 }  // namespace testing_util
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

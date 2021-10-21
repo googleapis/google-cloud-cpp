@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace golden {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 using ::google::cloud::golden_internal::MockGoldenKitchenSinkStub;
@@ -237,10 +237,12 @@ TEST(GoldenKitchenSinkConnectionTest, ListLogsTooManyTransients) {
   EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
 }
 
+using ::google::test::admin::database::v1::TailLogEntriesResponse;
+
 std::unique_ptr<MockTailLogEntriesStreamingReadRpc> MakeFailingReader(
     Status status) {
   auto reader = absl::make_unique<MockTailLogEntriesStreamingReadRpc>();
-  EXPECT_CALL(*reader, Read).WillOnce(Return(std::move(status)));
+  EXPECT_CALL(*reader, Read).WillOnce(Return(status));
   return reader;
 }
 
@@ -296,7 +298,7 @@ TEST(GoldenKitchenSinkConnectionTest, ListServiceAccountKeysPermanentError) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google

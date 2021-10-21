@@ -19,7 +19,6 @@
 #include "google/cloud/pubsub/application_callback.h"
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
-#include "google/cloud/pubsub/internal/non_constructible.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/retry_policy.h"
@@ -28,20 +27,19 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/status_or.h"
 #include <functional>
-#include <initializer_list>
 #include <vector>
 
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
  * A connection to the Cloud Pub/Sub service to receive events.
  *
- * This interface defines pure-virtual functions for each of the user-facing
+ * This interface defines pure-virtual methods for each of the user-facing
  * overload sets in `Subscriber`. That is, all of `Subscriber`'s overloads will
- * forward to the one pure-virtual function declared in this interface. This
+ * forward to the one pure-virtual method declared in this interface. This
  * allows users to inject custom behavior (e.g., with a Google Mock object) in a
  * `Subscriber` object for use in their own tests.
  *
@@ -70,60 +68,13 @@ class SubscriberConnection {
 /**
  * Creates a new `SubscriberConnection` object to work with `Subscriber`.
  *
- * @note This function exists solely for backwards compatibility. It prevents
- *     existing code, which calls `MakeSubscriberConnection(subscription, {})`
- *     from breaking, due to ambiguity.
- *
- * @deprecated Please use the `MakeSubscriberConnection` function which accepts
- *     `google::cloud::Options` instead.
- */
-std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
-    Subscription subscription,
-    std::initializer_list<pubsub_internal::NonConstructible>);
-
-/**
- * Creates a new `SubscriberConnection` object to work with `Subscriber`.
- *
  * The `SubscriberConnection` class is not intended for direct use in
  * applications, it is provided for applications wanting to mock the
- * `Subscriber` behavior in their tests.
+ * `SubscriberClient` behavior in their tests.
  *
  * @par Performance
  * Creating a new `SubscriberConnection` is relatively expensive. This typically
  * initiate connections to the service, and therefore these objects should be
- * shared and reused when possible. Note that gRPC reuses existing OS resources
- * (sockets) whenever possible, so applications may experience better
- * performance on the second (and subsequent) calls to this function with the
- * same `Options` from `GrpcOptionList` and `CommonOptionList`. However, this
- * behavior is not guaranteed and applications should not rely on it.
- *
- * @see `SubscriberConnection`
- *
- * @par Changing Retry Parameters Example
- * @snippet samples.cc subscriber-retry-settings
- *
- * @param subscription the Cloud Pub/Sub subscription used by the returned
- *     connection.
- * @param opts The options to use for this call. Expected options are any
- *     of the types in the following option lists.
- *       - `google::cloud::CommonOptionList`
- *       - `google::cloud::GrpcOptionList`
- *       - `google::cloud::pubsub::PolicyOptionList`
- *       - `google::cloud::pubsub::SubscriberOptionList`
- */
-std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
-    Subscription subscription, Options opts = {});
-
-/**
- * Creates a new `SubscriberConnection` object to work with `Subscriber`.
- *
- * The `SubscriberConnection` class is not intended for direct use in
- * applications, it is provided for applications wanting to mock the
- * `Subscriber` behavior in their tests.
- *
- * @par Performance
- * Creating a new `SubscriberConnection` is relatively expensive. This typically
- * initiates connections to the service, and therefore these objects should be
  * shared and reused when possible. Note that gRPC reuses existing OS resources
  * (sockets) whenever possible, so applications may experience better
  * performance on the second (and subsequent) calls to this function with the
@@ -145,27 +96,34 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
  *     RPCs attempted.
  * @param backoff_policy controls the backoff behavior between retry attempts,
  *     typically some form of exponential backoff with jitter.
- *
- * @deprecated Please use the `MakeSubscriberConnection` function which accepts
- *     `google::cloud::Options` instead.
  */
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
-    Subscription subscription, SubscriberOptions options,
+    Subscription subscription, SubscriberOptions options = {},
     ConnectionOptions connection_options = {},
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy = {},
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-std::shared_ptr<pubsub::SubscriberConnection> MakeTestSubscriberConnection(
-    pubsub::Subscription subscription, Options opts,
-    std::vector<std::shared_ptr<SubscriberStub>> stubs);
+std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
+    pubsub::Subscription subscription, pubsub::SubscriberOptions options,
+    pubsub::ConnectionOptions connection_options,
+    std::shared_ptr<SubscriberStub> stub,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
+    pubsub::Subscription subscription, pubsub::SubscriberOptions options,
+    pubsub::ConnectionOptions connection_options,
+    std::vector<std::shared_ptr<SubscriberStub>> stubs,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
+
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

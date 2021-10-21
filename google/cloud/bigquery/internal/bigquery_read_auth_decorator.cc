@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace bigquery_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 BigQueryReadAuth::BigQueryReadAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -45,7 +45,7 @@ std::unique_ptr<internal::StreamingReadRpc<
 BigQueryReadAuth::ReadRows(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
-  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
+  using ErrorStream = google::cloud::internal::StreamingReadRpcError<
       google::cloud::bigquery::storage::v1::ReadRowsResponse>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
@@ -61,7 +61,7 @@ BigQueryReadAuth::SplitReadStream(
   if (!status.ok()) return status;
   return child_->SplitReadStream(context, request);
 }
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace bigquery_internal
 }  // namespace cloud
 }  // namespace google

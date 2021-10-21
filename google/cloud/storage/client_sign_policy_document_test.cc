@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
@@ -53,7 +53,7 @@ constexpr char kJsonKeyfileContents[] = R"""({
  * base64.
  */
 std::string Dec64(std::string const& s) {
-  auto res = internal::Base64Decode(s).value();
+  auto res = internal::Base64Decode(s);
   return std::string(res.begin(), res.end());
 };
 
@@ -71,7 +71,7 @@ class CreateSignedPolicyDocRPCTest
 PolicyDocument CreatePolicyDocumentForTest() {
   PolicyDocument result;
   result.expiration =
-      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z").value();
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z");
   result.conditions.emplace_back(
       PolicyDocumentCondition::StartsWith("key", ""));
   result.conditions.emplace_back(
@@ -169,7 +169,7 @@ PolicyDocumentV4 CreatePolicyDocumentV4ForTest() {
   result.object = "test-object";
   result.expiration = std::chrono::seconds(13);
   result.timestamp =
-      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z").value();
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z");
   result.conditions.emplace_back(
       PolicyDocumentCondition::StartsWith("Content-Type", "image/"));
   result.conditions.emplace_back(
@@ -276,7 +276,7 @@ TEST(CreateSignedPolicyDocTest, SignV4VirtualHostname) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

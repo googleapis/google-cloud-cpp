@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_GENERATOR_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_GENERATOR_H
 
@@ -41,8 +40,6 @@ namespace generator {
  *   --cpp_codegen_out=. \
  *   --cpp_codegen_opt=product_path=google/cloud/spanner
  *   --cpp_codegen_opt=copyright_year=2020
- *   --cpp_codegen_opt=service_endpoint_env_var=SERVICE_ENDPOINT
- *   --cpp_codegen_opt=emulator_endpoint_env_var=SERVICE_EMULATOR_HOST
  * @endcode
  */
 class Generator : public google::protobuf::compiler::CodeGenerator {

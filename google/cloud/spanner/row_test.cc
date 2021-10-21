@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
@@ -229,7 +229,7 @@ TEST(RowStreamIterator, Basics) {
   EXPECT_STATUS_OK(*it);
   EXPECT_EQ(rows[2], **it);
 
-  // Tests op*() const and op->() const
+  // Tests const op*() and op->()
   auto const copy = it;
   EXPECT_EQ(copy, it);
   EXPECT_NE(copy, end);
@@ -350,7 +350,7 @@ TEST(TupleStreamIterator, Basics) {
   EXPECT_STATUS_OK(*it);
   EXPECT_EQ(std::make_tuple(3, "baz", true), **it);
 
-  // Tests op*() const and op->() const
+  // Tests const op*() and op->()
   auto const copy = it;
   EXPECT_EQ(copy, it);
   EXPECT_NE(copy, end);
@@ -544,7 +544,7 @@ TEST(GetSingularRow, TupleStreamTooManyRows) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

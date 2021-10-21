@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 /// Specify the initial configuration for a new instance.
 class InstanceConfig {
  public:
@@ -39,7 +39,7 @@ class InstanceConfig {
   }
   //@{
   /// @name Convenient shorthands for the instance types.
-  using InstanceType = ::google::bigtable::admin::v2::Instance::Type;
+  using InstanceType = google::bigtable::admin::v2::Instance::Type;
   // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static InstanceType TYPE_UNSPECIFIED =
       google::bigtable::admin::v2::Instance::TYPE_UNSPECIFIED;
@@ -81,7 +81,7 @@ class InstanceConfig {
   google::bigtable::admin::v2::CreateInstanceRequest proto_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

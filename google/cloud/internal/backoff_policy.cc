@@ -17,7 +17,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 std::unique_ptr<BackoffPolicy> ExponentialBackoffPolicy::clone() const {
@@ -55,6 +55,6 @@ std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
  * A decorator for `ResumableUploadSession` that logs each operation.
@@ -37,8 +37,7 @@ class LoggingResumableUploadSession : public ResumableUploadSession {
   StatusOr<ResumableUploadResponse> UploadChunk(
       ConstBufferSequence const& buffers) override;
   StatusOr<ResumableUploadResponse> UploadFinalChunk(
-      ConstBufferSequence const& buffers, std::uint64_t upload_size,
-      HashValues const& full_object_hashes) override;
+      ConstBufferSequence const& buffers, std::uint64_t upload_size) override;
   StatusOr<ResumableUploadResponse> ResetSession() override;
   std::uint64_t next_expected_byte() const override;
   std::string const& session_id() const override;
@@ -50,7 +49,7 @@ class LoggingResumableUploadSession : public ResumableUploadSession {
 };
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

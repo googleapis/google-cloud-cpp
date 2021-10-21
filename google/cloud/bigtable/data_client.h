@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 // Forward declare some classes so we can be friends.
 class Table;
 namespace internal {
@@ -80,7 +80,7 @@ class DataClient {
   /**
    * The thread factory this client was created with.
    */
-  virtual google::cloud::BackgroundThreadsFactory
+  virtual ClientOptions::BackgroundThreadsFactory
   BackgroundThreadsFactory() = 0;
 
   // The member functions of this class are not intended for general use by
@@ -138,53 +138,45 @@ class DataClient {
                 google::bigtable::v2::ReadRowsRequest const& request,
                 grpc::CompletionQueue* cq, void* tag) = 0;
   virtual std::unique_ptr<::grpc::ClientAsyncReaderInterface<
-      google::bigtable::v2::ReadRowsResponse>>
+      ::google::bigtable::v2::ReadRowsResponse>>
   PrepareAsyncReadRows(::grpc::ClientContext* context,
-                       google::bigtable::v2::ReadRowsRequest const& request,
-                       grpc::CompletionQueue* cq) = 0;
+                       ::google::bigtable::v2::ReadRowsRequest const& request,
+                       ::grpc::CompletionQueue* cq) = 0;
   virtual std::unique_ptr<
       grpc::ClientReaderInterface<google::bigtable::v2::SampleRowKeysResponse>>
   SampleRowKeys(grpc::ClientContext* context,
                 google::bigtable::v2::SampleRowKeysRequest const& request) = 0;
   virtual std::unique_ptr<::grpc::ClientAsyncReaderInterface<
-      google::bigtable::v2::SampleRowKeysResponse>>
-  AsyncSampleRowKeys(grpc::ClientContext* context,
-                     google::bigtable::v2::SampleRowKeysRequest const& request,
-                     grpc::CompletionQueue* cq, void* tag) = 0;
+      ::google::bigtable::v2::SampleRowKeysResponse>>
+  AsyncSampleRowKeys(
+      ::grpc::ClientContext* context,
+      ::google::bigtable::v2::SampleRowKeysRequest const& request,
+      ::grpc::CompletionQueue* cq, void* tag) = 0;
   virtual std::unique_ptr<::grpc::ClientAsyncReaderInterface<
-      google::bigtable::v2::SampleRowKeysResponse>>
+      ::google::bigtable::v2::SampleRowKeysResponse>>
   PrepareAsyncSampleRowKeys(
-      grpc::ClientContext* context,
-      google::bigtable::v2::SampleRowKeysRequest const& request,
-      grpc::CompletionQueue* cq);
+      ::grpc::ClientContext* context,
+      ::google::bigtable::v2::SampleRowKeysRequest const& request,
+      ::grpc::CompletionQueue* cq);
   virtual std::unique_ptr<
       grpc::ClientReaderInterface<google::bigtable::v2::MutateRowsResponse>>
   MutateRows(grpc::ClientContext* context,
              google::bigtable::v2::MutateRowsRequest const& request) = 0;
   virtual std::unique_ptr<::grpc::ClientAsyncReaderInterface<
-      google::bigtable::v2::MutateRowsResponse>>
+      ::google::bigtable::v2::MutateRowsResponse>>
   AsyncMutateRows(::grpc::ClientContext* context,
-                  google::bigtable::v2::MutateRowsRequest const& request,
-                  grpc::CompletionQueue* cq, void* tag) = 0;
+                  ::google::bigtable::v2::MutateRowsRequest const& request,
+                  ::grpc::CompletionQueue* cq, void* tag) = 0;
   virtual std::unique_ptr<::grpc::ClientAsyncReaderInterface<
-      google::bigtable::v2::MutateRowsResponse>>
-  PrepareAsyncMutateRows(grpc::ClientContext* context,
-                         google::bigtable::v2::MutateRowsRequest const& request,
-                         grpc::CompletionQueue* cq) = 0;
+      ::google::bigtable::v2::MutateRowsResponse>>
+  PrepareAsyncMutateRows(
+      ::grpc::ClientContext* context,
+      ::google::bigtable::v2::MutateRowsRequest const& request,
+      ::grpc::CompletionQueue* cq) = 0;
   //@}
 };
 
-/// Create a new data client configured via @p options.
-std::shared_ptr<DataClient> MakeDataClient(std::string project_id,
-                                           std::string instance_id,
-                                           Options options = {});
-
-/**
- * Create a new data client configured via @p options.
- *
- * @deprecated use the `MakeDataClient` method which accepts
- * `google::cloud::Options` instead.
- */
+/// Create the default implementation of ClientInterface.
 std::shared_ptr<DataClient> CreateDefaultDataClient(std::string project_id,
                                                     std::string instance_id,
                                                     ClientOptions options);
@@ -200,7 +192,7 @@ inline std::string InstanceName(std::shared_ptr<DataClient> const& client) {
          client->instance_id();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

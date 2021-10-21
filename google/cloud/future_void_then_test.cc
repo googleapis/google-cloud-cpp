@@ -21,7 +21,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 using ::testing::HasSubstr;
 using testing_util::chrono_literals::operator"" _ms;
@@ -721,6 +721,6 @@ TEST(FutureTestVoid, LValueThenUnwrapFunctorIsCopied) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
  * Performs topic admin operations in Cloud Pub/Sub.
@@ -51,8 +51,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
- * contains the expected result. Please consult the [`StatusOr<T>`
- * documentation](#google::cloud::StatusOr) for more details.
+ * contains the expected result. Please consult the
+ * [`StatusOr<T>` documentation](#google::cloud::v1::StatusOr) for more details.
  *
  * [pubsub-doc-link]: https://cloud.google.com/pubsub/docs
  */
@@ -215,7 +215,7 @@ class TopicAdminClient {
   std::shared_ptr<TopicAdminConnection> connection_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

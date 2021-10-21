@@ -25,13 +25,13 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 /**
  * Decodes a Base64-encoded string.
  */
-StatusOr<std::vector<std::uint8_t>> Base64Decode(std::string const& str);
+std::vector<std::uint8_t> Base64Decode(std::string const& str);
 
 /**
  * Encodes a string using Base64.
@@ -76,13 +76,10 @@ inline std::string UrlsafeBase64Encode(Collection const& bytes) {
 /**
  * Decodes a Url-safe Base64-encoded string.
  */
-StatusOr<std::vector<std::uint8_t>> UrlsafeBase64Decode(std::string const& str);
-
-/// Compute the MD5 hash of @p payload
-std::vector<std::uint8_t> MD5Hash(std::string const& payload);
+std::vector<std::uint8_t> UrlsafeBase64Decode(std::string const& str);
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -31,7 +31,7 @@
 namespace google {
 namespace cloud {
 namespace golden {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 GoldenKitchenSinkConnection::~GoldenKitchenSinkConnection() = default;
 
@@ -107,7 +107,7 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
           return stub_->GenerateAccessToken(context, request);
         },
         request, __func__);
-  }
+}
 
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
   GenerateIdToken(
@@ -120,7 +120,7 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
           return stub_->GenerateIdToken(context, request);
         },
         request, __func__);
-  }
+}
 
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
   WriteLogEntries(
@@ -133,7 +133,7 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
           return stub_->WriteLogEntries(context, request);
         },
         request, __func__);
-  }
+}
 
   StreamRange<std::string> ListLogs(
       google::test::admin::database::v1::ListLogsRequest request) override {
@@ -206,7 +206,7 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
           return stub_->ListServiceAccountKeys(context, request);
         },
         request, __func__);
-  }
+}
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
@@ -221,14 +221,14 @@ std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
     Options options) {
   options = golden_internal::GoldenKitchenSinkDefaultOptions(
       std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
   auto stub = golden_internal::CreateDefaultGoldenKitchenSinkStub(
     background->cq(), options);
   return std::make_shared<GoldenKitchenSinkConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google
@@ -236,18 +236,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace google {
 namespace cloud {
 namespace golden_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<golden::GoldenKitchenSinkConnection>
 MakeGoldenKitchenSinkConnection(
     std::shared_ptr<GoldenKitchenSinkStub> stub, Options options) {
   options = GoldenKitchenSinkDefaultOptions(std::move(options));
   return std::make_shared<golden::GoldenKitchenSinkConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(),
+      options.get<GrpcBackgroundThreadsFactoryOption>()(),
       std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
+

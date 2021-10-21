@@ -26,9 +26,6 @@ namespace cloud {
 namespace bigtable {
 namespace testing {
 
-using ::testing::ContainerEq;
-using ::testing::IsEmpty;
-
 std::string TableTestEnvironment::project_id_;
 std::string TableTestEnvironment::instance_id_;
 std::string TableTestEnvironment::zone_a_;
@@ -62,8 +59,8 @@ void TableTestEnvironment::SetUp() {
 
   generator_ = google::cloud::internal::MakeDefaultPRNG();
 
-  auto admin_client =
-      bigtable::MakeAdminClient(TableTestEnvironment::project_id());
+  auto admin_client = bigtable::CreateDefaultAdminClient(
+      TableTestEnvironment::project_id(), ClientOptions());
   auto table_admin =
       bigtable::TableAdmin(admin_client, TableTestEnvironment::instance_id());
 
@@ -87,8 +84,8 @@ void TableTestEnvironment::SetUp() {
 }
 
 void TableTestEnvironment::TearDown() {
-  auto admin_client =
-      bigtable::MakeAdminClient(TableTestEnvironment::project_id());
+  auto admin_client = bigtable::CreateDefaultAdminClient(
+      TableTestEnvironment::project_id(), ClientOptions());
   auto table_admin =
       bigtable::TableAdmin(admin_client, TableTestEnvironment::instance_id());
 
@@ -108,11 +105,13 @@ std::string TableTestEnvironment::RandomInstanceId() {
 }
 
 void TableIntegrationTest::SetUp() {
-  admin_client_ = bigtable::MakeAdminClient(TableTestEnvironment::project_id());
+  admin_client_ = bigtable::CreateDefaultAdminClient(
+      TableTestEnvironment::project_id(), ClientOptions());
   table_admin_ = absl::make_unique<bigtable::TableAdmin>(
       admin_client_, TableTestEnvironment::instance_id());
-  data_client_ = bigtable::MakeDataClient(TableTestEnvironment::project_id(),
-                                          TableTestEnvironment::instance_id());
+  data_client_ = bigtable::CreateDefaultDataClient(
+      TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
+      ClientOptions());
 
   // In production, we cannot use `DropAllRows()` to cleanup the table because
   // the integration tests sometimes consume all the 'DropRowRangeGroup' quota.
@@ -221,7 +220,7 @@ void TableIntegrationTest::CreateCells(
     bulk.emplace_back(std::move(kv.second));
   }
   auto failures = table.BulkApply(std::move(bulk));
-  ASSERT_THAT(failures, IsEmpty());
+  ASSERT_THAT(failures, ::testing::IsEmpty());
 }
 
 std::vector<bigtable::Cell> TableIntegrationTest::GetCellsIgnoringTimestamp(
@@ -243,7 +242,7 @@ void TableIntegrationTest::CheckEqualUnordered(
     std::vector<bigtable::Cell> expected, std::vector<bigtable::Cell> actual) {
   std::sort(expected.begin(), expected.end());
   std::sort(actual.begin(), actual.end());
-  EXPECT_THAT(actual, ContainerEq(expected));
+  EXPECT_THAT(actual, ::testing::ContainerEq(expected));
 }
 
 std::string TableIntegrationTest::RandomTableId() {

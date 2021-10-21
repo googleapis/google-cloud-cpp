@@ -19,21 +19,20 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
 using ::testing::HasSubstr;
 using ::testing::Not;
 
-std::string const* const kChars = new std::string(
-    "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-
 TEST(GenerateMessageBoundaryTest, Simple) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
 
   auto string_generator = [&generator](int n) {
-    return google::cloud::internal::Sample(generator, n, *kChars);
+    static std::string const kChars =
+        "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    return google::cloud::internal::Sample(generator, n, kChars);
   };
 
   // The magic constants here are uninteresting. We just want a large message
@@ -45,6 +44,9 @@ TEST(GenerateMessageBoundaryTest, Simple) {
 }
 
 TEST(GenerateMessageBoundaryTest, RequiresGrowth) {
+  static std::string const kChars =
+      "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
   auto generator = google::cloud::internal::MakeDefaultPRNG();
 
   // This test will ensure that both the message and the initial string contain
@@ -54,17 +56,17 @@ TEST(GenerateMessageBoundaryTest, RequiresGrowth) {
 
   auto g1 = google::cloud::internal::MakeDefaultPRNG();
   std::string message =
-      google::cloud::internal::Sample(g1, kMismatchedStringLength, *kChars);
+      google::cloud::internal::Sample(g1, kMismatchedStringLength, kChars);
   // Copy the PRNG to obtain the same sequence of random numbers that
   // `generator` will create later.
   g1 = generator;
-  message += google::cloud::internal::Sample(g1, kMatchedStringLength, *kChars);
+  message += google::cloud::internal::Sample(g1, kMatchedStringLength, kChars);
   g1 = google::cloud::internal::MakeDefaultPRNG();
   message +=
-      google::cloud::internal::Sample(g1, kMismatchedStringLength, *kChars);
+      google::cloud::internal::Sample(g1, kMismatchedStringLength, kChars);
 
   auto string_generator = [&generator](int n) {
-    return google::cloud::internal::Sample(generator, n, *kChars);
+    return google::cloud::internal::Sample(generator, n, kChars);
   };
 
   // The initial_size and growth_size parameters are set to
@@ -83,7 +85,7 @@ TEST(GenerateMessageBoundaryTest, RequiresGrowth) {
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -28,7 +28,6 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 namespace {
-
 std::vector<std::pair<std::string, std::string>> const& SnakeCaseExceptions() {
   static const std::vector<std::pair<std::string, std::string>> kExceptions = {
       {"big_query", "bigquery"}};
@@ -109,32 +108,7 @@ void ProcessArgOmitRpc(
   }
 }
 
-void ProcessArgServiceEndpointEnvVar(
-    std::vector<std::pair<std::string, std::string>>& command_line_args) {
-  auto service_endpoint_env_var =
-      std::find_if(command_line_args.begin(), command_line_args.end(),
-                   [](std::pair<std::string, std::string> const& p) {
-                     return p.first == "service_endpoint_env_var";
-                   });
-  if (service_endpoint_env_var == command_line_args.end()) {
-    command_line_args.emplace_back("service_endpoint_env_var", "");
-  }
-}
-
-void ProcessArgEmulatorEndpointEnvVar(
-    std::vector<std::pair<std::string, std::string>>& command_line_args) {
-  auto emulator_endpoint_env_var =
-      std::find_if(command_line_args.begin(), command_line_args.end(),
-                   [](std::pair<std::string, std::string> const& p) {
-                     return p.first == "emulator_endpoint_env_var";
-                   });
-  if (emulator_endpoint_env_var == command_line_args.end()) {
-    command_line_args.emplace_back("emulator_endpoint_env_var", "");
-  }
-}
-
 }  // namespace
-
 std::string CurrentCopyrightYear() {
   static std::string const kCurrentCopyrightYear =
       absl::FormatTime("%Y", absl::Now(), absl::UTCTimeZone());
@@ -181,7 +155,7 @@ std::string CamelCaseToSnakeCase(absl::string_view input) {
 }
 
 std::string ServiceNameToFilePath(absl::string_view service_name) {
-  std::vector<absl::string_view> components = absl::StrSplit(service_name, '.');
+  std::vector<absl::string_view> components = absl::StrSplit(service_name, ".");
   absl::ConsumeSuffix(&components.back(), "Service");
   auto formatter = [](std::string* s, absl::string_view sv) {
     *s += CamelCaseToSnakeCase(sv);
@@ -207,7 +181,7 @@ std::vector<std::string> BuildNamespaces(std::string const& product_path,
   }
 
   return std::vector<std::string>{"google", "cloud", name,
-                                  "GOOGLE_CLOUD_CPP_NS"};
+                                  "GOOGLE_CLOUD_CPP_GENERATED_NS"};
 }
 
 StatusOr<std::vector<std::pair<std::string, std::string>>>
@@ -223,8 +197,6 @@ ProcessCommandLineArgs(std::string const& parameters) {
 
   ProcessArgCopyrightYear(command_line_args);
   ProcessArgOmitRpc(command_line_args);
-  ProcessArgServiceEndpointEnvVar(command_line_args);
-  ProcessArgEmulatorEndpointEnvVar(command_line_args);
   return command_line_args;
 }
 

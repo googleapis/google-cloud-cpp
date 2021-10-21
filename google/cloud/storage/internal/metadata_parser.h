@@ -16,14 +16,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_METADATA_PARSER_H
 
 #include "google/cloud/storage/version.h"
-#include "google/cloud/status_or.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
  * Parses a boolean field, even if it is represented by a string type in the
@@ -32,22 +31,20 @@ namespace internal {
  * @return the value of @p field_name in @p json, or `false` if the field is not
  * present.
  */
-StatusOr<bool> ParseBoolField(nlohmann::json const& json,
-                              char const* field_name);
+bool ParseBoolField(nlohmann::json const& json, char const* field_name);
 
 /**
  * Parses an integer field, even if it is represented by a string type in the
  * JSON object.
  */
-StatusOr<std::int32_t> ParseIntField(nlohmann::json const& json,
-                                     char const* field_name);
+std::int32_t ParseIntField(nlohmann::json const& json, char const* field_name);
 
 /**
  * Parses an unsigned integer field, even if it is represented by a string type
  * in the JSON object.
  */
-StatusOr<std::uint32_t> ParseUnsignedIntField(nlohmann::json const& json,
-                                              char const* field_name);
+std::uint32_t ParseUnsignedIntField(nlohmann::json const& json,
+                                    char const* field_name);
 
 /**
  * Parses a long integer field, even if it is represented by a string type in
@@ -56,8 +53,7 @@ StatusOr<std::uint32_t> ParseUnsignedIntField(nlohmann::json const& json,
  * @return the value of @p field_name in @p json, or `0` if the field is not
  * present.
  */
-StatusOr<std::int64_t> ParseLongField(nlohmann::json const& json,
-                                      char const* field_name);
+std::int64_t ParseLongField(nlohmann::json const& json, char const* field_name);
 
 /**
  * Parses an unsigned long integer field, even if it is represented by a string
@@ -66,8 +62,8 @@ StatusOr<std::int64_t> ParseLongField(nlohmann::json const& json,
  * @return the value of @p field_name in @p json, or `0` if the field is not
  * present.
  */
-StatusOr<std::uint64_t> ParseUnsignedLongField(nlohmann::json const& json,
-                                               char const* field_name);
+std::uint64_t ParseUnsignedLongField(nlohmann::json const& json,
+                                     char const* field_name);
 
 /**
  * Parses a RFC 3339 timestamp.
@@ -75,11 +71,11 @@ StatusOr<std::uint64_t> ParseUnsignedLongField(nlohmann::json const& json,
  * @return the value of @p field_name in @p json, or the epoch if the field is
  * not present.
  */
-StatusOr<std::chrono::system_clock::time_point> ParseTimestampField(
+std::chrono::system_clock::time_point ParseTimestampField(
     nlohmann::json const& json, char const* field_name);
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

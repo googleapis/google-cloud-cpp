@@ -18,7 +18,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 std::vector<unsigned int> FetchEntropy(std::size_t desired_bits) {
   // We use the default C++ random device to generate entropy.  The quality of
@@ -90,6 +90,6 @@ std::string Sample(DefaultPRNG& gen, int n, std::string const& population) {
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

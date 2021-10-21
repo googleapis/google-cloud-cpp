@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Implement a thin wrapper around google::bigtable::admin::v2::GcRule.
  *
@@ -143,8 +143,8 @@ class GcRule {
 
   //@{
   /// @name Use default constructors and assignments.
-  GcRule(GcRule&&) = default;
-  GcRule& operator=(GcRule&&) = default;
+  GcRule(GcRule&&) noexcept = default;
+  GcRule& operator=(GcRule&&) noexcept = default;
   GcRule(GcRule const&) = default;
   GcRule& operator=(GcRule const&) = default;
   //@}
@@ -207,8 +207,9 @@ class ColumnFamilyModification {
 
   //@{
   /// @name Use default constructors and assignments.
-  ColumnFamilyModification(ColumnFamilyModification&&) = default;
-  ColumnFamilyModification& operator=(ColumnFamilyModification&&) = default;
+  ColumnFamilyModification(ColumnFamilyModification&&) noexcept = default;
+  ColumnFamilyModification& operator=(ColumnFamilyModification&&) noexcept =
+      default;
   ColumnFamilyModification(ColumnFamilyModification const&) = default;
   ColumnFamilyModification& operator=(ColumnFamilyModification const&) =
       default;
@@ -220,7 +221,7 @@ class ColumnFamilyModification {
   ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest::Modification mod_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

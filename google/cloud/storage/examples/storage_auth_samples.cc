@@ -66,8 +66,8 @@ void ExplicitADCs(std::vector<std::string> const& argv) {
   }
   //! [explicit-adcs]
   namespace gcs = ::google::cloud::storage;
-  using ::google::cloud::Options;
-  using ::google::cloud::UnifiedCredentialsOption;
+  using google::cloud::Options;
+  using google::cloud::UnifiedCredentialsOption;
   [](std::string const& bucket_name, std::string const& object_name) {
     auto client = gcs::Client(Options{}.set<UnifiedCredentialsOption>(
         google::cloud::MakeGoogleDefaultCredentials()));

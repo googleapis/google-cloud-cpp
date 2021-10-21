@@ -30,11 +30,11 @@ Usage:
     python ../tools/generate_rpc_policy_parameters.py \
     | clang-format > rpc_policy_parameters.inc
 """
-
 from __future__ import print_function
 
 import collections
 import yaml
+import sys
 import urllib
 
 FILE_HEADER = """

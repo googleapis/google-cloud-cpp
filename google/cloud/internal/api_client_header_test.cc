@@ -18,27 +18,25 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
 using ::testing::HasSubstr;
 
 TEST(ApiClientHeaderTest, Basic) {
-  for (auto const& build_identifier : {"", "build-identifier"}) {
-    auto actual = ApiClientHeader(build_identifier);
-    EXPECT_THAT(actual,
-                HasSubstr("gl-cpp/" + google::cloud::internal::CompilerId() +
-                          "-" + google::cloud::internal::CompilerVersion() +
-                          "-" + google::cloud::internal::CompilerFeatures() +
-                          "-" + google::cloud::internal::LanguageVersion()));
-    EXPECT_THAT(actual,
-                HasSubstr("gccl/" + ApiClientVersion(build_identifier)));
-  }
+  auto actual = ApiClientHeader();
+
+  EXPECT_THAT(actual, HasSubstr("gccl/" + version_string()));
+  EXPECT_THAT(actual,
+              HasSubstr("gl-cpp/" + google::cloud::internal::CompilerId() +
+                        "-" + google::cloud::internal::CompilerVersion() + "-" +
+                        google::cloud::internal::CompilerFeatures() + "-" +
+                        google::cloud::internal::LanguageVersion()));
 }
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

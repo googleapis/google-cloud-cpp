@@ -25,12 +25,7 @@ namespace cloud {
 namespace storage {
 namespace testing {
 
-/// Remove a bucket, including any objects in it.
-Status RemoveBucketAndContents(
-    google::cloud::storage::Client client,
-    google::cloud::storage::BucketMetadata const& bucket);
-
-/// Remove a bucket, including any objects in it.
+/// Remove a bucket, including any objects in it
 Status RemoveBucketAndContents(google::cloud::storage::Client client,
                                std::string const& bucket_name);
 

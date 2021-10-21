@@ -23,32 +23,33 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
  * Implement a ResumableUploadSession that delegates to a CurlClient.
  */
 class CurlResumableUploadSession : public ResumableUploadSession {
  public:
-  explicit CurlResumableUploadSession(std::shared_ptr<CurlClient> client,
-                                      ResumableUploadRequest request,
-                                      std::string session_id)
+  explicit CurlResumableUploadSession(
+      std::shared_ptr<CurlClient> client, std::string session_id,
+      CustomHeader custom_header = CustomHeader())
       : client_(std::move(client)),
-        request_(std::move(request)),
-        session_id_(std::move(session_id)) {}
+        session_id_(std::move(session_id)),
+        custom_header_(std::move(custom_header)) {}
 
   StatusOr<ResumableUploadResponse> UploadChunk(
       ConstBufferSequence const& buffers) override;
 
   StatusOr<ResumableUploadResponse> UploadFinalChunk(
-      ConstBufferSequence const& buffers, std::uint64_t upload_size,
-      HashValues const& full_object_hashes) override;
+      ConstBufferSequence const& buffers, std::uint64_t upload_size) override;
 
   StatusOr<ResumableUploadResponse> ResetSession() override;
 
   std::uint64_t next_expected_byte() const override;
 
   std::string const& session_id() const override { return session_id_; }
+
+  CustomHeader const& custom_header() const { return custom_header_; }
 
   bool done() const override { return done_; }
 
@@ -61,15 +62,15 @@ class CurlResumableUploadSession : public ResumableUploadSession {
               std::size_t chunk_size);
 
   std::shared_ptr<CurlClient> client_;
-  ResumableUploadRequest request_;
   std::string session_id_;
+  CustomHeader custom_header_;
   std::uint64_t next_expected_ = 0;
   bool done_ = false;
   StatusOr<ResumableUploadResponse> last_response_;
 };
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

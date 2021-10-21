@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 namespace {
 
@@ -45,6 +45,10 @@ void SetBasicDefaults(Options& opts) {
   if (!opts.has<GrpcCredentialOption>()) {
     opts.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
   }
+  if (!opts.has<GrpcBackgroundThreadsFactoryOption>()) {
+    opts.set<GrpcBackgroundThreadsFactoryOption>(
+        internal::DefaultBackgroundThreadsFactory);
+  }
   if (!opts.has<GrpcNumChannelsOption>()) {
     opts.set<GrpcNumChannelsOption>(4);
   }
@@ -56,7 +60,7 @@ void SetBasicDefaults(Options& opts) {
   }
   // Inserts our user-agent string at the front.
   auto& products = opts.lookup<UserAgentProductsOption>();
-  products.insert(products.begin(), internal::UserAgentPrefix());
+  products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
 }
 
 }  // namespace
@@ -93,8 +97,6 @@ Options DefaultOptions(Options opts) {
     opts.set<SessionPoolClockOption>(std::make_shared<Session::Clock>());
   }
   // Enforces some SessionPool constraints.
-  auto& num_channels = opts.lookup<GrpcNumChannelsOption>();
-  num_channels = (std::max)(num_channels, 1);
   auto& max_idle = opts.lookup<spanner::SessionPoolMaxIdleSessionsOption>();
   max_idle = (std::max)(max_idle, 0);
   auto& max_sessions_per_channel =
@@ -103,7 +105,8 @@ Options DefaultOptions(Options opts) {
   auto& min_sessions = opts.lookup<spanner::SessionPoolMinSessionsOption>();
   min_sessions = (std::max)(min_sessions, 0);
   min_sessions =
-      (std::min)(min_sessions, max_sessions_per_channel * num_channels);
+      (std::min)(min_sessions,
+                 max_sessions_per_channel * opts.get<GrpcNumChannelsOption>());
 
   return opts;
 }
@@ -138,7 +141,7 @@ Options DefaultAdminOptions(Options opts) {
   return opts;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

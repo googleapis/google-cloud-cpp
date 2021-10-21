@@ -21,13 +21,14 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
  * A googlemock-based mock for
  * [pubsub::SchemaAdminConnection][mocked-link]
  *
- * [mocked-link]: @ref google::cloud::pubsub::SchemaAdminConnection
+ * [mocked-link]: @ref
+ * google::cloud::pubsub::v1::SchemaAdminConnection
  */
 class MockSchemaAdminConnection : public pubsub::SchemaAdminConnection {
  public:
@@ -52,7 +53,7 @@ class MockSchemaAdminConnection : public pubsub::SchemaAdminConnection {
               (google::pubsub::v1::ValidateMessageRequest const&), (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

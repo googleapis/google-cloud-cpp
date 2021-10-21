@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::ContainsOnce;
@@ -36,7 +36,7 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
-namespace btadmin = ::google::bigtable::admin::v2;
+namespace btadmin = google::bigtable::admin::v2;
 
 class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
  protected:
@@ -51,8 +51,9 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
     TableIntegrationTest::SetUp();
 
     std::shared_ptr<bigtable::AdminClient> admin_client =
-        bigtable::MakeAdminClient(
-            bigtable::testing::TableTestEnvironment::project_id());
+        bigtable::CreateDefaultAdminClient(
+            bigtable::testing::TableTestEnvironment::project_id(),
+            bigtable::ClientOptions());
     table_admin_ = absl::make_unique<bigtable::TableAdmin>(
         admin_client, bigtable::testing::TableTestEnvironment::instance_id());
   }
@@ -243,10 +244,12 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
   // Create a bigtable::InstanceAdmin and a bigtable::TableAdmin to create the
   // new instance and the new table.
-  auto instance_admin_client = bigtable::MakeInstanceAdminClient(project_id);
+  auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
+      project_id, bigtable::ClientOptions());
   bigtable::InstanceAdmin instance_admin(instance_admin_client);
 
-  auto admin_client = bigtable::MakeAdminClient(project_id);
+  auto admin_client =
+      bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions());
   bigtable::TableAdmin table_admin(admin_client, id);
 
   // The instance configuration is involved, it needs two clusters, which must
@@ -279,7 +282,8 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
   // We need to mutate the data in the table and then wait for those mutations
   // to propagate to both clusters. First create a `bigtable::Table` object.
-  auto data_client = bigtable::MakeDataClient(project_id, id);
+  auto data_client = bigtable::CreateDefaultDataClient(
+      project_id, id, bigtable::ClientOptions());
   bigtable::Table table(data_client, random_table_id);
 
   // Insert some cells into the table.
@@ -320,9 +324,9 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   std::string const table_id = RandomTableId();
 
   std::shared_ptr<bigtable::AdminClient> admin_client =
-      bigtable::MakeAdminClient(
+      bigtable::CreateDefaultAdminClient(
           bigtable::testing::TableTestEnvironment::project_id(),
-          Options{}.set<TracingComponentsOption>({"rpc"}));
+          bigtable::ClientOptions().enable_tracing("rpc"));
   auto table_admin = absl::make_unique<bigtable::TableAdmin>(
       admin_client, bigtable::testing::TableTestEnvironment::instance_id());
 
@@ -403,7 +407,7 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteTable")));
 }
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

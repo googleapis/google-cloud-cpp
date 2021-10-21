@@ -57,9 +57,9 @@
 // further down in this file. Because Clang defines both __GNUC__ and __clang__
 // test for the Clang version first (sigh).
 #if defined(__clang__)
-#  if __clang_major__ < 6
-#    error "Only Clang >= 6.0 is supported."
-#  endif  // Clang < 6.0
+#  if __clang_major__ < 3 || (__clang_major__ == 3 && __clang_minor__ < 8)
+#    error "Only Clang >= 3.8 is supported."
+#  endif  // Clang < 3.8
 #elif defined(__GNUC__)
 #  if __GNUC__ < 5 || (__GNUC__ == 5 && __GNUC_MINOR__ < 4)
 #    error "Only GCC >= 5.4 is supported."

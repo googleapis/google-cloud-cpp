@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 namespace {
@@ -213,6 +213,12 @@ LoggingClient::CreateResumableSession(ResumableUploadRequest const& request) {
           std::move(result).value()));
 }
 
+StatusOr<std::unique_ptr<ResumableUploadSession>>
+LoggingClient::RestoreResumableSession(std::string const& request) {
+  return MakeCallNoResponseLogging(
+      *client_, &RawClient::RestoreResumableSession, request, __func__);
+}
+
 StatusOr<EmptyResponse> LoggingClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
   return MakeCall(*client_, &RawClient::DeleteResumableUpload, request,
@@ -370,7 +376,7 @@ StatusOr<EmptyResponse> LoggingClient::DeleteNotification(
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

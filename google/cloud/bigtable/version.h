@@ -27,10 +27,9 @@
       " instead. The function will be removed on 2022-04-01 or shortly "       \
       "after. See GitHub issue #5929 for more information.")
 
-// This preprocessor symbol is deprecated and should never be used anywhere. It
-// exists solely for backward compatibility to avoid breaking anyone who may
-// have been using it.
-#define BIGTABLE_CLIENT_NS GOOGLE_CLOUD_CPP_NS
+#define BIGTABLE_CLIENT_NS                              \
+  GOOGLE_CLOUD_CPP_VEVAL(BIGTABLE_CLIENT_VERSION_MAJOR, \
+                         BIGTABLE_CLIENT_VERSION_MINOR)
 
 namespace google {
 namespace cloud {
@@ -38,35 +37,55 @@ namespace cloud {
  * Contains all the Cloud Bigtable C++ client APIs.
  */
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+/**
+ * The inlined, versioned namespace for the Cloud Bigtable C++ client APIs.
+ *
+ * Applications may need to link multiple versions of the Cloud Bigtable C++
+ * client, for example, if they link a library that uses an older version of
+ * the client than they do.  This namespace is inlined, so applications can use
+ * `bigtable::Foo` in their source, but the symbols are versioned, i.e., the
+ * symbol becomes `bigtable::v1::Foo`.
+ *
+ * Note that, consistent with the semver.org guidelines, the v0 version makes
+ * no guarantees with respect to backwards compatibility.
+ */
+inline namespace BIGTABLE_CLIENT_NS {
 /**
  * The Cloud Bigtable C++ Client major version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
-int constexpr version_major() { return google::cloud::version_major(); }
+int constexpr version_major() { return BIGTABLE_CLIENT_VERSION_MAJOR; }
 
 /**
  * The Cloud Bigtable C++ Client minor version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
-int constexpr version_minor() { return google::cloud::version_minor(); }
+int constexpr version_minor() { return BIGTABLE_CLIENT_VERSION_MINOR; }
 
 /**
  * The Cloud Bigtable C++ Client patch version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
-int constexpr version_patch() { return google::cloud::version_patch(); }
+int constexpr version_patch() { return BIGTABLE_CLIENT_VERSION_PATCH; }
 
 /// A single integer representing the Major/Minor/Patch version.
-int constexpr version() { return google::cloud::version(); }
+int constexpr version() {
+  static_assert(::google::cloud::version_major() == version_major(),
+                "Mismatched major version");
+  static_assert(::google::cloud::version_minor() == version_minor(),
+                "Mismatched minor version");
+  static_assert(::google::cloud::version_patch() == version_patch(),
+                "Mismatched patch version");
+  return ::google::cloud::version();
+}
 
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string version_string();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

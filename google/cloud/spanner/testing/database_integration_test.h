@@ -26,7 +26,7 @@ namespace cloud {
 /// Helper types and functions used in Cloud Spanner C++ client library tests.
 namespace spanner_testing {
 /// An inlined, versioned namespace for the testing helpers.
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 class DatabaseIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
@@ -41,7 +41,7 @@ class DatabaseIntegrationTest
   static google::cloud::internal::DefaultPRNG* generator_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

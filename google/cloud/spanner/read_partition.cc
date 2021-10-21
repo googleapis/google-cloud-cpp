@@ -18,11 +18,9 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
-ReadPartition::ReadPartition(std::string transaction_id,
-                             std::string transaction_tag,
-                             std::string session_id,
+ReadPartition::ReadPartition(std::string transaction_id, std::string session_id,
                              std::string partition_token,
                              std::string table_name,
                              google::cloud::spanner::KeySet key_set,
@@ -55,12 +53,6 @@ ReadPartition::ReadPartition(std::string transaction_id,
         break;
     }
   }
-  if (read_options.request_tag.has_value()) {
-    proto_.mutable_request_options()->set_request_tag(
-        *std::move(read_options.request_tag));
-  }
-  proto_.mutable_request_options()->set_transaction_tag(
-      std::move(transaction_tag));
 }
 
 google::cloud::spanner::ReadOptions ReadPartition::ReadOptions() const {
@@ -80,9 +72,6 @@ google::cloud::spanner::ReadOptions ReadPartition::ReadOptions() const {
         break;
       default:
         break;
-    }
-    if (!proto_.request_options().request_tag().empty()) {
-      options.request_tag = proto_.request_options().request_tag();
     }
   }
   return options;
@@ -117,7 +106,7 @@ StatusOr<ReadPartition> DeserializeReadPartition(
   return ReadPartition(std::move(proto));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

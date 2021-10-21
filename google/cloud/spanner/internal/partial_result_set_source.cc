@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 StatusOr<std::unique_ptr<ResultSourceInterface>> PartialResultSetSource::Create(
     std::unique_ptr<PartialResultSetReader> reader) {
@@ -76,7 +76,7 @@ StatusOr<spanner::Row> PartialResultSetSource::NextRow() {
     ++iter;
   }
   buffer_.erase(buffer_.begin(), iter);
-  return RowFriend::MakeRow(std::move(values), columns_);
+  return MakeRow(std::move(values), columns_);
 }
 
 PartialResultSetSource::~PartialResultSetSource() {
@@ -179,7 +179,7 @@ Status PartialResultSetSource::ReadFromStream() {
   return {};  // OK
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

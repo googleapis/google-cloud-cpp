@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 /// Specify the initial schema for a new table.
 class TableConfig {
  public:
@@ -96,7 +96,7 @@ class TableConfig {
   ::google::bigtable::admin::v2::Table::TimestampGranularity granularity_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

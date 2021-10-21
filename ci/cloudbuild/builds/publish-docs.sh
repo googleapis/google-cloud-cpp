@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -euo pipefail
+set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
@@ -22,9 +22,8 @@ source module ci/cloudbuild/builds/lib/cmake.sh
 version=""
 doc_args=(
   "-DCMAKE_BUILD_TYPE=Debug"
-  "-DGOOGLE_CLOUD_CPP_GENERATE_DOXYGEN=ON"
   "-DGOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV=ON"
-  "-DDOXYGEN_CLANG_OPTIONS=-resource-dir=$(clang -print-resource-dir) -Wno-deprecated-declarations"
+  "-DDOXYGEN_CLANG_OPTIONS=-resource-dir=$(clang -print-resource-dir)"
 )
 
 # Extract the version number if we're on a release branch.
@@ -102,9 +101,8 @@ io::log "branch:  ${BRANCH_NAME}"
 io::log "bucket:  gs://${bucket}"
 
 upload_docs "google-cloud-common" "cmake-out/google/cloud/html"
-upload_docs "google-cloud-bigquery" "cmake-out/google/cloud/bigquery/html"
 upload_docs "google-cloud-bigtable" "cmake-out/google/cloud/bigtable/html"
-upload_docs "google-cloud-iam" "cmake-out/google/cloud/iam/html"
 upload_docs "google-cloud-pubsub" "cmake-out/google/cloud/pubsub/html"
 upload_docs "google-cloud-spanner" "cmake-out/google/cloud/spanner/html"
 upload_docs "google-cloud-storage" "cmake-out/google/cloud/storage/html"
+upload_docs "google-cloud-firestore" "cmake-out/google/cloud/firestore/html"

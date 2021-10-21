@@ -27,7 +27,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 class CompletionQueue;
 
 namespace internal {
@@ -263,7 +263,7 @@ inline std::shared_ptr<CompletionQueueImpl> GetCompletionQueueImpl(
 
 }  // namespace internal
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

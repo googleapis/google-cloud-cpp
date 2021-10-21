@@ -69,9 +69,6 @@ TEST(CleanupStaleBucketsTest, RemoveBucketContents) {
         response.items.push_back(CreateObject("baz", 1));
         return response;
       });
-  EXPECT_CALL(*mock, GetBucketMetadata)
-      .WillOnce(
-          Return(make_status_or(BucketMetadata{}.set_name("fake-bucket"))));
   auto client = internal::ClientImplDetails::CreateWithoutDecorations(mock);
   auto const actual = RemoveBucketAndContents(client, "fake-bucket");
   EXPECT_STATUS_OK(actual);
@@ -95,7 +92,7 @@ TEST(CleanupStaleBucketsTest, RemoveStaleBuckets) {
   EXPECT_CALL(*mock, client_options).WillRepeatedly(ReturnRef(options));
 
   auto const now =
-      google::cloud::internal::ParseRfc3339("2020-09-23T12:34:56Z").value();
+      google::cloud::internal::ParseRfc3339("2020-09-23T12:34:56Z");
   auto const create_time_limit = now - std::chrono::hours(48);
   auto const affected_tp = create_time_limit - std::chrono::hours(1);
   auto const unaffected_tp = create_time_limit + std::chrono::hours(1);

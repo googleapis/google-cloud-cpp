@@ -18,14 +18,14 @@
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
-#include <google/storage/v2/storage.pb.h>
+#include <google/storage/v1/storage.pb.h>
 #include <functional>
 #include <string>
 
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 /**
@@ -40,8 +40,8 @@ namespace internal {
  */
 class GrpcObjectReadSource : public ObjectReadSource {
  public:
-  using StreamingRpc = ::google::cloud::internal::StreamingReadRpc<
-      google::storage::v2::ReadObjectResponse>;
+  using StreamingRpc = google::cloud::internal::StreamingReadRpc<
+      google::storage::v1::GetObjectMediaResponse>;
 
   explicit GrpcObjectReadSource(std::unique_ptr<StreamingRpc> stream);
 
@@ -62,15 +62,17 @@ class GrpcObjectReadSource : public ObjectReadSource {
   // In some cases the gRPC response may contain more data than the buffer
   // provided by the application. This buffer stores any excess results.
   std::string spill_;
-  // The current portion of `spill_` that has not been consumed.
-  absl::string_view spill_view_;
 
   // The status of the request.
   google::cloud::Status status_;
+
+  // If set the checksums for the object are known and `Read()` does not need
+  // to return them, even if present in the response.
+  bool checksums_known_ = false;
 };
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 
 static_assert(std::is_copy_constructible<storage::Client>::value,
               "storage::Client must be constructible");
@@ -42,7 +42,7 @@ Client::Client(Options opts)
 
 std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
     Options const& opts, std::shared_ptr<internal::RawClient> client) {
-  using ::google::cloud::internal::Contains;
+  using google::cloud::internal::Contains;
   auto const& tracing_components = opts.get<TracingComponentsOption>();
   auto const enable_logging = Contains(tracing_components, "raw-client") ||
                               Contains(tracing_components, "rpc");
@@ -93,8 +93,8 @@ ObjectWriteStream Client::WriteObjectImpl(
 
     ObjectWriteStream error_stream(
         absl::make_unique<internal::ObjectWriteStreambuf>(
-            std::move(error), 0, internal::CreateNullHashFunction(),
-            internal::HashValues{}, internal::CreateNullHashValidator(),
+            std::move(error), 0,
+            absl::make_unique<internal::NullHashValidator>(),
             AutoFinalizeConfig::kDisabled));
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     error_stream.Close();
@@ -102,11 +102,6 @@ ObjectWriteStream Client::WriteObjectImpl(
   }
   return ObjectWriteStream(absl::make_unique<internal::ObjectWriteStreambuf>(
       *std::move(session), raw_client_->client_options().upload_buffer_size(),
-      internal::CreateHashFunction(request),
-      internal::HashValues{
-          request.GetOption<Crc32cChecksumValue>().value_or(""),
-          request.GetOption<MD5HashValue>().value_or(""),
-      },
       internal::CreateHashValidator(request),
       request.GetOption<AutoFinalize>().value_or(
           AutoFinalizeConfig::kEnabled)));
@@ -137,9 +132,9 @@ StatusOr<ObjectMetadata> Client::UploadFileSimple(
        << ") is bigger than the size of file source (" << file_size << ")";
     return Status(StatusCode::kInvalidArgument, std::move(os).str());
   }
-  auto upload_size = (std::min)(
-      request.GetOption<UploadLimit>().value_or(file_size - upload_offset),
-      file_size - upload_offset);
+  auto upload_size = (std::min)(request.GetOption<UploadLimit>().value_or(
+                                    file_size - upload_offset),
+                                file_size - upload_offset);
 
   std::ifstream is(file_name, std::ios::binary);
   if (!is.is_open()) {
@@ -197,9 +192,9 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
       return Status(StatusCode::kInvalidArgument, std::move(os).str());
     }
 
-    auto upload_size = (std::min)(
-        request.GetOption<UploadLimit>().value_or(file_size - upload_offset),
-        file_size - upload_offset);
+    auto upload_size = (std::min)(request.GetOption<UploadLimit>().value_or(
+                                      file_size - upload_offset),
+                                  file_size - upload_offset);
     request.set_option(UploadContentLength(upload_size));
   }
   std::ifstream source(file_name, std::ios::binary);
@@ -265,7 +260,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     auto expected = source_size;
     buffers[0] = internal::ConstBuffer{buffer.data(), gcount};
     if (final_chunk) {
-      upload_response = session->UploadFinalChunk(buffers, source_size, {});
+      upload_response = session->UploadFinalChunk(buffers, source_size);
     } else {
       upload_response = session->UploadChunk(buffers);
     }
@@ -361,10 +356,11 @@ StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
   internal::SignBlobRequest sign_request(
       signing_account_email, internal::Base64Encode(string_to_sign), {});
   auto response = raw_client_->SignBlob(sign_request);
-  if (!response) return response.status();
-  auto decoded = internal::Base64Decode(response->signed_blob);
-  if (!decoded) return std::move(decoded).status();
-  return SignBlobResponseRaw{response->key_id, *std::move(decoded)};
+  if (!response) {
+    return response.status();
+  }
+  return SignBlobResponseRaw{response->key_id,
+                             internal::Base64Decode(response->signed_blob)};
 }
 
 StatusOr<std::string> Client::SignUrlV2(
@@ -514,7 +510,7 @@ Status ScopedDeleter::ExecuteDelete() {
 
 }  // namespace internal
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

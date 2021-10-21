@@ -18,7 +18,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 class TerminateFunction {
@@ -42,7 +42,7 @@ class TerminateFunction {
 };
 
 TerminateFunction& GetTerminateHolder() {
-  static TerminateFunction f([](char const* msg) {
+  static TerminateFunction f([](const char* msg) {
     std::cerr << "Aborting because exceptions are disabled: " << msg << "\n";
     std::abort();
   });
@@ -57,7 +57,7 @@ TerminateHandler SetTerminateHandler(TerminateHandler f) {
 
 TerminateHandler GetTerminateHandler() { return GetTerminateHolder().Get(); }
 
-[[noreturn]] void Terminate(char const* msg) {
+[[noreturn]] void Terminate(const char* msg) {
   GetTerminateHolder().Get()(msg);
   std::cerr << "Aborting because the installed terminate handler returned. "
                "Error details: "
@@ -65,6 +65,6 @@ TerminateHandler GetTerminateHandler() { return GetTerminateHolder().Get(); }
   std::abort();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

@@ -17,11 +17,9 @@
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
-#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/options.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
 #include "absl/memory/memory.h"
 #include <chrono>
@@ -429,10 +427,9 @@ void PublisherTask(Config const& config, ExperimentFlowControl& flow_control,
   auto make_publisher = [config, task] {
     auto const topic = pubsub::Topic(config.project_id, config.topic_id);
     return pubsub::Publisher(pubsub::MakePublisherConnection(
-        topic,
-        google::cloud::Options{}.set<google::cloud::GrpcChannelArgumentsOption>(
-            {{GRPC_ARG_CHANNEL_POOL_DOMAIN,
-              "publisher: " + std::to_string(task)}})));
+        topic, {},
+        pubsub::ConnectionOptions{}.set_channel_pool_domain(
+            "publisher:" + std::to_string(task))));
   };
   auto publisher = make_publisher();
 

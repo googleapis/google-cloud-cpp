@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
  * Defines the interface to acknowledge and reject messages.
@@ -49,8 +49,8 @@ class AckHandler {
  public:
   ~AckHandler();
 
-  AckHandler(AckHandler&&) = default;
-  AckHandler& operator=(AckHandler&&) = default;
+  AckHandler(AckHandler&&) noexcept = default;
+  AckHandler& operator=(AckHandler&&) noexcept = default;
 
   /**
    * Acknowledges the message associated with this handler.
@@ -107,7 +107,7 @@ class AckHandler {
   std::unique_ptr<Impl> impl_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

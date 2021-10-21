@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
  * Objects of this class identify a Cloud Pub/Sub snapshot.
@@ -76,7 +76,7 @@ class Snapshot {
   std::string snapshot_id_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

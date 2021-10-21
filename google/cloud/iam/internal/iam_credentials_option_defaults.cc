@@ -20,7 +20,6 @@
 #include "google/cloud/iam/iam_credentials_connection.h"
 #include "google/cloud/iam/iam_credentials_options.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
@@ -30,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace iam_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,17 +38,17 @@ auto constexpr kBackoffScaling = 2.0;
 Options IAMCredentialsDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_ENDPOINT");
-    options.set<EndpointOption>(
-        env && !env->empty() ? *env : "iamcredentials.googleapis.com");
+    options.set<EndpointOption>(env ? *env : "iamcredentials.googleapis.com");
   }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
   }
-  if (!options.has<TracingComponentsOption>()) {
-    options.set<TracingComponentsOption>(internal::DefaultTracingComponents());
+  if (!options.has<GrpcBackgroundThreadsFactoryOption>()) {
+    options.set<GrpcBackgroundThreadsFactoryOption>(
+        internal::DefaultBackgroundThreadsFactory);
   }
-  if (!options.has<GrpcTracingOptionsOption>()) {
-    options.set<GrpcTracingOptionsOption>(internal::DefaultTracingOptions());
+  if (!options.has<GrpcNumChannelsOption>()) {
+    options.set<GrpcNumChannelsOption>(4);
   }
   auto& products = options.lookup<UserAgentProductsOption>();
   products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
@@ -59,12 +58,14 @@ Options IAMCredentialsDefaultOptions(Options options) {
         iam::IAMCredentialsLimitedTimeRetryPolicy(std::chrono::minutes(30))
             .clone());
   }
+
   if (!options.has<iam::IAMCredentialsBackoffPolicyOption>()) {
     options.set<iam::IAMCredentialsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
+
   if (!options.has<iam::IAMCredentialsConnectionIdempotencyPolicyOption>()) {
     options.set<iam::IAMCredentialsConnectionIdempotencyPolicyOption>(
         iam::MakeDefaultIAMCredentialsConnectionIdempotencyPolicy());
@@ -73,7 +74,7 @@ Options IAMCredentialsDefaultOptions(Options options) {
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

@@ -29,6 +29,7 @@ spanner_client_testing_hdrs = [
     "testing/mock_spanner_stub.h",
     "testing/pick_instance_config.h",
     "testing/pick_random_instance.h",
+    "testing/policies.h",
     "testing/random_backup_name.h",
     "testing/random_database_name.h",
     "testing/random_instance_name.h",

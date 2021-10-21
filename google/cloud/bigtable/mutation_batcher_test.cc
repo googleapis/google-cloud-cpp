@@ -27,10 +27,10 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
-namespace btproto = ::google::bigtable::v2;
+namespace btproto = google::bigtable::v2;
 namespace bt = ::google::cloud::bigtable;
 
 using ::google::cloud::testing_util::IsContextMDValid;
@@ -141,7 +141,7 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
         batcher_(new MutationBatcher(table_)) {}
 
   void ExpectInteraction(std::vector<Exchange> const& interactions) {
-    // gMock expectation matching starts from the latest added, so we need to
+    // gMock expectation matching starts form the latest added, so we need to
     // add them in the reverse order.
     for (auto exchange_it = interactions.crbegin();
          exchange_it != interactions.crend(); ++exchange_it) {
@@ -249,34 +249,16 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
   std::unique_ptr<MutationBatcher> batcher_;
 };
 
-TEST(OptionsTest, Defaults) {
-  MutationBatcher::Options opt = MutationBatcher::Options();
-  ASSERT_EQ(1000, opt.max_mutations_per_batch);
-  ASSERT_EQ(4, opt.max_batches);
-}
-
 TEST(OptionsTest, Trivial) {
   MutationBatcher::Options opt = MutationBatcher::Options()
                                      .SetMaxMutationsPerBatch(1)
                                      .SetMaxSizePerBatch(2)
                                      .SetMaxBatches(3)
-                                     .SetMaxOutstandingSize(4)
-                                     .SetMaxOutstandingMutations(5);
+                                     .SetMaxOutstandingSize(4);
   ASSERT_EQ(1, opt.max_mutations_per_batch);
   ASSERT_EQ(2, opt.max_size_per_batch);
   ASSERT_EQ(3, opt.max_batches);
   ASSERT_EQ(4, opt.max_outstanding_size);
-  ASSERT_EQ(5, opt.max_outstanding_mutations);
-}
-
-TEST(OptionsTest, StrictLimits) {
-  MutationBatcher::Options opt = MutationBatcher::Options()
-                                     .SetMaxMutationsPerBatch(200000)
-                                     .SetMaxOutstandingMutations(400000);
-  // See `kBigtableMutationLimit`
-  ASSERT_EQ(100000, opt.max_mutations_per_batch);
-  // See `kBigtableOutstandingMutationLimit`
-  ASSERT_EQ(300000, opt.max_outstanding_mutations);
 }
 
 TEST_F(MutationBatcherTest, TrivialTest) {
@@ -426,86 +408,6 @@ TEST_F(MutationBatcherTest, RequestsWithManyMutationsAreRejected) {
   EXPECT_TRUE(state->admitted);
   EXPECT_TRUE(state->completed);
   EXPECT_THAT(state->completion_status, Not(IsOk()));
-  EXPECT_EQ(0, NumOperationsOutstanding());
-}
-
-TEST_F(MutationBatcherTest, OutstandingMutationsAreCapped) {
-  std::vector<SingleRowMutation> mutations(
-      {SingleRowMutation("foo", {bt::SetCell("fam", "col1", 0_ms, "baz")}),
-       SingleRowMutation("foo", {bt::SetCell("fam", "col1", 0_ms, "baz"),
-                                 bt::SetCell("fam", "col2", 0_ms, "baz"),
-                                 bt::SetCell("fam", "col3", 0_ms, "baz")})});
-
-  // The second mutation will go through alone. But it will not go through if
-  // the first mutation is outstanding due to the outstanding mutations limit.
-  batcher_.reset(new MutationBatcher(
-      table_, MutationBatcher::Options().SetMaxOutstandingMutations(3)));
-
-  ExpectInteraction({{{mutations[0]}, {ResultPiece({0}, {}, {})}},
-                     {{mutations[1]}, {ResultPiece({0, 1, 2}, {}, {})}}});
-
-  auto initially_admitted = Apply(mutations[0]);
-  EXPECT_TRUE(initially_admitted->admitted);
-  EXPECT_FALSE(initially_admitted->completed);
-  EXPECT_EQ(1, NumOperationsOutstanding());
-
-  auto initially_not_admitted = Apply(mutations[1]);
-  EXPECT_FALSE(initially_not_admitted->admitted);
-  EXPECT_FALSE(initially_not_admitted->completed);
-  EXPECT_EQ(1, NumOperationsOutstanding());
-
-  FinishSingleItemStream();
-
-  EXPECT_TRUE(initially_admitted->completed);
-  EXPECT_STATUS_OK(initially_admitted->completion_status);
-  EXPECT_TRUE(initially_not_admitted->admitted);
-  EXPECT_FALSE(initially_not_admitted->completed);
-  EXPECT_EQ(1, NumOperationsOutstanding());
-
-  FinishSingleItemStream();
-
-  EXPECT_TRUE(initially_not_admitted->completed);
-  EXPECT_STATUS_OK(initially_not_admitted->completion_status);
-  EXPECT_EQ(0, NumOperationsOutstanding());
-}
-
-TEST_F(MutationBatcherTest, OutstandingMutationSizeIsCapped) {
-  std::vector<SingleRowMutation> mutations(
-      {SingleRowMutation("foo", {bt::SetCell("fam", "col1", 0_ms, "baz")}),
-       SingleRowMutation("foo", {bt::SetCell("fam", "col1", 0_ms, "baz"),
-                                 bt::SetCell("fam", "col2", 0_ms, "baz")})});
-
-  // The second mutation will go through alone. But it will not go through if
-  // the first mutation is outstanding due to the outstanding size limit.
-  batcher_.reset(new MutationBatcher(
-      table_, MutationBatcher::Options().SetMaxOutstandingSize(
-                  MutationSize(mutations[1]))));
-
-  ExpectInteraction({{{mutations[0]}, {ResultPiece({0}, {}, {})}},
-                     {{mutations[1]}, {ResultPiece({0, 1, 2}, {}, {})}}});
-
-  auto initially_admitted = Apply(mutations[0]);
-  EXPECT_TRUE(initially_admitted->admitted);
-  EXPECT_FALSE(initially_admitted->completed);
-  EXPECT_EQ(1, NumOperationsOutstanding());
-
-  auto initially_not_admitted = Apply(mutations[1]);
-  EXPECT_FALSE(initially_not_admitted->admitted);
-  EXPECT_FALSE(initially_not_admitted->completed);
-  EXPECT_EQ(1, NumOperationsOutstanding());
-
-  FinishSingleItemStream();
-
-  EXPECT_TRUE(initially_admitted->completed);
-  EXPECT_STATUS_OK(initially_admitted->completion_status);
-  EXPECT_TRUE(initially_not_admitted->admitted);
-  EXPECT_FALSE(initially_not_admitted->completed);
-  EXPECT_EQ(1, NumOperationsOutstanding());
-
-  FinishSingleItemStream();
-
-  EXPECT_TRUE(initially_not_admitted->completed);
-  EXPECT_STATUS_OK(initially_not_admitted->completion_status);
   EXPECT_EQ(0, NumOperationsOutstanding());
 }
 
@@ -839,7 +741,7 @@ TEST_F(MutationBatcherTest, ApplyCompletesImmediately) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

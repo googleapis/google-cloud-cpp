@@ -32,10 +32,11 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::AclEntityNames;
+using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
@@ -678,11 +679,15 @@ TEST_F(ObjectIntegrationTest, ListObjectsFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  // This operation should fail because the bucket does not exist.
   ListObjectsReader reader = client->ListObjects(bucket_name, Versions(true));
-  auto it = reader.begin();
-  ASSERT_TRUE(it != reader.end());
-  EXPECT_THAT(*it, Not(IsOk()));
+
+  // This operation should fail because the bucket does not exist.
+  TestPermanentFailure([&] {
+    std::vector<ObjectMetadata> actual;
+    for (auto&& o : reader) {
+      actual.emplace_back(std::move(o).value());
+    }
+  });
 }
 
 TEST_F(ObjectIntegrationTest, DeleteObjectFailure) {
@@ -872,7 +877,7 @@ TEST_F(ObjectIntegrationTest, WriteWithCustomTime) {
 }
 
 }  // anonymous namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

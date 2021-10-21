@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 class StorageRoundRobin : public StorageStub {
@@ -32,20 +32,105 @@ class StorageRoundRobin : public StorageStub {
       : children_(std::move(children)) {}
   ~StorageRoundRobin() override = default;
 
-  std::unique_ptr<ReadObjectStream> ReadObject(
+  std::unique_ptr<ObjectMediaStream> GetObjectMedia(
       std::unique_ptr<grpc::ClientContext> context,
-      google::storage::v2::ReadObjectRequest const& request) override;
+      google::storage::v1::GetObjectMediaRequest const& request) override;
 
-  std::unique_ptr<WriteObjectStream> WriteObject(
+  std::unique_ptr<InsertStream> InsertObjectMedia(
       std::unique_ptr<grpc::ClientContext> context) override;
 
-  StatusOr<google::storage::v2::StartResumableWriteResponse>
+  Status DeleteBucketAccessControl(
+      grpc::ClientContext& context,
+      google::storage::v1::DeleteBucketAccessControlRequest const& request)
+      override;
+  StatusOr<google::storage::v1::BucketAccessControl> GetBucketAccessControl(
+      grpc::ClientContext& context,
+      google::storage::v1::GetBucketAccessControlRequest const& request)
+      override;
+  StatusOr<google::storage::v1::BucketAccessControl> InsertBucketAccessControl(
+      grpc::ClientContext& context,
+      google::storage::v1::InsertBucketAccessControlRequest const& request)
+      override;
+  StatusOr<google::storage::v1::ListBucketAccessControlsResponse>
+  ListBucketAccessControls(
+      grpc::ClientContext& context,
+      google::storage::v1::ListBucketAccessControlsRequest const& request)
+      override;
+  StatusOr<google::storage::v1::BucketAccessControl> UpdateBucketAccessControl(
+      grpc::ClientContext& context,
+      google::storage::v1::UpdateBucketAccessControlRequest const& request)
+      override;
+  Status DeleteBucket(
+      grpc::ClientContext& context,
+      google::storage::v1::DeleteBucketRequest const& request) override;
+  StatusOr<google::storage::v1::Bucket> GetBucket(
+      grpc::ClientContext& context,
+      google::storage::v1::GetBucketRequest const& request) override;
+  StatusOr<google::storage::v1::Bucket> InsertBucket(
+      grpc::ClientContext& context,
+      google::storage::v1::InsertBucketRequest const& request) override;
+  StatusOr<google::storage::v1::ListBucketsResponse> ListBuckets(
+      grpc::ClientContext& context,
+      google::storage::v1::ListBucketsRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetBucketIamPolicy(
+      grpc::ClientContext& context,
+      google::storage::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetBucketIamPolicy(
+      grpc::ClientContext& context,
+      google::storage::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestBucketIamPermissions(
+      grpc::ClientContext& context,
+      google::storage::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::storage::v1::Bucket> UpdateBucket(
+      grpc::ClientContext& context,
+      google::storage::v1::UpdateBucketRequest const& request) override;
+  Status DeleteDefaultObjectAccessControl(
+      grpc::ClientContext& context,
+      google::storage::v1::DeleteDefaultObjectAccessControlRequest const&
+          request) override;
+  StatusOr<google::storage::v1::ObjectAccessControl>
+  GetDefaultObjectAccessControl(
+      grpc::ClientContext& context,
+      google::storage::v1::GetDefaultObjectAccessControlRequest const& request)
+      override;
+  StatusOr<google::storage::v1::ObjectAccessControl>
+  InsertDefaultObjectAccessControl(
+      grpc::ClientContext& context,
+      google::storage::v1::InsertDefaultObjectAccessControlRequest const&
+          request) override;
+  StatusOr<google::storage::v1::ListObjectAccessControlsResponse>
+  ListDefaultObjectAccessControls(
+      grpc::ClientContext& context,
+      google::storage::v1::ListDefaultObjectAccessControlsRequest const&
+          request) override;
+  StatusOr<google::storage::v1::ObjectAccessControl>
+  UpdateDefaultObjectAccessControl(
+      grpc::ClientContext& context,
+      google::storage::v1::UpdateDefaultObjectAccessControlRequest const&
+          request) override;
+  Status DeleteNotification(
+      grpc::ClientContext& context,
+      google::storage::v1::DeleteNotificationRequest const& request) override;
+  StatusOr<google::storage::v1::Notification> GetNotification(
+      grpc::ClientContext& context,
+      google::storage::v1::GetNotificationRequest const& request) override;
+  StatusOr<google::storage::v1::Notification> InsertNotification(
+      grpc::ClientContext& context,
+      google::storage::v1::InsertNotificationRequest const& request) override;
+  StatusOr<google::storage::v1::ListNotificationsResponse> ListNotifications(
+      grpc::ClientContext& context,
+      google::storage::v1::ListNotificationsRequest const& request) override;
+  Status DeleteObject(
+      grpc::ClientContext& context,
+      google::storage::v1::DeleteObjectRequest const& request) override;
+  StatusOr<google::storage::v1::StartResumableWriteResponse>
   StartResumableWrite(
       grpc::ClientContext& context,
-      google::storage::v2::StartResumableWriteRequest const& request) override;
-  StatusOr<google::storage::v2::QueryWriteStatusResponse> QueryWriteStatus(
+      google::storage::v1::StartResumableWriteRequest const& request) override;
+  StatusOr<google::storage::v1::QueryWriteStatusResponse> QueryWriteStatus(
       grpc::ClientContext& context,
-      google::storage::v2::QueryWriteStatusRequest const& request) override;
+      google::storage::v1::QueryWriteStatusRequest const& request) override;
 
  private:
   std::shared_ptr<StorageStub> Child();
@@ -56,7 +141,7 @@ class StorageRoundRobin : public StorageStub {
 };
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

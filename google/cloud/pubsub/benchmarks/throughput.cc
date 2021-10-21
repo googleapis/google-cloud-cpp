@@ -17,7 +17,6 @@
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
-#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -192,13 +191,12 @@ std::string Timestamp() {
 }
 
 void PrintResult(std::string const& operation, int iteration,
-                 std::int64_t count, std::int64_t bytes,
-                 Timer::Snapshot const& usage) {
+                 std::int64_t count, std::int64_t bytes, Timer const& usage) {
   using std::chrono::duration_cast;
   using std::chrono::microseconds;
   using std::chrono::seconds;
 
-  auto const elapsed_us = duration_cast<microseconds>(usage.elapsed_time);
+  auto const elapsed_us = duration_cast<microseconds>(usage.elapsed_time());
   auto const mbs =
       absl::StrFormat("%.02f", static_cast<double>(bytes) /
                                    static_cast<double>(elapsed_us.count()));
@@ -212,28 +210,27 @@ void PrintResult(std::string const& operation, int iteration,
 }
 
 pubsub::Publisher CreatePublisher(Config const& config) {
-  namespace gc = ::google::cloud;
-  auto options =
-      gc::Options{}
-          .set<pubsub::MaxBatchMessagesOption>(config.publisher_max_batch_size)
-          .set<pubsub::MaxBatchBytesOption>(
-              static_cast<std::size_t>(config.publisher_max_batch_bytes))
-          .set<gc::GrpcChannelArgumentsOption>(
-              {{GRPC_ARG_CHANNEL_POOL_DOMAIN, "Publisher"}});
+  auto publisher_options =
+      pubsub::PublisherOptions{}
+          .set_maximum_batch_message_count(config.publisher_max_batch_size)
+          .set_maximum_batch_bytes(
+              static_cast<std::size_t>(config.publisher_max_batch_bytes));
+  auto connection_options =
+      pubsub::ConnectionOptions{}.set_channel_pool_domain("Publisher");
   if (!config.endpoint.empty()) {
-    options.set<gc::EndpointOption>(config.endpoint);
+    connection_options.set_endpoint(config.endpoint);
   }
   if (config.publisher_io_threads != 0) {
-    options.set<gc::GrpcBackgroundThreadPoolSizeOption>(
+    connection_options.set_background_thread_pool_size(
         config.publisher_io_threads);
   }
   if (config.publisher_io_channels != 0) {
-    options.set<google::cloud::GrpcNumChannelsOption>(
-        config.publisher_io_channels);
+    connection_options.set_num_channels(config.publisher_io_channels);
   }
 
   return pubsub::Publisher(pubsub::MakePublisherConnection(
-      pubsub::Topic(config.project_id, config.topic_id), std::move(options)));
+      pubsub::Topic(config.project_id, config.topic_id),
+      std::move(publisher_options), std::move(connection_options)));
 }
 
 std::atomic<std::int64_t> send_count{0};
@@ -372,7 +369,8 @@ void PublisherTask(Config const& config) {
   auto const start = std::chrono::steady_clock::now();
   for (int i = 0; !Done(config, i, start); ++i) {
     using std::chrono::steady_clock;
-    auto timer = Timer::PerThread();
+    Timer usage;
+    usage.Start();
     auto const start_send_count = send_count.load();
     auto const start_send_bytes = send_bytes.load();
     auto const start_ack_count = ack_count.load();
@@ -382,7 +380,7 @@ void PublisherTask(Config const& config) {
     auto const send_bytes_last = send_bytes.load() - start_send_bytes;
     auto const ack_count_last = ack_count.load() - start_ack_count;
     auto const ack_bytes_last = ack_bytes.load() - start_ack_bytes;
-    auto const usage = timer.Sample();
+    usage.Stop();
     PrintResult("Pub", i, send_count_last, send_bytes_last, usage);
     PrintResult("Ack", i, ack_count_last, ack_bytes_last, usage);
   }
@@ -406,31 +404,28 @@ void PublisherTask(Config const& config) {
 }
 
 pubsub::Subscriber CreateSubscriber(Config const& config) {
-  namespace gc = ::google::cloud;
-  auto options =
-      gc::Options{}
-          .set<pubsub::MaxOutstandingMessagesOption>(
+  auto subscriber_options =
+      pubsub::SubscriberOptions{}
+          .set_max_outstanding_messages(
               config.subscriber_max_outstanding_messages)
-          .set<pubsub::MaxOutstandingBytesOption>(
-              config.subscriber_max_outstanding_bytes)
-          .set<pubsub::MaxConcurrencyOption>(config.subscriber_max_concurrency)
-          .set<gc::GrpcChannelArgumentsOption>(
-              {{GRPC_ARG_CHANNEL_POOL_DOMAIN, "Subscriber"}});
+          .set_max_outstanding_bytes(config.subscriber_max_outstanding_bytes)
+          .set_max_concurrency(config.subscriber_max_concurrency);
+  auto connection_options =
+      pubsub::ConnectionOptions{}.set_channel_pool_domain("Subscriber");
   if (!config.endpoint.empty()) {
-    options.set<gc::EndpointOption>(config.endpoint);
+    connection_options.set_endpoint(config.endpoint);
   }
   if (config.subscriber_io_threads != 0) {
-    options.set<gc::GrpcBackgroundThreadPoolSizeOption>(
+    connection_options.set_background_thread_pool_size(
         config.subscriber_io_threads);
   }
   if (config.subscriber_io_channels != 0) {
-    options.set<google::cloud::GrpcNumChannelsOption>(
-        config.subscriber_io_channels);
+    connection_options.set_num_channels(config.subscriber_io_channels);
   }
 
   return pubsub::Subscriber(pubsub::MakeSubscriberConnection(
       pubsub::Subscription(config.project_id, config.subscription_id),
-      std::move(options)));
+      std::move(subscriber_options), std::move(connection_options)));
 }
 
 void SubscriberTask(Config const& config) {
@@ -456,13 +451,14 @@ void SubscriberTask(Config const& config) {
   auto const start = std::chrono::steady_clock::now();
   for (int i = 0; !Done(config, i, start); ++i) {
     using std::chrono::steady_clock;
-    auto timer = Timer::PerThread();
+    Timer usage;
+    usage.Start();
     auto const start_count = received_count.load();
     auto const start_bytes = received_bytes.load();
     std::this_thread::sleep_for(config.iteration_duration);
     auto const count = received_count.load() - start_count;
     auto const bytes = received_bytes.load() - start_bytes;
-    auto const usage = timer.Sample();
+    usage.Stop();
     PrintResult("Sub", i, count, bytes, usage);
   }
   for (auto& s : sessions) s.cancel();

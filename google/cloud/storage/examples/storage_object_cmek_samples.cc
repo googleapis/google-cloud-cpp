@@ -24,7 +24,7 @@ namespace {
 void WriteObjectWithKmsKey(google::cloud::storage::Client client,
                            std::vector<std::string> const& argv) {
   //! [write object with kms key] [START storage_upload_with_kms_key]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& kms_key_name) {
@@ -52,7 +52,7 @@ void WriteObjectWithKmsKey(google::cloud::storage::Client client,
 void ObjectCsekToCmek(google::cloud::storage::Client client,
                       std::vector<std::string> const& argv) {
   //! [object csek to cmek] [START storage_object_csek_to_cmek]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& old_csek_key_base64,
@@ -75,7 +75,7 @@ void ObjectCsekToCmek(google::cloud::storage::Client client,
 void GetObjectKmsKey(google::cloud::storage::Client client,
                      std::vector<std::string> const& argv) {
   //! [get object kms key] [START storage_object_get_kms_key]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {

@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 class CurlRequestBuilder;
 
@@ -72,16 +72,13 @@ class CurlClient : public RawClient,
   /// @name Implement the CurlResumableSession operations.
   // Note that these member functions are not inherited from RawClient, they are
   // called only by `CurlResumableUploadSession`, because the retry loop for
-  // them is very different from the standard retry loop. Also note that some of
-  // these member functions are virtual, but only because we need to override
-  // them in the *library* unit tests.
+  // them is very different from the standard retry loop. Also note that these
+  // are virtual functions only because we need to override them in the unit
+  // tests.
   virtual StatusOr<ResumableUploadResponse> UploadChunk(
       UploadChunkRequest const&);
   virtual StatusOr<ResumableUploadResponse> QueryResumableUpload(
       QueryResumableUploadRequest const&);
-  StatusOr<std::unique_ptr<ResumableUploadSession>>
-  FullyRestoreResumableSession(ResumableUploadRequest const& request,
-                               std::string const& session_id);
   //@}
 
   ClientOptions const& client_options() const override {
@@ -130,6 +127,8 @@ class CurlClient : public RawClient,
       ComposeObjectRequest const& request) override;
   StatusOr<std::unique_ptr<ResumableUploadSession>> CreateResumableSession(
       ResumableUploadRequest const& request) override;
+  StatusOr<std::unique_ptr<ResumableUploadSession>> RestoreResumableSession(
+      std::string const& session_id) override;
   StatusOr<EmptyResponse> DeleteResumableUpload(
       DeleteResumableUploadRequest const& request) override;
 
@@ -225,6 +224,10 @@ class CurlClient : public RawClient,
   StatusOr<ObjectMetadata> InsertObjectMediaSimple(
       InsertObjectMediaRequest const& request);
 
+  template <typename RequestType>
+  StatusOr<std::unique_ptr<ResumableUploadSession>>
+  CreateResumableSessionGeneric(RequestType const& request);
+
   google::cloud::Options opts_;
   ClientOptions backwards_compatibility_options_;
   std::string const x_goog_api_client_header_;
@@ -244,7 +247,7 @@ class CurlClient : public RawClient,
 };
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -27,44 +27,37 @@
       "deprecated and will be be removed on 2022-04-01 or shortly "        \
       "after. See GitHub issue #5929 for more information.")
 
-#define GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi, Pa) v##Ma##_##Mi##_##Pa
-#define GOOGLE_CLOUD_CPP_VEVAL(Ma, Mi, Pa) GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi, Pa)
+#define GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi) v##Ma
+#define GOOGLE_CLOUD_CPP_VEVAL(Ma, Mi) GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi)
 #define GOOGLE_CLOUD_CPP_NS                              \
   GOOGLE_CLOUD_CPP_VEVAL(GOOGLE_CLOUD_CPP_VERSION_MAJOR, \
-                         GOOGLE_CLOUD_CPP_VERSION_MINOR, \
-                         GOOGLE_CLOUD_CPP_VERSION_PATCH)
+                         GOOGLE_CLOUD_CPP_VERSION_MINOR)
 
-/**
- * Versioned inline namespace that users should generally avoid spelling.
- *
- * The actual inline namespace name will change with each release, and if you
- * use it your code will be tightly coupled to a specific release. Omitting the
- * inline namespace name will make upgrading to newer releases easier.
- *
- * However, applications may need to link multiple versions of the Google Cloud
- * C++ Libraries, for example, if they link a library that uses an older
- * version of the libraries than they do. This namespace is inlined, so
- * applications can use `google::cloud::Foo` in their source, but the symbols
- * are versioned, i.e., the symbol becomes `google::cloud::vXYZ::Foo`.
- */
-#define GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN \
-  inline namespace GOOGLE_CLOUD_CPP_NS {
-#define GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END \
-  } /* namespace GOOGLE_CLOUD_CPP_NS */       \
-  namespace v1 = GOOGLE_CLOUD_CPP_NS;         \
-  namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;
-
-// This preprocessor symbol is deprecated and should never be used anywhere. It
-// exists solely for backward compatibility to avoid breaking anyone who may
-// have been using it.
-#define GOOGLE_CLOUD_CPP_GENERATED_NS GOOGLE_CLOUD_CPP_NS
+#define GOOGLE_CLOUD_CPP_GENERATED_VCONCAT(Ma, Mi) gcpcxxV##Ma
+#define GOOGLE_CLOUD_CPP_GENERATED_VEVAL(Ma, Mi) \
+  GOOGLE_CLOUD_CPP_GENERATED_VCONCAT(Ma, Mi)
+#define GOOGLE_CLOUD_CPP_GENERATED_NS                              \
+  GOOGLE_CLOUD_CPP_GENERATED_VEVAL(GOOGLE_CLOUD_CPP_VERSION_MAJOR, \
+                                   GOOGLE_CLOUD_CPP_VERSION_MINOR)
 
 namespace google {
 /**
  * Contains all the Google Cloud C++ Library APIs.
  */
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+/**
+ * The Google Cloud C++ Library inlined, versioned namespace.
+ *
+ * Applications may need to link multiple versions of the Google Cloud C++
+ * Libraries, for example, if they link a library that uses an older version of
+ * the libraries than they do.  This namespace is inlined, so applications can
+ * use `google::cloud::Foo` in their source, but the symbols are versioned,
+ * i.e., the symbol becomes `google::cloud::v1::Foo`.
+ *
+ * Note that, consistent with the semver.org guidelines, the v0 version makes
+ * no guarantees with respect to backwards compatibility.
+ */
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * The Google Cloud Storage C++ Client major version.
  *
@@ -105,7 +98,7 @@ int constexpr version() {
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string version_string();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

@@ -31,13 +31,21 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
+
 
 std::shared_ptr<GoldenThingAdminStub>
 CreateDefaultGoldenThingAdminStub(
     google::cloud::CompletionQueue cq, Options const& options) {
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      std::move(cq), options);
+  auto auth = [&] {
+    if (options.has<google::cloud::UnifiedCredentialsOption>()) {
+      return google::cloud::internal::CreateAuthenticationStrategy(
+          options.get<google::cloud::UnifiedCredentialsOption>(), std::move(cq),
+          options);
+    }
+    return google::cloud::internal::CreateAuthenticationStrategy(
+        options.get<google::cloud::GrpcCredentialOption>());
+  }();
   auto channel = auth->CreateChannel(
     options.get<EndpointOption>(), internal::MakeChannelArguments(options));
   auto service_grpc_stub = google::test::admin::database::v1::GoldenThingAdmin::NewStub(channel);
@@ -61,8 +69,8 @@ CreateDefaultGoldenThingAdminStub(
   }
   return stub;
 }
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
+

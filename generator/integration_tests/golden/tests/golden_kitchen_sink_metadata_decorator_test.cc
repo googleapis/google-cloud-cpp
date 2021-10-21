@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 using ::google::cloud::golden_internal::MockGoldenKitchenSinkStub;
@@ -39,8 +39,7 @@ using ::testing::Return;
 class MetadataDecoratorTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    expected_api_client_header_ =
-        google::cloud::internal::ApiClientHeader("generator");
+    expected_api_client_header_ = google::cloud::internal::ApiClientHeader();
     mock_ = std::make_shared<MockGoldenKitchenSinkStub>();
   }
 
@@ -176,7 +175,7 @@ TEST_F(MetadataDecoratorTest, ListServiceAccountKeys) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

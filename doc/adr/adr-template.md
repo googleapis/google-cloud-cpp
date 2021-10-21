@@ -15,3 +15,4 @@ next day during the PR review.
 **Decision**: what is the change that we're actually proposing or doing.
 
 **Consequences**: what becomes easier or more difficult to do because of this change.
+

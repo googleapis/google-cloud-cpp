@@ -32,14 +32,18 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 future<Status> CreateSubscriptionSession(
-    pubsub::Subscription const& subscription, Options const& opts,
-    std::shared_ptr<SubscriberStub> const& stub, CompletionQueue const& cq,
-    std::string client_id, pubsub::SubscriberConnection::SubscribeParams p);
+    pubsub::Subscription const& subscription,
+    pubsub::SubscriberOptions const& options,
+    std::shared_ptr<pubsub_internal::SubscriberStub> const& stub,
+    google::cloud::CompletionQueue const& executor, std::string client_id,
+    pubsub::SubscriberConnection::SubscribeParams p,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

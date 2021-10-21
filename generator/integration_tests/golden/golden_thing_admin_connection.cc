@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace golden {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 GoldenThingAdminConnection::~GoldenThingAdminConnection() = default;
 
@@ -255,7 +255,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->GetDatabase(context, request);
         },
         request, __func__);
-  }
+}
 
   future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override {
@@ -294,7 +294,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->DropDatabase(context, request);
         },
         request, __func__);
-  }
+}
 
   StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(
@@ -307,7 +307,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->GetDatabaseDdl(context, request);
         },
         request, __func__);
-  }
+}
 
   StatusOr<google::iam::v1::Policy>
   SetIamPolicy(
@@ -320,7 +320,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->SetIamPolicy(context, request);
         },
         request, __func__);
-  }
+}
 
   StatusOr<google::iam::v1::Policy>
   GetIamPolicy(
@@ -333,7 +333,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->GetIamPolicy(context, request);
         },
         request, __func__);
-  }
+}
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(
@@ -346,7 +346,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->TestIamPermissions(context, request);
         },
         request, __func__);
-  }
+}
 
   future<StatusOr<google::test::admin::database::v1::Backup>>
   CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request) override {
@@ -385,7 +385,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->GetBackup(context, request);
         },
         request, __func__);
-  }
+}
 
   StatusOr<google::test::admin::database::v1::Backup>
   UpdateBackup(
@@ -398,7 +398,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->UpdateBackup(context, request);
         },
         request, __func__);
-  }
+}
 
   Status
   DeleteBackup(
@@ -411,7 +411,7 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           return stub_->DeleteBackup(context, request);
         },
         request, __func__);
-  }
+}
 
   StreamRange<google::test::admin::database::v1::Backup> ListBackups(
       google::test::admin::database::v1::ListBackupsRequest request) override {
@@ -546,14 +546,14 @@ std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
     Options options) {
   options = golden_internal::GoldenThingAdminDefaultOptions(
       std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
   auto stub = golden_internal::CreateDefaultGoldenThingAdminStub(
     background->cq(), options);
   return std::make_shared<GoldenThingAdminConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google
@@ -561,18 +561,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace google {
 namespace cloud {
 namespace golden_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<golden::GoldenThingAdminConnection>
 MakeGoldenThingAdminConnection(
     std::shared_ptr<GoldenThingAdminStub> stub, Options options) {
   options = GoldenThingAdminDefaultOptions(std::move(options));
   return std::make_shared<golden::GoldenThingAdminConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(),
+      options.get<GrpcBackgroundThreadsFactoryOption>()(),
       std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
+

@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 /**
  * Transforms a stream of chunks as returned by the ReadRows streaming
@@ -133,7 +133,7 @@ class ReadRowsParserFactory {
   }
 };
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

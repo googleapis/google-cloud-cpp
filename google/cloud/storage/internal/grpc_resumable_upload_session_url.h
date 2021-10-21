@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 /*
@@ -38,6 +38,8 @@ namespace internal {
 
 /// Parameters that should be bundled with a resumable upload session ID.
 struct ResumableUploadSessionGrpcParams {
+  std::string bucket_name;
+  std::string object_name;
   std::string upload_id;
 };
 
@@ -53,7 +55,7 @@ StatusOr<ResumableUploadSessionGrpcParams> DecodeGrpcResumableUploadSessionUrl(
 bool IsGrpcResumableSessionUrl(std::string const& upload_session_url);
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

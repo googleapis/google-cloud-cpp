@@ -18,17 +18,15 @@
 
 bigtable_benchmark_common_hdrs = [
     "benchmark.h",
-    "benchmark_options.h",
     "constants.h",
     "embedded_server.h",
-    "mutation_batcher_throughput_options.h",
     "random_mutation.h",
+    "setup.h",
 ]
 
 bigtable_benchmark_common_srcs = [
     "benchmark.cc",
-    "benchmark_options.cc",
     "embedded_server.cc",
-    "mutation_batcher_throughput_options.cc",
     "random_mutation.cc",
+    "setup.cc",
 ]

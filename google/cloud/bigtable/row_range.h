@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Define the interfaces to create row key ranges.
  *
@@ -40,8 +40,8 @@ class RowRange {
   explicit RowRange(::google::bigtable::v2::RowRange rhs)
       : row_range_(std::move(rhs)) {}
 
-  RowRange(RowRange&&) = default;
-  RowRange& operator=(RowRange&&) = default;
+  RowRange(RowRange&&) noexcept = default;
+  RowRange& operator=(RowRange&&) noexcept = default;
   RowRange(RowRange const&) = default;
   RowRange& operator=(RowRange const&) = default;
 
@@ -201,7 +201,7 @@ inline bool operator!=(RowRange const& lhs, RowRange const& rhs) {
 
 /// Print a human-readable representation of the range, mostly for testing.
 std::ostream& operator<<(std::ostream& os, RowRange const& x);
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

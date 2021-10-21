@@ -27,16 +27,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
-absl::optional<std::string> const& NormalizePap(
-    absl::optional<std::string> const& pap) {
-  static auto const* normalized =
-      new absl::optional<std::string>(PublicAccessPreventionInherited());
-  if (!pap.has_value() || *pap != "unspecified") return pap;
-  return *normalized;
-}
-}  // namespace internal
+inline namespace STORAGE_CLIENT_NS {
 
 std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
   os << "CorsEntry={";
@@ -100,8 +91,7 @@ bool operator==(BucketMetadata const& lhs, BucketMetadata const& rhs) {
          lhs.location_type_ == rhs.location_type_ &&
          lhs.logging_ == rhs.logging_ && lhs.labels_ == rhs.labels_ &&
          lhs.retention_policy_ == rhs.retention_policy_ &&
-         lhs.rpo_ == rhs.rpo_ && lhs.versioning_ == rhs.versioning_ &&
-         lhs.website_ == rhs.website_;
+         lhs.versioning_ == rhs.versioning_ && lhs.website_ == rhs.website_;
 }
 
 std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
@@ -183,8 +173,6 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
        << ", retention_policy.is_locked=" << std::boolalpha
        << rhs.retention_policy().is_locked;
   }
-
-  os << ", rpo=" << rhs.rpo();
 
   if (rhs.versioning().has_value()) {
     auto previous_flags = os.flags();
@@ -465,18 +453,6 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetRetentionPolicy() {
   return *this;
 }
 
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetRpo(
-    std::string const& v) {
-  if (v.empty()) return ResetRpo();
-  impl_.SetStringField("rpo", v);
-  return *this;
-}
-
-BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetRpo() {
-  impl_.RemoveField("rpo");
-  return *this;
-}
-
 BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetStorageClass(
     std::string const& v) {
   if (v.empty()) {
@@ -517,7 +493,7 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetWebsite() {
   return *this;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

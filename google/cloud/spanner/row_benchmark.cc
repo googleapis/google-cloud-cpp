@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 // Run on (6 X 2300 MHz CPU s)
@@ -59,7 +59,7 @@ void BM_RowGetByColumnName(benchmark::State& state) {
 BENCHMARK(BM_RowGetByColumnName);
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

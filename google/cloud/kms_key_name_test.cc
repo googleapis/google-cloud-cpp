@@ -20,10 +20,9 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 
 TEST(KmsKeyNameTest, FromComponents) {
@@ -35,10 +34,13 @@ TEST(KmsKeyNameTest, FromComponents) {
 }
 
 TEST(KmsKeyNameTest, MakeKmsKeyName) {
-  auto key = KmsKeyName("p1", "l1", "r1", "n1");
-  EXPECT_EQ(key, MakeKmsKeyName(key.FullName()).value());
+  auto constexpr kValidKey =
+      "projects/p1/locations/l1/keyRings/r1/cryptoKeys/n1";
+  auto valid_key = MakeKmsKeyName(kValidKey);
+  ASSERT_STATUS_OK(valid_key);
+  EXPECT_EQ(std::string{kValidKey}, valid_key->FullName());
 
-  for (std::string invalid : {
+  for (std::string str : {
            "projects/p1/locations/l1/keyRings/r1/carlosKey/n1",
            "projects/p1",
            "",
@@ -47,9 +49,9 @@ TEST(KmsKeyNameTest, MakeKmsKeyName) {
            "plojects/p1/locations/l1/keyRings/r1/cryptoKeys/n1",
            "projects/p1/locations/l1/keyRings/r1/cryptoKeys/n1/",
        }) {
-    auto key = MakeKmsKeyName(invalid);
+    auto key = MakeKmsKeyName(str);
     EXPECT_THAT(key, StatusIs(StatusCode::kInvalidArgument,
-                              "Improperly formatted KmsKeyName: " + invalid));
+                              "Improperly formatted KmsKeyName: " + str));
   }
 }
 
@@ -57,7 +59,7 @@ TEST(KmsKeyNameTest, Equality) {
   KmsKeyName key1("proj", "loc", "ring", "keyname");
   auto key2 = MakeKmsKeyName(
       "projects/proj/locations/loc/keyRings/ring/cryptoKeys/keyname");
-  ASSERT_THAT(key2, IsOk());
+  ASSERT_STATUS_OK(key2);
   EXPECT_EQ(key1, *key2);
 
   KmsKeyName key3("proj", "loc", "ring2", "keyname");
@@ -73,6 +75,6 @@ TEST(Instance, OutputStream) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

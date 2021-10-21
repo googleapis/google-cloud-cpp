@@ -28,50 +28,22 @@ namespace cloud {
  * change without notice, including removal.
  */
 namespace storage_experimental {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-/**
- * Low-level experimental settings for the GCS+gRPC plugin.
- *
- * Possible values for the string include:
- *
- * - "default" or "none": do not use any special settings with gRPC.
- * - "dp": enable Google Direct Access (formerly 'Direct Path') equivalent to
- *   setting both "pick-first-lb" and "enable-dns-srv-queries".
- * - "alts": same settings as "dp", but use the experimental ALTS credentials.
- * - "enable-dns-srv-queries": set the `grpc.dns_enable_srv_queries` channel
- *   argument to `1`, see [dns-query-arg].
- * - "disable-dns-srv-queries": set the `grpc.dns_enable_srv_queries` channel
- *   argument to `0`, see [dns-query-arg].
- * - "pick-first-lb": configure the gRPC load balancer to use the "pick_first"
- *   policy.
- * - "exclusive": use an exclusive channel for each stub.
- *
- * Unknown values are ignored.
- *
- * [dns-query-arg]:
- * https://grpc.github.io/grpc/core/group__grpc__arg__keys.html#ga247ed6771077938be12ab24790a95732
- */
-struct GrpcPluginOption {
-  using Type = std::string;
-};
+inline namespace STORAGE_CLIENT_NS {
 
 /**
  * Create a `google::cloud::storage::Client` object configured to use gRPC.
  *
- * @note The Credentials parameter in the configuration is ignored. The gRPC
+ * @note the Credentials parameter in the configuration is ignored. The gRPC
  *     client only supports Google Default Credentials.
  *
  * @param opts the configuration parameters for the Client.
  *
- * @warning This is an experimental feature, and subject to change without
+ * @warning this is an experimental feature, and subject to change without
  *     notice.
- *
- * @par Example storage_grpc_samples.cc grpc-read-write
  */
 google::cloud::storage::Client DefaultGrpcClient(Options opts = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage_experimental
 }  // namespace cloud
 }  // namespace google

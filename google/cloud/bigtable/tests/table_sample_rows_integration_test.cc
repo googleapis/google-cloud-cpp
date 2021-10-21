@@ -31,15 +31,16 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::bigtable::testing::TableTestEnvironment;
 using ::testing::IsEmpty;
 
 Table GetTable() {
-  return Table(MakeDataClient(TableTestEnvironment::project_id(),
-                              TableTestEnvironment::instance_id()),
+  return Table(CreateDefaultDataClient(TableTestEnvironment::project_id(),
+                                       TableTestEnvironment::instance_id(),
+                                       ClientOptions()),
                TableTestEnvironment::table_id());
 }
 
@@ -70,9 +71,9 @@ class SampleRowsIntegrationTest
     // Create kBatchSize * kBatchCount rows. Use a special client with tracing
     // disabled because it simply generates too much data.
     auto table =
-        Table(MakeDataClient(TableTestEnvironment::project_id(),
-                             TableTestEnvironment::instance_id(),
-                             Options{}.set<TracingComponentsOption>({"rpc"})),
+        Table(CreateDefaultDataClient(TableTestEnvironment::project_id(),
+                                      TableTestEnvironment::instance_id(),
+                                      ClientOptions().disable_tracing("rpc")),
               TableTestEnvironment::table_id());
 
     int constexpr kBatchCount = 10;
@@ -121,7 +122,7 @@ TEST_F(SampleRowsIntegrationTest, Asynchronous) {
 };
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

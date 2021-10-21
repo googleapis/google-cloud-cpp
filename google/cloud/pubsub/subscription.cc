@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::string Subscription::FullName() const {
   return "projects/" + project_id() + "/subscriptions/" + subscription_id();
@@ -32,7 +32,7 @@ std::ostream& operator<<(std::ostream& os, Subscription const& rhs) {
   return os << rhs.FullName();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_PREDICATE_UTILS_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_PREDICATE_UTILS_H
 
@@ -71,8 +70,7 @@ bool HasRoutingHeader(google::protobuf::MethodDescriptor const& method);
  *
  * https://google.aip.dev/client-libraries/4233
  */
-google::cloud::optional<
-    std::pair<std::string, google::protobuf::Descriptor const*>>
+google::cloud::optional<std::pair<std::string, std::string>>
 DeterminePagination(google::protobuf::MethodDescriptor const& method);
 
 /**

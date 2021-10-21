@@ -33,12 +33,12 @@ namespace btadmin = ::google::bigtable::admin::v2;
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 static_assert(std::is_copy_assignable<bigtable::InstanceAdmin>::value,
               "bigtable::InstanceAdmin must be CopyAssignable");
 
 using ClientUtils = bigtable::internal::UnaryClientUtils<InstanceAdminClient>;
-using ::google::cloud::internal::Idempotency;
+using google::cloud::internal::Idempotency;
 
 StatusOr<InstanceList> InstanceAdmin::ListInstances() {
   grpc::Status status;
@@ -644,7 +644,7 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::ProtoToWrapper(
   return result;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

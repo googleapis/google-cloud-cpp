@@ -27,21 +27,9 @@
       " instead. The function will be removed on 2022-04-01 or shortly "       \
       "after. See GitHub issue #5929 for more information.")
 
-#if defined(_MSC_VER) && _MSC_VER < 1929
-#define GOOGLE_CLOUD_CPP_STORAGE_RESTORE_UPLOAD_DEPRECATED() /**/
-#else
-#define GOOGLE_CLOUD_CPP_STORAGE_RESTORE_UPLOAD_DEPRECATED()                   \
-  GOOGLE_CLOUD_CPP_DEPRECATED(                                                 \
-      "this function is not used within the library. There was never a need"   \
-      " to mock this function, but it is preserved to avoid breaking existing" \
-      " applications. The function may be removed after 2022-10-01, more"      \
-      " details on GitHub issue #7282.")
-#endif  // _MSC_VER
-
-// This preprocessor symbol is deprecated and should never be used anywhere. It
-// exists solely for backward compatibility to avoid breaking anyone who may
-// have been using it.
-#define STORAGE_CLIENT_NS GOOGLE_CLOUD_CPP_NS
+#define STORAGE_CLIENT_NS                              \
+  GOOGLE_CLOUD_CPP_VEVAL(STORAGE_CLIENT_VERSION_MAJOR, \
+                         STORAGE_CLIENT_VERSION_MINOR)
 
 namespace google {
 namespace cloud {
@@ -49,30 +37,50 @@ namespace cloud {
  * Contains all the Google Cloud Storage C++ client APIs.
  */
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+/**
+ * The Google Cloud Storage C++ client APIs inlined, versioned namespace.
+ *
+ * Applications may need to link multiple versions of the Google Cloud Storage
+ * C++ client, for example, if they link a library that uses an older version of
+ * the client than they do.  This namespace is inlined, so applications can use
+ * `storage::Foo` in their source, but the symbols are versioned, i.e., the
+ * symbol becomes `storage::v1::Foo`.
+ *
+ * Note that, consistent with the semver.org guidelines, the v0 version makes
+ * no guarantees with respect to backwards compatibility.
+ */
+inline namespace STORAGE_CLIENT_NS {
 /**
  * Returns the Google Cloud Storage C++ Client major version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
-int constexpr version_major() { return google::cloud::version_major(); }
+int constexpr version_major() { return STORAGE_CLIENT_VERSION_MAJOR; }
 
 /**
  * Returns the Google Cloud Storage C++ Client minor version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
-int constexpr version_minor() { return google::cloud::version_minor(); }
+int constexpr version_minor() { return STORAGE_CLIENT_VERSION_MINOR; }
 
 /**
  * Returns the Google Cloud Storage C++ Client patch version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
-int constexpr version_patch() { return google::cloud::version_patch(); }
+int constexpr version_patch() { return STORAGE_CLIENT_VERSION_PATCH; }
 
 /// Returns a single integer representing the Major/Minor/Patch version.
-int constexpr version() { return google::cloud::version(); }
+int constexpr version() {
+  static_assert(::google::cloud::version_major() == version_major(),
+                "Mismatched major version");
+  static_assert(::google::cloud::version_minor() == version_minor(),
+                "Mismatched minor version");
+  static_assert(::google::cloud::version_patch() == version_patch(),
+                "Mismatched patch version");
+  return ::google::cloud::version();
+}
 
 /// Returns the version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string version_string();
@@ -80,7 +88,7 @@ std::string version_string();
 /// Returns the value for `x-goog-api-client` header.
 std::string x_goog_api_client();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

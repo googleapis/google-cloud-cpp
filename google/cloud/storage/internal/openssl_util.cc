@@ -13,19 +13,22 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/openssl_util.h"
-#include "google/cloud/internal/base64_transforms.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include <openssl/bio.h>
 #include <openssl/buffer.h>
 #include <openssl/evp.h>
-#include <openssl/md5.h>
 #include <openssl/opensslv.h>
 #include <openssl/pem.h>
+#ifdef OPENSSL_IS_BORINGSSL
+#include <openssl/base64.h>
+#endif  // OPENSSL_IS_BORINGSSL
 #include <memory>
+#include <sstream>
 
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 namespace {
@@ -42,22 +45,132 @@ inline std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_free)> GetDigestCtx() {
       EVP_MD_CTX_new(), &EVP_MD_CTX_free);
 };
 #endif
+
+#ifndef OPENSSL_IS_BORINGSSL
+/**
+ * Build a BIO chain for Base 64 encoding and decoding.
+ *
+ * BIO chains are a OpenSSL abstraction to perform I/O (including from memory
+ * buffers) with transformations. This function takes a BIO object and builds a
+ * chain that:
+ *
+ * - For writes, it performs Base 64 encoding and then writes the encoded data
+ *   into @p mem_io.
+ * - For reads, it extracts data from @p mem_io and then decodes it using
+ *   Base64.
+ *
+ */
+std::unique_ptr<BIO, decltype(&BIO_free_all)> PushBase64Transcoding(
+    std::unique_ptr<BIO, decltype(&BIO_free)> mem_io) {
+  auto base64_io = std::unique_ptr<BIO, decltype(&BIO_free)>(
+      BIO_new(BIO_f_base64()), &BIO_free);
+  if (!(base64_io && mem_io)) {
+    std::ostringstream err_builder;
+    err_builder << "Permanent error in " << __func__ << ": "
+                << "Could not allocate BIO* for Base64 encoding.";
+    google::cloud::internal::ThrowRuntimeError(err_builder.str());
+  }
+  auto bio_chain = std::unique_ptr<BIO, decltype(&BIO_free_all)>(
+      // Output from a b64 encoder should go to an in-memory sink.
+      BIO_push(base64_io.release(), mem_io.release()),
+      // Make sure we free all resources in this chain upon destruction.
+      &BIO_free_all);
+  // Don't use newlines as a signal for when to flush buffers.
+  BIO_set_flags(bio_chain.get(), BIO_FLAGS_BASE64_NO_NL);
+  return bio_chain;
+}
+#endif  // OPENSSL_IS_BORINGSSL
+
+std::string Base64Encode(std::uint8_t const* bytes, std::size_t bytes_size) {
+#ifdef OPENSSL_IS_BORINGSSL
+  std::size_t encoded_size;
+  EVP_EncodedLength(&encoded_size, bytes_size);
+  std::vector<std::uint8_t> result(encoded_size);
+  std::size_t out_size = EVP_EncodeBlock(result.data(), bytes, bytes_size);
+  result.resize(out_size);
+  return {result.begin(), result.end()};
+#else
+  auto mem_io = std::unique_ptr<BIO, decltype(&BIO_free)>(BIO_new(BIO_s_mem()),
+                                                          &BIO_free);
+  auto bio_chain = PushBase64Transcoding(std::move(mem_io));
+
+  // These BIO_*() operations are guaranteed not to block, consult the NOTES in:
+  //   https://www.openssl.org/docs/man1.1.1/man3/BIO_s_mem.html
+  // for details.
+  int retval = BIO_write(bio_chain.get(), bytes, static_cast<int>(bytes_size));
+  if (retval <= 0) {
+    std::ostringstream err_builder;
+    err_builder << "Permanent error in " << __func__ << ": "
+                << "BIO_write returned non-retryable value of " << retval;
+    google::cloud::internal::ThrowRuntimeError(err_builder.str());
+  }
+
+  // Tell the b64 encoder that we're done writing data, thus prompting it to
+  // add trailing '=' characters for padding if needed.
+  retval = BIO_flush(bio_chain.get());
+  if (retval <= 0) {
+    std::ostringstream err_builder;
+    err_builder << "Permanent error in " << __func__ << ": "
+                << "BIO_flush returned non-retryable value of " << retval;
+    google::cloud::internal::ThrowRuntimeError(err_builder.str());
+  }
+
+  // This buffer belongs to the BIO chain and is freed upon its destruction.
+  BUF_MEM* buf_mem;
+  BIO_get_mem_ptr(bio_chain.get(), &buf_mem);
+  // Return a string copy of the buffer's bytes, as the buffer will be freed
+  // upon this method's exit.
+  return std::string(buf_mem->data, buf_mem->length);
+#endif  // OPENSSL_IS_BORINGSSL
+}
 }  // namespace
 
-StatusOr<std::vector<std::uint8_t>> Base64Decode(std::string const& str) {
-  return google::cloud::internal::Base64DecodeToBytes(str);
+std::vector<std::uint8_t> Base64Decode(std::string const& str) {
+#ifdef OPENSSL_IS_BORINGSSL
+  std::size_t decoded_size;
+  EVP_DecodedLength(&decoded_size, str.size());
+  std::vector<std::uint8_t> result(decoded_size);
+  EVP_DecodeBase64(result.data(), &decoded_size, result.size(),
+                   reinterpret_cast<unsigned char const*>(str.data()),
+                   str.size());
+  result.resize(decoded_size);
+  return result;
+#else
+  if (str.empty()) {
+    return {};
+  }
+
+  std::unique_ptr<BIO, decltype(&BIO_free)> source(
+      BIO_new_mem_buf(str.data(), static_cast<int>(str.size())), &BIO_free);
+  auto bio = PushBase64Transcoding(std::move(source));
+
+  // We could compute the exact buffer size by looking at the number of padding
+  // characters (=) at the end of str, but we will get the exact length later,
+  // so simply compute a buffer that is big enough.
+  std::vector<std::uint8_t> result(str.size() * 3 / 4);
+
+  // We do not retry, just make one call because the full stream is blocking.
+  // Note that the number of bytes to read is the number of bytes we fetch from
+  // the *source*, not the number of bytes that we have available in `result`.
+  int len = BIO_read(bio.get(), result.data(), static_cast<int>(str.size()));
+  if (len < 0) {
+    std::ostringstream os;
+    os << "Error parsing Base64 string [" << len << "], string=<" << str << ">";
+    google::cloud::internal::ThrowRuntimeError(os.str());
+  }
+
+  result.resize(static_cast<std::size_t>(len));
+  return result;
+#endif  // OPENSSL_IS_BORINGSSL
 }
 
 std::string Base64Encode(std::string const& str) {
-  google::cloud::internal::Base64Encoder enc;
-  for (auto c : str) enc.PushBack(c);
-  return std::move(enc).FlushAndPad();
+  return Base64Encode(reinterpret_cast<unsigned char const*>(str.data()),
+                      str.size());
 }
 
 std::string Base64Encode(std::vector<std::uint8_t> const& bytes) {
-  google::cloud::internal::Base64Encoder enc;
-  for (auto c : bytes) enc.PushBack(c);
-  return std::move(enc).FlushAndPad();
+  return Base64Encode(bytes.data(), bytes.size());
 }
 
 StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
@@ -155,9 +268,10 @@ StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
       {signed_str.begin(), signed_str.end()});
 }
 
-StatusOr<std::vector<std::uint8_t>> UrlsafeBase64Decode(
-    std::string const& str) {
-  if (str.empty()) return std::vector<std::uint8_t>{};
+std::vector<std::uint8_t> UrlsafeBase64Decode(std::string const& str) {
+  if (str.empty()) {
+    return {};
+  }
   std::string b64str = str;
   std::replace(b64str.begin(), b64str.end(), '-', '+');
   std::replace(b64str.begin(), b64str.end(), '_', '/');
@@ -170,23 +284,8 @@ StatusOr<std::vector<std::uint8_t>> UrlsafeBase64Decode(
   }
   return Base64Decode(b64str);
 }
-
-std::vector<std::uint8_t> MD5Hash(std::string const& payload) {
-  MD5_CTX md5;
-  MD5_Init(&md5);
-  MD5_Update(&md5, payload.c_str(), payload.size());
-
-  std::vector<std::uint8_t> hash(MD5_DIGEST_LENGTH, 0);
-  // Note: MD5_Final consumes a `unsigned char*` in its first parameter, on some
-  // platforms (PowerPC and ARM I read), the default `char` is unsigned. In
-  // those platforms it is possible that `std::uint8_t != unsigned char` and
-  // the `reinterpret_cast<>` is not trivial (but still safe I think).
-  MD5_Final(reinterpret_cast<unsigned char*>(hash.data()), &md5);
-  return hash;
-}
-
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

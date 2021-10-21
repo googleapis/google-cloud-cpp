@@ -17,29 +17,22 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 StatusOr<ResumableUploadResponse> CurlResumableUploadSession::UploadChunk(
     ConstBufferSequence const& buffers) {
   UploadChunkRequest request(session_id_, next_expected_, buffers);
-  request.set_multiple_options(
-      request_.GetOption<CustomHeader>(), request_.GetOption<Fields>(),
-      request_.GetOption<IfMatchEtag>(), request_.GetOption<IfNoneMatchEtag>(),
-      request_.GetOption<QuotaUser>(), request_.GetOption<UserIp>());
+  request.set_option(custom_header());
   auto result = client_->UploadChunk(request);
   Update(result, TotalBytes(buffers));
   return result;
 }
 
 StatusOr<ResumableUploadResponse> CurlResumableUploadSession::UploadFinalChunk(
-    ConstBufferSequence const& buffers, std::uint64_t upload_size,
-    HashValues const& /*full_object_hashes*/) {
+    ConstBufferSequence const& buffers, std::uint64_t upload_size) {
   UploadChunkRequest request(session_id_, next_expected_, buffers, upload_size);
-  request.set_multiple_options(
-      request_.GetOption<CustomHeader>(), request_.GetOption<Fields>(),
-      request_.GetOption<IfMatchEtag>(), request_.GetOption<IfNoneMatchEtag>(),
-      request_.GetOption<QuotaUser>(), request_.GetOption<UserIp>());
+  request.set_option(custom_header());
   auto result = client_->UploadChunk(request);
   Update(result, TotalBytes(buffers));
   return result;
@@ -47,10 +40,6 @@ StatusOr<ResumableUploadResponse> CurlResumableUploadSession::UploadFinalChunk(
 
 StatusOr<ResumableUploadResponse> CurlResumableUploadSession::ResetSession() {
   QueryResumableUploadRequest request(session_id_);
-  request.set_multiple_options(
-      request_.GetOption<CustomHeader>(), request_.GetOption<Fields>(),
-      request_.GetOption<IfMatchEtag>(), request_.GetOption<IfNoneMatchEtag>(),
-      request_.GetOption<QuotaUser>(), request_.GetOption<UserIp>());
   auto result = client_->QueryResumableUpload(request);
   Update(result, 0);
   return result;
@@ -85,7 +74,7 @@ void CurlResumableUploadSession::Update(
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -17,8 +17,10 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+std::once_flag default_curl_handle_factory_initialized;
+std::shared_ptr<CurlHandleFactory> default_curl_handle_factory;
 
 void CurlHandleFactory::SetCurlStringOption(CURL* handle, CURLoption option_tag,
                                             char const* value) {
@@ -26,9 +28,10 @@ void CurlHandleFactory::SetCurlStringOption(CURL* handle, CURLoption option_tag,
 }
 
 std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory() {
-  static auto const* const kFactory =
-      new auto(std::make_shared<DefaultCurlHandleFactory>());
-  return *kFactory;
+  std::call_once(default_curl_handle_factory_initialized, [] {
+    default_curl_handle_factory = std::make_shared<DefaultCurlHandleFactory>();
+  });
+  return default_curl_handle_factory;
 }
 
 std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory(
@@ -51,7 +54,6 @@ CurlPtr DefaultCurlHandleFactory::CreateHandle() {
 }
 
 void DefaultCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
-  if (GetHandle(h) == nullptr) return;
   char* ip;
   auto res = curl_easy_getinfo(GetHandle(h), CURLINFO_LOCAL_IP, &ip);
   if (res == CURLE_OK && ip != nullptr) {
@@ -109,7 +111,6 @@ CurlPtr PooledCurlHandleFactory::CreateHandle() {
 }
 
 void PooledCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
-  if (GetHandle(h) == nullptr) return;
   std::unique_lock<std::mutex> lk(mu_);
   char* ip;
   auto res = curl_easy_getinfo(GetHandle(h), CURLINFO_LOCAL_IP, &ip);
@@ -137,7 +138,6 @@ CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {
 }
 
 void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti&& m) {
-  if (!m) return;
   std::unique_lock<std::mutex> lk(mu_);
   while (multi_handles_.size() >= maximum_size_) {
     auto* tmp = multi_handles_.front();
@@ -159,7 +159,7 @@ void PooledCurlHandleFactory::SetCurlOptions(CURL* handle) {
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

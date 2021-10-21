@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/benchmarks/benchmarks_config.h"
 #include "google/cloud/spanner/client.h"
+#include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include <algorithm>
@@ -436,22 +435,17 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  google::cloud::spanner_admin::DatabaseAdminClient admin_client(
-      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  google::cloud::spanner::DatabaseAdminClient admin_client;
 
   std::cout << "# Waiting for database creation to complete " << std::flush;
-  google::spanner::admin::database::v1::CreateDatabaseRequest request;
-  request.set_parent(database.instance().FullName());
-  request.set_create_statement(
-      absl::StrCat("CREATE DATABASE `", database.database_id(), "`"));
-  request.add_extra_statements(R"sql(CREATE TABLE KeyValue (
-                                        Key   INT64 NOT NULL,
-                                        Data  STRING(1024),
-                                     ) PRIMARY KEY (Key))sql");
   google::cloud::StatusOr<google::spanner::admin::database::v1::Database> db;
   int constexpr kMaxCreateDatabaseRetries = 3;
   for (int retry = 0; retry <= kMaxCreateDatabaseRetries; ++retry) {
-    auto create_future = admin_client.CreateDatabase(request);
+    auto create_future =
+        admin_client.CreateDatabase(database, {R"sql(CREATE TABLE KeyValue (
+                                Key   INT64 NOT NULL,
+                                Data  STRING(1024),
+                             ) PRIMARY KEY (Key))sql"});
     for (;;) {
       auto status = create_future.wait_for(std::chrono::seconds(1));
       if (status == std::future_status::ready) break;
@@ -498,7 +492,7 @@ int main(int argc, char* argv[]) {
   experiment->Run(config, database, cout_sink);
 
   if (!user_specified_database) {
-    auto drop = admin_client.DropDatabase(database.FullName());
+    auto drop = admin_client.DropDatabase(database);
     if (!drop.ok()) {
       std::cerr << "# Error dropping database: " << drop << "\n";
     }

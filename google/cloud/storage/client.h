@@ -45,7 +45,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 class NonResumableParallelUploadState;
 class ResumableParallelUploadState;
@@ -109,8 +109,8 @@ struct ClientImplDetails;
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
- * contains the expected result. Please consult the [`StatusOr<T>`
- * documentation](#google::cloud::StatusOr) for more details.
+ * contains the expected result. Please consult the
+ * [`StatusOr<T>` documentation](#google::cloud::v1::StatusOr) for more details.
  *
  * @code
  * namespace gcs = google::cloud::storage;
@@ -181,7 +181,7 @@ struct ClientImplDetails;
  * @see https://cloud.google.com/docs/authentication/production for details
  *     about Application Default %Credentials.
  *
- * @see #google::cloud::StatusOr.
+ * @see #google::cloud::v1::StatusOr.
  *
  * @see `LimitedTimeRetryPolicy` and `LimitedErrorCountRetryPolicy` for
  * alternative retry policies.
@@ -622,7 +622,7 @@ class Client {
   }
 
   /**
-   * Fetches the [IAM policy](@ref google::cloud::IamPolicy) for a Bucket.
+   * Fetches the [IAM policy](@ref google::cloud::v1::IamPolicy) for a Bucket.
    *
    * Google Cloud Identity & Access Management (IAM) lets administrators
    * authorize who can take action on specific resources, including Google
@@ -654,7 +654,7 @@ class Client {
    * @par Example
    * Use #GetNativeBucketIamPolicy() instead.
    *
-   * @see #google::cloud::IamPolicy for details about the `IamPolicy` class.
+   * @see #google::cloud::v1::IamPolicy for details about the `IamPolicy` class.
    */
   template <typename... Options>
   GOOGLE_CLOUD_CPP_STORAGE_IAM_DEPRECATED("GetNativeBucketIamPolicy")
@@ -666,7 +666,7 @@ class Client {
   }
 
   /**
-   * Fetches the native [IAM policy](@ref google::cloud::IamPolicy) for a
+   * Fetches the native [IAM policy](@ref google::cloud::v1::IamPolicy) for a
    * Bucket.
    *
    * Google Cloud Identity & Access Management (IAM) lets administrators
@@ -695,7 +695,7 @@ class Client {
    * @par Example
    * @snippet storage_bucket_iam_samples.cc native get bucket iam policy
    *
-   * @see #google::cloud::IamPolicy for details about the `IamPolicy` class.
+   * @see #google::cloud::v1::IamPolicy for details about the `IamPolicy` class.
    */
   template <typename... Options>
   StatusOr<NativeIamPolicy> GetNativeBucketIamPolicy(
@@ -706,7 +706,7 @@ class Client {
   }
 
   /**
-   * Sets the [IAM Policy](@ref google::cloud::IamPolicy) for a Bucket.
+   * Sets the [IAM Policy](@ref google::cloud::v1::IamPolicy) for a Bucket.
    *
    * Google Cloud Identity & Access Management (IAM) lets administrators
    * authorize who can take action on specific resources, including Google
@@ -748,7 +748,7 @@ class Client {
    * @par Example: adding a new member
    * Use #GetNativeBucketIamPolicy() instead.
    *
-   * @see #google::cloud::IamPolicy for details about the `IamPolicy` class.
+   * @see #google::cloud::v1::IamPolicy for details about the `IamPolicy` class.
    */
   template <typename... Options>
   GOOGLE_CLOUD_CPP_STORAGE_IAM_DEPRECATED("SetNativeBucketIamPolicy")
@@ -761,7 +761,8 @@ class Client {
   }
 
   /**
-   * Sets the native [IAM Policy](@ref google::cloud::IamPolicy) for a Bucket.
+   * Sets the native [IAM Policy](@ref google::cloud::v1::IamPolicy) for a
+   * Bucket.
    *
    * Google Cloud Identity & Access Management (IAM) lets administrators
    * authorize who can take action on specific resources, including Google
@@ -802,7 +803,7 @@ class Client {
    * @par Example: removing a IAM member
    * @snippet storage_bucket_iam_samples.cc native remove bucket iam member
    *
-   * @see #google::cloud::IamPolicy for details about the `IamPolicy` class.
+   * @see #google::cloud::v1::IamPolicy for details about the `IamPolicy` class.
    */
   template <typename... Options>
   StatusOr<NativeIamPolicy> SetNativeBucketIamPolicy(
@@ -3280,14 +3281,12 @@ struct ClientImplDetails {
 struct DeleteApplyHelper {
   template <typename... Options>
   Status operator()(Options... options) const {
-    return client.DeleteObject(bucket_name, object_name, Generation(generation),
-                               std::move(options)...);
+    return client.DeleteObject(bucket_name, object_name, std::move(options)...);
   }
 
   Client& client;
   std::string bucket_name;
   std::string object_name;
-  std::int64_t generation;
 };
 
 // Just a wrapper to allow for using in `google::cloud::internal::apply`.
@@ -3359,20 +3358,24 @@ Status DeleteByPrefix(Client& client, std::string const& bucket_name,
               all_options))>::value == 0,
       "This functions accepts only options of type QuotaUser, UserIp, "
       "UserProject or Versions.");
-  auto status = Status{};
-  for (auto& object :
+  for (auto const& object :
        client.ListObjects(bucket_name, Projection::NoAcl(), Prefix(prefix),
                           std::forward<Options>(options)...)) {
-    if (!object) return std::move(object).status();
-    auto del = google::cloud::internal::apply(
-        internal::DeleteApplyHelper{client, object->bucket(), object->name(),
-                                    object->generation()},
-        StaticTupleFilter<NotAmong<Versions>::TPred>(all_options));
-    // We ignore kNotFound because we are trying to delete the object anyway.
-    if (del.ok() || status.code() == StatusCode::kNotFound) continue;
-    status = std::move(del);
+    if (!object) {
+      return object.status();
+    }
+
+    auto deletion_status = google::cloud::internal::apply(
+        internal::DeleteApplyHelper{client, bucket_name, object->name()},
+        std::tuple_cat(
+            std::make_tuple(IfGenerationMatch(object->generation())),
+            StaticTupleFilter<NotAmong<Versions>::TPred>(all_options)));
+
+    if (!deletion_status.ok()) {
+      return deletion_status;
+    }
   }
-  return status;
+  return Status();
 }
 
 namespace internal {
@@ -3499,10 +3502,11 @@ StatusOr<ObjectMetadata> ComposeMany(
   internal::ScopedDeleter deleter(
       [&](std::string const& object_name, std::int64_t generation) {
         return google::cloud::internal::apply(
-            internal::DeleteApplyHelper{client, bucket_name, object_name,
-                                        generation},
-            StaticTupleFilter<Among<QuotaUser, UserProject, UserIp>::TPred>(
-                all_options));
+            internal::DeleteApplyHelper{client, bucket_name, object_name},
+            std::tuple_cat(
+                std::make_tuple(IfGenerationMatch(generation)),
+                StaticTupleFilter<Among<QuotaUser, UserProject, UserIp>::TPred>(
+                    all_options)));
       });
 
   auto lock = internal::LockPrefix(client, bucket_name, prefix, "",
@@ -3593,7 +3597,7 @@ StatusOr<ObjectMetadata> ComposeMany(
   return result;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

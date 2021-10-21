@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 using ::google::cloud::internal::DebugString;
 using ::google::cloud::internal::LogWrapper;
@@ -92,7 +92,7 @@ Status SubscriberLogging::ModifyPushConfig(
       context, request, __func__, tracing_options_);
 }
 
-std::shared_ptr<SubscriberStub::AsyncPullStream>
+std::unique_ptr<SubscriberStub::AsyncPullStream>
 SubscriberLogging::AsyncStreamingPull(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -103,8 +103,8 @@ SubscriberLogging::AsyncStreamingPull(
                  << " << request=" << DebugString(request, tracing_options_);
   auto stream = child_->AsyncStreamingPull(cq, std::move(context), request);
   if (!trace_streams_) return stream;
-  return std::make_shared<LoggingAsyncPullStream>(std::move(stream),
-                                                  tracing_options_, request_id);
+  return absl::make_unique<LoggingAsyncPullStream>(
+      std::move(stream), tracing_options_, request_id);
 }
 
 future<Status> SubscriberLogging::AsyncAcknowledge(
@@ -201,7 +201,7 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriberLogging::Seek(
 }
 
 LoggingAsyncPullStream::LoggingAsyncPullStream(
-    std::shared_ptr<SubscriberStub::AsyncPullStream> child,
+    std::unique_ptr<SubscriberStub::AsyncPullStream> child,
     TracingOptions tracing_options, std::string request_id)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
@@ -282,7 +282,7 @@ future<Status> LoggingAsyncPullStream::Finish() {
   });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

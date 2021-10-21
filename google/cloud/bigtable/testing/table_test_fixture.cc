@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
-#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <google/protobuf/text_format.h>
 
@@ -44,7 +43,7 @@ google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(
 
 std::shared_ptr<MockDataClient> TableTestFixture::SetupMockClient() {
   auto client = std::make_shared<MockDataClient>(
-      Options{}.set<GrpcCompletionQueueOption>(cq_));
+      ClientOptions().DisableBackgroundThreads(cq_));
   EXPECT_CALL(*client, project_id())
       .WillRepeatedly(::testing::ReturnRef(project_id_));
   EXPECT_CALL(*client, instance_id())

@@ -24,57 +24,25 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-namespace storage_proto = ::google::storage::v2;
+namespace storage_proto = ::google::storage::v1;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 
-// Use gsutil to obtain the CRC32C checksum (in base64):
-//    TEXT="The quick brown fox jumps over the lazy dog"
-//    /bin/echo -n $TEXT > /tmp/fox.txt
-//    gsutil hash /tmp/fox.txt
-// Hashes [base64] for /tmp/fox.txt:
-//    Hash (crc32c): ImIEBA==
-//    Hash (md5)   : nhB9nTcrtoJr2B01QqQZ1g==
-//
-// Then convert the base64 values to hex
-//
-//     echo "ImIEBA==" | openssl base64 -d | od -t x1
-//     echo "nhB9nTcrtoJr2B01QqQZ1g==" | openssl base64 -d | od -t x1
-//
-// Which yields (in proto format):
-//
-//     CRC32C      : 0x22620404
-//     MD5         : 9e107d9d372bb6826bd81d3542a419d6
-auto constexpr kText = "The quick brown fox jumps over the lazy dog";
-
-// Doing something similar for an alternative text yields:
-// Hashes [base64] for /tmp/alt.txt:
-//    Hash (crc32c): StZ/gA==
-//    Hash (md5)   : StEvo2V/qoDCuaktZSw3IQ==
-// In proto format
-//     CRC32C      : 0x4ad67f80
-//     MD5         : 4ad12fa3657faa80c2b9a92d652c3721
-auto constexpr kAlt = "How vexingly quick daft zebras jump!";
-
 TEST(GrpcClientObjectRequest, InsertObjectMediaRequestSimple) {
-  storage_proto::WriteObjectRequest expected;
+  storage_proto::InsertObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
-        write_object_spec: {
-          resource: {
-            bucket: "projects/_/buckets/test-bucket-name"
-            name: "test-object-name"
-          }
+        insert_object_spec: {
+          resource: { bucket: "test-bucket-name" name: "test-object-name" }
         }
+        # See hash_validator_test.cc for how these magic numbers are obtained.
         object_checksums: {
-          # See top-of-file comments for details on the magic numbers
-          crc32c: 0x22620404
-          # MD5 hashes are disabled by default
-          # md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
+          crc32c { value: 576848900 }
+          md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
         }
       )pb",
       &expected));
@@ -82,152 +50,50 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestSimple) {
   InsertObjectMediaRequest request(
       "test-bucket-name", "test-object-name",
       "The quick brown fox jumps over the lazy dog");
-  auto actual = GrpcClient::ToProto(request).value();
+  auto actual = GrpcClient::ToProto(request);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientObjectRequest, InsertObjectMediaRequestHashOptions) {
-  // See top-of-file comments for details on the magic numbers
-  struct Test {
-    std::function<void(InsertObjectMediaRequest&)> apply_options;
-    std::string expected_checksums;
-  } cases[] = {
-      // These tests provide the "wrong" hashes. This is what would happen if
-      // one was (for example) reading a GCS file, obtained the expected hashes
-      // from GCS, and then uploaded to another GCS destination *but* the data
-      // was somehow corrupted locally (say a bad disk). In that case, we don't
-      // want to recompute the hashes in the upload.
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
-            r.set_option(DisableCrc32cChecksum(true));
-          },
-          R"pb(
-            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6")pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
-            r.set_option(DisableCrc32cChecksum(false));
-          },
-          R"pb(
-            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
-            crc32c: 0x4ad67f80)pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(MD5HashValue(ComputeMD5Hash(kText)));
-            r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
-          },
-          R"pb(
-            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
-            crc32c: 0x22620404)pb",
-      },
-
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(false));
-            r.set_option(DisableCrc32cChecksum(true));
-          },
-          R"pb(
-            md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21")pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(false));
-            r.set_option(DisableCrc32cChecksum(false));
-          },
-          R"pb(
-            md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21"
-            crc32c: 0x4ad67f80)pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(false));
-            r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
-          },
-          R"pb(
-            md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21"
-            crc32c: 0x22620404)pb",
-      },
-
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(true));
-            r.set_option(DisableCrc32cChecksum(true));
-          },
-          R"pb(
-          )pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(true));
-            r.set_option(DisableCrc32cChecksum(false));
-          },
-          R"pb(
-            crc32c: 0x4ad67f80)pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(DisableMD5Hash(true));
-            r.set_option(Crc32cChecksumValue(ComputeCrc32cChecksum(kText)));
-          },
-          R"pb(
-            crc32c: 0x22620404)pb",
-      },
-  };
-
-  for (auto const& test : cases) {
-    SCOPED_TRACE("Expected outcome " + test.expected_checksums);
-    storage_proto::ObjectChecksums expected;
-    ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
-        test.expected_checksums, &expected));
-
-    InsertObjectMediaRequest request("test-bucket-name", "test-object-name",
-                                     kAlt);
-    test.apply_options(request);
-    auto actual = GrpcClient::ToProto(request);
-    ASSERT_STATUS_OK(actual) << "expected=" << test.expected_checksums;
-    EXPECT_THAT(actual->object_checksums(), IsProtoEqual(expected));
-  }
-}
-
 TEST(GrpcClientObjectRequest, InsertObjectMediaRequestAllOptions) {
-  storage_proto::WriteObjectRequest expected;
+  storage_proto::InsertObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
-        write_object_spec: {
+        insert_object_spec: {
           resource: {
-            bucket: "projects/_/buckets/test-bucket-name"
+            bucket: "test-bucket-name"
             name: "test-object-name"
             content_type: "test-content-type"
             content_encoding: "test-content-encoding"
-            # Should not be set, the proto file says these values should
-            # not be included in the upload
-            #     crc32c:
-            #     md5_hash:
-            kms_key: "test-kms-key-name"
+            crc32c: { value: 576848900 }
+            # See hash_validator_test.cc for how it was obtained.
+            md5_hash: "nhB9nTcrtoJr2B01QqQZ1g=="
+            kms_key_name: "test-kms-key-name"
           }
           predefined_acl: OBJECT_ACL_PRIVATE
-          if_generation_match: 0
-          if_generation_not_match: 7
-          if_metageneration_match: 42
-          if_metageneration_not_match: 84
+          if_generation_match: { value: 0 }
+          if_generation_not_match: { value: 7 }
+          if_metageneration_match: { value: 42 }
+          if_metageneration_not_match: { value: 84 }
+          projection: FULL
         }
         common_object_request_params: {
           encryption_algorithm: "AES256"
           # to get the key value use:
-          #   /bin/echo -n "01234567"
+          #   /bin/echo -n "01234567" | openssl base64
           # to get the key hash use (note this command goes over two lines):
-          #   /bin/echo -n "01234567" | sha256sum
-          encryption_key_bytes: "01234567"
-          encryption_key_sha256_bytes: "\x92\x45\x92\xb9\xb1\x03\xf1\x4f\x83\x3f\xaa\xfb\x67\xf4\x80\x69\x1f\x01\x98\x8a\xa4\x57\xc0\x06\x17\x69\xf5\x8c\xd4\x73\x11\xbc"
+          #   /bin/echo -n "01234567" | sha256sum | awk '{printf("%s", $1);}' |
+          #     xxd -r -p | openssl base64
+          encryption_key: "MDEyMzQ1Njc="
+          encryption_key_sha256: "kkWSubED8U+DP6r7Z/SAaR8BmIqkV8AGF2n1jNRzEbw="
         }
-        common_request_params: { user_project: "test-user-project" }
+        common_request_params: {
+          user_project: "test-user-project"
+          quota_user: "test-quota-user"
+        }
+        # See hash_validator_test.cc for how these magic numbers are obtained.
         object_checksums: {
-          # See top-of-file comments for details on the magic numbers
-          crc32c: 0x22620404
-          md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
+          crc32c { value: 576848900 }
+          md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
         }
       )pb",
       &expected));
@@ -247,17 +113,17 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestAllOptions) {
       UserIp("test-user-ip"), EncryptionKey::FromBinaryKey("01234567"),
       KmsKeyName("test-kms-key-name"));
 
-  auto actual = GrpcClient::ToProto(request).value();
+  auto actual = GrpcClient::ToProto(request);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(GrpcClientObjectRequest, InsertObjectMediaRequestWithObjectMetadata) {
-  storage_proto::WriteObjectRequest expected;
+  storage_proto::InsertObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
-        write_object_spec: {
+        insert_object_spec: {
           resource: {
-            bucket: "projects/_/buckets/test-bucket-name"
+            bucket: "test-bucket-name"
             name: "test-object-name"
             acl: { role: "test-role1" entity: "test-entity1" }
             acl: { role: "test-role2" entity: "test-entity2" }
@@ -266,15 +132,18 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestWithObjectMetadata) {
             content_encoding: "test-content-encoding"
             content_language: "test-content-language"
             content_type: "test-content-type"
-            event_based_hold: true
+            event_based_hold: { value: true }
             metadata: { key: "test-key-1" value: "test-value-1" }
             metadata: { key: "test-key-2" value: "test-value-2" }
             storage_class: "test-storage-class"
             temporary_hold: true
           }
         }
-        # See top-of-file comments for details on the magic numbers
-        object_checksums: { crc32c: 0x22620404 }
+        # See hash_validator_test.cc for how these magic numbers are obtained.
+        object_checksums: {
+          crc32c { value: 576848900 }
+          md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
+        }
       )pb",
       &expected));
 
@@ -300,61 +169,105 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestWithObjectMetadata) {
           .set_storage_class("test-storage-class")
           .set_temporary_hold(true)));
 
-  auto actual = GrpcClient::ToProto(request).value();
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientObjectRequest, DeleteObjectRequestSimple) {
+  storage_proto::DeleteObjectRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    object: "test-object-name"
+)""",
+                                                            &expected));
+
+  DeleteObjectRequest request("test-bucket-name", "test-object-name");
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientObjectRequest, DeleteObjectRequestAllFields) {
+  storage_proto::DeleteObjectRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    object: "test-object-name"
+    generation: 1234
+    if_generation_match: { value: 2345 }
+    if_generation_not_match: { value: 3456 }
+    if_metageneration_match: { value: 42 }
+    if_metageneration_not_match: { value: 7 }
+    common_request_params: {
+      quota_user: "test-quota-user"
+      user_project: "test-user-project"
+    }
+)""",
+                                                            &expected));
+
+  DeleteObjectRequest request("test-bucket-name", "test-object-name");
+  request.set_multiple_options(
+      Generation(1234), IfGenerationMatch(2345), IfGenerationNotMatch(3456),
+      IfMetagenerationMatch(42), IfMetagenerationNotMatch(7),
+      UserProject("test-user-project"), QuotaUser("test-quota-user"),
+      UserIp("test-user-ip"));
+
+  auto actual = GrpcClient::ToProto(request);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(GrpcClientObjectRequest, ResumableUploadRequestSimple) {
-  google::storage::v2::StartResumableWriteRequest expected;
+  google::storage::v1::StartResumableWriteRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-      write_object_spec: {
+      insert_object_spec: {
           resource: {
             name: "test-object"
-            bucket: "projects/_/buckets/test-bucket"
+            bucket: "test-bucket"
           }
       })""",
                                                             &expected));
 
   ResumableUploadRequest req("test-bucket", "test-object");
 
-  auto actual = GrpcClient::ToProto(req).value();
+  auto actual = GrpcClient::ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(GrpcClientObjectRequest, ResumableUploadRequestAllFields) {
-  google::storage::v2::StartResumableWriteRequest expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      R"pb(
-        write_object_spec: {
+  google::storage::v1::StartResumableWriteRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+      insert_object_spec: {
           resource: {
             name: "test-object"
-            bucket: "projects/_/buckets/test-bucket"
+            bucket: "test-bucket"
             content_encoding: "test-content-encoding"
             content_type: "test-content-type"
-            # Should not be set, the proto file says these values should
-            # not be included in the upload
-            #     crc32c:
-            #     md5_hash:
-            kms_key: "test-kms-key-name"
+            crc32c: { value: 576848900 }
+            md5_hash: "nhB9nTcrtoJr2B01QqQZ1g=="
+            kms_key_name: "test-kms-key-name"
           }
           predefined_acl: OBJECT_ACL_PRIVATE
-          if_generation_match: 0
-          if_generation_not_match: 7
-          if_metageneration_match: 42
-          if_metageneration_not_match: 84
-        }
-        common_request_params: { user_project: "test-user-project" }
+          if_generation_match: { value: 0 }
+          if_generation_not_match: { value: 7 }
+          if_metageneration_match: { value: 42 }
+          if_metageneration_not_match: { value: 84 }
+          projection: FULL
+      }
+      common_request_params: {
+        user_project: "test-user-project"
+        quota_user: "test-quota-user"
+      }
 
-        common_object_request_params: {
-          encryption_algorithm: "AES256"
-          # to get the key value use:
-          #   /bin/echo -n "01234567"
-          # to get the key hash use (note this command goes over two lines):
-          #   /bin/echo -n "01234567" | sha256sum
-          encryption_key_bytes: "01234567"
-          encryption_key_sha256_bytes: "\x92\x45\x92\xb9\xb1\x03\xf1\x4f\x83\x3f\xaa\xfb\x67\xf4\x80\x69\x1f\x01\x98\x8a\xa4\x57\xc0\x06\x17\x69\xf5\x8c\xd4\x73\x11\xbc"
-        })pb",
-      &expected));
+      common_object_request_params: {
+        encryption_algorithm: "AES256"
+# to get the key value use:
+#   /bin/echo -n "01234567" | openssl base64
+# to get the key hash use (note this command goes over two lines):
+#   /bin/echo -n "01234567" | sha256sum | awk '{printf("%s", $1);}' |
+#     xxd -r -p | openssl base64
+        encryption_key: "MDEyMzQ1Njc="
+        encryption_key_sha256: "kkWSubED8U+DP6r7Z/SAaR8BmIqkV8AGF2n1jNRzEbw="
+      })""",
+                                                            &expected));
 
   ResumableUploadRequest req("test-bucket", "test-object");
   req.set_multiple_options(
@@ -371,24 +284,24 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestAllFields) {
       EncryptionKey::FromBinaryKey("01234567"),
       KmsKeyName("test-kms-key-name"));
 
-  auto actual = GrpcClient::ToProto(req).value();
+  auto actual = GrpcClient::ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(GrpcClientObjectRequest, ResumableUploadRequestWithObjectMetadataFields) {
-  google::storage::v2::StartResumableWriteRequest expected;
+  google::storage::v1::StartResumableWriteRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-      write_object_spec: {
+      insert_object_spec: {
           resource: {
             name: "test-object"
-            bucket: "projects/_/buckets/test-bucket"
+            bucket: "test-bucket"
             content_encoding: "test-content-encoding"
             content_disposition: "test-content-disposition"
             cache_control: "test-cache-control"
             content_language: "test-content-language"
             content_type: "test-content-type"
             storage_class: "REGIONAL"
-            event_based_hold: true
+            event_based_hold: { value: true }
             metadata: { key: "test-metadata-key1" value: "test-value1" }
             metadata: { key: "test-metadata-key2" value: "test-value2" }
             temporary_hold: true
@@ -417,12 +330,12 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestWithObjectMetadataFields) {
           .set_temporary_hold(true)
           .set_acl(std::move(acls))));
 
-  auto actual = GrpcClient::ToProto(req).value();
+  auto actual = GrpcClient::ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(GrpcClientObjectRequest, QueryResumableUploadRequestSimple) {
-  google::storage::v2::QueryWriteStatusRequest expected;
+  google::storage::v1::QueryWriteStatusRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
         upload_id: "test-upload-id"
@@ -436,41 +349,45 @@ TEST(GrpcClientObjectRequest, QueryResumableUploadRequestSimple) {
 }
 
 TEST(GrpcClientObjectRequest, ReadObjectRangeRequestSimple) {
-  google::storage::v2::ReadObjectRequest expected;
+  google::storage::v1::GetObjectMediaRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
-        bucket: "projects/_/buckets/test-bucket" object: "test-object"
+        bucket: "test-bucket" object: "test-object"
       )pb",
       &expected));
 
   ReadObjectRangeRequest req("test-bucket", "test-object");
 
-  auto const actual = GrpcClient::ToProto(req).value();
+  auto const actual = GrpcClient::ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(GrpcClientObjectRequest, ReadObjectRangeRequestAllFields) {
-  google::storage::v2::ReadObjectRequest expected;
+  google::storage::v1::GetObjectMediaRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
-        bucket: "projects/_/buckets/test-bucket"
+        bucket: "test-bucket"
         object: "test-object"
         generation: 7
         read_offset: 2000
         read_limit: 1000
-        if_generation_match: 1
-        if_generation_not_match: 2
-        if_metageneration_match: 3
-        if_metageneration_not_match: 4
-        common_request_params: { user_project: "test-user-project" }
+        if_generation_match: { value: 1 }
+        if_generation_not_match: { value: 2 }
+        if_metageneration_match: { value: 3 }
+        if_metageneration_not_match: { value: 4 }
+        common_request_params: {
+          user_project: "test-user-project"
+          quota_user: "test-quota-user"
+        }
         common_object_request_params: {
           encryption_algorithm: "AES256"
           # to get the key value use:
-          #   /bin/echo -n "01234567"
+          #   /bin/echo -n "01234567" | openssl base64
           # to get the key hash use (note this command goes over two lines):
-          #   /bin/echo -n "01234567" | sha256sum
-          encryption_key_bytes: "01234567"
-          encryption_key_sha256_bytes: "\x92\x45\x92\xb9\xb1\x03\xf1\x4f\x83\x3f\xaa\xfb\x67\xf4\x80\x69\x1f\x01\x98\x8a\xa4\x57\xc0\x06\x17\x69\xf5\x8c\xd4\x73\x11\xbc"
+          #   /bin/echo -n "01234567" | sha256sum | awk '{printf("%s", $1);}' |
+          #     xxd -r -p | openssl base64
+          encryption_key: "MDEyMzQ1Njc="
+          encryption_key_sha256: "kkWSubED8U+DP6r7Z/SAaR8BmIqkV8AGF2n1jNRzEbw="
         }
       )pb",
       &expected));
@@ -483,39 +400,37 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestAllFields) {
       UserProject("test-user-project"), QuotaUser("test-quota-user"),
       UserIp("test-user-ip"), EncryptionKey::FromBinaryKey("01234567"));
 
-  auto const actual = GrpcClient::ToProto(req).value();
+  auto const actual = GrpcClient::ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLast) {
-  google::storage::v2::ReadObjectRequest expected;
+  google::storage::v1::GetObjectMediaRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
-        bucket: "projects/_/buckets/test-bucket"
-        object: "test-object"
-        read_offset: -2000
+        bucket: "test-bucket" object: "test-object" read_offset: -2000
       )pb",
       &expected));
 
   ReadObjectRangeRequest req("test-bucket", "test-object");
   req.set_multiple_options(ReadLast(2000));
 
-  auto const actual = GrpcClient::ToProto(req).value();
+  auto const actual = GrpcClient::ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLastZero) {
-  google::storage::v2::ReadObjectRequest expected;
+  google::storage::v1::GetObjectMediaRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
-        bucket: "projects/_/buckets/test-bucket" object: "test-object"
+        bucket: "test-bucket" object: "test-object"
       )pb",
       &expected));
 
   ReadObjectRangeRequest req("test-bucket", "test-object");
   req.set_multiple_options(ReadLast(0));
 
-  auto const actual = GrpcClient::ToProto(req).value();
+  auto const actual = GrpcClient::ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 
   auto client = GrpcClient::Create(DefaultOptionsGrpc(
@@ -528,7 +443,7 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLastZero) {
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

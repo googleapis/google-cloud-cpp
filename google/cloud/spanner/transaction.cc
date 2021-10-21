@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 namespace {
 
@@ -69,12 +69,6 @@ Transaction::ReadOnlyOptions::ReadOnlyOptions(
 
 Transaction::ReadWriteOptions::ReadWriteOptions() = default;  // currently none
 
-Transaction::ReadWriteOptions& Transaction::ReadWriteOptions::WithTag(
-    absl::optional<std::string> tag) {
-  tag_ = std::move(tag);
-  return *this;
-}
-
 Transaction::SingleUseOptions::SingleUseOptions(ReadOnlyOptions opts) {
   ro_opts_ = std::move(opts.ro_opts_);
 }
@@ -94,57 +88,53 @@ Transaction::SingleUseOptions::SingleUseOptions(
 Transaction::Transaction(ReadOnlyOptions opts) {
   google::spanner::v1::TransactionSelector selector;
   *selector.mutable_begin() = MakeOpts(std::move(opts.ro_opts_));
-  impl_ = std::make_shared<spanner_internal::TransactionImpl>(
-      std::move(selector), std::string());
+  impl_ =
+      std::make_shared<spanner_internal::TransactionImpl>(std::move(selector));
 }
 
 Transaction::Transaction(ReadWriteOptions opts) {
   google::spanner::v1::TransactionSelector selector;
   *selector.mutable_begin() = MakeOpts(std::move(opts.rw_opts_));
-  impl_ = std::make_shared<spanner_internal::TransactionImpl>(
-      std::move(selector), std::move(opts.tag_).value_or(std::string()));
+  impl_ =
+      std::make_shared<spanner_internal::TransactionImpl>(std::move(selector));
 }
 
 Transaction::Transaction(Transaction const& txn, ReadWriteOptions opts) {
   google::spanner::v1::TransactionSelector selector;
   *selector.mutable_begin() = MakeOpts(std::move(opts.rw_opts_));
   impl_ = std::make_shared<spanner_internal::TransactionImpl>(
-      *txn.impl_, std::move(selector),
-      std::move(opts.tag_).value_or(std::string()));
+      *txn.impl_, std::move(selector));
 }
 
 Transaction::Transaction(SingleUseOptions opts) {
   google::spanner::v1::TransactionSelector selector;
   *selector.mutable_single_use() = MakeOpts(std::move(opts.ro_opts_));
-  impl_ = std::make_shared<spanner_internal::TransactionImpl>(
-      std::move(selector), std::string());
+  impl_ =
+      std::make_shared<spanner_internal::TransactionImpl>(std::move(selector));
 }
 
-Transaction::Transaction(std::string session_id, std::string transaction_id,
-                         std::string transaction_tag) {
+Transaction::Transaction(std::string session_id, std::string transaction_id) {
   google::spanner::v1::TransactionSelector selector;
   selector.set_id(std::move(transaction_id));
   impl_ = std::make_shared<spanner_internal::TransactionImpl>(
       spanner_internal::MakeDissociatedSessionHolder(std::move(session_id)),
-      std::move(selector), std::move(transaction_tag));
+      std::move(selector));
 }
 
 Transaction::~Transaction() = default;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 spanner::Transaction TransactionInternals::MakeTransactionFromIds(
-    std::string session_id, std::string transaction_id,
-    std::string transaction_tag) {
-  return spanner::Transaction(std::move(session_id), std::move(transaction_id),
-                              std::move(transaction_tag));
+    std::string session_id, std::string transaction_id) {
+  return spanner::Transaction(std::move(session_id), std::move(transaction_id));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

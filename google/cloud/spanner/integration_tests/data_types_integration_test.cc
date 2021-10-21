@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
+#include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/spanner/timestamp.h"
@@ -26,12 +27,9 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
-using ::google::cloud::testing_util::StatusIs;
-using ::testing::HasSubstr;
 using ::testing::UnorderedElementsAreArray;
 
 absl::Time MakeTime(std::time_t sec, int nanos) {
@@ -81,10 +79,6 @@ class DataTypeIntegrationTest
   static void TearDownTestSuite() {
     client_ = nullptr;
     spanner_testing::DatabaseIntegrationTest::TearDownTestSuite();
-  }
-
-  static bool UsingEmulator() {
-    return google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
   }
 
  protected:
@@ -219,25 +213,11 @@ TEST_F(DataTypeIntegrationTest, WriteReadDate) {
   EXPECT_THAT(*result, UnorderedElementsAreArray(data));
 }
 
-TEST_F(DataTypeIntegrationTest, WriteReadJson) {
-  // TODO(#6873): Remove this check when the emulator supports JSON.
-  if (UsingEmulator()) GTEST_SKIP();
-
-  std::vector<Json> const data = {
-      Json(),                     //
-      Json(R"("Hello world!")"),  //
-      Json("42"),                 //
-      Json("true"),               //
-  };
-  auto result = WriteReadData(*client_, data, "JsonValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
-}
-
 TEST_F(DataTypeIntegrationTest, WriteReadNumeric) {
   // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-  if (UsingEmulator()) GTEST_SKIP();
-
+  if (google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value()) {
+    GTEST_SKIP();
+  }
   auto min = MakeNumeric("-99999999999999999999999999999.999999999");
   ASSERT_STATUS_OK(min);
   auto max = MakeNumeric("99999999999999999999999999999.999999999");
@@ -344,29 +324,11 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayDate) {
   EXPECT_THAT(*result, UnorderedElementsAreArray(data));
 }
 
-TEST_F(DataTypeIntegrationTest, WriteReadArrayJson) {
-  // TODO(#6873): Remove this check when the emulator supports JSON.
-  if (UsingEmulator()) GTEST_SKIP();
-
-  std::vector<std::vector<Json>> const data = {
-      std::vector<Json>{},
-      std::vector<Json>{Json()},
-      std::vector<Json>{
-          Json(),
-          Json(R"("Hello world!")"),
-          Json("42"),
-          Json("true"),
-      },
-  };
-  auto result = WriteReadData(*client_, data, "ArrayJsonValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
-}
-
 TEST_F(DataTypeIntegrationTest, WriteReadArrayNumeric) {
   // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-  if (UsingEmulator()) GTEST_SKIP();
-
+  if (google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value()) {
+    GTEST_SKIP();
+  }
   std::vector<std::vector<Numeric>> const data = {
       std::vector<Numeric>{},
       std::vector<Numeric>{Numeric()},
@@ -379,26 +341,6 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayNumeric) {
   auto result = WriteReadData(*client_, data, "ArrayNumericValue");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, UnorderedElementsAreArray(data));
-}
-
-TEST_F(DataTypeIntegrationTest, InsertAndQueryWithNumericKey) {
-  // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-  if (UsingEmulator()) GTEST_SKIP();
-
-  auto& client = *client_;
-  auto const key = MakeNumeric(42).value();
-
-  auto commit_result = client.Commit(
-      Mutations{InsertOrUpdateMutationBuilder("NumericKey", {"Key"})
-                    .EmplaceRow(key)
-                    .Build()});
-  ASSERT_STATUS_OK(commit_result);
-
-  auto rows = client.Read("NumericKey", KeySet::All(), {"Key"});
-  using RowType = std::tuple<Numeric>;
-  auto row = GetSingularRow(StreamOf<RowType>(rows));
-  ASSERT_STATUS_OK(row);
-  EXPECT_EQ(std::get<0>(*std::move(row)), key);
 }
 
 // This test differs a lot from the other tests since Spanner STRUCT types may
@@ -444,41 +386,8 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithStruct) {
   EXPECT_EQ(data, v[0]);
 }
 
-// Verify maximum JSON nesting.
-TEST_F(DataTypeIntegrationTest, JsonMaxNesting) {
-  // TODO(#6873): Remove this check when the emulator supports JSON.
-  if (UsingEmulator()) GTEST_SKIP();
-
-  // The default value of the backend max-nesting-level flag.
-  int const k_spanner_json_max_nesting_level = 100;
-
-  // Nested arrays that exceed `k_spanner_json_max_nesting_level` by one.
-  std::string bad_json;
-  for (int i = 0; i != k_spanner_json_max_nesting_level + 1; ++i)
-    bad_json.append(1, '[');
-  bad_json.append("null");
-  for (int i = 0; i != k_spanner_json_max_nesting_level + 1; ++i)
-    bad_json.append(1, ']');
-
-  // Nested arrays that match `k_spanner_json_max_nesting_level`.
-  std::string good_json = bad_json.substr(1, bad_json.size() - 2);
-
-  std::vector<Json> const good_data = {Json(good_json)};
-  auto result = WriteReadData(*client_, good_data, "JsonValue");
-  ASSERT_THAT(result, IsOk());
-  EXPECT_THAT(*result, UnorderedElementsAreArray(good_data));
-
-  std::vector<Json> const bad_data = {Json(bad_json)};
-  result = WriteReadData(*client_, bad_data, "JsonValue");
-  // NOTE: The backend is currently dropping a more specific "Max nesting
-  // of 100 had been exceeded [INVALID_ARGUMENT]" error, so expect this
-  // expectation to change when that problem is fixed.
-  EXPECT_THAT(result, StatusIs(StatusCode::kFailedPrecondition,
-                               HasSubstr("Expected JSON")));
-}
-
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

@@ -30,10 +30,11 @@ def google_cloud_cpp_deps():
     if "rules_cc" not in native.existing_rules():
         http_archive(
             name = "rules_cc",
+            strip_prefix = "rules_cc-daf6ace7cfeacd6a83e9ff2ed659f416537b6c74",
             urls = [
-                "https://github.com/bazelbuild/rules_cc/releases/download/0.0.1/rules_cc-0.0.1.tar.gz",
+                "https://github.com/bazelbuild/rules_cc/archive/daf6ace7cfeacd6a83e9ff2ed659f416537b6c74.tar.gz",
             ],
-            sha256 = "4dccbfd22c0def164c8f47458bd50e0c7148f3d92002cdb459c2a96a68498241",
+            sha256 = "34b2ebd4f4289ebbc27c7a0d854dcd510160109bb0194c0ba331c9656ffcb556",
         )
 
     # Load Abseil
@@ -62,11 +63,11 @@ def google_cloud_cpp_deps():
     if "com_google_benchmark" not in native.existing_rules():
         http_archive(
             name = "com_google_benchmark",
-            strip_prefix = "benchmark-1.6.0",
+            strip_prefix = "benchmark-1.5.5",
             urls = [
-                "https://github.com/google/benchmark/archive/v1.6.0.tar.gz",
+                "https://github.com/google/benchmark/archive/v1.5.5.tar.gz",
             ],
-            sha256 = "1f71c72ce08d2c1310011ea6436b31e39ccab8c2db94186d26657d41747c85d6",
+            sha256 = "3bff5f237c317ddfd8d5a9b96b3eede7c0802e799db520d38ce756a2a46a18a0",
         )
 
     # Load the googleapis dependency.
@@ -74,10 +75,10 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_google_googleapis",
             urls = [
-                "https://github.com/googleapis/googleapis/archive/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49.tar.gz",
+                "https://github.com/googleapis/googleapis/archive/2c6e4dd22260e34403b468cc6d19aa43a9c684ed.tar.gz",
             ],
-            strip_prefix = "googleapis-9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49",
-            sha256 = "74d6c8d2bf028a8eb72da84c88a433b345c07f0b8db41d0ac02ef85154e7aa59",
+            strip_prefix = "googleapis-2c6e4dd22260e34403b468cc6d19aa43a9c684ed",
+            sha256 = "8dffa7cf62a821b1c0b25a09335684c6f240d9a8efb6c599b8cec63e3b6f4054",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
             # Scaffolding for patching googleapis after download. For example:
             #   patches = ["googleapis.patch"]
@@ -93,11 +94,11 @@ def google_cloud_cpp_deps():
     if "com_google_protobuf" not in native.existing_rules():
         http_archive(
             name = "com_google_protobuf",
-            strip_prefix = "protobuf-3.18.1",
+            strip_prefix = "protobuf-3.17.3",
             urls = [
-                "https://github.com/protocolbuffers/protobuf/archive/v3.18.1.tar.gz",
+                "https://github.com/google/protobuf/archive/v3.17.3.tar.gz",
             ],
-            sha256 = "9111bf0b542b631165fadbd80aa60e7fb25b25311c532139ed2089d76ddf6dd7",
+            sha256 = "c6003e1d2e7fefa78a3039f19f383b4f3a61e81be8c19356f85b6461998ad3db",
         )
 
     # Load BoringSSL, this is used by gRPC, but as I write this (2021-06-03, circa gRPC-1.37.1), the version used by
@@ -118,11 +119,11 @@ def google_cloud_cpp_deps():
     if "com_github_grpc_grpc" not in native.existing_rules():
         http_archive(
             name = "com_github_grpc_grpc",
-            strip_prefix = "grpc-1.41.0",
+            strip_prefix = "grpc-1.38.1",
             urls = [
-                "https://github.com/grpc/grpc/archive/v1.41.0.tar.gz",
+                "https://github.com/grpc/grpc/archive/v1.38.1.tar.gz",
             ],
-            sha256 = "e5fb30aae1fa1cffa4ce00aa0bbfab908c0b899fcf0bbc30e268367d660d8656",
+            sha256 = "f60e5b112913bf776a22c16a3053cc02cf55e60bf27a959fd54d7aaf8e2da6e8",
         )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
@@ -154,9 +155,9 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_github_nlohmann_json",
             urls = [
-                "https://github.com/nlohmann/json/releases/download/v3.10.4/include.zip",
+                "https://github.com/nlohmann/json/releases/download/v3.9.1/include.zip",
             ],
-            sha256 = "62c585468054e2d8e7c2759c0d990fd339d13be988577699366fe195162d16cb",
+            sha256 = "6bea5877b1541d353bd77bdfbdb2696333ae5ed8f9e8cc22df657192218cad91",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:nlohmann_json.BUILD",
         )
 
@@ -164,10 +165,10 @@ def google_cloud_cpp_deps():
     if "com_github_google_crc32c" not in native.existing_rules():
         http_archive(
             name = "com_github_google_crc32c",
-            strip_prefix = "crc32c-1.1.2",
+            strip_prefix = "crc32c-1.1.1",
             urls = [
-                "https://github.com/google/crc32c/archive/1.1.2.tar.gz",
+                "https://github.com/google/crc32c/archive/1.1.1.tar.gz",
             ],
-            sha256 = "ac07840513072b7fcebda6e821068aa04889018f24e10e46181068fb214d7e56",
+            sha256 = "a6533f45b1670b5d59b38a514d82b09c6fb70cc1050467220216335e873074e8",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:crc32c.BUILD",
         )

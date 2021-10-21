@@ -17,12 +17,12 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 std::ostream& operator<<(std::ostream& os, IamPolicy const& rhs) {
   return os << "IamPolicy={version=" << rhs.version
             << ", bindings=" << rhs.bindings << ", etag=" << rhs.etag << "}";
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

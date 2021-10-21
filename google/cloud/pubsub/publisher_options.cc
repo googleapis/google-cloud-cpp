@@ -13,19 +13,17 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/publisher_options.h"
-#include "google/cloud/pubsub/internal/defaults.h"
 
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-PublisherOptions::PublisherOptions(Options opts) {
-  internal::CheckExpectedOptions<PublisherOptionList>(opts, __func__);
-  opts_ = pubsub_internal::DefaultPublisherOptionsOnly(std::move(opts));
-}
+std::chrono::milliseconds constexpr PublisherOptions::kDefaultMaximumHoldTime;
+std::size_t constexpr PublisherOptions::kDefaultMaximumMessageCount;
+std::size_t constexpr PublisherOptions::kDefaultMaximumMessageSize;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

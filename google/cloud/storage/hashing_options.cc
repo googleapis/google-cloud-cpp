@@ -16,14 +16,21 @@
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/big_endian.h"
 #include <crc32c/crc32c.h>
+#include <openssl/md5.h>
+#include <cstring>
 
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
+inline namespace STORAGE_CLIENT_NS {
 std::string ComputeMD5Hash(std::string const& payload) {
-  return internal::Base64Encode(internal::MD5Hash(payload));
+  MD5_CTX md5;
+  MD5_Init(&md5);
+  MD5_Update(&md5, payload.c_str(), payload.size());
+
+  std::string hash(MD5_DIGEST_LENGTH, ' ');
+  MD5_Final(reinterpret_cast<unsigned char*>(&hash[0]), &md5);
+  return internal::Base64Encode(hash);
 }
 
 std::string ComputeCrc32cChecksum(std::string const& payload) {
@@ -33,7 +40,7 @@ std::string ComputeCrc32cChecksum(std::string const& payload) {
   return internal::Base64Encode(hash);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

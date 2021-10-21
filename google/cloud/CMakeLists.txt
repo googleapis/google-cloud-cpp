@@ -32,6 +32,7 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/testing_util/*"
     "*/google/cloud/bigtable/*"
     "*/google/cloud/bigquery/*"
+    "*/google/cloud/firestore/*"
     "*/google/cloud/iam/*"
     "*/google/cloud/logging/*"
     "*/google/cloud/spanner/*"
@@ -129,8 +130,6 @@ add_library(
     internal/attributes.h
     internal/backoff_policy.cc
     internal/backoff_policy.h
-    internal/base64_transforms.cc
-    internal/base64_transforms.h
     internal/big_endian.h
     internal/build_info.h
     internal/compiler_info.cc
@@ -163,7 +162,6 @@ add_library(
     internal/port_platform.h
     internal/random.cc
     internal/random.h
-    internal/retry_policy.cc
     internal/retry_policy.h
     internal/setenv.cc
     internal/setenv.h
@@ -185,8 +183,6 @@ add_library(
     options.cc
     options.h
     polling_policy.h
-    project.cc
-    project.h
     status.cc
     status.h
     status_or.h
@@ -264,7 +260,6 @@ if (BUILD_TESTING)
         internal/algorithm_test.cc
         internal/api_client_header_test.cc
         internal/backoff_policy_test.cc
-        internal/base64_transforms_test.cc
         internal/big_endian_test.cc
         internal/compiler_info_test.cc
         internal/credentials_impl_test.cc
@@ -287,7 +282,6 @@ if (BUILD_TESTING)
         kms_key_name_test.cc
         log_test.cc
         options_test.cc
-        project_test.cc
         status_or_test.cc
         status_test.cc
         stream_range_test.cc
@@ -394,14 +388,12 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         grpc_utils/completion_queue.h
         grpc_utils/grpc_error_delegate.h
         grpc_utils/version.h
-        iam_updater.h
         internal/async_connection_ready.cc
         internal/async_connection_ready.h
         internal/async_long_running_operation.h
         internal/async_polling_loop.cc
         internal/async_polling_loop.h
         internal/async_read_stream_impl.h
-        internal/async_read_write_stream_auth.h
         internal/async_read_write_stream_impl.h
         internal/async_retry_loop.h
         internal/async_retry_unary_rpc.h
@@ -541,7 +533,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/async_connection_ready_test.cc
             internal/async_long_running_operation_test.cc
             internal/async_polling_loop_test.cc
-            internal/async_read_write_stream_auth_test.cc
             internal/async_read_write_stream_impl_test.cc
             internal/async_retry_loop_test.cc
             internal/async_retry_unary_rpc_test.cc

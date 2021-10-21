@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO(#7356): Remove this file after the deprecation period expires
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/timestamp.h"
 #include <algorithm>
@@ -21,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 namespace gcsa = ::google::spanner::admin::database::v1;
 
@@ -222,7 +220,7 @@ ListDatabaseOperationsRange DatabaseAdminClient::ListDatabaseOperations(
   return conn_->ListDatabaseOperations({std::move(in), std::move(filter)});
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

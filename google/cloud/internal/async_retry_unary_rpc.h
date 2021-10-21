@@ -27,7 +27,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 /**
@@ -158,7 +158,6 @@ class RetryAsyncUnaryRpc {
   /// Generate an error message
   Status DetailedStatus(char const* context, Status const& status) {
     std::string full_message = location_;
-    full_message += ' ';
     full_message += context;
     full_message += ", last error=";
     full_message += status.message();
@@ -208,6 +207,7 @@ template <
                                 RequestT const&, grpc::CompletionQueue*>::value,
                             int>::type = 0>
 future<StatusOr<typename AsyncCallResponseType<AsyncCallT, RequestT>::type>>
+// NOLINTNEXTLINE(performance-unnecessary-value-param)  TODO(#4112)
 StartRetryAsyncUnaryRpc(CompletionQueue cq, char const* location,
                         std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
                         std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
@@ -225,7 +225,7 @@ StartRetryAsyncUnaryRpc(CompletionQueue cq, char const* location,
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

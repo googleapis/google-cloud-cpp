@@ -29,10 +29,10 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
-namespace btproto = ::google::bigtable::v2;
+namespace btproto = google::bigtable::v2;
 
 using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::IsContextMDValid;
@@ -1075,7 +1075,7 @@ TEST_F(TableAsyncReadRowsTest, ReadRowError) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

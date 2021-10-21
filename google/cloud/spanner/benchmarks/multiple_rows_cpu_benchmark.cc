@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/benchmarks/benchmarks_config.h"
 #include "google/cloud/spanner/client.h"
+#include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
@@ -98,7 +98,7 @@ struct BytesTraits {
   static std::string TableSuffix() { return "bytes"; }
   static native_type MakeRandomValue(
       google::cloud::internal::DefaultPRNG& generator) {
-    static auto const* const kPopulation = new auto([] {
+    static std::string const kPopulation = [] {
       std::string result;
       // NOLINTNEXTLINE(bugprone-signed-char-misuse)
       int constexpr kCharMin = (std::numeric_limits<char>::min)();
@@ -107,9 +107,9 @@ struct BytesTraits {
         result.push_back(static_cast<char>(c));
       }
       return result;
-    }());
+    }();
     std::string tmp =
-        google::cloud::internal::Sample(generator, 1024, *kPopulation);
+        google::cloud::internal::Sample(generator, 1024, kPopulation);
     return spanner::Bytes(tmp.begin(), tmp.end());
   }
 };
@@ -440,7 +440,8 @@ class BasicExperiment : public Experiment {
     auto stubs = impl_.MakeStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
-    auto overall = Timer::PerProcess();
+    Timer overall;
+    overall.Start();
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
       auto const thread_count = impl_.ThreadCount(config);
@@ -453,7 +454,8 @@ class BasicExperiment : public Experiment {
       }
       RunIterationViaClient(config, client, thread_count, channel_count);
     }
-    std::cout << overall.Annotations() << "\n";
+    overall.Stop();
+    std::cout << overall.annotations();
     return {};
   }
 
@@ -568,7 +570,8 @@ class ReadExperiment : public BasicExperiment<Traits> {
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = this->impl_.RandomKeySet(config);
 
-      auto timer = Timer::PerThread();
+      Timer timer;
+      timer.Start();
 
       google::spanner::v1::ReadRequest request{};
       request.set_session(*session);
@@ -604,10 +607,10 @@ class ReadExperiment : public BasicExperiment<Traits> {
         }
       }
       auto final = stream->Finish();
-      auto const usage = timer.Sample();
+      timer.Stop();
       samples.push_back(RowCpuSample{
-          channel_count, thread_count, true, row_count, usage.elapsed_time,
-          usage.cpu_time, google::cloud::MakeStatusFromRpcError(final)});
+          channel_count, thread_count, true, row_count, timer.elapsed_time(),
+          timer.cpu_time(), google::cloud::MakeStatusFromRpcError(final)});
     }
     return samples;
   }
@@ -631,7 +634,8 @@ class ReadExperiment : public BasicExperiment<Traits> {
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = this->impl_.RandomKeySet(config);
 
-      auto timer = Timer::PerThread();
+      Timer timer;
+      timer.Start();
       auto rows = client.Read(this->table_name_, key, column_names);
       int row_count = 0;
       Status status;
@@ -642,10 +646,10 @@ class ReadExperiment : public BasicExperiment<Traits> {
         }
         ++row_count;
       }
-      auto const usage = timer.Sample();
+      timer.Stop();
       samples.push_back(RowCpuSample{channel_count, thread_count, false,
-                                     row_count, usage.elapsed_time,
-                                     usage.cpu_time, std::move(status)});
+                                     row_count, timer.elapsed_time(),
+                                     timer.cpu_time(), std::move(status)});
     }
     return samples;
   }
@@ -705,7 +709,8 @@ class SelectExperiment : public BasicExperiment<Traits> {
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = this->impl_.RandomKeySetBegin(config);
 
-      auto timer = Timer::PerThread();
+      Timer timer;
+      timer.Start();
 
       google::spanner::v1::ExecuteSqlRequest request{};
       request.set_session(*session);
@@ -747,10 +752,10 @@ class SelectExperiment : public BasicExperiment<Traits> {
         }
       }
       auto final = stream->Finish();
-      auto const usage = timer.Sample();
+      timer.Stop();
       samples.push_back(RowCpuSample{
-          channel_count, thread_count, true, row_count, usage.elapsed_time,
-          usage.cpu_time, google::cloud::MakeStatusFromRpcError(final)});
+          channel_count, thread_count, true, row_count, timer.elapsed_time(),
+          timer.cpu_time(), google::cloud::MakeStatusFromRpcError(final)});
     }
     return samples;
   }
@@ -772,7 +777,8 @@ class SelectExperiment : public BasicExperiment<Traits> {
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = this->impl_.RandomKeySetBegin(config);
 
-      auto timer = Timer::PerThread();
+      Timer timer;
+      timer.Start();
       auto rows = client.ExecuteQuery(spanner::SqlStatement(
           statement, {{"begin", spanner::Value(key)},
                       {"end", spanner::Value(key + config.query_size)}}));
@@ -785,10 +791,10 @@ class SelectExperiment : public BasicExperiment<Traits> {
         }
         ++row_count;
       }
-      auto const usage = timer.Sample();
+      timer.Stop();
       samples.push_back(RowCpuSample{channel_count, thread_count, false,
-                                     row_count, usage.elapsed_time,
-                                     usage.cpu_time, std::move(status)});
+                                     row_count, timer.elapsed_time(),
+                                     timer.cpu_time(), std::move(status)});
     }
     return samples;
   }
@@ -872,7 +878,8 @@ class UpdateExperiment : public BasicExperiment<Traits> {
           this->impl_.GenerateRandomValue(), this->impl_.GenerateRandomValue(),
       };
 
-      auto timer = Timer::PerThread();
+      Timer timer;
+      timer.Start();
 
       google::spanner::v1::ExecuteSqlRequest request{};
       request.set_session(*session);
@@ -918,10 +925,10 @@ class UpdateExperiment : public BasicExperiment<Traits> {
         if (!response) status = std::move(response).status();
       }
 
-      auto const usage = timer.Sample();
+      timer.Stop();
       samples.push_back(RowCpuSample{channel_count, thread_count, true,
-                                     row_count, usage.elapsed_time,
-                                     usage.cpu_time, status});
+                                     row_count, timer.elapsed_time(),
+                                     timer.cpu_time(), status});
     }
     return samples;
   }
@@ -950,7 +957,8 @@ class UpdateExperiment : public BasicExperiment<Traits> {
           this->impl_.GenerateRandomValue(), this->impl_.GenerateRandomValue(),
       };
 
-      auto timer = Timer::PerThread();
+      Timer timer;
+      timer.Start();
       std::unordered_map<std::string, spanner::Value> const params{
           {"key", spanner::Value(key)},      {"v0", spanner::Value(values[0])},
           {"v1", spanner::Value(values[1])}, {"v2", spanner::Value(values[2])},
@@ -970,10 +978,10 @@ class UpdateExperiment : public BasicExperiment<Traits> {
             row_count = static_cast<int>(result->RowsModified());
             return spanner::Mutations{};
           });
-      auto const usage = timer.Sample();
+      timer.Stop();
       samples.push_back(RowCpuSample{
-          channel_count, thread_count, false, row_count, usage.elapsed_time,
-          usage.cpu_time, std::move(commit_result).status()});
+          channel_count, thread_count, false, row_count, timer.elapsed_time(),
+          timer.cpu_time(), std::move(commit_result).status()});
     }
     return samples;
   }
@@ -1065,7 +1073,8 @@ class MutationExperiment : public BasicExperiment<Traits> {
           this->impl_.GenerateRandomValue(), this->impl_.GenerateRandomValue(),
       };
 
-      auto timer = Timer::PerThread();
+      Timer timer;
+      timer.Start();
 
       grpc::ClientContext context;
       google::spanner::v1::CommitRequest commit_request;
@@ -1087,10 +1096,10 @@ class MutationExperiment : public BasicExperiment<Traits> {
       }
       auto response = stub->Commit(context, commit_request);
 
-      auto const usage = timer.Sample();
+      timer.Stop();
       samples.push_back(RowCpuSample{
           channel_count, thread_count, true, commit_request.mutations_size(),
-          usage.elapsed_time, usage.cpu_time, response.status()});
+          timer.elapsed_time(), timer.cpu_time(), response.status()});
     }
     return samples;
   }
@@ -1129,7 +1138,8 @@ class MutationExperiment : public BasicExperiment<Traits> {
           this->impl_.GenerateRandomValue(), this->impl_.GenerateRandomValue(),
       };
 
-      auto timer = Timer::PerThread();
+      Timer timer;
+      timer.Start();
 
       int row_count = 0;
       auto commit_result =
@@ -1137,10 +1147,10 @@ class MutationExperiment : public BasicExperiment<Traits> {
               this->table_name_, column_names, key, values[0], values[1],
               values[2], values[3], values[4], values[5], values[6], values[7],
               values[8], values[9])});
-      auto const usage = timer.Sample();
+      timer.Stop();
       samples.push_back(RowCpuSample{
-          channel_count, thread_count, false, row_count, usage.elapsed_time,
-          usage.cpu_time, std::move(commit_result).status()});
+          channel_count, thread_count, false, row_count, timer.elapsed_time(),
+          timer.cpu_time(), std::move(commit_result).status()});
     }
     return samples;
   }
@@ -1347,31 +1357,32 @@ int main(int argc, char* argv[]) {
   // print everything out.
   std::cout << config << std::flush;
 
-  google::cloud::spanner_admin::DatabaseAdminClient admin_client(
-      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  google::cloud::spanner::DatabaseAdminClient admin_client;
+  std::vector<std::string> additional_statements = [&available, generator] {
+    std::vector<std::string> statements;
+    for (auto const& kv : available) {
+      // TODO(#5024): Remove this check when the emulator supports NUMERIC.
+      if (google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST")
+              .has_value()) {
+        auto pos = kv.first.rfind("-numeric");
+        if (pos != std::string::npos) {
+          continue;
+        }
+      }
+      auto experiment = kv.second(generator);
+      auto s = experiment->AdditionalDdlStatement();
+      if (s.empty()) continue;
+      statements.push_back(std::move(s));
+    }
+    return statements;
+  }();
 
   std::cout << "# Waiting for database creation to complete " << std::flush;
-  google::spanner::admin::database::v1::CreateDatabaseRequest request;
-  request.set_parent(database.instance().FullName());
-  request.set_create_statement(
-      absl::StrCat("CREATE DATABASE `", database.database_id(), "`"));
-  for (auto const& kv : available) {
-    // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-    if (google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value()) {
-      auto pos = kv.first.rfind("-numeric");
-      if (pos != std::string::npos) {
-        continue;
-      }
-    }
-    auto experiment = kv.second(generator);
-    auto s = experiment->AdditionalDdlStatement();
-    if (s.empty()) continue;
-    request.add_extra_statements(std::move(s));
-  }
   google::cloud::StatusOr<google::spanner::admin::database::v1::Database> db;
   int constexpr kMaxCreateDatabaseRetries = 3;
   for (int retry = 0; retry <= kMaxCreateDatabaseRetries; ++retry) {
-    auto create_future = admin_client.CreateDatabase(request);
+    auto create_future =
+        admin_client.CreateDatabase(database, additional_statements);
     for (;;) {
       auto status = create_future.wait_for(std::chrono::seconds(1));
       if (status == std::future_status::ready) break;
@@ -1418,7 +1429,7 @@ int main(int argc, char* argv[]) {
   }
 
   if (!user_specified_database) {
-    auto drop = admin_client.DropDatabase(database.FullName());
+    auto drop = admin_client.DropDatabase(database);
     if (!drop.ok()) {
       std::cerr << "# Error dropping database: " << drop << "\n";
     }

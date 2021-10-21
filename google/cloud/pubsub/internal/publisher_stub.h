@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
  * Define the interface for the gRPC wrapper.
@@ -91,21 +91,15 @@ class PublisherStub {
 };
 
 /**
- * Creates a PublisherStub configured with @p opts and @p channel_id.
+ * Creates a PublisherStub configured with @p options and @p channel_id.
  *
  * @p channel_id should be unique among all stubs in the same Connection pool,
  * to ensure they use different underlying connections.
  */
-std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(Options const& opts,
-                                                          int channel_id);
-
-/**
- * Create a PublisherStub using a pre-configured channel.
- */
 std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
-    std::shared_ptr<grpc::Channel> channel);
+    pubsub::ConnectionOptions options, int channel_id);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

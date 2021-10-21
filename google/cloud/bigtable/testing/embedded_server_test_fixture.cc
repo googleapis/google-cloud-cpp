@@ -15,7 +15,6 @@
 #include "google/cloud/bigtable/testing/embedded_server_test_fixture.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/build_info.h"
-#include "google/cloud/internal/user_agent_prefix.h"
 #include <thread>
 
 namespace google {
@@ -49,8 +48,7 @@ void EmbeddedServerTestFixture::SetUp() {
   StartServer();
 
   grpc::ChannelArguments channel_arguments;
-  channel_arguments.SetUserAgentPrefix(
-      google::cloud::internal::UserAgentPrefix());
+  channel_arguments.SetUserAgentPrefix(ClientOptions::UserAgentPrefix());
   std::string project_id = kProjectId;
   std::string instance_id = kInstanceId;
   std::string table_id = kTableId;

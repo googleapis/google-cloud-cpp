@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 StatusOr<google::pubsub::v1::Subscription>
 SubscriberRoundRobin::CreateSubscription(
@@ -59,7 +59,7 @@ Status SubscriberRoundRobin::ModifyPushConfig(
   return Child()->ModifyPushConfig(context, request);
 }
 
-std::shared_ptr<SubscriberStub::AsyncPullStream>
+std::unique_ptr<SubscriberStub::AsyncPullStream>
 SubscriberRoundRobin::AsyncStreamingPull(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -125,7 +125,7 @@ std::shared_ptr<SubscriberStub> SubscriberRoundRobin::Child() {
   return child;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

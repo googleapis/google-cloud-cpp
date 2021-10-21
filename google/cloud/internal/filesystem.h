@@ -22,7 +22,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 enum class file_type {
@@ -106,10 +106,10 @@ class file_status {  // NOLINT(readability-identifier-naming)
   file_status() noexcept : file_status(file_type::none) {}
   explicit file_status(file_type type, perms permissions = perms::unknown)
       : type_(type), permissions_(permissions) {}
-  file_status(file_status const&) = default;
-  file_status(file_status&&) = default;
-  file_status& operator=(file_status const&) = default;
-  file_status& operator=(file_status&&) = default;
+  file_status(file_status const&) noexcept = default;
+  file_status(file_status&&) noexcept = default;
+  file_status& operator=(file_status const&) noexcept = default;
+  file_status& operator=(file_status&&) noexcept = default;
 
   file_type type() const noexcept { return type_; }
   void type(file_type type) noexcept { type_ = type; }
@@ -171,7 +171,7 @@ std::uintmax_t file_size(std::string const& path, std::error_code& ec) noexcept;
 std::string PathAppend(std::string const& directory, std::string const& path);
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO(#7356): Remove this file after the deprecation period expires
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/instance_admin_connection.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/internal/defaults.h"
@@ -28,14 +26,13 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::AtLeast;
-using ::testing::ElementsAre;
 using ::testing::Return;
 
 namespace gcsa = ::google::spanner::admin::instance::v1;
@@ -66,7 +63,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceSuccess) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance";
 
-  auto constexpr kInstanceText = R"pb(
+  auto constexpr kText = R"pb(
     name: "projects/test-project/instances/test-instance"
     config: "test-config"
     display_name: "test display name"
@@ -74,7 +71,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceSuccess) {
     state: CREATING
   )pb";
   gcsa::Instance expected_instance;
-  ASSERT_TRUE(TextFormat::ParseFromString(kInstanceText, &expected_instance));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected_instance));
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, GetInstance)
@@ -308,19 +305,12 @@ TEST(InstanceAdminConnectionTest, DeleteInstanceTooManyTransients) {
 TEST(InstanceAdminConnectionTest, GetInstanceConfigSuccess) {
   std::string const expected_name =
       "projects/test-project/instanceConfigs/test-instance-config";
-  auto constexpr kConfigText = R"pb(
+  auto constexpr kText = R"pb(
     name: "projects/test-project/instanceConfigs/test-instance-config"
     display_name: "test display name"
-    replicas {
-      location: "location"
-      type: READ_WRITE
-      default_leader_location: true
-    }
-    leader_options: "location"
   )pb";
   gcsa::InstanceConfig expected_instance_config;
-  ASSERT_TRUE(
-      TextFormat::ParseFromString(kConfigText, &expected_instance_config));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected_instance_config));
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, GetInstanceConfig)
@@ -365,47 +355,8 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfigTooManyTransients) {
 }
 
 TEST(InstanceAdminConnectionTest, ListInstanceConfigsSuccess) {
-  constexpr char const* kInstanceConfigText[3] = {
-      R"pb(
-        name: "projects/test-project/instanceConfigs/test-instance-config-1"
-        display_name: "test display name 1"
-        replicas {
-          location: "location1"
-          type: READ_WRITE
-          default_leader_location: true
-        }
-        leader_options: "location1"
-      )pb",
-      R"pb(
-        name: "projects/test-project/instanceConfigs/test-instance-config-2"
-        display_name: "test display name 2"
-        replicas {
-          location: "location2"
-          type: READ_WRITE
-          default_leader_location: true
-        }
-        leader_options: "location2"
-      )pb",
-      R"pb(
-        name: "projects/test-project/instanceConfigs/test-instance-config-3"
-        display_name: "test display name 3"
-        replicas {
-          location: "location3"
-          type: READ_WRITE
-          default_leader_location: true
-        }
-        leader_options: "location3"
-      )pb",
-  };
-  gcsa::InstanceConfig expected_instance_configs[3];
-  ASSERT_TRUE(TextFormat::ParseFromString(kInstanceConfigText[0],
-                                          &expected_instance_configs[0]));
-  ASSERT_TRUE(TextFormat::ParseFromString(kInstanceConfigText[1],
-                                          &expected_instance_configs[1]));
-  ASSERT_TRUE(TextFormat::ParseFromString(kInstanceConfigText[2],
-                                          &expected_instance_configs[2]));
-
   std::string const expected_parent = "projects/test-project";
+
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, ListInstanceConfigs)
       .WillOnce([&](grpc::ClientContext&,
@@ -421,8 +372,8 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigsSuccess) {
 
         gcsa::ListInstanceConfigsResponse response;
         response.set_next_page_token("p1");
-        *response.add_instance_configs() = expected_instance_configs[0];
-        *response.add_instance_configs() = expected_instance_configs[1];
+        response.add_instance_configs()->set_name("c1");
+        response.add_instance_configs()->set_name("c2");
         return response;
       })
       .WillOnce([&](grpc::ClientContext&,
@@ -432,21 +383,18 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigsSuccess) {
 
         gcsa::ListInstanceConfigsResponse response;
         response.clear_next_page_token();
-        *response.add_instance_configs() = expected_instance_configs[2];
+        response.add_instance_configs()->set_name("c3");
         return response;
       });
 
   auto conn = MakeLimitedRetryConnection(mock);
-  std::vector<gcsa::InstanceConfig> actual_instance_configs;
+  std::vector<std::string> actual_names;
   for (auto const& instance_config :
        conn->ListInstanceConfigs({"test-project"})) {
     ASSERT_STATUS_OK(instance_config);
-    actual_instance_configs.push_back(*instance_config);
+    actual_names.push_back(instance_config->name());
   }
-  EXPECT_THAT(actual_instance_configs,
-              ElementsAre(IsProtoEqual(expected_instance_configs[0]),
-                          IsProtoEqual(expected_instance_configs[1]),
-                          IsProtoEqual(expected_instance_configs[2])));
+  EXPECT_THAT(actual_names, ::testing::ElementsAre("c1", "c2", "c3"));
 }
 
 TEST(InstanceAdminConnectionTest, ListInstanceConfigsPermanentFailure) {
@@ -517,7 +465,7 @@ TEST(InstanceAdminConnectionTest, ListInstancesSuccess) {
     ASSERT_STATUS_OK(instance);
     actual_names.push_back(instance->name());
   }
-  EXPECT_THAT(actual_names, ElementsAre("i1", "i2", "i3"));
+  EXPECT_THAT(actual_names, ::testing::ElementsAre("i1", "i2", "i3"));
 }
 
 TEST(InstanceAdminConnectionTest, ListInstancesPermanentFailure) {
@@ -598,7 +546,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicySuccess) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance";
 
-  auto constexpr kPolicyText = R"pb(
+  auto constexpr kText = R"pb(
     etag: "request-etag"
     bindings {
       role: "roles/spanner.databaseReader"
@@ -607,7 +555,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicySuccess) {
     }
   )pb";
   giam::Policy expected_policy;
-  ASSERT_TRUE(TextFormat::ParseFromString(kPolicyText, &expected_policy));
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected_policy));
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, SetIamPolicy)
@@ -722,7 +670,7 @@ TEST(InstanceAdminConnectionTest, TestIamPermissionsTooManyTransients) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

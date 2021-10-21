@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
 /**
@@ -41,8 +41,7 @@ class AsyncLongrunningOperation {
       : client_(std::move(client)), operation_(std::move(operation)) {}
 
   AsyncLongrunningOperation(AsyncLongrunningOperation const&) = delete;
-  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-  AsyncLongrunningOperation(AsyncLongrunningOperation&&) = default;
+  AsyncLongrunningOperation(AsyncLongrunningOperation&&) noexcept = default;
 
   // The semantics of the value returned by the future is as follows:
   // - outer status is the attempt's status (e.g. couldn't reach CBT)
@@ -153,7 +152,7 @@ future<StatusOr<Response>> StartAsyncLongrunningOp(
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

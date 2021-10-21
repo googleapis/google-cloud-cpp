@@ -23,18 +23,14 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
-static_assert(sizeof(Severity) == sizeof(int),
-              "Expected Severity to be represented as an int");
+static_assert(sizeof(Severity) <= sizeof(int),
+              "Expected Severity to fit in an integer");
 
 static_assert(static_cast<int>(Severity::GCP_LS_LOWEST) <
                   static_cast<int>(Severity::GCP_LS_HIGHEST),
               "Expect LOWEST severity to be smaller than HIGHEST severity");
-
-static_assert(static_cast<int>(Severity::GCP_LS_LOWEST_ENABLED) <=
-                  static_cast<int>(Severity::GCP_LS_FATAL),
-              "Severity FATAL cannot be disable at compile time");
 
 namespace {
 struct Timestamp {
@@ -50,10 +46,18 @@ std::ostream& operator<<(std::ostream& os, Timestamp const& ts) {
 
 auto constexpr kSeverityCount = static_cast<int>(Severity::GCP_LS_HIGHEST) + 1;
 
-std::array<char const*, kSeverityCount> constexpr kSeverityNames{
-    "TRACE", "DEBUG",    "INFO",  "NOTICE", "WARNING",
-    "ERROR", "CRITICAL", "ALERT", "FATAL",
-};
+// Double braces needed to workaround a clang-3.8 bug.
+std::array<char const*, kSeverityCount> constexpr kSeverityNames{{
+    "TRACE",
+    "DEBUG",
+    "INFO",
+    "NOTICE",
+    "WARNING",
+    "ERROR",
+    "CRITICAL",
+    "ALERT",
+    "FATAL",
+}};
 
 absl::optional<Severity> ParseSeverity(std::string const& name) {
   int i = 0;
@@ -81,7 +85,7 @@ std::ostream& operator<<(std::ostream& os, Severity x) {
 
 std::ostream& operator<<(std::ostream& os, LogRecord const& rhs) {
   return os << Timestamp{rhs.timestamp} << " [" << rhs.severity << "]"
-            << " <" << rhs.thread_id << ">"
+            << " <" << std::this_thread::get_id() << ">"
             << " " << rhs.message << " (" << rhs.filename << ':' << rhs.lineno
             << ')';
 }
@@ -93,7 +97,8 @@ LogSink::LogSink()
 LogSink& LogSink::Instance() {
   static auto* const kInstance = [] {
     auto* p = new LogSink;
-    p->SetDefaultBackend(internal::DefaultLogBackend());
+    auto be = internal::DefaultLogBackend();
+    if (be) p->SetDefaultBackend(std::move(be));
     return p;
   }();
   return *kInstance;
@@ -144,19 +149,16 @@ void LogSink::Flush() {
   for (auto& kv : copy) kv.second->Flush();
 }
 
-void LogSink::EnableStdClogImpl(Severity min_severity) {
+void LogSink::EnableStdClogImpl() {
   std::unique_lock<std::mutex> lk(mu_);
   if (default_backend_id_ != 0) return;
   default_backend_id_ =
-      AddBackendImpl(std::make_shared<internal::StdClogBackend>(min_severity));
+      AddBackendImpl(std::make_shared<internal::StdClogBackend>());
 }
 
 void LogSink::DisableStdClogImpl() {
   std::unique_lock<std::mutex> lk(mu_);
   if (default_backend_id_ == 0) return;
-  // Note that the backend set by SetDefaultBackend() may be any LogBackend
-  // subclass, and so not necessarily a StdClogBackend. But, by default, it
-  // always is one, or a CircularBufferBackend that wraps a StdClogBackend.
   RemoveBackendImpl(default_backend_id_);
   default_backend_id_ = 0;
 }
@@ -196,34 +198,32 @@ LogSink::CopyBackends() {
 namespace internal {
 
 std::shared_ptr<LogBackend> DefaultLogBackend() {
-  auto constexpr kLogConfig = "GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG";
-  auto constexpr kEnableClog = "GOOGLE_CLOUD_CPP_ENABLE_CLOG";
-
-  auto config = internal::GetEnv(kLogConfig).value_or("");
-  std::vector<std::string> fields = absl::StrSplit(config, ',');
-  if (!fields.empty()) {
-    auto min_severity = Severity::GCP_LS_LOWEST_ENABLED;
-    if (fields[0] == "lastN" && fields.size() == 3) {
-      auto size = ParseSize(fields[1]);
-      auto min_flush_severity = ParseSeverity(fields[2]);
-      if (size.has_value() && min_flush_severity.has_value()) {
-        return std::make_shared<CircularBufferBackend>(
-            *size, *min_flush_severity,
-            std::make_shared<StdClogBackend>(min_severity));
-      }
+  auto clog_or_none = []() -> std::shared_ptr<LogBackend> {
+    if (internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG").has_value()) {
+      return std::make_shared<StdClogBackend>();
     }
-    if (fields[0] == "clog" && fields.size() == 1) {
-      return std::make_shared<StdClogBackend>(min_severity);
+    return {};
+  };
+
+  auto constexpr kVariableName = "GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG";
+  auto config = internal::GetEnv(kVariableName).value_or("");
+  std::vector<std::string> fields = absl::StrSplit(config, ',');
+  if (fields.empty()) return clog_or_none();
+  if (fields[0] == "lastN" && fields.size() == 3) {
+    auto size = ParseSize(fields[1]);
+    auto min_severity = ParseSeverity(fields[2]);
+    if (size.has_value() && min_severity.has_value()) {
+      return std::make_shared<CircularBufferBackend>(
+          *size, *min_severity, std::make_shared<StdClogBackend>());
     }
   }
-
-  auto min_severity =
-      ParseSeverity(internal::GetEnv(kEnableClog).value_or("FATAL"));
-  return std::make_shared<StdClogBackend>(
-      min_severity.value_or(Severity::GCP_LS_LOWEST_ENABLED));
+  if (fields[0] == "clog" && fields.size() == 1) {
+    return std::make_shared<StdClogBackend>();
+  }
+  return clog_or_none();
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

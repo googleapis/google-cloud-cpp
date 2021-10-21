@@ -28,34 +28,13 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::IsEmpty;
-
-TEST(UnifiedGrpcCredentialsTest, GrpcCredentialOption) {
-  CompletionQueue cq;
-  auto result = CreateAuthenticationStrategy(
-      cq,
-      Options{}.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials()));
-  EXPECT_FALSE(result->RequiresConfigureContext());
-}
-
-TEST(UnifiedGrpcCredentialsTest, UnifiedCredentialsOption) {
-  auto const expiration =
-      std::chrono::system_clock::now() + std::chrono::hours(1);
-  CompletionQueue cq;
-  auto result = CreateAuthenticationStrategy(
-      cq, Options{}
-              .set<UnifiedCredentialsOption>(
-                  MakeAccessTokenCredentials("test-token", expiration))
-              .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials()));
-  // Verify `UnifiedCredentialsOption` is used before `GrpcCredentialOption`
-  EXPECT_TRUE(result->RequiresConfigureContext());
-}
 
 TEST(UnifiedGrpcCredentialsTest, WithGrpcCredentials) {
   auto result =
@@ -139,6 +118,6 @@ TEST(UnifiedGrpcCredentialsTest, LoadCAInfoContents) {
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

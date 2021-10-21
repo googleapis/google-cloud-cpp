@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 
 using ::google::cloud::internal::FormatRfc3339;
 
@@ -257,7 +257,7 @@ ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetCustomTime() {
   return *this;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

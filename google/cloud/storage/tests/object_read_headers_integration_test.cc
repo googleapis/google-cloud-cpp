@@ -24,12 +24,11 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::IsOk;
-using ::testing::Contains;
 using ::testing::IsSupersetOf;
 
 class ObjectReadHeadersIntegrationTest
@@ -78,18 +77,19 @@ TEST_F(ObjectReadHeadersIntegrationTest, SmokeTest) {
     return keys;
   };
   if (UsingGrpc()) {
-    EXPECT_THAT(keys(is.headers()), Contains(":grpc-context-peer"));
+    EXPECT_THAT(keys(is.headers()),
+                IsSupersetOf({":grpc-context-peer", "x-goog-hash"}));
   } else if (UsingEmulator()) {
-    EXPECT_THAT(keys(is.headers()), Contains("x-goog-hash"));
+    EXPECT_THAT(keys(is.headers()), IsSupersetOf({"x-goog-hash"}));
   } else {
     EXPECT_THAT(keys(is.headers()),
                 IsSupersetOf({"x-guploader-uploadid", "x-goog-hash",
-                              "x-goog-generation", ":curl-peer"}));
+                              "x-goog-generation"}));
   }
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

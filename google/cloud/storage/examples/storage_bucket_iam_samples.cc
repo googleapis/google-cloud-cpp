@@ -20,12 +20,12 @@
 
 namespace {
 
-using ::google::cloud::storage::examples::Usage;
+using google::cloud::storage::examples::Usage;
 
 void NativeGetBucketIamPolicy(google::cloud::storage::Client client,
                               std::vector<std::string> const& argv) {
   //! [native get bucket iam policy] [START storage_view_bucket_iam_members]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     auto policy = client.GetNativeBucketIamPolicy(
@@ -42,7 +42,7 @@ void NativeGetBucketIamPolicy(google::cloud::storage::Client client,
 void NativeAddBucketIamMember(google::cloud::storage::Client client,
                               std::vector<std::string> const& argv) {
   //! [native add bucket iam member] [START storage_add_bucket_iam_member]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& role, std::string const& member) {
@@ -77,7 +77,7 @@ void NativeAddBucketConditionalIamBinding(
     std::vector<std::string> const& argv) {
   // [START storage_add_bucket_conditional_iam_binding]
   //! [native add bucket conditional iam binding]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& role, std::string const& member,
@@ -116,7 +116,7 @@ void NativeAddBucketConditionalIamBinding(
 void NativeRemoveBucketIamMember(google::cloud::storage::Client client,
                                  std::vector<std::string> const& argv) {
   //! [native remove bucket iam member] [START storage_remove_bucket_iam_member]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& role, std::string const& member) {
@@ -153,7 +153,7 @@ void NativeRemoveBucketConditionalIamBinding(
     std::vector<std::string> const& argv) {
   //  [START storage_remove_bucket_conditional_iam_binding]
   //! [native remove bucket conditional iam binding]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& role, std::string const& condition_title,
@@ -197,7 +197,7 @@ void TestBucketIamPermissions(google::cloud::storage::Client client,
   std::vector<std::string> permissions(it, argv.cend());
 
   //! [test bucket iam permissions]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::vector<std::string> const& permissions) {
@@ -227,8 +227,8 @@ void TestBucketIamPermissions(google::cloud::storage::Client client,
 void NativeSetBucketPublicIam(google::cloud::storage::Client client,
                               std::vector<std::string> const& argv) {
   // [START storage_set_bucket_public_iam]
-  namespace gcs = ::google::cloud::storage;
-  using ::google::cloud::StatusOr;
+  namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     auto current_policy = client.GetNativeBucketIamPolicy(
         bucket_name, gcs::RequestedPolicyVersion(3));

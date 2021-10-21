@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /// Represents a request to call the `BucketAccessControl: list` API.
 class ListBucketAclRequest
@@ -111,6 +111,7 @@ class GenericChangeBucketAclRequest : public GenericBucketAclRequest<Derived> {
  public:
   GenericChangeBucketAclRequest() = default;
 
+  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   explicit GenericChangeBucketAclRequest(std::string bucket, std::string entity,
                                          std::string role)
       : GenericBucketAclRequest<Derived>(std::move(bucket), std::move(entity)),
@@ -165,7 +166,7 @@ class PatchBucketAclRequest
 std::ostream& operator<<(std::ostream& os, PatchBucketAclRequest const& r);
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

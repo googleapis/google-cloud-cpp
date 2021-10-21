@@ -15,9 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_PUBLISHER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_PUBLISHER_OPTIONS_H
 
-#include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/version.h"
-#include "google/cloud/options.h"
 #include <algorithm>
 #include <chrono>
 #include <cstddef>
@@ -26,19 +24,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-class PublisherOptions;
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsub
-
-namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-Options MakeOptions(pubsub::PublisherOptions);
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsub_internal
-
-namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
  * Configuration options for a `Publisher`.
@@ -60,20 +46,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class PublisherOptions {
  public:
-  PublisherOptions() : PublisherOptions(Options{}) {}
-
-  /**
-   * Initialize the publisher options.
-   *
-   * Expected options are any of the types in the `PublisherOptionList`
-   *
-   * @note Unrecognized options will be ignored. To debug issues with options
-   *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and
-   *     unexpected options will be logged.
-   *
-   * @param opts configuration options
-   */
-  explicit PublisherOptions(Options opts);
+  PublisherOptions() = default;
 
   //@{
   /**
@@ -88,18 +61,18 @@ class PublisherOptions {
    * [quota limits]: https://cloud.google.com/pubsub/quotas#resource_limits
    */
   std::chrono::microseconds maximum_hold_time() const {
-    return opts_.get<MaxHoldTimeOption>();
+    return maximum_hold_time_;
   }
 
   /**
    * Sets the maximum hold time for the messages.
    *
-   * @note While this function accepts durations in arbitrary precision, the
+   * @note while this function accepts durations in arbitrary precision, the
    *     implementation depends on the granularity of your OS timers. It is
    *     possible that messages are held for slightly longer times than the
    *     value set here.
    *
-   * @note The first message in a batch starts the hold time counter. New
+   * @note the first message in a batch starts the hold time counter. New
    *     messages do not extend the life of the batch. For example, if you have
    *     set the holding time to 10 milliseconds, start a batch with message 1,
    *     and publish a second message 5 milliseconds later, the second message
@@ -108,13 +81,13 @@ class PublisherOptions {
   template <typename Rep, typename Period>
   PublisherOptions& set_maximum_hold_time(
       std::chrono::duration<Rep, Period> v) {
-    opts_.set<MaxHoldTimeOption>(
-        std::chrono::duration_cast<std::chrono::microseconds>(v));
+    maximum_hold_time_ =
+        std::chrono::duration_cast<std::chrono::microseconds>(v);
     return *this;
   }
 
   std::size_t maximum_batch_message_count() const {
-    return opts_.get<MaxBatchMessagesOption>();
+    return maximum_batch_message_count_;
   }
 
   /**
@@ -128,13 +101,11 @@ class PublisherOptions {
    * [pubsub-quota-link]: https://cloud.google.com/pubsub/quotas#resource_limits
    */
   PublisherOptions& set_maximum_batch_message_count(std::size_t v) {
-    opts_.set<MaxBatchMessagesOption>(v);
+    maximum_batch_message_count_ = v;
     return *this;
   }
 
-  std::size_t maximum_batch_bytes() const {
-    return opts_.get<MaxBatchBytesOption>();
-  }
+  std::size_t maximum_batch_bytes() const { return maximum_batch_bytes_; }
 
   /**
    * Set the maximum size for the messages in a batch.
@@ -147,7 +118,7 @@ class PublisherOptions {
    * [pubsub-quota-link]: https://cloud.google.com/pubsub/quotas#resource_limits
    */
   PublisherOptions& set_maximum_batch_bytes(std::size_t v) {
-    opts_.set<MaxBatchBytesOption>(v);
+    maximum_batch_bytes_ = v;
     return *this;
   }
   //@}
@@ -167,7 +138,7 @@ class PublisherOptions {
    */
 
   /// Return `true` if message ordering is enabled.
-  bool message_ordering() const { return opts_.get<MessageOrderingOption>(); }
+  bool message_ordering() const { return message_ordering_; }
 
   /**
    * Enable message ordering.
@@ -175,7 +146,7 @@ class PublisherOptions {
    * @see the documentation for the `Publisher` class for details.
    */
   PublisherOptions& enable_message_ordering() {
-    opts_.set<MessageOrderingOption>(true);
+    message_ordering_ = true;
     return *this;
   }
 
@@ -185,7 +156,7 @@ class PublisherOptions {
    * @see the documentation for the `Publisher` class for details.
    */
   PublisherOptions& disable_message_ordering() {
-    opts_.set<MessageOrderingOption>(false);
+    message_ordering_ = false;
     return *this;
   }
   //@}
@@ -205,73 +176,73 @@ class PublisherOptions {
 
   /// Flow control based on pending bytes.
   PublisherOptions& set_maximum_pending_bytes(std::size_t v) {
-    opts_.set<MaxPendingBytesOption>(v);
+    maximum_pending_bytes_ = v;
     return *this;
   }
 
   /// Flow control based on pending messages.
   PublisherOptions& set_maximum_pending_messages(std::size_t v) {
-    opts_.set<MaxPendingMessagesOption>(v);
+    maximum_pending_messages_ = v;
     return *this;
   }
 
-  std::size_t maximum_pending_bytes() const {
-    return opts_.get<MaxPendingBytesOption>();
-  }
+  std::size_t maximum_pending_bytes() const { return maximum_pending_bytes_; }
   std::size_t maximum_pending_messages() const {
-    return opts_.get<MaxPendingMessagesOption>();
+    return maximum_pending_messages_;
   }
 
   /// The current action for a full publisher
   bool full_publisher_ignored() const {
-    return opts_.get<FullPublisherActionOption>() ==
-           FullPublisherAction::kIgnored;
+    return full_publisher_action_ == FullPublisherAction::kIgnored;
   }
   bool full_publisher_rejects() const {
-    return opts_.get<FullPublisherActionOption>() ==
-           FullPublisherAction::kRejects;
+    return full_publisher_action_ == FullPublisherAction::kRejects;
   }
   bool full_publisher_blocks() const {
-    return opts_.get<FullPublisherActionOption>() ==
-           FullPublisherAction::kBlocks;
+    return full_publisher_action_ == FullPublisherAction::kBlocks;
   }
 
   /// Ignore full publishers, continue as usual
   PublisherOptions& set_full_publisher_ignored() {
-    opts_.set<FullPublisherActionOption>(FullPublisherAction::kIgnored);
+    full_publisher_action_ = FullPublisherAction::kIgnored;
     return *this;
   }
 
   /// Configure the publisher to reject new messages when full.
   PublisherOptions& set_full_publisher_rejects() {
-    opts_.set<FullPublisherActionOption>(FullPublisherAction::kRejects);
+    full_publisher_action_ = FullPublisherAction::kRejects;
     return *this;
   }
 
   /// Configure the publisher to block the caller when full.
   PublisherOptions& set_full_publisher_blocks() {
-    opts_.set<FullPublisherActionOption>(FullPublisherAction::kBlocks);
+    full_publisher_action_ = FullPublisherAction::kBlocks;
     return *this;
   }
   //@}
 
  private:
-  friend Options pubsub_internal::MakeOptions(PublisherOptions);
-  Options opts_;
+  static auto constexpr kDefaultMaximumHoldTime = std::chrono::milliseconds(10);
+  static std::size_t constexpr kDefaultMaximumMessageCount = 100;
+  static std::size_t constexpr kDefaultMaximumMessageSize = 1024 * 1024L;
+  static std::size_t constexpr kDefaultMaximumPendingBytes =
+      (std::numeric_limits<std::size_t>::max)();
+  static std::size_t constexpr kDefaultMaximumPendingMessages =
+      (std::numeric_limits<std::size_t>::max)();
+
+  enum class FullPublisherAction { kIgnored, kRejects, kBlocks };
+
+  std::chrono::microseconds maximum_hold_time_ = kDefaultMaximumHoldTime;
+  std::size_t maximum_batch_message_count_ = kDefaultMaximumMessageCount;
+  std::size_t maximum_batch_bytes_ = kDefaultMaximumMessageSize;
+  bool message_ordering_ = false;
+  std::size_t maximum_pending_bytes_ = kDefaultMaximumPendingBytes;
+  std::size_t maximum_pending_messages_ = kDefaultMaximumPendingMessages;
+  FullPublisherAction full_publisher_action_ = FullPublisherAction::kBlocks;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
-
-namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-inline Options MakeOptions(pubsub::PublisherOptions o) {
-  return std::move(o.opts_);
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
 

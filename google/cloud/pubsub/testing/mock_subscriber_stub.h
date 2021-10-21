@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_testing {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
  * A class to mock pubsub_internal::SubscriberStub
@@ -61,7 +61,7 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
                google::pubsub::v1::ModifyPushConfigRequest const& request),
               (override));
 
-  MOCK_METHOD(std::shared_ptr<pubsub_internal::SubscriberStub::AsyncPullStream>,
+  MOCK_METHOD(std::unique_ptr<pubsub_internal::SubscriberStub::AsyncPullStream>,
               AsyncStreamingPull,
               (google::cloud::CompletionQueue&,
                std::unique_ptr<grpc::ClientContext>,
@@ -126,7 +126,7 @@ class MockAsyncPullStream
   MOCK_METHOD(future<Status>, Finish, (), (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_testing
 }  // namespace cloud
 }  // namespace google

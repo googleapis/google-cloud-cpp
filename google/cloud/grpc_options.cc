@@ -19,11 +19,12 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
+
 namespace internal {
 
 grpc::ChannelArguments MakeChannelArguments(Options const& opts) {
-  auto channel_arguments = opts.get<GrpcChannelArgumentsNativeOption>();
+  grpc::ChannelArguments channel_arguments;
   for (auto const& p : opts.get<GrpcChannelArgumentsOption>()) {
     channel_arguments.SetString(p.first, p.second);
   }
@@ -34,49 +35,12 @@ grpc::ChannelArguments MakeChannelArguments(Options const& opts) {
   return channel_arguments;
 }
 
-absl::optional<int> GetIntChannelArgument(grpc::ChannelArguments const& args,
-                                          std::string const& key) {
-  auto c_args = args.c_channel_args();
-  // Just do a linear search for the key; the data structure is not organized
-  // in any other useful way.
-  for (auto const* a = c_args.args; a != c_args.args + c_args.num_args; ++a) {
-    if (key != a->key) continue;
-    if (a->type != GRPC_ARG_INTEGER) return absl::nullopt;
-    return a->value.integer;
-  }
-  return absl::nullopt;
-}
-
-absl::optional<std::string> GetStringChannelArgument(
-    grpc::ChannelArguments const& args, std::string const& key) {
-  auto c_args = args.c_channel_args();
-  // Just do a linear search for the key; the data structure is not organized
-  // in any other useful way.
-  for (auto const* a = c_args.args; a != c_args.args + c_args.num_args; ++a) {
-    if (key != a->key) continue;
-    if (a->type != GRPC_ARG_STRING) return absl::nullopt;
-    return a->value.string;
-  }
-  return absl::nullopt;
-}
-
-BackgroundThreadsFactory MakeBackgroundThreadsFactory(Options const& opts) {
-  if (opts.has<GrpcCompletionQueueOption>()) {
-    auto const& cq = opts.get<GrpcCompletionQueueOption>();
-    return [cq] {
-      return absl::make_unique<CustomerSuppliedBackgroundThreads>(cq);
-    };
-  }
-  if (opts.has<GrpcBackgroundThreadsFactoryOption>()) {
-    return opts.get<GrpcBackgroundThreadsFactoryOption>();
-  }
-  auto const s = opts.get<GrpcBackgroundThreadPoolSizeOption>();
-  return [s] {
-    return absl::make_unique<AutomaticallyCreatedBackgroundThreads>(s);
-  };
+std::unique_ptr<BackgroundThreads> DefaultBackgroundThreadsFactory() {
+  return absl::make_unique<AutomaticallyCreatedBackgroundThreads>();
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

@@ -19,10 +19,8 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
-
-using ::testing::ContainerEq;
 
 using FilterIntegrationTest =
     ::google::cloud::bigtable::testing::TableIntegrationTest;
@@ -328,7 +326,7 @@ TEST_F(FilterIntegrationTest, CellsRowLimit) {
                                      {RowKeyType(prefix + "/many-columns"), 3},
                                      {RowKeyType(prefix + "/complex"), 3}};
 
-  EXPECT_THAT(expected, ContainerEq(actual));
+  EXPECT_THAT(expected, ::testing::ContainerEq(actual));
 }
 
 TEST_F(FilterIntegrationTest, CellsRowOffset) {
@@ -349,7 +347,7 @@ TEST_F(FilterIntegrationTest, CellsRowOffset) {
                                      {RowKeyType(prefix + "/many-columns"), 2},
                                      {RowKeyType(prefix + "/complex"), 78}};
 
-  EXPECT_THAT(expected, ContainerEq(actual));
+  EXPECT_THAT(expected, ::testing::ContainerEq(actual));
 }
 
 TEST_F(FilterIntegrationTest, RowSample) {
@@ -604,7 +602,7 @@ TEST_F(FilterIntegrationTest, InterleaveFromRange) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

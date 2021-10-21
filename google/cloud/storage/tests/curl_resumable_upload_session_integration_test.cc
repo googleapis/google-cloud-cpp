@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
@@ -58,7 +58,7 @@ TEST_F(CurlResumableUploadIntegrationTest, Simple) {
 
   std::string const contents = LoremIpsum();
   StatusOr<ResumableUploadResponse> response =
-      (*session)->UploadFinalChunk({{contents}}, contents.size(), HashValues{});
+      (*session)->UploadFinalChunk({{contents}}, contents.size());
 
   ASSERT_STATUS_OK(response);
   EXPECT_TRUE(response->payload.has_value());
@@ -91,8 +91,7 @@ TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
   response = (*session)->ResetSession();
   ASSERT_STATUS_OK(response);
 
-  response = (*session)->UploadFinalChunk({{contents}}, 2 * contents.size(),
-                                          HashValues{});
+  response = (*session)->UploadFinalChunk({{contents}}, 2 * contents.size());
   ASSERT_STATUS_OK(response);
 
   EXPECT_TRUE(response->payload.has_value());
@@ -124,16 +123,14 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
   ASSERT_STATUS_OK(response.status());
 
   StatusOr<std::unique_ptr<ResumableUploadSession>> session =
-      client->FullyRestoreResumableSession(request,
-                                           (*old_session)->session_id());
+      client->RestoreResumableSession((*old_session)->session_id());
   EXPECT_EQ(contents.size(), (*session)->next_expected_byte());
   old_session->reset();
 
   response = (*session)->UploadChunk({{contents}});
   ASSERT_STATUS_OK(response);
 
-  response = (*session)->UploadFinalChunk({{contents}}, 3 * contents.size(),
-                                          HashValues{});
+  response = (*session)->UploadFinalChunk({{contents}}, 3 * contents.size());
   ASSERT_STATUS_OK(response);
 
   EXPECT_TRUE(response->payload.has_value());
@@ -172,8 +169,7 @@ TEST_F(CurlResumableUploadIntegrationTest, EmptyTrailer) {
   // upload quantum. In this case the stream is terminated by sending an empty
   // chunk at the end, with the size of the previous chunks as an indication
   // of "done".
-  response =
-      (*session)->UploadFinalChunk({}, 2 * contents.size(), HashValues{});
+  response = (*session)->UploadFinalChunk({}, 2 * contents.size());
   ASSERT_STATUS_OK(response.status());
 
   EXPECT_TRUE(response->payload.has_value());
@@ -198,7 +194,7 @@ TEST_F(CurlResumableUploadIntegrationTest, Empty) {
 
   ASSERT_STATUS_OK(session);
 
-  auto response = (*session)->UploadFinalChunk({}, 0, HashValues{});
+  auto response = (*session)->UploadFinalChunk({}, 0);
   ASSERT_STATUS_OK(response.status());
 
   EXPECT_TRUE(response->payload.has_value());
@@ -254,8 +250,7 @@ TEST_F(CurlResumableUploadIntegrationTest, ResetWithParameters) {
   response = (*session)->ResetSession();
   ASSERT_STATUS_OK(response);
 
-  response = (*session)->UploadFinalChunk({{contents}}, 2 * contents.size(),
-                                          HashValues{});
+  response = (*session)->UploadFinalChunk({{contents}}, 2 * contents.size());
   ASSERT_STATUS_OK(response);
   ASSERT_TRUE(response->payload.has_value());
   auto metadata = *response->payload;
@@ -277,7 +272,7 @@ TEST_F(CurlResumableUploadIntegrationTest, ResetWithParameters) {
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

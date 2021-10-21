@@ -13,159 +13,180 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/hash_validator.h"
-#include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/internal/hash_validator_impl.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/status.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::testing::IsEmpty;
+using ::testing::HasSubstr;
 
 // These values were obtained using:
 // echo -n '' > foo.txt && gsutil hash foo.txt
-auto constexpr kEmptyStringCrc32cChecksum = "AAAAAA==";
-auto constexpr kEmptyStringMD5Hash = "1B2M2Y8AsgTpgAmY7PhCfg==";
+const std::string kEmptyStringCrc32cChecksum = "AAAAAA==";
+const std::string kEmptyStringMD5Hash = "1B2M2Y8AsgTpgAmY7PhCfg==";
 
 // /bin/echo -n 'The quick brown fox jumps over the lazy dog' > foo.txt
 // gsutil hash foo.txt
-auto constexpr kQuickFoxCrc32cChecksum = "ImIEBA==";
-auto constexpr kQuickFoxMD5Hash = "nhB9nTcrtoJr2B01QqQZ1g==";
+const std::string kQuickFoxCrc32cChecksum = "ImIEBA==";
+const std::string kQuickFoxMD5Hash = "nhB9nTcrtoJr2B01QqQZ1g==";
 
-HashValues HashEmpty(std::unique_ptr<HashFunction> function) {
-  return std::move(*function).Finish();
-}
-
-HashValues HashQuick(std::unique_ptr<HashFunction> function) {
-  auto const text = std::string{"The quick brown fox jumps over the lazy dog"};
-  function->Update(text.data(), text.size());
-  return std::move(*function).Finish();
+void UpdateValidator(HashValidator& validator, std::string const& buffer) {
+  validator.Update(buffer.data(), buffer.size());
 }
 
 TEST(NullHashValidatorTest, Simple) {
   NullHashValidator validator;
-  validator.ProcessHashValues(
-      HashValues{/*.crc32c=*/{}, /*.md5=*/"<placeholder-for-test>"});
-  auto result =
-      std::move(validator).Finish(HashQuick(CreateNullHashFunction()));
-  EXPECT_THAT(result.received.crc32c, IsEmpty());
-  EXPECT_THAT(result.received.md5, IsEmpty());
+  validator.ProcessHeader("x-goog-hash", "md5=<placeholder-for-test>");
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
+  auto result = std::move(validator).Finish();
+  EXPECT_TRUE(result.computed.empty());
+  EXPECT_TRUE(result.received.empty());
 }
 
 TEST(MD5HashValidator, Empty) {
   MD5HashValidator validator;
-  validator.ProcessHashValues(
-      HashValues{/*.crc32c=*/{}, /*.md5=*/kEmptyStringMD5Hash});
-  auto result = std::move(validator).Finish(
-      HashEmpty(absl::make_unique<MD5HashFunction>()));
-  EXPECT_THAT(result.received.crc32c, IsEmpty());
-  EXPECT_THAT(result.received.md5, kEmptyStringMD5Hash);
-  EXPECT_EQ(result.computed.crc32c, result.received.crc32c);
-  EXPECT_EQ(result.computed.md5, result.received.md5);
+  validator.ProcessHeader("x-goog-hash", "md5=" + kEmptyStringMD5Hash);
+  auto result = std::move(validator).Finish();
+  EXPECT_EQ(result.computed, result.received);
+  EXPECT_EQ(kEmptyStringMD5Hash, result.computed);
   EXPECT_FALSE(result.is_mismatch);
 }
 
 TEST(MD5HashValidator, Simple) {
   MD5HashValidator validator;
-  validator.ProcessHashValues(
-      HashValues{/*.crc32c=*/{}, /*.md5=*/"<invalid-value-for-test>"});
-  auto result = std::move(validator).Finish(
-      HashQuick(absl::make_unique<MD5HashFunction>()));
-  EXPECT_THAT(result.received.crc32c, IsEmpty());
-  EXPECT_THAT(result.received.md5, "<invalid-value-for-test>");
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
+  validator.ProcessHeader("x-goog-hash", "md5=<invalid-value-for-test>");
+  auto result = std::move(validator).Finish();
+  EXPECT_EQ("<invalid-value-for-test>", result.received);
+  EXPECT_EQ(kQuickFoxMD5Hash, result.computed);
   EXPECT_TRUE(result.is_mismatch);
 }
 
 TEST(MD5HashValidator, MultipleHashesMd5AtEnd) {
   MD5HashValidator validator;
-  validator.ProcessHashValues(HashValues{/*.crc32c=*/"<should-be-ignored>",
-                                         /*.md5=*/"<invalid-value-for-test>"});
-  auto result = std::move(validator).Finish(
-      HashQuick(absl::make_unique<MD5HashFunction>()));
-  EXPECT_THAT(result.received.crc32c, IsEmpty());
-  EXPECT_THAT(result.received.md5, "<invalid-value-for-test>");
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
+  validator.ProcessHeader(
+      "x-goog-hash", "crc32c=<should-be-ignored>,md5=<invalid-value-for-test>");
+  auto result = std::move(validator).Finish();
+  EXPECT_EQ("<invalid-value-for-test>", result.received);
+  EXPECT_EQ(kQuickFoxMD5Hash, result.computed);
+  EXPECT_TRUE(result.is_mismatch);
+}
+
+TEST(MD5HashValidator, MultipleHashes) {
+  MD5HashValidator validator;
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
+  validator.ProcessHeader(
+      "x-goog-hash", "md5=<invalid-value-for-test>,crc32c=<should-be-ignored>");
+  auto result = std::move(validator).Finish();
+  EXPECT_EQ("<invalid-value-for-test>", result.received);
+  EXPECT_EQ(kQuickFoxMD5Hash, result.computed);
   EXPECT_TRUE(result.is_mismatch);
 }
 
 TEST(Crc32cHashValidator, Empty) {
   Crc32cHashValidator validator;
-  validator.ProcessHashValues(HashValues{/*.crc32c=*/kEmptyStringCrc32cChecksum,
-                                         /*.md5=*/"<invalid-value-for-test>"});
-  validator.ProcessHashValues(
-      HashValues{/*.crc32c=*/{},
-                 /*.md5=*/"<invalid-should-be-ignored>"});
-  auto result = std::move(validator).Finish(
-      HashEmpty(absl::make_unique<Crc32cHashFunction>()));
-  EXPECT_THAT(result.received.crc32c, kEmptyStringCrc32cChecksum);
-  EXPECT_THAT(result.received.md5, IsEmpty());
+  validator.ProcessHeader("x-goog-hash",
+                          "crc32c=" + kEmptyStringCrc32cChecksum);
+  validator.ProcessHeader("x-goog-hash", "md5=<invalid-should-be-ignored>");
+  auto result = std::move(validator).Finish();
+  EXPECT_EQ(result.computed, result.received);
+  EXPECT_EQ(kEmptyStringCrc32cChecksum, result.computed);
   EXPECT_FALSE(result.is_mismatch);
 }
 
 TEST(Crc32cHashValidator, Simple) {
   Crc32cHashValidator validator;
-  validator.ProcessHashValues(HashValues{/*.crc32c=*/"<invalid-value-for-test>",
-                                         /*.md5=*/{}});
-  auto result = std::move(validator).Finish(
-      HashQuick(absl::make_unique<Crc32cHashFunction>()));
-  EXPECT_THAT(result.received.crc32c, "<invalid-value-for-test>");
-  EXPECT_THAT(result.received.md5, IsEmpty());
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
+  validator.ProcessHeader("x-goog-hash", "crc32c=<invalid-value-for-test>");
+  auto result = std::move(validator).Finish();
+  EXPECT_EQ("<invalid-value-for-test>", result.received);
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
+  EXPECT_TRUE(result.is_mismatch);
+}
+
+TEST(Crc32cHashValidator, MultipleHashesCrc32cAtEnd) {
+  Crc32cHashValidator validator;
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
+  validator.ProcessHeader("x-goog-hash",
+                          "md5=<ignored>,crc32c=<invalid-value-for-test>");
+  auto result = std::move(validator).Finish();
+  EXPECT_EQ("<invalid-value-for-test>", result.received);
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
   EXPECT_TRUE(result.is_mismatch);
 }
 
 TEST(Crc32cHashValidator, MultipleHashes) {
   Crc32cHashValidator validator;
-  validator.ProcessHashValues(HashValues{/*.crc32c=*/"<invalid-value-for-test>",
-                                         /*.md5=*/"<ignored>"});
-  auto result = std::move(validator).Finish(
-      HashQuick(absl::make_unique<Crc32cHashFunction>()));
-  EXPECT_THAT(result.received.crc32c, "<invalid-value-for-test>");
-  EXPECT_THAT(result.received.md5, IsEmpty());
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
+  validator.ProcessHeader("x-goog-hash",
+                          "crc32c=<invalid-value-for-test>,md5=<ignored>");
+  auto result = std::move(validator).Finish();
+  EXPECT_EQ("<invalid-value-for-test>", result.received);
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
   EXPECT_TRUE(result.is_mismatch);
 }
 
 TEST(CompositeHashValidator, Empty) {
   CompositeValidator validator(absl::make_unique<Crc32cHashValidator>(),
                                absl::make_unique<MD5HashValidator>());
-  validator.ProcessHashValues(HashValues{/*.crc32c=*/kEmptyStringCrc32cChecksum,
-                                         /*.md5=*/{}});
-  validator.ProcessHashValues(HashValues{/*.crc32c=*/{},
-                                         /*.md5=*/kEmptyStringMD5Hash});
-  auto result = std::move(validator).Finish(
-      HashEmpty(absl::make_unique<CompositeFunction>(
-          absl::make_unique<Crc32cHashFunction>(),
-          absl::make_unique<MD5HashFunction>())));
-  EXPECT_THAT(result.received.crc32c, kEmptyStringCrc32cChecksum);
-  EXPECT_THAT(result.received.md5, kEmptyStringMD5Hash);
+  validator.ProcessHeader("x-goog-hash",
+                          "crc32c=" + kEmptyStringCrc32cChecksum);
+  validator.ProcessHeader("x-goog-hash", "md5=" + kEmptyStringMD5Hash);
+  auto result = std::move(validator).Finish();
+  EXPECT_EQ(result.computed, result.received);
+  EXPECT_EQ(
+      "crc32c=" + kEmptyStringCrc32cChecksum + ",md5=" + kEmptyStringMD5Hash,
+      result.computed);
   EXPECT_FALSE(result.is_mismatch);
 }
 
 TEST(CompositeHashValidator, Simple) {
   CompositeValidator validator(absl::make_unique<Crc32cHashValidator>(),
                                absl::make_unique<MD5HashValidator>());
-  validator.ProcessHashValues(
-      HashValues{/*.crc32c=*/"<invalid-crc32c-for-test>",
-                 /*.md5=*/{}});
-  validator.ProcessHashValues(HashValues{/*.crc32c=*/{},
-                                         /*.md5=*/"<invalid-md5-for-test>"});
-  auto result = std::move(validator).Finish(
-      HashQuick(absl::make_unique<CompositeFunction>(
-          absl::make_unique<Crc32cHashFunction>(),
-          absl::make_unique<MD5HashFunction>())));
-  EXPECT_THAT(result.received.crc32c, "<invalid-crc32c-for-test>");
-  EXPECT_THAT(result.received.md5, "<invalid-md5-for-test>");
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
+  validator.ProcessHeader("x-goog-hash", "crc32c=<invalid-crc32c-for-test>");
+  validator.ProcessHeader("x-goog-hash", "md5=<invalid-md5-for-test>");
+  auto result = std::move(validator).Finish();
+  EXPECT_EQ("crc32c=<invalid-crc32c-for-test>,md5=<invalid-md5-for-test>",
+            result.received);
+  EXPECT_EQ("crc32c=" + kQuickFoxCrc32cChecksum + ",md5=" + kQuickFoxMD5Hash,
+            result.computed);
   EXPECT_TRUE(result.is_mismatch);
 }
 
 TEST(CompositeHashValidator, ProcessMetadata) {
   CompositeValidator validator(absl::make_unique<Crc32cHashValidator>(),
                                absl::make_unique<MD5HashValidator>());
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
   auto object_metadata = internal::ObjectMetadataParser::FromJson(
                              nlohmann::json{
                                  {"crc32c", kQuickFoxCrc32cChecksum},
@@ -173,127 +194,196 @@ TEST(CompositeHashValidator, ProcessMetadata) {
                              })
                              .value();
   validator.ProcessMetadata(object_metadata);
-  auto result = std::move(validator).Finish(
-      HashQuick(absl::make_unique<CompositeFunction>(
-          absl::make_unique<Crc32cHashFunction>(),
-          absl::make_unique<MD5HashFunction>())));
-  EXPECT_THAT(result.received.crc32c, kQuickFoxCrc32cChecksum);
-  EXPECT_THAT(result.received.md5, kQuickFoxMD5Hash);
+  auto result = std::move(validator).Finish();
+  EXPECT_EQ("crc32c=" + kQuickFoxCrc32cChecksum + ",md5=" + kQuickFoxMD5Hash,
+            result.computed);
+  EXPECT_EQ("crc32c=" + kQuickFoxCrc32cChecksum + ",md5=" + kQuickFoxMD5Hash,
+            result.received);
   EXPECT_FALSE(result.is_mismatch);
 }
 
 TEST(CompositeHashValidator, Missing) {
   CompositeValidator validator(absl::make_unique<Crc32cHashValidator>(),
                                absl::make_unique<MD5HashValidator>());
-  validator.ProcessHashValues(HashValues{/*.crc32c=*/kQuickFoxCrc32cChecksum,
-                                         /*.md5=*/{}});
-  auto result = std::move(validator).Finish(
-      HashQuick(absl::make_unique<CompositeFunction>(
-          absl::make_unique<Crc32cHashFunction>(),
-          absl::make_unique<MD5HashFunction>())));
-  EXPECT_THAT(result.received.crc32c, kQuickFoxCrc32cChecksum);
-  EXPECT_THAT(result.received.md5, IsEmpty());
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
+  validator.ProcessHeader("x-goog-hash", "crc32c=" + kQuickFoxCrc32cChecksum);
+  auto result = std::move(validator).Finish();
+  EXPECT_EQ("crc32c=" + kQuickFoxCrc32cChecksum + ",md5=", result.received);
+  EXPECT_EQ("crc32c=" + kQuickFoxCrc32cChecksum + ",md5=" + kQuickFoxMD5Hash,
+            result.computed);
   EXPECT_FALSE(result.is_mismatch);
 }
 
-TEST(HashValidatorImplTest, CreateHashFunctionRead) {
-  struct Test {
-    std::string crc32c_expected;
-    std::string md5_expected;
-    DisableCrc32cChecksum crc32_disabled;
-    DisableMD5Hash md5_disabled;
-  } cases[]{
-      {"", "", DisableCrc32cChecksum(true), DisableMD5Hash(true)},
-      {"", kQuickFoxMD5Hash, DisableCrc32cChecksum(true),
-       DisableMD5Hash(false)},
-      {kQuickFoxCrc32cChecksum, "", DisableCrc32cChecksum(false),
-       DisableMD5Hash(true)},
-      {kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash, DisableCrc32cChecksum(false),
-       DisableMD5Hash(false)},
-  };
-
-  for (auto const& test : cases) {
-    auto request =
-        ReadObjectRangeRequest("test-bucket", "test-object")
-            .set_multiple_options(test.crc32_disabled, test.md5_disabled);
-    auto validator = CreateHashValidator(request);
-    auto actual =
-        std::move(*validator).Finish(HashQuick(CreateHashFunction(request)));
-    EXPECT_EQ(test.crc32c_expected, actual.computed.crc32c);
-    EXPECT_EQ(test.md5_expected, actual.computed.md5);
-  }
+TEST(CreateHashValidator, ReadNull) {
+  auto validator =
+      CreateHashValidator(ReadObjectRangeRequest("test-bucket", "test-object")
+                              .set_multiple_options(DisableCrc32cChecksum(true),
+                                                    DisableMD5Hash(true)));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_TRUE(result.computed.empty());
 }
 
-TEST(HashValidatorImplTest, CreateHashFunctionUpload) {
-  struct Test {
-    std::string crc32c_expected;
-    std::string md5_expected;
-    DisableCrc32cChecksum crc32_disabled;
-    Crc32cChecksumValue crc32_value;
-    DisableMD5Hash md5_disabled;
-    MD5HashValue md5_value;
-  } cases[]{
-      {"", "", DisableCrc32cChecksum(true), Crc32cChecksumValue(),
-       DisableMD5Hash(true), MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(true), Crc32cChecksumValue(),
-       DisableMD5Hash(true), MD5HashValue(kEmptyStringMD5Hash)},
-      {"", kQuickFoxMD5Hash, DisableCrc32cChecksum(true), Crc32cChecksumValue(),
-       DisableMD5Hash(false), MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(true), Crc32cChecksumValue(),
-       DisableMD5Hash(false), MD5HashValue(kEmptyStringMD5Hash)},
-      {"", "", DisableCrc32cChecksum(true),
-       Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(true),
-       MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(true),
-       Crc32cChecksumValue(kEmptyStringMD5Hash), DisableMD5Hash(true),
-       MD5HashValue(kEmptyStringMD5Hash)},
-      {"", kQuickFoxMD5Hash, DisableCrc32cChecksum(true),
-       Crc32cChecksumValue(kEmptyStringMD5Hash), DisableMD5Hash(false),
-       MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(true),
-       Crc32cChecksumValue(kEmptyStringMD5Hash), DisableMD5Hash(false),
-       MD5HashValue(kEmptyStringMD5Hash)},
-
-      {kQuickFoxCrc32cChecksum, "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(), DisableMD5Hash(true), MD5HashValue()},
-      {kQuickFoxCrc32cChecksum, "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(), DisableMD5Hash(true),
-       MD5HashValue(kEmptyStringMD5Hash)},
-      {kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash, DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(), DisableMD5Hash(false), MD5HashValue()},
-      {kQuickFoxCrc32cChecksum, "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(), DisableMD5Hash(false),
-       MD5HashValue(kEmptyStringMD5Hash)},
-      {"", "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(true),
-       MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(true),
-       MD5HashValue(kEmptyStringMD5Hash)},
-      {"", kQuickFoxMD5Hash, DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(false),
-       MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(false),
-       MD5HashValue(kEmptyStringMD5Hash)},
-  };
-
-  for (auto const& test : cases) {
-    auto request =
-        ResumableUploadRequest("test-bucket", "test-object")
-            .set_multiple_options(test.crc32_disabled, test.crc32_value,
-                                  test.md5_disabled, test.md5_value);
-    auto validator = CreateHashValidator(request);
-    auto actual =
-        std::move(*validator).Finish(HashQuick(CreateHashFunction(request)));
-    EXPECT_EQ(test.crc32c_expected, actual.computed.crc32c);
-    EXPECT_EQ(test.md5_expected, actual.computed.md5);
-  }
+TEST(CreateHashValidator, ReadOnlyCrc32c) {
+  auto validator =
+      CreateHashValidator(ReadObjectRangeRequest("test-bucket", "test-object")
+                              .set_multiple_options(DisableMD5Hash(true)));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
 }
 
+TEST(CreateHashValidator, ReadDisableCrc32cTrue) {
+  auto validator = CreateHashValidator(
+      ReadObjectRangeRequest("test-bucket", "test-object")
+          .set_multiple_options(DisableCrc32cChecksum(true)));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_TRUE(result.computed.empty());
+}
+
+TEST(CreateHashValidator, ReadWithoutConstructors) {
+  auto validator =
+      CreateHashValidator(ReadObjectRangeRequest("test-bucket", "test-object"));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
+}
+
+TEST(CreateHashValidator, ReadDisableCrc32cFalse) {
+  auto validator = CreateHashValidator(
+      ReadObjectRangeRequest("test-bucket", "test-object")
+          .set_multiple_options(DisableCrc32cChecksum(false)));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
+}
+
+TEST(CreateHashValidator, ReadDisableMD5False) {
+  auto validator =
+      CreateHashValidator(ReadObjectRangeRequest("test-bucket", "test-object")
+                              .set_multiple_options(DisableMD5Hash(false)));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxMD5Hash));
+  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxCrc32cChecksum));
+}
+
+TEST(CreateHashValidator, ReadDisableCrc32cDefaultConstructor) {
+  auto validator =
+      CreateHashValidator(ReadObjectRangeRequest("test-bucket", "test-object")
+                              .set_multiple_options(DisableCrc32cChecksum()));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
+}
+
+TEST(CreateHashValidator, ReadDisableMD5DefaultConstructor) {
+  auto validator =
+      CreateHashValidator(ReadObjectRangeRequest("test-bucket", "test-object")
+                              .set_multiple_options(DisableMD5Hash()));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
+}
+
+TEST(CreateHashValidator, WriteNull) {
+  auto validator =
+      CreateHashValidator(ResumableUploadRequest("test-bucket", "test-object")
+                              .set_multiple_options(DisableCrc32cChecksum(true),
+                                                    DisableMD5Hash(true)));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_TRUE(result.computed.empty());
+}
+
+TEST(CreateHashValidator, WriteOnlyCrc32c) {
+  auto validator =
+      CreateHashValidator(ResumableUploadRequest("test-bucket", "test-object")
+                              .set_multiple_options(DisableMD5Hash(true)));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
+}
+
+TEST(CreateHashValidator, WriteDisableCrc32cTrue) {
+  auto validator = CreateHashValidator(
+      ResumableUploadRequest("test-bucket", "test-object")
+          .set_multiple_options(DisableCrc32cChecksum(true)));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_TRUE(result.computed.empty());
+}
+
+TEST(CreateHashValidator, WriteWithoutConstrutors) {
+  auto validator =
+      CreateHashValidator(ResumableUploadRequest("test-bucket", "test-object"));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
+}
+
+TEST(CreateHashValidator, WriteBothFalse) {
+  auto validator = CreateHashValidator(
+      ResumableUploadRequest("test-bucket", "test-object")
+          .set_multiple_options(DisableCrc32cChecksum(false),
+                                DisableMD5Hash(false)));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxMD5Hash));
+  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxCrc32cChecksum));
+}
+
+TEST(CreateHashValidator, WriteBothDefaultConstructor) {
+  auto validator = CreateHashValidator(
+      ResumableUploadRequest("test-bucket", "test-object")
+          .set_multiple_options(DisableCrc32cChecksum(), DisableMD5Hash()));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
+}
+
+TEST(CreateHashValidator, WriteDisableCrc32False) {
+  auto validator = CreateHashValidator(
+      ResumableUploadRequest("test-bucket", "test-object")
+          .set_multiple_options(DisableCrc32cChecksum(false)));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
+}
+
+TEST(CreateHashValidator, WriteDisableMD5False) {
+  auto validator =
+      CreateHashValidator(ResumableUploadRequest("test-bucket", "test-object")
+                              .set_multiple_options(DisableMD5Hash(false)));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxMD5Hash));
+  EXPECT_THAT(result.computed, HasSubstr(kQuickFoxCrc32cChecksum));
+}
+
+TEST(CreateHashValidator, WriteDisableCrc32cDefaultConstructor) {
+  auto validator =
+      CreateHashValidator(ResumableUploadRequest("test-bucket", "test-object")
+                              .set_multiple_options(DisableCrc32cChecksum()));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
+}
+
+TEST(CreateHashValidator, WriteDisableMD5DefaultConstructor) {
+  auto validator =
+      CreateHashValidator(ResumableUploadRequest("test-bucket", "test-object")
+                              .set_multiple_options(DisableMD5Hash()));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_EQ(kQuickFoxCrc32cChecksum, result.computed);
+}
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

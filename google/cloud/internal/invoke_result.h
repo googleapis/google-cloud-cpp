@@ -20,7 +20,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 /**
  * A helper to detect if expressions are valid and use SFINAE.
@@ -208,7 +208,7 @@ template <typename F, typename... ArgTypes>
 struct is_invocable : public is_invocable_impl<void, F, ArgTypes...> {};
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

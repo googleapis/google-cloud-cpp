@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 class BulkMutatorState {
  public:
@@ -53,6 +53,16 @@ class BulkMutatorState {
 
   /// Handle the result of a `Finish()` operation on the MutateRows() RPC.
   void OnFinish(google::cloud::Status finish_status);
+
+  /**
+   * Return the permanently failed mutations.
+   *
+   * This will return all the mutations which we've learned are definite
+   * failures since since the last call to this member function.
+   *
+   * Whatever is returned, will not be returned by `OnRetryDone()`.
+   */
+  std::vector<FailedMutation> ConsumeAccumulatedFailures();
 
   /// Terminate the retry loop and return all the failures.
   std::vector<FailedMutation> OnRetryDone() &&;
@@ -124,7 +134,7 @@ class BulkMutator {
 };
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

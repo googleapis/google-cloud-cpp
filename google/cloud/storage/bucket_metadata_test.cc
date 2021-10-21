@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::testing::HasSubstr;
@@ -151,7 +151,6 @@ BucketMetadata CreateBucketMetadataForTest() {
           "isLocked": false,
           "retentionPeriod": 86400
       },
-      "rpo": "DEFAULT",
       "selfLink": "https://storage.googleapis.com/storage/v1/b/test-bucket",
       "storageClass": "STANDARD",
       "timeCreated": "2018-05-19T19:31:14Z",
@@ -165,18 +164,6 @@ BucketMetadata CreateBucketMetadataForTest() {
       }
 })""";
   return internal::BucketMetadataParser::FromString(text).value();
-}
-
-TEST(BucketMetadataTest, NormalizePap) {
-  EXPECT_EQ(internal::NormalizePap(absl::nullopt), absl::nullopt);
-  EXPECT_EQ(internal::NormalizePap(PublicAccessPreventionInherited()),
-            PublicAccessPreventionInherited());
-  EXPECT_EQ(internal::NormalizePap("unspecified"),
-            PublicAccessPreventionInherited());
-  EXPECT_EQ(internal::NormalizePap(PublicAccessPreventionEnforced()),
-            PublicAccessPreventionEnforced());
-  EXPECT_EQ(internal::NormalizePap(std::string{"something"}),
-            std::string{"something"});
 }
 
 /// @test Verify that we parse JSON objects into BucketMetadata objects.
@@ -270,9 +257,6 @@ TEST(BucketMetadataTest, Parse) {
             actual.retention_policy().retention_period);
   EXPECT_FALSE(actual.retention_policy().is_locked);
 
-  // rpo
-  EXPECT_EQ("DEFAULT", actual.rpo());
-
   EXPECT_EQ("https://storage.googleapis.com/storage/v1/b/test-bucket",
             actual.self_link());
   EXPECT_EQ(storage_class::Standard(), actual.storage_class());
@@ -353,9 +337,6 @@ TEST(BucketMetadataTest, IOStream) {
       actual,
       HasSubstr("retention_policy.effective_time=2018-10-01T12:34:56Z"));
   EXPECT_THAT(actual, HasSubstr("retention_policy.is_locked=false"));
-
-  // rpo()
-  EXPECT_THAT(actual, HasSubstr("rpo=DEFAULT"));
 
   // versioning()
   EXPECT_THAT(actual, HasSubstr("versioning.enabled=true"));
@@ -466,10 +447,6 @@ TEST(BucketMetadataTest, ToJsonString) {
       {"retentionPeriod", 86400},
   };
   EXPECT_EQ(expected_retention_policy, actual["retentionPolicy"]);
-
-  // rpo()
-  EXPECT_TRUE(actual.contains("rpo"));
-  EXPECT_EQ("DEFAULT", actual.value("rpo", ""));
 
   // storage_class()
   ASSERT_EQ("STANDARD", actual.value("storageClass", ""));
@@ -634,8 +611,7 @@ TEST(BucketMetadataTest, SetIamConfigurationUBLA) {
   auto copy = expected;
   BucketIamConfiguration new_configuration;
   new_configuration.uniform_bucket_level_access = UniformBucketLevelAccess{
-      true,
-      google::cloud::internal::ParseRfc3339("2019-02-03T04:05:06Z").value()};
+      true, google::cloud::internal::ParseRfc3339("2019-02-03T04:05:06Z")};
   copy.set_iam_configuration(new_configuration);
   ASSERT_TRUE(copy.has_iam_configuration());
   EXPECT_EQ(new_configuration, copy.iam_configuration());
@@ -749,7 +725,7 @@ TEST(BucketMetadataTest, SetRetentionPolicy) {
   auto expected = CreateBucketMetadataForTest();
   BucketRetentionPolicy new_retention_policy{
       std::chrono::seconds(3600),
-      google::cloud::internal::ParseRfc3339("2019-11-01T00:00:00Z").value(),
+      google::cloud::internal::ParseRfc3339("2019-11-01T00:00:00Z"),
       true,
   };
   auto copy = expected;
@@ -771,17 +747,6 @@ TEST(BucketMetadataTest, ResetRetentionPolicy) {
   std::ostringstream os;
   os << copy;
   EXPECT_THAT(os.str(), Not(HasSubstr("retention_policy.")));
-}
-
-/// @test Verify we can change the retention policy in BucketMetadata.
-TEST(BucketMetadataTest, SetRPO) {
-  auto expected = CreateBucketMetadataForTest();
-  auto copy = expected;
-  copy.set_rpo("ASYNC_TURBO");
-  EXPECT_NE(expected, copy);
-  std::ostringstream os;
-  os << copy;
-  EXPECT_THAT(os.str(), HasSubstr("rpo=ASYNC_TURBO"));
 }
 
 /// @test Verify we can clear the versioning field in BucketMetadata.
@@ -1150,8 +1115,7 @@ TEST(BucketMetadataPatchBuilder, SetRetentionPolicy) {
   BucketMetadataPatchBuilder builder;
   builder.SetRetentionPolicy(BucketRetentionPolicy{
       std::chrono::seconds(60),
-      google::cloud::internal::ParseRfc3339("2018-01-01T00:00:00Z").value(),
-      false});
+      google::cloud::internal::ParseRfc3339("2018-01-01T00:00:00Z"), false});
 
   auto actual_patch = builder.BuildPatch();
   auto actual_json = nlohmann::json::parse(actual_patch);
@@ -1168,27 +1132,6 @@ TEST(BucketMetadataPatchBuilder, ResetRetentionPolicy) {
   auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("retentionPolicy")) << json;
   ASSERT_TRUE(json["retentionPolicy"].is_null()) << json;
-}
-
-TEST(BucketMetadataPatchBuilder, SetRpo) {
-  BucketMetadataPatchBuilder builder;
-  builder.SetRpo("ASYNC_TURBO");
-
-  auto actual = builder.BuildPatch();
-  auto json = nlohmann::json::parse(actual);
-  ASSERT_TRUE(json.contains("rpo")) << json;
-  ASSERT_TRUE(json["rpo"].is_string()) << json;
-  EXPECT_EQ("ASYNC_TURBO", json.value("rpo", "")) << json;
-}
-
-TEST(BucketMetadataPatchBuilder, ResetRpo) {
-  BucketMetadataPatchBuilder builder;
-  builder.ResetRpo();
-
-  auto actual = builder.BuildPatch();
-  auto json = nlohmann::json::parse(actual);
-  ASSERT_TRUE(json.contains("rpo")) << json;
-  ASSERT_TRUE(json["rpo"].is_null()) << json;
 }
 
 TEST(BucketMetadataPatchBuilder, SetStorageClass) {
@@ -1256,7 +1199,7 @@ TEST(BucketMetadataPatchBuilder, ResetWebsite) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

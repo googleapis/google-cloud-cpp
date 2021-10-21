@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
  * Define the interface for the gRPC wrapper.
@@ -71,12 +71,12 @@ class SubscriberStub {
       grpc::ClientContext& client_context,
       google::pubsub::v1::ModifyPushConfigRequest const& request) = 0;
 
-  using AsyncPullStream = ::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  using AsyncPullStream = google::cloud::internal::AsyncStreamingReadWriteRpc<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>;
 
   /// Start a bi-directional stream to read messages and send ack/nacks.
-  virtual std::shared_ptr<AsyncPullStream> AsyncStreamingPull(
+  virtual std::unique_ptr<AsyncPullStream> AsyncStreamingPull(
       google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
       google::pubsub::v1::StreamingPullRequest const& request) = 0;
 
@@ -123,20 +123,16 @@ class SubscriberStub {
       google::pubsub::v1::SeekRequest const& request) = 0;
 };
 
-/// Create a SubscriberStub using a pre-configured channel.
-std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
-    std::shared_ptr<grpc::Channel> channel);
-
 /**
- * Creates a SubscriberStub configured with @p opts and @p channel_id.
+ * Creates a SubscriberStub configured with @p options and @p channel_id.
  *
  * @p channel_id should be unique among all stubs in the same Connection pool,
  * to ensure they use different underlying connections.
  */
-std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(Options const& opts,
-                                                            int channel_id);
+std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
+    pubsub::ConnectionOptions options, int channel_id);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

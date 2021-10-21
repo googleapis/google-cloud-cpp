@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/subscriber_connection.h"
-#include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/testing/fake_streaming_pull.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
@@ -27,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ::google::cloud::pubsub_testing::FakeAsyncStreamingPull;
@@ -37,22 +36,6 @@ using ::testing::AtLeast;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::StartsWith;
-
-std::shared_ptr<SubscriberConnection> MakeTestSubscriberConnection(
-    Subscription subscription,
-    std::shared_ptr<pubsub_internal::SubscriberStub> mock, Options opts = {}) {
-  opts.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
-  opts = pubsub_internal::DefaultSubscriberOptions(
-      pubsub_testing::MakeTestOptions(std::move(opts)));
-  std::vector<std::shared_ptr<pubsub_internal::SubscriberStub>> children{
-      std::move(mock)};
-  return MakeTestSubscriberConnection(std::move(subscription), std::move(opts),
-                                      std::move(children));
-}
-
-Options UserSuppliedThreadsOption(CompletionQueue const& cq) {
-  return Options{}.set<GrpcCompletionQueueOption>(cq);
-}
 
 TEST(SubscriberConnectionTest, Basic) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
@@ -75,8 +58,12 @@ TEST(SubscriberConnectionTest, Basic) {
       .WillRepeatedly(FakeAsyncStreamingPull);
 
   CompletionQueue cq;
-  auto subscriber = MakeTestSubscriberConnection(subscription, mock,
-                                                 UserSuppliedThreadsOption(cq));
+  auto subscriber = pubsub_internal::MakeSubscriberConnection(
+      subscription, pubsub::SubscriberOptions{},
+      ConnectionOptions{grpc::InsecureChannelCredentials()}
+          .DisableBackgroundThreads(cq),
+      mock, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   std::atomic_flag received_one{false};
   promise<void> waiter;
   auto handler = [&](Message const& m, AckHandler h) {
@@ -139,7 +126,10 @@ TEST(SubscriberConnectionTest, PullFailure) {
         return stream;
       });
 
-  auto subscriber = MakeTestSubscriberConnection(subscription, mock);
+  auto subscriber = pubsub_internal::MakeSubscriberConnection(
+      subscription, {}, ConnectionOptions{grpc::InsecureChannelCredentials()},
+      mock, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   auto handler = [&](Message const&, AckHandler const&) {};
   auto response = subscriber->Subscribe({handler});
   EXPECT_THAT(response.get(),
@@ -169,10 +159,14 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsLogging) {
   testing_util::ScopedLog log;
 
   CompletionQueue cq;
-  auto subscriber = MakeTestSubscriberConnection(
-      subscription, mock,
-      UserSuppliedThreadsOption(cq).set<TracingComponentsOption>(
-          {"rpc", "rpc-streams"}));
+  auto subscriber = pubsub_internal::MakeSubscriberConnection(
+      subscription, {},
+      ConnectionOptions{grpc::InsecureChannelCredentials()}
+          .DisableBackgroundThreads(cq)
+          .enable_tracing("rpc")
+          .enable_tracing("rpc-streams"),
+      mock, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   std::atomic_flag received_one{false};
   promise<void> waiter;
   auto handler = [&](Message const&, AckHandler h) {
@@ -228,7 +222,10 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
             return FakeAsyncStreamingPull(cq, std::move(context), request);
           });
 
-  auto subscriber = MakeTestSubscriberConnection(subscription, mock);
+  auto subscriber = pubsub_internal::MakeSubscriberConnection(
+      subscription, {}, ConnectionOptions{grpc::InsecureChannelCredentials()},
+      mock, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
   std::atomic_flag received_one{false};
   promise<void> waiter;
   auto handler = [&](Message const&, AckHandler h) {
@@ -243,7 +240,7 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

@@ -28,7 +28,7 @@
 
 namespace {
 
-using ::google::cloud::bigtable::examples::Usage;
+using google::cloud::bigtable::examples::Usage;
 
 void BigtableHelloInstance(std::vector<std::string> const& argv) {
   if (argv.size() != 4) {
@@ -43,14 +43,15 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
   std::string const zone = argv[3];
 
   //! [aliases]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::future;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
   //! [aliases]
 
   // Connect to the Cloud Bigtable admin endpoint.
   //! [connect instance admin]
-  cbt::InstanceAdmin instance_admin(cbt::MakeInstanceAdminClient(project_id));
+  cbt::InstanceAdmin instance_admin(
+      cbt::CreateDefaultInstanceAdminClient(project_id, cbt::ClientOptions()));
   //! [connect instance admin]
 
   //! [check instance exists]
@@ -164,7 +165,7 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
 
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
-  namespace cbt = ::google::cloud::bigtable;
+  namespace cbt = google::cloud::bigtable;
 
   if (!argv.empty()) throw Usage{"auto"};
   if (!examples::RunAdminIntegrationTests()) return;
@@ -178,7 +179,8 @@ void RunAll(std::vector<std::string> const& argv) {
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A")
           .value();
 
-  cbt::InstanceAdmin admin(cbt::MakeInstanceAdminClient(project_id));
+  cbt::InstanceAdmin admin(
+      cbt::CreateDefaultInstanceAdminClient(project_id, cbt::ClientOptions{}));
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   google::cloud::bigtable::testing::CleanupStaleInstances(admin);

@@ -29,10 +29,13 @@ EMULATOR_PID=0
 #   None
 ################################################
 kill_emulator() {
+  echo "${IO_COLOR_GREEN}[ -------- ]${IO_RESET} Integration test environment tear-down."
   echo -n "Killing emulator server [${EMULATOR_PID}] ... "
   kill "${EMULATOR_PID}"
   wait "${EMULATOR_PID}" >/dev/null 2>&1
   echo "done."
+  echo "${IO_COLOR_GREEN}[ ======== ]${IO_RESET} Integration test environment tear-down."
+
 }
 
 ################################################
@@ -52,21 +55,22 @@ kill_emulator() {
 start_emulator() {
   local port="${1:-0}"
 
-  io::log "Launching Cloud Storage emulator on port ${port}"
+  echo "${IO_COLOR_GREEN}[ -------- ]${IO_RESET} Integration test environment set-up"
+  echo "Launching Cloud Storage emulator in the background"
   trap kill_emulator EXIT
 
-  rm -f gcs_emulator.log
   gunicorn --bind "0.0.0.0:${port}" \
     --worker-class sync \
     --threads "$(nproc)" \
     --access-logfile - \
-    "testbench:run()" \
+    --chdir "${PROJECT_ROOT}/google/cloud/storage/emulator" \
+    "emulator:run()" \
     >gcs_emulator.log 2>&1 </dev/null &
   EMULATOR_PID=$!
 
   local emulator_port=""
   local -r listening_at='Listening at: http://0.0.0.0:\([1-9][0-9]*\)'
-  for _ in $(seq 1 8); do
+  for attempt in $(seq 1 8); do
     if [[ -r gcs_emulator.log ]]; then
       emulator_port=$(sed -n "s,^.*${listening_at}.*$,\1,p" gcs_emulator.log)
       [[ -n "${emulator_port}" ]] && break
@@ -75,7 +79,7 @@ start_emulator() {
   done
 
   if [[ -z "${emulator_port}" ]]; then
-    io::log_red "Cannot find listening port for emulator." >&2
+    echo "${IO_COLOR_RED}Cannot find listening port for emulator.${IO_RESET}" >&2
     cat gcs_emulator.log
     exit 1
   fi
@@ -83,16 +87,19 @@ start_emulator() {
   export HTTPBIN_ENDPOINT="http://localhost:${emulator_port}/httpbin"
   export CLOUD_STORAGE_EMULATOR_ENDPOINT="http://localhost:${emulator_port}"
 
+  delay=1
   connected=no
-  if curl -s --retry 8 --retry-max-time 128 "${HTTPBIN_ENDPOINT}/get" >/dev/null 2>&1; then
-    connected=yes
-  fi
+  for _ in $(seq 1 8); do
+    if curl "${HTTPBIN_ENDPOINT}/get" >/dev/null 2>&1; then
+      connected=yes
+      break
+    fi
+    sleep $delay
+    delay=$((delay * 2))
+  done
 
-  if [[ "${connected}" == "no" ]]; then
-    io::log_red "Cannot connect to emulator; aborting test."
-    io::log_red "curl connection test result."
-    curl "${HTTPBIN_ENDPOINT}/get"
-    io::log_red "emulator log."
+  if [[ "${connected}" = "no" ]]; then
+    echo "${IO_COLOR_RED}Cannot connect to emulator; aborting test.${IO_RESET}" >&2
     cat gcs_emulator.log
     exit 1
   else
@@ -104,12 +111,14 @@ start_emulator() {
   grpc_port=$(curl -s --retry 5 --retry-max-time 40 "http://localhost:${emulator_port}/start_grpc?port=${port}")
 
   if [ "${grpc_port}" -eq "${grpc_port}" ] 2>/dev/null; then
-    io::log_green "Successfully connected to gRPC server at port ${grpc_port}"
+    echo "Successfully connected to gRPC server at port ${grpc_port}"
   else
-    io::log_red "${grpc_port} must be an integer"
-    io::log_red "Cannot connect to gRPC server; aborting test."
+    echo "${IO_COLOR_RED}${grpc_port} must be an integer" >&2
+    echo "${IO_COLOR_RED}Cannot connect to gRPC server; aborting test.${IO_RESET}" >&2
     cat gcs_emulator.log
     exit 1
   fi
   export CLOUD_STORAGE_GRPC_ENDPOINT="localhost:${grpc_port}"
+
+  echo "${IO_COLOR_GREEN}[ ======== ]${IO_RESET} Integration test environment set-up."
 }

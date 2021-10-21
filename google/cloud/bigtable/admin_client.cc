@@ -21,93 +21,102 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-namespace btadmin = ::google::bigtable::admin::v2;
-
-grpc::Status AdminClient::CreateBackup(grpc::ClientContext*,
-                                       btadmin::CreateBackupRequest const&,
-                                       google::longrunning::Operation*) {
+inline namespace BIGTABLE_CLIENT_NS {
+grpc::Status AdminClient::CreateBackup(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::CreateBackupRequest const&,
+    google::longrunning::Operation*) {
   return {grpc::StatusCode::UNIMPLEMENTED, "Not implemented"};
 }
 
-grpc::Status AdminClient::GetBackup(grpc::ClientContext*,
-                                    btadmin::GetBackupRequest const&,
-                                    btadmin::Backup*) {
+grpc::Status AdminClient::GetBackup(
+    grpc::ClientContext*, google::bigtable::admin::v2::GetBackupRequest const&,
+    google::bigtable::admin::v2::Backup*) {
   return {grpc::StatusCode::UNIMPLEMENTED, "Not implemented"};
 }
 
-grpc::Status AdminClient::UpdateBackup(grpc::ClientContext*,
-                                       btadmin::UpdateBackupRequest const&,
-                                       btadmin::Backup*) {
+grpc::Status AdminClient::UpdateBackup(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::UpdateBackupRequest const&,
+    google::bigtable::admin::v2::Backup*) {
   return {grpc::StatusCode::UNIMPLEMENTED, "Not implemented"};
 }
 
-grpc::Status AdminClient::DeleteBackup(grpc::ClientContext*,
-                                       btadmin::DeleteBackupRequest const&,
-                                       google::protobuf::Empty*) {
+grpc::Status AdminClient::DeleteBackup(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::DeleteBackupRequest const&,
+    google::protobuf::Empty*) {
   return {grpc::StatusCode::UNIMPLEMENTED, "Not implemented"};
 }
 
-grpc::Status AdminClient::ListBackups(grpc::ClientContext*,
-                                      btadmin::ListBackupsRequest const&,
-                                      btadmin::ListBackupsResponse*) {
+grpc::Status AdminClient::ListBackups(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::ListBackupsRequest const&,
+    google::bigtable::admin::v2::ListBackupsResponse*) {
   return {grpc::StatusCode::UNIMPLEMENTED, "Not implemented"};
 }
 
-grpc::Status AdminClient::RestoreTable(grpc::ClientContext*,
-                                       btadmin::RestoreTableRequest const&,
-                                       google::longrunning::Operation*) {
+grpc::Status AdminClient::RestoreTable(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::RestoreTableRequest const&,
+    google::longrunning::Operation*) {
   return {grpc::StatusCode::UNIMPLEMENTED, "Not implemented"};
 }
 
 std::unique_ptr<
     grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
-AdminClient::AsyncCreateBackup(grpc::ClientContext*,
-                               btadmin::CreateBackupRequest const&,
-                               grpc::CompletionQueue*) {
+AdminClient::AsyncCreateBackup(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::CreateBackupRequest const&,
+    grpc::CompletionQueue*) {
   return {};
 }
 
-std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Backup>>
-AdminClient::AsyncGetBackup(grpc::ClientContext*,
-                            btadmin::GetBackupRequest const&,
-                            grpc::CompletionQueue*) {
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    google::bigtable::admin::v2::Backup>>
+AdminClient::AsyncGetBackup(
+    grpc::ClientContext*, google::bigtable::admin::v2::GetBackupRequest const&,
+    grpc::CompletionQueue*) {
   return {};
 }
 
-std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Backup>>
-AdminClient::AsyncUpdateBackup(grpc::ClientContext*,
-                               btadmin::UpdateBackupRequest const&,
-                               grpc::CompletionQueue*) {
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    google::bigtable::admin::v2::Backup>>
+AdminClient::AsyncUpdateBackup(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::UpdateBackupRequest const&,
+    grpc::CompletionQueue*) {
   return {};
 }
 
 std::unique_ptr<
     grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
-AdminClient::AsyncDeleteBackup(grpc::ClientContext*,
-                               btadmin::DeleteBackupRequest const&,
-                               grpc::CompletionQueue*) {
+AdminClient::AsyncDeleteBackup(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::DeleteBackupRequest const&,
+    grpc::CompletionQueue*) {
   return {};
 }
 
-std::unique_ptr<
-    grpc::ClientAsyncResponseReaderInterface<btadmin::ListBackupsResponse>>
-AdminClient::AsyncListBackups(grpc::ClientContext*,
-                              btadmin::ListBackupsRequest const&,
-                              grpc::CompletionQueue*) {
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    google::bigtable::admin::v2::ListBackupsResponse>>
+AdminClient::AsyncListBackups(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::ListBackupsRequest const&,
+    grpc::CompletionQueue*) {
   return {};
 }
 
 std::unique_ptr<
     grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
-AdminClient::AsyncRestoreTable(grpc::ClientContext*,
-                               btadmin::RestoreTableRequest const&,
-                               grpc::CompletionQueue*) {
+AdminClient::AsyncRestoreTable(
+    grpc::ClientContext*,
+    google::bigtable::admin::v2::RestoreTableRequest const&,
+    grpc::CompletionQueue*) {
   return {};
 }
 
-namespace {
+namespace btadmin = google::bigtable::admin::v2;
 
 /**
  * An AdminClient for single-threaded programs that refreshes credentials on all
@@ -123,8 +132,24 @@ namespace {
  * connections need refreshing.
  */
 class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
+ private:
+  // Introduce an early `private:` section because this type is used to define
+  // the public interface, it should not be part of the public interface.
+  struct AdminTraits {
+    static std::string const& Endpoint(
+        google::cloud::bigtable::ClientOptions& options) {
+      return options.admin_endpoint();
+    }
+  };
+
+  using Impl = google::cloud::bigtable::internal::CommonClient<
+      AdminTraits, btadmin::BigtableTableAdmin>;
+
  public:
-  DefaultAdminClient(std::string project, Options options)
+  using AdminStubPtr = Impl::StubPtr;
+
+  DefaultAdminClient(std::string project,
+                     google::cloud::bigtable::ClientOptions options)
       : project_(std::move(project)), impl_(std::move(options)) {}
 
   std::string const& project() const override { return project_; }
@@ -143,10 +168,10 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
     return impl_.Stub()->ListTables(context, request, response);
   }
 
-  std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<btadmin::ListTablesResponse>>
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::ListTablesResponse>>
   AsyncListTables(grpc::ClientContext* context,
-                  btadmin::ListTablesRequest const& request,
+                  google::bigtable::admin::v2::ListTablesRequest const& request,
                   grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncListTables(context, request, cq);
   }
@@ -157,9 +182,10 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
     return impl_.Stub()->GetTable(context, request, response);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Table>>
   AsyncGetTable(grpc::ClientContext* context,
-                btadmin::GetTableRequest const& request,
+                google::bigtable::admin::v2::GetTableRequest const& request,
                 grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncGetTable(context, request, cq);
   }
@@ -170,39 +196,45 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
     return impl_.Stub()->DeleteTable(context, request, response);
   }
 
-  grpc::Status CreateBackup(grpc::ClientContext* context,
-                            btadmin::CreateBackupRequest const& request,
-                            google::longrunning::Operation* response) override {
+  grpc::Status CreateBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateBackupRequest const& request,
+      google::longrunning::Operation* response) override {
     return impl_.Stub()->CreateBackup(context, request, response);
   }
 
-  grpc::Status GetBackup(grpc::ClientContext* context,
-                         btadmin::GetBackupRequest const& request,
-                         btadmin::Backup* response) override {
+  grpc::Status GetBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GetBackupRequest const& request,
+      google::bigtable::admin::v2::Backup* response) override {
     return impl_.Stub()->GetBackup(context, request, response);
   }
 
-  grpc::Status UpdateBackup(grpc::ClientContext* context,
-                            btadmin::UpdateBackupRequest const& request,
-                            btadmin::Backup* response) override {
+  grpc::Status UpdateBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::UpdateBackupRequest const& request,
+      google::bigtable::admin::v2::Backup* response) override {
     return impl_.Stub()->UpdateBackup(context, request, response);
   }
 
-  grpc::Status DeleteBackup(grpc::ClientContext* context,
-                            btadmin::DeleteBackupRequest const& request,
-                            google::protobuf::Empty* response) override {
+  grpc::Status DeleteBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteBackupRequest const& request,
+      google::protobuf::Empty* response) override {
     return impl_.Stub()->DeleteBackup(context, request, response);
   }
 
-  grpc::Status ListBackups(grpc::ClientContext* context,
-                           btadmin::ListBackupsRequest const& request,
-                           btadmin::ListBackupsResponse* response) override {
+  grpc::Status ListBackups(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ListBackupsRequest const& request,
+      google::bigtable::admin::v2::ListBackupsResponse* response) override {
     return impl_.Stub()->ListBackups(context, request, response);
   }
 
-  grpc::Status RestoreTable(grpc::ClientContext* context,
-                            btadmin::RestoreTableRequest const& request,
-                            google::longrunning::Operation* response) override {
+  grpc::Status RestoreTable(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::RestoreTableRequest const& request,
+      google::longrunning::Operation* response) override {
     return impl_.Stub()->RestoreTable(context, request, response);
   }
 
@@ -260,96 +292,111 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
     return impl_.Stub()->TestIamPermissions(context, request, response);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>
-  AsyncCreateTable(grpc::ClientContext* context,
-                   btadmin::CreateTableRequest const& request,
-                   grpc::CompletionQueue* cq) override {
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Table>>
+  AsyncCreateTable(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateTableRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncCreateTable(context, request, cq);
   }
 
   std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>>
-  AsyncDeleteTable(grpc::ClientContext* context,
-                   btadmin::DeleteTableRequest const& request,
-                   grpc::CompletionQueue* cq) override {
+      ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>>
+  AsyncDeleteTable(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteTableRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncDeleteTable(context, request, cq);
   }
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
-  AsyncCreateBackup(grpc::ClientContext* context,
-                    btadmin::CreateBackupRequest const& request,
-                    grpc::CompletionQueue* cq) override {
+  AsyncCreateBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateBackupRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncCreateBackup(context, request, cq);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Backup>>
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Backup>>
   AsyncGetBackup(grpc::ClientContext* context,
-                 btadmin::GetBackupRequest const& request,
+                 google::bigtable::admin::v2::GetBackupRequest const& request,
                  grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncGetBackup(context, request, cq);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Backup>>
-  AsyncUpdateBackup(grpc::ClientContext* context,
-                    btadmin::UpdateBackupRequest const& request,
-                    grpc::CompletionQueue* cq) override {
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Backup>>
+  AsyncUpdateBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::UpdateBackupRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncUpdateBackup(context, request, cq);
   }
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
-  AsyncDeleteBackup(grpc::ClientContext* context,
-                    btadmin::DeleteBackupRequest const& request,
-                    grpc::CompletionQueue* cq) override {
+  AsyncDeleteBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteBackupRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncDeleteBackup(context, request, cq);
   }
 
-  std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<btadmin::ListBackupsResponse>>
-  AsyncListBackups(grpc::ClientContext* context,
-                   btadmin::ListBackupsRequest const& request,
-                   grpc::CompletionQueue* cq) override {
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::ListBackupsResponse>>
+  AsyncListBackups(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ListBackupsRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncListBackups(context, request, cq);
   }
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
-  AsyncRestoreTable(grpc::ClientContext* context,
-                    btadmin::RestoreTableRequest const& request,
-                    grpc::CompletionQueue* cq) override {
+  AsyncRestoreTable(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::RestoreTableRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncRestoreTable(context, request, cq);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>
-  AsyncModifyColumnFamilies(grpc::ClientContext* context,
-                            btadmin::ModifyColumnFamiliesRequest const& request,
-                            grpc::CompletionQueue* cq) override {
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Table>>
+  AsyncModifyColumnFamilies(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncModifyColumnFamilies(context, request, cq);
   }
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
-  AsyncDropRowRange(grpc::ClientContext* context,
-                    btadmin::DropRowRangeRequest const& request,
-                    grpc::CompletionQueue* cq) override {
+  AsyncDropRowRange(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DropRowRangeRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncDropRowRange(context, request, cq);
   };
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      btadmin::GenerateConsistencyTokenResponse>>
+      google::bigtable::admin::v2::GenerateConsistencyTokenResponse>>
   AsyncGenerateConsistencyToken(
       grpc::ClientContext* context,
-      btadmin::GenerateConsistencyTokenRequest const& request,
+      google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
+          request,
       grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncGenerateConsistencyToken(context, request, cq);
   }
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      btadmin::CheckConsistencyResponse>>
-  AsyncCheckConsistency(grpc::ClientContext* context,
-                        btadmin::CheckConsistencyRequest const& request,
-                        grpc::CompletionQueue* cq) override {
+      google::bigtable::admin::v2::CheckConsistencyResponse>>
+  AsyncCheckConsistency(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CheckConsistencyRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncCheckConsistency(context, request, cq);
   }
 
@@ -390,46 +437,28 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
   }
 
  private:
-  google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
-    return impl_.BackgroundThreadsFactory();
+  ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() override {
+    return impl_.Options().background_threads_factory();
   }
 
-  struct Traits {
-    static std::string const& Endpoint(Options const& options) {
-      return options.get<AdminEndpointOption>();
-    }
-  };
-
   std::string project_;
-  internal::CommonClient<Traits, btadmin::BigtableTableAdmin> impl_;
+  Impl impl_;
 };
 
-}  // namespace
-
-std::shared_ptr<AdminClient> MakeAdminClient(std::string project,
-                                             Options options) {
-  options = internal::DefaultOptions(std::move(options));
-  bool tracing_enabled = google::cloud::internal::Contains(
-      options.get<TracingComponentsOption>(), "rpc");
-  auto tracing_options = options.get<GrpcTracingOptionsOption>();
-
-  std::shared_ptr<AdminClient> client = std::make_shared<DefaultAdminClient>(
-      std::move(project), std::move(options));
-  if (tracing_enabled) {
+std::shared_ptr<AdminClient> CreateDefaultAdminClient(
+    std::string project,
+    ClientOptions options) {  // NOLINT(performance-unnecessary-value-param)
+  std::shared_ptr<AdminClient> client =
+      std::make_shared<DefaultAdminClient>(std::move(project), options);
+  if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     client = std::make_shared<internal::LoggingAdminClient>(
-        std::move(client), std::move(tracing_options));
+        std::move(client), options.tracing_options());
   }
   return client;
 }
 
-std::shared_ptr<AdminClient> CreateDefaultAdminClient(std::string project,
-                                                      ClientOptions options) {
-  return MakeAdminClient(std::move(project),
-                         internal::MakeOptions(std::move(options)));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

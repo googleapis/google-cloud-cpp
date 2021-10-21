@@ -114,7 +114,7 @@ using the `.status()` member function (and trying to access the value produces
 undefined behavior).
 
 @code {.cpp}
-using gcs = ::google::cloud::storage;
+using gcs = google::cloud::storage;
 [](gcs::Client client) {
   google::cloud::StatusOr<gcs::BucketMetadata> metadata =
     client.GetBucketMetadata("my-bucket");
@@ -137,7 +137,7 @@ the `StatusOr<T>` object. This will return a `T` if the `StatusOr<T>` object
 contains a value, and will otherwise throw an exception.
 
 @code {.cpp}
-using gcs = ::google::cloud::storage;
+using gcs = google::cloud::storage;
 [](gcs::Client client) {
   gcs::BucketMetadata metadata = client.GetBucketMetadata(
         "my-bucket").value();  // throws on error
@@ -149,11 +149,11 @@ using gcs = ::google::cloud::storage;
 ### Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
-follows the [recommended
-practice](https://cloud.google.com/storage/docs/exponential-backoff) to backoff
-between retries. Application developers can override the default
-[retry](@ref google::cloud::storage::RetryPolicy) and
-[backoff](@ref google::cloud::storage::BackoffPolicy) policies:
+follows the
+[recommended practice](https://cloud.google.com/storage/docs/exponential-backoff)
+to backoff between retries. Application developers can override the default
+[retry](@ref google::cloud::storage::v1::RetryPolicy) and
+[backoff](@ref google::cloud::storage::v1::BackoffPolicy) policies:
 
 @snippet storage_object_samples.cc insert object modified retry
 
@@ -163,20 +163,20 @@ period between retries.
 
 By default the library retries all operations, even those that are not
 idempotent. Application developers can override the
-[idempotency policy](@ref google::cloud::storage::Client::Client) to follow a
-more conservative approach:
+[idempotency policy](@ref google::cloud::storage::v1::Client::Client)
+to follow a more conservative approach:
 
 @snippet storage_object_samples.cc insert object strict idempotency
 
-@see [LimitedTimeRetryPolicy](@ref google::cloud::storage::LimitedTimeRetryPolicy)
-   and [LimitedErrorCountRetryPolicy](@ref google::cloud::storage::LimitedErrorCountRetryPolicy)
+@see [LimitedTimeRetryPolicy](@ref google::cloud::storage::v1::LimitedTimeRetryPolicy)
+   and [LimitedErrorCountRetryPolicy](@ref google::cloud::storage::v1::LimitedErrorCountRetryPolicy)
    for alternative retry policies.
 
-@see [ExponentialBackoffPolicy](@ref google::cloud::storage::ExponentialBackoffPolicy)
+@see [ExponentialBackoffPolicy](@ref google::cloud::storage::v1::ExponentialBackoffPolicy)
    to configure different parameters for the exponential backoff policy.
 
-@see [AlwaysRetryIdempotencyPolicy](@ref google::cloud::storage::AlwaysRetryIdempotencyPolicy)
-   and [StrictIdempotencyPolicy](@ref google::cloud::storage::StrictIdempotencyPolicy)
+@see [AlwaysRetryIdempotencyPolicy](@ref google::cloud::storage::v1::AlwaysRetryIdempotencyPolicy)
+   and [StrictIdempotencyPolicy](@ref google::cloud::storage::v1::StrictIdempotencyPolicy)
    for alternative idempotency policies.
 
 ### Next Steps
@@ -189,14 +189,11 @@ good places to continue learning about the library.
 
 @ref storage-mocking "Example for mocking GCS C++ Client"
 
-<!-- @ref storage-grpc "Using the GCS+gRPC plugin" -->
-
-
-[Client]: @ref google::cloud::storage::Client
-[ReadObject]: @ref google::cloud::storage::Client::ReadObject()
-[WriteObject]: @ref google::cloud::storage::Client::WriteObject()
-[ListObjects]: @ref google::cloud::storage::Client::ListObjects()
-[DeleteObject]: @ref google::cloud::storage::Client::DeleteObject()
+[Client]: @ref google::cloud::storage::v1::Client
+[ReadObject]: @ref google::cloud::storage::v1::Client::ReadObject()
+[WriteObject]: @ref google::cloud::storage::v1::Client::WriteObject()
+[ListObjects]: @ref google::cloud::storage::v1::Client::ListObjects()
+[DeleteObject]: @ref google::cloud::storage::v1::Client::DeleteObject()
 
 
 [gcs-quickstart]: https://cloud.google.com/storage/docs/quickstarts 'GCS Quickstarts'

@@ -24,7 +24,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 class CompletionQueue;
 namespace internal {
 
@@ -108,8 +108,8 @@ using CheckUnaryRpcCallback =
  * data callback.
  */
 template <typename Functor, typename Response>
-using CheckUnaryStreamRpcDataCallback = ::google::cloud::internal::is_invocable<
-    Functor, CompletionQueue&, grpc::ClientContext const&, Response&>;
+using CheckUnaryStreamRpcDataCallback = google::cloud::internal::is_invocable<
+    Functor, CompletionQueue&, const grpc::ClientContext&, Response&>;
 
 /**
  * Verify that @p Functor meets the requirements for an AsyncUnaryStreamRpc
@@ -187,7 +187,7 @@ using AsyncCallResponseType = AsyncCallResponseTypeUnwrap<
         grpc::CompletionQueue*>>;
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

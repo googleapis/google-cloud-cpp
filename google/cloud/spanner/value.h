@@ -18,7 +18,6 @@
 #include "google/cloud/spanner/bytes.h"
 #include "google/cloud/spanner/date.h"
 #include "google/cloud/spanner/internal/tuple_utils.h"
-#include "google/cloud/spanner/json.h"
 #include "google/cloud/spanner/numeric.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
@@ -40,13 +39,13 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 struct ValueInternals;
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * The Value class represents a type-safe, nullable Spanner value.
@@ -64,7 +63,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * FLOAT64      | `double`
  * STRING       | `std::string`
  * BYTES        | `google::cloud::spanner::Bytes`
- * JSON         | `google::cloud::spanner::Json`
  * NUMERIC      | `google::cloud::spanner::Numeric`
  * TIMESTAMP    | `google::cloud::spanner::Timestamp`
  * DATE         | `absl::CivilDay`
@@ -190,8 +188,6 @@ class Value {
   explicit Value(std::string v) : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
   explicit Value(Bytes v) : Value(PrivateConstructor{}, std::move(v)) {}
-  /// @copydoc Value(bool)
-  explicit Value(Json v) : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
   explicit Value(Numeric v) : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
@@ -362,7 +358,6 @@ class Value {
   static bool TypeProtoIs(absl::CivilDay, google::spanner::v1::Type const&);
   static bool TypeProtoIs(std::string const&, google::spanner::v1::Type const&);
   static bool TypeProtoIs(Bytes const&, google::spanner::v1::Type const&);
-  static bool TypeProtoIs(Json const&, google::spanner::v1::Type const&);
   static bool TypeProtoIs(Numeric const&, google::spanner::v1::Type const&);
   template <typename T>
   static bool TypeProtoIs(absl::optional<T>,
@@ -409,7 +404,6 @@ class Value {
   static google::spanner::v1::Type MakeTypeProto(double);
   static google::spanner::v1::Type MakeTypeProto(std::string const&);
   static google::spanner::v1::Type MakeTypeProto(Bytes const&);
-  static google::spanner::v1::Type MakeTypeProto(Json const&);
   static google::spanner::v1::Type MakeTypeProto(Numeric const&);
   static google::spanner::v1::Type MakeTypeProto(Timestamp);
   static google::spanner::v1::Type MakeTypeProto(CommitTimestamp);
@@ -470,7 +464,6 @@ class Value {
   static google::protobuf::Value MakeValueProto(double d);
   static google::protobuf::Value MakeValueProto(std::string s);
   static google::protobuf::Value MakeValueProto(Bytes b);
-  static google::protobuf::Value MakeValueProto(Json j);
   static google::protobuf::Value MakeValueProto(Numeric n);
   static google::protobuf::Value MakeValueProto(Timestamp ts);
   static google::protobuf::Value MakeValueProto(CommitTimestamp ts);
@@ -533,8 +526,6 @@ class Value {
                                         google::spanner::v1::Type const&);
   static StatusOr<Bytes> GetValue(Bytes const&, google::protobuf::Value const&,
                                   google::spanner::v1::Type const&);
-  static StatusOr<Json> GetValue(Json const&, google::protobuf::Value const&,
-                                 google::spanner::v1::Type const&);
   static StatusOr<Numeric> GetValue(Numeric const&,
                                     google::protobuf::Value const&,
                                     google::spanner::v1::Type const&);
@@ -648,7 +639,7 @@ class Value {
   Value(google::spanner::v1::Type t, google::protobuf::Value v)
       : type_(std::move(t)), value_(std::move(v)) {}
 
-  friend struct spanner_internal::ValueInternals;
+  friend struct spanner_internal::SPANNER_CLIENT_NS::ValueInternals;
 
   google::spanner::v1::Type type_;
   google::protobuf::Value value_;
@@ -666,11 +657,11 @@ Value MakeNullValue() {
   return Value(absl::optional<T>{});
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 struct ValueInternals {
   static spanner::Value FromProto(google::spanner::v1::Type t,
@@ -694,7 +685,7 @@ inline std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(
   return ValueInternals::ToProto(std::move(v));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

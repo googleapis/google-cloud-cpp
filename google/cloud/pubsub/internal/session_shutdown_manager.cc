@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::string FormatOps(std::unordered_map<std::string, int> const& ops) {
   std::ostringstream os;
@@ -39,7 +39,7 @@ SessionShutdownManager::~SessionShutdownManager() {
   done_.set_value(std::move(result_));
 }
 
-void SessionShutdownManager::LogStart(char const* caller, char const* name) {
+void SessionShutdownManager::LogStart(const char* caller, const char* name) {
   auto increase_count = [&] { return ++ops_[name]; };
   GCP_LOG(TRACE) << "operation <" << name << "> starting from " << caller
                  << ", shutdown=" << shutdown_ << ", signaled=" << signaled_
@@ -89,7 +89,7 @@ void SessionShutdownManager::SignalOnShutdown(std::unique_lock<std::mutex> lk) {
   p.set_value(std::move(s));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

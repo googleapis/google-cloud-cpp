@@ -28,7 +28,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * Implement ISO/IEC TS 19571:2016 future for void.
  */
@@ -141,7 +141,7 @@ class promise<void> final : private internal::promise_base<void> {
   explicit promise(null_promise_t x) : promise_base(std::move(x)) {}
 
   /// Constructs a new promise and transfer any shared state from @p rhs.
-  promise(promise&&) = default;
+  promise(promise&&) noexcept = default;
 
   /// Abandons the shared state in `*this`, if any, and transfers the shared
   /// state from @p rhs.
@@ -201,7 +201,7 @@ inline future<void> make_ready_future() {
   return p.get_future();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

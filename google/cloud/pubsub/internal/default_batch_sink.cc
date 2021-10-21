@@ -13,28 +13,31 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/default_batch_sink.h"
-#include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-DefaultBatchSink::DefaultBatchSink(std::shared_ptr<PublisherStub> stub,
-                                   CompletionQueue cq, Options const& opts)
+DefaultBatchSink::DefaultBatchSink(
+    std::shared_ptr<pubsub_internal::PublisherStub> stub,
+    google::cloud::CompletionQueue cq,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy)
     : stub_(std::move(stub)),
       cq_(std::move(cq)),
-      retry_policy_(opts.get<pubsub::RetryPolicyOption>()->clone()),
-      backoff_policy_(opts.get<pubsub::BackoffPolicyOption>()->clone()) {}
+      retry_policy_(std::move(retry_policy)),
+      backoff_policy_(std::move(backoff_policy)) {}
 
 future<StatusOr<google::pubsub::v1::PublishResponse>>
 DefaultBatchSink::AsyncPublish(google::pubsub::v1::PublishRequest request) {
   auto& stub = stub_;
-  return internal::AsyncRetryLoop(
+  return google::cloud::internal::AsyncRetryLoop(
       retry_policy_->clone(), backoff_policy_->clone(),
-      internal::Idempotency::kIdempotent, cq_,
-      [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::internal::Idempotency::kIdempotent, cq_,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
              google::pubsub::v1::PublishRequest const& request) {
         return stub->AsyncPublish(cq, std::move(context), request);
       },
@@ -43,7 +46,7 @@ DefaultBatchSink::AsyncPublish(google::pubsub::v1::PublishRequest request) {
 
 void DefaultBatchSink::ResumePublish(std::string const&) {}
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

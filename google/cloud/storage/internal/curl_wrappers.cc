@@ -29,9 +29,30 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
+// The Google Cloud Storage C++ client library depends on libcurl, which depends
+// on many different SSL libraries, depending on the library the library needs
+// to take action to be thread-safe. More details can be found here:
+//
+//     https://curl.haxx.se/libcurl/c/threadsafe.html
+//
+std::once_flag ssl_locking_initialized;
+
+// libcurl recommends turning on CURLOPT_NOSIGNAL for multi-threaded
+// applications: "Note that setting CURLOPT_NOSIGNAL to 0L will not work in a
+// threaded situation as there will be race where libcurl risks restoring the
+// former signal handler while another thread should still ignore it."
+//
+// libcurl further recommends that we setup our own signal handler for SIGPIPE
+// when using multiple threads: "When CURLOPT_NOSIGNAL is set to 1L, your
+// application needs to deal with the risk of a SIGPIPE (that at least the
+// OpenSSL backend can trigger)".
+//
+//     https://curl.haxx.se/libcurl/c/threadsafe.html
+//
+std::once_flag sigpipe_handler_initialized;
 
 #if LIBRESSL_VERSION_NUMBER
 // LibreSSL calls itself OpenSSL > 2.0, but it really is based on SSL 1.0.2
@@ -185,24 +206,6 @@ bool SslLibraryNeedsLocking(std::string const& curl_ssl_id) {
           curl_ssl_id.rfind("LibreSSL/2", 0) == 0);
 }
 
-long VersionToCurlCode(std::string const& v) {  // NOLINT(google-runtime-int)
-  if (v == "1.0") return CURL_HTTP_VERSION_1_0;
-  if (v == "1.1") return CURL_HTTP_VERSION_1_1;
-#if CURL_AT_LEAST_VERSION(7, 33, 0)
-  // CURL_HTTP_VERSION_2_0 and CURL_HTTP_VERSION_2 are aliases.
-  if (v == "2.0" || v == "2") return CURL_HTTP_VERSION_2_0;
-#endif  // CURL >= 7.33.0
-#if CURL_AT_LEAST_VERSION(7, 47, 0)
-  if (v == "2TLS") return CURL_HTTP_VERSION_2TLS;
-#endif  // CURL >= 7.47.0
-#if CURL_AT_LEAST_VERSION(7, 66, 0)
-  // google-cloud-cpp requires curl >= 7.47.0. All the previous codes exist at
-  // that version, but the next one is more recent.
-  if (v == "3") return CURL_HTTP_VERSION_3;
-#endif  // CURL >= 7.66.0
-  return CURL_HTTP_VERSION_NONE;
-}
-
 bool SslLockingCallbacksInstalled() {
 #if GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS
   return !ssl_locks.empty();
@@ -236,36 +239,14 @@ std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
 
 void CurlInitializeOnce(Options const& options) {
   static CurlInitializer curl_initializer;
-  static bool const kInitialized = [&options]() {
-    // The Google Cloud Storage C++ client library depends on libcurl, which
-    // depends on many different SSL libraries, depending on the library the
-    // library needs to take action to be thread-safe. More details can be
-    // found here:
-    //
-    //     https://curl.haxx.se/libcurl/c/threadsafe.html
-    //
-    InitializeSslLocking(options.get<EnableCurlSslLockingOption>());
-
-    // libcurl recommends turning on CURLOPT_NOSIGNAL for multi-threaded
-    // applications: "Note that setting CURLOPT_NOSIGNAL to 0L will not work in
-    // a threaded situation as there will be race where libcurl risks restoring
-    // the former signal handler while another thread should still ignore it."
-    //
-    // libcurl further recommends that we setup our own signal handler for
-    // SIGPIPE when using multiple threads: "When CURLOPT_NOSIGNAL is set to
-    // 1L, your application needs to deal with the risk of a SIGPIPE (that at
-    // least the OpenSSL backend can trigger)".
-    //
-    //     https://curl.haxx.se/libcurl/c/threadsafe.html
-    //
-    InitializeSigPipeHandler(options.get<EnableCurlSigpipeHandlerOption>());
-    return true;
-  }();
-  static_cast<void>(kInitialized);
+  std::call_once(ssl_locking_initialized, InitializeSslLocking,
+                 options.get<EnableCurlSslLockingOption>());
+  std::call_once(sigpipe_handler_initialized, InitializeSigPipeHandler,
+                 options.get<EnableCurlSigpipeHandlerOption>());
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

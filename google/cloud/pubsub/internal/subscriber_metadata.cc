@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 SubscriberMetadata::SubscriberMetadata(std::shared_ptr<SubscriberStub> child)
     : child_(std::move(child)),
@@ -70,7 +70,7 @@ Status SubscriberMetadata::ModifyPushConfig(
   return child_->ModifyPushConfig(context, request);
 }
 
-std::shared_ptr<SubscriberStub::AsyncPullStream>
+std::unique_ptr<SubscriberStub::AsyncPullStream>
 SubscriberMetadata::AsyncStreamingPull(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -144,7 +144,7 @@ void SubscriberMetadata::SetMetadata(grpc::ClientContext& context,
   context.AddMetadata("x-goog-api-client", x_goog_api_client_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

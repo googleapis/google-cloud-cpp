@@ -20,19 +20,74 @@ enumerated below.
 Before beginning the release process, verify all CI builds are passing on
 the `main` branch. This is displayed in the GitHub page for the project.
 
-### Update CHANGELOG.md
+### Update the API baseline
 
-To update the top-level [`CHANGELOG.md`] file, you run the script
+Run the `check-api` build to update the API baseline. Once you cut the release
+any new APIs are, well, released, and we should think carefully about removing
+them.
 
 ```bash
-release/changes.sh
+ci/cloudbuild/build.sh -t check-api-pr --docker
 ```
 
-to output a summary of the potentially interesting changes since the previous
-release. You paste the output into the relevant section in the `CHANGELOG.md`
-file, and manually tweak as needed.
+The updated ABI dump files will be left in the `ci/abi-dumps` folder.
 
-[`CHANGELOG.md`]: /CHANGELOG.md
+This may take a while, leave it running while you perform the next step. You
+can, but are not required to, send a single PR to update the baseline and the
+`CHANGELOG.md` file.
+
+### Update CHANGELOG.md
+
+Assuming you are working on your own fork of the `google-cloud-cpp` project,
+and `upstream` points to the `googleapis/google-cloud-cpp` remote, these
+commands should be useful in identifying important changes for inclusion in the
+release notes.
+
+Update `CHANGELOG.md` based on the release notes for Bigtable, Storage,
+Spanner, and the common libraries:
+
+```bash
+# Summarize the output of this into CHANGELOG.md under the "Bigtable" header
+git log --no-merges --format="format:* %s" \
+    $(git describe --tags --abbrev=0 upstream/main)..HEAD \
+    upstream/main -- google/cloud/bigtable
+```
+
+```bash
+# Summarize the output of this into CHANGELOG.md under the "Pub/Sub" header
+git log --no-merges --format="format:* %s" \
+    $(git describe --tags --abbrev=0 upstream/main)..HEAD \
+    upstream/main -- google/cloud/pubsub
+```
+
+```bash
+# Summarize the output of this into CHANGELOG.md under the "Storage" header
+git log --no-merges --format="format:* %s" \
+    $(git describe --tags --abbrev=0 upstream/main)..HEAD \
+    upstream/main -- google/cloud/storage
+```
+
+```bash
+# Summarize the output of this into CHANGELOG.md under the "Spanner" header
+git log --no-merges --format="format:* %s" \
+    $(git describe --tags --abbrev=0 upstream/main)..HEAD \
+    upstream/main -- google/cloud/spanner
+```
+
+```bash
+# Summarize the output of this into CHANGELOG.md under the "Common libraries" header
+git log --no-merges --format="format:* %s" \
+    $(git describe --tags --abbrev=0 upstream/main)..HEAD \
+    upstream/main -- google/cloud \
+   ':(exclude)google/cloud/firestore/' \
+   ':(exclude)google/cloud/bigtable/' \
+   ':(exclude)google/cloud/pubsub/' \
+   ':(exclude)google/cloud/spanner/' \
+   ':(exclude)google/cloud/storage/'
+```
+
+Any **chore**/**ci**/**test**-tagged PRs in the above lists should probably be
+discarded as they are uninteresting to our users.
 
 ### Send a PR with all these changes
 
@@ -44,6 +99,11 @@ judgment.
 
 ## Creating the release
 
+> :warning: the `release.sh` script was broken as of 2021-07.
+> See [#6682] for details
+
+[#6682]: https://github.com/googleapis/google-cloud-cpp/issues/6682
+
 We next need to create the release tag, the release branch, and create the
 release in the GitHub UI. We use a script ([`release/release.sh`]) to automate
 said steps.
@@ -52,8 +112,8 @@ said steps.
 
 *No PR is needed for this step.*
 
-First run the following command -- which will *NOT* make any changes to the
-repo -- and verify that the output and *version numbers* look correct.
+First run the following command -- which will *NOT* make any changes to any
+repos -- and verify that the output and *version numbers* look correct.
 
 ```bash
 $ release/release.sh googleapis/google-cloud-cpp
@@ -81,36 +141,28 @@ The `publish-docs` build should start automatically when you create the release
 branch. This build will upload the docs for the new release to the following
 URLs:
 
-* https://googleapis.dev/cpp/google-cloud-bigquery/latest/
 * https://googleapis.dev/cpp/google-cloud-bigtable/latest/
-* https://googleapis.dev/cpp/google-cloud-iam/latest/
 * https://googleapis.dev/cpp/google-cloud-pubsub/latest/
-* https://googleapis.dev/cpp/google-cloud-spanner/latest/
 * https://googleapis.dev/cpp/google-cloud-storage/latest/
+* https://googleapis.dev/cpp/google-cloud-spanner/latest/
 * https://googleapis.dev/cpp/google-cloud-common/latest/
 
 It can take up to an hour after the build finishes for the new docs to show up
 at the above URLs. You can watch the status of the build at
-https://console.cloud.google.com/cloud-build/builds;region=us-east1?project=cloud-cpp-testing-resources&query=tags%3D%22publish-docs%22
+https://console.cloud.google.com/cloud-build/builds?project=cloud-cpp-testing-resources&query=tags%3D%22publish-docs%22
 
-## Bump the version number in `main`
+## Bump the version numbers in `main`
 
 Working in your fork of `google-cloud-cpp`: bump the version numbers to the
 *next* version, i.e., one version past the release you just did above. Then
 send the PR for review against `main`. You need to:
 
-- Update the version number in the top-level `CMakeLists.txt` file.
-- Run the cmake configuration step, which will update the
-  `google/cloud/internal/version_info.h` file. Hint: Running
-  `ci/cloudbuild/build.sh -t clang-tidy-pr` will do this, and you can `CTRL-C`
-  the build after CMake's configure step is finished.
-- Update the ABI baseline to include the new version numbers in the inline
-  namespace by running `ci/cloudbuild/build.sh -t check-api-pr`, which will
-  leave the updated files in `ci/abi-dumps`.
-
-**NOTE:** The Renovate bot will automatically update the Bazel deps in the
-quickstart `WORKSPACE` files after it sees the new release published. Watch for
-this PR to come through, kick off the builds, approve, and merge it.
+- Update the version numbers in the top-level `CMakeLists.txt` file.
+- Run the cmake configuration step, this will update the different
+  `version_info.h` files.
+- Update the version number and SHA256 checksums in the
+  `google/cloud/*/quickstart/WORKSPACE` files to point to the *just-released*
+  version.
 
 ## Review the protections for the `v[0-9].*` branches
 

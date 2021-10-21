@@ -28,7 +28,7 @@
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
 /// Report errors parsing the command-line.
@@ -46,7 +46,7 @@ using Commands = std::map<std::string, CommandType>;
 /**
  * Drive the execution of code examples for the Cloud C++ client libraries.
  *
- * @note The examples always assume that exceptions are enabled. We prefer
+ * @note the examples always assume that exceptions are enabled. We prefer
  * clarity over portability for example code.
  *
  * We often (ideally always) write examples showing how to use each key API in
@@ -89,7 +89,7 @@ class Example {
 void CheckEnvironmentVariablesAreSet(std::vector<std::string> const&);
 
 }  // namespace testing_util
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

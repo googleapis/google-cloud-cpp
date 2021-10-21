@@ -21,9 +21,6 @@ directory.
   [setup a development workstation][howto-setup-dev-workstation].
 
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
-[ninja-build]: https://ninja-build.org/
-[ccmake]: https://cmake.org/cmake/help/latest/manual/ccmake.1.html
-[issues-5489]: https://github.com/googleapis/google-cloud-cpp/issues/5849
 
 There are two primary ways of obtaining `google-cloud-cpp`. You can use git:
 
@@ -47,6 +44,13 @@ tar -xf ${VERSION}.tar.gz -C $HOME/google-cloud-cpp --strip=1
 <!-- This is an automatically generated file -->
 <!-- Make changes in ci/generate-markdown/generate-packaging.sh -->
 
+By default `google-cloud-cpp` libraries download and compile all their
+dependencies ([see below](#required-libraries) for a complete list). This makes
+it easier for users to "take the library for a spin", and works well for users
+that "Live at Head", but does not work for package maintainers or users that
+prefer to compile their dependencies once and install them in `/usr/local/` or
+a similar directory.
+
 This document provides instructions to install the dependencies of
 `google-cloud-cpp`.
 
@@ -59,42 +63,114 @@ cmake -H. -Bcmake-out -DBUILD_TESTING=OFF -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
 cmake --build cmake-out --target install
 ```
 
+You may choose to parallelize the build by appending `-- -j ${NCPU}` to the
+build command, where `NCPU` is an environment variable set to the number of
+processors on your system. On Linux, you can obtain this information using the
+`nproc` command or `sysctl -n hw.physicalcpu` on Mac.
+
 Unfortunately getting your system to this state may require multiple steps,
 the following sections describe how to install `google-cloud-cpp` on several
 platforms.
 
-## Common Configuration Variables for CMake
+## Using `google-cloud-cpp` in CMake-based projects.
 
-As is often the case, the CMake build can be configured using a number of
-options and command-line flags.  A full treatment of these options is outside
-the scope of this document, but here are a few highlights:
+Once you have installed `google-cloud-cpp` you can use the libraries from
+your own projects using `find_package()` in your `CMakeLists.txt` file:
 
-* Consider using `-GNinja` to switch the generator from `make` (or msbuild on
-  Windows) to [`ninja`][ninja-build]. In our experience `ninja` takes better
-  advantage of multi-core machines. Be aware that `ninja` is often not
-  installed in development workstations, but it is available through most
-  package managers.
-* If you use the default generator, consider appending `-- -j ${NCPU}` to the
-  build command, where `NCPU` is an environment variable set to the number of
-  processors on your system. You can obtain this information using
-  the `nproc` command on Linux, or `sysctl -n hw.physicalcpu` on macOS.
-* By default, CMake compiles the `google-cloud-cpp` as static libraries. The
-  standard `-DBUILD_SHARED_LIBS=ON` option can be used to switch this to shared
-  libraries.  Having said this, on Windows there are [known issues][issues-5489]
-  with DLLs and generated protos.
-* You can compile a subset of the libraries using
-  `-DGOOGLE_CLOUD_CPP_ENABLE=lib1,lib2`.
+```CMake
+cmake_minimum_required(VERSION 3.5)
 
-To find out about other configuration options, consider using
-[`ccmake`][ccmake], or `cmake -L`.
+find_package(google_cloud_cpp_storage REQUIRED)
 
-## Using `google-cloud-cpp` after it is installed
+add_executable(my_program my_program.cc)
+target_link_libraries(my_program google-cloud-cpp::storage)
+```
 
-Once installed, follow any of the [quickstart guides](/README.md#quickstart) to
-use `google-cloud-cpp` in your CMake or Make-based project. If you are planning
-to use Bazel for your own project, there is no need to install
-`google-cloud-cpp`, we provide Bazel `BUILD` files for this purpose. The
-quickstart guides also cover this use-case.
+You can use a similar `CMakeLists.txt` to use the Cloud Bigtable C++ client:
+
+```CMake
+cmake_minimum_required(VERSION 3.5)
+
+find_package(google_cloud_cpp_bigtable REQUIRED)
+
+add_executable(my_program my_program.cc)
+target_link_libraries(my_program google-cloud-cpp::bigtable)
+```
+
+## Using `google-cloud-cpp` in Make-based projects.
+
+Once you have installed `google-cloud-cpp` you can use the libraries in your
+own Make-based projects using `pkg-config`:
+
+```Makefile
+GCS_CXXFLAGS   := $(shell pkg-config storage_client --cflags)
+GCS_CXXLDFLAGS := $(shell pkg-config storage_client --libs-only-L)
+GCS_LIBS       := $(shell pkg-config storage_client --libs-only-l)
+
+my_storage_program: my_storage_program.cc
+        $(CXX) $(CXXFLAGS) $(GCS_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(GCS_LIBS)
+
+CBT_CXXFLAGS   := $(shell pkg-config bigtable_client --cflags)
+CBT_CXXLDFLAGS := $(shell pkg-config bigtable_client --libs-only-L)
+CBT_LIBS       := $(shell pkg-config bigtable_client --libs-only-l)
+
+my_bigtable_program: my_bigtable_program.cc
+        $(CXX) $(CXXFLAGS) $(CBT_CXXFLAGS) $(CBT_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
+```
+
+## Using `google-cloud-cpp` in Bazel-based projects.
+
+If you use `Bazel` for your builds you do not need to install
+`google-cloud-cpp`. We provide a Starlark function to automatically download and
+compile `google-cloud-cpp` as part of you Bazel build. Add the following
+commands to your `WORKSPACE` file:
+
+```Python
+# Update the version and SHA256 digest as needed.
+http_archive(
+    name = "com_github_googleapis_google_cloud_cpp",
+    url = "http://github.com/googleapis/google-cloud-cpp/archive/v1.19.0.tar.gz",
+    strip_prefix = "google-cloud-cpp-1.19.0",
+    sha256 = "33eb349cf5f033704a4299b0ac57e3a8b4973ca92f4491aef822bfeb41e69d27",
+)
+
+load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+google_cloud_cpp_deps()
+# Have to manually call the corresponding function for gRPC:
+#   https://github.com/bazelbuild/bazel/issues/1550
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+grpc_deps()
+load("@upb//bazel:workspace_deps.bzl", "upb_deps")
+upb_deps()
+load("@build_bazel_rules_apple//apple:repositories.bzl", "apple_rules_dependencies")
+apple_rules_dependencies()
+load("@build_bazel_apple_support//lib:repositories.bzl", "apple_support_dependencies")
+apple_support_dependencies()
+```
+
+Then you can link the libraries from your `BUILD` files:
+
+```Python
+cc_binary(
+    name = "bigtable_install_test",
+    srcs = [
+        "bigtable_install_test.cc",
+    ],
+    deps = [
+        "@com_github_googleapis_google_cloud_cpp//google/cloud/bigtable:bigtable_client",
+    ],
+)
+
+cc_binary(
+    name = "storage_install_test",
+    srcs = [
+        "storage_install_test.cc",
+    ],
+    deps = [
+        "@com_github_googleapis_google_cloud_cpp//google/cloud/storage:storage_client",
+    ],
+)
+```
 
 ## Required Libraries
 
@@ -108,7 +184,7 @@ quickstart guides also cover this use-case.
 | [crc32c][crc32c-gh]  | 1.0.6 | Hardware-accelerated CRC32C implementation |
 | [OpenSSL][OpenSSL-gh] | 1.0.2 | Crypto functions for Google Cloud Storage authentication |
 | [nlohmann/json][nlohmann-json-gh] | 3.4.0 | JSON for Modern C++ |
-| [protobuf][protobuf-gh] | 3.15.8 | C++ Microgenerator support |
+| [protobuf][protobuf-gh] | 3.14.0 | C++ Microgenerator support |
 
 [abseil-gh]: https://github.com/abseil/abseil-cpp
 [gRPC-gh]: https://github.com/grpc/grpc
@@ -123,52 +199,37 @@ instructions include steps to install these indirect dependencies too.
 
 When possible, the instructions below prefer to use pre-packaged versions of
 these libraries and their dependencies. In some cases the packages do not exist,
-or the packaged versions are too old to support `google-cloud-cpp`. If this is
+or the package versions are too old to support `google-cloud-cpp`. If this is
 the case, the instructions describe how you can manually download and install
 these dependencies.
 
 <details>
-<summary>Fedora (34)</summary>
+<summary>Fedora (33)</summary>
 <br>
 
 Install the minimal development tools:
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y ccache cmake curl findutils gcc-c++ git make ninja-build \
-        openssl-devel patch unzip tar wget zip zlib-devel
+sudo dnf install -y ccache cmake gcc-c++ git make openssl-devel patch pkgconfig \
+        zlib-devel
 ```
 
-Fedora 34 includes packages for gRPC and Protobuf, but they are not
-recent enough to support the protos published by Google Cloud. The indirect
-dependencies of libcurl, Protobuf, and gRPC are recent enough for our needs.
+Fedora 31 includes packages for gRPC, libcurl, and OpenSSL that are recent
+enough for the project. Install these packages and additional development
+tools to compile the dependencies:
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y c-ares-devel re2-devel libcurl-devel
-```
-
-Fedora's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
-when handling `.pc` files with lots of `Requires:` deps, which happens with
-Abseil. If you plan to use `pkg-config` with any of the installed artifacts,
-you may want to use a recent version of the standard `pkg-config` binary. If
-not, `sudo dnf install pkgconfig` should work.
-
-```bash
-mkdir -p $HOME/Downloads/pkg-config-cpp && cd $HOME/Downloads/pkg-config-cpp
-curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    ./configure --with-internal-glib && \
-    make -j ${NCPU:-4} && \
-sudo make install && \
-sudo ldconfig
+sudo dnf install -y grpc-devel grpc-plugins \
+        libcurl-devel protobuf-compiler tar wget zlib-devel
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
 default pkg-config does not search in these directories.
 
 ```bash
-export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
+export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 ```
 
 #### Abseil
@@ -198,7 +259,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -221,58 +282,14 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -H. -Bcmake-out/nlohmann/json && \
-sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
-#### Protobuf
-
-Unless you are only using the Google Cloud Storage library the project
-needs Protobuf and gRPC. Unfortunately the version of Protobuf that ships
-with Fedora 34 is not recent enough to support the protos published by
-Google Cloud. We need to build from source:
-
-```bash
-mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.18.1.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=yes \
-        -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
-#### gRPC
-
-Finally we build gRPC from source also:
-
-```bash
-mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.41.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=ON \
-        -DgRPC_INSTALL=ON \
-        -DgRPC_BUILD_TESTS=OFF \
-        -DgRPC_ABSL_PROVIDER=package \
-        -DgRPC_CARES_PROVIDER=package \
-        -DgRPC_PROTOBUF_PROVIDER=package \
-        -DgRPC_RE2_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=package \
-        -DgRPC_ZLIB_PROVIDER=package \
-        -H. -Bcmake-out && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
 sudo ldconfig
 ```
 
@@ -347,7 +364,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.18.1.tar.gz | \
+curl -sSL https://github.com/google/protobuf/archive/v3.17.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -380,7 +397,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.41.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.38.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -405,7 +422,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -428,14 +445,14 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -H. -Bcmake-out/nlohmann/json && \
-sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
 sudo ldconfig
 ```
 
@@ -498,7 +515,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.18.1.tar.gz | \
+curl -sSL https://github.com/google/protobuf/archive/v3.17.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -517,7 +534,7 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.41.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.38.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -542,7 +559,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -565,14 +582,14 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -H. -Bcmake-out/nlohmann/json && \
-sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
 sudo ldconfig
 ```
 
@@ -634,7 +651,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.18.1.tar.gz | \
+curl -sSL https://github.com/google/protobuf/archive/v3.17.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -670,7 +687,7 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.41.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.38.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -695,7 +712,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -718,14 +735,14 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -H. -Bcmake-out/nlohmann/json && \
-sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
 sudo ldconfig
 ```
 
@@ -747,23 +764,22 @@ cmake --build cmake-out --target install
 </details>
 
 <details>
-<summary>Debian (11 - Bullseye)</summary>
+<summary>Ubuntu (16.04 LTS - Xenial Xerus)</summary>
 <br>
 
-Install the minimal development tools, libcurl, and OpenSSL:
+Install the minimal development tools, OpenSSL and libcurl:
 
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ca-certificates ccache cmake curl git \
-        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev \
-        libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev
+        automake build-essential ccache cmake ca-certificates curl git \
+        gcc g++ libcurl4-openssl-dev libssl-dev libtool m4 make \
+        pkg-config tar wget zlib1g-dev
 ```
 
 #### Abseil
 
-Debian 11 ships with Abseil==20200923.3.  Unfortunately, the current gRPC version needs
-Abseil>=20210324.
+We need a recent version of Abseil.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
@@ -781,6 +797,81 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### Protobuf
+
+We need to install a version of Protobuf that is recent enough to support the
+Google Cloud Platform proto files:
+
+```bash
+mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
+curl -sSL https://github.com/google/protobuf/archive/v3.17.3.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -Hcmake -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### c-ares
+
+Recent versions of gRPC require c-ares >= 1.11, while Ubuntu-16.04
+distributes c-ares-1.10. Manually install a newer version:
+
+```bash
+mkdir -p $HOME/Downloads/c-ares && cd $HOME/Downloads/c-ares
+curl -sSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    ./buildconf && ./configure && make -j ${NCPU:-4} && \
+sudo make install && \
+sudo ldconfig
+```
+
+#### RE2
+
+We need a newer version of RE2 than the system package provides.
+
+```bash
+mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
+curl -sSL https://github.com/google/re2/archive/2020-11-01.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DRE2_BUILD_TESTING=OFF \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### gRPC
+
+We also need a version of gRPC that is recent enough to support the Google
+Cloud Platform proto files. We can install gRPC from source using:
+
+```bash
+mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
+curl -sSL https://github.com/grpc/grpc/archive/v1.38.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_RE2_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
 #### crc32c
 
 The project depends on the Crc32c library, we need to compile this from
@@ -788,7 +879,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -804,54 +895,25 @@ sudo ldconfig
 
 #### nlohmann_json library
 
-Debian 11 also ships with nlohmann-json==3.9.1, which is recent enough for our needs:
+The project depends on the nlohmann_json library. We use CMake to
+install it as this installs the necessary CMake configuration files.
+Note that this is a header-only library, and often installed manually.
+This leaves your environment without support for CMake pkg-config.
 
 ```bash
-sudo apt-get update && \
-sudo apt-get --no-install-recommends install -y nlohmann-json3-dev
-```
-
-#### Protobuf
-
-Unless you are only using the Google Cloud Storage library the project
-needs Protobuf and gRPC. Unfortunately the version of Protobuf that ships
-with Debian 11 is not recent enough to support the protos published by
-Google Cloud. We need to build from source:
-
-```bash
-mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.18.1.tar.gz | \
+mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
+    sed -i \
+        -e '1s/VERSION 3.8/VERSION 3.5/' \
+        -e '/^target_compile_features/d' \
+        CMakeLists.txt && \
     cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=yes \
-        -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
-#### gRPC
-
-Finally we build gRPC from source also:
-
-```bash
-mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.41.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=ON \
-        -DgRPC_INSTALL=ON \
-        -DgRPC_BUILD_TESTS=OFF \
-        -DgRPC_ABSL_PROVIDER=package \
-        -DgRPC_CARES_PROVIDER=package \
-        -DgRPC_PROTOBUF_PROVIDER=package \
-        -DgRPC_RE2_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=package \
-        -DgRPC_ZLIB_PROVIDER=package \
-        -H. -Bcmake-out && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBUILD_TESTING=OFF \
+      -H. -Bcmake-out/nlohmann/json && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
 sudo ldconfig
 ```
 
@@ -873,7 +935,7 @@ cmake --build cmake-out --target install
 </details>
 
 <details>
-<summary>Debian (10 - Buster)</summary>
+<summary>Debian (Buster)</summary>
 <br>
 
 Install the minimal development tools, libcurl, and OpenSSL:
@@ -882,8 +944,17 @@ Install the minimal development tools, libcurl, and OpenSSL:
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ca-certificates ccache cmake curl git \
-        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev \
-        libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev
+        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 \
+        make pkg-config tar wget zlib1g-dev
+```
+
+Debian 10 includes versions of gRPC and Protobuf that support the
+Google Cloud Platform proto files. We simply install these pre-built versions:
+
+```bash
+sudo apt-get update && \
+sudo apt-get --no-install-recommends install -y libgrpc++-dev libprotobuf-dev \
+    libprotoc-dev libc-ares-dev protobuf-compiler protobuf-compiler-grpc
 ```
 
 #### Abseil
@@ -913,7 +984,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -936,58 +1007,14 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -H. -Bcmake-out/nlohmann/json && \
-sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
-#### Protobuf
-
-Unless you are only using the Google Cloud Storage library the project
-needs Protobuf and gRPC. Unfortunately the version of Protobuf that ships
-with Debian 10 is not recent enough to support the protos published by
-Google Cloud. We need to build from source:
-
-```bash
-mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.18.1.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=yes \
-        -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-sudo ldconfig
-```
-
-#### gRPC
-
-Finally we build gRPC from source also:
-
-```bash
-mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.41.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=ON \
-        -DgRPC_INSTALL=ON \
-        -DgRPC_BUILD_TESTS=OFF \
-        -DgRPC_ABSL_PROVIDER=package \
-        -DgRPC_CARES_PROVIDER=package \
-        -DgRPC_PROTOBUF_PROVIDER=package \
-        -DgRPC_RE2_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=package \
-        -DgRPC_ZLIB_PROVIDER=package \
-        -H. -Bcmake-out && \
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
 sudo ldconfig
 ```
 
@@ -1009,7 +1036,7 @@ cmake --build cmake-out --target install
 </details>
 
 <details>
-<summary>Debian (9 - Stretch)</summary>
+<summary>Debian (Stretch)</summary>
 <br>
 
 First install the development tools and libcurl.
@@ -1056,7 +1083,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.18.1.tar.gz | \
+curl -sSL https://github.com/google/protobuf/archive/v3.17.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1106,7 +1133,7 @@ Protobuf we just installed in `/usr/local`:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.41.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.38.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1131,7 +1158,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1154,7 +1181,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i \
         -e '1s/VERSION 3.8/VERSION 3.5/' \
@@ -1165,7 +1192,7 @@ curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -H. -Bcmake-out/nlohmann/json && \
-sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
 sudo ldconfig
 ```
 
@@ -1241,7 +1268,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.18.1.tar.gz | \
+curl -sSL https://github.com/google/protobuf/archive/v3.17.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1260,7 +1287,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.41.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.38.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1285,7 +1312,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1308,14 +1335,14 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -H. -Bcmake-out/nlohmann/json && \
-sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
 sudo ldconfig
 ```
 
@@ -1417,7 +1444,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.18.1.tar.gz | \
+curl -sSL https://github.com/google/protobuf/archive/v3.17.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1450,7 +1477,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.41.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.38.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1475,7 +1502,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1498,14 +1525,14 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -H. -Bcmake-out/nlohmann/json && \
-sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
 sudo ldconfig
 ```
 

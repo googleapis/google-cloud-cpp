@@ -33,7 +33,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
  * Represents a request to the `Objects: list` API.
@@ -177,6 +177,17 @@ class ReadObjectRangeRequest
 };
 
 std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r);
+
+struct ReadObjectRangeResponse {
+  std::string contents;
+  std::int64_t first_byte;
+  std::int64_t last_byte;
+  std::int64_t object_size;
+
+  static ReadObjectRangeResponse FromHttpResponse(HttpResponse&& response);
+};
+
+std::ostream& operator<<(std::ostream& os, ReadObjectRangeResponse const& r);
 
 /**
  * Represents a request to the `Objects: delete` API.
@@ -437,7 +448,7 @@ std::ostream& operator<<(std::ostream& os,
                          QueryResumableUploadRequest const& r);
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

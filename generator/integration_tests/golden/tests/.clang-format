@@ -10,8 +10,6 @@ PointerAlignment: Left
 IncludeBlocks: Merge
 IncludeCategories:
 # Matches common headers first, but sorts them after project includes
-- Regex: '^\"google/cloud/internal/disable_deprecation_warnings.inc\"$'
-  Priority: -1
 - Regex: '^\"google/cloud/(internal/|grpc_utils/|testing_util/|[^/]+\.h)'
   Priority: 1000
 - Regex: '^\"google/cloud/'  # project includes should sort first

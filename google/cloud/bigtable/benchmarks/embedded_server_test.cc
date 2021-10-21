@@ -25,7 +25,7 @@ namespace bigtable {
 namespace benchmarks {
 namespace {
 
-using ::std::chrono::milliseconds;
+using std::chrono::milliseconds;
 
 TEST(EmbeddedServer, WaitAndShutdown) {
   auto server = CreateEmbeddedServer();
@@ -33,7 +33,7 @@ TEST(EmbeddedServer, WaitAndShutdown) {
 
   std::thread wait_thread([&server]() { server->Wait(); });
   EXPECT_TRUE(wait_thread.joinable());
-  std::this_thread::sleep_for(milliseconds(20));
+  std::this_thread::sleep_for(std::chrono::milliseconds(20));
   EXPECT_TRUE(wait_thread.joinable());
   server->Shutdown();
   wait_thread.join();
@@ -43,12 +43,10 @@ TEST(EmbeddedServer, Admin) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  auto options =
-      Options{}
-          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-          .set<AdminEndpointOption>(server->address());
-
-  TableAdmin admin(MakeAdminClient("fake-project", options), "fake-instance");
+  ClientOptions options(grpc::InsecureChannelCredentials());
+  options.set_admin_endpoint(server->address());
+  TableAdmin admin(CreateDefaultAdminClient("fake-project", options),
+                   "fake-instance");
 
   auto gc = GcRule::MaxNumVersions(42);
   EXPECT_EQ(0, server->create_table_count());
@@ -67,12 +65,9 @@ TEST(EmbeddedServer, TableApply) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  auto options =
-      Options{}
-          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-          .set<DataEndpointOption>(server->address());
-
-  Table table(MakeDataClient("fake-project", "fake-instance", options),
+  ClientOptions options(grpc::InsecureChannelCredentials());
+  options.set_data_endpoint(server->address());
+  Table table(CreateDefaultDataClient("fake-project", "fake-instance", options),
               "fake-table");
 
   SingleRowMutation mutation("row1",
@@ -92,12 +87,9 @@ TEST(EmbeddedServer, TableBulkApply) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  auto options =
-      Options{}
-          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-          .set<DataEndpointOption>(server->address());
-
-  Table table(MakeDataClient("fake-project", "fake-instance", options),
+  ClientOptions options(grpc::InsecureChannelCredentials());
+  options.set_data_endpoint(server->address());
+  Table table(CreateDefaultDataClient("fake-project", "fake-instance", options),
               "fake-table");
 
   BulkMutation bulk;
@@ -119,12 +111,9 @@ TEST(EmbeddedServer, ReadRows1) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  auto options =
-      Options{}
-          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-          .set<DataEndpointOption>(server->address());
-
-  Table table(MakeDataClient("fake-project", "fake-instance", options),
+  ClientOptions options(grpc::InsecureChannelCredentials());
+  options.set_data_endpoint(server->address());
+  Table table(CreateDefaultDataClient("fake-project", "fake-instance", options),
               "fake-table");
 
   EXPECT_EQ(0, server->read_rows_count());
@@ -141,12 +130,9 @@ TEST(EmbeddedServer, ReadRows100) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  auto options =
-      Options{}
-          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-          .set<DataEndpointOption>(server->address());
-
-  Table table(MakeDataClient("fake-project", "fake-instance", options),
+  ClientOptions options(grpc::InsecureChannelCredentials());
+  options.set_data_endpoint(server->address());
+  Table table(CreateDefaultDataClient("fake-project", "fake-instance", options),
               "fake-table");
 
   EXPECT_EQ(0, server->read_rows_count());

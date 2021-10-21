@@ -17,6 +17,9 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/string_view.h"
+#include "absl/time/clock.h"
+#include "absl/time/time.h"
 #include "generator/generator.h"
 #include "generator/internal/codegen_utils.h"
 #include <google/protobuf/compiler/command_line_interface.h>
@@ -29,6 +32,7 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::ElementsAreArray;
 
 StatusOr<std::vector<std::string>> ReadFile(std::string const& filepath) {
@@ -44,7 +48,8 @@ StatusOr<std::vector<std::string>> ReadFile(std::string const& filepath) {
   return file_contents;
 }
 
-class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
+class GeneratorIntegrationTest
+    : public testing::TestWithParam<absl::string_view> {
  protected:
   void SetUp() override {
     auto run_integration_tests =
@@ -101,8 +106,6 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
     copyright_year_ = CurrentCopyrightYear();
     omit_rpc1_ = "Omitted1";
     omit_rpc2_ = "Omitted2";
-    service_endpoint_env_var_ = "GOLDEN_KITCHEN_SINK_ENDPOINT";
-    emulator_endpoint_env_var_ = "GOLDEN_KITCHEN_SINK_EMULATOR_HOST";
 
     std::vector<std::string> args;
     // empty arg keeps first real arg from being ignored.
@@ -117,10 +120,6 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
     args.emplace_back("--cpp_codegen_opt=copyright_year=" + copyright_year_);
     args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc1_);
     args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc2_);
-    args.emplace_back("--cpp_codegen_opt=service_endpoint_env_var=" +
-                      service_endpoint_env_var_);
-    args.emplace_back("--cpp_codegen_opt=emulator_endpoint_env_var=" +
-                      emulator_endpoint_env_var_);
     args.emplace_back("generator/integration_tests/test.proto");
 
     std::vector<char const*> c_args;
@@ -143,17 +142,16 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
   std::string copyright_year_;
   std::string omit_rpc1_;
   std::string omit_rpc2_;
-  std::string service_endpoint_env_var_;
-  std::string emulator_endpoint_env_var_;
 };
 
 TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {
   auto golden_file = ReadFile(absl::StrCat(golden_path_, GetParam()));
-  ASSERT_STATUS_OK(golden_file);
+  EXPECT_THAT(golden_file, IsOk());
   auto generated_file =
       ReadFile(absl::StrCat(output_path_, product_path_, GetParam()));
-  ASSERT_STATUS_OK(generated_file);
 
+  EXPECT_THAT(generated_file, IsOk());
+  EXPECT_EQ(golden_file->size(), generated_file->size());
   EXPECT_THAT(*golden_file,
               ElementsAreArray(generated_file->begin(), generated_file->end()));
 }

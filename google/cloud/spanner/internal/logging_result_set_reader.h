@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 class LoggingResultSetReader : public PartialResultSetReader {
  public:
@@ -42,7 +42,7 @@ class LoggingResultSetReader : public PartialResultSetReader {
   TracingOptions tracing_options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

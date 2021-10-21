@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
+#include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/internal/getenv.h"
@@ -25,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
@@ -886,11 +887,12 @@ TEST_F(ClientIntegrationTest, ProfileDml) {
 }
 
 /// @test Verify version_retention_period is returned in information schema.
-TEST_F(ClientIntegrationTest, VersionRetentionPeriod) {
+TEST_F(ClientIntegrationTest, InformationSchema) {
   auto rows = client_->ExecuteQuery(SqlStatement(R"""(
         SELECT s.OPTION_VALUE
         FROM INFORMATION_SCHEMA.DATABASE_OPTIONS s
-        WHERE s.OPTION_NAME = "version_retention_period"
+        WHERE s.SCHEMA_NAME = ""
+          AND s.OPTION_NAME = "version_retention_period"
       )"""));
   using RowType = std::tuple<std::string>;
   for (auto& row : StreamOf<RowType>(rows)) {
@@ -902,28 +904,6 @@ TEST_F(ClientIntegrationTest, VersionRetentionPeriod) {
     }
     if (!row) break;
     EXPECT_EQ("2h", std::get<0>(*row));
-  }
-}
-
-/// @test Verify default_leader is returned in information schema.
-TEST_F(ClientIntegrationTest, DefaultLeader) {
-  auto rows = client_->ExecuteQuery(SqlStatement(R"""(
-        SELECT s.OPTION_VALUE
-        FROM INFORMATION_SCHEMA.DATABASE_OPTIONS s
-        WHERE s.OPTION_NAME = "default_leader"
-      )"""));
-  using RowType = std::tuple<std::string>;
-  for (auto& row : StreamOf<RowType>(rows)) {
-    if (emulator_) {
-      // TODO(#7144): Awaiting emulator support for default_leader.
-      EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
-    } else {
-      EXPECT_THAT(row, IsOk());
-    }
-    if (!row) break;
-    // When the backend starts delivering rows for the table, we can
-    // refine the column expectations beyond a non-empty leader.
-    EXPECT_NE(std::get<0>(*row), "");
   }
 }
 
@@ -968,7 +948,7 @@ TEST_F(ClientIntegrationTest, SpannerStatistics) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

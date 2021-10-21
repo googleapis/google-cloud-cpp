@@ -22,10 +22,10 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
-namespace btproto = ::google::bigtable::v2;
+namespace btproto = google::bigtable::v2;
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
@@ -39,7 +39,7 @@ class TableBulkApplyTest
  public:
   TableBulkApplyTest() : TableTestFixture(CompletionQueue{}) {}
 };
-using ::google::cloud::bigtable::testing::MockMutateRowsReader;
+using google::cloud::bigtable::testing::MockMutateRowsReader;
 
 /// @test Verify that Table::BulkApply() works in the easy case.
 TEST_F(TableBulkApplyTest, Simple) {
@@ -301,7 +301,7 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
 }
 
 }  // anonymous namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

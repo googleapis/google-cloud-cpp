@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 /// Object to hold information used to instantiate an AuthorizedUserCredentials.
 struct AuthorizedUserCredentialsInfo {
@@ -79,12 +79,23 @@ template <typename HttpRequestBuilderType =
           typename ClockType = std::chrono::system_clock>
 class AuthorizedUserCredentials : public Credentials {
  public:
-  explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo info,
+  explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo const& info,
                                      ChannelOptions const& channel_options = {})
-      : info_(std::move(info)),
-        options_(Options{}.set<CARootsFilePathOption>(
-            channel_options.ssl_root_path())),
-        clock_() {}
+      : clock_() {
+    HttpRequestBuilderType request_builder(
+        info.token_uri, storage::internal::GetDefaultCurlHandleFactory(
+                            Options{}.set<CARootsFilePathOption>(
+                                channel_options.ssl_root_path())));
+    std::string payload("grant_type=refresh_token");
+    payload += "&client_id=";
+    payload += request_builder.MakeEscapedString(info.client_id).get();
+    payload += "&client_secret=";
+    payload += request_builder.MakeEscapedString(info.client_secret).get();
+    payload += "&refresh_token=";
+    payload += request_builder.MakeEscapedString(info.refresh_token).get();
+    payload_ = std::move(payload);
+    request_ = request_builder.BuildRequest();
+  }
 
   StatusOr<std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
@@ -94,31 +105,25 @@ class AuthorizedUserCredentials : public Credentials {
 
  private:
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() {
-    HttpRequestBuilderType builder(
-        info_.token_uri,
-        storage::internal::GetDefaultCurlHandleFactory(options_));
-    std::string payload("grant_type=refresh_token");
-    payload += "&client_id=";
-    payload += builder.MakeEscapedString(info_.client_id).get();
-    payload += "&client_secret=";
-    payload += builder.MakeEscapedString(info_.client_secret).get();
-    payload += "&refresh_token=";
-    payload += builder.MakeEscapedString(info_.refresh_token).get();
-    auto response = std::move(builder).BuildRequest().MakeRequest(payload);
-    if (!response) return std::move(response).status();
-    if (response->status_code >= 300) return AsStatus(*response);
+    auto response = request_.MakeRequest(payload_);
+    if (!response) {
+      return std::move(response).status();
+    }
+    if (response->status_code >= 300) {
+      return AsStatus(*response);
+    }
     return ParseAuthorizedUserRefreshResponse(*response, clock_.now());
   }
 
-  AuthorizedUserCredentialsInfo info_;
-  Options options_;
   ClockType clock_;
+  typename HttpRequestBuilderType::RequestType request_;
+  std::string payload_;
   mutable std::mutex mu_;
   RefreshingCredentialsWrapper refreshing_creds_;
 };
 
 }  // namespace oauth2
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

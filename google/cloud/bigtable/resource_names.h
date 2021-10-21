@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 
 /**
  * @file
@@ -49,7 +49,7 @@ std::string BackupName(std::string const& project_id,
                        std::string const& cluster_id,
                        std::string const& backup_id);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

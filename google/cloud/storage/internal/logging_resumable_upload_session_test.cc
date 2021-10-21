@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
@@ -63,8 +63,7 @@ TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
 
   std::string const payload = "test-payload-data";
   EXPECT_CALL(*mock, UploadFinalChunk)
-      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s,
-                    HashValues const&) {
+      .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
         EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
         EXPECT_EQ(513 * 1024, s);
         return StatusOr<ResumableUploadResponse>(
@@ -73,7 +72,7 @@ TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
 
   LoggingResumableUploadSession session(std::move(mock));
 
-  auto result = session.UploadFinalChunk({{payload}}, 513 * 1024, {});
+  auto result = session.UploadFinalChunk({{payload}}, 513 * 1024);
   EXPECT_THAT(result, StatusIs(StatusCode::kUnavailable, "uh oh"));
 
   auto const log_lines = log_backend_.ExtractLines();
@@ -150,7 +149,7 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseBadStatus) {
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -16,9 +16,8 @@
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud BigQuery C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud BigQuery")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
-                         ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Beta)")
+set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 set(DOXYGEN_EXCLUDE_PATTERNS "*/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "bigquery_internal" "bigquery_testing"
                             "examples")
@@ -66,13 +65,14 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_bigquery)
 set_target_properties(
     google_cloud_cpp_bigquery
-    PROPERTIES EXPORT_NAME google-cloud-cpp::bigquery VERSION
-                                                      "${PROJECT_VERSION}"
-               SOVERSION "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-bigquery
+               VERSION "${PROJECT_VERSION}" SOVERSION
+                                            "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_bigquery
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::bigquery ALIAS google_cloud_cpp_bigquery)
+add_library(google-cloud-cpp::experimental-bigquery ALIAS
+            google_cloud_cpp_bigquery)
 
 # To avoid maintaining the list of files for the library, export them to a .bzl
 # file.
@@ -90,8 +90,8 @@ target_sources(
     INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_bigquery_read_connection.h)
 target_link_libraries(
     google_cloud_cpp_bigquery_mocks
-    INTERFACE google-cloud-cpp::bigquery GTest::gmock_main GTest::gmock
-              GTest::gtest)
+    INTERFACE google-cloud-cpp::experimental-bigquery GTest::gmock_main
+              GTest::gmock GTest::gtest)
 create_bazel_config(google_cloud_cpp_bigquery_mocks YEAR "2021")
 target_include_directories(
     google_cloud_cpp_bigquery_mocks
@@ -102,11 +102,6 @@ target_compile_options(google_cloud_cpp_bigquery_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 add_subdirectory(integration_tests)
-# Examples are enabled if possible, but package maintainers may want to disable
-# compilation to speed up their builds.
-if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
-    add_subdirectory(samples)
-endif ()
 
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)

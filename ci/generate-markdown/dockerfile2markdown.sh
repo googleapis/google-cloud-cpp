@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -euo pipefail
+set -eu
 
 # shellcheck disable=SC2016
 sed_args=(

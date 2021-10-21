@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 std::ostream& operator<<(std::ostream& os, LifecycleRuleAction const& rhs) {
   return os << "LifecycleRuleAction={" << rhs.type << ", " << rhs.storage_class
             << "}";
@@ -165,8 +165,9 @@ void LifecycleRule::MergeConditions(LifecycleRuleCondition& result,
   }
   if (rhs.days_since_noncurrent_time.has_value()) {
     if (result.days_since_noncurrent_time.has_value()) {
-      result.days_since_noncurrent_time = (std::max)(
-          *result.days_since_noncurrent_time, *rhs.days_since_noncurrent_time);
+      result.days_since_noncurrent_time =
+          (std::max)(*result.days_since_noncurrent_time,
+                     *rhs.days_since_noncurrent_time);
     } else {
       result.days_since_noncurrent_time = *rhs.days_since_noncurrent_time;
     }
@@ -202,7 +203,7 @@ std::ostream& operator<<(std::ostream& os, LifecycleRule const& rhs) {
             << ", action=" << rhs.action() << "}";
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

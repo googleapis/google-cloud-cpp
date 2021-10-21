@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
@@ -379,6 +379,15 @@ RetryClient::CreateResumableSession(ResumableUploadRequest const& request) {
           std::move(backoff_policy)));
 }
 
+StatusOr<std::unique_ptr<ResumableUploadSession>>
+RetryClient::RestoreResumableSession(std::string const& request) {
+  auto retry_policy = retry_policy_prototype_->clone();
+  auto backoff_policy = backoff_policy_prototype_->clone();
+  return MakeCall(*retry_policy, *backoff_policy, Idempotency::kIdempotent,
+                  *client_, &RawClient::RestoreResumableSession, request,
+                  __func__);
+}
+
 StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
   auto retry_policy = retry_policy_prototype_->clone();
@@ -708,7 +717,7 @@ StatusOr<EmptyResponse> RetryClient::DeleteNotification(
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -16,8 +16,10 @@
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/setenv.h"
+#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <crc32c/crc32c.h>
@@ -34,13 +36,16 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::google::cloud::internal::GetEnv;
-using ::testing::IsEmpty;
+using ::google::cloud::storage::testing::AclEntityNames;
+using ::google::cloud::testing_util::ContainsOnce;
+using ::testing::Contains;
+using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::UnorderedElementsAre;
 
 // When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
 // actually just run against the regular GCS REST API. That is fine.
@@ -55,24 +60,253 @@ class GrpcIntegrationTest
     std::string const grpc_config_value = GetParam();
     google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
                                     grpc_config_value);
-    project_id_ = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-    ASSERT_THAT(project_id_, Not(IsEmpty()))
-        << "GOOGLE_CLOUD_PROJECT is not set";
+    project_id_ =
+        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+    ASSERT_FALSE(project_id_.empty()) << "GOOGLE_CLOUD_PROJECT is not set";
 
-    bucket_name_ =
-        GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
-    ASSERT_THAT(bucket_name_, Not(IsEmpty()))
-        << "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME is not set";
+    topic_name_ = google::cloud::internal::GetEnv(
+                      "GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME")
+                      .value_or("");
+    ASSERT_FALSE(topic_name_.empty())
+        << "GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME is not set";
   }
 
   std::string project_id() const { return project_id_; }
-  std::string bucket_name() const { return bucket_name_; }
+  std::string topic_name() const { return topic_name_; }
+
+  std::string MakeEntityName() {
+    // We always use the viewers for the project because it is known to exist.
+    return "project-viewers-" + project_id_;
+  }
 
  private:
   std::string project_id_;
-  std::string bucket_name_;
+  std::string topic_name_;
   testing_util::ScopedEnvironment grpc_config_;
 };
+
+TEST_P(GrpcIntegrationTest, BucketCRUD) {
+  auto client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto bucket_name = MakeRandomBucketName();
+  auto bucket_metadata = client->CreateBucketForProject(
+      bucket_name, project_id(), BucketMetadata());
+  ASSERT_STATUS_OK(bucket_metadata);
+
+  EXPECT_EQ(bucket_name, bucket_metadata->name());
+
+  auto list_bucket_names = [&client, this] {
+    std::vector<std::string> names;
+    for (auto b : client->ListBucketsForProject(project_id())) {
+      EXPECT_STATUS_OK(b);
+      if (!b) break;
+      names.push_back(b->name());
+    }
+    return names;
+  };
+  EXPECT_THAT(list_bucket_names(), Contains(bucket_name));
+
+  auto get = client->GetBucketMetadata(bucket_name);
+  ASSERT_STATUS_OK(get);
+  EXPECT_EQ(bucket_name, get->id());
+  EXPECT_EQ(bucket_name, get->name());
+
+  // Create a request to update the metadata, change the storage class because
+  // it is easy. And use either COLDLINE or NEARLINE depending on the existing
+  // value.
+  std::string desired_storage_class = storage_class::Coldline();
+  if (get->storage_class() == storage_class::Coldline()) {
+    desired_storage_class = storage_class::Nearline();
+  }
+  BucketMetadata update = *get;
+  update.set_storage_class(desired_storage_class);
+  StatusOr<BucketMetadata> updated_meta =
+      client->UpdateBucket(bucket_name, update);
+  ASSERT_STATUS_OK(updated_meta);
+  EXPECT_EQ(desired_storage_class, updated_meta->storage_class());
+
+  auto delete_status = client->DeleteBucket(bucket_name);
+  EXPECT_STATUS_OK(delete_status);
+  EXPECT_THAT(list_bucket_names(), Not(Contains(bucket_name)));
+}
+
+TEST_P(GrpcIntegrationTest, BucketAccessControlCRUD) {
+  // TODO(#5673): Enable this.
+  if (!UsingEmulator()) GTEST_SKIP();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  // Create a new bucket to run the test, with the "private" PredefinedAcl so
+  // we know what the contents of the ACL will be.
+  std::string bucket_name = MakeRandomBucketName();
+  auto meta = client->CreateBucketForProject(
+      bucket_name, project_id(), BucketMetadata(), PredefinedAcl("private"),
+      Projection("full"));
+  ASSERT_STATUS_OK(meta);
+
+  auto entity_name = MakeEntityName();
+
+  ASSERT_FALSE(meta->acl().empty())
+      << "Test aborted. Empty ACL returned from newly created bucket <"
+      << bucket_name << "> even though we requested the <full> projection.";
+  ASSERT_THAT(AclEntityNames(meta->acl()), Not(Contains(entity_name)))
+      << "Test aborted. The bucket <" << bucket_name << "> has <" << entity_name
+      << "> in its ACL.  This is unexpected because the bucket was just"
+      << " created with a predefine ACL which should preclude this result.";
+
+  StatusOr<BucketAccessControl> result =
+      client->CreateBucketAcl(bucket_name, entity_name, "OWNER");
+  ASSERT_STATUS_OK(result);
+  EXPECT_EQ("OWNER", result->role());
+
+  StatusOr<std::vector<BucketAccessControl>> current_acl =
+      client->ListBucketAcl(bucket_name);
+  ASSERT_STATUS_OK(current_acl);
+  EXPECT_FALSE(current_acl->empty());
+  // Search using the entity name returned by the request, because we use
+  // 'project-editors-<project_id>' this different than the original entity
+  // name, the server "translates" the project id to a project number.
+  EXPECT_THAT(AclEntityNames(*current_acl), ContainsOnce(result->entity()));
+
+  StatusOr<BucketAccessControl> get_result =
+      client->GetBucketAcl(bucket_name, entity_name);
+  ASSERT_STATUS_OK(get_result);
+  EXPECT_EQ(*get_result, *result);
+
+  BucketAccessControl new_acl = *get_result;
+  new_acl.set_role("READER");
+  auto updated_result = client->UpdateBucketAcl(bucket_name, new_acl);
+  ASSERT_STATUS_OK(updated_result);
+  EXPECT_EQ("READER", updated_result->role());
+
+  get_result = client->GetBucketAcl(bucket_name, entity_name);
+  ASSERT_STATUS_OK(get_result);
+  EXPECT_EQ(*get_result, *updated_result);
+
+  auto status = client->DeleteBucketAcl(bucket_name, entity_name);
+  ASSERT_STATUS_OK(status);
+
+  current_acl = client->ListBucketAcl(bucket_name);
+  ASSERT_STATUS_OK(current_acl);
+  EXPECT_THAT(AclEntityNames(*current_acl), Not(Contains(result->entity())));
+
+  status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
+}
+
+TEST_P(GrpcIntegrationTest, DefaultObjectAccessControlCRUD) {
+  // TODO(#5673): Enable this.
+  if (!UsingEmulator()) GTEST_SKIP();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  // Create a new bucket to run the test, with the "private"
+  // PredefinedDefaultObjectAcl, that way we can predict the the contents of the
+  // ACL.
+  std::string bucket_name = MakeRandomBucketName();
+  auto meta = client->CreateBucketForProject(
+      bucket_name, project_id(), BucketMetadata(),
+      PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"));
+  ASSERT_STATUS_OK(meta);
+
+  auto entity_name = MakeEntityName();
+
+  ASSERT_FALSE(meta->default_acl().empty())
+      << "Test aborted. Empty ACL returned from newly created bucket <"
+      << bucket_name << "> even though we requested the <full> projection.";
+  ASSERT_THAT(AclEntityNames(meta->default_acl()), Not(Contains(entity_name)))
+      << "Test aborted. The bucket <" << bucket_name << "> has <" << entity_name
+      << "> in its ACL.  This is unexpected because the bucket was just"
+      << " created with a predefine ACL which should preclude this result.";
+
+  StatusOr<ObjectAccessControl> result =
+      client->CreateDefaultObjectAcl(bucket_name, entity_name, "OWNER");
+  ASSERT_STATUS_OK(result);
+  EXPECT_EQ("OWNER", result->role());
+
+  auto current_acl = client->ListDefaultObjectAcl(bucket_name);
+  ASSERT_STATUS_OK(current_acl);
+  EXPECT_FALSE(current_acl->empty());
+  // Search using the entity name returned by the request, because we use
+  // 'project-editors-<project_id_>' this different than the original entity
+  // name, the server "translates" the project id to a project number.
+  EXPECT_THAT(AclEntityNames(meta->default_acl()),
+              ContainsOnce(result->entity()));
+
+  auto get_result = client->GetDefaultObjectAcl(bucket_name, entity_name);
+  ASSERT_STATUS_OK(get_result);
+  EXPECT_EQ(*get_result, *result);
+
+  ObjectAccessControl new_acl = *get_result;
+  new_acl.set_role("READER");
+  auto updated_result = client->UpdateDefaultObjectAcl(bucket_name, new_acl);
+  ASSERT_STATUS_OK(updated_result);
+
+  EXPECT_EQ(updated_result->role(), "READER");
+  get_result = client->GetDefaultObjectAcl(bucket_name, entity_name);
+  EXPECT_EQ(*get_result, *updated_result);
+
+  ASSERT_STATUS_OK(get_result);
+  EXPECT_EQ(get_result->role(), new_acl.role());
+
+  auto status = client->DeleteDefaultObjectAcl(bucket_name, entity_name);
+  EXPECT_STATUS_OK(status);
+
+  current_acl = client->ListDefaultObjectAcl(bucket_name);
+  ASSERT_STATUS_OK(current_acl);
+  EXPECT_THAT(AclEntityNames(meta->default_acl()), Not(Contains(entity_name)));
+
+  status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
+}
+
+TEST_P(GrpcIntegrationTest, NotificationsCRUD) {
+  // TODO(#5673): Enable this.
+  if (!UsingEmulator()) GTEST_SKIP();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  // Create a new bucket to run the test.
+  std::string bucket_name = MakeRandomBucketName();
+  auto meta = client->CreateBucketForProject(bucket_name, project_id(),
+                                             BucketMetadata());
+  ASSERT_STATUS_OK(meta);
+
+  auto notification_ids = [&client, bucket_name] {
+    std::vector<std::string> ids;
+    auto list = client->ListNotifications(bucket_name);
+    EXPECT_STATUS_OK(list);
+    for (auto const& notification : *list) ids.push_back(notification.id());
+    return ids;
+  };
+  ASSERT_TRUE(notification_ids().empty())
+      << "Test aborted. Non-empty notification list returned from newly"
+      << " created bucket <" << bucket_name
+      << ">. This is unexpected because the bucket name is chosen at random.";
+
+  auto create = client->CreateNotification(
+      bucket_name, topic_name(), payload_format::JsonApiV1(),
+      NotificationMetadata().append_event_type(event_type::ObjectFinalize()));
+  ASSERT_STATUS_OK(create);
+
+  EXPECT_EQ(payload_format::JsonApiV1(), create->payload_format());
+  EXPECT_THAT(create->topic(), HasSubstr(topic_name()));
+  EXPECT_THAT(notification_ids(), ContainsOnce(create->id()))
+      << "create=" << *create;
+
+  auto get = client->GetNotification(bucket_name, create->id());
+  ASSERT_STATUS_OK(get);
+  EXPECT_EQ(*create, *get);
+
+  auto status = client->DeleteNotification(bucket_name, create->id());
+  ASSERT_STATUS_OK(status);
+  EXPECT_THAT(notification_ids(), Not(Contains(create->id())))
+      << "create=" << *create;
+
+  status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
+}
 
 TEST_P(GrpcIntegrationTest, ObjectCRUD) {
   auto bucket_client = MakeBucketIntegrationTestClient();
@@ -106,6 +340,61 @@ TEST_P(GrpcIntegrationTest, ObjectCRUD) {
 
   auto delete_bucket_status = bucket_client->DeleteBucket(bucket_name);
   EXPECT_STATUS_OK(delete_bucket_status);
+}
+
+TEST_P(GrpcIntegrationTest, NativeIamCRUD) {
+  // TODO(#5673): Enable this.
+  if (!UsingEmulator()) GTEST_SKIP();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  // Create a new bucket to run the test.
+  std::string bucket_name = MakeRandomBucketName();
+  auto meta = client->CreateBucketForProject(bucket_name, project_id(),
+                                             BucketMetadata());
+  ASSERT_STATUS_OK(meta);
+
+  auto set = client->SetNativeBucketIamPolicy(
+      bucket_name, NativeIamPolicy({NativeIamBinding(
+                                       "test-role", {"user@test.example.com"})},
+                                   "test-etag", 3));
+  ASSERT_STATUS_OK(set);
+
+  EXPECT_TRUE(google::cloud::internal::ContainsIf(
+      set->bindings(), [](NativeIamBinding const& binding) {
+        return binding.role() == "test-role";
+      }));
+  EXPECT_TRUE(google::cloud::internal::ContainsIf(
+      set->bindings(), [](NativeIamBinding const& binding) {
+        return google::cloud::internal::Contains(binding.members(),
+                                                 "user@test.example.com");
+      }));
+  EXPECT_EQ(set->version(), 3);
+
+  auto get = client->GetNativeBucketIamPolicy(bucket_name);
+  ASSERT_STATUS_OK(get);
+  EXPECT_TRUE(google::cloud::internal::ContainsIf(
+      get->bindings(), [](NativeIamBinding const& binding) {
+        return binding.role() == "test-role";
+      }));
+  EXPECT_TRUE(google::cloud::internal::ContainsIf(
+      get->bindings(), [](NativeIamBinding const& binding) {
+        return google::cloud::internal::Contains(binding.members(),
+                                                 "user@test.example.com");
+      }));
+  EXPECT_EQ(get->version(), set->version());
+  EXPECT_EQ(get->etag(), set->etag());
+
+  auto test = client->TestBucketIamPermissions(
+      bucket_name, {"storage.buckets.get", "storage.buckets.setIamPolicy",
+                    "storage.objects.update"});
+  ASSERT_STATUS_OK(test);
+  EXPECT_THAT(*test, UnorderedElementsAre("storage.buckets.get",
+                                          "storage.buckets.setIamPolicy",
+                                          "storage.objects.update"));
+
+  auto status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(GrpcIntegrationTest, WriteResume) {
@@ -216,46 +505,14 @@ TEST_P(GrpcIntegrationTest, StreamLargeChunks) {
   EXPECT_EQ(2 * desired_size, stream.metadata()->size());
 }
 
-TEST_P(GrpcIntegrationTest, QuotaUser) {
-  auto client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  auto metadata =
-      client->InsertObject(bucket_name(), object_name, LoremIpsum(),
-                           IfGenerationMatch(0), QuotaUser("test-only"));
-  ASSERT_STATUS_OK(metadata);
-  ScheduleForDelete(*metadata);
-}
-
-TEST_P(GrpcIntegrationTest, FieldFilter) {
-  auto client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  auto metadata = client->InsertObject(
-      bucket_name(), object_name, LoremIpsum(), IfGenerationMatch(0),
-      ContentType("text/plain"), ContentEncoding("utf-8"),
-      Fields("bucket,name,generation,contentType"));
-  ASSERT_STATUS_OK(metadata);
-  ScheduleForDelete(*metadata);
-
-  // If the Fields() filter works, then size() would be 0
-  if (!UsingEmulator()) {
-    EXPECT_EQ(metadata->size(), 0);
-    EXPECT_EQ(metadata->content_type(), "text/plain");
-    EXPECT_EQ(metadata->content_encoding(), "");
-  }
-}
-
 INSTANTIATE_TEST_SUITE_P(GrpcIntegrationMediaTest, GrpcIntegrationTest,
-                         ::testing::Values("none"));
+                         ::testing::Values("media"));
+INSTANTIATE_TEST_SUITE_P(GrpcIntegrationMetadataTest, GrpcIntegrationTest,
+                         ::testing::Values("metadata"));
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

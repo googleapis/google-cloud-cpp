@@ -22,10 +22,10 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-namespace btadmin = ::google::bigtable::admin::v2;
+namespace btadmin = google::bigtable::admin::v2;
 
 /**
  * Implement a logging AdminClient.
@@ -254,7 +254,7 @@ class LoggingAdminClient : public google::cloud::bigtable::AdminClient {
                     grpc::CompletionQueue* cq) override;
 
  private:
-  google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
+  ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() override {
     return child_->BackgroundThreadsFactory();
   }
 
@@ -263,7 +263,7 @@ class LoggingAdminClient : public google::cloud::bigtable::AdminClient {
 };
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

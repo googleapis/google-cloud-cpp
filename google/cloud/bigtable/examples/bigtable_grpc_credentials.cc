@@ -21,7 +21,7 @@
 
 namespace {
 
-using ::google::cloud::bigtable::examples::Usage;
+using google::cloud::bigtable::examples::Usage;
 
 void AccessToken(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
@@ -29,10 +29,8 @@ void AccessToken(std::vector<std::string> const& argv) {
   }
 
   // Create a namespace alias to make the code easier to read.
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::GrpcCredentialOption;
-  using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
 
   //! [test access token]
   [](std::string const& project_id, std::string const& instance_id,
@@ -42,9 +40,9 @@ void AccessToken(std::vector<std::string> const& argv) {
         grpc::SslCredentials(grpc::SslCredentialsOptions());
     auto credentials = grpc::CompositeChannelCredentials(channel_credentials,
                                                          call_credentials);
-    auto options = Options{}.set<GrpcCredentialOption>(credentials);
 
-    cbt::TableAdmin admin(cbt::MakeAdminClient(project_id, options),
+    cbt::TableAdmin admin(cbt::CreateDefaultAdminClient(
+                              project_id, cbt::ClientOptions(credentials)),
                           instance_id);
 
     auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
@@ -61,10 +59,8 @@ void JWTAccessToken(std::vector<std::string> const& argv) {
         "<service_account_file_json>"};
   }
   // Create a namespace alias to make the code easier to read.
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::GrpcCredentialOption;
-  using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
 
   //! [test jwt access token]
   [](std::string const& project_id, std::string const& instance_id,
@@ -84,9 +80,8 @@ void JWTAccessToken(std::vector<std::string> const& argv) {
         grpc::SslCredentials(grpc::SslCredentialsOptions());
     auto credentials = grpc::CompositeChannelCredentials(channel_credentials,
                                                          call_credentials);
-    auto options = Options{}.set<GrpcCredentialOption>(credentials);
-
-    cbt::TableAdmin admin(cbt::MakeAdminClient(project_id, options),
+    cbt::TableAdmin admin(cbt::CreateDefaultAdminClient(
+                              project_id, cbt::ClientOptions(credentials)),
                           instance_id);
 
     auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
@@ -101,10 +96,8 @@ void GCECredentials(std::vector<std::string> const& argv) {
     throw Usage{"test-gce-credentials: <project-id> <instance-id>"};
   }
   // Create a namespace alias to make the code easier to read.
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::GrpcCredentialOption;
-  using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
 
   //! [test gce credentials]
   [](std::string const& project_id, std::string const& instance_id) {
@@ -113,9 +106,8 @@ void GCECredentials(std::vector<std::string> const& argv) {
         grpc::SslCredentials(grpc::SslCredentialsOptions());
     auto credentials = grpc::CompositeChannelCredentials(channel_credentials,
                                                          call_credentials);
-    auto options = Options{}.set<GrpcCredentialOption>(credentials);
-
-    cbt::TableAdmin admin(cbt::MakeAdminClient(project_id, options),
+    cbt::TableAdmin admin(cbt::CreateDefaultAdminClient(
+                              project_id, cbt::ClientOptions(credentials)),
                           instance_id);
 
     auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);

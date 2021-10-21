@@ -21,12 +21,12 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-namespace btproto = ::google::bigtable::v2;
+namespace btproto = google::bigtable::v2;
 
-using ::google::cloud::internal::Idempotency;
+using google::cloud::internal::Idempotency;
 
 BulkMutatorState::BulkMutatorState(std::string const& app_profile_id,
                                    std::string const& table_name,
@@ -98,17 +98,18 @@ std::vector<int> BulkMutatorState::OnRead(
     auto const index = static_cast<std::size_t>(entry.index());
     auto& annotation = annotations_[index];
     annotation.has_mutation_result = true;
-    auto const status = MakeStatusFromRpcError(entry.status());
+    auto const& status = entry.status();
+    auto const code = static_cast<grpc::StatusCode>(status.code());
     // Successful responses are not even recorded, this class only reports
     // the failures.  The data for successful responses is discarded, because
     // this class takes ownership in the constructor.
-    if (status.ok()) {
+    if (grpc::StatusCode::OK == code) {
       res.push_back(annotation.original_index);
       continue;
     }
     auto& original = *mutations_.mutable_entries(static_cast<int>(index));
     // Failed responses are handled according to the current policies.
-    if (SafeGrpcRetry::IsTransientFailure(status) &&
+    if (SafeGrpcRetry::IsTransientFailure(code) &&
         (annotation.idempotency == Idempotency::kIdempotent)) {
       // Retryable requests are saved in the pending mutations, along with the
       // mapping from their index in pending_mutations_ to the original
@@ -161,6 +162,12 @@ void BulkMutatorState::OnFinish(google::cloud::Status finish_status) {
   }
 }
 
+std::vector<FailedMutation> BulkMutatorState::ConsumeAccumulatedFailures() {
+  std::vector<FailedMutation> res;
+  res.swap(failures_);
+  return res;
+}
+
 std::vector<FailedMutation> BulkMutatorState::OnRetryDone() && {
   std::vector<FailedMutation> result(std::move(failures_));
 
@@ -210,7 +217,7 @@ std::vector<FailedMutation> BulkMutator::OnRetryDone() && {
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

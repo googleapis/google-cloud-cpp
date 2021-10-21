@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 class SubscriberLogging : public SubscriberStub {
  public:
@@ -58,7 +58,7 @@ class SubscriberLogging : public SubscriberStub {
       grpc::ClientContext& context,
       google::pubsub::v1::ModifyPushConfigRequest const& request) override;
 
-  std::shared_ptr<AsyncPullStream> AsyncStreamingPull(
+  std::unique_ptr<AsyncPullStream> AsyncStreamingPull(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::pubsub::v1::StreamingPullRequest const& request) override;
@@ -105,7 +105,7 @@ class SubscriberLogging : public SubscriberStub {
 
 class LoggingAsyncPullStream : public SubscriberStub::AsyncPullStream {
  public:
-  LoggingAsyncPullStream(std::shared_ptr<SubscriberStub::AsyncPullStream> child,
+  LoggingAsyncPullStream(std::unique_ptr<SubscriberStub::AsyncPullStream> child,
                          TracingOptions tracing_options,
                          std::string request_id);
 
@@ -119,12 +119,12 @@ class LoggingAsyncPullStream : public SubscriberStub::AsyncPullStream {
   future<Status> Finish() override;
 
  private:
-  std::shared_ptr<SubscriberStub::AsyncPullStream> child_;
+  std::unique_ptr<SubscriberStub::AsyncPullStream> child_;
   TracingOptions tracing_options_;
   std::string request_id_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

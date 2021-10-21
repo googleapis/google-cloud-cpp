@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * These QueryOptions allow users to configure features about how their SQL
@@ -82,20 +82,8 @@ class QueryOptions {
     return *this;
   }
 
-  /// Returns the request tag.
-  absl::optional<std::string> const& request_tag() const {
-    return request_tag_;
-  }
-
-  /// Sets the request tag.
-  QueryOptions& set_request_tag(absl::optional<std::string> tag) {
-    request_tag_ = std::move(tag);
-    return *this;
-  }
-
   friend bool operator==(QueryOptions const& a, QueryOptions const& b) {
     return a.request_priority_ == b.request_priority_ &&
-           a.request_tag_ == b.request_tag_ &&
            a.optimizer_version_ == b.optimizer_version_ &&
            a.optimizer_statistics_package_ == b.optimizer_statistics_package_;
   }
@@ -105,15 +93,12 @@ class QueryOptions {
   }
 
  private:
-  // Note: If you add an attribute here, remember to update the implementation
-  // of Client::OverlayQueryOptions().
   absl::optional<std::string> optimizer_version_;
   absl::optional<std::string> optimizer_statistics_package_;
   absl::optional<RequestPriority> request_priority_;
-  absl::optional<std::string> request_tag_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

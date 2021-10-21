@@ -16,22 +16,21 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INSTANCE_H
 
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/project.h"
-#include "google/cloud/status_or.h"
-#include <iosfwd>
+#include <ostream>
 #include <string>
+#include <tuple>
 
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /**
- * This class identifies a Cloud Spanner Instance.
+ * This class identifies a Cloud Spanner Instance
  *
  * A Cloud Spanner instance is identified by its `project_id` and `instance_id`.
  *
- * @note This class makes no effort to validate the components of the
+ * @note this class makes no effort to validate the components of the
  *     database name. It is the application's responsibility to provide valid
  *     project, and instance ids. Passing invalid values will not be checked
  *     until the instance name is used in a RPC to spanner.
@@ -41,19 +40,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class Instance {
  public:
-  /**
-   * Constructs an Instance object identified by the given @p project and
-   * @p instance_id.
-   */
-  Instance(Project project, std::string instance_id);
-
-  /**
-   * Constructs an Instance object identified by the given IDs.
-   *
-   * This is equivalent to first constructing a `Project` from the given
-   * @p project_id and then calling the `Instance(Project, std::string)`
-   * constructor.
-   */
+  /// Constructs a Instance object identified by the given IDs.
   Instance(std::string project_id, std::string instance_id);
 
   /// @name Copy and move
@@ -64,11 +51,10 @@ class Instance {
   Instance& operator=(Instance&&) = default;
   //@}
 
-  /// Returns the `Project` containing this instance.
-  Project const& project() const { return project_; }
-  std::string const& project_id() const { return project_.project_id(); }
+  /// Returns the Project ID
+  std::string const& project_id() const { return project_id_; }
 
-  /// Returns the Instance ID.
+  /// Returns the Instance ID
   std::string const& instance_id() const { return instance_id_; }
 
   /**
@@ -84,20 +70,14 @@ class Instance {
   //@}
 
   /// Output the `FullName()` format.
-  friend std::ostream& operator<<(std::ostream&, Instance const&);
+  friend std::ostream& operator<<(std::ostream& os, Instance const& dn);
 
  private:
-  Project project_;
+  std::string project_id_;
   std::string instance_id_;
 };
 
-/**
- * Constructs an `Instance` from the given @p full_name.
- * Returns a non-OK Status if `full_name` is improperly formed.
- */
-StatusOr<Instance> MakeInstance(std::string const& full_name);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

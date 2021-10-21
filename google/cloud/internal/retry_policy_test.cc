@@ -19,7 +19,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
@@ -36,12 +36,11 @@ Status CreatePermanentError() {
 }
 
 using RetryPolicyForTest =
-    ::google::cloud::internal::TraitBasedRetryPolicy<TestRetryablePolicy>;
+    google::cloud::internal::TraitBasedRetryPolicy<TestRetryablePolicy>;
 using LimitedTimeRetryPolicyForTest =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<TestRetryablePolicy>;
+    google::cloud::internal::LimitedTimeRetryPolicy<TestRetryablePolicy>;
 using LimitedErrorCountRetryPolicyForTest =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        TestRetryablePolicy>;
+    google::cloud::internal::LimitedErrorCountRetryPolicy<TestRetryablePolicy>;
 
 auto const kLimitedTimeTestPeriod = std::chrono::milliseconds(50);
 auto const kLimitedTimeTolerance = std::chrono::milliseconds(10);
@@ -104,42 +103,8 @@ TEST(LimitedErrorCountRetryPolicy, OnNonRetryable) {
   EXPECT_FALSE(tested.OnFailure(CreatePermanentError()));
 }
 
-TEST(TransientInternalError, Basic) {
-  // These are all retryable error messages, with `StatusCode::kInternal`, that
-  // have been seen in the wild.
-  auto retryable_errors = {
-      "Received RST_STREAM with error code 2", "RST_STREAM closed stream",
-      "HTTP/2 error code: INTERNAL_ERROR\nReceived Rst Stream",
-      "Received unexpected EOS on DATA frame from server"};
-  for (auto const& e : retryable_errors) {
-    EXPECT_TRUE(IsTransientInternalError(Status(StatusCode::kInternal, e)));
-  }
-  EXPECT_FALSE(IsTransientInternalError(Status(
-      StatusCode::kInternal, "Some error we definitely should not retry!")));
-
-  auto invalid_codes = {StatusCode::kOk,
-                        StatusCode::kCancelled,
-                        StatusCode::kUnknown,
-                        StatusCode::kInvalidArgument,
-                        StatusCode::kDeadlineExceeded,
-                        StatusCode::kNotFound,
-                        StatusCode::kAlreadyExists,
-                        StatusCode::kPermissionDenied,
-                        StatusCode::kUnauthenticated,
-                        StatusCode::kResourceExhausted,
-                        StatusCode::kFailedPrecondition,
-                        StatusCode::kAborted,
-                        StatusCode::kOutOfRange,
-                        StatusCode::kUnimplemented,
-                        StatusCode::kUnavailable,
-                        StatusCode::kDataLoss};
-  for (auto c : invalid_codes) {
-    EXPECT_FALSE(IsTransientInternalError(Status(c, "RST_STREAM")));
-  }
-}
-
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

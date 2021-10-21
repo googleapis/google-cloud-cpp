@@ -32,12 +32,11 @@
 namespace google {
 namespace cloud {
 namespace iam {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Not;
@@ -275,7 +274,7 @@ TEST_F(IamIntegrationTest, GetIamPolicyFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetIamPolicy")));
 }
 
-TEST_F(IamIntegrationTest, SetIamPolicySuccessOrAborted) {
+TEST_F(IamIntegrationTest, SetIamPolicySuccess) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
   auto client = IAMClient(MakeIAMConnection());
   ::google::iam::v1::Policy policy;
@@ -283,34 +282,15 @@ TEST_F(IamIntegrationTest, SetIamPolicySuccessOrAborted) {
       absl::StrCat("projects/", iam_project_, "/serviceAccounts/",
                    iam_service_account_),
       policy);
-  EXPECT_THAT(response, AnyOf(IsOk(), StatusIs(StatusCode::kAborted)));
+  EXPECT_STATUS_OK(response);
 }
 
 TEST_F(IamIntegrationTest, SetIamPolicyFailure) {
   auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
-  auto response = client.SetIamPolicy("", ::google::iam::v1::Policy{});
+  auto response = client.SetIamPolicy("", {});
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("SetIamPolicy")));
-}
-
-TEST_F(IamIntegrationTest, SetIamPolicyUpdaterSuccess) {
-  if (!RunQuotaLimitedTests()) GTEST_SKIP();
-  auto client = IAMClient(MakeIAMConnection());
-  auto response = client.SetIamPolicy(
-      absl::StrCat("projects/", iam_project_, "/serviceAccounts/",
-                   iam_service_account_),
-      [](::google::iam::v1::Policy policy) { return policy; });
-  EXPECT_THAT(response, IsOk());
-}
-
-TEST_F(IamIntegrationTest, SetIamPolicyUpdaterCancelled) {
-  auto client = IAMClient(MakeIAMConnection());
-  auto response = client.SetIamPolicy(
-      absl::StrCat("projects/", iam_project_, "/serviceAccounts/",
-                   iam_service_account_),
-      [](::google::iam::v1::Policy const&) { return absl::nullopt; });
-  EXPECT_THAT(response, StatusIs(StatusCode::kCancelled));
 }
 
 TEST_F(IamIntegrationTest, TestIamPermissionsSuccess) {
@@ -812,7 +792,7 @@ TEST_F(IamIntegrationTest, LintPolicyProtoFailure) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace iam
 }  // namespace cloud
 }  // namespace google

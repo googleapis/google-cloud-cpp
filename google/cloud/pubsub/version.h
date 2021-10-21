@@ -18,10 +18,9 @@
 #include "google/cloud/pubsub/version_info.h"
 #include "google/cloud/version.h"
 
-// This preprocessor symbol is deprecated and should never be used anywhere. It
-// exists solely for backward compatibility to avoid breaking anyone who may
-// have been using it.
-#define GOOGLE_CLOUD_CPP_PUBSUB_NS GOOGLE_CLOUD_CPP_NS
+#define GOOGLE_CLOUD_CPP_PUBSUB_NS                                     \
+  GOOGLE_CLOUD_CPP_VEVAL(GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_MAJOR, \
+                         GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_MINOR)
 
 namespace google {
 /**
@@ -31,7 +30,19 @@ namespace cloud {
 /**
  * Contains all the Cloud Pubsub C++ client types and functions.
  */
-namespace pubsub {}  // namespace pubsub
+namespace pubsub {
+/**
+ * The inlined, versioned namespace for the Cloud Pubsub C++ client APIs.
+ *
+ * Applications may need to link multiple versions of the Cloud pubsub C++
+ * client, for example, if they link a library that uses an older version of
+ * the client than they do.  This namespace is inlined, so applications can use
+ * `pubsub::Foo` in their source, but the symbols are versioned, i.e., the
+ * symbol becomes `pubsub::v1::Foo`.
+ */
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub
 }  // namespace cloud
 }  // namespace google
 

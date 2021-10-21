@@ -23,190 +23,8 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-namespace {
-
-void DiffAcl(BucketMetadataPatchBuilder& builder, BucketMetadata const& o,
-             BucketMetadata const& u) {
-  if (o.acl() != u.acl()) builder.SetAcl(u.acl());
-}
-
-void DiffBilling(BucketMetadataPatchBuilder& builder, BucketMetadata const& o,
-                 BucketMetadata const& u) {
-  if (o.billing_as_optional() == u.billing_as_optional()) return;
-  if (u.has_billing()) {
-    builder.SetBilling(u.billing());
-  } else {
-    builder.ResetBilling();
-  }
-}
-
-void DiffCors(BucketMetadataPatchBuilder& builder, BucketMetadata const& o,
-              BucketMetadata const& u) {
-  if (o.cors() != u.cors()) builder.SetCors(u.cors());
-}
-
-void DiffEventBasedHold(BucketMetadataPatchBuilder& builder,
-                        BucketMetadata const& o, BucketMetadata const& u) {
-  if (o.default_event_based_hold() != u.default_event_based_hold()) {
-    builder.SetDefaultEventBasedHold(u.default_event_based_hold());
-  }
-}
-
-void DiffDefaultObjectAcl(BucketMetadataPatchBuilder& builder,
-                          BucketMetadata const& o, BucketMetadata const& u) {
-  if (o.default_acl() != u.default_acl()) {
-    builder.SetDefaultAcl(u.default_acl());
-  }
-}
-
-void DiffEncryption(BucketMetadataPatchBuilder& builder,
-                    BucketMetadata const& o, BucketMetadata const& u) {
-  if (o.encryption_as_optional() == u.encryption_as_optional()) return;
-  if (u.has_encryption()) {
-    builder.SetEncryption(u.encryption());
-  } else {
-    builder.ResetEncryption();
-  }
-}
-
-void DiffIamConfiguration(BucketMetadataPatchBuilder& builder,
-                          BucketMetadata const& o, BucketMetadata const& u) {
-  if (o.iam_configuration_as_optional() == u.iam_configuration_as_optional()) {
-    return;
-  }
-  if (u.has_iam_configuration()) {
-    builder.SetIamConfiguration(u.iam_configuration());
-  } else {
-    builder.ResetIamConfiguration();
-  }
-}
-
-void DiffLabels(BucketMetadataPatchBuilder& builder, BucketMetadata const& o,
-                BucketMetadata const& u) {
-  if (o.labels() == u.labels()) return;
-  if (u.labels().empty()) {
-    builder.ResetLabels();
-    return;
-  }
-  std::map<std::string, std::string> difference;
-  // Find the keys in the original map that are not in the new map:
-  std::set_difference(o.labels().begin(), o.labels().end(), u.labels().begin(),
-                      u.labels().end(),
-                      std::inserter(difference, difference.end()),
-                      // We want to compare just keys and ignore values, the
-                      // map class provides such a function, so use it:
-                      o.labels().value_comp());
-  for (auto&& d : difference) {
-    builder.ResetLabel(d.first);
-  }
-
-  // Find the elements (comparing key and value) in the updated map that
-  // are not in the original map:
-  difference.clear();
-  std::set_difference(u.labels().begin(), u.labels().end(), o.labels().begin(),
-                      o.labels().end(),
-                      std::inserter(difference, difference.end()));
-  for (auto&& d : difference) {
-    builder.SetLabel(d.first, d.second);
-  }
-}
-
-void DiffLifecycle(BucketMetadataPatchBuilder& builder, BucketMetadata const& o,
-                   BucketMetadata const& u) {
-  if (o.lifecycle_as_optional() == u.lifecycle_as_optional()) return;
-  if (u.has_lifecycle()) {
-    builder.SetLifecycle(u.lifecycle());
-  } else {
-    builder.ResetLifecycle();
-  }
-}
-
-void DiffLogging(BucketMetadataPatchBuilder& builder, BucketMetadata const& o,
-                 BucketMetadata const& u) {
-  if (o.logging_as_optional() == u.logging_as_optional()) return;
-  if (u.has_logging()) {
-    builder.SetLogging(u.logging());
-  } else {
-    builder.ResetLogging();
-  }
-}
-
-void DiffName(BucketMetadataPatchBuilder& builder, BucketMetadata const& o,
-              BucketMetadata const& u) {
-  if (o.name() != u.name()) builder.SetName(u.name());
-}
-
-void DiffRetentionPolicy(BucketMetadataPatchBuilder& builder,
-                         BucketMetadata const& o, BucketMetadata const& u) {
-  if (o.retention_policy_as_optional() == u.retention_policy_as_optional()) {
-    return;
-  }
-  if (u.has_retention_policy()) {
-    builder.SetRetentionPolicy(u.retention_policy());
-  } else {
-    builder.ResetRetentionPolicy();
-  }
-}
-
-void DiffStorageClass(BucketMetadataPatchBuilder& builder,
-                      BucketMetadata const& o, BucketMetadata const& u) {
-  if (o.storage_class() != u.storage_class()) {
-    builder.SetStorageClass(u.storage_class());
-  }
-}
-
-void DiffRpo(BucketMetadataPatchBuilder& builder, BucketMetadata const& o,
-             BucketMetadata const& u) {
-  if (o.rpo() != u.rpo()) builder.SetRpo(u.rpo());
-}
-
-void DiffVersioning(BucketMetadataPatchBuilder& builder,
-                    BucketMetadata const& o, BucketMetadata const& u) {
-  if (o.versioning() == u.versioning()) return;
-  if (u.has_versioning()) {
-    builder.SetVersioning(*u.versioning());
-  } else {
-    builder.ResetVersioning();
-  }
-}
-
-void DiffWebsite(BucketMetadataPatchBuilder& builder, BucketMetadata const& o,
-                 BucketMetadata const& u) {
-  if (o.website_as_optional() == u.website_as_optional()) return;
-  if (u.has_website()) {
-    builder.SetWebsite(u.website());
-  } else {
-    builder.ResetWebsite();
-  }
-}
-
-BucketMetadataPatchBuilder DiffBucketMetadata(BucketMetadata const& original,
-                                              BucketMetadata const& updated) {
-  // Compare each modifiable field to build the patch
-  BucketMetadataPatchBuilder builder;
-  DiffAcl(builder, original, updated);
-  DiffBilling(builder, original, updated);
-  DiffCors(builder, original, updated);
-  DiffEventBasedHold(builder, original, updated);
-  DiffDefaultObjectAcl(builder, original, updated);
-  DiffEncryption(builder, original, updated);
-  DiffIamConfiguration(builder, original, updated);
-  DiffLabels(builder, original, updated);
-  DiffLifecycle(builder, original, updated);
-  DiffLogging(builder, original, updated);
-  DiffName(builder, original, updated);
-  DiffRetentionPolicy(builder, original, updated);
-  DiffRpo(builder, original, updated);
-  DiffStorageClass(builder, original, updated);
-  DiffVersioning(builder, original, updated);
-  DiffWebsite(builder, original, updated);
-  return builder;
-}
-
-}  // namespace
-
 std::string CreateBucketRequest::json_payload() const {
   return BucketMetadataToJsonString(metadata_);
 }
@@ -278,8 +96,131 @@ std::ostream& operator<<(std::ostream& os, UpdateBucketRequest const& r) {
 PatchBucketRequest::PatchBucketRequest(std::string bucket,
                                        BucketMetadata const& original,
                                        BucketMetadata const& updated)
-    : bucket_(std::move(bucket)),
-      payload_(DiffBucketMetadata(original, updated).BuildPatch()) {}
+    : bucket_(std::move(bucket)) {
+  // Compare each modifiable field to build the patch
+  BucketMetadataPatchBuilder builder;
+
+  if (original.acl() != updated.acl()) {
+    builder.SetAcl(updated.acl());
+  }
+
+  if (original.billing_as_optional() != updated.billing_as_optional()) {
+    if (updated.has_billing()) {
+      builder.SetBilling(updated.billing());
+    } else {
+      builder.ResetBilling();
+    }
+  }
+
+  if (original.cors() != updated.cors()) {
+    builder.SetCors(updated.cors());
+  }
+
+  if (original.default_event_based_hold() !=
+      updated.default_event_based_hold()) {
+    builder.SetDefaultEventBasedHold(updated.default_event_based_hold());
+  }
+
+  if (original.default_acl() != updated.default_acl()) {
+    builder.SetDefaultAcl(updated.default_acl());
+  }
+
+  if (original.encryption_as_optional() != updated.encryption_as_optional()) {
+    if (updated.has_encryption()) {
+      builder.SetEncryption(updated.encryption());
+    } else {
+      builder.ResetEncryption();
+    }
+  }
+
+  if (original.iam_configuration_as_optional() !=
+      updated.iam_configuration_as_optional()) {
+    if (updated.has_iam_configuration()) {
+      builder.SetIamConfiguration(updated.iam_configuration());
+    } else {
+      builder.ResetIamConfiguration();
+    }
+  }
+
+  if (original.labels() != updated.labels()) {
+    if (updated.labels().empty()) {
+      builder.ResetLabels();
+    } else {
+      std::map<std::string, std::string> difference;
+      // Find the keys in the original map that are not in the new map:
+      std::set_difference(original.labels().begin(), original.labels().end(),
+                          updated.labels().begin(), updated.labels().end(),
+                          std::inserter(difference, difference.end()),
+                          // We want to compare just keys and ignore values, the
+                          // map class provides such a function, so use it:
+                          original.labels().value_comp());
+      for (auto&& d : difference) {
+        builder.ResetLabel(d.first);
+      }
+
+      // Find the elements (comparing key and value) in the updated map that
+      // are not in the original map:
+      difference.clear();
+      std::set_difference(updated.labels().begin(), updated.labels().end(),
+                          original.labels().begin(), original.labels().end(),
+                          std::inserter(difference, difference.end()));
+      for (auto&& d : difference) {
+        builder.SetLabel(d.first, d.second);
+      }
+    }
+  }
+
+  if (original.lifecycle_as_optional() != updated.lifecycle_as_optional()) {
+    if (updated.has_lifecycle()) {
+      builder.SetLifecycle(updated.lifecycle());
+    } else {
+      builder.ResetLifecycle();
+    }
+  }
+
+  if (original.logging_as_optional() != updated.logging_as_optional()) {
+    if (updated.has_logging()) {
+      builder.SetLogging(updated.logging());
+    } else {
+      builder.ResetLogging();
+    }
+  }
+
+  if (original.name() != updated.name()) {
+    builder.SetName(updated.name());
+  }
+
+  if (original.retention_policy_as_optional() !=
+      updated.retention_policy_as_optional()) {
+    if (updated.has_retention_policy()) {
+      builder.SetRetentionPolicy(updated.retention_policy());
+    } else {
+      builder.ResetRetentionPolicy();
+    }
+  }
+
+  if (original.storage_class() != updated.storage_class()) {
+    builder.SetStorageClass(updated.storage_class());
+  }
+
+  if (original.versioning() != updated.versioning()) {
+    if (updated.has_versioning()) {
+      builder.SetVersioning(*updated.versioning());
+    } else {
+      builder.ResetVersioning();
+    }
+  }
+
+  if (original.website_as_optional() != updated.website_as_optional()) {
+    if (updated.has_website()) {
+      builder.SetWebsite(updated.website());
+    } else {
+      builder.ResetWebsite();
+    }
+  }
+
+  payload_ = builder.BuildPatch();
+}
 
 PatchBucketRequest::PatchBucketRequest(std::string bucket,
                                        BucketMetadataPatchBuilder const& patch)
@@ -346,8 +287,7 @@ StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
   if (json.count("bindings") != 0) {
     if (!json["bindings"].is_array()) {
       std::ostringstream os;
-      os << "Invalid IamPolicy payload, expected array for 'bindings' "
-            "field."
+      os << "Invalid IamPolicy payload, expected array for 'bindings' field."
          << "  payload=" << payload;
       return Status(StatusCode::kInvalidArgument, os.str());
     }
@@ -450,7 +390,7 @@ std::ostream& operator<<(std::ostream& os,
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

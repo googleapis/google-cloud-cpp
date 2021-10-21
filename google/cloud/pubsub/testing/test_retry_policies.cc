@@ -13,29 +13,23 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
-#include "google/cloud/pubsub/options.h"
-#include <chrono>
-#include <memory>
+#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
 namespace pubsub_testing {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-Options MakeTestOptions(Options opts) {
-  if (!opts.has<pubsub::RetryPolicyOption>()) {
-    opts.set<pubsub::RetryPolicyOption>(
-        std::make_shared<pubsub::LimitedErrorCountRetryPolicy>(3));
-  }
-  if (!opts.has<pubsub::BackoffPolicyOption>()) {
-    opts.set<pubsub::BackoffPolicyOption>(
-        std::make_shared<pubsub::ExponentialBackoffPolicy>(
-            std::chrono::microseconds(1), std::chrono::microseconds(1), 2.0));
-  }
-  return opts;
+std::unique_ptr<pubsub::RetryPolicy const> TestRetryPolicy() {
+  return absl::make_unique<pubsub::LimitedErrorCountRetryPolicy>(3);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+std::unique_ptr<pubsub::BackoffPolicy const> TestBackoffPolicy() {
+  return absl::make_unique<pubsub::ExponentialBackoffPolicy>(
+      std::chrono::microseconds(1), std::chrono::microseconds(1), 2.0);
+}
+
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_testing
 }  // namespace cloud
 }  // namespace google

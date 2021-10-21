@@ -19,7 +19,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 // Forward declare the promise type so we can write some helpers.
 template <typename R>
 class promise;
@@ -39,7 +39,7 @@ template <>
 class promise<void>;
 template <>
 class future<void>;
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

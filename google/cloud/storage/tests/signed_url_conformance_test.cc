@@ -47,11 +47,11 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
-using ::google::cloud::conformance::storage::v1::PostPolicyV4Test;
-using ::google::cloud::conformance::storage::v1::SigningV4Test;
-using ::google::cloud::conformance::storage::v1::UrlStyle;
+using google::cloud::conformance::storage::v1::PostPolicyV4Test;
+using google::cloud::conformance::storage::v1::SigningV4Test;
+using google::cloud::conformance::storage::v1::UrlStyle;
 using ::testing::HasSubstr;
 
 // Initialized in main() below.
@@ -250,9 +250,7 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
   ASSERT_STATUS_OK(doc_res);
   EXPECT_EQ(expected_policy, doc_res->policy);
   auto actual_policy_vec = internal::Base64Decode(doc_res->policy);
-  ASSERT_STATUS_OK(actual_policy_vec);
-  std::string actual_policy(actual_policy_vec->begin(),
-                            actual_policy_vec->end());
+  std::string actual_policy(actual_policy_vec.begin(), actual_policy_vec.end());
   EXPECT_EQ(expected_decoded_policy, actual_policy);
   EXPECT_EQ(expected_url, doc_res->url);
   EXPECT_EQ(expected_credential, doc_res->access_id);
@@ -277,13 +275,13 @@ INSTANTIATE_TEST_SUITE_P(
     }()));
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
 
-using ::google::cloud::conformance::storage::v1::PostPolicyV4Test;
-using ::google::cloud::conformance::storage::v1::SigningV4Test;
+using google::cloud::conformance::storage::v1::PostPolicyV4Test;
+using google::cloud::conformance::storage::v1::SigningV4Test;
 
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   auto conformance_tests_file =

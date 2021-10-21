@@ -27,19 +27,19 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 class SessionPoolOptions;
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 Options MakeOptions(spanner::SessionPoolOptions);
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * Controls the session pool maintained by a `spanner::Client`.
@@ -131,7 +131,7 @@ class SessionPoolOptions {
     return opts_.get<SessionPoolActionOnExhaustionOption>();
   }
 
-  /**
+  /*
    * Set the interval at which we refresh sessions so they don't get
    * collected by the backend GC. The GC collects objects older than 60
    * minutes, so any duration below that (less some slack to allow the calls
@@ -168,15 +168,15 @@ class SessionPoolOptions {
   Options opts_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 inline Options MakeOptions(spanner::SessionPoolOptions old) {
   return std::move(old.opts_);
 }
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
 }  // namespace cloud

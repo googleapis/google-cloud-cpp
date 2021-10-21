@@ -16,20 +16,13 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
-#include "google/cloud/internal/user_agent_prefix.h"
-#include "absl/memory/memory.h"
+#include "google/cloud/internal/build_info.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-namespace {
-char const* InitialQueryParameterSeparator(std::string const& url) {
-  if (url.find('?') != std::string::npos) return "&";
-  return "?";
-}
-}  // namespace
 
 #ifndef GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE
 #define GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE (128 * 1024)
@@ -41,39 +34,38 @@ CurlRequestBuilder::CurlRequestBuilder(
       handle_(factory_->CreateHandle()),
       headers_(nullptr, &curl_slist_free_all),
       url_(std::move(base_url)),
-      query_parameter_separator_(InitialQueryParameterSeparator(url_)),
+      query_parameter_separator_("?"),
       logging_enabled_(false),
-      transfer_stall_timeout_(0) {}
+      download_stall_timeout_(0) {}
 
-CurlRequest CurlRequestBuilder::BuildRequest() && {
+CurlRequest CurlRequestBuilder::BuildRequest() {
   ValidateBuilderState(__func__);
   CurlRequest request;
   request.url_ = std::move(url_);
   request.headers_ = std::move(headers_);
   request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();
-  request.http_version_ = std::move(http_version_);
   request.handle_ = std::move(handle_);
   request.factory_ = std::move(factory_);
   request.logging_enabled_ = logging_enabled_;
   request.socket_options_ = socket_options_;
-  request.transfer_stall_timeout_ = transfer_stall_timeout_;
   return request;
 }
 
-std::unique_ptr<CurlDownloadRequest>
-CurlRequestBuilder::BuildDownloadRequest() && {
+CurlDownloadRequest CurlRequestBuilder::BuildDownloadRequest(
+    std::string payload) {
   ValidateBuilderState(__func__);
-  auto agent = user_agent_prefix_ + UserAgentSuffix();
-  auto request = absl::make_unique<CurlDownloadRequest>(
-      std::move(headers_), std::move(handle_), factory_->CreateMultiHandle());
-  request->url_ = std::move(url_);
-  request->user_agent_ = std::move(agent);
-  request->http_version_ = std::move(http_version_);
-  request->factory_ = factory_;
-  request->logging_enabled_ = logging_enabled_;
-  request->socket_options_ = socket_options_;
-  request->transfer_stall_timeout_ = transfer_stall_timeout_;
-  request->SetOptions();
+  CurlDownloadRequest request;
+  request.url_ = std::move(url_);
+  request.headers_ = std::move(headers_);
+  request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();
+  request.payload_ = std::move(payload);
+  request.handle_ = std::move(handle_);
+  request.multi_ = factory_->CreateMultiHandle();
+  request.factory_ = factory_;
+  request.logging_enabled_ = logging_enabled_;
+  request.socket_options_ = socket_options_;
+  request.download_stall_timeout_ = download_stall_timeout_;
+  request.SetOptions();
   return request;
 }
 
@@ -89,9 +81,7 @@ CurlRequestBuilder& CurlRequestBuilder::ApplyClientOptions(
   auto agents = options.get<UserAgentProductsOption>();
   agents.push_back(user_agent_prefix_);
   user_agent_prefix_ = absl::StrJoin(agents, " ");
-  http_version_ =
-      std::move(options.get<storage_experimental::HttpVersionOption>());
-  transfer_stall_timeout_ = options.get<TransferStallTimeoutOption>();
+  download_stall_timeout_ = options.get<DownloadStallTimeoutOption>();
   return *this;
 }
 
@@ -129,12 +119,13 @@ CurlRequestBuilder& CurlRequestBuilder::SetCurlShare(CURLSH* share) {
 std::string CurlRequestBuilder::UserAgentSuffix() const {
   ValidateBuilderState(__func__);
   // Pre-compute and cache the user agent string:
-  static auto const* const kUserAgentSuffix = new auto([] {
-    std::string agent = google::cloud::internal::UserAgentPrefix() + " ";
+  static std::string const kUserAgentSuffix = [] {
+    std::string agent = "gcloud-cpp/" + storage::version_string() + " ";
     agent += curl_version();
+    agent += " " + google::cloud::internal::compiler();
     return agent;
-  }());
-  return *kUserAgentSuffix;
+  }();
+  return kUserAgentSuffix;
 }
 
 void CurlRequestBuilder::ValidateBuilderState(char const* where) const {
@@ -145,7 +136,7 @@ void CurlRequestBuilder::ValidateBuilderState(char const* where) const {
   }
 }
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

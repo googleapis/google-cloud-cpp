@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
-#include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
@@ -29,10 +28,12 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ::google::cloud::internal::AutomaticallyCreatedBackgroundThreads;
+using ::google::cloud::pubsub_testing::TestBackoffPolicy;
+using ::google::cloud::pubsub_testing::TestRetryPolicy;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
@@ -72,7 +73,7 @@ class FakeStream {
     auto read_response = [this] {
       return AddAction("Read").then([](future<bool> g) {
         auto ok = g.get();
-        using Response = ::google::pubsub::v1::StreamingPullResponse;
+        using Response = google::pubsub::v1::StreamingPullResponse;
         if (!ok) return absl::optional<Response>{};
         return absl::make_optional(Response{});
       });
@@ -105,22 +106,20 @@ class FakeStream {
   AsyncSequencer<bool> async_;
 };
 
-std::shared_ptr<StreamingSubscriptionBatchSource> MakeTestBatchSource(
-    CompletionQueue cq, std::shared_ptr<SessionShutdownManager> shutdown,
-    std::shared_ptr<SubscriberStub> mock) {
-  auto subscription = pubsub::Subscription("test-project", "test-subscription");
-  auto opts = DefaultSubscriberOptions(pubsub_testing::MakeTestOptions(
-      Options{}
-          .set<pubsub::MaxOutstandingMessagesOption>(100)
-          .set<pubsub::MaxOutstandingBytesOption>(100 * 1024 * 1024L)
-          .set<pubsub::MaxHoldTimeOption>(std::chrono::seconds(300))));
-  return std::make_shared<StreamingSubscriptionBatchSource>(
-      std::move(cq), std::move(shutdown), std::move(mock),
-      std::move(subscription).FullName(), "test-client-id", std::move(opts),
-      AckBatchingConfig(1, std::chrono::milliseconds(10)));
+pubsub::SubscriberOptions TestSubscriptionOptions() {
+  return pubsub::SubscriberOptions()
+      .set_max_outstanding_messages(100)
+      .set_max_outstanding_bytes(100 * 1024 * 1024L)
+      .set_max_deadline_time(std::chrono::seconds(300));
+}
+
+AckBatchingConfig TestBatchingConfig() {
+  return AckBatchingConfig(1, std::chrono::milliseconds(10));
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, Start) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
   AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
@@ -135,7 +134,10 @@ TEST(StreamingSubscriptionBatchSourceTest, Start) {
       });
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      background.cq(), shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy(),
+      TestBatchingConfig());
 
   auto done = shutdown->Start({});
   uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
@@ -152,6 +154,8 @@ TEST(StreamingSubscriptionBatchSourceTest, Start) {
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, StartWithRetry) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
   AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
@@ -174,7 +178,9 @@ TEST(StreamingSubscriptionBatchSourceTest, StartWithRetry) {
       .WillOnce(make_async_pull_mock(success_stream));
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      background.cq(), shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy());
 
   auto done = shutdown->Start({});
   uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
@@ -199,6 +205,8 @@ TEST(StreamingSubscriptionBatchSourceTest, StartWithRetry) {
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, StartTooManyTransientFailures) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
   AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
@@ -210,7 +218,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartTooManyTransientFailures) {
                              google::pubsub::v1::StreamingPullRequest const&) {
     using us = std::chrono::microseconds;
     using F = future<StatusOr<std::chrono::system_clock::time_point>>;
-    using Response = ::google::pubsub::v1::StreamingPullResponse;
+    using Response = google::pubsub::v1::StreamingPullResponse;
     auto start_response = [cq]() mutable {
       return cq.MakeRelativeTimer(us(10)).then([](F) { return true; });
     };
@@ -243,7 +251,10 @@ TEST(StreamingSubscriptionBatchSourceTest, StartTooManyTransientFailures) {
       .WillRepeatedly(async_pull_mock);
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      background.cq(), shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy(),
+      TestBatchingConfig());
 
   auto done = shutdown->Start({});
   promise<Status> p;
@@ -259,6 +270,8 @@ TEST(StreamingSubscriptionBatchSourceTest, StartTooManyTransientFailures) {
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, StartPermanentFailure) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
   AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
@@ -270,7 +283,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartPermanentFailure) {
                              google::pubsub::v1::StreamingPullRequest const&) {
     using us = std::chrono::microseconds;
     using F = future<StatusOr<std::chrono::system_clock::time_point>>;
-    using Response = ::google::pubsub::v1::StreamingPullResponse;
+    using Response = google::pubsub::v1::StreamingPullResponse;
     auto start_response = [cq]() mutable {
       return cq.MakeRelativeTimer(us(10)).then([](F) { return true; });
     };
@@ -301,7 +314,10 @@ TEST(StreamingSubscriptionBatchSourceTest, StartPermanentFailure) {
   EXPECT_CALL(*mock, AsyncStreamingPull).WillOnce(async_pull_mock);
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      background.cq(), shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy(),
+      TestBatchingConfig());
 
   auto done = shutdown->Start({});
   promise<Status> p;
@@ -317,6 +333,8 @@ TEST(StreamingSubscriptionBatchSourceTest, StartPermanentFailure) {
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, StartUnexpected) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
   AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
@@ -325,11 +343,14 @@ TEST(StreamingSubscriptionBatchSourceTest, StartUnexpected) {
       .WillRepeatedly([](google::cloud::CompletionQueue&,
                          std::unique_ptr<grpc::ClientContext>,
                          google::pubsub::v1::StreamingPullRequest const&) {
-        return std::shared_ptr<SubscriberStub::AsyncPullStream>{};
+        return std::unique_ptr<SubscriberStub::AsyncPullStream>{};
       });
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      background.cq(), shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy(),
+      TestBatchingConfig());
 
   auto done = shutdown->Start({});
   promise<Status> p;
@@ -344,6 +365,8 @@ TEST(StreamingSubscriptionBatchSourceTest, StartUnexpected) {
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsAfterStartAndShutdown) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
   AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
@@ -362,7 +385,10 @@ TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsAfterStartAndShutdown) {
   EXPECT_CALL(callback, Call).Times(0);
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      background.cq(), shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy(),
+      TestBatchingConfig());
 
   auto done = shutdown->Start({});
   uut->Start(callback.AsStdFunction());
@@ -374,6 +400,8 @@ TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsAfterStartAndShutdown) {
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsAfterWriteAndShutdown) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
   AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
@@ -392,7 +420,10 @@ TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsAfterWriteAndShutdown) {
   EXPECT_CALL(callback, Call).Times(0);
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      background.cq(), shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy(),
+      TestBatchingConfig());
 
   auto done = shutdown->Start({});
   uut->Start(callback.AsStdFunction());
@@ -406,6 +437,8 @@ TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsAfterWriteAndShutdown) {
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, ResumeAfterFirstRead) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
   AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
@@ -415,7 +448,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ResumeAfterFirstRead) {
                           google::pubsub::v1::StreamingPullRequest const&) {
       using us = std::chrono::microseconds;
       using F = future<StatusOr<std::chrono::system_clock::time_point>>;
-      using Response = ::google::pubsub::v1::StreamingPullResponse;
+      using Response = google::pubsub::v1::StreamingPullResponse;
       auto start_response = [cq]() mutable {
         return cq.MakeRelativeTimer(us(10)).then([](F) { return true; });
       };
@@ -469,7 +502,10 @@ TEST(StreamingSubscriptionBatchSourceTest, ResumeAfterFirstRead) {
       });
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      background.cq(), shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy(),
+      TestBatchingConfig());
 
   auto done = shutdown->Start({});
   std::vector<std::string> ids;
@@ -496,6 +532,8 @@ future<Status> OnModify(google::cloud::CompletionQueue&,
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
   AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
@@ -508,7 +546,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
                       google::pubsub::v1::StreamingPullRequest const& request) {
           auto stream = success_stream.MakeWriteFailureStream(
               cq, std::move(context), request);
-          using Request = ::google::pubsub::v1::StreamingPullRequest;
+          using Request = google::pubsub::v1::StreamingPullRequest;
           // Add expectations for Write() calls with empty subscriptions, only
           // the first call has a non-empty value and it is already set.
           EXPECT_CALL(*stream,
@@ -548,7 +586,10 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
   }
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      background.cq(), shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy(),
+      TestBatchingConfig());
 
   auto done = shutdown->Start({});
   uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
@@ -576,6 +617,8 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
   AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
@@ -588,7 +631,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
                     google::pubsub::v1::StreamingPullRequest const& request) {
         auto stream =
             fake_stream.MakeWriteFailureStream(cq, std::move(context), request);
-        using Request = ::google::pubsub::v1::StreamingPullRequest;
+        using Request = google::pubsub::v1::StreamingPullRequest;
         // Add expectations for Write() calls with empty subscriptions, only
         // the first call has a non-empty value and it is already set.
         EXPECT_CALL(*stream,
@@ -607,7 +650,10 @@ TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
   EXPECT_CALL(callback, Call(IsOk())).Times(1);
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      background.cq(), shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy(),
+      TestBatchingConfig());
 
   auto done = shutdown->Start({});
   uut->Start(callback.AsStdFunction());
@@ -630,6 +676,8 @@ TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, WriteErrorWaitsForRead) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
   AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
@@ -642,7 +690,7 @@ TEST(StreamingSubscriptionBatchSourceTest, WriteErrorWaitsForRead) {
                     google::pubsub::v1::StreamingPullRequest const& request) {
         auto stream =
             fake_stream.MakeWriteFailureStream(cq, std::move(context), request);
-        using Request = ::google::pubsub::v1::StreamingPullRequest;
+        using Request = google::pubsub::v1::StreamingPullRequest;
         // Add expectations for Write() calls with empty subscriptions, only
         // the first call has a non-empty value and it is already set.
         EXPECT_CALL(*stream,
@@ -661,7 +709,10 @@ TEST(StreamingSubscriptionBatchSourceTest, WriteErrorWaitsForRead) {
   EXPECT_CALL(callback, Call(IsOk())).Times(1);
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      background.cq(), shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy(),
+      TestBatchingConfig());
 
   auto done = shutdown->Start({});
   uut->Start(callback.AsStdFunction());
@@ -684,6 +735,8 @@ TEST(StreamingSubscriptionBatchSourceTest, WriteErrorWaitsForRead) {
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingRead) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
   AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
@@ -702,7 +755,10 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingRead) {
   EXPECT_CALL(callback, Call(IsOk())).Times(0);
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      background.cq(), shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy(),
+      TestBatchingConfig());
 
   auto done = shutdown->Start({});
   uut->Start(callback.AsStdFunction());
@@ -720,6 +776,8 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingRead) {
 
 /// @test verify that a shutdown cancels the initial Read() call
 TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingReadCancel) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
   AutomaticallyCreatedBackgroundThreads background;
 
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
@@ -734,8 +792,8 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingReadCancel) {
   auto async_pull_mock = [&](google::cloud::CompletionQueue&,
                              std::unique_ptr<grpc::ClientContext>,
                              google::pubsub::v1::StreamingPullRequest const&) {
-    using Response = ::google::pubsub::v1::StreamingPullResponse;
-    using Request = ::google::pubsub::v1::StreamingPullRequest;
+    using Response = google::pubsub::v1::StreamingPullResponse;
+    using Request = google::pubsub::v1::StreamingPullRequest;
     auto start_response = [&async] {
       return async.PushBack("Start").then(
           [](future<bool> f) { return f.get(); });
@@ -773,7 +831,10 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingReadCancel) {
   EXPECT_CALL(callback, Call(IsOk())).Times(0);
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
-  auto uut = MakeTestBatchSource(background.cq(), shutdown, mock);
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      background.cq(), shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy(),
+      TestBatchingConfig());
 
   auto done = shutdown->Start({});
   uut->Start(callback.AsStdFunction());
@@ -805,7 +866,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StateOStream) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

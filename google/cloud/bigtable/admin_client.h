@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 // Forward declare some classes so we can be friends.
 class TableAdmin;
 namespace internal {
@@ -79,7 +79,7 @@ class AdminClient {
   /**
    * The thread factory this client was created with.
    */
-  virtual google::cloud::BackgroundThreadsFactory
+  virtual ClientOptions::BackgroundThreadsFactory
   BackgroundThreadsFactory() = 0;
 
   // The member functions of this class are not intended for general use by
@@ -293,20 +293,11 @@ class AdminClient {
   //@}
 };
 
-/// Create a new table admin client configured via @p options.
-std::shared_ptr<AdminClient> MakeAdminClient(std::string project,
-                                             Options options = {});
-
-/**
- * Create a new table admin client configured via @p options.
- *
- * @deprecated use the `MakeAdminClient` method which accepts
- * `google::cloud::Options` instead.
- */
+/// Create a new admin client configured via @p options.
 std::shared_ptr<AdminClient> CreateDefaultAdminClient(std::string project,
                                                       ClientOptions options);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

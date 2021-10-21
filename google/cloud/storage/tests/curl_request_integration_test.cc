@@ -21,40 +21,36 @@
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <chrono>
-#include <functional>
+#include <cstdlib>
 #include <thread>
 #include <vector>
 
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
-using ::testing::Contains;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 using ::testing::Not;
-using ::testing::Pair;
-using ::testing::StartsWith;
 
 std::string HttpBinEndpoint() {
   return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT")
-      .value_or("https://httpbin.org");
+      .value_or("https://nghttp2.org/httpbin");
 }
 
 // The integration tests sometimes flake (e.g. DNS failures) if we do not have a
 // retry loop.
-StatusOr<HttpResponse> RetryMakeRequest(
-    std::function<CurlRequest()> const& request_factory,
-    std::string const& payload = {}, int expected_status = 200) {
+StatusOr<HttpResponse> RetryMakeRequest(CurlRequest request,
+                                        std::string const& payload = {}) {
   auto delay = std::chrono::seconds(1);
   StatusOr<HttpResponse> response;
   for (auto i = 0; i != 3; ++i) {
-    response = request_factory().MakeRequest(payload);
-    if (response && response->status_code == expected_status) return response;
+    response = request.MakeRequest(payload);
+    if (response) return response;
     std::this_thread::sleep_for(delay);
     delay *= 2;
   }
@@ -62,14 +58,12 @@ StatusOr<HttpResponse> RetryMakeRequest(
 }
 
 StatusOr<HttpResponse> RetryMakeUploadRequest(
-    std::function<CurlRequest()> const& request_factory,
-    std::vector<absl::Span<char const>> const& payload,
-    int expected_status = 200) {
+    CurlRequest request, std::vector<absl::Span<char const>> const& payload) {
   auto delay = std::chrono::seconds(1);
   StatusOr<HttpResponse> response;
   for (auto i = 0; i != 3; ++i) {
-    response = request_factory().MakeUploadRequest(payload);
-    if (response && response->status_code == expected_status) return response;
+    response = request.MakeUploadRequest(payload);
+    if (response) return response;
     std::this_thread::sleep_for(delay);
     delay *= 2;
   }
@@ -77,45 +71,20 @@ StatusOr<HttpResponse> RetryMakeUploadRequest(
 }
 
 TEST(CurlRequestTest, SimpleGET) {
-  auto factory = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() + "/get",
-        storage::internal::GetDefaultCurlHandleFactory());
-    builder.AddQueryParameter("foo", "foo1&&&foo2");
-    builder.AddQueryParameter("bar", "bar1==bar2=");
-    builder.AddHeader("Accept: application/json");
-    builder.AddHeader("charsets: utf-8");
-    return std::move(builder).BuildRequest();
-  };
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/get",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  builder.AddQueryParameter("foo", "foo1&&&foo2");
+  builder.AddQueryParameter("bar", "bar1==bar2=");
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("charsets: utf-8");
 
-  auto response = RetryMakeRequest(factory);
+  auto response = RetryMakeRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
-  ASSERT_EQ(200, response->status_code) << "response=" << *response;
+  EXPECT_EQ(200, response->status_code);
   auto parsed = nlohmann::json::parse(response->payload);
   auto args = parsed["args"];
   EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
   EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
-}
-
-TEST(CurlRequestTest, AddParametersToComplexUrl) {
-  auto factory = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() + "/get?foo=foo-value",
-        storage::internal::GetDefaultCurlHandleFactory());
-    builder.AddQueryParameter("bar", "bar-value");
-    builder.AddQueryParameter("baz", "baz-value");
-    builder.AddHeader("Accept: application/json");
-    builder.AddHeader("charsets: utf-8");
-    return std::move(builder).BuildRequest();
-  };
-  auto response = RetryMakeRequest(factory);
-  ASSERT_STATUS_OK(response);
-  ASSERT_EQ(200, response->status_code) << "response=" << *response;
-  auto parsed = nlohmann::json::parse(response->payload);
-  auto args = parsed["args"];
-  EXPECT_EQ("foo-value", args["foo"].get<std::string>());
-  EXPECT_EQ("bar-value", args["bar"].get<std::string>());
-  EXPECT_EQ("baz-value", args["baz"].get<std::string>());
 }
 
 TEST(CurlRequestTest, FailedGET) {
@@ -124,44 +93,73 @@ TEST(CurlRequestTest, FailedGET) {
   CurlRequestBuilder builder("https://localhost:1/",
                              storage::internal::GetDefaultCurlHandleFactory());
 
-  auto response = std::move(builder).BuildRequest().MakeRequest({});
+  auto response = builder.BuildRequest().MakeRequest({});
   EXPECT_THAT(response, Not(IsOk()));
 }
 
-TEST(CurlRequestTest, SimplePOST) {
-  auto data = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() + "/post",
-        storage::internal::GetDefaultCurlHandleFactory());
-    std::string data;
-    std::vector<std::pair<std::string, std::string>> form_parameters = {
-        {"foo", "foo1&foo2 foo3"},
-        {"bar", "bar1-bar2"},
-        {"baz", "baz=baz2"},
-    };
-    char const* sep = "";
-    for (auto const& p : form_parameters) {
-      data += sep;
-      data += builder.MakeEscapedString(p.first).get();
-      data += '=';
-      data += builder.MakeEscapedString(p.second).get();
-      sep = "&";
+TEST(CurlRequestTest, RepeatedGET) {
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/get",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  builder.AddQueryParameter("foo", "foo1&&&foo2");
+  builder.AddQueryParameter("bar", "bar1==bar2=");
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("charsets: utf-8");
+
+  // This retry overload is only used in this function.
+  auto retry = [](CurlRequest& request) {
+    auto delay = std::chrono::seconds(1);
+    StatusOr<HttpResponse> response;
+    for (auto i = 0; i != 3; ++i) {
+      response = request.MakeRequest(std::string{});
+      if (response) return response;
+      std::this_thread::sleep_for(delay);
+      delay *= 2;
     }
-    return data;
-  }();
-  auto factory = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() + "/post",
-        storage::internal::GetDefaultCurlHandleFactory());
-    builder.AddHeader("Accept: application/json");
-    builder.AddHeader("Content-Type: application/x-www-form-urlencoded");
-    builder.AddHeader("charsets: utf-8");
-    return std::move(builder).BuildRequest();
+    return response;
   };
 
-  auto response = RetryMakeRequest(factory, data);
+  auto request = builder.BuildRequest();
+  auto response = retry(request);
   ASSERT_STATUS_OK(response);
-  ASSERT_EQ(200, response->status_code) << "response=" << *response;
+
+  EXPECT_EQ(200, response->status_code);
+  auto parsed = nlohmann::json::parse(response->payload);
+  auto args = parsed["args"];
+  EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
+  EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
+
+  response = retry(request);
+  EXPECT_EQ(200, response->status_code);
+  parsed = nlohmann::json::parse(response->payload);
+  args = parsed["args"];
+  EXPECT_EQ("foo1&&&foo2", args["foo"].get<std::string>());
+  EXPECT_EQ("bar1==bar2=", args["bar"].get<std::string>());
+}
+
+TEST(CurlRequestTest, SimplePOST) {
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/post",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  std::vector<std::pair<std::string, std::string>> form_parameters = {
+      {"foo", "foo1&foo2 foo3"},
+      {"bar", "bar1-bar2"},
+      {"baz", "baz=baz2"},
+  };
+  std::string data;
+  char const* sep = "";
+  for (auto const& p : form_parameters) {
+    data += sep;
+    data += builder.MakeEscapedString(p.first).get();
+    data += '=';
+    data += builder.MakeEscapedString(p.second).get();
+    sep = "&";
+  }
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("Content-Type: application/x-www-form-urlencoded");
+  builder.AddHeader("charsets: utf-8");
+
+  auto response = RetryMakeRequest(builder.BuildRequest(), data);
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(200, response->status_code);
   auto parsed = nlohmann::json::parse(response->payload);
   auto form = parsed["form"];
   EXPECT_EQ("foo1&foo2 foo3", form["foo"].get<std::string>());
@@ -170,6 +168,10 @@ TEST(CurlRequestTest, SimplePOST) {
 }
 
 TEST(CurlRequestTest, MultiBufferPUT) {
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/put",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  builder.SetMethod("PUT");
+
   std::vector<std::string> lines = {
       {"line 1"},
       {"line 2"},
@@ -181,56 +183,43 @@ TEST(CurlRequestTest, MultiBufferPUT) {
     data.emplace_back(p.data(), p.size());
     data.emplace_back(nl.data(), nl.size());
   }
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("Content-Type: application/octet-stream");
+  builder.AddHeader("charsets: utf-8");
 
-  auto factory = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() + "/put",
-        storage::internal::GetDefaultCurlHandleFactory());
-    builder.SetMethod("PUT");
-
-    builder.AddHeader("Accept: application/json");
-    builder.AddHeader("Content-Type: application/octet-stream");
-    builder.AddHeader("charsets: utf-8");
-    return std::move(builder).BuildRequest();
-  };
-
-  auto response = RetryMakeUploadRequest(factory, data);
+  auto response = RetryMakeUploadRequest(builder.BuildRequest(), data);
   ASSERT_STATUS_OK(response);
-  ASSERT_EQ(200, response->status_code) << "response=" << *response;
+  EXPECT_EQ(200, response->status_code);
   auto parsed = nlohmann::json::parse(response->payload);
   EXPECT_EQ("line 1\nline 2\nline 3\n", parsed["data"]);
 }
 
 TEST(CurlRequestTest, MultiBufferEmptyPUT) {
-  auto factory = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() + "/put",
-        storage::internal::GetDefaultCurlHandleFactory());
-    builder.SetMethod("PUT");
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/put",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  builder.SetMethod("PUT");
 
-    builder.AddHeader("Accept: application/json");
-    builder.AddHeader("Content-Type: application/octet-stream");
-    builder.AddHeader("charsets: utf-8");
-    return std::move(builder).BuildRequest();
-  };
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("Content-Type: application/octet-stream");
+  builder.AddHeader("charsets: utf-8");
 
-  auto response = RetryMakeRequest(factory);
+  auto response = RetryMakeRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
-  ASSERT_EQ(200, response->status_code) << "response=" << *response;
+  EXPECT_EQ(200, response->status_code);
   auto parsed = nlohmann::json::parse(response->payload);
   EXPECT_TRUE(parsed["data"].get<std::string>().empty());
 }
 
 TEST(CurlRequestTest, MultiBufferLargePUT) {
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/put",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  builder.SetMethod("PUT");
+
   std::vector<std::string> lines;
   auto constexpr kLineSize = 1024;
   // libcurl's CURLOPT_READFUNCTION provides at most CURL_MAX_READ_SIZE bytes,
   // use enough buffers to ensure we get more than one read callback.
-#if CURL_AT_LEAST_VERSION(7, 53, 0)
   auto constexpr kLineCount = (2 * CURL_MAX_READ_SIZE) / kLineSize;
-#else
-  auto constexpr kLineCount = 512 * 1024 / kLineSize;
-#endif  // CURL_AT_LEAST_VERSION >= 7.53.0
   for (int i = 0; i != kLineCount; ++i) {
     std::string line = std::to_string(i);
     line += ": ";
@@ -243,21 +232,13 @@ TEST(CurlRequestTest, MultiBufferLargePUT) {
     data.emplace_back(p.data(), p.size());
     data.emplace_back(nl.data(), nl.size());
   }
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("Content-Type: application/octet-stream");
+  builder.AddHeader("charsets: utf-8");
 
-  auto factory = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() + "/put",
-        storage::internal::GetDefaultCurlHandleFactory());
-    builder.SetMethod("PUT");
-    builder.AddHeader("Accept: application/json");
-    builder.AddHeader("Content-Type: application/octet-stream");
-    builder.AddHeader("charsets: utf-8");
-    return std::move(builder).BuildRequest();
-  };
-
-  auto response = RetryMakeUploadRequest(factory, data);
+  auto response = RetryMakeUploadRequest(builder.BuildRequest(), data);
   ASSERT_STATUS_OK(response);
-  ASSERT_EQ(200, response->status_code) << "response=" << *response;
+  EXPECT_EQ(200, response->status_code);
   auto parsed = nlohmann::json::parse(response->payload);
   std::vector<std::string> const actual = absl::StrSplit(
       parsed["data"].get<std::string>(), '\n', absl::SkipEmpty());
@@ -265,34 +246,26 @@ TEST(CurlRequestTest, MultiBufferLargePUT) {
 }
 
 TEST(CurlRequestTest, Handle404) {
-  auto factory = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() + "/status/404",
-        storage::internal::GetDefaultCurlHandleFactory());
-    builder.AddHeader("Accept: application/json");
-    builder.AddHeader("charsets: utf-8");
-    return std::move(builder).BuildRequest();
-  };
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/status/404",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("charsets: utf-8");
 
-  auto response = RetryMakeRequest(factory, {}, 404);
+  auto response = RetryMakeRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
-  ASSERT_EQ(404, response->status_code) << "response=" << *response;
+  EXPECT_EQ(404, response->status_code);
 }
 
 /// @test Verify the payload for error status is included in the return value.
 TEST(CurlRequestTest, HandleTeapot) {
-  auto factory = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() + "/status/418",
-        storage::internal::GetDefaultCurlHandleFactory());
-    builder.AddHeader("Accept: application/json");
-    builder.AddHeader("charsets: utf-8");
-    return std::move(builder).BuildRequest();
-  };
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/status/418",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("charsets: utf-8");
 
-  auto response = RetryMakeRequest(factory, {}, 418);
+  auto response = RetryMakeRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
-  ASSERT_EQ(418, response->status_code) << "response=" << *response;
+  EXPECT_EQ(418, response->status_code);
   EXPECT_THAT(response->payload, HasSubstr("[ teapot ]"));
 }
 
@@ -302,21 +275,17 @@ TEST(CurlRequestTest, CheckResponseHeaders) {
   // because some versions of httpbin capitalize and others do not, in real
   // code (as opposed to a test), we should search for headers in a
   // case-insensitive manner, but that is not the purpose of this test.
-  auto factory = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() +
-            "/response-headers"
-            "?X-Test-Foo=bar"
-            "&X-Test-Empty",
-        storage::internal::GetDefaultCurlHandleFactory());
-    builder.AddHeader("Accept: application/json");
-    builder.AddHeader("charsets: utf-8");
-    return std::move(builder).BuildRequest();
-  };
+  CurlRequestBuilder builder(HttpBinEndpoint() +
+                                 "/response-headers"
+                                 "?X-Test-Foo=bar"
+                                 "&X-Test-Empty",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("charsets: utf-8");
 
-  auto response = RetryMakeRequest(factory);
+  auto response = RetryMakeRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
-  ASSERT_EQ(200, response->status_code) << "response=" << *response;
+  EXPECT_EQ(200, response->status_code);
   EXPECT_EQ(1, response->headers.count("x-test-empty"));
   EXPECT_EQ("", response->headers.find("x-test-empty")->second);
   EXPECT_LE(1U, response->headers.count("x-test-foo"));
@@ -330,21 +299,17 @@ TEST(CurlRequestTest, UserAgent) {
   // code (as opposed to a test), we should search for headers in a
   // case-insensitive manner, but that is not the purpose of this test.
   // Also verifying the telemetry header is present.
-  auto factory = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() + "/headers",
-        storage::internal::GetDefaultCurlHandleFactory());
-    auto options = google::cloud::Options{}.set<UserAgentProductsOption>(
-        {"test-user-agent-prefix"});
-    builder.ApplyClientOptions(options);
-    builder.AddHeader("Accept: application/json");
-    builder.AddHeader("charsets: utf-8");
-    return std::move(builder).BuildRequest();
-  };
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/headers",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  auto options = google::cloud::Options{}.set<UserAgentProductsOption>(
+      {"test-user-agent-prefix"});
+  builder.ApplyClientOptions(options);
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("charsets: utf-8");
 
-  auto response = RetryMakeRequest(factory);
+  auto response = RetryMakeRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
-  ASSERT_EQ(200, response->status_code) << "response=" << *response;
+  EXPECT_EQ(200, response->status_code);
   auto payload = nlohmann::json::parse(response->payload);
   ASSERT_EQ(1U, payload.count("headers"));
   auto headers = payload["headers"];
@@ -353,57 +318,17 @@ TEST(CurlRequestTest, UserAgent) {
   EXPECT_THAT(headers.value("User-Agent", ""), HasSubstr("gcloud-cpp/"));
 }
 
-/// @test Verify the HTTP Version option.
-TEST(CurlRequestTest, HttpVersion) {
-  struct Test {
-    std::string version;
-    std::string prefix;
-  } cases[] = {
-      // The HTTP version setting is a request, libcurl may choose a slightly
-      // different version (e.g. 1.1 when 1.0 is requested).
-      {"1.1", "http/1"},
-      {"1.0", "http/1"},
-      {"2", "http/"},  // HTTP/2 may not be compiled in
-      {"", "http/"},
-  };
-
-  for (auto const& test : cases) {
-    SCOPED_TRACE("Testing with version=<" + test.version + ">");
-    auto factory = [&] {
-      CurlRequestBuilder builder(
-          HttpBinEndpoint() + "/get",
-          storage::internal::GetDefaultCurlHandleFactory());
-      auto options =
-          google::cloud::Options{}.set<storage_experimental::HttpVersionOption>(
-              test.version);
-      builder.ApplyClientOptions(options);
-      builder.AddHeader("Accept: application/json");
-      builder.AddHeader("charsets: utf-8");
-      return std::move(builder).BuildRequest();
-    };
-
-    auto response = RetryMakeRequest(factory);
-    ASSERT_STATUS_OK(response);
-    ASSERT_EQ(200, response->status_code) << "response=" << *response;
-    EXPECT_THAT(response->headers, Contains(Pair(StartsWith(test.prefix), "")));
-  }
-}
-
 /// @test Verify that the Projection parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParametersProjection) {
-  auto factory = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() + "/get",
-        storage::internal::GetDefaultCurlHandleFactory());
-    builder.AddHeader("Accept: application/json");
-    builder.AddHeader("charsets: utf-8");
-    builder.AddOption(storage::Projection("full"));
-    return std::move(builder).BuildRequest();
-  };
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/get",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("charsets: utf-8");
+  builder.AddOption(storage::Projection("full"));
 
-  auto response = RetryMakeRequest(factory);
+  auto response = RetryMakeRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
-  ASSERT_EQ(200, response->status_code) << "response=" << *response;
+  EXPECT_EQ(200, response->status_code);
   auto parsed = nlohmann::json::parse(response->payload);
   auto args = parsed["args"];
   EXPECT_EQ("full", args.value("projection", ""));
@@ -417,19 +342,15 @@ TEST(CurlRequestTest, WellKnownQueryParametersProjection) {
 
 /// @test Verify that the UserProject parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParametersUserProject) {
-  auto factory = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() + "/get",
-        storage::internal::GetDefaultCurlHandleFactory());
-    builder.AddHeader("Accept: application/json");
-    builder.AddHeader("charsets: utf-8");
-    builder.AddOption(storage::UserProject("a-project"));
-    return std::move(builder).BuildRequest();
-  };
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/get",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("charsets: utf-8");
+  builder.AddOption(storage::UserProject("a-project"));
 
-  auto response = RetryMakeRequest(factory);
+  auto response = RetryMakeRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
-  ASSERT_EQ(200, response->status_code) << "response=" << *response;
+  EXPECT_EQ(200, response->status_code);
   auto parsed = nlohmann::json::parse(response->payload);
   auto args = parsed["args"];
   EXPECT_EQ("a-project", args.value("userProject", ""));
@@ -443,19 +364,15 @@ TEST(CurlRequestTest, WellKnownQueryParametersUserProject) {
 
 /// @test Verify that the IfGenerationMatch parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParametersIfGenerationMatch) {
-  auto factory = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() + "/get",
-        storage::internal::GetDefaultCurlHandleFactory());
-    builder.AddHeader("Accept: application/json");
-    builder.AddHeader("charsets: utf-8");
-    builder.AddOption(storage::IfGenerationMatch(42));
-    return std::move(builder).BuildRequest();
-  };
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/get",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("charsets: utf-8");
+  builder.AddOption(storage::IfGenerationMatch(42));
 
-  auto response = RetryMakeRequest(factory);
+  auto response = RetryMakeRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
-  ASSERT_EQ(200, response->status_code) << "response=" << *response;
+  EXPECT_EQ(200, response->status_code);
   auto parsed = nlohmann::json::parse(response->payload);
   auto args = parsed["args"];
   EXPECT_EQ("42", args.value("ifGenerationMatch", ""));
@@ -469,19 +386,15 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfGenerationMatch) {
 
 /// @test Verify that the IfGenerationNotMatch parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParametersIfGenerationNotMatch) {
-  auto factory = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() + "/get",
-        storage::internal::GetDefaultCurlHandleFactory());
-    builder.AddHeader("Accept: application/json");
-    builder.AddHeader("charsets: utf-8");
-    builder.AddOption(storage::IfGenerationNotMatch(42));
-    return std::move(builder).BuildRequest();
-  };
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/get",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("charsets: utf-8");
+  builder.AddOption(storage::IfGenerationNotMatch(42));
 
-  auto response = RetryMakeRequest(factory);
+  auto response = RetryMakeRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
-  ASSERT_EQ(200, response->status_code) << "response=" << *response;
+  EXPECT_EQ(200, response->status_code);
   auto parsed = nlohmann::json::parse(response->payload);
   auto args = parsed["args"];
   EXPECT_EQ("42", args.value("ifGenerationNotMatch", ""));
@@ -495,19 +408,15 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfGenerationNotMatch) {
 
 /// @test Verify that the IfMetagenerationMatch parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParametersIfMetagenerationMatch) {
-  auto factory = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() + "/get",
-        storage::internal::GetDefaultCurlHandleFactory());
-    builder.AddHeader("Accept: application/json");
-    builder.AddHeader("charsets: utf-8");
-    builder.AddOption(storage::IfMetagenerationMatch(42));
-    return std::move(builder).BuildRequest();
-  };
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/get",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("charsets: utf-8");
+  builder.AddOption(storage::IfMetagenerationMatch(42));
 
-  auto response = RetryMakeRequest(factory);
+  auto response = RetryMakeRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
-  ASSERT_EQ(200, response->status_code) << "response=" << *response;
+  EXPECT_EQ(200, response->status_code);
   auto parsed = nlohmann::json::parse(response->payload);
   auto args = parsed["args"];
   EXPECT_EQ("42", args.value("ifMetagenerationMatch", ""));
@@ -521,19 +430,15 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfMetagenerationMatch) {
 
 /// @test Verify that the IfMetagenerationNotMatch parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParametersIfMetagenerationNotMatch) {
-  auto factory = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() + "/get",
-        storage::internal::GetDefaultCurlHandleFactory());
-    builder.AddHeader("Accept: application/json");
-    builder.AddHeader("charsets: utf-8");
-    builder.AddOption(storage::IfMetagenerationNotMatch(42));
-    return std::move(builder).BuildRequest();
-  };
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/get",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("charsets: utf-8");
+  builder.AddOption(storage::IfMetagenerationNotMatch(42));
 
-  auto response = RetryMakeRequest(factory);
+  auto response = RetryMakeRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
-  ASSERT_EQ(200, response->status_code) << "response=" << *response;
+  EXPECT_EQ(200, response->status_code);
   auto parsed = nlohmann::json::parse(response->payload);
   auto args = parsed["args"];
   EXPECT_EQ("42", args.value("ifMetagenerationNotMatch", ""));
@@ -543,25 +448,21 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfMetagenerationNotMatch) {
   EXPECT_EQ(0, args.count("ifGenerationMatch"));
   EXPECT_EQ(0, args.count("ifGenerationNotMatch"));
   EXPECT_EQ(0, args.count("ifMetagenerationMatch"));
-}  // namespace
+}
 
 /// @test Verify that the well-known query parameters are included if set.
 TEST(CurlRequestTest, WellKnownQueryParametersMultiple) {
-  auto factory = [] {
-    CurlRequestBuilder builder(
-        HttpBinEndpoint() + "/get",
-        storage::internal::GetDefaultCurlHandleFactory());
-    builder.AddHeader("Accept: application/json");
-    builder.AddHeader("charsets: utf-8");
-    builder.AddOption(storage::UserProject("user-project-id"));
-    builder.AddOption(storage::IfMetagenerationMatch(7));
-    builder.AddOption(storage::IfGenerationNotMatch(42));
-    return std::move(builder).BuildRequest();
-  };
+  CurlRequestBuilder builder(HttpBinEndpoint() + "/get",
+                             storage::internal::GetDefaultCurlHandleFactory());
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("charsets: utf-8");
+  builder.AddOption(storage::UserProject("user-project-id"));
+  builder.AddOption(storage::IfMetagenerationMatch(7));
+  builder.AddOption(storage::IfGenerationNotMatch(42));
 
-  auto response = RetryMakeRequest(factory);
+  auto response = RetryMakeRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
-  ASSERT_EQ(200, response->status_code) << "response=" << *response;
+  EXPECT_EQ(200, response->status_code);
   auto parsed = nlohmann::json::parse(response->payload);
   auto args = parsed["args"];
   EXPECT_EQ("user-project-id", args.value("userProject", ""));
@@ -586,7 +487,7 @@ class MockLogBackend : public google::cloud::LogBackend {
 TEST(CurlRequestTest, Logging) {
   // Prepare the Log subsystem to receive mock calls:
   auto mock_logger = std::make_shared<MockLogBackend>();
-  auto backend_id = google::cloud::LogSink::Instance().AddBackend(mock_logger);
+  google::cloud::LogSink::Instance().AddBackend(mock_logger);
 
   std::string log_messages;
   EXPECT_CALL(*mock_logger, ProcessWithOwnership)
@@ -596,25 +497,23 @@ TEST(CurlRequestTest, Logging) {
       });
 
   {
-    auto factory = [] {
-      CurlRequestBuilder builder(
-          HttpBinEndpoint() + "/post?foo=bar",
-          storage::internal::GetDefaultCurlHandleFactory());
-      auto options =
-          google::cloud::Options{}.set<TracingComponentsOption>({"http"});
-      builder.ApplyClientOptions(options);
-      builder.AddHeader("Accept: application/json");
-      builder.AddHeader("charsets: utf-8");
-      builder.AddHeader("x-test-header: foo");
-      return std::move(builder).BuildRequest();
-    };
+    CurlRequestBuilder builder(
+        HttpBinEndpoint() + "/post?foo=bar",
+        storage::internal::GetDefaultCurlHandleFactory());
+    auto options =
+        google::cloud::Options{}.set<TracingComponentsOption>({"http"});
+    builder.ApplyClientOptions(options);
+    builder.AddHeader("Accept: application/json");
+    builder.AddHeader("charsets: utf-8");
+    builder.AddHeader("x-test-header: foo");
 
-    auto response = RetryMakeRequest(factory, "this is some text");
+    auto response =
+        RetryMakeRequest(builder.BuildRequest(), "this is some text");
     ASSERT_STATUS_OK(response);
-    ASSERT_EQ(200, response->status_code) << "response=" << *response;
+    EXPECT_EQ(200, response->status_code);
   }
 
-  google::cloud::LogSink::Instance().RemoveBackend(backend_id);
+  google::cloud::LogSink::Instance().ClearBackends();
 
   // Verify the URL, and headers, and payload are logged.
   EXPECT_THAT(log_messages, HasSubstr("/post?foo=bar"));
@@ -626,38 +525,9 @@ TEST(CurlRequestTest, Logging) {
   EXPECT_THAT(log_messages, HasSubstr("curl(Recv Header)"));
   EXPECT_THAT(log_messages, HasSubstr("curl(Recv Data)"));
 }
-
-TEST(CurlRequestTest, HandlesReleasedOnError) {
-  auto constexpr kTestPoolSize = 8;
-  auto factory =
-      std::make_shared<PooledCurlHandleFactory>(kTestPoolSize, Options{});
-  ASSERT_EQ(0, factory->CurrentHandleCount());
-  ASSERT_EQ(0, factory->CurrentMultiHandleCount());
-
-  CurlRequestBuilder builder("https://localhost:1/get", factory);
-  auto response = std::move(builder).BuildRequest().MakeRequest(std::string{});
-  ASSERT_THAT(response, Not(IsOk()));
-  // Assuming there was an error the CURL* handle should not be returned to the
-  // pool.
-  EXPECT_EQ(0, factory->CurrentHandleCount());
-}
-
-TEST(CurlRequestTest, HandlesReusedOnSuccess) {
-  auto constexpr kTestPoolSize = 8;
-  auto factory =
-      std::make_shared<PooledCurlHandleFactory>(kTestPoolSize, Options{});
-  ASSERT_EQ(0, factory->CurrentHandleCount());
-  ASSERT_EQ(0, factory->CurrentMultiHandleCount());
-
-  CurlRequestBuilder builder(HttpBinEndpoint() + "/get", factory);
-  auto response = std::move(builder).BuildRequest().MakeRequest(std::string{});
-  ASSERT_THAT(response, IsOk());
-  EXPECT_EQ(1, factory->CurrentHandleCount());
-}
-
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

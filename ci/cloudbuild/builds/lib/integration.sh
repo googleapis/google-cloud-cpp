@@ -28,7 +28,7 @@ source module ci/lib/io.sh
 
 # To run the integration tests we need to install the dependencies for the storage emulator
 export PATH="${HOME}/.local/bin:${PATH}"
-python3 -m pip install --quiet --user "git+git://github.com/googleapis/storage-testbench@v0.9.0"
+python3 -m pip install --quiet --user -r "${PROJECT_ROOT}/google/cloud/storage/emulator/requirements.txt"
 
 # Some of the tests will need a valid roots.pem file.
 rm -f /dev/shm/roots.pem
@@ -172,6 +172,10 @@ function integration::bazel_with_emulators() {
   "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}"
 
+  io::log_h2 "Running Storage Emulator integration tests"
+  "google/cloud/storage/emulator/ci/run_integration_tests_bazel.sh" \
+    bazel "${args[@]}"
+
   io::log_h2 "Running Storage integration tests (with emulator)"
   "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}"
@@ -241,7 +245,7 @@ function integration::ctest_with_emulators() {
   env -C "${cmake_out}" \
     GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS="yes" \
     GOOGLE_CLOUD_CPP_GENERATOR_GOOGLEAPIS_PATH="${googleapis_abs_path}" \
-    GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH="/usr/local/include/" \
+    GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH="/usr/include/" \
     GOOGLE_CLOUD_CPP_GENERATOR_CODE_PATH="/workspace/" \
     GOOGLE_CLOUD_CPP_GENERATOR_GOLDEN_PATH="/workspace/" \
     ctest -R "^google_cloud_cpp_generator_integration_" "${ctest_args[@]}"

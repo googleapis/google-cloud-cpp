@@ -21,13 +21,13 @@
 namespace google {
 namespace cloud {
 namespace pubsub_mocks {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
  * A googlemock-based mock for
  * [pubsub::SubscriptionAdminConnection][mocked-link]
  *
- * [mocked-link]: @ref google::cloud::pubsub::SubscriptionAdminConnection
+ * [mocked-link]: @ref google::cloud::pubsub::v1::SubscriptionAdminConnection
  */
 class MockSubscriptionAdminConnection
     : public pubsub::SubscriptionAdminConnection {
@@ -67,7 +67,7 @@ class MockSubscriptionAdminConnection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_mocks
 }  // namespace cloud
 }  // namespace google

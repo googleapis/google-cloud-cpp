@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 template <typename T>
@@ -77,7 +77,7 @@ class AsyncRetryLoopImpl
         request_(std::move(request)),
         location_(location) {}
 
-  using ReturnType = ::google::cloud::internal::invoke_result_t<
+  using ReturnType = google::cloud::internal::invoke_result_t<
       Functor, google::cloud::CompletionQueue&,
       std::unique_ptr<grpc::ClientContext>, Request const&>;
   using T = typename FutureValueType<ReturnType>::value_type;
@@ -256,7 +256,7 @@ auto AsyncRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 namespace spanner_proto = ::google::spanner::v1;
@@ -438,7 +438,7 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
   EXPECT_STATUS_OK(reader.status());
 
   // Verify the returned values are correct.
-  for (auto const& value :
+  for (const auto& value :
        {"not_chunked", "first_chunksecond_chunkthird_chunk",
         "second group first_chunk second group second_chunk",
         "also not_chunked", "still not_chunked"}) {
@@ -705,7 +705,7 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

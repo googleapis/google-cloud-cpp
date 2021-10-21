@@ -21,7 +21,7 @@ set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Spanner")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "spanner_internal" "spanner_testing")
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "spanner_testing")
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/spanner/README.md" "*/google/cloud/spanner/internal/*"
     "*/google/cloud/spanner/benchmarks/*" "*/google/cloud/spanner/testing/*"
@@ -34,45 +34,6 @@ include(GoogleCloudCppCommon)
 
 add_library(
     google_cloud_cpp_spanner # cmake-format: sort
-    admin/database_admin_client.cc
-    admin/database_admin_client.h
-    admin/database_admin_connection.cc
-    admin/database_admin_connection.h
-    admin/database_admin_connection_idempotency_policy.cc
-    admin/database_admin_connection_idempotency_policy.h
-    admin/database_admin_options.h
-    admin/instance_admin_client.cc
-    admin/instance_admin_client.h
-    admin/instance_admin_connection.cc
-    admin/instance_admin_connection.h
-    admin/instance_admin_connection_idempotency_policy.cc
-    admin/instance_admin_connection_idempotency_policy.h
-    admin/instance_admin_options.h
-    admin/internal/database_admin_auth_decorator.cc
-    admin/internal/database_admin_auth_decorator.h
-    admin/internal/database_admin_logging_decorator.cc
-    admin/internal/database_admin_logging_decorator.h
-    admin/internal/database_admin_metadata_decorator.cc
-    admin/internal/database_admin_metadata_decorator.h
-    admin/internal/database_admin_option_defaults.cc
-    admin/internal/database_admin_option_defaults.h
-    admin/internal/database_admin_stub.cc
-    admin/internal/database_admin_stub.h
-    admin/internal/database_admin_stub_factory.cc
-    admin/internal/database_admin_stub_factory.h
-    admin/internal/instance_admin_auth_decorator.cc
-    admin/internal/instance_admin_auth_decorator.h
-    admin/internal/instance_admin_logging_decorator.cc
-    admin/internal/instance_admin_logging_decorator.h
-    admin/internal/instance_admin_metadata_decorator.cc
-    admin/internal/instance_admin_metadata_decorator.h
-    admin/internal/instance_admin_option_defaults.cc
-    admin/internal/instance_admin_option_defaults.h
-    admin/internal/instance_admin_stub.cc
-    admin/internal/instance_admin_stub.h
-    admin/internal/instance_admin_stub_factory.cc
-    admin/internal/instance_admin_stub_factory.h
-    admin/retry_traits.h
     backoff_policy.h
     backup.cc
     backup.h
@@ -145,7 +106,6 @@ add_library(
     internal/transaction_impl.cc
     internal/transaction_impl.h
     internal/tuple_utils.h
-    json.h
     keys.cc
     keys.h
     mutations.cc
@@ -222,12 +182,9 @@ create_bazel_config(google_cloud_cpp_spanner YEAR "2019")
 add_library(google_cloud_cpp_spanner_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_spanner_mocks
-    INTERFACE
-        ${CMAKE_CURRENT_SOURCE_DIR}/admin/mocks/mock_database_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/admin/mocks/mock_instance_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_database_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_instance_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_spanner_connection.h)
+    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_database_admin_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_instance_admin_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_spanner_connection.h)
 target_link_libraries(
     google_cloud_cpp_spanner_mocks
     INTERFACE google-cloud-cpp::spanner GTest::gmock_main GTest::gmock
@@ -271,6 +228,7 @@ function (spanner_client_define_tests)
         testing/pick_instance_config.h
         testing/pick_random_instance.cc
         testing/pick_random_instance.h
+        testing/policies.h
         testing/random_backup_name.cc
         testing/random_backup_name.h
         testing/random_database_name.cc
@@ -326,7 +284,6 @@ function (spanner_client_define_tests)
         internal/status_utils_test.cc
         internal/transaction_impl_test.cc
         internal/tuple_utils_test.cc
-        json_test.cc
         keys_test.cc
         mutations_test.cc
         numeric_test.cc
@@ -419,7 +376,6 @@ if (BUILD_TESTING)
     spanner_client_define_tests()
     spanner_client_define_benchmarks()
     add_subdirectory(integration_tests)
-    add_subdirectory(admin/integration_tests)
     add_subdirectory(benchmarks) # macro benchmarks
 endif (BUILD_TESTING)
 

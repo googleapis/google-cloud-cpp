@@ -13,16 +13,16 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/benchmarks/embedded_server.h"
-#include "google/cloud/bigtable/benchmarks/constants.h"
 #include "google/cloud/bigtable/benchmarks/random_mutation.h"
+#include "google/cloud/bigtable/benchmarks/setup.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <atomic>
 #include <iomanip>
 #include <sstream>
 
-namespace btproto = ::google::bigtable::v2;
-namespace btadmin = ::google::bigtable::admin::v2;
+namespace btproto = google::bigtable::v2;
+namespace btadmin = google::bigtable::admin::v2;
 
 namespace google {
 namespace cloud {

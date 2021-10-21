@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 
 using ::google::cloud::testing_util::IsOk;
 using ::testing::IsEmpty;
@@ -259,7 +259,7 @@ TEST_F(ClientOptionsTest, UserAgentPrefix) {
   options.add_user_agent_prefix("foo-1.0");
   EXPECT_EQ("foo-1.0", options.user_agent_prefix());
   options.add_user_agent_prefix("bar-2.2");
-  EXPECT_EQ("bar-2.2 foo-1.0", options.user_agent_prefix());
+  EXPECT_EQ("bar-2.2/foo-1.0", options.user_agent_prefix());
 }
 
 TEST_F(ClientOptionsTest, SetMaximumSimpleUploadSize) {
@@ -324,7 +324,7 @@ TEST_F(ClientOptionsTest, MakeOptionsFromDefault) {
   EXPECT_TRUE(opts.has<EnableCurlSigpipeHandlerOption>());
   EXPECT_EQ(0, opts.get<MaximumCurlSocketSendSizeOption>());
   EXPECT_EQ(0, opts.get<MaximumCurlSocketRecvSizeOption>());
-  EXPECT_LT(0, opts.get<TransferStallTimeoutOption>().count());
+  EXPECT_LT(0, opts.get<DownloadStallTimeoutOption>().count());
   EXPECT_THAT(opts.get<CARootsFilePathOption>(), IsEmpty());
 }
 
@@ -340,7 +340,7 @@ TEST_F(ClientOptionsTest, DefaultOptions) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

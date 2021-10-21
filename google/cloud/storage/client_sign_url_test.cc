@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
@@ -153,7 +153,7 @@ TEST_F(CreateSignedUrlTest, V4SignGet) {
 
   auto actual = client.CreateV4SignedUrl(
       "GET", bucket_name, object_name,
-      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date).value()),
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
       SignedUrlDuration(valid_for),
       AddExtensionHeader("host", "storage.googleapis.com"));
   ASSERT_STATUS_OK(actual);
@@ -194,7 +194,7 @@ TEST_F(CreateSignedUrlTest, V4SignPut) {
 
   auto actual = client.CreateV4SignedUrl(
       "POST", bucket_name, object_name,
-      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date).value()),
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
       SignedUrlDuration(valid_for),
       AddExtensionHeader("host", "storage.googleapis.com"),
       AddExtensionHeader("x-goog-resumable", "start"));
@@ -269,7 +269,7 @@ TEST_F(CreateSignedUrlTest, V4SignPermanentFailure) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

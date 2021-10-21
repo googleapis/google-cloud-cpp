@@ -23,10 +23,10 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
-namespace btproto = ::google::bigtable::v2;
+namespace btproto = google::bigtable::v2;
 using ::testing::Return;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::bigtable::testing::MockMutateRowsReader;
@@ -482,7 +482,7 @@ TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
 }
 
 }  // anonymous namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

@@ -19,11 +19,10 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 
 // Version of DefaultCurlHandleFactory that keeps track of what calls have been
@@ -36,7 +35,7 @@ class OverriddenDefaultCurlHandleFactory : public DefaultCurlHandleFactory {
 
  protected:
   void SetCurlStringOption(CURL* handle, CURLoption option_tag,
-                           char const* value) override {
+                           const char* value) override {
     set_options_[option_tag] = value;
     DefaultCurlHandleFactory::SetCurlStringOption(handle, option_tag, value);
   }
@@ -57,7 +56,7 @@ class OverriddenPooledCurlHandleFactory : public PooledCurlHandleFactory {
 
  protected:
   void SetCurlStringOption(CURL* handle, CURLoption option_tag,
-                           char const* value) override {
+                           const char* value) override {
     set_options_[option_tag] = value;
     PooledCurlHandleFactory::SetCurlStringOption(handle, option_tag, value);
   }
@@ -81,7 +80,7 @@ TEST(CurlHandleFactoryTest, DefaultFactoryChannelOptionsCallsSetOptions) {
   auto const expected = std::make_pair(CURLOPT_CAINFO, std::string("foo"));
 
   object_under_test.CreateHandle();
-  EXPECT_THAT(object_under_test.set_options_, ElementsAre(expected));
+  EXPECT_THAT(object_under_test.set_options_, testing::ElementsAre(expected));
 }
 
 TEST(CurlHandleFactoryTest, PooledFactoryNoChannelOptionsDoesntCallSetOptions) {
@@ -99,19 +98,19 @@ TEST(CurlHandleFactoryTest, PooledFactoryChannelOptionsCallsSetOptions) {
 
   {
     object_under_test.CreateHandle();
-    EXPECT_THAT(object_under_test.set_options_, ElementsAre(expected));
+    EXPECT_THAT(object_under_test.set_options_, testing::ElementsAre(expected));
   }
   // the above should have left the handle in the cache. Check that cached
   // handles get their options set again.
   object_under_test.set_options_.clear();
 
   object_under_test.CreateHandle();
-  EXPECT_THAT(object_under_test.set_options_, ElementsAre(expected));
+  EXPECT_THAT(object_under_test.set_options_, testing::ElementsAre(expected));
 }
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

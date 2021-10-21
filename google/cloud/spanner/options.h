@@ -52,7 +52,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * Option for `google::cloud::Options` to set a `spanner::RetryPolicy`.
@@ -124,7 +124,7 @@ struct SessionPoolActionOnExhaustionOption {
   using Type = spanner::ActionOnExhaustion;
 };
 
-/**
+/*
  * Option for `google::cloud::Options` to set the interval at which we refresh
  * sessions so they don't get collected by the backend GC.
  *
@@ -164,18 +164,11 @@ struct RequestPriorityOption {
 };
 
 /**
- * Option for `google::cloud::Options` to set a per-request tag.
- */
-struct RequestTagOption {
-  using Type = std::string;
-};
-
-/**
  * List of all Request options.
  */
-using RequestOptionList = OptionList<RequestPriorityOption, RequestTagOption>;
+using RequestOptionList = OptionList<RequestPriorityOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

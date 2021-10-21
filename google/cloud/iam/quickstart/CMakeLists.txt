@@ -12,8 +12,8 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-# A minimal CMakeList.txt showing how to use the Cloud IAM C++ client library in
-# CMake-based projects.
+# A minimal CMakeList.txt showing how to use the Cloud Bigtable C++ client
+# library in CMake-based projects.
 
 cmake_minimum_required(VERSION 3.5)
 project(google-cloud-cpp-iam-quickstart CXX C)
@@ -32,4 +32,4 @@ endif ()
 
 # Once the iam_client package is found, define new targets.
 add_executable(quickstart quickstart.cc)
-target_link_libraries(quickstart google-cloud-cpp::iam)
+target_link_libraries(quickstart google-cloud-cpp::experimental-iam)

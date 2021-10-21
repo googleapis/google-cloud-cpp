@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -euo pipefail
+set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
@@ -51,11 +51,9 @@ function dump_abi() {
 export -f dump_abi # enables this function to be called from a subshell
 
 libraries=(
-  "google_cloud_cpp_bigquery"
   "google_cloud_cpp_bigtable"
   "google_cloud_cpp_common"
   "google_cloud_cpp_grpc_utils"
-  "google_cloud_cpp_iam"
   "google_cloud_cpp_spanner"
   "google_cloud_cpp_storage"
   "google_cloud_cpp_pubsub"
@@ -74,29 +72,27 @@ for lib in "${libraries[@]}"; do
   actual_dump_file="${lib}.actual.abi.dump"
   expected_dump_file="${lib}.expected.abi.dump"
   expected_dump_path="${PROJECT_ROOT}/ci/abi-dumps/${expected_dump_file}.gz"
-  if [[ -r "${expected_dump_path}" ]]; then
-    zcat "${expected_dump_path}" >"cmake-out/${expected_dump_file}"
-    # We ignore all symbols in internal namespaces, because these are not part
-    # of our public API. We do this by specifying a regex that matches against
-    # the mangled symbol names. For example, 8 is the number of characters in
-    # the string "internal", and it should again be followed by some other
-    # number indicating the length of the symbol within the "internal"
-    # namespace. See: https://en.wikipedia.org/wiki/Name_mangling
-    report="cmake-out/compat_reports/${lib}/expected_to_actual/src_compat_report.html"
-    if ! abi-compliance-checker \
-      -skip-internal-symbols "(8internal|17bigquery_internal|12iam_internal|15pubsub_internal|16spanner_internal)\d" \
-      -report-path "${report}" \
-      -src -l "${lib}" \
-      -old "cmake-out/${expected_dump_file}" \
-      -new "cmake-out/${actual_dump_file}"; then
-      io::log_red "ABI Compliance error: ${lib}"
-      ((++errors))
-      io::log "Report file: ${report}"
-      w3m -dump "${report}"
-    fi
+  zcat "${expected_dump_path}" >"cmake-out/${expected_dump_file}"
+  # We ignore all symbols in internal namespaces, because these are not part
+  # of our public API. We do this by specifying a regex that matches against
+  # the mangled symbol names. For example, 8 is the number of characters in
+  # the string "internal", and it should again be followed by some other
+  # number indicating the length of the symbol within the "internal"
+  # namespace. See: https://en.wikipedia.org/wiki/Name_mangling
+  report="cmake-out/compat_reports/${lib}/expected_to_actual/src_compat_report.html"
+  if ! abi-compliance-checker \
+    -skip-internal-symbols "(8internal|15pubsub_internal|16spanner_internal)\d" \
+    -report-path "${report}" \
+    -src -l "${lib}" \
+    -old "cmake-out/${expected_dump_file}" \
+    -new "cmake-out/${actual_dump_file}"; then
+    io::log_red "ABI Compliance error: ${lib}"
+    ((++errors))
+    io::log "Report file: ${report}"
+    w3m -dump "${report}"
   fi
   # Replaces the (old) expected dump file with the (new) actual one.
-  gzip -n "cmake-out/${actual_dump_file}"
+  gzip "cmake-out/${actual_dump_file}"
   mv -f "cmake-out/${actual_dump_file}.gz" "${expected_dump_path}"
 done
 echo

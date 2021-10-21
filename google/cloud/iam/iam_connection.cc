@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace iam {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 IAMConnection::~IAMConnection() = default;
 
@@ -659,13 +659,13 @@ class IAMConnectionImpl : public IAMConnection {
 
 std::shared_ptr<IAMConnection> MakeIAMConnection(Options options) {
   options = iam_internal::IAMDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
   auto stub = iam_internal::CreateDefaultIAMStub(background->cq(), options);
   return std::make_shared<IAMConnectionImpl>(std::move(background),
                                              std::move(stub), options);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace iam
 }  // namespace cloud
 }  // namespace google
@@ -673,17 +673,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace google {
 namespace cloud {
 namespace iam_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<iam::IAMConnection> MakeIAMConnection(
     std::shared_ptr<IAMStub> stub, Options options) {
   options = IAMDefaultOptions(std::move(options));
   return std::make_shared<iam::IAMConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
+      options.get<GrpcBackgroundThreadsFactoryOption>()(), std::move(stub),
       std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

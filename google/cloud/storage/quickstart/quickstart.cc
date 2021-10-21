@@ -24,13 +24,19 @@ int main(int argc, char* argv[]) {
   std::string const bucket_name = argv[1];
 
   // Create aliases to make the code easier to read.
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
 
   // Create a client to communicate with Google Cloud Storage. This client
   // uses the default configuration for authentication and project id.
-  auto client = gcs::Client();
+  google::cloud::StatusOr<gcs::Client> client =
+      gcs::Client::CreateDefaultClient();
+  if (!client) {
+    std::cerr << "Failed to create Storage Client, status=" << client.status()
+              << "\n";
+    return 1;
+  }
 
-  auto writer = client.WriteObject(bucket_name, "quickstart.txt");
+  auto writer = client->WriteObject(bucket_name, "quickstart.txt");
   writer << "Hello World!";
   writer.Close();
   if (writer.metadata()) {
@@ -41,7 +47,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  auto reader = client.ReadObject(bucket_name, "quickstart.txt");
+  auto reader = client->ReadObject(bucket_name, "quickstart.txt");
   if (!reader) {
     std::cerr << "Error reading object: " << reader.status() << "\n";
     return 1;

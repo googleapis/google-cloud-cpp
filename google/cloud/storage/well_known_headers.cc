@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 std::ostream& operator<<(std::ostream& os, CustomHeader const& rhs) {
   if (!rhs.has_value()) {
     return os;
@@ -36,7 +36,7 @@ EncryptionKeyData EncryptionDataFromBinaryKey(std::string const& key) {
 }
 
 EncryptionKeyData EncryptionDataFromBase64Key(std::string const& key) {
-  auto binary_key = internal::Base64Decode(key).value();
+  auto binary_key = internal::Base64Decode(key);
   return EncryptionKeyData{
       "AES256", key, internal::Base64Encode(internal::Sha256Hash(binary_key))};
 }
@@ -77,7 +77,7 @@ std::ostream& operator<<(std::ostream& os, SourceEncryptionKey const& rhs) {
   return os << prefix << "*: <not set>";
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

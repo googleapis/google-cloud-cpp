@@ -19,7 +19,7 @@ namespace cloud {
 namespace bigtable {
 namespace testing {
 
-namespace btproto = ::google::bigtable::v2;
+namespace btproto = google::bigtable::v2;
 
 grpc::Status InProcessDataClient::MutateRow(
     grpc::ClientContext* context, btproto::MutateRowRequest const& request,

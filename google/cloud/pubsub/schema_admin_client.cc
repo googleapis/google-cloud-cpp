@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/schema_admin_client.h"
+#include "schema_admin_client.h"
 
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 SchemaAdminClient::SchemaAdminClient(
     std::shared_ptr<SchemaAdminConnection> connection)
@@ -143,7 +143,7 @@ SchemaAdminClient::ValidateMessage(
   return connection_->ValidateMessage(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

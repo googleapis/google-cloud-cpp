@@ -18,23 +18,23 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 std::string PredefinedAcl::HeaderName() const {
-  static auto const* const kMapping = new std::map<std::string, std::string>({
+  static std::map<std::string, std::string> const kMapping{
       {"authenticatedRead", "authenticated-read"},
       {"bucketOwnerFullControl", "bucket-owner-full-control"},
       {"bucketOwnerRead", "bucket-owner-read"},
       {"private", "private"},
       {"projectPrivate", "project-private"},
       {"publicRead", "public-read"},
-  });
-  auto loc = kMapping->find(value());
-  if (loc == kMapping->end()) {
+  };
+  auto loc = kMapping.find(value());
+  if (loc == kMapping.end()) {
     return value();
   }
   return loc->second;
 }
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

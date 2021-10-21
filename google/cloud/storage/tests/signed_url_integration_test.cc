@@ -19,13 +19,12 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
-#include <functional>
 #include <thread>
 
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 class SignedUrlIntegrationTest
@@ -48,11 +47,10 @@ class SignedUrlIntegrationTest
 };
 
 StatusOr<internal::HttpResponse> RetryHttpRequest(
-    std::function<internal::CurlRequest()> const& factory,
-    std::string const& payload = {}) {
+    internal::CurlRequest request, std::string const& payload = {}) {
   StatusOr<internal::HttpResponse> response;
   for (int i = 0; i != 3; ++i) {
-    response = factory().MakeRequest(payload);
+    response = request.MakeRequest(payload);
     if (response) return response;
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }
@@ -80,13 +78,10 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlGet) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
-  auto factory = [&] {
-    internal::CurlRequestBuilder builder(
-        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-    return std::move(builder).BuildRequest();
-  };
+  internal::CurlRequestBuilder builder(
+      *signed_url, storage::internal::GetDefaultCurlHandleFactory());
 
-  auto response = RetryHttpRequest(factory);
+  auto response = RetryHttpRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
 
@@ -109,15 +104,12 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlPut) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
-  auto factory = [&] {
-    internal::CurlRequestBuilder builder(
-        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-    builder.SetMethod("PUT");
-    builder.AddHeader("content-type: application/octet-stream");
-    return std::move(builder).BuildRequest();
-  };
+  internal::CurlRequestBuilder builder(
+      *signed_url, storage::internal::GetDefaultCurlHandleFactory());
+  builder.SetMethod("PUT");
+  builder.AddHeader("content-type: application/octet-stream");
 
-  auto response = RetryHttpRequest(factory, expected);
+  auto response = RetryHttpRequest(builder.BuildRequest(), expected);
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
 
@@ -150,13 +142,10 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlGet) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
-  auto factory = [&] {
-    internal::CurlRequestBuilder builder(
-        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-    return std::move(builder).BuildRequest();
-  };
+  internal::CurlRequestBuilder builder(
+      *signed_url, storage::internal::GetDefaultCurlHandleFactory());
 
-  auto response = RetryHttpRequest(factory);
+  auto response = RetryHttpRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
 
@@ -178,14 +167,11 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlPut) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
-  auto factory = [&] {
-    internal::CurlRequestBuilder builder(
-        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-    builder.SetMethod("PUT");
-    return std::move(builder).BuildRequest();
-  };
+  internal::CurlRequestBuilder builder(
+      *signed_url, storage::internal::GetDefaultCurlHandleFactory());
+  builder.SetMethod("PUT");
 
-  auto response = RetryHttpRequest(factory, expected);
+  auto response = RetryHttpRequest(builder.BuildRequest(), expected);
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
 
@@ -198,7 +184,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlPut) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

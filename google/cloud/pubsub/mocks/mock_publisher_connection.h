@@ -22,12 +22,12 @@
 namespace google {
 namespace cloud {
 namespace pubsub_mocks {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
  * A googlemock-based mock for [pubsub::PublisherConnection][mocked-link]
  *
- * [mocked-link]: @ref google::cloud::pubsub::PublisherConnection
+ * [mocked-link]: @ref google::cloud::pubsub::v1::PublisherConnection
  *
  * @see @ref publisher-mock for an example using this class.
  */
@@ -41,7 +41,7 @@ class MockPublisherConnection : public pubsub::PublisherConnection {
               (pubsub::PublisherConnection::ResumePublishParams), (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_mocks
 }  // namespace cloud
 }  // namespace google

@@ -1,0 +1,8 @@
+git+git://github.com/googleapis/python-storage@8cf6c62a96ba3fff7e5028d931231e28e5029f1c
+flask==2.0.1
+httpbin==0.7.0
+requests-toolbelt==0.9.1
+scalpl==0.4.2
+crc32c==2.2
+gunicorn==20.1.0
+schema==0.7.4

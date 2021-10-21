@@ -26,7 +26,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /// A helper class to initialize promises to a null state.
 struct null_promise_t {  // NOLINT(readability-identifier-naming)
 };
@@ -40,11 +40,9 @@ namespace internal {
 template <typename T>
 class future_base {  // NOLINT(readability-identifier-naming)
  public:
-  future_base() = default;
-  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-  future_base(future_base&&) = default;
-  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-  future_base& operator=(future_base&&) = default;
+  future_base() noexcept = default;
+  future_base(future_base&&) noexcept = default;
+  future_base& operator=(future_base&&) noexcept = default;
 
   future_base(future_base const& rhs) = delete;
   future_base& operator=(future_base const& rhs) = delete;
@@ -165,8 +163,7 @@ class promise_base {  // NOLINT(readability-identifier-naming)
   explicit promise_base(std::function<void()> cancellation_callback)
       : shared_state_(
             std::make_shared<shared_state_type>(cancellation_callback)) {}
-  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-  promise_base(promise_base&&) = default;
+  promise_base(promise_base&&) noexcept = default;
 
   ~promise_base() {
     if (shared_state_) {
@@ -177,7 +174,7 @@ class promise_base {  // NOLINT(readability-identifier-naming)
   // Delete the operators we do not want. Note that the move operator is deleted
   // because the implementation must call the destructor (or at least abandon)
   // on *this.
-  promise_base& operator=(promise_base&&) = delete;
+  promise_base& operator=(promise_base&&) noexcept = delete;
   promise_base(promise_base const&) = delete;
   promise_base& operator=(promise_base const&) = delete;
 
@@ -203,7 +200,7 @@ class promise_base {  // NOLINT(readability-identifier-naming)
 };
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

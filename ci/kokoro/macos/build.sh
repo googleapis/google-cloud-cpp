@@ -14,9 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -euo pipefail
+set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
+source module ci/etc/repo-config.sh
 source module ci/lib/io.sh
 
 cd "${PROJECT_ROOT}"
@@ -105,7 +106,7 @@ curl -sSL --retry 10 -o "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}" \
 
 io::log_h1 "Downloading cache"
 readonly CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
-readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/google-cloud-cpp/${BRANCH}"
+readonly CACHE_FOLDER="${CACHE_BUCKET}/build-cache/${GOOGLE_CLOUD_CPP_REPOSITORY}/${BRANCH}"
 readonly CACHE_NAME="cache-macos-${BUILD_NAME}"
 gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
   "${CACHE_FOLDER}" "${CACHE_NAME}" || true

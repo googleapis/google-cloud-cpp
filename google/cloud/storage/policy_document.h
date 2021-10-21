@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 /**
  * Define a condition for a policy document.
  */
@@ -204,7 +204,7 @@ std::string FormatDateForForm(PolicyDocumentV4Result const&);
 
 std::ostream& operator<<(std::ostream& os, PolicyDocumentV4Result const& rhs);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

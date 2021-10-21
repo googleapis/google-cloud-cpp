@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 StatusOr<ObjectAccessControl> ObjectAccessControlParser::FromJson(
     nlohmann::json const& json) {
@@ -29,10 +29,10 @@ StatusOr<ObjectAccessControl> ObjectAccessControlParser::FromJson(
   }
   ObjectAccessControl result{};
   auto status = internal::AccessControlCommonParser::FromJson(result, json);
-  if (!status.ok()) return status;
-  auto generation = internal::ParseLongField(json, "generation");
-  if (!generation) return std::move(generation).status();
-  result.generation_ = *generation;
+  if (!status.ok()) {
+    return status;
+  }
+  result.generation_ = internal::ParseLongField(json, "generation");
   result.object_ = json.value("object", "");
   return result;
 }
@@ -44,7 +44,7 @@ StatusOr<ObjectAccessControl> ObjectAccessControlParser::FromString(
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

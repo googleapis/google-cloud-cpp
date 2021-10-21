@@ -28,30 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-/**
- * Set the HTTP version used by the client.
- *
- * If this option is not provided, or is set to `default` then the library uses
- * [libcurl's default], typically HTTP/2 with SSL. Possible settings include:
- * - "1.0": use HTTP/1.0, this is not recommended as would require a new
- *   connection for each request.
- * - "1.1": use HTTP/1.1, this may be useful when the overhead of HTTP/2 is
- *   unacceptable. Note that this may require additional connections.
- * - "2TLS": use HTTP/2 with TLS
- * - "2.0": use HTTP/2 with our without TLS.
- *
- * [libcurl's default]: https://curl.se/libcurl/c/CURLOPT_HTTP_VERSION.html
- */
-struct HttpVersionOption {
-  using Type = std::string;
-};
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
-
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /// This is only intended for testing against staging or development versions
 /// of the service. It is not for public use.
@@ -86,7 +64,7 @@ struct ProjectIdOption {
   using Type = std::string;
 };
 
-/**
+/***
  * Set the maximum connection pool size.
  *
  * The C++ client library uses this value to limit the growth of the
@@ -202,27 +180,15 @@ struct MaximumCurlSocketSendSizeOption {
 };
 
 /**
- * Sets the transfer stall timeout.
+ * Sets the "stall" timeout.
  *
- * If a transfer (upload, download, or request) *stalls*, i.e., no bytes are
- * sent or received for a significant period, it may be better to restart the
- * transfer as this may indicate a network glitch.
- *
- * For large requests (e.g. downloads in the GiB to TiB range) this is a better
- * configuration parameter than a simple timeout, as the transfers will take
- * minutes or hours to complete. Relying on a timeout value for them would not
- * work, as the timeout would be too large to be useful. For small requests,
- * this is as effective as a timeout parameter, but maybe unfamiliar and thus
- * harder to reason about.
+ * If the download "stalls", i.e., no bytes are received for a significant
+ * period, it may be better to restart the download as this may indicate a
+ * network glitch.
  */
-struct TransferStallTimeoutOption {
+struct DownloadStallTimeoutOption {
   using Type = std::chrono::seconds;
 };
-
-/**
- * @deprecated Please use TransferStallTimeoutOption instead
- */
-using DownloadStallTimeoutOption = TransferStallTimeoutOption;
 
 /// Set the retry policy for a GCS client.
 struct RetryPolicyOption {
@@ -246,11 +212,10 @@ using ClientOptionList = ::google::cloud::OptionList<
     DownloadBufferSizeOption, UploadBufferSizeOption,
     EnableCurlSslLockingOption, EnableCurlSigpipeHandlerOption,
     MaximumCurlSocketRecvSizeOption, MaximumCurlSocketSendSizeOption,
-    TransferStallTimeoutOption, RetryPolicyOption, BackoffPolicyOption,
-    IdempotencyPolicyOption, CARootsFilePathOption,
-    storage_experimental::HttpVersionOption>;
+    DownloadStallTimeoutOption, RetryPolicyOption, BackoffPolicyOption,
+    IdempotencyPolicyOption, CARootsFilePathOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

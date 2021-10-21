@@ -22,7 +22,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
 class MockCompletionQueueImpl : public internal::CompletionQueueImpl {
@@ -47,7 +47,7 @@ class MockCompletionQueueImpl : public internal::CompletionQueueImpl {
 };
 
 }  // namespace testing_util
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

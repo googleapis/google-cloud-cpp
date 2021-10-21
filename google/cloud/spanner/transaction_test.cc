@@ -19,10 +19,8 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
-
-using ::testing::IsEmpty;
 
 TEST(TransactionOptions, Construction) {
   Timestamp read_timestamp{};
@@ -83,20 +81,18 @@ TEST(Transaction, Visit) {
   spanner_internal::Visit(
       a, [&a_seqno](spanner_internal::SessionHolder& /*session*/,
                     StatusOr<google::spanner::v1::TransactionSelector>& s,
-                    std::string const& tag, std::int64_t seqno) {
+                    std::int64_t seqno) {
         EXPECT_TRUE(s->has_begin());
         EXPECT_TRUE(s->begin().has_read_only());
         s->set_id("test-txn-id");
-        EXPECT_THAT(tag, IsEmpty());
         a_seqno = seqno;
         return 0;
       });
   spanner_internal::Visit(
       a, [a_seqno](spanner_internal::SessionHolder& /*session*/,
                    StatusOr<google::spanner::v1::TransactionSelector>& s,
-                   std::string const& tag, std::int64_t seqno) {
+                   std::int64_t seqno) {
         EXPECT_EQ("test-txn-id", s->id());
-        EXPECT_THAT(tag, IsEmpty());
         EXPECT_GT(seqno, a_seqno);
         return 0;
       });
@@ -105,33 +101,30 @@ TEST(Transaction, Visit) {
 TEST(Transaction, SessionAffinity) {
   auto a_session =
       spanner_internal::MakeDissociatedSessionHolder("SessionAffinity");
-  auto opts = Transaction::ReadWriteOptions().WithTag("app=cart,env=dev");
-  Transaction a = MakeReadWriteTransaction(opts);
+  Transaction a = MakeReadWriteTransaction();
   spanner_internal::Visit(
       a, [&a_session](spanner_internal::SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      std::string const& tag, std::int64_t) {
+                      std::int64_t) {
         EXPECT_FALSE(session);
         EXPECT_TRUE(s->has_begin());
         session = a_session;
         s->set_id("a-txn-id");
-        EXPECT_EQ(tag, "app=cart,env=dev");
         return 0;
       });
-  Transaction b = MakeReadWriteTransaction(a, opts);
+  Transaction b = MakeReadWriteTransaction(a);
   spanner_internal::Visit(
       b, [&a_session](spanner_internal::SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
-                      std::string const& tag, std::int64_t) {
+                      std::int64_t) {
         EXPECT_EQ(a_session, session);  // session affinity
         EXPECT_TRUE(s->has_begin());    // but a new transaction
-        EXPECT_EQ(tag, "app=cart,env=dev");
         return 0;
       });
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

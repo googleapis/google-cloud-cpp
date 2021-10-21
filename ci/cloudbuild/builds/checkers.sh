@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -euo pipefail
+set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/lib/io.sh
@@ -82,7 +82,6 @@ printf "%-30s" "Running markdown generators:" >&2
 time {
   declare -A -r GENERATOR_MAP=(
     ["ci/generate-markdown/generate-readme.sh"]="README.md"
-    ["ci/generate-markdown/generate-bigquery-readme.sh"]="google/cloud/bigquery/README.md"
     ["ci/generate-markdown/generate-bigtable-readme.sh"]="google/cloud/bigtable/README.md"
     ["ci/generate-markdown/generate-iam-readme.sh"]="google/cloud/iam/README.md"
     ["ci/generate-markdown/generate-pubsub-readme.sh"]="google/cloud/pubsub/README.md"
@@ -131,17 +130,14 @@ time {
     xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
-# Applies whitespace fixes in text files, unless they request no edits. The
-# `[D]` character class makes this file not contain the target text itself.
+# Apply transformations to fix whitespace formatting in files not handled by
+# clang-format(1) above.  For now we simply remove trailing blanks.  Note that
+# we do not expand TABs (they currently only appear in Makefiles and Makefile
+# snippets).
 printf "%-30s" "Running whitespace fixes:" >&2
 time {
-  # Removes trailing whitespace on lines
-  expressions=("-e" "'s/[[:blank:]]\+$//'")
-  # Removes trailing blank lines (see http://sed.sourceforge.net/sed1line.txt)
-  expressions+=("-e" "':a;/^\n*$/{\$d;N;ba;}'")
   git ls-files -z | grep -zv '\.gz$' |
-    (xargs -P "$(nproc)" -n 50 -0 grep -ZPL "\b[D]O NOT EDIT\b" || true) |
-    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
+    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit -e 's/[[:blank:]]\+$//' \"\$0\" \"\$@\""
 }
 
 # Apply buildifier to fix the BUILD and .bzl formatting rules.

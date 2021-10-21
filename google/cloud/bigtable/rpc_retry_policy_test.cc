@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 /// Create a grpc::Status with a status code for transient errors.
@@ -47,7 +47,10 @@ auto const kLimitedTimeTolerance = 10_ms;
  */
 void CheckLimitedTime(RPCRetryPolicy& tested) {
   google::cloud::testing_util::CheckPredicateBecomesFalse(
-      [&tested] { return tested.OnFailure(CreateTransientError()); },
+      [&tested] {
+        return tested.OnFailure(
+            grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"));
+      },
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
       kLimitedTimeTolerance);
 }
@@ -106,16 +109,8 @@ TEST(LimitedErrorCountRetryPolicy, OnNonRetryable) {
   EXPECT_FALSE(tested.OnFailure(CreatePermanentError()));
 }
 
-/// @test Verify that certain known internal errors are retryable.
-TEST(TransientInternalError, RstStreamRetried) {
-  EXPECT_FALSE(internal::SafeGrpcRetry::IsTransientFailure(
-      Status(StatusCode::kInternal, "non-retryable")));
-  EXPECT_TRUE(internal::SafeGrpcRetry::IsTransientFailure(
-      Status(StatusCode::kInternal, "RST_STREAM")));
-}
-
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

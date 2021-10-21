@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO(#7356): Remove this file after the deprecation period expires
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/testing/cleanup_stale_instances.h"
@@ -22,7 +20,6 @@
 #include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <algorithm>
@@ -33,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
@@ -92,8 +89,7 @@ class CleanupStaleInstances : public ::testing::Environment {
 ::testing::Environment* const kCleanupEnv =
     ::testing::AddGlobalTestEnvironment(new CleanupStaleInstances);
 
-class InstanceAdminClientTest
-    : public ::google::cloud::testing_util::IntegrationTest {
+class InstanceAdminClientTest : public testing::Test {
  public:
   InstanceAdminClientTest()
       : generator_(internal::MakeDefaultPRNG()),
@@ -263,7 +259,7 @@ TEST_F(InstanceAdminClientTest, InstanceIam) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

@@ -47,8 +47,7 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 namespace {
-
-char const* const kGoogleapisProtoFileLinkPrefix =
+const char* const kGoogleapisProtoFileLinkPrefix =
     "https://github.com/googleapis/googleapis/blob/";
 
 std::string CppTypeToString(FieldDescriptor const* field) {
@@ -72,10 +71,9 @@ std::string CppTypeToString(FieldDescriptor const* field) {
     case FieldDescriptor::CPPTYPE_MESSAGE:
       return ProtoNameToCppName(field->message_type()->full_name());
   }
-  GCP_LOG(FATAL) << "FieldDescriptor " << field->cpp_type_name()
-                 << " not handled";
-  /*NOTREACHED*/
-  return field->cpp_type_name();
+  GCP_LOG(FATAL) << "FieldDescriptor " << std::string(field->cpp_type_name())
+                 << " not handled.";
+  std::exit(1);
 }
 
 std::string FormatDoxygenLink(google::protobuf::Descriptor const& message_type,
@@ -167,7 +165,7 @@ void SetMethodSignatureMethodVars(
   for (int i = 0; i < method_signature_extension.size(); ++i) {
     google::protobuf::Descriptor const* input_type = method.input_type();
     std::vector<std::string> parameters =
-        absl::StrSplit(method_signature_extension[i], ',');
+        absl::StrSplit(method_signature_extension[i], ",");
     std::string method_signature;
     std::string method_request_setters;
     for (unsigned int j = 0; j < parameters.size(); ++j) {
@@ -231,7 +229,7 @@ void SetResourceRoutingMethodVars(
     method_vars["method_request_url_substitution"] = result->url_substitution;
     std::string param = result->param_key;
     method_vars["method_request_param_key"] = param;
-    std::vector<std::string> chunks = absl::StrSplit(param, '.');
+    std::vector<std::string> chunks = absl::StrSplit(param, std::string("."));
     method_vars["method_request_param_value"] =
         absl::StrJoin(chunks, "().") + "()";
     method_vars["method_request_body"] = result->body;
@@ -240,23 +238,29 @@ void SetResourceRoutingMethodVars(
 
 std::string DefaultIdempotencyFromHttpOperation(
     google::protobuf::MethodDescriptor const& method) {
-  if (method.options().HasExtension(google::api::http)) {
-    google::api::HttpRule http_rule =
-        method.options().GetExtension(google::api::http);
-    switch (http_rule.pattern_case()) {
-      case google::api::HttpRule::kGet:
-      case google::api::HttpRule::kPut:
-        return "kIdempotent";
-      case google::api::HttpRule::kPost:
-      case google::api::HttpRule::kDelete:
-      case google::api::HttpRule::kPatch:
-        break;
-      default:
-        GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
-                       << ": google::api::HttpRule not handled";
-    }
+  if (!method.options().HasExtension(google::api::http)) {
+    // if no http option exists, opt for more conservative.
+    return "kNonIdempotent";
   }
-  return "kNonIdempotent";
+
+  google::api::HttpRule http_rule =
+      method.options().GetExtension(google::api::http);
+
+  switch (http_rule.pattern_case()) {
+    case google::api::HttpRule::kGet:
+    case google::api::HttpRule::kPut:
+      return "kIdempotent";
+      break;
+    case google::api::HttpRule::kPost:
+    case google::api::HttpRule::kDelete:
+    case google::api::HttpRule::kPatch:
+      return "kNonIdempotent";
+      break;
+    default:
+      GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
+                     << ": google::api::HttpRule not handled" << std::endl;
+      std::exit(1);
+  }
 }
 
 std::string ChompByValue(std::string const& s) {
@@ -270,18 +274,19 @@ std::string EscapePrinterDelimiter(std::string const& text) {
 std::string FormatClassCommentsFromServiceComments(
     google::protobuf::ServiceDescriptor const& service) {
   google::protobuf::SourceLocation service_source_location;
-  if (!service.GetSourceLocation(&service_source_location) ||
-      service_source_location.leading_comments.empty()) {
-    GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << service.full_name()
-                   << " no leading_comments to format";
+  if (service.GetSourceLocation(&service_source_location) &&
+      !service_source_location.leading_comments.empty()) {
+    std::string doxygen_formatted_comments =
+        absl::StrCat("/**\n *",
+                     absl::StrReplaceAll(
+                         ChompByValue(service_source_location.leading_comments),
+                         {{"\n\n", "\n *\n * "}, {"\n", "\n * "}}),
+                     "\n */");
+    return absl::StrReplaceAll(doxygen_formatted_comments, {{"*  ", "* "}});
   }
-  std::string doxygen_formatted_comments =
-      absl::StrCat("/**\n *",
-                   absl::StrReplaceAll(
-                       ChompByValue(service_source_location.leading_comments),
-                       {{"\n\n", "\n *\n * "}, {"\n", "\n * "}}),
-                   "\n */");
-  return absl::StrReplaceAll(doxygen_formatted_comments, {{"*  ", "* "}});
+  GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << service.full_name()
+                 << " no leading_comments to format.\n";
+  std::exit(1);
 }
 
 std::string FormatApiMethodSignatureParameters(
@@ -291,7 +296,7 @@ std::string FormatApiMethodSignatureParameters(
       method.options().GetRepeatedExtension(google::api::method_signature);
   for (auto const& signature : method_signature_extension) {
     google::protobuf::Descriptor const* input_type = method.input_type();
-    std::vector<std::string> parameters = absl::StrSplit(signature, ',');
+    std::vector<std::string> parameters = absl::StrSplit(signature, ",");
     for (auto const& parameter : parameters) {
       google::protobuf::FieldDescriptor const* parameter_descriptor =
           input_type->FindFieldByName(parameter);
@@ -362,7 +367,8 @@ absl::optional<ResourceRoutingInfo> ParseResourceRoutingHeader(
       break;
     default:
       GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
-                     << ": google::api::HttpRule not handled";
+                     << ": google::api::HttpRule not handled" << std::endl;
+      std::exit(1);
   }
 
   static std::regex const kUrlPatternRegex(R"(.*\{(.*)=(.*)\}.*)");
@@ -375,37 +381,35 @@ std::string FormatMethodCommentsFromRpcComments(
     google::protobuf::MethodDescriptor const& method,
     MethodParameterStyle parameter_style) {
   google::protobuf::SourceLocation method_source_location;
-  if (!method.GetSourceLocation(&method_source_location) ||
-      method_source_location.leading_comments.empty()) {
-    GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
-                   << " no leading_comments to format";
-  }
-  std::string parameter_comment_string;
-  if (parameter_style == MethodParameterStyle::kApiMethodSignature) {
-    parameter_comment_string = FormatApiMethodSignatureParameters(method);
-  } else {
-    parameter_comment_string =
-        FormatProtobufRequestParameters(method, "$googleapis_commit_hash$");
-  }
+  if (method.GetSourceLocation(&method_source_location) &&
+      !method_source_location.leading_comments.empty()) {
+    std::string parameter_comment_string;
+    if (parameter_style == MethodParameterStyle::kApiMethodSignature) {
+      parameter_comment_string = FormatApiMethodSignatureParameters(method);
+    } else {
+      parameter_comment_string =
+          FormatProtobufRequestParameters(method, "$googleapis_commit_hash$");
+    }
 
-  std::string doxygen_formatted_function_comments = absl::StrReplaceAll(
-      EscapePrinterDelimiter(method_source_location.leading_comments),
-      {{"\n", "\n   *"}});
+    std::string doxygen_formatted_function_comments = absl::StrReplaceAll(
+        EscapePrinterDelimiter(method_source_location.leading_comments),
+        {{"\n", "\n   *"}});
 
-  std::string return_comment_string;
-  if (IsLongrunningOperation(method)) {
-    return_comment_string =
-        "   * @return $method_longrunning_deduced_return_doxygen_link$\n";
-  } else if (!IsResponseTypeEmpty(method) && !IsPaginated(method)) {
-    return_comment_string = "   * @return $method_return_doxygen_link$\n";
-  } else if (IsPaginated(method)) {
-    return_comment_string =
-        "   * @return $method_paginated_return_doxygen_link$\n";
+    std::string return_comment_string;
+    if (IsLongrunningOperation(method)) {
+      return_comment_string =
+          "   * @return $method_longrunning_deduced_return_doxygen_link$\n";
+    } else if (!IsResponseTypeEmpty(method) && !IsPaginated(method)) {
+      return_comment_string = "   * @return $method_return_doxygen_link$\n";
+    }
+
+    return absl::StrCat("  /**\n   *", doxygen_formatted_function_comments,
+                        "\n", parameter_comment_string, return_comment_string,
+                        "   */\n");
   }
-
-  return absl::StrCat("  /**\n   *", doxygen_formatted_function_comments, "\n",
-                      parameter_comment_string, return_comment_string,
-                      "   */\n");
+  GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
+                 << " no leading_comments to format.\n";
+  std::exit(1);
 }
 
 VarsDictionary CreateServiceVars(
@@ -492,13 +496,10 @@ VarsDictionary CreateServiceVars(
       absl::StrCat(vars["product_path"], "retry_traits", ".h");
   vars["service_endpoint"] =
       descriptor.options().GetExtension(google::api::default_host);
-  auto& service_endpoint_env_var = vars["service_endpoint_env_var"];
-  if (service_endpoint_env_var.empty()) {
-    service_endpoint_env_var = absl::StrCat(
-        "GOOGLE_CLOUD_CPP_",
-        absl::AsciiStrToUpper(CamelCaseToSnakeCase(descriptor.name())),
-        "_ENDPOINT");
-  }
+  vars["service_endpoint_env_var"] = absl::StrCat(
+      "GOOGLE_CLOUD_CPP_",
+      absl::AsciiStrToUpper(CamelCaseToSnakeCase(descriptor.name())),
+      "_ENDPOINT");
   vars["service_name"] = descriptor.name();
   vars["stub_class_name"] = absl::StrCat(descriptor.name(), "Stub");
   vars["stub_cc_path"] =
@@ -542,16 +543,9 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
       // Add exception to AIP-4233 for response types that have exactly one
       // repeated field that is of primitive type string.
       method_vars["range_output_type"] =
-          pagination_info->second == nullptr
+          pagination_info->second == "string"
               ? "std::string"
-              : ProtoNameToCppName(pagination_info->second->full_name());
-      if (pagination_info->second) {
-        method_vars["method_paginated_return_doxygen_link"] =
-            FormatDoxygenLink(*pagination_info->second,
-                              service_vars.at("googleapis_commit_hash"));
-      } else {
-        method_vars["method_paginated_return_doxygen_link"] = "std::string";
-      }
+              : ProtoNameToCppName(pagination_info->second);
     }
     SetMethodSignatureMethodVars(method, method_vars);
     SetResourceRoutingMethodVars(method, method_vars);

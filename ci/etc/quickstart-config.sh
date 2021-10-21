@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,7 +22,6 @@ fi # include guard
 source module ci/etc/integration-tests-config.sh
 
 function quickstart::libraries() {
-  echo "bigquery"
   echo "bigtable"
   echo "iam"
   echo "spanner"
@@ -34,11 +32,6 @@ function quickstart::libraries() {
 function quickstart::arguments() {
   local -r library="$1"
   case "${library}" in
-  "bigquery")
-    echo "${GOOGLE_CLOUD_PROJECT}"
-    echo "${GOOGLE_CLOUD_CPP_BIGQUERY_TEST_QUICKSTART_TABLE}"
-    return 0
-    ;;
   "bigtable")
     echo "${GOOGLE_CLOUD_PROJECT}"
     echo "${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"

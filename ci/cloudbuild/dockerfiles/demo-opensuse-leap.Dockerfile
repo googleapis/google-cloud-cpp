@@ -67,7 +67,7 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/protobuf
-RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.18.1.tar.gz | \
+RUN curl -sSL https://github.com/google/protobuf/archive/v3.17.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -100,7 +100,7 @@ RUN curl -sSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/grpc
-RUN curl -sSL https://github.com/grpc/grpc/archive/v1.41.0.tar.gz | \
+RUN curl -sSL https://github.com/grpc/grpc/archive/v1.38.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -125,7 +125,7 @@ RUN curl -sSL https://github.com/grpc/grpc/archive/v1.41.0.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/crc32c
-RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+RUN curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -148,14 +148,14 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/json
-RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
+RUN curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -H. -Bcmake-out/nlohmann/json && \
-    cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
+    cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
     ldconfig
 # ```
 

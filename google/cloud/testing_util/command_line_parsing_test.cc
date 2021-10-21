@@ -17,11 +17,10 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 namespace {
 
-using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 
 TEST(CommandLineParsing, UsageSimple) {
@@ -59,8 +58,8 @@ TEST(CommandLineParsing, Simple) {
       OptionsParse(desc, {"command-name", "skip1", "--option2=value2", "skip2",
                           "skip3", "--option1=value1", "skip4", "skip5"});
 
-  EXPECT_THAT(unparsed, ElementsAre("command-name", "skip1", "skip2", "skip3",
-                                    "skip4", "skip5"));
+  EXPECT_THAT(unparsed, ::testing::ElementsAre("command-name", "skip1", "skip2",
+                                               "skip3", "skip4", "skip5"));
   EXPECT_EQ(option1_val, "value1");
   EXPECT_EQ(option2_val, "value2");
 }
@@ -80,7 +79,8 @@ TEST(CommandLineParsing, PrefixArgument) {
       OptionsParse(desc, {"command-name", "--option1-with-suffix=suffix1",
                           "skip1", "skip2", "--option1=value1"});
 
-  EXPECT_THAT(unparsed, ElementsAre("command-name", "skip1", "skip2"));
+  EXPECT_THAT(unparsed,
+              ::testing::ElementsAre("command-name", "skip1", "skip2"));
   EXPECT_EQ(option1_with_suffix_val, "suffix1");
   EXPECT_EQ(option1_val, "value1");
 }
@@ -98,6 +98,6 @@ TEST(CommandLineParsing, FormatSize) {
 
 }  // namespace
 }  // namespace testing_util
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

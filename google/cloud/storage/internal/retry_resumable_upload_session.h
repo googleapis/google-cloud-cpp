@@ -18,7 +18,6 @@
 #include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
-#include "absl/functional/function_ref.h"
 #include "absl/types/optional.h"
 #include <memory>
 #include <string>
@@ -26,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
  * Decorates a `ResumableUploadSession` to retry operations that fail.
@@ -47,8 +46,7 @@ class RetryResumableUploadSession : public ResumableUploadSession {
   StatusOr<ResumableUploadResponse> UploadChunk(
       ConstBufferSequence const& buffers) override;
   StatusOr<ResumableUploadResponse> UploadFinalChunk(
-      ConstBufferSequence const& buffers, std::uint64_t upload_size,
-      HashValues const& full_object_hashes) override;
+      ConstBufferSequence const& buffers, std::uint64_t upload_size) override;
   StatusOr<ResumableUploadResponse> ResetSession() override;
   std::uint64_t next_expected_byte() const override;
   std::string const& session_id() const override;
@@ -56,14 +54,11 @@ class RetryResumableUploadSession : public ResumableUploadSession {
   StatusOr<ResumableUploadResponse> const& last_response() const override;
 
  private:
-  using UploadChunkFunction =
-      absl::FunctionRef<StatusOr<ResumableUploadResponse>(
-          ConstBufferSequence const&)>;
   // Retry either UploadChunk or either UploadFinalChunk. Note that we need a
   // copy of the buffers because on some retries they need to be modified.
   StatusOr<ResumableUploadResponse> UploadGenericChunk(
-      char const* caller, ConstBufferSequence buffers,
-      UploadChunkFunction upload);
+      ConstBufferSequence buffers,
+      absl::optional<std::uint64_t> const& upload_size);
 
   // Reset the current session using previously cloned policies.
   StatusOr<ResumableUploadResponse> ResetSession(RetryPolicy& retry_policy,
@@ -76,7 +71,7 @@ class RetryResumableUploadSession : public ResumableUploadSession {
 };
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

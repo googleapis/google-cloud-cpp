@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -euo pipefail
+set -eu
 
 BINDIR=$(dirname "$0")
 readonly BINDIR
@@ -38,19 +38,18 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 ## Supported Platforms
 
 * Windows, macOS, Linux
-* C++11 (and higher) compilers (we test with GCC >= 5.4, Clang >= 6.0, and
-  MSVC >= 2017)
+* C++11 (and higher) compilers (we test with GCC \>= 5.4, Clang >= 3.8, and MSVC \>= 2019)
 * Environments with or without exceptions
 * Bazel and CMake builds
 
 ## Documentation
 
-* Official documentation about the [Cloud Pub/Sub][cloud-pubsub-docs] service
+* Official documentation about the [Cloud Pub/Sub][cloud-spanner-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this client library
 * Detailed header comments in our [public `.h`][source-link] files
 
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-pubsub/latest/
-[cloud-pubsub-docs]: https://cloud.google.com/pubsub/docs/
+[cloud-spanner-docs]: https://cloud.google.com/pubsub/docs/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/pubsub
 
 ## Quickstart
@@ -100,4 +99,5 @@ as well as how to properly format your code.
 ## Licensing
 
 Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
+
 _EOF_

@@ -17,16 +17,14 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 void StdClogBackend::Process(LogRecord const& lr) {
   std::lock_guard<std::mutex> lk(mu_);
-  if (lr.severity >= min_severity_) {
-    std::clog << lr << "\n";
-    if (lr.severity >= Severity::GCP_LS_WARNING) {
-      std::clog << std::flush;
-    }
+  std::clog << lr << "\n";
+  if (lr.severity >= Severity::GCP_LS_WARNING) {
+    std::clog << std::flush;
   }
 }
 
@@ -54,6 +52,6 @@ void CircularBufferBackend::FlushImpl(std::unique_lock<std::mutex> /*lk*/) {
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

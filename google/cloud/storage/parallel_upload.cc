@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
@@ -28,15 +28,11 @@ class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
   ParallelObjectWriteStreambuf(
       std::shared_ptr<ParallelUploadStateImpl> state, std::size_t stream_idx,
       std::unique_ptr<ResumableUploadSession> upload_session,
-      std::size_t max_buffer_size, ResumableUploadRequest const& request)
-      : ObjectWriteStreambuf(
-            std::move(upload_session), max_buffer_size,
-            CreateHashFunction(request),
-            internal::HashValues{
-                request.GetOption<Crc32cChecksumValue>().value_or(""),
-                request.GetOption<MD5HashValue>().value_or(""),
-            },
-            CreateHashValidator(request), AutoFinalizeConfig::kEnabled),
+      std::size_t max_buffer_size,
+      std::unique_ptr<HashValidator> hash_validator)
+      : ObjectWriteStreambuf(std::move(upload_session), max_buffer_size,
+                             std::move(hash_validator),
+                             AutoFinalizeConfig::kEnabled),
         state_(std::move(state)),
         stream_idx_(stream_idx) {}
 
@@ -92,7 +88,8 @@ StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
   lk.unlock();
   return ObjectWriteStream(absl::make_unique<ParallelObjectWriteStreambuf>(
       shared_from_this(), idx, *std::move(session),
-      raw_client.client_options().upload_buffer_size(), request));
+      raw_client.client_options().upload_buffer_size(),
+      CreateHashValidator(request)));
 }
 
 std::string ParallelUploadPersistentState::ToString() const {
@@ -455,7 +452,7 @@ StatusOr<std::pair<std::string, std::int64_t>> ParseResumableSessionId(
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -13,8 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/testing/cleanup_stale_databases.h"
-#include "google/cloud/spanner/database.h"
-#include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include <iostream>
 #include <regex>
@@ -22,33 +20,37 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 Status CleanupStaleDatabases(
-    google::cloud::spanner_admin::DatabaseAdminClient admin_client,
+    google::cloud::spanner::DatabaseAdminClient admin_client,
     std::string const& project_id, std::string const& instance_id,
     std::chrono::system_clock::time_point tp) {
   // Drop any databases more than 2 days old. This automatically cleans up
   // any databases created by a previous build that may have crashed before
   // having a chance to cleanup.
-  spanner::Instance instance(Project(project_id), instance_id);
   auto const expired = RandomDatabasePrefix(tp);
   std::regex re(RandomDatabasePrefixRegex());
-  for (auto const& db : admin_client.ListDatabases(instance.FullName())) {
+  for (auto const& db :
+       admin_client.ListDatabases(spanner::Instance(project_id, instance_id))) {
     if (!db) return std::move(db).status();
-    auto id = spanner::MakeDatabase(db->name())->database_id();
+    // Extract the database ID from the database full name.
+    auto pos = db->name().find_last_of('/');
+    if (pos == std::string::npos) continue;
+    auto id = db->name().substr(pos + 1);
     // Skip databases that do not look like a randomly created DB.
     if (!std::regex_match(id, re)) continue;
     // Skip databases that are relatively recent
     if (id > expired) continue;
     // Drop the database and ignore errors.
-    admin_client.DropDatabase(db->name());
+    (void)admin_client.DropDatabase(
+        spanner::Database(project_id, instance_id, id));
     std::cout << "Dropped DB " << db->name() << "\n";
   }
   return {};
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

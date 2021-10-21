@@ -23,12 +23,12 @@
 #include "google/cloud/testing_util/crash_handler.h"
 
 //! [cbt namespace]
-namespace cbt = ::google::cloud::bigtable;
+namespace cbt = google::cloud::bigtable;
 //! [cbt namespace]
 
 namespace {
 
-using ::google::cloud::bigtable::examples::Usage;
+using google::cloud::bigtable::examples::Usage;
 
 void HelloWorldAppProfile(std::vector<std::string> const& argv) {
   if (argv.size() != 4) {
@@ -42,7 +42,8 @@ void HelloWorldAppProfile(std::vector<std::string> const& argv) {
   std::string const profile_id = argv[3];
 
   // Create an object to access the Cloud Bigtable Data API.
-  auto data_client = cbt::MakeDataClient(project_id, instance_id);
+  auto data_client = cbt::CreateDefaultDataClient(project_id, instance_id,
+                                                  cbt::ClientOptions());
 
   // Use the default profile to write some data.
   cbt::Table write(data_client, table_id);
@@ -117,7 +118,9 @@ void RunAll(std::vector<std::string> const& argv) {
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
                                .value();
 
-  cbt::TableAdmin admin(cbt::MakeAdminClient(project_id), instance_id);
+  cbt::TableAdmin admin(
+      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
+      instance_id);
 
   google::cloud::bigtable::testing::CleanupStaleTables(admin);
 
@@ -132,7 +135,8 @@ void RunAll(std::vector<std::string> const& argv) {
                     google::cloud::internal::Sample(
                         generator, 8, "abcdefghilklmnopqrstuvwxyz0123456789");
 
-  cbt::InstanceAdmin instance_admin(cbt::MakeInstanceAdminClient(project_id));
+  cbt::InstanceAdmin instance_admin(
+      cbt::CreateDefaultInstanceAdminClient(project_id, cbt::ClientOptions{}));
   auto profile = instance_admin.CreateAppProfile(
       instance_id, cbt::AppProfileConfig::MultiClusterUseAny(profile_id));
   if (!profile) throw std::runtime_error(profile.status().message());

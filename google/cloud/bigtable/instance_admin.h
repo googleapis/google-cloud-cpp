@@ -38,7 +38,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Implements the APIs to administer Cloud Bigtable instances.
  *
@@ -60,8 +60,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
  * contains the expected result. Operations that do not return a value simply
  * return a `google::cloud::Status` indicating success or the details of the
- * error Please consult the [`StatusOr<T>`
- * documentation](#google::cloud::StatusOr) for more details.
+ * error Please consult the
+ * [`StatusOr<T>` documentation](#google::cloud::v1::StatusOr) for more details.
  *
  * @code
  * namespace cbt = google::cloud::bigtable;
@@ -109,8 +109,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @see https://cloud.google.com/bigtable/docs/reference/service-apis-overview
  *     for an overview of the underlying Cloud Bigtable API.
  *
- * @see #google::cloud::StatusOr for a description of the error reporting class
- *     used by this library.
+ * @see #google::cloud::v1::StatusOr for a description of the error reporting
+ *     class used by this library.
  *
  * @see `LimitedTimeRetryPolicy` and `LimitedErrorCountRetryPolicy` for
  *     alternative retry policies.
@@ -161,6 +161,7 @@ class InstanceAdmin {
    *     LimitedErrorCountRetryPolicy, LimitedTimeRetryPolicy.
    */
   template <typename... Policies>
+  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   explicit InstanceAdmin(std::shared_ptr<InstanceAdminClient> client,
                          Policies&&... policies)
       : InstanceAdmin(std::move(client)) {
@@ -779,7 +780,7 @@ class InstanceAdmin {
   std::shared_ptr<BackgroundThreads> background_threads_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

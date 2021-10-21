@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 RowStream Client::Read(std::string table, KeySet keys,
                        std::vector<std::string> columns,
@@ -196,9 +196,7 @@ StatusOr<CommitResult> Client::Commit(
   // The status-code discriminator of TransactionRerunPolicy.
   using RerunnablePolicy = spanner_internal::SafeTransactionRerun;
 
-  auto const opts =
-      Transaction::ReadWriteOptions().WithTag(options.transaction_tag());
-  Transaction txn = MakeReadWriteTransaction(opts);
+  Transaction txn = MakeReadWriteTransaction();
   for (int rerun = 0;; ++rerun) {
     StatusOr<Mutations> mutations;
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -248,15 +246,15 @@ StatusOr<CommitResult> Client::Commit(
       spanner_internal::Visit(
           txn, [](spanner_internal::SessionHolder& s,
                   StatusOr<google::spanner::v1::TransactionSelector> const&,
-                  std::string const&, std::int64_t) {
+                  std::int64_t) {
             if (s) s->set_bad();
             return true;
           });
-      txn = MakeReadWriteTransaction(opts);
+      txn = MakeReadWriteTransaction();
     } else {
       // Create a new transaction for the next loop, but reuse the session
       // so that we have a slightly better chance of avoiding another abort.
-      txn = MakeReadWriteTransaction(txn, opts);
+      txn = MakeReadWriteTransaction(txn);
     }
     std::this_thread::sleep_for(backoff_policy->OnCompletion());
   }
@@ -303,13 +301,12 @@ StatusOr<PartitionedDmlResult> Client::ExecutePartitionedDml(
       {std::move(statement), OverlayQueryOptions(opts)});
 }
 
-// Returns a QueryOptions that has each attribute set according to
-// the hierarchy that options specified at the function call (i.e.,
-// `preferred`) are preferred, followed by options set at the Client
-// level (i.e., `opts_.query_options()`), followed by some environment
-// variables. If none are set, the attribute's optional will be unset
-// and nothing will be included in the proto sent to Spanner, in which
-// case the Database default will be used.
+// Returns a QueryOptions struct that has each field set according to the
+// hierarchy that options specified as to the function call (i.e., `preferred`)
+// are preferred, followed by options set at the Client level, followed by an
+// environment variable. If none are set, the field's optional will be unset
+// and nothing will be included in the proto sent to Spanner, in which case,
+// the Database default will be used.
 QueryOptions Client::OverlayQueryOptions(QueryOptions const& preferred) {
   // GetEnv() is not super fast, so we look it up once and cache it.
   static auto const* const kOptimizerVersionEnvValue =
@@ -317,9 +314,30 @@ QueryOptions Client::OverlayQueryOptions(QueryOptions const& preferred) {
   static auto const* const kOptimizerStatisticsPackageEnvValue = new auto(
       google::cloud::internal::GetEnv("SPANNER_OPTIMIZER_STATISTICS_PACKAGE"));
 
-  return spanner_internal::OverlayQueryOptions(
-      preferred, opts_.query_options(), *kOptimizerVersionEnvValue,
-      *kOptimizerStatisticsPackageEnvValue);
+  QueryOptions const& fallback = opts_.query_options();
+  QueryOptions opts;
+
+  // Choose the `optimizer_version` option.
+  if (preferred.optimizer_version().has_value()) {
+    opts.set_optimizer_version(preferred.optimizer_version());
+  } else if (fallback.optimizer_version().has_value()) {
+    opts.set_optimizer_version(fallback.optimizer_version());
+  } else if (kOptimizerVersionEnvValue->has_value()) {
+    opts.set_optimizer_version(*kOptimizerVersionEnvValue);
+  }
+
+  // Choose the `optimizer_statistics_package` option.
+  if (preferred.optimizer_statistics_package().has_value()) {
+    opts.set_optimizer_statistics_package(
+        preferred.optimizer_statistics_package());
+  } else if (fallback.optimizer_statistics_package().has_value()) {
+    opts.set_optimizer_statistics_package(
+        fallback.optimizer_statistics_package());
+  } else if (kOptimizerStatisticsPackageEnvValue->has_value()) {
+    opts.set_optimizer_statistics_package(*kOptimizerVersionEnvValue);
+  }
+
+  return opts;
 }
 
 std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
@@ -329,13 +347,13 @@ std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
       spanner_internal::SessionPoolClockOption, SpannerPolicyOptionList>(
       opts, __func__);
   opts = spanner_internal::DefaultOptions(std::move(opts));
-
-  std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs(
-      opts.get<GrpcNumChannelsOption>());
-  int id = 0;
-  std::generate(stubs.begin(), stubs.end(), [&id, db, opts] {
-    return spanner_internal::CreateDefaultSpannerStub(db, opts, id++);
-  });
+  std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
+  int num_channels = opts.get<GrpcNumChannelsOption>();
+  stubs.reserve(num_channels);
+  for (int channel_id = 0; channel_id < num_channels; ++channel_id) {
+    stubs.push_back(
+        spanner_internal::CreateDefaultSpannerStub(db, opts, channel_id));
+  }
   return std::make_shared<spanner_internal::ConnectionImpl>(
       std::move(db), std::move(stubs), opts);
 }
@@ -362,59 +380,7 @@ std::shared_ptr<Connection> MakeConnection(
   return MakeConnection(db, std::move(opts));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
-
-namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-// Returns a QueryOptions that has each attribute set according to the
-// preferred/fallback/environment hierarchy.
-spanner::QueryOptions OverlayQueryOptions(
-    spanner::QueryOptions const& preferred,
-    spanner::QueryOptions const& fallback,
-    absl::optional<std::string> const& optimizer_version_env,
-    absl::optional<std::string> const& optimizer_statistics_package_env) {
-  spanner::QueryOptions opts;
-
-  // Choose the `optimizer_version` option.
-  if (preferred.optimizer_version().has_value()) {
-    opts.set_optimizer_version(preferred.optimizer_version());
-  } else if (fallback.optimizer_version().has_value()) {
-    opts.set_optimizer_version(fallback.optimizer_version());
-  } else if (optimizer_version_env.has_value()) {
-    opts.set_optimizer_version(*optimizer_version_env);
-  }
-
-  // Choose the `optimizer_statistics_package` option.
-  if (preferred.optimizer_statistics_package().has_value()) {
-    opts.set_optimizer_statistics_package(
-        preferred.optimizer_statistics_package());
-  } else if (fallback.optimizer_statistics_package().has_value()) {
-    opts.set_optimizer_statistics_package(
-        fallback.optimizer_statistics_package());
-  } else if (optimizer_statistics_package_env.has_value()) {
-    opts.set_optimizer_statistics_package(*optimizer_statistics_package_env);
-  }
-
-  // Choose the `request_priority` option.
-  if (preferred.request_priority().has_value()) {
-    opts.set_request_priority(preferred.request_priority());
-  } else if (fallback.request_priority().has_value()) {
-    opts.set_request_priority(fallback.request_priority());
-  }
-
-  // Choose the `request_tag` option.
-  if (preferred.request_tag().has_value()) {
-    opts.set_request_tag(preferred.request_tag());
-  } else if (fallback.request_tag().has_value()) {
-    opts.set_request_tag(fallback.request_tag());
-  }
-
-  return opts;
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

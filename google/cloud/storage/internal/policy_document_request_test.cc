@@ -21,12 +21,11 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::ElementsAre;
 
 TEST(PolicyDocumentRequest, SigningAccount) {
   PolicyDocumentRequest request;
@@ -40,7 +39,7 @@ TEST(PolicyDocumentRequest, SigningAccount) {
   ASSERT_TRUE(request.signing_account_delegates().has_value());
   EXPECT_EQ("another-account@example.com", request.signing_account().value());
   EXPECT_THAT(request.signing_account_delegates().value(),
-              ElementsAre("test-delegate1", "test-delegate2"));
+              ::testing::ElementsAre("test-delegate1", "test-delegate2"));
 }
 
 TEST(PolicyDocumentV4Request, SigningAccount) {
@@ -55,7 +54,7 @@ TEST(PolicyDocumentV4Request, SigningAccount) {
   ASSERT_TRUE(request.signing_account_delegates().has_value());
   EXPECT_EQ("another-account@example.com", request.signing_account().value());
   EXPECT_THAT(request.signing_account_delegates().value(),
-              ElementsAre("test-delegate1", "test-delegate2"));
+              ::testing::ElementsAre("test-delegate1", "test-delegate2"));
 }
 
 TEST(PostPolicyV4EscapeTest, OnlyAscii) {
@@ -76,9 +75,8 @@ TEST(PostPolicyV4EscapeTest, InvalidUtf) {
 TEST(PostPolicyV4EscapeTest, Simple) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_EQ("\127\065abcd$", *PostPolicyV4Escape("\127\065abcd$"));
-  auto constexpr kUtf8Text = u8"\\\b\f\n\r\t\v\u0080\u0119";
-  auto input = std::string{kUtf8Text, kUtf8Text + 11};
-  EXPECT_EQ("\\\\b\\f\\n\\r\\t\\v\\u0080\\u0119", *PostPolicyV4Escape(input));
+  EXPECT_EQ("\\\\b\\f\\n\\r\\t\\v\\u0080\\u0119",
+            *PostPolicyV4Escape(u8"\\\b\f\n\r\t\v\u0080\u0119"));
 #else   // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THAT(PostPolicyV4Escape("ąę"), StatusIs(StatusCode::kUnimplemented));
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -89,8 +87,7 @@ TEST(PolicyDocumentV4Request, Printing) {
   doc.bucket = "test-bucket";
   doc.object = "test-object";
   doc.expiration = std::chrono::seconds(13);
-  doc.timestamp =
-      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z").value();
+  doc.timestamp = google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z");
   PolicyDocumentV4Request req(doc);
   std::stringstream stream;
   stream << req;
@@ -108,8 +105,7 @@ TEST(PolicyDocumentV4Request, RequiredFormFields) {
   doc.bucket = "test-bucket";
   doc.object = "test-object";
   doc.expiration = std::chrono::seconds(13);
-  doc.timestamp =
-      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z").value();
+  doc.timestamp = google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z");
   doc.conditions = std::vector<PolicyDocumentCondition>{
       PolicyDocumentCondition::StartsWith("key", ""),
       PolicyDocumentCondition::ExactMatchObject("acl", "bucket-owner-read"),
@@ -131,7 +127,7 @@ TEST(PolicyDocumentV4Request, RequiredFormFields) {
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 class ClientOptions;
 namespace internal {
 std::string JsonEndpoint(Options const&);
@@ -182,7 +182,7 @@ class ClientOptions {
   ClientOptions& add_user_agent_prefix(std::string prefix) {
     opts_.lookup<UserAgentProductsOption>().push_back(prefix);
     if (!user_agent_prefix_.empty()) {
-      prefix += ' ';
+      prefix += '/';
       prefix += user_agent_prefix_;
     }
     user_agent_prefix_ = std::move(prefix);
@@ -251,10 +251,10 @@ class ClientOptions {
    * The default value is 2 minutes. Can be disabled by setting the value to 0.
    */
   std::chrono::seconds download_stall_timeout() const {
-    return opts_.get<TransferStallTimeoutOption>();
+    return opts_.get<DownloadStallTimeoutOption>();
   }
   ClientOptions& set_download_stall_timeout(std::chrono::seconds v) {
-    opts_.set<TransferStallTimeoutOption>(std::move(v));
+    opts_.set<DownloadStallTimeoutOption>(std::move(v));
     return *this;
   }
   //@}
@@ -275,7 +275,7 @@ class ClientOptions {
   std::string user_agent_prefix_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -20,22 +20,20 @@
 namespace google {
 namespace cloud {
 namespace storage_experimental {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 
 namespace {
-absl::optional<std::string> GrpcConfig() {
-  return google::cloud::internal::GetEnv(
-      "GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG");
+bool UseGrpcForMetadata() {
+  auto v =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG")
+          .value_or("");
+  return v.find("metadata") != std::string::npos;
 }
 }  // namespace
 
 google::cloud::storage::Client DefaultGrpcClient(Options opts) {
   opts = google::cloud::storage::internal::DefaultOptionsGrpc(std::move(opts));
-  auto config = GrpcConfig();
-  if (config.value_or("none") == "none") {
-    return google::cloud::storage::Client(std::move(opts));
-  }
-  if (config.value_or("") == "metadata") {
+  if (UseGrpcForMetadata()) {
     return storage::internal::ClientImplDetails::CreateClient(
         storage::internal::GrpcClient::Create(opts));
   }
@@ -43,7 +41,7 @@ google::cloud::storage::Client DefaultGrpcClient(Options opts) {
       storage::internal::HybridClient::Create(opts));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage_experimental
 }  // namespace cloud
 }  // namespace google

@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
@@ -174,7 +174,7 @@ TEST(ListBucketsResponseTest, Parse) {
 
   auto actual = ListBucketsResponse::FromHttpResponse(text).value();
   EXPECT_EQ("some-token-42", actual.next_page_token);
-  EXPECT_THAT(actual.items, ElementsAre(b1, b2));
+  EXPECT_THAT(actual.items, ::testing::ElementsAre(b1, b2));
 }
 
 TEST(ListBucketsResponseTest, ParseFailure) {
@@ -600,18 +600,6 @@ TEST(PatchBucketRequestTest, DiffResetRetentionPolicy) {
   EXPECT_EQ(expected, patch);
 }
 
-TEST(PatchBucketRequestTest, DiffSetRpo) {
-  BucketMetadata original = CreateBucketMetadataForTest();
-  original.set_rpo(RpoDefault());
-  BucketMetadata updated = original;
-  updated.set_rpo(RpoAsyncTurbo());
-  PatchBucketRequest request("test-bucket", original, updated);
-
-  auto patch = nlohmann::json::parse(request.payload());
-  auto expected = nlohmann::json::parse(R"""({"rpo": "ASYNC_TURBO"})""");
-  EXPECT_EQ(expected, patch);
-}
-
 TEST(PatchBucketRequestTest, DiffSetStorageClass) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.set_storage_class(storage_class::Standard());
@@ -1018,7 +1006,7 @@ TEST(BucketRequestsTest, LockBucketRetentionPolicyRequest) {
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -21,9 +21,36 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-namespace {
+
+void CompositeValidator::Update(char const* buf, std::size_t n) {
+  left_->Update(buf, n);
+  right_->Update(buf, n);
+}
+
+void CompositeValidator::ProcessMetadata(ObjectMetadata const& meta) {
+  left_->ProcessMetadata(meta);
+  right_->ProcessMetadata(meta);
+}
+
+void CompositeValidator::ProcessHeader(std::string const& key,
+                                       std::string const& value) {
+  left_->ProcessHeader(key, value);
+  right_->ProcessHeader(key, value);
+}
+
+HashValidator::Result CompositeValidator::Finish() && {
+  auto left_result = std::move(*left_).Finish();
+  auto right_result = std::move(*right_).Finish();
+
+  auto received = left_->Name() + "=" + left_result.received;
+  received += "," + right_->Name() + "=" + right_result.received;
+  auto computed = left_->Name() + "=" + left_result.computed;
+  computed += "," + right_->Name() + "=" + right_result.computed;
+  bool is_mismatch = left_result.is_mismatch || right_result.is_mismatch;
+  return Result{std::move(received), std::move(computed), is_mismatch};
+}
 
 std::unique_ptr<HashValidator> CreateHashValidator(bool disable_md5,
                                                    bool disable_crc32c) {
@@ -41,42 +68,29 @@ std::unique_ptr<HashValidator> CreateHashValidator(bool disable_md5,
       absl::make_unique<MD5HashValidator>());
 }
 
-}  // namespace
-
-std::unique_ptr<HashValidator> CreateNullHashValidator() {
-  return absl::make_unique<NullHashValidator>();
-}
-
 std::unique_ptr<HashValidator> CreateHashValidator(
     ReadObjectRangeRequest const& request) {
-  if (request.RequiresRangeHeader()) return CreateNullHashValidator();
-
+  if (request.RequiresRangeHeader()) {
+    return absl::make_unique<NullHashValidator>();
+  }
   // `DisableMD5Hash`'s default value is `true`.
-  auto disable_md5 = request.GetOption<DisableMD5Hash>().value_or(false);
-  auto disable_crc32c =
-      request.GetOption<DisableCrc32cChecksum>().value_or(false);
+  auto disable_md5 = request.GetOption<DisableMD5Hash>().value();
+  auto disable_crc32c = request.HasOption<DisableCrc32cChecksum>() &&
+                        request.GetOption<DisableCrc32cChecksum>().value();
   return CreateHashValidator(disable_md5, disable_crc32c);
 }
 
 std::unique_ptr<HashValidator> CreateHashValidator(
     ResumableUploadRequest const& request) {
   // `DisableMD5Hash`'s default value is `true`.
-  auto disable_md5 = request.GetOption<DisableMD5Hash>().value_or(false);
-  auto disable_crc32c =
-      request.GetOption<DisableCrc32cChecksum>().value_or(false);
+  auto disable_md5 = request.GetOption<DisableMD5Hash>().value();
+  auto disable_crc32c = request.HasOption<DisableCrc32cChecksum>() &&
+                        request.GetOption<DisableCrc32cChecksum>().value();
   return CreateHashValidator(disable_md5, disable_crc32c);
 }
 
-std::string FormatReceivedHashes(HashValidator::Result const& result) {
-  return Format(result.received);
-}
-
-std::string FormatComputedHashes(HashValidator::Result const& result) {
-  return Format(result.computed);
-}
-
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

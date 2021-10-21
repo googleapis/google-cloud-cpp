@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 template <typename Derived>
 struct CommonMetadataParser {
@@ -35,9 +35,7 @@ struct CommonMetadataParser {
     result.etag_ = json.value("etag", "");
     result.id_ = json.value("id", "");
     result.kind_ = json.value("kind", "");
-    auto metageneration = ParseLongField(json, "metageneration");
-    if (!metageneration) return std::move(metageneration).status();
-    result.metageneration_ = *metageneration;
+    result.metageneration_ = ParseLongField(json, "metageneration");
     result.name_ = json.value("name", "");
     if (json.count("owner") != 0) {
       Owner o;
@@ -47,12 +45,8 @@ struct CommonMetadataParser {
     }
     result.self_link_ = json.value("selfLink", "");
     result.storage_class_ = json.value("storageClass", "");
-    auto time_created = ParseTimestampField(json, "timeCreated");
-    if (!time_created) return std::move(time_created).status();
-    result.time_created_ = *time_created;
-    auto updated = ParseTimestampField(json, "updated");
-    if (!updated) return std::move(updated).status();
-    result.updated_ = *updated;
+    result.time_created_ = ParseTimestampField(json, "timeCreated");
+    result.updated_ = ParseTimestampField(json, "updated");
     return Status();
   }
   static StatusOr<CommonMetadata<Derived>> FromString(
@@ -63,7 +57,7 @@ struct CommonMetadataParser {
 };
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

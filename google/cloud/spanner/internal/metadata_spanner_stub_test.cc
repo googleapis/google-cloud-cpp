@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsContextMDValid;
@@ -73,12 +73,10 @@ class MetadataSpannerStubTest : public ::testing::Test {
     grpc::ClientContext context;
     Request request;
     request.set_session(
-        google::cloud::spanner::Database(
-            google::cloud::spanner::Instance(
-                google::cloud::Project("test-project-id"), "test-instance-id"),
-            "test-database-id")
-            .FullName() +
-        "/sessions/test-session-id");
+        "projects/test-project-id/"
+        "instances/test-instance-id/"
+        "databases/test-database-id/"
+        "sessions/test-session-id");
     auto result = (stub.*member_function)(context, request);
     ExpectTransientError(result);
   }
@@ -139,12 +137,10 @@ TEST_F(MetadataSpannerStubTest, GetSession) {
   grpc::ClientContext context;
   spanner_proto::GetSessionRequest request;
   request.set_name(
-      google::cloud::spanner::Database(
-          google::cloud::spanner::Instance(
-              google::cloud::Project("test-project-id"), "test-instance-id"),
-          "test-database-id")
-          .FullName() +
-      "/sessions/test-session-id");
+      "projects/test-project-id/"
+      "instances/test-instance-id/"
+      "databases/test-database-id/"
+      "sessions/test-session-id");
   auto status = stub.GetSession(context, request);
   EXPECT_EQ(TransientError(), status.status());
 }
@@ -181,12 +177,10 @@ TEST_F(MetadataSpannerStubTest, DeleteSession) {
   grpc::ClientContext context;
   spanner_proto::DeleteSessionRequest request;
   request.set_name(
-      google::cloud::spanner::Database(
-          google::cloud::spanner::Instance(
-              google::cloud::Project("test-project-id"), "test-instance-id"),
-          "test-database-id")
-          .FullName() +
-      "/sessions/test-session-id");
+      "projects/test-project-id/"
+      "instances/test-instance-id/"
+      "databases/test-database-id/"
+      "sessions/test-session-id");
   auto status = stub.DeleteSession(context, request);
   EXPECT_EQ(TransientError(), status);
 }
@@ -210,12 +204,10 @@ TEST_F(MetadataSpannerStubTest, ExecuteStreamingSql) {
   grpc::ClientContext context;
   spanner_proto::ExecuteSqlRequest request;
   request.set_session(
-      google::cloud::spanner::Database(
-          google::cloud::spanner::Instance(
-              google::cloud::Project("test-project-id"), "test-instance-id"),
-          "test-database-id")
-          .FullName() +
-      "/sessions/test-session-id");
+      "projects/test-project-id/"
+      "instances/test-instance-id/"
+      "databases/test-database-id/"
+      "sessions/test-session-id");
   auto result = stub.ExecuteStreamingSql(context, request);
   EXPECT_FALSE(result);
 }
@@ -239,12 +231,10 @@ TEST_F(MetadataSpannerStubTest, StreamingRead) {
   grpc::ClientContext context;
   spanner_proto::ReadRequest request;
   request.set_session(
-      google::cloud::spanner::Database(
-          google::cloud::spanner::Instance(
-              google::cloud::Project("test-project-id"), "test-instance-id"),
-          "test-database-id")
-          .FullName() +
-      "/sessions/test-session-id");
+      "projects/test-project-id/"
+      "instances/test-instance-id/"
+      "databases/test-database-id/"
+      "sessions/test-session-id");
   auto result = stub.StreamingRead(context, request);
   EXPECT_FALSE(result);
 }
@@ -270,7 +260,7 @@ TEST_F(MetadataSpannerStubTest, PartitionRead) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

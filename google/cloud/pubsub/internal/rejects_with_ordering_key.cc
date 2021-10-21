@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 future<StatusOr<std::string>> RejectsWithOrderingKey::Publish(PublishParams p) {
   if (!p.message.ordering_key().empty()) {
@@ -38,7 +38,7 @@ void RejectsWithOrderingKey::ResumePublish(ResumePublishParams p) {
   connection_->ResumePublish(std::move(p));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

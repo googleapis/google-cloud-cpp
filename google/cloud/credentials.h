@@ -24,7 +24,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 class CredentialsVisitor;
 }  // namespace internal
@@ -246,20 +246,7 @@ struct CARootsFilePathOption {
   using Type = std::string;
 };
 
-namespace internal {
-
-/**
- * Use an insecure channel for AccessToken authentication.
- *
- * This is useful when testing against emulators, where it is impossible to
- * create a secure channel.
- */
-struct UseInsecureChannelOption {
-  using Type = bool;
-};
-
-}  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 
 using ::google::cloud::internal::GetEnv;
 
@@ -168,7 +168,7 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
           .set<EnableCurlSigpipeHandlerOption>(true)
           .set<MaximumCurlSocketRecvSizeOption>(0)
           .set<MaximumCurlSocketSendSizeOption>(0)
-          .set<TransferStallTimeoutOption>(std::chrono::seconds(
+          .set<DownloadStallTimeoutOption>(std::chrono::seconds(
               GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT))
           .set<RetryPolicyOption>(
               LimitedTimeRetryPolicy(
@@ -294,7 +294,7 @@ ClientOptions& ClientOptions::SetUploadBufferSize(std::size_t size) {
   return *this;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO(#7356): Remove this file after the deprecation period expires
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/instance_admin_connection.h"
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/internal/defaults.h"
@@ -26,11 +24,11 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 namespace gcsa = ::google::spanner::admin::instance::v1;
 namespace giam = ::google::iam::v1;
-using ::google::cloud::internal::Idempotency;
+using google::cloud::internal::Idempotency;
 
 namespace {
 
@@ -45,7 +43,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
             opts.get<SpannerBackoffPolicyOption>()->clone()),
         polling_policy_prototype_(
             opts.get<SpannerPollingPolicyOption>()->clone()),
-        background_threads_(internal::MakeBackgroundThreadsFactory(opts)()) {}
+        background_threads_(opts.get<GrpcBackgroundThreadsFactoryOption>()()) {}
 
   ~InstanceAdminConnectionImpl() override = default;
 
@@ -299,11 +297,11 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
   return MakeInstanceAdminConnection(std::move(opts));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 std::shared_ptr<spanner::InstanceAdminConnection>
 MakeInstanceAdminConnectionForTesting(std::shared_ptr<InstanceAdminStub> stub,
@@ -313,7 +311,7 @@ MakeInstanceAdminConnectionForTesting(std::shared_ptr<InstanceAdminStub> stub,
       std::move(stub), std::move(opts));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

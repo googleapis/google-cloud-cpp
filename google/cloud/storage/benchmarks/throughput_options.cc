@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/benchmarks/throughput_options.h"
 #include "absl/strings/str_split.h"
-#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -110,12 +109,25 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        }},
       {"--enabled-apis", "enable a subset of the APIs for the test",
        [&options](std::string const& val) {
+         auto const names = [] {
+           std::map<std::string, ApiName> names;
+           for (auto a : {
+                    ApiName::kApiJson,
+                    ApiName::kApiXml,
+                    ApiName::kApiGrpc,
+                    ApiName::kApiRawJson,
+                    ApiName::kApiRawXml,
+                    ApiName::kApiRawGrpc,
+                })
+             names[ToString(a)] = a;
+           return names;
+         }();
          options.enabled_apis.clear();
-         std::set<ApiName> apis;  // avoid duplicates
+         std::set<ApiName> apis;
          for (auto const& token : absl::StrSplit(val, ',')) {
-           auto api = ParseApiName(std::string{token});
-           if (!api) return;
-           apis.insert(*api);
+           auto const l = names.find(std::string(token));
+           if (l == names.end()) return;
+           apis.insert(l->second);
          }
          options.enabled_apis = {apis.begin(), apis.end()};
        }},
@@ -209,7 +221,7 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
     return make_status(os);
   }
 
-  if (!Timer::SupportsPerThreadUsage() && options.thread_count > 1) {
+  if (!Timer::SupportPerThreadUsage() && options.thread_count > 1) {
     std::cerr <<
         R"""(
 # WARNING

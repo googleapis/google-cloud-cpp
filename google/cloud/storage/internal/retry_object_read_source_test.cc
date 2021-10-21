@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
@@ -292,45 +292,9 @@ TEST(RetryObjectReadSourceTest, TransientFailureWithReadLastOption) {
   auto res = (*source)->Read(nullptr, 1024);
   ASSERT_TRUE(res);
 }
-
-/// @test The generation is captured such that we resume from the same version
-TEST(RetryObjectReadSourceTest, TransientFailureWithGeneration) {
-  auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
-
-  EXPECT_CALL(*raw_client, ReadObject)
-      .WillOnce([](ReadObjectRangeRequest const& req) {
-        EXPECT_FALSE(req.HasOption<ReadRange>());
-        EXPECT_FALSE(req.HasOption<Generation>());
-        auto source = absl::make_unique<MockObjectReadSource>();
-        auto result = ReadSourceResult{static_cast<std::size_t>(1024),
-                                       HttpResponse{200, "", {}}};
-        result.generation = 23456;
-        EXPECT_CALL(*source, Read)
-            .WillOnce(Return(result))
-            .WillOnce(Return(TransientError()));
-        return std::unique_ptr<ObjectReadSource>(std::move(source));
-      })
-      .WillOnce([](ReadObjectRangeRequest const& req) {
-        EXPECT_EQ(1024, req.GetOption<ReadFromOffset>().value_or(0));
-        EXPECT_EQ(23456, req.GetOption<Generation>().value_or(0));
-        auto source = absl::make_unique<MockObjectReadSource>();
-        EXPECT_CALL(*source, Read).WillOnce(Return(ReadSourceResult{}));
-        return std::unique_ptr<ObjectReadSource>(std::move(source));
-      });
-
-  ReadObjectRangeRequest req("test_bucket", "test_object");
-  auto source = client->ReadObject(req);
-  ASSERT_STATUS_OK(source);
-  ASSERT_STATUS_OK((*source)->Read(nullptr, 1024));
-  auto res = (*source)->Read(nullptr, 1024);
-  ASSERT_TRUE(res);
-}
-
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

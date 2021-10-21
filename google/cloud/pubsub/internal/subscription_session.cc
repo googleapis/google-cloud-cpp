@@ -22,27 +22,27 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 class SubscriptionSessionImpl
     : public std::enable_shared_from_this<SubscriptionSessionImpl> {
  public:
   static future<Status> Create(
-      Options const& opts, CompletionQueue cq,
+      pubsub::SubscriberOptions const& options,
+      google::cloud::CompletionQueue executor,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionBatchSource> source,
       pubsub::SubscriberConnection::SubscribeParams p) {
     auto queue =
         SubscriptionMessageQueue::Create(shutdown_manager, std::move(source));
     auto concurrency_control = SubscriptionConcurrencyControl::Create(
-        cq, shutdown_manager, std::move(queue),
-        opts.get<pubsub::MaxConcurrencyOption>());
+        executor, shutdown_manager, std::move(queue),
+        options.max_concurrency());
 
     auto self = std::make_shared<SubscriptionSessionImpl>(
-        std::move(cq), std::move(shutdown_manager),
-        std::move(concurrency_control),
-        opts.get<pubsub::ShutdownPollingPeriodOption>());
+        std::move(executor), std::move(shutdown_manager),
+        std::move(concurrency_control), options.shutdown_polling_period());
 
     auto weak = std::weak_ptr<SubscriptionSessionImpl>(self);
     auto result = self->shutdown_manager_->Start(promise<Status>([weak] {
@@ -158,24 +158,28 @@ class SubscriptionSessionImpl
 }  // namespace
 
 future<Status> CreateSubscriptionSession(
-    pubsub::Subscription const& subscription, Options const& opts,
-    std::shared_ptr<SubscriberStub> const& stub, CompletionQueue const& cq,
-    std::string client_id, pubsub::SubscriberConnection::SubscribeParams p) {
+    pubsub::Subscription const& subscription,
+    pubsub::SubscriberOptions const& options,
+    std::shared_ptr<pubsub_internal::SubscriberStub> const& stub,
+    google::cloud::CompletionQueue const& executor, std::string client_id,
+    pubsub::SubscriberConnection::SubscribeParams p,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
   auto batch = std::make_shared<StreamingSubscriptionBatchSource>(
-      cq, shutdown_manager, stub, subscription.FullName(), std::move(client_id),
-      opts);
+      executor, shutdown_manager, stub, subscription.FullName(),
+      std::move(client_id), options, std::move(retry_policy),
+      std::move(backoff_policy));
   auto lease_management = SubscriptionLeaseManagement::Create(
-      cq, shutdown_manager, std::move(batch),
-      opts.get<pubsub::MaxDeadlineTimeOption>(),
-      opts.get<pubsub::MaxDeadlineExtensionOption>());
+      executor, shutdown_manager, std::move(batch), options.max_deadline_time(),
+      options.max_deadline_extension());
 
-  return SubscriptionSessionImpl::Create(opts, cq, std::move(shutdown_manager),
-                                         std::move(lease_management),
-                                         std::move(p));
+  return SubscriptionSessionImpl::Create(
+      options, std::move(executor), std::move(shutdown_manager),
+      std::move(lease_management), std::move(p));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

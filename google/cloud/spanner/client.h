@@ -37,7 +37,6 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/optional.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/v1/spanner.pb.h>
@@ -50,7 +49,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 // clang-format off
 /**
@@ -304,13 +303,12 @@ class Client {
    */
   RowStream ExecuteQuery(Transaction transaction, SqlStatement statement,
                          QueryOptions const& opts = {});
-
   /**
    * Executes a SQL query on a subset of rows in a database. Requires a prior
    * call to `PartitionQuery` to obtain the partition information; see the
    * documentation of that method for full details.
    *
-   * @param partition A `QueryPartition`, obtained by calling `PartitionQuery`.
+   * @param partition A `QueryPartition`, obtained by calling `PartitionRead`.
    * @param opts The `QueryOptions` to use for this call. If given, these will
    *     take precedence over the options set at the client and environment
    *     levels.
@@ -722,20 +720,8 @@ std::shared_ptr<Connection> MakeConnection(
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
-
-namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-spanner::QueryOptions OverlayQueryOptions(
-    spanner::QueryOptions const& preferred,
-    spanner::QueryOptions const& fallback,
-    absl::optional<std::string> const& optimizer_version_env,
-    absl::optional<std::string> const& optimizer_statistics_package_env);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

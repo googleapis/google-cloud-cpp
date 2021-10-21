@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 namespace {
 
@@ -52,7 +52,6 @@ bool Equal(google::spanner::v1::Type const& pt1,  // NOLINT(misc-no-recursion)
              pv1.number_value() == pv2.number_value();
     case google::spanner::v1::TypeCode::STRING:
     case google::spanner::v1::TypeCode::BYTES:
-    case google::spanner::v1::TypeCode::JSON:
     case google::spanner::v1::TypeCode::DATE:
     case google::spanner::v1::TypeCode::TIMESTAMP:
     case google::spanner::v1::TypeCode::NUMERIC:
@@ -142,7 +141,6 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     case google::spanner::v1::TypeCode::BYTES:
       return os << spanner_internal::BytesFromBase64(v.string_value()).value();
 
-    case google::spanner::v1::TypeCode::JSON:
     case google::spanner::v1::TypeCode::TIMESTAMP:
     case google::spanner::v1::TypeCode::NUMERIC:
       return os << v.string_value();
@@ -152,7 +150,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
              << spanner_internal::FromProto(t, v).get<absl::CivilDay>().value();
 
     case google::spanner::v1::TypeCode::ARRAY: {
-      char const* delimiter = "";
+      const char* delimiter = "";
       os << '[';
       for (auto const& e : v.list_value().values()) {
         os << delimiter;
@@ -163,7 +161,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
     }
 
     case google::spanner::v1::TypeCode::STRUCT: {
-      char const* delimiter = "";
+      const char* delimiter = "";
       os << '(';
       for (int i = 0; i < v.list_value().values_size(); ++i) {
         os << delimiter;
@@ -233,10 +231,6 @@ bool Value::TypeProtoIs(Bytes const&, google::spanner::v1::Type const& type) {
   return type.code() == google::spanner::v1::TypeCode::BYTES;
 }
 
-bool Value::TypeProtoIs(Json const&, google::spanner::v1::Type const& type) {
-  return type.code() == google::spanner::v1::TypeCode::JSON;
-}
-
 bool Value::TypeProtoIs(Numeric const&, google::spanner::v1::Type const& type) {
   return type.code() == google::spanner::v1::TypeCode::NUMERIC;
 }
@@ -272,12 +266,6 @@ google::spanner::v1::Type Value::MakeTypeProto(std::string const&) {
 google::spanner::v1::Type Value::MakeTypeProto(Bytes const&) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::BYTES);
-  return t;
-}
-
-google::spanner::v1::Type Value::MakeTypeProto(Json const&) {
-  google::spanner::v1::Type t;
-  t.set_code(google::spanner::v1::TypeCode::JSON);
   return t;
 }
 
@@ -350,12 +338,6 @@ google::protobuf::Value Value::MakeValueProto(std::string s) {
 google::protobuf::Value Value::MakeValueProto(Bytes bytes) {
   google::protobuf::Value v;
   v.set_string_value(spanner_internal::BytesToBase64(std::move(bytes)));
-  return v;
-}
-
-google::protobuf::Value Value::MakeValueProto(Json j) {
-  google::protobuf::Value v;
-  v.set_string_value(std::string(std::move(j)));
   return v;
 }
 
@@ -476,14 +458,6 @@ StatusOr<Bytes> Value::GetValue(Bytes const&, google::protobuf::Value const& pv,
   return *decoded;
 }
 
-StatusOr<Json> Value::GetValue(Json const&, google::protobuf::Value const& pv,
-                               google::spanner::v1::Type const&) {
-  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing JSON");
-  }
-  return Json(pv.string_value());
-}
-
 StatusOr<Numeric> Value::GetValue(Numeric const&,
                                   google::protobuf::Value const& pv,
                                   google::spanner::v1::Type const&) {
@@ -527,7 +501,7 @@ StatusOr<absl::CivilDay> Value::GetValue(absl::CivilDay,
                 s + ": Failed to match RFC3339 full-date");
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 extern "C" size_t CurlRequestOnWriteData(char* ptr, size_t size, size_t nmemb,
                                          void* userdata);
@@ -35,7 +35,9 @@ extern "C" size_t CurlRequestOnHeaderData(char* contents, size_t size,
 class CurlRequest {
  public:
   CurlRequest() = default;
-  ~CurlRequest();
+  ~CurlRequest() {
+    if (factory_) factory_->CleanupHandle(std::move(handle_));
+  }
 
   CurlRequest(CurlRequest&&) = default;
   CurlRequest& operator=(CurlRequest&&) = default;
@@ -47,15 +49,12 @@ class CurlRequest {
    *
    * @return The response HTTP error code, the headers and an empty payload.
    */
-  StatusOr<HttpResponse> MakeRequest(std::string const& payload) &&;
+  StatusOr<HttpResponse> MakeRequest(std::string const& payload);
 
   /// @copydoc MakeRequest(std::string const&)
-  StatusOr<HttpResponse> MakeUploadRequest(ConstBufferSequence payload) &&;
+  StatusOr<HttpResponse> MakeUploadRequest(ConstBufferSequence payload);
 
  private:
-  /// Handle a libcurl error during the request.
-  Status OnError(Status status);
-
   StatusOr<HttpResponse> MakeRequestImpl();
 
   friend class CurlRequestBuilder;
@@ -71,18 +70,16 @@ class CurlRequest {
   std::string url_;
   CurlHeaders headers_ = CurlHeaders(nullptr, &curl_slist_free_all);
   std::string user_agent_;
-  std::string http_version_;
   std::string response_payload_;
   CurlReceivedHeaders received_headers_;
   bool logging_enabled_ = false;
   CurlHandle::SocketOptions socket_options_;
-  std::chrono::seconds transfer_stall_timeout_;
   CurlHandle handle_;
   std::shared_ptr<CurlHandleFactory> factory_;
 };
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

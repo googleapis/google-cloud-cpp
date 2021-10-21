@@ -23,7 +23,7 @@ namespace testing {
 void WriteBase64AsBinary(std::string const& filename, char const* data) {
   std::ofstream os(filename, std::ios::binary);
   os.exceptions(std::ios::badbit);
-  auto bytes = internal::Base64Decode(data).value();
+  auto bytes = internal::Base64Decode(data);
   for (unsigned char c : bytes) {
     os << c;
   }

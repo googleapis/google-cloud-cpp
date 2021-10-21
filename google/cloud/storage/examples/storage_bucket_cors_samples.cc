@@ -24,7 +24,7 @@ namespace {
 void SetCorsConfiguration(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
   //! [cors configuration] [START storage_cors_configuration]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& origin) {
@@ -64,7 +64,7 @@ void SetCorsConfiguration(google::cloud::storage::Client client,
 void RemoveCorsConfiguration(google::cloud::storage::Client client,
                              std::vector<std::string> const& argv) {
   // [START storage_remove_cors_configuration]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =

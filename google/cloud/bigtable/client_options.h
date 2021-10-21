@@ -15,17 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLIENT_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLIENT_OPTIONS_H
 
-#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/completion_queue.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/algorithm.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/tracing_options.h"
-#include "absl/strings/str_split.h"
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/resource_quota.h>
 #include <chrono>
@@ -35,10 +29,13 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-class ClientOptions;
+inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
-Options&& MakeOptions(ClientOptions&& o);
+struct InstanceAdminTraits;
+std::string DefaultDataEndpoint();
+std::string DefaultAdminEndpoint();
+std::string DefaultInstanceAdminEndpoint();
+TracingOptions DefaultTracingOptions();
 }  // namespace internal
 
 /**
@@ -53,10 +50,10 @@ Options&& MakeOptions(ClientOptions&& o);
 class ClientOptions {
  public:
   /**
-   * Initialize the client options.
+   * Initialize the client options with the default credentials.
    *
    * Configure the client to connect to the Cloud Bigtable service, using the
-   * default options.
+   * default Google credentials for authentication.
    *
    * @par Environment Variables
    * If the `BIGTABLE_EMULATOR_HOST` environment variable is set, the default
@@ -79,56 +76,28 @@ class ClientOptions {
   ClientOptions();
 
   /**
-   * Initialize the client options.
-   *
-   * Expected options are any of the types in the following option lists.
-   *
-   * - `google::cloud::CommonOptionList`
-   * - `google::cloud::GrpcOptionList`
-   * - `google::cloud::bigtable::ClientOptionList`
-   *
-   * @note Unrecognized options will be ignored. To debug issues with options
-   *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and
-   *     unexpected options will be logged.
-   *
-   * @param opts (optional) configuration options
-   */
-  explicit ClientOptions(Options opts);
-
-  /**
    * Connect to the production instance of Cloud Bigtable using @p creds.
    *
    * This constructor always connects to the production instance of Cloud
    * Bigtable, and can be used when the application default credentials are
    * not configured in the environment where the application is running.
-   *
-   * @note Prefer using the `ClientOptions(Options opts)` constructor and
-   *     passing in @p creds as a `GrpcCredentialOption`.
-   *
-   * @param creds gRPC authentication credentials
    */
   explicit ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds);
 
   /// Return the current endpoint for data RPCs.
-  std::string const& data_endpoint() const {
-    return opts_.get<DataEndpointOption>();
-  }
-
+  std::string const& data_endpoint() const { return data_endpoint_; }
   ClientOptions& set_data_endpoint(std::string endpoint) {
-    opts_.set<DataEndpointOption>(std::move(endpoint));
+    data_endpoint_ = std::move(endpoint);
     return *this;
   }
 
   /// Return the current endpoint for admin RPCs.
-  std::string const& admin_endpoint() const {
-    return opts_.get<AdminEndpointOption>();
-  }
-
+  std::string const& admin_endpoint() const { return admin_endpoint_; }
   ClientOptions& set_admin_endpoint(std::string endpoint) {
-    opts_.set<AdminEndpointOption>(endpoint);
+    admin_endpoint_ = std::move(endpoint);
     // These two endpoints are generally equivalent, but they may differ in
     // some tests.
-    opts_.set<InstanceAdminEndpointOption>(std::move(endpoint));
+    instance_admin_endpoint_ = admin_endpoint_;
     return *this;
   }
 
@@ -147,44 +116,39 @@ class ClientOptions {
     connection_pool_name_ = std::move(name);
     return *this;
   }
-
   /// Return the name of the connection pool.
   std::string const& connection_pool_name() const {
     return connection_pool_name_;
   }
 
-  /**
-   * Set the size of the connection pool.
+  /* Set the size of the connection pool.
    *
    * Specifying 0 for @p size will set the size of the connection pool to
    * default.
    */
   ClientOptions& set_connection_pool_size(std::size_t size);
 
-  std::size_t connection_pool_size() const {
-    return opts_.get<GrpcNumChannelsOption>();
-  }
+  std::size_t connection_pool_size() const { return connection_pool_size_; }
 
   /// Return the current credentials.
   std::shared_ptr<grpc::ChannelCredentials> credentials() const {
-    return opts_.get<GrpcCredentialOption>();
+    return credentials_;
   }
-
   ClientOptions& SetCredentials(
       std::shared_ptr<grpc::ChannelCredentials> credentials) {
-    opts_.set<GrpcCredentialOption>(std::move(credentials));
+    credentials_ = std::move(credentials);
     return *this;
   }
 
   /// Access all the channel arguments.
   grpc::ChannelArguments channel_arguments() const {
-    return ::google::cloud::internal::MakeChannelArguments(opts_);
+    return channel_arguments_;
   }
 
   /// Set all the channel arguments.
   ClientOptions& set_channel_arguments(
       grpc::ChannelArguments const& channel_arguments) {
-    opts_.set<GrpcChannelArgumentsNativeOption>(channel_arguments);
+    channel_arguments_ = channel_arguments;
     return *this;
   }
 
@@ -197,8 +161,7 @@ class ClientOptions {
    *
    */
   void SetCompressionAlgorithm(grpc_compression_algorithm algorithm) {
-    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetCompressionAlgorithm(
-        algorithm);
+    channel_arguments_.SetCompressionAlgorithm(algorithm);
   }
 
   /**
@@ -247,8 +210,7 @@ class ClientOptions {
                                    "maximum value allowed by gRPC (INT_MAX)");
     }
     auto fallback_timeout_ms = static_cast<int>(ft_ms.count());
-    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetGrpclbFallbackTimeout(
-        fallback_timeout_ms);
+    channel_arguments_.SetGrpclbFallbackTimeout(fallback_timeout_ms);
     return google::cloud::Status();
   }
 
@@ -261,8 +223,7 @@ class ClientOptions {
    *
    */
   void SetUserAgentPrefix(grpc::string const& user_agent_prefix) {
-    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetUserAgentPrefix(
-        user_agent_prefix);
+    channel_arguments_.SetUserAgentPrefix(user_agent_prefix);
   }
 
   /**
@@ -274,8 +235,7 @@ class ClientOptions {
    *
    */
   void SetResourceQuota(grpc::ResourceQuota const& resource_quota) {
-    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetResourceQuota(
-        resource_quota);
+    channel_arguments_.SetResourceQuota(resource_quota);
   }
 
   /**
@@ -288,8 +248,7 @@ class ClientOptions {
    *
    */
   void SetMaxReceiveMessageSize(int size) {
-    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetMaxReceiveMessageSize(
-        size);
+    channel_arguments_.SetMaxReceiveMessageSize(size);
   }
 
   /**
@@ -301,8 +260,7 @@ class ClientOptions {
    *
    */
   void SetMaxSendMessageSize(int size) {
-    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetMaxSendMessageSize(
-        size);
+    channel_arguments_.SetMaxSendMessageSize(size);
   }
 
   /**
@@ -315,8 +273,7 @@ class ClientOptions {
    *
    */
   void SetLoadBalancingPolicyName(grpc::string const& lb_policy_name) {
-    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetLoadBalancingPolicyName(
-        lb_policy_name);
+    channel_arguments_.SetLoadBalancingPolicyName(lb_policy_name);
   }
 
   /**
@@ -328,8 +285,7 @@ class ClientOptions {
    *
    */
   void SetServiceConfigJSON(grpc::string const& service_config_json) {
-    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetServiceConfigJSON(
-        service_config_json);
+    channel_arguments_.SetServiceConfigJSON(service_config_json);
   }
 
   /**
@@ -341,8 +297,7 @@ class ClientOptions {
    *
    */
   void SetSslTargetNameOverride(grpc::string const& name) {
-    opts_.lookup<GrpcChannelArgumentsNativeOption>().SetSslTargetNameOverride(
-        name);
+    channel_arguments_.SetSslTargetNameOverride(name);
   }
 
   /// Return the user agent prefix used by the library.
@@ -356,32 +311,29 @@ class ClientOptions {
    * be enabled by clients configured with this option.
    */
   bool tracing_enabled(std::string const& component) const {
-    return google::cloud::internal::Contains(
-        opts_.get<TracingComponentsOption>(), component);
+    return tracing_components_.find(component) != tracing_components_.end();
   }
 
   /// Enable tracing for @p component in clients configured with this object.
   ClientOptions& enable_tracing(std::string const& component) {
-    opts_.lookup<TracingComponentsOption>().insert(component);
+    tracing_components_.insert(component);
     return *this;
   }
 
   /// Disable tracing for @p component in clients configured with this object.
   ClientOptions& disable_tracing(std::string const& component) {
-    opts_.lookup<TracingComponentsOption>().erase(component);
+    tracing_components_.erase(component);
     return *this;
   }
 
   /// Return the options for use when tracing RPCs.
-  TracingOptions const& tracing_options() const {
-    return opts_.get<GrpcTracingOptionsOption>();
-  }
+  TracingOptions const& tracing_options() const { return tracing_options_; }
 
   /**
    * Maximum connection refresh period, as set via `set_max_conn_refresh_period`
    */
   std::chrono::milliseconds max_conn_refresh_period() {
-    return opts_.get<MaxConnectionRefreshOption>();
+    return max_conn_refresh_period_;
   }
 
   /**
@@ -397,9 +349,8 @@ class ClientOptions {
    * @endcode
    */
   ClientOptions& set_max_conn_refresh_period(std::chrono::milliseconds period) {
-    opts_.set<MaxConnectionRefreshOption>(period);
-    auto& min_conn_refresh_period = opts_.lookup<MinConnectionRefreshOption>();
-    min_conn_refresh_period = (std::min)(min_conn_refresh_period, period);
+    max_conn_refresh_period_ = period;
+    min_conn_refresh_period_ = (std::min)(min_conn_refresh_period_, period);
     return *this;
   }
 
@@ -407,7 +358,7 @@ class ClientOptions {
    * Minimum connection refresh period, as set via `set_min_conn_refresh_period`
    */
   std::chrono::milliseconds min_conn_refresh_period() {
-    return opts_.get<MinConnectionRefreshOption>();
+    return min_conn_refresh_period_;
   }
 
   /**
@@ -421,24 +372,22 @@ class ClientOptions {
    * @endcode
    */
   ClientOptions& set_min_conn_refresh_period(std::chrono::milliseconds period) {
-    opts_.set<MinConnectionRefreshOption>(period);
-    auto& max_conn_refresh_period = opts_.lookup<MaxConnectionRefreshOption>();
-    max_conn_refresh_period = (std::max)(max_conn_refresh_period, period);
+    min_conn_refresh_period_ = period;
+    max_conn_refresh_period_ = (std::max)(max_conn_refresh_period_, period);
     return *this;
   }
 
   /**
    * Set the number of background threads.
    *
-   * @note This value is not used if `DisableBackgroundThreads()` is called.
+   * @note this value is not used if `DisableBackgroundThreads()` is called.
    */
   ClientOptions& set_background_thread_pool_size(std::size_t s) {
-    opts_.set<GrpcBackgroundThreadPoolSizeOption>(s);
+    background_thread_pool_size_ = s;
     return *this;
   }
-
   std::size_t background_thread_pool_size() const {
-    return opts_.get<GrpcBackgroundThreadPoolSizeOption>();
+    return background_thread_pool_size_;
   }
 
   /**
@@ -454,29 +403,39 @@ class ClientOptions {
   ClientOptions& DisableBackgroundThreads(
       google::cloud::CompletionQueue const& cq);
 
-  /**
-   * Backwards compatibility alias
-   *
-   * @deprecated Consider using `google::cloud::BackgroundThreadsFactory`
-   * directly
-   */
-  using BackgroundThreadsFactory = ::google::cloud::BackgroundThreadsFactory;
+  using BackgroundThreadsFactory =
+      std::function<std::unique_ptr<BackgroundThreads>()>;
   BackgroundThreadsFactory background_threads_factory() const;
 
  private:
+  friend struct internal::InstanceAdminTraits;
   friend struct ClientOptionsTestTraits;
-  friend Options&& internal::MakeOptions(ClientOptions&&);
 
   /// Return the current endpoint for instance admin RPCs.
   std::string const& instance_admin_endpoint() const {
-    return opts_.get<InstanceAdminEndpointOption>();
+    return instance_admin_endpoint_;
   }
 
+  std::shared_ptr<grpc::ChannelCredentials> credentials_;
+  grpc::ChannelArguments channel_arguments_;
   std::string connection_pool_name_;
-  Options opts_;
+  std::size_t connection_pool_size_;
+  std::string data_endpoint_;
+  std::string admin_endpoint_;
+  // The endpoint for instance admin operations, in most scenarios this should
+  // have the same value as `admin_endpoint_`. The most common exception is
+  // testing, where the emulator for instance admin operations may be different
+  // than the emulator for admin and data operations.
+  std::string instance_admin_endpoint_;
+  std::set<std::string> tracing_components_;
+  TracingOptions tracing_options_;
+  std::chrono::milliseconds max_conn_refresh_period_;
+  std::chrono::milliseconds min_conn_refresh_period_;
+  std::size_t background_thread_pool_size_ = 0;
+  BackgroundThreadsFactory background_threads_factory_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

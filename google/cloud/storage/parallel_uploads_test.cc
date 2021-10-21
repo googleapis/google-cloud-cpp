@@ -35,7 +35,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
@@ -116,9 +116,9 @@ class ExpectedDeletions {
 
   StatusOr<internal::EmptyResponse> operator()(
       internal::DeleteObjectRequest const& r) {
-    EXPECT_TRUE(r.HasOption<Generation>());
-    auto generation = r.GetOption<Generation>().value_or(-1);
-    auto status = RemoveExpectation(r.object_name(), generation);
+    EXPECT_TRUE(r.HasOption<IfGenerationMatch>());
+    auto if_gen_match = r.GetOption<IfGenerationMatch>();
+    auto status = RemoveExpectation(r.object_name(), if_gen_match.value());
     EXPECT_EQ(kBucketName, r.bucket_name());
     if (status.ok()) {
       return internal::EmptyResponse();
@@ -131,8 +131,8 @@ class ExpectedDeletions {
                            std::int64_t generation) {
     std::lock_guard<std::mutex> lk(mu_);
     auto it = deletions_.find(std::make_pair(object_name, generation));
-    EXPECT_TRUE(it != deletions_.end());
     if (it == deletions_.end()) {
+      EXPECT_TRUE(false);
       return Status(StatusCode::kFailedPrecondition,
                     "Unexpected deletion. object=" + object_name +
                         " generation=" + std::to_string(generation));
@@ -199,8 +199,7 @@ class ParallelUploadTest
       EXPECT_CALL(res, UploadFinalChunk)
           .WillOnce([expected_content, object_name, generation](
                         ConstBufferSequence const& content,
-                        std::uint64_t /*size*/,
-                        HashValues const& /*full_object_hashes*/) {
+                        std::uint64_t /*size*/) {
             EXPECT_THAT(content, ElementsAre(ConstBuffer(*expected_content)));
             return make_status_or(
                 ResumableUploadResponse{"fake-url",
@@ -311,7 +310,8 @@ auto expect_deletion = [](std::string const& name, int generation) {
   return [name, generation](internal::DeleteObjectRequest const& r) {
     EXPECT_EQ(kBucketName, r.bucket_name());
     EXPECT_EQ(name, r.object_name());
-    EXPECT_EQ(generation, r.GetOption<Generation>().value_or(-1));
+    EXPECT_TRUE(r.HasOption<IfGenerationMatch>());
+    EXPECT_EQ(generation, r.GetOption<IfGenerationMatch>().value());
     return make_status_or(internal::EmptyResponse{});
   };
 };
@@ -1868,7 +1868,7 @@ TEST_F(ParallelUploadTest, SuspendUploadFileResumeBadOffset) {
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

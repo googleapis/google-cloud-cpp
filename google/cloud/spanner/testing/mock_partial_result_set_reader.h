@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 class MockPartialResultSetReader
     : public spanner_internal::PartialResultSetReader {
@@ -33,7 +33,7 @@ class MockPartialResultSetReader
   MOCK_METHOD(Status, Finish, (), (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/subscription_admin_connection.h"
-#include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/snapshot_builder.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
@@ -28,9 +27,11 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::pubsub_testing::TestBackoffPolicy;
+using ::google::cloud::pubsub_testing::TestRetryPolicy;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
@@ -38,15 +39,6 @@ using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
-
-std::shared_ptr<SubscriptionAdminConnection>
-MakeTestSubscriptionAdminConnection(
-    std::shared_ptr<pubsub_internal::SubscriberStub> mock, Options opts = {}) {
-  opts = pubsub_internal::DefaultCommonOptions(
-      pubsub_testing::MakeTestOptions(std::move(opts)));
-  return pubsub_internal::MakeTestSubscriptionAdminConnection(std::move(opts),
-                                                              std::move(mock));
-}
 
 TEST(SubscriptionAdminConnectionTest, Create) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
@@ -60,7 +52,8 @@ TEST(SubscriptionAdminConnectionTest, Create) {
         return make_status_or(request);
       });
 
-  auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  auto subscription_admin = pubsub_internal::MakeSubscriptionAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   google::pubsub::v1::Subscription expected;
   expected.set_topic("test-topic-name");
   expected.set_name(subscription.FullName());
@@ -85,7 +78,8 @@ TEST(SubscriptionAdminConnectionTest, CreateWithMetadata) {
         return make_status_or(request);
       });
 
-  auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  auto subscription_admin = pubsub_internal::MakeSubscriptionAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   google::pubsub::v1::Subscription expected;
   expected.set_topic("test-topic-name");
   expected.set_name(subscription.FullName());
@@ -110,7 +104,8 @@ TEST(SubscriptionAdminConnectionTest, List) {
             return make_status_or(response);
           });
 
-  auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  auto subscription_admin = pubsub_internal::MakeSubscriptionAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   std::vector<std::string> topic_names;
   for (auto& t :
        subscription_admin->ListSubscriptions({"projects/test-project-id"})) {
@@ -136,7 +131,8 @@ TEST(SubscriptionAdminConnectionTest, Get) {
         return make_status_or(expected);
       });
 
-  auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  auto subscription_admin = pubsub_internal::MakeSubscriptionAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   auto response = subscription_admin->GetSubscription({subscription});
   ASSERT_STATUS_OK(response);
   EXPECT_THAT(*response, IsProtoEqual(expected));
@@ -157,7 +153,8 @@ TEST(SubscriptionAdminConnectionTest, Update) {
             return make_status_or(request.subscription());
           });
 
-  auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  auto subscription_admin = pubsub_internal::MakeSubscriptionAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   google::pubsub::v1::Subscription expected;
   expected.set_name(subscription.FullName());
   expected.set_ack_deadline_seconds(1);
@@ -190,8 +187,9 @@ TEST(SubscriptionAdminConnectionTest, DeleteWithLogging) {
             return Status{};
           });
 
-  auto subscription_admin = MakeTestSubscriptionAdminConnection(
-      mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+  auto subscription_admin = pubsub_internal::MakeSubscriptionAdminConnection(
+      ConnectionOptions{}.enable_tracing("rpc"), mock, TestRetryPolicy(),
+      TestBackoffPolicy());
   auto response = subscription_admin->DeleteSubscription({subscription});
   ASSERT_STATUS_OK(response);
 
@@ -212,8 +210,9 @@ TEST(SubscriptionAdminConnectionTest, ModifyPushConfig) {
             return Status{};
           });
 
-  auto subscription_admin = MakeTestSubscriptionAdminConnection(
-      mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+  auto subscription_admin = pubsub_internal::MakeSubscriptionAdminConnection(
+      ConnectionOptions{}.enable_tracing("rpc"), mock, TestRetryPolicy(),
+      TestBackoffPolicy());
   google::pubsub::v1::ModifyPushConfigRequest request;
   request.set_subscription(subscription.FullName());
   auto response = subscription_admin->ModifyPushConfig({request});
@@ -240,7 +239,8 @@ TEST(SubscriptionAdminConnectionTest, CreateSnapshot) {
         return make_status_or(expected);
       });
 
-  auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  auto subscription_admin = pubsub_internal::MakeSubscriptionAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   auto response = subscription_admin->CreateSnapshot(
       {SnapshotBuilder{}.BuildCreateRequest(subscription, snapshot)});
   ASSERT_STATUS_OK(response);
@@ -259,7 +259,8 @@ TEST(SubscriptionAdminConnectionTest, CreateSnapshotNotIdempotent) {
   EXPECT_CALL(*mock, CreateSnapshot)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
 
-  auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  auto subscription_admin = pubsub_internal::MakeSubscriptionAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   auto response = subscription_admin->CreateSnapshot(
       {SnapshotBuilder{}.BuildCreateRequest(subscription)});
   EXPECT_THAT(response,
@@ -283,7 +284,8 @@ TEST(SubscriptionAdminConnectionTest, GetSnapshot) {
         return make_status_or(expected);
       });
 
-  auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  auto subscription_admin = pubsub_internal::MakeSubscriptionAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   auto response = subscription_admin->GetSnapshot({snapshot});
   ASSERT_STATUS_OK(response);
   EXPECT_THAT(*response, IsProtoEqual(expected));
@@ -304,7 +306,8 @@ TEST(SubscriptionAdminConnectionTest, ListSnapshots) {
         return make_status_or(response);
       });
 
-  auto snapshot_admin = MakeTestSubscriptionAdminConnection(mock);
+  auto snapshot_admin = pubsub_internal::MakeSubscriptionAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   std::vector<std::string> names;
   for (auto& t : snapshot_admin->ListSnapshots({"projects/test-project-id"})) {
     ASSERT_STATUS_OK(t);
@@ -330,7 +333,8 @@ TEST(SubscriptionAdminConnectionTest, UpdateSnapshot) {
         return make_status_or(expected);
       });
 
-  auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  auto subscription_admin = pubsub_internal::MakeSubscriptionAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   auto response = subscription_admin->UpdateSnapshot(
       {SnapshotBuilder{}.BuildUpdateRequest(snapshot)});
   ASSERT_STATUS_OK(response);
@@ -349,8 +353,9 @@ TEST(SubscriptionAdminConnectionTest, DeleteSnapshot) {
         return Status{};
       });
 
-  auto snapshot_admin = MakeTestSubscriptionAdminConnection(
-      mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+  auto snapshot_admin = pubsub_internal::MakeSubscriptionAdminConnection(
+      ConnectionOptions{}.enable_tracing("rpc"), mock, TestRetryPolicy(),
+      TestBackoffPolicy());
   auto response = snapshot_admin->DeleteSnapshot({snapshot});
   ASSERT_STATUS_OK(response);
 }
@@ -369,8 +374,9 @@ TEST(SubscriptionAdminConnectionTest, Seek) {
         return make_status_or(google::pubsub::v1::SeekResponse{});
       });
 
-  auto snapshot_admin = MakeTestSubscriptionAdminConnection(
-      mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+  auto snapshot_admin = pubsub_internal::MakeSubscriptionAdminConnection(
+      ConnectionOptions{}.enable_tracing("rpc"), mock, TestRetryPolicy(),
+      TestBackoffPolicy());
   google::pubsub::v1::SeekRequest request;
   request.set_subscription(subscription.FullName());
   request.set_snapshot(snapshot.FullName());
@@ -379,7 +385,7 @@ TEST(SubscriptionAdminConnectionTest, Seek) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

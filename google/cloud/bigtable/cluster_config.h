@@ -22,12 +22,12 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 
 /// Specify the initial configuration for a new cluster.
 class ClusterConfig {
  public:
-  using StorageType = ::google::bigtable::admin::v2::StorageType;
+  using StorageType = google::bigtable::admin::v2::StorageType;
   // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static StorageType STORAGE_TYPE_UNSPECIFIED =
       google::bigtable::admin::v2::STORAGE_TYPE_UNSPECIFIED;
@@ -71,7 +71,7 @@ class ClusterConfig {
   google::bigtable::admin::v2::Cluster proto_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

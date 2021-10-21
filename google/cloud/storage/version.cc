@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 std::string version_string() { return ::google::cloud::version_string(); }
 
 std::string x_goog_api_client() {
@@ -36,7 +36,7 @@ static_assert(
     "    https://github.com/googleapis/google-cloud-cpp/issues\n"
     "describing your platform details to request support for it.");
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -17,7 +17,6 @@
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
-#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_async_response_reader.h"
@@ -29,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
@@ -64,7 +63,7 @@ class AsyncLongrunningOpFutureTest : public bigtable::testing::TableTestFixture,
 TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
   auto const success = GetParam();
   auto client = std::make_shared<testing::MockAdminClient>(
-      Options{}.set<GrpcCompletionQueueOption>(cq_));
+      ClientOptions().DisableBackgroundThreads(cq_));
 
   auto longrunning_reader = absl::make_unique<MockAsyncLongrunningOpReader>();
   EXPECT_CALL(*longrunning_reader, Finish)
@@ -266,7 +265,7 @@ TEST_F(AsyncLongrunningOperationTest, ImmediateSuccess) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

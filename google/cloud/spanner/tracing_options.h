@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * The configuration parameters for RPC/protobuf tracing.
@@ -31,9 +31,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *   use_short_repeated_primitives=on
  *   truncate_string_field_longer_than=128
  */
-using TracingOptions = ::google::cloud::TracingOptions;
+using TracingOptions = google::cloud::TracingOptions;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

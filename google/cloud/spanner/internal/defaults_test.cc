@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::testing::AllOf;
@@ -59,6 +59,7 @@ TEST(Options, Defaults) {
   // to verify that both are `nullptr` or neither is `nullptr`.
   auto const expected = grpc::GoogleDefaultCredentials();
   EXPECT_EQ(!!opts.get<GrpcCredentialOption>(), !!expected);
+  EXPECT_NE(opts.get<GrpcBackgroundThreadsFactoryOption>(), nullptr);
   EXPECT_EQ(opts.get<GrpcNumChannelsOption>(), 4);
   EXPECT_THAT(opts.get<TracingComponentsOption>(), IsEmpty());
   EXPECT_EQ(opts.get<GrpcTracingOptionsOption>(), TracingOptions{});
@@ -94,6 +95,7 @@ TEST(Options, AdminDefaults) {
   // to verify that both are `nullptr` or neither is `nullptr`.
   auto const expected = grpc::GoogleDefaultCredentials();
   EXPECT_EQ(!!opts.get<GrpcCredentialOption>(), !!expected);
+  EXPECT_NE(opts.get<GrpcBackgroundThreadsFactoryOption>(), nullptr);
   EXPECT_EQ(opts.get<GrpcNumChannelsOption>(), 4);
   EXPECT_THAT(opts.get<TracingComponentsOption>(), IsEmpty());
   EXPECT_EQ(opts.get<GrpcTracingOptionsOption>(), TracingOptions{});
@@ -184,7 +186,7 @@ TEST(Options, OverrideBackgroundThreadsFactory) {
   bool called = false;
   auto factory = [&called] {
     called = true;
-    return internal::MakeBackgroundThreadsFactory()();
+    return internal::DefaultBackgroundThreadsFactory();
   };
   auto opts =
       Options{}.set<GrpcBackgroundThreadsFactoryOption>(std::move(factory));
@@ -242,7 +244,7 @@ TEST(Options, AppendToUserAgent) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

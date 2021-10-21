@@ -19,17 +19,13 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
-#include <functional>
 #include <thread>
 
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
-
-constexpr auto kJsonEnvVar = "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON";
-constexpr auto kP12EnvVar = "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12";
 
 class KeyFileIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
@@ -39,20 +35,16 @@ class KeyFileIntegrationTest
     // The emulator does not implement signed URLs.
     if (UsingEmulator()) GTEST_SKIP();
 
-    std::string const env = GetParam();
-    key_filename_ = google::cloud::internal::GetEnv(env.c_str()).value_or("");
-    // The p12 test is only run on certain platforms, so if it's not set, skip
-    // the test rather than failing.
-    if (key_filename_.empty() && env == kP12EnvVar) {
-      GTEST_SKIP() << "Skipping because ${" << env << "} is not set";
-    }
-    ASSERT_FALSE(key_filename_.empty())
-        << "Expected non-empty value for ${" << env << "}";
+    std::string const key_file_envvar = GetParam();
 
     bucket_name_ = google::cloud::internal::GetEnv(
                        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
                        .value_or("");
     ASSERT_FALSE(bucket_name_.empty());
+    key_filename_ =
+        google::cloud::internal::GetEnv(key_file_envvar.c_str()).value_or("");
+    ASSERT_FALSE(key_filename_.empty())
+        << " expected non-empty value for ${" << key_file_envvar << "}";
     service_account_ =
         google::cloud::internal::GetEnv(
             "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT")
@@ -66,10 +58,10 @@ class KeyFileIntegrationTest
 };
 
 StatusOr<internal::HttpResponse> RetryHttpRequest(
-    std::function<internal::CurlRequest()> const& factory) {
+    internal::CurlRequest request) {
   StatusOr<internal::HttpResponse> response;
   for (int i = 0; i != 3; ++i) {
-    response = factory().MakeRequest({});
+    response = request.MakeRequest({});
     if (response) return response;
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }
@@ -97,13 +89,10 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
-  auto factory = [&] {
-    internal::CurlRequestBuilder builder(
-        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-    return std::move(builder).BuildRequest();
-  };
+  internal::CurlRequestBuilder builder(
+      *signed_url, storage::internal::GetDefaultCurlHandleFactory());
 
-  auto response = RetryHttpRequest(factory);
+  auto response = RetryHttpRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
 
@@ -131,26 +120,25 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
-  auto factory = [&] {
-    internal::CurlRequestBuilder builder(
-        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-    return std::move(builder).BuildRequest();
-  };
+  internal::CurlRequestBuilder builder(
+      *signed_url, storage::internal::GetDefaultCurlHandleFactory());
 
-  auto response = RetryHttpRequest(factory);
+  auto response = RetryHttpRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
 
   EXPECT_EQ(expected, response->payload);
 }
 
-INSTANTIATE_TEST_SUITE_P(KeyFileJsonTest, KeyFileIntegrationTest,
-                         ::testing::Values(kJsonEnvVar));
-INSTANTIATE_TEST_SUITE_P(KeyFileP12Test, KeyFileIntegrationTest,
-                         ::testing::Values(kP12EnvVar));
+INSTANTIATE_TEST_SUITE_P(
+    KeyFileJsonTest, KeyFileIntegrationTest,
+    ::testing::Values("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON"));
+INSTANTIATE_TEST_SUITE_P(
+    KeyFileP12Test, KeyFileIntegrationTest,
+    ::testing::Values("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12"));
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

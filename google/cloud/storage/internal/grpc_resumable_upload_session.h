@@ -24,21 +24,20 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /// Implements the ResumableUploadSession interface for a gRPC client.
 class GrpcResumableUploadSession : public ResumableUploadSession {
  public:
   explicit GrpcResumableUploadSession(
-      std::shared_ptr<GrpcClient> client, ResumableUploadRequest request,
+      std::shared_ptr<GrpcClient> client,
       ResumableUploadSessionGrpcParams session_id_params);
 
   StatusOr<ResumableUploadResponse> UploadChunk(
       ConstBufferSequence const& payload) override;
 
   StatusOr<ResumableUploadResponse> UploadFinalChunk(
-      ConstBufferSequence const& payload, std::uint64_t upload_size,
-      HashValues const& full_object_hashes) override;
+      ConstBufferSequence const& payload, std::uint64_t upload_size) override;
 
   StatusOr<ResumableUploadResponse> ResetSession() override;
 
@@ -57,11 +56,9 @@ class GrpcResumableUploadSession : public ResumableUploadSession {
    * This function is used by both UploadChunk() and UploadFinalChunk()
    */
   StatusOr<ResumableUploadResponse> UploadGeneric(ConstBufferSequence buffers,
-                                                  bool final_chunk,
-                                                  HashValues const& hashes);
+                                                  bool final_chunk);
 
   std::shared_ptr<GrpcClient> client_;
-  ResumableUploadRequest request_;
   ResumableUploadSessionGrpcParams session_id_params_;
   std::string session_url_;
 
@@ -70,7 +67,7 @@ class GrpcResumableUploadSession : public ResumableUploadSession {
   StatusOr<ResumableUploadResponse> last_response_;
 };
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

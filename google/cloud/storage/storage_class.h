@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 /// Contains functions to return well-known storage class names.
 namespace storage_class {
 inline char const* Standard() {
@@ -59,7 +59,7 @@ inline char const* Archive() {
 }
 
 }  // namespace storage_class
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

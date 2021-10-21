@@ -18,7 +18,7 @@
 # GCB. To manually run this build use:
 #   ci/cloudbuild/build.sh --distro fedora scan-build --docker
 
-set -euo pipefail
+set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh

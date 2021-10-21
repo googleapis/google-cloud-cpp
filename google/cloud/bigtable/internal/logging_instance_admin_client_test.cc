@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 using ::testing::Contains;
@@ -34,7 +34,7 @@ using MockAsyncLongrunningOpReader =
     ::google::cloud::testing_util::MockAsyncResponseReader<
         google::longrunning::Operation>;
 
-namespace btadmin = ::google::bigtable::admin::v2;
+namespace btadmin = google::bigtable::admin::v2;
 
 class LoggingInstanceAdminClientTest : public ::testing::Test {
  protected:
@@ -436,7 +436,7 @@ TEST_F(LoggingInstanceAdminClientTest, AsyncUpdateInstance) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

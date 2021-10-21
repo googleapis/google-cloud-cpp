@@ -20,9 +20,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-using ::testing::ElementsAre;
+inline namespace SPANNER_CLIENT_NS {
 
 TEST(TupleUtils, IsTuple) {
   using T0 = std::tuple<>;
@@ -58,7 +56,7 @@ TEST(TupleUtils, ForEachMultipleTypes) {
   auto tup = std::make_tuple(true, 42);
   std::vector<std::string> v;
   ForEach(tup, Stringify{}, v);
-  EXPECT_THAT(v, ElementsAre("1", "42"));
+  EXPECT_THAT(v, testing::ElementsAre("1", "42"));
 }
 
 TEST(TupleUtils, ForEachMutate) {
@@ -68,7 +66,7 @@ TEST(TupleUtils, ForEachMutate) {
   EXPECT_EQ(tup, std::make_tuple(2, 3, 4));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

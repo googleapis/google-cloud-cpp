@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_testing {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
  * A class to mock pubsub_internal::BatchSink
@@ -37,7 +37,7 @@ class MockBatchSink : public pubsub_internal::BatchSink {
   MOCK_METHOD(void, ResumePublish, (std::string const&), (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_testing
 }  // namespace cloud
 }  // namespace google

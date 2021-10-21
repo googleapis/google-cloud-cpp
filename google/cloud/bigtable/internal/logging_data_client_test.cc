@@ -21,14 +21,14 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
-namespace btproto = ::google::bigtable::v2;
+namespace btproto = google::bigtable::v2;
 
 class LoggingDataClientTest : public ::testing::Test {
  protected:
@@ -154,7 +154,7 @@ TEST_F(LoggingDataClientTest, MutateRows) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

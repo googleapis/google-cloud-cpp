@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 class ReadPartitionTester {
  public:
@@ -31,7 +31,6 @@ class ReadPartitionTester {
   std::string PartitionToken() const { return partition_.PartitionToken(); }
   std::string SessionId() const { return partition_.SessionId(); }
   std::string TransactionId() const { return partition_.TransactionId(); }
-  std::string TransactionTag() const { return partition_.TransactionTag(); }
   ReadPartition Partition() const { return partition_; }
   std::string TableName() const { return partition_.TableName(); }
   google::spanner::v1::KeySet KeySet() const { return partition_.KeySet(); }
@@ -48,7 +47,7 @@ class ReadPartitionTester {
 
 namespace {
 
-using ::google::cloud::spanner_testing::HasSessionAndTransaction;
+using ::google::cloud::spanner_testing::HasSessionAndTransactionId;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::Not;
@@ -56,23 +55,20 @@ using ::testing::Not;
 TEST(ReadPartitionTest, MakeReadPartition) {
   std::string partition_token("token");
   std::string session_id("session");
-  std::string transaction_id("txn-id");
-  std::string transaction_tag("tag");
+  std::string transaction_id("foo");
   std::string table_name("Students");
   std::vector<std::string> column_names = {"LastName", "FirstName"};
   ReadOptions read_options;
   read_options.index_name = "secondary";
   read_options.limit = 42;
   read_options.request_priority = RequestPriority::kMedium;
-  read_options.request_tag = "tag";
 
   ReadPartitionTester actual_partition(spanner_internal::MakeReadPartition(
-      transaction_id, transaction_tag, session_id, partition_token, table_name,
-      KeySet::All(), column_names, read_options));
+      transaction_id, session_id, partition_token, table_name, KeySet::All(),
+      column_names, read_options));
 
   EXPECT_EQ(partition_token, actual_partition.PartitionToken());
   EXPECT_EQ(transaction_id, actual_partition.TransactionId());
-  EXPECT_EQ(transaction_tag, actual_partition.TransactionTag());
   EXPECT_EQ(session_id, actual_partition.SessionId());
   EXPECT_EQ(table_name, actual_partition.TableName());
   EXPECT_THAT(actual_partition.KeySet(),
@@ -84,8 +80,7 @@ TEST(ReadPartitionTest, MakeReadPartition) {
 TEST(ReadPartitionTest, Constructor) {
   std::string partition_token("token");
   std::string session_id("session");
-  std::string transaction_id("txn-id");
-  std::string transaction_tag("tag");
+  std::string transaction_id("foo");
   std::string table_name("Students");
   std::vector<std::string> column_names = {"LastName", "FirstName"};
   ReadOptions read_options;
@@ -94,11 +89,10 @@ TEST(ReadPartitionTest, Constructor) {
   read_options.request_priority = RequestPriority::kMedium;
 
   ReadPartitionTester actual_partition(spanner_internal::MakeReadPartition(
-      transaction_id, transaction_tag, session_id, partition_token, table_name,
-      KeySet::All(), column_names, read_options));
+      transaction_id, session_id, partition_token, table_name, KeySet::All(),
+      column_names, read_options));
   EXPECT_EQ(partition_token, actual_partition.PartitionToken());
   EXPECT_EQ(transaction_id, actual_partition.TransactionId());
-  EXPECT_EQ(transaction_tag, actual_partition.TransactionTag());
   EXPECT_EQ(session_id, actual_partition.SessionId());
   EXPECT_EQ(table_name, actual_partition.TableName());
   EXPECT_THAT(actual_partition.KeySet(),
@@ -110,8 +104,7 @@ TEST(ReadPartitionTest, Constructor) {
 TEST(ReadPartitionTest, RegularSemantics) {
   std::string partition_token("token");
   std::string session_id("session");
-  std::string transaction_id("txn-id");
-  std::string transaction_tag("tag");
+  std::string transaction_id("foo");
   std::string table_name("Students");
   std::vector<std::string> column_names = {"LastName", "FirstName"};
   ReadOptions read_options;
@@ -120,8 +113,8 @@ TEST(ReadPartitionTest, RegularSemantics) {
   read_options.request_priority = RequestPriority::kMedium;
 
   ReadPartition read_partition(spanner_internal::MakeReadPartition(
-      transaction_id, transaction_tag, session_id, partition_token, table_name,
-      KeySet::All(), column_names, read_options));
+      transaction_id, session_id, partition_token, table_name, KeySet::All(),
+      column_names, read_options));
 
   EXPECT_NE(read_partition, ReadPartition());
 
@@ -142,7 +135,7 @@ TEST(ReadPartitionTest, SerializeDeserialize) {
   read_options.limit = 42;
   read_options.request_priority = RequestPriority::kMedium;
   ReadPartitionTester expected_partition(spanner_internal::MakeReadPartition(
-      "txn-id", "tag", "session", "token", "Students", KeySet::All(),
+      "foo", "session", "token", "Students", KeySet::All(),
       std::vector<std::string>{"LastName", "FirstName"}, read_options));
 
   StatusOr<ReadPartition> partition = DeserializeReadPartition(
@@ -154,8 +147,6 @@ TEST(ReadPartitionTest, SerializeDeserialize) {
             actual_partition.PartitionToken());
   EXPECT_EQ(expected_partition.TransactionId(),
             actual_partition.TransactionId());
-  EXPECT_EQ(expected_partition.TransactionTag(),
-            actual_partition.TransactionTag());
   EXPECT_EQ(expected_partition.SessionId(), actual_partition.SessionId());
   EXPECT_EQ(expected_partition.TableName(), actual_partition.TableName());
   EXPECT_THAT(actual_partition.KeySet(),
@@ -178,7 +169,7 @@ TEST(ReadPartitionTest, MakeReadParams) {
   read_options.limit = 42;
   read_options.request_priority = RequestPriority::kMedium;
   ReadPartitionTester expected_partition(spanner_internal::MakeReadPartition(
-      "txn-id", "tag", "session", "token", "Students", KeySet::All(), columns,
+      "foo", "session", "token", "Students", KeySet::All(), columns,
       read_options));
 
   Connection::ReadParams params =
@@ -189,12 +180,11 @@ TEST(ReadPartitionTest, MakeReadParams) {
   EXPECT_EQ(params.columns, columns);
   EXPECT_EQ(params.keys, KeySet::All());
   EXPECT_EQ(params.table, "Students");
-  EXPECT_THAT(params.transaction,
-              HasSessionAndTransaction("session", "txn-id", "tag"));
+  EXPECT_THAT(params.transaction, HasSessionAndTransactionId("session", "foo"));
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

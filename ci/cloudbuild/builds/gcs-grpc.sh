@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -euo pipefail
+set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
@@ -33,7 +33,6 @@ mapfile -t args < <(bazel::common_args)
 # Run as many of the integration tests as possible using production and gRPC:
 # "media" says to use the hybrid gRPC/REST client. For more details see
 # https://github.com/googleapis/google-cloud-cpp/issues/6268
-# TODO(#7257) - cleanup once production is fixed (again)
-#    readonly GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=media
+readonly GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=media
 mapfile -t integration_args < <(integration::bazel_args)
 bazel test "${args[@]}" "${integration_args[@]}" -- //google/cloud/storage/... "${excluded_rules[@]}"

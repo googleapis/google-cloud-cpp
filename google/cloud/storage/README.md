@@ -16,8 +16,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 ## Supported Platforms
 
 * Windows, macOS, Linux
-* C++11 (and higher) compilers (we test with GCC >= 5.4, Clang >= 6.0, and
-  MSVC >= 2017)
+* C++11 (and higher) compilers (we test with GCC \>= 4.9, Clang >= 3.8, and MSVC \>= 2019)
 * Environments with or without exceptions
 * Bazel and CMake builds
 
@@ -51,13 +50,19 @@ int main(int argc, char* argv[]) {
   std::string const bucket_name = argv[1];
 
   // Create aliases to make the code easier to read.
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
 
   // Create a client to communicate with Google Cloud Storage. This client
   // uses the default configuration for authentication and project id.
-  auto client = gcs::Client();
+  google::cloud::StatusOr<gcs::Client> client =
+      gcs::Client::CreateDefaultClient();
+  if (!client) {
+    std::cerr << "Failed to create Storage Client, status=" << client.status()
+              << "\n";
+    return 1;
+  }
 
-  auto writer = client.WriteObject(bucket_name, "quickstart.txt");
+  auto writer = client->WriteObject(bucket_name, "quickstart.txt");
   writer << "Hello World!";
   writer.Close();
   if (writer.metadata()) {
@@ -68,7 +73,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  auto reader = client.ReadObject(bucket_name, "quickstart.txt");
+  auto reader = client->ReadObject(bucket_name, "quickstart.txt");
   if (!reader) {
     std::cerr << "Error reading object: " << reader.status() << "\n";
     return 1;
@@ -79,7 +84,7 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
-```
+````
 
 * Packaging maintainers or developers that prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
@@ -103,3 +108,4 @@ as well as how to properly format your code.
 ## Licensing
 
 Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
+

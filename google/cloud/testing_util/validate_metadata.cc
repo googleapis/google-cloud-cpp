@@ -27,10 +27,74 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
 namespace {
+
+/**
+ * GetMetadata from `ClientContext`.
+ *
+ * `ClientContext` doesn't give access to the metadata, but `ServerContext`
+ * does. In order to transform the `ClientContext` into `ServerContext`
+ * we spin up a server and a client and send some garbage with this context.
+ */
+std::multimap<std::string, std::string> GetMetadata(
+    grpc::ClientContext& context) {
+  // Set the deadline to far in the future. If the deadline is in the past, gRPC
+  // doesn't send the initial metadata at all (which makes sense, given that the
+  // context is already expired). The `context` is destroyed by this function
+  // anyway, so we're not making things worse by changing the deadline.
+  context.set_deadline(std::chrono::system_clock::now() +
+                       std::chrono::hours(24));
+
+  // Start the generic server.
+  grpc::ServerBuilder builder;
+  grpc::AsyncGenericService generic_service;
+  builder.RegisterAsyncGenericService(&generic_service);
+  auto srv_cq = builder.AddCompletionQueue();
+  auto server = builder.BuildAndStart();
+
+  // Send some garbage with the supplied context.
+  grpc::GenericStub generic_stub(
+      server->InProcessChannel(grpc::ChannelArguments()));
+  grpc::CompletionQueue cli_cq;
+  auto cli_stream =
+      generic_stub.PrepareCall(&context, "made_up_method", &cli_cq);
+  cli_stream->StartCall(nullptr);
+  bool ok;
+  void* placeholder;
+  cli_cq.Next(&placeholder, &ok);  // actually start the client call
+
+  // Receive the garbage with the supplied context.
+  grpc::GenericServerContext server_context;
+  grpc::GenericServerAsyncReaderWriter reader_writer(&server_context);
+  generic_service.RequestCall(&server_context, &reader_writer, srv_cq.get(),
+                              srv_cq.get(), nullptr);
+  srv_cq->Next(&placeholder, &ok);  // actually receive the data
+
+  // Now we've got the data - save it before cleaning up.
+  std::multimap<std::string, std::string> res;
+  auto const& cli_md = server_context.client_metadata();
+  std::transform(cli_md.begin(), cli_md.end(), std::inserter(res, res.begin()),
+                 [](std::pair<grpc::string_ref, grpc::string_ref> const& md) {
+                   return std::make_pair(
+                       std::string(md.first.data(), md.first.length()),
+                       std::string(md.second.data(), md.second.length()));
+                 });
+
+  // Shut everything down.
+  server->Shutdown(std::chrono::system_clock::now());
+  srv_cq->Shutdown();
+  cli_cq.Shutdown();
+  // Drain completion queues.
+  while (srv_cq->Next(&placeholder, &ok))
+    ;
+  while (cli_cq.Next(&placeholder, &ok))
+    ;
+
+  return res;
+}
 
 /**
  * Check if the `header` is of "foo=bar&baz=rab&..." and if it is, return a
@@ -222,64 +286,7 @@ Status IsContextMDValid(
   return Status();
 }
 
-std::multimap<std::string, std::string> GetMetadata(
-    grpc::ClientContext& context) {
-  // Set the deadline to far in the future. If the deadline is in the past, gRPC
-  // doesn't send the initial metadata at all (which makes sense, given that the
-  // context is already expired). The `context` is destroyed by this function
-  // anyway, so we're not making things worse by changing the deadline.
-  context.set_deadline(std::chrono::system_clock::now() +
-                       std::chrono::hours(24));
-
-  // Start the generic server.
-  grpc::ServerBuilder builder;
-  grpc::AsyncGenericService generic_service;
-  builder.RegisterAsyncGenericService(&generic_service);
-  auto srv_cq = builder.AddCompletionQueue();
-  auto server = builder.BuildAndStart();
-
-  // Send some garbage with the supplied context.
-  grpc::GenericStub generic_stub(
-      server->InProcessChannel(grpc::ChannelArguments()));
-  grpc::CompletionQueue cli_cq;
-  auto cli_stream =
-      generic_stub.PrepareCall(&context, "made_up_method", &cli_cq);
-  cli_stream->StartCall(nullptr);
-  bool ok;
-  void* placeholder;
-  cli_cq.Next(&placeholder, &ok);  // actually start the client call
-
-  // Receive the garbage with the supplied context.
-  grpc::GenericServerContext server_context;
-  grpc::GenericServerAsyncReaderWriter reader_writer(&server_context);
-  generic_service.RequestCall(&server_context, &reader_writer, srv_cq.get(),
-                              srv_cq.get(), nullptr);
-  srv_cq->Next(&placeholder, &ok);  // actually receive the data
-
-  // Now we've got the data - save it before cleaning up.
-  std::multimap<std::string, std::string> res;
-  auto const& cli_md = server_context.client_metadata();
-  std::transform(cli_md.begin(), cli_md.end(), std::inserter(res, res.begin()),
-                 [](std::pair<grpc::string_ref, grpc::string_ref> const& md) {
-                   return std::make_pair(
-                       std::string(md.first.data(), md.first.length()),
-                       std::string(md.second.data(), md.second.length()));
-                 });
-
-  // Shut everything down.
-  server->Shutdown(std::chrono::system_clock::now());
-  srv_cq->Shutdown();
-  cli_cq.Shutdown();
-  // Drain completion queues.
-  while (srv_cq->Next(&placeholder, &ok))
-    ;
-  while (cli_cq.Next(&placeholder, &ok))
-    ;
-
-  return res;
-}
-
 }  // namespace testing_util
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

@@ -22,7 +22,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 enum class Idempotency { kIdempotent, kNonIdempotent };
@@ -79,13 +79,13 @@ class TraitBasedRetryPolicy : public RetryPolicy {
  public:
   ///@{
   /**
-   * @name Type traits
+   * @name type traits
    */
   /// The traits describing which errors are permanent failures
   using RetryableTraits = RetryableTraitsP;
 
   /// The status type used by the retry policy
-  using StatusType = ::google::cloud::Status;
+  using StatusType = google::cloud::Status;
   ///@}
 
   ~TraitBasedRetryPolicy() override = default;
@@ -136,7 +136,6 @@ class LimitedErrorCountRetryPolicy
   bool IsExhausted() const override {
     return failure_count_ > maximum_failures_;
   }
-  int maximum_failures() const { return maximum_failures_; }
 
  protected:
   void OnFailureImpl() override { ++failure_count_; }
@@ -205,14 +204,8 @@ class LimitedTimeRetryPolicy : public TraitBasedRetryPolicy<RetryablePolicy> {
   std::chrono::system_clock::time_point deadline_;
 };
 
-/**
- * Returns `true` for gRPC error messages, with status code: `kInternal`, that
- * are known to be retryable across all services.
- */
-bool IsTransientInternalError(Status const& status);
-
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
@@ -119,8 +119,7 @@ TEST_P(GrpcClientFailuresTest, GetBucketIamPolicy) {
 TEST_P(GrpcClientFailuresTest, GetNativeBucketIamPolicy) {
   auto actual =
       client_->GetNativeBucketIamPolicy(GetBucketIamPolicyRequest("bkt"));
-  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable,
-                                     StatusCode::kUnimplemented)));
+  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable)));
 }
 
 TEST_P(GrpcClientFailuresTest, SetBucketIamPolicy) {
@@ -134,15 +133,13 @@ TEST_P(GrpcClientFailuresTest, SetNativeBucketIamPolicy) {
   auto actual =
       client_->SetNativeBucketIamPolicy(SetNativeBucketIamPolicyRequest(
           "bkt", NativeIamPolicy(std::vector<NativeIamBinding>())));
-  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable,
-                                     StatusCode::kUnimplemented)));
+  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable)));
 }
 
 TEST_P(GrpcClientFailuresTest, TestBucketIamPermissions) {
   auto actual = client_->TestBucketIamPermissions(
       TestBucketIamPermissionsRequest("bkt", {}));
-  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable,
-                                     StatusCode::kUnimplemented)));
+  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable)));
 }
 
 TEST_P(GrpcClientFailuresTest, LockBucketRetentionPolicy) {
@@ -318,11 +315,10 @@ TEST_P(GrpcClientFailuresTest, CreateResumableSession) {
 }
 
 TEST_P(GrpcClientFailuresTest, DeleteResumableUpload) {
-  auto actual = client_->DeleteResumableUpload(
-      DeleteResumableUploadRequest(EncodeGrpcResumableUploadSessionUrl(
-          ResumableUploadSessionGrpcParams{"test-upload-id"})));
-  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable,
-                                     StatusCode::kUnimplemented)));
+  auto actual = client_->DeleteResumableUpload(DeleteResumableUploadRequest(
+      EncodeGrpcResumableUploadSessionUrl(ResumableUploadSessionGrpcParams{
+          "test-bucket", "test-object", "test-upload-id"})));
+  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable)));
 }
 
 TEST_P(GrpcClientFailuresTest, ListDefaultObjectAcl) {
@@ -429,7 +425,7 @@ INSTANTIATE_TEST_SUITE_P(GrpcClientFailures, GrpcClientFailuresTest,
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

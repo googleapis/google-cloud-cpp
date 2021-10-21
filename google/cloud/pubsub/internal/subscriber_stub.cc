@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 class DefaultSubscriberStub : public SubscriberStub {
  public:
@@ -84,7 +84,7 @@ class DefaultSubscriberStub : public SubscriberStub {
     return {};
   }
 
-  std::shared_ptr<AsyncPullStream> AsyncStreamingPull(
+  std::unique_ptr<AsyncPullStream> AsyncStreamingPull(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::pubsub::v1::StreamingPullRequest const&) override {
@@ -193,19 +193,14 @@ class DefaultSubscriberStub : public SubscriberStub {
   std::unique_ptr<google::pubsub::v1::Subscriber::StubInterface> grpc_stub_;
 };
 
-/// Create a SubscriberStub using a pre-configured channel.
 std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
-    std::shared_ptr<grpc::Channel> channel) {
+    pubsub::ConnectionOptions options, int channel_id) {
   return std::make_shared<DefaultSubscriberStub>(
-      google::pubsub::v1::Subscriber::NewStub(std::move(channel)));
+      google::pubsub::v1::Subscriber::NewStub(
+          CreateChannel(std::move(options), channel_id)));
 }
 
-std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(Options const& opts,
-                                                            int channel_id) {
-  return CreateDefaultSubscriberStub(CreateChannel(opts, channel_id));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

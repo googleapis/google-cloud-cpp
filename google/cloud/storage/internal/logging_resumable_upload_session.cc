@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 StatusOr<ResumableUploadResponse> LoggingResumableUploadSession::UploadChunk(
@@ -37,14 +37,10 @@ StatusOr<ResumableUploadResponse> LoggingResumableUploadSession::UploadChunk(
 
 StatusOr<ResumableUploadResponse>
 LoggingResumableUploadSession::UploadFinalChunk(
-    ConstBufferSequence const& buffers, std::uint64_t upload_size,
-    HashValues const& full_object_hashes) {
+    ConstBufferSequence const& buffers, std::uint64_t upload_size) {
   GCP_LOG(INFO) << __func__ << "() << upload_size=" << upload_size
-                << ", buffer.size=" << TotalBytes(buffers) << ", crc32c=<"
-                << full_object_hashes.crc32c << ">, md5=<"
-                << full_object_hashes.md5 << ">";
-  auto response =
-      session_->UploadFinalChunk(buffers, upload_size, full_object_hashes);
+                << ", buffer.size=" << TotalBytes(buffers);
+  auto response = session_->UploadFinalChunk(buffers, upload_size);
   if (response.ok()) {
     GCP_LOG(INFO) << __func__ << "() >> payload={" << response.value() << "}";
   } else {
@@ -94,7 +90,7 @@ LoggingResumableUploadSession::last_response() const {
 bool LoggingResumableUploadSession::done() const { return session_->done(); }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::internal::GetEnv;
@@ -218,7 +218,7 @@ INSTANTIATE_TEST_SUITE_P(XmlEnabled, ObjectReadPreconditionsIntegrationTest,
                          ::testing::Values(TestParam{absl::nullopt}));
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

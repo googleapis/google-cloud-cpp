@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 namespace btadmin = ::google::bigtable::admin::v2;
@@ -488,7 +488,7 @@ TEST(CompletionQueueTest, RunAsyncThread) {
   for (auto& t : runners) t.join();
 }
 
-using RunAsyncBlocker = ::google::cloud::testing_util::AsyncSequencer<void>;
+using RunAsyncBlocker = google::cloud::testing_util::AsyncSequencer<void>;
 
 TEST(CompletionQueueTest, RunAsyncParallel) {
   auto impl = std::make_shared<internal::DefaultCompletionQueueImpl>();
@@ -848,6 +848,6 @@ TEST(CompletionQueueTest, StartOperationMayOperateOnCq) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

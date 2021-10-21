@@ -32,22 +32,20 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 class Row;
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-struct RowFriend {
-  static spanner::Row MakeRow(std::vector<spanner::Value>,
-                              std::shared_ptr<std::vector<std::string> const>);
-};
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+inline namespace SPANNER_CLIENT_NS {
+spanner::Row MakeRow(std::vector<spanner::Value>,
+                     std::shared_ptr<std::vector<std::string> const>);
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * A `Row` is a sequence of columns each with a name and an associated `Value`.
@@ -175,7 +173,9 @@ class Row {
   ///@}
 
  private:
-  friend struct spanner_internal::RowFriend;
+  friend Row spanner_internal::SPANNER_CLIENT_NS::MakeRow(
+      std::vector<spanner::Value>,
+      std::shared_ptr<std::vector<std::string> const>);
   struct ExtractValue {
     Status& status;
     template <typename T, typename It>
@@ -232,7 +232,7 @@ Row MakeTestRow(Ts&&... ts) {
     columns->emplace_back(std::to_string(i));
   }
   std::vector<Value> v{Value(std::forward<Ts>(ts))...};
-  return spanner_internal::RowFriend::MakeRow(std::move(v), std::move(columns));
+  return spanner_internal::MakeRow(std::move(v), std::move(columns));
 }
 
 /**
@@ -435,7 +435,7 @@ class TupleStream {
  *
  * @snippet samples.cc stream-of
  *
- * @note Ownership of the @p range is not transferred, so it must outlive the
+ * @note ownership of the @p range is not transferred, so it must outlive the
  *     returned `TupleStream`.
  *
  * @tparam RowRange must be a range defined by `RowStreamIterator`s.
@@ -477,7 +477,7 @@ auto GetSingularRow(RowRange&& range) -> typename std::decay<
   return row;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

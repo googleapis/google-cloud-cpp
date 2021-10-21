@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 class MockGoldenThingAdminStub
     : public google::cloud::golden_internal::GoldenThingAdminStub {
@@ -133,7 +133,7 @@ class MockGoldenThingAdminStub
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

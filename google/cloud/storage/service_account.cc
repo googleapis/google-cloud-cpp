@@ -17,12 +17,12 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 std::ostream& operator<<(std::ostream& os, ServiceAccount const& rhs) {
   return os << "ServiceAccount={email_address=" << rhs.email_address()
             << ", kind=" << rhs.kind() << "}";
 }
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

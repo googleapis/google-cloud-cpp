@@ -51,15 +51,14 @@ add_library(
     internal/create_channel.h
     internal/default_batch_sink.cc
     internal/default_batch_sink.h
-    internal/defaults.cc
-    internal/defaults.h
+    internal/default_retry_policies.cc
+    internal/default_retry_policies.h
+    internal/emulator_overrides.cc
+    internal/emulator_overrides.h
     internal/flow_controlled_publisher_connection.cc
     internal/flow_controlled_publisher_connection.h
-    internal/non_constructible.h
     internal/ordering_key_publisher_connection.cc
     internal/ordering_key_publisher_connection.h
-    internal/publisher_auth.cc
-    internal/publisher_auth.h
     internal/publisher_logging.cc
     internal/publisher_logging.h
     internal/publisher_metadata.cc
@@ -70,8 +69,6 @@ add_library(
     internal/publisher_stub.h
     internal/rejects_with_ordering_key.cc
     internal/rejects_with_ordering_key.h
-    internal/schema_auth.cc
-    internal/schema_auth.h
     internal/schema_logging.cc
     internal/schema_logging.h
     internal/schema_metadata.cc
@@ -84,8 +81,6 @@ add_library(
     internal/session_shutdown_manager.h
     internal/streaming_subscription_batch_source.cc
     internal/streaming_subscription_batch_source.h
-    internal/subscriber_auth.cc
-    internal/subscriber_auth.h
     internal/subscriber_logging.cc
     internal/subscriber_logging.h
     internal/subscriber_metadata.cc
@@ -104,9 +99,10 @@ add_library(
     internal/subscription_message_source.h
     internal/subscription_session.cc
     internal/subscription_session.h
+    internal/user_agent_prefix.cc
+    internal/user_agent_prefix.h
     message.cc
     message.h
-    options.h
     publisher.cc
     publisher.h
     publisher_connection.cc
@@ -239,21 +235,18 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         ack_handler_test.cc
         internal/batching_publisher_connection_test.cc
         internal/default_batch_sink_test.cc
-        internal/defaults_test.cc
+        internal/emulator_overrides_test.cc
         internal/flow_controlled_publisher_connection_test.cc
         internal/ordering_key_publisher_connection_test.cc
-        internal/publisher_auth_test.cc
         internal/publisher_logging_test.cc
         internal/publisher_metadata_test.cc
         internal/publisher_round_robin_test.cc
         internal/rejects_with_ordering_key_test.cc
-        internal/schema_auth_test.cc
         internal/schema_logging_test.cc
         internal/schema_metadata_test.cc
         internal/sequential_batch_sink_test.cc
         internal/session_shutdown_manager_test.cc
         internal/streaming_subscription_batch_source_test.cc
-        internal/subscriber_auth_test.cc
         internal/subscriber_logging_test.cc
         internal/subscriber_metadata_test.cc
         internal/subscriber_round_robin_test.cc
@@ -261,6 +254,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/subscription_lease_management_test.cc
         internal/subscription_message_queue_test.cc
         internal/subscription_session_test.cc
+        internal/user_agent_prefix_test.cc
         message_test.cc
         publisher_connection_test.cc
         publisher_options_test.cc

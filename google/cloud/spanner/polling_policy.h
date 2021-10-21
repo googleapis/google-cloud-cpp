@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 using PollingPolicy = ::google::cloud::PollingPolicy;
 
@@ -33,7 +33,7 @@ template <typename Retry = LimitedTimeRetryPolicy,
 using GenericPollingPolicy =
     ::google::cloud::GenericPollingPolicy<Retry, Backoff>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

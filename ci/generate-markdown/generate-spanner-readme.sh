@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -euo pipefail
+set -eu
 
 BINDIR=$(dirname "$0")
 readonly BINDIR
@@ -38,8 +38,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 ## Supported Platforms
 
 * Windows, macOS, Linux
-* C++11 (and higher) compilers (we test with GCC >= 5.4, Clang >= 6.0, and
-  MSVC >= 2017)
+* C++11 (and higher) compilers (we test with GCC \>= 4.9, Clang >= 3.8, and MSVC \>= 2019)
 * Environments with or without exceptions
 * Bazel and CMake builds
 
@@ -68,7 +67,7 @@ _EOF_
 sed -n '/^#/,$p' "${BINDIR}/../../google/cloud/spanner/quickstart/quickstart.cc"
 
 cat <<'_EOF_'
-```
+````
 
 * Packaging maintainers or developers that prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
@@ -92,4 +91,5 @@ as well as how to properly format your code.
 ## Licensing
 
 Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
+
 _EOF_

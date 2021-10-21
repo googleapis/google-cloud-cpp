@@ -29,7 +29,7 @@ namespace btadmin = ::google::bigtable::admin::v2;
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 static_assert(std::is_copy_constructible<bigtable::TableAdmin>::value,
               "bigtable::TableAdmin must be constructible");
 static_assert(std::is_copy_assignable<bigtable::TableAdmin>::value,
@@ -50,7 +50,7 @@ constexpr TableAdmin::TableView TableAdmin::VIEW_UNSPECIFIED;
 
 /// Shortcuts to avoid typing long names over and over.
 using ClientUtils = bigtable::internal::UnaryClientUtils<AdminClient>;
-using ::google::cloud::internal::Idempotency;
+using google::cloud::internal::Idempotency;
 
 StatusOr<btadmin::Table> TableAdmin::CreateTable(std::string table_id,
                                                  TableConfig config) {
@@ -751,7 +751,7 @@ std::string TableAdmin::InstanceName() const {
                                                instance_id_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

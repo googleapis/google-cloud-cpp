@@ -13,27 +13,24 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/testing/pick_instance_config.h"
-#include "google/cloud/spanner/admin/instance_admin_client.h"
-#include "google/cloud/project.h"
+#include "google/cloud/spanner/instance_admin_client.h"
 #include <regex>
 
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 std::string PickInstanceConfig(
     std::string const& project_id, std::regex const& filter_regex,
     google::cloud::internal::DefaultPRNG& generator) {
-  spanner_admin::InstanceAdminClient client(
-      spanner_admin::MakeInstanceAdminConnection());
+  spanner::InstanceAdminClient client(spanner::MakeInstanceAdminConnection());
   std::string instance_config_name{};
   auto instance_configs =
       [&client, &instance_config_name, &project_id,
        &filter_regex]() mutable -> std::vector<std::string> {
     std::vector<std::string> ret;
-    for (auto const& instance_config :
-         client.ListInstanceConfigs(Project(project_id).FullName())) {
+    for (auto const& instance_config : client.ListInstanceConfigs(project_id)) {
       if (!instance_config) return ret;
       if (instance_config_name.empty()) {
         instance_config_name = instance_config->name();
@@ -52,7 +49,7 @@ std::string PickInstanceConfig(
   return instance_config_name;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

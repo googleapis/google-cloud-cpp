@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -euo pipefail
+set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
@@ -39,9 +39,11 @@ bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
 io::log_h2 "Formatting generated code"
 find google/cloud -path google/cloud/bigtable -prune -o \
   -path google/cloud/examples -prune -o \
+  -path google/cloud/firestore -prune -o \
   -path google/cloud/grpc_utils -prune -o \
   -path google/cloud/internal -prune -o \
   -path google/cloud/pubsub -prune -o \
+  -path google/cloud/spanner -prune -o \
   -path google/cloud/storage -prune -o \
   -path google/cloud/testing_util -prune -o \
   \( -name '*.cc' -o -name '*.h' \) -exec clang-format -i {} \;

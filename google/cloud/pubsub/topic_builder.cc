@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 google::pubsub::v1::Topic TopicBuilder::BuildCreateRequest() && {
   return std::move(proto_);
@@ -34,7 +34,7 @@ google::pubsub::v1::UpdateTopicRequest TopicBuilder::BuildUpdateRequest() && {
   return request;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

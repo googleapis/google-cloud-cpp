@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/schema_admin_connection.h"
-#include "google/cloud/pubsub/internal/defaults.h"
+#include "schema_admin_connection.h"
 #include "google/cloud/pubsub/testing/mock_schema_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/internal/api_client_header.h"
@@ -27,9 +26,11 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::pubsub_testing::TestBackoffPolicy;
+using ::google::cloud::pubsub_testing::TestRetryPolicy;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
@@ -38,14 +39,6 @@ using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
-
-std::shared_ptr<SchemaAdminConnection> MakeTestSchemaAdminConnection(
-    std::shared_ptr<pubsub_internal::SchemaStub> mock, Options opts = {}) {
-  opts = pubsub_internal::DefaultCommonOptions(
-      pubsub_testing::MakeTestOptions(std::move(opts)));
-  return pubsub_internal::MakeTestSchemaAdminConnection(std::move(opts),
-                                                        std::move(mock));
-}
 
 TEST(SchemaAdminConnectionTest, Create) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
@@ -78,7 +71,8 @@ TEST(SchemaAdminConnectionTest, Create) {
         return make_status_or(response);
       });
 
-  auto schema_admin = MakeTestSchemaAdminConnection(mock);
+  auto schema_admin = pubsub_internal::MakeSchemaAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
 
   auto actual = schema_admin->CreateSchema(request);
   ASSERT_THAT(actual, IsOk());
@@ -107,7 +101,8 @@ TEST(SchemaAdminConnectionTest, Get) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(make_status_or(response)));
 
-  auto schema_admin = MakeTestSchemaAdminConnection(mock);
+  auto schema_admin = pubsub_internal::MakeSchemaAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   auto actual = schema_admin->GetSchema(request);
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(response));
@@ -132,7 +127,8 @@ TEST(SchemaAdminConnectionTest, List) {
         return make_status_or(response);
       });
 
-  auto schema_admin = MakeTestSchemaAdminConnection(mock);
+  auto schema_admin = pubsub_internal::MakeSchemaAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   std::vector<std::string> schema_names;
   for (auto& t : schema_admin->ListSchemas(request)) {
     ASSERT_THAT(t, IsOk());
@@ -161,8 +157,9 @@ TEST(SchemaAdminConnectionTest, DeleteWithLogging) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(Status{}));
 
-  auto schema_admin = MakeTestSchemaAdminConnection(
-      mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+  auto schema_admin = pubsub_internal::MakeSchemaAdminConnection(
+      pubsub::ConnectionOptions{}.enable_tracing("rpc"), mock,
+      TestRetryPolicy(), TestBackoffPolicy());
   auto response = schema_admin->DeleteSchema(request);
   ASSERT_THAT(response, IsOk());
 
@@ -184,7 +181,8 @@ TEST(SchemaAdminConnectionTest, ValidateSchema) {
       .WillOnce(
           Return(make_status_or(google::pubsub::v1::ValidateSchemaResponse{})));
 
-  auto schema_admin = MakeTestSchemaAdminConnection(mock);
+  auto schema_admin = pubsub_internal::MakeSchemaAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   auto response = schema_admin->ValidateSchema(request);
   ASSERT_THAT(response, IsOk());
 }
@@ -206,13 +204,14 @@ TEST(SchemaAdminConnectionTest, ValidateMessage) {
       .WillOnce(Return(
           make_status_or(google::pubsub::v1::ValidateMessageResponse{})));
 
-  auto schema_admin = MakeTestSchemaAdminConnection(mock);
+  auto schema_admin = pubsub_internal::MakeSchemaAdminConnection(
+      {}, mock, TestRetryPolicy(), TestBackoffPolicy());
   auto response = schema_admin->ValidateMessage(request);
   ASSERT_THAT(response, IsOk());
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

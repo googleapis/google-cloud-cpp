@@ -18,7 +18,6 @@
 #include "google/cloud/storage/well_known_parameters.h"
 #include "google/cloud/internal/getenv.h"
 #include <iostream>
-#include <iterator>
 #include <map>
 #include <string>
 #include <thread>
@@ -28,7 +27,7 @@ namespace {
 void ListObjects(google::cloud::storage::Client client,
                  std::vector<std::string> const& argv) {
   //! [list objects] [START storage_list_files]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name) {
     for (auto&& object_metadata : client.ListObjects(bucket_name)) {
       if (!object_metadata) {
@@ -46,7 +45,7 @@ void ListObjects(google::cloud::storage::Client client,
 void ListObjectsWithPrefix(google::cloud::storage::Client client,
                            std::vector<std::string> const& argv) {
   //! [list objects with prefix] [START storage_list_files_with_prefix]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& bucket_prefix) {
     for (auto&& object_metadata :
@@ -66,7 +65,7 @@ void ListObjectsWithPrefix(google::cloud::storage::Client client,
 void ListVersionedObjects(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
   //! [list versioned objects] [START storage_list_file_archived_generations]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name) {
     for (auto&& object_metadata :
          client.ListObjects(bucket_name, gcs::Versions{true})) {
@@ -86,7 +85,7 @@ void ListVersionedObjects(google::cloud::storage::Client client,
 void ListObjectsAndPrefixes(google::cloud::storage::Client client,
                             std::vector<std::string> const& argv) {
   //! [list objects and prefixes]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& bucket_prefix) {
     for (auto&& item : client.ListObjectsAndPrefixes(
@@ -108,7 +107,7 @@ void ListObjectsAndPrefixes(google::cloud::storage::Client client,
 void InsertObject(google::cloud::storage::Client client,
                   std::vector<std::string> const& argv) {
   //! [insert object]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& contents) {
@@ -131,7 +130,7 @@ void InsertObject(google::cloud::storage::Client client,
 void InsertObjectStrictIdempotency(google::cloud::storage::Client,
                                    std::vector<std::string> const& argv) {
   //! [insert object strict idempotency]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](std::string const& bucket_name, std::string const& object_name,
      std::string const& contents) {
@@ -160,7 +159,7 @@ void InsertObjectStrictIdempotency(google::cloud::storage::Client,
 void InsertObjectModifiedRetry(google::cloud::storage::Client,
                                std::vector<std::string> const& argv) {
   //! [insert object modified retry]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](std::string const& bucket_name, std::string const& object_name,
      std::string const& contents) {
@@ -189,7 +188,7 @@ void InsertObjectModifiedRetry(google::cloud::storage::Client,
 void InsertObjectMultipart(google::cloud::storage::Client client,
                            std::vector<std::string> const& argv) {
   //! [insert object multipart]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& content_type,
@@ -219,7 +218,7 @@ void InsertObjectMultipart(google::cloud::storage::Client client,
 void CopyObject(google::cloud::storage::Client client,
                 std::vector<std::string> const& argv) {
   //! [copy object] [START storage_copy_file]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& source_bucket_name,
      std::string const& source_object_name,
@@ -246,7 +245,7 @@ void CopyObject(google::cloud::storage::Client client,
 void GetObjectMetadata(google::cloud::storage::Client client,
                        std::vector<std::string> const& argv) {
   //! [get object metadata] [START storage_get_metadata]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
@@ -268,8 +267,7 @@ void GetObjectMetadata(google::cloud::storage::Client client,
 void ReadObject(google::cloud::storage::Client client,
                 std::vector<std::string> const& argv) {
   //! [read object] [START storage_download_file]
-  // [START storage_stream_file_download]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
     gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
@@ -282,7 +280,6 @@ void ReadObject(google::cloud::storage::Client client,
 
     std::cout << "The object has " << count << " lines\n";
   }
-  // [END storage_stream_file_download]
   //! [read object] [END storage_download_file]
   (std::move(client), argv.at(0), argv.at(1));
 }
@@ -290,7 +287,7 @@ void ReadObject(google::cloud::storage::Client client,
 void ReadObjectRange(google::cloud::storage::Client client,
                      std::vector<std::string> const& argv) {
   //! [read object range] [START storage_download_byte_range]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::int64_t start, std::int64_t end) {
     gcs::ObjectReadStream stream =
@@ -310,26 +307,10 @@ void ReadObjectRange(google::cloud::storage::Client client,
    std::stoll(argv.at(3)));
 }
 
-void ReadObjectIntoMemory(google::cloud::storage::Client client,
-                          std::vector<std::string> const& argv) {
-  //! [read object into memory] [START storage_file_download_into_memory]
-  namespace gcs = ::google::cloud::storage;
-  [](gcs::Client client, std::string const& bucket_name,
-     std::string const& object_name) {
-    gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
-    std::string buffer{std::istream_iterator<char>(stream),
-                       std::istream_iterator<char>()};
-
-    std::cout << "The object has " << buffer.size() << " characters\n";
-  }
-  //! [read object into memory] [END storage_file_download_into_memory]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
 void DeleteObject(google::cloud::storage::Client client,
                   std::vector<std::string> const& argv) {
   //! [delete object] [START storage_delete_file]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
     google::cloud::Status status =
@@ -346,7 +327,7 @@ void DeleteObject(google::cloud::storage::Client client,
 void WriteObject(google::cloud::storage::Client client,
                  std::vector<std::string> const& argv) {
   //! [write object] [START storage_stream_file_upload]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, int desired_line_count) {
@@ -372,36 +353,10 @@ void WriteObject(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), argv.at(1), std::stoi(argv.at(2)));
 }
 
-void WriteObjectFromMemory(google::cloud::storage::Client client,
-                           std::vector<std::string> const& argv) {
-  //! [write object from memory] [START storage_file_upload_from_memory]
-  namespace gcs = ::google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string const& bucket_name,
-     std::string const& object_name) {
-    std::string const text = "Lorem ipsum dolor sit amet";
-    std::vector<std::string> v(100, text);
-    gcs::ObjectWriteStream stream =
-        client.WriteObject(bucket_name, object_name);
-
-    std::copy(v.begin(), v.end(), std::ostream_iterator<std::string>(stream));
-
-    stream.Close();
-
-    StatusOr<gcs::ObjectMetadata> metadata = std::move(stream).metadata();
-    if (!metadata) throw std::runtime_error(metadata.status().message());
-    std::cout << "Successfully wrote to object " << metadata->name()
-              << " its size is: " << metadata->size()
-              << "\nFull metadata: " << *metadata << "\n";
-  }
-  //! [write object from memory] [END storage_file_upload_from_memory]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
 void UpdateObjectMetadata(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
   //! [update object metadata] [START storage_set_metadata]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& key,
@@ -431,7 +386,7 @@ void UpdateObjectMetadata(google::cloud::storage::Client client,
 void PatchObjectDeleteMetadata(google::cloud::storage::Client client,
                                std::vector<std::string> const& argv) {
   //! [patch object delete metadata]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& key) {
@@ -456,7 +411,7 @@ void PatchObjectDeleteMetadata(google::cloud::storage::Client client,
 void PatchObjectContentType(google::cloud::storage::Client client,
                             std::vector<std::string> const& argv) {
   //! [patch object content type]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& content_type) {
@@ -483,7 +438,7 @@ void ComposeObject(google::cloud::storage::Client client,
   } while (it != argv.cend());
 
   //! [compose object] [START storage_compose_file]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& destination_object_name,
@@ -515,7 +470,7 @@ void ComposeObjectFromMany(google::cloud::storage::Client client,
   } while (it != argv.cend());
 
   //! [compose object from many] [START storage_compose_file_from_many]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& destination_object_name,
@@ -545,7 +500,7 @@ void ChangeObjectStorageClass(google::cloud::storage::Client client,
                               std::vector<std::string> const& argv) {
   //! [change file storage class]
   // [START storage_change_file_storage_class]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& storage_class) {
@@ -571,7 +526,7 @@ void ChangeObjectStorageClass(google::cloud::storage::Client client,
 void ChangeObjectCustomTime(google::cloud::storage::Client client,
                             std::vector<std::string> const& argv) {
   //! [object custom time]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
@@ -766,13 +721,9 @@ int main(int argc, char* argv[]) {
       make_entry("read-object", {"<object-name>"}, ReadObject),
       make_entry("read-object-range", {"<object-name>", "<start>", "<end>"},
                  ReadObjectRange),
-      make_entry("read-object-into-memory", {"<object-name>"},
-                 ReadObjectIntoMemory),
       make_entry("delete-object", {"<object-name>"}, DeleteObject),
       make_entry("write-object",
                  {"<object-name>", "<target-object-line-count>"}, WriteObject),
-      make_entry("write-object-from-memory", {"<object-name>"},
-                 WriteObjectFromMemory),
       make_entry("update-object-metadata",
                  {"<object-name>", "<key>", "<value>"}, UpdateObjectMetadata),
       make_entry("update-object-metadata", {"<object-name>"},

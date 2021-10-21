@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_SERVICE_CODE_GENERATOR_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_SERVICE_CODE_GENERATOR_H
 
@@ -109,14 +108,6 @@ class ServiceCodeGenerator : public GeneratorInterface {
    * response.
    */
   bool HasStreamingReadMethod() const;
-
-  /**
-   * Determines if any of the method signatures has any Protocol Buffer
-   * Well-Known Types per
-   * https://developers.google.com/protocol-buffers/docs/reference/google.protobuf
-   * and provides the necessary include path.
-   */
-  std::vector<std::string> MethodSignatureWellKnownProtobufTypeIncludes() const;
 
  private:
   enum class FileType { kHeaderFile, kCcFile };

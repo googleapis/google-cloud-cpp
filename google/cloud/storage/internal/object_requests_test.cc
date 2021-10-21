@@ -23,12 +23,11 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
-using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
@@ -123,8 +122,8 @@ TEST(ObjectRequestsTest, ParseListResponse) {
 
   auto actual = ListObjectsResponse::FromHttpResponse(text).value();
   EXPECT_EQ("some-token-42", actual.next_page_token);
-  EXPECT_THAT(actual.items, ElementsAre(o1, o2));
-  EXPECT_THAT(actual.prefixes, ElementsAre("foo/", "qux/"));
+  EXPECT_THAT(actual.items, ::testing::ElementsAre(o1, o2));
+  EXPECT_THAT(actual.prefixes, ::testing::ElementsAre("foo/", "qux/"));
 }
 
 TEST(ObjectRequestsTest, ParseListResponseFailure) {
@@ -201,6 +200,16 @@ TEST(ObjectRequestsTest, Copy) {
   EXPECT_THAT(actual, HasSubstr("destinationPredefinedAcl=private"));
   EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=7"));
   EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
+}
+
+HttpResponse CreateRangeRequestResponse(
+    char const* content_range_header_value) {
+  HttpResponse response;
+  response.status_code = 200;
+  response.headers.emplace(std::string("content-range"),
+                           std::string(content_range_header_value));
+  response.payload = "some payload";
+  return response;
 }
 
 TEST(ObjectRequestsTest, ReadObjectRange) {
@@ -299,6 +308,72 @@ TEST(ObjectRequestsTest, ReadObjectRangeRangeHeader) {
             ReadObjectRangeRequest("test-bucket", "test-object")
                 .set_multiple_options(ReadLast(0))
                 .RangeHeader());
+}
+
+TEST(ObjectRequestsTest, RangeResponseParse) {
+  auto actual = ReadObjectRangeResponse::FromHttpResponse(
+      CreateRangeRequestResponse("bytes 100-200/20000"));
+  EXPECT_EQ(100, actual.first_byte);
+  EXPECT_EQ(200, actual.last_byte);
+  EXPECT_EQ(20000, actual.object_size);
+  EXPECT_EQ("some payload", actual.contents);
+}
+
+TEST(ObjectRequestsTest, RangeResponseParseStar) {
+  auto actual = ReadObjectRangeResponse::FromHttpResponse(
+      CreateRangeRequestResponse("bytes */20000"));
+  EXPECT_EQ(0, actual.first_byte);
+  EXPECT_EQ(0, actual.last_byte);
+  EXPECT_EQ(20000, actual.object_size);
+}
+
+TEST(ObjectRequestsTest, RangeResponseParseErrors) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(ReadObjectRangeResponse::FromHttpResponse(
+                   CreateRangeRequestResponse("bits 100-200/20000")),
+               std::invalid_argument);
+  EXPECT_THROW(ReadObjectRangeResponse::FromHttpResponse(
+                   CreateRangeRequestResponse("100-200/20000")),
+               std::invalid_argument);
+  EXPECT_THROW(ReadObjectRangeResponse::FromHttpResponse(
+                   CreateRangeRequestResponse("bytes ")),
+               std::invalid_argument);
+  EXPECT_THROW(ReadObjectRangeResponse::FromHttpResponse(
+                   CreateRangeRequestResponse("bytes */")),
+               std::invalid_argument);
+  EXPECT_THROW(ReadObjectRangeResponse::FromHttpResponse(
+                   CreateRangeRequestResponse("bytes 100-200/")),
+               std::invalid_argument);
+  EXPECT_THROW(ReadObjectRangeResponse::FromHttpResponse(
+                   CreateRangeRequestResponse("bytes 100-/20000")),
+               std::invalid_argument);
+  EXPECT_THROW(ReadObjectRangeResponse::FromHttpResponse(
+                   CreateRangeRequestResponse("bytes -200/20000")),
+               std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      ReadObjectRangeResponse::FromHttpResponse(
+          CreateRangeRequestResponse("bits 100-200/20000")),
+      "");
+  EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
+                                CreateRangeRequestResponse("100-200/20000")),
+                            "");
+  EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
+                                CreateRangeRequestResponse("bytes ")),
+                            "");
+  EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
+                                CreateRangeRequestResponse("bytes */")),
+                            "");
+  EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
+                                CreateRangeRequestResponse("bytes 100-200/")),
+                            "");
+  EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
+                                CreateRangeRequestResponse("bytes 100-/20000")),
+                            "");
+  EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
+                                CreateRangeRequestResponse("bytes -200/20000")),
+                            "");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 TEST(ObjectRequestsTest, Delete) {
@@ -860,7 +935,7 @@ TEST(DefaultCtorsWork, Trivial) {
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

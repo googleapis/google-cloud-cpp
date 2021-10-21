@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 
 enum class AutoFinalizeConfig {
   kDisabled,
@@ -57,7 +57,7 @@ inline AutoFinalize AutoFinalizeDisabled() {
 
 std::ostream& operator<<(std::ostream& os, AutoFinalize const& rhs);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

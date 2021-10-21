@@ -17,28 +17,18 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-std::string ApiClientVersion(std::string const& build_identifier) {
-  auto client_library_version = version_string();
-  if (!build_identifier.empty()) {
-    auto pos = client_library_version.find('+');
-    client_library_version.append(1, pos == std::string::npos ? '+' : '.');
-    client_library_version.append(build_identifier);
-  }
-  return client_library_version;
-}
-
-std::string ApiClientHeader(std::string const& build_identifier) {
+std::string ApiClientHeader() {
   return "gl-cpp/" + google::cloud::internal::CompilerId() + "-" +
          google::cloud::internal::CompilerVersion() + "-" +
          google::cloud::internal::CompilerFeatures() + "-" +
          google::cloud::internal::LanguageVersion() + " gccl/" +
-         ApiClientVersion(build_identifier);
+         version_string();
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 template <class InputIt>
 /**
  * Create a google::iam::v1::Policy.
@@ -140,7 +140,7 @@ void RemoveBindingFromPolicy(
     google::protobuf::RepeatedPtrField<google::iam::v1::Binding>::iterator
         to_remove);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

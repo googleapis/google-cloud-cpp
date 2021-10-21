@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 using ::google::cloud::golden_internal::MockTailLogEntriesStreamingReadRpc;
@@ -153,13 +153,13 @@ TEST_F(LoggingDecoratorTest, ListLogsError) {
 }
 
 TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
-  auto mock_response = absl::make_unique<MockTailLogEntriesStreamingReadRpc>();
+  auto mock_response = new MockTailLogEntriesStreamingReadRpc;
   EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
   EXPECT_CALL(*mock_, TailLogEntries)
       .WillOnce(Return(ByMove(
           std::unique_ptr<internal::StreamingReadRpc<
               google::test::admin::database::v1::TailLogEntriesResponse>>(
-              mock_response.release()))));
+              mock_response))));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   auto response = stub.TailLogEntries(
       absl::make_unique<grpc::ClientContext>(),
@@ -173,13 +173,13 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
 }
 
 TEST_F(LoggingDecoratorTest, TailLogEntriesRpcWithRpcStreams) {
-  auto mock_response = absl::make_unique<MockTailLogEntriesStreamingReadRpc>();
+  auto mock_response = new MockTailLogEntriesStreamingReadRpc;
   EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
   EXPECT_CALL(*mock_, TailLogEntries)
       .WillOnce(Return(ByMove(
           std::unique_ptr<internal::StreamingReadRpc<
               google::test::admin::database::v1::TailLogEntriesResponse>>(
-              mock_response.release()))));
+              mock_response))));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
   auto response = stub.TailLogEntries(
       absl::make_unique<grpc::ClientContext>(),
@@ -222,7 +222,7 @@ TEST_F(LoggingDecoratorTest, ListServiceAccountKeysError) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

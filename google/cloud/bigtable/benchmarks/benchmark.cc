@@ -15,8 +15,6 @@
 #include "google/cloud/bigtable/benchmarks/benchmark.h"
 #include "google/cloud/bigtable/benchmarks/random_mutation.h"
 #include "google/cloud/bigtable/table_admin.h"
-#include "google/cloud/internal/background_threads_impl.h"
-#include "google/cloud/internal/getenv.h"
 #include <future>
 #include <iomanip>
 #include <sstream>
@@ -29,59 +27,25 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace benchmarks {
-using ::google::cloud::internal::GetEnv;
 
-google::cloud::StatusOr<BenchmarkOptions> ParseArgs(
-    int& argc, char* argv[], std::string const& description) {
-  bool auto_run =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
-          .value_or("") == "yes";
-  if (argc == 1 && auto_run) {
-    for (auto const& var : {"GOOGLE_CLOUD_PROJECT",
-                            "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID"}) {
-      auto const value = GetEnv(var).value_or("");
-      if (!value.empty()) continue;
-      std::ostringstream os;
-      os << "The environment variable " << var << " is not set or empty";
-      return google::cloud::Status(google::cloud::StatusCode::kUnknown,
-                                   std::move(os).str());
-    }
-    auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value();
-    auto const instance_id =
-        GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID").value();
-    // Table size must be > 10,000 or scan_throughput_benchmark crashes on
-    // Windows
-    return ParseBenchmarkOptions(
-        {
-            std::string(argv[0]),
-            "--project-id=" + project_id,
-            "--instance-id=" + instance_id,
-            "--app-profile-id=default",
-            "--thread-count=1",
-            "--test-duration=1s",
-            "--table-size=11000",
-        },
-        description);
-  }
-
-  return ParseBenchmarkOptions({argv, argv + argc}, description);
-}
-
-Benchmark::Benchmark(BenchmarkOptions options)
-    : options_(std::move(options)), key_width_(KeyWidth()) {
-  opts_.set<GrpcNumChannelsOption>(options_.thread_count);
-  if (options_.use_embedded_server) {
+Benchmark::Benchmark(BenchmarkSetup setup)
+    : setup_(std::move(setup)),
+      key_width_(KeyWidth()),
+      client_options_(grpc::InsecureChannelCredentials()) {
+  if (setup_.use_embedded_server()) {
     server_ = CreateEmbeddedServer();
     std::string address = server_->address();
     std::cout << "Running embedded Cloud Bigtable server at " << address
               << "\n";
     server_thread_ = std::thread([this]() { server_->Wait(); });
 
-    opts_.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-        .set<DataEndpointOption>(address)
-        .set<AdminEndpointOption>(address)
-        .set<InstanceAdminEndpointOption>(address);
+    client_options_.set_admin_endpoint(address);
+    client_options_.set_data_endpoint(address);
+  } else {
+    client_options_ = bigtable::ClientOptions();
   }
+  client_options_.set_connection_pool_size(
+      static_cast<std::size_t>(setup_.thread_count()));
 }
 
 Benchmark::~Benchmark() {
@@ -98,23 +62,23 @@ Benchmark::~Benchmark() {
 std::string Benchmark::CreateTable() {
   // Create the table, with an initial split.
   bigtable::TableAdmin admin(
-      bigtable::MakeAdminClient(options_.project_id, opts_),
-      options_.instance_id);
+      bigtable::CreateDefaultAdminClient(setup_.project_id(), client_options_),
+      setup_.instance_id());
 
   std::vector<std::string> splits{"user0", "user1", "user2", "user3", "user4",
                                   "user5", "user6", "user7", "user8", "user9"};
   (void)admin.CreateTable(
-      options_.table_id,
+      setup_.table_id(),
       bigtable::TableConfig(
           {{kColumnFamily, bigtable::GcRule::MaxNumVersions(1)}}, splits));
-  return options_.table_id;
+  return setup_.table_id();
 }
 
 void Benchmark::DeleteTable() {
   bigtable::TableAdmin admin(
-      bigtable::MakeAdminClient(options_.project_id, opts_),
-      options_.instance_id);
-  auto status = admin.DeleteTable(options_.table_id);
+      bigtable::CreateDefaultAdminClient(setup_.project_id(), client_options_),
+      setup_.instance_id());
+  auto status = admin.DeleteTable(setup_.table_id());
   if (!status.ok()) {
     std::cerr << "Failed to delete table: " << status
               << ". Continuing anyway.\n";
@@ -122,17 +86,17 @@ void Benchmark::DeleteTable() {
 }
 
 std::shared_ptr<bigtable::DataClient> Benchmark::MakeDataClient() {
-  return bigtable::MakeDataClient(options_.project_id, options_.instance_id,
-                                  opts_);
+  return bigtable::CreateDefaultDataClient(
+      setup_.project_id(), setup_.instance_id(), client_options_);
 }
 
 google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTable() {
-  bigtable::Table table(MakeDataClient(), options_.app_profile_id,
-                        options_.table_id);
-  std::cout << "# Populating table " << options_.table_id << " " << std::flush;
+  bigtable::Table table(MakeDataClient(), setup_.app_profile_id(),
+                        setup_.table_id());
+  std::cout << "# Populating table " << setup_.table_id() << " " << std::flush;
   std::vector<std::future<google::cloud::StatusOr<BenchmarkResult>>> tasks;
   auto upload_start = std::chrono::steady_clock::now();
-  auto table_size = options_.table_size;
+  auto table_size = setup_.table_size();
   std::int64_t shard_start = 0;
   for (int i = 0; i != kPopulateShardCount; ++i) {
     auto end =
@@ -170,7 +134,7 @@ google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTable() {
 std::string Benchmark::MakeRandomKey(
     google::cloud::internal::DefaultPRNG& gen) const {
   std::uniform_int_distribution<std::int64_t> prng_user(
-      0, options_.table_size - 1);
+      0, setup_.table_size() - 1);
   return MakeKey(prng_user(gen));
 }
 
@@ -237,7 +201,7 @@ void Benchmark::PrintResultCsv(std::ostream& os, std::string const& test_name,
               return lhs.latency < rhs.latency;
             });
   auto const nsamples = result.operations.size();
-  os << test_name << "," << options_.start_time << "," << op_name << ","
+  os << test_name << "," << setup_.start_time() << "," << op_name << ","
      << measurement << "," << nsamples;
   for (double p : kResultPercentiles) {
     auto index = static_cast<std::size_t>(
@@ -251,7 +215,7 @@ void Benchmark::PrintResultCsv(std::ostream& os, std::string const& test_name,
       1000 * result.operations.size() / result.elapsed.count();
 
   os << ",us," << row_throughput << "," << ops_throughput << ","
-     << options_.notes << "\n";
+     << setup_.notes() << "\n";
 }
 
 int Benchmark::create_table_count() const {
@@ -287,10 +251,6 @@ int Benchmark::read_rows_count() const {
     return 0;
   }
   return server_->read_rows_count();
-}
-
-void Benchmark::DisableBackgroundThreads(CompletionQueue& cq) {
-  opts_.set<GrpcCompletionQueueOption>(cq);
 }
 
 google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTableShard(
@@ -352,7 +312,7 @@ google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTableShard(
 
 int Benchmark::KeyWidth() const {
   int r = 1;
-  for (auto tsize = options_.table_size; tsize > 0; tsize /= 10, ++r) {
+  for (auto tsize = setup_.table_size(); tsize > 0; tsize /= 10, ++r) {
   }
   return r;
 }

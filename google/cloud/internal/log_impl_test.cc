@@ -19,7 +19,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
@@ -27,7 +27,6 @@ using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::ScopedLog;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
-using ::testing::NotNull;
 
 auto constexpr kLogConfig = "GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG";
 auto constexpr kEnableClog = "GOOGLE_CLOUD_CPP_ENABLE_CLOG";
@@ -35,28 +34,32 @@ auto constexpr kEnableClog = "GOOGLE_CLOUD_CPP_ENABLE_CLOG";
 TEST(CircularBufferBackend, Basic) {
   auto be = std::make_shared<ScopedLog::Backend>();
   CircularBufferBackend buffer(3, Severity::GCP_LS_ERROR, be);
-  auto test_log_record = [](Severity severity, std::string msg) {
-    return LogRecord{
-        severity, "test_function()", "file", 1, std::this_thread::get_id(),
-        {},       std::move(msg)};
-  };
-  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 1"));
-  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_DEBUG, "msg 2"));
-  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_TRACE, "msg 3"));
-  buffer.ProcessWithOwnership(
-      test_log_record(Severity::GCP_LS_WARNING, "msg 4"));
-  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 5"));
+  buffer.ProcessWithOwnership(LogRecord{
+      Severity::GCP_LS_INFO, "test_function()", "file", 1, {}, "msg 1"});
+  buffer.ProcessWithOwnership(LogRecord{
+      Severity::GCP_LS_DEBUG, "test_function()", "file", 1, {}, "msg 2"});
+  buffer.ProcessWithOwnership(LogRecord{
+      Severity::GCP_LS_TRACE, "test_function()", "file", 1, {}, "msg 3"});
+  buffer.ProcessWithOwnership(LogRecord{
+      Severity::GCP_LS_WARNING, "test_function()", "file", 1, {}, "msg 4"});
+  buffer.ProcessWithOwnership(LogRecord{
+      Severity::GCP_LS_INFO, "test_function()", "file", 1, {}, "msg 5"});
   EXPECT_THAT(be->ExtractLines(), IsEmpty());
 
-  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_ERROR, "msg 6"));
+  buffer.ProcessWithOwnership(LogRecord{
+      Severity::GCP_LS_ERROR, "test_error()", "file", 1, {}, "msg 6"});
   EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 4", "msg 5", "msg 6"));
 
-  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 7"));
-  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_ERROR, "msg 8"));
+  buffer.ProcessWithOwnership(LogRecord{
+      Severity::GCP_LS_INFO, "test_function()", "file", 1, {}, "msg 7"});
+  buffer.ProcessWithOwnership(LogRecord{
+      Severity::GCP_LS_ERROR, "test_function()", "file", 1, {}, "msg 8"});
   EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 7", "msg 8"));
 
-  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 9"));
-  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 10"));
+  buffer.ProcessWithOwnership(LogRecord{
+      Severity::GCP_LS_INFO, "test_function()", "file", 1, {}, "msg 9"});
+  buffer.ProcessWithOwnership(LogRecord{
+      Severity::GCP_LS_INFO, "test_function()", "file", 1, {}, "msg 10"});
   buffer.Flush();
   EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 9", "msg 10"));
 }
@@ -65,89 +68,66 @@ TEST(DefaultLogBackend, CircularBuffer) {
   ScopedEnvironment config(kLogConfig, "lastN,5,WARNING");
   ScopedEnvironment clog(kEnableClog, absl::nullopt);
   auto be = DefaultLogBackend();
+  EXPECT_TRUE(!!be);
   auto const* buffer = dynamic_cast<CircularBufferBackend*>(be.get());
   ASSERT_NE(buffer, nullptr);
   EXPECT_EQ(5, buffer->size());
   EXPECT_EQ(Severity::GCP_LS_WARNING, buffer->min_flush_severity());
-  auto const* clog_be = dynamic_cast<StdClogBackend*>(buffer->backend().get());
-  ASSERT_THAT(clog_be, NotNull());
-  EXPECT_EQ(Severity::GCP_LS_DEBUG, clog_be->min_severity());
 }
 
 TEST(DefaultLogBackend, CLog) {
   ScopedEnvironment config(kLogConfig, "clog");
   ScopedEnvironment clog(kEnableClog, absl::nullopt);
   auto be = DefaultLogBackend();
-  auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
-  ASSERT_THAT(clog_be, NotNull());
-  EXPECT_EQ(Severity::GCP_LS_DEBUG, clog_be->min_severity());
+  EXPECT_TRUE(!!be);
+  EXPECT_NE(dynamic_cast<StdClogBackend*>(be.get()), nullptr);
 }
 
-TEST(DefaultLogBackend, BackwardsCompatibilityCLog) {
+TEST(DefaultLogBackend, CLogBackwardsCompatibility) {
   ScopedEnvironment config(kLogConfig, absl::nullopt);
   ScopedEnvironment clog(kEnableClog, "yes");
   auto be = DefaultLogBackend();
-  auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
-  ASSERT_THAT(clog_be, NotNull());
-  EXPECT_EQ(Severity::GCP_LS_DEBUG, clog_be->min_severity());
+  EXPECT_TRUE(!!be);
+  EXPECT_NE(dynamic_cast<StdClogBackend*>(be.get()), nullptr);
 }
 
-TEST(DefaultLogBackend, BackwardsCompatibilityCLogUnset) {
+TEST(DefaultLogBackend, Unset) {
   ScopedEnvironment config(kLogConfig, absl::nullopt);
   ScopedEnvironment clog(kEnableClog, absl::nullopt);
   auto be = DefaultLogBackend();
-  auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
-  ASSERT_THAT(clog_be, NotNull());
-  EXPECT_EQ(Severity::GCP_LS_FATAL, clog_be->min_severity());
-}
-
-TEST(DefaultLogBackend, BackwardsCompatibilityCLogWithSeverity) {
-  ScopedEnvironment config(kLogConfig, absl::nullopt);
-  ScopedEnvironment clog(kEnableClog, "WARNING");
-  auto be = DefaultLogBackend();
-  auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
-  ASSERT_THAT(clog_be, NotNull());
-  EXPECT_EQ(Severity::GCP_LS_WARNING, clog_be->min_severity());
+  EXPECT_FALSE(!!be);
 }
 
 TEST(DefaultLogBackend, UnknownType) {
   ScopedEnvironment config(kLogConfig, "invalid");
   ScopedEnvironment clog(kEnableClog, absl::nullopt);
   auto be = DefaultLogBackend();
-  auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
-  ASSERT_THAT(clog_be, NotNull());
-  EXPECT_EQ(Severity::GCP_LS_FATAL, clog_be->min_severity());
+  EXPECT_FALSE(!!be);
 }
 
 TEST(DefaultLogBackend, MissingComponents) {
   ScopedEnvironment config(kLogConfig, "lastN,1");
   ScopedEnvironment clog(kEnableClog, absl::nullopt);
   auto be = DefaultLogBackend();
-  auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
-  ASSERT_THAT(clog_be, NotNull());
-  EXPECT_EQ(Severity::GCP_LS_FATAL, clog_be->min_severity());
+  EXPECT_FALSE(!!be);
 }
 
 TEST(DefaultLogBackend, InvalidSize) {
   ScopedEnvironment config(kLogConfig, "lastN,-10,WARNING");
   ScopedEnvironment clog(kEnableClog, absl::nullopt);
   auto be = DefaultLogBackend();
-  auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
-  ASSERT_THAT(clog_be, NotNull());
-  EXPECT_EQ(Severity::GCP_LS_FATAL, clog_be->min_severity());
+  EXPECT_FALSE(!!be);
 }
 
 TEST(DefaultLogBackend, InvalidSeverity) {
   ScopedEnvironment config(kLogConfig, "lastN,10,invalid");
   ScopedEnvironment clog(kEnableClog, absl::nullopt);
   auto be = DefaultLogBackend();
-  auto const* clog_be = dynamic_cast<StdClogBackend*>(be.get());
-  ASSERT_THAT(clog_be, NotNull());
-  EXPECT_EQ(Severity::GCP_LS_FATAL, clog_be->min_severity());
+  EXPECT_FALSE(!!be);
 }
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
@@ -47,7 +47,7 @@ TEST(SelfSigningServiceAccountCredentials, CreateBearerToken) {
   std::vector<std::string> decoded(components.size());
   std::transform(components.begin(), components.end(), decoded.begin(),
                  [](std::string const& e) {
-                   auto v = UrlsafeBase64Decode(e).value();
+                   auto v = UrlsafeBase64Decode(e);
                    return std::string{v.begin(), v.end()};
                  });
   ASSERT_THAT(3, decoded.size());
@@ -101,7 +101,7 @@ TEST(SelfSigningServiceAccountCredentials, Basic) {
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

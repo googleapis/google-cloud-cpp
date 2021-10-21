@@ -40,7 +40,7 @@ class StringSourceTree : public google::protobuf::compiler::SourceTree {
       : files_(std::move(files)) {}
 
   google::protobuf::io::ZeroCopyInputStream* Open(
-      std::string const& filename) override {
+      const std::string& filename) override {
     auto iter = files_.find(filename);
     return iter == files_.end() ? nullptr
                                 : new google::protobuf::io::ArrayInputStream(
@@ -58,15 +58,16 @@ class AbortingErrorCollector : public DescriptorPool::ErrorCollector {
   AbortingErrorCollector(AbortingErrorCollector const&) = delete;
   AbortingErrorCollector& operator=(AbortingErrorCollector const&) = delete;
 
-  void AddError(std::string const& filename, std::string const& element_name,
-                google::protobuf::Message const*, ErrorLocation,
-                std::string const& error_message) override {
+  void AddError(const std::string& filename, const std::string& element_name,
+                const google::protobuf::Message*, ErrorLocation,
+                const std::string& error_message) override {
     GCP_LOG(FATAL) << "AddError() called unexpectedly: " << filename << " ["
-                   << element_name << "]: " << error_message;
+                   << element_name << "]: " << error_message << "\n";
+    std::exit(1);
   }
 };
 
-char const* const kSuccessServiceProto =
+const char* const kSuccessServiceProto =
     "syntax = \"proto3\";\n"
     "package google.foo.v1;\n"
     "// Leading comments about service SuccessService.\n"
@@ -111,7 +112,7 @@ TEST_F(GeneratorTest, GenericService) {
   generic_service_file.set_name("google/generic/v1/generic.proto");
   generic_service_file.add_service()->set_name("GenericService");
   generic_service_file.mutable_options()->set_cc_generic_services(true);
-  FileDescriptor const* generic_service_file_descriptor =
+  const FileDescriptor* generic_service_file_descriptor =
       pool.BuildFile(generic_service_file);
 
   Generator generator;
@@ -128,7 +129,7 @@ TEST_F(GeneratorTest, BadCommandLineArgs) {
   service_file.set_name("google/foo/v1/service.proto");
   service_file.add_service()->set_name("Service");
   service_file.mutable_options()->set_cc_generic_services(false);
-  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
 
   Generator generator;
   std::string actual_error;
@@ -148,7 +149,7 @@ TEST_F(GeneratorTest, GenerateServicesSuccess) {
     output = absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
   }
 
-  FileDescriptor const* service_file_descriptor =
+  const FileDescriptor* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
 
   for (auto& output : mock_outputs) {

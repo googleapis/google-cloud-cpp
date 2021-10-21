@@ -43,7 +43,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 struct SessionPoolFriendForTest;
 
 // An option for the Clock that the session pool will use. This is an injection
@@ -108,7 +108,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   /**
    * Construct a `SessionPool`.
    *
-   * @warning Must call Initialize() once immediately after the constructor.
+   * @warning must call Initialize() once immediately after the constructor.
    */
   SessionPool(spanner::Database db,
               std::vector<std::shared_ptr<SpannerStub>> stubs,
@@ -205,7 +205,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   ChannelVec::iterator next_dissociated_stub_channel_;  // GUARDED_BY(mu_)
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

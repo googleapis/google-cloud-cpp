@@ -33,13 +33,10 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 struct BucketMetadataParser;
 class GrpcClient;
-// TODO(#7365) - remove once PAP reaches GA
-absl::optional<std::string> const& NormalizePap(
-    absl::optional<std::string> const& pap);
 }  // namespace internal
 
 /**
@@ -214,22 +211,18 @@ struct BucketIamConfiguration {
   absl::optional<std::string> public_access_prevention;
 };
 
-//@{
-/// @name Public Access Prevention helper functions
 inline std::string PublicAccessPreventionEnforced() { return "enforced"; }
-inline std::string PublicAccessPreventionInherited() { return "inherited"; }
-GOOGLE_CLOUD_CPP_DEPRECATED("Use PublicAccessPreventionInherited()")
+
 inline std::string PublicAccessPreventionUnspecified() { return "unspecified"; }
-//@}
 
 //@{
 /// @name Comparison operators for BucketIamConfiguration.
 inline bool operator==(BucketIamConfiguration const& lhs,
                        BucketIamConfiguration const& rhs) {
   return std::tie(lhs.uniform_bucket_level_access,
-                  internal::NormalizePap(lhs.public_access_prevention)) ==
+                  lhs.public_access_prevention) ==
          std::tie(rhs.uniform_bucket_level_access,
-                  internal::NormalizePap(rhs.public_access_prevention));
+                  rhs.public_access_prevention);
 }
 
 inline bool operator<(BucketIamConfiguration const& lhs,
@@ -436,12 +429,6 @@ inline bool operator>=(BucketRetentionPolicy const& lhs,
 }
 
 std::ostream& operator<<(std::ostream& os, BucketRetentionPolicy const& rhs);
-
-/// A helper function to avoid typos in the RPO configuration
-inline std::string RpoDefault() { return "DEFAULT"; }
-
-/// A helper function to avoid typos in the RPO configuration
-inline std::string RpoAsyncTurbo() { return "ASYNC_TURBO"; }
 
 /**
  * The versioning configuration for a Bucket.
@@ -825,17 +812,6 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   }
   //@}
 
-  //@{
-  /**
-   * @name Accessors and modifiers for the Recovery Point Objective.
-   */
-  std::string const& rpo() const { return rpo_; }
-  BucketMetadata& set_rpo(std::string v) {
-    rpo_ = std::move(v);
-    return *this;
-  }
-  //@}
-
   using CommonMetadata::storage_class;
   BucketMetadata& set_storage_class(std::string v) {
     CommonMetadata::set_storage_class(std::move(v));
@@ -911,7 +887,6 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   absl::optional<BucketLogging> logging_;
   std::int64_t project_number_ = 0;
   absl::optional<BucketRetentionPolicy> retention_policy_;
-  std::string rpo_;
   absl::optional<BucketVersioning> versioning_;
   absl::optional<BucketWebsite> website_;
 };
@@ -996,9 +971,6 @@ class BucketMetadataPatchBuilder {
   }
   BucketMetadataPatchBuilder& ResetRetentionPolicy();
 
-  BucketMetadataPatchBuilder& SetRpo(std::string const& v);
-  BucketMetadataPatchBuilder& ResetRpo();
-
   BucketMetadataPatchBuilder& SetStorageClass(std::string const& v);
   BucketMetadataPatchBuilder& ResetStorageClass();
 
@@ -1014,7 +986,7 @@ class BucketMetadataPatchBuilder {
   internal::PatchBuilder labels_subpatch_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

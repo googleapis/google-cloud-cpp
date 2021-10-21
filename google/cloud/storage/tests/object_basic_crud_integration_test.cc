@@ -31,13 +31,12 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::Contains;
 using ::testing::Not;
-using ::testing::UnorderedElementsAreArray;
 using ObjectBasicCRUDIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 
@@ -73,40 +72,20 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
       Projection("full"));
   ASSERT_STATUS_OK(get_meta);
 
-  // TODO(#7257) - cleanup after production is fixed.
   if (UsingGrpc()) {
-    // The metadata returned by gRPC (InsertObject) doesn't contain the `acl`,
-    // `etag`, `media_link`, or `self_link` fields. Just compare field by field:
-    EXPECT_EQ(get_meta->name(), insert_meta->name());
-    // EXPECT_EQ(get_meta->acl(), insert_meta->acl());
-    EXPECT_EQ(get_meta->bucket(), insert_meta->bucket());
-    EXPECT_EQ(get_meta->cache_control(), insert_meta->cache_control());
-    EXPECT_EQ(get_meta->component_count(), insert_meta->component_count());
-    EXPECT_EQ(get_meta->content_disposition(),
-              insert_meta->content_disposition());
-    EXPECT_EQ(get_meta->content_encoding(), insert_meta->content_encoding());
-    EXPECT_EQ(get_meta->content_type(), insert_meta->content_type());
-    EXPECT_EQ(get_meta->crc32c(), insert_meta->crc32c());
-    EXPECT_EQ(get_meta->event_based_hold(), insert_meta->event_based_hold());
-    EXPECT_EQ(get_meta->generation(), insert_meta->generation());
-    // EXPECT_EQ(get_meta->id(), insert_meta->id()); // b/198515640
-    EXPECT_EQ(get_meta->kind(), insert_meta->kind());
-    EXPECT_EQ(get_meta->kms_key_name(), insert_meta->kms_key_name());
-    EXPECT_EQ(get_meta->md5_hash(), insert_meta->md5_hash());
-    // EXPECT_EQ(get_meta->media_link(), insert_meta->media_link());
-    EXPECT_EQ(get_meta->metageneration(), insert_meta->metageneration());
-    // EXPECT_EQ(get_meta->owner(), insert_meta->owner());
-    EXPECT_EQ(get_meta->retention_expiration_time(),
-              insert_meta->retention_expiration_time());
-    // EXPECT_EQ(get_meta->self_link(), insert_meta->self_link());
-    EXPECT_EQ(get_meta->size(), insert_meta->size());
-    EXPECT_EQ(get_meta->storage_class(), insert_meta->storage_class());
-    EXPECT_EQ(get_meta->temporary_hold(), insert_meta->temporary_hold());
-    EXPECT_EQ(get_meta->time_created(), insert_meta->time_created());
-    EXPECT_EQ(get_meta->time_deleted(), insert_meta->time_deleted());
-    EXPECT_EQ(get_meta->time_storage_class_updated(),
-              insert_meta->time_storage_class_updated());
-    EXPECT_EQ(get_meta->updated(), insert_meta->updated());
+    // The metadata returned by gRPC (InsertObject) doesn't contain `media_link`
+    // and `self_link`. The easiest way to do the comparison is by replacing the
+    // relevant parts in the string representations.
+
+    std::stringstream get_meta_stream;
+    get_meta_stream << *get_meta;
+    std::string get_meta_rep =
+        std::regex_replace(get_meta_stream.str(),
+                           std::regex("(media|self)_link=[^,)}]*"), "$1_link=");
+    std::stringstream insert_meta_stream;
+    insert_meta_stream << *insert_meta;
+    std::string insert_meta_rep = insert_meta_stream.str();
+    EXPECT_EQ(get_meta_rep, insert_meta_rep);
   } else {
     EXPECT_EQ(*get_meta, *insert_meta);
   }
@@ -139,7 +118,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
         };
     auto expected = acl_to_string_vector(update.acl());
     auto actual = acl_to_string_vector(updated_meta->acl());
-    EXPECT_THAT(expected, UnorderedElementsAreArray(actual));
+    EXPECT_THAT(expected, ::testing::UnorderedElementsAreArray(actual));
   }
   EXPECT_EQ(update.cache_control(), updated_meta->cache_control())
       << *updated_meta;
@@ -255,7 +234,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointWriteXml) {
 }
 
 }  // anonymous namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -90,7 +90,7 @@ cc_test(
     deps = [
         ":hello_world_cc_grpc",
         ":hello_world_cc_proto",
-        "//:iam",
+        "//:experimental-iam",
         "//:spanner",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",

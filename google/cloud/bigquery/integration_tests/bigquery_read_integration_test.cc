@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace bigquery {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
@@ -264,7 +264,7 @@ TEST_F(BigQueryReadIntegrationTest, SplitReadStreamProtoSuccess) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace bigquery
 }  // namespace cloud
 }  // namespace google

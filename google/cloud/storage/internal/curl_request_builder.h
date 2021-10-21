@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
  * Implements the Builder pattern for CurlRequest, and CurlUploadRequest.
@@ -45,7 +45,7 @@ class CurlRequestBuilder {
    * This function invalidates the builder. The application should not use this
    * builder once this function is called.
    */
-  CurlRequest BuildRequest() &&;
+  CurlRequest BuildRequest();
 
   /**
    * Creates a non-blocking http request.
@@ -53,7 +53,7 @@ class CurlRequestBuilder {
    * This function invalidates the builder. The application should not use this
    * builder once this function is called.
    */
-  std::unique_ptr<CurlDownloadRequest> BuildDownloadRequest() &&;
+  CurlDownloadRequest BuildDownloadRequest(std::string payload);
 
   /// Adds one of the well-known parameters as a query parameter
   template <typename P>
@@ -195,12 +195,11 @@ class CurlRequestBuilder {
   std::string user_agent_prefix_;
   bool logging_enabled_;
   CurlHandle::SocketOptions socket_options_;
-  std::chrono::seconds transfer_stall_timeout_;
-  std::string http_version_;
+  std::chrono::seconds download_stall_timeout_;
 };
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

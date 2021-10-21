@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 extern "C" size_t CurlRequestOnWriteData(char* ptr, size_t size, size_t nmemb,
@@ -64,11 +64,7 @@ extern "C" std::size_t CurlRequestOnReadData(char* ptr, std::size_t size,
   return v->OnRead(ptr, size, nitems);
 }
 
-CurlRequest::~CurlRequest() {
-  if (factory_) factory_->CleanupHandle(std::move(handle_));
-}
-
-StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) && {
+StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) {
   handle_.SetOption(CURLOPT_UPLOAD, 0L);
   if (!payload.empty()) {
     handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload.length());
@@ -78,7 +74,7 @@ StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) && {
 }
 
 StatusOr<HttpResponse> CurlRequest::MakeUploadRequest(
-    ConstBufferSequence payload) && {
+    ConstBufferSequence payload) {
   handle_.SetOption(CURLOPT_UPLOAD, 0L);
   if (payload.empty()) return MakeRequestImpl();
   if (payload.size() == 1) {
@@ -92,14 +88,6 @@ StatusOr<HttpResponse> CurlRequest::MakeUploadRequest(
   handle_.SetOption(CURLOPT_READDATA, &writev);
   handle_.SetOption(CURLOPT_UPLOAD, 1L);
   return MakeRequestImpl();
-}
-
-Status CurlRequest::OnError(Status status) {
-  // When there is a transfer error the handle is suspect. It could be pointing
-  // to an invalid host, a host that is slow and trickling data, or otherwise in
-  // a bad state. Release the handle, but do not return it to the pool.
-  auto handle = std::move(handle_);
-  return status;
 }
 
 StatusOr<HttpResponse> CurlRequest::MakeRequestImpl() {
@@ -116,27 +104,21 @@ StatusOr<HttpResponse> CurlRequest::MakeRequestImpl() {
   handle_.SetOption(CURLOPT_TCP_KEEPALIVE, 1L);
   handle_.EnableLogging(logging_enabled_);
   handle_.SetSocketCallback(socket_options_);
-  handle_.SetOptionUnchecked(CURLOPT_HTTP_VERSION,
-                             VersionToCurlCode(http_version_));
   handle_.SetOption(CURLOPT_WRITEFUNCTION, &CurlRequestOnWriteData);
   handle_.SetOption(CURLOPT_WRITEDATA, this);
   handle_.SetOption(CURLOPT_HEADERFUNCTION, &CurlRequestOnHeaderData);
   handle_.SetOption(CURLOPT_HEADERDATA, this);
-  if (transfer_stall_timeout_.count() != 0) {
-    // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
-    auto const timeout = static_cast<long>(transfer_stall_timeout_.count());
-    handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
-    // Timeout if the request sends or receives less than 1 byte/second (i.e.
-    // effectively no bytes) for `transfer_stall_timeout_` seconds.
-    handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, 1L);
-    handle_.SetOption(CURLOPT_LOW_SPEED_TIME, timeout);
-  }
   auto status = handle_.EasyPerform();
-  if (!status.ok()) return OnError(std::move(status));
-
-  if (logging_enabled_) handle_.FlushDebug(__func__);
+  if (!status.ok()) {
+    return status;
+  }
+  if (logging_enabled_) {
+    handle_.FlushDebug(__func__);
+  }
   auto code = handle_.GetResponseCode();
-  if (!code.ok()) return std::move(code).status();
+  if (!code.ok()) {
+    return std::move(code).status();
+  }
   return HttpResponse{code.value(), std::move(response_payload_),
                       std::move(received_headers_)};
 }
@@ -153,7 +135,7 @@ std::size_t CurlRequest::OnHeaderData(char* contents, std::size_t size,
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

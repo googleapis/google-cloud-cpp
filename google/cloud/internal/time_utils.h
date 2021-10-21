@@ -23,7 +23,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 // These functions convert between an `absl::Time` and a
@@ -49,21 +49,8 @@ std::chrono::system_clock::time_point ToChronoTimePoint(
 google::protobuf::Timestamp ToProtoTimestamp(
     std::chrono::system_clock::time_point const& tp);
 
-// Convert a std::chrono::duration<Rep, Period> to the protobuf representation
-template <typename Rep, typename Period>
-google::protobuf::Duration ToDurationProto(
-    std::chrono::duration<Rep, Period> d) {
-  auto seconds = std::chrono::duration_cast<std::chrono::seconds>(d);
-  auto nanos =
-      std::chrono::duration_cast<std::chrono::nanoseconds>(d - seconds);
-  google::protobuf::Duration result;
-  result.set_seconds(seconds.count());
-  result.set_nanos(static_cast<std::int32_t>(nanos.count()));
-  return result;
-}
-
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

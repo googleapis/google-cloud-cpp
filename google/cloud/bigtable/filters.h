@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Define the interfaces to create filter expressions.
  *
@@ -52,8 +52,8 @@ class Filter {
   explicit Filter(::google::bigtable::v2::RowFilter rhs)
       : filter_(std::move(rhs)) {}
 
-  Filter(Filter&&) = default;
-  Filter& operator=(Filter&&) = default;
+  Filter(Filter&&) noexcept = default;
+  Filter& operator=(Filter&&) noexcept = default;
   Filter(Filter const&) = default;
   Filter& operator=(Filter const&) = default;
 
@@ -695,7 +695,7 @@ class Filter {
   google::bigtable::v2::RowFilter filter_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

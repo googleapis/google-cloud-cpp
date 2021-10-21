@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class Options;
 namespace internal {
@@ -52,7 +52,7 @@ void CheckExpectedOptionsImpl(std::set<std::type_index> const&, Options const&,
  * - `.unset<T>()`   -- Removes the option `T`
  * - `.get<T>()`     -- Gets a const-ref to the value of option `T`
  * - `.lookup<T>(x)` -- Gets a non-const-ref to option `T`'s value, initializing
- *                      it to `x` if it was not set (`x` is optional).
+ *                      it to `x` if it was no set (`x` is optional).
  *
  * @par Example:
  *
@@ -277,7 +277,7 @@ Options MergeOptions(Options a, Options b);
 
 }  // namespace internal
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

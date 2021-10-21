@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 namespace {
 
@@ -35,10 +35,8 @@ using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::AllOf;
 using ::testing::An;
-using ::testing::AtLeast;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Return;
@@ -73,7 +71,7 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
 
   auto mock_builder = MockHttpRequestBuilder::mock_;
   EXPECT_CALL(*mock_builder,
-              Constructor(StrEq("https://oauth2.googleapis.com/token"), _, _))
+              Constructor(StrEq("https://oauth2.googleapis.com/token")))
       .Times(1);
   EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce([mock_request]() {
     MockHttpRequest result;
@@ -119,24 +117,20 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
     "id_token": "id-token-value",
     "expires_in": 1000
 })""";
+  auto mock_request = std::make_shared<MockHttpRequest::Impl>();
+  EXPECT_CALL(*mock_request, MakeRequest)
+      .WillOnce(Return(HttpResponse{200, r1, {}}))
+      .WillOnce(Return(HttpResponse{200, r2, {}}));
 
   // Now setup the builder to return those responses.
   auto mock_builder = MockHttpRequestBuilder::mock_;
-  EXPECT_CALL(*mock_builder, BuildRequest())
-      .WillOnce([&] {
-        MockHttpRequest request;
-        EXPECT_CALL(*request.mock, MakeRequest)
-            .WillOnce(Return(HttpResponse{200, r1, {}}));
-        return request;
-      })
-      .WillOnce([&] {
-        MockHttpRequest request;
-        EXPECT_CALL(*request.mock, MakeRequest)
-            .WillOnce(Return(HttpResponse{200, r2, {}}));
-        return request;
-      });
-  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint(), _, _))
-      .Times(AtLeast(1));
+  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce([mock_request] {
+    MockHttpRequest request;
+    request.mock = mock_request;
+    return request;
+  });
+  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
+      .Times(1);
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
       .WillRepeatedly([](std::string const& s) {
         auto t = std::unique_ptr<char[]>(new char[s.size() + 1]);
@@ -164,23 +158,20 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
 
 /// @test Mock a failed refresh response.
 TEST_F(AuthorizedUserCredentialsTest, FailedRefresh) {
+  auto mock_request = std::make_shared<MockHttpRequest::Impl>();
+  EXPECT_CALL(*mock_request, MakeRequest)
+      .WillOnce(Return(Status(StatusCode::kAborted, "Fake Curl error")))
+      .WillOnce(Return(HttpResponse{400, "", {}}));
+
   // Now setup the builder to return those responses.
   auto mock_builder = MockHttpRequestBuilder::mock_;
-  EXPECT_CALL(*mock_builder, BuildRequest())
-      .WillOnce([] {
-        MockHttpRequest request;
-        EXPECT_CALL(*request.mock, MakeRequest)
-            .WillOnce(Return(Status(StatusCode::kAborted, "Fake Curl error")));
-        return request;
-      })
-      .WillOnce([] {
-        MockHttpRequest request;
-        EXPECT_CALL(*request.mock, MakeRequest)
-            .WillOnce(Return(HttpResponse{400, "", {}}));
-        return request;
-      });
-  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint(), _, _))
-      .Times(AtLeast(1));
+  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce([mock_request] {
+    MockHttpRequest request;
+    request.mock = mock_request;
+    return request;
+  });
+  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
+      .Times(1);
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
       .WillRepeatedly([](std::string const& s) {
         auto t = std::unique_ptr<char[]>(new char[s.size() + 1]);
@@ -204,49 +195,6 @@ TEST_F(AuthorizedUserCredentialsTest, FailedRefresh) {
   // Response 2
   status = credentials.AuthorizationHeader();
   EXPECT_THAT(status, Not(IsOk()));
-}
-
-/// @test Verify that the options are used in the constructor.
-TEST_F(AuthorizedUserCredentialsTest, UsesCARootsInfo) {
-  // Now setup the builder to return a valid response.
-  auto mock_builder = MockHttpRequestBuilder::mock_;
-  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce([&] {
-    MockHttpRequest request;
-    nlohmann::json response{{"token_type", "Mock-Type"},
-                            {"access_token", "fake-token"},
-                            {"id_token", "fake-id-token-value"},
-                            {"expires_in", 3600}};
-    EXPECT_CALL(*request.mock, MakeRequest)
-        .WillOnce(Return(HttpResponse{200, response.dump(), {}}));
-    return request;
-  });
-
-  // This is the key check in this test, verify the constructor is called with
-  // the right parameters.
-  auto const cainfo = std::string{"fake-cainfo-path-aka-roots-pem"};
-  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint(),
-                                         absl::make_optional(cainfo), _))
-      .Times(AtLeast(1));
-  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
-      .WillRepeatedly([](std::string const& s) {
-        auto t = std::unique_ptr<char[]>(new char[s.size() + 1]);
-        std::copy(s.begin(), s.end(), t.get());
-        t[s.size()] = '\0';
-        return t;
-      });
-
-  std::string config = R"""({
-      "client_id": "a-client-id.example.com",
-      "client_secret": "a-123456ABCDEF",
-      "refresh_token": "1/THETOKEN",
-      "type": "magic_type"
-})""";
-  auto info = ParseAuthorizedUserCredentials(config, "test");
-  ASSERT_STATUS_OK(info);
-  AuthorizedUserCredentials<MockHttpRequestBuilder> credentials(
-      *info, ChannelOptions().set_ssl_root_path(cainfo));
-  EXPECT_EQ("Authorization: Mock-Type fake-token",
-            credentials.AuthorizationHeader().value());
 }
 
 /// @test Verify that parsing an authorized user account JSON string works.
@@ -407,7 +355,7 @@ TEST_F(AuthorizedUserCredentialsTest, ParseAuthorizedUserRefreshResponse) {
 
 }  // namespace
 }  // namespace oauth2
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

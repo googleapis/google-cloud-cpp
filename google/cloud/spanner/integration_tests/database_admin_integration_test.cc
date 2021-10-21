@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO(#7356): Remove this file after the deprecation period expires
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/testing/instance_location.h"
@@ -31,13 +29,12 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::AllOf;
 using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::ContainsRegex;
@@ -67,8 +64,8 @@ class DatabaseAdminClientTest
 
     auto generator = google::cloud::internal::MakeDefaultPRNG();
 
-    auto instance_id = spanner_testing::PickRandomInstance(
-        generator, project_id, "NOT name:/instances/test-instance-mr-");
+    auto instance_id =
+        spanner_testing::PickRandomInstance(generator, project_id);
     ASSERT_STATUS_OK(instance_id);
     instance_ = Instance(project_id, *instance_id);
 
@@ -210,12 +207,6 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
           FirstName  STRING(1024),
           LastName   STRING(1024),
           SingerInfo BYTES(MAX)
-      )""");
-  if (!emulator_) {
-    // TODO(#6873): Remove this check when the emulator supports JSON.
-    statements.back().append(R"""(,SingerDetails JSON)""");
-  }
-  statements.back().append(R"""(
         ) PRIMARY KEY (SingerId)
       )""");
   auto metadata = client_.UpdateDatabase(database_, statements).get();
@@ -230,47 +221,6 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
     EXPECT_THAT(metadata->statements(), Contains(HasSubstr("ALTER DATABASE")));
   }
   EXPECT_FALSE(metadata->throttled());
-
-  // Verify that a JSON column cannot be used as an index.
-  statements.clear();
-  statements.emplace_back(R"""(
-        CREATE INDEX SingersByDetail
-          ON Singers(SingerDetails)
-      )""");
-  metadata = client_.UpdateDatabase(database_, statements).get();
-  if (!emulator_) {
-    // TODO(#6873): Remove this check when the emulator supports JSON.
-    EXPECT_THAT(metadata,
-                StatusIs(StatusCode::kFailedPrecondition,
-                         AllOf(HasSubstr("Index SingersByDetail"),
-                               HasSubstr("column of unsupported type JSON"))));
-  } else {
-    EXPECT_THAT(
-        metadata,
-        StatusIs(
-            StatusCode::kInvalidArgument,
-            AllOf(HasSubstr("Index SingersByDetail"),
-                  HasSubstr("column SingerDetails which does not exist"))));
-  }
-
-  // Verify that a JSON column cannot be used as a primary key.
-  statements.clear();
-  statements.emplace_back(R"""(
-        CREATE TABLE JsonKey (
-          Key JSON NOT NULL
-        ) PRIMARY KEY (Key)
-      )""");
-  metadata = client_.UpdateDatabase(database_, statements).get();
-  if (!emulator_) {
-    // TODO(#6873): Remove this check when the emulator supports JSON.
-    EXPECT_THAT(metadata,
-                StatusIs(StatusCode::kInvalidArgument,
-                         AllOf(HasSubstr("Key has type JSON"),
-                               HasSubstr("part of the primary key"))));
-  } else {
-    EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument,
-                                   HasSubstr("Encountered 'JSON'")));
-  }
 
   EXPECT_TRUE(DatabaseExists()) << "Database " << database_;
   auto drop_status = client_.DropDatabase(database_);
@@ -506,7 +456,7 @@ TEST_F(DatabaseAdminClientTest, CreateWithNonexistentEncryptionKey) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

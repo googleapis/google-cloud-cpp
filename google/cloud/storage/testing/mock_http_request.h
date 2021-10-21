@@ -64,8 +64,8 @@ class MockHttpRequestBuilder {
  public:
   explicit MockHttpRequestBuilder(
       // NOLINTNEXTLINE(performance-unnecessary-value-param)
-      std::string url, std::shared_ptr<internal::CurlHandleFactory> h) {
-    mock_->Constructor(std::move(url), h->cainfo(), h->capath());
+      std::string url, std::shared_ptr<internal::CurlHandleFactory>) {
+    mock_->Constructor(std::move(url));
   }
 
   using RequestType = MockHttpRequest;
@@ -125,9 +125,7 @@ class MockHttpRequestBuilder {
   }
 
   struct Impl {
-    MOCK_METHOD(void, Constructor,
-                (std::string, absl::optional<std::string>,
-                 absl::optional<std::string>));
+    MOCK_METHOD(void, Constructor, (std::string));
     MOCK_METHOD(MockHttpRequest, BuildRequest, ());
     MOCK_METHOD(void, AddUserAgentPrefix, (std::string const&));
     MOCK_METHOD(void, AddHeader, (std::string const&));

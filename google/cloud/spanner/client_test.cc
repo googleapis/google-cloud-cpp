@@ -19,7 +19,9 @@
 #include "google/cloud/spanner/results.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/value.h"
+#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include "absl/types/optional.h"
@@ -33,7 +35,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 namespace spanner_proto = ::google::spanner::v1;
@@ -43,9 +45,12 @@ using ::google::cloud::spanner_mocks::MockResultSetSource;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
+using ::testing::AnyNumber;
 using ::testing::ByMove;
 using ::testing::DoAll;
 using ::testing::ElementsAre;
+using ::testing::Eq;
+using ::testing::Field;
 using ::testing::HasSubstr;
 using ::testing::Return;
 using ::testing::SaveArg;
@@ -691,9 +696,9 @@ TEST(ClientTest, CommitMutations) {
 
 MATCHER(DoesNotHaveSession, "not bound to a session") {
   return spanner_internal::Visit(
-      arg, [&](spanner_internal::SessionHolder& session,
-               StatusOr<google::spanner::v1::TransactionSelector>&,
-               std::string const&, std::int64_t) {
+      arg,
+      [&](spanner_internal::SessionHolder& session,
+          StatusOr<google::spanner::v1::TransactionSelector>&, std::int64_t) {
         if (session) {
           *result_listener << "has session " << session->session_name();
           return false;
@@ -704,9 +709,9 @@ MATCHER(DoesNotHaveSession, "not bound to a session") {
 
 MATCHER_P(HasSession, name, "bound to expected session") {
   return spanner_internal::Visit(
-      arg, [&](spanner_internal::SessionHolder& session,
-               StatusOr<google::spanner::v1::TransactionSelector>&,
-               std::string const&, std::int64_t) {
+      arg,
+      [&](spanner_internal::SessionHolder& session,
+          StatusOr<google::spanner::v1::TransactionSelector>&, std::int64_t) {
         if (!session) {
           *result_listener << "has no session but expected " << name;
           return false;
@@ -720,24 +725,11 @@ MATCHER_P(HasSession, name, "bound to expected session") {
       });
 }
 
-MATCHER_P(HasTag, value, "bound to expected transaction tag") {
-  return spanner_internal::Visit(
-      arg, [&](spanner_internal::SessionHolder&,
-               StatusOr<google::spanner::v1::TransactionSelector>&,
-               std::string const& tag, std::int64_t) {
-        if (tag != value) {
-          *result_listener << "has tag " << tag << " but expected " << value;
-          return false;
-        }
-        return true;
-      });
-}
-
 MATCHER(HasBegin, "not bound to a transaction-id nor invalidated") {
   return spanner_internal::Visit(
-      arg, [&](spanner_internal::SessionHolder&,
-               StatusOr<google::spanner::v1::TransactionSelector>& s,
-               std::string const&, std::int64_t) {
+      arg,
+      [&](spanner_internal::SessionHolder&,
+          StatusOr<google::spanner::v1::TransactionSelector>& s, std::int64_t) {
         if (!s) {
           *result_listener << "has status " << s.status();
           return false;
@@ -758,7 +750,7 @@ bool SetSessionName(Transaction const& txn, std::string name) {
   return spanner_internal::Visit(
       txn, [&name](spanner_internal::SessionHolder& session,
                    StatusOr<google::spanner::v1::TransactionSelector>&,
-                   std::string const&, std::int64_t) {
+                   std::int64_t) {
         session =
             spanner_internal::MakeDissociatedSessionHolder(std::move(name));
         return true;
@@ -769,62 +761,10 @@ bool SetTransactionId(Transaction const& txn, std::string id) {
   return spanner_internal::Visit(
       txn, [&id](spanner_internal::SessionHolder&,
                  StatusOr<google::spanner::v1::TransactionSelector>& s,
-                 std::string const&, std::int64_t) {
+                 std::int64_t) {
         s->set_id(std::move(id));  // only valid when s.ok()
         return true;
       });
-}
-
-TEST(ClientTest, CommitMutatorWithTags) {
-  auto timestamp =
-      spanner_internal::TimestampFromRFC3339("2021-04-26T17:25:36.321Z");
-  ASSERT_STATUS_OK(timestamp);
-  std::string const transaction_tag = "app=cart,env=dev";
-
-  auto conn = std::make_shared<MockConnection>();
-  EXPECT_CALL(*conn, ExecuteQuery)
-      .WillOnce([&](Connection::SqlParams const& params) {
-        EXPECT_EQ(params.query_options.request_tag(), "action=ExecuteQuery");
-        EXPECT_THAT(params.transaction, HasTag(transaction_tag));
-        return RowStream(absl::make_unique<MockResultSetSource>());
-      });
-  EXPECT_CALL(*conn, ExecuteBatchDml)
-      .WillOnce([&](Connection::ExecuteBatchDmlParams const& params) {
-        EXPECT_EQ(params.options.get<RequestTagOption>(),
-                  "action=ExecuteBatchDml");
-        EXPECT_THAT(params.transaction, HasTag(transaction_tag));
-        return BatchDmlResult{};
-      });
-  EXPECT_CALL(*conn, Read).WillOnce([&](Connection::ReadParams const& params) {
-    EXPECT_EQ(params.read_options.request_tag, "action=Read");
-    EXPECT_THAT(params.transaction, HasTag(transaction_tag));
-    return RowStream(absl::make_unique<MockResultSetSource>());
-  });
-  EXPECT_CALL(*conn, Commit)
-      .WillOnce([&](Connection::CommitParams const& params) {
-        EXPECT_EQ(params.options.transaction_tag(), transaction_tag);
-        EXPECT_THAT(params.transaction, HasTag(transaction_tag));
-        return CommitResult{*timestamp, absl::nullopt};
-      });
-
-  Client client(conn);
-  auto mutator = [&client](Transaction const& txn) -> StatusOr<Mutations> {
-    auto query_rows = client.ExecuteQuery(
-        txn, SqlStatement("select * from table;"),
-        QueryOptions{}.set_request_tag("action=ExecuteQuery"));
-    auto result = client.ExecuteBatchDml(
-        txn, {SqlStatement("UPDATE Foo SET Bar = 2")},
-        Options{}.set<spanner::RequestTagOption>("action=ExecuteBatchDml"));
-    ReadOptions read_options;
-    read_options.request_tag = "action=Read";
-    auto read_rows = client.Read(txn, "table", KeySet::All(), {"column"},
-                                 std::move(read_options));
-    return Mutations{};
-  };
-  auto result = client.Commit(
-      mutator, CommitOptions{}.set_transaction_tag(transaction_tag));
-  EXPECT_STATUS_OK(result);
-  EXPECT_EQ(*timestamp, result->commit_timestamp);
 }
 
 TEST(ClientTest, CommitMutatorSessionAffinity) {
@@ -1086,114 +1026,64 @@ TEST(ClientTest, ProfileQueryWithOptionsSuccess) {
 }
 
 TEST(ClientTest, QueryOptionsOverlayPrecedence) {
-  // Check optimizer_version.
-  {
-    QueryOptions preferred;
-    preferred.set_optimizer_version("preferred");
-    QueryOptions fallback;
-    fallback.set_optimizer_version("fallback");
-    absl::optional<std::string> optimizer_version_env = "environment";
-    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
-                  preferred, fallback, optimizer_version_env, absl::nullopt)
-                  .optimizer_version(),
-              "preferred");
-    preferred.set_optimizer_version(absl::nullopt);
-    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
-                  preferred, fallback, optimizer_version_env, absl::nullopt)
-                  .optimizer_version(),
-              "fallback");
-    fallback.set_optimizer_version(absl::nullopt);
-    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
-                  preferred, fallback, optimizer_version_env, absl::nullopt)
-                  .optimizer_version(),
-              "environment");
-    optimizer_version_env = absl::nullopt;
-    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
-                  preferred, fallback, optimizer_version_env, absl::nullopt)
-                  .optimizer_version(),
-              absl::nullopt);
-  }
+  struct Levels {
+    absl::optional<std::string> env;
+    absl::optional<std::string> client;
+    absl::optional<std::string> function;
+    absl::optional<std::string> expected;
+  };
+  std::vector<Levels> levels = {
+      {{}, {}, {}, {}},
+      {"env", {}, {}, "env"},
+      {{}, "client", {}, "client"},
+      {{}, {}, "function", "function"},
+      {"env", "client", {}, "client"},
+      {"env", {}, "function", "function"},
+      {{}, "client", "function", "function"},
+      {"env", "client", "function", "function"},
+  };
 
-  // Check optimizer_statistics_package.
-  {
-    QueryOptions preferred;
-    preferred.set_optimizer_statistics_package("preferred");
-    QueryOptions fallback;
-    fallback.set_optimizer_statistics_package("fallback");
-    absl::optional<std::string> optimizer_statistics_package_env =
-        "environment";
-    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
-                  preferred, fallback, absl::nullopt,
-                  optimizer_statistics_package_env)
-                  .optimizer_statistics_package(),
-              "preferred");
-    preferred.set_optimizer_statistics_package(absl::nullopt);
-    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
-                  preferred, fallback, absl::nullopt,
-                  optimizer_statistics_package_env)
-                  .optimizer_statistics_package(),
-              "fallback");
-    fallback.set_optimizer_statistics_package(absl::nullopt);
-    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
-                  preferred, fallback, absl::nullopt,
-                  optimizer_statistics_package_env)
-                  .optimizer_statistics_package(),
-              "environment");
-    optimizer_statistics_package_env = absl::nullopt;
-    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
-                  preferred, fallback, absl::nullopt,
-                  optimizer_statistics_package_env)
-                  .optimizer_statistics_package(),
-              absl::nullopt);
-  }
+  auto constexpr kQueryOptionsField = &Connection::SqlParams::query_options;
+  auto conn = std::make_shared<MockConnection>();
+  for (auto const& level : levels) {
+    google::cloud::testing_util::ScopedEnvironment opt_ver_env(
+        "SPANNER_OPTIMIZER_VERSION", level.env);
+    google::cloud::testing_util::ScopedEnvironment opt_stats_env(
+        "SPANNER_OPTIMIZER_STATISTICS_PACKAGE", level.env);
+    auto client_qo = QueryOptions()
+                         .set_optimizer_version(level.client)
+                         .set_optimizer_statistics_package(level.client);
+    Client client(conn, ClientOptions().set_query_options(client_qo));
+    auto expected = QueryOptions()
+                        .set_optimizer_version(level.expected)
+                        .set_optimizer_statistics_package(level.expected);
+    EXPECT_CALL(*conn, ExecuteQuery(Field(kQueryOptionsField, Eq(expected))))
+        .Times(AnyNumber());
 
-  // Check request_priority.
-  {
-    QueryOptions preferred;
-    preferred.set_request_priority(RequestPriority::kHigh);
-    QueryOptions fallback;
-    fallback.set_request_priority(RequestPriority::kLow);
-    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
-                  preferred, fallback, absl::nullopt, absl::nullopt)
-                  .request_priority(),
-              RequestPriority::kHigh);
-    preferred.set_request_priority(absl::nullopt);
-    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
-                  preferred, fallback, absl::nullopt, absl::nullopt)
-                  .request_priority(),
-              RequestPriority::kLow);
-    fallback.set_request_priority(absl::nullopt);
-    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
-                  preferred, fallback, absl::nullopt, absl::nullopt)
-                  .request_priority(),
-              absl::nullopt);
-  }
+    auto const qo = QueryOptions()
+                        .set_optimizer_version(level.function)
+                        .set_optimizer_statistics_package(level.function);
+    auto const ro = Transaction::ReadOnlyOptions{};
+    auto const su = Transaction::SingleUseOptions{ro};
 
-  // Check request_tag.
-  {
-    QueryOptions preferred;
-    preferred.set_request_tag("preferred");
-    QueryOptions fallback;
-    fallback.set_request_tag("fallback");
-    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
-                  preferred, fallback, absl::nullopt, absl::nullopt)
-                  .request_tag(),
-              "preferred");
-    preferred.set_request_tag(absl::nullopt);
-    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
-                  preferred, fallback, absl::nullopt, absl::nullopt)
-                  .request_tag(),
-              "fallback");
-    fallback.set_request_tag(absl::nullopt);
-    EXPECT_EQ(spanner_internal::OverlayQueryOptions(
-                  preferred, fallback, absl::nullopt, absl::nullopt)
-                  .request_tag(),
-              absl::nullopt);
+    // Call all the overloads that accept QueryOptions to ensure they all work.
+    client.ExecuteQuery(SqlStatement{}, qo);
+    client.ExecuteQuery(su, SqlStatement{}, qo);
+    client.ExecuteQuery(Transaction{ro}, SqlStatement{}, qo);
+    client.ExecuteQuery(QueryPartition{}, qo);
+
+    client.ProfileQuery(SqlStatement{}, qo);
+    client.ProfileQuery(su, SqlStatement{}, qo);
+    client.ProfileQuery(Transaction{ro}, SqlStatement{}, qo);
+
+    client.ExecuteDml(Transaction{ro}, SqlStatement{}, qo);
+    client.ProfileDml(Transaction{ro}, SqlStatement{}, qo);
+    client.AnalyzeSql(Transaction{ro}, SqlStatement{}, qo);
   }
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

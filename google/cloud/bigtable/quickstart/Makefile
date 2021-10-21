@@ -26,7 +26,7 @@ all: $(BIN)/quickstart
 
 # Configuration variables to compile and link against the Cloud Bigtable C++
 # client library.
-CBT_DEPS := google_cloud_cpp_bigtable
+CBT_DEPS := bigtable_client
 CBT_CXXFLAGS   := $(shell pkg-config $(CBT_DEPS) --cflags)
 CBT_CXXLDFLAGS := $(shell pkg-config $(CBT_DEPS) --libs-only-L)
 CBT_LIBS       := $(shell pkg-config $(CBT_DEPS) --libs-only-l)

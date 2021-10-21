@@ -20,13 +20,13 @@ namespace {
 
 std::string const& GoogleWellKnownAdcFilePathSuffix() {
 #ifdef _WIN32
-  static auto const* const kSuffix =
-      new std::string("/gcloud/application_default_credentials.json");
+  static std::string const kSuffix =
+      "/gcloud/application_default_credentials.json";
 #else
-  static auto const* const kSuffix =
-      new std::string("/.config/gcloud/application_default_credentials.json");
+  static std::string const kSuffix =
+      "/.config/gcloud/application_default_credentials.json";
 #endif
-  return *kSuffix;
+  return kSuffix;
 }
 
 }  // anonymous namespace
@@ -34,7 +34,7 @@ std::string const& GoogleWellKnownAdcFilePathSuffix() {
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
 std::string GoogleAdcFilePathFromEnvVarOrEmpty() {
@@ -62,7 +62,7 @@ std::string GoogleAdcFilePathFromWellKnownPathOrEmpty() {
 }
 
 }  // namespace oauth2
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

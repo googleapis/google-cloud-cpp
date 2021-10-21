@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_INPROCESS_ADMIN_CLIENT_H
 
 #include "google/cloud/bigtable/admin_client.h"
+#include "google/cloud/bigtable/client_options.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <string>
@@ -29,7 +30,8 @@ namespace testing {
  * Connects to Cloud Bigtable's administration APIs.
  *
  * This class is mainly for testing purpose, it enable use of a single embedded
- * server for multiple test cases. This admin client uses a pre-defined channel.
+ * server
+ * for multiple test cases. This admin client uses a pre-defined channel.
  */
 class InProcessAdminClient : public bigtable::AdminClient {
  public:
@@ -228,12 +230,13 @@ class InProcessAdminClient : public bigtable::AdminClient {
   //@}
 
  private:
-  google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
-    return google::cloud::internal::MakeBackgroundThreadsFactory();
+  ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() override {
+    return options_.background_threads_factory();
   }
 
   std::string project_;
   std::shared_ptr<grpc::Channel> channel_;
+  ClientOptions options_;
 };
 
 }  // namespace testing

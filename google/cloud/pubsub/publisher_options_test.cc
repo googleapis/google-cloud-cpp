@@ -13,18 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/publisher_options.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
-
-using ::testing::Contains;
-using ::testing::HasSubstr;
 
 TEST(PublisherOptions, Setters) {
   auto const b0 = PublisherOptions{};
@@ -84,76 +79,8 @@ TEST(PublisherOptions, FullPublisherAction) {
       PublisherOptions{}.set_full_publisher_blocks().full_publisher_blocks());
 }
 
-TEST(PublisherOptions, OptionsConstructor) {
-  auto const b = PublisherOptions(
-      Options{}
-          .set<MaxHoldTimeOption>(std::chrono::seconds(12))
-          .set<MaxBatchMessagesOption>(10)
-          .set<MaxBatchBytesOption>(123)
-          .set<MaxPendingMessagesOption>(4)
-          .set<MaxPendingBytesOption>(444)
-          .set<MessageOrderingOption>(true)
-          .set<FullPublisherActionOption>(FullPublisherAction::kRejects));
-
-  auto const expected = std::chrono::duration_cast<std::chrono::microseconds>(
-      std::chrono::seconds(12));
-  EXPECT_EQ(expected, b.maximum_hold_time());
-  EXPECT_EQ(10, b.maximum_batch_message_count());
-  EXPECT_EQ(123, b.maximum_batch_bytes());
-  EXPECT_EQ(4, b.maximum_pending_messages());
-  EXPECT_EQ(444, b.maximum_pending_bytes());
-  EXPECT_TRUE(b.message_ordering());
-  EXPECT_TRUE(b.full_publisher_rejects());
-}
-
-TEST(PublisherOptions, ExpectedOptionsCheck) {
-  struct NonOption {
-    using Type = bool;
-  };
-
-  testing_util::ScopedLog log;
-  auto b = PublisherOptions(Options{}.set<NonOption>(true));
-  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("Unexpected option")));
-}
-
-TEST(PublisherOptions, MakeOptions) {
-  auto b = PublisherOptions{}
-               .set_maximum_hold_time(std::chrono::seconds(12))
-               .set_maximum_batch_message_count(10)
-               .set_maximum_batch_bytes(123)
-               .set_maximum_pending_messages(4)
-               .set_maximum_pending_bytes(444)
-               .enable_message_ordering();
-
-  auto opts = pubsub_internal::MakeOptions(std::move(b));
-  EXPECT_EQ(std::chrono::seconds(12), opts.get<MaxHoldTimeOption>());
-  EXPECT_EQ(10, opts.get<MaxBatchMessagesOption>());
-  EXPECT_EQ(123, opts.get<MaxBatchBytesOption>());
-  EXPECT_EQ(4, opts.get<MaxPendingMessagesOption>());
-  EXPECT_EQ(444, opts.get<MaxPendingBytesOption>());
-  EXPECT_TRUE(opts.get<MessageOrderingOption>());
-
-  auto ignored = PublisherOptions{}.set_full_publisher_ignored();
-  opts = pubsub_internal::MakeOptions(std::move(ignored));
-  EXPECT_EQ(FullPublisherAction::kIgnored,
-            opts.get<FullPublisherActionOption>());
-
-  auto rejects = PublisherOptions{}.set_full_publisher_rejects();
-  opts = pubsub_internal::MakeOptions(std::move(rejects));
-  EXPECT_EQ(FullPublisherAction::kRejects,
-            opts.get<FullPublisherActionOption>());
-
-  auto blocks = PublisherOptions{}.set_full_publisher_blocks();
-  opts = pubsub_internal::MakeOptions(std::move(blocks));
-  EXPECT_EQ(FullPublisherAction::kBlocks,
-            opts.get<FullPublisherActionOption>());
-
-  // Ensure that we are not setting any extra options
-  EXPECT_FALSE(opts.has<GrpcCredentialOption>());
-}
-
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

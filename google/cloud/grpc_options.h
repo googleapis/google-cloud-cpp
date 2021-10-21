@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_OPTIONS_H
 
 #include "google/cloud/background_threads.h"
-#include "google/cloud/completion_queue.h"
 #include "google/cloud/options.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
@@ -26,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * The gRPC credentials used by clients configured with this object.
@@ -51,40 +50,13 @@ struct GrpcNumChannelsOption {
  *
  * This option gives users the ability to set various arguments for the
  * underlying `grpc::ChannelArguments` objects that will be created. See the
- * gRPC documentation for more details about available channel arguments.
- *
- * @note Our library will always start with the native object from
- * `GrpcChannelArgumentsNativeOption`, then add the channel arguments from this
- * option. Users are cautioned not to set the same channel argument to different
- * values in different options as gRPC will use the first value set for some
- * channel arguments, and the last value set for others.
+ * gRPC documentation for more details about available options.
  *
  * @see https://grpc.github.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
  * @see https://grpc.github.io/grpc/core/group__grpc__arg__keys.html
  */
 struct GrpcChannelArgumentsOption {
   using Type = std::map<std::string, std::string>;
-};
-
-/**
- * The native `grpc::ChannelArguments` object.
- *
- * This option gives users full control over the `grpc::ChannelArguments`
- * objects that will be created. See the gRPC documentation for more details
- * about available channel arguments.
- *
- * @note Our library will always start with the native object, then add in the
- * channel arguments from `GrpcChannelArgumentsOption`, then add the user agent
- * prefix from `UserAgentProductsOption`. Users are cautioned not to set the
- * same channel argument to different values in different options as gRPC will
- * use the first value set for some channel arguments, and the last value set
- * for others.
- *
- * @see https://grpc.github.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
- * @see https://grpc.github.io/grpc/core/group__grpc__arg__keys.html
- */
-struct GrpcChannelArgumentsNativeOption {
-  using Type = grpc::ChannelArguments;
 };
 
 /**
@@ -95,53 +67,17 @@ struct GrpcTracingOptionsOption {
 };
 
 /**
- * The size of the background thread pool
- *
- * These threads are created by the client library to run a `CompletionQueue`
- * which performs background work for gRPC.
- *
- * @note `GrpcBackgroundThreadPoolSizeOption`, `GrpcCompletionQueueOption`, and
- *     `GrpcBackgroundThreadsFactoryOption` are mutually exclusive. This option
- *     will be ignored if either `GrpcCompletionQueueOption` or
- *     `GrpcBackgroundThreadsFactoryOption` are set.
- */
-struct GrpcBackgroundThreadPoolSizeOption {
-  using Type = std::size_t;
-};
-
-/**
- * The `CompletionQueue` to use for background gRPC work.
- *
- * If this option is set, the library will use the supplied `CompletionQueue`
- * instead of its own. The caller is responsible for making sure there are
- * thread(s) servicing this `CompletionQueue`. The client library will not
- * create any background threads or attempt to call `CompletionQueue::Run()`.
- *
- * @note `GrpcBackgroundThreadPoolSizeOption`, `GrpcCompletionQueueOption`, and
- *     `GrpcBackgroundThreadsFactoryOption` are mutually exclusive.
- */
-struct GrpcCompletionQueueOption {
-  using Type = CompletionQueue;
-};
-
-using BackgroundThreadsFactory =
-    std::function<std::unique_ptr<BackgroundThreads>()>;
-/**
  * Changes the `BackgroundThreadsFactory`.
  *
  * Connections need to perform background work on behalf of the application.
  * Normally they just create a background thread and a `CompletionQueue` for
  * this work, but the application may need more fine-grained control of their
- * threads.
- *
- * In this case the application can provide its own `BackgroundThreadsFactory`
- * and it assumes responsibility for creating one or more threads blocked on its
- * `CompletionQueue::Run()`.
- *
- * @note `GrpcBackgroundThreadPoolSizeOption`, `GrpcCompletionQueueOption`, and
- *     `GrpcBackgroundThreadsFactoryOption` are mutually exclusive. This option
- *     will be ignored if `GrpcCompletionQueueOption` is set.
+ * threads. In this case the application can provide its own
+ * `BackgroundThreadsFactory` and it assumes responsibility for creating one or
+ * more threads blocked on its `CompletionQueue::Run()`.
  */
+using BackgroundThreadsFactory =
+    std::function<std::unique_ptr<BackgroundThreads>()>;
 struct GrpcBackgroundThreadsFactoryOption {
   using Type = BackgroundThreadsFactory;
 };
@@ -151,33 +87,20 @@ struct GrpcBackgroundThreadsFactoryOption {
  */
 using GrpcOptionList =
     OptionList<GrpcCredentialOption, GrpcNumChannelsOption,
-               GrpcChannelArgumentsOption, GrpcChannelArgumentsNativeOption,
-               GrpcTracingOptionsOption, GrpcBackgroundThreadPoolSizeOption,
-               GrpcCompletionQueueOption, GrpcBackgroundThreadsFactoryOption>;
+               GrpcChannelArgumentsOption, GrpcTracingOptionsOption,
+               GrpcBackgroundThreadsFactoryOption>;
 
 namespace internal {
 
 /// Creates a new `grpc::ChannelArguments` configured with @p opts.
 grpc::ChannelArguments MakeChannelArguments(Options const& opts);
 
-/// Helper function to extract the first instance of an integer channel argument
-absl::optional<int> GetIntChannelArgument(grpc::ChannelArguments const& args,
-                                          std::string const& key);
-
-/// Helper function to extract the first instance of a string channel argument
-absl::optional<std::string> GetStringChannelArgument(
-    grpc::ChannelArguments const& args, std::string const& key);
-
-/**
- * Returns a factory for generating `BackgroundThreads`.
- *
- * If `GrpcBackgroundThreadsFactoryOption` is unset, it will return a thread
- * pool of size `GrpcBackgroundThreadPoolSizeOption`.
- */
-BackgroundThreadsFactory MakeBackgroundThreadsFactory(Options const& opts = {});
+/// Returns a factory to use if `GrpcBackgroundThreadsFactoryOption` is unset.
+std::unique_ptr<BackgroundThreads> DefaultBackgroundThreadsFactory();
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

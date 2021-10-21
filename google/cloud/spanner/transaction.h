@@ -18,7 +18,6 @@
 #include "google/cloud/spanner/internal/transaction_impl.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
-#include "absl/types/optional.h"
 #include <google/spanner/v1/transaction.pb.h>
 #include <chrono>
 #include <memory>
@@ -27,13 +26,13 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 struct TransactionInternals;
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * The representation of a Cloud Spanner transaction.
@@ -86,13 +85,9 @@ class Transaction {
     // There are currently no read-write options.
     ReadWriteOptions();
 
-    // A tag used for collecting statistics about the transaction.
-    ReadWriteOptions& WithTag(absl::optional<std::string> tag);
-
    private:
     friend Transaction;
     google::spanner::v1::TransactionOptions_ReadWrite rw_opts_;
-    absl::optional<std::string> tag_;
   };
 
   /**
@@ -161,13 +156,12 @@ class Transaction {
 
  private:
   // Friendship for access by internal helpers.
-  friend struct spanner_internal::TransactionInternals;
+  friend struct spanner_internal::SPANNER_CLIENT_NS::TransactionInternals;
 
   // Construction of a single-use transaction.
   explicit Transaction(SingleUseOptions opts);
   // Construction of a transaction with existing IDs.
-  Transaction(std::string session_id, std::string transaction_id,
-              std::string transaction_tag);
+  Transaction(std::string session_id, std::string transaction_id);
 
   std::shared_ptr<spanner_internal::TransactionImpl> impl_;
 };
@@ -203,11 +197,11 @@ inline Transaction MakeReadWriteTransaction(
   return Transaction(txn, std::move(opts));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 struct TransactionInternals {
   template <typename T>
@@ -228,8 +222,7 @@ struct TransactionInternals {
   }
 
   static spanner::Transaction MakeTransactionFromIds(
-      std::string session_id, std::string transaction_id,
-      std::string transaction_tag);
+      std::string session_id, std::string transaction_id);
 };
 
 template <typename T>
@@ -246,15 +239,13 @@ VisitInvokeResult<Functor> Visit(spanner::Transaction txn, Functor&& f) {
   return TransactionInternals::Visit(std::move(txn), std::forward<Functor>(f));
 }
 
-inline spanner::Transaction MakeTransactionFromIds(
-    std::string session_id, std::string transaction_id,
-    std::string transaction_tag) {
+inline spanner::Transaction MakeTransactionFromIds(std::string session_id,
+                                                   std::string transaction_id) {
   return TransactionInternals::MakeTransactionFromIds(
-      std::move(session_id), std::move(transaction_id),
-      std::move(transaction_tag));
+      std::move(session_id), std::move(transaction_id));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

@@ -18,7 +18,6 @@
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/pubsub/version.h"
-#include "google/cloud/internal/time_utils.h"
 #include <google/protobuf/util/field_mask_util.h>
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <chrono>
@@ -29,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 class SubscriptionBuilder;
 
 /**
@@ -163,7 +162,7 @@ class SubscriptionBuilder {
   SubscriptionBuilder& set_message_retention_duration(
       std::chrono::duration<Rep, Period> d) & {
     *proto_.mutable_message_retention_duration() =
-        google::cloud::internal::ToDurationProto(std::move(d));
+        ToDurationProto(std::move(d));
     paths_.insert("message_retention_duration");
     return *this;
   }
@@ -260,8 +259,7 @@ class SubscriptionBuilder {
   static google::pubsub::v1::ExpirationPolicy MakeExpirationPolicy(
       std::chrono::duration<Rep, Period> d) {
     google::pubsub::v1::ExpirationPolicy result;
-    *result.mutable_ttl() =
-        google::cloud::internal::ToDurationProto(std::move(d));
+    *result.mutable_ttl() = ToDurationProto(std::move(d));
     return result;
   }
 
@@ -274,11 +272,23 @@ class SubscriptionBuilder {
   }
 
  private:
+  template <typename Rep, typename Period>
+  static google::protobuf::Duration ToDurationProto(
+      std::chrono::duration<Rep, Period> d) {
+    auto seconds = std::chrono::duration_cast<std::chrono::seconds>(d);
+    auto nanos =
+        std::chrono::duration_cast<std::chrono::nanoseconds>(d - seconds);
+    google::protobuf::Duration result;
+    result.set_seconds(seconds.count());
+    result.set_nanos(static_cast<std::int32_t>(nanos.count()));
+    return result;
+  }
+
   google::pubsub::v1::Subscription proto_;
   std::set<std::string> paths_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

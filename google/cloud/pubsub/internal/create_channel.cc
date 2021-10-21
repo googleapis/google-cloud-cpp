@@ -13,23 +13,21 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/create_channel.h"
+#include "google/cloud/pubsub/internal/emulator_overrides.h"
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-std::shared_ptr<grpc::Channel> CreateChannel(Options const& opts,
+/// Create a gRPC channel with the right configuration.
+std::shared_ptr<grpc::Channel> CreateChannel(pubsub::ConnectionOptions options,
                                              int channel_id) {
-  return grpc::CreateCustomChannel(opts.get<EndpointOption>(),
-                                   opts.get<GrpcCredentialOption>(),
-                                   MakeChannelArguments(opts, channel_id));
-}
-
-grpc::ChannelArguments MakeChannelArguments(Options const& opts,
-                                            int channel_id) {
-  auto args = internal::MakeChannelArguments(opts);
-  args.SetInt(GRPC_ARG_CHANNEL_ID, channel_id);
+  options = EmulatorOverrides(std::move(options));
+  auto channel_arguments = options.CreateChannelArguments();
+  // Newer versions of gRPC include a macro (`GRPC_ARG_CHANNEL_ID`) but use
+  // its value here to allow compiling against older versions.
+  channel_arguments.SetInt("grpc.channel_id", channel_id);
   // Pub/Sub messages are often larger than the default gRPC limit (4MiB). How
   // much bigger is a bit of a guess. The application-level payload cannot be
   // larger than 10MiB, but there is the overhead in the protos, and the gRPC
@@ -38,12 +36,14 @@ grpc::ChannelArguments MakeChannelArguments(Options const& opts,
   // reasonable overhead, and (c) typically applications have dozens of channels
   // and rarely more than 100, so even if too generous it is unlikely to be
   // material.
-  args.SetMaxSendMessageSize(16 * 1024 * 1024);
-  args.SetMaxReceiveMessageSize(16 * 1024 * 1024);
-  return args;
+  channel_arguments.SetMaxSendMessageSize(16 * 1024 * 1024);
+  channel_arguments.SetMaxReceiveMessageSize(16 * 1024 * 1024);
+
+  return grpc::CreateCustomChannel(options.endpoint(), options.credentials(),
+                                   std::move(channel_arguments));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

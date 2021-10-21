@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 /// Define the gRPC status code semantics for retrying requests.
 struct RetryTraits {
   static inline bool IsPermanentFailure(google::cloud::Status const& status) {
@@ -35,27 +35,26 @@ struct RetryTraits {
   }
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /// The base class for retry policies.
-using RetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
+using RetryPolicy = google::cloud::internal::TraitBasedRetryPolicy<
     pubsub_internal::RetryTraits>;
 
 /// A retry policy that limits based on time.
-using LimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        pubsub_internal::RetryTraits>;
+using LimitedTimeRetryPolicy = google::cloud::internal::LimitedTimeRetryPolicy<
+    pubsub_internal::RetryTraits>;
 
 /// A retry policy that limits the number of times a request can fail.
 using LimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         pubsub_internal::RetryTraits>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

@@ -17,8 +17,5 @@
 
 int main() {
   std::cout << "Hello: " << google::cloud::version_string() << "\n";
-  // Verifies use of the backward-compatibility aliases: v1 and gcpcxxV1.
-  std::cout << "Hello: " << google::cloud::v1::version_string() << "\n";
-  std::cout << "Hello: " << google::cloud::gcpcxxV1::version_string() << "\n";
   return 0;
 }

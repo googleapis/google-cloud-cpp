@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace iam_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 class IAMCredentialsAuth : public IAMCredentialsStub {
  public:
@@ -62,7 +62,7 @@ class IAMCredentialsAuth : public IAMCredentialsStub {
   std::shared_ptr<IAMCredentialsStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

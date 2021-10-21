@@ -22,7 +22,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 /**
  * Control the Cloud C++ client library behavior with respect to polling on
@@ -86,29 +86,20 @@ class GenericPollingPolicy : public PollingPolicy {
   }
 
   bool OnFailure(google::cloud::Status const& status) override {
-    return maybe_deref(retry_policy_).OnFailure(status);
+    return retry_policy_.OnFailure(status);
   }
 
   std::chrono::milliseconds WaitPeriod() override {
-    return maybe_deref(backoff_policy_).OnCompletion();
+    return backoff_policy_.OnCompletion();
   }
   //@}
 
  private:
-  template <typename T>
-  T& maybe_deref(T& v) {
-    return v;
-  }
-  template <typename T>
-  T& maybe_deref(std::shared_ptr<T>& v) {
-    return *v;
-  }
-
   Retry retry_policy_;
   Backoff backoff_policy_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

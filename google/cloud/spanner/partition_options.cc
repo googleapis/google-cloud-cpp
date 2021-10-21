@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 google::spanner::v1::PartitionOptions ToProto(
     spanner::PartitionOptions const& po) {
@@ -29,7 +29,7 @@ google::spanner::v1::PartitionOptions ToProto(
   return proto;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_benchmarks {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 std::ostream& operator<<(std::ostream& os, Config const& config) {
   return os << "# Experiment: " << config.experiment
@@ -192,7 +192,7 @@ google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args) {
   return config;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_benchmarks
 }  // namespace cloud
 }  // namespace google

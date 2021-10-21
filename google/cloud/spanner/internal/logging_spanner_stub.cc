@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 namespace spanner_proto = ::google::spanner::v1;
 using ::google::cloud::internal::LogWrapper;
@@ -226,7 +226,7 @@ StatusOr<spanner_proto::PartitionResponse> LoggingSpannerStub::PartitionRead(
       client_context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

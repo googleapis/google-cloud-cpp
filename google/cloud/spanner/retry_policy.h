@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /// Define the gRPC status code semantics for retrying requests.
 struct SafeGrpcRetry {
@@ -67,20 +67,19 @@ struct SafeTransactionRerun {
     return !IsOk(status) && !IsTransientFailure(status);
   }
 };
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /// The base class for retry policies.
-using RetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
+using RetryPolicy = google::cloud::internal::TraitBasedRetryPolicy<
     spanner_internal::SafeGrpcRetry>;
 
 /// A retry policy that limits based on time.
-using LimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        spanner_internal::SafeGrpcRetry>;
+using LimitedTimeRetryPolicy = google::cloud::internal::LimitedTimeRetryPolicy<
+    spanner_internal::SafeGrpcRetry>;
 
 /// A retry policy that limits the number of times a request can fail.
 using LimitedErrorCountRetryPolicy =
@@ -88,7 +87,7 @@ using LimitedErrorCountRetryPolicy =
         spanner_internal::SafeGrpcRetry>;
 
 /// The base class for transaction rerun policies.
-using TransactionRerunPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
+using TransactionRerunPolicy = google::cloud::internal::TraitBasedRetryPolicy<
     spanner_internal::SafeTransactionRerun>;
 
 /// A transaction rerun policy that limits the duration of the rerun loop.
@@ -101,7 +100,7 @@ using LimitedErrorCountTransactionRerunPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         spanner_internal::SafeTransactionRerun>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

@@ -68,7 +68,7 @@ https://cloud.google.com/docs/authentication/production
    project. As it is often the case with C++ libraries, compiling these
    dependencies may take several minutes.
 
-3. Run the example, change the placeholder to appropriate values:
+3. Run the example, change the place holder to appropriate values:
 
    ```bash
    bazel run :quickstart -- [BUCKET NAME]
@@ -94,7 +94,7 @@ https://cloud.google.com/docs/authentication/production
 
    ```bash
    cd $HOME/vcpkg
-   ./vcpkg install google-cloud-cpp[core,storage]
+   ./vcpkg install google-cloud-cpp
    ```
 
    Note that, as it is often the case with C++ libraries, compiling these
@@ -120,67 +120,7 @@ https://cloud.google.com/docs/authentication/production
    example, bucket names cannot include forward slashes (`/`) or uppercase
    letters.
 
-## The gRPC plugin
-
-The Google Cloud Storage client library includes an experimental plugin to use
-gRPC as the transport to access GCS.  For the most part, only applications with
-very large workloads (several Tbits/s of upload and/or download bandwidth)
-benefit from GCS+gRPC.  Furthermore, this GCS feature is not generally
-available in GCP, please talk to your sales rep if you have an interest in using
-this feature.
-
-To enable the GCS+gRPC plugin you need to (a) link your application
-with an additional library, and (b) use a different function to initialize the
-`google::cloud::storage::Client` object. Both changes are illustrated in the
-`quickstart_grpc` program included in this directory.
-
-### Using with CMake
-
-The GCS+gRPC plugin is disabled in CMake builds, this minimized the impact in
-build times and dependency management for customers not wanting to use the
-feature. To enable the feature add `-DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON`
-to your CMake configuration step. Using the previous example:
-
-```sh
-cd $HOME/gooogle-cloud-cpp/google/cloud/storage/quickstart
-cmake -H. -B.build -DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON \
-    -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
-cmake --build .build --target quickstart_grpc
-```
-
-Then run the additional program:
-
-```sh
-.build/quickstart_grpc [BUCKET NAME]
-```
-
-### Using with Bazel
-
-Run the example, change the placeholder to appropriate values:
-
-```bash
-bazel run :quickstart_grpc -- [BUCKET NAME]
- ```
-
 ## Platform Specific Notes
-
-### macOS
-
-gRPC [requires][grpc-roots-pem-bug] an environment variable to configure the
-trust store for SSL certificates, you can download and configure this using:
-
-```bash
-curl -Lo roots.pem https://pki.google.com/roots.pem
-export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="$PWD/roots.pem"
-```
-
-To workaround a [bug in Bazel][bazel-grpc-macos-bug], gRPC requires this flag on
-macOS builds, you can add the option manually or include it in your `.bazelrc`
-file:
-
-```bash
-bazel build --copt=-DGRPC_BAZEL_BUILD ...
-```
 
 ### Windows
 
@@ -194,16 +134,6 @@ to use it via:
 
 ```shell
 bazel --output_user_root=c:\b build ...
-```
-
-gRPC [requires][grpc-roots-pem-bug] an environment variable to configure the
-trust store for SSL certificates, you can download and configure this using:
-
-```console
-@powershell -NoProfile -ExecutionPolicy unrestricted -Command ^
-    (new-object System.Net.WebClient).Downloadfile( ^
-        'https://pki.google.com/roots.pem', 'roots.pem')
-set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
 [bazel-install]: https://docs.bazel.build/versions/main/install.html

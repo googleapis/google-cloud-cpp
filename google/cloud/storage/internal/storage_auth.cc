@@ -17,49 +17,246 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-std::unique_ptr<StorageStub::ReadObjectStream> StorageAuth::ReadObject(
+std::unique_ptr<StorageStub::ObjectMediaStream> StorageAuth::GetObjectMedia(
     std::unique_ptr<grpc::ClientContext> context,
-    google::storage::v2::ReadObjectRequest const& request) {
-  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
-      google::storage::v2::ReadObjectResponse>;
+    google::storage::v1::GetObjectMediaRequest const& request) {
+  using ErrorStream = google::cloud::internal::StreamingReadRpcError<
+      google::storage::v1::GetObjectMediaResponse>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
-  return child_->ReadObject(std::move(context), request);
+  return child_->GetObjectMedia(std::move(context), request);
 }
 
-std::unique_ptr<StorageStub::WriteObjectStream> StorageAuth::WriteObject(
+std::unique_ptr<StorageStub::InsertStream> StorageAuth::InsertObjectMedia(
     std::unique_ptr<grpc::ClientContext> context) {
-  using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
-      google::storage::v2::WriteObjectRequest,
-      google::storage::v2::WriteObjectResponse>;
+  using ErrorStream = google::cloud::internal::StreamingWriteRpcError<
+      google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
-  return child_->WriteObject(std::move(context));
+  return child_->InsertObjectMedia(std::move(context));
 }
 
-StatusOr<google::storage::v2::StartResumableWriteResponse>
+Status StorageAuth::DeleteBucketAccessControl(
+    grpc::ClientContext& context,
+    google::storage::v1::DeleteBucketAccessControlRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBucketAccessControl(context, request);
+}
+
+StatusOr<google::storage::v1::BucketAccessControl>
+StorageAuth::GetBucketAccessControl(
+    grpc::ClientContext& context,
+    google::storage::v1::GetBucketAccessControlRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetBucketAccessControl(context, request);
+}
+
+StatusOr<google::storage::v1::BucketAccessControl>
+StorageAuth::InsertBucketAccessControl(
+    grpc::ClientContext& context,
+    google::storage::v1::InsertBucketAccessControlRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->InsertBucketAccessControl(context, request);
+}
+
+StatusOr<google::storage::v1::ListBucketAccessControlsResponse>
+StorageAuth::ListBucketAccessControls(
+    grpc::ClientContext& context,
+    google::storage::v1::ListBucketAccessControlsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListBucketAccessControls(context, request);
+}
+
+StatusOr<google::storage::v1::BucketAccessControl>
+StorageAuth::UpdateBucketAccessControl(
+    grpc::ClientContext& context,
+    google::storage::v1::UpdateBucketAccessControlRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateBucketAccessControl(context, request);
+}
+
+Status StorageAuth::DeleteBucket(
+    grpc::ClientContext& context,
+    google::storage::v1::DeleteBucketRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBucket(context, request);
+}
+
+StatusOr<google::storage::v1::Bucket> StorageAuth::GetBucket(
+    grpc::ClientContext& context,
+    google::storage::v1::GetBucketRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetBucket(context, request);
+}
+
+StatusOr<google::storage::v1::Bucket> StorageAuth::InsertBucket(
+    grpc::ClientContext& context,
+    google::storage::v1::InsertBucketRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->InsertBucket(context, request);
+}
+
+StatusOr<google::storage::v1::ListBucketsResponse> StorageAuth::ListBuckets(
+    grpc::ClientContext& context,
+    google::storage::v1::ListBucketsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListBuckets(context, request);
+}
+
+StatusOr<google::iam::v1::Policy> StorageAuth::GetBucketIamPolicy(
+    grpc::ClientContext& context,
+    google::storage::v1::GetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetBucketIamPolicy(context, request);
+}
+
+StatusOr<google::iam::v1::Policy> StorageAuth::SetBucketIamPolicy(
+    grpc::ClientContext& context,
+    google::storage::v1::SetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SetBucketIamPolicy(context, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+StorageAuth::TestBucketIamPermissions(
+    grpc::ClientContext& context,
+    google::storage::v1::TestIamPermissionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TestBucketIamPermissions(context, request);
+}
+
+StatusOr<google::storage::v1::Bucket> StorageAuth::UpdateBucket(
+    grpc::ClientContext& context,
+    google::storage::v1::UpdateBucketRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateBucket(context, request);
+}
+
+Status StorageAuth::DeleteDefaultObjectAccessControl(
+    grpc::ClientContext& context,
+    google::storage::v1::DeleteDefaultObjectAccessControlRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDefaultObjectAccessControl(context, request);
+}
+
+StatusOr<google::storage::v1::ObjectAccessControl>
+StorageAuth::GetDefaultObjectAccessControl(
+    grpc::ClientContext& context,
+    google::storage::v1::GetDefaultObjectAccessControlRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetDefaultObjectAccessControl(context, request);
+}
+
+StatusOr<google::storage::v1::ObjectAccessControl>
+StorageAuth::InsertDefaultObjectAccessControl(
+    grpc::ClientContext& context,
+    google::storage::v1::InsertDefaultObjectAccessControlRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->InsertDefaultObjectAccessControl(context, request);
+}
+
+StatusOr<google::storage::v1::ListObjectAccessControlsResponse>
+StorageAuth::ListDefaultObjectAccessControls(
+    grpc::ClientContext& context,
+    google::storage::v1::ListDefaultObjectAccessControlsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListDefaultObjectAccessControls(context, request);
+}
+
+StatusOr<google::storage::v1::ObjectAccessControl>
+StorageAuth::UpdateDefaultObjectAccessControl(
+    grpc::ClientContext& context,
+    google::storage::v1::UpdateDefaultObjectAccessControlRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateDefaultObjectAccessControl(context, request);
+}
+
+Status StorageAuth::DeleteNotification(
+    grpc::ClientContext& context,
+    google::storage::v1::DeleteNotificationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteNotification(context, request);
+}
+
+StatusOr<google::storage::v1::Notification> StorageAuth::GetNotification(
+    grpc::ClientContext& context,
+    google::storage::v1::GetNotificationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetNotification(context, request);
+}
+
+StatusOr<google::storage::v1::Notification> StorageAuth::InsertNotification(
+    grpc::ClientContext& context,
+    google::storage::v1::InsertNotificationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->InsertNotification(context, request);
+}
+
+StatusOr<google::storage::v1::ListNotificationsResponse>
+StorageAuth::ListNotifications(
+    grpc::ClientContext& context,
+    google::storage::v1::ListNotificationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListNotifications(context, request);
+}
+
+Status StorageAuth::DeleteObject(
+    grpc::ClientContext& context,
+    google::storage::v1::DeleteObjectRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteObject(context, request);
+}
+
+StatusOr<google::storage::v1::StartResumableWriteResponse>
 StorageAuth::StartResumableWrite(
     grpc::ClientContext& context,
-    google::storage::v2::StartResumableWriteRequest const& request) {
+    google::storage::v1::StartResumableWriteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StartResumableWrite(context, request);
 }
 
-StatusOr<google::storage::v2::QueryWriteStatusResponse>
+StatusOr<google::storage::v1::QueryWriteStatusResponse>
 StorageAuth::QueryWriteStatus(
     grpc::ClientContext& context,
-    google::storage::v2::QueryWriteStatusRequest const& request) {
+    google::storage::v1::QueryWriteStatusRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->QueryWriteStatus(context, request);
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 /// Contains functions to return well-known notification payload format names.
 namespace payload_format {
 inline char const* JsonApiV1() {
@@ -34,7 +34,7 @@ inline char const* None() {
 }
 
 }  // namespace payload_format
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

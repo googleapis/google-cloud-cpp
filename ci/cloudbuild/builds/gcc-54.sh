@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -euo pipefail
+set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
@@ -25,9 +25,5 @@ export CC=gcc
 export CXX=g++
 
 cmake -GNinja -DBUILD_SHARED_LIBS=yes -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON \
-  -H. -Bcmake-out
+  -Hsuper -Bcmake-out
 cmake --build cmake-out
-(
-  cd cmake-out
-  ctest --output-on-failure -LE "integration-test" -j "$(nproc)"
-)

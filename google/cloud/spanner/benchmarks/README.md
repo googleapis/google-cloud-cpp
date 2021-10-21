@@ -38,9 +38,19 @@ instructions for your platform.
 
 ### Compiling the library
 
-You must compile both the library and its dependencies with optimization.
-The [contributor documentation](/doc/contributor/README.md) has the relevant
-information.
+You must compile both the library and its dependencies with optimization, using
+CMake this is:
+
+```bash
+git clone https://github.com/googleapis/google-cloud-cpp.git
+cd google-cloud-cpp
+cmake -Hsuper -Bcmake-out/si -DCMAKE_BUILD_TYPE=Release \
+     -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local-spanner
+cmake --build cmake-out/si --target project-dependencies
+cmake -H. -B.build -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_PREFIX_PATH=$HOME/local-spanner
+cmake --build .build
+```
 
 ### Configuring Authentication
 

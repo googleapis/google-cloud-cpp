@@ -37,7 +37,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 /**
  * A parameter type indicating the maximum number of streams to
  * `ParallelUploadFile`.
@@ -664,9 +664,9 @@ NonResumableParallelUploadState::Create(Client client,
       [client, bucket_name, delete_options](std::string const& object_name,
                                             std::int64_t generation) mutable {
         return google::cloud::internal::apply(
-            DeleteApplyHelper{client, std::move(bucket_name), object_name,
-                              generation},
-            std::move(delete_options));
+            DeleteApplyHelper{client, std::move(bucket_name), object_name},
+            std::tuple_cat(std::make_tuple(IfGenerationMatch(generation)),
+                           std::move(delete_options)));
       });
 
   auto compose_options = StaticTupleFilter<
@@ -725,9 +725,9 @@ std::shared_ptr<ScopedDeleter> ResumableParallelUploadState::CreateDeleter(
       [client, bucket_name, delete_options](std::string const& object_name,
                                             std::int64_t generation) mutable {
         return google::cloud::internal::apply(
-            DeleteApplyHelper{client, std::move(bucket_name), object_name,
-                              generation},
-            std::move(delete_options));
+            DeleteApplyHelper{client, std::move(bucket_name), object_name},
+            std::tuple_cat(std::make_tuple(IfGenerationMatch(generation)),
+                           std::move(delete_options)));
       });
 }
 
@@ -1109,7 +1109,14 @@ struct CreateParallelUploadShards {
           offset, shard_end - offset, upload_buffer_size));
       offset = shard_end;
     }
+#if defined(__clang__) && \
+    (__clang_major__ < 4 || (__clang_major__ == 3 && __clang_minor__ <= 8))
+    // The extra std::move() is required to workaround a Clang <= 3.8 bug, which
+    // tries to copy the result otherwise.
+    return std::move(res);
+#else
     return res;
+#endif
   }
 };
 
@@ -1188,7 +1195,7 @@ StatusOr<ObjectMetadata> ParallelUploadFile(
   return res;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

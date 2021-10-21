@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 namespace {
@@ -58,8 +58,7 @@ class MinimalIamCredentialsRestImpl : public MinimalIamCredentialsRest {
         {"scope", request.scopes},
         {"lifetime", std::to_string(request.lifetime.count()) + "s"},
     };
-    auto response =
-        std::move(builder).BuildRequest().MakeRequest(payload.dump());
+    auto response = builder.BuildRequest().MakeRequest(payload.dump());
     if (!response) return std::move(response).status();
     if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
       return AsStatus(*response);
@@ -70,11 +69,10 @@ class MinimalIamCredentialsRestImpl : public MinimalIamCredentialsRest {
       return Status(StatusCode::kUnknown,
                     "invalid response from service <" + parsed.dump() + ">");
     }
-    auto expire_time = google::cloud::internal::ParseRfc3339(
-        parsed["expireTime"].get<std::string>());
-    if (!expire_time) return std::move(expire_time).status();
     return google::cloud::internal::AccessToken{
-        parsed["accessToken"].get<std::string>(), *expire_time};
+        parsed["accessToken"].get<std::string>(),
+        google::cloud::internal::ParseRfc3339(
+            parsed["expireTime"].get<std::string>())};
   }
 
  private:
@@ -147,7 +145,7 @@ std::shared_ptr<MinimalIamCredentialsRest> MakeMinimalIamCredentialsRestStub(
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -32,7 +32,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 [[noreturn]] void ThrowFutureError(std::future_errc ec, char const* msg);
 
@@ -334,6 +334,7 @@ template <typename T>
 class future_shared_state final : private future_shared_state_base {
  public:
   future_shared_state() : future_shared_state_base(), buffer_() {}
+  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   explicit future_shared_state(std::function<void()> cancellation_callback)
       : future_shared_state_base(std::move(cancellation_callback)), buffer_() {}
   ~future_shared_state() {
@@ -867,7 +868,7 @@ future_shared_state<void>::make_continuation(
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

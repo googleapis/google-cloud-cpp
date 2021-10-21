@@ -21,7 +21,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * The configuration parameters for RPC/protobuf tracing.
  *
@@ -66,7 +66,7 @@ class TracingOptions {
   std::int64_t truncate_string_field_longer_than_ = 128;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

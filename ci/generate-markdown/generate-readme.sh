@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -euo pipefail
+set -eu
 
 BINDIR=$(dirname "$0")
 readonly BINDIR
@@ -40,8 +40,8 @@ cat <<"EOF"
 [kokoro-windows-cmake-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-cmake-link.html
 [kokoro-windows-bazel-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-bazel.svg
 [kokoro-windows-bazel-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-bazel-link.html
-[kokoro-macos-cmake-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-cmake-vcpkg.svg
-[kokoro-macos-cmake-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-cmake-vcpkg-link.html
+[kokoro-macos-cmake-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-cmake-super.svg
+[kokoro-macos-cmake-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-cmake-super-link.html
 [kokoro-macos-bazel-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-bazel.svg
 [kokoro-macos-bazel-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-bazel-link.html
 [codecov-shield]: https://codecov.io/gh/googleapis/google-cloud-cpp/branch/main/graph/badge.svg
@@ -54,9 +54,7 @@ cat <<"EOF"
 This repository contains idiomatic C++ client libraries for the following
 [Google Cloud Platform](https://cloud.google.com/) services.
 
-* [Google Cloud BigQuery](google/cloud/bigquery/README.md) [[quickstart]](google/cloud/bigquery/quickstart/README.md)
 * [Google Cloud Bigtable](google/cloud/bigtable/README.md) [[quickstart]](google/cloud/bigtable/quickstart/README.md)
-* [Google Cloud IAM](google/cloud/iam/README.md) [[quickstart]](google/cloud/iam/quickstart/README.md)
 * [Google Cloud Spanner](google/cloud/spanner/README.md) [[quickstart]](google/cloud/spanner/quickstart/README.md)
 * [Google Cloud Pub/Sub](google/cloud/pubsub/README.md) [[quickstart]](google/cloud/pubsub/quickstart/README.md)
 * [Google Cloud Storage](google/cloud/storage/README.md) [[quickstart]](google/cloud/storage/quickstart/README.md)
@@ -106,13 +104,12 @@ colleagues.
 From the top-level directory of `google-cloud-cpp` run these commands:
 
 ```shell
-git -C $HOME clone https://github.com/microsoft/vcpkg.git
-$HOME/vcpkg/bootstrap-vcpkg.sh
-cmake -H. -Bcmake-out/ -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+cmake -Hsuper -Bcmake-out
 cmake --build cmake-out -- -j $(nproc)
 ```
 
-The binary artifacts, such as examples, will be placed in `cmake-out/`.
+The binary artifacts, such as examples, will be placed in
+`cmake-out/super/src/google_cloud_cpp_project-build/`.
 
 ## Quickstart
 
@@ -122,9 +119,7 @@ intended to help you get up and running in a matter of minutes. This
 how to use the library, along with minimal build files for common build
 systems, such as CMake and Bazel.
 
-* [Google Cloud BigQuery Quickstart](google/cloud/bigquery/quickstart/README.md)
 * [Google Cloud Bigtable Quickstart](google/cloud/bigtable/quickstart/README.md)
-* [Google Cloud IAM Quickstart](google/cloud/iam/quickstart/README.md)
 * [Google Cloud Spanner Quickstart](google/cloud/spanner/quickstart/README.md)
 * [Google Cloud Pub/Sub Quickstart](google/cloud/pubsub/quickstart/README.md)
 * [Google Cloud Storage Quickstart](google/cloud/storage/quickstart/README.md)
@@ -146,8 +141,7 @@ cat <<"EOF"
 ## Support
 
 * This project supports Windows, macOS, Linux
-* This project supports C++11 (and higher) compilers (we test with GCC >= 6.3,
-  Clang >= 6.0, and MSVC >= 2017)
+* This project supports C++11 (and higher) compilers (we test with GCC \>= 5.4, Clang >= 3.8, and MSVC \>= 2019)
 * This project supports Bazel and CMake builds. See the [Quickstart examples](https://github.com/googleapis/google-cloud-cpp#quickstart)
 * This project uses dependencies described in [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md)
 * This project works with or without exceptions enabled
@@ -205,12 +199,6 @@ policy described at https://cloud.google.com/terms.
 * Any file or symbol with `Impl` or `impl` in its name is **not part of our
   public API**.
 * Any symbol with `experimental` in its name is not part of the public API.
-* You should avoid naming our inline namespaces (even avoid spelling the
-  preprocessor names like `GOOGLE_CLOUD_CPP_NS`) and instead rely on them being
-  a transparent versioning mechanism that you almost certainly don't care
-  about. If you do spell out specific inline namespace names, your code will be
-  tightly coupled with that specific version and will likely break when
-  upgrading to a new version of our library.
 
 ## Beyond the C++ API
 
@@ -245,7 +233,7 @@ macros, files, targets, rules, and installed artifacts.
 
 Only the rules exported at the top-level directory are intended for customer
 use, e.g.,`//:spanner`. Experimental rules have `experimental` in their name,
-e.g. `//:experimental-logging`. As previously stated, experimental rules are
+e.g. `//:experimental-firestore`. As previously stated, experimental rules are
 subject to change or removal without notice.
 
 Previously some of the rules in subdirectories
@@ -258,7 +246,7 @@ rules are deprecated as of 2021-02-15, and will be become inaccessible
 Only CMake packages starting with the `google_cloud_cpp_` prefix are intended
 for customer use. Only targets starting with `google-cloud-cpp::`, are intended
 for customer use. Experimental targets have `experimental` in their name (e.g.
-`google-cloud-cpp::experimental-logging`). As previously stated, experimental
+`google-cloud-cpp::experimental-iam`). As previously stated, experimental
 targets are subject to change or removal without notice.
 
 In previous versions we released packages with other prefixes (or without

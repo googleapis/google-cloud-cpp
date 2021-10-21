@@ -13,19 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/metadata_parser.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <limits>
 
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
-
-using ::google::cloud::testing_util::StatusIs;
-
 /// @test Verify that we parse boolean values in JSON objects.
 TEST(MetadataParserTest, ParseBoolField) {
   std::string text = R"""({
@@ -33,8 +28,8 @@ TEST(MetadataParserTest, ParseBoolField) {
       "flag2": false
 })""";
   auto json_object = nlohmann::json::parse(text);
-  EXPECT_TRUE(ParseBoolField(json_object, "flag1").value());
-  EXPECT_FALSE(ParseBoolField(json_object, "flag2").value());
+  EXPECT_TRUE(ParseBoolField(json_object, "flag1"));
+  EXPECT_FALSE(ParseBoolField(json_object, "flag2"));
 }
 
 /// @test Verify that we parse boolean values in JSON objects.
@@ -44,8 +39,8 @@ TEST(MetadataParserTest, ParseBoolFieldFromString) {
       "flag2": "false"
 })""";
   auto json_object = nlohmann::json::parse(text);
-  EXPECT_TRUE(ParseBoolField(json_object, "flag1").value());
-  EXPECT_FALSE(ParseBoolField(json_object, "flag2").value());
+  EXPECT_TRUE(ParseBoolField(json_object, "flag1"));
+  EXPECT_FALSE(ParseBoolField(json_object, "flag2"));
 }
 
 /// @test Verify that we parse missing boolean values in JSON objects.
@@ -54,17 +49,22 @@ TEST(MetadataParserTest, ParseMissingBoolField) {
       "flag": true
 })""";
   auto json_object = nlohmann::json::parse(text);
-  auto actual = ParseBoolField(json_object, "some-other-flag").value();
+  auto actual = ParseBoolField(json_object, "some-other-flag");
   EXPECT_FALSE(actual);
 }
 
 /// @test Verify that we raise an exception with invalid boolean fields.
 TEST(MetadataParserTest, ParseInvalidBoolFieldValue) {
-  std::string text = R"""({"flag": "not-a-boolean"})""";
+  std::string text = R"""({
+      "flag": "not-a-boolean"
+})""";
   auto json_object = nlohmann::json::parse(text);
 
-  EXPECT_THAT(ParseBoolField(json_object, "flag"),
-              StatusIs(StatusCode::kInvalidArgument));
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(ParseBoolField(json_object, "flag"), std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(ParseBoolField(json_object, "flag"), "");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify that we raise an exception with invalid boolean fields.
@@ -74,8 +74,11 @@ TEST(MetadataParserTest, ParseInvalidBoolFieldType) {
 })""";
   auto json_object = nlohmann::json::parse(text);
 
-  EXPECT_THAT(ParseBoolField(json_object, "flag"),
-              StatusIs(StatusCode::kInvalidArgument));
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(ParseBoolField(json_object, "flag"), std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(ParseBoolField(json_object, "flag"), "");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify that we parse RFC-3339 timestamps in JSON objects.
@@ -86,13 +89,12 @@ TEST(MetadataParserTest, ParseTimestampField) {
 })""";
   auto json_object = nlohmann::json::parse(text);
   auto actual = ParseTimestampField(json_object, "timeCreated");
-  ASSERT_STATUS_OK(actual);
 
   // Use `date -u +%s --date='2018-05-19T19:31:14Z'` to get the magic number:
   using std::chrono::duration_cast;
   EXPECT_EQ(
       1526758274L,
-      duration_cast<std::chrono::seconds>(actual->time_since_epoch()).count());
+      duration_cast<std::chrono::seconds>(actual.time_since_epoch()).count());
 }
 
 /// @test Verify that we parse RFC-3339 timestamps in JSON objects.
@@ -102,31 +104,20 @@ TEST(MetadataParserTest, ParseMissingTimestampField) {
 })""";
   auto json_object = nlohmann::json::parse(text);
   auto actual = ParseTimestampField(json_object, "timeCreated");
-  ASSERT_STATUS_OK(actual);
 
   using std::chrono::duration_cast;
   EXPECT_EQ(
       0L,
-      duration_cast<std::chrono::seconds>(actual->time_since_epoch()).count());
-}
-
-TEST(MetadataParserTest, ParseTimestampInvalidType) {
-  std::string text = R"""({
-      "updated": [0, 1, 2]
-})""";
-  auto json_object = nlohmann::json::parse(text);
-  auto actual = ParseTimestampField(json_object, "updated");
-  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument));
+      duration_cast<std::chrono::seconds>(actual.time_since_epoch()).count());
 }
 
 template <typename Integer>
 void CheckParseNormal(
-    std::function<StatusOr<Integer>(nlohmann::json const&, char const*)>
-        tested) {
+    std::function<Integer(nlohmann::json const&, char const*)> tested) {
   std::string text = R"""({ "field": 42 })""";
   auto json_object = nlohmann::json::parse(text);
   auto actual = tested(json_object, "field");
-  EXPECT_EQ(Integer(42), actual.value());
+  EXPECT_EQ(Integer(42), actual);
 }
 
 /// @test Verify Parse*Field can parse regular values.
@@ -139,12 +130,11 @@ TEST(MetadataParserTest, ParseIntegralFieldNormal) {
 
 template <typename Integer>
 void CheckParseFromString(
-    std::function<StatusOr<Integer>(nlohmann::json const&, char const*)>
-        tested) {
+    std::function<Integer(nlohmann::json const&, char const*)> tested) {
   std::string text = R"""({ "field": "1234" })""";
   auto json_object = nlohmann::json::parse(text);
   auto actual = tested(json_object, "field");
-  EXPECT_EQ(Integer(1234), actual.value());
+  EXPECT_EQ(Integer(1234), actual);
 }
 
 /// @test Verify Parse*Field can parse string values.
@@ -156,37 +146,12 @@ TEST(MetadataParserTest, ParseIntegralFieldString) {
 }
 
 template <typename Integer>
-void CheckParseFullRange(
-    std::function<StatusOr<Integer>(nlohmann::json const&, char const*)>
-        tested) {
-  auto min = tested(
-      nlohmann::json{
-          {"field", std::to_string(std::numeric_limits<Integer>::min())}},
-      "field");
-  EXPECT_EQ(std::numeric_limits<Integer>::min(), min.value());
-  auto max = tested(
-      nlohmann::json{
-          {"field", std::to_string(std::numeric_limits<Integer>::max())}},
-      "field");
-  EXPECT_EQ(std::numeric_limits<Integer>::max(), max.value());
-}
-
-/// @test Verify Parse*Field can parse string values.
-TEST(MetadataParserTest, ParseIntegralFieldFullRange) {
-  CheckParseFullRange<std::int32_t>(&ParseIntField);
-  CheckParseFullRange<std::uint32_t>(&ParseUnsignedIntField);
-  CheckParseFullRange<std::int64_t>(&ParseLongField);
-  CheckParseFullRange<std::uint64_t>(&ParseUnsignedLongField);
-}
-
-template <typename Integer>
 void CheckParseMissing(
-    std::function<StatusOr<Integer>(nlohmann::json const&, char const*)>
-        tested) {
+    std::function<Integer(nlohmann::json const&, char const*)> tested) {
   std::string text = R"""({ "field": "1234" })""";
   auto json_object = nlohmann::json::parse(text);
   auto actual = tested(json_object, "some-other-field");
-  EXPECT_EQ(Integer(0), actual.value());
+  EXPECT_EQ(Integer(0), actual);
 }
 
 /// @test Verify Parse*Field can parse string values.
@@ -199,12 +164,14 @@ TEST(MetadataParserTest, ParseIntegralFieldMissing) {
 
 template <typename Integer>
 void CheckParseInvalid(
-    std::function<StatusOr<Integer>(nlohmann::json const&, char const*)>
-        tested) {
+    std::function<Integer(nlohmann::json const&, char const*)> tested) {
   std::string text = R"""({ "field_name": "not-a-number" })""";
   auto json_object = nlohmann::json::parse(text);
-  EXPECT_THAT(tested(json_object, "field_name"),
-              StatusIs(StatusCode::kInvalidArgument));
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(tested(json_object, "field_name"), std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(tested(json_object, "field_name"), "");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify Parse*Field detects invalid values.
@@ -217,12 +184,23 @@ TEST(MetadataParserTest, ParseIntegralFieldInvalid) {
 
 template <typename Integer>
 void CheckParseInvalidFieldType(
-    std::function<StatusOr<Integer>(nlohmann::json const&, char const*)>
-        tested) {
+    std::function<Integer(nlohmann::json const&, char const*)> tested) {
   std::string text = R"""({ "field_name": [0, 1, 2] })""";
   auto json_object = nlohmann::json::parse(text);
-  EXPECT_THAT(tested(json_object, "field_name"),
-              StatusIs(StatusCode::kInvalidArgument));
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try {
+        tested(json_object, "field_name");
+      } catch (std::exception const& ex) {
+        EXPECT_THAT(ex.what(), ::testing::HasSubstr("json="));
+        EXPECT_THAT(ex.what(), ::testing::HasSubstr("<field_name>"));
+        EXPECT_THAT(ex.what(), ::testing::HasSubstr("[0,1,2]"));
+        throw;
+      },
+      std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(tested(json_object, "field_name"), "");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 /// @test Verify Parse*Field detects invalid field types.
@@ -235,7 +213,7 @@ TEST(MetadataParserTest, ParseIntegralFieldInvalidFieldType) {
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

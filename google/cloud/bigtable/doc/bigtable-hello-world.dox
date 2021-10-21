@@ -34,7 +34,7 @@ The example uses the following headers:
 ## Connecting to Cloud Bigtable to manage tables
 
 To manage tables, connect to Cloud Bigtable using
-`bigtable::MakeAdminClient()`:
+`bigtable::CreateDefaultAdminClient()`:
 
 @snippet bigtable_hello_world.cc connect admin
 
@@ -59,7 +59,7 @@ Create a table with [TableAdmin::CreateTable()][TableAdmin-CreateTable]:
 ## Connecting to Cloud Bigtable to read and write data
 
 To read and write data, connect to Cloud Bigtable using
-`bigtable::MakeDataClient()`:
+`bigtable::CreateDefaultDataClient()`:
 
 @snippet bigtable_hello_world.cc connect data
 
@@ -124,19 +124,19 @@ Here is the full example
 
 @snippet bigtable_hello_world.cc all code
 
-[Filter]:          @ref google::cloud::bigtable::Filter
-[InstanceAdmin]:   @ref google::cloud::bigtable::InstanceAdmin
-[Mutation]:        @ref google::cloud::bigtable::Mutation
-[Row]:             @ref google::cloud::bigtable::Row
-[RowRange]:        @ref google::cloud::bigtable::RowRange
-[RowSet]:          @ref google::cloud::bigtable::RowSet
-[Table]:           @ref google::cloud::bigtable::Table
-[Table-Apply]:     @ref google::cloud::bigtable::Table::Apply
-[Table-BulkApply]: @ref google::cloud::bigtable::Table::BulkApply
-[Table-ReadRow]:   @ref google::cloud::bigtable::Table::ReadRow
-[Table-ReadRows]:  @ref google::cloud::bigtable::Table::ReadRows
-[TableAdmin]:      @ref google::cloud::bigtable::TableAdmin
-[TableAdmin-CreateTable]:  @ref google::cloud::bigtable::TableAdmin::CreateTable
-[TableAdmin-DeleteTable]:  @ref google::cloud::bigtable::TableAdmin::DeleteTable
+[Filter]:          @ref google::cloud::bigtable::v1::Filter
+[InstanceAdmin]:   @ref google::cloud::bigtable::v1::InstanceAdmin
+[Mutation]:        @ref google::cloud::bigtable::v1::Mutation
+[Row]:             @ref google::cloud::bigtable::v1::Row
+[RowRange]:        @ref google::cloud::bigtable::v1::RowRange
+[RowSet]:          @ref google::cloud::bigtable::v1::RowSet
+[Table]:           @ref google::cloud::bigtable::v1::Table
+[Table-Apply]:     @ref google::cloud::bigtable::v1::Table::Apply
+[Table-BulkApply]: @ref google::cloud::bigtable::v1::Table::BulkApply
+[Table-ReadRow]:   @ref google::cloud::bigtable::v1::Table::ReadRow
+[Table-ReadRows]:  @ref google::cloud::bigtable::v1::Table::ReadRows
+[TableAdmin]:      @ref google::cloud::bigtable::v1::TableAdmin
+[TableAdmin-CreateTable]:  @ref google::cloud::bigtable::v1::TableAdmin::CreateTable
+[TableAdmin-DeleteTable]:  @ref google::cloud::bigtable::v1::TableAdmin::DeleteTable
 
 */

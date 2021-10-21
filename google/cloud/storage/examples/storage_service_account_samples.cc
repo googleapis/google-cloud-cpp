@@ -22,7 +22,7 @@ namespace {
 void GetServiceAccount(google::cloud::storage::Client client,
                        std::vector<std::string> const&) {
   //! [START storage_get_service_account] [get service account]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client) {
     StatusOr<gcs::ServiceAccount> account = client.GetServiceAccount();
@@ -37,7 +37,7 @@ void GetServiceAccount(google::cloud::storage::Client client,
 void GetServiceAccountForProject(google::cloud::storage::Client client,
                                  std::vector<std::string> const& argv) {
   //! [get service account for project]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& project_id) {
     StatusOr<gcs::ServiceAccount> account =
@@ -54,7 +54,7 @@ void GetServiceAccountForProject(google::cloud::storage::Client client,
 void ListHmacKeys(google::cloud::storage::Client client,
                   std::vector<std::string> const&) {
   //! [list hmac keys] [START storage_list_hmac_keys]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client) {
     int count = 0;
@@ -77,7 +77,7 @@ void ListHmacKeys(google::cloud::storage::Client client,
 void ListHmacKeysWithServiceAccount(google::cloud::storage::Client client,
                                     std::vector<std::string> const& argv) {
   //! [list hmac keys service account]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& service_account) {
     int count = 0;
@@ -102,7 +102,7 @@ void ListHmacKeysWithServiceAccount(google::cloud::storage::Client client,
 std::string CreateHmacKey(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
   //! [create hmac key] [START storage_create_hmac_key]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   return [](gcs::Client client, std::string const& service_account_email) {
     StatusOr<std::pair<gcs::HmacKeyMetadata, std::string>> key_info =
@@ -121,7 +121,7 @@ std::string CreateHmacKey(google::cloud::storage::Client client,
 std::string CreateHmacKeyForProject(google::cloud::storage::Client client,
                                     std::vector<std::string> const& argv) {
   //! [create hmac key project]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   return [](gcs::Client client, std::string const& project_id,
             std::string const& service_account_email) {
@@ -145,7 +145,7 @@ std::string CreateHmacKeyForProject(google::cloud::storage::Client client,
 void DeleteHmacKey(google::cloud::storage::Client client,
                    std::vector<std::string> const& argv) {
   //! [delete hmac key] [START storage_delete_hmac_key]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string const& access_id) {
     google::cloud::Status status = client.DeleteHmacKey(access_id);
     if (!status.ok()) throw std::runtime_error(status.message());
@@ -160,7 +160,7 @@ void DeleteHmacKey(google::cloud::storage::Client client,
 void GetHmacKey(google::cloud::storage::Client client,
                 std::vector<std::string> const& argv) {
   //! [get hmac key] [START storage_get_hmac_key]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& access_id) {
     StatusOr<gcs::HmacKeyMetadata> hmac_key = client.GetHmacKey(access_id);
@@ -175,7 +175,7 @@ void GetHmacKey(google::cloud::storage::Client client,
 void UpdateHmacKey(google::cloud::storage::Client client,
                    std::vector<std::string> const& argv) {
   //! [update hmac key]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& access_id,
      std::string const& state) {
@@ -192,7 +192,7 @@ void UpdateHmacKey(google::cloud::storage::Client client,
 void ActivateHmacKey(google::cloud::storage::Client client,
                      std::vector<std::string> const& argv) {
   //! [START storage_activate_hmac_key]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& access_id) {
     StatusOr<gcs::HmacKeyMetadata> updated = client.UpdateHmacKey(
@@ -214,7 +214,7 @@ void ActivateHmacKey(google::cloud::storage::Client client,
 void DeactivateHmacKey(google::cloud::storage::Client client,
                        std::vector<std::string> const& argv) {
   //! [START storage_deactivate_hmac_key]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& access_id) {
     StatusOr<gcs::HmacKeyMetadata> updated = client.UpdateHmacKey(

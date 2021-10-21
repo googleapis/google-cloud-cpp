@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::CountMatchingEntities;
@@ -35,9 +35,6 @@ using ::google::cloud::testing_util::IsOk;
 using ::testing::AllOf;
 using ::testing::HasSubstr;
 using ::testing::Not;
-
-constexpr auto kJsonEnvVar = "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON";
-constexpr auto kP12EnvVar = "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12";
 
 class ObjectInsertIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
@@ -52,19 +49,15 @@ class ObjectInsertIntegrationTest
       // P12 and JSON credentials are usable in production. The positives for
       // this test are (1) it is relatively short (less than 60 seconds), (2) it
       // actually performs multiple operations against production.
-      std::string const env = GetParam();
-      if (UsingGrpc() && env == kP12EnvVar) {
+      std::string const key_file_envvar = GetParam();
+      if (UsingGrpc() && key_file_envvar.find("P12") != std::string::npos) {
         // TODO(#5116): gRPC doesn't support PKCS #12 keys.
-        GTEST_SKIP() << "Skipping because gRPC doesn't support PKCS #12 keys";
+        GTEST_SKIP();
       }
-      auto value = google::cloud::internal::GetEnv(env.c_str()).value_or("");
-      // The p12 test is only run on certain platforms, so if it's not set, skip
-      // the test rather than failing.
-      if (value.empty() && env == kP12EnvVar) {
-        GTEST_SKIP() << "Skipping because ${" << env << "} is not set";
-      }
-      ASSERT_FALSE(value.empty())
-          << "Expected non-empty value for ${" << env << "}";
+      auto value =
+          google::cloud::internal::GetEnv(key_file_envvar.c_str()).value_or("");
+      ASSERT_FALSE(value.empty()) << " expected ${" << key_file_envvar
+                                  << "} to be set and be not empty";
       google::cloud::internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS", value);
     }
     bucket_name_ = google::cloud::internal::GetEnv(
@@ -94,7 +87,7 @@ TEST_P(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
-  // Create an iostream to read the object back.
+  // Create a iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
@@ -116,7 +109,7 @@ TEST_P(ObjectInsertIntegrationTest, XmlInsertWithNonUrlSafeName) {
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
-  // Create an iostream to read the object back.
+  // Create a iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
@@ -138,7 +131,7 @@ TEST_P(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
-  // Create an iostream to read the object back.
+  // Create a iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
@@ -161,7 +154,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithMD5) {
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
-  // Create an iostream to read the object back.
+  // Create a iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
@@ -184,7 +177,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
-  // Create an iostream to read the object back.
+  // Create a iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
@@ -207,7 +200,7 @@ TEST_P(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
-  // Create an iostream to read the object back.
+  // Create a iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
@@ -235,7 +228,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithMetadata) {
   EXPECT_EQ("test-value", meta->metadata("test-key"));
   EXPECT_EQ("text/plain", meta->content_type());
 
-  // Create an iostream to read the object back.
+  // Create a iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
@@ -668,15 +661,15 @@ TEST_P(ObjectInsertIntegrationTest, InsertXmlFailure) {
   EXPECT_THAT(failure, Not(IsOk())) << "metadata=" << failure.value();
 }
 
-INSTANTIATE_TEST_SUITE_P(ObjectInsertWithJsonCredentialsTest,
-                         ObjectInsertIntegrationTest,
-                         ::testing::Values(kJsonEnvVar));
-INSTANTIATE_TEST_SUITE_P(ObjectInsertWithP12CredentialsTest,
-                         ObjectInsertIntegrationTest,
-                         ::testing::Values(kP12EnvVar));
+INSTANTIATE_TEST_SUITE_P(
+    ObjectInsertWithJsonCredentialsTest, ObjectInsertIntegrationTest,
+    ::testing::Values("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON"));
+INSTANTIATE_TEST_SUITE_P(
+    ObjectInsertWithP12CredentialsTest, ObjectInsertIntegrationTest,
+    ::testing::Values("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12"));
 
 }  // anonymous namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

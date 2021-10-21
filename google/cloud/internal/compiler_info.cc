@@ -18,7 +18,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 /**
@@ -86,7 +86,6 @@ std::string LanguageVersion() {
   auto constexpr kMagicVersionCxx11 = 201103L;
   auto constexpr kMagicVersionCxx14 = 201402L;
   auto constexpr kMagicVersionCxx17 = 201703L;
-  auto constexpr kMagicVersionCxx20 = 202002L;
   switch (GOOGLE_CLOUD_CPP_CPP_VERSION) {
     case kMagicVersionCxx98:
       return "1998";
@@ -96,14 +95,12 @@ std::string LanguageVersion() {
       return "2014";
     case kMagicVersionCxx17:
       return "2017";
-    case kMagicVersionCxx20:
-      return "2020";
     default:
       return "unknown";
   }
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

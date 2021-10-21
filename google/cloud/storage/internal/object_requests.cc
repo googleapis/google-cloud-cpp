@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 std::string UpdateObjectRequest::json_payload() const {
   return ObjectMetadataJsonForUpdate(metadata_).dump();
@@ -170,6 +170,69 @@ std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r) {
      << ", object_name=" << r.object_name();
   r.DumpOptions(os, ", ");
   return os << "}";
+}
+
+ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
+    HttpResponse&& response) {
+  auto loc = response.headers.find(std::string("content-range"));
+  if (response.headers.end() == loc) {
+    google::cloud::internal::ThrowInvalidArgument(
+        "invalid http response for ReadObjectRange");
+  }
+
+  std::string const& content_range_value = loc->second;
+  // capture this function name, not the lambda's
+  auto const* function = __func__;
+  auto raise_error = [&content_range_value, &function]() {
+    std::ostringstream os;
+    os << static_cast<char const*>(function)
+       << " invalid format for content-range header <" << content_range_value
+       << ">";
+    google::cloud::internal::ThrowInvalidArgument(os.str());
+  };
+  char const unit_descriptor[] = "bytes";
+  if (content_range_value.rfind(unit_descriptor, 0) != 0) {
+    raise_error();
+  }
+  char const* buffer = content_range_value.data();
+  auto size = content_range_value.size();
+  if (size < sizeof(unit_descriptor) + 2) raise_error();
+
+  // skip the initial "bytes " string.
+  buffer += sizeof(unit_descriptor);
+  size -= sizeof(unit_descriptor);
+
+  if (buffer[0] == '*' && buffer[1] == '/') {
+    // The header is just the indication of size ('bytes */<size>'), parse that.
+    std::int64_t object_size;
+    if (!absl::SimpleAtoi(absl::string_view(buffer + 2, size - 2),
+                          &object_size)) {
+      raise_error();
+    }
+    return ReadObjectRangeResponse{std::move(response.payload), 0, 0,
+                                   object_size};
+  }
+
+  std::vector<absl::string_view> components =
+      absl::StrSplit(absl::string_view(buffer, size), absl::ByAnyChar("-/"));
+  if (components.size() != 3) raise_error();
+
+  std::int64_t first_byte;
+  std::int64_t last_byte;
+  std::int64_t object_size;
+  if (!absl::SimpleAtoi(components[0], &first_byte)) raise_error();
+  if (!absl::SimpleAtoi(components[1], &last_byte)) raise_error();
+  if (!absl::SimpleAtoi(components[2], &object_size)) raise_error();
+
+  return ReadObjectRangeResponse{std::move(response.payload), first_byte,
+                                 last_byte, object_size};
+}
+
+std::ostream& operator<<(std::ostream& os, ReadObjectRangeResponse const& r) {
+  return os << "ReadObjectRangeResponse={range=" << r.first_byte << "-"
+            << r.last_byte << "/" << r.object_size << ", contents=\n"
+            << BinaryDataAsDebugString(r.contents.data(), r.contents.size())
+            << "}";
 }
 
 std::ostream& operator<<(std::ostream& os, DeleteObjectRequest const& r) {
@@ -329,17 +392,16 @@ StatusOr<RewriteObjectResponse> RewriteObjectResponse::FromHttpResponse(
   }
 
   RewriteObjectResponse result;
-  auto v = ParseUnsignedLongField(object, "totalBytesRewritten");
-  if (!v) return std::move(v).status();
-  result.total_bytes_rewritten = *v;
-  v = ParseUnsignedLongField(object, "objectSize");
-  if (!v) return std::move(v).status();
-  result.object_size = *v;
+  result.total_bytes_rewritten =
+      ParseUnsignedLongField(object, "totalBytesRewritten");
+  result.object_size = ParseUnsignedLongField(object, "objectSize");
   result.done = object.value("done", false);
   result.rewrite_token = object.value("rewriteToken", "");
   if (object.count("resource") != 0) {
     auto parsed = internal::ObjectMetadataParser::FromJson(object["resource"]);
-    if (!parsed.ok()) return std::move(parsed).status();
+    if (!parsed.ok()) {
+      return std::move(parsed).status();
+    }
     result.resource = std::move(*parsed);
   }
   return result;
@@ -414,7 +476,7 @@ std::ostream& operator<<(std::ostream& os,
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -16,6 +16,10 @@
 
 find_package(absl CONFIG REQUIRED)
 
+option(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC
+       "Enable compilation for the GCS gRPC plugin (EXPERIMENTAL)" OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
+
 set(DOXYGEN_PROJECT_NAME "Google Cloud Storage C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Storage")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
@@ -32,7 +36,8 @@ set(DOXYGEN_EXCLUDE_PATTERNS
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "storage_benchmarks")
 
 # Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::storage_protos)
+set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::storage_protos
+                                  google_cloud_cpp_storage_internal_protos)
 
 include(GoogleCloudCppCommon)
 
@@ -63,7 +68,6 @@ add_library(
     client_options.cc
     client_options.h
     download_options.h
-    hash_mismatch_error.h
     hashing_options.cc
     hashing_options.h
     hmac_key_metadata.cc
@@ -119,16 +123,10 @@ add_library(
     internal/generate_message_boundary.h
     internal/generic_object_request.h
     internal/generic_request.h
-    internal/hash_function.cc
-    internal/hash_function.h
-    internal/hash_function_impl.cc
-    internal/hash_function_impl.h
     internal/hash_validator.cc
     internal/hash_validator.h
     internal/hash_validator_impl.cc
     internal/hash_validator_impl.h
-    internal/hash_values.cc
-    internal/hash_values.h
     internal/hmac_key_metadata_parser.cc
     internal/hmac_key_metadata_parser.h
     internal/hmac_key_requests.cc
@@ -160,12 +158,10 @@ add_library(
     internal/object_metadata_parser.cc
     internal/object_metadata_parser.h
     internal/object_read_source.h
-    internal/object_read_streambuf.cc
-    internal/object_read_streambuf.h
     internal/object_requests.cc
     internal/object_requests.h
-    internal/object_write_streambuf.cc
-    internal/object_write_streambuf.h
+    internal/object_streambuf.cc
+    internal/object_streambuf.h
     internal/openssl_util.cc
     internal/openssl_util.h
     internal/parameter_pack_validation.h
@@ -173,7 +169,6 @@ add_library(
     internal/patch_builder.h
     internal/policy_document_request.cc
     internal/policy_document_request.h
-    internal/raw_client.cc
     internal/raw_client.h
     internal/raw_client_wrapper_utils.h
     internal/resumable_upload_session.cc
@@ -233,13 +228,10 @@ add_library(
     object_access_control.h
     object_metadata.cc
     object_metadata.h
-    object_read_stream.cc
-    object_read_stream.h
     object_rewriter.cc
     object_rewriter.h
+    object_stream.cc
     object_stream.h
-    object_write_stream.cc
-    object_write_stream.h
     options.h
     override_default_project.h
     parallel_upload.cc
@@ -312,13 +304,23 @@ install(
 
 if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     find_package(gRPC REQUIRED)
+    google_cloud_cpp_proto_library(
+        google_cloud_cpp_storage_internal_protos
+        internal/grpc_resumable_upload_session_url.proto PROTO_PATH_DIRECTORIES
+        ${CMAKE_CURRENT_SOURCE_DIR}/internal LOCAL_INCLUDE)
+    add_library(google-cloud-cpp::internal-storage-protos ALIAS
+                google_cloud_cpp_storage_internal_protos)
+    set_target_properties(
+        google_cloud_cpp_storage_internal_protos
+        PROPERTIES EXPORT_NAME "google-cloud-cpp::internal-storage-protos"
+                   VERSION ${PROJECT_VERSION} SOVERSION
+                                              ${PROJECT_VERSION_MAJOR})
     add_library(
         google_cloud_cpp_storage_grpc
         grpc_plugin.cc
         grpc_plugin.h
         internal/grpc_client.cc
         internal/grpc_client.h
-        internal/grpc_configure_client_context.h
         internal/grpc_object_read_source.cc
         internal/grpc_object_read_source.h
         internal/grpc_resumable_upload_session.cc
@@ -338,6 +340,7 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         PUBLIC google-cloud-cpp::storage
                google-cloud-cpp::grpc_utils
                google-cloud-cpp::common
+               google_cloud_cpp_storage_internal_protos
                google-cloud-cpp::storage_protos
                nlohmann_json::nlohmann_json
                gRPC::grpc++
@@ -366,14 +369,20 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
     create_bazel_config(google_cloud_cpp_storage_grpc)
 else ()
+    add_library(google_cloud_cpp_storage_internal_protos INTERFACE)
     add_library(google_cloud_cpp_storage_grpc INTERFACE)
 
     set_target_properties(
         google_cloud_cpp_storage_grpc
         PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage-grpc")
+    set_target_properties(
+        google_cloud_cpp_storage_internal_protos
+        PROPERTIES EXPORT_NAME "google-cloud-cpp::internal-storage-protos")
 endif (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 add_library(google-cloud-cpp::experimental-storage-grpc ALIAS
             google_cloud_cpp_storage_grpc)
+add_library(google-cloud-cpp::internal-storage-protos ALIAS
+            google_cloud_cpp_storage_internal_protos)
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CPP_PC_NAME "The GCS (Google Cloud Storage) gRPC plugin")
@@ -389,7 +398,8 @@ string(
            " google_cloud_cpp_common"
            " libcurl"
            " openssl")
-string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage_grpc")
+string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage_grpc"
+              " -lgoogle_cloud_cpp_storage_internal_protos")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
@@ -473,7 +483,6 @@ if (BUILD_TESTING)
         internal/compute_engine_util_test.cc
         internal/const_buffer_test.cc
         internal/curl_client_test.cc
-        internal/curl_download_request_test.cc
         internal/curl_handle_factory_test.cc
         internal/curl_handle_test.cc
         internal/curl_resumable_upload_session_test.cc
@@ -482,13 +491,10 @@ if (BUILD_TESTING)
         internal/curl_wrappers_locking_already_present_test.cc
         internal/curl_wrappers_locking_disabled_test.cc
         internal/curl_wrappers_locking_enabled_test.cc
-        internal/curl_wrappers_test.cc
         internal/default_object_acl_requests_test.cc
         internal/generate_message_boundary_test.cc
         internal/generic_request_test.cc
-        internal/hash_function_impl_test.cc
         internal/hash_validator_test.cc
-        internal/hash_values_test.cc
         internal/hmac_key_requests_test.cc
         internal/http_response_test.cc
         internal/impersonate_service_account_credentials_test.cc
@@ -498,9 +504,8 @@ if (BUILD_TESTING)
         internal/metadata_parser_test.cc
         internal/notification_requests_test.cc
         internal/object_acl_requests_test.cc
-        internal/object_read_streambuf_test.cc
         internal/object_requests_test.cc
-        internal/object_write_streambuf_test.cc
+        internal/object_streambuf_test.cc
         internal/openssl_util_test.cc
         internal/parameter_pack_validation_test.cc
         internal/patch_builder_test.cc
@@ -578,12 +583,11 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     if (BUILD_TESTING)
         set(storage_client_grpc_unit_tests
             # cmake-format: sort
+            internal/grpc_client_bucket_metadata_test.cc
+            internal/grpc_client_bucket_request_test.cc
             internal/grpc_client_failures_test.cc
-            internal/grpc_client_insert_object_media_test.cc
             internal/grpc_client_object_request_test.cc
-            internal/grpc_client_read_object_test.cc
             internal/grpc_client_test.cc
-            internal/grpc_configure_client_context_test.cc
             internal/grpc_object_read_source_test.cc
             internal/grpc_resumable_upload_session_test.cc
             internal/grpc_resumable_upload_session_url_test.cc
@@ -630,6 +634,7 @@ endif ()
 
 install(
     TARGETS google_cloud_cpp_storage google_cloud_cpp_storage_grpc
+            google_cloud_cpp_storage_internal_protos
     EXPORT storage-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
@@ -642,6 +647,7 @@ install(
 # duplication).
 install(
     TARGETS google_cloud_cpp_storage google_cloud_cpp_storage_grpc
+            google_cloud_cpp_storage_internal_protos
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development
             NAMELINK_ONLY

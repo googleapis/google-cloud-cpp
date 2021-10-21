@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 TEST(AppProfileConfig, MultiClusterUseAny) {
   auto proto = AppProfileConfig::MultiClusterUseAny("my-profile").as_proto();
@@ -128,7 +128,7 @@ TEST(AppProfileUpdateConfig, SetSeveral) {
   EXPECT_TRUE(HasFieldNameOnce(proto.update_mask(), "single_cluster_routing"));
 }
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

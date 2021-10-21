@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
@@ -415,13 +415,12 @@ ObjectMetadata CreateObject(int index) {
   std::string id = "object-" + std::to_string(index);
   std::string name = id;
   std::string link =
-      "https://storage.googleapis.com/storage/v1/b/test-bucket/" + id + "#1";
+      "https://storage.googleapis.com/storage/v1/b/test-bucket/" + id + "/1";
   nlohmann::json metadata{
       {"bucket", "test-bucket"},
       {"id", id},
       {"name", name},
       {"selfLink", link},
-      {"generation", "1"},
       {"kind", "storage#object"},
   };
   return internal::ObjectMetadataParser::FromJson(metadata).value();
@@ -540,12 +539,7 @@ TEST_F(ObjectTest, DeleteByPrefixDeleteFailure) {
         return make_status_or(internal::EmptyResponse{});
       })
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(
-          Status(StatusCode::kPermissionDenied, ""))))
-      .WillOnce([](internal::DeleteObjectRequest const& r) {
-        EXPECT_EQ("test-bucket", r.bucket_name());
-        EXPECT_EQ("object-3", r.object_name());
-        return make_status_or(internal::EmptyResponse{});
-      });
+          Status(StatusCode::kPermissionDenied, ""))));
   auto client = testing::ClientFromMock(mock);
   auto status = DeleteByPrefix(client, "test-bucket", "object-", Versions(),
                                UserProject("project-to-bill"));
@@ -894,7 +888,7 @@ TEST_F(ObjectTest, ComposeManyLockingPrefixFails) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -27,9 +27,9 @@ bigtable::Mutation MakeRandomMutation(google::cloud::internal::DefaultPRNG& gen,
 }
 
 std::string MakeRandomValue(google::cloud::internal::DefaultPRNG& generator) {
-  static auto const* const kLetters = new std::string(
+  static std::string const kLetters(
       "ABCDEFGHIJLKMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789-/_");
-  return google::cloud::internal::Sample(generator, kFieldSize, *kLetters);
+  return google::cloud::internal::Sample(generator, kFieldSize, kLetters);
 }
 }  // namespace benchmarks
 }  // namespace bigtable

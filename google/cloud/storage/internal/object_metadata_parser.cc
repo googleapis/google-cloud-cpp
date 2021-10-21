@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 /**
@@ -46,7 +46,9 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
   }
   ObjectMetadata result{};
   auto status = CommonMetadataParser<ObjectMetadata>::FromJson(result, json);
-  if (!status.ok()) return status;
+  if (!status.ok()) {
+    return status;
+  }
 
   if (json.count("acl") != 0) {
     for (auto const& kv : json["acl"].items()) {
@@ -60,9 +62,7 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
 
   result.bucket_ = json.value("bucket", "");
   result.cache_control_ = json.value("cacheControl", "");
-  auto component_count = internal::ParseIntField(json, "componentCount");
-  if (!component_count) return std::move(component_count).status();
-  result.component_count_ = *component_count;
+  result.component_count_ = internal::ParseIntField(json, "componentCount");
   result.content_disposition_ = json.value("contentDisposition", "");
   result.content_encoding_ = json.value("contentEncoding", "");
   result.content_language_ = json.value("contentLanguage", "");
@@ -75,12 +75,8 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
     e.key_sha256 = field.value("keySha256", "");
     result.customer_encryption_ = std::move(e);
   }
-  auto event_based_hold = internal::ParseBoolField(json, "eventBasedHold");
-  if (!event_based_hold) return std::move(event_based_hold).status();
-  result.event_based_hold_ = *event_based_hold;
-  auto generation = internal::ParseLongField(json, "generation");
-  if (!generation) return std::move(generation).status();
-  result.generation_ = *generation;
+  result.event_based_hold_ = internal::ParseBoolField(json, "eventBasedHold");
+  result.generation_ = internal::ParseLongField(json, "generation");
   result.kms_key_name_ = json.value("kmsKeyName", "");
   result.md5_hash_ = json.value("md5Hash", "");
   result.media_link_ = json.value("mediaLink", "");
@@ -89,30 +85,17 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
       result.metadata_.emplace(kv.key(), kv.value().get<std::string>());
     }
   }
-  auto expiration_time =
+  result.retention_expiration_time_ =
       internal::ParseTimestampField(json, "retentionExpirationTime");
-  if (!expiration_time) return std::move(expiration_time).status();
-  result.retention_expiration_time_ = *expiration_time;
-  auto size = internal::ParseUnsignedLongField(json, "size");
-  if (!size) return std::move(size).status();
-  result.size_ = *size;
-  auto temporary_hold = internal::ParseBoolField(json, "temporaryHold");
-  if (!temporary_hold) return std::move(temporary_hold).status();
-  result.temporary_hold_ = *temporary_hold;
-  auto time_deleted = internal::ParseTimestampField(json, "timeDeleted");
-  if (!time_deleted) return std::move(time_deleted).status();
-  result.time_deleted_ = *time_deleted;
-  auto time_storage_class_updated =
+  result.size_ = internal::ParseUnsignedLongField(json, "size");
+  result.temporary_hold_ = internal::ParseBoolField(json, "temporaryHold");
+  result.time_deleted_ = internal::ParseTimestampField(json, "timeDeleted");
+  result.time_storage_class_updated_ =
       internal::ParseTimestampField(json, "timeStorageClassUpdated");
-  if (!time_storage_class_updated)
-    return std::move(time_storage_class_updated).status();
-  result.time_storage_class_updated_ = *time_storage_class_updated;
   if (json.count("customTime") == 0) {
     result.custom_time_.reset();
   } else {
-    auto v = internal::ParseTimestampField(json, "customTime");
-    if (!v) return std::move(v).status();
-    result.custom_time_ = *v;
+    result.custom_time_ = internal::ParseTimestampField(json, "customTime");
   }
   return result;
 }
@@ -216,7 +199,7 @@ nlohmann::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta) {
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

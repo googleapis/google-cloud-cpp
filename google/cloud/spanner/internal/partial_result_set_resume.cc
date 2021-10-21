@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 void PartialResultSetResume::TryCancel() { child_->TryCancel(); }
 
@@ -53,7 +53,7 @@ Status PartialResultSetResume::Finish() {
   return *last_status_;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

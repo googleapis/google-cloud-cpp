@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
@@ -162,21 +162,8 @@ TEST(AsyncReadWriteStreamingRpcTest, Basic) {
   EXPECT_THAT(finish.get(), IsOk());
 }
 
-TEST(AsyncReadWriteStreamingRpcTest, Error) {
-  auto stream = AsyncStreamingReadWriteRpcError<FakeRequest, FakeResponse>(
-      Status(StatusCode::kPermissionDenied, "uh-oh"));
-
-  stream.Cancel();
-  EXPECT_FALSE(stream.Start().get());
-  EXPECT_FALSE(stream.Read().get().has_value());
-  EXPECT_FALSE(stream.Write(FakeRequest{}, grpc::WriteOptions()).get());
-  EXPECT_FALSE(stream.WritesDone().get());
-  EXPECT_EQ(Status(StatusCode::kPermissionDenied, "uh-oh"),
-            stream.Finish().get());
-}
-
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

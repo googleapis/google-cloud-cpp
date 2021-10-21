@@ -18,19 +18,15 @@ add_library(
     bigtable_benchmark_common # cmake-format: sort
     benchmark.cc
     benchmark.h
-    benchmark_options.cc
-    benchmark_options.h
     constants.h
     embedded_server.cc
     embedded_server.h
-    mutation_batcher_throughput_options.cc
-    mutation_batcher_throughput_options.h
     random_mutation.cc
-    random_mutation.h)
+    random_mutation.h
+    setup.cc
+    setup.h)
 target_link_libraries(
     bigtable_benchmark_common
-    bigtable_client_testing
-    google_cloud_cpp_testing_grpc
     google-cloud-cpp::bigtable
     google-cloud-cpp::bigtable_protos
     google-cloud-cpp::common
@@ -47,12 +43,8 @@ if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
     set(bigtable_benchmarks_unit_tests
         # cmake-format: sort
-        benchmark_options_test.cc
-        bigtable_benchmark_test.cc
-        embedded_server_test.cc
-        format_duration_test.cc
-        mutation_batcher_throughput_options_test.cc
-        random_mutation_test.cc)
+        bigtable_benchmark_test.cc embedded_server_test.cc
+        format_duration_test.cc random_mutation_test.cc setup_test.cc)
     export_list_to_bazel("bigtable_benchmarks_unit_tests.bzl"
                          "bigtable_benchmarks_unit_tests" YEAR 2020)
 
@@ -84,11 +76,8 @@ endif ()
 
 set(bigtable_benchmark_programs
     # cmake-format: sort
-    apply_read_latency_benchmark.cc
-    endurance_benchmark.cc
-    mutation_batcher_throughput_benchmark.cc
-    read_sync_vs_async_benchmark.cc
-    scan_throughput_benchmark.cc)
+    apply_read_latency_benchmark.cc endurance_benchmark.cc
+    read_sync_vs_async_benchmark.cc scan_throughput_benchmark.cc)
 export_list_to_bazel("bigtable_benchmark_programs.bzl"
                      "bigtable_benchmark_programs")
 
@@ -100,7 +89,6 @@ foreach (fname ${bigtable_benchmark_programs})
                 google-cloud-cpp::bigtable
                 google-cloud-cpp::bigtable_protos
                 google-cloud-cpp::grpc_utils
-                google_cloud_cpp_testing
                 gRPC::grpc++
                 gRPC::grpc
                 protobuf::libprotobuf)

@@ -14,16 +14,18 @@
 # limitations under the License.
 # ~~~
 
+cmake_minimum_required(VERSION 3.5)
+
 # Give application developers a hook to configure the version and hash
 # downloaded from GitHub.
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
-    "https://github.com/googleapis/googleapis/archive/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49.tar.gz"
+    "https://github.com/googleapis/googleapis/archive/2c6e4dd22260e34403b468cc6d19aa43a9c684ed.tar.gz"
 )
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
-    "74d6c8d2bf028a8eb72da84c88a433b345c07f0b8db41d0ac02ef85154e7aa59")
+    "8dffa7cf62a821b1c0b25a09335684c6f240d9a8efb6c599b8cec63e3b6f4054")
 
 set(EXTERNAL_GOOGLEAPIS_SOURCE
-    "${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download")
+    "${CMAKE_BINARY_DIR}/external/googleapis/src/googleapis_download")
 
 set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/api/http.proto"
@@ -62,10 +64,8 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/cloud/bigquery/logging/v1/audit_data.proto"
     "google/cloud/bigquery/storage/v1/arrow.proto"
     "google/cloud/bigquery/storage/v1/avro.proto"
-    "google/cloud/bigquery/storage/v1/protobuf.proto"
     "google/cloud/bigquery/storage/v1/storage.proto"
     "google/cloud/bigquery/storage/v1/stream.proto"
-    "google/cloud/bigquery/storage/v1/table.proto"
     "google/cloud/bigquery/v2/encryption_config.proto"
     "google/cloud/bigquery/v2/model.proto"
     "google/cloud/bigquery/v2/model_reference.proto"
@@ -134,7 +134,8 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/spanner/v1/spanner.proto"
     "google/spanner/v1/transaction.proto"
     "google/spanner/v1/type.proto"
-    "google/storage/v2/storage.proto"
+    "google/storage/v1/storage.proto"
+    "google/storage/v1/storage_resources.proto"
     "google/type/calendar_period.proto"
     "google/type/color.proto"
     "google/type/date.proto"
@@ -165,7 +166,7 @@ include(ExternalProject)
 ExternalProject_Add(
     googleapis_download
     EXCLUDE_FROM_ALL ON
-    PREFIX "${PROJECT_BINARY_DIR}/external/googleapis"
+    PREFIX "${CMAKE_BINARY_DIR}/external/googleapis"
     URL ${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL}
     URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256}
     PATCH_COMMAND
@@ -367,10 +368,8 @@ google_cloud_cpp_grpcpp_library(
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/logging/v1/audit_data.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/arrow.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/avro.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/protobuf.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/storage.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/stream.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/table.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/v2/encryption_config.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/v2/model.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/v2/model_reference.proto"
@@ -597,7 +596,6 @@ target_link_libraries(
            google-cloud-cpp::api_metric_protos
            google-cloud-cpp::api_monitored_resource_protos
            google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::longrunning_operations_protos
            google-cloud-cpp::rpc_status_protos
            google-cloud-cpp::type_calendar_period_protos)
 
@@ -648,7 +646,8 @@ target_link_libraries(
 
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_storage_protos
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/storage/v2/storage.proto"
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/storage/v1/storage.proto"
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/storage/v1/storage_resources.proto"
     PROTO_PATH_DIRECTORIES
     "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
@@ -658,7 +657,6 @@ target_link_libraries(
     PUBLIC google-cloud-cpp::api_annotations_protos
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::type_date_protos
            google-cloud-cpp::iam_v1_iam_policy_protos
            google-cloud-cpp::iam_v1_policy_protos)
 

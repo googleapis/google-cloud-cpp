@@ -30,10 +30,8 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
-
-using ::testing::IsSupersetOf;
 
 using ObjectListObjectsVersionsIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
@@ -78,11 +76,11 @@ TEST_F(ObjectListObjectsVersionsIntegrationTest, ListObjectsVersions) {
     auto const& meta = it.value();
     actual.emplace_back(meta.name(), meta.generation());
   }
-  EXPECT_THAT(actual, IsSupersetOf(expected));
+  EXPECT_THAT(actual, ::testing::IsSupersetOf(expected));
 }
 
 }  // anonymous namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

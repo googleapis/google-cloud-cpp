@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 /**
  * Define the expiration time for a signed URL.
  */
@@ -269,7 +269,7 @@ inline AddExtensionFieldOption AddExtensionField(std::string field,
   return AddExtensionFieldOption(std::move(field), std::move(value));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

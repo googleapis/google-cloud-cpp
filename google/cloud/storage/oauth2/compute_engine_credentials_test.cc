@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 namespace {
 
@@ -38,7 +38,6 @@ using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Return;
@@ -97,8 +96,7 @@ TEST_F(ComputeEngineCredentialsTest,
       *mock_req_builder,
       Constructor(StrEq(std::string("http://") + hostname +
                         "/computeMetadata/v1/instance/service-accounts/" +
-                        email + "/token"),
-                  _, _))
+                        email + "/token")))
       .Times(1);
   // Only the call to retrieve service account info sends this query param.
   EXPECT_CALL(*mock_req_builder,
@@ -106,10 +104,9 @@ TEST_F(ComputeEngineCredentialsTest,
       .Times(1);
   EXPECT_CALL(
       *mock_req_builder,
-      Constructor(
-          StrEq(std::string("http://") + hostname +
-                "/computeMetadata/v1/instance/service-accounts/" + alias + "/"),
-          _, _))
+      Constructor(StrEq(std::string("http://") + hostname +
+                        "/computeMetadata/v1/instance/service-accounts/" +
+                        alias + "/")))
       .Times(1);
 
   ComputeEngineCredentials<MockHttpRequestBuilder> credentials(alias);
@@ -244,10 +241,9 @@ TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
       .Times(3);
   EXPECT_CALL(
       *mock_req_builder,
-      Constructor(
-          StrEq(std::string("http://") + hostname +
-                "/computeMetadata/v1/instance/service-accounts/" + alias + "/"),
-          _, _))
+      Constructor(StrEq(std::string("http://") + hostname +
+                        "/computeMetadata/v1/instance/service-accounts/" +
+                        alias + "/")))
       .Times(3);
 
   ComputeEngineCredentials<MockHttpRequestBuilder> credentials(alias);
@@ -313,8 +309,7 @@ TEST_F(ComputeEngineCredentialsTest, FailedRefresh) {
       *mock_req_builder,
       Constructor(StrEq(std::string("http://") + hostname +
                         "/computeMetadata/v1/instance/service-accounts/" +
-                        email + "/token"),
-                  _, _))
+                        email + "/token")))
       .Times(3);
   // This is only set when not retrieving the token.
   EXPECT_CALL(*mock_req_builder,
@@ -324,17 +319,15 @@ TEST_F(ComputeEngineCredentialsTest, FailedRefresh) {
   // request succeeds. Then the email is refreshed.
   EXPECT_CALL(
       *mock_req_builder,
-      Constructor(
-          StrEq(std::string("http://") + hostname +
-                "/computeMetadata/v1/instance/service-accounts/" + alias + "/"),
-          _, _))
+      Constructor(StrEq(std::string("http://") + hostname +
+                        "/computeMetadata/v1/instance/service-accounts/" +
+                        alias + "/")))
       .Times(2);
   EXPECT_CALL(
       *mock_req_builder,
-      Constructor(
-          StrEq(std::string("http://") + hostname +
-                "/computeMetadata/v1/instance/service-accounts/" + email + "/"),
-          _, _))
+      Constructor(StrEq(std::string("http://") + hostname +
+                        "/computeMetadata/v1/instance/service-accounts/" +
+                        email + "/")))
       .Times(2);
 
   ComputeEngineCredentials<MockHttpRequestBuilder> credentials(alias);
@@ -385,10 +378,9 @@ TEST_F(ComputeEngineCredentialsTest, AccountEmail) {
       .Times(1);
   EXPECT_CALL(
       *mock_req_builder,
-      Constructor(
-          StrEq(std::string("http://") + hostname +
-                "/computeMetadata/v1/instance/service-accounts/" + alias + "/"),
-          _, _))
+      Constructor(StrEq(std::string("http://") + hostname +
+                        "/computeMetadata/v1/instance/service-accounts/" +
+                        alias + "/")))
       .Times(1);
 
   ComputeEngineCredentials<MockHttpRequestBuilder> credentials(alias);
@@ -400,7 +392,7 @@ TEST_F(ComputeEngineCredentialsTest, AccountEmail) {
 
 }  // namespace
 }  // namespace oauth2
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -26,7 +26,7 @@ using ::testing::Return;
 
 //! [mock successful readobject]
 TEST(StorageMockingSamples, MockReadObject) {
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
 
   std::shared_ptr<gcs::testing::MockClient> mock =
       std::make_shared<gcs::testing::MockClient>();
@@ -43,14 +43,15 @@ TEST(StorageMockingSamples, MockReadObject) {
         l, gcs::internal::HttpResponse{200, {}, {}}};
   };
   EXPECT_CALL(*mock, ReadObject)
-      .WillOnce([&](gcs::internal::ReadObjectRangeRequest const& request) {
+      .WillOnce([simulate_read](
+                    gcs::internal::ReadObjectRangeRequest const& request) {
         EXPECT_EQ(request.bucket_name(), "mock-bucket-name") << request;
         std::unique_ptr<gcs::testing::MockObjectReadSource> mock_source(
             new gcs::testing::MockObjectReadSource);
-        ::testing::InSequence seq;
-        EXPECT_CALL(*mock_source, IsOpen()).WillRepeatedly(Return(true));
-        EXPECT_CALL(*mock_source, Read).WillOnce(simulate_read);
-        EXPECT_CALL(*mock_source, IsOpen()).WillRepeatedly(Return(false));
+        EXPECT_CALL(*mock_source, IsOpen())
+            .WillOnce(Return(true))
+            .WillRepeatedly(Return(false));
+        EXPECT_CALL(*mock_source, Read).WillRepeatedly(simulate_read);
 
         return google::cloud::make_status_or(
             std::unique_ptr<gcs::internal::ObjectReadSource>(
@@ -69,7 +70,7 @@ TEST(StorageMockingSamples, MockReadObject) {
 
 //! [mock successful writeobject]
 TEST(StorageMockingSamples, MockWriteObject) {
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
 
   std::shared_ptr<gcs::testing::MockClient> mock =
       std::make_shared<gcs::testing::MockClient>();
@@ -114,7 +115,7 @@ TEST(StorageMockingSamples, MockWriteObject) {
 
 //! [mock failed readobject]
 TEST(StorageMockingSamples, MockReadObjectFailure) {
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
 
   std::shared_ptr<gcs::testing::MockClient> mock =
       std::make_shared<gcs::testing::MockClient>();
@@ -125,13 +126,13 @@ TEST(StorageMockingSamples, MockReadObjectFailure) {
       .WillOnce([](gcs::internal::ReadObjectRangeRequest const& request) {
         EXPECT_EQ(request.bucket_name(), "mock-bucket-name") << request;
         auto* mock_source = new gcs::testing::MockObjectReadSource;
-        ::testing::InSequence seq;
-        EXPECT_CALL(*mock_source, IsOpen).WillRepeatedly(Return(true));
+        EXPECT_CALL(*mock_source, IsOpen())
+            .WillOnce(Return(true))
+            .WillRepeatedly(Return(false));
         EXPECT_CALL(*mock_source, Read)
             .WillOnce(Return(google::cloud::Status(
                 google::cloud::StatusCode::kInvalidArgument,
                 "Invalid Argument")));
-        EXPECT_CALL(*mock_source, IsOpen).WillRepeatedly(Return(false));
 
         std::unique_ptr<gcs::internal::ObjectReadSource> result(mock_source);
 
@@ -147,7 +148,7 @@ TEST(StorageMockingSamples, MockReadObjectFailure) {
 
 //! [mock failed writeobject]
 TEST(StorageMockingSamples, MockWriteObjectFailure) {
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
 
   std::shared_ptr<gcs::testing::MockClient> mock =
       std::make_shared<gcs::testing::MockClient>();

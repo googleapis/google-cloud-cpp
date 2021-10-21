@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
 #include "google/cloud/pubsub/publisher.h"
 #include "google/cloud/pubsub/subscriber.h"
@@ -22,7 +21,6 @@
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/pubsub/version.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
@@ -37,7 +35,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
@@ -104,56 +102,11 @@ class SubscriberIntegrationTest
   Subscription ordered_subscription_ = Subscription("unused", "unused");
 };
 
-void TestRoundtrip(pubsub::Publisher publisher, pubsub::Subscriber subscriber) {
-  std::mutex mu;
-  std::map<std::string, int> ids;
-  for (auto const* data : {"message-0", "message-1", "message-2"}) {
-    auto response =
-        publisher.Publish(MessageBuilder{}.SetData(data).Build()).get();
-    EXPECT_STATUS_OK(response);
-    if (response) {
-      std::lock_guard<std::mutex> lk(mu);
-      ids.emplace(*std::move(response), 0);
-    }
-  }
-  EXPECT_FALSE(ids.empty());
-
-  promise<void> ids_empty;
-  auto handler = [&](pubsub::Message const& m, AckHandler h) {
-    SCOPED_TRACE("Search for message " + m.message_id());
-    std::unique_lock<std::mutex> lk(mu);
-    auto i = ids.find(m.message_id());
-    // Remember that Cloud Pub/Sub has "at least once" semantics, so a dup is
-    // perfectly possible, in that case the message would not be in the map of
-    // of pending ids.
-    if (i == ids.end()) return;
-    // The first time just NACK the message to exercise that path, we expect
-    // Cloud Pub/Sub to retry.
-    if (i->second == 0) {
-      std::move(h).nack();
-      ++i->second;
-      return;
-    }
-    ids.erase(i);
-    if (ids.empty()) ids_empty.set_value();
-    lk.unlock();
-    std::move(h).ack();
-  };
-
-  auto result = subscriber.Subscribe(handler);
-  // Wait until there are no more ids pending, then cancel the subscription and
-  // get its status.
-  ids_empty.get_future().get();
-  result.cancel();
-  EXPECT_STATUS_OK(result.get());
-}
-
 TEST_F(SubscriberIntegrationTest, RawStub) {
-  auto publisher = Publisher(MakePublisherConnection(topic_));
+  auto publisher = Publisher(MakePublisherConnection(topic_, {}));
 
   internal::AutomaticallyCreatedBackgroundThreads background(4);
-  auto stub = pubsub_internal::CreateDefaultSubscriberStub(
-      pubsub_internal::DefaultCommonOptions({}), 0);
+  auto stub = pubsub_internal::CreateDefaultSubscriberStub({}, 0);
   google::pubsub::v1::StreamingPullRequest request;
   request.set_client_id("test-client-0001");
   request.set_subscription(subscription_.FullName());
@@ -226,21 +179,21 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
   };
 
   auto publisher = Publisher(MakePublisherConnection(
-      topic_, Options{}.set<GrpcBackgroundThreadPoolSizeOption>(2)));
+      topic_, {},
+      pubsub::ConnectionOptions{}.set_background_thread_pool_size(2)));
 
   internal::AutomaticallyCreatedBackgroundThreads background(4);
-  auto stub = pubsub_internal::CreateDefaultSubscriberStub(
-      pubsub_internal::DefaultCommonOptions({}), 0);
+  auto stub = pubsub_internal::CreateDefaultSubscriberStub({}, 0);
 
   auto shutdown = std::make_shared<pubsub_internal::SessionShutdownManager>();
   auto source =
       std::make_shared<pubsub_internal::StreamingSubscriptionBatchSource>(
           background.cq(), shutdown, stub, subscription_.FullName(),
           "test-client-0001",
-          pubsub_internal::DefaultSubscriberOptions(
-              pubsub_testing::MakeTestOptions(
-                  Options{}.set<MaxDeadlineTimeOption>(
-                      std::chrono::seconds(300)))));
+          pubsub::SubscriberOptions{}.set_max_deadline_time(
+              std::chrono::seconds(300)),
+          pubsub_testing::TestRetryPolicy(),
+          pubsub_testing::TestBackoffPolicy());
 
   // This must be declared after `source` as it captures it and uses it to send
   // back acknowledgements.
@@ -306,9 +259,50 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
 }
 
 TEST_F(SubscriberIntegrationTest, PublishPullAck) {
-  auto publisher = Publisher(MakePublisherConnection(topic_));
+  auto publisher = Publisher(MakePublisherConnection(topic_, {}));
   auto subscriber = Subscriber(MakeSubscriberConnection(subscription_));
-  ASSERT_NO_FATAL_FAILURE(TestRoundtrip(publisher, subscriber));
+
+  std::mutex mu;
+  std::map<std::string, int> ids;
+  for (auto const* data : {"message-0", "message-1", "message-2"}) {
+    auto response =
+        publisher.Publish(MessageBuilder{}.SetData(data).Build()).get();
+    EXPECT_STATUS_OK(response);
+    if (response) {
+      std::lock_guard<std::mutex> lk(mu);
+      ids.emplace(*std::move(response), 0);
+    }
+  }
+  EXPECT_FALSE(ids.empty());
+
+  promise<void> ids_empty;
+  auto handler = [&](pubsub::Message const& m, AckHandler h) {
+    SCOPED_TRACE("Search for message " + m.message_id());
+    std::unique_lock<std::mutex> lk(mu);
+    auto i = ids.find(m.message_id());
+    // Remember that Cloud Pub/Sub has "at least once" semantics, so a dup is
+    // perfectly possible, in that case the message would not be in the map of
+    // of pending ids.
+    if (i == ids.end()) return;
+    // The first time just NACK the message to exercise that path, we expect
+    // Cloud Pub/Sub to retry.
+    if (i->second == 0) {
+      std::move(h).nack();
+      ++i->second;
+      return;
+    }
+    ids.erase(i);
+    if (ids.empty()) ids_empty.set_value();
+    lk.unlock();
+    std::move(h).ack();
+  };
+
+  auto result = subscriber.Subscribe(handler);
+  // Wait until there are no more ids pending, then cancel the subscription and
+  // get its status.
+  ids_empty.get_future().get();
+  result.cancel();
+  EXPECT_STATUS_OK(result.get());
 }
 
 TEST_F(SubscriberIntegrationTest, FireAndForget) {
@@ -320,7 +314,7 @@ TEST_F(SubscriberIntegrationTest, FireAndForget) {
   std::vector<Status> publish_errors;
   auto constexpr kMinimumMessages = 10;
 
-  auto publisher = Publisher(MakePublisherConnection(topic_));
+  auto publisher = Publisher(MakePublisherConnection(topic_, {}));
   auto subscriber = Subscriber(MakeSubscriberConnection(subscription_));
   {
     (void)subscriber
@@ -367,7 +361,7 @@ TEST_F(SubscriberIntegrationTest, FireAndForget) {
 }
 
 TEST_F(SubscriberIntegrationTest, ReportNotFound) {
-  auto publisher = Publisher(MakePublisherConnection(topic_));
+  auto publisher = Publisher(MakePublisherConnection(topic_, {}));
   auto const not_found_id = pubsub_testing::RandomSubscriptionId(generator_);
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
@@ -384,7 +378,7 @@ TEST_F(SubscriberIntegrationTest, ReportNotFound) {
 
 TEST_F(SubscriberIntegrationTest, PublishOrdered) {
   auto publisher = Publisher(MakePublisherConnection(
-      topic_, Options{}.set<MessageOrderingOption>(true)));
+      topic_, pubsub::PublisherOptions{}.enable_message_ordering()));
   auto subscriber = Subscriber(MakeSubscriberConnection(ordered_subscription_));
 
   struct SampleData {
@@ -436,27 +430,8 @@ TEST_F(SubscriberIntegrationTest, PublishOrdered) {
   EXPECT_STATUS_OK(result.get());
 }
 
-TEST_F(SubscriberIntegrationTest, UnifiedCredentials) {
-  auto options =
-      google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
-          google::cloud::MakeGoogleDefaultCredentials());
-  auto const using_emulator =
-      internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
-  if (using_emulator) {
-    options = Options{}
-                  .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
-                      "test-only-invalid", std::chrono::system_clock::now() +
-                                               std::chrono::minutes(15)))
-                  .set<internal::UseInsecureChannelOption>(true);
-  }
-  auto publisher = Publisher(MakePublisherConnection(topic_, options));
-  auto subscriber =
-      Subscriber(MakeSubscriberConnection(subscription_, options));
-  ASSERT_NO_FATAL_FAILURE(TestRoundtrip(publisher, subscriber));
-}
-
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

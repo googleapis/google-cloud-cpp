@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -euo pipefail
+set -eu
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
 source module /ci/lib/io.sh
@@ -32,7 +31,7 @@ shift
 bazel_test_args=("$@")
 
 # Start the emulator and arranges to kill it, run in $HOME because
-# spanner_emulator::start creates unsightly *.log files in the workspace
+# pubsub_emulator::start creates unsightly *.log files in the workspace
 # otherwise. Use a fixed port so Bazel can cache the test results.
 pushd "${HOME}" >/dev/null
 spanner_emulator::start 8787

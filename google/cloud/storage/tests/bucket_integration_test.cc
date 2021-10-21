@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::AclEntityNames;
@@ -462,36 +462,6 @@ TEST_F(BucketIntegrationTest, PublicAccessPreventionPatch) {
   ASSERT_TRUE(patched->has_iam_configuration()) << "patched=" << *patched;
   ASSERT_TRUE(patched->iam_configuration().public_access_prevention)
       << "patched=" << *patched;
-
-  auto status = client->DeleteBucket(bucket_name);
-  ASSERT_STATUS_OK(status);
-}
-
-// @test Verify that we can set the RPO in a Bucket.
-TEST_F(BucketIntegrationTest, RpoPatch) {
-  std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto insert_meta = client->CreateBucketForProject(
-      bucket_name, project_id_,
-      BucketMetadata().set_rpo(RpoAsyncTurbo()).set_location("NAM4"),
-      PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
-      Projection("full"));
-  ASSERT_STATUS_OK(insert_meta);
-  ScheduleForDelete(*insert_meta);
-  EXPECT_EQ(bucket_name, insert_meta->name());
-  EXPECT_EQ("ASYNC_TURBO", insert_meta->rpo());
-
-  // Patch the rpo().
-  BucketMetadata desired_state = *insert_meta;
-  desired_state.set_rpo(RpoDefault());
-
-  StatusOr<BucketMetadata> patched =
-      client->PatchBucket(bucket_name, *insert_meta, desired_state);
-  ASSERT_STATUS_OK(patched);
-
-  EXPECT_EQ(patched->rpo(), RpoDefault()) << "patched=" << *patched;
 
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
@@ -1243,7 +1213,7 @@ TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
   ASSERT_STATUS_OK(status);
 }
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -23,17 +23,16 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-spanner::Row RowFriend::MakeRow(
-    std::vector<spanner::Value> values,
-    std::shared_ptr<std::vector<std::string> const> columns) {
+inline namespace SPANNER_CLIENT_NS {
+spanner::Row MakeRow(std::vector<spanner::Value> values,
+                     std::shared_ptr<std::vector<std::string> const> columns) {
   return spanner::Row(std::move(values), std::move(columns));
 }
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 Row MakeTestRow(std::vector<std::pair<std::string, Value>> pairs) {
   auto values = std::vector<Value>{};
   auto columns = std::make_shared<std::vector<std::string>>();
@@ -41,8 +40,7 @@ Row MakeTestRow(std::vector<std::pair<std::string, Value>> pairs) {
     values.emplace_back(std::move(p.second));
     columns->emplace_back(std::move(p.first));
   }
-  return spanner_internal::RowFriend::MakeRow(std::move(values),
-                                              std::move(columns));
+  return spanner_internal::MakeRow(std::move(values), std::move(columns));
 }
 
 Row::Row() : Row({}, std::make_shared<std::vector<std::string>>()) {}
@@ -115,7 +113,7 @@ bool operator!=(RowStreamIterator const& a, RowStreamIterator const& b) {
   return !(a == b);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

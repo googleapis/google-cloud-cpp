@@ -380,7 +380,7 @@ TEST(PredicateUtilsTest, PaginationSuccess) {
       DeterminePagination(*service_file_descriptor->service(0)->method(0));
   EXPECT_TRUE(result.has_value());
   EXPECT_EQ(result->first, "repeated_field");
-  EXPECT_EQ(result->second->full_name(), "google.protobuf.Bar");
+  EXPECT_EQ(result->second, "google.protobuf.Bar");
 }
 
 TEST(PredicateUtilsTest, PaginationNoPageSize) {
@@ -552,9 +552,8 @@ TEST(PredicateUtilsDeathTest, PaginationRepeatedMessageOrderMismatch) {
                                                             &service_file));
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
-  EXPECT_DEATH_IF_SUPPORTED(
-      IsPaginated(*service_file_descriptor->service(0)->method(0)),
-      "Repeated field in paginated response must be first");
+  EXPECT_DEATH(IsPaginated(*service_file_descriptor->service(0)->method(0)),
+               "");
 }
 
 TEST(PredicateUtilsTest, PaginationExactlyOneRepatedStringResponse) {
@@ -598,7 +597,7 @@ TEST(PredicateUtilsTest, PaginationExactlyOneRepatedStringResponse) {
       DeterminePagination(*service_file_descriptor->service(0)->method(0));
   EXPECT_TRUE(result.has_value());
   EXPECT_EQ(result->first, "repeated_field");
-  EXPECT_EQ(result->second, nullptr);
+  EXPECT_EQ(result->second, "string");
 }
 
 class StringSourceTree : public google::protobuf::compiler::SourceTree {
@@ -607,7 +606,7 @@ class StringSourceTree : public google::protobuf::compiler::SourceTree {
       : files_(std::move(files)) {}
 
   google::protobuf::io::ZeroCopyInputStream* Open(
-      std::string const& filename) override {
+      const std::string& filename) override {
     auto iter = files_.find(filename);
     return iter == files_.end() ? nullptr
                                 : new google::protobuf::io::ArrayInputStream(
@@ -625,15 +624,16 @@ class AbortingErrorCollector : public DescriptorPool::ErrorCollector {
   AbortingErrorCollector(AbortingErrorCollector const&) = delete;
   AbortingErrorCollector& operator=(AbortingErrorCollector const&) = delete;
 
-  void AddError(std::string const& filename, std::string const& element_name,
-                google::protobuf::Message const*, ErrorLocation,
-                std::string const& error_message) override {
+  void AddError(const std::string& filename, const std::string& element_name,
+                const google::protobuf::Message*, ErrorLocation,
+                const std::string& error_message) override {
     GCP_LOG(FATAL) << "AddError() called unexpectedly: " << filename << " ["
-                   << element_name << "]: " << error_message;
+                   << element_name << "]: " << error_message << "\n";
+    std::exit(1);
   }
 };
 
-char const* const kStreamingServiceProto =
+const char* const kStreamingServiceProto =
     "syntax = \"proto3\";\n"
     "package google.protobuf;\n"
     "// Leading comments about message Foo.\n"
@@ -700,7 +700,7 @@ class StreamingReadTest : public testing::Test {
 };
 
 TEST_F(StreamingReadTest, IsStreamingRead) {
-  FileDescriptor const* service_file_descriptor =
+  const FileDescriptor* service_file_descriptor =
       pool_.FindFileByName("google/cloud/foo/streaming.proto");
   EXPECT_TRUE(IsStreamingRead(*service_file_descriptor->service(0)->method(0)));
   EXPECT_FALSE(

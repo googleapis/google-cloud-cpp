@@ -20,7 +20,6 @@
 #include "generator/integration_tests/golden/golden_thing_admin_connection.h"
 #include "generator/integration_tests/golden/golden_thing_admin_options.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
@@ -30,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,21 +37,18 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options GoldenThingAdminDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
-    auto env = internal::GetEnv("GOLDEN_KITCHEN_SINK_ENDPOINT");
-    options.set<EndpointOption>(env && !env->empty() ? *env : "test.googleapis.com");
-  }
-  if (auto emulator = internal::GetEnv("GOLDEN_KITCHEN_SINK_EMULATOR_HOST")) {
-    options.set<EndpointOption>(*emulator).set<GrpcCredentialOption>(
-        grpc::InsecureChannelCredentials());
+    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_GOLDEN_THING_ADMIN_ENDPOINT");
+    options.set<EndpointOption>(env ? *env : "test.googleapis.com");
   }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
   }
-  if (!options.has<TracingComponentsOption>()) {
-    options.set<TracingComponentsOption>(internal::DefaultTracingComponents());
+  if (!options.has<GrpcBackgroundThreadsFactoryOption>()) {
+    options.set<GrpcBackgroundThreadsFactoryOption>(
+        internal::DefaultBackgroundThreadsFactory);
   }
-  if (!options.has<GrpcTracingOptionsOption>()) {
-    options.set<GrpcTracingOptionsOption>(internal::DefaultTracingOptions());
+  if (!options.has<GrpcNumChannelsOption>()) {
+    options.set<GrpcNumChannelsOption>(4);
   }
   auto& products = options.lookup<UserAgentProductsOption>();
   products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
@@ -62,20 +58,23 @@ Options GoldenThingAdminDefaultOptions(Options options) {
         golden::GoldenThingAdminLimitedTimeRetryPolicy(
             std::chrono::minutes(30)).clone());
   }
+
   if (!options.has<golden::GoldenThingAdminBackoffPolicyOption>()) {
     options.set<golden::GoldenThingAdminBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
             std::chrono::minutes(5), kBackoffScaling).clone());
   }
+
   if (!options.has<golden::GoldenThingAdminPollingPolicyOption>()) {
     options.set<golden::GoldenThingAdminPollingPolicyOption>(
-        GenericPollingPolicy<
-            golden::GoldenThingAdminRetryPolicyOption::Type,
-            golden::GoldenThingAdminBackoffPolicyOption::Type>(
-            options.get<golden::GoldenThingAdminRetryPolicyOption>()->clone(),
-            options.get<golden::GoldenThingAdminBackoffPolicyOption>()->clone())
-            .clone());
+        GenericPollingPolicy<golden::GoldenThingAdminLimitedTimeRetryPolicy,
+        ExponentialBackoffPolicy>(
+            golden::GoldenThingAdminLimitedTimeRetryPolicy(
+                std::chrono::minutes(30)),
+                ExponentialBackoffPolicy(std::chrono::seconds(10),
+                    std::chrono::minutes(5), kBackoffScaling)).clone());
   }
+
   if (!options.has<golden::GoldenThingAdminConnectionIdempotencyPolicyOption>()) {
     options.set<golden::GoldenThingAdminConnectionIdempotencyPolicyOption>(
         golden::MakeDefaultGoldenThingAdminConnectionIdempotencyPolicy());
@@ -84,7 +83,8 @@ Options GoldenThingAdminDefaultOptions(Options options) {
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
+

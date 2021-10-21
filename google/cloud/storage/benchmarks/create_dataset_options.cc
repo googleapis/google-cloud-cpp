@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/create_dataset_options.h"
-#include <sstream>
+#include "google/cloud/internal/getenv.h"
 
 namespace google {
 namespace cloud {

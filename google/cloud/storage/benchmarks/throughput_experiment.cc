@@ -24,7 +24,7 @@
 #include "absl/algorithm/container.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/str_split.h"
-#include <google/storage/v2/storage.grpc.pb.h>
+#include <google/storage/v1/storage.grpc.pb.h>
 #include <curl/curl.h>
 #include <vector>
 
@@ -32,7 +32,7 @@ namespace google {
 namespace cloud {
 namespace storage_benchmarks {
 
-namespace gcs = ::google::cloud::storage;
+namespace gcs = google::cloud::storage;
 
 namespace {
 
@@ -63,14 +63,15 @@ class UploadObject : public ThroughputExperiment {
     // ObjectInsert()
     if (static_cast<std::size_t>(config.object_size) < random_data_.size() &&
         prefer_insert_) {
-      auto timer = Timer::PerThread();
+      Timer timer;
+      timer.Start();
       std::string data =
           random_data_.substr(0, static_cast<std::size_t>(config.object_size));
       auto object_metadata = client_.InsertObject(
           bucket_name, object_name, std::move(data),
           gcs::DisableCrc32cChecksum(!config.enable_crc32c),
           gcs::DisableMD5Hash(!config.enable_md5), api_selector);
-      auto const usage = timer.Sample();
+      timer.Stop();
       return ThroughputResult{kOpInsert,
                               config.object_size,
                               config.app_buffer_size,
@@ -78,11 +79,12 @@ class UploadObject : public ThroughputExperiment {
                               config.enable_crc32c,
                               config.enable_md5,
                               api_,
-                              usage.elapsed_time,
-                              usage.cpu_time,
+                              timer.elapsed_time(),
+                              timer.cpu_time(),
                               object_metadata.status()};
     }
-    auto timer = Timer::PerThread();
+    Timer timer;
+    timer.Start();
     auto writer = client_.WriteObject(
         bucket_name, object_name,
         gcs::DisableCrc32cChecksum(!config.enable_crc32c),
@@ -96,7 +98,7 @@ class UploadObject : public ThroughputExperiment {
       writer.write(random_data_.data(), len);
     }
     writer.Close();
-    auto const usage = timer.Sample();
+    timer.Stop();
 
     return ThroughputResult{kOpWrite,
                             config.object_size,
@@ -105,8 +107,8 @@ class UploadObject : public ThroughputExperiment {
                             config.enable_crc32c,
                             config.enable_md5,
                             api_,
-                            usage.elapsed_time,
-                            usage.cpu_time,
+                            timer.elapsed_time(),
+                            timer.cpu_time(),
                             writer.metadata().status()};
   }
 
@@ -138,7 +140,8 @@ class DownloadObject : public ThroughputExperiment {
 
     std::vector<char> buffer(config.app_buffer_size);
 
-    auto timer = Timer::PerThread();
+    Timer timer;
+    timer.Start();
     auto reader = client_.ReadObject(
         bucket_name, object_name,
         gcs::DisableCrc32cChecksum(!config.enable_crc32c),
@@ -146,7 +149,7 @@ class DownloadObject : public ThroughputExperiment {
     for (std::uint64_t num_read = 0; reader.read(buffer.data(), buffer.size());
          num_read += reader.gcount()) {
     }
-    auto const usage = timer.Sample();
+    timer.Stop();
     return ThroughputResult{config.op,
                             config.object_size,
                             config.app_buffer_size,
@@ -154,8 +157,8 @@ class DownloadObject : public ThroughputExperiment {
                             config.enable_crc32c,
                             config.enable_md5,
                             api_,
-                            usage.elapsed_time,
-                            usage.cpu_time,
+                            timer.elapsed_time(),
+                            timer.cpu_time(),
                             reader.status()};
   }
 
@@ -189,7 +192,8 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
     auto header = creds_->AuthorizationHeader();
     if (!header) return {};
 
-    auto timer = Timer::PerThread();
+    Timer timer;
+    timer.Start();
     struct curl_slist* slist1 = nullptr;
     slist1 = curl_slist_append(slist1, header->c_str());
 
@@ -205,8 +209,9 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
     }
     curl_easy_setopt(hnd, CURLOPT_URL, url.c_str());
     curl_easy_setopt(hnd, CURLOPT_HTTPHEADER, slist1);
-    curl_easy_setopt(hnd, CURLOPT_USERAGENT, curl_version());
+    curl_easy_setopt(hnd, CURLOPT_USERAGENT, "curl/7.65.3");
     curl_easy_setopt(hnd, CURLOPT_MAXREDIRS, 50L);
+    curl_easy_setopt(hnd, CURLOPT_HTTP09_ALLOWED, 1L);
     curl_easy_setopt(hnd, CURLOPT_TCP_KEEPALIVE, 1L);
 
     std::vector<char> buffer(CURL_MAX_WRITE_SIZE);
@@ -226,7 +231,7 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
 
     curl_easy_cleanup(hnd);
     curl_slist_free_all(slist1);
-    auto const usage = timer.Sample();
+    timer.Stop();
     return ThroughputResult{config.op,
                             config.object_size,
                             config.app_buffer_size,
@@ -234,8 +239,8 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
                             config.enable_crc32c,
                             config.enable_md5,
                             api_,
-                            usage.elapsed_time,
-                            usage.cpu_time,
+                            timer.elapsed_time(),
+                            timer.cpu_time(),
                             status};
   }
 
@@ -275,20 +280,22 @@ std::shared_ptr<grpc::ChannelInterface> CreateGcsChannel(int thread_id) {
 class DownloadObjectRawGrpc : public ThroughputExperiment {
  public:
   explicit DownloadObjectRawGrpc(int thread_id)
-      : stub_(google::storage::v2::Storage::NewStub(
+      : stub_(google::storage::v1::Storage::NewStub(
             CreateGcsChannel(thread_id))) {}
   ~DownloadObjectRawGrpc() override = default;
 
   ThroughputResult Run(std::string const& bucket_name,
                        std::string const& object_name,
                        ThroughputExperimentConfig const& config) override {
-    auto timer = Timer::PerThread();
-    google::storage::v2::ReadObjectRequest request;
+    Timer timer;
+
+    timer.Start();
+    google::storage::v1::GetObjectMediaRequest request;
     request.set_bucket(bucket_name);
     request.set_object(object_name);
     grpc::ClientContext context;
-    auto stream = stub_->ReadObject(&context, request);
-    google::storage::v2::ReadObjectResponse response;
+    auto stream = stub_->GetObjectMedia(&context, request);
+    google::storage::v1::GetObjectMediaResponse response;
     std::int64_t bytes_received = 0;
     while (stream->Read(&response)) {
       if (response.has_checksummed_data()) {
@@ -297,7 +304,7 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
     }
     auto const status =
         ::google::cloud::MakeStatusFromRpcError(stream->Finish());
-    auto const usage = timer.Sample();
+    timer.Stop();
 
     return ThroughputResult{config.op,
                             config.object_size,
@@ -306,13 +313,13 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
                             /*crc_enabled=*/false,
                             /*md5_enabled=*/false,
                             ApiName::kApiRawGrpc,
-                            usage.elapsed_time,
-                            usage.cpu_time,
+                            timer.elapsed_time(),
+                            timer.cpu_time(),
                             status};
   }
 
  private:
-  std::unique_ptr<google::storage::v2::Storage::StubInterface> stub_;
+  std::unique_ptr<google::storage::v1::Storage::StubInterface> stub_;
 };
 
 }  // namespace

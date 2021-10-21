@@ -26,16 +26,19 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /// Publish message batches using a stub, with retries, but no queueing.
 class DefaultBatchSink : public BatchSink {
  public:
   static std::shared_ptr<DefaultBatchSink> Create(
-      std::shared_ptr<PublisherStub> stub, CompletionQueue cq,
-      Options const& opts) {
-    return std::shared_ptr<DefaultBatchSink>(
-        new DefaultBatchSink(std::move(stub), std::move(cq), opts));
+      std::shared_ptr<pubsub_internal::PublisherStub> stub,
+      google::cloud::CompletionQueue cq,
+      std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+      std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
+    return std::shared_ptr<DefaultBatchSink>(new DefaultBatchSink(
+        std::move(stub), std::move(cq), std::move(retry_policy),
+        std::move(backoff_policy)));
   }
 
   ~DefaultBatchSink() override = default;
@@ -46,16 +49,18 @@ class DefaultBatchSink : public BatchSink {
   void ResumePublish(std::string const& ordering_key) override;
 
  private:
-  DefaultBatchSink(std::shared_ptr<PublisherStub> stub, CompletionQueue cq,
-                   Options const& opts);
+  DefaultBatchSink(std::shared_ptr<pubsub_internal::PublisherStub> stub,
+                   google::cloud::CompletionQueue cq,
+                   std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+                   std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
 
-  std::shared_ptr<PublisherStub> stub_;
-  CompletionQueue cq_;
+  std::shared_ptr<pubsub_internal::PublisherStub> stub_;
+  google::cloud::CompletionQueue cq_;
   std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
   std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

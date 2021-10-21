@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 struct HmacKeyMetadataParser;
 }  // namespace internal
@@ -112,7 +112,7 @@ inline bool operator!=(HmacKeyMetadata const& lhs, HmacKeyMetadata const& rhs) {
 
 std::ostream& operator<<(std::ostream& os, HmacKeyMetadata const& rhs);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

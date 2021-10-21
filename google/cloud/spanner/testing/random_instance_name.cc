@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * Generate a random instance name for InstanceAdminClient CRUD tests.
@@ -40,7 +40,7 @@ std::string RandomInstanceName(
                                          "abcdefghijlkmnopqrstuvwxyz");
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

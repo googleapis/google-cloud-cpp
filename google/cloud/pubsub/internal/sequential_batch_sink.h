@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /// Publish message batches using a stub, with retries, but no queueing.
 class SequentialBatchSink
@@ -54,8 +54,8 @@ class SequentialBatchSink
   explicit SequentialBatchSink(
       std::shared_ptr<pubsub_internal::BatchSink> sink);
 
-  using PublishResponse = ::google::pubsub::v1::PublishResponse;
-  using PublishRequest = ::google::pubsub::v1::PublishRequest;
+  using PublishResponse = google::pubsub::v1::PublishResponse;
+  using PublishRequest = google::pubsub::v1::PublishRequest;
 
   void OnPublish(Status s);
   std::weak_ptr<SequentialBatchSink> WeakFromThis() {
@@ -74,7 +74,7 @@ class SequentialBatchSink
   Status corked_on_error_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

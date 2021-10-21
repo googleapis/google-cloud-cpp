@@ -21,7 +21,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 /**
@@ -53,7 +53,7 @@ std::string FormatV4SignedUrlTimestamp(
 std::string FormatV4SignedUrlScope(std::chrono::system_clock::time_point tp);
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

@@ -24,7 +24,7 @@ namespace {
 void GetBucketLifecycleManagement(google::cloud::storage::Client client,
                                   std::vector<std::string> const& argv) {
   // [START storage_view_lifecycle_management_configuration]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> updated_metadata =
@@ -56,7 +56,7 @@ void EnableBucketLifecycleManagement(google::cloud::storage::Client client,
                                      std::vector<std::string> const& argv) {
   //! [enable_bucket_lifecycle_management]
   // [START storage_enable_bucket_lifecycle_management]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     gcs::BucketLifecycle bucket_lifecycle_rules = gcs::BucketLifecycle{
@@ -96,7 +96,7 @@ void DisableBucketLifecycleManagement(google::cloud::storage::Client client,
                                       std::vector<std::string> const& argv) {
   //! [disable_bucket_lifecycle_management]
   // [START storage_disable_bucket_lifecycle_management]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(

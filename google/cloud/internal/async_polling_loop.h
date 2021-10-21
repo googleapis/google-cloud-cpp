@@ -27,7 +27,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 using AsyncPollLongRunningOperation =
@@ -95,7 +95,7 @@ using AsyncCancelLongRunningOperation = std::function<future<Status>(
  *  public:
  *   // Using C++14 for exposition purposes. The implementation supports C++11.
  *   future<StatusOr<FooResponse>> Foo(FooRequest const& request) override {
- *     using ::google::longrunning::Operation;
+ *     using google::longrunning::Operation;
  *     future<StatusOr<Operation>> op = AsyncStart();
  *
  *     return op.then([stub = stub_, cq = cq_, loc = __func__](auto f) {
@@ -128,7 +128,7 @@ future<StatusOr<google::longrunning::Operation>> AsyncPollingLoop(
     std::unique_ptr<PollingPolicy> polling_policy, std::string location);
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

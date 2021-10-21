@@ -15,9 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BENCHMARKS_BENCHMARK_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BENCHMARKS_BENCHMARK_H
 
-#include "google/cloud/bigtable/benchmarks/benchmark_options.h"
-#include "google/cloud/bigtable/benchmarks/constants.h"
 #include "google/cloud/bigtable/benchmarks/embedded_server.h"
+#include "google/cloud/bigtable/benchmarks/setup.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/status_or.h"
@@ -47,7 +46,7 @@ struct BenchmarkResult {
  */
 class Benchmark {
  public:
-  explicit Benchmark(BenchmarkOptions options);
+  explicit Benchmark(BenchmarkSetup setup);
   ~Benchmark();
 
   Benchmark(Benchmark const&) = delete;
@@ -119,7 +118,8 @@ class Benchmark {
   int read_rows_count() const;
   //@}
 
-  void DisableBackgroundThreads(CompletionQueue& cq);
+  /// Return a mutable reference to client options.
+  ClientOptions& ClientOptionsRef() { return client_options_; }
 
  private:
   /// Populate the table rows in the range [@p begin, @p end)
@@ -132,9 +132,9 @@ class Benchmark {
    */
   int KeyWidth() const;
 
-  BenchmarkOptions options_;
+  BenchmarkSetup setup_;
   int key_width_;
-  Options opts_;
+  bigtable::ClientOptions client_options_;
   std::unique_ptr<EmbeddedServer> server_;
   std::thread server_thread_;
 };
@@ -162,9 +162,6 @@ struct FormatDuration {
  * @return the stream after printing.
  */
 std::ostream& operator<<(std::ostream& os, FormatDuration duration);
-
-google::cloud::StatusOr<BenchmarkOptions> ParseArgs(
-    int& argc, char* argv[], std::string const& description);
 
 }  // namespace benchmarks
 }  // namespace bigtable

@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 Mutation DeleteFromFamily(std::string family) {
   Mutation m;
   auto& d = *m.op.mutable_delete_from_family();
@@ -42,7 +42,7 @@ Mutation SetCell(Cell cell) {
   return m;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

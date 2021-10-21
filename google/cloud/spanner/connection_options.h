@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * The traits to configure `ConnectionOptions<T>` for Cloud Spanner.
@@ -45,7 +45,7 @@ struct ConnectionOptionsTraits {
 using ConnectionOptions =
     google::cloud::ConnectionOptions<ConnectionOptionsTraits>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 
 }  // namespace cloud

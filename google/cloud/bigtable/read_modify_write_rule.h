@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Define the interfaces to create ReadWriteModifyRule operations.
  *
@@ -34,8 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class ReadModifyWriteRule {
  public:
-  ReadModifyWriteRule(ReadModifyWriteRule&&) = default;
-  ReadModifyWriteRule& operator=(ReadModifyWriteRule&&) = default;
+  ReadModifyWriteRule(ReadModifyWriteRule&&) noexcept = default;
+  ReadModifyWriteRule& operator=(ReadModifyWriteRule&&) noexcept = default;
   ReadModifyWriteRule(ReadModifyWriteRule const&) = default;
   ReadModifyWriteRule& operator=(ReadModifyWriteRule const&) = default;
 
@@ -82,7 +82,7 @@ class ReadModifyWriteRule {
   google::bigtable::v2::ReadModifyWriteRule rule_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

@@ -18,12 +18,11 @@
 #include "google/cloud/spanner/request_priority.h"
 #include "google/cloud/spanner/version.h"
 #include "absl/types/optional.h"
-#include <string>
 
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * Set options on calls to `spanner::Client::Commit()`.
@@ -57,30 +56,12 @@ class CommitOptions {
     return request_priority_;
   }
 
-  /**
-   * Set the transaction tag for the `spanner::Client::Commit()` call.
-   * Ignored for the overload that already takes a `spanner::Transaction`.
-   */
-  CommitOptions& set_transaction_tag(
-      absl::optional<std::string> transaction_tag) {
-    transaction_tag_ = std::move(transaction_tag);
-    return *this;
-  }
-
-  /// The transaction tag for the `spanner::Client::Commit()` call.
-  absl::optional<std::string> const& transaction_tag() const {
-    return transaction_tag_;
-  }
-
  private:
-  // Note that CommitRequest.request_options.request_tag is ignored,
-  // so we do not even provide a mechanism to specify one.
   bool return_stats_ = false;
   absl::optional<RequestPriority> request_priority_;
-  absl::optional<std::string> transaction_tag_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 // Appends the values in the given `key` to the `lv` proto.
 void AppendKey(google::protobuf::ListValue& lv, Key&& key) {
@@ -59,7 +59,7 @@ bool operator==(KeySet const& a, KeySet const& b) {
   return differencer.Compare(a.proto_, b.proto_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

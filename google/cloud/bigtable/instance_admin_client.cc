@@ -20,14 +20,20 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
+namespace internal {
+/// Define what endpoint in ClientOptions is used for the InstanceAdminClient.
+struct InstanceAdminTraits {
+  static std::string const& Endpoint(ClientOptions& options) {
+    return options.instance_admin_endpoint();
+  }
+};
+}  // namespace internal
+
 namespace {
-
-namespace btadmin = ::google::bigtable::admin::v2;
-
 /**
- * An InstanceAdminClient for single-threaded programs that refreshes
- * credentials on all gRPC errors.
+ * An AdminClient for single-threaded programs that refreshes credentials on all
+ * gRPC errors.
  *
  * This class should not be used by multiple threads, it makes no attempt to
  * protect its critical sections.  While it is rare that the admin interface
@@ -39,31 +45,40 @@ namespace btadmin = ::google::bigtable::admin::v2;
  * connections need refreshing.
  */
 class DefaultInstanceAdminClient : public InstanceAdminClient {
+ private:
+  // Introduce an early `private:` section because this type is used to define
+  // the public interface, it should not be part of the public interface.
+  using Impl = internal::CommonClient<
+      internal::InstanceAdminTraits,
+      ::google::bigtable::admin::v2::BigtableInstanceAdmin>;
+
  public:
-  DefaultInstanceAdminClient(std::string project, Options options)
+  using AdminStubPtr = Impl::StubPtr;
+
+  DefaultInstanceAdminClient(std::string project, ClientOptions options)
       : project_(std::move(project)), impl_(std::move(options)) {}
 
   std::string const& project() const override { return project_; }
-  std::shared_ptr<grpc::Channel> Channel() override { return impl_.Channel(); }
+  Impl::ChannelPtr Channel() override { return impl_.Channel(); }
   void reset() override { return impl_.reset(); }
 
   grpc::Status ListInstances(
       grpc::ClientContext* context,
-      btadmin::ListInstancesRequest const& request,
-      btadmin::ListInstancesResponse* response) override {
+      google::bigtable::admin::v2::ListInstancesRequest const& request,
+      google::bigtable::admin::v2::ListInstancesResponse* response) override {
     return impl_.Stub()->ListInstances(context, request, response);
   }
 
   grpc::Status CreateInstance(
       grpc::ClientContext* context,
-      btadmin::CreateInstanceRequest const& request,
+      google::bigtable::admin::v2::CreateInstanceRequest const& request,
       google::longrunning::Operation* response) override {
     return impl_.Stub()->CreateInstance(context, request, response);
   }
 
   grpc::Status UpdateInstance(
       grpc::ClientContext* context,
-      btadmin::PartialUpdateInstanceRequest const& request,
+      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
       google::longrunning::Operation* response) override {
     return impl_.Stub()->PartialUpdateInstance(context, request, response);
   }
@@ -76,78 +91,87 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
     return stub->GetOperation(context, request, response);
   }
 
-  grpc::Status GetInstance(grpc::ClientContext* context,
-                           btadmin::GetInstanceRequest const& request,
-                           btadmin::Instance* response) override {
+  grpc::Status GetInstance(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GetInstanceRequest const& request,
+      google::bigtable::admin::v2::Instance* response) override {
     return impl_.Stub()->GetInstance(context, request, response);
   }
 
-  grpc::Status DeleteInstance(grpc::ClientContext* context,
-                              btadmin::DeleteInstanceRequest const& request,
-                              google::protobuf::Empty* response) override {
+  grpc::Status DeleteInstance(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteInstanceRequest const& request,
+      google::protobuf::Empty* response) override {
     return impl_.Stub()->DeleteInstance(context, request, response);
   }
 
-  grpc::Status ListClusters(grpc::ClientContext* context,
-                            btadmin::ListClustersRequest const& request,
-                            btadmin::ListClustersResponse* response) override {
+  grpc::Status ListClusters(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ListClustersRequest const& request,
+      google::bigtable::admin::v2::ListClustersResponse* response) override {
     return impl_.Stub()->ListClusters(context, request, response);
   }
 
-  grpc::Status GetCluster(grpc::ClientContext* context,
-                          btadmin::GetClusterRequest const& request,
-                          btadmin::Cluster* response) override {
+  grpc::Status GetCluster(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GetClusterRequest const& request,
+      google::bigtable::admin::v2::Cluster* response) override {
     return impl_.Stub()->GetCluster(context, request, response);
   }
 
-  grpc::Status DeleteCluster(grpc::ClientContext* context,
-                             btadmin::DeleteClusterRequest const& request,
-                             google::protobuf::Empty* response) override {
+  grpc::Status DeleteCluster(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteClusterRequest const& request,
+      google::protobuf::Empty* response) override {
     return impl_.Stub()->DeleteCluster(context, request, response);
   }
 
   grpc::Status CreateCluster(
       grpc::ClientContext* context,
-      btadmin::CreateClusterRequest const& request,
+      google::bigtable::admin::v2::CreateClusterRequest const& request,
       google::longrunning::Operation* response) override {
     return impl_.Stub()->CreateCluster(context, request, response);
   }
 
   grpc::Status UpdateCluster(
-      grpc::ClientContext* context, btadmin::Cluster const& request,
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::Cluster const& request,
       google::longrunning::Operation* response) override {
     return impl_.Stub()->UpdateCluster(context, request, response);
   }
 
-  grpc::Status CreateAppProfile(grpc::ClientContext* context,
-                                btadmin::CreateAppProfileRequest const& request,
-                                btadmin::AppProfile* response) override {
+  grpc::Status CreateAppProfile(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateAppProfileRequest const& request,
+      google::bigtable::admin::v2::AppProfile* response) override {
     return impl_.Stub()->CreateAppProfile(context, request, response);
   }
 
-  grpc::Status GetAppProfile(grpc::ClientContext* context,
-                             btadmin::GetAppProfileRequest const& request,
-                             btadmin::AppProfile* response) override {
+  grpc::Status GetAppProfile(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GetAppProfileRequest const& request,
+      google::bigtable::admin::v2::AppProfile* response) override {
     return impl_.Stub()->GetAppProfile(context, request, response);
   }
 
   grpc::Status ListAppProfiles(
       grpc::ClientContext* context,
-      btadmin::ListAppProfilesRequest const& request,
-      btadmin::ListAppProfilesResponse* response) override {
+      google::bigtable::admin::v2::ListAppProfilesRequest const& request,
+      google::bigtable::admin::v2::ListAppProfilesResponse* response) override {
     return impl_.Stub()->ListAppProfiles(context, request, response);
   }
 
   grpc::Status UpdateAppProfile(
       grpc::ClientContext* context,
-      btadmin::UpdateAppProfileRequest const& request,
+      google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
       google::longrunning::Operation* response) override {
     return impl_.Stub()->UpdateAppProfile(context, request, response);
   }
 
-  grpc::Status DeleteAppProfile(grpc::ClientContext* context,
-                                btadmin::DeleteAppProfileRequest const& request,
-                                google::protobuf::Empty* response) override {
+  grpc::Status DeleteAppProfile(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteAppProfileRequest const& request,
+      google::protobuf::Empty* response) override {
     return impl_.Stub()->DeleteAppProfile(context, request, response);
   }
 
@@ -170,119 +194,136 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
     return impl_.Stub()->TestIamPermissions(context, request, response);
   }
 
-  std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<btadmin::ListInstancesResponse>>
-  AsyncListInstances(grpc::ClientContext* context,
-                     btadmin::ListInstancesRequest const& request,
-                     grpc::CompletionQueue* cq) override {
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::ListInstancesResponse>>
+  AsyncListInstances(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ListInstancesRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncListInstances(context, request, cq);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Instance>>
-  AsyncGetInstance(grpc::ClientContext* context,
-                   btadmin::GetInstanceRequest const& request,
-                   grpc::CompletionQueue* cq) override {
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Instance>>
+  AsyncGetInstance(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GetInstanceRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncGetInstance(context, request, cq);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Cluster>>
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Cluster>>
   AsyncGetCluster(grpc::ClientContext* context,
-                  btadmin::GetClusterRequest const& request,
+                  google::bigtable::admin::v2::GetClusterRequest const& request,
                   grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncGetCluster(context, request, cq);
   }
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
-  AsyncDeleteCluster(grpc::ClientContext* context,
-                     btadmin::DeleteClusterRequest const& request,
-                     grpc::CompletionQueue* cq) override {
+  AsyncDeleteCluster(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteClusterRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncDeleteCluster(context, request, cq);
   }
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
-  AsyncCreateCluster(grpc::ClientContext* context,
-                     btadmin::CreateClusterRequest const& request,
-                     grpc::CompletionQueue* cq) override {
+  AsyncCreateCluster(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateClusterRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncCreateCluster(context, request, cq);
   }
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
-  AsyncCreateInstance(grpc::ClientContext* context,
-                      btadmin::CreateInstanceRequest const& request,
-                      grpc::CompletionQueue* cq) override {
+  AsyncCreateInstance(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateInstanceRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncCreateInstance(context, request, cq);
   }
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
-  AsyncUpdateInstance(grpc::ClientContext* context,
-                      btadmin::PartialUpdateInstanceRequest const& request,
-                      grpc::CompletionQueue* cq) override {
+  AsyncUpdateInstance(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncPartialUpdateInstance(context, request, cq);
   }
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncUpdateCluster(grpc::ClientContext* context,
-                     btadmin::Cluster const& request,
+                     google::bigtable::admin::v2::Cluster const& request,
                      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncUpdateCluster(context, request, cq);
   }
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
-  AsyncDeleteInstance(grpc::ClientContext* context,
-                      btadmin::DeleteInstanceRequest const& request,
-                      grpc::CompletionQueue* cq) override {
+  AsyncDeleteInstance(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteInstanceRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncDeleteInstance(context, request, cq);
   }
 
-  std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<btadmin::ListClustersResponse>>
-  AsyncListClusters(grpc::ClientContext* context,
-                    btadmin::ListClustersRequest const& request,
-                    grpc::CompletionQueue* cq) override {
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::ListClustersResponse>>
+  AsyncListClusters(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ListClustersRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncListClusters(context, request, cq);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::AppProfile>>
-  AsyncGetAppProfile(grpc::ClientContext* context,
-                     btadmin::GetAppProfileRequest const& request,
-                     grpc::CompletionQueue* cq) override {
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::AppProfile>>
+  AsyncGetAppProfile(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GetAppProfileRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncGetAppProfile(context, request, cq);
   }
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
-  AsyncDeleteAppProfile(grpc::ClientContext* context,
-                        btadmin::DeleteAppProfileRequest const& request,
-                        grpc::CompletionQueue* cq) override {
+  AsyncDeleteAppProfile(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteAppProfileRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncDeleteAppProfile(context, request, cq);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::AppProfile>>
-  AsyncCreateAppProfile(grpc::ClientContext* context,
-                        btadmin::CreateAppProfileRequest const& request,
-                        grpc::CompletionQueue* cq) override {
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::AppProfile>>
+  AsyncCreateAppProfile(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateAppProfileRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncCreateAppProfile(context, request, cq);
   }
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
-  AsyncUpdateAppProfile(grpc::ClientContext* context,
-                        btadmin::UpdateAppProfileRequest const& request,
-                        grpc::CompletionQueue* cq) override {
+  AsyncUpdateAppProfile(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncUpdateAppProfile(context, request, cq);
   }
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      btadmin::ListAppProfilesResponse>>
-  AsyncListAppProfiles(grpc::ClientContext* context,
-                       btadmin::ListAppProfilesRequest const& request,
-                       grpc::CompletionQueue* cq) override {
+      google::bigtable::admin::v2::ListAppProfilesResponse>>
+  AsyncListAppProfiles(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ListAppProfilesRequest const& request,
+      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncListAppProfiles(context, request, cq);
   }
 
@@ -322,48 +363,34 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
         stub->AsyncGetOperation(context, request, cq).release());
   }
 
+  DefaultInstanceAdminClient(DefaultInstanceAdminClient const&) = delete;
+  DefaultInstanceAdminClient& operator=(DefaultInstanceAdminClient const&) =
+      delete;
+
  private:
-  google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
-    return impl_.BackgroundThreadsFactory();
+  ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() override {
+    return impl_.Options().background_threads_factory();
   }
 
-  struct Traits {
-    static std::string const& Endpoint(Options const& options) {
-      return options.get<InstanceAdminEndpointOption>();
-    }
-  };
-
   std::string project_;
-  internal::CommonClient<Traits, btadmin::BigtableInstanceAdmin> impl_;
+  Impl impl_;
 };
-
 }  // anonymous namespace
 
-std::shared_ptr<InstanceAdminClient> MakeInstanceAdminClient(
-    std::string project, Options options) {
-  options = internal::DefaultOptions(std::move(options));
-  bool tracing_enabled = google::cloud::internal::Contains(
-      options.get<TracingComponentsOption>(), "rpc");
-  auto tracing_options = options.get<GrpcTracingOptionsOption>();
-
+std::shared_ptr<InstanceAdminClient> CreateDefaultInstanceAdminClient(
+    std::string project,
+    ClientOptions options) {  // NOLINT(performance-unnecessary-value-param)
   std::shared_ptr<InstanceAdminClient> client =
-      std::make_shared<DefaultInstanceAdminClient>(std::move(project),
-                                                   std::move(options));
-  if (tracing_enabled) {
+      std::make_shared<DefaultInstanceAdminClient>(std::move(project), options);
+  if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     client = std::make_shared<internal::LoggingInstanceAdminClient>(
-        std::move(client), std::move(tracing_options));
+        std::move(client), options.tracing_options());
   }
   return client;
 }
 
-std::shared_ptr<InstanceAdminClient> CreateDefaultInstanceAdminClient(
-    std::string project, ClientOptions options) {
-  return MakeInstanceAdminClient(std::move(project),
-                                 internal::MakeOptions(std::move(options)));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

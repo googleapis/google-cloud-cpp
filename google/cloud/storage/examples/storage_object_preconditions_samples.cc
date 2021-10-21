@@ -27,7 +27,7 @@ namespace {
 void InsertOnlyIfDoesNotExists(google::cloud::storage::Client client,
                                std::vector<std::string> const& argv) {
   //! [insert-only-if-does-not-exists]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
@@ -46,7 +46,7 @@ void InsertOnlyIfDoesNotExists(google::cloud::storage::Client client,
 void ReadObjectIfGenerationMatch(google::cloud::storage::Client client,
                                  std::vector<std::string> const& argv) {
   //! [read-object-if-generation-match]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::int64_t generation) {
@@ -65,7 +65,7 @@ void ReadObjectIfGenerationMatch(google::cloud::storage::Client client,
 void ReadObjectIfMetagenerationMatch(google::cloud::storage::Client client,
                                      std::vector<std::string> const& argv) {
   //! [read-object-if-metageneration-match]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::int64_t metageneration) {
@@ -84,7 +84,7 @@ void ReadObjectIfMetagenerationMatch(google::cloud::storage::Client client,
 void ReadObjectIfGenerationNotMatch(google::cloud::storage::Client client,
                                     std::vector<std::string> const& argv) {
   //! [read-object-if-generation-not-match]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::int64_t generation) {
@@ -103,7 +103,7 @@ void ReadObjectIfGenerationNotMatch(google::cloud::storage::Client client,
 void ReadObjectIfMetagenerationNotMatch(google::cloud::storage::Client client,
                                         std::vector<std::string> const& argv) {
   //! [read-object-if-metageneration-not-match]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::int64_t metageneration) {

@@ -13,13 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database.h"
-#include <ostream>
-#include <regex>
+#include <array>
 
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 Database::Database(Instance instance, std::string database_id)
     : instance_(std::move(instance)), database_id_(std::move(database_id)) {}
@@ -30,7 +29,7 @@ Database::Database(std::string project_id, std::string instance_id,
                std::move(database_id)) {}
 
 std::string Database::FullName() const {
-  return instance_.FullName() + "/databases/" + database_id_;
+  return instance().FullName() + "/databases/" + database_id_;
 }
 
 bool operator==(Database const& a, Database const& b) {
@@ -39,22 +38,11 @@ bool operator==(Database const& a, Database const& b) {
 
 bool operator!=(Database const& a, Database const& b) { return !(a == b); }
 
-std::ostream& operator<<(std::ostream& os, Database const& db) {
-  return os << db.FullName();
+std::ostream& operator<<(std::ostream& os, Database const& dn) {
+  return os << dn.FullName();
 }
 
-StatusOr<Database> MakeDatabase(std::string const& full_name) {
-  std::regex re("projects/([^/]+)/instances/([^/]+)/databases/([^/]+)");
-  std::smatch matches;
-  if (!std::regex_match(full_name, matches, re)) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Improperly formatted Database: " + full_name);
-  }
-  return Database(Instance(std::move(matches[1]), std::move(matches[2])),
-                  std::move(matches[3]));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

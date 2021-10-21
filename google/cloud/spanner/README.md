@@ -13,8 +13,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 ## Supported Platforms
 
 * Windows, macOS, Linux
-* C++11 (and higher) compilers (we test with GCC >= 5.4, Clang >= 6.0, and
-  MSVC >= 2017)
+* C++11 (and higher) compilers (we test with GCC \>= 4.9, Clang >= 3.8, and MSVC \>= 2019)
 * Environments with or without exceptions
 * Bazel and CMake builds
 
@@ -64,7 +63,7 @@ int main(int argc, char* argv[]) try {
   std::cerr << "Standard exception raised: " << ex.what() << "\n";
   return 1;
 }
-```
+````
 
 * Packaging maintainers or developers that prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
@@ -88,3 +87,4 @@ as well as how to properly format your code.
 ## Licensing
 
 Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
+

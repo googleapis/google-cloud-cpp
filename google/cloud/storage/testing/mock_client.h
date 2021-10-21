@@ -165,10 +165,10 @@ class MockResumableUploadSession
     : public google::cloud::storage::internal::ResumableUploadSession {
  public:
   MOCK_METHOD(StatusOr<internal::ResumableUploadResponse>, UploadChunk,
-              (internal::ConstBufferSequence const&), (override));
+              (internal::ConstBufferSequence const& buffer), (override));
   MOCK_METHOD(StatusOr<internal::ResumableUploadResponse>, UploadFinalChunk,
-              (internal::ConstBufferSequence const&, std::uint64_t,
-               internal::HashValues const&),
+              (internal::ConstBufferSequence const& buffer,
+               std::uint64_t upload_size),
               (override));
   MOCK_METHOD(StatusOr<internal::ResumableUploadResponse>, ResetSession, (),
               (override));

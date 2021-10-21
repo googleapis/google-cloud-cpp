@@ -21,7 +21,6 @@
 #include "google/cloud/testing_util/integration_test.h"
 #include <gmock/gmock.h>
 #include <algorithm>
-#include <mutex>
 #include <string>
 #include <thread>
 #include <vector>
@@ -98,45 +97,40 @@ class StorageIntegrationTest
 
   /// Delete the given object during the test teardown.
   void ScheduleForDelete(ObjectMetadata meta) {
-    std::lock_guard<std::mutex> lk(mu_);
     objects_to_delete_.push_back(std::move(meta));
   }
 
   /// Delete the given bucket during the test teardown.
   void ScheduleForDelete(BucketMetadata meta) {
-    std::lock_guard<std::mutex> lk(mu_);
     buckets_to_delete_.push_back(std::move(meta));
   }
 
-  struct ApiSwitch {
-    Fields for_insert;
-    IfMetagenerationNotMatch for_streaming_read;
-  };
-
-  static ApiSwitch RestApiFlags(std::string const& api) {
-    if (api == "XML") {
-      return ApiSwitch{
-          // enables XML: this filters-out all metadata fields from
-          // the InsertObject() response. JSON and XML are equivalent when no
-          // metadata fields are requested, and we default to XML in that case.
-          Fields(""),
-          // empty option has no effect, and the default is XML
-          IfMetagenerationNotMatch()};
-    }
-    return ApiSwitch{
-        // empty option has no effect, and the default is JSON since only JSON
-        // can provide all metadata fields.
-        Fields(),
-        // disables XML (the default) as it does not support
-        // metageneration-not-match
-        IfMetagenerationNotMatch(0)};
-  }
-
  private:
-  std::mutex mu_;
   std::vector<ObjectMetadata> objects_to_delete_;
   std::vector<BucketMetadata> buckets_to_delete_;
 };
+
+/**
+ * Tests that a callable reports permanent errors correctly.
+ *
+ * @param callable the function / code snippet under test. This is typically a
+ *     lambda expression that exercises some code path expected to report
+ *     a permanent failure.
+ * @tparam Callable the type of @p callable.
+ */
+template <typename Callable>
+void TestPermanentFailure(Callable&& callable) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(
+      try { callable(); } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), ::testing::HasSubstr("Permanent error in"));
+        throw;
+      },
+      std::runtime_error);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(callable(), "");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
 
 /**
  * Count the number of *AccessControl entities with matching name and role.

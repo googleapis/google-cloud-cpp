@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
 /// Configuration parameters for retry and backoff policies.
@@ -34,7 +34,7 @@ struct RPCPolicyParameters {
 #include "google/cloud/bigtable/internal/rpc_policy_parameters.inc"
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

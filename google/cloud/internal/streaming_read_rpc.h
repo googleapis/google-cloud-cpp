@@ -27,7 +27,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 /// A simple representation of request metadata.
@@ -77,7 +77,7 @@ void StreamingReadRpcReportUnhandledError(Status const& status,
 /**
  * Implement `StreamingReadRpc<ResponseType>` using the gRPC abstractions.
  *
- * @note This class is thread compatible, but it is not thread safe. It should
+ * @note this class is thread compatible, but it is not thread safe. It should
  *   not be used from multiple threads at the same time.
  */
 template <typename ResponseType>
@@ -149,7 +149,7 @@ class StreamingReadRpcError : public StreamingReadRpc<ResponseType> {
 };
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

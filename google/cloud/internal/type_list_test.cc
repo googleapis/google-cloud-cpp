@@ -18,7 +18,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
@@ -68,7 +68,7 @@ TEST(TypeList, Cat) {
 
 TEST(TypeList, Big) {
   // Verifies that we can concatenate lots of types, which breaks with
-  // `std::tuple` on older versions of Clang
+  // `std::tuple` on clang 3.8
   using BigList = TypeList<int, int, int, int, int, int, int, int, int, int>;
   using BiggerList = TypeListCatT<BigList, BigList, BigList, BigList, BigList>;
   static_assert(!std::is_same<BigList, BiggerList>::value, "");
@@ -76,6 +76,6 @@ TEST(TypeList, Big) {
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

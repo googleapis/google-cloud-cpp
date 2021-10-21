@@ -37,7 +37,8 @@ if (BUILD_TESTING)
     target_link_libraries(
         grpc_credential_types
         PRIVATE hello_world_protos google_cloud_cpp_testing
-                google-cloud-cpp::iam google-cloud-cpp::spanner CURL::libcurl)
+                google-cloud-cpp::experimental-iam google-cloud-cpp::spanner
+                CURL::libcurl)
     google_cloud_cpp_add_common_options(grpc_credential_types)
 
     foreach (test gcs2cbt grpc_credential_types)

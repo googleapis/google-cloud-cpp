@@ -13,36 +13,30 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/testing/pick_random_instance.h"
-#include "google/cloud/spanner/admin/instance_admin_client.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
-#include "google/cloud/spanner/instance.h"
+#include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/project.h"
 #include <vector>
 
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 StatusOr<std::string> PickRandomInstance(
     google::cloud::internal::DefaultPRNG& generator,
     std::string const& project_id, std::string const& filter) {
-  Project project(project_id);
-  spanner_admin::InstanceAdminClient client(
-      spanner_admin::MakeInstanceAdminConnection());
+  spanner::InstanceAdminClient client(spanner::MakeInstanceAdminConnection());
 
   // We only pick instance IDs starting with "test-instance-" for isolation
   // from tests that create/delete their own instances (in particular from
   // tests calling `RandomInstanceName()`, which uses "temporary-instance-").
-  auto const instance_prefix = spanner::Instance(project, "").FullName();
+  auto const instance_prefix = "projects/" + project_id + "/instances/";
   auto const name_filter = " name:" + instance_prefix + "test-instance-";
 
   std::vector<std::string> instance_ids;
-  google::spanner::admin::instance::v1::ListInstancesRequest request;
-  request.set_parent(project.FullName());
-  request.set_filter(filter + name_filter);
-  for (auto& instance : client.ListInstances(request)) {
+  for (auto& instance :
+       client.ListInstances(project_id, filter + name_filter)) {
     if (!instance) return std::move(instance).status();
     auto instance_id = instance->name().substr(instance_prefix.size());
     if (instance_id.rfind("test-instance-", 0) != 0) {
@@ -62,7 +56,8 @@ StatusOr<std::string> PickRandomInstance(
       spanner::Instance in(project_id, "test-instance-a");
       auto create_instance_request =
           spanner::CreateInstanceRequestBuilder(
-              in, in.project().FullName() + "/instanceConfigs/emulator-config")
+              in, "projects/" + in.project_id() +
+                      "/instanceConfigs/emulator-config")
               .Build();
       StatusOr<google::spanner::admin::instance::v1::Instance> instance =
           client.CreateInstance(create_instance_request).get();
@@ -81,7 +76,7 @@ StatusOr<std::string> PickRandomInstance(
   return instance_ids[random_index(generator)];
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

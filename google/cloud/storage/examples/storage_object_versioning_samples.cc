@@ -24,7 +24,7 @@ namespace {
 void GetObjectVersioning(google::cloud::storage::Client client,
                          std::vector<std::string> const& argv) {
   //! [START storage_view_versioning_status]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> metadata =
@@ -47,7 +47,7 @@ void GetObjectVersioning(google::cloud::storage::Client client,
 void EnableObjectVersioning(google::cloud::storage::Client client,
                             std::vector<std::string> const& argv) {
   //! [enable versioning] [START storage_enable_versioning]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
@@ -77,7 +77,7 @@ void EnableObjectVersioning(google::cloud::storage::Client client,
 void DisableObjectVersioning(google::cloud::storage::Client client,
                              std::vector<std::string> const& argv) {
   //! [START storage_disable_versioning]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
@@ -91,10 +91,14 @@ void DisableObjectVersioning(google::cloud::storage::Client client,
         gcs::IfMetagenerationMatch(original->metageneration()));
     if (!patched) throw std::runtime_error(patched.status().message());
 
-    auto versioning =
-        patched->versioning().value_or(gcs::BucketVersioning{false});
-    std::cout << "Object versioning for bucket " << bucket_name << " is "
-              << (versioning.enabled ? "enabled" : "disabled") << "\n";
+    if (patched->versioning().has_value()) {
+      std::cout << "Object versioning for bucket " << bucket_name << " is "
+                << (patched->versioning()->enabled ? "enabled" : "disabled")
+                << "\n";
+    } else {
+      std::cout << "Object versioning for bucket " << bucket_name
+                << " is disabled.\n";
+    }
   }
   //! [END storage_disable_versioning]
   (std::move(client), argv.at(0));
@@ -103,7 +107,7 @@ void DisableObjectVersioning(google::cloud::storage::Client client,
 void CopyVersionedObject(google::cloud::storage::Client client,
                          std::vector<std::string> const& argv) {
   // [START storage_copy_file_archived_generation]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& source_bucket_name,
      std::string const& source_object_name,
@@ -131,7 +135,7 @@ void DeleteVersionedObject(google::cloud::storage::Client client,
                            std::vector<std::string> const& argv) {
   //! [delete versioned object]
   // [START storage_delete_file_archived_generation]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::int64_t object_generation) {
     google::cloud::Status status = client.DeleteObject(
@@ -166,19 +170,22 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nCreating bucket to run the example (" << bucket_name << ")"
             << std::endl;
-  // Create the bucket with versioning enabled. The default is disabled, and if
-  // we change it we may need to wait 30 seconds for all objects to receive the
-  // new value:
-  //    https://cloud.google.com/storage/docs/object-versioning
   (void)client
-      .CreateBucketForProject(
-          bucket_name, project_id,
-          gcs::BucketMetadata{}.set_versioning(gcs::BucketVersioning{true}))
+      .CreateBucketForProject(bucket_name, project_id, gcs::BucketMetadata{})
       .value();
   // In GCS a single project cannot create or delete buckets more often than
   // once every two seconds. We will pause until that time before deleting the
   // bucket.
   auto pause = std::chrono::steady_clock::now() + std::chrono::seconds(2);
+
+  std::cout << "\nRunning the GetObjectVersioning() example [1]" << std::endl;
+  GetObjectVersioning(client, {bucket_name});
+
+  std::cout << "\nRunning the EnableObjectVersioning() example" << std::endl;
+  EnableObjectVersioning(client, {bucket_name});
+
+  std::cout << "\nRunning the GetObjectVersioning() example [2]" << std::endl;
+  GetObjectVersioning(client, {bucket_name});
 
   auto constexpr kText = R"""(Some text to insert into the test objects.)""";
   auto const src_object_name =
@@ -208,12 +215,6 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning the DisableObjectVersioning() example" << std::endl;
   DisableObjectVersioning(client, {bucket_name});
-
-  std::cout << "\nRunning the GetObjectVersioning() example [1]" << std::endl;
-  GetObjectVersioning(client, {bucket_name});
-
-  std::cout << "\nRunning the EnableObjectVersioning() example" << std::endl;
-  EnableObjectVersioning(client, {bucket_name});
 
   std::cout << "\nRunning the GetObjectVersioning() example [2]" << std::endl;
   GetObjectVersioning(client, {bucket_name});

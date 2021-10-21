@@ -16,21 +16,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_VERSION_H
 
 #include "google/cloud/spanner/version_info.h"
-#include "google/cloud/internal/attributes.h"
 #include "google/cloud/version.h"
 #include <string>
 
-#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED(name)                 \
-  GOOGLE_CLOUD_CPP_DEPRECATED(                                              \
-      "google::cloud::spanner::" name                                       \
-      " is deprecated, and will be removed on or shortly after 2022-10-01." \
-      " Please use google::cloud::spanner_admin::" name                     \
-      " instead. See GitHub issue #7356 for more information.")
-
-// This preprocessor symbol is deprecated and should never be used anywhere. It
-// exists solely for backward compatibility to avoid breaking anyone who may
-// have been using it.
-#define SPANNER_CLIENT_NS GOOGLE_CLOUD_CPP_NS
+#define SPANNER_CLIENT_NS                              \
+  GOOGLE_CLOUD_CPP_VEVAL(SPANNER_CLIENT_VERSION_MAJOR, \
+                         SPANNER_CLIENT_VERSION_MINOR)
 
 namespace google {
 /**
@@ -41,29 +32,46 @@ namespace cloud {
  * Contains all the Cloud Spanner C++ client types and functions.
  */
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+/**
+ * The inlined, versioned namespace for the Cloud Spanner C++ client APIs.
+ *
+ * Applications may need to link multiple versions of the Cloud spanner C++
+ * client, for example, if they link a library that uses an older version of
+ * the client than they do.  This namespace is inlined, so applications can use
+ * `spanner::Foo` in their source, but the symbols are versioned, i.e., the
+ * symbol becomes `spanner::v1::Foo`.
+ */
+inline namespace SPANNER_CLIENT_NS {
 /**
  * The Cloud spanner C++ Client major version.
  */
-int constexpr VersionMajor() { return google::cloud::version_major(); }
+int constexpr VersionMajor() { return SPANNER_CLIENT_VERSION_MAJOR; }
 
 /**
  * The Cloud spanner C++ Client minor version.
  */
-int constexpr VersionMinor() { return google::cloud::version_minor(); }
+int constexpr VersionMinor() { return SPANNER_CLIENT_VERSION_MINOR; }
 
 /**
  * The Cloud spanner C++ Client patch version.
  */
-int constexpr VersionPatch() { return google::cloud::version_patch(); }
+int constexpr VersionPatch() { return SPANNER_CLIENT_VERSION_PATCH; }
 
 /// A single integer representing the Major/Minor/Patch version.
-int constexpr Version() { return google::cloud::version(); }
+int constexpr Version() {
+  static_assert(::google::cloud::version_major() == VersionMajor(),
+                "Mismatched major version");
+  static_assert(::google::cloud::version_minor() == VersionMinor(),
+                "Mismatched minor version");
+  static_assert(::google::cloud::version_patch() == VersionPatch(),
+                "Mismatched patch version");
+  return ::google::cloud::version();
+}
 
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string VersionString();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

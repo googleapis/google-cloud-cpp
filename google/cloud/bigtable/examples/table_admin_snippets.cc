@@ -22,13 +22,13 @@
 
 namespace {
 
-using ::google::cloud::bigtable::examples::Usage;
+using google::cloud::bigtable::examples::Usage;
 
 void CreateTable(google::cloud::bigtable::TableAdmin const& admin,
                  std::vector<std::string> const& argv) {
   //! [create table] [START bigtable_create_table]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id) {
     StatusOr<google::bigtable::admin::v2::Table> schema = admin.CreateTable(
         table_id,
@@ -46,8 +46,8 @@ void CreateTable(google::cloud::bigtable::TableAdmin const& admin,
 void ListTables(google::cloud::bigtable::TableAdmin const& admin,
                 std::vector<std::string> const&) {
   //! [list tables] [START bigtable_list_tables]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin) {
     StatusOr<std::vector<google::bigtable::admin::v2::Table>> tables =
         admin.ListTables(cbt::TableAdmin::NAME_ONLY);
@@ -64,8 +64,8 @@ void ListTables(google::cloud::bigtable::TableAdmin const& admin,
 void GetTable(google::cloud::bigtable::TableAdmin const& admin,
               std::vector<std::string> const& argv) {
   //! [get table] [START bigtable_get_table_metadata]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id) {
     StatusOr<google::bigtable::admin::v2::Table> table =
         admin.GetTable(table_id, cbt::TableAdmin::FULL);
@@ -79,8 +79,8 @@ void GetTable(google::cloud::bigtable::TableAdmin const& admin,
 void CheckTableExists(google::cloud::bigtable::TableAdmin const& admin,
                       std::vector<std::string> const& argv) {
   //! [START bigtable_check_table_exists]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id) {
     StatusOr<google::bigtable::admin::v2::Table> table =
         admin.GetTable(table_id, cbt::TableAdmin::NAME_ONLY);
@@ -101,8 +101,8 @@ void CheckTableExists(google::cloud::bigtable::TableAdmin const& admin,
 void GetOrCreateTable(google::cloud::bigtable::TableAdmin const& admin,
                       std::vector<std::string> const& argv) {
   // [START bigtable_get_or_create_table]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id) {
     StatusOr<google::bigtable::admin::v2::Table> table =
         admin.GetTable(table_id, cbt::TableAdmin::FULL);
@@ -127,7 +127,7 @@ void GetOrCreateTable(google::cloud::bigtable::TableAdmin const& admin,
 void DeleteTable(google::cloud::bigtable::TableAdmin const& admin,
                  std::vector<std::string> const& argv) {
   //! [delete table] [START bigtable_delete_table]
-  namespace cbt = ::google::cloud::bigtable;
+  namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string const& table_id) {
     google::cloud::Status status = admin.DeleteTable(table_id);
     if (!status.ok()) throw std::runtime_error(status.message());
@@ -140,8 +140,8 @@ void DeleteTable(google::cloud::bigtable::TableAdmin const& admin,
 void ModifyTable(google::cloud::bigtable::TableAdmin const& admin,
                  std::vector<std::string> const& argv) {
   //! [modify table]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id) {
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(
@@ -166,8 +166,8 @@ void ModifyTable(google::cloud::bigtable::TableAdmin const& admin,
 void CreateMaxAgeFamily(google::cloud::bigtable::TableAdmin const& admin,
                         std::vector<std::string> const& argv) {
   // [START bigtable_create_family_gc_max_age]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id,
      std::string const& family_name) {
     StatusOr<google::bigtable::admin::v2::Table> schema =
@@ -186,8 +186,8 @@ void CreateMaxAgeFamily(google::cloud::bigtable::TableAdmin const& admin,
 void CreateMaxVersionsFamily(google::cloud::bigtable::TableAdmin const& admin,
                              std::vector<std::string> const& argv) {
   // [START bigtable_create_family_gc_max_versions]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id,
      std::string const& family_name) {
     StatusOr<google::bigtable::admin::v2::Table> schema =
@@ -205,8 +205,8 @@ void CreateMaxVersionsFamily(google::cloud::bigtable::TableAdmin const& admin,
 void CreateUnionFamily(google::cloud::bigtable::TableAdmin const& admin,
                        std::vector<std::string> const& argv) {
   // [START bigtable_create_family_gc_union]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id,
      std::string const& family_name) {
     StatusOr<google::bigtable::admin::v2::Table> schema =
@@ -228,8 +228,8 @@ void CreateUnionFamily(google::cloud::bigtable::TableAdmin const& admin,
 void CreateIntersectionFamily(google::cloud::bigtable::TableAdmin const& admin,
                               std::vector<std::string> const& argv) {
   // [START bigtable_create_family_gc_intersection]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id,
      std::string const& family_name) {
     StatusOr<google::bigtable::admin::v2::Table> schema =
@@ -251,8 +251,8 @@ void CreateIntersectionFamily(google::cloud::bigtable::TableAdmin const& admin,
 void CreateNestedFamily(google::cloud::bigtable::TableAdmin const& admin,
                         std::vector<std::string> const& argv) {
   // [START bigtable_create_family_gc_nested]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id,
      std::string const& family_name) {
     StatusOr<google::bigtable::admin::v2::Table> schema =
@@ -277,8 +277,8 @@ void GetFamilyMetadata(google::cloud::bigtable::TableAdmin const& admin,
                        std::vector<std::string> const& argv) {
   // [START bigtable_get_family_metadata]
   // [START bigtable_get_family]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id,
      std::string const& family_name) {
     StatusOr<google::bigtable::admin::v2::Table> schema =
@@ -301,8 +301,8 @@ void GetFamilyMetadata(google::cloud::bigtable::TableAdmin const& admin,
 void GetOrCreateFamily(google::cloud::bigtable::TableAdmin const& admin,
                        std::vector<std::string> const& argv) {
   // [START bigtable_get_or_create_family]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id,
      std::string const& family_name) {
     StatusOr<google::bigtable::admin::v2::Table> schema =
@@ -337,8 +337,8 @@ void GetOrCreateFamily(google::cloud::bigtable::TableAdmin const& admin,
 void DeleteColumnFamily(google::cloud::bigtable::TableAdmin const& admin,
                         std::vector<std::string> const& argv) {
   // [START bigtable_delete_family]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id,
      std::string const& family_name) {
     StatusOr<google::bigtable::admin::v2::Table> schema =
@@ -355,8 +355,8 @@ void DeleteColumnFamily(google::cloud::bigtable::TableAdmin const& admin,
 void CheckFamilyExists(google::cloud::bigtable::TableAdmin const& admin,
                        std::vector<std::string> const& argv) {
   // [START bigtable_check_family_exists]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id,
      std::string const& family_name) {
     StatusOr<google::bigtable::admin::v2::Table> schema =
@@ -377,8 +377,8 @@ void CheckFamilyExists(google::cloud::bigtable::TableAdmin const& admin,
 void ListColumnFamilies(google::cloud::bigtable::TableAdmin const& admin,
                         std::vector<std::string> const& argv) {
   // [START bigtable_list_column_families]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id) {
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.GetTable(table_id, cbt::TableAdmin::FULL);
@@ -398,8 +398,8 @@ void ListColumnFamilies(google::cloud::bigtable::TableAdmin const& admin,
 void UpdateGcRule(google::cloud::bigtable::TableAdmin const& admin,
                   std::vector<std::string> const& argv) {
   // [START bigtable_update_gc_rule]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id,
      std::string const& family_name) {
     StatusOr<google::bigtable::admin::v2::Table> schema =
@@ -419,7 +419,7 @@ void DropAllRows(google::cloud::bigtable::TableAdmin const& admin,
   //! [drop all rows]
   // [START bigtable_truncate_table]
   // [START bigtable_delete_rows]
-  namespace cbt = ::google::cloud::bigtable;
+  namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string const& table_id) {
     google::cloud::Status status = admin.DropAllRows(table_id);
     if (!status.ok()) throw std::runtime_error(status.message());
@@ -434,7 +434,7 @@ void DropAllRows(google::cloud::bigtable::TableAdmin const& admin,
 void DropRowsByPrefix(google::cloud::bigtable::TableAdmin const& admin,
                       std::vector<std::string> const& argv) {
   //! [drop rows by prefix] [START bigtable_delete_rows_prefix]
-  namespace cbt = ::google::cloud::bigtable;
+  namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string const& table_id,
      std::string const& prefix) {
     google::cloud::Status status = admin.DropRowsByPrefix(table_id, prefix);
@@ -449,9 +449,9 @@ void DropRowsByPrefix(google::cloud::bigtable::TableAdmin const& admin,
 void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin const& admin,
                              std::vector<std::string> const& argv) {
   //! [wait for consistency check]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::future;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id) {
     StatusOr<std::string> consistency_token =
         admin.GenerateConsistencyToken(table_id);
@@ -484,8 +484,8 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin const& admin,
 void CheckConsistency(google::cloud::bigtable::TableAdmin const& admin,
                       std::vector<std::string> const& argv) {
   //! [check consistency]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id,
      std::string const& consistency_token) {
     StatusOr<cbt::Consistency> result =
@@ -507,8 +507,8 @@ void CheckConsistency(google::cloud::bigtable::TableAdmin const& admin,
 void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin const& admin,
                               std::vector<std::string> const& argv) {
   //! [generate consistency token]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id) {
     StatusOr<std::string> token = admin.GenerateConsistencyToken(table_id);
     if (!token) throw std::runtime_error(token.status().message());
@@ -520,7 +520,7 @@ void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin const& admin,
 
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
-  namespace cbt = ::google::cloud::bigtable;
+  namespace cbt = google::cloud::bigtable;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
   if (!examples::RunAdminIntegrationTests()) return;
@@ -534,7 +534,9 @@ void RunAll(std::vector<std::string> const& argv) {
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
                                .value();
 
-  cbt::TableAdmin admin(cbt::MakeAdminClient(project_id), instance_id);
+  cbt::TableAdmin admin(
+      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
+      instance_id);
 
   // If a previous run of these samples crashes before cleaning up there may be
   // old tables left over. As there are quotas on the total number of tables we
@@ -645,7 +647,7 @@ void RunAll(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {
   google::cloud::testing_util::InstallCrashHandler(argv[0]);
 
-  namespace examples = ::google::cloud::bigtable::examples;
+  namespace examples = google::cloud::bigtable::examples;
   google::cloud::bigtable::examples::Example example({
       examples::MakeCommandEntry("create-table", {"<table-id>"}, CreateTable),
       examples::MakeCommandEntry("list-tables", {}, ListTables),

@@ -26,7 +26,7 @@ load(":iam_client_integration_tests.bzl", "iam_client_integration_tests")
         "integration-test",
     ],
     deps = [
-        "//:iam",
+        "//:experimental-iam",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",

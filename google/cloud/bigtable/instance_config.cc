@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 // The names for these constants are taken from the proto, and follow the
 // conventions from proto files.
 
@@ -28,7 +28,7 @@ constexpr InstanceConfig::InstanceType InstanceConfig::PRODUCTION;
 // NOLINTNEXTLINE(readability-identifier-naming)
 constexpr InstanceConfig::InstanceType InstanceConfig::DEVELOPMENT;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

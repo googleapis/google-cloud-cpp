@@ -22,15 +22,12 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
-
-using ::testing::IsSubsetOf;
-
 PolicyDocument CreatePolicyDocumentForTest() {
   PolicyDocument result;
   result.expiration =
-      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z").value();
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z");
   result.conditions = {
       {{"starts-with", "$key", ""}},
       {{"acl", "bucket-owner-read"}},
@@ -44,7 +41,7 @@ PolicyDocument CreatePolicyDocumentForTest() {
 PolicyDocumentV4 CreatePolicyDocumentV4ForTest() {
   PolicyDocumentV4 result;
   result.timestamp =
-      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z").value();
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z");
   result.conditions = {
       {{"starts-with", "$key", ""}},
       {{"acl", "bucket-owner-read"}},
@@ -91,7 +88,7 @@ TEST(PolicyDocumentTests, Parsing) {
 TEST(PolicyDocumentTests, StartsWith) {
   auto condition = PolicyDocumentCondition::StartsWith("key", "");
   std::vector<std::string> subset = {"starts-with", "$key", ""};
-  EXPECT_THAT(subset, IsSubsetOf(condition));
+  EXPECT_THAT(subset, ::testing::IsSubsetOf(condition));
 }
 
 /**
@@ -101,7 +98,7 @@ TEST(PolicyDocumentTests, StartsWith) {
 TEST(PolicyDocumentTests, ExactMatchObject) {
   auto condition = PolicyDocumentCondition::ExactMatch("bucket", "travel-maps");
   std::vector<std::string> subset = {"eq", "$bucket", "travel-maps"};
-  EXPECT_THAT(subset, IsSubsetOf(condition));
+  EXPECT_THAT(subset, ::testing::IsSubsetOf(condition));
 }
 
 /// @test Verify that PolicyDocumentCondition::ExactMatchObject works as
@@ -110,7 +107,7 @@ TEST(PolicyDocumentTests, ExactMatch) {
   auto condition =
       PolicyDocumentCondition::ExactMatchObject("Content-Type", "image/jpeg");
   std::vector<std::string> subset = {"Content-Type", "image/jpeg"};
-  EXPECT_THAT(subset, IsSubsetOf(condition));
+  EXPECT_THAT(subset, ::testing::IsSubsetOf(condition));
 }
 
 /**
@@ -120,7 +117,7 @@ TEST(PolicyDocumentTests, ExactMatch) {
 TEST(PolicyDocumentTests, ContentLengthRange) {
   auto condition = PolicyDocumentCondition::ContentLengthRange(0, 42);
   std::vector<std::string> subset = {"content-length-range", "0", "42"};
-  EXPECT_THAT(subset, IsSubsetOf(condition));
+  EXPECT_THAT(subset, ::testing::IsSubsetOf(condition));
 }
 
 /// @test Verify that PolicyDocumentCondition comparisons work as expected.
@@ -154,7 +151,7 @@ TEST(PolicyDocumentTests, PolicyDocumentStreaming) {
 TEST(PolicyDocumentTests, PolicyDocumentResultStreaming) {
   PolicyDocumentResult result = {
       "foo@foo.com",
-      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z").value(),
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z"),
       "asdfasdfasdf", "asdfasdfasdf"};
   std::ostringstream os;
   os << result;
@@ -186,7 +183,7 @@ TEST(PolicyDocumentTests, PolicyDocumentV4ResultStreaming) {
   PolicyDocumentV4Result result = {
       "https://storage.googleapis.com/rsaposttest",
       "foo@foo.com",
-      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z").value(),
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z"),
       "test-policy",
       "test-sig",
       "test-alg",
@@ -222,7 +219,7 @@ TEST(PolicyDocumentTests, PolicyDocumentV4CtorDefaultTime) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

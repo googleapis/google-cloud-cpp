@@ -11,8 +11,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 ## Supported Platforms
 
 * Windows, macOS, Linux
-* C++11 (and higher) compilers (we test with GCC >= 5.4, Clang >= 6.0, and
-  MSVC >= 2017)
+* C++11 (and higher) compilers (we test with GCC \>= 5.4, Clang >= 3.8, and MSVC \>= 2019)
 * Environments with or without exceptions
 * Bazel and CMake builds
 
@@ -47,7 +46,7 @@ int main(int argc, char* argv[]) try {
   std::string const project_id = argv[1];
 
   // Create a namespace alias to make the code easier to read.
-  namespace iam = ::google::cloud::iam;
+  namespace iam = google::cloud::iam;
   iam::IAMClient client(iam::MakeIAMConnection());
   std::cout << "Service Accounts for project: " << project_id << "\n";
   int count = 0;
@@ -98,3 +97,4 @@ as well as how to properly format your code.
 ## Licensing
 
 Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
+

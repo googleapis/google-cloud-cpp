@@ -20,42 +20,23 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 
-// Cloud Bigtable doesn't accept more than this in a single request.
+// Cloud Bigtable doesn't accept more than this.
 auto constexpr kBigtableMutationLimit = 100000;
-auto constexpr kDefaultMutationLimit = 1000;
-// Maximum mutations that can be outstanding in the Cloud Bigtable front end.
-// NOTE: this is a system-wide limit, but it is only enforced per process.
-auto constexpr kBigtableOutstandingMutationLimit = 300000;
 // Let's make the default slightly smaller, so that overheads or
 // miscalculations don't tip us over.
 auto constexpr kDefaultMaxSizePerBatch =
     (BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH * 90LL) / 100LL;
-auto constexpr kDefaultMaxBatches = 4;
+auto constexpr kDefaultMaxBatches = 8;
 auto constexpr kDefaultMaxOutstandingSize =
     kDefaultMaxSizePerBatch * kDefaultMaxBatches;
 
 MutationBatcher::Options::Options()
-    : max_mutations_per_batch(kDefaultMutationLimit),
+    : max_mutations_per_batch(kBigtableMutationLimit),
       max_size_per_batch(kDefaultMaxSizePerBatch),
       max_batches(kDefaultMaxBatches),
-      max_outstanding_size(kDefaultMaxOutstandingSize),
-      max_outstanding_mutations(kBigtableOutstandingMutationLimit) {}
-
-MutationBatcher::Options& MutationBatcher::Options::SetMaxMutationsPerBatch(
-    size_t max_mutations_per_batch_arg) {
-  max_mutations_per_batch = std::min<std::size_t>(max_mutations_per_batch_arg,
-                                                  kBigtableMutationLimit);
-  return *this;
-}
-
-MutationBatcher::Options& MutationBatcher::Options::SetMaxOutstandingMutations(
-    size_t max_outstanding_mutations_arg) {
-  max_outstanding_mutations = std::min<std::size_t>(
-      max_outstanding_mutations_arg, kBigtableOutstandingMutationLimit);
-  return *this;
-}
+      max_outstanding_size(kDefaultMaxOutstandingSize) {}
 
 std::pair<future<void>, future<Status>> MutationBatcher::AsyncApply(
     CompletionQueue& cq, SingleRowMutation mut) {
@@ -124,13 +105,11 @@ grpc::Status MutationBatcher::IsValid(PendingSingleRowMutation& mut) const {
   // mutations in a batch because it should not pack more. If we have this
   // knowledge, we might as well simplify everything and not admit larger
   // mutations.
-  auto mutation_limit = (std::min)(options_.max_mutations_per_batch,
-                                   options_.max_outstanding_mutations);
-  if (mut.num_mutations > mutation_limit) {
+  if (mut.num_mutations > options_.max_mutations_per_batch) {
     std::stringstream stream;
     stream << "Too many (" << mut.num_mutations
-           << ") mutations in a SingleRowMutations request. " << mutation_limit
-           << " is the limit.";
+           << ") mutations in a SingleRowMutations request. "
+           << options_.max_mutations_per_batch << " is the limit.";
     return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, stream.str());
   }
   if (mut.num_mutations == 0) {
@@ -150,8 +129,6 @@ grpc::Status MutationBatcher::IsValid(PendingSingleRowMutation& mut) const {
 bool MutationBatcher::HasSpaceFor(PendingSingleRowMutation const& mut) const {
   return outstanding_size_ + mut.request_size <=
              options_.max_outstanding_size &&
-         outstanding_mutations_ + mut.num_mutations <=
-             options_.max_outstanding_mutations &&
          cur_batch_->requests_size + mut.request_size <=
              options_.max_size_per_batch &&
          cur_batch_->num_mutations + mut.num_mutations <=
@@ -228,7 +205,6 @@ void MutationBatcher::OnBulkApplyDone(
 
   std::unique_lock<std::mutex> lk(mu_);
   outstanding_size_ -= batch.requests_size;
-  outstanding_mutations_ -= batch.num_mutations;
   num_requests_pending_ -= num_mutations;
   num_outstanding_batches_--;
   SatisfyPromises(TryAdmit(cq), lk);  // unlocks the lock
@@ -253,7 +229,6 @@ std::vector<MutationBatcher::AdmissionPromise> MutationBatcher::TryAdmit(
 
 void MutationBatcher::Admit(PendingSingleRowMutation mut) {
   outstanding_size_ += mut.request_size;
-  outstanding_mutations_ += mut.num_mutations;
   cur_batch_->requests_size += mut.request_size;
   cur_batch_->num_mutations += mut.num_mutations;
   cur_batch_->requests.emplace_back(std::move(mut.mut));
@@ -284,7 +259,7 @@ void MutationBatcher::SatisfyPromises(
   }
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

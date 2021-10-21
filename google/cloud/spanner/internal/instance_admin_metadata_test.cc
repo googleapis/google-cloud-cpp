@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/instance_admin_metadata.h"
-#include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/testing/mock_instance_admin_stub.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -25,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsContextMDValid;
@@ -65,9 +64,8 @@ TEST_F(InstanceAdminMetadataTest, GetInstance) {
   grpc::ClientContext context;
   gcsa::GetInstanceRequest request;
   request.set_name(
-      google::cloud::spanner::Instance(
-          google::cloud::Project("test-project-id"), "test-instance-id")
-          .FullName());
+      "projects/test-project-id/"
+      "instances/test-instance-id");
   auto response = stub.GetInstance(context, request);
   EXPECT_EQ(TransientError(), response.status());
 }
@@ -87,8 +85,9 @@ TEST_F(InstanceAdminMetadataTest, GetInstanceConfig) {
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
   gcsa::GetInstanceConfigRequest request;
-  request.set_name(google::cloud::Project("test-project-id").FullName() +
-                   "/instanceConfigs/test-instance-config-id");
+  request.set_name(
+      "projects/test-project-id/"
+      "instanceConfigs/test-instance-config-id");
   auto response = stub.GetInstanceConfig(context, request);
   EXPECT_EQ(TransientError(), response.status());
 }
@@ -108,7 +107,7 @@ TEST_F(InstanceAdminMetadataTest, ListInstanceConfigs) {
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
   gcsa::ListInstanceConfigsRequest request;
-  request.set_parent(google::cloud::Project("test-project-id").FullName());
+  request.set_parent("projects/test-project-id");
   auto response = stub.ListInstanceConfigs(context, request);
   EXPECT_EQ(TransientError(), response.status());
 }
@@ -130,7 +129,7 @@ TEST_F(InstanceAdminMetadataTest, CreateInstance) {
   InstanceAdminMetadata stub(mock_);
   CompletionQueue cq;
   gcsa::CreateInstanceRequest request;
-  request.set_parent(google::cloud::Project("test-project-id").FullName());
+  request.set_parent("projects/test-project-id");
   request.set_instance_id("test-instance-id");
   auto response = stub.AsyncCreateInstance(
       cq, absl::make_unique<grpc::ClientContext>(), request);
@@ -155,9 +154,7 @@ TEST_F(InstanceAdminMetadataTest, UpdateInstance) {
   CompletionQueue cq;
   gcsa::UpdateInstanceRequest request;
   request.mutable_instance()->set_name(
-      google::cloud::spanner::Instance(
-          google::cloud::Project("test-project-id"), "test-instance-id")
-          .FullName());
+      "projects/test-project-id/instances/test-instance-id");
   auto response = stub.AsyncUpdateInstance(
       cq, absl::make_unique<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
@@ -178,10 +175,7 @@ TEST_F(InstanceAdminMetadataTest, DeleteInstance) {
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
   gcsa::DeleteInstanceRequest request;
-  request.set_name(
-      google::cloud::spanner::Instance(
-          google::cloud::Project("test-project-id"), "test-instance-id")
-          .FullName());
+  request.set_name("projects/test-project-id/instances/test-instance-id");
   auto status = stub.DeleteInstance(context, request);
   EXPECT_EQ(TransientError(), status);
 }
@@ -201,7 +195,7 @@ TEST_F(InstanceAdminMetadataTest, ListInstances) {
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
   gcsa::ListInstancesRequest request;
-  request.set_parent(google::cloud::Project("test-project-id").FullName());
+  request.set_parent("projects/test-project-id");
   auto response = stub.ListInstances(context, request);
   EXPECT_EQ(TransientError(), response.status());
 }
@@ -221,10 +215,8 @@ TEST_F(InstanceAdminMetadataTest, GetIamPolicy) {
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
   google::iam::v1::GetIamPolicyRequest request;
-  request.set_resource(
-      google::cloud::spanner::Instance(
-          google::cloud::Project("test-project-id"), "test-instance-id")
-          .FullName());
+  request.set_resource("projects/test-project-id/instances/test-instance-id");
+
   auto response = stub.GetIamPolicy(context, request);
   EXPECT_EQ(TransientError(), response.status());
 }
@@ -244,10 +236,7 @@ TEST_F(InstanceAdminMetadataTest, SetIamPolicy) {
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
   google::iam::v1::SetIamPolicyRequest request;
-  request.set_resource(
-      google::cloud::spanner::Instance(
-          google::cloud::Project("test-project-id"), "test-instance-id")
-          .FullName());
+  request.set_resource("projects/test-project-id/instances/test-instance-id");
   auto response = stub.SetIamPolicy(context, request);
   EXPECT_EQ(TransientError(), response.status());
 }
@@ -267,16 +256,13 @@ TEST_F(InstanceAdminMetadataTest, TestIamPermissions) {
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
   google::iam::v1::TestIamPermissionsRequest request;
-  request.set_resource(
-      google::cloud::spanner::Instance(
-          google::cloud::Project("test-project-id"), "test-instance-id")
-          .FullName());
+  request.set_resource("projects/test-project-id/instances/test-instance-id");
   auto response = stub.TestIamPermissions(context, request);
   EXPECT_EQ(TransientError(), response.status());
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

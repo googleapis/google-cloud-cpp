@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 struct ReadRangeData {
   std::int64_t begin;
   std::int64_t end;
@@ -70,7 +70,7 @@ struct ReadLast : public internal::ComplexOption<ReadLast, std::int64_t> {
   static char const* name() { return "read-last"; }
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

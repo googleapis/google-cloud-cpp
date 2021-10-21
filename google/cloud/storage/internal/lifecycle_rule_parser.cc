@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
     nlohmann::json const& json) {
@@ -33,9 +33,7 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
   if (json.count("condition") != 0) {
     auto condition = json["condition"];
     if (condition.count("age") != 0) {
-      auto age = internal::ParseIntField(condition, "age");
-      if (!age) return std::move(age).status();
-      result.condition_.age.emplace(*age);
+      result.condition_.age.emplace(internal::ParseIntField(condition, "age"));
     }
     if (condition.count("createdBefore") != 0) {
       auto const date = condition.value("createdBefore", "");
@@ -48,9 +46,8 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
       result.condition_.created_before.emplace(std::move(day));
     }
     if (condition.count("isLive") != 0) {
-      auto is_live = internal::ParseBoolField(condition, "isLive");
-      if (!is_live.ok()) return std::move(is_live).status();
-      result.condition_.is_live.emplace(*is_live);
+      result.condition_.is_live.emplace(
+          internal::ParseBoolField(condition, "isLive"));
     }
     if (condition.count("matchesStorageClass") != 0) {
       std::vector<std::string> matches;
@@ -60,14 +57,12 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
       result.condition_.matches_storage_class.emplace(std::move(matches));
     }
     if (condition.count("numNewerVersions") != 0) {
-      auto v = internal::ParseIntField(condition, "numNewerVersions");
-      if (!v) return std::move(v).status();
-      result.condition_.num_newer_versions.emplace(*v);
+      result.condition_.num_newer_versions.emplace(
+          internal::ParseIntField(condition, "numNewerVersions"));
     }
     if (condition.count("daysSinceNoncurrentTime") != 0) {
-      auto v = internal::ParseIntField(condition, "daysSinceNoncurrentTime");
-      if (!v) return std::move(v).status();
-      result.condition_.days_since_noncurrent_time.emplace(*v);
+      result.condition_.days_since_noncurrent_time.emplace(
+          internal::ParseIntField(condition, "daysSinceNoncurrentTime"));
     }
     if (condition.count("noncurrentTimeBefore") != 0) {
       auto const date = condition.value("noncurrentTimeBefore", "");
@@ -80,9 +75,8 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
       result.condition_.noncurrent_time_before.emplace(std::move(day));
     }
     if (condition.count("daysSinceCustomTime") != 0) {
-      auto v = internal::ParseIntField(condition, "daysSinceCustomTime");
-      if (!v) return std::move(v).status();
-      result.condition_.days_since_custom_time.emplace(*v);
+      result.condition_.days_since_custom_time.emplace(
+          internal::ParseIntField(condition, "daysSinceCustomTime"));
     }
     if (condition.count("customTimeBefore") != 0) {
       auto const date = condition.value("customTimeBefore", "");
@@ -105,7 +99,7 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromString(
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

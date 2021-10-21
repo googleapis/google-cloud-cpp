@@ -16,23 +16,23 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_BYTES_H
 
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/status_or.h"
 #include <array>
 #include <cstddef>
+#include <iterator>
 #include <ostream>
 #include <string>
 
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 struct BytesInternals;
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * A representation of the Spanner BYTES type: variable-length binary data.
@@ -49,9 +49,12 @@ class Bytes {
   ///@{
   template <typename InputIt>
   Bytes(InputIt first, InputIt last) {
-    google::cloud::internal::Base64Encoder encoder;
-    while (first != last) encoder.PushBack(*first++);
-    base64_rep_ = std::move(encoder).FlushAndPad();
+    Encoder encoder(base64_rep_);
+    while (first != last) {
+      encoder.buf_[encoder.len_++] = *first++;
+      if (encoder.len_ == encoder.buf_.size()) encoder.Flush();
+    }
+    if (encoder.len_ != 0) encoder.FlushAndPad();
   }
   template <typename Container>
   explicit Bytes(Container const& c) : Bytes(std::begin(c), std::end(c)) {}
@@ -61,7 +64,7 @@ class Bytes {
   /// construction from a range specified as a pair of input iterators.
   template <typename Container>
   Container get() const {
-    google::cloud::internal::Base64Decoder decoder(base64_rep_);
+    Decoder decoder(base64_rep_);
     return Container(decoder.begin(), decoder.end());
   }
 
@@ -82,19 +85,80 @@ class Bytes {
   friend std::ostream& operator<<(std::ostream& os, Bytes const& bytes);
 
  private:
-  friend struct spanner_internal::BytesInternals;
+  friend struct spanner_internal::SPANNER_CLIENT_NS::BytesInternals;
+
+  struct Encoder {
+    explicit Encoder(std::string& rep) : rep_(rep), len_(0) {}
+    void Flush();
+    void FlushAndPad();
+
+    std::string& rep_;  // encoded
+    std::size_t len_;   // buf_[0 .. len_-1] pending encode
+    std::array<unsigned char, 3> buf_;
+  };
+
+  struct Decoder {
+    class Iterator {
+     public:
+      using iterator_category = std::input_iterator_tag;
+      using value_type = unsigned char;
+      using difference_type = std::ptrdiff_t;
+      using pointer = value_type*;
+      using reference = value_type&;
+
+      Iterator(std::string::const_iterator begin,
+               std::string::const_iterator end)
+          : pos_(begin), end_(end), len_(0) {
+        Fill();
+      }
+
+      void Fill();
+
+      reference operator*() { return buf_[len_]; }
+      pointer operator->() { return &buf_[len_]; }
+
+      Iterator& operator++() {
+        if (--len_ == 0) Fill();
+        return *this;
+      }
+      Iterator operator++(int) {
+        auto const old = *this;
+        operator++();
+        return old;
+      }
+
+      friend bool operator==(Iterator const& a, Iterator const& b) {
+        return a.pos_ == b.pos_ && a.len_ == b.len_;
+      }
+      friend bool operator!=(Iterator const& a, Iterator const& b) {
+        return !(a == b);
+      }
+
+     private:
+      std::string::const_iterator pos_;  // [pos_ .. end_) pending decode
+      std::string::const_iterator end_;
+      std::size_t len_;  // buf_[len_ .. 1] decoded
+      std::array<value_type, 1 + 3> buf_;
+    };
+
+    explicit Decoder(std::string const& rep) : rep_(rep) {}
+    Iterator begin() { return Iterator(rep_.begin(), rep_.end()); }
+    Iterator end() { return Iterator(rep_.end(), rep_.end()); }
+
+    std::string const& rep_;  // encoded
+  };
 
   std::string base64_rep_;  // valid base64 representation
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 StatusOr<spanner::Bytes> BytesFromBase64(std::string input);
 std::string BytesToBase64(spanner::Bytes b);
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
 }  // namespace cloud

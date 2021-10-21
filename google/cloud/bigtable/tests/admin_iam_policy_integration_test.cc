@@ -22,13 +22,13 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 using ::testing::Contains;
 using ::testing::Not;
-namespace btadmin = ::google::bigtable::admin::v2;
-namespace bigtable = ::google::cloud::bigtable;
+namespace btadmin = google::bigtable::admin::v2;
+namespace bigtable = google::cloud::bigtable;
 
 class AdminIAMPolicyIntegrationTest
     : public bigtable::testing::TableIntegrationTest {
@@ -44,8 +44,8 @@ class AdminIAMPolicyIntegrationTest
     ASSERT_FALSE(service_account_.empty());
 
     TableIntegrationTest::SetUp();
-    admin_client_ =
-        MakeAdminClient(testing::TableTestEnvironment::project_id());
+    admin_client_ = CreateDefaultAdminClient(
+        testing::TableTestEnvironment::project_id(), ClientOptions());
     table_admin_ = absl::make_unique<TableAdmin>(
         admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
   }
@@ -96,7 +96,7 @@ TEST_F(AdminIAMPolicyIntegrationTest, SetGetTestIamAPIsTest) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

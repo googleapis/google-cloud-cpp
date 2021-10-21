@@ -24,7 +24,7 @@ namespace {
 void ListDefaultObjectAcl(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
   //! [list default object acl]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<std::vector<gcs::ObjectAccessControl>> items =
@@ -43,7 +43,7 @@ void ListDefaultObjectAcl(google::cloud::storage::Client client,
 void CreateDefaultObjectAcl(google::cloud::storage::Client client,
                             std::vector<std::string> const& argv) {
   //! [create default object acl] [START storage_add_bucket_default_owner]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& entity, std::string const& role) {
@@ -67,7 +67,7 @@ void CreateDefaultObjectAcl(google::cloud::storage::Client client,
 void GetDefaultObjectAcl(google::cloud::storage::Client client,
                          std::vector<std::string> const& argv) {
   //! [get default object acl]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& entity) {
@@ -85,7 +85,7 @@ void GetDefaultObjectAcl(google::cloud::storage::Client client,
 void UpdateDefaultObjectAcl(google::cloud::storage::Client client,
                             std::vector<std::string> const& argv) {
   //! [update default object acl]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& entity, std::string const& role) {
@@ -116,7 +116,7 @@ void UpdateDefaultObjectAcl(google::cloud::storage::Client client,
 void PatchDefaultObjectAcl(google::cloud::storage::Client client,
                            std::vector<std::string> const& argv) {
   //! [patch default object acl]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& entity, std::string const& role) {
@@ -146,7 +146,7 @@ void PatchDefaultObjectAcl(google::cloud::storage::Client client,
 void PatchDefaultObjectAclNoRead(google::cloud::storage::Client client,
                                  std::vector<std::string> const& argv) {
   //! [patch default object acl no-read]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& entity, std::string const& role) {
@@ -167,7 +167,7 @@ void PatchDefaultObjectAclNoRead(google::cloud::storage::Client client,
 void DeleteDefaultObjectAcl(google::cloud::storage::Client client,
                             std::vector<std::string> const& argv) {
   //! [delete default object acl] [START storage_remove_bucket_default_owner]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& entity) {
     google::cloud::Status status =

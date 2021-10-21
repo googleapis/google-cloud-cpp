@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 StatusOr<std::string> RejectMessage() {
   return Status(StatusCode::kFailedPrecondition, "Publisher is full");
@@ -37,16 +37,17 @@ future<StatusOr<std::string>> FlowControlledPublisherConnection::Publish(
   }
   ++pending_messages_;
   pending_bytes_ += message_size;
+  auto w = WeakFromThis();
+  auto r = child_->Publish(std::move(p));
   max_pending_messages_ = (std::max)(max_pending_messages_, pending_messages_);
   max_pending_bytes_ = (std::max)(max_pending_bytes_, pending_bytes_);
   lk.unlock();
-  // child_ does not need be locked because it is a `const` member variable.
-  auto w = WeakFromThis();
-  return child_->Publish(std::move(p))
-      .then([w, message_size](future<StatusOr<std::string>> f) {
-        if (auto self = w.lock()) self->OnPublish(message_size);
-        return f.get();
-      });
+  r = r.then([w, message_size](future<StatusOr<std::string>> f) {
+    if (auto self = w.lock()) self->OnPublish(message_size);
+    return f.get();
+  });
+  lk.lock();
+  return r;
 }
 
 void FlowControlledPublisherConnection::Flush(FlushParams p) {
@@ -66,7 +67,7 @@ void FlowControlledPublisherConnection::OnPublish(std::size_t message_size) {
   cv_.notify_all();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

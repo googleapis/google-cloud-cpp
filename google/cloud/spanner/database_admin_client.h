@@ -34,7 +34,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * Performs database administration operations on Spanner.
@@ -114,8 +114,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [database-doc-link]:
  * https://cloud.google.com/spanner/docs/schema-and-data-model
  */
-class GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED("DatabaseAdminClient")
-    DatabaseAdminClient {
+class DatabaseAdminClient {
  public:
   explicit DatabaseAdminClient(
       ConnectionOptions const& options = ConnectionOptions());
@@ -593,7 +592,7 @@ class GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED("DatabaseAdminClient")
   std::shared_ptr<DatabaseAdminConnection> conn_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

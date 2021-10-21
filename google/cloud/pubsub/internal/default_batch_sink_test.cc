@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/default_batch_sink.h"
-#include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/pubsub/topic.h"
@@ -24,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
@@ -33,13 +32,6 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
 using ::testing::HasSubstr;
 using ::testing::Unused;
-
-std::shared_ptr<DefaultBatchSink> MakeTestBatchSink(
-    std::shared_ptr<PublisherStub> mock, CompletionQueue cq) {
-  return DefaultBatchSink::Create(
-      std::move(mock), std::move(cq),
-      DefaultPublisherOptions(pubsub_testing::MakeTestOptions()));
-}
 
 pubsub::Topic TestTopic() {
   return pubsub::Topic("test-project", "test-topic");
@@ -77,7 +69,9 @@ TEST(DefaultBatchSinkTest, BasicWithRetry) {
       });
 
   internal::AutomaticallyCreatedBackgroundThreads background;
-  auto uut = MakeTestBatchSink(mock, background.cq());
+  auto uut = DefaultBatchSink::Create(mock, background.cq(),
+                                      pubsub_testing::TestRetryPolicy(),
+                                      pubsub_testing::TestBackoffPolicy());
 
   auto response = uut->AsyncPublish(MakeRequest(3)).get();
   ASSERT_THAT(response, IsOk());
@@ -94,7 +88,9 @@ TEST(DefaultBatchSinkTest, PermanentError) {
   });
 
   internal::AutomaticallyCreatedBackgroundThreads background;
-  auto uut = MakeTestBatchSink(mock, background.cq());
+  auto uut = DefaultBatchSink::Create(mock, background.cq(),
+                                      pubsub_testing::TestRetryPolicy(),
+                                      pubsub_testing::TestBackoffPolicy());
 
   auto response = uut->AsyncPublish(MakeRequest(3)).get();
   ASSERT_THAT(response,
@@ -111,7 +107,9 @@ TEST(DefaultBatchSinkTest, TooManyTransients) {
       });
 
   internal::AutomaticallyCreatedBackgroundThreads background;
-  auto uut = MakeTestBatchSink(mock, background.cq());
+  auto uut = DefaultBatchSink::Create(mock, background.cq(),
+                                      pubsub_testing::TestRetryPolicy(),
+                                      pubsub_testing::TestBackoffPolicy());
 
   auto response = uut->AsyncPublish(MakeRequest(3)).get();
   ASSERT_THAT(response,
@@ -119,7 +117,7 @@ TEST(DefaultBatchSinkTest, TooManyTransients) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

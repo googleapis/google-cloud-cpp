@@ -15,16 +15,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SCHEMA_ADMIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SCHEMA_ADMIN_CLIENT_H
 
-#include "google/cloud/pubsub/schema.h"
-#include "google/cloud/pubsub/schema_admin_connection.h"
 #include "google/cloud/pubsub/version.h"
+#include "schema.h"
+#include "schema_admin_connection.h"
 #include <memory>
 #include <string>
 
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
  * Performs schema admin operations in Cloud Pub/Sub.
@@ -32,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Applications use this class to perform operations on
  * [Cloud Pub/Sub][pubsub-doc-link].
  *
- * @warning The Cloud Pub/Sub schema API and the C++ client library for the
+ * @warning the Cloud Pub/Sub schema API and the C++ client library for the
  *     Cloud Pub/Sub schema APIs are experimental. They are subject to change,
  *     including complete removal, without notice.
  *
@@ -54,8 +54,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
- * contains the expected result. Please consult the [`StatusOr<T>`
- * documentation](#google::cloud::StatusOr) for more details.
+ * contains the expected result. Please consult the
+ * [`StatusOr<T>` documentation](#google::cloud::v1::StatusOr) for more details.
  *
  * [pubsub-doc-link]: https://cloud.google.com/pubsub/docs
  */
@@ -244,7 +244,7 @@ class SchemaAdminClient {
   std::shared_ptr<SchemaAdminConnection> connection_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

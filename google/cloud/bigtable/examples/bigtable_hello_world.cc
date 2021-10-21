@@ -27,7 +27,7 @@
 
 namespace {
 
-using ::google::cloud::bigtable::examples::Usage;
+using google::cloud::bigtable::examples::Usage;
 
 void BigtableHelloWorld(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
@@ -39,13 +39,15 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
 
   // Create a namespace alias to make the code easier to read.
   //! [aliases]
-  namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
   //! [aliases]
 
   // Connect to the Cloud Bigtable Admin API.
   //! [connect admin] [START bigtable_hw_connect]
-  cbt::TableAdmin table_admin(cbt::MakeAdminClient(project_id), instance_id);
+  cbt::TableAdmin table_admin(
+      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions()),
+      instance_id);
   //! [connect admin] [END bigtable_hw_connect]
 
   //! [create table] [START bigtable_hw_create_table]
@@ -60,7 +62,9 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
 
   // Create an object to access the Cloud Bigtable Data API.
   //! [connect data]
-  cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id);
+  cbt::Table table(cbt::CreateDefaultDataClient(project_id, instance_id,
+                                                cbt::ClientOptions()),
+                   table_id);
   //! [connect data] [END bigtable_hw_create_table]
 
   // Modify (and create if necessary) a row.
@@ -131,7 +135,7 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
 
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
-  namespace cbt = ::google::cloud::bigtable;
+  namespace cbt = google::cloud::bigtable;
 
   if (!argv.empty()) throw Usage{"auto"};
   if (!examples::RunAdminIntegrationTests()) return;
@@ -145,7 +149,9 @@ void RunAll(std::vector<std::string> const& argv) {
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
                                .value();
 
-  cbt::TableAdmin admin(cbt::MakeAdminClient(project_id), instance_id);
+  cbt::TableAdmin admin(
+      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
+      instance_id);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);

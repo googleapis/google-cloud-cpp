@@ -30,14 +30,14 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 class Numeric;  // defined below
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 
 // Internal implementation details that callers should not use.
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 StatusOr<spanner::Numeric> MakeNumeric(std::string s);
 
 // Like `std::to_string`, but also supports Abseil 128-bit integers.
@@ -52,11 +52,11 @@ std::string ToString(absl::uint128 value);
 Status DataLoss(std::string message);
 StatusOr<spanner::Numeric> MakeNumeric(std::string s, int exponent);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * A representation of the Spanner NUMERIC type: an exact numeric value with
@@ -132,7 +132,8 @@ class Numeric {
   }
 
  private:
-  friend StatusOr<Numeric> spanner_internal::MakeNumeric(std::string s);
+  friend StatusOr<Numeric> spanner_internal::SPANNER_CLIENT_NS::MakeNumeric(
+      std::string s);
   explicit Numeric(std::string rep) : rep_(std::move(rep)) {}
   std::string rep_;  // a valid and canonical NUMERIC representation
 };
@@ -284,7 +285,7 @@ StatusOr<T> ToInteger(  // NOLINT(misc-no-recursion)
 }
 ///@}
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

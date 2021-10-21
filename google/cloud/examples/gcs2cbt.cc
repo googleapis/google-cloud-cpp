@@ -33,8 +33,8 @@
  * Shows how to upload CSV data from Google Cloud Storage to Google Cloud
  * Bigtable.
  */
-namespace cbt = ::google::cloud::bigtable;
-namespace gcs = ::google::cloud::storage;
+namespace cbt = google::cloud::bigtable;
+namespace gcs = google::cloud::storage;
 
 namespace {
 
@@ -250,8 +250,8 @@ Options ParseArgsNoAutoRun(int argc, char const* const argv[]) {
 /// Setup test versions of the Bigtable and Google Cloud Storage environments
 /// and return options pointing to those versions.
 Options AutoRun() {
-  using ::google::cloud::internal::GetEnv;
-  using ::google::cloud::internal::Sample;
+  using google::cloud::internal::GetEnv;
+  using google::cloud::internal::Sample;
 
   for (auto const& var :
        {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",

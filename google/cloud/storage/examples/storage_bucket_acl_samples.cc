@@ -24,7 +24,7 @@ namespace {
 void ListBucketAcl(google::cloud::storage::Client client,
                    std::vector<std::string> const& argv) {
   //! [list bucket acl] [START storage_print_bucket_acl]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<std::vector<gcs::BucketAccessControl>> items =
@@ -43,7 +43,7 @@ void ListBucketAcl(google::cloud::storage::Client client,
 void CreateBucketAcl(google::cloud::storage::Client client,
                      std::vector<std::string> const& argv) {
   //! [create bucket acl]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& entity, std::string const& role) {
@@ -63,7 +63,7 @@ void CreateBucketAcl(google::cloud::storage::Client client,
 void DeleteBucketAcl(google::cloud::storage::Client client,
                      std::vector<std::string> const& argv) {
   //! [delete bucket acl]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& entity) {
     google::cloud::Status status = client.DeleteBucketAcl(bucket_name, entity);
@@ -79,7 +79,7 @@ void DeleteBucketAcl(google::cloud::storage::Client client,
 void GetBucketAcl(google::cloud::storage::Client client,
                   std::vector<std::string> const& argv) {
   //! [get bucket acl] [START storage_print_bucket_acl_for_user]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& entity) {
@@ -97,7 +97,7 @@ void GetBucketAcl(google::cloud::storage::Client client,
 void UpdateBucketAcl(google::cloud::storage::Client client,
                      std::vector<std::string> const& argv) {
   //! [update bucket acl]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& entity, std::string const& role) {
@@ -119,7 +119,7 @@ void UpdateBucketAcl(google::cloud::storage::Client client,
 void PatchBucketAcl(google::cloud::storage::Client client,
                     std::vector<std::string> const& argv) {
   //! [patch bucket acl]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& entity, std::string const& role) {
@@ -147,7 +147,7 @@ void PatchBucketAcl(google::cloud::storage::Client client,
 void PatchBucketAclNoRead(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
   //! [patch bucket acl no-read]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& entity, std::string const& role) {
@@ -166,7 +166,7 @@ void PatchBucketAclNoRead(google::cloud::storage::Client client,
 void AddBucketOwner(google::cloud::storage::Client client,
                     std::vector<std::string> const& argv) {
   //! [add bucket owner] [START storage_add_bucket_owner]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& entity) {
@@ -186,7 +186,7 @@ void AddBucketOwner(google::cloud::storage::Client client,
 void RemoveBucketOwner(google::cloud::storage::Client client,
                        std::vector<std::string> const& argv) {
   //! [remove bucket owner] [START storage_remove_bucket_owner]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& entity) {
@@ -200,7 +200,7 @@ void RemoveBucketOwner(google::cloud::storage::Client client,
     std::vector<gcs::BucketAccessControl> original_acl =
         original_metadata->acl();
     auto it = std::find_if(original_acl.begin(), original_acl.end(),
-                           [entity](gcs::BucketAccessControl const& entry) {
+                           [entity](const gcs::BucketAccessControl& entry) {
                              return entry.entity() == entity &&
                                     entry.role() ==
                                         gcs::BucketAccessControl::ROLE_OWNER();

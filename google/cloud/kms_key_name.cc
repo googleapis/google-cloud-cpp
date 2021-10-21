@@ -13,12 +13,21 @@
 // limitations under the License.
 
 #include "google/cloud/kms_key_name.h"
-#include <ostream>
 #include <regex>
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
+
+StatusOr<KmsKeyName> MakeKmsKeyName(std::string full_name) {
+  std::regex re(
+      "projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+");
+  if (!std::regex_match(full_name, re)) {
+    return Status(StatusCode::kInvalidArgument,
+                  "Improperly formatted KmsKeyName: " + full_name);
+  }
+  return KmsKeyName(std::move(full_name));
+}
 
 KmsKeyName::KmsKeyName(std::string const& project_id,
                        std::string const& location, std::string const& key_ring,
@@ -34,18 +43,6 @@ std::ostream& operator<<(std::ostream& os, KmsKeyName const& key) {
   return os << key.FullName();
 }
 
-StatusOr<KmsKeyName> MakeKmsKeyName(std::string const& full_name) {
-  std::regex re(
-      "projects/([^/]+)/locations/([^/]+)/keyRings/([^/]+)/cryptoKeys/([^/]+)");
-  std::smatch matches;
-  if (!std::regex_match(full_name, matches, re)) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Improperly formatted KmsKeyName: " + full_name);
-  }
-  return KmsKeyName(std::move(matches[1]), std::move(matches[2]),
-                    std::move(matches[3]), std::move(matches[4]));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,7 +32,7 @@ function pubsub_emulator::internal::read_emulator_port() {
 
   local emulator_port="0"
   local -r expected=": Server started, listening on "
-  for _ in $(seq 1 12); do
+  for attempt in $(seq 1 12); do
     if grep -q "${expected}" "${logfile}"; then
       # The port number is whatever is after 'listening on'.
       emulator_port=$(grep "${expected}" "${logfile}" | awk -F' ' '{print $NF}')
@@ -62,12 +61,12 @@ function pubsub_emulator::start() {
     "--project=${GOOGLE_CLOUD_PROJECT:-fake-project}")
   if [[ ! -x "${PUBSUB_EMULATOR_CMD}" ]]; then
     echo 1>&2 "The Cloud Pub/Sub emulator does not seem to be installed, aborting"
+    cat emulator.log >&2
     return 1
   fi
 
   # The tests typically run in a Docker container, where the ports are largely
   # free; when using in manual tests, you can set EMULATOR_PORT.
-  rm -f emulator.log
   "${PUBSUB_EMULATOR_CMD}" "${PUBSUB_EMULATOR_ARGS[@]}" >emulator.log 2>&1 </dev/null &
   PUBSUB_EMULATOR_PID=$!
 

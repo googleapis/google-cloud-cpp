@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
@@ -223,7 +223,7 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
         EXPECT_CALL(*mock, UploadFinalChunk)
             .WillOnce([expected, &bytes_written](
                           internal::ConstBufferSequence const& data,
-                          std::uint64_t size, internal::HashValues const&) {
+                          std::uint64_t size) {
               bytes_written += internal::TotalBytes(data);
               EXPECT_EQ(bytes_written, size);
               return make_status_or(ResumableUploadResponse{
@@ -356,7 +356,7 @@ TEST_F(WriteObjectTest, UploadFile) {
         EXPECT_CALL(*mock, UploadFinalChunk)
             .WillOnce([expected, &bytes_written](
                           internal::ConstBufferSequence const& data,
-                          std::uint64_t size, internal::HashValues const&) {
+                          std::uint64_t size) {
               bytes_written += internal::TotalBytes(data);
               EXPECT_EQ(bytes_written, size);
               return make_status_or(ResumableUploadResponse{
@@ -375,7 +375,7 @@ TEST_F(WriteObjectTest, UploadFile) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

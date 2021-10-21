@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -154,39 +154,6 @@ TEST(TopicBuilder, SetEncoding) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(TopicBuilder, SetMessageRetentionDuration) {
-  auto const actual = TopicBuilder(Topic("test-project", "test-topic"))
-                          .set_message_retention_duration(std::chrono::hours(1))
-                          .BuildUpdateRequest();
-  google::pubsub::v1::UpdateTopicRequest expected;
-  std::string const text = R"pb(
-    topic {
-      name: "projects/test-project/topics/test-topic"
-      message_retention_duration { seconds: 3600 }
-    }
-    update_mask { paths: "message_retention_duration" })pb";
-  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
-  EXPECT_THAT(actual, IsProtoEqual(expected));
-}
-
-TEST(TopicBuilder, SetMessageRetentionDurationProto) {
-  google::protobuf::Duration d;
-  d.set_seconds(3600);
-  d.set_nanos(123456);
-  auto const actual = TopicBuilder(Topic("test-project", "test-topic"))
-                          .set_message_retention_duration(d)
-                          .BuildUpdateRequest();
-  google::pubsub::v1::UpdateTopicRequest expected;
-  std::string const text = R"pb(
-    topic {
-      name: "projects/test-project/topics/test-topic"
-      message_retention_duration { seconds: 3600 nanos: 123456 }
-    }
-    update_mask { paths: "message_retention_duration" })pb";
-  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
-  EXPECT_THAT(actual, IsProtoEqual(expected));
-}
-
 TEST(TopicBuilder, MultipleChanges) {
   auto builder = TopicBuilder(Topic("test-project", "test-topic"))
                      .add_label("key0", "label0")
@@ -217,7 +184,7 @@ TEST(TopicBuilder, MultipleChanges) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

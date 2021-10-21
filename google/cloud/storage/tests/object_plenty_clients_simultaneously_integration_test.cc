@@ -31,7 +31,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ObjectPlentyClientsSimultaneouslyIntegrationTest =
@@ -39,11 +39,6 @@ using ObjectPlentyClientsSimultaneouslyIntegrationTest =
 
 TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
        PlentyClientsSimultaneously) {
-  // The main purpose of this test is to search for file description leaks in
-  // the REST-based client. We do not need such tests with gRPC, they have their
-  // own tests.
-  if (UsingGrpc()) GTEST_SKIP();
-
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -57,7 +52,7 @@ TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  // Create an iostream to read the object back.
+  // Create a iostream to read the object back.
   auto num_fds_before_test = GetNumOpenFiles();
   std::vector<Client> read_clients;
   std::vector<ObjectReadStream> read_streams;
@@ -84,7 +79,7 @@ TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
         << "Clients keeps at least some file descriptors open";
     EXPECT_LT(*num_fds_after_test, *num_fds_during_test)
         << "Releasing clients also releases at least some file descriptors";
-    EXPECT_GE(*num_fds_before_test, *num_fds_after_test)
+    EXPECT_EQ(*num_fds_before_test, *num_fds_after_test)
         << "Clients are leaking descriptors";
   } else {
     EXPECT_EQ(StatusCode::kUnimplemented, num_fds_before_test.status().code());
@@ -94,7 +89,7 @@ TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
 }
 
 }  // anonymous namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -22,7 +22,7 @@ namespace {
 void CreateGetSignedUrlV4(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
   //! [sign url v4] [START storage_generate_signed_url_v4]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& signing_account) {
@@ -43,7 +43,7 @@ void CreateGetSignedUrlV4(google::cloud::storage::Client client,
 void CreatePutSignedUrlV4(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
   //! [create put signed url v4] [START storage_generate_upload_signed_url_v4]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& signing_account) {

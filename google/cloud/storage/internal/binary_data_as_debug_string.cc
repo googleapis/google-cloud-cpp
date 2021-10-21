@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 std::string BinaryDataAsDebugString(char const* data, std::size_t size,
                                     std::size_t max_output_bytes) {
@@ -81,7 +81,7 @@ std::string BinaryDataAsDebugString(char const* data, std::size_t size,
   return result;
 }
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

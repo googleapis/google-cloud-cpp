@@ -21,96 +21,98 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::NotNull;
+
+ObjectReadStream CreateReader() {
+  std::shared_ptr<internal::RawClient> client;
+  internal::ReadObjectRangeRequest request("test-bucket", "test-object");
+
+  auto buf = absl::make_unique<internal::ObjectReadStreambuf>(
+      request, Status(StatusCode::kNotFound, "test-message"));
+  return ObjectReadStream(std::move(buf));
+}
+
+ObjectWriteStream CreateWriter() {
+  auto session = absl::make_unique<internal::ResumableUploadSessionError>(
+      Status(StatusCode::kNotFound, "test-message"));
+
+  auto validator = absl::make_unique<internal::NullHashValidator>();
+
+  ObjectWriteStream writer(absl::make_unique<internal::ObjectWriteStreambuf>(
+      std::move(session), 0, std::move(validator),
+      AutoFinalizeConfig::kEnabled));
+  writer.setstate(std::ios::badbit | std::ios::eofbit);
+  writer.Close();
+  return writer;
+}
 
 TEST(ObjectStream, ReadMoveConstructor) {
-  ObjectReadStream reader;
-  ASSERT_THAT(reader.rdbuf(), NotNull());
+  ObjectReadStream reader = CreateReader();
   reader.setstate(std::ios::badbit | std::ios::eofbit);
   EXPECT_TRUE(reader.bad());
   EXPECT_TRUE(reader.eof());
+  EXPECT_NE(nullptr, reader.rdbuf());
 
   ObjectReadStream copy(std::move(reader));
-  ASSERT_THAT(copy.rdbuf(), NotNull());
   EXPECT_TRUE(copy.bad());
   EXPECT_TRUE(copy.eof());
-  EXPECT_THAT(copy.status(), StatusIs(StatusCode::kUnimplemented));
+  EXPECT_THAT(copy.status(), StatusIs(StatusCode::kNotFound));
 
-  // NOLINTNEXTLINE(bugprone-use-after-move)
-  EXPECT_THAT(reader.status(), Not(IsOk()));
-  EXPECT_THAT(reader.rdbuf(), NotNull());
+  EXPECT_EQ(nullptr, reader.rdbuf());  // NOLINT(bugprone-use-after-move)
+  EXPECT_NE(nullptr, copy.rdbuf());
 }
 
 TEST(ObjectStream, ReadMoveAssignment) {
-  ObjectReadStream reader;
-  ASSERT_THAT(reader.rdbuf(), NotNull());
+  ObjectReadStream reader = CreateReader();
   reader.setstate(std::ios::badbit | std::ios::eofbit);
+  EXPECT_NE(nullptr, reader.rdbuf());
 
   ObjectReadStream copy;
 
   copy = std::move(reader);
-  ASSERT_THAT(copy.rdbuf(), NotNull());
   EXPECT_TRUE(copy.bad());
   EXPECT_TRUE(copy.eof());
-  EXPECT_THAT(copy.status(), StatusIs(StatusCode::kUnimplemented));
+  EXPECT_THAT(copy.status(), StatusIs(StatusCode::kNotFound));
 
-  // NOLINTNEXTLINE(bugprone-use-after-move)
-  ASSERT_THAT(reader.rdbuf(), NotNull());
-  EXPECT_THAT(reader.status(), Not(IsOk()));
+  EXPECT_EQ(nullptr, reader.rdbuf());  // NOLINT(bugprone-use-after-move)
+  EXPECT_NE(nullptr, copy.rdbuf());
 }
 
 TEST(ObjectStream, WriteMoveConstructor) {
-  ObjectWriteStream writer;
-  ASSERT_THAT(writer.rdbuf(), NotNull());
-  EXPECT_THAT(writer.metadata(), StatusIs(StatusCode::kUnimplemented));
+  ObjectWriteStream writer = CreateWriter();
+  EXPECT_THAT(writer.metadata(), StatusIs(StatusCode::kNotFound));
+  EXPECT_NE(nullptr, writer.rdbuf());
 
   ObjectWriteStream copy(std::move(writer));
-  ASSERT_THAT(copy.rdbuf(), NotNull());
   EXPECT_TRUE(copy.bad());
   EXPECT_TRUE(copy.eof());
-  EXPECT_THAT(copy.metadata(), StatusIs(StatusCode::kUnimplemented));
+  EXPECT_THAT(copy.metadata(), StatusIs(StatusCode::kNotFound));
 
-  // NOLINTNEXTLINE(bugprone-use-after-move)
-  ASSERT_THAT(writer.rdbuf(), NotNull());
-  EXPECT_THAT(writer.last_status(), Not(IsOk()));
+  EXPECT_EQ(nullptr, writer.rdbuf());  // NOLINT(bugprone-use-after-move)
+  EXPECT_NE(nullptr, copy.rdbuf());
 }
 
 TEST(ObjectStream, WriteMoveAssignment) {
-  ObjectWriteStream writer;
-  ASSERT_THAT(writer.rdbuf(), NotNull());
-  EXPECT_THAT(writer.metadata(), StatusIs(StatusCode::kUnimplemented));
+  ObjectWriteStream writer = CreateWriter();
+  EXPECT_THAT(writer.metadata(), StatusIs(StatusCode::kNotFound));
+  EXPECT_NE(nullptr, writer.rdbuf());
 
   ObjectWriteStream copy;
 
   copy = std::move(writer);
-  ASSERT_THAT(copy.rdbuf(), NotNull());
   EXPECT_TRUE(copy.bad());
   EXPECT_TRUE(copy.eof());
-  EXPECT_THAT(copy.metadata(), StatusIs(StatusCode::kUnimplemented));
+  EXPECT_THAT(copy.metadata(), StatusIs(StatusCode::kNotFound));
 
-  // NOLINTNEXTLINE(bugprone-use-after-move)
-  ASSERT_THAT(writer.rdbuf(), NotNull());
-  EXPECT_THAT(writer.last_status(), Not(IsOk()));
-}
-
-TEST(ObjectStream, Suspend) {
-  ObjectWriteStream writer;
-  ASSERT_THAT(writer.rdbuf(), NotNull());
-  EXPECT_THAT(writer.metadata(), StatusIs(StatusCode::kUnimplemented));
-
-  std::move(writer).Suspend();
-  // NOLINTNEXTLINE(bugprone-use-after-move)
-  ASSERT_THAT(writer.rdbuf(), NotNull());
-  EXPECT_THAT(writer.last_status(), Not(IsOk()));
+  EXPECT_EQ(nullptr, writer.rdbuf());  // NOLINT(bugprone-use-after-move)
+  EXPECT_NE(nullptr, copy.rdbuf());
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/object_write_streambuf.h"
+#include "google/cloud/storage/internal/object_streambuf.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
@@ -56,8 +56,7 @@ class ObjectWriteStreambufIntegrationTest
         internal::ClientImplDetails::GetRawClient(*client)
             ->client_options()
             .upload_buffer_size(),
-        CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
-        AutoFinalizeConfig::kEnabled));
+        absl::make_unique<NullHashValidator>(), AutoFinalizeConfig::kEnabled));
 
     std::ostringstream expected_stream;
     WriteRandomLines(writer, expected_stream, line_count, line_size);
@@ -89,7 +88,7 @@ TEST_F(ObjectWriteStreambufIntegrationTest, QuantumAndNonQuantum) {
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

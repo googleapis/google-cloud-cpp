@@ -17,7 +17,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 google::cloud::StatusCode MapStatusCode(grpc::StatusCode const& code) {
   switch (code) {
@@ -83,6 +83,6 @@ google::cloud::Status MakeStatusFromRpcError(
   return Status(code, status.message());
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

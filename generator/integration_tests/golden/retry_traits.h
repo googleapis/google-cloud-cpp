@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 /// Define the gRPC status code semantics for retrying requests.
 struct GoldenThingAdminRetryTraits {
   static inline bool IsPermanentFailure(google::cloud::Status const& status) {
@@ -39,7 +39,7 @@ struct GoldenKitchenSinkRetryTraits {
   }
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

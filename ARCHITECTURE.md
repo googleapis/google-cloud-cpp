@@ -110,9 +110,9 @@ These are some examples:
 - Spanner has one non-admin client, the
   [spanner::Client](/google/cloud/spanner/client.h). It also has two admin
   clients:
-  [spanner_admin::InstanceAdminClient](/google/cloud/spanner/admin/instance_admin_client.h),
+  [spanner::InstanceAdminClient](/google/cloud/spanner/instance_admin_client.h),
   and
-  [spanner_admin::DatabaseAdminClient](/google/cloud/spanner/admin/database_admin_client.h).
+  [spanner::DatabaseAdminClient](/google/cloud/spanner/database_admin_client.h).
 
 Generally these classes are very "thin"; they take function arguments from the
 application, package them in lightweight structure, and then forward the request

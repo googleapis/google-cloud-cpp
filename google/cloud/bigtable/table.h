@@ -39,7 +39,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 /// The branch taken by a Table::CheckAndMutateRow operation.
 enum class MutationBranch {
   /// The predicate provided to CheckAndMutateRow did not match and the
@@ -100,8 +100,8 @@ inline std::string TableName(std::shared_ptr<DataClient> const& client,
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
  * contains the expected result. Operations that do not return a value simply
  * return a `google::cloud::Status` indicating success or the details of the
- * error Please consult the [`StatusOr<T>`
- * documentation](#google::cloud::StatusOr) for more details.
+ * error Please consult the
+ * [`StatusOr<T>` documentation](#google::cloud::v1::StatusOr) for more details.
  *
  * @code
  * namespace cbt = google::cloud::bigtable;
@@ -152,8 +152,8 @@ inline std::string TableName(std::shared_ptr<DataClient> const& client,
  * @see https://cloud.google.com/bigtable/docs/reference/service-apis-overview
  *     for an overview of the underlying Cloud Bigtable API.
  *
- * @see #google::cloud::StatusOr for a description of the error reporting class
- *     used by this library.
+ * @see #google::cloud::v1::StatusOr for a description of the error reporting
+ *     class used by this library.
  *
  * @see `LimitedTimeRetryPolicy` and `LimitedErrorCountRetryPolicy` for
  *     alternative retry policies.
@@ -233,7 +233,7 @@ class Table {
    * @par Example
    * @code
    * using namespace std::chrono_literals; // assuming C++14.
-   * auto client = bigtable::MakeClient(...); // details omitted
+   * auto client = bigtable::CreateDefaultClient(...); // details omitted
    * bigtable::Table table(client, "my-table",
    *                       // Allow up to 20 minutes to retry operations
    *                       bigtable::LimitedTimeRetryPolicy(20min),
@@ -280,6 +280,7 @@ class Table {
   template <
       typename... Policies,
       typename std::enable_if<ValidPolicies<Policies...>::value, int>::type = 0>
+  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   Table(std::shared_ptr<DataClient> client, std::string const& table_id,
         Policies&&... policies)
       : Table(std::move(client), table_id) {
@@ -295,7 +296,7 @@ class Table {
    * @par Example
    * @code
    * using namespace std::chrono_literals; // assuming C++14.
-   * auto client = bigtable::MakeClient(...); // details omitted
+   * auto client = bigtable::CreateDefaultClient(...); // details omitted
    * bigtable::Table table(client, "app_id", "my-table",
    *                       // Allow up to 20 minutes to retry operations
    *                       bigtable::LimitedTimeRetryPolicy(20min),
@@ -343,6 +344,7 @@ class Table {
   template <
       typename... Policies,
       typename std::enable_if<ValidPolicies<Policies...>::value, int>::type = 0>
+  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
         std::string const& table_id, Policies&&... policies)
       : Table(std::move(client), std::move(app_profile_id), table_id) {
@@ -404,30 +406,11 @@ class Table {
   /**
    * Attempts to apply mutations to multiple rows.
    *
-   * These mutations are applied in bulk, in a single `MutateRowsRequest` RPC.
-   * Failures are handled on a per mutation basis. If the result of a mutation
-   * is a permanent (non-retryable) error, or if a non-idempotent mutation fails
-   * for any reason, the mutation will not be retried. Only idempotent mutations
-   * that encounter transient (retryable) errors can be retried. These mutations
-   * are collected and retried in bulk. This function will continue to retry any
-   * remaining errors until this class's retry policy is exhausted.
-   *
-   * It is possible that some mutations may not be attempted at all. These
-   * mutations are considered failing and will be returned.
-   *
-   * @note The retry policy is only impacted by the result of the gRPC stream.
-   *     Let's say you have a `LimitedErrorCountRetryPolicy` of 2. If an
-   *     idempotent mutation fails with a retryable error and the stream itself
-   *     succeeds, it may be retried more than 2 times. Only when the stream
-   *     fails twice will we give up and consider the mutation to be failed.
-   *
-   * @note This function takes ownership (and then discards) the data in the
-   *     mutation. In general, a `BulkMutation` can modify multiple rows, and
-   *     the modifications for each row can change (or create) multiple cells,
-   *     across different columns and column families.
-   *
-   * @param mut the mutations
-   * @returns a list of failed mutations
+   * @param mut the mutations, note that this function takes
+   *     ownership (and then discards) the data in the mutation. In general, a
+   *     `BulkMutation` can modify multiple rows, and the modifications for each
+   *     row can change (or create) multiple cells, across different columns and
+   *     column families.
    *
    * @par Idempotency
    * This operation is idempotent if the provided mutations are idempotent. Note
@@ -447,31 +430,15 @@ class Table {
   /**
    * Makes asynchronous attempts to apply mutations to multiple rows.
    *
-   * These mutations are applied in bulk, in a single `MutateRowsRequest` RPC.
-   * Failures are handled on a per mutation basis. If the result of a mutation
-   * is a permanent (non-retryable) error, or if a non-idempotent mutation fails
-   * for any reason, the mutation will not be retried. Only idempotent mutations
-   * that encounter transient (retryable) errors can be retried. These mutations
-   * are collected and retried in bulk. This function will continue to retry any
-   * remaining errors until this class's retry policy is exhausted.
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
    *
-   * It is possible that some mutations may not be attempted at all. These
-   * mutations are considered failing and will be returned.
-   *
-   * @note The retry policy is only impacted by the result of the gRPC stream.
-   *     Let's say you have a `LimitedErrorCountRetryPolicy` of 2. If an
-   *     idempotent mutation fails with a retryable error and the stream itself
-   *     succeeds, it may be retried more than 2 times. Only when the stream
-   *     fails twice will we give up and consider the mutation to be failed.
-   *
-   * @note This function takes ownership (and then discards) the data in the
-   *     mutation. In general, a `BulkMutation` can modify multiple rows, and
-   *     the modifications for each row can change (or create) multiple cells,
-   *     across different columns and column families.
-   *
-   * @param mut the mutations
-   * @returns a future to be filled with a list of failed mutations, when the
-   *     operation is complete.
+   * @param mut the mutations, note that this function takes
+   *     ownership (and then discards) the data in the mutation. In general, a
+   *     `BulkMutation` can modify multiple rows, and the modifications for each
+   *     row can change (or create) multiple cells, across different columns and
+   *     column families.
    *
    * @par Idempotency
    * This operation is idempotent if the provided mutations are idempotent. Note
@@ -623,9 +590,10 @@ class Table {
   /**
    * Sample of the row keys in the table, including approximate data sizes.
    *
-   * @note The sample may only include one element for small tables.  In
-   *     addition, the sample may include row keys that do not exist on the
-   *     table, and may include the empty row key to indicate "end of table".
+   * @returns Note that the sample may only include one element for small
+   *     tables.  In addition, the sample may include row keys that do not exist
+   *     on the table, and may include the empty row key to indicate
+   *     "end of table".
    *
    * @par Idempotency
    * This operation is always treated as idempotent.
@@ -644,11 +612,11 @@ class Table {
    * Asynchronously obtains a sample of the row keys in the table, including
    * approximate data sizes.
    *
-   * @returns a future, that becomes satisfied when the operation completes.
-   *
-   * @note The sample may only include one element for small tables. In
-   *     addition, the sample may include row keys that do not exist on the
-   *     table, and may include the empty row key to indicate "end of table".
+   * @returns A future, that becomes satisfied when the operation completes.
+   *     Note that the sample may only include one element for small tables.
+   *     In addition, the sample may include row keys that do not exist on
+   *     the table, and may include the empty row key to indicate "end of
+   *     table".
    *
    * @par Idempotency
    * This operation is always treated as idempotent.
@@ -676,7 +644,7 @@ class Table {
    *     and add the value provided.
    *     Both rules accept the family and column identifier to modify.
    * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
-   * @returns the new contents of all modified cells.
+   * @returns The new contents of all modified cells.
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
@@ -693,6 +661,8 @@ class Table {
   StatusOr<Row> ReadModifyWriteRow(std::string row_key,
                                    bigtable::ReadModifyWriteRule rule,
                                    Args&&... rules) {
+    grpc::Status status;
+
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_row_key(std::move(row_key));
 
@@ -725,7 +695,7 @@ class Table {
    *     and add the value provided.
    *     Both rules accept the family and column identifier to modify.
    * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
-   * @returns a future, that becomes satisfied when the operation completes,
+   * @returns A future, that becomes satisfied when the operation completes,
    *     at that point the future has the contents of all modified cells.
    *
    * @par Idempotency
@@ -742,20 +712,9 @@ class Table {
   future<StatusOr<Row>> AsyncReadModifyWriteRow(
       std::string row_key, bigtable::ReadModifyWriteRule rule,
       Args&&... rules) {
-    ::google::bigtable::v2::ReadModifyWriteRowRequest request;
-    request.set_row_key(std::move(row_key));
-
-    // Generate a better compile time error message than the default one
-    // if the types do not match
-    static_assert(
-        absl::conjunction<
-            std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
-        "The arguments passed to AsyncReadModifyWriteRow(row_key,...) must be "
-        "convertible to bigtable::ReadModifyWriteRule");
-
-    *request.add_rules() = std::move(rule).as_proto();
-    AddRules(request, std::forward<Args>(rules)...);
-    return AsyncReadModifyWriteRowImpl(std::move(request));
+    auto cq = background_threads_->cq();
+    return AsyncReadModifyWriteRowImpl(std::move(row_key), cq, std::move(rule),
+                                       std::forward<Args>(rules)...);
   }
 
   /**
@@ -791,9 +750,9 @@ class Table {
   template <typename RowFunctor, typename FinishFunctor>
   void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
                      Filter filter) {
-    AsyncReadRows(std::move(on_row), std::move(on_finish), std::move(row_set),
-                  AsyncRowReader<RowFunctor, FinishFunctor>::NO_ROWS_LIMIT,
-                  std::move(filter));
+    auto cq = background_threads_->cq();
+    AsyncReadRowsImpl(cq, std::move(on_row), std::move(on_finish),
+                      std::move(row_set), std::move(filter));
   }
 
   /**
@@ -834,12 +793,9 @@ class Table {
   template <typename RowFunctor, typename FinishFunctor>
   void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
                      std::int64_t rows_limit, Filter filter) {
-    AsyncRowReader<RowFunctor, FinishFunctor>::Create(
-        background_threads_->cq(), client_, app_profile_id_, table_name_,
-        std::move(on_row), std::move(on_finish), std::move(row_set), rows_limit,
-        std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-        metadata_update_policy_,
-        absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
+    auto cq = background_threads_->cq();
+    AsyncReadRowsImpl(cq, std::move(on_row), std::move(on_finish),
+                      std::move(row_set), rows_limit, std::move(filter));
   }
 
   /**
@@ -875,6 +831,53 @@ class Table {
                                                       Filter filter);
 
  private:
+  future<Status> AsyncApplyImpl(SingleRowMutation mut, CompletionQueue& cq);
+
+  future<std::vector<FailedMutation>> AsyncBulkApplyImpl(BulkMutation mut,
+                                                         CompletionQueue& cq);
+  future<StatusOr<MutationBranch>> AsyncCheckAndMutateRowImpl(
+      std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
+      std::vector<Mutation> false_mutations, CompletionQueue& cq);
+
+  template <typename... Args>
+  future<StatusOr<Row>> AsyncReadModifyWriteRowImpl(
+      std::string row_key, CompletionQueue& cq,
+      bigtable::ReadModifyWriteRule rule, Args&&... rules) {
+    ::google::bigtable::v2::ReadModifyWriteRowRequest request;
+    request.set_row_key(std::move(row_key));
+    *request.add_rules() = std::move(rule).as_proto();
+    AddRules(request, std::forward<Args>(rules)...);
+
+    return AsyncReadModifyWriteRowImpl(cq, std::move(request));
+  }
+
+  template <typename RowFunctor, typename FinishFunctor>
+  void AsyncReadRowsImpl(CompletionQueue& cq, RowFunctor on_row,
+                         FinishFunctor on_finish, RowSet row_set,
+                         Filter filter) {
+    AsyncRowReader<RowFunctor, FinishFunctor>::Create(
+        cq, client_, app_profile_id_, table_name_, std::move(on_row),
+        std::move(on_finish), std::move(row_set),
+        AsyncRowReader<RowFunctor, FinishFunctor>::NO_ROWS_LIMIT,
+        std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+        metadata_update_policy_,
+        absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
+  }
+  template <typename RowFunctor, typename FinishFunctor>
+  void AsyncReadRowsImpl(CompletionQueue& cq, RowFunctor on_row,
+                         FinishFunctor on_finish, RowSet row_set,
+                         std::int64_t rows_limit, Filter filter) {
+    AsyncRowReader<RowFunctor, FinishFunctor>::Create(
+        cq, client_, app_profile_id_, table_name_, std::move(on_row),
+        std::move(on_finish), std::move(row_set), rows_limit, std::move(filter),
+        clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+        metadata_update_policy_,
+        absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
+  }
+
+  future<StatusOr<std::pair<bool, Row>>> AsyncReadRowImpl(CompletionQueue& cq,
+                                                          std::string row_key,
+                                                          Filter filter);
   /**
    * Send request ReadModifyWriteRowRequest to modify the row and get it back
    */
@@ -882,6 +885,7 @@ class Table {
       ::google::bigtable::v2::ReadModifyWriteRowRequest request);
 
   future<StatusOr<Row>> AsyncReadModifyWriteRowImpl(
+      CompletionQueue& cq,
       ::google::bigtable::v2::ReadModifyWriteRowRequest request);
 
   void AddRules(google::bigtable::v2::ReadModifyWriteRowRequest&) {
@@ -945,7 +949,7 @@ class Table {
   std::shared_ptr<BackgroundThreads> background_threads_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

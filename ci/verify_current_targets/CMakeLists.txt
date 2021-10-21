@@ -27,11 +27,11 @@ set(common_libraries common grpc_utils)
 # Add GA libraries to this list, the only difference is the name of the CMake
 # targets
 set(ga_libraries # cmake-format: sortable
-                 bigquery bigtable iam pubsub spanner storage)
+                 bigtable pubsub spanner storage)
 
 # Add experimental (non-GA) libraries here.
 set(experimental_libraries # cmake-format: sortable
-                           logging)
+                           firestore iam logging)
 
 # CMake can use pkg-config to find dependencies. We recommend using CMake
 # targets, but we want to verify our pkg-config files remain usable and

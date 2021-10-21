@@ -14,7 +14,6 @@
 
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/internal/algorithm.h"
-#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/status_or.h"
@@ -31,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::ContainsOnce;
@@ -39,7 +38,7 @@ using ::testing::Contains;
 using ::testing::EndsWith;
 using ::testing::HasSubstr;
 using ::testing::Not;
-namespace btadmin = ::google::bigtable::admin::v2;
+namespace btadmin = google::bigtable::admin::v2;
 
 class InstanceAdminIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
@@ -66,7 +65,8 @@ class InstanceAdminIntegrationTest
                            .value_or("");
     ASSERT_FALSE(service_account_.empty());
 
-    auto instance_admin_client = bigtable::MakeInstanceAdminClient(project_id_);
+    auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
+        project_id_, bigtable::ClientOptions());
     instance_admin_ =
         absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
   }
@@ -437,8 +437,8 @@ TEST_F(InstanceAdminIntegrationTest,
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
-  auto instance_admin_client = bigtable::MakeInstanceAdminClient(
-      project_id_, Options{}.set<TracingComponentsOption>({"rpc"}));
+  auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
+      project_id_, bigtable::ClientOptions().enable_tracing("rpc"));
   auto instance_admin =
       absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
 
@@ -501,8 +501,8 @@ TEST_F(InstanceAdminIntegrationTest,
 
 TEST_F(InstanceAdminIntegrationTest, CustomWorkers) {
   CompletionQueue cq;
-  auto instance_admin_client = bigtable::MakeInstanceAdminClient(
-      project_id_, Options{}.set<GrpcCompletionQueueOption>(cq));
+  auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
+      project_id_, bigtable::ClientOptions().DisableBackgroundThreads(cq));
   instance_admin_ = absl::make_unique<bigtable::InstanceAdmin>(
       instance_admin_client,
       *DefaultRPCRetryPolicy({std::chrono::seconds(1), std::chrono::seconds(1),
@@ -530,7 +530,7 @@ TEST_F(InstanceAdminIntegrationTest, CustomWorkers) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 std::shared_ptr<RawClient> HybridClient::Create(Options const& options) {
@@ -146,6 +146,14 @@ StatusOr<RewriteObjectResponse> HybridClient::RewriteObject(
 StatusOr<std::unique_ptr<ResumableUploadSession>>
 HybridClient::CreateResumableSession(ResumableUploadRequest const& request) {
   return grpc_->CreateResumableSession(request);
+}
+
+StatusOr<std::unique_ptr<ResumableUploadSession>>
+HybridClient::RestoreResumableSession(std::string const& upload_id) {
+  if (internal::IsGrpcResumableSessionUrl(upload_id)) {
+    return grpc_->RestoreResumableSession(upload_id);
+  }
+  return curl_->RestoreResumableSession(upload_id);
 }
 
 StatusOr<EmptyResponse> HybridClient::DeleteResumableUpload(
@@ -302,7 +310,7 @@ StatusOr<EmptyResponse> HybridClient::DeleteNotification(
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

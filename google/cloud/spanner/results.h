@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 class ResultSourceInterface {
  public:
   virtual ~ResultSourceInterface() = default;
@@ -38,11 +38,11 @@ class ResultSourceInterface {
   virtual absl::optional<google::spanner::v1::ResultSetStats> Stats() const = 0;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * Contains a hierarchical representation of the operations the database server
@@ -59,14 +59,14 @@ using ExecutionPlan = ::google::spanner::v1::QueryPlan;
  * Represents the stream of `Rows` returned from `spanner::Client::Read()` or
  * `spanner::Client::ExecuteQuery()`.
  *
- * This is a range defined by the [Input Iterators][input-iterator] returned
- * from its `begin()` and `end()` members. Callers may directly iterate the
- * `RowStream` instance, which will return a sequence of `StatusOr<Row>`
- * objects.
+ * A `RowStream` object is a range defined by the [Input
+ * Iterators][input-iterator] returned from its `begin()` and `end()` members.
+ * Callers may directly iterate a `RowStream` instance, which will return a
+ * sequence of `StatusOr<Row>` objects.
  *
- * For convenience, callers may wrap instances in a `StreamOf<std::tuple<...>>`
- * object, which will automatically parse each `Row` into a `std::tuple` with
- * the specified types.
+ * For convenience, callers may wrap a `RowStream` instance in a
+ * `StreamOf<std::tuple<...>>` object, which will automatically parse each
+ * `Row` into a `std::tuple` with the specified types.
  *
  * [input-iterator]: https://en.cppreference.com/w/cpp/named_req/InputIterator
  */
@@ -140,14 +140,14 @@ class DmlResult {
  * Represents the stream of `Rows` and profile stats returned from
  * `spanner::Client::ProfileQuery()`.
  *
- * This is a range defined by the [Input Iterators][input-iterator] returned
- * from its `begin()` and `end()` members. Callers may directly iterate the
- * `ProfileQueryResult` instance, which will return a sequence of
- * `StatusOr<Row>` objects.
+ * A `RowStream` object is a range defined by the [Input
+ * Iterators][input-iterator] returned from its `begin()` and `end()` members.
+ * Callers may directly iterate a `RowStream` instance, which will return a
+ * sequence of `StatusOr<Row>` objects.
  *
- * For convenience, callers may wrap instances in a `StreamOf<std::tuple<...>>`
- * object, which will automatically parse each `Row` into a `std::tuple` with
- * the specified types.
+ * For convenience, callers may wrap a `RowStream` instance in a
+ * `StreamOf<std::tuple<...>>` object, which will automatically parse each
+ * `Row` into a `std::tuple` with the specified types.
  *
  * [input-iterator]: https://en.cppreference.com/w/cpp/named_req/InputIterator
  *
@@ -249,7 +249,7 @@ class ProfileDmlResult {
  private:
   std::unique_ptr<spanner_internal::ResultSourceInterface> source_;
 };
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

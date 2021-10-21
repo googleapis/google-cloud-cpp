@@ -30,7 +30,7 @@
 namespace google {
 namespace cloud {
 namespace bigquery {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 BigQueryReadConnection::~BigQueryReadConnection() = default;
 
@@ -145,14 +145,14 @@ class BigQueryReadConnectionImpl : public BigQueryReadConnection {
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
     Options options) {
   options = bigquery_internal::BigQueryReadDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto background = options.get<GrpcBackgroundThreadsFactoryOption>()();
   auto stub = bigquery_internal::CreateDefaultBigQueryReadStub(background->cq(),
                                                                options);
   return std::make_shared<BigQueryReadConnectionImpl>(std::move(background),
                                                       std::move(stub), options);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace bigquery
 }  // namespace cloud
 }  // namespace google
@@ -160,17 +160,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace google {
 namespace cloud {
 namespace bigquery_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<bigquery::BigQueryReadConnection> MakeBigQueryReadConnection(
     std::shared_ptr<BigQueryReadStub> stub, Options options) {
   options = BigQueryReadDefaultOptions(std::move(options));
   return std::make_shared<bigquery::BigQueryReadConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
+      options.get<GrpcBackgroundThreadsFactoryOption>()(), std::move(stub),
       std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace bigquery_internal
 }  // namespace cloud
 }  // namespace google

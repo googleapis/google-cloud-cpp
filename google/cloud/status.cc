@@ -17,7 +17,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 std::string StatusWhat(Status const& status) {
   std::ostringstream os;
@@ -74,6 +74,6 @@ std::ostream& operator<<(std::ostream& os, StatusCode code) {
 RuntimeStatusError::RuntimeStatusError(Status status)
     : std::runtime_error(StatusWhat(status)), status_(std::move(status)) {}
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

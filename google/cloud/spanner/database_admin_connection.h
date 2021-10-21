@@ -36,7 +36,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * An input range to stream all the databases in a Cloud Spanner instance.
@@ -47,7 +47,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
  */
-using ListDatabaseRange = ::google::cloud::internal::PaginationRange<
+using ListDatabaseRange = google::cloud::internal::PaginationRange<
     google::spanner::admin::database::v1::Database>;
 
 /**
@@ -83,7 +83,7 @@ using ListDatabaseOperationsRange =
  *
  * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
  */
-using ListBackupsRange = ::google::cloud::internal::PaginationRange<
+using ListBackupsRange = google::cloud::internal::PaginationRange<
     google::spanner::admin::database::v1::Backup>;
 
 /**
@@ -97,8 +97,7 @@ using ListBackupsRange = ::google::cloud::internal::PaginationRange<
  * To create a concrete instance that connects you to a real Cloud Spanner
  * instance administration service, see `MakeDatabaseAdminConnection()`.
  */
-class GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED("DatabaseAdminConnection")
-    DatabaseAdminConnection {
+class DatabaseAdminConnection {
  public:
   virtual ~DatabaseAdminConnection() = 0;
 
@@ -342,7 +341,6 @@ class GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED("DatabaseAdminConnection")
  * @param opts (optional) configure the `DatabaseAdminConnection` created by
  *     this function.
  */
-GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED("MakeDatabaseAdminConnection()")
 std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
     Options opts = {});
 
@@ -361,7 +359,6 @@ std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
  * @param options configure the `DatabaseAdminConnection` created by this
  *     function.
  */
-GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED("MakeDatabaseAdminConnection()")
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     ConnectionOptions const& options);
 
@@ -387,24 +384,23 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
  * @par Example
  * @snippet samples.cc custom-database-admin-policies
  */
-GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED("MakeDatabaseAdminConnection()")
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /// Internal-only factory that allows us to inject mock stubs for testing.
 std::shared_ptr<spanner::DatabaseAdminConnection>
 MakeDatabaseAdminConnectionForTesting(std::shared_ptr<DatabaseAdminStub> stub,
                                       Options opts);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
 }  // namespace cloud

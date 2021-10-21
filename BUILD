@@ -37,6 +37,13 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-firestore",
+    deps = [
+        "//google/cloud/firestore:google_cloud_cpp_firestore",
+    ],
+)
+
+cc_library(
     name = "pubsub",
     deps = [
         "//google/cloud/pubsub:google_cloud_cpp_pubsub",
@@ -107,14 +114,14 @@ cc_library(
 )
 
 cc_library(
-    name = "iam",
+    name = "experimental-iam",
     deps = [
         "//google/cloud/iam:google_cloud_cpp_iam",
     ],
 )
 
 cc_library(
-    name = "iam-mocks",
+    name = "experimental-iam-mocks",
     deps = [
         "//google/cloud/iam:google_cloud_cpp_iam_mocks",
     ],
@@ -135,14 +142,14 @@ cc_library(
 )
 
 cc_library(
-    name = "bigquery",
+    name = "experimental-bigquery",
     deps = [
         "//google/cloud/bigquery:google_cloud_cpp_bigquery",
     ],
 )
 
 cc_library(
-    name = "bigquery-mocks",
+    name = "experimental-bigquery-mocks",
     deps = [
         "//google/cloud/bigquery:google_cloud_cpp_bigquery_mocks",
     ],

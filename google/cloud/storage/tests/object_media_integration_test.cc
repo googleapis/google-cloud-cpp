@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
@@ -612,7 +612,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
 
   Client client(
       Options{}
-          .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
+          .set<DownloadStallTimeoutOption>(std::chrono::seconds(3))
           .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(3).clone()));
 
   auto object_name = MakeRandomObjectName();
@@ -642,7 +642,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
 
   Client client(
       Options{}
-          .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
+          .set<DownloadStallTimeoutOption>(std::chrono::seconds(3))
           .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(10).clone()));
 
   auto object_name = MakeRandomObjectName();
@@ -678,7 +678,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
 
   Client client(
       Options{}
-          .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
+          .set<DownloadStallTimeoutOption>(std::chrono::seconds(3))
           .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(5).clone()));
 
   auto object_name = MakeRandomObjectName();
@@ -706,7 +706,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
 }
 
 }  // anonymous namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

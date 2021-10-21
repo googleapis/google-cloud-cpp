@@ -21,14 +21,14 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
-namespace btadmin = ::google::bigtable::admin::v2;
+namespace btadmin = google::bigtable::admin::v2;
 
 class LoggingAdminClientTest : public ::testing::Test {
  protected:
@@ -365,7 +365,7 @@ TEST_F(LoggingAdminClientTest, TestIamPermissions) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

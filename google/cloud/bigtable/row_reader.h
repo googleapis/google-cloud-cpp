@@ -36,7 +36,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Object returned by Table::ReadRows(), enumerates rows in the response.
  *
@@ -71,7 +71,7 @@ class RowReader {
             MetadataUpdatePolicy metadata_update_policy,
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
 
-  RowReader(RowReader&&) = default;
+  RowReader(RowReader&&) noexcept = default;
 
   ~RowReader();
 
@@ -166,7 +166,7 @@ class RowReader {
   RowKeyType last_read_row_key_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

@@ -21,40 +21,25 @@ ARG NCPU=4
 
 # ```bash
 RUN dnf makecache && \
-    dnf install -y ccache cmake curl findutils gcc-c++ git make ninja-build \
-        openssl-devel patch unzip tar wget zip zlib-devel
+    dnf install -y ccache cmake gcc-c++ git make openssl-devel patch pkgconfig \
+        zlib-devel
 # ```
 
-# Fedora 34 includes packages for gRPC and Protobuf, but they are not
-# recent enough to support the protos published by Google Cloud. The indirect
-# dependencies of libcurl, Protobuf, and gRPC are recent enough for our needs.
+# Fedora 31 includes packages for gRPC, libcurl, and OpenSSL that are recent
+# enough for the project. Install these packages and additional development
+# tools to compile the dependencies:
 
 # ```bash
 RUN dnf makecache && \
-    dnf install -y c-ares-devel re2-devel libcurl-devel
-# ```
-
-# Fedora's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
-# when handling `.pc` files with lots of `Requires:` deps, which happens with
-# Abseil. If you plan to use `pkg-config` with any of the installed artifacts,
-# you may want to use a recent version of the standard `pkg-config` binary. If
-# not, `dnf install pkgconfig` should work.
-
-# ```bash
-WORKDIR /var/tmp/build/pkg-config-cpp
-RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    ./configure --with-internal-glib && \
-    make -j ${NCPU:-4} && \
-    make install && \
-    ldconfig
+    dnf install -y grpc-devel grpc-plugins \
+        libcurl-devel protobuf-compiler tar wget zlib-devel
 # ```
 
 # The following steps will install libraries and tools in `/usr/local`. By
 # default pkg-config does not search in these directories.
 
 # ```bash
-ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
+ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 # ```
 
 # #### Abseil
@@ -84,7 +69,7 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/crc32c
-RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+RUN curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -107,58 +92,14 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/json
-RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
+RUN curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -H. -Bcmake-out/nlohmann/json && \
-    cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
-    ldconfig
-# ```
-
-# #### Protobuf
-
-# Unless you are only using the Google Cloud Storage library the project
-# needs Protobuf and gRPC. Unfortunately the version of Protobuf that ships
-# with Fedora 34 is not recent enough to support the protos published by
-# Google Cloud. We need to build from source:
-
-# ```bash
-WORKDIR /var/tmp/build/protobuf
-RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.18.1.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=yes \
-        -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-    ldconfig
-# ```
-
-# #### gRPC
-
-# Finally we build gRPC from source also:
-
-# ```bash
-WORKDIR /var/tmp/build/grpc
-RUN curl -sSL https://github.com/grpc/grpc/archive/v1.41.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=ON \
-        -DgRPC_INSTALL=ON \
-        -DgRPC_BUILD_TESTS=OFF \
-        -DgRPC_ABSL_PROVIDER=package \
-        -DgRPC_CARES_PROVIDER=package \
-        -DgRPC_PROTOBUF_PROVIDER=package \
-        -DgRPC_RE2_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=package \
-        -DgRPC_ZLIB_PROVIDER=package \
-        -H. -Bcmake-out && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
     ldconfig
 # ```
 

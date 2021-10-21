@@ -28,7 +28,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
  * Implement ISO/IEC TS 19571:2016 `future<T>`.
  */
@@ -138,7 +138,9 @@ class promise final : private internal::promise_base<T> {
   promise() : internal::promise_base<T>([] {}) {}
 
   /// Creates a promise with an unsatisfied shared state.
-  explicit promise(std::function<void()> cancellation_callback)
+  explicit promise(
+      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
+      std::function<void()> cancellation_callback)
       : internal::promise_base<T>(std::move(cancellation_callback)) {}
 
   /// Creates a promise *without* a shared state.
@@ -146,8 +148,7 @@ class promise final : private internal::promise_base<T> {
       : internal::promise_base<T>(std::move(x)) {}
 
   /// Constructs a new promise and transfer any shared state from @p rhs.
-  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-  promise(promise&&) = default;
+  promise(promise&&) noexcept = default;
 
   /// Abandons the shared state in `*this`, if any, and transfers the shared
   /// state from @p rhs.
@@ -212,7 +213,7 @@ inline future<typename internal::make_ready_return<T>::type> make_ready_future(
   return p.get_future();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

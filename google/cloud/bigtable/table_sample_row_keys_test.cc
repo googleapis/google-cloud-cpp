@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
@@ -173,7 +173,7 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

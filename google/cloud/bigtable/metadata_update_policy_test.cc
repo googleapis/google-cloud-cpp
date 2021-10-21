@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 class MetadataUpdatePolicyTest : public testing::EmbeddedServerTestFixture {};
@@ -75,11 +75,11 @@ TEST_F(MetadataUpdatePolicyTest, SimpleDefault) {
   EXPECT_THAT(created.api_client_header(), HasSubstr("gl-cpp/"));
   EXPECT_THAT(created.api_client_header(), HasSubstr("gccl/"));
   EXPECT_THAT(created.api_client_header(),
-              AnyOf(HasSubstr("-noex-"), HasSubstr("-ex-")));
+              ::testing::AnyOf(HasSubstr("-noex-"), HasSubstr("-ex-")));
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

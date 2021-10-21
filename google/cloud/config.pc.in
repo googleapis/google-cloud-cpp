@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-prefix=${pcfiledir}/../..
+prefix=@CMAKE_INSTALL_PREFIX@
 exec_prefix=${prefix}/@CMAKE_INSTALL_BINDIR@
 libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
 includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@

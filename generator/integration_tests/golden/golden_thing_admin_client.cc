@@ -18,14 +18,11 @@
 
 #include "generator/integration_tests/golden/golden_thing_admin_client.h"
 #include <memory>
-#include "generator/integration_tests/golden/golden_thing_admin_options.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.h"
-#include <thread>
 
 namespace google {
 namespace cloud {
 namespace golden {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 GoldenThingAdminClient::GoldenThingAdminClient(std::shared_ptr<GoldenThingAdminConnection> connection) : connection_(std::move(connection)) {}
 GoldenThingAdminClient::~GoldenThingAdminClient() = default;
@@ -80,28 +77,6 @@ GoldenThingAdminClient::SetIamPolicy(std::string const& resource, google::iam::v
   request.set_resource(resource);
   *request.mutable_policy() = policy;
   return connection_->SetIamPolicy(request);
-}
-
-StatusOr<google::iam::v1::Policy>
-GoldenThingAdminClient::SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options options) {
-  internal::CheckExpectedOptions<GoldenThingAdminBackoffPolicyOption>(options, __func__);
-  options = golden_internal::GoldenThingAdminDefaultOptions(std::move(options));
-  auto backoff_policy = options.get<GoldenThingAdminBackoffPolicyOption>()->clone();
-  for (;;) {
-    auto recent = GetIamPolicy(resource);
-    if (!recent) {
-      return recent.status();
-    }
-    auto policy = updater(*std::move(recent));
-    if (!policy) {
-      return Status(StatusCode::kCancelled, "updater did not yield a policy");
-    }
-    auto result = SetIamPolicy(resource, *std::move(policy));
-    if (result || result.status().code() != StatusCode::kAborted) {
-      return result;
-    }
-    std::this_thread::sleep_for(backoff_policy->OnCompletion());
-  }
 }
 
 StatusOr<google::iam::v1::Policy>
@@ -265,7 +240,8 @@ GoldenThingAdminClient::ListBackupOperations(google::test::admin::database::v1::
   return connection_->ListBackupOperations(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google
+

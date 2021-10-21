@@ -19,35 +19,13 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 TEST(QueryOptionsTest, Values) {
   QueryOptions const default_constructed{};
   EXPECT_FALSE(default_constructed.optimizer_version().has_value());
   EXPECT_FALSE(default_constructed.request_priority().has_value());
-
-  auto copy = default_constructed;
-  EXPECT_EQ(copy, default_constructed);
-
-  copy.set_request_priority(RequestPriority::kLow);
-  EXPECT_NE(copy, default_constructed);
-  copy.set_request_priority(RequestPriority::kHigh);
-  EXPECT_NE(copy, default_constructed);
-
-  copy.set_request_priority(absl::optional<RequestPriority>{});
-  EXPECT_EQ(copy, default_constructed);
-
-  copy.set_request_tag("foo");
-  EXPECT_NE(copy, default_constructed);
-
-  copy.set_request_tag(absl::optional<std::string>{});
-  EXPECT_EQ(copy, default_constructed);
-}
-
-TEST(QueryOptionsTest, OptimizerVersion) {
-  QueryOptions const default_constructed{};
-  EXPECT_FALSE(default_constructed.optimizer_statistics_package().has_value());
 
   auto copy = default_constructed;
   EXPECT_EQ(copy, default_constructed);
@@ -81,10 +59,18 @@ TEST(QueryOptionsTest, OptimizerStatisticsPackage) {
 
   copy.set_optimizer_statistics_package(absl::nullopt);
   EXPECT_EQ(copy, default_constructed);
+
+  copy.set_request_priority(RequestPriority::kLow);
+  EXPECT_NE(copy, default_constructed);
+  copy.set_request_priority(RequestPriority::kHigh);
+  EXPECT_NE(copy, default_constructed);
+
+  copy.set_request_priority(absl::optional<RequestPriority>{});
+  EXPECT_EQ(copy, default_constructed);
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

@@ -16,7 +16,6 @@
 #include "google/cloud/pubsub/schema_admin_client.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -27,25 +26,17 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-using ::google::cloud::pubsub_testing::MakeTestOptions;
+using ::google::cloud::pubsub_testing::TestBackoffPolicy;
+using ::google::cloud::pubsub_testing::TestRetryPolicy;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
-using ::testing::IsEmpty;
 using ::testing::Not;
-
-bool UsingEmulator() {
-  return google::cloud::internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
-}
-
-SchemaAdminClient MakeTestSchemaAdminClient() {
-  return SchemaAdminClient(MakeSchemaAdminConnection(MakeTestOptions()));
-}
 
 using SchemaAdminIntegrationTest =
     ::google::cloud::testing_util::IntegrationTest;
@@ -55,7 +46,8 @@ TEST_F(SchemaAdminIntegrationTest, SchemaCRUD) {
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_FALSE(project_id.empty());
 
-  auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection());
+  auto schema_admin =
+      SchemaAdminClient(MakeSchemaAdminConnection(pubsub::ConnectionOptions{}));
 
   auto constexpr kTestAvroSchema = R"js({
      "type": "record",
@@ -99,29 +91,10 @@ TEST_F(SchemaAdminIntegrationTest, SchemaCRUD) {
   EXPECT_THAT(deleted, IsOk());
 }
 
-TEST_F(SchemaAdminIntegrationTest, UnifiedCredentials) {
-  auto project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  ASSERT_THAT(project_id, Not(IsEmpty()));
-  auto options =
-      Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
-  if (UsingEmulator()) {
-    options = Options{}
-                  .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
-                      "test-only-invalid", std::chrono::system_clock::now() +
-                                               std::chrono::minutes(15)))
-                  .set<internal::UseInsecureChannelOption>(true);
-  }
-  auto client =
-      SchemaAdminClient(MakeSchemaAdminConnection(std::move(options)));
-  for (auto&& r : client.ListSchemas(project_id)) {
-    EXPECT_THAT(r, IsOk());
-  }
-}
-
 TEST_F(SchemaAdminIntegrationTest, CreateSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = MakeTestSchemaAdminClient();
+  auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
+      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));
   google::pubsub::v1::CreateSchemaRequest request;
   auto response = schema_admin.CreateSchema(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -129,7 +102,8 @@ TEST_F(SchemaAdminIntegrationTest, CreateSchema) {
 
 TEST_F(SchemaAdminIntegrationTest, GetSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = MakeTestSchemaAdminClient();
+  auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
+      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));
   auto response = schema_admin.GetSchema(
       Schema("--invalid-project--", "--invalid-schema--"));
   EXPECT_THAT(response, Not(IsOk()));
@@ -137,7 +111,8 @@ TEST_F(SchemaAdminIntegrationTest, GetSchema) {
 
 TEST_F(SchemaAdminIntegrationTest, ListSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = MakeTestSchemaAdminClient();
+  auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
+      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));
   auto response = schema_admin.ListSchemas("--invalid-project");
   auto i = response.begin();
   ASSERT_FALSE(i == response.end());
@@ -146,7 +121,8 @@ TEST_F(SchemaAdminIntegrationTest, ListSchema) {
 
 TEST_F(SchemaAdminIntegrationTest, DeleteSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = MakeTestSchemaAdminClient();
+  auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
+      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));
   auto response = schema_admin.DeleteSchema(
       Schema("--invalid-project--", "--invalid-schema--"));
   EXPECT_THAT(response, Not(IsOk()));
@@ -154,7 +130,8 @@ TEST_F(SchemaAdminIntegrationTest, DeleteSchema) {
 
 TEST_F(SchemaAdminIntegrationTest, ValidateSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = MakeTestSchemaAdminClient();
+  auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
+      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));
   auto response = schema_admin.ValidateSchema("--invalid-project--",
                                               google::pubsub::v1::Schema{});
   EXPECT_THAT(response, Not(IsOk()));
@@ -162,14 +139,15 @@ TEST_F(SchemaAdminIntegrationTest, ValidateSchema) {
 
 TEST_F(SchemaAdminIntegrationTest, ValidateMessage) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = MakeTestSchemaAdminClient();
+  auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
+      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));
   google::pubsub::v1::ValidateMessageRequest request;
   auto response = schema_admin.ValidateMessage(request);
   EXPECT_THAT(response, Not(IsOk()));
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

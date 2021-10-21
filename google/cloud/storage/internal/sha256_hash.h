@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 /// Return the SHA256 hash (as raw bytes) of @p str.
@@ -39,7 +39,7 @@ std::string HexEncode(std::vector<std::uint8_t> const& bytes);
 std::vector<std::uint8_t> HexDecode(std::string const& str);
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

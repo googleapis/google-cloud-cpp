@@ -24,7 +24,7 @@ BIN=.
 
 all: $(BIN)/quickstart
 
-# Configuration variables to compile and link against the Cloud BigQuery C++
+# Configuration variables to compile and link against the Cloud Spanner C++
 # client library.
 BIGQUERY_DEPS := google_cloud_cpp_bigquery
 BIGQUERY_CXXFLAGS   := $(shell pkg-config $(BIGQUERY_DEPS) --cflags)

@@ -18,19 +18,23 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/user_agent_prefix.h"
 
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 std::string ConnectionOptionsTraits::default_endpoint() {
   return spanner_internal::DefaultOptions().get<EndpointOption>();
 }
 
 std::string ConnectionOptionsTraits::user_agent_prefix() {
-  return internal::UserAgentPrefix();
+  static auto const* const kUserAgentPrefix = new auto([] {
+    auto const defaults = spanner_internal::DefaultOptions();
+    auto const& products = defaults.get<UserAgentProductsOption>();
+    return absl::StrJoin(products, " ");
+  }());
+  return *kUserAgentPrefix;
 }
 
 int ConnectionOptionsTraits::default_num_channels() {
@@ -39,7 +43,7 @@ int ConnectionOptionsTraits::default_num_channels() {
   return kNumChannels;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

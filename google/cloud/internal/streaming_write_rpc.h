@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 /**
@@ -68,7 +68,7 @@ void StreamingWriteRpcReportUnhandledError(Status const& status,
  * Implement `StreamingWriteRpc<RequestType, ResponseType>` using the gRPC
  * abstractions.
  *
- * @note This class is thread compatible, but it is not thread safe. It should
+ * @note this class is thread compatible, but it is not thread safe. It should
  *   not be used from multiple threads at the same time.
  */
 template <typename RequestType, typename ResponseType>
@@ -146,7 +146,7 @@ class StreamingWriteRpcError
 };
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -euo pipefail
+set -eu
 
 source "$(dirname "$0")/../../../lib/init.sh"
 source module ci/lib/io.sh
@@ -32,8 +31,7 @@ brew list --versions pkg-config || brew install pkg-config
 vcpkg_dir="${HOME}/vcpkg-quickstart"
 mkdir -p "${vcpkg_dir}"
 io::log "Downloading vcpkg into ${vcpkg_dir}..."
-VCPKG_COMMIT="$(<ci/etc/vcpkg-commit.txt)"
-curl -sSL "https://github.com/microsoft/vcpkg/archive/${VCPKG_COMMIT}.tar.gz" |
+curl -sSL "https://github.com/microsoft/vcpkg/archive/6e024e744e7717c06ddacd5089401109c6298553.tar.gz" |
   tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
 (
   cd "${vcpkg_dir}"

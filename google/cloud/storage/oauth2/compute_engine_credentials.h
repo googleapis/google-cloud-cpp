@@ -33,7 +33,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 /// A helper struct that contains service account metadata.
 struct ServiceAccountMetadata {
@@ -137,12 +137,14 @@ class ComputeEngineCredentials : public Credentials {
     std::string metadata_server_hostname =
         google::cloud::storage::internal::GceMetadataHostname();
 
-    HttpRequestBuilderType builder(
+    HttpRequestBuilderType request_builder(
         std::move("http://" + metadata_server_hostname + path),
         storage::internal::GetDefaultCurlHandleFactory());
-    builder.AddHeader("metadata-flavor: Google");
-    if (recursive) builder.AddQueryParameter("recursive", "true");
-    return std::move(builder).BuildRequest().MakeRequest(std::string{});
+    request_builder.AddHeader("metadata-flavor: Google");
+    if (recursive) {
+      request_builder.AddQueryParameter("recursive", "true");
+    }
+    return request_builder.BuildRequest().MakeRequest(std::string{});
   }
 
   /**
@@ -201,7 +203,7 @@ class ComputeEngineCredentials : public Credentials {
 };
 
 }  // namespace oauth2
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

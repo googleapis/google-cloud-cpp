@@ -15,18 +15,16 @@
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_async_failing_rpc_factory.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
-#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 namespace btproto = ::google::bigtable::v2;
-using ::google::cloud::testing_util::FakeCompletionQueueImpl;
-using ::testing::HasSubstr;
+using google::cloud::testing_util::FakeCompletionQueueImpl;
 
 /// Define types and functions used in the tests.
 namespace {
@@ -95,21 +93,21 @@ TEST_F(TableTest, MoveAssignment) {
 TEST_F(TableTest, ChangeOnePolicy) {
   Table table(client_, "some-table", AlwaysRetryMutationPolicy());
   EXPECT_EQ("", table.app_profile_id());
-  EXPECT_THAT(table.table_name(), HasSubstr("some-table"));
+  EXPECT_THAT(table.table_name(), ::testing::HasSubstr("some-table"));
 }
 
 TEST_F(TableTest, ChangePolicies) {
   Table table(client_, "some-table", AlwaysRetryMutationPolicy(),
               LimitedErrorCountRetryPolicy(42));
   EXPECT_EQ("", table.app_profile_id());
-  EXPECT_THAT(table.table_name(), HasSubstr("some-table"));
+  EXPECT_THAT(table.table_name(), ::testing::HasSubstr("some-table"));
 }
 
 TEST_F(TableTest, ConstructorWithAppProfileAndPolicies) {
   Table table(client_, "test-profile-id", "some-table",
               AlwaysRetryMutationPolicy(), LimitedErrorCountRetryPolicy(42));
   EXPECT_EQ("test-profile-id", table.app_profile_id());
-  EXPECT_THAT(table.table_name(), HasSubstr("some-table"));
+  EXPECT_THAT(table.table_name(), ::testing::HasSubstr("some-table"));
 }
 
 std::string const kProjectId = "the-project";
@@ -122,7 +120,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
       : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
         client_(new ::google::cloud::bigtable::testing::MockDataClient(
-            Options{}.set<GrpcCompletionQueueOption>(cq_))) {
+            ClientOptions().DisableBackgroundThreads(cq_))) {
     EXPECT_CALL(*client_, project_id())
         .WillRepeatedly(::testing::ReturnRef(kProjectId));
     EXPECT_CALL(*client_, instance_id())
@@ -216,7 +214,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncReadModifyWriteRow) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

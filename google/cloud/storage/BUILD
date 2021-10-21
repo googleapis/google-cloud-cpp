@@ -26,6 +26,18 @@ GOOGLE_CLOUD_STORAGE_WIN_COPTS = [
 load(":google_cloud_cpp_storage.bzl", "google_cloud_cpp_storage_hdrs", "google_cloud_cpp_storage_srcs")
 load(":google_cloud_cpp_storage_grpc.bzl", "google_cloud_cpp_storage_grpc_hdrs", "google_cloud_cpp_storage_grpc_srcs")
 
+proto_library(
+    name = "google_cloud_cpp_storage_internal_grpc_resumable_session_url_proto",
+    srcs = [
+        "internal/grpc_resumable_upload_session_url.proto",
+    ],
+)
+
+cc_proto_library(
+    name = "google_cloud_cpp_storage_internal_grpc_resumable_session_url_cc_proto",
+    deps = [":google_cloud_cpp_storage_internal_grpc_resumable_session_url_proto"],
+)
+
 cc_library(
     name = "google_cloud_cpp_storage_grpc",
     srcs = google_cloud_cpp_storage_grpc_srcs,
@@ -37,6 +49,7 @@ cc_library(
     defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"],
     deps = [
         ":google_cloud_cpp_storage",
+        ":google_cloud_cpp_storage_internal_grpc_resumable_session_url_cc_proto",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
@@ -46,8 +59,8 @@ cc_library(
         "@com_google_absl//absl/algorithm:container",
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/time",
-        "@com_google_googleapis//google/storage/v2:storage_cc_grpc",
-        "@com_google_googleapis//google/storage/v2:storage_cc_proto",
+        "@com_google_googleapis//google/storage/v1:storage_cc_grpc",
+        "@com_google_googleapis//google/storage/v1:storage_cc_proto",
     ],
 )
 

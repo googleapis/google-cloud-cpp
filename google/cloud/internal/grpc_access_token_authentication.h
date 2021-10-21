@@ -22,7 +22,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 class GrpcAccessTokenAuthentication : public GrpcAuthenticationStrategy {
@@ -42,11 +42,10 @@ class GrpcAccessTokenAuthentication : public GrpcAuthenticationStrategy {
  private:
   std::shared_ptr<grpc::CallCredentials> credentials_;
   grpc::SslCredentialsOptions ssl_options_;
-  bool use_insecure_channel_;
 };
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

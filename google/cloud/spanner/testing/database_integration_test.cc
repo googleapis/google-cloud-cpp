@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/testing/database_integration_test.h"
-#include "google/cloud/spanner/admin/database_admin_client.h"
+#include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/testing/cleanup_stale_databases.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
@@ -23,9 +23,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-using ::google::cloud::testing_util::IsOk;
+inline namespace SPANNER_CLIENT_NS {
 
 google::cloud::spanner::Database* DatabaseIntegrationTest::db_;
 google::cloud::internal::DefaultPRNG* DatabaseIntegrationTest::generator_;
@@ -38,14 +36,13 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
       google::cloud::internal::MakeDefaultPRNG());
 
   auto instance_id = PickRandomInstance(*generator_, project_id);
-  ASSERT_THAT(instance_id, IsOk());
+  ASSERT_STATUS_OK(instance_id);
 
   auto database_id = spanner_testing::RandomDatabaseName(*generator_);
 
   db_ = new spanner::Database(project_id, *instance_id, database_id);
 
-  spanner_admin::DatabaseAdminClient admin_client(
-      spanner_admin::MakeDatabaseAdminConnection());
+  spanner::DatabaseAdminClient admin_client;
   CleanupStaleDatabases(
       admin_client, project_id, *instance_id,
       std::chrono::system_clock::now() - std::chrono::hours(48));
@@ -54,15 +51,13 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
       google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
 
   std::cout << "Creating database and table " << std::flush;
-  google::spanner::admin::database::v1::CreateDatabaseRequest request;
-  request.set_parent(db_->instance().FullName());
-  request.set_create_statement("CREATE DATABASE `" + db_->database_id() + "`");
+  std::vector<std::string> extra_statements;
   if (!emulator) {
     // TODO(#5479): Awaiting emulator support for version_retention_period.
-    request.add_extra_statements("ALTER DATABASE `" + database_id + "` " +
-                                 "SET OPTIONS (version_retention_period='2h')");
+    extra_statements.push_back("ALTER DATABASE `" + database_id + "` " +
+                               "SET OPTIONS (version_retention_period='2h')");
   }
-  request.add_extra_statements(R"sql(
+  extra_statements.emplace_back(R"sql(
         CREATE TABLE Singers (
           SingerId   INT64 NOT NULL,
           FirstName  STRING(1024),
@@ -81,10 +76,6 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
           DateValue DATE,
       )sql";
   if (!emulator) {
-    // TODO(#6873): Remove this check when the emulator supports JSON.
-    create_datatypes.append(R"sql(JsonValue JSON,)sql");
-  }
-  if (!emulator) {
     // TODO(#5024): Remove this check when the emulator supports NUMERIC.
     create_datatypes.append(R"sql(NumericValue NUMERIC,)sql");
   }
@@ -98,27 +89,15 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
           ArrayDateValue ARRAY<DATE>
       )sql");
   if (!emulator) {
-    // TODO(#6873): Remove this check when the emulator supports JSON.
-    create_datatypes.append(R"sql(,ArrayJsonValue ARRAY<JSON>)sql");
-  }
-  if (!emulator) {
     // TODO(#5024): Remove this check when the emulator supports NUMERIC.
     create_datatypes.append(R"sql(,ArrayNumericValue ARRAY<NUMERIC>)sql");
   }
   create_datatypes.append(R"sql(
         ) PRIMARY KEY (Id)
       )sql");
-  request.add_extra_statements(std::move(create_datatypes));
-  // Verify that NUMERIC can be used as a table key.
-  if (!emulator) {
-    // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-    request.add_extra_statements(R"sql(
-          CREATE TABLE NumericKey (
-            Key NUMERIC NOT NULL
-          ) PRIMARY KEY (Key)
-        )sql");
-  }
-  auto database_future = admin_client.CreateDatabase(request);
+  extra_statements.push_back(std::move(create_datatypes));
+  auto database_future =
+      admin_client.CreateDatabase(*db_, std::move(extra_statements));
 
   int i = 0;
   int const timeout = 120;
@@ -132,22 +111,17 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
     FAIL();
   }
   auto database = database_future.get();
-  ASSERT_THAT(database, IsOk());
+  ASSERT_STATUS_OK(database);
   std::cout << "DONE\n";
 }
 
 void DatabaseIntegrationTest::TearDownTestSuite() {
-  spanner_admin::DatabaseAdminClient admin_client(
-      spanner_admin::MakeDatabaseAdminConnection());
-  auto drop_status = admin_client.DropDatabase(db_->FullName());
-  EXPECT_THAT(drop_status, IsOk());
-  delete db_;
-  db_ = nullptr;
-  delete generator_;
-  generator_ = nullptr;
+  spanner::DatabaseAdminClient admin_client;
+  auto drop_status = admin_client.DropDatabase(*db_);
+  EXPECT_STATUS_OK(drop_status);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

@@ -13,8 +13,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 ## Supported Platforms
 
 * Windows, macOS, Linux
-* C++11 (and higher) compilers (we test with GCC >= 5.4, Clang >= 6.0, and
-  MSVC >= 2017)
+* C++11 (and higher) compilers (we test with GCC \>= 4.9, Clang >= 3.8, and MSVC \>= 2019)
 * Environments with or without exceptions
 * Bazel and CMake builds
 
@@ -52,9 +51,11 @@ int main(int argc, char* argv[]) try {
   std::string const table_id = argv[3];
 
   // Create a namespace alias to make the code easier to read.
-  namespace cbt = ::google::cloud::bigtable;
+  namespace cbt = google::cloud::bigtable;
 
-  cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id);
+  cbt::Table table(cbt::CreateDefaultDataClient(project_id, instance_id,
+                                                cbt::ClientOptions()),
+                   table_id);
 
   std::string row_key = "r1";
   std::string column_family = "cf1";
@@ -104,3 +105,4 @@ as well as how to properly format your code.
 ## Licensing
 
 Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
+

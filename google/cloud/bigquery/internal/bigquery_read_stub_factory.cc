@@ -31,12 +31,19 @@
 namespace google {
 namespace cloud {
 namespace bigquery_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<BigQueryReadStub> CreateDefaultBigQueryReadStub(
     google::cloud::CompletionQueue cq, Options const& options) {
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      std::move(cq), options);
+  auto auth = [&] {
+    if (options.has<google::cloud::UnifiedCredentialsOption>()) {
+      return google::cloud::internal::CreateAuthenticationStrategy(
+          options.get<google::cloud::UnifiedCredentialsOption>(), std::move(cq),
+          options);
+    }
+    return google::cloud::internal::CreateAuthenticationStrategy(
+        options.get<google::cloud::GrpcCredentialOption>());
+  }();
   auto channel = auth->CreateChannel(options.get<EndpointOption>(),
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
@@ -56,8 +63,7 @@ std::shared_ptr<BigQueryReadStub> CreateDefaultBigQueryReadStub(
   }
   return stub;
 }
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace bigquery_internal
 }  // namespace cloud
 }  // namespace google

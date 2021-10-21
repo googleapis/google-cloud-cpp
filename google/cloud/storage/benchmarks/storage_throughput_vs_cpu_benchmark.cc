@@ -28,8 +28,8 @@
 #include <sstream>
 
 namespace {
-namespace gcs = ::google::cloud::storage;
-namespace gcs_bm = ::google::cloud::storage_benchmarks;
+namespace gcs = google::cloud::storage;
+namespace gcs_bm = google::cloud::storage_benchmarks;
 using gcs_bm::ApiName;
 using gcs_bm::ThroughputOptions;
 using gcs_bm::ThroughputResult;
@@ -289,6 +289,7 @@ TestResults RunThread(ThroughputOptions const& options, gcs::Client rest_client,
 
   auto deadline = std::chrono::steady_clock::now() + options.duration;
 
+  gcs_bm::Timer timer;
   TestResults results;
 
   std::int32_t iteration_count = 0;
@@ -341,8 +342,8 @@ TestResults RunThread(ThroughputOptions const& options, gcs::Client rest_client,
 }
 
 google::cloud::StatusOr<ThroughputOptions> SelfTest(char const* argv0) {
-  using ::google::cloud::internal::GetEnv;
-  using ::google::cloud::internal::Sample;
+  using google::cloud::internal::GetEnv;
+  using google::cloud::internal::Sample;
 
   for (auto const& var :
        {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID"}) {

@@ -22,10 +22,9 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
 using ::testing::AnyOf;
 using ::testing::Eq;
 using ::testing::HasSubstr;
@@ -319,9 +318,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
     os.Close();
     ASSERT_STATUS_OK(os.metadata());
     ScheduleForDelete(*os.metadata());
-    EXPECT_FALSE(os.bad()) << *os.metadata();
+    EXPECT_FALSE(os.bad());
     EXPECT_EQ(desired_size, os.metadata()->size());
-    EXPECT_EQ(desired_size, offset);
   }
 }
 
@@ -391,7 +389,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithInvalidXUploadContentLength) {
 }
 
 }  // anonymous namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

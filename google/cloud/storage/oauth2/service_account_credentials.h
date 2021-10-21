@@ -37,7 +37,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 
 namespace oauth2 {
 /// Object to hold information used to instantiate an ServiceAccountCredentials.
@@ -136,13 +136,28 @@ template <typename HttpRequestBuilderType =
           typename ClockType = std::chrono::system_clock>
 class ServiceAccountCredentials : public Credentials {
  public:
+  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo info)
       : ServiceAccountCredentials(std::move(info), {}) {}
   ServiceAccountCredentials(ServiceAccountCredentialsInfo info,
                             ChannelOptions const& options)
-      : info_(std::move(info)),
-        options_(Options{}.set<CARootsFilePathOption>(options.ssl_root_path())),
-        clock_() {}
+      : info_(std::move(info)), clock_() {
+    HttpRequestBuilderType request_builder(
+        info_.token_uri,
+        storage::internal::GetDefaultCurlHandleFactory(
+            Options{}.set<CARootsFilePathOption>(options.ssl_root_path())));
+    request_builder.AddHeader(
+        "Content-Type: application/x-www-form-urlencoded");
+    // This is the value of grant_type for JSON-formatted service account
+    // keyfiles downloaded from Cloud Console.
+    std::string grant_type("grant_type=");
+    grant_type +=
+        request_builder
+            .MakeEscapedString("urn:ietf:params:oauth:grant-type:jwt-bearer")
+            .get();
+    grant_type_ = std::move(grant_type);
+    request_ = request_builder.BuildRequest();
+  }
 
   StatusOr<std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
@@ -179,34 +194,30 @@ class ServiceAccountCredentials : public Credentials {
 
  private:
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() {
-    HttpRequestBuilderType builder(
-        info_.token_uri,
-        storage::internal::GetDefaultCurlHandleFactory(options_));
-    builder.AddHeader("Content-Type: application/x-www-form-urlencoded");
-    // This is the value of grant_type for JSON-formatted service account
-    // keyfiles downloaded from Cloud Console.
-    std::string grant_type("grant_type=");
-    grant_type +=
-        builder.MakeEscapedString("urn:ietf:params:oauth:grant-type:jwt-bearer")
-            .get();
-
     auto payload =
-        CreateServiceAccountRefreshPayload(info_, grant_type, clock_.now());
-    auto response = std::move(builder).BuildRequest().MakeRequest(payload);
-    if (!response) return std::move(response).status();
-    if (response->status_code >= 300) return AsStatus(*response);
+        CreateServiceAccountRefreshPayload(info_, grant_type_, clock_.now());
+
+    auto response = request_.MakeRequest(payload);
+    if (!response) {
+      return std::move(response).status();
+    }
+    if (response->status_code >= 300) {
+      return AsStatus(*response);
+    }
+
     return ParseServiceAccountRefreshResponse(*response, clock_.now());
   }
 
+  typename HttpRequestBuilderType::RequestType request_;
+  std::string grant_type_;
   ServiceAccountCredentialsInfo info_;
-  Options options_;
   mutable std::mutex mu_;
   RefreshingCredentialsWrapper refreshing_creds_;
   ClockType clock_;
 };
 
 }  // namespace oauth2
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -19,10 +19,10 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
-using ::google::cloud::internal::Idempotency;
+using google::cloud::internal::Idempotency;
 namespace gtab = ::google::test::admin::database::v1;
 
 class GoldenIdempotencyPolicyTest : public ::testing::Test {
@@ -120,7 +120,7 @@ TEST_F(GoldenIdempotencyPolicyTest, ListBackupOperations) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

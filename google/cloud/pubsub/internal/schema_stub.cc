@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 class DefaultSchemaStub : public SchemaStub {
@@ -91,12 +91,13 @@ class DefaultSchemaStub : public SchemaStub {
 }  // namespace
 
 std::shared_ptr<SchemaStub> CreateDefaultSchemaStub(
-    std::shared_ptr<grpc::Channel> channel) {
+    pubsub::ConnectionOptions options, int channel_id) {
   return std::make_shared<DefaultSchemaStub>(
-      google::pubsub::v1::SchemaService::NewStub(std::move(channel)));
+      google::pubsub::v1::SchemaService::NewStub(
+          CreateChannel(std::move(options), channel_id)));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

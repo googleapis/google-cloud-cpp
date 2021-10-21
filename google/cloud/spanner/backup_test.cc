@@ -13,17 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/backup.h"
-#include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/spanner/testing/matchers.h"
 #include <gmock/gmock.h>
 #include <sstream>
 
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
-
-using ::google::cloud::testing_util::StatusIs;
 
 TEST(Backup, Basics) {
   Instance in("p1", "i1");
@@ -60,30 +58,8 @@ TEST(Backup, OutputStream) {
   EXPECT_EQ("projects/p1/instances/i1/backups/b1", os.str());
 }
 
-TEST(Backup, MakeBackup) {
-  auto bu = Backup(Instance(Project("p1"), "i1"), "b1");
-  EXPECT_EQ(bu, MakeBackup(bu.FullName()).value());
-
-  for (std::string invalid : {
-           "",
-           "projects/",
-           "projects/p1",
-           "projects/p1/instances/",
-           "projects/p1/instances/i1",
-           "projects/p1/instances/i1/backups",
-           "projects/p1/instances/i1/backups/",
-           "/projects/p1/instances/i1/backups/b1",
-           "projects/p1/instances/i1/backups/b1/",
-           "projects/p1/instances/i1/backups/b1/etc",
-       }) {
-    auto bu = MakeBackup(invalid);
-    EXPECT_THAT(bu, StatusIs(StatusCode::kInvalidArgument,
-                             "Improperly formatted Backup: " + invalid));
-  }
-}
-
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

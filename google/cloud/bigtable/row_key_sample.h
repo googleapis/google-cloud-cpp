@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 /// A simple wrapper to represent the response from `Table::SampleRowKeys()`.
 struct RowKeySample {
   /**
@@ -41,7 +41,7 @@ struct RowKeySample {
   std::int64_t offset_bytes;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

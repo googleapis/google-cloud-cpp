@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace bigquery_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 class BigQueryReadAuth : public BigQueryReadStub {
  public:
@@ -60,7 +60,7 @@ class BigQueryReadAuth : public BigQueryReadStub {
   std::shared_ptr<BigQueryReadStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace bigquery_internal
 }  // namespace cloud
 }  // namespace google

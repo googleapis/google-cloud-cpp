@@ -89,9 +89,6 @@ behaviors in the library.
 - `SPANNER_OPTIMIZER_VERSION=n` sets the default query optimizer version to use
   in `Client::ExecuteQuery()` calls.
 
-- `SPANNER_OPTIMIZER_STATISTICS_PACKAGE=...` specifies a statistics package
-  for the query optimizer to use when compiling a SQL query.
-
 - `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library, basically
   the library always "logs" but the logging infrastructure has no backend to
   actually print anything until the application sets a backend or they set this
@@ -137,8 +134,8 @@ there is no value.
 The library automatically retries requests that fail with transient errors, and
 follows the recommended practices with respect to backoff between retries.
 Application developers can override the default
-[retry](@ref google::cloud::spanner::RetryPolicy) and
-[backoff](@ref google::cloud::spanner::BackoffPolicy) policies.
+[retry](@ref google::cloud::spanner::v1::RetryPolicy) and
+[backoff](@ref google::cloud::spanner::v1::BackoffPolicy) policies.
 
 The default policies are to continue retrying for up to 15 minutes, and to
 use truncated (at 5 minutes) exponential backoff, doubling the maximum backoff
@@ -146,11 +143,11 @@ period between retries.
 
 @snippet samples.cc custom-retry-policy
 
-@see [LimitedTimeRetryPolicy](@ref google::cloud::spanner::LimitedTimeRetryPolicy)
-   and [LimitedErrorCountRetryPolicy](@ref google::cloud::spanner::LimitedErrorCountRetryPolicy)
+@see [LimitedTimeRetryPolicy](@ref google::cloud::spanner::v1::LimitedTimeRetryPolicy)
+   and [LimitedErrorCountRetryPolicy](@ref google::cloud::spanner::v1::LimitedErrorCountRetryPolicy)
    for alternative retry policies.
 
-@see [ExponentialBackoffPolicy](@ref google::cloud::spanner::ExponentialBackoffPolicy)
+@see [ExponentialBackoffPolicy](@ref google::cloud::spanner::v1::ExponentialBackoffPolicy)
    to configure different parameters for the exponential backoff policy.
 
 ## Next Steps

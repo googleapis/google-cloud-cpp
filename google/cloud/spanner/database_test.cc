@@ -13,18 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database.h"
-#include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/spanner/testing/matchers.h"
 #include <gmock/gmock.h>
 #include <sstream>
-#include <string>
 
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
-
-using ::google::cloud::testing_util::StatusIs;
 
 TEST(Database, Basics) {
   Instance in("p1", "i1");
@@ -61,30 +58,8 @@ TEST(Database, OutputStream) {
   EXPECT_EQ("projects/p1/instances/i1/databases/d1", os.str());
 }
 
-TEST(Database, MakeDatabase) {
-  auto db = Database(Instance(Project("p1"), "i1"), "d1");
-  EXPECT_EQ(db, MakeDatabase(db.FullName()).value());
-
-  for (std::string invalid : {
-           "",
-           "projects/",
-           "projects/p1",
-           "projects/p1/instances/",
-           "projects/p1/instances/i1",
-           "projects/p1/instances/i1/databases",
-           "projects/p1/instances/i1/databases/",
-           "/projects/p1/instances/i1/databases/d1",
-           "projects/p1/instances/i1/databases/d1/",
-           "projects/p1/instances/i1/databases/d1/etc",
-       }) {
-    auto db = MakeDatabase(invalid);
-    EXPECT_THAT(db, StatusIs(StatusCode::kInvalidArgument,
-                             "Improperly formatted Database: " + invalid));
-  }
-}
-
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

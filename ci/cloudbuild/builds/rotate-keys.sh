@@ -44,7 +44,7 @@
 # We can schedule this script to run every night or weekly and it will create
 # keys as necessary and delete old ones.
 
-set -euo pipefail
+set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module /ci/lib/io.sh

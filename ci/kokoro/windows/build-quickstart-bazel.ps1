@@ -1,5 +1,4 @@
 # !/usr/bin/env powershell
-#
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -79,8 +78,10 @@ if (-not (Test-Path env:KOKORO_GFILE_DIR)) {
 } else {
     $integration_tests_config="${project_root}/ci/etc/integration-tests-config.ps1"
     $test_key_file_json="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
+    $test_key_file_p12="${env:KOKORO_GFILE_DIR}/kokoro-run-key.p12"
     if ((Test-Path "${integration_tests_config}") -and
-        (Test-Path "${test_key_file_json}")) {
+        (Test-Path "${test_key_file_json}") -and
+        (Test-Path "${test_key_file_p12}")) {
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Loading integration tests config"
         . "${integration_tests_config}"
         ${env:GOOGLE_APPLICATION_CREDENTIALS}="${test_key_file_json}"
@@ -105,20 +106,15 @@ if (-not (Test-Path env:KOKORO_GFILE_DIR)) {
     }
 }
 
-$quickstart_config=@{
-    "bigquery"=@(":quickstart", "${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_BIGQUERY_TEST_QUICKSTART_TABLE}")
-    "storage"=@(":quickstart", "${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}")
-    # TODO(#6467) - enable GCS+gRPC quickstart after next release
-    # "storage"=@(":quickstart_grpc", "${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}");
-    "bigtable"=@(":quickstart", "${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}", "quickstart")
-    "spanner"=@(":quickstart", "${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}", "quickstart-db")
-    "pubsub"=@(":quickstart", "${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}")
-    "iam"=@(":quickstart", "${env:GOOGLE_CLOUD_PROJECT}")
+$quickstart_args=@{
+    "storage"=@("${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}");
+    "bigtable"=@("${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}", "quickstart")
+    "spanner"=@("${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}", "quickstart-db")
+    "pubsub"=@("${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}")
+    "iam"=@("${env:GOOGLE_CLOUD_PROJECT}")
 }
 
-ForEach ($c in $quickstart_config.GetEnumerator()) {
-    $library = $($c.Name)
-    $target, $args = $($c.Value)
+ForEach($library in ("bigtable", "storage", "spanner", "pubsub")) {
     Set-Location "${project_root}/google/cloud/${library}/quickstart"
     ForEach($_ in (1, 2, 3)) {
         # Additional dependencies, these are not downloaded by `bazel fetch ...`,
@@ -141,7 +137,7 @@ ForEach ($c in $quickstart_config.GetEnumerator()) {
 
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
         "Compiling quickstart for ${library}"
-    bazelisk $common_flags build $build_flags $target
+    bazelisk $common_flags build $build_flags ...
     if ($LastExitCode) {
         Write-Host -ForegroundColor Red `
             "bazel test failed with exit code ${LastExitCode}."
@@ -151,7 +147,8 @@ ForEach ($c in $quickstart_config.GetEnumerator()) {
     if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "true")) {
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
             "Running quickstart for ${library}"
-        bazelisk $common_flags run "--spawn_strategy=local" "${target}" -- $args
+        bazelisk $common_flags run "--spawn_strategy=local" `
+            ":quickstart" -- $quickstart_args[${library}]
         if ($LastExitCode) {
             Write-Host -ForegroundColor Red `
                 "quickstart test for ${library} failed with exit code ${LastExitCode}."

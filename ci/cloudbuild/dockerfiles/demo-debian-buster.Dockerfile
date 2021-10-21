@@ -23,8 +23,17 @@ ARG NCPU=4
 RUN apt-get update && \
     apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ca-certificates ccache cmake curl git \
-        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev \
-        libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev
+        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 \
+        make pkg-config tar wget zlib1g-dev
+# ```
+
+# Debian 10 includes versions of gRPC and Protobuf that support the
+# Google Cloud Platform proto files. We simply install these pre-built versions:
+
+# ```bash
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y libgrpc++-dev libprotobuf-dev \
+    libprotoc-dev libc-ares-dev protobuf-compiler protobuf-compiler-grpc
 # ```
 
 # #### Abseil
@@ -54,7 +63,7 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/crc32c
-RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+RUN curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -77,58 +86,14 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/json
-RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
+RUN curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -H. -Bcmake-out/nlohmann/json && \
-    cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
-    ldconfig
-# ```
-
-# #### Protobuf
-
-# Unless you are only using the Google Cloud Storage library the project
-# needs Protobuf and gRPC. Unfortunately the version of Protobuf that ships
-# with Debian 10 is not recent enough to support the protos published by
-# Google Cloud. We need to build from source:
-
-# ```bash
-WORKDIR /var/tmp/build/protobuf
-RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.18.1.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=yes \
-        -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-    ldconfig
-# ```
-
-# #### gRPC
-
-# Finally we build gRPC from source also:
-
-# ```bash
-WORKDIR /var/tmp/build/grpc
-RUN curl -sSL https://github.com/grpc/grpc/archive/v1.41.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=ON \
-        -DgRPC_INSTALL=ON \
-        -DgRPC_BUILD_TESTS=OFF \
-        -DgRPC_ABSL_PROVIDER=package \
-        -DgRPC_CARES_PROVIDER=package \
-        -DgRPC_PROTOBUF_PROVIDER=package \
-        -DgRPC_RE2_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=package \
-        -DgRPC_ZLIB_PROVIDER=package \
-        -H. -Bcmake-out && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
     ldconfig
 # ```
 

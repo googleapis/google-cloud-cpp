@@ -25,7 +25,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Define the interface for controlling how the Bigtable client
  * backsoff from failed RPC operations.
@@ -99,11 +99,11 @@ class ExponentialBackoffPolicy : public RPCBackoffPolicy {
   std::chrono::milliseconds OnCompletion(grpc::Status const& status) override;
 
  private:
-  using Impl = ::google::cloud::internal::ExponentialBackoffPolicy;
+  using Impl = google::cloud::internal::ExponentialBackoffPolicy;
   Impl impl_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

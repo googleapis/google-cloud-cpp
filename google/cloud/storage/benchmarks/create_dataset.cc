@@ -28,8 +28,8 @@
 #include <vector>
 
 namespace {
-namespace gcs = ::google::cloud::storage;
-namespace gcs_bm = ::google::cloud::storage_benchmarks;
+namespace gcs = google::cloud::storage;
+namespace gcs_bm = google::cloud::storage_benchmarks;
 using ::google::cloud::internal::GetEnv;
 
 google::cloud::StatusOr<gcs_bm::CreateDatasetOptions> ParseArgs(int argc,

@@ -29,8 +29,6 @@ namespace {
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
-using ::testing::Contains;
-using ::testing::IsEmpty;
 using ::testing::Return;
 
 class MockGeneratorContext
@@ -58,7 +56,7 @@ class StringSourceTree : public google::protobuf::compiler::SourceTree {
       : files_(std::move(files)) {}
 
   google::protobuf::io::ZeroCopyInputStream* Open(
-      std::string const& filename) override {
+      const std::string& filename) override {
     auto iter = files_.find(filename);
     return iter == files_.end() ? nullptr
                                 : new google::protobuf::io::ArrayInputStream(
@@ -76,11 +74,12 @@ class AbortingErrorCollector : public DescriptorPool::ErrorCollector {
   AbortingErrorCollector(AbortingErrorCollector const&) = delete;
   AbortingErrorCollector& operator=(AbortingErrorCollector const&) = delete;
 
-  void AddError(std::string const& filename, std::string const& element_name,
-                google::protobuf::Message const*, ErrorLocation,
-                std::string const& error_message) override {
+  void AddError(const std::string& filename, const std::string& element_name,
+                const google::protobuf::Message*, ErrorLocation,
+                const std::string& error_message) override {
     GCP_LOG(FATAL) << "AddError() called unexpectedly: " << filename << " ["
-                   << element_name << "]: " << error_message;
+                   << element_name << "]: " << error_message << "\n";
+    std::exit(1);
   }
 };
 
@@ -96,7 +95,6 @@ class TestGenerator : public ServiceCodeGenerator {
   using ServiceCodeGenerator::HasMessageWithMapField;
   using ServiceCodeGenerator::HasPaginatedMethod;
   using ServiceCodeGenerator::HasStreamingReadMethod;
-  using ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes;
 
   Status GenerateHeader() override { return {}; }
   Status GenerateCc() override { return {}; }
@@ -325,7 +323,7 @@ TEST(PredicateUtilsTest, HasPaginatedMethodFalse) {
   EXPECT_FALSE(g.HasPaginatedMethod());
 }
 
-char const* const kFooServiceProto =
+const char* const kFooServiceProto =
     "syntax = \"proto3\";\n"
     "package google.protobuf;\n"
     "// Leading comments about message Foo.\n"
@@ -381,7 +379,7 @@ class HasMessageWithMapFieldTest : public testing::Test {
 };
 
 TEST_F(HasMessageWithMapFieldTest, HasRequestMessageWithMapField) {
-  FileDescriptor const* service_file_descriptor =
+  const FileDescriptor* service_file_descriptor =
       pool_.FindFileByName("google/cloud/foo/service.proto");
   auto generator_context = absl::make_unique<MockGeneratorContext>();
   auto output = absl::make_unique<MockZeroCopyOutputStream>();
@@ -392,7 +390,7 @@ TEST_F(HasMessageWithMapFieldTest, HasRequestMessageWithMapField) {
 }
 
 TEST_F(HasMessageWithMapFieldTest, HasResponseMessageWithMapField) {
-  FileDescriptor const* service_file_descriptor =
+  const FileDescriptor* service_file_descriptor =
       pool_.FindFileByName("google/cloud/foo/service.proto");
   auto generator_context = absl::make_unique<MockGeneratorContext>();
   auto output = absl::make_unique<MockZeroCopyOutputStream>();
@@ -403,7 +401,7 @@ TEST_F(HasMessageWithMapFieldTest, HasResponseMessageWithMapField) {
 }
 
 TEST_F(HasMessageWithMapFieldTest, HasNoMessageWithMapField) {
-  FileDescriptor const* service_file_descriptor =
+  const FileDescriptor* service_file_descriptor =
       pool_.FindFileByName("google/cloud/foo/service.proto");
   auto generator_context = absl::make_unique<MockGeneratorContext>();
   auto output = absl::make_unique<MockZeroCopyOutputStream>();
@@ -413,113 +411,7 @@ TEST_F(HasMessageWithMapFieldTest, HasNoMessageWithMapField) {
   EXPECT_FALSE(g.HasMessageWithMapField());
 }
 
-char const* const kClientProto =
-    "syntax = \"proto3\";\n"
-    "package google.api;\n"
-    "import \"google/protobuf/descriptor.proto\";\n"
-    "extend google.protobuf.MethodOptions {\n"
-    "  repeated string method_signature = 1051;\n"
-    "}\n"
-    "extend google.protobuf.ServiceOptions {\n"
-    "  string default_host = 1049;\n"
-    "  string oauth_scopes = 1050;\n"
-    "}\n";
-
-char const* const kDurationProto =
-    "syntax = \"proto3\";\n"
-    "package google.protobuf;\n"
-    "message Duration {\n"
-    "  int64 seconds = 1;\n"
-    "  int32 nanos = 2;\n"
-    "}\n";
-
-char const* const kMethodSignatureServiceProto =
-    "syntax = \"proto3\";\n"
-    "package google.protobuf;\n"
-    "import \"google/api/client.proto\";\n"
-    "import \"google/protobuf/duration.proto\";\n"
-
-    "// Leading comments about message Foo.\n"
-    "message Foo {\n"
-    "  google.protobuf.Duration duration = 1;\n"
-    "}\n"
-    "// Leading comments about message Bar.\n"
-    "message Bar {\n"
-    "  string name = 1;\n"
-    "}\n"
-    "// Leading comments about message Empty.\n"
-    "message Empty {}\n"
-    "// Leading comments about service Service0.\n"
-    "service Service0 {\n"
-    "  // Leading comments about rpc Method0.\n"
-    "  rpc Method0(Foo) returns (Empty) {\n"
-    "    option (google.api.method_signature) = \"duration\";\n"
-    "  }\n"
-    "}\n"
-    "// Leading comments about service Service1.\n"
-    "service Service1 {\n"
-    "  // Leading comments about rpc Method0.\n"
-    "  rpc Method0(Bar) returns (Empty) {\n"
-    "    option (google.api.method_signature) = \"name\";\n"
-    "  }\n"
-    "}\n";
-
-class MethodSignatureWellKnownProtobufTypeIncludesTest : public testing::Test {
- public:
-  MethodSignatureWellKnownProtobufTypeIncludesTest()
-      : source_tree_(std::map<std::string, std::string>{
-            {std::string("google/api/client.proto"), kClientProto},
-            {std::string("google/protobuf/duration.proto"), kDurationProto},
-            {std::string("google/cloud/foo/service.proto"),
-             kMethodSignatureServiceProto}}),
-        source_tree_db_(&source_tree_),
-        merged_db_(&simple_db_, &source_tree_db_),
-        pool_(&merged_db_, &collector_) {
-    // we need descriptor.proto to be accessible by the pool
-    // since our test file imports it
-    FileDescriptorProto::descriptor()->file()->CopyTo(&file_proto_);
-    simple_db_.Add(file_proto_);
-  }
-
- private:
-  FileDescriptorProto file_proto_;
-  AbortingErrorCollector collector_;
-  StringSourceTree source_tree_;
-  google::protobuf::SimpleDescriptorDatabase simple_db_;
-  google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
-  google::protobuf::MergedDescriptorDatabase merged_db_;
-
- protected:
-  DescriptorPool pool_;
-};
-
-TEST_F(MethodSignatureWellKnownProtobufTypeIncludesTest,
-       HasSignatureWithDurationField) {
-  FileDescriptor const* service_file_descriptor =
-      pool_.FindFileByName("google/cloud/foo/service.proto");
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
-  EXPECT_CALL(*generator_context, Open("header_path"))
-      .WillOnce(Return(output.release()));
-  TestGenerator g(service_file_descriptor->service(0), generator_context.get());
-  auto includes = g.MethodSignatureWellKnownProtobufTypeIncludes();
-  EXPECT_THAT(includes, Contains("google/protobuf/duration.pb.h"));
-}
-
-TEST_F(MethodSignatureWellKnownProtobufTypeIncludesTest,
-       HasSignatureWithoutWellKnownTypeField) {
-  FileDescriptor const* service_file_descriptor =
-      pool_.FindFileByName("google/cloud/foo/service.proto");
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
-  EXPECT_CALL(*generator_context, Open("header_path"))
-      .WillOnce(Return(output.release()));
-  TestGenerator g(service_file_descriptor->service(1), generator_context.get());
-  auto includes = g.MethodSignatureWellKnownProtobufTypeIncludes();
-  EXPECT_THAT(includes, IsEmpty());
-}
-
-char const* const kStreamingServiceProto =
+const char* const kStreamingServiceProto =
     "syntax = \"proto3\";\n"
     "package google.protobuf;\n"
     "// Leading comments about message Foo.\n"
@@ -586,7 +478,7 @@ class StreamingReadTest : public testing::Test {
 };
 
 TEST_F(StreamingReadTest, HasStreamingReadTrue) {
-  FileDescriptor const* service_file_descriptor =
+  const FileDescriptor* service_file_descriptor =
       pool_.FindFileByName("google/cloud/foo/streaming.proto");
   auto generator_context = absl::make_unique<MockGeneratorContext>();
   auto output = absl::make_unique<MockZeroCopyOutputStream>();
@@ -597,7 +489,7 @@ TEST_F(StreamingReadTest, HasStreamingReadTrue) {
 }
 
 TEST_F(StreamingReadTest, HasStreamingReadFalse) {
-  FileDescriptor const* service_file_descriptor =
+  const FileDescriptor* service_file_descriptor =
       pool_.FindFileByName("google/cloud/foo/streaming.proto");
   auto generator_context = absl::make_unique<MockGeneratorContext>();
   auto output = absl::make_unique<MockZeroCopyOutputStream>();

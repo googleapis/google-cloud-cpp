@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
@@ -55,13 +55,13 @@ TEST_F(CurlSignBlobIntegrationTest, Simple) {
   EXPECT_FALSE(response->key_id.empty());
   EXPECT_FALSE(response->signed_blob.empty());
 
-  auto decoded = Base64Decode(response->signed_blob).value();
+  auto decoded = Base64Decode(response->signed_blob);
   EXPECT_FALSE(decoded.empty());
 }
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

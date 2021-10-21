@@ -15,14 +15,14 @@
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "absl/memory/memory.h"
-#include <grpcpp/client_context.h>
-#include <grpcpp/completion_queue.h>
+#include "grpcpp/client_context.h"
+#include "grpcpp/completion_queue.h"
 #include <chrono>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
 namespace btproto = ::google::bigtable::v2;
@@ -118,7 +118,7 @@ void AsyncRowSampler::OnFinish(Status const& status) {
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

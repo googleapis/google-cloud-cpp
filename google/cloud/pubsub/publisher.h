@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 /**
  * Publish messages to the Cloud Pub/Sub service.
  *
@@ -65,10 +65,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * this class is not guaranteed to work.
  *
  * @par Background Threads
- * This class uses the background threads configured via the `Options` from
- * `GrpcOptionList`. Applications can create their own pool of background
- * threads by (a) creating their own #google::cloud::CompletionQueue, (b)
- * passing this completion queue as a `GrpcCompletionQueueOption`, and (c)
+ * This class uses the background threads configured via `ConnectionOptions`.
+ * Applications can create their own pool of background threads by (a) creating
+ * their own #google::cloud::v1::CompletionQueue, (b) setting this completion
+ * queue in `pubsub::ConnectionOptions::DisableBackgroundThreads()`, and (c)
  * attaching any number of threads to the completion queue.
  *
  * @par Example: using a custom thread pool
@@ -80,14 +80,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [`std::future<T>`][std-future-link]. Our version adds a `.then()` function to
  * attach a callback to the future, which is invoked when the future is
  * satisfied. This function returns a `future<U>` where `U` is the return value
- * of the attached function. More details in the #google::cloud::future
+ * of the attached function. More details in the #google::cloud::v1::future
  * documentation.
  *
  * @par Error Handling
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
- * contains the expected result. Please consult the #google::cloud::StatusOr
+ * contains the expected result. Please consult the #google::cloud::v1::StatusOr
  * documentation for more details.
  *
  * @par Batching Configuration Example
@@ -98,13 +98,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class Publisher {
  public:
   explicit Publisher(std::shared_ptr<PublisherConnection> connection,
-                     PublisherOptions const& options = {});
+                     PublisherOptions options = {});
 
   //@{
   Publisher(Publisher const&) = default;
   Publisher& operator=(Publisher const&) = default;
-  Publisher(Publisher&&) = default;
-  Publisher& operator=(Publisher&&) = default;
+  Publisher(Publisher&&) noexcept = default;
+  Publisher& operator=(Publisher&&) noexcept = default;
   //@}
 
   //@{
@@ -121,7 +121,7 @@ class Publisher {
    *
    * Note that the message may be batched, depending on the Publisher's
    * configuration. It could be delayed until the batch has enough messages,
-   * or enough data, or enough time has elapsed. See the `PublisherOptionList`
+   * or enough data, or enough time has elapsed. See the `PublisherOptions`
    * documentation for more details.
    *
    * @par Idempotency
@@ -170,8 +170,9 @@ class Publisher {
    * Resumes publishing after an error.
    *
    * If the publisher options have message ordering enabled (see
-   * `MessageOrderingOption`) all messages for a key that experience failure
-   * will be rejected until the application calls this function.
+   * `PublisherOptions::message_ordering()`) all messages for a key that
+   * experience failure will be rejected until the application calls this
+   * function.
    *
    * @par Idempotency
    * This function never initiates a remote RPC, so there are no considerations
@@ -191,7 +192,7 @@ class Publisher {
   std::shared_ptr<PublisherConnection> connection_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

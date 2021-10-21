@@ -16,7 +16,6 @@
 #include "google/cloud/bigtable/testing/mock_async_failing_rpc_factory.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
 #include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -32,7 +31,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 namespace btadmin = ::google::bigtable::admin::v2;
@@ -337,7 +336,7 @@ TEST_F(InstanceAdminTest, ListInstancesTooManyTransients) {
 
 /// @test Verify that `bigtable::DeleteInstance` works in the positive case.
 TEST_F(InstanceAdminTest, DeleteInstance) {
-  using ::google::protobuf::Empty;
+  using google::protobuf::Empty;
   InstanceAdmin tested(client_);
   std::string expected_text = R"""(
   name: 'projects/the-project/instances/the-instance'
@@ -487,7 +486,7 @@ TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
 
 /// @test Verify that DeleteCluster works in the positive case.
 TEST_F(InstanceAdminTest, DeleteCluster) {
-  using ::google::protobuf::Empty;
+  using google::protobuf::Empty;
   InstanceAdmin tested(client_);
   std::string expected_text = R"""(
   name: 'projects/the-project/instances/the-instance/clusters/the-cluster'
@@ -866,7 +865,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
       : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
         client_(new MockAdminClient(
-            Options{}.set<GrpcCompletionQueueOption>(cq_))) {
+            ClientOptions{}.DisableBackgroundThreads(cq_))) {
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     instance_admin_ = absl::make_unique<InstanceAdmin>(client_);
   }
@@ -995,7 +994,7 @@ TEST_F(InstanceAdminTest, CreateAppProfile) {
 }
 
 TEST_F(InstanceAdminTest, DeleteAppProfile) {
-  using ::google::protobuf::Empty;
+  using google::protobuf::Empty;
   InstanceAdmin tested(client_);
   std::string expected_text = R"""(
       name: "projects/the-project/instances/the-instance/appProfiles/the-profile"
@@ -1009,7 +1008,7 @@ TEST_F(InstanceAdminTest, DeleteAppProfile) {
 }
 
 TEST_F(InstanceAdminTest, GetAppProfile) {
-  using ::google::protobuf::Empty;
+  using google::protobuf::Empty;
   InstanceAdmin tested(client_);
   std::string expected_text = R"""(
       name: "projects/the-project/instances/the-instance/appProfiles/the-profile"
@@ -1024,7 +1023,7 @@ TEST_F(InstanceAdminTest, GetAppProfile) {
 }
 
 TEST_F(InstanceAdminTest, GetInstance) {
-  using ::google::protobuf::Empty;
+  using google::protobuf::Empty;
   InstanceAdmin tested(client_);
   std::string expected_text = R"""(
       name: "projects/the-project/instances/the-instance"
@@ -1038,7 +1037,7 @@ TEST_F(InstanceAdminTest, GetInstance) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

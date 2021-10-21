@@ -31,18 +31,13 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ObjectPlentyClientsSeriallyIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 
 TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
-  // The main purpose of this test is to search for file description leaks in
-  // the REST-based client. We do not need such tests with gRPC, they have their
-  // own tests.
-  if (UsingGrpc()) GTEST_SKIP();
-
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -55,7 +50,7 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  // Create an iostream to read the object back.
+  // Create a iostream to read the object back.
 
   // Track the number of open files to ensure every client creates the same
   // number of file descriptors and none are leaked.
@@ -90,13 +85,13 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
   if (track_open_files) {
     auto num_fds_after_test = GetNumOpenFiles();
     ASSERT_STATUS_OK(num_fds_after_test);
-    EXPECT_GE(*num_fds_before_test, *num_fds_after_test)
+    EXPECT_EQ(*num_fds_before_test, *num_fds_after_test)
         << "Clients are leaking descriptors";
   }
 }
 
 }  // anonymous namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

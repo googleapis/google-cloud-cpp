@@ -123,43 +123,6 @@ alternatives.
 ./ci/install-cloud-sdk.sh
 ```
 
-If you use an editor that uses `compile_commands.json` for autocomplete, one
-can generate it with CMake using
-[CMAKE_EXPORT_COMPILE_COMMANDS](https://cmake.org/cmake/help/latest/variable/CMAKE_EXPORT_COMPILE_COMMANDS.html).
-If you prefer using Bazel, the following steps will generate one for you.
-
-First, install Bazelisk:
-
-```console
-go get github.com/bazelbuild/bazelisk
-# Alternatively, if you have Go 1.17 or later
-go install github.com/bazelbuild/bazelisk@latest
-```
-
-Add Go binaries to your PATH:
-
-```console
-export PATH=$PATH:$(go env GOPATH)/bin
-```
-
-Name this script `bazel-compile-commands.sh`, add it to `~/.local/bin` and
-`chmod +x` it:
-
-```console
-#!/bin/bash
-readonly TMP_DIR="$(mktemp -d "/tmp/bazel-compdb-temp-XXXXXXX")"
-trap "rm -rf ${TMP_DIR}" EXIT
-readonly REPO="https://github.com/grailbio/bazel-compilation-database"
-git clone --depth=1 "${REPO}" "${TMP_DIR}"
-CC=clang CXX=clang++ "${TMP_DIR}/generate.sh"
-```
-
-Then from the directory where you've cloned `google-cloud-cpp`:
-
-```console
-bazel-compile-commands.sh --sandbox_writable_path=$HOME/.ccache
-```
-
 ### Clone and compile `google-cloud-cpp`
 
 You may need to clone and compile the code as described
@@ -206,14 +169,49 @@ installation, so you would need to install it first.  This needs to be executed
 in a `cmd.exe` shell, running as the `Administrator`:
 
 ```console
-@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -Command "iex (
+> @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -Command "iex (
 (New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 ```
 
 Then you can install the dependencies in the same shell:
 ```console
-choco install -y visualstudio2019community visualstudio2019-workload-nativedesktop visualstudio2019buildtools
-choco install -y git cmake ninja bazelisk
+> choco install -y cmake git cmake.portable activeperl ninja golang yasm putty msys2 bazel
+> choco install -y visualstudio2019community visualstudio2019-workload-nativedesktop microsoft-build-tools
+```
+
+### Connecting to GitHub with PuTTY
+
+This short recipe is offered to setup your SSH keys quickly using PuTTY.  If
+you prefer another SSH client for Windows, please search the Internet for a
+tutorial on how to configure it.
+
+First, generate a private/public key pair with `puttygen`:
+
+```console
+> puttygen
+```
+
+Then store the public key in your
+[GitHub Settings](https://github.com/settings/keys).
+
+Once you have generated the public/private key pair, start the SSH agent in the
+background:
+
+```console
+> pageant
+```
+
+and use the menu to load the private key you generated above. Test the keys
+with:
+
+```console
+> plink -T git@github.com
+```
+
+and do not forget to setup the `GIT_SSH` environment variable:
+
+```console
+> set GIT_SSH=plink
 ```
 
 ### Clone `google-cloud-cpp`
@@ -264,7 +262,7 @@ Windows, but they quickly get out of date.
 
 ## macOS
 
-> :warning: This is a work in progress. These instructions might be incomplete
+> :warning: this is work in progress, these instructions might be incomplete
 > because we don't know how to create a "fresh" macOS install to verify we did
 > not miss a step.
 
@@ -309,8 +307,8 @@ cd google-cloud-cpp
 The CI scripts follow a similar pattern to the scripts for Linux and Windows:
 
 ```shell
-./ci/kokoro/macos/build.sh bazel        # <-- Run the `bazel` CI build
-./ci/kokoro/macos/build.sh cmake-vcpkg  # <-- Build with CMake
+./ci/kokoro/macos/build.sh bazel   # <-- Run the `bazel` CI build
+./ci/kokoro/macos/build.sh cmake-super  # <-- Build with CMake
 ```
 
 ### Manual builds with CMake
@@ -321,14 +319,16 @@ native OpenSSL library on macOS does not work, but the one distributed by
 `homebrew` does. You **must** set the `OPENSSL_ROOT_DIR` environment variable
 before configuring CMake, so CMake can use this alternative version. You cannot
 just pass this as a `-D` option to CMake, because the value must recurse to all
-the external projects. There is an example of this in the
-[vcpkg build script](/ci/kokoro/macos/builds/cmake-vcpkg.sh).
+the external projects in the super build.
 
 ```shell
-git clone -C $HOME https://github.com/microsoft/vcpkg.git
-$HOME/vcpkg/bootstrap-vcpkg.sh
-cmake -H. -Bcmake-out/ -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
-cmake --build cmake-out -- -j $(nproc)
+export OPENSSL_ROOT_DIR=/usr/local/opt/openssl
+cmake -Hsuper -Bcmake-out/si \
+    -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX="${HOME}/local-cpp" -GNinja
+cmake --build cmake-out/si --target project-dependencies
+
+cmake -H. -Bcmake-out/home -DCMAKE_PREFIX_PATH="${HOME}/local-cpp" -GNinja
+cmake --build cmake-out/home
 ```
 
 ## Appendix: Linux VM on Google Compute Engine

@@ -14,14 +14,16 @@
 
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
+#include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
+#include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/internal/parse_rfc3339.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 ObjectMetadata CreateObjectMetadataForTest() {
@@ -139,9 +141,8 @@ TEST(ObjectMetadataTest, Parse) {
   EXPECT_EQ("baz", actual.name());
   EXPECT_EQ("user-qux", actual.owner().entity);
   EXPECT_EQ("user-qux-id-123", actual.owner().entity_id);
-  EXPECT_EQ(
-      google::cloud::internal::ParseRfc3339("2019-01-01T00:00:00Z").value(),
-      actual.retention_expiration_time());
+  EXPECT_EQ(google::cloud::internal::ParseRfc3339("2019-01-01T00:00:00Z"),
+            actual.retention_expiration_time());
   EXPECT_EQ("https://storage.googleapis.com/storage/v1/b/foo-bar/o/baz",
             actual.self_link());
   EXPECT_EQ(102400, actual.size());
@@ -463,8 +464,7 @@ TEST(ObjectMetadataTest, SetStorageClass) {
 TEST(ObjectMetadataTest, SetCustomTime) {
   auto const expected = CreateObjectMetadataForTest();
   auto copy = expected;
-  auto tp =
-      google::cloud::internal::ParseRfc3339("2020-08-11T09:00:00Z").value();
+  auto tp = google::cloud::internal::ParseRfc3339("2020-08-11T09:00:00Z");
   copy.set_custom_time(tp);
   EXPECT_TRUE(expected.has_custom_time());
   EXPECT_TRUE(copy.has_custom_time());
@@ -712,8 +712,7 @@ TEST(ObjectMetadataPatchBuilder, ResetTemporaryHold) {
 
 TEST(ObjectMetadataPatchBuilder, SetCustomTime) {
   ObjectMetadataPatchBuilder builder;
-  auto const tp =
-      google::cloud::internal::ParseRfc3339("2020-08-10T09:00:00Z").value();
+  auto const tp = google::cloud::internal::ParseRfc3339("2020-08-10T09:00:00Z");
   builder.SetCustomTime(tp);
 
   auto actual = builder.BuildPatch();
@@ -733,7 +732,7 @@ TEST(ObjectMetadataPatchBuilder, ResetCustomTime) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

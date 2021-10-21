@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO(#7356): Remove this file after the deprecation period expires
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/mocks/mock_database_admin_connection.h"
 #include "google/cloud/spanner/timestamp.h"
@@ -26,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::spanner_mocks::MockDatabaseAdminConnection;
@@ -718,7 +716,7 @@ TEST(DatabaseAdminClientTest, ListDatabaseOperations) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

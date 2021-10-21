@@ -26,16 +26,16 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
-/// Verifies a `Transaction` has the expected Session and ID/tag.
-MATCHER_P3(
-    HasSessionAndTransaction, session_id, transaction_id, transaction_tag,
+/// Verifies a `Transaction` has the expected Session and Transaction IDs
+MATCHER_P2(
+    HasSessionAndTransactionId, session_id, transaction_id,
     "Verifies a Transaction has the expected Session and Transaction IDs") {
   return google::cloud::spanner_internal::Visit(
-      arg, [&](google::cloud::spanner_internal::SessionHolder& session,
-               StatusOr<google::spanner::v1::TransactionSelector>& s,
-               std::string const& tag, std::int64_t) {
+      arg,
+      [&](google::cloud::spanner_internal::SessionHolder& session,
+          StatusOr<google::spanner::v1::TransactionSelector>& s, std::int64_t) {
         bool result = true;
         if (!session) {
           *result_listener << "Session ID missing (expected " << session_id
@@ -57,16 +57,11 @@ MATCHER_P3(
                            << " != " << transaction_id;
           result = false;
         }
-        if (tag != transaction_tag) {
-          *result_listener << "Transaction tag mismatch: " << tag
-                           << " != " << transaction_tag;
-          result = false;
-        }
         return result;
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

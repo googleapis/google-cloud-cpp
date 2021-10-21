@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
 template <typename AsyncCallType, typename Request, typename Accumulator,
@@ -207,8 +207,10 @@ template <typename AsyncCallType, typename Request, typename Accumulator,
 future<StatusOr<Accumulator>> StartAsyncRetryMultiPage(
     char const* location, std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
     std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
     MetadataUpdatePolicy metadata_update_policy, AsyncCallType async_call,
     Request request, Accumulator accumulator,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
     CombiningFunction combining_function, CompletionQueue cq) {
   std::shared_ptr<AsyncRetryMultiPageFuture<AsyncCallType, Request, Accumulator,
                                             CombiningFunction>>
@@ -224,7 +226,7 @@ future<StatusOr<Accumulator>> StartAsyncRetryMultiPage(
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 std::string RandomDatabasePrefixRegex() {
   return R"re(^db-\d{4}-\d{2}-\d{2}-.*$)re";
@@ -43,7 +43,7 @@ std::string RandomDatabaseName(google::cloud::internal::DefaultPRNG& generator,
              generator, 1, "abcdefghijlkmnopqrstuvwxyz0123456789");
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

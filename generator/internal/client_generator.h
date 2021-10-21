@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CLIENT_GENERATOR_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CLIENT_GENERATOR_H
 
@@ -48,10 +47,6 @@ class ClientGenerator : public ServiceCodeGenerator {
  private:
   Status GenerateHeader() override;
   Status GenerateCc() override;
-
-  // Descriptors for IAM policy producing method_signature extensions, if any.
-  google::protobuf::MethodDescriptor const* get_iam_policy_extension_ = nullptr;
-  google::protobuf::MethodDescriptor const* set_iam_policy_extension_ = nullptr;
 };
 
 }  // namespace generator_internal

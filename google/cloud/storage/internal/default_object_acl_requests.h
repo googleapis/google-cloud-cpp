@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 /// Represents a request to call the `DefaultObjectAccessControls: list` API.
@@ -119,9 +119,9 @@ class GenericChangeDefaultObjectAclRequest
  public:
   GenericChangeDefaultObjectAclRequest() = default;
 
-  explicit GenericChangeDefaultObjectAclRequest(std::string bucket,
-                                                std::string entity,
-                                                std::string role)
+  explicit GenericChangeDefaultObjectAclRequest(
+      // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
+      std::string bucket, std::string entity, std::string role)
       : GenericDefaultObjectAclRequest<Derived>(std::move(bucket),
                                                 std::move(entity)),
         role_(std::move(role)) {}
@@ -182,7 +182,7 @@ std::ostream& operator<<(std::ostream& os,
                          PatchDefaultObjectAclRequest const& r);
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

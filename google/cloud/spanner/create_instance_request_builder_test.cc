@@ -20,18 +20,19 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 TEST(CreateInstanceRequestBuilder, DefaultValues) {
-  Instance in(Project("test-project"), "test-instance");
+  std::string expected_name = "projects/test-project/instances/test-instance";
   std::string expected_config =
-      in.project().FullName() + "/instanceConfigs/test-config";
-  std::string const& expected_display_name = in.instance_id();
-  CreateInstanceRequestBuilder builder(in, expected_config);
+      "projects/test-project/instanceConfigs/test-config";
+  std::string expected_display_name = "test-instance";
+  CreateInstanceRequestBuilder builder(
+      Instance("test-project", "test-instance"), expected_config);
   auto req = builder.Build();
-  EXPECT_EQ(in.project().FullName(), req.parent());
-  EXPECT_EQ(in.instance_id(), req.instance_id());
-  EXPECT_EQ(in.FullName(), req.instance().name());
+  EXPECT_EQ("projects/test-project", req.parent());
+  EXPECT_EQ("test-instance", req.instance_id());
+  EXPECT_EQ(expected_name, req.instance().name());
   EXPECT_EQ(expected_config, req.instance().config());
   EXPECT_EQ(1, req.instance().node_count());
   EXPECT_EQ(0, req.instance().labels_size());
@@ -39,19 +40,20 @@ TEST(CreateInstanceRequestBuilder, DefaultValues) {
 }
 
 TEST(CreateInstanceRequestBuilder, RvalueReference) {
-  Instance in(Project("test-project"), "test-instance");
+  std::string expected_name = "projects/test-project/instances/test-instance";
   std::string expected_config =
-      in.project().FullName() + "/instanceConfigs/test-config";
+      "projects/test-project/instanceConfigs/test-config";
   std::string expected_display_name = "test-display-name";
+  Instance in("test-project", "test-instance");
 
   auto req = CreateInstanceRequestBuilder(in, expected_config)
                  .SetDisplayName(expected_display_name)
                  .SetNodeCount(1)
                  .SetLabels({{"key", "value"}})
                  .Build();
-  EXPECT_EQ(in.project().FullName(), req.parent());
-  EXPECT_EQ(in.instance_id(), req.instance_id());
-  EXPECT_EQ(in.FullName(), req.instance().name());
+  EXPECT_EQ("projects/test-project", req.parent());
+  EXPECT_EQ("test-instance", req.instance_id());
+  EXPECT_EQ(expected_name, req.instance().name());
   EXPECT_EQ(expected_config, req.instance().config());
   EXPECT_EQ(1, req.instance().node_count());
   EXPECT_EQ(1, req.instance().labels_size());
@@ -60,19 +62,20 @@ TEST(CreateInstanceRequestBuilder, RvalueReference) {
 }
 
 TEST(CreateInstanceRequestBuilder, Lvalue) {
-  Instance in(Project("test-project"), "test-instance");
+  std::string expected_name = "projects/test-project/instances/test-instance";
   std::string expected_config =
-      in.project().FullName() + "/instanceConfigs/test-config";
+      "projects/test-project/instanceConfigs/test-config";
   std::string expected_display_name = "test-display-name";
+  Instance in("test-project", "test-instance");
 
   auto builder = CreateInstanceRequestBuilder(in, expected_config);
   auto req = builder.SetDisplayName(expected_display_name)
                  .SetProcessingUnits(500)
                  .SetLabels({{"key", "value"}})
                  .Build();
-  EXPECT_EQ(in.project().FullName(), req.parent());
-  EXPECT_EQ(in.instance_id(), req.instance_id());
-  EXPECT_EQ(in.FullName(), req.instance().name());
+  EXPECT_EQ("projects/test-project", req.parent());
+  EXPECT_EQ("test-instance", req.instance_id());
+  EXPECT_EQ(expected_name, req.instance().name());
   EXPECT_EQ(expected_config, req.instance().config());
   EXPECT_EQ(500, req.instance().processing_units());
   EXPECT_EQ(1, req.instance().labels_size());
@@ -80,7 +83,7 @@ TEST(CreateInstanceRequestBuilder, Lvalue) {
   EXPECT_EQ(expected_display_name, req.instance().display_name());
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

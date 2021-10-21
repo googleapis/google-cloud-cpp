@@ -23,13 +23,13 @@ namespace cloud {
  * Contains all the Cloud C++ gRPC Utilities APIs.
  */
 namespace grpc_utils {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 using ::google::cloud::version;
 using ::google::cloud::version_major;
 using ::google::cloud::version_minor;
 using ::google::cloud::version_patch;
 using ::google::cloud::version_string;
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace grpc_utils
 }  // namespace cloud
 }  // namespace google

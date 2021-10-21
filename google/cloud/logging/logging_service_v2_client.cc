@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace logging {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 LoggingServiceV2Client::LoggingServiceV2Client(
     std::shared_ptr<LoggingServiceV2Connection> connection)
@@ -95,7 +95,7 @@ StreamRange<std::string> LoggingServiceV2Client::ListLogs(
   return connection_->ListLogs(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace logging
 }  // namespace cloud
 }  // namespace google

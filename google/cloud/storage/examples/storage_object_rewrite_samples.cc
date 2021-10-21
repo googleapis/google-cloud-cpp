@@ -24,7 +24,7 @@ namespace {
 void RewriteObject(google::cloud::storage::Client client,
                    std::vector<std::string> const& argv) {
   //! [rewrite object]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& source_bucket_name,
      std::string const& source_object_name,
@@ -45,7 +45,7 @@ void RewriteObject(google::cloud::storage::Client client,
 void RewriteObjectNonBlocking(google::cloud::storage::Client client,
                               std::vector<std::string> const& argv) {
   //! [rewrite object non blocking]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& source_bucket_name,
      std::string const& source_object_name,
@@ -74,7 +74,7 @@ void RewriteObjectNonBlocking(google::cloud::storage::Client client,
 void RewriteObjectToken(google::cloud::storage::Client client,
                         std::vector<std::string> const& argv) {
   //! [rewrite object token]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& source_bucket_name,
      std::string const& source_object_name,
@@ -101,7 +101,7 @@ void RewriteObjectToken(google::cloud::storage::Client client,
 void RewriteObjectResume(google::cloud::storage::Client client,
                          std::vector<std::string> const& argv) {
   //! [rewrite object resume]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& source_bucket_name,
      std::string const& source_object_name,
@@ -133,7 +133,7 @@ void RewriteObjectResume(google::cloud::storage::Client client,
 void RenameObject(google::cloud::storage::Client client,
                   std::vector<std::string> const& argv) {
   //! [rename object] [START storage_move_file]
-  namespace gcs = ::google::cloud::storage;
+  namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& old_object_name, std::string const& new_object_name) {

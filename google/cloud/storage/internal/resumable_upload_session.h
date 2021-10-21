@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RESUMABLE_UPLOAD_SESSION_H
 
 #include "google/cloud/storage/internal/const_buffer.h"
-#include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/version.h"
@@ -29,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 struct ResumableUploadResponse;
 
@@ -58,8 +57,7 @@ class ResumableUploadSession {
    * @return The final result of the upload, including the object metadata.
    */
   virtual StatusOr<ResumableUploadResponse> UploadFinalChunk(
-      ConstBufferSequence const& buffers, std::uint64_t upload_size,
-      HashValues const& full_object_hashes) = 0;
+      ConstBufferSequence const& buffers, std::uint64_t upload_size) = 0;
 
   /// Resets the session by querying its current state.
   virtual StatusOr<ResumableUploadResponse> ResetSession() = 0;
@@ -132,8 +130,8 @@ class ResumableUploadSessionError : public ResumableUploadSession {
     return last_response_;
   }
 
-  StatusOr<ResumableUploadResponse> UploadFinalChunk(
-      ConstBufferSequence const&, std::uint64_t, HashValues const&) override {
+  StatusOr<ResumableUploadResponse> UploadFinalChunk(ConstBufferSequence const&,
+                                                     std::uint64_t) override {
     return last_response_;
   }
 
@@ -160,7 +158,7 @@ class ResumableUploadSessionError : public ResumableUploadSession {
 };
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

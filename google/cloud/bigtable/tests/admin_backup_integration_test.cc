@@ -29,14 +29,14 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::Contains;
 using ::testing::Not;
-namespace btadmin = ::google::bigtable::admin::v2;
-namespace bigtable = ::google::cloud::bigtable;
+namespace btadmin = google::bigtable::admin::v2;
+namespace bigtable = google::cloud::bigtable;
 
 class AdminBackupIntegrationTest
     : public bigtable::testing::TableIntegrationTest {
@@ -54,12 +54,14 @@ class AdminBackupIntegrationTest
     TableIntegrationTest::SetUp();
 
     std::shared_ptr<bigtable::AdminClient> admin_client =
-        bigtable::MakeAdminClient(
-            bigtable::testing::TableTestEnvironment::project_id());
+        bigtable::CreateDefaultAdminClient(
+            bigtable::testing::TableTestEnvironment::project_id(),
+            bigtable::ClientOptions());
     table_admin_ = absl::make_unique<bigtable::TableAdmin>(
         admin_client, bigtable::testing::TableTestEnvironment::instance_id());
-    auto instance_admin_client = bigtable::MakeInstanceAdminClient(
-        bigtable::testing::TableTestEnvironment::project_id());
+    auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
+        bigtable::testing::TableTestEnvironment::project_id(),
+        bigtable::ClientOptions());
     instance_admin_ =
         absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
   }
@@ -173,7 +175,7 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

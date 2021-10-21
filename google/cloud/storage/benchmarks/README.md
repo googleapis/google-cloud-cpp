@@ -13,9 +13,20 @@ over 500 MiB).
 
 ## Compiling for Benchmarks
 
-Make sure to compile all the dependencies with the right optimization level.
-The [contributor documentation](/doc/contributor/README.md) has the relevant
-information.
+Make sure to compile all the dependencies with the right optimization level, for
+example:
+
+```console
+cmake -Hsuper -B.build/si -GNinja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local-cpp
+cmake --build .build/si --target project-dependencies
+cmake -H. -B.build/release -GNinja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_PREFIX_PATH=$HOME/local-cpp \
+  -DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON
+cmake --build .build/release
+```
 
 ## Running the Benchmarks
 

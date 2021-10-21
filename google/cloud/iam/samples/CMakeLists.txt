@@ -17,7 +17,7 @@
 function (iam_client_define_samples)
     find_package(gRPC)
     set(iam_client_samples # cmake-format: sort
-                           iam_credentials_samples.cc iam_samples.cc)
+                           iam_samples.cc)
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("iam_client_samples.bzl" "iam_client_samples" YEAR
@@ -28,8 +28,9 @@ function (iam_client_define_samples)
         google_cloud_cpp_add_executable(target "iam" "${fname}")
         add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(
-            ${target} PRIVATE google_cloud_cpp_testing google-cloud-cpp::iam
-                              GTest::gmock_main GTest::gmock GTest::gtest)
+            ${target}
+            PRIVATE google_cloud_cpp_testing google-cloud-cpp::experimental-iam
+                    GTest::gmock_main GTest::gmock GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()
 
@@ -38,28 +39,6 @@ function (iam_client_define_samples)
         set_tests_properties(
             ${target} PROPERTIES LABELS
                                  "integration-test;integration-test-emulator")
-    endforeach ()
-
-    set(iam_client_mock_samples # cmake-format: sort
-                                mock_iam.cc mock_iam_credentials.cc)
-
-    # Export the list of unit tests to a .bzl file so we do not need to maintain
-    # the list in two places.
-    export_list_to_bazel("iam_client_mock_samples.bzl"
-                         "iam_client_mock_samples" YEAR "2021")
-
-    # Generate a target for each unit test.
-    foreach (fname ${iam_client_mock_samples})
-        google_cloud_cpp_add_executable(target "iam" "${fname}")
-        add_test(NAME ${target} COMMAND ${target})
-        target_link_libraries(
-            ${target} PRIVATE google_cloud_cpp_testing google-cloud-cpp::iam
-                              GTest::gmock_main GTest::gmock GTest::gtest)
-        google_cloud_cpp_add_common_options(${target})
-    endforeach ()
-
-    foreach (fname ${iam_client_mock_samples})
-        google_cloud_cpp_set_target_name(target "iam" "${fname}")
     endforeach ()
 endfunction ()
 

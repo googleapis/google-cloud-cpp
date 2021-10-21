@@ -20,12 +20,11 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
-using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
@@ -166,7 +165,7 @@ TEST(HmacKeysRequestsTest, ParseListResponse) {
 
   auto actual = ListHmacKeysResponse::FromHttpResponse(text).value();
   EXPECT_EQ("some-token-42", actual.next_page_token);
-  EXPECT_THAT(actual.items, ElementsAre(key1, key2));
+  EXPECT_THAT(actual.items, ::testing::ElementsAre(key1, key2));
 }
 
 TEST(HmacKeysRequestsTest, ParseListResponseFailure) {
@@ -258,7 +257,7 @@ TEST(HmacKeysRequestsTest, Update) {
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

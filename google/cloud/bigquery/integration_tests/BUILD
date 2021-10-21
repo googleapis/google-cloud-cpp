@@ -26,7 +26,7 @@ load(":bigquery_client_integration_tests.bzl", "bigquery_client_integration_test
         "integration-test",
     ],
     deps = [
-        "//:bigquery",
+        "//:experimental-bigquery",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",

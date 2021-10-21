@@ -20,7 +20,7 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 //@{
 /**
  * @name Control behaviour on unrecoverable errors.
@@ -38,7 +38,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * It should handle the error, whose description are given in *msg* and should
  * never return.
  */
-using TerminateHandler = std::function<void(char const* msg)>;
+using TerminateHandler = std::function<void(const char* msg)>;
 
 /**
  * Install terminate handler and get the old one atomically.
@@ -65,11 +65,11 @@ TerminateHandler GetTerminateHandler();
  * This function should never return.
  *
  */
-[[noreturn]] void Terminate(char const* msg);
+[[noreturn]] void Terminate(const char* msg);
 
 //@}
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

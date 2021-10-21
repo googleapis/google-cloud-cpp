@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
@@ -85,9 +85,9 @@ class SharedBackoffPolicyMock : public bigtable::RPCBackoffPolicy {
   std::shared_ptr<BackoffPolicyMock> state_;
 };
 
-using ::google::bigtable::admin::v2::Cluster;
-using ::google::bigtable::admin::v2::ListClustersRequest;
-using ::google::bigtable::admin::v2::ListClustersResponse;
+using google::bigtable::admin::v2::Cluster;
+using google::bigtable::admin::v2::ListClustersRequest;
+using google::bigtable::admin::v2::ListClustersResponse;
 
 class AsyncMultipageFutureTest : public ::testing::Test {
  public:
@@ -351,7 +351,7 @@ TEST_F(AsyncMultipageFutureTest, PermanentErrorsAreNotRetried) {
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

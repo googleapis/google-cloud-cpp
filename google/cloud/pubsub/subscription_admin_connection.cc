@@ -13,35 +13,30 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/subscription_admin_connection.h"
-#include "google/cloud/pubsub/internal/defaults.h"
-#include "google/cloud/pubsub/internal/subscriber_auth.h"
+#include "google/cloud/pubsub/internal/default_retry_policies.h"
 #include "google/cloud/pubsub/internal/subscriber_logging.h"
 #include "google/cloud/pubsub/internal/subscriber_metadata.h"
-#include "google/cloud/pubsub/internal/subscriber_stub.h"
-#include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsub_internal {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-using ::google::cloud::internal::Idempotency;
-using ::google::cloud::internal::RetryLoop;
+using google::cloud::internal::Idempotency;
+using google::cloud::internal::RetryLoop;
 
 class SubscriptionAdminConnectionImpl
     : public pubsub::SubscriptionAdminConnection {
  public:
   explicit SubscriptionAdminConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<pubsub_internal::SubscriberStub> stub,
       std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
       std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
+      : stub_(std::move(stub)),
         retry_policy_(std::move(retry_policy)),
         backoff_policy_(std::move(backoff_policy)) {}
 
@@ -245,33 +240,46 @@ class SubscriptionAdminConnectionImpl
   }
 
  private:
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<pubsub_internal::SubscriberStub> stub_;
   std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
   std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
 };
+}  // namespace
 
-// Decorates a SubscriptionAdminStub. This works for both mock and real stubs.
-std::shared_ptr<pubsub_internal::SubscriberStub> DecorateSubscriptionAdminStub(
-    Options const& opts,
-    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
-    std::shared_ptr<pubsub_internal::SubscriberStub> stub) {
-  if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<pubsub_internal::SubscriberAuth>(std::move(auth),
-                                                             std::move(stub));
-  }
-  stub = std::make_shared<pubsub_internal::SubscriberMetadata>(std::move(stub));
-  auto const& tracing = opts.get<TracingComponentsOption>();
-  if (internal::Contains(tracing, "rpc")) {
+std::shared_ptr<pubsub::SubscriptionAdminConnection>
+MakeSubscriptionAdminConnection(
+    pubsub::ConnectionOptions const& options,
+    std::shared_ptr<SubscriberStub> stub,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
+  stub = std::make_shared<SubscriberMetadata>(std::move(stub));
+  if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<pubsub_internal::SubscriberLogging>(
-        std::move(stub), opts.get<GrpcTracingOptionsOption>(),
-        internal::Contains(tracing, "rpc-streams"));
+        std::move(stub), options.tracing_options(),
+        options.tracing_enabled("rpc-streams"));
   }
-  return stub;
+  return std::make_shared<SubscriptionAdminConnectionImpl>(
+      std::move(stub), std::move(retry_policy), std::move(backoff_policy));
 }
 
-}  // namespace
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
+}  // namespace pubsub_internal
+
+namespace pubsub {
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+
+std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
+    ConnectionOptions const& options,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
+  if (!retry_policy) retry_policy = pubsub_internal::DefaultRetryPolicy();
+  if (!backoff_policy) backoff_policy = pubsub_internal::DefaultBackoffPolicy();
+  return pubsub_internal::MakeSubscriptionAdminConnection(
+      options,
+      pubsub_internal::CreateDefaultSubscriberStub(options, /*channel_id=*/0),
+      std::move(retry_policy), std::move(backoff_policy));
+}
 
 SubscriptionAdminConnection::~SubscriptionAdminConnection() = default;
 
@@ -340,59 +348,7 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminConnection::Seek(
   return Status{StatusCode::kUnimplemented, "needs-override"};
 }
 
-std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
-    std::initializer_list<pubsub_internal::NonConstructible>) {
-  return MakeSubscriptionAdminConnection();
-}
-
-std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
-    Options opts) {
-  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 PolicyOptionList>(opts, __func__);
-  opts = pubsub_internal::DefaultCommonOptions(std::move(opts));
-  auto background = internal::MakeBackgroundThreadsFactory(opts)();
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      background->cq(), opts);
-  auto stub = pubsub_internal::CreateDefaultSubscriberStub(auth->CreateChannel(
-      opts.get<EndpointOption>(), internal::MakeChannelArguments(opts)));
-  stub = DecorateSubscriptionAdminStub(opts, std::move(auth), std::move(stub));
-  return std::make_shared<SubscriptionAdminConnectionImpl>(
-      std::move(background), std::move(stub),
-      opts.get<pubsub::RetryPolicyOption>()->clone(),
-      opts.get<pubsub::BackoffPolicyOption>()->clone());
-}
-
-std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
-    pubsub::ConnectionOptions const& options,
-    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
-  auto opts = internal::MakeOptions(options);
-  if (retry_policy) opts.set<RetryPolicyOption>(retry_policy->clone());
-  if (backoff_policy) opts.set<BackoffPolicyOption>(backoff_policy->clone());
-  return MakeSubscriptionAdminConnection(std::move(opts));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
-
-namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<pubsub::SubscriptionAdminConnection>
-MakeTestSubscriptionAdminConnection(Options const& opts,
-                                    std::shared_ptr<SubscriberStub> stub) {
-  auto background = internal::MakeBackgroundThreadsFactory(opts)();
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      background->cq(), opts);
-  stub = pubsub::DecorateSubscriptionAdminStub(opts, std::move(auth),
-                                               std::move(stub));
-  return std::make_shared<pubsub::SubscriptionAdminConnectionImpl>(
-      std::move(background), std::move(stub),
-      opts.get<pubsub::RetryPolicyOption>()->clone(),
-      opts.get<pubsub::BackoffPolicyOption>()->clone());
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

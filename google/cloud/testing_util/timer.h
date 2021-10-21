@@ -24,42 +24,44 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
 class Timer {
  public:
-  struct Snapshot {
-    std::chrono::microseconds elapsed_time;
-    std::chrono::microseconds cpu_time;
-  };
-  static Timer PerThread() { return Timer(CpuAccounting::kPerThread); }
-  static Timer PerProcess() { return Timer(CpuAccounting::kPerProcess); }
+  Timer() = default;
 
-  Snapshot Sample() const;
-  std::string Annotations() const;
+  /// Start the timer, call before the code being measured.
+  void Start();
 
-  static bool SupportsPerThreadUsage();
+  /// Stop the timer, call after the code being measured.
+  void Stop();
+
+  //@{
+  /**
+   * @name Measurement results.
+   *
+   * @note The values are only valid after calling Start() and Stop().
+   */
+  std::chrono::microseconds elapsed_time() const { return elapsed_time_; }
+  std::chrono::microseconds cpu_time() const { return cpu_time_; }
+  std::string const& annotations() const { return annotations_; }
+  //@}
+
+  static bool SupportPerThreadUsage();
 
  private:
-  enum class CpuAccounting {
-    kPerThread,
-    kPerProcess,
-  };
-
-  explicit Timer(CpuAccounting cpu_accounting);
-
-  int RUsageWho() const;
-
-  CpuAccounting accounting_;
   std::chrono::steady_clock::time_point start_;
+  std::chrono::microseconds elapsed_time_;
+  std::chrono::microseconds cpu_time_;
+  std::string annotations_;
 #if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
   struct rusage start_usage_;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 };
 
 }  // namespace testing_util
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

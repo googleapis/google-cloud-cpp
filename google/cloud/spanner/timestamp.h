@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * Convenience alias. `std::chrono::sys_time` since C++20.
@@ -197,14 +197,14 @@ struct CommitTimestamp {
   friend bool operator!=(CommitTimestamp, CommitTimestamp) { return false; }
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 StatusOr<spanner::Timestamp> TimestampFromRFC3339(std::string const&);
 std::string TimestampToRFC3339(spanner::Timestamp);
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
 }  // namespace cloud

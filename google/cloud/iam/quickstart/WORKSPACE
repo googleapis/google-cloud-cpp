@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# A minimal WORKSPACE file showing how to use the Google Cloud IAM C++ client
-# library in Bazel-based projects.
+# A minimal WORKSPACE file showing how to use the Google Cloud Pub/Sub C++
+# client library in Bazel-based projects.
 workspace(name = "iam_quickstart")
 
 # Add the necessary Starlark functions to fetch google-cloud-cpp.
@@ -23,9 +23,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # NOTE: Update this version and SHA256 as needed.
 http_archive(
     name = "com_github_googleapis_google_cloud_cpp",
-    sha256 = "11fa27528440233305b61e77e330134115ff118f06ad0e4d4b8dd56062a364da",
-    strip_prefix = "google-cloud-cpp-1.32.1",
-    url = "https://github.com/googleapis/google-cloud-cpp/archive/v1.32.1.tar.gz",
+    sha256 = "6a736ebf5eacae23f8e51d755378469e11f10dd3257b0d8ddaba7a97f7186c95",
+    strip_prefix = "google-cloud-cpp-1.29.0",
+    url = "https://github.com/googleapis/google-cloud-cpp/archive/v1.29.0.tar.gz",
 )
 
 # Load indirect dependencies due to

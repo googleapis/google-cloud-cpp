@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 TEST(ReadOptionsTest, Equality) {
@@ -41,17 +41,12 @@ TEST(ReadOptionsTest, Equality) {
   test_options_1.request_priority = RequestPriority::kLow;
   EXPECT_EQ(test_options_0, test_options_1);
 
-  test_options_0.request_tag = "tag";
-  EXPECT_NE(test_options_0, test_options_1);
-  test_options_1.request_tag = "tag";
-  EXPECT_EQ(test_options_0, test_options_1);
-
   ReadOptions test_options_2 = test_options_0;
   EXPECT_EQ(test_options_0, test_options_2);
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

@@ -28,7 +28,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 StatusOr<std::string> PostPolicyV4Escape(std::string const& utf8_bytes);
@@ -47,7 +47,7 @@ class PolicyDocumentRequest {
   /**
    * Creates the string to be signed.
    *
-   * @note Unlike signed URLs, policy documents are base64-encoded before
+   * @note unlike signed URLs, policy documents are base64-encoded before
    * being signed.
    */
   std::string StringToSign() const;
@@ -92,7 +92,7 @@ class PolicyDocumentV4Request {
   /**
    * Creates the string to be signed.
    *
-   * @note Unlike signed URLs, policy documents are base64-encoded before
+   * @note unlike signed URLs, policy documents are base64-encoded before
    * being signed.
    */
   std::string StringToSign() const;
@@ -153,7 +153,7 @@ class PolicyDocumentV4Request {
 std::ostream& operator<<(std::ostream& os, PolicyDocumentV4Request const& r);
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

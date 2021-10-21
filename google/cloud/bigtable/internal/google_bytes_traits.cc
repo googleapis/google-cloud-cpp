@@ -17,7 +17,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
 bool ConsecutiveRowKeys(std::string const& a, std::string const& b) {
@@ -32,7 +32,7 @@ bool ConsecutiveRowKeys(std::string const& a, std::string const& b) {
   return b.compare(0, a.length(), a) == 0;
 }
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

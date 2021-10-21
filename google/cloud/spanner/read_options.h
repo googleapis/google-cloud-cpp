@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace SPANNER_CLIENT_NS {
 
 /// Options passed to `Client::Read` or `Client::PartitionRead`.
 struct ReadOptions {
@@ -45,24 +45,19 @@ struct ReadOptions {
    * Priority for the read request.
    */
   absl::optional<RequestPriority> request_priority;
-
-  /**
-   * Tag for the read request.
-   */
-  absl::optional<std::string> request_tag;
 };
 
 inline bool operator==(ReadOptions const& lhs, ReadOptions const& rhs) {
   return lhs.limit == rhs.limit &&
          lhs.request_priority == rhs.request_priority &&
-         lhs.request_tag == rhs.request_tag && lhs.index_name == rhs.index_name;
+         lhs.index_name == rhs.index_name;
 }
 
 inline bool operator!=(ReadOptions const& lhs, ReadOptions const& rhs) {
   return !(lhs == rhs);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

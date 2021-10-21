@@ -20,15 +20,14 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::ExitedWithCode;
 using ::testing::HasSubstr;
 
-auto constexpr kLogConfig = "GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG";
-auto constexpr kEnableClog = "GOOGLE_CLOUD_CPP_ENABLE_CLOG";
+auto constexpr kLogConfigVariable = "GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG";
 
 TEST(LogSeverityTest, Streaming) {
   std::ostringstream os;
@@ -42,7 +41,6 @@ TEST(LogRecordTest, Streaming) {
   lr.function = "Func";
   lr.filename = "filename.cc";
   lr.lineno = 123;
-  lr.thread_id = std::this_thread::get_id();
   lr.timestamp = std::chrono::system_clock::from_time_t(1585112316) +
                  std::chrono::microseconds(123456);
   lr.message = "message";
@@ -148,31 +146,32 @@ TEST(LogSinkTest, FlushMultipleBackends) {
 }
 
 TEST(LogSinkTest, LogDefaultInstance) {
-  ScopedEnvironment config(kLogConfig, absl::nullopt);
-  ScopedEnvironment env(kEnableClog, "anyvalue");
+  ScopedEnvironment config(kLogConfigVariable, absl::nullopt);
 
   auto backend = std::make_shared<MockLogBackend>();
-  EXPECT_CALL(*backend, Process).WillOnce([](LogRecord const& lr) {
+  EXPECT_CALL(*backend, ProcessWithOwnership).WillOnce([](LogRecord const& lr) {
     EXPECT_EQ(Severity::GCP_LS_WARNING, lr.severity);
     EXPECT_EQ("test message", lr.message);
   });
+  LogSink::Instance().AddBackend(backend);
 
-  auto backend_id = LogSink::Instance().AddBackend(backend);
   GCP_LOG(WARNING) << "test message";
-  LogSink::Instance().RemoveBackend(backend_id);
+  LogSink::Instance().ClearBackends();
 }
 
 TEST(LogSinkTest, LogToClog) {
+  LogSink::EnableStdClog();
   EXPECT_FALSE(LogSink::Instance().empty());
   LogSink::Instance().set_minimum_severity(Severity::GCP_LS_NOTICE);
   GCP_LOG(NOTICE) << "test message";
   LogSink::DisableStdClog();
   EXPECT_TRUE(LogSink::Instance().empty());
   EXPECT_EQ(0, LogSink::Instance().BackendCount());
-  LogSink::EnableStdClog();
+  LogSink::Instance().ClearBackends();
 }
 
 TEST(LogSinkTest, ClogMultiple) {
+  LogSink::EnableStdClog();
   EXPECT_FALSE(LogSink::Instance().empty());
   EXPECT_EQ(1, LogSink::Instance().BackendCount());
   LogSink::EnableStdClog();
@@ -186,7 +185,6 @@ TEST(LogSinkTest, ClogMultiple) {
   LogSink::DisableStdClog();
   EXPECT_TRUE(LogSink::Instance().empty());
   EXPECT_EQ(0, LogSink::Instance().BackendCount());
-  LogSink::EnableStdClog();
 }
 
 TEST(LogSinkTest, ClogEnvironment) {
@@ -199,8 +197,8 @@ TEST(LogSinkTest, ClogEnvironment) {
   auto old_style = testing::FLAGS_gtest_death_test_style;
   testing::FLAGS_gtest_death_test_style = "threadsafe";
 
-  ScopedEnvironment config(kLogConfig, absl::nullopt);
-  ScopedEnvironment env(kEnableClog, "anyvalue");
+  ScopedEnvironment config(kLogConfigVariable, absl::nullopt);
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_CLOG", "anyvalue");
 
   auto f = [] {
     GCP_LOG(INFO) << "testing clog";
@@ -231,7 +229,7 @@ TEST(LogSinkTest, LogCheckCounter) {
   EXPECT_CALL(*backend, ProcessWithOwnership).Times(2);
   sink.AddBackend(backend);
   GOOGLE_CLOUD_CPP_LOG_I(GCP_LS_ALERT, sink) << "count is " << counter;
-  GOOGLE_CLOUD_CPP_LOG_I(GCP_LS_CRITICAL, sink) << "count is " << counter;
+  GOOGLE_CLOUD_CPP_LOG_I(GCP_LS_FATAL, sink) << "count is " << counter;
   EXPECT_EQ(2, counter.count);
 }
 
@@ -294,11 +292,7 @@ TEST(LogSinkTest, DisabledLogsMakeNoCalls) {
   EXPECT_EQ(0, counter);
 }
 
-TEST(LogFatalTest, NoReturn) {
-  EXPECT_DEATH_IF_SUPPORTED(GCP_LOG(FATAL) << "fatal message", "fatal message");
-}
-
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

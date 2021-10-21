@@ -24,16 +24,17 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 class FlowControlledPublisherConnection
     : public pubsub::PublisherConnection,
       public std::enable_shared_from_this<FlowControlledPublisherConnection> {
  public:
   static std::shared_ptr<FlowControlledPublisherConnection> Create(
-      Options opts, std::shared_ptr<pubsub::PublisherConnection> child) {
+      pubsub::PublisherOptions options,
+      std::shared_ptr<pubsub::PublisherConnection> child) {
     return std::shared_ptr<FlowControlledPublisherConnection>(
-        new FlowControlledPublisherConnection(std::move(opts),
+        new FlowControlledPublisherConnection(std::move(options),
                                               std::move(child)));
   }
 
@@ -58,35 +59,28 @@ class FlowControlledPublisherConnection
 
  private:
   explicit FlowControlledPublisherConnection(
-      Options opts, std::shared_ptr<pubsub::PublisherConnection> child)
-      : opts_(std::move(opts)), child_(std::move(child)) {}
+      pubsub::PublisherOptions options,
+      std::shared_ptr<pubsub::PublisherConnection> child)
+      : options_(std::move(options)), child_(std::move(child)) {}
 
   void OnPublish(std::size_t message_size);
   bool IsFull() const {
-    return pending_messages_ > opts_.get<pubsub::MaxPendingMessagesOption>() ||
-           pending_bytes_ > opts_.get<pubsub::MaxPendingBytesOption>();
+    return pending_messages_ > options_.maximum_pending_messages() ||
+           pending_bytes_ > options_.maximum_pending_bytes();
   }
   bool MakesFull(std::size_t message_size) const {
     // Accept at least one message before blocking or rejecting data.
     if (pending_messages_ == 0) return false;
-    return pending_messages_ + 1 >
-               opts_.get<pubsub::MaxPendingMessagesOption>() ||
-           pending_bytes_ + message_size >
-               opts_.get<pubsub::MaxPendingBytesOption>();
+    return pending_messages_ + 1 > options_.maximum_pending_messages() ||
+           pending_bytes_ + message_size > options_.maximum_pending_bytes();
   }
-  bool RejectWhenFull() const {
-    return opts_.get<pubsub::FullPublisherActionOption>() ==
-           pubsub::FullPublisherAction::kRejects;
-  }
-  bool BlockWhenFull() const {
-    return opts_.get<pubsub::FullPublisherActionOption>() ==
-           pubsub::FullPublisherAction::kBlocks;
-  }
+  bool RejectWhenFull() const { return options_.full_publisher_rejects(); }
+  bool BlockWhenFull() const { return options_.full_publisher_blocks(); }
   std::weak_ptr<FlowControlledPublisherConnection> WeakFromThis() {
     return shared_from_this();
   }
 
-  Options const opts_;
+  pubsub::PublisherOptions const options_;
   std::shared_ptr<pubsub::PublisherConnection> const child_;
 
   mutable std::mutex mu_;
@@ -97,7 +91,7 @@ class FlowControlledPublisherConnection
   std::size_t max_pending_messages_ = 0;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

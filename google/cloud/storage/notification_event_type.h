@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace STORAGE_CLIENT_NS {
 /// Contains functions to return well-known notification event type names.
 namespace event_type {
 inline char const* ObjectFinalize() {
@@ -44,7 +44,7 @@ inline char const* ObjectArchive() {
 }
 
 }  // namespace event_type
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

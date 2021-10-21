@@ -13,20 +13,20 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/connection_options.h"
-#include "google/cloud/internal/user_agent_prefix.h"
+#include "google/cloud/pubsub/internal/user_agent_prefix.h"
 #include <thread>
 
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::string ConnectionOptionsTraits::default_endpoint() {
   return "pubsub.googleapis.com";
 }
 
 std::string ConnectionOptionsTraits::user_agent_prefix() {
-  return internal::UserAgentPrefix();
+  return pubsub_internal::UserAgentPrefix();
 }
 
 int ConnectionOptionsTraits::default_num_channels() {
@@ -34,7 +34,7 @@ int ConnectionOptionsTraits::default_num_channels() {
   return ncores == 0 ? 4 : static_cast<int>(ncores);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google
