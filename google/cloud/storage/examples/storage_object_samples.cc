@@ -595,26 +595,24 @@ void ChangeObjectCustomTime(google::cloud::storage::Client client,
 google::cloud::storage::Client StorageRetries(std::vector<std::string> const&) {
   //! [START storage_configure_retries]
   namespace gcs = ::google::cloud::storage;
-  return gcs::Client(
-      google::cloud::Options{}
-
-          // Creates a client with the following configuration:
-          // Retries only idempotent operations.
-          .set<gcs::IdempotencyPolicyOption>(
-              gcs::StrictIdempotencyPolicy().clone())
-          // On error, it backs off for 1 second, then 3 seconds, then 9
-          // seconds, etc.  The backoff time never grows larger than 1 minute.
-          // The strategy introduces jitter around the backoff delay.
-          .set<gcs::BackoffPolicyOption>(
-              gcs::ExponentialBackoffPolicy(
-                  /*initial_delay=*/std::chrono::seconds(1),
-                  /*maximum_delay=*/std::chrono::minutes(1),
-                  /*scaling=*/3.0)
-                  .clone())
-          // Retries all operations for up to 5 minutes, including any backoff
-          // time.
-          .set<gcs::RetryPolicyOption>(
-              gcs::LimitedTimeRetryPolicy(std::chrono::minutes(5)).clone()));
+  // Create the client configuration:
+  auto options = google::cloud::Options{};
+  // Retries only idempotent operations.
+  options.set<gcs::IdempotencyPolicyOption>(
+      gcs::StrictIdempotencyPolicy().clone());
+  // On error, it backs off for 1 second, then 3 seconds, then 9 seconds, etc.
+  // The backoff time never grows larger than 1 minute. The strategy introduces
+  // jitter around the backoff delay.
+  options.set<gcs::BackoffPolicyOption>(
+      gcs::ExponentialBackoffPolicy(
+          /*initial_delay=*/std::chrono::seconds(1),
+          /*maximum_delay=*/std::chrono::minutes(1),
+          /*scaling=*/3.0)
+          .clone());
+  // Retries all operations for up to 5 minutes, including any backoff time.
+  options.set<gcs::RetryPolicyOption>(
+      gcs::LimitedTimeRetryPolicy(std::chrono::minutes(5)).clone());
+  return gcs::Client(std::move(options));
   //! [END storage_configure_retries]
 }
 
