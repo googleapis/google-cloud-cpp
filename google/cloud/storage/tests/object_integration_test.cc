@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/expect_exception.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <sys/types.h>
 #include <algorithm>
