@@ -609,7 +609,7 @@ google::cloud::storage::Client StorageRetries(std::vector<std::string> const&) {
           .set<gcs::BackoffPolicyOption>(
               gcs::ExponentialBackoffPolicy(
                   /*initial_delay=*/std::chrono::seconds(1),
-                  /*maximum_delay=*/std::chrono::minutes(2),
+                  /*maximum_delay=*/std::chrono::minutes(1),
                   /*scaling=*/3.0)
                   .clone())
           // Retries all operations for up to 5 minutes, including any backoff
