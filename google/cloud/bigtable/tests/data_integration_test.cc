@@ -516,25 +516,12 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
 
 TEST_F(DataIntegrationTest, TableApplyWithLogging) {
   testing_util::ScopedLog log;
-  std::string const table_id = RandomTableId();
-
-  auto constexpr kTestMaxVersions = 10;
-  auto const test_gc_rule = bigtable::GcRule::MaxNumVersions(kTestMaxVersions);
-  bigtable::TableConfig table_config = bigtable::TableConfig(
-      {
-          {kFamily1, test_gc_rule},
-          {kFamily2, test_gc_rule},
-          {kFamily3, test_gc_rule},
-          {kFamily4, test_gc_rule},
-      },
-      {});
-  ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
 
   std::shared_ptr<bigtable::DataClient> data_client =
       bigtable::MakeDataClient(project_id(), instance_id(),
                                Options{}.set<TracingComponentsOption>({"rpc"}));
 
-  Table table(data_client, table_id);
+  Table table(data_client, testing::TableTestEnvironment::table_id());
 
   std::string const row_key = "row-key-1";
   std::vector<Cell> created{{row_key, kFamily4, "c0", 1000, "v1000"},
@@ -546,8 +533,6 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
   auto actual = ReadRows(table, Filter::PassAllFilter());
   CheckEqualUnordered(expected, actual);
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("MutateRow")));
-
-  ASSERT_STATUS_OK(table_admin_->DeleteTable(table_id));
 }
 
 TEST(ConnectionRefresh, Disabled) {
