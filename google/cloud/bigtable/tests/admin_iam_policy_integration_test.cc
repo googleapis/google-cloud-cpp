@@ -60,11 +60,6 @@ TEST_F(AdminIAMPolicyIntegrationTest, SetGetTestIamAPIsTest) {
   auto previous_table_list =
       table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   ASSERT_STATUS_OK(previous_table_list);
-  ASSERT_THAT(
-      TableNames(*previous_table_list),
-      Not(Contains(table_admin_->instance_name() + "/tables/" + table_id)))
-      << "Table (" << table_id << ") already exists."
-      << " This is unexpected, as the table ids are generated at random.";
 
   // create table config
   bigtable::TableConfig table_config(

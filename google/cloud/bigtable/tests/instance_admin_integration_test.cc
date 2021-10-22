@@ -249,10 +249,6 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
   auto instances_before = instance_admin_->ListInstances();
   ASSERT_STATUS_OK(instances_before);
   ASSERT_TRUE(instances_before->failed_locations.empty());
-  ASSERT_FALSE(IsInstancePresent(instances_before->instances, instance_id))
-      << "Instance (" << instance_id << ") already exists."
-      << " This is unexpected, as the instance ids are"
-      << " generated at random.";
 
   // create instance
   auto config = IntegrationTestConfig(instance_id, zone_a_);
@@ -312,10 +308,6 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   // create cluster
   auto clusters_before = instance_admin_->ListClusters(instance_id);
   ASSERT_STATUS_OK(clusters_before);
-  ASSERT_FALSE(IsClusterPresent(clusters_before->clusters, cluster_id))
-      << "Cluster (" << cluster_id << ") already exists."
-      << " This is unexpected, as the cluster ids are"
-      << " generated at random.";
   auto cluster_config =
       bigtable::ClusterConfig(zone_b_, 3, bigtable::ClusterConfig::HDD);
   auto cluster =
@@ -446,10 +438,6 @@ TEST_F(InstanceAdminIntegrationTest,
   auto instances_before = instance_admin->ListInstances();
   ASSERT_STATUS_OK(instances_before);
   ASSERT_TRUE(instances_before->failed_locations.empty());
-  ASSERT_FALSE(IsInstancePresent(instances_before->instances, instance_id))
-      << "Instance (" << instance_id << ") already exists."
-      << " This is unexpected, as the instance ids are"
-      << " generated at random.";
 
   // create instance
   auto config = IntegrationTestConfig(instance_id, zone_a_);

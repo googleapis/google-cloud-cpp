@@ -75,11 +75,6 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   auto previous_table_list =
       table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   ASSERT_STATUS_OK(previous_table_list);
-  ASSERT_THAT(
-      TableNames(*previous_table_list),
-      Not(Contains(table_admin_->instance_name() + "/tables/" + table_id)))
-      << "Table (" << table_id << ") already exists."
-      << " This is unexpected, as the table ids are generated at random.";
   // create table config
   bigtable::TableConfig table_config(
       {{"fam", GC::MaxNumVersions(5)},
@@ -104,12 +99,6 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   // list backups to verify new backup id does not already exist
   auto previous_backup_list = table_admin_->ListBackups({});
   ASSERT_STATUS_OK(previous_backup_list);
-  ASSERT_THAT(
-      BackupNames(*previous_backup_list),
-      Not(Contains(table_admin_->instance_name() + "/backups/" + backup_id)))
-      << "Backup (" << backup_id << ") already exists."
-      << " This is unexpected, as the backup ids are"
-      << " generated at random.";
   // create backup
   google::protobuf::Timestamp const expire_time =
       google::protobuf::util::TimeUtil::GetCurrentTime() +
