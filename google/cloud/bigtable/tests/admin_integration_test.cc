@@ -70,11 +70,6 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTables) {
   int constexpr kTableCount = 5;
   for (int index = 0; index < kTableCount; ++index) {
     std::string table_id = RandomTableId();
-    ASSERT_THAT(
-        TableNames(*previous_table_list),
-        Not(Contains(table_admin_->instance_name() + "/tables/" + table_id)))
-        << "Table (" << table_id << ") already exists."
-        << " This is unexpected, as the table ids are generated at random.";
     EXPECT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
 
     expected_table_list.emplace_back(table_id);
@@ -165,11 +160,6 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTable) {
   auto previous_table_list =
       table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   ASSERT_STATUS_OK(previous_table_list);
-  ASSERT_THAT(
-      TableNames(*previous_table_list),
-      Not(Contains(table_admin_->instance_name() + "/tables/" + table_id)))
-      << "Table (" << table_id << ") already exists."
-      << " This is unexpected, as the table ids are generated at random.";
 
   // create table config
   bigtable::TableConfig table_config(
@@ -329,11 +319,6 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   // verify new table id in current table list
   auto previous_table_list = table_admin->ListTables(btadmin::Table::NAME_ONLY);
   ASSERT_STATUS_OK(previous_table_list);
-  ASSERT_THAT(
-      TableNames(*previous_table_list),
-      Not(Contains(table_admin->instance_name() + "/tables/" + table_id)))
-      << "Table (" << table_id << ") already exists."
-      << " This is unexpected, as the table ids are generated at random.";
 
   // create table config
   bigtable::TableConfig table_config(
