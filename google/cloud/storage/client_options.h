@@ -70,8 +70,10 @@ Options DefaultOptionsWithCredentials(Options opts);
  */
 class ChannelOptions {
  public:
+  /// @deprecated Use google::cloud::Options and CAPathOption instead.
   std::string ssl_root_path() const { return ssl_root_path_; }
 
+  /// @deprecated Use google::cloud::Options and CAPathOption instead.
   ChannelOptions& set_ssl_root_path(std::string ssl_root_path) {
     ssl_root_path_ = std::move(ssl_root_path);
     return *this;
@@ -96,11 +98,31 @@ class ChannelOptions {
  * - `CLOUD_STORAGE_ENABLE_TRACING`: if set, this is the list of components that
  *   will have logging enabled, the component this is:
  *   - `http`: trace all http request / responses.
+ *
+ * @deprecated Please use google::cloud::Options instead.
  */
 class ClientOptions {
  public:
+  /**
+   * Constructor with channel options.
+   *
+   * @deprecated use google::cloud::Options instead.
+   *
+   * @param credentials how to authenticate to the client. Using a `nullptr` for
+   *   @p credentials results in undefined behavior.
+   */
   explicit ClientOptions(std::shared_ptr<oauth2::Credentials> credentials)
       : ClientOptions(std::move(credentials), {}) {}
+
+  /**
+   * Constructor with channel options.
+   *
+   * @deprecated use google::cloud::Options instead.
+   *
+   * @param credentials how to authenticate to the client. Using a `nullptr` for
+   *   @p credentials results in undefined behavior.
+   * @param channel_options the configuration for SSL certificate validation.
+   */
   ClientOptions(std::shared_ptr<oauth2::Credentials> credentials,
                 ChannelOptions channel_options);
 
@@ -111,74 +133,164 @@ class ClientOptions {
    * `Status` with failure details.  If the `CLOUD_STORAGE_EMULATOR_ENDPOINT`
    * environment variable is set, this function instead uses an
    * `AnonymousCredentials` to configure the client.
+   *
+   * @deprecated Please use google::cloud::Options instead.
    */
   static StatusOr<ClientOptions> CreateDefaultClientOptions();
+  /// @deprecated Please use google::cloud::Options instead.
   static StatusOr<ClientOptions> CreateDefaultClientOptions(
       ChannelOptions const& channel_options);
 
+  /**
+   * @deprecated Use google::cloud::Options and Oauth2CredentialsOption instead.
+   */
   std::shared_ptr<oauth2::Credentials> credentials() const {
     return opts_.get<Oauth2CredentialsOption>();
   }
+
+  /**
+   * @deprecated Use google::cloud::Options and Oauth2CredentialsOption instead.
+   */
   ClientOptions& set_credentials(std::shared_ptr<oauth2::Credentials> c) {
     opts_.set<Oauth2CredentialsOption>(std::move(c));
     return *this;
   }
 
+  /**
+   * @deprecated Use google::cloud::Options and RestEndpointOption instead.
+   */
   std::string const& endpoint() const {
     return opts_.get<RestEndpointOption>();
   }
+
+  /**
+   * @deprecated Use google::cloud::Options and RestEndpointOption instead.
+   */
   ClientOptions& set_endpoint(std::string endpoint) {
     opts_.set<RestEndpointOption>(std::move(endpoint));
     return *this;
   }
 
+  /**
+   * @deprecated Use google::cloud::Options and IamEndpointOption instead.
+   */
   std::string const& iam_endpoint() const {
     return opts_.get<IamEndpointOption>();
   }
+
+  /**
+   * @deprecated Use google::cloud::Options and IamEndpointOption instead.
+   */
   ClientOptions& set_iam_endpoint(std::string endpoint) {
     opts_.set<IamEndpointOption>(std::move(endpoint));
     return *this;
   }
 
+  /**
+   * @deprecated This was intended for development and not a public API.
+   */
   std::string const& version() const {
     return opts_.get<internal::TargetApiVersionOption>();
   }
+
+  /**
+   * @deprecated This was intended for development and not a public API.
+   */
   ClientOptions& set_version(std::string version) {
     opts_.set<internal::TargetApiVersionOption>(std::move(version));
     return *this;
   }
 
+  /**
+   * @deprecated Use google::cloud::Options and
+   *     google::cloud::TracingComponentsOption instead.
+   */
   bool enable_http_tracing() const;
+
+  /**
+   * @deprecated Use google::cloud::Options and
+   *     google::cloud::TracingComponentsOption instead.
+   */
   ClientOptions& set_enable_http_tracing(bool enable);
 
+  /**
+   * @deprecated Use google::cloud::Options and
+   *     google::cloud::TracingComponentsOption instead.
+   */
   bool enable_raw_client_tracing() const;
+
+  /**
+   * @deprecated Use google::cloud::Options and
+   *     google::cloud::TracingComponentsOption instead.
+   */
   ClientOptions& set_enable_raw_client_tracing(bool enable);
 
+  /**
+   * @deprecated Use google::cloud::Options and ProjectIdOption instead.
+   */
   std::string const& project_id() const { return opts_.get<ProjectIdOption>(); }
+
+  /**
+   * @deprecated Use google::cloud::Options and ProjectIdOption instead.
+   */
   ClientOptions& set_project_id(std::string v) {
     opts_.set<ProjectIdOption>(std::move(v));
     return *this;
   }
 
+  /**
+   * @deprecated Use google::cloud::Options and ConnectionPoolSizeOption
+   *     instead.
+   */
   std::size_t connection_pool_size() const {
     return opts_.get<ConnectionPoolSizeOption>();
   }
+
+  /**
+   * @deprecated Use google::cloud::Options and ConnectionPoolSizeOption
+   *     instead.
+   */
   ClientOptions& set_connection_pool_size(std::size_t size) {
     opts_.set<ConnectionPoolSizeOption>(size);
     return *this;
   }
 
+  /**
+   * @deprecated Use google::cloud::Options and DownloadBufferSizeOption
+   *     instead.
+   */
   std::size_t download_buffer_size() const {
     return opts_.get<DownloadBufferSizeOption>();
   }
+
+  /**
+   * @deprecated Use google::cloud::Options and DownloadBufferSizeOption
+   *     instead.
+   */
   ClientOptions& SetDownloadBufferSize(std::size_t size);
 
+  /**
+   * @deprecated Use google::cloud::Options and UploadBufferSizeOption instead.
+   */
   std::size_t upload_buffer_size() const {
     return opts_.get<UploadBufferSizeOption>();
   }
+
+  /**
+   * @deprecated Use google::cloud::Options and UploadBufferSizeOption instead.
+   */
   ClientOptions& SetUploadBufferSize(std::size_t size);
 
+  /**
+   * @deprecated Use google::cloud::Options and
+   *     google::cloud::UserAgentProductsOption instead.
+   */
   std::string const& user_agent_prefix() const { return user_agent_prefix_; }
+
+  /**
+   * @deprecated Use google::cloud::Options and
+   *     google::cloud::UserAgentProductsOption instead.
+   */
   ClientOptions& add_user_agent_prefix(std::string prefix) {
     opts_.lookup<UserAgentProductsOption>().push_back(prefix);
     if (!user_agent_prefix_.empty()) {
@@ -188,14 +300,24 @@ class ClientOptions {
     user_agent_prefix_ = std::move(prefix);
     return *this;
   }
+
   /// @deprecated use `add_user_agent_prefix()` instead.
   ClientOptions& add_user_agent_prefx(std::string const& v) {
     return add_user_agent_prefix(v);
   }
 
+  /**
+   * @deprecated Use google::cloud::Options and MaximumSimpleUploadSizeOption
+   *     instead.
+   */
   std::size_t maximum_simple_upload_size() const {
     return opts_.get<MaximumSimpleUploadSizeOption>();
   }
+
+  /**
+   * @deprecated Use google::cloud::Options and MaximumSimpleUploadSizeOption
+   *     instead.
+   */
   ClientOptions& set_maximum_simple_upload_size(std::size_t v) {
     opts_.set<MaximumSimpleUploadSizeOption>(v);
     return *this;
@@ -204,40 +326,81 @@ class ClientOptions {
   /**
    * If true and using OpenSSL 1.0.2 the library configures the OpenSSL
    * callbacks for locking.
+   *
+   * @deprecated Use google::cloud::options and EnableCurlSslLockingOption
+   *     instead.
    */
   bool enable_ssl_locking_callbacks() const {
     return opts_.get<EnableCurlSslLockingOption>();
   }
+
+  /**
+   * If true and using OpenSSL 1.0.2 the library configures the OpenSSL
+   * callbacks for locking.
+   *
+   * @deprecated Use google::cloud::options and EnableCurlSslLockingOption
+   *     instead.
+   */
   ClientOptions& set_enable_ssl_locking_callbacks(bool v) {
     opts_.set<EnableCurlSslLockingOption>(v);
     return *this;
   }
 
+  /**
+   * @deprecated Use google::cloud::Options and EnableCurlSigpipeOption
+   *     instead.
+   */
   bool enable_sigpipe_handler() const {
     return opts_.get<EnableCurlSigpipeHandlerOption>();
   }
+
+  /**
+   * @deprecated Use google::cloud::Options and EnableCurlSigpipeOption
+   *     instead.
+   */
   ClientOptions& set_enable_sigpipe_handler(bool v) {
     opts_.set<EnableCurlSigpipeHandlerOption>(v);
     return *this;
   }
 
+  /**
+   * @deprecated Use google::cloud::Options and MaximumCurlSocketRecvSizeOption
+   *     instead.
+   */
   std::size_t maximum_socket_recv_size() const {
     return opts_.get<MaximumCurlSocketRecvSizeOption>();
   }
+
+  /**
+   * @deprecated Use google::cloud::Options and MaximumCurlSocketRecvSizeOption
+   *     instead.
+   */
   ClientOptions& set_maximum_socket_recv_size(std::size_t v) {
     opts_.set<MaximumCurlSocketRecvSizeOption>(v);
     return *this;
   }
 
+  /**
+   * @deprecated Use google::cloud::Options and MaximumCurlSocketSendSizeOption
+   *     instead.
+   */
   std::size_t maximum_socket_send_size() const {
     return opts_.get<MaximumCurlSocketSendSizeOption>();
   }
+
+  /**
+   * @deprecated Use google::cloud::Options and MaximumCurlSocketSendSizeOption
+   *     instead.
+   */
   ClientOptions& set_maximum_socket_send_size(std::size_t v) {
     opts_.set<MaximumCurlSocketSendSizeOption>(v);
     return *this;
   }
 
+  /// @deprecated Use google::cloud::Options and CAPathOption instead.
   ChannelOptions& channel_options() { return channel_options_; }
+
+  /// @deprecated Use google::cloud::Options and CAPathOption instead.
   ChannelOptions const& channel_options() const { return channel_options_; }
 
   //@{
@@ -249,10 +412,18 @@ class ClientOptions {
    * is aborted.
    *
    * The default value is 2 minutes. Can be disabled by setting the value to 0.
+   *
+   * @deprecated Use google::cloud::Options and TransferStallTimeoutOption
+   *     instead.
    */
   std::chrono::seconds download_stall_timeout() const {
     return opts_.get<TransferStallTimeoutOption>();
   }
+
+  /**
+   * @deprecated Use google::cloud::Options and TransferStallTimeoutOption
+   *     instead.
+   */
   ClientOptions& set_download_stall_timeout(std::chrono::seconds v) {
     opts_.set<TransferStallTimeoutOption>(std::move(v));
     return *this;
