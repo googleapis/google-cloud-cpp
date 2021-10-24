@@ -25,7 +25,6 @@ cc_library(
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
-        "@com_google_absl//absl/container:flat_hash_set",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/strings",
         "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",

@@ -155,7 +155,7 @@ target_include_directories(
 target_link_libraries(
     google_cloud_cpp_pubsub
     PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
-           google-cloud-cpp::pubsub_protos absl::flat_hash_map)
+           google-cloud-cpp::pubsub_protos)
 google_cloud_cpp_add_common_options(google_cloud_cpp_pubsub)
 set_target_properties(
     google_cloud_cpp_pubsub
@@ -374,7 +374,7 @@ set(GOOGLE_CLOUD_PC_DESCRIPTION
 set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_pubsub")
 string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
               " google_cloud_cpp_common" " google_cloud_cpp_pubsub_protos"
-              " absl_flat_hash_map" " absl_str_format")
+              " absl_str_format")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/pubsub/config.pc.in"

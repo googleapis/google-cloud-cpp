@@ -26,7 +26,6 @@ google_cloud_cpp_common_hdrs = [
     "iam_binding.h",
     "iam_bindings.h",
     "iam_policy.h",
-    "internal/absl_flat_hash_map_quiet.h",
     "internal/absl_str_cat_quiet.h",
     "internal/absl_str_join_quiet.h",
     "internal/absl_str_replace_quiet.h",

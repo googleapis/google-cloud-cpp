@@ -14,12 +14,12 @@
 
 #include "google/cloud/pubsub/internal/subscription_message_queue.h"
 #include "google/cloud/pubsub/testing/mock_subscription_batch_source.h"
-#include "google/cloud/internal/absl_flat_hash_map_quiet.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "absl/strings/str_format.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -223,7 +223,7 @@ TEST(SubscriptionMessageQueueTest, RespectOrderingKeys) {
   EXPECT_CALL(*mock, NackMessage).Times(AtLeast(1));
   EXPECT_CALL(*mock, BulkNack).Times(0);
 
-  absl::flat_hash_map<std::string, std::vector<std::string>> received;
+  std::unordered_map<std::string, std::vector<std::string>> received;
   auto handler = [&received](google::pubsub::v1::ReceivedMessage const& m) {
     auto key = m.message().ordering_key();
     received[key].push_back(m.message().message_id());
@@ -310,7 +310,7 @@ TEST(SubscriptionMessageQueueTest, DuplicateMessagesNoKey) {
   EXPECT_CALL(*mock, AckMessage("ack--000001")).Times(1);
   EXPECT_CALL(*mock, BulkNack).Times(0);
 
-  absl::flat_hash_map<std::string, std::vector<std::string>> received;
+  std::unordered_map<std::string, std::vector<std::string>> received;
   auto handler = [&received](google::pubsub::v1::ReceivedMessage const& m) {
     auto key = m.message().ordering_key();
     received[key].push_back(m.message().message_id());
@@ -360,7 +360,7 @@ TEST(SubscriptionMessageQueueTest, DuplicateMessagesWithKey) {
   EXPECT_CALL(*mock, AckMessage).Times(AtLeast(1));
   EXPECT_CALL(*mock, BulkNack).Times(0);
 
-  absl::flat_hash_map<std::string, std::vector<std::string>> received;
+  std::unordered_map<std::string, std::vector<std::string>> received;
   auto handler = [&received](google::pubsub::v1::ReceivedMessage const& m) {
     auto key = m.message().ordering_key();
     received[key].push_back(m.message().message_id());
@@ -426,7 +426,7 @@ TEST_P(SubscriptionMessageQueueOrderingTest, RespectOrderingKeysTorture) {
 
   std::condition_variable cv;
   std::int64_t received_count = 0;
-  absl::flat_hash_map<std::string, std::vector<std::string>> received;
+  std::unordered_map<std::string, std::vector<std::string>> received;
 
   auto handler = [&](google::pubsub::v1::ReceivedMessage const& m) {
     background.cq().RunAsync([&, m]() {

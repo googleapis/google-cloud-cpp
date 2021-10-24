@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "generator/internal/service_code_generator.h"
-#include "google/cloud/internal/absl_flat_hash_map_quiet.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
@@ -25,6 +24,7 @@
 #include "generator/internal/printer.h"
 #include <google/api/client.pb.h>
 #include <google/protobuf/descriptor.h>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ absl::optional<std::string> IncludePathForWellKnownProtobufType(
   // This hash is not intended to be comprehensive. Problematic types and their
   // includes should be added as needed.
   static auto const* const kTypeIncludeMap =
-      new absl::flat_hash_map<std::string, std::string>(
+      new std::unordered_map<std::string, std::string>(
           {{"google.protobuf.Duration", "google/protobuf/duration.pb.h"}});
   if (parameter.type() == google::protobuf::FieldDescriptor::TYPE_MESSAGE) {
     auto iter = kTypeIncludeMap->find(parameter.message_type()->full_name());

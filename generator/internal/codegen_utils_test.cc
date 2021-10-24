@@ -25,8 +25,10 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::ElementsAre;
+using ::testing::HasSubstr;
 using ::testing::Pair;
 
 TEST(LocalInclude, Success) {
@@ -245,6 +247,18 @@ TEST(ProcessCommandLineArgs, EmulatorEndpointEnvVar) {
   EXPECT_THAT(*result, Contains(Pair("emulator_endpoint_env_var",
                                      "SPANNER_EMULATOR_HOST")));
   EXPECT_THAT(*result, Contains(Pair("service_endpoint_env_var", "")));
+}
+
+TEST(ProcessCommandLineArgs, ProcessArgOmitRpc) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/spanner/,googleapis_commit_hash=foo"
+      ",emulator_endpoint_env_var=SPANNER_EMULATOR_HOST"
+      ",omit_rpc=Omitted1"
+      ",omit_rpc=Omitted2");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result,
+              Contains(Pair("omitted_rpcs", AllOf(HasSubstr("Omitted1"),
+                                                  HasSubstr("Omitted2")))));
 }
 
 }  // namespace

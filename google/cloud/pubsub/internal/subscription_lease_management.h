@@ -19,10 +19,10 @@
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/internal/subscription_batch_source.h"
 #include "google/cloud/pubsub/version.h"
-#include "google/cloud/internal/absl_flat_hash_map_quiet.h"
 #include <chrono>
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 namespace google {
@@ -99,7 +99,7 @@ class SubscriptionLeaseManagement
     std::chrono::system_clock::time_point estimated_server_deadline;
     std::chrono::system_clock::time_point handling_deadline;
   };
-  absl::flat_hash_map<std::string, LeaseStatus> leases_;
+  std::unordered_map<std::string, LeaseStatus> leases_;
 
   bool refreshing_leases_ = false;
   future<void> refresh_timer_;

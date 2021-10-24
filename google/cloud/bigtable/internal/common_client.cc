@@ -108,7 +108,7 @@ void OutstandingTimers::DeregisterTimer(std::uint64_t id) {
 }
 
 void OutstandingTimers::CancelAll() {
-  absl::flat_hash_map<std::uint64_t, future<void>> to_cancel;
+  std::unordered_map<std::uint64_t, future<void>> to_cancel;
   {
     std::lock_guard<std::mutex> lk(mu_);
     if (shutdown_) {
