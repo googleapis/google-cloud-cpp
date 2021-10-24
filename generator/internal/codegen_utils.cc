@@ -16,13 +16,13 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
-#include "absl/container/flat_hash_set.h"
 #include "absl/strings/str_split.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <cctype>
 #include <string>
+#include <unordered_set>
 
 namespace google {
 namespace cloud {
@@ -89,19 +89,15 @@ void ProcessArgCopyrightYear(
 
 void ProcessArgOmitRpc(
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
-  absl::flat_hash_set<std::string> omitted_rpcs;
-  auto iter = std::find_if(command_line_args.begin(), command_line_args.end(),
-                           [](std::pair<std::string, std::string> const& p) {
-                             return p.first == "omit_rpc";
-                           });
-  while (iter != command_line_args.end()) {
-    omitted_rpcs.insert(iter->second);
-    command_line_args.erase(iter);
-    iter = std::find_if(command_line_args.begin(), command_line_args.end(),
-                        [](std::pair<std::string, std::string> const& p) {
-                          return p.first == "omit_rpc";
-                        });
-  }
+  using Pair = std::pair<std::string, std::string>;
+  auto it = std::partition(command_line_args.begin(), command_line_args.end(),
+                           [](Pair const& p) { return p.first != "omit_rpc"; });
+  std::unordered_set<std::string> omitted_rpcs;
+  std::transform(it, command_line_args.end(),
+                 std::inserter(omitted_rpcs, omitted_rpcs.end()),
+                 [](Pair const& p) { return p.second; });
+
+  command_line_args.erase(it, command_line_args.end());
   if (!omitted_rpcs.empty()) {
     command_line_args.emplace_back(
         "omitted_rpcs",

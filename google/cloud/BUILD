@@ -40,7 +40,6 @@ cc_library(
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
     deps = [
-        "@com_google_absl//absl/container:flat_hash_map",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/time",
         "@com_google_absl//absl/types:optional",
