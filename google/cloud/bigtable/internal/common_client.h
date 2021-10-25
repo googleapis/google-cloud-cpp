@@ -19,7 +19,6 @@
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/connection_options.h"
-#include "google/cloud/internal/absl_flat_hash_map_quiet.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
@@ -27,6 +26,7 @@
 #include <grpcpp/grpcpp.h>
 #include <chrono>
 #include <list>
+#include <unordered_map>
 #include <vector>
 
 namespace google {
@@ -60,8 +60,8 @@ class OutstandingTimers
   std::mutex mu_;
   bool shutdown_ = false;           // GUARDED_BY(mu_)
   std::uint64_t id_generator_ = 0;  // GUARDED_BY(mu_)
-  absl::flat_hash_map<std::uint64_t,
-                      future<void>> timers_;  // GUARDED_BY(mu_)
+  std::unordered_map<std::uint64_t,
+                     future<void>> timers_;  // GUARDED_BY(mu_)
   // Object of this class is owned by timers continuations, which means it
   // cannot have an owning reference to the `CompletionQueue` because  it would
   // otherwise create a risk of a deadlock on the completion queue destruction.
