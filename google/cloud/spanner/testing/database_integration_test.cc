@@ -121,7 +121,7 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
   auto database_future = admin_client.CreateDatabase(request);
 
   int i = 0;
-  int const timeout = 120;
+  int const timeout = 300;
   while (++i < timeout) {
     auto status = database_future.wait_for(std::chrono::seconds(1));
     if (status == std::future_status::ready) break;
