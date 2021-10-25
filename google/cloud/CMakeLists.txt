@@ -198,7 +198,7 @@ add_library(
     version.h)
 target_link_libraries(
     google_cloud_cpp_common PUBLIC absl::memory absl::optional absl::time
-                                   Threads::Threads)
+                                   absl::variant Threads::Threads)
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -447,6 +447,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         PUBLIC absl::function_ref
                absl::memory
                absl::time
+               absl::variant
                google-cloud-cpp::iam_protos
                google-cloud-cpp::longrunning_operations_protos
                google-cloud-cpp::rpc_status_protos
