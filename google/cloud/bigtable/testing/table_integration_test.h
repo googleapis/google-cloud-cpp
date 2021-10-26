@@ -72,6 +72,19 @@ class TableTestEnvironment : public ::testing::Environment {
   static bool using_cloud_bigtable_emulator_;
 };
 
+/// Environment specific to TableAdmin integration tests
+class TableAdminTestEnvironment : public TableTestEnvironment {
+ public:
+  TableAdminTestEnvironment() = default;
+
+  void SetUp() override;
+  void TearDown() override;
+
+  // Skip tests that run only against production, unless explicitly enabled by
+  // setting the `ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS` environment variable.
+  static bool skip_test_;
+};
+
 /**
  * Fixture for integration tests that need to create tables and check their
  * contents.

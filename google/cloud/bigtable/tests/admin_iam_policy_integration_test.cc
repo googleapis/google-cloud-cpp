@@ -36,12 +36,13 @@ class AdminIAMPolicyIntegrationTest
   std::string service_account_;
 
   void SetUp() override {
+    TableIntegrationTest::SetUp();
+
     service_account_ = google::cloud::internal::GetEnv(
                            "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT")
                            .value_or("");
     ASSERT_FALSE(service_account_.empty());
 
-    TableIntegrationTest::SetUp();
     admin_client_ =
         MakeAdminClient(testing::TableTestEnvironment::project_id());
     table_admin_ = absl::make_unique<TableAdmin>(
@@ -97,6 +98,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleMock(&argc, argv);
   (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::bigtable::testing::TableTestEnvironment);
+      new google::cloud::bigtable::testing::TableAdminTestEnvironment);
   return RUN_ALL_TESTS();
 }
