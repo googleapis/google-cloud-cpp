@@ -1322,13 +1322,39 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   // in:
   //   https://cloud.google.com/storage/docs/uploading-objects#rest-upload-objects
   // This function is structured as follows:
-  // 1. Create a request object, as we often do.
+
+  // 1. Create a request builder, as done elsewhere in this class, but manually
+  //    configure the options because we need to skip one (groan).
   CurlRequestBuilder builder(
       upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilderCommon(builder, "POST");
+  if (!status.ok()) return status;
+  SetupBuilderUserIp(builder, request);
+  builder.AddOption(request.GetOption<ContentEncoding>());
+  // Cannot use this header, or it overrides the value set below:
+  //     builder.AddOption(request.GetOption<ContentType>());
+  builder.AddOption(request.GetOption<Crc32cChecksumValue>());
+  builder.AddOption(request.GetOption<DisableCrc32cChecksum>());
+  builder.AddOption(request.GetOption<DisableMD5Hash>());
+  builder.AddOption(request.GetOption<EncryptionKey>());
+  builder.AddOption(request.GetOption<IfGenerationMatch>());
+  builder.AddOption(request.GetOption<IfGenerationNotMatch>());
+  builder.AddOption(request.GetOption<IfMetagenerationMatch>());
+  builder.AddOption(request.GetOption<IfMetagenerationNotMatch>());
+  builder.AddOption(request.GetOption<KmsKeyName>());
+  builder.AddOption(request.GetOption<MD5HashValue>());
+  builder.AddOption(request.GetOption<PredefinedAcl>());
+  builder.AddOption(request.GetOption<Projection>());
+  builder.AddOption(request.GetOption<UserProject>());
+  builder.AddOption(request.GetOption<UploadFromOffset>());
+  builder.AddOption(request.GetOption<UploadLimit>());
+  builder.AddOption(request.GetOption<WithObjectMetadata>());
+  builder.AddOption(request.GetOption<CustomHeader>());
+  builder.AddOption(request.GetOption<Fields>());
+  builder.AddOption(request.GetOption<IfMatchEtag>());
+  builder.AddOption(request.GetOption<IfNoneMatchEtag>());
+  builder.AddOption(request.GetOption<QuotaUser>());
+  builder.AddOption(request.GetOption<UserIp>());
 
   // 2. Pick a separator that does not conflict with the request contents.
   auto boundary = PickBoundary(request.contents());

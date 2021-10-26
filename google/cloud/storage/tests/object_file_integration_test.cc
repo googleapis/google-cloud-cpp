@@ -655,6 +655,34 @@ TEST_F(ObjectFileIntegrationTest, ResumableUploadFileCustomHeader) {
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
+TEST_F(ObjectFileIntegrationTest, UploadFileWithContentType) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto file_name = google::cloud::internal::PathAppend(::testing::TempDir(),
+                                                       MakeRandomFilename());
+  auto object_name = MakeRandomObjectName();
+
+  std::ofstream os(file_name, std::ios::binary);
+  os << LoremIpsum();
+  os.close();
+
+  StatusOr<ObjectMetadata> meta = client->UploadFile(
+      file_name, bucket_name_, object_name, IfGenerationMatch(0),
+      ContentType("application/octet-stream"));
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name_, meta->bucket());
+  EXPECT_EQ(LoremIpsum().size(), meta->size());
+
+  auto stream = client->ReadObject(bucket_name_, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_FALSE(actual.empty());
+  EXPECT_EQ(LoremIpsum(), actual);
+}
+
 }  // anonymous namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
