@@ -275,8 +275,7 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
                          AllOf(HasSubstr("Key has type JSON"),
                                HasSubstr("part of the primary key"))));
   } else {
-    EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument,
-                                   HasSubstr("Encountered 'JSON'")));
+    EXPECT_THAT(metadata, Not(IsOk()));
   }
 
   EXPECT_TRUE(DatabaseExists()) << "Database " << database_;
