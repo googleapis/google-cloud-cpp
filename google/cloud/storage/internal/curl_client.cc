@@ -646,29 +646,9 @@ CurlClient::CreateResumableSession(ResumableUploadRequest const& request) {
       upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
   auto status = SetupBuilderCommon(builder, "POST");
   if (!status.ok()) return status;
-
-  // In most cases we use `SetupBuilder()` to set up all these options in the
-  // request. But in this case we cannot because that might also set
-  // `Content-Type` to the wrong value. Instead, we have to explicitly list all
-  // the options here. Somebody could write a clever meta-function to say
-  // "set all the options except `ContentType`, but I think that is going to be
-  // very hard to understand.
-  builder.AddOption(request.GetOption<EncryptionKey>());
-  builder.AddOption(request.GetOption<IfGenerationMatch>());
-  builder.AddOption(request.GetOption<IfGenerationNotMatch>());
-  builder.AddOption(request.GetOption<IfMetagenerationMatch>());
-  builder.AddOption(request.GetOption<IfMetagenerationNotMatch>());
-  builder.AddOption(request.GetOption<KmsKeyName>());
-  builder.AddOption(request.GetOption<PredefinedAcl>());
-  builder.AddOption(request.GetOption<Projection>());
-  builder.AddOption(request.GetOption<UserProject>());
-  builder.AddOption(request.GetOption<CustomHeader>());
-  builder.AddOption(request.GetOption<Fields>());
-  builder.AddOption(request.GetOption<IfMatchEtag>());
-  builder.AddOption(request.GetOption<IfNoneMatchEtag>());
-  builder.AddOption(request.GetOption<QuotaUser>());
-  builder.AddOption(request.GetOption<UploadContentLength>());
   SetupBuilderUserIp(builder, request);
+  AddOptionsWithSkip<CurlRequestBuilder, ContentType> no_content_type{builder};
+  request.ForEachOption(no_content_type);
 
   builder.AddQueryParameter("uploadType", "resumable");
   builder.AddHeader("Content-Type: application/json; charset=UTF-8");
@@ -1330,31 +1310,8 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   auto status = SetupBuilderCommon(builder, "POST");
   if (!status.ok()) return status;
   SetupBuilderUserIp(builder, request);
-  builder.AddOption(request.GetOption<ContentEncoding>());
-  // Cannot use this header, or it overrides the value set below:
-  //     builder.AddOption(request.GetOption<ContentType>());
-  builder.AddOption(request.GetOption<Crc32cChecksumValue>());
-  builder.AddOption(request.GetOption<DisableCrc32cChecksum>());
-  builder.AddOption(request.GetOption<DisableMD5Hash>());
-  builder.AddOption(request.GetOption<EncryptionKey>());
-  builder.AddOption(request.GetOption<IfGenerationMatch>());
-  builder.AddOption(request.GetOption<IfGenerationNotMatch>());
-  builder.AddOption(request.GetOption<IfMetagenerationMatch>());
-  builder.AddOption(request.GetOption<IfMetagenerationNotMatch>());
-  builder.AddOption(request.GetOption<KmsKeyName>());
-  builder.AddOption(request.GetOption<MD5HashValue>());
-  builder.AddOption(request.GetOption<PredefinedAcl>());
-  builder.AddOption(request.GetOption<Projection>());
-  builder.AddOption(request.GetOption<UserProject>());
-  builder.AddOption(request.GetOption<UploadFromOffset>());
-  builder.AddOption(request.GetOption<UploadLimit>());
-  builder.AddOption(request.GetOption<WithObjectMetadata>());
-  builder.AddOption(request.GetOption<CustomHeader>());
-  builder.AddOption(request.GetOption<Fields>());
-  builder.AddOption(request.GetOption<IfMatchEtag>());
-  builder.AddOption(request.GetOption<IfNoneMatchEtag>());
-  builder.AddOption(request.GetOption<QuotaUser>());
-  builder.AddOption(request.GetOption<UserIp>());
+  AddOptionsWithSkip<CurlRequestBuilder, ContentType> no_content_type{builder};
+  request.ForEachOption(no_content_type);
 
   // 2. Pick a separator that does not conflict with the request contents.
   auto boundary = PickBoundary(request.contents());
@@ -1437,7 +1394,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaSimple(
   if (!status.ok()) {
     return status;
   }
-  // Set the content type of a sensible value, the application can override this
+  // Set the content type to a sensible value, the application can override this
   // in the options for the request.
   if (!request.HasOption<ContentType>()) {
     builder.AddHeader("content-type: application/octet-stream");
