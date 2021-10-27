@@ -46,7 +46,7 @@ inline std::string ApplicationCompilerId() {
 inline std::string ApplicationCompilerVersion() {
 #if defined(__apple_build_version__) && defined(__clang__)
   return CombineVersions(__clang_major__, __clang_minor__, __clang_patchlevel__,
-                         __apple_build_version__);
+                         std::to_string(__apple_build_version__));
 #elif defined(__clang__)
   return CombineVersions(__clang_major__, __clang_minor__,
                          __clang_patchlevel__);
