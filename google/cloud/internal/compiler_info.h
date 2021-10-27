@@ -22,6 +22,64 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+std::string CombineVersions(int major, int minor, int patch,
+                            std::string const& build_id = {});
+std::string LanguageVersion(int language_version);
+
+// Note the use of an anonymous namespace to avoid ODR violations.
+namespace {  // NOLINT(google-build-namespaces)
+
+inline std::string ApplicationCompilerId() {
+#if defined(__apple_build_version__) && defined(__clang__)
+  return "AppleClang";
+#elif defined(__clang__)
+  return "Clang";
+#elif defined(__GNUC__)
+  return "GNU";
+#elif defined(_MSC_VER)
+  return "MSVC";
+#endif
+
+  return "Unknown";
+}
+
+inline std::string ApplicationCompilerVersion() {
+#if defined(__apple_build_version__) && defined(__clang__)
+  return CombineVersions(__clang_major__, __clang_minor__, __clang_patchlevel__,
+                         __apple_build_version__);
+#elif defined(__clang__)
+  return CombineVersions(__clang_major__, __clang_minor__,
+                         __clang_patchlevel__);
+#elif defined(__GNUC__)
+  return CombineVersions(__GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__);
+#elif defined(_MSC_VER)
+#if !defined(_MSC_FULL_VER)
+  auto constexpr kPatchLevel = 0;
+#elif _MSC_VER >= 1400
+  auto constexpr kPatchLevel = _MSC_FULL_VER % 100000;
+#elif
+  auto constexpr kPatchLevel = _MSC_FULL_VER % 10000;
+#endif
+  return CombinedVersions(_MSC_VER / 100, _MSC_VER % 100, kPatchLevel);
+#else
+  return "Unknown";
+#endif
+}
+
+inline std::string ApplicationCompilerFeatures() {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  return "ex";
+#else
+  return "noex";
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+inline std::string ApplicationLanguageVersion() {
+  return LanguageVersion(GOOGLE_CLOUD_CPP_CPP_VERSION);
+}
+
+}  // namespace
+
 /**
  * Returns the compiler ID.
  *

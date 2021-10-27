@@ -145,12 +145,17 @@ while IFS= read -r -d '' f; do
   fi
 done < <(find "${INSTALL_PREFIX}" -type f -print0)
 
-for repo_root in "ci/verify_current_targets" "ci/verify_deprecated_targets"; do
-  out_dir="cmake-out/$(basename "${repo_root}")-out"
+cmake_project_list=(
+  "google/cloud/capture_versions"
+  "ci/verify_current_targets"
+  "ci/verify_deprecated_targets"
+)
+for project in "${cmake_project_list[@]}"; do
+  out_dir="cmake-out/$(basename "${project}")-out"
   rm -f "${out_dir}/CMakeCache.txt"
-  io::log_h2 "Verifying CMake targets in repo root: ${repo_root}"
+  io::log_h2 "Verifying CMake targets in project: ${project}"
   cmake -GNinja -DCMAKE_PREFIX_PATH="${INSTALL_PREFIX}" \
-    -S "${repo_root}" -B "${out_dir}" -Wno-dev
+    -S "${project}" -B "${out_dir}" -Wno-dev
   cmake --build "${out_dir}"
   cmake --build "${out_dir}" --target test
 done

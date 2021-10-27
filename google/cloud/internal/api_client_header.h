@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_API_CLIENT_HEADER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_API_CLIENT_HEADER_H
 
+#include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/version.h"
 #include <string>
 
@@ -28,6 +29,14 @@ std::string ApiClientVersion(std::string const& build_identifier);
 
 /// Return the value for the x-goog-api-client header (aka metadata).
 std::string ApiClientHeader(std::string const& build_identifier = "");
+
+inline std::string ApplicationApiClientHeader(std::string const& build = {}) {
+  return "gl-cpp/" + internal::ApplicationCompilerId() + "-" +
+         internal::ApplicationCompilerVersion() + "-" +
+         internal::ApplicationCompilerFeatures() + "-" +
+         internal::ApplicationLanguageVersion() + " gccl/" +
+         ApiClientVersion(build);
+}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

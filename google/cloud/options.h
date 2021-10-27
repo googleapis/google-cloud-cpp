@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIONS_H
 
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/type_list.h"
 #include "google/cloud/version.h"
 #include "absl/memory/memory.h"
@@ -32,6 +33,21 @@ namespace internal {
 Options MergeOptions(Options, Options);
 void CheckExpectedOptionsImpl(std::set<std::type_index> const&, Options const&,
                               char const*);
+
+/// Capture the compiler id and version at the time the library is used.
+struct ApiClientHeaderOption {
+  using Type = std::string;
+};
+
+struct InternalOnly {
+  std::string header;
+};
+
+inline InternalOnly CaptureVersions(
+    std::string header = ApplicationApiClientHeader()) {
+  return InternalOnly{std::move(header)};
+}
+
 }  // namespace internal
 
 /**
@@ -85,7 +101,7 @@ class Options {
 
  public:
   /// Constructs an empty instance.
-  Options() = default;
+  Options() : Options(internal::CaptureVersions()) {}
 
   Options(Options const& rhs) {
     for (auto const& kv : rhs.m_) m_.emplace(kv.first, kv.second->clone());
@@ -205,6 +221,10 @@ class Options {
   friend void internal::CheckExpectedOptionsImpl(
       std::set<std::type_index> const&, Options const&, char const*);
 
+  explicit Options(internal::InternalOnly v) {
+    set<internal::ApiClientHeaderOption>(std::move(v.header));
+  }
+
   // The type-erased data holder of all the option values.
   class DataHolder {
    public:
@@ -296,7 +316,9 @@ void CheckExpectedOptionsImpl(OptionList<T...> const&, Options const& opts,
  */
 template <typename... T>
 void CheckExpectedOptions(Options const& opts, char const* caller) {
-  using ExpectedTypes = TypeListCatT<WrapTypeListT<T>...>;
+  using ExpectedTypes =
+      TypeListCatT<WrapTypeListT<internal::ApiClientHeaderOption>,
+                   WrapTypeListT<T>...>;
   CheckExpectedOptionsImpl(ExpectedTypes{}, opts, caller);
 }
 

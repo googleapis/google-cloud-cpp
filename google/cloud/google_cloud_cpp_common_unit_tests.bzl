@@ -17,6 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 google_cloud_cpp_common_unit_tests = [
+    "capture_versions/capture_versions_test.cc",
     "common_options_test.cc",
     "future_generic_test.cc",
     "future_generic_then_test.cc",

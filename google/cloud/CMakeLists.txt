@@ -254,6 +254,7 @@ if (BUILD_TESTING)
     google_cloud_cpp_common_define_benchmarks()
     set(google_cloud_cpp_common_unit_tests
         # cmake-format: sort
+        capture_versions/capture_versions_test.cc
         common_options_test.cc
         future_generic_test.cc
         future_generic_then_test.cc

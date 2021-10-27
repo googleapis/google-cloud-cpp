@@ -26,6 +26,7 @@ namespace {
 using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::ContainsRegex;
+using ::testing::IsEmpty;
 using ::testing::UnorderedElementsAre;
 
 struct IntOption {
@@ -160,7 +161,7 @@ TEST(CheckUnexpectedOptions, Empty) {
   testing_util::ScopedLog log;
   Options opts;
   internal::CheckExpectedOptions<BoolOption>(opts, "caller");
-  EXPECT_TRUE(log.ExtractLines().empty());
+  EXPECT_THAT(log.ExtractLines(), IsEmpty());
 }
 
 TEST(CheckUnexpectedOptions, OneExpected) {
@@ -168,7 +169,7 @@ TEST(CheckUnexpectedOptions, OneExpected) {
   Options opts;
   opts.set<BoolOption>({});
   internal::CheckExpectedOptions<BoolOption>(opts, "caller");
-  EXPECT_TRUE(log.ExtractLines().empty());
+  EXPECT_THAT(log.ExtractLines(), IsEmpty());
 }
 
 TEST(CheckUnexpectedOptions, TwoExpected) {
@@ -177,7 +178,7 @@ TEST(CheckUnexpectedOptions, TwoExpected) {
   opts.set<BoolOption>({});
   opts.set<IntOption>({});
   internal::CheckExpectedOptions<BoolOption, IntOption>(opts, "caller");
-  EXPECT_TRUE(log.ExtractLines().empty());
+  EXPECT_THAT(log.ExtractLines(), IsEmpty());
 }
 
 TEST(CheckUnexpectedOptions, FullishLogLine) {
@@ -221,7 +222,7 @@ TEST(CheckUnexpectedOptions, BasicOptionsList) {
   opts.set<IntOption>({});
   opts.set<StringOption>({});
   internal::CheckExpectedOptions<TestOptionList>(opts, "caller");
-  EXPECT_TRUE(log.ExtractLines().empty());
+  EXPECT_THAT(log.ExtractLines(), IsEmpty());
 }
 
 TEST(CheckUnexpectedOptions, OptionsListPlusOne) {
@@ -234,7 +235,7 @@ TEST(CheckUnexpectedOptions, OptionsListPlusOne) {
   opts.set<StringOption>({});
   opts.set<FooOption>({});
   internal::CheckExpectedOptions<FooOption, TestOptionList>(opts, "caller");
-  EXPECT_TRUE(log.ExtractLines().empty());
+  EXPECT_THAT(log.ExtractLines(), IsEmpty());
 }
 
 TEST(CheckUnexpectedOptions, OptionsListOneUnexpected) {
