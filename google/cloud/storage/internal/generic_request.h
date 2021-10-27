@@ -94,7 +94,7 @@ class GenericRequestBase<Derived, Option> {
   }
 
   template <typename Callable>
-  void ForEachOption(Callable&& c) const {
+  void ForEachOption(Callable& c) const {
     c(option_);
   }
 
@@ -144,15 +144,15 @@ class GenericRequestBase : public GenericRequestBase<Derived, Options...> {
   }
 
   template <typename Callable>
-  void ForEachOption(Callable&& c) const {
+  void ForEachOption(Callable& c) const {
     c(option_);
-    GenericRequestBase<Derived, Options...>::ForEachOption(
-        std::forward<Callable>(c));
+    GenericRequestBase<Derived, Options...>::ForEachOption(c);
   }
 
   template <typename HttpRequest>
   void AddOptionsToHttpRequest(HttpRequest& request) const {
-    ForEachOption(AddOptionsToBuilder<HttpRequest>{request});
+    AddOptionsToBuilder<HttpRequest> add{request};
+    ForEachOption(add);
   }
 
   void DumpOptions(std::ostream& os, char const* sep) const {

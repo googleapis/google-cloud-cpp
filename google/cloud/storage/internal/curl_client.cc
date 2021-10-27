@@ -647,8 +647,8 @@ CurlClient::CreateResumableSession(ResumableUploadRequest const& request) {
   auto status = SetupBuilderCommon(builder, "POST");
   if (!status.ok()) return status;
   SetupBuilderUserIp(builder, request);
-  request.ForEachOption(
-      AddOptionsWithSkip<CurlRequestBuilder, ContentType>{builder});
+  AddOptionsWithSkip<CurlRequestBuilder, ContentType> no_content_type{builder};
+  request.ForEachOption(no_content_type);
 
   builder.AddQueryParameter("uploadType", "resumable");
   builder.AddHeader("Content-Type: application/json; charset=UTF-8");
@@ -1310,8 +1310,8 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   auto status = SetupBuilderCommon(builder, "POST");
   if (!status.ok()) return status;
   SetupBuilderUserIp(builder, request);
-  request.ForEachOption(
-      AddOptionsWithSkip<CurlRequestBuilder, ContentType>{builder});
+  AddOptionsWithSkip<CurlRequestBuilder, ContentType> no_content_type{builder};
+  request.ForEachOption(no_content_type);
 
   // 2. Pick a separator that does not conflict with the request contents.
   auto boundary = PickBoundary(request.contents());
