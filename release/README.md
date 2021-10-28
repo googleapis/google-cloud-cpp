@@ -152,7 +152,13 @@ take several weeks.
 
 In your development fork:
 * Switch to the existing release branch, e.g. `git checkout v1.17.x`.
-* Create a new branch off the release branch.
+* Bump the version numbers for the patch release
+  * Create a new branch off the release branch
+  * Follow the instructions in the "Bump the version number in `main`"
+    instructions from above, but update the patch number, not the minor number.
+  * **Send this PR for review and merge it before continuing**
+* Create a new branch off the release branch, which now contains the new patch
+  version and baseline ABI dumps.
 * Create or cherry-pick commits with the desired changes.
 * Update `CHANELOG.md` to reflect the changes made.
 * Bump the minor version number in the top-level CMakeLists.txt and run the
