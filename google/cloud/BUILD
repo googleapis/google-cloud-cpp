@@ -21,10 +21,9 @@ genrule(
     srcs = ["internal/build_info.cc.in"],
     outs = ["internal/build_info.cc"],
     cmd = """
-V=$$(sed -n -e 's/^STABLE_GIT_COMMIT  *//p' bazel-out/stable-status.txt)
 sed -e "s;@CMAKE_CXX_FLAGS@;$(CC_FLAGS);" \
     -e "s;\\$${CMAKE_CXX_FLAGS_.*};$(COMPILATION_MODE);" \
-    -e "s;@GOOGLE_CLOUD_CPP_BUILD_METADATA@;$${V:-unknown};" < $< > $@
+    -e "s;@GOOGLE_CLOUD_CPP_BUILD_METADATA@;;" < $< > $@
   """,
     stamp = True,
     toolchains = [

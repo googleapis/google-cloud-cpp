@@ -27,11 +27,6 @@ build --experimental_convenience_symlinks=ignore
 # Use host-OS-specific config lines from bazelrc files.
 build --enable_platform_specific_config=true
 
-# Specify a binary that Bazel runs before each build. The program can report
-# information about the status of the workspace, such as the current source
-# control revision.
-build:linux --workspace_status_command=bazel/workspace_status_command.sh
-
 # Clang Sanitizers, use with (for example):
 #
 # --client_env=CXX=clang++ --client_env=CC=clang --config asan
