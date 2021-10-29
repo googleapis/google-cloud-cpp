@@ -167,10 +167,6 @@ if (Integration-Tests-Enabled) {
         }
     }
     ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
-    $enable_bigtable_admin_integration_tests="no"
-    if (Test-Path env:ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS) {
-        $enable_bigtable_admin_integration_tests=${env:ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS}
-    }
 
     $integration_flags=@(
         # Common configuration
@@ -188,7 +184,6 @@ if (Integration-Tests-Enabled) {
         "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A=${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A}",
         "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B=${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B}",
         "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT}",
-        "--test_env=ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${enable_bigtable_admin_integration_tests}",
 
         # Storage
         "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME=${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}",

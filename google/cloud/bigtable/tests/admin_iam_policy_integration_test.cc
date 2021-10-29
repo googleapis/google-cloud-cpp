@@ -98,6 +98,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleMock(&argc, argv);
   (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::bigtable::testing::TableAdminTestEnvironment);
+      new google::cloud::bigtable::testing::TableTestEnvironment);
   return RUN_ALL_TESTS();
 }
