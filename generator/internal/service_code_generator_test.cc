@@ -14,6 +14,7 @@
 
 #include "generator/internal/service_code_generator.h"
 #include "google/cloud/log.h"
+#include "generator/testing/printer_mocks.h"
 #include <google/protobuf/compiler/importer.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/descriptor.pb.h>
@@ -26,31 +27,14 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
+using ::google::cloud::generator_testing::MockGeneratorContext;
+using ::google::cloud::generator_testing::MockZeroCopyOutputStream;
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Return;
-
-class MockGeneratorContext
-    : public google::protobuf::compiler::GeneratorContext {
- public:
-  ~MockGeneratorContext() override = default;
-  MOCK_METHOD(google::protobuf::io::ZeroCopyOutputStream*, Open,
-              (std::string const&), (override));
-};
-
-class MockZeroCopyOutputStream
-    : public google::protobuf::io::ZeroCopyOutputStream {
- public:
-  ~MockZeroCopyOutputStream() override = default;
-  MOCK_METHOD(bool, Next, (void**, int*), (override));
-  MOCK_METHOD(void, BackUp, (int), (override));
-  MOCK_METHOD(int64_t, ByteCount, (), (const, override));
-  MOCK_METHOD(bool, WriteAliasedRaw, (void const*, int), (override));
-  MOCK_METHOD(bool, AllowsAliasing, (), (const, override));
-};
 
 class StringSourceTree : public google::protobuf::compiler::SourceTree {
  public:

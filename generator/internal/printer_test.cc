@@ -15,6 +15,7 @@
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/port_platform.h"
 #include "absl/memory/memory.h"
+#include "generator/testing/printer_mocks.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -22,26 +23,9 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
+using ::google::cloud::generator_testing::MockGeneratorContext;
+using ::google::cloud::generator_testing::MockZeroCopyOutputStream;
 using ::testing::Return;
-
-class MockGeneratorContext
-    : public google::protobuf::compiler::GeneratorContext {
- public:
-  ~MockGeneratorContext() override = default;
-  MOCK_METHOD(google::protobuf::io::ZeroCopyOutputStream*, Open,
-              (std::string const&), (override));
-};
-
-class MockZeroCopyOutputStream
-    : public google::protobuf::io::ZeroCopyOutputStream {
- public:
-  ~MockZeroCopyOutputStream() override = default;
-  MOCK_METHOD(bool, Next, (void**, int*), (override));
-  MOCK_METHOD(void, BackUp, (int), (override));
-  MOCK_METHOD(int64_t, ByteCount, (), (const, override));
-  MOCK_METHOD(bool, WriteAliasedRaw, (void const*, int), (override));
-  MOCK_METHOD(bool, AllowsAliasing, (), (const, override));
-};
 
 TEST(PrinterTest, PrintWithMap) {
   auto generator_context = absl::make_unique<MockGeneratorContext>();
