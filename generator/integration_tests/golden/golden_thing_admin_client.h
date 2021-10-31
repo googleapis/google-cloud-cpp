@@ -379,6 +379,26 @@ class GoldenThingAdminClient {
   ListBackupOperations(std::string const& parent);
 
   /**
+   * Gets the state of a Cloud Test database.
+   *
+   * @param name  Required. The name of the requested database. Values are of the form
+   *  `projects/<project>/instances/<instance>/databases/<database>`.
+   * @return [google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
+   */
+  future<StatusOr<google::test::admin::database::v1::Database>>
+  AsyncGetDatabase(std::string const& name);
+
+  /**
+   * Drops (aka deletes) a Cloud Test database.
+   * Completed backups for the database will be retained according to their
+   * `expire_time`.
+   *
+   * @param database  Required. The database to be dropped.
+   */
+  future<Status>
+  AsyncDropDatabase(std::string const& database);
+
+  /**
    * Lists Cloud Test databases.
    *
    * @param request [google::test::admin::database::v1::ListDatabasesRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L377)
@@ -612,6 +632,25 @@ class GoldenThingAdminClient {
    */
   StreamRange<google::longrunning::Operation>
   ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest request);
+
+  /**
+   * Gets the state of a Cloud Test database.
+   *
+   * @param request [google::test::admin::database::v1::GetDatabaseRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L443)
+   * @return [google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
+   */
+  future<StatusOr<google::test::admin::database::v1::Database>>
+  AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request);
+
+  /**
+   * Drops (aka deletes) a Cloud Test database.
+   * Completed backups for the database will be retained according to their
+   * `expire_time`.
+   *
+   * @param request [google::test::admin::database::v1::DropDatabaseRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L523)
+   */
+  future<Status>
+  AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request);
 
  private:
   std::shared_ptr<GoldenThingAdminConnection> connection_;

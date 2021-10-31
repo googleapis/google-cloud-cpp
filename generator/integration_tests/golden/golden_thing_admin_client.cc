@@ -180,6 +180,20 @@ GoldenThingAdminClient::ListBackupOperations(std::string const& parent) {
   return connection_->ListBackupOperations(request);
 }
 
+future<StatusOr<google::test::admin::database::v1::Database>>
+GoldenThingAdminClient::AsyncGetDatabase(std::string const& name) {
+  google::test::admin::database::v1::GetDatabaseRequest request;
+  request.set_name(name);
+  return connection_->AsyncGetDatabase(request);
+}
+
+future<Status>
+GoldenThingAdminClient::AsyncDropDatabase(std::string const& database) {
+  google::test::admin::database::v1::DropDatabaseRequest request;
+  request.set_database(database);
+  return connection_->AsyncDropDatabase(request);
+}
+
 StreamRange<google::test::admin::database::v1::Database>
 GoldenThingAdminClient::ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request) {
   return connection_->ListDatabases(std::move(request));
@@ -263,6 +277,16 @@ GoldenThingAdminClient::ListDatabaseOperations(google::test::admin::database::v1
 StreamRange<google::longrunning::Operation>
 GoldenThingAdminClient::ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest request) {
   return connection_->ListBackupOperations(std::move(request));
+}
+
+future<StatusOr<google::test::admin::database::v1::Database>>
+GoldenThingAdminClient::AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request) {
+  return connection_->AsyncGetDatabase(request);
+}
+
+future<Status>
+GoldenThingAdminClient::AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request) {
+  return connection_->AsyncDropDatabase(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
