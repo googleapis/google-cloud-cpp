@@ -120,6 +120,19 @@ class MockGoldenThingAdminStub
        ::google::test::admin::database::v1::ListBackupOperationsRequest const&),
       (override));
 
+  MOCK_METHOD(future<StatusOr<::google::test::admin::database::v1::Database>>,
+      AsyncGetDatabase,
+              (google::cloud::CompletionQueue&,
+                  std::unique_ptr<grpc::ClientContext>,
+               ::google::test::admin::database::v1::GetDatabaseRequest const&),
+              (override));
+
+  MOCK_METHOD(future<Status>, AsyncDropDatabase,
+              (google::cloud::CompletionQueue&,
+                  std::unique_ptr<grpc::ClientContext>,
+               ::google::test::admin::database::v1::DropDatabaseRequest const&),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::longrunning::Operation>>, AsyncGetOperation,
               (google::cloud::CompletionQueue&,
                   std::unique_ptr<grpc::ClientContext>,
