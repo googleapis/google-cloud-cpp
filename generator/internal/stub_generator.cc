@@ -50,8 +50,8 @@ Status StubGenerator::GenerateHeader() {
 
   // includes
   HeaderLocalIncludes(
-      {HasLongrunningMethod() ? "google/cloud/completion_queue.h" : "",
-       HasLongrunningMethod() ? "google/cloud/future.h" : "",
+      {HasAsyncMethod() ? "google/cloud/completion_queue.h" : "",
+       HasAsyncMethod() ? "google/cloud/future.h" : "",
        "google/cloud/status_or.h",
        HasStreamingReadMethod() ? "google/cloud/internal/streaming_read_rpc.h"
                                 : "",
@@ -103,6 +103,26 @@ Status StubGenerator::GenerateHeader() {
     "\n"}},
              // clang-format on
              IsStreamingRead)},
+        __FILE__, __LINE__);
+  }
+
+  for (auto const& method : async_methods()) {
+    HeaderPrintMethod(
+        method,
+        {
+            MethodPattern(
+                {{IsResponseTypeEmpty,
+                  // clang-format off
+    "  virtual future<Status>\n",
+    "  virtual future<StatusOr<$response_type$>>\n"},
+   {"  Async$method_name$(\n"
+    "    google::cloud::CompletionQueue& cq,\n"
+    "    std::unique_ptr<grpc::ClientContext> context,\n"
+    "    $request_type$ const& request) = 0;\n"
+                  // clang-format on
+                  "\n"}},
+                And(IsNonStreaming, Not(IsLongrunningOperation))),
+        },
         __FILE__, __LINE__);
   }
 
@@ -177,6 +197,26 @@ Status StubGenerator::GenerateHeader() {
     "\n"}},
              // clang-format on
              IsStreamingRead)},
+        __FILE__, __LINE__);
+  }
+
+  for (auto const& method : async_methods()) {
+    HeaderPrintMethod(
+        method,
+        {
+            MethodPattern(
+                {{IsResponseTypeEmpty,
+                  // clang-format off
+    "  future<Status>\n",
+    "  future<StatusOr<$response_type$>>\n"},
+   {"  Async$method_name$(\n"
+    "    google::cloud::CompletionQueue& cq,\n"
+    "    std::unique_ptr<grpc::ClientContext> context,\n"
+    "    $request_type$ const& request) override;\n"
+                  // clang-format on
+                  "\n"}},
+                And(IsNonStreaming, Not(IsLongrunningOperation))),
+        },
         __FILE__, __LINE__);
   }
 
@@ -298,6 +338,36 @@ Default$stub_class_name$::Async$method_name$(
     "}\n\n"}},
              // clang-format on
              IsStreamingRead)},
+        __FILE__, __LINE__);
+  }
+
+  for (auto const& method : async_methods()) {
+    CcPrintMethod(
+        method,
+        {MethodPattern(
+            {{IsResponseTypeEmpty,
+              // clang-format off
+                      "future<Status>\n",
+                      "future<StatusOr<$response_type$>>\n"},
+    {R"""(Default$stub_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    $request_type$ const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             $request_type$ const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->Async$method_name$(context, request, cq);
+      },
+      request, std::move(context)))"""},
+      {IsResponseTypeEmpty, R"""(
+      .then([](future<StatusOr<google::protobuf::Empty>> f) {
+        return f.get().status();
+      }))""", ""},
+      {";\n}\n\n"}
+    },
+            // clang-format on
+            And(IsNonStreaming, Not(IsLongrunningOperation)))},
         __FILE__, __LINE__);
   }
 
