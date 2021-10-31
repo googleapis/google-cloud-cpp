@@ -247,6 +247,7 @@ StatusOr<google::iam::admin::v1::LintPolicyResponse> IAMAuth::LintPolicy(
   if (!status.ok()) return status;
   return child_->LintPolicy(context, request);
 }
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_internal
 }  // namespace cloud

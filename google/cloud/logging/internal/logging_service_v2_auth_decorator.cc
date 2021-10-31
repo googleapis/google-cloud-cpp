@@ -73,6 +73,7 @@ StatusOr<google::logging::v2::ListLogsResponse> LoggingServiceV2Auth::ListLogs(
   if (!status.ok()) return status;
   return child_->ListLogs(context, request);
 }
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_internal
 }  // namespace cloud
