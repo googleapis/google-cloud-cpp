@@ -172,6 +172,24 @@ GoldenThingAdminMetadata::ListBackupOperations(
   return child_->ListBackupOperations(context, request);
 }
 
+future<StatusOr<google::test::admin::database::v1::Database>>
+GoldenThingAdminMetadata::AsyncGetDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::test::admin::database::v1::GetDatabaseRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncGetDatabase(cq, std::move(context), request);
+}
+
+future<Status>
+GoldenThingAdminMetadata::AsyncDropDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::test::admin::database::v1::DropDatabaseRequest const& request) {
+  SetMetadata(*context, "database=" + request.database());
+  return child_->AsyncDropDatabase(cq, std::move(context), request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
