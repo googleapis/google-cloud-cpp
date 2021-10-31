@@ -208,6 +208,31 @@ Status ClientGenerator::GenerateHeader() {
     }
   }
 
+  for (google::protobuf::MethodDescriptor const& method : async_methods()) {
+    auto method_signature_extension =
+        method.options().GetRepeatedExtension(google::api::method_signature);
+    for (int i = 0; i < method_signature_extension.size(); ++i) {
+      std::string method_string =
+          absl::StrCat("  Async$method_name$($method_signature", i, "$);\n\n");
+      HeaderPrintMethod(
+          method,
+          {MethodPattern(
+              {
+                  {FormatMethodCommentsFromRpcComments(
+                      method, MethodParameterStyle::kApiMethodSignature)},
+                  {IsResponseTypeEmpty,
+                   // clang-format off
+                   "  future<Status>\n",
+                   "  future<StatusOr<$response_type$>>\n"},
+                  {method_string}
+                  // clang-format on
+              },
+              All(IsNonStreaming, Not(IsLongrunningOperation),
+                  Not(IsPaginated)))},
+          __FILE__, __LINE__);
+    }
+  }
+
   for (auto const& method : methods()) {
     HeaderPrintMethod(
         method,
@@ -258,6 +283,26 @@ Status ClientGenerator::GenerateHeader() {
                  // clang-format on
              },
              IsStreamingRead)},
+        __FILE__, __LINE__);
+  }
+
+  for (auto const& method : async_methods()) {
+    HeaderPrintMethod(
+        method,
+        {MethodPattern(
+            {
+                {FormatMethodCommentsFromRpcComments(
+                    method, MethodParameterStyle::kProtobufRequest)},
+                {IsResponseTypeEmpty,
+                 // clang-format off
+    "  future<Status>\n",
+    "  future<StatusOr<$response_type$>>\n"},
+   {"  Async$method_name$($request_type$ const& request);\n"
+        "\n"}
+                // clang-format on
+            },
+            All(IsNonStreaming, Not(IsLongrunningOperation),
+                Not(IsPaginated)))},
         __FILE__, __LINE__);
   }
 
@@ -417,6 +462,36 @@ Status ClientGenerator::GenerateCc() {
     }
   }
 
+  for (google::protobuf::MethodDescriptor const& method : async_methods()) {
+    auto method_signature_extension =
+        method.options().GetRepeatedExtension(google::api::method_signature);
+    for (int i = 0; i < method_signature_extension.size(); ++i) {
+      std::string method_string = absl::StrCat(
+          "$client_class_name$::Async$method_name$($method_signature", i,
+          "$) {\n");
+      std::string method_request_string =
+          absl::StrCat("$method_request_setters", i, "$");
+      CcPrintMethod(
+          method,
+          {MethodPattern(
+              {
+                  {IsResponseTypeEmpty,
+                   // clang-format off
+                   "future<Status>\n",
+                   "future<StatusOr<$response_type$>>\n"},
+                  {method_string},
+                  {"  $request_type$ request;\n"},
+                   {method_request_string},
+                  {"  return connection_->Async$method_name$(request);\n"
+                   "}\n\n"}
+                  // clang-format on
+              },
+              All(IsNonStreaming, Not(IsLongrunningOperation),
+                  Not(IsPaginated)))},
+          __FILE__, __LINE__);
+    }
+  }
+
   for (auto const& method : methods()) {
     CcPrintMethod(
         method,
@@ -465,6 +540,25 @@ Status ClientGenerator::GenerateCc() {
                  // clang-format on
              },
              IsStreamingRead)},
+        __FILE__, __LINE__);
+  }
+
+  for (auto const& method : async_methods()) {
+    CcPrintMethod(
+        method,
+        {MethodPattern(
+            {
+                {IsResponseTypeEmpty,
+                 // clang-format off
+    "future<Status>\n",
+    "future<StatusOr<$response_type$>>\n"},
+   {"$client_class_name$::Async$method_name$($request_type$ const& request) {\n"
+    "  return connection_->Async$method_name$(request);\n"
+    "}\n\n"}
+                // clang-format on
+            },
+            All(IsNonStreaming, Not(IsLongrunningOperation),
+                Not(IsPaginated)))},
         __FILE__, __LINE__);
   }
 

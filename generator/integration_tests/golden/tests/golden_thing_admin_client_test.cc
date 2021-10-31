@@ -807,6 +807,56 @@ TEST(GoldenThingAdminClientTest, ListBackupOperations) {
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
+TEST(GoldenThingAdminClientTest, AsyncGetDatabase) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  std::string expected_database =
+      "/projects/test-project/instances/test-instance/databases/test-db";
+  EXPECT_CALL(*mock, AsyncGetDatabase)
+      .Times(2)
+      .WillRepeatedly(
+          [expected_database](
+              ::google::test::admin::database::v1::GetDatabaseRequest const&
+                  request) {
+            EXPECT_EQ(expected_database, request.name());
+            ::google::test::admin::database::v1::Database response;
+            response.set_name(request.name());
+            return make_ready_future<
+                StatusOr<google::test::admin::database::v1::Database>>(
+                response);
+          });
+  GoldenThingAdminClient client(std::move(mock));
+  auto response = client.AsyncGetDatabase(expected_database).get();
+  EXPECT_STATUS_OK(response);
+  EXPECT_EQ(response->name(), expected_database);
+  ::google::test::admin::database::v1::GetDatabaseRequest request;
+  request.set_name(expected_database);
+  response = client.AsyncGetDatabase(request).get();
+  EXPECT_STATUS_OK(response);
+  EXPECT_EQ(response->name(), expected_database);
+}
+
+TEST(GoldenThingAdminClientTest, AsyncDropDatabase) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  std::string expected_database =
+      "/projects/test-project/instances/test-instance/databases/test-db";
+  EXPECT_CALL(*mock, AsyncDropDatabase)
+      .Times(2)
+      .WillRepeatedly(
+          [expected_database](
+              ::google::test::admin::database::v1::DropDatabaseRequest const&
+                  request) {
+            EXPECT_EQ(expected_database, request.database());
+            return make_ready_future(Status());
+          });
+  GoldenThingAdminClient client(std::move(mock));
+  auto response = client.AsyncDropDatabase(expected_database).get();
+  EXPECT_STATUS_OK(response);
+  ::google::test::admin::database::v1::DropDatabaseRequest request;
+  request.set_database(expected_database);
+  response = client.AsyncDropDatabase(request).get();
+  EXPECT_STATUS_OK(response);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden
