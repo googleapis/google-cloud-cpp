@@ -314,6 +314,45 @@ TEST_F(LoggingDecoratorTest, ListBackupOperations) {
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
+TEST_F(LoggingDecoratorTest, AsyncGetDatabase) {
+  EXPECT_CALL(*mock_, AsyncGetDatabase).WillOnce([] {
+    return make_ready_future<
+        StatusOr<google::test::admin::database::v1::Database>>(
+        TransientError());
+  });
+
+  GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
+  CompletionQueue cq;
+  auto status = stub.AsyncGetDatabase(
+                        cq, absl::make_unique<grpc::ClientContext>(),
+                        google::test::admin::database::v1::GetDatabaseRequest())
+                    .get();
+  EXPECT_EQ(TransientError(), status.status());
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncGetDatabase")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
+}
+
+TEST_F(LoggingDecoratorTest, AsyncDropDatabase) {
+  EXPECT_CALL(*mock_, AsyncDropDatabase).WillOnce([] {
+    return make_ready_future(TransientError());
+  });
+
+  GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
+  CompletionQueue cq;
+  auto status =
+      stub.AsyncDropDatabase(
+              cq, absl::make_unique<grpc::ClientContext>(),
+              google::test::admin::database::v1::DropDatabaseRequest())
+          .get();
+  EXPECT_EQ(TransientError(), status);
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncDropDatabase")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
+}
+
 TEST_F(LoggingDecoratorTest, GetOperation) {
   EXPECT_CALL(*mock_, AsyncGetOperation).WillOnce(LongrunningTransientError);
 
