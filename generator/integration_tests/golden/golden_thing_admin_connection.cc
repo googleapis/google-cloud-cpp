@@ -172,6 +172,21 @@ StreamRange<google::longrunning::Operation> GoldenThingAdminConnection::ListBack
     });
 }
 
+future<StatusOr<google::test::admin::database::v1::Database>>
+GoldenThingAdminConnection::AsyncGetDatabase(
+    google::test::admin::database::v1::GetDatabaseRequest const&) {
+  return google::cloud::make_ready_future<
+    StatusOr<google::test::admin::database::v1::Database>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<Status>
+GoldenThingAdminConnection::AsyncDropDatabase(
+    google::test::admin::database::v1::DropDatabaseRequest const&) {
+  return google::cloud::make_ready_future(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 namespace {
 class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
  public:
@@ -530,6 +545,38 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           std::move(messages.begin(), messages.end(), result.begin());
           return result;
         });
+  }
+
+  future<StatusOr<google::test::admin::database::v1::Database>>
+  AsyncGetDatabase(
+      google::test::admin::database::v1::GetDatabaseRequest const& request) override {
+    auto& stub = stub_;
+    return google::cloud::internal::AsyncRetryLoop(
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        idempotency_policy_->GetDatabase(request),
+        background_->cq(),
+        [stub](CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::test::admin::database::v1::GetDatabaseRequest const& request) {
+          return stub->AsyncGetDatabase(cq, std::move(context), request);
+        },
+        request, __func__);
+  }
+
+  future<Status>
+  AsyncDropDatabase(
+      google::test::admin::database::v1::DropDatabaseRequest const& request) override {
+    auto& stub = stub_;
+    return google::cloud::internal::AsyncRetryLoop(
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        idempotency_policy_->DropDatabase(request),
+        background_->cq(),
+        [stub](CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::test::admin::database::v1::DropDatabaseRequest const& request) {
+          return stub->AsyncDropDatabase(cq, std::move(context), request);
+        },
+        request, __func__);
   }
 
  private:

@@ -102,6 +102,12 @@ class GoldenThingAdminConnection {
   virtual StreamRange<google::longrunning::Operation>
   ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest request);
 
+  virtual future<StatusOr<google::test::admin::database::v1::Database>>
+  AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request);
+
+  virtual future<Status>
+  AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request);
+
 };
 
 std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(

@@ -146,6 +146,24 @@ Status ConnectionGenerator::GenerateHeader() {
         __FILE__, __LINE__);
   }
 
+  for (auto const& method : async_methods()) {
+    HeaderPrintMethod(
+        method,
+        {MethodPattern(
+            {
+                {IsResponseTypeEmpty,
+                 // clang-format off
+    "  virtual future<Status>\n",
+    "  virtual future<StatusOr<$response_type$>>\n"},
+   {"  Async$method_name$($request_type$ const& request);\n"
+        "\n",}
+                // clang-format on
+            },
+            All(IsNonStreaming, Not(IsLongrunningOperation),
+                Not(IsPaginated)))},
+        __FILE__, __LINE__);
+  }
+
   // close abstract interface Connection base class
   HeaderPrint(  // clang-format off
     "};\n\n");
@@ -278,6 +296,31 @@ Status ConnectionGenerator::GenerateCc() {
                  },
              },
              IsStreamingRead)},
+        __FILE__, __LINE__);
+  }
+
+  for (auto const& method : async_methods()) {
+    CcPrintMethod(
+        method,
+        {MethodPattern({{IsResponseTypeEmpty, R"""(future<Status>
+$connection_class_name$::Async$method_name$(
+    $request_type$ const&) {
+  return google::cloud::make_ready_future(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+)""",
+                         R"""(future<StatusOr<$response_type$>>
+$connection_class_name$::Async$method_name$(
+    $request_type$ const&) {
+  return google::cloud::make_ready_future<
+    StatusOr<$response_type$>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+)"""}},
+                       All(IsNonStreaming, Not(IsLongrunningOperation),
+                           Not(IsPaginated)))},
         __FILE__, __LINE__);
   }
 
@@ -452,6 +495,37 @@ Status ConnectionGenerator::GenerateCc() {
                  },
              },
              IsStreamingRead)},
+        __FILE__, __LINE__);
+  }
+
+  for (auto const& method : async_methods()) {
+    CcPrintMethod(
+        method,
+        {MethodPattern(
+            {
+                {IsResponseTypeEmpty,
+                 // clang-format off
+    "  future<Status>\n",
+    "  future<StatusOr<$response_type$>>\n"},
+   {"  Async$method_name$(\n"
+    "      $request_type$ const& request) override {\n"
+    "    auto& stub = stub_;\n"
+    "    return google::cloud::internal::AsyncRetryLoop(\n"
+    "        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),\n"
+    "        idempotency_policy_->$method_name$(request),\n"
+    "        background_->cq(),\n"
+    "        [stub](CompletionQueue& cq,\n"
+    "               std::unique_ptr<grpc::ClientContext> context,\n"
+    "               $request_type$ const& request) {\n"
+    "          return stub->Async$method_name$(cq, std::move(context), request);\n"
+    "        },\n"
+    "        request, __func__);\n"
+    "  }\n"
+    "\n",}
+                // clang-format on
+            },
+            All(IsNonStreaming, Not(IsLongrunningOperation),
+                Not(IsPaginated)))},
         __FILE__, __LINE__);
   }
 
