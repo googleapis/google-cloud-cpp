@@ -831,6 +831,49 @@ TEST_F(GoldenStubTest, ListBackupOperations) {
   EXPECT_EQ(failure.status(), TransientError());
 }
 
+TEST_F(GoldenStubTest, AsyncGetDatabase) {
+  auto reader =
+      AsyncTransientError<google::test::admin::database::v1::Database>();
+  EXPECT_CALL(*grpc_stub_, AsyncGetDatabaseRaw).WillOnce(Return(reader.get()));
+  auto mock = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock, StartOperation)
+      .WillOnce([](std::shared_ptr<AsyncGrpcOperation> const& op,
+                   absl::FunctionRef<void(void*)> f) {
+        f(op.get());
+        op->Notify(false);
+      });
+  EXPECT_CALL(*mock, cq).WillOnce(::testing::ReturnRef(grpc_cq_));
+  CompletionQueue cq(mock);
+
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
+  google::test::admin::database::v1::GetDatabaseRequest request;
+  auto failure = stub.AsyncGetDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(failure.get(), StatusIs(StatusCode::kCancelled));
+}
+
+TEST_F(GoldenStubTest, AsyncDropDatabase) {
+  auto reader = AsyncTransientError<google::protobuf::Empty>();
+  EXPECT_CALL(*grpc_stub_, AsyncDropDatabaseRaw).WillOnce(Return(reader.get()));
+  auto mock = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock, StartOperation)
+      .WillOnce([](std::shared_ptr<AsyncGrpcOperation> const& op,
+                   absl::FunctionRef<void(void*)> f) {
+        f(op.get());
+        op->Notify(false);
+      });
+  EXPECT_CALL(*mock, cq).WillOnce(::testing::ReturnRef(grpc_cq_));
+  CompletionQueue cq(mock);
+
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
+  google::test::admin::database::v1::DropDatabaseRequest request;
+  auto failure = stub.AsyncDropDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(failure.get(), StatusIs(StatusCode::kCancelled));
+}
+
 TEST_F(GoldenStubTest, AsyncGetOperation) {
   auto reader = AsyncTransientError<google::longrunning::Operation>();
   EXPECT_CALL(*longrunning_stub_, AsyncGetOperationRaw)
