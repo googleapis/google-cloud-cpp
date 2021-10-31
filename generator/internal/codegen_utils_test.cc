@@ -261,6 +261,18 @@ TEST(ProcessCommandLineArgs, ProcessArgOmitRpc) {
                                                   HasSubstr("Omitted2")))));
 }
 
+TEST(ProcessCommandLineArgs, ProcessArgGenAsyncRpc) {
+  auto result = ProcessCommandLineArgs(
+      "gen_async_rpc=Async1"
+      ",product_path=google/cloud/spanner/,googleapis_commit_hash=foo"
+      ",emulator_endpoint_env_var=SPANNER_EMULATOR_HOST"
+      ",gen_async_rpc=Async2");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result,
+              Contains(Pair("gen_async_rpcs",
+                            AllOf(HasSubstr("Async1"), HasSubstr("Async2")))));
+}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud

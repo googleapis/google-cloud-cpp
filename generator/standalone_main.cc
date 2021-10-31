@@ -110,6 +110,9 @@ int main(int argc, char** argv) {
                       service.service_endpoint_env_var());
     args.emplace_back("--cpp_codegen_opt=emulator_endpoint_env_var=" +
                       service.emulator_endpoint_env_var());
+    for (auto const& gen_async_rpc : service.gen_async_rpcs()) {
+      args.emplace_back("--cpp_codegen_opt=gen_async_rpc=" + gen_async_rpc);
+    }
     args.emplace_back(service.service_proto_path());
     GCP_LOG(INFO) << "Generating service code using: "
                   << absl::StrJoin(args, ";") << "\n";
