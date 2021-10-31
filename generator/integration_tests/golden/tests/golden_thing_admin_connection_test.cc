@@ -1202,7 +1202,10 @@ TEST(GoldenThingAdminClientTest, AsyncGetDatabaseTooManyFailures) {
   auto fut = conn->AsyncGetDatabase(dbase);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto db = fut.get();
-  ASSERT_THAT(db, StatusIs(StatusCode::kUnavailable, HasSubstr("try again")));
+  ASSERT_THAT(db, StatusIs(StatusCode::kUnavailable,
+                           AllOf(HasSubstr("Retry policy exhausted"),
+                                 HasSubstr("AsyncGetDatabase"),
+                                 HasSubstr("try again"))));
 }
 
 TEST(GoldenThingAdminClientTest, AsyncGetDatabaseCancel) {
@@ -1281,8 +1284,10 @@ TEST(GoldenThingAdminClientTest, AsyncDropDatabaseFailure) {
   auto fut = conn->AsyncDropDatabase(request);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto status = fut.get();
-  ASSERT_THAT(status,
-              StatusIs(StatusCode::kUnavailable, HasSubstr("try again")));
+  ASSERT_THAT(status, StatusIs(StatusCode::kUnavailable,
+                               AllOf(HasSubstr("Error in non-idempotent"),
+                                     HasSubstr("AsyncDropDatabase"),
+                                     HasSubstr("try again"))));
 }
 
 TEST(GoldenThingAdminClientTest, AsyncDropDatabaseCancel) {
