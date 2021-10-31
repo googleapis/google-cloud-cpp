@@ -61,6 +61,7 @@ BigQueryReadAuth::SplitReadStream(
   if (!status.ok()) return status;
   return child_->SplitReadStream(context, request);
 }
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
 }  // namespace cloud

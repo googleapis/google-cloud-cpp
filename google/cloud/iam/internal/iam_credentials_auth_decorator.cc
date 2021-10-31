@@ -65,6 +65,7 @@ IAMCredentialsAuth::SignJwt(
   if (!status.ok()) return status;
   return child_->SignJwt(context, request);
 }
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_internal
 }  // namespace cloud
