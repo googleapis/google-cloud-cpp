@@ -103,6 +103,23 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
         __FILE__, __LINE__);
   }
 
+  for (auto const& method : async_methods()) {
+    HeaderPrintMethod(
+        method,
+        {MethodPattern(
+            {{IsResponseTypeEmpty,
+              // clang-format off
+    "  future<Status> Async$method_name$(\n",
+    "  future<StatusOr<$response_type$>> Async$method_name$(\n"},
+   {"    google::cloud::CompletionQueue& cq,\n"
+    "    std::unique_ptr<grpc::ClientContext> context,\n"
+    "    $request_type$ const& request) override;\n"
+              // clang-format on
+              "\n"}},
+            And(IsNonStreaming, Not(IsLongrunningOperation)))},
+        __FILE__, __LINE__);
+  }
+
   if (HasLongrunningMethod()) {
     HeaderPrint(
         R"""(  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -234,6 +251,33 @@ $logging_class_name$::Async$method_name$(
                "\n"}},
              // clang-format on
              IsStreamingRead)},
+        __FILE__, __LINE__);
+  }
+
+  for (auto const& method : async_methods()) {
+    CcPrintMethod(
+        method,
+        {MethodPattern(
+            {{IsResponseTypeEmpty,
+              // clang-format off
+    "future<Status>\n",
+    "future<StatusOr<$response_type$>>\n"},
+    {R"""($logging_class_name$::Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      $request_type$ const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             $request_type$ const& request) {
+        return child_->Async$method_name$(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+)"""}},
+            // clang-format on
+            And(IsNonStreaming, Not(IsLongrunningOperation)))},
         __FILE__, __LINE__);
   }
 

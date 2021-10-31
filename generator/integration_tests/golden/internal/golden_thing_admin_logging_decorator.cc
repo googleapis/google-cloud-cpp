@@ -246,6 +246,34 @@ GoldenThingAdminLogging::ListBackupOperations(
       context, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::test::admin::database::v1::Database>>
+GoldenThingAdminLogging::AsyncGetDatabase(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::GetDatabaseRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::test::admin::database::v1::GetDatabaseRequest const& request) {
+        return child_->AsyncGetDatabase(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<Status>
+GoldenThingAdminLogging::AsyncDropDatabase(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::DropDatabaseRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::test::admin::database::v1::DropDatabaseRequest const& request) {
+        return child_->AsyncDropDatabase(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
