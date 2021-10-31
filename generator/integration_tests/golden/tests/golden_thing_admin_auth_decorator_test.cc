@@ -16,6 +16,7 @@
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/mocks/mock_golden_thing_admin_stub.h"
+#include "generator/integration_tests/test.pb.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -327,6 +328,44 @@ TEST(GoldenThingAdminAuthDecoratorTest, ListBackupOperations) {
   auto auth_success = under_test.ListBackupOperations(ctx, request);
   EXPECT_THAT(ctx.credentials(), Not(IsNull()));
   EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(GoldenThingAdminAuthDecoratorTest, AsyncGetDatabase) {
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  EXPECT_CALL(*mock, AsyncGetDatabase).WillOnce([] {
+    return make_ready_future(
+        StatusOr<google::test::admin::database::v1::Database>(
+            Status(StatusCode::kPermissionDenied, "uh-oh")));
+  });
+
+  auto under_test = GoldenThingAdminAuth(MakeTypicalAsyncMockAuth(), mock);
+  google::test::admin::database::v1::GetDatabaseRequest request;
+  CompletionQueue cq;
+  auto auth_failure = under_test.AsyncGetDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
+
+  auto auth_success = under_test.AsyncGetDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(GoldenThingAdminAuthDecoratorTest, AsyncDropDatabase) {
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  EXPECT_CALL(*mock, AsyncDropDatabase).WillOnce([] {
+    return make_ready_future(Status(StatusCode::kPermissionDenied, "uh-oh"));
+  });
+
+  auto under_test = GoldenThingAdminAuth(MakeTypicalAsyncMockAuth(), mock);
+  google::test::admin::database::v1::DropDatabaseRequest request;
+  CompletionQueue cq;
+  auto auth_failure = under_test.AsyncDropDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
+
+  auto auth_success = under_test.AsyncDropDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(GoldenThingAdminAuthDecoratorTest, AsyncGetOperation) {

@@ -25,7 +25,6 @@ namespace cloud {
 namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-
 GoldenKitchenSinkAuth::GoldenKitchenSinkAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
     std::shared_ptr<GoldenKitchenSinkStub> child)
@@ -81,6 +80,7 @@ StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> Gold
   if (!status.ok()) return status;
   return child_->ListServiceAccountKeys(context, request);
 }
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
 }  // namespace cloud
