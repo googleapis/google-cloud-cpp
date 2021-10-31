@@ -103,6 +103,8 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
     omit_rpc2_ = "Omitted2";
     service_endpoint_env_var_ = "GOLDEN_KITCHEN_SINK_ENDPOINT";
     emulator_endpoint_env_var_ = "GOLDEN_KITCHEN_SINK_EMULATOR_HOST";
+    gen_async_rpc1_ = "GetDatabase";
+    gen_async_rpc2_ = "DropDatabase";
 
     std::vector<std::string> args;
     // empty arg keeps first real arg from being ignored.
@@ -121,6 +123,8 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
                       service_endpoint_env_var_);
     args.emplace_back("--cpp_codegen_opt=emulator_endpoint_env_var=" +
                       emulator_endpoint_env_var_);
+    args.emplace_back("--cpp_codegen_opt=gen_async_rpc=" + gen_async_rpc1_);
+    args.emplace_back("--cpp_codegen_opt=gen_async_rpc=" + gen_async_rpc2_);
     args.emplace_back("generator/integration_tests/test.proto");
 
     std::vector<char const*> c_args;
@@ -145,6 +149,8 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
   std::string omit_rpc2_;
   std::string service_endpoint_env_var_;
   std::string emulator_endpoint_env_var_;
+  std::string gen_async_rpc1_;
+  std::string gen_async_rpc2_;
 };
 
 TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {

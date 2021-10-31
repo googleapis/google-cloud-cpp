@@ -63,15 +63,24 @@ ServiceCodeGenerator::ServiceCodeGenerator(
   assert(service_descriptor != nullptr);
   assert(context != nullptr);
   SetVars(service_vars_[header_path_key]);
-  std::vector<std::string> omitted_rpcs;
+  std::set<std::string> omitted_rpcs;
   auto iter = service_vars_.find("omitted_rpcs");
   if (iter != service_vars_.end()) {
     omitted_rpcs = absl::StrSplit(iter->second, ',');
+  }
+  std::set<std::string> gen_async_rpcs;
+  iter = service_vars_.find("gen_async_rpcs");
+  if (iter != service_vars_.end()) {
+    gen_async_rpcs = absl::StrSplit(iter->second, ',');
   }
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
     if (!internal::Contains(omitted_rpcs,
                             service_descriptor_->method(i)->name())) {
       methods_.emplace_back(*service_descriptor_->method(i));
+    }
+    if (internal::Contains(gen_async_rpcs,
+                           service_descriptor_->method(i)->name())) {
+      async_methods_.emplace_back(*service_descriptor_->method(i));
     }
   }
 }
@@ -89,15 +98,24 @@ ServiceCodeGenerator::ServiceCodeGenerator(
   assert(service_descriptor != nullptr);
   assert(context != nullptr);
   SetVars(service_vars_[header_path_key]);
-  std::vector<std::string> omitted_rpcs;
+  std::set<std::string> omitted_rpcs;
   auto iter = service_vars_.find("omitted_rpcs");
   if (iter != service_vars_.end()) {
     omitted_rpcs = absl::StrSplit(iter->second, ',');
+  }
+  std::set<std::string> gen_async_rpcs;
+  iter = service_vars_.find("gen_async_rpcs");
+  if (iter != service_vars_.end()) {
+    gen_async_rpcs = absl::StrSplit(iter->second, ',');
   }
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
     if (!internal::Contains(omitted_rpcs,
                             service_descriptor_->method(i)->name())) {
       methods_.emplace_back(*service_descriptor_->method(i));
+    }
+    if (internal::Contains(gen_async_rpcs,
+                           service_descriptor_->method(i)->name())) {
+      async_methods_.emplace_back(*service_descriptor_->method(i));
     }
   }
 }
@@ -107,6 +125,10 @@ bool ServiceCodeGenerator::HasLongrunningMethod() const {
                      [](google::protobuf::MethodDescriptor const& m) {
                        return IsLongrunningOperation(m);
                      });
+}
+
+bool ServiceCodeGenerator::HasAsyncMethod() const {
+  return !async_methods_.empty() || HasLongrunningMethod();
 }
 
 bool ServiceCodeGenerator::HasPaginatedMethod() const {
@@ -177,6 +199,12 @@ std::vector<
     std::reference_wrapper<google::protobuf::MethodDescriptor const>> const&
 ServiceCodeGenerator::methods() const {
   return methods_;
+}
+
+std::vector<
+    std::reference_wrapper<google::protobuf::MethodDescriptor const>> const&
+ServiceCodeGenerator::async_methods() const {
+  return async_methods_;
 }
 
 VarsDictionary ServiceCodeGenerator::MergeServiceAndMethodVars(
