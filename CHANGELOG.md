@@ -108,11 +108,6 @@ referencing the versioned inline namespace.
 
 ### [BigQuery](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigquery/README.md)
 
-**BREAKING CHANGE**
-* refactor(generator)!: use GOOGLE_CLOUD_CPP_NS for inline namespace ([#7439](https://github.com/googleapis/google-cloud-cpp/pull/7439))
-  This change effectively changes the inlined namespace from `gcpcxxV1` to `v1`.
-
-**OTHER CHANGES**
 * feat: create relocatable pkg-config files ([#7481](https://github.com/googleapis/google-cloud-cpp/pull/7481))
 
 ### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
@@ -131,11 +126,6 @@ info see [#7443](https://github.com/googleapis/google-cloud-cpp/issues/7443).
 
 ### [IAM](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/README.md)
 
-**BREAKING CHANGE**
-* refactor(generator)!: use GOOGLE_CLOUD_CPP_NS for inline namespace ([#7439](https://github.com/googleapis/google-cloud-cpp/pull/7439))
-  This change effectively changes the inlined namespace from `gcpcxxV1` to `v1`.
-
-**OTHER CHANGES**
 * feat: create relocatable pkg-config files ([#7481](https://github.com/googleapis/google-cloud-cpp/pull/7481))
 * fix(generator): add doxygen return comment for StreamRanges ([#7419](https://github.com/googleapis/google-cloud-cpp/pull/7419))
 
@@ -153,11 +143,6 @@ info see [#7443](https://github.com/googleapis/google-cloud-cpp/issues/7443).
 
 ### [Spanner](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/spanner/README.md)
 
-**BREAKING CHANGE**
-* refactor(generator)!: use GOOGLE_CLOUD_CPP_NS for inline namespace ([#7439](https://github.com/googleapis/google-cloud-cpp/pull/7439))
-  This change effectively changes the inlined namespace from `gcpcxxV1` to `v1`.
-
-**OTHER CHANGES**
 * feat: create relocatable pkg-config files ([#7481](https://github.com/googleapis/google-cloud-cpp/pull/7481))
 * doc: remove inline namespace from doxygen ([#7461](https://github.com/googleapis/google-cloud-cpp/pull/7461))
 * fix(generator): add doxygen return comment for StreamRanges ([#7419](https://github.com/googleapis/google-cloud-cpp/pull/7419))
@@ -169,11 +154,11 @@ info see [#7443](https://github.com/googleapis/google-cloud-cpp/issues/7443).
 * fix(storage): prevent crashes on double Close() ([#7390](https://github.com/googleapis/google-cloud-cpp/pull/7390))
 * feat(storage): add bucket attributes for RPO ([#7384](https://github.com/googleapis/google-cloud-cpp/pull/7384))
 * doc(storage): 'unspecified' value for PAP is deprecated ([#7377](https://github.com/googleapis/google-cloud-cpp/pull/7377))
+* doc(storage): label `ClientOptions` as deprecated ([#7511](https://github.com/googleapis/google-cloud-cpp/pull/7511))
 
 ### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
 
 * fix(common): fewer crashes with dynamic loading ([#7512](https://github.com/googleapis/google-cloud-cpp/pull/7512))
-* doc(storage): label `ClientOptions` as deprecated ([#7511](https://github.com/googleapis/google-cloud-cpp/pull/7511))
 * feat: create relocatable pkg-config files ([#7481](https://github.com/googleapis/google-cloud-cpp/pull/7481))
 * fix(common): resume sending "v" in "gccl" component of API header ([#7473](https://github.com/googleapis/google-cloud-cpp/pull/7473))
 * doc: remove inline namespace from doxygen ([#7461](https://github.com/googleapis/google-cloud-cpp/pull/7461))
