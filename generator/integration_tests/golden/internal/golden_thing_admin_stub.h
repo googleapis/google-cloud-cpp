@@ -108,6 +108,18 @@ class GoldenThingAdminStub {
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListBackupOperationsRequest const& request) = 0;
 
+  virtual future<StatusOr<google::test::admin::database::v1::Database>>
+  AsyncGetDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::test::admin::database::v1::GetDatabaseRequest const& request) = 0;
+
+  virtual future<Status>
+  AsyncDropDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::test::admin::database::v1::DropDatabaseRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -211,6 +223,18 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
   ListBackupOperations(
     grpc::ClientContext& client_context,
     google::test::admin::database::v1::ListBackupOperationsRequest const& request) override;
+
+  future<StatusOr<google::test::admin::database::v1::Database>>
+  AsyncGetDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::test::admin::database::v1::GetDatabaseRequest const& request) override;
+
+  future<Status>
+  AsyncDropDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::test::admin::database::v1::DropDatabaseRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

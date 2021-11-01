@@ -255,6 +255,37 @@ DefaultGoldenThingAdminStub::ListBackupOperations(
     return response;
 }
 
+future<StatusOr<google::test::admin::database::v1::Database>>
+DefaultGoldenThingAdminStub::AsyncGetDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::test::admin::database::v1::GetDatabaseRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::test::admin::database::v1::GetDatabaseRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncGetDatabase(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<Status>
+DefaultGoldenThingAdminStub::AsyncDropDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::test::admin::database::v1::DropDatabaseRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::test::admin::database::v1::DropDatabaseRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDropDatabase(context, request, cq);
+      },
+      request, std::move(context))
+      .then([](future<StatusOr<google::protobuf::Empty>> f) {
+        return f.get().status();
+      });
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultGoldenThingAdminStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

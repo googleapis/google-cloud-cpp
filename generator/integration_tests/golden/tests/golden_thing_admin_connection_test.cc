@@ -36,6 +36,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::AtLeast;
 using ::testing::ElementsAre;
+using ::testing::HasSubstr;
 using ::testing::Return;
 
 std::shared_ptr<golden::GoldenThingAdminConnection> CreateTestingConnection(
@@ -1163,6 +1164,167 @@ TEST(GoldenThingAdminClientTest, ListBackupOperationsTooManyFailures) {
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
+}
+
+TEST(GoldenThingAdminClientTest, AsyncGetDatabaseSuccess) {
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  EXPECT_CALL(*mock, AsyncGetDatabase)
+      .WillOnce(
+          [](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+             ::google::test::admin::database::v1::GetDatabaseRequest const&) {
+            google::test::admin::database::v1::Database db;
+            db.set_name("test-database");
+            return make_ready_future(make_status_or(db));
+          });
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::GetDatabaseRequest dbase;
+  auto fut = conn->AsyncGetDatabase(dbase);
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
+  auto db = fut.get();
+  ASSERT_STATUS_OK(db);
+  EXPECT_EQ("test-database", db->name());
+}
+
+TEST(GoldenThingAdminClientTest, AsyncGetDatabaseTooManyFailures) {
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  EXPECT_CALL(*mock, AsyncGetDatabase)
+      .Times(AtLeast(2))
+      .WillRepeatedly(
+          [](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+             ::google::test::admin::database::v1::GetDatabaseRequest const&) {
+            return make_ready_future<
+                StatusOr<google::test::admin::database::v1::Database>>(
+                Status(StatusCode::kUnavailable, "try again"));
+          });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::GetDatabaseRequest dbase;
+  auto fut = conn->AsyncGetDatabase(dbase);
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
+  auto db = fut.get();
+  ASSERT_THAT(db, StatusIs(StatusCode::kUnavailable,
+                           AllOf(HasSubstr("Retry policy exhausted"),
+                                 HasSubstr("AsyncGetDatabase"),
+                                 HasSubstr("try again"))));
+}
+
+TEST(GoldenThingAdminClientTest, AsyncGetDatabaseCancel) {
+  auto cancelled = false;
+  promise<StatusOr<google::test::admin::database::v1::Database>> p(
+      [&p, &cancelled] {
+        cancelled = true;
+        p.set_value(Status(StatusCode::kUnavailable, "try again"));
+      });
+
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  EXPECT_CALL(*mock, AsyncGetDatabase)
+      .WillOnce(
+          [&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+              ::google::test::admin::database::v1::GetDatabaseRequest const&) {
+            return p.get_future();
+          });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::GetDatabaseRequest dbase;
+  auto fut = conn->AsyncGetDatabase(dbase);
+  ASSERT_EQ(std::future_status::timeout,
+            fut.wait_for(std::chrono::milliseconds(10)));
+  EXPECT_FALSE(cancelled);
+  fut.cancel();
+  EXPECT_TRUE(cancelled);
+  auto db = fut.get();
+  ASSERT_THAT(db, StatusIs(StatusCode::kUnavailable,
+                           AllOf(HasSubstr("Retry loop cancelled"),
+                                 HasSubstr("AsyncGetDatabase"),
+                                 HasSubstr("try again"))));
+}
+
+TEST(GoldenThingAdminClientTest, AsyncDropDatabaseSuccess) {
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  std::string const expected_name =
+      "projects/test-project/instances/test-instance/databases/test-database";
+  EXPECT_CALL(*mock, AsyncDropDatabase)
+      .WillOnce(
+          [&expected_name](
+              CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+              ::google::test::admin::database::v1::DropDatabaseRequest const&
+                  request) {
+            EXPECT_EQ(expected_name, request.database());
+            return make_ready_future(Status());
+          });
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::DropDatabaseRequest request;
+  request.set_database(
+      "projects/test-project/instances/test-instance/databases/test-database");
+  auto fut = conn->AsyncDropDatabase(request);
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
+  auto status = fut.get();
+  ASSERT_STATUS_OK(status);
+}
+
+TEST(GoldenThingAdminClientTest, AsyncDropDatabaseFailure) {
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  std::string const expected_name =
+      "projects/test-project/instances/test-instance/databases/test-database";
+  EXPECT_CALL(*mock, AsyncDropDatabase)
+      .WillOnce(
+          [&expected_name](
+              CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+              ::google::test::admin::database::v1::DropDatabaseRequest const&
+                  request) {
+            EXPECT_EQ(expected_name, request.database());
+            return make_ready_future(
+                Status(StatusCode::kUnavailable, "try again"));
+          });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::DropDatabaseRequest request;
+  request.set_database(
+      "projects/test-project/instances/test-instance/databases/test-database");
+  auto fut = conn->AsyncDropDatabase(request);
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
+  auto status = fut.get();
+  ASSERT_THAT(status, StatusIs(StatusCode::kUnavailable,
+                               AllOf(HasSubstr("Error in non-idempotent"),
+                                     HasSubstr("AsyncDropDatabase"),
+                                     HasSubstr("try again"))));
+}
+
+TEST(GoldenThingAdminClientTest, AsyncDropDatabaseCancel) {
+  auto cancelled = false;
+  promise<Status> p([&p, &cancelled] {
+    cancelled = true;
+    p.set_value(Status(StatusCode::kUnavailable, "try again"));
+  });
+
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  std::string const expected_name =
+      "projects/test-project/instances/test-instance/databases/test-database";
+  EXPECT_CALL(*mock, AsyncDropDatabase)
+      .WillOnce(
+          [&p, &expected_name](
+              CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+              ::google::test::admin::database::v1::DropDatabaseRequest const&
+                  request) {
+            EXPECT_EQ(expected_name, request.database());
+            return p.get_future();
+          });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::DropDatabaseRequest request;
+  request.set_database(
+      "projects/test-project/instances/test-instance/databases/test-database");
+  auto fut = conn->AsyncDropDatabase(request);
+  ASSERT_EQ(std::future_status::timeout,
+            fut.wait_for(std::chrono::milliseconds(10)));
+  EXPECT_FALSE(cancelled);
+  fut.cancel();
+  EXPECT_TRUE(cancelled);
+  auto status = fut.get();
+  ASSERT_THAT(status, StatusIs(StatusCode::kUnavailable,
+                               AllOf(HasSubstr("Error in non-idempotent"),
+                                     HasSubstr("AsyncDropDatabase"),
+                                     HasSubstr("try again"))));
 }
 
 }  // namespace

@@ -415,6 +415,55 @@ TEST_F(MetadataDecoratorTest, ListBackupOperations) {
   EXPECT_EQ(TransientError(), status.status());
 }
 
+TEST_F(MetadataDecoratorTest, AsyncGetDatabase) {
+  EXPECT_CALL(*mock_, AsyncGetDatabase)
+      .WillOnce(
+          [this](google::cloud::CompletionQueue&,
+                 std::unique_ptr<grpc::ClientContext> context,
+                 google::test::admin::database::v1::GetDatabaseRequest const&) {
+            EXPECT_STATUS_OK(IsContextMDValid(*context,
+                                              "google.test.admin.database.v1."
+                                              "GoldenThingAdmin.GetDatabase",
+                                              expected_api_client_header_));
+            return make_ready_future(
+                StatusOr<google::test::admin::database::v1::Database>(
+                    TransientError()));
+          });
+
+  GoldenThingAdminMetadata stub(mock_);
+  CompletionQueue cq;
+  google::test::admin::database::v1::GetDatabaseRequest request;
+  request.set_name(
+      "projects/my_project/instances/my_instance/databases/my_database");
+  auto status = stub.AsyncGetDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_EQ(TransientError(), status.get().status());
+}
+
+TEST_F(MetadataDecoratorTest, AsyncDropDatabase) {
+  EXPECT_CALL(*mock_, AsyncDropDatabase)
+      .WillOnce(
+          [this](
+              google::cloud::CompletionQueue&,
+              std::unique_ptr<grpc::ClientContext> context,
+              google::test::admin::database::v1::DropDatabaseRequest const&) {
+            EXPECT_STATUS_OK(IsContextMDValid(*context,
+                                              "google.test.admin.database.v1."
+                                              "GoldenThingAdmin.DropDatabase",
+                                              expected_api_client_header_));
+            return make_ready_future(TransientError());
+          });
+
+  GoldenThingAdminMetadata stub(mock_);
+  CompletionQueue cq;
+  google::test::admin::database::v1::DropDatabaseRequest request;
+  request.set_database(
+      "projects/my_project/instances/my_instance/databases/my_database");
+  auto status = stub.AsyncDropDatabase(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_EQ(TransientError(), status.get());
+}
+
 TEST_F(MetadataDecoratorTest, GetOperation) {
   EXPECT_CALL(*mock_, AsyncGetOperation)
       .WillOnce([this](google::cloud::CompletionQueue&,

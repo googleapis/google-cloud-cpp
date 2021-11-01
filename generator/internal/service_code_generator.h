@@ -60,6 +60,9 @@ class ServiceCodeGenerator : public GeneratorInterface {
   std::vector<
       std::reference_wrapper<google::protobuf::MethodDescriptor const>> const&
   methods() const;
+  std::vector<
+      std::reference_wrapper<google::protobuf::MethodDescriptor const>> const&
+  async_methods() const;
   void SetVars(absl::string_view header_path);
   VarsDictionary MergeServiceAndMethodVars(
       google::protobuf::MethodDescriptor const& method) const;
@@ -93,6 +96,11 @@ class ServiceCodeGenerator : public GeneratorInterface {
   bool HasLongrunningMethod() const;
 
   /**
+   * Determines if any async methods are generated for the service.
+   */
+  bool HasAsyncMethod() const;
+
+  /**
    * Determines if the service contains at least one method that is paginated
    * per https://google.aip.dev/client-libraries/4233.
    */
@@ -119,6 +127,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
   std::vector<std::string> MethodSignatureWellKnownProtobufTypeIncludes() const;
 
  private:
+  void SetMethods();
+
   enum class FileType { kHeaderFile, kCcFile };
   static void GenerateLocalIncludes(Printer& p,
                                     std::vector<std::string> local_includes,
@@ -136,6 +146,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
   std::vector<std::string> namespaces_;
   std::vector<std::reference_wrapper<google::protobuf::MethodDescriptor const>>
       methods_;
+  std::vector<std::reference_wrapper<google::protobuf::MethodDescriptor const>>
+      async_methods_;
   Printer header_;
   Printer cc_;
 };

@@ -23,6 +23,13 @@ message ServiceConfiguration {
   repeated string omitted_rpcs = 4;
   string service_endpoint_env_var = 5;
   string emulator_endpoint_env_var = 6;
+  // Generating Async APIs is typically unnecessary for RPCs that are
+  // non-streaming, non-paginated, and not longrunning operations. If we need
+  // to generate an Async API for such an RPC, we can list it here.
+  //
+  // Only the Async API will be generated for RPCs listed both here and in
+  // `omitted_rpcs`.
+  repeated string gen_async_rpcs = 7;
 }
 
 message GeneratorConfiguration {

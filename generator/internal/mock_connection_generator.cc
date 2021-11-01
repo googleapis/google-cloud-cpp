@@ -107,6 +107,24 @@ Status MockConnectionGenerator::GenerateHeader() {
         __FILE__, __LINE__);
   }
 
+  for (auto const& method : async_methods()) {
+    HeaderPrintMethod(
+        method,
+        {MethodPattern(
+            {
+                {IsResponseTypeEmpty,
+                 // clang-format off
+    "  MOCK_METHOD(future<Status>,\n",
+    "  MOCK_METHOD(future<StatusOr<$response_type$>>,\n"},
+   {"  Async$method_name$,\n"
+    "  ($request_type$ const& request), (override));\n\n",}
+                // clang-format on
+            },
+            All(IsNonStreaming, Not(IsLongrunningOperation),
+                Not(IsPaginated)))},
+        __FILE__, __LINE__);
+  }
+
   // close abstract interface Connection base class
   HeaderPrint(  // clang-format off
     "};\n\n");

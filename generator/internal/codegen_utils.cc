@@ -87,22 +87,27 @@ void ProcessArgCopyrightYear(
   }
 }
 
-void ProcessArgOmitRpc(
+void ProcessRepeatedRpcs(
+    std::string const& single_arg, std::string const& grouped_arg,
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
   using Pair = std::pair<std::string, std::string>;
-  auto it = std::partition(command_line_args.begin(), command_line_args.end(),
-                           [](Pair const& p) { return p.first != "omit_rpc"; });
-  std::unordered_set<std::string> omitted_rpcs;
-  std::transform(it, command_line_args.end(),
-                 std::inserter(omitted_rpcs, omitted_rpcs.end()),
+  auto it = std::partition(
+      command_line_args.begin(), command_line_args.end(),
+      [&single_arg](Pair const& p) { return p.first != single_arg; });
+  std::unordered_set<std::string> group;
+  std::transform(it, command_line_args.end(), std::inserter(group, group.end()),
                  [](Pair const& p) { return p.second; });
 
   command_line_args.erase(it, command_line_args.end());
-  if (!omitted_rpcs.empty()) {
+  if (!group.empty()) {
     command_line_args.emplace_back(
-        "omitted_rpcs",
-        absl::StrJoin(omitted_rpcs.begin(), omitted_rpcs.end(), ","));
+        grouped_arg, absl::StrJoin(group.begin(), group.end(), ","));
   }
+}
+
+void ProcessArgOmitRpc(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  ProcessRepeatedRpcs("omit_rpc", "omitted_rpcs", command_line_args);
 }
 
 void ProcessArgServiceEndpointEnvVar(
@@ -127,6 +132,11 @@ void ProcessArgEmulatorEndpointEnvVar(
   if (emulator_endpoint_env_var == command_line_args.end()) {
     command_line_args.emplace_back("emulator_endpoint_env_var", "");
   }
+}
+
+void ProcessArgGenerateAsyncRpc(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  ProcessRepeatedRpcs("gen_async_rpc", "gen_async_rpcs", command_line_args);
 }
 
 }  // namespace
@@ -221,6 +231,7 @@ ProcessCommandLineArgs(std::string const& parameters) {
   ProcessArgOmitRpc(command_line_args);
   ProcessArgServiceEndpointEnvVar(command_line_args);
   ProcessArgEmulatorEndpointEnvVar(command_line_args);
+  ProcessArgGenerateAsyncRpc(command_line_args);
   return command_line_args;
 }
 

@@ -97,6 +97,14 @@ class MockGoldenThingAdminConnection : public golden::GoldenThingAdminConnection
   ListBackupOperations,
   (google::test::admin::database::v1::ListBackupOperationsRequest request), (override));
 
+  MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::Database>>,
+  AsyncGetDatabase,
+  (google::test::admin::database::v1::GetDatabaseRequest const& request), (override));
+
+  MOCK_METHOD(future<Status>,
+  AsyncDropDatabase,
+  (google::test::admin::database::v1::DropDatabaseRequest const& request), (override));
+
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
