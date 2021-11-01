@@ -26,6 +26,7 @@ namespace cloud {
 namespace bigtable {
 namespace testing {
 
+using ::google::cloud::internal::GetEnv;
 using ::testing::ContainerEq;
 using ::testing::IsEmpty;
 
@@ -36,19 +37,15 @@ std::string TableTestEnvironment::zone_b_;
 google::cloud::internal::DefaultPRNG TableTestEnvironment::generator_;
 std::string TableTestEnvironment::table_id_;
 bool TableTestEnvironment::using_cloud_bigtable_emulator_;
+bool TableAdminTestEnvironment::skip_test_;
 
 TableTestEnvironment::TableTestEnvironment() {
-  project_id_ =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  instance_id_ = google::cloud::internal::GetEnv(
-                     "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
-                     .value_or("");
-  zone_a_ =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A")
-          .value_or("");
-  zone_b_ =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B")
-          .value_or("");
+  project_id_ = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  instance_id_ =
+      GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID").value_or("");
+  zone_a_ = GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A").value_or("");
+  zone_b_ = GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B").value_or("");
+  using_cloud_bigtable_emulator_ = GetEnv("BIGTABLE_EMULATOR_HOST").has_value();
 }
 
 void TableTestEnvironment::SetUp() {
@@ -56,9 +53,6 @@ void TableTestEnvironment::SetUp() {
   ASSERT_FALSE(instance_id_.empty());
   ASSERT_FALSE(zone_a_.empty());
   ASSERT_FALSE(zone_b_.empty());
-
-  using_cloud_bigtable_emulator_ =
-      google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST").has_value();
 
   generator_ = google::cloud::internal::MakeDefaultPRNG();
 
@@ -105,6 +99,20 @@ std::string TableTestEnvironment::RandomBackupId() {
 
 std::string TableTestEnvironment::RandomInstanceId() {
   return google::cloud::bigtable::testing::RandomInstanceId(generator_);
+}
+
+void TableAdminTestEnvironment::SetUp() {
+  skip_test_ =
+      GetEnv("ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS").value_or("") != "yes" &&
+      !TableTestEnvironment::UsingCloudBigtableEmulator();
+
+  if (skip_test_) GTEST_SKIP();
+  TableTestEnvironment::SetUp();
+}
+
+void TableAdminTestEnvironment::TearDown() {
+  if (skip_test_) GTEST_SKIP();
+  TableTestEnvironment::TearDown();
 }
 
 void TableIntegrationTest::SetUp() {

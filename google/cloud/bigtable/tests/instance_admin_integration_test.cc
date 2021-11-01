@@ -34,6 +34,7 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::Contains;
 using ::testing::EndsWith;
@@ -45,25 +46,22 @@ class InstanceAdminIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   void SetUp() override {
-    if (google::cloud::internal::GetEnv(
-            "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS")
-            .value_or("") != "yes") {
+    auto emulator_present =
+        GetEnv("BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST").has_value();
+    auto run_prod_tests =
+        GetEnv("ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS").value_or("") == "yes";
+    if (!emulator_present && !run_prod_tests) {
       GTEST_SKIP();
     }
-    project_id_ =
-        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+
+    project_id_ = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
     ASSERT_FALSE(project_id_.empty());
-    zone_a_ =
-        google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A")
-            .value_or("");
+    zone_a_ = GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A").value_or("");
     ASSERT_FALSE(zone_a_.empty());
-    zone_b_ =
-        google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B")
-            .value_or("");
+    zone_b_ = GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B").value_or("");
     ASSERT_FALSE(zone_b_.empty());
-    service_account_ = google::cloud::internal::GetEnv(
-                           "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT")
-                           .value_or("");
+    service_account_ =
+        GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT").value_or("");
     ASSERT_FALSE(service_account_.empty());
 
     auto instance_admin_client = bigtable::MakeInstanceAdminClient(project_id_);

@@ -43,11 +43,6 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
   std::unique_ptr<bigtable::TableAdmin> table_admin_;
 
   void SetUp() override {
-    if (google::cloud::internal::GetEnv(
-            "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS")
-            .value_or("") != "yes") {
-      GTEST_SKIP();
-    }
     TableIntegrationTest::SetUp();
 
     std::shared_ptr<bigtable::AdminClient> admin_client =
@@ -396,6 +391,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleMock(&argc, argv);
   (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::bigtable::testing::TableTestEnvironment);
+      new google::cloud::bigtable::testing::TableAdminTestEnvironment);
   return RUN_ALL_TESTS();
 }

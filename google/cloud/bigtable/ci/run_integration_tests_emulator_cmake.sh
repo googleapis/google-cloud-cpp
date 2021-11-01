@@ -36,8 +36,6 @@ ctest_args=("$@")
 export CBT_INSTANCE_ADMIN_EMULATOR_CMD="${BINARY_DIR}/google/cloud/bigtable/tests/instance_admin_emulator"
 source module /google/cloud/bigtable/tools/run_emulator_utils.sh
 
-export ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
-
 cd "${BINARY_DIR}"
 start_emulators 8480 8490
 
