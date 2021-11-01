@@ -133,13 +133,12 @@ info see [#7443](https://github.com/googleapis/google-cloud-cpp/issues/7443).
 
 * feat: create relocatable pkg-config files ([#7481](https://github.com/googleapis/google-cloud-cpp/pull/7481))
 * doc: remove inline namespace from doxygen ([#7461](https://github.com/googleapis/google-cloud-cpp/pull/7461))
-* feat(pubsub): implement GUAC for Subscriber ([#7449](https://github.com/googleapis/google-cloud-cpp/pull/7449))
-* feat(common): GUAC for async read-write streams ([#7442](https://github.com/googleapis/google-cloud-cpp/pull/7442))
-* feat(pubsub): implement GUAC for Publisher ([#7440](https://github.com/googleapis/google-cloud-cpp/pull/7440))
-* feat(pubsub): implement GUAC for SchemaAdmin ([#7436](https://github.com/googleapis/google-cloud-cpp/pull/7436))
-* feat(pubsub): implement GUAC for SubscriptionAdmin ([#7432](https://github.com/googleapis/google-cloud-cpp/pull/7432))
-* feat(pubsub): implement GUAC for TopicAdmin ([#7428](https://github.com/googleapis/google-cloud-cpp/pull/7428))
-* fix(pubsub): do not overwrite ConnectionOptions ([#7406](https://github.com/googleapis/google-cloud-cpp/pull/7406))
+* feat(pubsub): implement GUAC
+  ([#7449](https://github.com/googleapis/google-cloud-cpp/pull/7449))
+  ([#7440](https://github.com/googleapis/google-cloud-cpp/pull/7440))
+  ([#7436](https://github.com/googleapis/google-cloud-cpp/pull/7436))
+  ([#7432](https://github.com/googleapis/google-cloud-cpp/pull/7432))
+  ([#7428](https://github.com/googleapis/google-cloud-cpp/pull/7428))
 
 ### [Spanner](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/spanner/README.md)
 
