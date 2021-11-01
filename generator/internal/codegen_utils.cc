@@ -88,20 +88,20 @@ void ProcessArgCopyrightYear(
 }
 
 void ProcessRepeatedRpcs(
-    std::string const& in, std::string const& out,
+    std::string const& single_arg, std::string const& grouped_arg,
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
   using Pair = std::pair<std::string, std::string>;
-  auto it = std::partition(command_line_args.begin(), command_line_args.end(),
-                           [&in](Pair const& p) { return p.first != in; });
-  std::unordered_set<std::string> omitted_rpcs;
-  std::transform(it, command_line_args.end(),
-                 std::inserter(omitted_rpcs, omitted_rpcs.end()),
+  auto it = std::partition(
+      command_line_args.begin(), command_line_args.end(),
+      [&single_arg](Pair const& p) { return p.first != single_arg; });
+  std::unordered_set<std::string> group;
+  std::transform(it, command_line_args.end(), std::inserter(group, group.end()),
                  [](Pair const& p) { return p.second; });
 
   command_line_args.erase(it, command_line_args.end());
-  if (!omitted_rpcs.empty()) {
+  if (!group.empty()) {
     command_line_args.emplace_back(
-        out, absl::StrJoin(omitted_rpcs.begin(), omitted_rpcs.end(), ","));
+        grouped_arg, absl::StrJoin(group.begin(), group.end(), ","));
   }
 }
 

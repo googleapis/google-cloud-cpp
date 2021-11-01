@@ -63,26 +63,7 @@ ServiceCodeGenerator::ServiceCodeGenerator(
   assert(service_descriptor != nullptr);
   assert(context != nullptr);
   SetVars(service_vars_[header_path_key]);
-  std::set<std::string> omitted_rpcs;
-  auto iter = service_vars_.find("omitted_rpcs");
-  if (iter != service_vars_.end()) {
-    omitted_rpcs = absl::StrSplit(iter->second, ',');
-  }
-  std::set<std::string> gen_async_rpcs;
-  iter = service_vars_.find("gen_async_rpcs");
-  if (iter != service_vars_.end()) {
-    gen_async_rpcs = absl::StrSplit(iter->second, ',');
-  }
-  for (int i = 0; i < service_descriptor_->method_count(); ++i) {
-    if (!internal::Contains(omitted_rpcs,
-                            service_descriptor_->method(i)->name())) {
-      methods_.emplace_back(*service_descriptor_->method(i));
-    }
-    if (internal::Contains(gen_async_rpcs,
-                           service_descriptor_->method(i)->name())) {
-      async_methods_.emplace_back(*service_descriptor_->method(i));
-    }
-  }
+  SetMethods();
 }
 
 ServiceCodeGenerator::ServiceCodeGenerator(
@@ -98,26 +79,7 @@ ServiceCodeGenerator::ServiceCodeGenerator(
   assert(service_descriptor != nullptr);
   assert(context != nullptr);
   SetVars(service_vars_[header_path_key]);
-  std::set<std::string> omitted_rpcs;
-  auto iter = service_vars_.find("omitted_rpcs");
-  if (iter != service_vars_.end()) {
-    omitted_rpcs = absl::StrSplit(iter->second, ',');
-  }
-  std::set<std::string> gen_async_rpcs;
-  iter = service_vars_.find("gen_async_rpcs");
-  if (iter != service_vars_.end()) {
-    gen_async_rpcs = absl::StrSplit(iter->second, ',');
-  }
-  for (int i = 0; i < service_descriptor_->method_count(); ++i) {
-    if (!internal::Contains(omitted_rpcs,
-                            service_descriptor_->method(i)->name())) {
-      methods_.emplace_back(*service_descriptor_->method(i));
-    }
-    if (internal::Contains(gen_async_rpcs,
-                           service_descriptor_->method(i)->name())) {
-      async_methods_.emplace_back(*service_descriptor_->method(i));
-    }
-  }
+  SetMethods();
 }
 
 bool ServiceCodeGenerator::HasLongrunningMethod() const {
@@ -343,6 +305,27 @@ void ServiceCodeGenerator::SetVars(absl::string_view header_path) {
   service_vars_["header_include_guard"] = absl::StrCat(
       "GOOGLE_CLOUD_CPP_", absl::AsciiStrToUpper(absl::StrReplaceAll(
                                header_path, {{"/", "_"}, {".", "_"}})));
+}
+
+void ServiceCodeGenerator::SetMethods() {
+  auto split_arg = [this](std::string const& arg) -> std::set<std::string> {
+    auto l = service_vars_.find(arg);
+    if (l == service_vars_.end()) return {};
+    return absl::StrSplit(l->second, ',');
+  };
+  auto const omitted_rpcs = split_arg("omitted_rpcs");
+  auto const gen_async_rpcs = split_arg("gen_async_rpcs");
+
+  for (int i = 0; i < service_descriptor_->method_count(); ++i) {
+    if (!internal::Contains(omitted_rpcs,
+                            service_descriptor_->method(i)->name())) {
+      methods_.emplace_back(*service_descriptor_->method(i));
+    }
+    if (internal::Contains(gen_async_rpcs,
+                           service_descriptor_->method(i)->name())) {
+      async_methods_.emplace_back(*service_descriptor_->method(i));
+    }
+  }
 }
 
 }  // namespace generator_internal

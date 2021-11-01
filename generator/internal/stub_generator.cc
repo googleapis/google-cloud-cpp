@@ -110,18 +110,19 @@ Status StubGenerator::GenerateHeader() {
     HeaderPrintMethod(
         method,
         {
-            MethodPattern(
-                {{IsResponseTypeEmpty,
-                  // clang-format off
-    "  virtual future<Status>\n",
-    "  virtual future<StatusOr<$response_type$>>\n"},
-   {"  Async$method_name$(\n"
-    "    google::cloud::CompletionQueue& cq,\n"
-    "    std::unique_ptr<grpc::ClientContext> context,\n"
-    "    $request_type$ const& request) = 0;\n"
-                  // clang-format on
-                  "\n"}},
-                And(IsNonStreaming, Not(IsLongrunningOperation))),
+            MethodPattern({{IsResponseTypeEmpty,
+                            // clang-format off
+    "  virtual future<Status>",
+    "  virtual future<StatusOr<$response_type$>>"},
+                           // clang-format on
+                           {R"""(
+  Async$method_name$(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    $request_type$ const& request) = 0;
+
+)"""}},
+                          And(IsNonStreaming, Not(IsLongrunningOperation))),
         },
         __FILE__, __LINE__);
   }
@@ -344,12 +345,14 @@ Default$stub_class_name$::Async$method_name$(
   for (auto const& method : async_methods()) {
     CcPrintMethod(
         method,
-        {MethodPattern(
-            {{IsResponseTypeEmpty,
-              // clang-format off
-                      "future<Status>\n",
-                      "future<StatusOr<$response_type$>>\n"},
-    {R"""(Default$stub_class_name$::Async$method_name$(
+        {MethodPattern({{IsResponseTypeEmpty,
+                         // clang-format off
+                      "future<Status>",
+                      "future<StatusOr<$response_type$>>"},
+                        // clang-format on
+                        {
+                            R"""(
+Default$stub_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     $request_type$ const& request) {
@@ -360,14 +363,13 @@ Default$stub_class_name$::Async$method_name$(
         return grpc_stub_->Async$method_name$(context, request, cq);
       },
       request, std::move(context)))"""},
-      {IsResponseTypeEmpty, R"""(
+                        {IsResponseTypeEmpty, R"""(
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
-      }))""", ""},
-      {";\n}\n\n"}
-    },
-            // clang-format on
-            And(IsNonStreaming, Not(IsLongrunningOperation)))},
+      }))""",
+                         ""},
+                        {";\n}\n\n"}},
+                       And(IsNonStreaming, Not(IsLongrunningOperation)))},
         __FILE__, __LINE__);
   }
 

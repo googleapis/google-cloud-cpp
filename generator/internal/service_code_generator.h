@@ -127,6 +127,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
   std::vector<std::string> MethodSignatureWellKnownProtobufTypeIncludes() const;
 
  private:
+  void SetMethods();
+
   enum class FileType { kHeaderFile, kCcFile };
   static void GenerateLocalIncludes(Printer& p,
                                     std::vector<std::string> local_includes,
