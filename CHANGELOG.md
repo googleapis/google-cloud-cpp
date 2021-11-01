@@ -88,7 +88,9 @@
   https://github.com/googleapis/google-cloud-cpp/issues/5976.
 </details>
 
-## v1.33.0 - TBD
+## v1.34.0 - TBD
+
+## v1.33.0 - 2021-11
 
 > :warning: In this release we have stopped testing with Ubuntu:16.04 as this
 > distribution is no longer supported by Google Cloud. We will gladly consider,
@@ -97,12 +99,21 @@
 **ATTENTION**: Our Doxygen documentation (e.g. [Storage
 docs][storage-dox-link]) was incorrectly showing the versioned inline namespace
 name for our symbols (it was `v1`), implicitly suggesting that users should
-spell this inline namespace in their own code. This mistake was fixed and our
-Doxygen documentation no longer shows the versioned inline namespace name, now
-showing users how to correctly spell our symbol names without referencing the
-versioned inline namespace.
+spell this inline namespace in their own code. This has been corrected. Our
+Doxygen documentation no longer shows the versioned inline namespace name;
+instead, it shows users how to correctly spell our symbol names without
+referencing the versioned inline namespace.
 
 [storage-dox-link]: https://googleapis.dev/cpp/google-cloud-storage/latest/
+
+### [BigQuery](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigquery/README.md)
+
+* feat: create relocatable pkg-config files ([#7481](https://github.com/googleapis/google-cloud-cpp/pull/7481))
+
+### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
+
+* doc: remove inline namespace from doxygen ([#7461](https://github.com/googleapis/google-cloud-cpp/pull/7461))
+* fix(bigtable): retry internal errors known to be transient ([#7395](https://github.com/googleapis/google-cloud-cpp/pull/7395))
 
 ### Firestore
 
@@ -110,6 +121,48 @@ versioned inline namespace.
 live in this repo at `google/cloud/firestore` has been removed in favor of the
 canonical library at https://firebase.google.com/docs/reference/cpp. For more
 info see [#7443](https://github.com/googleapis/google-cloud-cpp/issues/7443).
+
+* cleanup(firestore)!: removes the experimental firestore library ([#7468](https://github.com/googleapis/google-cloud-cpp/pull/7468))
+
+### [IAM](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/README.md)
+
+* feat: create relocatable pkg-config files ([#7481](https://github.com/googleapis/google-cloud-cpp/pull/7481))
+* fix(generator): add doxygen return comment for StreamRanges ([#7419](https://github.com/googleapis/google-cloud-cpp/pull/7419))
+
+### [Pub/Sub](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/README.md)
+
+* feat: create relocatable pkg-config files ([#7481](https://github.com/googleapis/google-cloud-cpp/pull/7481))
+* doc: remove inline namespace from doxygen ([#7461](https://github.com/googleapis/google-cloud-cpp/pull/7461))
+* feat(pubsub): implement GUAC
+  ([#7449](https://github.com/googleapis/google-cloud-cpp/pull/7449))
+  ([#7440](https://github.com/googleapis/google-cloud-cpp/pull/7440))
+  ([#7436](https://github.com/googleapis/google-cloud-cpp/pull/7436))
+  ([#7432](https://github.com/googleapis/google-cloud-cpp/pull/7432))
+  ([#7428](https://github.com/googleapis/google-cloud-cpp/pull/7428))
+
+### [Spanner](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/spanner/README.md)
+
+* feat: create relocatable pkg-config files ([#7481](https://github.com/googleapis/google-cloud-cpp/pull/7481))
+* doc: remove inline namespace from doxygen ([#7461](https://github.com/googleapis/google-cloud-cpp/pull/7461))
+* fix(generator): add doxygen return comment for StreamRanges ([#7419](https://github.com/googleapis/google-cloud-cpp/pull/7419))
+
+### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
+
+* fix(storage): respect ContentType in Client::UploadFile ([#7521](https://github.com/googleapis/google-cloud-cpp/pull/7521))
+* doc: remove inline namespace from doxygen ([#7461](https://github.com/googleapis/google-cloud-cpp/pull/7461))
+* fix(storage): prevent crashes on double Close() ([#7390](https://github.com/googleapis/google-cloud-cpp/pull/7390))
+* feat(storage): add bucket attributes for RPO ([#7384](https://github.com/googleapis/google-cloud-cpp/pull/7384))
+* doc(storage): 'unspecified' value for PAP is deprecated ([#7377](https://github.com/googleapis/google-cloud-cpp/pull/7377))
+* doc(storage): label `ClientOptions` as deprecated ([#7511](https://github.com/googleapis/google-cloud-cpp/pull/7511))
+
+### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
+
+* fix(common): fewer crashes with dynamic loading ([#7512](https://github.com/googleapis/google-cloud-cpp/pull/7512))
+* feat: create relocatable pkg-config files ([#7481](https://github.com/googleapis/google-cloud-cpp/pull/7481))
+* fix(common): resume sending "v" in "gccl" component of API header ([#7473](https://github.com/googleapis/google-cloud-cpp/pull/7473))
+* doc: remove inline namespace from doxygen ([#7461](https://github.com/googleapis/google-cloud-cpp/pull/7461))
+* feat(common): adds begin/end inline namespace macros ([#7456](https://github.com/googleapis/google-cloud-cpp/pull/7456))
+* feat(common): GUAC for async read-write streams ([#7442](https://github.com/googleapis/google-cloud-cpp/pull/7442))
 
 ## v1.32.1 - 2021-10
 
