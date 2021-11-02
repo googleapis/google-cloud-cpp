@@ -21,17 +21,10 @@ set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/examples"
                          "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
-set(DOXYGEN_EXCLUDE_PATTERNS
-    "*/google/cloud/bigtable/README.md"
-    "*/google/cloud/bigtable/benchmarks/*"
-    "*/google/cloud/bigtable/ci/*"
-    "*/google/cloud/bigtable/examples/*.md"
-    "*/google/cloud/bigtable/internal/*"
-    "*/google/cloud/bigtable/testing/*"
-    "*/google/cloud/bigtable/tests/*"
-    "*/google/cloud/bigtable/tools/*"
-    "*/google/cloud/bigtable/*_test.cc")
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
+set(DOXYGEN_EXCLUDE_PATTERNS "*/benchmarks/*" "*/internal/*" "*/testing/*"
+                             "*/tests/*" "*/*_test.cc")
+set(DOXYGEN_EXCLUDE_SYMBOLS "benchmarks" "bigtable_admin_internal" "internal"
+                            "testing")
 
 include(GoogleCloudCppCommon)
 
@@ -50,6 +43,45 @@ include(CreateBazelConfig)
 # the client library
 add_library(
     google_cloud_cpp_bigtable # cmake-format: sort
+    admin/bigtable_instance_admin_client.cc
+    admin/bigtable_instance_admin_client.h
+    admin/bigtable_instance_admin_connection.cc
+    admin/bigtable_instance_admin_connection.h
+    admin/bigtable_instance_admin_connection_idempotency_policy.cc
+    admin/bigtable_instance_admin_connection_idempotency_policy.h
+    admin/bigtable_instance_admin_options.h
+    admin/bigtable_table_admin_client.cc
+    admin/bigtable_table_admin_client.h
+    admin/bigtable_table_admin_connection.cc
+    admin/bigtable_table_admin_connection.h
+    admin/bigtable_table_admin_connection_idempotency_policy.cc
+    admin/bigtable_table_admin_connection_idempotency_policy.h
+    admin/bigtable_table_admin_options.h
+    admin/internal/bigtable_instance_admin_auth_decorator.cc
+    admin/internal/bigtable_instance_admin_auth_decorator.h
+    admin/internal/bigtable_instance_admin_logging_decorator.cc
+    admin/internal/bigtable_instance_admin_logging_decorator.h
+    admin/internal/bigtable_instance_admin_metadata_decorator.cc
+    admin/internal/bigtable_instance_admin_metadata_decorator.h
+    admin/internal/bigtable_instance_admin_option_defaults.cc
+    admin/internal/bigtable_instance_admin_option_defaults.h
+    admin/internal/bigtable_instance_admin_stub.cc
+    admin/internal/bigtable_instance_admin_stub.h
+    admin/internal/bigtable_instance_admin_stub_factory.cc
+    admin/internal/bigtable_instance_admin_stub_factory.h
+    admin/internal/bigtable_table_admin_auth_decorator.cc
+    admin/internal/bigtable_table_admin_auth_decorator.h
+    admin/internal/bigtable_table_admin_logging_decorator.cc
+    admin/internal/bigtable_table_admin_logging_decorator.h
+    admin/internal/bigtable_table_admin_metadata_decorator.cc
+    admin/internal/bigtable_table_admin_metadata_decorator.h
+    admin/internal/bigtable_table_admin_option_defaults.cc
+    admin/internal/bigtable_table_admin_option_defaults.h
+    admin/internal/bigtable_table_admin_stub.cc
+    admin/internal/bigtable_table_admin_stub.h
+    admin/internal/bigtable_table_admin_stub_factory.cc
+    admin/internal/bigtable_table_admin_stub_factory.h
+    admin/retry_traits.h
     admin_client.cc
     admin_client.h
     app_profile_config.cc
