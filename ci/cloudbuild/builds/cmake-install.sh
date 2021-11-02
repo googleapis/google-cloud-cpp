@@ -53,6 +53,7 @@ expected_dirs=(
   ./include/google/cloud/bigquery/storage/v1
   ./include/google/cloud/bigquery/v2
   ./include/google/cloud/bigtable/internal
+  ./include/google/cloud/bigtable/admin/internal
   ./include/google/cloud/dialogflow/v2
   ./include/google/cloud/dialogflow/v2beta1
   ./include/google/cloud/grpc_utils
