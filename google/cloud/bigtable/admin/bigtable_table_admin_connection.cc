@@ -40,14 +40,6 @@ BigtableTableAdminConnection::CreateTable(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<google::bigtable::admin::v2::Table>>
-BigtableTableAdminConnection::CreateTableFromSnapshot(
-    google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&) {
-  return google::cloud::make_ready_future<
-      StatusOr<google::bigtable::admin::v2::Table>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
-}
-
 StreamRange<google::bigtable::admin::v2::Table>
 BigtableTableAdminConnection::ListTables(
     google::bigtable::admin::v2::ListTablesRequest request) {
@@ -93,39 +85,6 @@ BigtableTableAdminConnection::GenerateConsistencyToken(
 StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
 BigtableTableAdminConnection::CheckConsistency(
     google::bigtable::admin::v2::CheckConsistencyRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
-future<StatusOr<google::bigtable::admin::v2::Snapshot>>
-BigtableTableAdminConnection::SnapshotTable(
-    google::bigtable::admin::v2::SnapshotTableRequest const&) {
-  return google::cloud::make_ready_future<
-      StatusOr<google::bigtable::admin::v2::Snapshot>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
-}
-
-StatusOr<google::bigtable::admin::v2::Snapshot>
-BigtableTableAdminConnection::GetSnapshot(
-    google::bigtable::admin::v2::GetSnapshotRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
-StreamRange<google::bigtable::admin::v2::Snapshot>
-BigtableTableAdminConnection::ListSnapshots(
-    google::bigtable::admin::v2::ListSnapshotsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::bigtable::admin::v2::Snapshot>>(
-      std::move(request),
-      [](google::bigtable::admin::v2::ListSnapshotsRequest const&) {
-        return StatusOr<google::bigtable::admin::v2::ListSnapshotsResponse>{};
-      },
-      [](google::bigtable::admin::v2::ListSnapshotsResponse const&) {
-        return std::vector<google::bigtable::admin::v2::Snapshot>();
-      });
-}
-
-Status BigtableTableAdminConnection::DeleteSnapshot(
-    google::bigtable::admin::v2::DeleteSnapshotRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -231,38 +190,6 @@ class BigtableTableAdminConnectionImpl : public BigtableTableAdminConnection {
           return stub_->CreateTable(context, request);
         },
         request, __func__);
-  }
-
-  future<StatusOr<google::bigtable::admin::v2::Table>> CreateTableFromSnapshot(
-      google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
-          request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::bigtable::admin::v2::Table>(
-        background_->cq(), request,
-        [stub](
-            google::cloud::CompletionQueue& cq,
-            std::unique_ptr<grpc::ClientContext> context,
-            google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
-                request) {
-          return stub->AsyncCreateTableFromSnapshot(cq, std::move(context),
-                                                    request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::bigtable::admin::v2::Table>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateTableFromSnapshot(request),
-        polling_policy_prototype_->clone(), __func__);
   }
 
   StreamRange<google::bigtable::admin::v2::Table> ListTables(
@@ -375,95 +302,6 @@ class BigtableTableAdminConnectionImpl : public BigtableTableAdminConnection {
                google::bigtable::admin::v2::CheckConsistencyRequest const&
                    request) {
           return stub_->CheckConsistency(context, request);
-        },
-        request, __func__);
-  }
-
-  future<StatusOr<google::bigtable::admin::v2::Snapshot>> SnapshotTable(
-      google::bigtable::admin::v2::SnapshotTableRequest const& request)
-      override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::bigtable::admin::v2::Snapshot>(
-        background_->cq(), request,
-        [stub](
-            google::cloud::CompletionQueue& cq,
-            std::unique_ptr<grpc::ClientContext> context,
-            google::bigtable::admin::v2::SnapshotTableRequest const& request) {
-          return stub->AsyncSnapshotTable(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::bigtable::admin::v2::Snapshot>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SnapshotTable(request),
-        polling_policy_prototype_->clone(), __func__);
-  }
-
-  StatusOr<google::bigtable::admin::v2::Snapshot> GetSnapshot(
-      google::bigtable::admin::v2::GetSnapshotRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetSnapshot(request),
-        [this](grpc::ClientContext& context,
-               google::bigtable::admin::v2::GetSnapshotRequest const& request) {
-          return stub_->GetSnapshot(context, request);
-        },
-        request, __func__);
-  }
-
-  StreamRange<google::bigtable::admin::v2::Snapshot> ListSnapshots(
-      google::bigtable::admin::v2::ListSnapshotsRequest request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry = std::shared_ptr<BigtableTableAdminRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListSnapshots(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::bigtable::admin::v2::Snapshot>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::bigtable::admin::v2::ListSnapshotsRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::bigtable::admin::v2::ListSnapshotsRequest const&
-                         request) {
-                return stub->ListSnapshots(context, request);
-              },
-              r, function_name);
-        },
-        [](google::bigtable::admin::v2::ListSnapshotsResponse r) {
-          std::vector<google::bigtable::admin::v2::Snapshot> result(
-              r.snapshots().size());
-          auto& messages = *r.mutable_snapshots();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  Status DeleteSnapshot(
-      google::bigtable::admin::v2::DeleteSnapshotRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteSnapshot(request),
-        [this](
-            grpc::ClientContext& context,
-            google::bigtable::admin::v2::DeleteSnapshotRequest const& request) {
-          return stub_->DeleteSnapshot(context, request);
         },
         request, __func__);
   }

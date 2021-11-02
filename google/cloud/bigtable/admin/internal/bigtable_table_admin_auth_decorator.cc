@@ -39,27 +39,6 @@ BigtableTableAdminAuth::CreateTable(
   return child_->CreateTable(context, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-BigtableTableAdminAuth::AsyncCreateTableFromSnapshot(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
-        request) {
-  using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
-             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
-                          f) mutable {
-        auto context = f.get();
-        if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
-        }
-        return child->AsyncCreateTableFromSnapshot(cq, *std::move(context),
-                                                   request);
-      });
-}
-
 StatusOr<google::bigtable::admin::v2::ListTablesResponse>
 BigtableTableAdminAuth::ListTables(
     grpc::ClientContext& context,
@@ -119,51 +98,6 @@ BigtableTableAdminAuth::CheckConsistency(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CheckConsistency(context, request);
-}
-
-future<StatusOr<google::longrunning::Operation>>
-BigtableTableAdminAuth::AsyncSnapshotTable(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::bigtable::admin::v2::SnapshotTableRequest const& request) {
-  using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
-             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
-                          f) mutable {
-        auto context = f.get();
-        if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
-        }
-        return child->AsyncSnapshotTable(cq, *std::move(context), request);
-      });
-}
-
-StatusOr<google::bigtable::admin::v2::Snapshot>
-BigtableTableAdminAuth::GetSnapshot(
-    grpc::ClientContext& context,
-    google::bigtable::admin::v2::GetSnapshotRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->GetSnapshot(context, request);
-}
-
-StatusOr<google::bigtable::admin::v2::ListSnapshotsResponse>
-BigtableTableAdminAuth::ListSnapshots(
-    grpc::ClientContext& context,
-    google::bigtable::admin::v2::ListSnapshotsRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->ListSnapshots(context, request);
-}
-
-Status BigtableTableAdminAuth::DeleteSnapshot(
-    grpc::ClientContext& context,
-    google::bigtable::admin::v2::DeleteSnapshotRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->DeleteSnapshot(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

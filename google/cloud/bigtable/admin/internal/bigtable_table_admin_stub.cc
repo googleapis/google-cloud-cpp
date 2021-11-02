@@ -42,22 +42,6 @@ DefaultBigtableTableAdminStub::CreateTable(
   return response;
 }
 
-future<StatusOr<google::longrunning::Operation>>
-DefaultBigtableTableAdminStub::AsyncCreateTableFromSnapshot(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
-        request) {
-  return cq.MakeUnaryRpc(
-      [this](grpc::ClientContext* context,
-             google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
-                 request,
-             grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncCreateTableFromSnapshot(context, request, cq);
-      },
-      request, std::move(context));
-}
-
 StatusOr<google::bigtable::admin::v2::ListTablesResponse>
 DefaultBigtableTableAdminStub::ListTables(
     grpc::ClientContext& client_context,
@@ -142,55 +126,6 @@ DefaultBigtableTableAdminStub::CheckConsistency(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
-}
-
-future<StatusOr<google::longrunning::Operation>>
-DefaultBigtableTableAdminStub::AsyncSnapshotTable(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::bigtable::admin::v2::SnapshotTableRequest const& request) {
-  return cq.MakeUnaryRpc(
-      [this](grpc::ClientContext* context,
-             google::bigtable::admin::v2::SnapshotTableRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncSnapshotTable(context, request, cq);
-      },
-      request, std::move(context));
-}
-
-StatusOr<google::bigtable::admin::v2::Snapshot>
-DefaultBigtableTableAdminStub::GetSnapshot(
-    grpc::ClientContext& client_context,
-    google::bigtable::admin::v2::GetSnapshotRequest const& request) {
-  google::bigtable::admin::v2::Snapshot response;
-  auto status = grpc_stub_->GetSnapshot(&client_context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
-}
-
-StatusOr<google::bigtable::admin::v2::ListSnapshotsResponse>
-DefaultBigtableTableAdminStub::ListSnapshots(
-    grpc::ClientContext& client_context,
-    google::bigtable::admin::v2::ListSnapshotsRequest const& request) {
-  google::bigtable::admin::v2::ListSnapshotsResponse response;
-  auto status = grpc_stub_->ListSnapshots(&client_context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
-}
-
-Status DefaultBigtableTableAdminStub::DeleteSnapshot(
-    grpc::ClientContext& client_context,
-    google::bigtable::admin::v2::DeleteSnapshotRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteSnapshot(&client_context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>

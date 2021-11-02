@@ -42,10 +42,6 @@ class BigtableTableAdminConnectionIdempotencyPolicy {
   virtual google::cloud::internal::Idempotency CreateTable(
       google::bigtable::admin::v2::CreateTableRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateTableFromSnapshot(
-      google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
-          request) = 0;
-
   virtual google::cloud::internal::Idempotency ListTables(
       google::bigtable::admin::v2::ListTablesRequest request) = 0;
 
@@ -68,18 +64,6 @@ class BigtableTableAdminConnectionIdempotencyPolicy {
 
   virtual google::cloud::internal::Idempotency CheckConsistency(
       google::bigtable::admin::v2::CheckConsistencyRequest const& request) = 0;
-
-  virtual google::cloud::internal::Idempotency SnapshotTable(
-      google::bigtable::admin::v2::SnapshotTableRequest const& request) = 0;
-
-  virtual google::cloud::internal::Idempotency GetSnapshot(
-      google::bigtable::admin::v2::GetSnapshotRequest const& request) = 0;
-
-  virtual google::cloud::internal::Idempotency ListSnapshots(
-      google::bigtable::admin::v2::ListSnapshotsRequest request) = 0;
-
-  virtual google::cloud::internal::Idempotency DeleteSnapshot(
-      google::bigtable::admin::v2::DeleteSnapshotRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency CreateBackup(
       google::bigtable::admin::v2::CreateBackupRequest const& request) = 0;

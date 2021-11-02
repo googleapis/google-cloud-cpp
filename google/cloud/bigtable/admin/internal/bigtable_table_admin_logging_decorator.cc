@@ -46,23 +46,6 @@ BigtableTableAdminLogging::CreateTable(
       context, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-BigtableTableAdminLogging::AsyncCreateTableFromSnapshot(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
-        request) {
-  return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
-             google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
-                 request) {
-        return child_->AsyncCreateTableFromSnapshot(cq, std::move(context),
-                                                    request);
-      },
-      cq, std::move(context), request, __func__, tracing_options_);
-}
-
 StatusOr<google::bigtable::admin::v2::ListTablesResponse>
 BigtableTableAdminLogging::ListTables(
     grpc::ClientContext& context,
@@ -145,56 +128,6 @@ BigtableTableAdminLogging::CheckConsistency(
           grpc::ClientContext& context,
           google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
         return child_->CheckConsistency(context, request);
-      },
-      context, request, __func__, tracing_options_);
-}
-
-future<StatusOr<google::longrunning::Operation>>
-BigtableTableAdminLogging::AsyncSnapshotTable(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::bigtable::admin::v2::SnapshotTableRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
-             google::bigtable::admin::v2::SnapshotTableRequest const& request) {
-        return child_->AsyncSnapshotTable(cq, std::move(context), request);
-      },
-      cq, std::move(context), request, __func__, tracing_options_);
-}
-
-StatusOr<google::bigtable::admin::v2::Snapshot>
-BigtableTableAdminLogging::GetSnapshot(
-    grpc::ClientContext& context,
-    google::bigtable::admin::v2::GetSnapshotRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             google::bigtable::admin::v2::GetSnapshotRequest const& request) {
-        return child_->GetSnapshot(context, request);
-      },
-      context, request, __func__, tracing_options_);
-}
-
-StatusOr<google::bigtable::admin::v2::ListSnapshotsResponse>
-BigtableTableAdminLogging::ListSnapshots(
-    grpc::ClientContext& context,
-    google::bigtable::admin::v2::ListSnapshotsRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             google::bigtable::admin::v2::ListSnapshotsRequest const& request) {
-        return child_->ListSnapshots(context, request);
-      },
-      context, request, __func__, tracing_options_);
-}
-
-Status BigtableTableAdminLogging::DeleteSnapshot(
-    grpc::ClientContext& context,
-    google::bigtable::admin::v2::DeleteSnapshotRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context,
-          google::bigtable::admin::v2::DeleteSnapshotRequest const& request) {
-        return child_->DeleteSnapshot(context, request);
       },
       context, request, __func__, tracing_options_);
 }

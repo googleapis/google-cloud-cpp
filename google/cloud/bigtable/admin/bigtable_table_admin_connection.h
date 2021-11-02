@@ -56,11 +56,6 @@ class BigtableTableAdminConnection {
   virtual StatusOr<google::bigtable::admin::v2::Table> CreateTable(
       google::bigtable::admin::v2::CreateTableRequest const& request);
 
-  virtual future<StatusOr<google::bigtable::admin::v2::Table>>
-  CreateTableFromSnapshot(
-      google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
-          request);
-
   virtual StreamRange<google::bigtable::admin::v2::Table> ListTables(
       google::bigtable::admin::v2::ListTablesRequest request);
 
@@ -85,18 +80,6 @@ class BigtableTableAdminConnection {
   virtual StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
   CheckConsistency(
       google::bigtable::admin::v2::CheckConsistencyRequest const& request);
-
-  virtual future<StatusOr<google::bigtable::admin::v2::Snapshot>> SnapshotTable(
-      google::bigtable::admin::v2::SnapshotTableRequest const& request);
-
-  virtual StatusOr<google::bigtable::admin::v2::Snapshot> GetSnapshot(
-      google::bigtable::admin::v2::GetSnapshotRequest const& request);
-
-  virtual StreamRange<google::bigtable::admin::v2::Snapshot> ListSnapshots(
-      google::bigtable::admin::v2::ListSnapshotsRequest request);
-
-  virtual Status DeleteSnapshot(
-      google::bigtable::admin::v2::DeleteSnapshotRequest const& request);
 
   virtual future<StatusOr<google::bigtable::admin::v2::Backup>> CreateBackup(
       google::bigtable::admin::v2::CreateBackupRequest const& request);

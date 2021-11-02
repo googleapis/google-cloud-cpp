@@ -33,6 +33,7 @@ service {
   service_proto_path: "google/bigtable/admin/v2/bigtable_table_admin.proto"
   product_path: "google/cloud/bigtable/admin"
   initial_copyright_year: "2021"
+  omitted_rpcs: ["CreateTableFromSnapshot", "SnapshotTable", "GetSnapshot", "ListSnapshots", "DeleteSnapshot"]
   emulator_endpoint_env_var: "BIGTABLE_EMULATOR_HOST"
   gen_async_rpcs: ["CheckConsistency"]
 }

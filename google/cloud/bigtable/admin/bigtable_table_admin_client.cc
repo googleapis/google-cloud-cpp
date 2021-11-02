@@ -43,17 +43,6 @@ BigtableTableAdminClient::CreateTable(
   return connection_->CreateTable(request);
 }
 
-future<StatusOr<google::bigtable::admin::v2::Table>>
-BigtableTableAdminClient::CreateTableFromSnapshot(
-    std::string const& parent, std::string const& table_id,
-    std::string const& source_snapshot) {
-  google::bigtable::admin::v2::CreateTableFromSnapshotRequest request;
-  request.set_parent(parent);
-  request.set_table_id(table_id);
-  request.set_source_snapshot(source_snapshot);
-  return connection_->CreateTableFromSnapshot(request);
-}
-
 StreamRange<google::bigtable::admin::v2::Table>
 BigtableTableAdminClient::ListTables(std::string const& parent) {
   google::bigtable::admin::v2::ListTablesRequest request;
@@ -100,39 +89,6 @@ BigtableTableAdminClient::CheckConsistency(
   request.set_name(name);
   request.set_consistency_token(consistency_token);
   return connection_->CheckConsistency(request);
-}
-
-future<StatusOr<google::bigtable::admin::v2::Snapshot>>
-BigtableTableAdminClient::SnapshotTable(std::string const& name,
-                                        std::string const& cluster,
-                                        std::string const& snapshot_id,
-                                        std::string const& description) {
-  google::bigtable::admin::v2::SnapshotTableRequest request;
-  request.set_name(name);
-  request.set_cluster(cluster);
-  request.set_snapshot_id(snapshot_id);
-  request.set_description(description);
-  return connection_->SnapshotTable(request);
-}
-
-StatusOr<google::bigtable::admin::v2::Snapshot>
-BigtableTableAdminClient::GetSnapshot(std::string const& name) {
-  google::bigtable::admin::v2::GetSnapshotRequest request;
-  request.set_name(name);
-  return connection_->GetSnapshot(request);
-}
-
-StreamRange<google::bigtable::admin::v2::Snapshot>
-BigtableTableAdminClient::ListSnapshots(std::string const& parent) {
-  google::bigtable::admin::v2::ListSnapshotsRequest request;
-  request.set_parent(parent);
-  return connection_->ListSnapshots(request);
-}
-
-Status BigtableTableAdminClient::DeleteSnapshot(std::string const& name) {
-  google::bigtable::admin::v2::DeleteSnapshotRequest request;
-  request.set_name(name);
-  return connection_->DeleteSnapshot(request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::Backup>>
@@ -240,13 +196,6 @@ BigtableTableAdminClient::CreateTable(
   return connection_->CreateTable(request);
 }
 
-future<StatusOr<google::bigtable::admin::v2::Table>>
-BigtableTableAdminClient::CreateTableFromSnapshot(
-    google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
-        request) {
-  return connection_->CreateTableFromSnapshot(request);
-}
-
 StreamRange<google::bigtable::admin::v2::Table>
 BigtableTableAdminClient::ListTables(
     google::bigtable::admin::v2::ListTablesRequest request) {
@@ -285,29 +234,6 @@ StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
 BigtableTableAdminClient::CheckConsistency(
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
   return connection_->CheckConsistency(request);
-}
-
-future<StatusOr<google::bigtable::admin::v2::Snapshot>>
-BigtableTableAdminClient::SnapshotTable(
-    google::bigtable::admin::v2::SnapshotTableRequest const& request) {
-  return connection_->SnapshotTable(request);
-}
-
-StatusOr<google::bigtable::admin::v2::Snapshot>
-BigtableTableAdminClient::GetSnapshot(
-    google::bigtable::admin::v2::GetSnapshotRequest const& request) {
-  return connection_->GetSnapshot(request);
-}
-
-StreamRange<google::bigtable::admin::v2::Snapshot>
-BigtableTableAdminClient::ListSnapshots(
-    google::bigtable::admin::v2::ListSnapshotsRequest request) {
-  return connection_->ListSnapshots(std::move(request));
-}
-
-Status BigtableTableAdminClient::DeleteSnapshot(
-    google::bigtable::admin::v2::DeleteSnapshotRequest const& request) {
-  return connection_->DeleteSnapshot(request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::Backup>>

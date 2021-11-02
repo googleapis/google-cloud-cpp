@@ -48,12 +48,6 @@ class DefaultBigtableTableAdminConnectionIdempotencyPolicy
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency CreateTableFromSnapshot(
-      google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
   Idempotency ListTables(
       google::bigtable::admin::v2::ListTablesRequest) override {
     return Idempotency::kIdempotent;
@@ -88,26 +82,6 @@ class DefaultBigtableTableAdminConnectionIdempotencyPolicy
 
   Idempotency CheckConsistency(
       google::bigtable::admin::v2::CheckConsistencyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency SnapshotTable(
-      google::bigtable::admin::v2::SnapshotTableRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency GetSnapshot(
-      google::bigtable::admin::v2::GetSnapshotRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency ListSnapshots(
-      google::bigtable::admin::v2::ListSnapshotsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency DeleteSnapshot(
-      google::bigtable::admin::v2::DeleteSnapshotRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 

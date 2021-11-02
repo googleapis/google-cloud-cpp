@@ -89,33 +89,6 @@ class BigtableTableAdminClient {
       google::bigtable::admin::v2::Table const& table);
 
   /**
-   * Creates a new table from the specified snapshot. The target table must
-   * not exist. The snapshot and the table must be in the same instance.
-   *
-   * Note: This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   *
-   * @param parent  Required. The unique name of the instance in which to create
-   * the table. Values are of the form
-   * `projects/{project}/instances/{instance}`.
-   * @param table_id  Required. The name by which the new table should be
-   * referred to within the parent instance, e.g., `foobar` rather than
-   * `{parent}/tables/foobar`.
-   * @param source_snapshot  Required. The unique name of the snapshot from
-   * which to restore the table. The snapshot and the table must be in the same
-   * instance. Values are of the form
-   *  `projects/{project}/instances/{instance}/clusters/{cluster}/snapshots/{snapshot}`.
-   * @return
-   * [google::bigtable::admin::v2::Table](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/table.proto#L61)
-   */
-  future<StatusOr<google::bigtable::admin::v2::Table>> CreateTableFromSnapshot(
-      std::string const& parent, std::string const& table_id,
-      std::string const& source_snapshot);
-
-  /**
    * Lists all tables served from a specified instance.
    *
    * @param parent  Required. The unique name of the instance for which tables
@@ -200,87 +173,6 @@ class BigtableTableAdminClient {
   StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
   CheckConsistency(std::string const& name,
                    std::string const& consistency_token);
-
-  /**
-   * Creates a new snapshot in the specified cluster from the specified
-   * source table. The cluster and the table must be in the same instance.
-   *
-   * Note: This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   *
-   * @param name  Required. The unique name of the table to have the snapshot
-   * taken. Values are of the form
-   *  `projects/{project}/instances/{instance}/tables/{table}`.
-   * @param cluster  Required. The name of the cluster where the snapshot will
-   * be created in. Values are of the form
-   *  `projects/{project}/instances/{instance}/clusters/{cluster}`.
-   * @param snapshot_id  Required. The ID by which the new snapshot should be
-   * referred to within the parent cluster, e.g., `mysnapshot` of the form:
-   * `[_a-zA-Z0-9][-_.a-zA-Z0-9]*` rather than
-   *  `projects/{project}/instances/{instance}/clusters/{cluster}/snapshots/mysnapshot`.
-   * @param description  Description of the snapshot.
-   * @return
-   * [google::bigtable::admin::v2::Snapshot](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/table.proto#L267)
-   */
-  future<StatusOr<google::bigtable::admin::v2::Snapshot>> SnapshotTable(
-      std::string const& name, std::string const& cluster,
-      std::string const& snapshot_id, std::string const& description);
-
-  /**
-   * Gets metadata information about the specified snapshot.
-   *
-   * Note: This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   *
-   * @param name  Required. The unique name of the requested snapshot.
-   *  Values are of the form
-   *  `projects/{project}/instances/{instance}/clusters/{cluster}/snapshots/{snapshot}`.
-   * @return
-   * [google::bigtable::admin::v2::Snapshot](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/table.proto#L267)
-   */
-  StatusOr<google::bigtable::admin::v2::Snapshot> GetSnapshot(
-      std::string const& name);
-
-  /**
-   * Lists all snapshots associated with the specified cluster.
-   *
-   * Note: This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   *
-   * @param parent  Required. The unique name of the cluster for which snapshots
-   * should be listed. Values are of the form
-   *  `projects/{project}/instances/{instance}/clusters/{cluster}`.
-   *  Use `{cluster} = '-'` to list snapshots for all clusters in an instance,
-   *  e.g., `projects/{project}/instances/{instance}/clusters/-`.
-   * @return
-   * [google::bigtable::admin::v2::Snapshot](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/table.proto#L267)
-   */
-  StreamRange<google::bigtable::admin::v2::Snapshot> ListSnapshots(
-      std::string const& parent);
-
-  /**
-   * Permanently deletes the specified snapshot.
-   *
-   * Note: This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   *
-   * @param name  Required. The unique name of the snapshot to be deleted.
-   *  Values are of the form
-   *  `projects/{project}/instances/{instance}/clusters/{cluster}/snapshots/{snapshot}`.
-   */
-  Status DeleteSnapshot(std::string const& name);
 
   /**
    * Starts creating a new Cloud Bigtable Backup.  The returned backup
@@ -467,25 +359,6 @@ class BigtableTableAdminClient {
       google::bigtable::admin::v2::CreateTableRequest const& request);
 
   /**
-   * Creates a new table from the specified snapshot. The target table must
-   * not exist. The snapshot and the table must be in the same instance.
-   *
-   * Note: This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   *
-   * @param request
-   * [google::bigtable::admin::v2::CreateTableFromSnapshotRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_table_admin.proto#L458)
-   * @return
-   * [google::bigtable::admin::v2::Table](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/table.proto#L61)
-   */
-  future<StatusOr<google::bigtable::admin::v2::Table>> CreateTableFromSnapshot(
-      google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
-          request);
-
-  /**
    * Lists all tables served from a specified instance.
    *
    * @param request
@@ -570,73 +443,6 @@ class BigtableTableAdminClient {
   StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
   CheckConsistency(
       google::bigtable::admin::v2::CheckConsistencyRequest const& request);
-
-  /**
-   * Creates a new snapshot in the specified cluster from the specified
-   * source table. The cluster and the table must be in the same instance.
-   *
-   * Note: This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   *
-   * @param request
-   * [google::bigtable::admin::v2::SnapshotTableRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_table_admin.proto#L677)
-   * @return
-   * [google::bigtable::admin::v2::Snapshot](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/table.proto#L267)
-   */
-  future<StatusOr<google::bigtable::admin::v2::Snapshot>> SnapshotTable(
-      google::bigtable::admin::v2::SnapshotTableRequest const& request);
-
-  /**
-   * Gets metadata information about the specified snapshot.
-   *
-   * Note: This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   *
-   * @param request
-   * [google::bigtable::admin::v2::GetSnapshotRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_table_admin.proto#L721)
-   * @return
-   * [google::bigtable::admin::v2::Snapshot](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/table.proto#L267)
-   */
-  StatusOr<google::bigtable::admin::v2::Snapshot> GetSnapshot(
-      google::bigtable::admin::v2::GetSnapshotRequest const& request);
-
-  /**
-   * Lists all snapshots associated with the specified cluster.
-   *
-   * Note: This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   *
-   * @param request
-   * [google::bigtable::admin::v2::ListSnapshotsRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_table_admin.proto#L740)
-   * @return
-   * [google::bigtable::admin::v2::Snapshot](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/table.proto#L267)
-   */
-  StreamRange<google::bigtable::admin::v2::Snapshot> ListSnapshots(
-      google::bigtable::admin::v2::ListSnapshotsRequest request);
-
-  /**
-   * Permanently deletes the specified snapshot.
-   *
-   * Note: This is a private alpha release of Cloud Bigtable snapshots. This
-   * feature is not currently available to most Cloud Bigtable customers. This
-   * feature might be changed in backward-incompatible ways and is not
-   * recommended for production use. It is not subject to any SLA or deprecation
-   * policy.
-   *
-   * @param request
-   * [google::bigtable::admin::v2::DeleteSnapshotRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_table_admin.proto#L785)
-   */
-  Status DeleteSnapshot(
-      google::bigtable::admin::v2::DeleteSnapshotRequest const& request);
 
   /**
    * Starts creating a new Cloud Bigtable Backup.  The returned backup

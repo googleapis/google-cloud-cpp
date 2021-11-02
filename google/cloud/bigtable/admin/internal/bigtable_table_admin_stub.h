@@ -40,13 +40,6 @@ class BigtableTableAdminStub {
       grpc::ClientContext& context,
       google::bigtable::admin::v2::CreateTableRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateTableFromSnapshot(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
-          request) = 0;
-
   virtual StatusOr<google::bigtable::admin::v2::ListTablesResponse> ListTables(
       grpc::ClientContext& context,
       google::bigtable::admin::v2::ListTablesRequest const& request) = 0;
@@ -79,24 +72,6 @@ class BigtableTableAdminStub {
   CheckConsistency(
       grpc::ClientContext& context,
       google::bigtable::admin::v2::CheckConsistencyRequest const& request) = 0;
-
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncSnapshotTable(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::bigtable::admin::v2::SnapshotTableRequest const& request) = 0;
-
-  virtual StatusOr<google::bigtable::admin::v2::Snapshot> GetSnapshot(
-      grpc::ClientContext& context,
-      google::bigtable::admin::v2::GetSnapshotRequest const& request) = 0;
-
-  virtual StatusOr<google::bigtable::admin::v2::ListSnapshotsResponse>
-  ListSnapshots(
-      grpc::ClientContext& context,
-      google::bigtable::admin::v2::ListSnapshotsRequest const& request) = 0;
-
-  virtual Status DeleteSnapshot(
-      grpc::ClientContext& context,
-      google::bigtable::admin::v2::DeleteSnapshotRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
       google::cloud::CompletionQueue& cq,
@@ -170,12 +145,6 @@ class DefaultBigtableTableAdminStub : public BigtableTableAdminStub {
       grpc::ClientContext& client_context,
       google::bigtable::admin::v2::CreateTableRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateTableFromSnapshot(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
-          request) override;
-
   StatusOr<google::bigtable::admin::v2::ListTablesResponse> ListTables(
       grpc::ClientContext& client_context,
       google::bigtable::admin::v2::ListTablesRequest const& request) override;
@@ -207,26 +176,6 @@ class DefaultBigtableTableAdminStub : public BigtableTableAdminStub {
   CheckConsistency(grpc::ClientContext& client_context,
                    google::bigtable::admin::v2::CheckConsistencyRequest const&
                        request) override;
-
-  future<StatusOr<google::longrunning::Operation>> AsyncSnapshotTable(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::bigtable::admin::v2::SnapshotTableRequest const& request)
-      override;
-
-  StatusOr<google::bigtable::admin::v2::Snapshot> GetSnapshot(
-      grpc::ClientContext& client_context,
-      google::bigtable::admin::v2::GetSnapshotRequest const& request) override;
-
-  StatusOr<google::bigtable::admin::v2::ListSnapshotsResponse> ListSnapshots(
-      grpc::ClientContext& client_context,
-      google::bigtable::admin::v2::ListSnapshotsRequest const& request)
-      override;
-
-  Status DeleteSnapshot(
-      grpc::ClientContext& client_context,
-      google::bigtable::admin::v2::DeleteSnapshotRequest const& request)
-      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
       google::cloud::CompletionQueue& cq,

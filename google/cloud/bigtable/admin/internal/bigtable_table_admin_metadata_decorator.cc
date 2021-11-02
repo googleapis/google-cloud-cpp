@@ -41,16 +41,6 @@ BigtableTableAdminMetadata::CreateTable(
   return child_->CreateTable(context, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-BigtableTableAdminMetadata::AsyncCreateTableFromSnapshot(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
-        request) {
-  SetMetadata(*context, "parent=" + request.parent());
-  return child_->AsyncCreateTableFromSnapshot(cq, std::move(context), request);
-}
-
 StatusOr<google::bigtable::admin::v2::ListTablesResponse>
 BigtableTableAdminMetadata::ListTables(
     grpc::ClientContext& context,
@@ -104,38 +94,6 @@ BigtableTableAdminMetadata::CheckConsistency(
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->CheckConsistency(context, request);
-}
-
-future<StatusOr<google::longrunning::Operation>>
-BigtableTableAdminMetadata::AsyncSnapshotTable(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::bigtable::admin::v2::SnapshotTableRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
-  return child_->AsyncSnapshotTable(cq, std::move(context), request);
-}
-
-StatusOr<google::bigtable::admin::v2::Snapshot>
-BigtableTableAdminMetadata::GetSnapshot(
-    grpc::ClientContext& context,
-    google::bigtable::admin::v2::GetSnapshotRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
-  return child_->GetSnapshot(context, request);
-}
-
-StatusOr<google::bigtable::admin::v2::ListSnapshotsResponse>
-BigtableTableAdminMetadata::ListSnapshots(
-    grpc::ClientContext& context,
-    google::bigtable::admin::v2::ListSnapshotsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
-  return child_->ListSnapshots(context, request);
-}
-
-Status BigtableTableAdminMetadata::DeleteSnapshot(
-    grpc::ClientContext& context,
-    google::bigtable::admin::v2::DeleteSnapshotRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
-  return child_->DeleteSnapshot(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

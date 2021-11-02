@@ -34,13 +34,6 @@ class MockBigtableTableAdminConnection
               (google::bigtable::admin::v2::CreateTableRequest const& request),
               (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::bigtable::admin::v2::Table>>,
-      CreateTableFromSnapshot,
-      (google::bigtable::admin::v2::CreateTableFromSnapshotRequest const&
-           request),
-      (override));
-
   MOCK_METHOD(StreamRange<google::bigtable::admin::v2::Table>, ListTables,
               (google::bigtable::admin::v2::ListTablesRequest request),
               (override));
@@ -73,24 +66,6 @@ class MockBigtableTableAdminConnection
       StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>,
       CheckConsistency,
       (google::bigtable::admin::v2::CheckConsistencyRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::bigtable::admin::v2::Snapshot>>, SnapshotTable,
-      (google::bigtable::admin::v2::SnapshotTableRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::bigtable::admin::v2::Snapshot>, GetSnapshot,
-              (google::bigtable::admin::v2::GetSnapshotRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::bigtable::admin::v2::Snapshot>, ListSnapshots,
-              (google::bigtable::admin::v2::ListSnapshotsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      Status, DeleteSnapshot,
-      (google::bigtable::admin::v2::DeleteSnapshotRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Backup>>,
