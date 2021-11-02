@@ -21,7 +21,8 @@ set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Spanner")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "spanner_internal" "spanner_testing")
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "spanner_admin_internal"
+                            "spanner_internal" "spanner_testing")
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/spanner/README.md" "*/google/cloud/spanner/internal/*"
     "*/google/cloud/spanner/benchmarks/*" "*/google/cloud/spanner/testing/*"
