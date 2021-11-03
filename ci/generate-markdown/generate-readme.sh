@@ -107,7 +107,7 @@ From the top-level directory of `google-cloud-cpp` run these commands:
 
 ```shell
 git -C $HOME clone https://github.com/microsoft/vcpkg.git
-$HOME/vcpkg/bootstrap-vcpkg.sh
+env VCPKG_ROOT=$HOME/vcpkg $HOME/vcpkg/bootstrap-vcpkg.sh
 cmake -H. -Bcmake-out/ -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
 cmake --build cmake-out -- -j $(nproc)
 ```
