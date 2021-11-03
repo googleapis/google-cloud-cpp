@@ -326,7 +326,7 @@ the external projects. There is an example of this in the
 
 ```shell
 git clone -C $HOME https://github.com/microsoft/vcpkg.git
-$HOME/vcpkg/bootstrap-vcpkg.sh
+env VCPKG_ROOT=$HOME/vcpkg $HOME/vcpkg/bootstrap-vcpkg.sh
 cmake -H. -Bcmake-out/ -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
 cmake --build cmake-out -- -j $(nproc)
 ```

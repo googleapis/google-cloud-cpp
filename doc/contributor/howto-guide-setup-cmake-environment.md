@@ -45,7 +45,7 @@ git -C $HOME clone https://github.com/microsoft/vcpkg
 Then bootstrap the `vcpkg` tool:
 
 ```shell
-$HOME/vcpkg/bootstrap-vcpkg.sh
+env VCPKG_ROOT="${vcpkg_dir}" $HOME/vcpkg/bootstrap-vcpkg.sh
 ```
 
 ## Building `google-cloud-cpp` with vcpkg

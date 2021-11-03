@@ -37,7 +37,7 @@ curl -sSL "https://github.com/microsoft/vcpkg/archive/${VCPKG_COMMIT}.tar.gz" |
   tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
 (
   cd "${vcpkg_dir}"
-  CC="ccache cc" CXX="ccache c++" ./bootstrap-vcpkg.sh
+  VCPKG_ROOT="${vcpkg_dir}" CC="ccache cc" CXX="ccache c++" ./bootstrap-vcpkg.sh
   ./vcpkg remove --outdated --recurse
   ./vcpkg install google-cloud-cpp
 )
