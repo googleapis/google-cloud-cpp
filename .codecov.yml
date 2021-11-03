@@ -4,3 +4,6 @@ coverage:
   status:
     project: off
     patch: off
+
+ignore:
+  - "google/cloud/bigtable/admin/*"
