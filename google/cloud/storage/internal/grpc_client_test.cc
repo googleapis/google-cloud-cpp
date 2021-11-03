@@ -129,7 +129,7 @@ TEST(GrpcClientFromProto, ObjectSimple) {
     },
     "eventBasedHold": true,
     "name": "test-object-name",
-    "id": "test-bucket/test-object-name#2345",
+    "id": "test-bucket/test-object-name/2345",
     "kind": "storage#object",
     "bucket": "test-bucket",
     "generation": 2345,
