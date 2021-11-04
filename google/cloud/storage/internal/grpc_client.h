@@ -69,6 +69,8 @@ class GrpcClient : public RawClient,
                                std::string const& upload_url);
   //@}
 
+  Options const& options() const { return options_; }
+
   ClientOptions const& client_options() const override;
 
   StatusOr<ListBucketsResponse> ListBuckets(
@@ -184,7 +186,8 @@ class GrpcClient : public RawClient,
   static CustomerEncryption FromProto(
       google::storage::v2::Object::CustomerEncryption rhs);
 
-  static ObjectMetadata FromProto(google::storage::v2::Object object);
+  static ObjectMetadata FromProto(google::storage::v2::Object object,
+                                  Options const& options);
 
   static google::storage::v2::ObjectAccessControl ToProto(
       ObjectAccessControl const& acl);
@@ -202,7 +205,8 @@ class GrpcClient : public RawClient,
   static StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
       InsertObjectMediaRequest const& request);
   static ResumableUploadResponse FromProto(
-      google::storage::v2::WriteObjectResponse const&);
+      google::storage::v2::WriteObjectResponse const& p,
+      Options const& options);
   static StatusOr<google::storage::v2::StartResumableWriteRequest> ToProto(
       ResumableUploadRequest const& request);
   static google::storage::v2::QueryWriteStatusRequest ToProto(

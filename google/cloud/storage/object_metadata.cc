@@ -71,7 +71,8 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
      << rhs.event_based_hold() << ", generation=" << rhs.generation()
      << ", id=" << rhs.id() << ", kind=" << rhs.kind()
      << ", kms_key_name=" << rhs.kms_key_name()
-     << ", md5_hash=" << rhs.md5_hash() << ", media_link=" << rhs.media_link();
+     << ", md5_hash=" << rhs.md5_hash() << ", media_link=" << rhs.media_link()
+     << ", ";
   if (!rhs.metadata_.empty()) {
     os << "metadata."
        << absl::StrJoin(rhs.metadata_, ", metadata.", absl::PairFormatter("="));

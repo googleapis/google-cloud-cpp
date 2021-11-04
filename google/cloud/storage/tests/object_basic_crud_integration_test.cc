@@ -92,12 +92,12 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
     EXPECT_EQ(get_meta->kind(), insert_meta->kind());
     EXPECT_EQ(get_meta->kms_key_name(), insert_meta->kms_key_name());
     EXPECT_EQ(get_meta->md5_hash(), insert_meta->md5_hash());
-    // EXPECT_EQ(get_meta->media_link(), insert_meta->media_link());
+    EXPECT_EQ(get_meta->media_link(), insert_meta->media_link());
     EXPECT_EQ(get_meta->metageneration(), insert_meta->metageneration());
     // EXPECT_EQ(get_meta->owner(), insert_meta->owner());
     EXPECT_EQ(get_meta->retention_expiration_time(),
               insert_meta->retention_expiration_time());
-    // EXPECT_EQ(get_meta->self_link(), insert_meta->self_link());
+    EXPECT_EQ(get_meta->self_link(), insert_meta->self_link());
     EXPECT_EQ(get_meta->size(), insert_meta->size());
     EXPECT_EQ(get_meta->storage_class(), insert_meta->storage_class());
     EXPECT_EQ(get_meta->temporary_hold(), insert_meta->temporary_hold());
