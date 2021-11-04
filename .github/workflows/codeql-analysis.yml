@@ -49,7 +49,7 @@ jobs:
         env:
           CC: "ccache gcc"
           CXX: "ccache g++"
-          VCPKG_ROOT: {{github.workspace}}/build/vcpkg
+          VCPKG_ROOT: ${{ github.workspace }}/build/vcpkg
         working-directory: "build/vcpkg"
         run: |
           ./bootstrap-vcpkg.sh -disableMetrics
