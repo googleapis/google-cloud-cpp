@@ -727,7 +727,7 @@ ObjectMetadata GrpcClient::FromProto(google::storage::v2::Object object) {
   metadata.bucket_ = bucket_id(object);
   metadata.name_ = std::move(*object.mutable_name());
   metadata.generation_ = object.generation();
-  metadata.id_ = metadata.bucket() + "/" + metadata.name() + "#" +
+  metadata.id_ = metadata.bucket() + "/" + metadata.name() + "/" +
                  std::to_string(metadata.generation());
   metadata.metageneration_ = object.metageneration();
   if (object.has_owner()) {

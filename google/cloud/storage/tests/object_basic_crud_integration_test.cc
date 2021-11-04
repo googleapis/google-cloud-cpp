@@ -73,7 +73,6 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
       Projection("full"));
   ASSERT_STATUS_OK(get_meta);
 
-  // TODO(#7257) - cleanup after production is fixed.
   if (UsingGrpc()) {
     // The metadata returned by gRPC (InsertObject) doesn't contain the `acl`,
     // `etag`, `media_link`, or `self_link` fields. Just compare field by field:
@@ -89,7 +88,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
     EXPECT_EQ(get_meta->crc32c(), insert_meta->crc32c());
     EXPECT_EQ(get_meta->event_based_hold(), insert_meta->event_based_hold());
     EXPECT_EQ(get_meta->generation(), insert_meta->generation());
-    // EXPECT_EQ(get_meta->id(), insert_meta->id()); // b/198515640
+    EXPECT_EQ(get_meta->id(), insert_meta->id());
     EXPECT_EQ(get_meta->kind(), insert_meta->kind());
     EXPECT_EQ(get_meta->kms_key_name(), insert_meta->kms_key_name());
     EXPECT_EQ(get_meta->md5_hash(), insert_meta->md5_hash());
