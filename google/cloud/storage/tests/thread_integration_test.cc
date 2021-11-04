@@ -109,6 +109,7 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   ASSERT_STATUS_OK(meta);
   EXPECT_EQ(bucket_name, meta->name());
 
+  // Just a comment to trigger a build.
   auto constexpr kObjectCount = 2000;
   std::vector<std::string> objects(kObjectCount);
   std::generate(objects.begin(), objects.end(),
