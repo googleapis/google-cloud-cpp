@@ -109,13 +109,11 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   ASSERT_STATUS_OK(meta);
   EXPECT_EQ(bucket_name, meta->name());
 
-  auto constexpr kObjectCount = 2000;
-  std::vector<std::string> objects(kObjectCount);
+  auto const thread_count = (std::max)(std::thread::hardware_concurrency(), 8U);
+  auto const object_count = 100 * thread_count;
+  std::vector<std::string> objects(object_count);
   std::generate(objects.begin(), objects.end(),
                 [this] { return MakeRandomObjectName(); });
-
-  auto thread_count = std::thread::hardware_concurrency();
-  if (thread_count == 0) thread_count = 4;
 
   auto const groups = DivideIntoEqualSizedGroups(objects, thread_count);
   std::vector<std::future<void>> tasks(groups.size());
@@ -134,7 +132,7 @@ TEST_F(ThreadIntegrationTest, Unshared) {
     if (!o.ok()) break;
     ++found;
   }
-  EXPECT_GE(found, kObjectCount / 2);
+  EXPECT_GE(found, object_count / 2);
   std::transform(groups.begin(), groups.end(), tasks.begin(),
                  [&](ObjectNameList const& g) {
                    return std::async(std::launch::async,
