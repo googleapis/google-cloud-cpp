@@ -115,7 +115,6 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   std::generate(objects.begin(), objects.end(),
                 [this] { return MakeRandomObjectName(); });
 
-
   auto const groups = DivideIntoEqualSizedGroups(objects, thread_count);
   std::vector<std::future<void>> tasks(groups.size());
   std::transform(groups.begin(), groups.end(), tasks.begin(),
