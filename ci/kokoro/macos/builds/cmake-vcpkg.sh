@@ -105,6 +105,11 @@ if should_run_integration_tests; then
       -L 'integration-test-production' \
       -E '(bigtable_grpc_credentials|grpc_credential_types|storage_service_account_samples|service_account_integration_test)' \
       --output-on-failure -j "${NCPU}"
+
+    ctest \
+      -L 'integration-test-emulator' \
+      -E '(bigtable_grpc_credentials|grpc_credential_types|storage_service_account_samples|service_account_integration_test)' \
+      --output-on-failure -j "${NCPU}"
   )
 fi
 
