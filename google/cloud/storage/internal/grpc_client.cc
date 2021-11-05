@@ -191,7 +191,7 @@ StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
     response.last_committed_byte = 0;
   }
   if (status->has_resource()) {
-    response.payload = FromProto(status->resource());
+    response.payload = FromProto(status->resource(), options());
     response.upload_state = ResumableUploadResponse::kDone;
   }
   return response;
@@ -314,7 +314,9 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
 
   auto response = stream->Close();
   if (!response) return std::move(response).status();
-  if (response->has_resource()) return FromProto(response->resource());
+  if (response->has_resource()) {
+    return FromProto(response->resource(), options());
+  }
   return ObjectMetadata{};
 }
 
@@ -714,7 +716,8 @@ StatusOr<google::storage::v2::Object::CustomerEncryption> GrpcClient::ToProto(
   return result;
 }
 
-ObjectMetadata GrpcClient::FromProto(google::storage::v2::Object object) {
+ObjectMetadata GrpcClient::FromProto(google::storage::v2::Object object,
+                                     Options const& options) {
   auto bucket_id = [](google::storage::v2::Object const& object) {
     auto const& bucket_name = object.bucket();
     auto const pos = bucket_name.find_last_of('/');
@@ -729,6 +732,22 @@ ObjectMetadata GrpcClient::FromProto(google::storage::v2::Object object) {
   metadata.generation_ = object.generation();
   metadata.id_ = metadata.bucket() + "/" + metadata.name() + "/" +
                  std::to_string(metadata.generation());
+  auto const metadata_endpoint = [&options]() -> std::string {
+    if (options.get<RestEndpointOption>() != "https://storage.googleapis.com") {
+      return options.get<RestEndpointOption>();
+    }
+    return "https://www.googleapis.com";
+  }();
+  auto const path = [&options]() -> std::string {
+    if (!options.has<TargetApiVersionOption>()) return "/storage/v1";
+    return "/storage/" + options.get<TargetApiVersionOption>();
+  }();
+  auto const rel_path = "/b/" + metadata.bucket() + "/o/" + metadata.name();
+  metadata.self_link_ = metadata_endpoint + path + rel_path;
+  metadata.media_link_ =
+      options.get<RestEndpointOption>() + "/download" + path + rel_path +
+      "?generation=" + std::to_string(metadata.generation()) + "&alt=media";
+
   metadata.metageneration_ = object.metageneration();
   if (object.has_owner()) {
     metadata.owner_ = FromProto(*object.mutable_owner());
@@ -935,7 +954,7 @@ StatusOr<google::storage::v2::WriteObjectRequest> GrpcClient::ToProto(
 }
 
 ResumableUploadResponse GrpcClient::FromProto(
-    google::storage::v2::WriteObjectResponse const& p) {
+    google::storage::v2::WriteObjectResponse const& p, Options const& options) {
   ResumableUploadResponse response;
   response.upload_state = ResumableUploadResponse::kInProgress;
   if (p.has_persisted_size() && p.persisted_size() > 0) {
@@ -946,7 +965,7 @@ ResumableUploadResponse GrpcClient::FromProto(
     response.last_committed_byte = 0;
   }
   if (p.has_resource()) {
-    response.payload = FromProto(p.resource());
+    response.payload = FromProto(p.resource(), options);
     response.upload_state = ResumableUploadResponse::kDone;
   }
   return response;

@@ -133,6 +133,8 @@ TEST(GrpcClientFromProto, ObjectSimple) {
     "kind": "storage#object",
     "bucket": "test-bucket",
     "generation": 2345,
+    "selfLink":  "https://www.googleapis.com/storage/v1/b/test-bucket/o/test-object-name",
+    "mediaLink": "https://storage.googleapis.com/download/storage/v1/b/test-bucket/o/test-object-name?generation=2345&alt=media",
     "owner": {
       "entity": "test-entity",
       "entityId": "test-entity-id"
@@ -144,7 +146,9 @@ TEST(GrpcClientFromProto, ObjectSimple) {
 })""");
   EXPECT_STATUS_OK(expected);
 
-  auto actual = GrpcClient::FromProto(input);
+  auto actual = GrpcClient::FromProto(
+      input,
+      Options{}.set<RestEndpointOption>("https://storage.googleapis.com"));
   EXPECT_EQ(actual, *expected);
 }
 

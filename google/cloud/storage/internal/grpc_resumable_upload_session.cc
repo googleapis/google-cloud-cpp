@@ -141,7 +141,8 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
       return last_response_;
     }
     done_ = final_chunk;
-    last_response_ = GrpcClient::FromProto(*std::move(result));
+    last_response_ =
+        GrpcClient::FromProto(*std::move(result), client_->options());
     return last_response_;
   };
 
