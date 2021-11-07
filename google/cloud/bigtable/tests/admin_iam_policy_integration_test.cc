@@ -52,22 +52,12 @@ class AdminIAMPolicyIntegrationTest
 
 /// @test Verify that IAM Policy APIs work as expected.
 TEST_F(AdminIAMPolicyIntegrationTest, SetGetTestIamAPIsTest) {
-  using GC = bigtable::GcRule;
-  std::string const table_id = RandomTableId();
+  auto const table_id = bigtable::testing::TableTestEnvironment::table_id();
 
   // verify new table id in current table list
   auto previous_table_list =
       table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   ASSERT_STATUS_OK(previous_table_list);
-
-  // create table config
-  bigtable::TableConfig table_config(
-      {{"fam", GC::MaxNumVersions(5)},
-       {"foo", GC::MaxAge(std::chrono::hours(24))}},
-      {"a1000", "a2000", "b3000", "m5000"});
-
-  // create table
-  ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
 
   auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
       "roles/bigtable.reader", {"serviceAccount:" + service_account_})});
@@ -86,7 +76,6 @@ TEST_F(AdminIAMPolicyIntegrationTest, SetGetTestIamAPIsTest) {
   ASSERT_STATUS_OK(permission_set);
 
   EXPECT_EQ(2, permission_set->size());
-  EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
 }
 
 }  // namespace
