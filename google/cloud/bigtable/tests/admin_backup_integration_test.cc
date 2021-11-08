@@ -33,6 +33,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::ContainsOnce;
+using ::google::protobuf::util::TimeUtil;
 using ::testing::Contains;
 using ::testing::Not;
 namespace btadmin = ::google::bigtable::admin::v2;
@@ -63,73 +64,70 @@ class AdminBackupIntegrationTest
 /// expected.
 TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   auto const table_id = bigtable::testing::TableTestEnvironment::table_id();
+  auto const table_name =
+      bigtable::TableName(project_id(), instance_id(), table_id);
 
-  auto clusters_list =
-      instance_admin_->ListClusters(table_admin_->instance_id());
-  ASSERT_STATUS_OK(clusters_list);
-  std::string const backup_cluster_full_name =
-      clusters_list->clusters.begin()->name();
-  std::string const backup_cluster_id = backup_cluster_full_name.substr(
-      backup_cluster_full_name.rfind('/') + 1,
-      backup_cluster_full_name.size() - backup_cluster_full_name.rfind('/'));
-  std::string const backup_id = RandomBackupId();
-  std::string const backup_full_name =
-      backup_cluster_full_name + "/backups/" + backup_id;
+  auto clusters = instance_admin_->ListClusters(table_admin_->instance_id());
+  ASSERT_STATUS_OK(clusters);
+  auto const cluster_name = clusters->clusters.begin()->name();
+  auto const cluster_id =
+      cluster_name.substr(cluster_name.rfind('/') + 1,
+                          cluster_name.size() - cluster_name.rfind('/'));
+  auto const backup_id = RandomBackupId();
+  auto const backup_name = cluster_name + "/backups/" + backup_id;
 
-  // list backups to verify new backup id does not already exist
-  auto previous_backup_list = table_admin_->ListBackups({});
-  ASSERT_STATUS_OK(previous_backup_list);
-  // create backup
-  google::protobuf::Timestamp const expire_time =
-      google::protobuf::util::TimeUtil::GetCurrentTime() +
-      google::protobuf::util::TimeUtil::HoursToDuration(12);
+  // Create backup
+  google::protobuf::Timestamp expire_time =
+      TimeUtil::GetCurrentTime() + TimeUtil::HoursToDuration(12);
 
-  auto created_backup = table_admin_->CreateBackup(
-      {backup_cluster_id, backup_id, table_id,
+  auto backup = table_admin_->CreateBackup(
+      {cluster_id, backup_id, table_id,
        google::cloud::internal::ToChronoTimePoint(expire_time)});
-  ASSERT_STATUS_OK(created_backup);
-  EXPECT_EQ(created_backup->name(), backup_full_name);
+  ASSERT_STATUS_OK(backup);
+  EXPECT_EQ(backup->name(), backup_name);
 
-  // get backup to verify create
-  auto get_backup = table_admin_->GetBackup(backup_cluster_id, backup_id);
-  ASSERT_STATUS_OK(get_backup);
-  EXPECT_EQ(get_backup->name(), backup_full_name);
+  // List backups to verify new backup has been created
+  auto backups = table_admin_->ListBackups({});
+  ASSERT_STATUS_OK(backups);
+  EXPECT_THAT(BackupNames(*backups), Contains(backup_name));
 
-  // update backup
-  google::protobuf::Timestamp const updated_expire_time =
-      expire_time + google::protobuf::util::TimeUtil::HoursToDuration(12);
-  auto updated_backup = table_admin_->UpdateBackup(
-      {backup_cluster_id, backup_id,
-       google::cloud::internal::ToChronoTimePoint(updated_expire_time)});
+  // Get backup to verify create
+  backup = table_admin_->GetBackup(cluster_id, backup_id);
+  ASSERT_STATUS_OK(backup);
+  EXPECT_EQ(backup->name(), backup_name);
 
-  // get backup to verify update
-  auto get_updated_backup =
-      table_admin_->GetBackup(backup_cluster_id, backup_id);
-  ASSERT_STATUS_OK(get_updated_backup);
-  EXPECT_EQ(get_updated_backup->name(), backup_full_name);
-  EXPECT_EQ(get_updated_backup->expire_time(), updated_expire_time);
+  // Update backup
+  expire_time = expire_time + TimeUtil::HoursToDuration(12);
+  backup = table_admin_->UpdateBackup(
+      {cluster_id, backup_id,
+       google::cloud::internal::ToChronoTimePoint(expire_time)});
+  ASSERT_STATUS_OK(backup);
 
-  // delete table
+  // Verify the update
+  backup = table_admin_->GetBackup(cluster_id, backup_id);
+  ASSERT_STATUS_OK(backup);
+  EXPECT_EQ(backup->name(), backup_name);
+  EXPECT_EQ(backup->expire_time(), expire_time);
+
+  // Delete table
   EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
-  // List to verify it is no longer there
-  auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(current_table_list);
-  EXPECT_THAT(
-      TableNames(*current_table_list),
-      Not(Contains(table_admin_->instance_name() + "/tables/" + table_id)));
 
-  // restore table
-  auto restore_result =
-      table_admin_->RestoreTable({table_id, backup_cluster_id, backup_id});
-  EXPECT_STATUS_OK(restore_result);
-  current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(current_table_list);
-  EXPECT_THAT(
-      TableNames(*current_table_list),
-      ContainsOnce(table_admin_->instance_name() + "/tables/" + table_id));
+  // Verify the delete
+  auto tables = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
+  ASSERT_STATUS_OK(tables);
+  EXPECT_THAT(TableNames(*tables), Not(Contains(table_name)));
 
-  // delete backup
-  EXPECT_STATUS_OK(table_admin_->DeleteBackup(backup_cluster_id, backup_id));
+  // Restore table
+  auto table = table_admin_->RestoreTable({table_id, cluster_id, backup_id});
+  EXPECT_STATUS_OK(table);
+
+  // Verify the restore
+  tables = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
+  ASSERT_STATUS_OK(tables);
+  EXPECT_THAT(TableNames(*tables), ContainsOnce(table_name));
+
+  // Delete backup
+  EXPECT_STATUS_OK(table_admin_->DeleteBackup(cluster_id, backup_id));
 }
 
 }  // namespace

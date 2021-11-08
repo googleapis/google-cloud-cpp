@@ -17,7 +17,6 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -32,10 +31,10 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
+using ::testing::IsSupersetOf;
 using ::testing::Not;
 
 namespace btadmin = ::google::bigtable::admin::v2;
@@ -56,39 +55,33 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
 };
 
 TEST_F(AdminIntegrationTest, TableListWithMultipleTables) {
-  std::vector<std::string> expected_table_list;
-  auto table_config = bigtable::TableConfig();
+  std::vector<std::string> ids;
+  std::vector<std::string> expected_tables;
 
-  // Get the current list of tables.
-  auto previous_table_list =
-      table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(previous_table_list);
-
+  // Create tables
   int constexpr kTableCount = 5;
   for (int index = 0; index < kTableCount; ++index) {
     std::string table_id = RandomTableId();
-    EXPECT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
+    EXPECT_STATUS_OK(table_admin_->CreateTable(table_id, {}));
+    ids.emplace_back(table_id);
+    expected_tables.emplace_back(
+        bigtable::TableName(project_id(), instance_id(), std::move(table_id)));
+  }
+  auto tables = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
+  ASSERT_STATUS_OK(tables);
+  EXPECT_THAT(TableNames(*tables), IsSupersetOf(expected_tables));
 
-    expected_table_list.emplace_back(table_id);
-  }
-  auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(current_table_list);
   // Delete the tables so future tests have a clean slate.
-  for (auto const& table_id : expected_table_list) {
-    EXPECT_THAT(
-        TableNames(*current_table_list),
-        ContainsOnce(table_admin_->instance_name() + "/tables/" + table_id));
-  }
-  for (auto const& table_id : expected_table_list) {
+  for (auto const& table_id : ids) {
     EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
   }
-  current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(current_table_list);
-  // Delete the tables so future tests have a clean slate.
-  for (auto const& table_id : expected_table_list) {
-    EXPECT_THAT(
-        TableNames(*current_table_list),
-        Not(Contains(table_admin_->instance_name() + "/tables/" + table_id)));
+
+  // Verify the tables were deleted.
+  tables = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
+  ASSERT_STATUS_OK(tables);
+  auto names = TableNames(*tables);
+  for (auto const& t : expected_tables) {
+    EXPECT_THAT(names, Not(Contains(t)));
   }
 }
 
@@ -151,33 +144,33 @@ TEST_F(AdminIntegrationTest, DropAllRows) {
 /// @test Verify that `bigtable::TableAdmin` CRUD operations work as expected.
 TEST_F(AdminIntegrationTest, CreateListGetDeleteTable) {
   using GC = bigtable::GcRule;
-  std::string const table_id = RandomTableId();
+  auto const table_id = RandomTableId();
+  auto const table_name =
+      bigtable::TableName(project_id(), instance_id(), table_id);
 
-  // verify new table id in current table list
-  auto previous_table_list =
-      table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(previous_table_list);
-
-  // create table config
+  // Create table config
   bigtable::TableConfig table_config(
       {{"fam", GC::MaxNumVersions(5)},
        {"foo", GC::MaxAge(std::chrono::hours(24))}},
       {"a1000", "a2000", "b3000", "m5000"});
 
-  // create table
+  // Create table
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
   bigtable::Table table(data_client_, table_id);
 
-  // verify new table was created
-  auto table_result = table_admin_->GetTable(table_id);
-  ASSERT_STATUS_OK(table_result);
-  EXPECT_EQ(table.table_name(), table_result->name())
-      << "Mismatched names for GetTable(" << table_id
-      << "): " << table.table_name() << " != " << table_result->name();
+  // List tables
+  auto tables = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
+  ASSERT_STATUS_OK(tables);
+  EXPECT_THAT(TableNames(*tables), Contains(table_name));
 
-  // get table
+  // Get table
   auto table_detailed = table_admin_->GetTable(table_id, btadmin::Table::FULL);
   ASSERT_STATUS_OK(table_detailed);
+
+  // Verify new table was created
+  EXPECT_EQ(table.table_name(), table_detailed->name())
+      << "Mismatched names for GetTable(" << table_id
+      << "): " << table.table_name() << " != " << table_detailed->name();
   auto count_matching_families = [](btadmin::Table const& table,
                                     std::string const& name) {
     int count = 0;
@@ -191,7 +184,7 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTable) {
   EXPECT_EQ(1, count_matching_families(*table_detailed, "fam"));
   EXPECT_EQ(1, count_matching_families(*table_detailed, "foo"));
 
-  // update table
+  // Update table
   std::vector<bigtable::ColumnFamilyModification> column_modification_list = {
       bigtable::ColumnFamilyModification::Create(
           "newfam", GC::Intersection(GC::MaxAge(std::chrono::hours(7 * 24)),
@@ -209,14 +202,13 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTable) {
   EXPECT_TRUE(gc.has_intersection());
   EXPECT_EQ(2, gc.intersection().rules_size());
 
-  // delete table
+  // Delete table
   EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
+
   // List to verify it is no longer there
-  auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(current_table_list);
-  EXPECT_THAT(
-      TableNames(*current_table_list),
-      Not(Contains(table_admin_->instance_name() + "/tables/" + table_id)));
+  tables = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
+  ASSERT_STATUS_OK(tables);
+  EXPECT_THAT(TableNames(*tables), Not(Contains(table_name)));
 }
 
 /// @test Verify that `bigtable::TableAdmin` WaitForConsistencyCheck works as
@@ -224,16 +216,15 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTable) {
 TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
   // WaitForConsistencyCheck() only makes sense on a replicated table, we need
   // to create an instance with at least 2 clusters to test it.
-  auto project_id = bigtable::testing::TableTestEnvironment::project_id();
-  std::string id = bigtable::testing::TableTestEnvironment::RandomInstanceId();
-  std::string const random_table_id = RandomTableId();
+  auto const id = bigtable::testing::TableTestEnvironment::RandomInstanceId();
+  auto const random_table_id = RandomTableId();
 
   // Create a bigtable::InstanceAdmin and a bigtable::TableAdmin to create the
   // new instance and the new table.
-  auto instance_admin_client = bigtable::MakeInstanceAdminClient(project_id);
+  auto instance_admin_client = bigtable::MakeInstanceAdminClient(project_id());
   bigtable::InstanceAdmin instance_admin(instance_admin_client);
 
-  auto admin_client = bigtable::MakeAdminClient(project_id);
+  auto admin_client = bigtable::MakeAdminClient(project_id());
   bigtable::TableAdmin table_admin(admin_client, id);
 
   // The instance configuration is involved, it needs two clusters, which must
@@ -266,7 +257,7 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
   // We need to mutate the data in the table and then wait for those mutations
   // to propagate to both clusters. First create a `bigtable::Table` object.
-  auto data_client = bigtable::MakeDataClient(project_id, id);
+  auto data_client = bigtable::MakeDataClient(project_id(), id);
   bigtable::Table table(data_client, random_table_id);
 
   // Insert some cells into the table.
@@ -309,7 +300,9 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
                                          absl::nullopt};
   testing_util::ScopedLog log;
 
-  std::string const table_id = RandomTableId();
+  auto const table_id = RandomTableId();
+  auto const table_name =
+      bigtable::TableName(project_id(), instance_id(), table_id);
 
   std::shared_ptr<bigtable::AdminClient> admin_client =
       bigtable::MakeAdminClient(
@@ -318,30 +311,29 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   auto table_admin = absl::make_unique<bigtable::TableAdmin>(
       admin_client, bigtable::testing::TableTestEnvironment::instance_id());
 
-  // verify new table id in current table list
-  auto previous_table_list = table_admin->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(previous_table_list);
-
-  // create table config
+  // Create table config
   bigtable::TableConfig table_config(
       {{"fam", GC::MaxNumVersions(5)},
        {"foo", GC::MaxAge(std::chrono::hours(24))}},
       {"a1000", "a2000", "b3000", "m5000"});
 
-  // create table
+  // Create table
   ASSERT_STATUS_OK(table_admin->CreateTable(table_id, table_config));
   bigtable::Table table(data_client_, table_id);
 
-  // verify new table was created
-  auto table_result = table_admin->GetTable(table_id);
-  ASSERT_STATUS_OK(table_result);
-  EXPECT_EQ(table.table_name(), table_result->name())
-      << "Mismatched names for GetTable(" << table_id
-      << "): " << table.table_name() << " != " << table_result->name();
+  // List tables
+  auto tables = table_admin->ListTables(btadmin::Table::NAME_ONLY);
+  ASSERT_STATUS_OK(tables);
+  EXPECT_THAT(TableNames(*tables), Contains(table_name));
 
-  // get table
+  // Get table
   auto table_detailed = table_admin->GetTable(table_id, btadmin::Table::FULL);
   ASSERT_STATUS_OK(table_detailed);
+
+  // Verify new table was created
+  EXPECT_EQ(table.table_name(), table_detailed->name())
+      << "Mismatched names for GetTable(" << table_id
+      << "): " << table.table_name() << " != " << table_detailed->name();
   auto count_matching_families = [](btadmin::Table const& table,
                                     std::string const& name) {
     int count = 0;
@@ -355,7 +347,7 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   EXPECT_EQ(1, count_matching_families(*table_detailed, "fam"));
   EXPECT_EQ(1, count_matching_families(*table_detailed, "foo"));
 
-  // update table
+  // Update table
   std::vector<bigtable::ColumnFamilyModification> column_modification_list = {
       bigtable::ColumnFamilyModification::Create(
           "newfam", GC::Intersection(GC::MaxAge(std::chrono::hours(7 * 24)),
@@ -373,18 +365,17 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   EXPECT_TRUE(gc.has_intersection());
   EXPECT_EQ(2, gc.intersection().rules_size());
 
-  // delete table
+  // Delete table
   EXPECT_STATUS_OK(table_admin->DeleteTable(table_id));
+
   // List to verify it is no longer there
-  auto current_table_list = table_admin->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(current_table_list);
-  EXPECT_THAT(
-      TableNames(*current_table_list),
-      Not(Contains(table_admin->instance_name() + "/tables/" + table_id)));
+  tables = table_admin->ListTables(btadmin::Table::NAME_ONLY);
+  ASSERT_STATUS_OK(tables);
+  EXPECT_THAT(TableNames(*tables), Not(Contains(table_name)));
 
   auto const log_lines = log.ExtractLines();
-  EXPECT_THAT(log_lines, Contains(HasSubstr("ListTables")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("CreateTable")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ListTables")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetTable")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("ModifyColumnFamilies")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteTable")));

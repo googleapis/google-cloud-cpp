@@ -25,9 +25,6 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace btadmin = ::google::bigtable::admin::v2;
-namespace bigtable = ::google::cloud::bigtable;
-
 class AdminIAMPolicyIntegrationTest
     : public bigtable::testing::TableIntegrationTest {
  protected:
@@ -53,11 +50,6 @@ class AdminIAMPolicyIntegrationTest
 /// @test Verify that IAM Policy APIs work as expected.
 TEST_F(AdminIAMPolicyIntegrationTest, SetGetTestIamAPIsTest) {
   auto const table_id = bigtable::testing::TableTestEnvironment::table_id();
-
-  // verify new table id in current table list
-  auto previous_table_list =
-      table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(previous_table_list);
 
   auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
       "roles/bigtable.reader", {"serviceAccount:" + service_account_})});

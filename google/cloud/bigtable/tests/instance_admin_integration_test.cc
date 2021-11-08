@@ -38,7 +38,6 @@ namespace {
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::Contains;
-using ::testing::EndsWith;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Not;
@@ -102,7 +101,7 @@ bigtable::InstanceConfig IntegrationTestConfig(
         bigtable::InstanceConfig::DEVELOPMENT,
     int32_t serve_node = 0) {
   // The description cannot exceed 30 characters
-  auto display_name = ("IT " + instance_id).substr(0, 30);
+  auto const display_name = ("IT " + instance_id).substr(0, 30);
   auto cluster_config =
       bigtable::ClusterConfig(zone, serve_node, bigtable::ClusterConfig::HDD);
   bigtable::InstanceConfig config(instance_id, display_name,
@@ -113,27 +112,31 @@ bigtable::InstanceConfig IntegrationTestConfig(
 
 /// @test Verify that default InstanceAdmin::ListClusters works as expected.
 TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
-  std::string id1 =
+  auto const id_1 =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
-  std::string id2 =
+  auto const id_2 =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto const name_1 = bigtable::InstanceName(project_id_, id_1);
+  auto const name_2 = bigtable::InstanceName(project_id_, id_2);
 
-  auto instance_config1 = IntegrationTestConfig(
-      id1, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3);
-  auto instance_config2 = IntegrationTestConfig(
-      id2, zone_b_, bigtable::InstanceConfig::PRODUCTION, 3);
-  auto instance1_future = instance_admin_->CreateInstance(instance_config1);
-  auto instance2_future = instance_admin_->CreateInstance(instance_config2);
+  auto config_1 = IntegrationTestConfig(
+      id_1, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3);
+  auto config_2 = IntegrationTestConfig(
+      id_2, zone_b_, bigtable::InstanceConfig::PRODUCTION, 3);
+
+  auto instance_1_fut = instance_admin_->CreateInstance(config_1);
+  auto instance_2_fut = instance_admin_->CreateInstance(config_2);
+
   // Wait for instance creation
-  auto instance1 = instance1_future.get();
-  auto instance2 = instance2_future.get();
-  EXPECT_STATUS_OK(instance1);
-  EXPECT_STATUS_OK(instance2);
+  auto instance_1 = instance_1_fut.get();
+  auto instance_2 = instance_2_fut.get();
+  EXPECT_STATUS_OK(instance_1);
+  EXPECT_STATUS_OK(instance_2);
 
-  EXPECT_THAT(instance1->name(), HasSubstr(id1));
-  EXPECT_THAT(instance2->name(), HasSubstr(id2));
+  EXPECT_EQ(instance_1->name(), name_1);
+  EXPECT_EQ(instance_2->name(), name_2);
 
   auto clusters = instance_admin_->ListClusters();
   ASSERT_STATUS_OK(clusters);
@@ -143,33 +146,33 @@ TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
   }
   EXPECT_FALSE(clusters->clusters.empty());
 
-  EXPECT_STATUS_OK(instance_admin_->DeleteInstance(id2));
-  EXPECT_STATUS_OK(instance_admin_->DeleteInstance(id1));
+  EXPECT_STATUS_OK(instance_admin_->DeleteInstance(id_1));
+  EXPECT_STATUS_OK(instance_admin_->DeleteInstance(id_2));
 }
 
 /// @test Verify that AppProfile CRUD operations work as expected.
 TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
-  std::string instance_id =
+  auto const instance_id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto const instance_name = bigtable::InstanceName(project_id_, instance_id);
 
-  auto instance_config = IntegrationTestConfig(
-      instance_id, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3);
-  auto future = instance_admin_->CreateInstance(instance_config);
-  auto actual = future.get();
-  EXPECT_STATUS_OK(actual);
+  auto config = IntegrationTestConfig(instance_id, zone_a_,
+                                      bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance_fut = instance_admin_->CreateInstance(config);
   // Wait for instance creation
-  ASSERT_THAT(actual->name(), HasSubstr(instance_id));
+  auto instance = instance_fut.get();
+  ASSERT_STATUS_OK(instance);
+  ASSERT_EQ(instance->name(), instance_name);
 
-  std::string id1 =
+  auto const id_1 =
       "profile-" + google::cloud::internal::Sample(
                        generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
-  std::string id2 =
+  auto const id_2 =
       "profile-" + google::cloud::internal::Sample(
                        generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
-
-  auto initial_profiles = instance_admin_->ListAppProfiles(instance_id);
-  ASSERT_STATUS_OK(initial_profiles);
+  auto const name_1 = bigtable::AppProfileName(project_id_, instance_id, id_1);
+  auto const name_2 = bigtable::AppProfileName(project_id_, instance_id, id_2);
 
   // Simplify writing the rest of the test.
   auto profile_names = [](std::vector<btadmin::AppProfile> const& list) {
@@ -179,193 +182,177 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
     return names;
   };
 
-  EXPECT_THAT(profile_names(*initial_profiles),
-              Not(Contains(EndsWith("/appProfiles/" + id1))));
-  EXPECT_THAT(profile_names(*initial_profiles),
-              Not(Contains(EndsWith("/appProfiles/" + id2))));
+  auto profiles = instance_admin_->ListAppProfiles(instance_id);
+  ASSERT_STATUS_OK(profiles);
+  EXPECT_THAT(profile_names(*profiles), Not(Contains(name_1)));
+  EXPECT_THAT(profile_names(*profiles), Not(Contains(name_2)));
 
   auto profile_1 = instance_admin_->CreateAppProfile(
-      instance_id, bigtable::AppProfileConfig::MultiClusterUseAny(id1));
+      instance_id, bigtable::AppProfileConfig::MultiClusterUseAny(id_1));
   ASSERT_STATUS_OK(profile_1);
+  EXPECT_EQ(profile_1->name(), name_1);
+
   auto profile_2 = instance_admin_->CreateAppProfile(
-      instance_id, bigtable::AppProfileConfig::MultiClusterUseAny(id2));
+      instance_id, bigtable::AppProfileConfig::MultiClusterUseAny(id_2));
   ASSERT_STATUS_OK(profile_2);
+  EXPECT_EQ(profile_2->name(), name_2);
 
-  auto current_profiles = instance_admin_->ListAppProfiles(instance_id);
-  ASSERT_STATUS_OK(current_profiles);
-  EXPECT_THAT(profile_names(*current_profiles),
-              ContainsOnce(EndsWith("/appProfiles/" + id1)));
-  EXPECT_THAT(profile_names(*current_profiles),
-              ContainsOnce(EndsWith("/appProfiles/" + id2)));
+  profiles = instance_admin_->ListAppProfiles(instance_id);
+  ASSERT_STATUS_OK(profiles);
+  EXPECT_THAT(profile_names(*profiles), ContainsOnce(name_1));
+  EXPECT_THAT(profile_names(*profiles), ContainsOnce(name_2));
 
-  auto detail_1 = instance_admin_->GetAppProfile(instance_id, id1);
-  ASSERT_STATUS_OK(detail_1);
-  EXPECT_EQ(detail_1->name(), profile_1->name());
-  EXPECT_THAT(detail_1->name(), HasSubstr(instance_id));
-  EXPECT_THAT(detail_1->name(), HasSubstr(id1));
+  profile_1 = instance_admin_->GetAppProfile(instance_id, id_1);
+  ASSERT_STATUS_OK(profile_1);
+  EXPECT_EQ(profile_1->name(), name_1);
 
-  auto detail_2 = instance_admin_->GetAppProfile(instance_id, id2);
-  ASSERT_STATUS_OK(detail_2);
-  EXPECT_EQ(detail_2->name(), profile_2->name());
-  EXPECT_THAT(detail_2->name(), HasSubstr(instance_id));
-  EXPECT_THAT(detail_2->name(), HasSubstr(id2));
+  profile_2 = instance_admin_->GetAppProfile(instance_id, id_2);
+  ASSERT_STATUS_OK(profile_2);
+  EXPECT_EQ(profile_2->name(), name_2);
 
-  auto profile_updated_future = instance_admin_->UpdateAppProfile(
-      instance_id, id2,
-      bigtable::AppProfileUpdateConfig().set_description("new description"));
+  profile_2 =
+      instance_admin_
+          ->UpdateAppProfile(instance_id, id_2,
+                             bigtable::AppProfileUpdateConfig().set_description(
+                                 "new description"))
+          .get();
+  ASSERT_STATUS_OK(profile_2);
+  EXPECT_EQ("new description", profile_2->description());
 
-  auto update_2 = profile_updated_future.get();
-  auto detail_2_after_update = instance_admin_->GetAppProfile(instance_id, id2);
-  ASSERT_STATUS_OK(detail_2_after_update);
-  EXPECT_EQ("new description", update_2->description());
-  EXPECT_EQ("new description", detail_2_after_update->description());
+  profile_2 = instance_admin_->GetAppProfile(instance_id, id_2);
+  ASSERT_STATUS_OK(profile_2);
+  EXPECT_EQ("new description", profile_2->description());
 
-  ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(instance_id, id1, true));
-  current_profiles = instance_admin_->ListAppProfiles(instance_id);
-  ASSERT_STATUS_OK(current_profiles);
-  EXPECT_THAT(profile_names(*current_profiles),
-              Not(Contains(EndsWith("/appProfiles/" + id1))));
-  EXPECT_THAT(profile_names(*current_profiles),
-              ContainsOnce(EndsWith("/appProfiles/" + id2)));
+  ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(instance_id, id_1, true));
+  profiles = instance_admin_->ListAppProfiles(instance_id);
+  ASSERT_STATUS_OK(profiles);
+  EXPECT_THAT(profile_names(*profiles), Not(Contains(name_1)));
+  EXPECT_THAT(profile_names(*profiles), ContainsOnce(name_2));
 
-  ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(instance_id, id2, true));
-  current_profiles = instance_admin_->ListAppProfiles(instance_id);
-  ASSERT_STATUS_OK(current_profiles);
-  EXPECT_THAT(profile_names(*current_profiles),
-              Not(Contains(EndsWith("/appProfiles/" + id1))));
-  EXPECT_THAT(profile_names(*current_profiles),
-              Not(Contains(EndsWith("/appProfiles/" + id2))));
+  ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(instance_id, id_2, true));
+  profiles = instance_admin_->ListAppProfiles(instance_id);
+  ASSERT_STATUS_OK(profiles);
+  EXPECT_THAT(profile_names(*profiles), Not(Contains(name_1)));
+  EXPECT_THAT(profile_names(*profiles), Not(Contains(name_2)));
 
   ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
 }
 
 /// @test Verify that Instance CRUD operations work as expected.
 TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
-  std::string instance_id =
+  auto const instance_id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto const instance_name = bigtable::InstanceName(project_id_, instance_id);
 
-  // verify new instance id in list of instances
-  auto instances_before = instance_admin_->ListInstances();
-  ASSERT_STATUS_OK(instances_before);
-  ASSERT_TRUE(instances_before->failed_locations.empty());
-
-  // create instance
+  // Create instance
   auto config = IntegrationTestConfig(instance_id, zone_a_);
   auto instance = instance_admin_->CreateInstance(config).get();
   ASSERT_STATUS_OK(instance);
 
-  auto instances_current = instance_admin_->ListInstances();
-  ASSERT_STATUS_OK(instances_current);
-  ASSERT_TRUE(instances_current->failed_locations.empty());
-  EXPECT_TRUE(
-      IsInstancePresent(instances_current->instances, instance->name()));
+  // List instances
+  auto instances = instance_admin_->ListInstances();
+  ASSERT_STATUS_OK(instances);
+  ASSERT_TRUE(instances->failed_locations.empty());
+  EXPECT_TRUE(IsInstancePresent(instances->instances, instance->name()));
 
   // Get instance
-  auto instance_check = instance_admin_->GetInstance(instance_id);
-  ASSERT_STATUS_OK(instance_check);
-  auto const npos = std::string::npos;
-  EXPECT_NE(npos, instance_check->name().find(instance_admin_->project_name()));
-  EXPECT_NE(npos, instance_check->name().find(instance_id));
+  instance = instance_admin_->GetInstance(instance_id);
+  ASSERT_STATUS_OK(instance);
+  EXPECT_EQ(instance->name(), instance_name);
 
-  // update instance
-  google::cloud::StatusOr<btadmin::Instance> instance_copy;
-  instance_copy = *instance;
+  // Update instance
   bigtable::InstanceUpdateConfig instance_update_config(std::move(*instance));
   auto const updated_display_name = instance_id + " updated";
   instance_update_config.set_display_name(updated_display_name);
-  auto instance_after =
+  instance =
       instance_admin_->UpdateInstance(std::move(instance_update_config)).get();
-  auto instance_after_update = instance_admin_->GetInstance(instance_id);
-  ASSERT_STATUS_OK(instance_after_update);
-  EXPECT_EQ(updated_display_name, instance_after_update->display_name());
+  ASSERT_STATUS_OK(instance);
+
+  // Verify update
+  instance = instance_admin_->GetInstance(instance_id);
+  ASSERT_STATUS_OK(instance);
+  EXPECT_EQ(updated_display_name, instance->display_name());
 
   // Delete instance
   ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
-  auto instances_after_delete = instance_admin_->ListInstances();
-  ASSERT_STATUS_OK(instances_after_delete);
-  ASSERT_TRUE(instances_after_delete->failed_locations.empty());
-  EXPECT_TRUE(
-      IsInstancePresent(instances_current->instances, instance_copy->name()));
-  EXPECT_FALSE(
-      IsInstancePresent(instances_after_delete->instances, instance->name()));
+
+  // Verify delete
+  instances = instance_admin_->ListInstances();
+  ASSERT_STATUS_OK(instances);
+  ASSERT_TRUE(instances->failed_locations.empty());
+  EXPECT_FALSE(IsInstancePresent(instances->instances, instance_name));
 }
 
 /// @test Verify that cluster CRUD operations work as expected.
 TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
-  std::string instance_id =
+  auto const instance_id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
-  std::string const cluster_id = instance_id + "-cl2";
+  auto const cluster_id = instance_id + "-cl2";
+  auto const cluster_name =
+      bigtable::ClusterName(project_id_, instance_id, cluster_id);
 
-  // create instance prerequisites for cluster operations
-  auto instance_config = IntegrationTestConfig(
-      instance_id, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3);
-  auto instance_details =
-      instance_admin_->CreateInstance(instance_config).get();
-  ASSERT_STATUS_OK(instance_details);
+  // Create instance prerequisites for cluster operations
+  auto config = IntegrationTestConfig(instance_id, zone_a_,
+                                      bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance = instance_admin_->CreateInstance(config).get();
+  ASSERT_STATUS_OK(instance);
 
-  // create cluster
-  auto clusters_before = instance_admin_->ListClusters(instance_id);
-  ASSERT_STATUS_OK(clusters_before);
+  // Create cluster
   auto cluster_config =
       bigtable::ClusterConfig(zone_b_, 3, bigtable::ClusterConfig::HDD);
   auto cluster =
       instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
           .get();
-  auto clusters_after = instance_admin_->ListClusters(instance_id);
-  ASSERT_STATUS_OK(clusters_after);
-  EXPECT_FALSE(IsClusterPresent(clusters_before->clusters, cluster->name()));
-  EXPECT_TRUE(IsClusterPresent(clusters_after->clusters, cluster->name()));
+  ASSERT_STATUS_OK(cluster);
+  EXPECT_EQ(3, cluster->serve_nodes());
+
+  // Verify create
+  auto clusters = instance_admin_->ListClusters(instance_id);
+  ASSERT_STATUS_OK(clusters);
+  EXPECT_TRUE(IsClusterPresent(clusters->clusters, cluster->name()));
 
   // Get cluster
-  auto cluster_check = instance_admin_->GetCluster(instance_id, cluster_id);
-  ASSERT_STATUS_OK(cluster_check);
-  std::string cluster_name_prefix = instance_admin_->project_name() +
-                                    "/instances/" + instance_id + "/clusters/";
-  EXPECT_EQ(cluster_name_prefix + cluster_id, cluster_check->name());
+  cluster = instance_admin_->GetCluster(instance_id, cluster_id);
+  ASSERT_STATUS_OK(cluster);
+  EXPECT_EQ(cluster_name, cluster->name());
 
   // Update cluster
-  google::cloud::StatusOr<btadmin::Cluster> cluster_copy;
-  cluster_copy = *cluster;
-  // update the storage type
   cluster->set_serve_nodes(4);
   cluster->clear_state();
   bigtable::ClusterConfig updated_cluster_config(std::move(*cluster));
-  auto cluster_after_update =
+  cluster =
       instance_admin_->UpdateCluster(std::move(updated_cluster_config)).get();
-  auto check_cluster_after_update =
-      instance_admin_->GetCluster(instance_id, cluster_id);
-  ASSERT_STATUS_OK(check_cluster_after_update);
+  ASSERT_STATUS_OK(cluster);
 
-  EXPECT_EQ(3, cluster_copy->serve_nodes());
-  EXPECT_EQ(4, check_cluster_after_update->serve_nodes());
+  // Verify update
+  cluster = instance_admin_->GetCluster(instance_id, cluster_id);
+  ASSERT_STATUS_OK(cluster);
+  EXPECT_EQ(4, cluster->serve_nodes());
 
   // Delete cluster
   ASSERT_STATUS_OK(instance_admin_->DeleteCluster(instance_id, cluster_id));
-  auto clusters_after_delete = instance_admin_->ListClusters(instance_id);
-  ASSERT_STATUS_OK(clusters_after_delete);
+
+  // Verify delete
+  clusters = instance_admin_->ListClusters(instance_id);
+  ASSERT_STATUS_OK(clusters);
+  EXPECT_FALSE(IsClusterPresent(clusters->clusters, cluster_name));
+
+  // Delete instance
   ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
-  EXPECT_TRUE(IsClusterPresent(
-      clusters_after->clusters,
-      instance_details->name() + "/clusters/" + instance_id + "-cl2"));
-  EXPECT_FALSE(IsClusterPresent(
-      clusters_after_delete->clusters,
-      instance_details->name() + "/clusters/" + instance_id + "-cl2"));
 }
 
 /// @test Verify that IAM Policy APIs work as expected.
 TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
-  std::string instance_id =
+  auto const instance_id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
-  // create instance prerequisites for cluster operations
-  auto instance_config = IntegrationTestConfig(
-      instance_id, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3);
-  auto instance_details =
-      instance_admin_->CreateInstance(instance_config).get();
-  ASSERT_STATUS_OK(instance_details);
+  // Create instance prerequisites for cluster operations
+  auto config = IntegrationTestConfig(instance_id, zone_a_,
+                                      bigtable::InstanceConfig::PRODUCTION, 3);
+  ASSERT_STATUS_OK(instance_admin_->CreateInstance(config).get());
 
   auto iam_bindings = google::cloud::IamBindings(
       "roles/bigtable.reader", {"serviceAccount:" + service_account_});
@@ -390,16 +377,14 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
 
 /// @test Verify that IAM Policy Native APIs work as expected.
 TEST_F(InstanceAdminIntegrationTest, SetGetTestIamNativeAPIsTest) {
-  std::string instance_id =
+  auto const instance_id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
   // create instance prerequisites for cluster operations
-  auto instance_config = IntegrationTestConfig(
-      instance_id, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3);
-  auto instance_details =
-      instance_admin_->CreateInstance(instance_config).get();
-  ASSERT_STATUS_OK(instance_details);
+  auto config = IntegrationTestConfig(instance_id, zone_a_,
+                                      bigtable::InstanceConfig::PRODUCTION, 3);
+  ASSERT_STATUS_OK(instance_admin_->CreateInstance(config).get());
 
   auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
       "roles/bigtable.reader", {"serviceAccount:" + service_account_})});
@@ -430,59 +415,53 @@ TEST_F(InstanceAdminIntegrationTest,
   testing_util::ScopedEnvironment env = {"GOOGLE_CLOUD_CPP_ENABLE_TRACING",
                                          absl::nullopt};
   testing_util::ScopedLog log;
-  std::string instance_id =
+  auto const instance_id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto const instance_name = bigtable::InstanceName(project_id_, instance_id);
 
   auto instance_admin_client = bigtable::MakeInstanceAdminClient(
       project_id_, Options{}.set<TracingComponentsOption>({"rpc"}));
   auto instance_admin =
       absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
 
-  // verify new instance id in list of instances
-  auto instances_before = instance_admin->ListInstances();
-  ASSERT_STATUS_OK(instances_before);
-  ASSERT_TRUE(instances_before->failed_locations.empty());
-
-  // create instance
+  // Create instance
   auto config = IntegrationTestConfig(instance_id, zone_a_);
   auto instance = instance_admin->CreateInstance(config).get();
   ASSERT_STATUS_OK(instance);
 
-  auto instances_current = instance_admin->ListInstances();
-  ASSERT_STATUS_OK(instances_current);
-  ASSERT_TRUE(instances_current->failed_locations.empty());
-  EXPECT_TRUE(
-      IsInstancePresent(instances_current->instances, instance->name()));
+  // Verify create
+  auto instances = instance_admin->ListInstances();
+  ASSERT_STATUS_OK(instances);
+  ASSERT_TRUE(instances->failed_locations.empty());
+  EXPECT_TRUE(IsInstancePresent(instances->instances, instance->name()));
 
   // Get instance
-  auto instance_check = instance_admin->GetInstance(instance_id);
-  ASSERT_STATUS_OK(instance_check);
-  auto const npos = std::string::npos;
-  EXPECT_NE(npos, instance_check->name().find(instance_admin->project_name()));
-  EXPECT_NE(npos, instance_check->name().find(instance_id));
+  instance = instance_admin->GetInstance(instance_id);
+  ASSERT_STATUS_OK(instance);
+  EXPECT_EQ(instance->name(), instance_name);
 
-  // update instance
-  google::cloud::StatusOr<btadmin::Instance> instance_copy;
-  instance_copy = *instance;
+  // Update instance
   bigtable::InstanceUpdateConfig instance_update_config(std::move(*instance));
   auto const updated_display_name = instance_id + " updated";
   instance_update_config.set_display_name(updated_display_name);
-  auto instance_after =
+  instance =
       instance_admin->UpdateInstance(std::move(instance_update_config)).get();
-  auto instance_after_update = instance_admin->GetInstance(instance_id);
-  ASSERT_STATUS_OK(instance_after_update);
-  EXPECT_EQ(updated_display_name, instance_after_update->display_name());
+  ASSERT_STATUS_OK(instance);
+
+  // Verify update
+  instance = instance_admin->GetInstance(instance_id);
+  ASSERT_STATUS_OK(instance);
+  EXPECT_EQ(updated_display_name, instance->display_name());
 
   // Delete instance
   ASSERT_STATUS_OK(instance_admin->DeleteInstance(instance_id));
-  auto instances_after_delete = instance_admin->ListInstances();
-  ASSERT_STATUS_OK(instances_after_delete);
-  ASSERT_TRUE(instances_after_delete->failed_locations.empty());
-  EXPECT_TRUE(
-      IsInstancePresent(instances_current->instances, instance_copy->name()));
-  EXPECT_FALSE(
-      IsInstancePresent(instances_after_delete->instances, instance->name()));
+
+  // Verify delete
+  instances = instance_admin->ListInstances();
+  ASSERT_STATUS_OK(instances);
+  ASSERT_TRUE(instances->failed_locations.empty());
+  EXPECT_FALSE(IsInstancePresent(instances->instances, instance_name));
 
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListInstances")));
@@ -507,19 +486,18 @@ TEST_F(InstanceAdminIntegrationTest, CustomWorkers) {
                               std::chrono::seconds(1)}));
 
   // CompletionQueue `cq` is not being `Run()`, so this should never finish.
-  std::string instance_id =
+  auto const instance_id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
-  auto instance_details_fut =
-      instance_admin_->CreateInstance(IntegrationTestConfig(
-          instance_id, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3));
+  auto instance_fut = instance_admin_->CreateInstance(IntegrationTestConfig(
+      instance_id, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3));
 
   EXPECT_EQ(std::future_status::timeout,
-            instance_details_fut.wait_for(std::chrono::milliseconds(100)));
+            instance_fut.wait_for(std::chrono::milliseconds(100)));
 
   std::thread t([cq]() mutable { cq.Run(); });
-  auto instance_details = instance_details_fut.get();
-  ASSERT_STATUS_OK(instance_details);
+  auto instance = instance_fut.get();
+  ASSERT_STATUS_OK(instance);
   EXPECT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
 
   cq.CancelAll();
