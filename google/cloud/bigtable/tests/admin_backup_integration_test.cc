@@ -62,21 +62,7 @@ class AdminBackupIntegrationTest
 /// @test Verify that `bigtable::TableAdmin` Backup CRUD operations work as
 /// expected.
 TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
-  using GC = bigtable::GcRule;
-  std::string const table_id = RandomTableId();
-
-  // verify new table id in current table list
-  auto previous_table_list =
-      table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(previous_table_list);
-  // create table config
-  bigtable::TableConfig table_config(
-      {{"fam", GC::MaxNumVersions(5)},
-       {"foo", GC::MaxAge(std::chrono::hours(24))}},
-      {"a1000", "a2000", "b3000", "m5000"});
-
-  // create table
-  ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
+  auto const table_id = bigtable::testing::TableTestEnvironment::table_id();
 
   auto clusters_list =
       instance_admin_->ListClusters(table_admin_->instance_id());
@@ -144,15 +130,6 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
 
   // delete backup
   EXPECT_STATUS_OK(table_admin_->DeleteBackup(backup_cluster_id, backup_id));
-
-  // delete table
-  EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
-  // List to verify it is no longer there
-  current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(current_table_list);
-  EXPECT_THAT(
-      TableNames(*current_table_list),
-      Not(Contains(table_admin_->instance_name() + "/tables/" + table_id)));
 }
 
 }  // namespace
