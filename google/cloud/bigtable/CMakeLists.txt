@@ -359,8 +359,9 @@ endif ()
 
 # Only compile integration tests and benchmarks if testing is enabled.
 if (BUILD_TESTING)
-    add_subdirectory(tests)
+    add_subdirectory(admin/integration_tests)
     add_subdirectory(benchmarks)
+    add_subdirectory(tests)
 endif ()
 
 # Examples are enabled if possible, but package maintainers may want to disable
