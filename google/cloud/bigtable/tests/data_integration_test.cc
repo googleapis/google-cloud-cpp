@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <thread>
@@ -32,6 +33,7 @@ using ::std::chrono::microseconds;
 using ::std::chrono::milliseconds;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 
 using DataIntegrationTest =
     ::google::cloud::bigtable::testing::TableIntegrationTest;
@@ -515,13 +517,19 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
 }
 
 TEST_F(DataIntegrationTest, TableApplyWithLogging) {
+  // In our ci builds, we set GOOGLE_CLOUD_CPP_ENABLE_TRACING to log our tests,
+  // by default. We should unset this variable and create a fresh client in
+  // order to have a conclusive test.
+  testing_util::ScopedEnvironment env = {"GOOGLE_CLOUD_CPP_ENABLE_TRACING",
+                                         absl::nullopt};
   testing_util::ScopedLog log;
+  auto const table_id = testing::TableTestEnvironment::table_id();
 
   std::shared_ptr<bigtable::DataClient> data_client =
       bigtable::MakeDataClient(project_id(), instance_id(),
                                Options{}.set<TracingComponentsOption>({"rpc"}));
 
-  Table table(data_client, testing::TableTestEnvironment::table_id());
+  Table table(data_client, table_id);
 
   std::string const row_key = "row-key-1";
   std::vector<Cell> created{{row_key, kFamily4, "c0", 1000, "v1000"},
@@ -533,6 +541,12 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
   auto actual = ReadRows(table, Filter::PassAllFilter());
   CheckEqualUnordered(expected, actual);
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("MutateRow")));
+
+  // Verify that a normal client does not log.
+  auto no_logging_client =
+      Table(MakeDataClient(project_id(), instance_id()), table_id);
+  Apply(no_logging_client, row_key, created);
+  EXPECT_THAT(log.ExtractLines(), IsEmpty());
 }
 
 TEST(ConnectionRefresh, Disabled) {
