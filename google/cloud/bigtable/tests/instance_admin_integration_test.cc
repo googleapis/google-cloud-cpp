@@ -20,6 +20,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/integration_test.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
@@ -39,6 +40,7 @@ using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::Contains;
 using ::testing::EndsWith;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Not;
 namespace btadmin = ::google::bigtable::admin::v2;
 
@@ -422,6 +424,11 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamNativeAPIsTest) {
 /// @test Verify that Instance CRUD operations with logging work as expected.
 TEST_F(InstanceAdminIntegrationTest,
        CreateListGetDeleteInstanceTestWithLogging) {
+  // In our ci builds, we set GOOGLE_CLOUD_CPP_ENABLE_TRACING to log our tests,
+  // by default. We should unset this variable and create a fresh client in
+  // order to have a conclusive test.
+  testing_util::ScopedEnvironment env = {"GOOGLE_CLOUD_CPP_ENABLE_TRACING",
+                                         absl::nullopt};
   testing_util::ScopedLog log;
   std::string instance_id =
       "it-" + google::cloud::internal::Sample(
@@ -483,6 +490,11 @@ TEST_F(InstanceAdminIntegrationTest,
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetInstance")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncUpdateInstance")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteInstance")));
+
+  // Verify that a normal client does not log.
+  auto no_logging_client = InstanceAdmin(MakeInstanceAdminClient(project_id_));
+  (void)no_logging_client.ListInstances();
+  EXPECT_THAT(log.ExtractLines(), IsEmpty());
 }
 
 TEST_F(InstanceAdminIntegrationTest, CustomWorkers) {

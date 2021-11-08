@@ -18,6 +18,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/contains_once.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
@@ -34,6 +35,7 @@ namespace {
 using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Not;
 
 namespace btadmin = ::google::bigtable::admin::v2;
@@ -300,6 +302,11 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 /// @test Verify rpc logging for `bigtable::TableAdmin`
 TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   using GC = bigtable::GcRule;
+  // In our ci builds, we set GOOGLE_CLOUD_CPP_ENABLE_TRACING to log our tests,
+  // by default. We should unset this variable and create a fresh client in
+  // order to have a conclusive test.
+  testing_util::ScopedEnvironment env = {"GOOGLE_CLOUD_CPP_ENABLE_TRACING",
+                                         absl::nullopt};
   testing_util::ScopedLog log;
 
   std::string const table_id = RandomTableId();
@@ -381,7 +388,14 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetTable")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("ModifyColumnFamilies")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteTable")));
+
+  // Verify that a normal client does not log.
+  auto no_logging_client =
+      TableAdmin(MakeAdminClient(project_id()), instance_id());
+  (void)no_logging_client.ListTables(btadmin::Table::NAME_ONLY);
+  EXPECT_THAT(log.ExtractLines(), IsEmpty());
 }
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
