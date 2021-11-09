@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/instance_admin.h"
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/chrono_literals.h"
@@ -21,17 +21,13 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 class AdminIAMPolicyIntegrationTest
     : public bigtable::testing::TableIntegrationTest {
  protected:
-  std::shared_ptr<AdminClient> admin_client_;
-  std::unique_ptr<TableAdmin> table_admin_;
-  std::string service_account_;
-
   void SetUp() override {
     TableIntegrationTest::SetUp();
 
@@ -39,40 +35,43 @@ class AdminIAMPolicyIntegrationTest
                            "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT")
                            .value_or("");
     ASSERT_FALSE(service_account_.empty());
-
-    admin_client_ =
-        MakeAdminClient(testing::TableTestEnvironment::project_id());
-    table_admin_ = absl::make_unique<TableAdmin>(
-        admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
   }
+
+  std::string service_account_;
+  BigtableTableAdminClient client_ =
+      BigtableTableAdminClient(MakeBigtableTableAdminConnection());
 };
 
 /// @test Verify that IAM Policy APIs work as expected.
 TEST_F(AdminIAMPolicyIntegrationTest, SetGetTestIamAPIsTest) {
-  auto const table_id = bigtable::testing::TableTestEnvironment::table_id();
+  auto const instance_name =
+      bigtable::InstanceName(project_id(), instance_id());
+  auto const table_name =
+      bigtable::TableName(project_id(), instance_id(),
+                          bigtable::testing::TableTestEnvironment::table_id());
 
   auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
       "roles/bigtable.reader", {"serviceAccount:" + service_account_})});
 
-  auto initial_policy = table_admin_->SetIamPolicy(table_id, iam_policy);
+  auto initial_policy = client_.SetIamPolicy(table_name, iam_policy);
   ASSERT_STATUS_OK(initial_policy);
 
-  auto fetched_policy = table_admin_->GetIamPolicy(table_id);
+  auto fetched_policy = client_.GetIamPolicy(table_name);
   ASSERT_STATUS_OK(fetched_policy);
 
   EXPECT_EQ(initial_policy->version(), fetched_policy->version());
   EXPECT_EQ(initial_policy->etag(), fetched_policy->etag());
 
-  auto permission_set = table_admin_->TestIamPermissions(
-      table_id, {"bigtable.tables.get", "bigtable.tables.readRows"});
+  auto permission_set = client_.TestIamPermissions(
+      table_name, {"bigtable.tables.get", "bigtable.tables.readRows"});
   ASSERT_STATUS_OK(permission_set);
 
-  EXPECT_EQ(2, permission_set->size());
+  EXPECT_EQ(2, permission_set->permissions_size());
 }
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable
+}  // namespace bigtable_admin
 }  // namespace cloud
 }  // namespace google
 
