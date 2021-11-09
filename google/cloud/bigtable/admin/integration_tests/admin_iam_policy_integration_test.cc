@@ -38,8 +38,7 @@ class AdminIAMPolicyIntegrationTest
   }
 
   std::string service_account_;
-  BigtableTableAdminClient client_ =
-      BigtableTableAdminClient(MakeBigtableTableAdminConnection());
+  BigtableTableAdminClient client_ = bigtable::testing::TableAdminClient();
 };
 
 /// @test Verify that IAM Policy APIs work as expected.

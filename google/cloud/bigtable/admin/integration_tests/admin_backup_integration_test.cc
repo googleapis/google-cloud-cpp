@@ -70,8 +70,7 @@ class AdminBackupIntegrationTest
     return names;
   }
 
-  BigtableTableAdminClient client_ =
-      BigtableTableAdminClient(MakeBigtableTableAdminConnection());
+  BigtableTableAdminClient client_ = bigtable::testing::TableAdminClient();
 };
 
 protobuf::FieldMask Mask(std::string const& path) {

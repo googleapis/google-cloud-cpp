@@ -64,8 +64,7 @@ class TableAdminIntegrationTest
     return names;
   }
 
-  BigtableTableAdminClient client_ =
-      BigtableTableAdminClient(MakeBigtableTableAdminConnection());
+  BigtableTableAdminClient client_ = bigtable::testing::TableAdminClient();
 };
 
 TEST_F(TableAdminIntegrationTest, TableListWithMultipleTables) {
