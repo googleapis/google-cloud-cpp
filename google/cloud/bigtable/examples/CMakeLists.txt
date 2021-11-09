@@ -51,9 +51,10 @@ if (BUILD_TESTING)
                                      bigtable_examples_common_test.cc)
 
     include(CreateBazelConfig)
-    export_list_to_bazel("bigtable_examples.bzl" "bigtable_examples")
+    export_list_to_bazel("bigtable_examples.bzl" "bigtable_examples" YEAR
+                         "2018")
     export_list_to_bazel("bigtable_examples_unit_tests.bzl"
-                         "bigtable_examples_unit_tests")
+                         "bigtable_examples_unit_tests" YEAR "2018")
     create_bazel_config(bigtable_examples_common)
 
     foreach (fname ${bigtable_examples_unit_tests})

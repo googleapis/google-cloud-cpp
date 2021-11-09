@@ -569,7 +569,7 @@ if (BUILD_TESTING)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("storage_client_unit_tests.bzl"
-                         "storage_client_unit_tests")
+                         "storage_client_unit_tests" YEAR "2018")
 
     add_subdirectory(tests)
 endif ()
@@ -613,7 +613,7 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
         # Export the list of unit tests so the Bazel BUILD file can pick it up.
         export_list_to_bazel("storage_client_grpc_unit_tests.bzl"
-                             "storage_client_grpc_unit_tests")
+                             "storage_client_grpc_unit_tests" YEAR "2018")
     endif ()
 endif (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 

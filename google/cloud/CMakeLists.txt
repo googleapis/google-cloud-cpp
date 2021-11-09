@@ -253,7 +253,7 @@ if (BUILD_TESTING)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_common_unit_tests.bzl"
-                         "google_cloud_cpp_common_unit_tests" YEAR 2018)
+                         "google_cloud_cpp_common_unit_tests" YEAR "2018")
 
     foreach (fname ${google_cloud_cpp_common_unit_tests})
         google_cloud_cpp_add_executable(target "common" "${fname}")
@@ -527,11 +527,12 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
 
         # Export the list of unit and integration tests so the Bazel BUILD file
         # can pick them up.
-        export_list_to_bazel("google_cloud_cpp_grpc_utils_unit_tests.bzl"
-                             "google_cloud_cpp_grpc_utils_unit_tests" YEAR 2019)
+        export_list_to_bazel(
+            "google_cloud_cpp_grpc_utils_unit_tests.bzl"
+            "google_cloud_cpp_grpc_utils_unit_tests" YEAR "2019")
         export_list_to_bazel(
             "google_cloud_cpp_grpc_utils_integration_tests.bzl"
-            "google_cloud_cpp_grpc_utils_integration_tests" YEAR 2021)
+            "google_cloud_cpp_grpc_utils_integration_tests" YEAR "2021")
 
         foreach (fname ${google_cloud_cpp_grpc_utils_unit_tests})
             google_cloud_cpp_grpc_utils_add_test("${fname}" "")

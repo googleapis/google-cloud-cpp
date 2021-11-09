@@ -315,7 +315,7 @@ if (BUILD_TESTING)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("bigtable_client_unit_tests.bzl"
-                         "bigtable_client_unit_tests")
+                         "bigtable_client_unit_tests" YEAR "2018")
 
     # Append this unit test after exporting to Bazel because it requires special
     # treatment

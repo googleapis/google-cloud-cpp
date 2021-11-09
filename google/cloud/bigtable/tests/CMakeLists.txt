@@ -30,7 +30,7 @@ set(bigtable_client_integration_tests
 
 include(CreateBazelConfig)
 export_list_to_bazel("bigtable_client_integration_tests.bzl"
-                     "bigtable_client_integration_tests")
+                     "bigtable_client_integration_tests" YEAR "2018")
 
 foreach (fname ${bigtable_client_integration_tests})
     google_cloud_cpp_add_executable(target "bigtable" "${fname}")

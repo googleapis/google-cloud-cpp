@@ -75,7 +75,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     endforeach ()
 
     export_list_to_bazel("storage_benchmark_programs.bzl"
-                         "storage_benchmark_programs" YEAR 2019)
+                         "storage_benchmark_programs" YEAR "2019")
 
     # List the unit tests, then setup the targets and dependencies.
     set(storage_benchmarks_unit_tests
@@ -115,5 +115,5 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     endforeach ()
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("storage_benchmarks_unit_tests.bzl"
-                         "storage_benchmarks_unit_tests" YEAR 2019)
+                         "storage_benchmarks_unit_tests" YEAR "2019")
 endif ()

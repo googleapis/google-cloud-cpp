@@ -53,7 +53,7 @@ function (pubsub_client_define_samples)
     endforeach ()
 
     export_list_to_bazel("pubsub_samples_unit_tests.bzl"
-                         "pubsub_samples_unit_tests" YEAR 2020)
+                         "pubsub_samples_unit_tests" YEAR "2020")
 
     set(pubsub_client_integration_samples # cmake-format: sort
                                           samples.cc)
