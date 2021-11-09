@@ -121,4 +121,4 @@ target_link_libraries(storage_error_injection_integration_test
 
 include(CreateBazelConfig)
 export_list_to_bazel("storage_client_integration_tests.bzl"
-                     "storage_client_integration_tests")
+                     "storage_client_integration_tests" YEAR "2018")

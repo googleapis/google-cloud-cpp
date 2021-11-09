@@ -59,9 +59,9 @@ if (BUILD_TESTING)
         storage_client_mock_samples.cc storage_examples_common_test.cc)
 
     include(CreateBazelConfig)
-    export_list_to_bazel("storage_examples.bzl" "storage_examples")
+    export_list_to_bazel("storage_examples.bzl" "storage_examples" YEAR "2018")
     export_list_to_bazel("storage_examples_unit_tests.bzl"
-                         "storage_examples_unit_tests")
+                         "storage_examples_unit_tests" YEAR "2018")
     create_bazel_config(storage_examples_common)
 
     # While it is tempting create these targets using a function or a loop, we

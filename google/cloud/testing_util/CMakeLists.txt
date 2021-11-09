@@ -75,7 +75,7 @@ if (BUILD_TESTING)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_testing_unit_tests.bzl"
-                         "google_cloud_cpp_testing_unit_tests" YEAR 2018)
+                         "google_cloud_cpp_testing_unit_tests" YEAR "2018")
 
     foreach (fname ${google_cloud_cpp_testing_unit_tests})
         google_cloud_cpp_add_executable(target "common_testing" "${fname}")
@@ -119,7 +119,7 @@ if (BUILD_TESTING)
                                                  is_proto_equal_test.cc)
 
     export_list_to_bazel("google_cloud_cpp_testing_grpc_unit_tests.bzl"
-                         "google_cloud_cpp_testing_grpc_unit_tests" YEAR 2020)
+                         "google_cloud_cpp_testing_grpc_unit_tests" YEAR "2020")
 
     foreach (fname ${google_cloud_cpp_testing_grpc_unit_tests})
         google_cloud_cpp_add_executable(target "common_testing_grpc" "${fname}")

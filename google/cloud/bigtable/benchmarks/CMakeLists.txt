@@ -54,7 +54,7 @@ if (BUILD_TESTING)
         mutation_batcher_throughput_options_test.cc
         random_mutation_test.cc)
     export_list_to_bazel("bigtable_benchmarks_unit_tests.bzl"
-                         "bigtable_benchmarks_unit_tests" YEAR 2020)
+                         "bigtable_benchmarks_unit_tests" YEAR "2020")
 
     foreach (fname ${bigtable_benchmarks_unit_tests})
         google_cloud_cpp_add_executable(target "bigtable_benchmarks" "${fname}")
@@ -90,7 +90,7 @@ set(bigtable_benchmark_programs
     read_sync_vs_async_benchmark.cc
     scan_throughput_benchmark.cc)
 export_list_to_bazel("bigtable_benchmark_programs.bzl"
-                     "bigtable_benchmark_programs")
+                     "bigtable_benchmark_programs" YEAR "2018")
 
 foreach (fname ${bigtable_benchmark_programs})
     google_cloud_cpp_add_executable(target "bigtable" "${fname}")
