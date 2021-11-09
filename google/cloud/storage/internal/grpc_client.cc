@@ -72,10 +72,13 @@ Options DefaultOptionsGrpc(Options options) {
   if (!options.has<EndpointOption>()) {
     options.set<EndpointOption>("storage.googleapis.com");
   }
-  auto env = google::cloud::internal::GetEnv("CLOUD_STORAGE_GRPC_ENDPOINT");
-  if (env.has_value()) {
+  using google::cloud::internal::GetEnv;
+  auto env = GetEnv("CLOUD_STORAGE_GRPC_ENDPOINT");
+  if (env.has_value()) options.set<EndpointOption>(*env);
+  if (GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT")) {
+    // The emulator does not support HTTPS or authentication, use insecure
+    // (sometimes called "anonymous") credentials, which disable SSL.
     options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-    options.set<EndpointOption>(*env);
   }
   if (!options.has<GrpcNumChannelsOption>()) {
     options.set<GrpcNumChannelsOption>(DefaultGrpcNumChannels());
