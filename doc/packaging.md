@@ -177,7 +177,7 @@ We need a recent version of Abseil.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -326,7 +326,7 @@ We need a recent version of Abseil.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -477,7 +477,7 @@ We need a recent version of Abseil.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -613,7 +613,7 @@ We need a recent version of Abseil.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -767,7 +767,7 @@ Abseil>=20210324.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -892,7 +892,7 @@ We need a recent version of Abseil.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -1035,7 +1035,7 @@ We need a recent version of Abseil.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -1220,7 +1220,7 @@ We need a recent version of Abseil.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -1396,7 +1396,7 @@ We need a recent version of Abseil.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
