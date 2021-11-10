@@ -147,7 +147,11 @@ TEST_F(InstanceAdminClientTest, InstanceReadOperations) {
 
 /// @test Verify the basic CRUD operations for instances work.
 TEST_F(InstanceAdminClientTest, InstanceCRUDOperations) {
-  if (!RunSlowInstanceTests()) GTEST_SKIP();
+  if (!Emulator() && !RunSlowInstanceTests()) {
+    GTEST_SKIP() << "skipping slow instance tests; set "
+                 << "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=instance"
+                 << " to override";
+  }
 
   std::string instance_id = spanner_testing::RandomInstanceName(generator_);
   Instance in(ProjectId(), instance_id);
@@ -172,9 +176,7 @@ TEST_F(InstanceAdminClientTest, InstanceCRUDOperations) {
   EXPECT_EQ(instance->display_name(), "test-display-name");
   EXPECT_NE(instance->node_count(), 0);
   EXPECT_EQ(instance->config(), instance_config);
-  if (!Emulator() || instance->labels_size() != 0) {
-    EXPECT_EQ(instance->labels().at("label-key"), "label-value");
-  }
+  EXPECT_EQ(instance->labels().at("label-key"), "label-value");
 
   // Then update the instance
   instance = client_
@@ -222,8 +224,6 @@ TEST_F(InstanceAdminClientTest, InstanceConfig) {
 }
 
 TEST_F(InstanceAdminClientTest, InstanceIam) {
-  if (Emulator()) GTEST_SKIP();
-
   Instance in(ProjectId(), InstanceId());
   ASSERT_FALSE(in.project_id().empty());
   ASSERT_FALSE(in.instance_id().empty());
@@ -233,6 +233,9 @@ TEST_F(InstanceAdminClientTest, InstanceIam) {
                    .empty());
 
   auto actual_policy = client_.GetIamPolicy(in.FullName());
+  if (Emulator() && actual_policy.status().code() == StatusCode::kUnimplemented) {
+    GTEST_SKIP() << "emulator does not support IAM policies";
+  }
   ASSERT_STATUS_OK(actual_policy);
   EXPECT_FALSE(actual_policy->etag().empty());
 
