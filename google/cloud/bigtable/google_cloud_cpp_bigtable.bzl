@@ -61,7 +61,6 @@ google_cloud_cpp_bigtable_hdrs = [
     "internal/async_bulk_apply.h",
     "internal/async_longrunning_op.h",
     "internal/async_poll_op.h",
-    "internal/async_retry_multi_page.h",
     "internal/async_retry_op.h",
     "internal/async_retry_unary_rpc_and_poll.h",
     "internal/async_row_sampler.h",
