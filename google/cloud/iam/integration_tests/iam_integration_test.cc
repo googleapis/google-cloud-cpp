@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/iam/iam_client.h"
+#include "google/cloud/iam/iam_connection_idempotency_policy.h"
 #include "google/cloud/iam/iam_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -35,6 +36,7 @@ namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::Idempotency;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
@@ -48,6 +50,118 @@ bool RunQuotaLimitedTests() {
           .value_or("") == "yes";
   return run_quota_limited_tests;
 }
+
+class IAMIntegrationTestIdempotencyPolicy
+    : public IAMConnectionIdempotencyPolicy {
+ public:
+  ~IAMIntegrationTestIdempotencyPolicy() override = default;
+  /// Create a new copy of this object.
+  std::unique_ptr<IAMConnectionIdempotencyPolicy> clone() const override {
+    return absl::make_unique<IAMIntegrationTestIdempotencyPolicy>(*this);
+  }
+  Idempotency ListServiceAccounts(
+      google::iam::admin::v1::ListServiceAccountsRequest) override {
+    return Idempotency::kIdempotent;
+  }
+  Idempotency GetServiceAccount(
+      google::iam::admin::v1::GetServiceAccountRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+  Idempotency CreateServiceAccount(
+      google::iam::admin::v1::CreateServiceAccountRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+  Idempotency PatchServiceAccount(
+      google::iam::admin::v1::PatchServiceAccountRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+  Idempotency DeleteServiceAccount(
+      google::iam::admin::v1::DeleteServiceAccountRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+  Idempotency UndeleteServiceAccount(
+      google::iam::admin::v1::UndeleteServiceAccountRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+  Idempotency EnableServiceAccount(
+      google::iam::admin::v1::EnableServiceAccountRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+  Idempotency DisableServiceAccount(
+      google::iam::admin::v1::DisableServiceAccountRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+  Idempotency ListServiceAccountKeys(
+      google::iam::admin::v1::ListServiceAccountKeysRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+  Idempotency GetServiceAccountKey(
+      google::iam::admin::v1::GetServiceAccountKeyRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+  Idempotency CreateServiceAccountKey(
+      google::iam::admin::v1::CreateServiceAccountKeyRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+  Idempotency UploadServiceAccountKey(
+      google::iam::admin::v1::UploadServiceAccountKeyRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+  Idempotency DeleteServiceAccountKey(
+      google::iam::admin::v1::DeleteServiceAccountKeyRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+  Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+  Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+  Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+  Idempotency QueryGrantableRoles(
+      google::iam::admin::v1::QueryGrantableRolesRequest) override {
+    return Idempotency::kIdempotent;
+  }
+  Idempotency ListRoles(google::iam::admin::v1::ListRolesRequest) override {
+    return Idempotency::kIdempotent;
+  }
+  Idempotency GetRole(google::iam::admin::v1::GetRoleRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+  Idempotency CreateRole(
+      google::iam::admin::v1::CreateRoleRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+  Idempotency UpdateRole(
+      google::iam::admin::v1::UpdateRoleRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+  Idempotency DeleteRole(
+      google::iam::admin::v1::DeleteRoleRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+  Idempotency UndeleteRole(
+      google::iam::admin::v1::UndeleteRoleRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+  Idempotency QueryTestablePermissions(
+      google::iam::admin::v1::QueryTestablePermissionsRequest) override {
+    return Idempotency::kIdempotent;
+  }
+  Idempotency QueryAuditableServices(
+      google::iam::admin::v1::QueryAuditableServicesRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+  Idempotency LintPolicy(
+      google::iam::admin::v1::LintPolicyRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+};
 
 class IamIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
@@ -91,8 +205,13 @@ Options TestFailureOptions() {
               .clone());
 }
 
+Options TestSuccessOptions() {
+  return Options{}.set<IAMConnectionIdempotencyPolicyOption>(
+      std::make_shared<IAMIntegrationTestIdempotencyPolicy>());
+}
+
 TEST_F(IamIntegrationTest, ListServiceAccountsSuccess) {
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   auto expected_service_account = absl::StrCat(
       "projects/", iam_project_, "/serviceAccounts/", iam_service_account_);
   auto response = client.ListServiceAccounts("projects/" + iam_project_);
@@ -115,7 +234,7 @@ TEST_F(IamIntegrationTest, ListServiceAccountsFailure) {
 }
 
 TEST_F(IamIntegrationTest, GetServiceAccountSuccess) {
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   auto response = client.GetServiceAccount("projects/-/serviceAccounts/" +
                                            iam_service_account_);
   ASSERT_STATUS_OK(response);
@@ -142,7 +261,7 @@ TEST_F(IamIntegrationTest, CreateServiceAccountFailure) {
 
 TEST_F(IamIntegrationTest, ServiceAccountCrudSuccess) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   std::string account_id = "sa-crud-test";
   auto service_account_inferred_name =
       absl::StrCat("projects/-/serviceAccounts/", account_id, "@", iam_project_,
@@ -220,7 +339,7 @@ TEST_F(IamIntegrationTest, DeleteServiceAccountKeyFailure) {
 
 TEST_F(IamIntegrationTest, ServiceAccountKeyCrudSuccess) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   auto create_response = client.CreateServiceAccountKey(
       "projects/-/serviceAccounts/" + iam_service_account_,
       ::google::iam::admin::v1::ServiceAccountPrivateKeyType::
@@ -261,7 +380,7 @@ TEST_F(IamIntegrationTest, ServiceAccountKeyCrudSuccess) {
 }
 
 TEST_F(IamIntegrationTest, GetIamPolicySuccess) {
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   auto response = client.GetIamPolicy(absl::StrCat(
       "projects/", iam_project_, "/serviceAccounts/", iam_service_account_));
   EXPECT_STATUS_OK(response);
@@ -296,7 +415,7 @@ TEST_F(IamIntegrationTest, SetIamPolicyFailure) {
 
 TEST_F(IamIntegrationTest, SetIamPolicyUpdaterSuccess) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   auto response = client.SetIamPolicy(
       absl::StrCat("projects/", iam_project_, "/serviceAccounts/",
                    iam_service_account_),
@@ -314,7 +433,7 @@ TEST_F(IamIntegrationTest, SetIamPolicyUpdaterCancelled) {
 }
 
 TEST_F(IamIntegrationTest, TestIamPermissionsSuccess) {
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   auto response = client.TestIamPermissions(
       absl::StrCat("projects/", iam_project_, "/serviceAccounts/",
                    iam_service_account_),
@@ -331,7 +450,7 @@ TEST_F(IamIntegrationTest, TestIamPermissionsFailure) {
 }
 
 TEST_F(IamIntegrationTest, QueryGrantableRolesSuccess) {
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   auto response = client.QueryGrantableRoles(
       absl::StrCat("//iam.googleapis.com/projects/", iam_project_,
                    "/serviceAccounts/", iam_service_account_));
@@ -351,7 +470,7 @@ TEST_F(IamIntegrationTest, QueryGrantableRolesFailure) {
 }
 
 TEST_F(IamIntegrationTest, ListServiceAccountsProtoSuccess) {
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   auto expected_service_account = absl::StrCat(
       "projects/", iam_project_, "/serviceAccounts/", iam_service_account_);
   ::google::iam::admin::v1::ListServiceAccountsRequest request;
@@ -377,7 +496,7 @@ TEST_F(IamIntegrationTest, ListServiceAccountsProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, GetServiceAccountProtoSuccess) {
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   ::google::iam::admin::v1::GetServiceAccountRequest request;
   request.set_name("projects/-/serviceAccounts/" + iam_service_account_);
   auto response = client.GetServiceAccount(request);
@@ -396,7 +515,7 @@ TEST_F(IamIntegrationTest, GetServiceAccountProtoFailure) {
 
 TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   std::string account_id = "sa-crud-proto-test";
   auto service_account_inferred_name =
       absl::StrCat("projects/-/serviceAccounts/", account_id, "@", iam_project_,
@@ -537,7 +656,7 @@ TEST_F(IamIntegrationTest, DeleteServiceAccountKeyProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, GetIamPolicyProtoSuccess) {
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   ::google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(absl::StrCat("projects/", iam_project_,
                                     "/serviceAccounts/", iam_service_account_));
@@ -556,7 +675,7 @@ TEST_F(IamIntegrationTest, GetIamPolicyProtoFailure) {
 
 TEST_F(IamIntegrationTest, SetIamPolicyProtoSuccess) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   ::google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(absl::StrCat("projects/", iam_project_,
                                     "/serviceAccounts/", iam_service_account_));
@@ -575,7 +694,7 @@ TEST_F(IamIntegrationTest, SetIamPolicyProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, TestIamPermissionsProtoSuccess) {
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   ::google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(absl::StrCat("projects/", iam_project_,
                                     "/serviceAccounts/", iam_service_account_));
@@ -594,7 +713,7 @@ TEST_F(IamIntegrationTest, TestIamPermissionsProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, QueryGrantableRolesProtoSuccess) {
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   ::google::iam::admin::v1::QueryGrantableRolesRequest request;
   request.set_full_resource_name(absl::StrCat("//iam.googleapis.com/projects/",
                                               iam_project_, "/serviceAccounts/",
@@ -676,7 +795,7 @@ TEST_F(IamIntegrationTest, UndeleteRoleProtoFailure) {
 
 TEST_F(IamIntegrationTest, RoleProtoCrudSuccess) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   auto const parent_project = "projects/" + iam_project_;
   // Clean up any roles leaked in previous executions.
   ::google::iam::admin::v1::ListRolesRequest list_request;
@@ -747,7 +866,7 @@ TEST_F(IamIntegrationTest, RoleProtoCrudSuccess) {
 }
 
 TEST_F(IamIntegrationTest, QueryTestablePermissionsProtoSuccess) {
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   ::google::iam::admin::v1::QueryTestablePermissionsRequest request;
   request.set_full_resource_name(absl::StrCat("//iam.googleapis.com/projects/",
                                               iam_project_, "/serviceAccounts/",
@@ -770,7 +889,7 @@ TEST_F(IamIntegrationTest, QueryTestablePermissionsProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, QueryAuditableServicesProtoSuccess) {
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   ::google::iam::admin::v1::QueryAuditableServicesRequest request;
   request.set_full_resource_name(absl::StrCat("//iam.googleapis.com/projects/",
                                               iam_project_, "/serviceAccounts/",
@@ -789,7 +908,7 @@ TEST_F(IamIntegrationTest, QueryAuditableServicesProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, LintPolicyProtoSuccess) {
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
   ::google::iam::admin::v1::LintPolicyRequest request;
   ::google::type::Expr condition;
   condition.set_expression("request.time < timestamp('2000-01-01T00:00:00Z')");
