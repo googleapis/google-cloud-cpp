@@ -233,7 +233,8 @@ TEST_F(InstanceAdminClientTest, InstanceIam) {
                    .empty());
 
   auto actual_policy = client_.GetIamPolicy(in.FullName());
-  if (Emulator() && actual_policy.status().code() == StatusCode::kUnimplemented) {
+  if (Emulator() &&
+      actual_policy.status().code() == StatusCode::kUnimplemented) {
     GTEST_SKIP() << "emulator does not support IAM policies";
   }
   ASSERT_STATUS_OK(actual_policy);
