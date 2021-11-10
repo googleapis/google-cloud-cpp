@@ -119,7 +119,6 @@ add_library(
     internal/async_bulk_apply.h
     internal/async_longrunning_op.h
     internal/async_poll_op.h
-    internal/async_retry_multi_page.h
     internal/async_retry_op.h
     internal/async_retry_unary_rpc_and_poll.h
     internal/async_row_sampler.cc
@@ -278,7 +277,6 @@ if (BUILD_TESTING)
         internal/async_bulk_apply_test.cc
         internal/async_longrunning_op_test.cc
         internal/async_poll_op_test.cc
-        internal/async_retry_multi_page_test.cc
         internal/async_retry_unary_rpc_and_poll_test.cc
         internal/async_row_sampler_test.cc
         internal/bulk_mutator_test.cc
