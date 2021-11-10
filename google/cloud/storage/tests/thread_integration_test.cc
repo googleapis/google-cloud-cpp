@@ -110,7 +110,7 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   ASSERT_STATUS_OK(meta);
   EXPECT_EQ(bucket_name, meta->name());
 
-  // clamp the thread count to the [8, 16] range. Sadly, `std::clamp` is a C++17
+  // Clamp the thread count to the [8, 32] range. Sadly, `std::clamp` is a C++17
   // feature.
   auto const thread_count =
       (std::min)(32U, (std::max)(8U, std::thread::hardware_concurrency()));
