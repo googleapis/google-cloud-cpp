@@ -20,6 +20,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
+#include <algorithm>
 #include <future>
 #include <thread>
 
@@ -109,7 +110,10 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   ASSERT_STATUS_OK(meta);
   EXPECT_EQ(bucket_name, meta->name());
 
-  auto const thread_count = (std::max)(std::thread::hardware_concurrency(), 8U);
+  // clamp the thread count to the [8, 16] range. Sadly, `std::clamp` is a C++17
+  // feature.
+  auto const thread_count =
+      (std::min)(32U, (std::max)(8U, std::thread::hardware_concurrency()));
   auto const object_count = 100 * thread_count;
   std::vector<std::string> objects(object_count);
   std::generate(objects.begin(), objects.end(),
