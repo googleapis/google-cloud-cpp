@@ -40,11 +40,11 @@ def google_cloud_cpp_deps():
     if "com_google_absl" not in native.existing_rules():
         http_archive(
             name = "com_google_absl",
-            strip_prefix = "abseil-cpp-20210324.2",
+            strip_prefix = "abseil-cpp-20211102.0",
             urls = [
-                "https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz",
+                "https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz",
             ],
-            sha256 = "59b862f50e710277f8ede96f083a5bb8d7c9595376146838b9580be90374ee1f",
+            sha256 = "dcf71b9cba8dc0ca9940c4b316a0c796be8fab42b070bb6b7cab62b48f0e66c4",
         )
 
     # Load a version of googletest that we know works.
