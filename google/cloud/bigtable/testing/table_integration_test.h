@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_TABLE_INTEGRATION_TEST_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_TABLE_INTEGRATION_TEST_H
 
-#include "google/cloud/bigtable/admin_client.h"
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/cell.h"
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/table.h"
@@ -30,6 +30,8 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace testing {
+
+bigtable_admin::BigtableTableAdminClient TableAdminClient();
 
 /// Store the project and instance captured from the command-line arguments.
 class TableTestEnvironment : public ::testing::Environment {
@@ -177,8 +179,6 @@ class TableIntegrationTest
     return names;
   }
 
-  std::shared_ptr<bigtable::AdminClient> admin_client_;
-  std::unique_ptr<bigtable::TableAdmin> table_admin_;
   std::shared_ptr<bigtable::DataClient> data_client_;
 };
 
