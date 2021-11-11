@@ -103,6 +103,9 @@ int main(int argc, char** argv) {
                       googleapis_commit_hash);
     args.emplace_back("--cpp_codegen_opt=copyright_year=" +
                       service.initial_copyright_year());
+    for (auto const& omit_service : service.omitted_services()) {
+      args.emplace_back("--cpp_codegen_opt=omit_service=" + omit_service);
+    }
     for (auto const& omit_rpc : service.omitted_rpcs()) {
       args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc);
     }

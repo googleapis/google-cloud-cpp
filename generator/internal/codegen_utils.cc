@@ -87,7 +87,7 @@ void ProcessArgCopyrightYear(
   }
 }
 
-void ProcessRepeatedRpcs(
+void ProcessRepeated(
     std::string const& single_arg, std::string const& grouped_arg,
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
   using Pair = std::pair<std::string, std::string>;
@@ -105,9 +105,14 @@ void ProcessRepeatedRpcs(
   }
 }
 
+void ProcessArgOmitService(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  ProcessRepeated("omit_service", "omitted_services", command_line_args);
+}
+
 void ProcessArgOmitRpc(
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
-  ProcessRepeatedRpcs("omit_rpc", "omitted_rpcs", command_line_args);
+  ProcessRepeated("omit_rpc", "omitted_rpcs", command_line_args);
 }
 
 void ProcessArgServiceEndpointEnvVar(
@@ -136,7 +141,7 @@ void ProcessArgEmulatorEndpointEnvVar(
 
 void ProcessArgGenerateAsyncRpc(
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
-  ProcessRepeatedRpcs("gen_async_rpc", "gen_async_rpcs", command_line_args);
+  ProcessRepeated("gen_async_rpc", "gen_async_rpcs", command_line_args);
 }
 
 }  // namespace
@@ -228,6 +233,7 @@ ProcessCommandLineArgs(std::string const& parameters) {
   if (!status.ok()) return status;
 
   ProcessArgCopyrightYear(command_line_args);
+  ProcessArgOmitService(command_line_args);
   ProcessArgOmitRpc(command_line_args);
   ProcessArgServiceEndpointEnvVar(command_line_args);
   ProcessArgEmulatorEndpointEnvVar(command_line_args);
