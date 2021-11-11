@@ -251,7 +251,9 @@ TEST_P(GrpcIntegrationTest, FieldFilter) {
 }
 
 INSTANTIATE_TEST_SUITE_P(GrpcIntegrationMediaTest, GrpcIntegrationTest,
-                         ::testing::Values("media"));
+                         // TODO(#7257) - restore production tests
+                         //     ::testing::Values("media"));
+                         ::testing::Values("none"));
 
 }  // namespace
 }  // namespace internal
