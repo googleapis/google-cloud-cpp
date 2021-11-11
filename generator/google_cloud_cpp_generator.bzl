@@ -32,7 +32,6 @@ google_cloud_cpp_generator_hdrs = [
     "internal/options_generator.h",
     "internal/predicate_utils.h",
     "internal/printer.h",
-    "internal/retry_policy_generator.h",
     "internal/scaffold_generator.h",
     "internal/service_code_generator.h",
     "internal/stub_factory_generator.h",
@@ -53,8 +52,11 @@ google_cloud_cpp_generator_srcs = [
     "internal/option_defaults_generator.cc",
     "internal/options_generator.cc",
     "internal/predicate_utils.cc",
+<<<<<<< HEAD
     "internal/retry_policy_generator.cc",
     "internal/scaffold_generator.cc",
+=======
+>>>>>>> 6b677979d (cleanup(generator): remove unused class)
     "internal/service_code_generator.cc",
     "internal/stub_factory_generator.cc",
     "internal/stub_generator.cc",
