@@ -599,12 +599,17 @@ void AutoRun(std::vector<std::string> const& argv) {
 
     auto sample_service_account_key_name =
         CreateServiceAccountKey({service_account_name});
-    try {
-      GetServiceAccountKey({sample_service_account_key_name});
-    } catch (std::runtime_error const&) {
-      // Service Account Key may not be usable for up to 60s after creation.
-      std::this_thread::sleep_for(std::chrono::seconds(61));
-      GetServiceAccountKey({sample_service_account_key_name});
+
+    // Service Account Key may not be usable for up to 60s after creation.
+    // Plus some unknown amount of time for propagation.
+    for (auto backoff : {65, 30, 30, 30, 30, 0}) {
+      try {
+        GetServiceAccountKey({sample_service_account_key_name});
+        break;
+      } catch (std::runtime_error const&) {
+        if (backoff == 0) throw;  // retries exhausted
+        std::this_thread::sleep_for(std::chrono::seconds(backoff));
+      }
     }
     DeleteServiceAccountKey({sample_service_account_key_name});
 
