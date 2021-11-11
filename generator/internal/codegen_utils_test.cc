@@ -249,6 +249,17 @@ TEST(ProcessCommandLineArgs, EmulatorEndpointEnvVar) {
   EXPECT_THAT(*result, Contains(Pair("service_endpoint_env_var", "")));
 }
 
+TEST(ProcessCommandLineArgs, ProcessArgOmitService) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/spanner/,googleapis_commit_hash=foo"
+      ",omit_service=Omitted1"
+      ",omit_service=Omitted2");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result,
+              Contains(Pair("omitted_services", AllOf(HasSubstr("Omitted1"),
+                                                      HasSubstr("Omitted2")))));
+}
+
 TEST(ProcessCommandLineArgs, ProcessArgOmitRpc) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/spanner/,googleapis_commit_hash=foo"

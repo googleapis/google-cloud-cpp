@@ -19,6 +19,7 @@ service {
   service_proto_path: "google/cloud/bigquery/storage/v1/storage.proto"
   product_path: "google/cloud/bigquery"
   initial_copyright_year: "2021"
+  omitted_services: ["BigQueryWrite"]
 }
 
 # Bigtable

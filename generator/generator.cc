@@ -14,7 +14,9 @@
 
 #include "generator/generator.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_split.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/generator_interface.h"
@@ -49,11 +51,21 @@ bool Generator::Generate(google::protobuf::FileDescriptor const* file,
     return false;
   }
 
+  std::vector<std::string> omitted_services;
+  for (auto const& arg : *command_line_args) {
+    if (arg.first == "omitted_services") {
+      omitted_services = absl::StrSplit(arg.second, ',');
+    }
+  }
+
   std::vector<ServiceGenerator> services;
   services.reserve(file->service_count());
   for (int i = 0; i < file->service_count(); ++i) {
-    services.push_back(generator_internal::MakeGenerators(
-        file->service(i), context, *command_line_args));
+    auto const* service = file->service(i);
+    if (!internal::Contains(omitted_services, service->name())) {
+      services.push_back(generator_internal::MakeGenerators(
+          service, context, *command_line_args));
+    }
   }
 
   std::vector<std::future<Status>> tasks;
