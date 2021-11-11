@@ -603,7 +603,8 @@ void AutoRun(std::vector<std::string> const& argv) {
       GetServiceAccountKey({sample_service_account_key_name});
     } catch (std::runtime_error const&) {
       // Service Account Key may not be usable for up to 60s after creation.
-      std::this_thread::sleep_for(std::chrono::seconds(61));
+      // Plus some unknown amount of time for propagation.
+      std::this_thread::sleep_for(std::chrono::seconds(71));
       GetServiceAccountKey({sample_service_account_key_name});
     }
     DeleteServiceAccountKey({sample_service_account_key_name});
