@@ -32,6 +32,7 @@ cmake -GNinja \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+  -DGOOGLE_CLOUD_CPP_ENABLE="bigtable;bigquery;iam;logging;pubsub;spanner;storage;experimental-storage-grpc;pubsublite" \
   -S . -B cmake-out
 cmake --build cmake-out
 cmake --install cmake-out --component google_cloud_cpp_development
