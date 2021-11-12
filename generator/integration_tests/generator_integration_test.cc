@@ -100,7 +100,7 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
     googleapis_commit_hash_ = "59f97e6044a1275f83427ab7962a154c00d915b5";
     copyright_year_ = CurrentCopyrightYear();
     omit_rpc1_ = "Omitted1";
-    omit_rpc2_ = "Omitted2";
+    omit_rpc2_ = "GoldenKitchenSink.Omitted2";
     service_endpoint_env_var_ = "GOLDEN_KITCHEN_SINK_ENDPOINT";
     emulator_endpoint_env_var_ = "GOLDEN_KITCHEN_SINK_EMULATOR_HOST";
     gen_async_rpc1_ = "GetDatabase";
