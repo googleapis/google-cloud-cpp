@@ -318,6 +318,30 @@ TEST(RowStreamIterator, RangeForLoop) {
   EXPECT_EQ(product, 30);
 }
 
+TEST(RowStreamIterator, MovedFromValueOk) {
+  std::vector<Row> rows;
+  rows.emplace_back(MakeTestRow({{"num", Value(1)}}));
+  rows.emplace_back(MakeTestRow({{"num", Value(2)}}));
+
+  RowRange range(MakeRowStreamIteratorSource(rows));
+  auto it = range.begin();
+  auto end = range.end();
+
+  EXPECT_NE(it, end);
+  auto row = std::move(*it);
+  EXPECT_STATUS_OK(row);
+  EXPECT_EQ(1, row->size());
+
+  ++it;
+  EXPECT_NE(it, end);
+  row = std::move(*it);
+  EXPECT_STATUS_OK(row);
+  EXPECT_EQ(1, row->size());
+
+  ++it;
+  EXPECT_EQ(it, end);
+}
+
 TEST(TupleStreamIterator, Basics) {
   std::vector<Row> rows;
   rows.emplace_back(MakeTestRow(1, "foo", true));
@@ -401,6 +425,32 @@ TEST(TupleStreamIterator, Error) {
 
   ++it;  // Due to the previous error, jumps straight to "end"
   EXPECT_EQ(it, it);
+  EXPECT_EQ(it, end);
+}
+
+TEST(TupleStreamIterator, MovedFromValueOk) {
+  std::vector<Row> rows;
+  rows.emplace_back(MakeTestRow({{"num", Value(42)}}));
+  rows.emplace_back(MakeTestRow({{"num", Value(42)}}));
+
+  RowRange range(MakeRowStreamIteratorSource(rows));
+  using RowType = std::tuple<std::int64_t>;
+  using TupleIterator = TupleStreamIterator<RowType>;
+  auto it = TupleIterator(range.begin(), range.end());
+  auto end = TupleIterator();
+
+  EXPECT_NE(it, end);
+  auto tup = std::move(*it);
+  EXPECT_STATUS_OK(tup);
+  EXPECT_EQ(42, std::get<0>(*tup));
+
+  ++it;
+  EXPECT_NE(it, end);
+  tup = std::move(*it);
+  EXPECT_STATUS_OK(tup);
+  EXPECT_EQ(42, std::get<0>(*tup));
+
+  ++it;
   EXPECT_EQ(it, end);
 }
 
