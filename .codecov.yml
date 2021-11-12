@@ -5,5 +5,15 @@ coverage:
     project: off
     patch: off
 
+# Ignoring paths (see https://docs.codecov.com/docs/ignoring-paths)
+#
+# Ignore generated code, produced using...
+#   awk '/product_path:/ { print "  -", $2; }' \
+#     generator/generator_config.textproto | sort -u
+#
 ignore:
-  - "google/cloud/bigtable/admin/*"
+  - "google/cloud/bigquery"
+  - "google/cloud/bigtable/admin"
+  - "google/cloud/iam"
+  - "google/cloud/logging"
+  - "google/cloud/spanner/admin"
