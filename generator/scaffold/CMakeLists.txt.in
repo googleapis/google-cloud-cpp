@@ -123,8 +123,7 @@ install(
 
 google_cloud_cpp_install_proto_library_protos("google_cloud_cpp_@NAME@_protos"
                                               "${EXTERNAL_GOOGLEAPIS_SOURCE}")
-google_cloud_cpp_install_headers("google_cloud_cpp_@NAME@_protos"
-                                 "include/google/cloud/@NAME@")
+google_cloud_cpp_install_proto_library_headers("google_cloud_cpp_@NAME@_protos")
 google_cloud_cpp_install_headers("google_cloud_cpp_@NAME@"
                                  "include/google/cloud/@NAME@")
 google_cloud_cpp_install_headers("google_cloud_cpp_@NAME@_mocks"

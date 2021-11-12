@@ -140,8 +140,8 @@ install(
 
 google_cloud_cpp_install_proto_library_protos(
     "google_cloud_cpp_pubsublite_protos" "${EXTERNAL_GOOGLEAPIS_SOURCE}")
-google_cloud_cpp_install_headers("google_cloud_cpp_pubsublite_protos"
-                                 "include/google/cloud/pubsublite")
+google_cloud_cpp_install_proto_library_headers(
+    "google_cloud_cpp_pubsublite_protos")
 google_cloud_cpp_install_headers("google_cloud_cpp_pubsublite"
                                  "include/google/cloud/pubsublite")
 google_cloud_cpp_install_headers("google_cloud_cpp_pubsublite_mocks"
