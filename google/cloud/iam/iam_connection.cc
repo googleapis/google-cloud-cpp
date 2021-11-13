@@ -21,6 +21,7 @@
 #include "google/cloud/iam/internal/iam_option_defaults.h"
 #include "google/cloud/iam/internal/iam_stub_factory.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -658,6 +659,8 @@ class IAMConnectionImpl : public IAMConnection {
 }  // namespace
 
 std::shared_ptr<IAMConnection> MakeIAMConnection(Options options) {
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 IAMPolicyOptionList>(options, __func__);
   options = iam_internal::IAMDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = iam_internal::CreateDefaultIAMStub(background->cq(), options);

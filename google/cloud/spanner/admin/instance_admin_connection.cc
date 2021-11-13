@@ -21,6 +21,7 @@
 #include "google/cloud/spanner/admin/internal/instance_admin_option_defaults.h"
 #include "google/cloud/spanner/admin/internal/instance_admin_stub_factory.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -361,6 +362,9 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     Options options) {
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 InstanceAdminPolicyOptionList>(options,
+                                                                __func__);
   options =
       spanner_admin_internal::InstanceAdminDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
