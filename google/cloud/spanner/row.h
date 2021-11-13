@@ -463,17 +463,12 @@ TupleStream<Tuple> StreamOf(RowRange&& range) {
  * a loop.
  *
  * @snippet samples.cc get-singular-row
- *
- * @warning Due to the fact that a `RowStreamIterator` is an input iterator,
- *     this function may consume the first element in the range, even in cases
- *     where an error is returned. But again, this function should not be used
- *     if @p range might contain multiple rows.
  */
 template <typename RowRange>
-auto GetSingularRow(RowRange&& range) -> typename std::decay<
-    decltype(*std::forward<RowRange>(range).begin())>::type {
-  auto const e = std::forward<RowRange>(range).end();
-  auto it = std::forward<RowRange>(range).begin();
+auto GetSingularRow(RowRange range) ->
+    typename std::decay<decltype(*range.begin())>::type {
+  auto const e = range.end();
+  auto it = range.begin();
   if (it == e) return Status(StatusCode::kInvalidArgument, "no rows");
   auto row = std::move(*it);
   if (++it != e) return Status(StatusCode::kInvalidArgument, "too many rows");
