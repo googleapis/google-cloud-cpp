@@ -290,7 +290,8 @@ class RowStreamIterator {
   friend bool operator!=(RowStreamIterator const&, RowStreamIterator const&);
 
  private:
-  value_type row_;
+  bool row_ok_{true};
+  value_type row_{Row{}};
   Source source_;  // nullptr means "end"
 };
 
@@ -343,7 +344,7 @@ class TupleStreamIterator {
   const_pointer operator->() const { return &tup_; }
 
   TupleStreamIterator& operator++() {
-    if (!tup_) {
+    if (!tup_ok_) {
       it_ = end_;
       return *this;
     }
@@ -372,8 +373,10 @@ class TupleStreamIterator {
   void ParseTuple() {
     if (it_ == end_) return;
     tup_ = *it_ ? std::move(*it_)->template get<Tuple>() : it_->status();
+    tup_ok_ = tup_.ok();
   }
 
+  bool tup_ok_{false};
   value_type tup_;
   RowStreamIterator it_;
   RowStreamIterator end_;

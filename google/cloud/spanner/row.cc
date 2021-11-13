@@ -80,16 +80,17 @@ bool operator==(Row const& a, Row const& b) {
 RowStreamIterator::RowStreamIterator() = default;
 
 RowStreamIterator::RowStreamIterator(Source source)
-    : row_(Row{}), source_(std::move(source)) {
+    : source_(std::move(source)) {
   ++*this;
 }
 
 RowStreamIterator& RowStreamIterator::operator++() {
-  if (!row_) {
+  if (!row_ok_) {
     source_ = nullptr;  // Last row was an error; become "end"
     return *this;
   }
   row_ = source_();
+  row_ok_ = row_.ok();
   if (row_ && row_->size() == 0) {
     source_ = nullptr;  // No more Rows to consume; become "end"
     return *this;
