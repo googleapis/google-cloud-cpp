@@ -21,6 +21,7 @@
 #include "google/cloud/spanner/admin/internal/database_admin_option_defaults.h"
 #include "google/cloud/spanner/admin/internal/database_admin_stub_factory.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -592,6 +593,9 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     Options options) {
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 DatabaseAdminPolicyOptionList>(options,
+                                                                __func__);
   options =
       spanner_admin_internal::DatabaseAdminDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

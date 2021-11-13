@@ -21,6 +21,7 @@
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_option_defaults.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_stub_factory.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -504,6 +505,9 @@ class BigtableTableAdminConnectionImpl : public BigtableTableAdminConnection {
 
 std::shared_ptr<BigtableTableAdminConnection> MakeBigtableTableAdminConnection(
     Options options) {
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 BigtableTableAdminPolicyOptionList>(options,
+                                                                     __func__);
   options = bigtable_admin_internal::BigtableTableAdminDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

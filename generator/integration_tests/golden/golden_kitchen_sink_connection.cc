@@ -21,6 +21,7 @@
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_option_defaults.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub_factory.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/resumable_streaming_read_rpc.h"
@@ -219,6 +220,8 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
 
 std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
     Options options) {
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+      GoldenKitchenSinkPolicyOptionList>(options, __func__);
   options = golden_internal::GoldenKitchenSinkDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

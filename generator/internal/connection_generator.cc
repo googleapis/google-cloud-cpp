@@ -205,7 +205,8 @@ Status ConnectionGenerator::GenerateCc() {
   CcLocalIncludes(
       {vars("connection_header_path"), vars("options_header_path"),
        vars("option_defaults_header_path"), vars("stub_factory_header_path"),
-       "google/cloud/background_threads.h", "google/cloud/grpc_options.h",
+       "google/cloud/background_threads.h", "google/cloud/common_options.h",
+       "google/cloud/grpc_options.h",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : "",
        HasLongrunningMethod()
            ? "google/cloud/internal/async_long_running_operation.h"
@@ -550,6 +551,8 @@ $connection_class_name$::Async$method_name$(
   CcPrint(R"""(
 std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
     Options options) {
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+      $service_name$PolicyOptionList>(options, __func__);
   options = $product_internal_namespace$::$service_name$DefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

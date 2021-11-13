@@ -21,6 +21,7 @@
 #include "google/cloud/logging/internal/logging_service_v2_stub_factory.h"
 #include "google/cloud/logging/logging_service_v2_options.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -241,6 +242,9 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
 
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
     Options options) {
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 LoggingServiceV2PolicyOptionList>(options,
+                                                                   __func__);
   options =
       logging_internal::LoggingServiceV2DefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();

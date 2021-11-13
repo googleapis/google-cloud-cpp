@@ -15,6 +15,7 @@
 #include "generator/integration_tests/golden/golden_kitchen_sink_connection.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/golden_kitchen_sink_options.h"
 #include "generator/integration_tests/golden/mocks/mock_golden_kitchen_sink_stub.h"
@@ -31,6 +32,8 @@ using ::google::cloud::golden_internal::MockGoldenKitchenSinkStub;
 using ::google::cloud::golden_internal::MockTailLogEntriesStreamingReadRpc;
 using ::testing::AtLeast;
 using ::testing::ByMove;
+using ::testing::Contains;
+using ::testing::ContainsRegex;
 using ::testing::ElementsAre;
 using ::testing::Return;
 
@@ -293,6 +296,17 @@ TEST(GoldenKitchenSinkConnectionTest, ListServiceAccountKeysPermanentError) {
   ::google::test::admin::database::v1::ListServiceAccountKeysRequest request;
   auto response = conn->ListServiceAccountKeys(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+}
+
+TEST(GoldenKitchenSinkConnectionTest, CheckExpectedOptions) {
+  struct UnexpectedOption {
+    using Type = int;
+  };
+  testing_util::ScopedLog log;
+  auto opts = Options{}.set<UnexpectedOption>({});
+  auto conn = MakeGoldenKitchenSinkConnection(std::move(opts));
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(ContainsRegex("Unexpected option.+UnexpectedOption")));
 }
 
 }  // namespace

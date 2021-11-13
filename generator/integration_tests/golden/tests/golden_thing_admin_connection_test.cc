@@ -16,6 +16,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/golden_thing_admin_options.h"
 #include "generator/integration_tests/golden/mocks/mock_golden_thing_admin_stub.h"
@@ -35,6 +36,8 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::AtLeast;
+using ::testing::Contains;
+using ::testing::ContainsRegex;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -1325,6 +1328,17 @@ TEST(GoldenThingAdminClientTest, AsyncDropDatabaseCancel) {
                                AllOf(HasSubstr("Error in non-idempotent"),
                                      HasSubstr("AsyncDropDatabase"),
                                      HasSubstr("try again"))));
+}
+
+TEST(GoldenThingAdminConnectionTest, CheckExpectedOptions) {
+  struct UnexpectedOption {
+    using Type = int;
+  };
+  testing_util::ScopedLog log;
+  auto opts = Options{}.set<UnexpectedOption>({});
+  auto conn = MakeGoldenThingAdminConnection(std::move(opts));
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(ContainsRegex("Unexpected option.+UnexpectedOption")));
 }
 
 }  // namespace

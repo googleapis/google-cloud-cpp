@@ -21,6 +21,7 @@
 #include "google/cloud/bigquery/internal/bigquery_read_option_defaults.h"
 #include "google/cloud/bigquery/internal/bigquery_read_stub_factory.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -144,6 +145,9 @@ class BigQueryReadConnectionImpl : public BigQueryReadConnection {
 
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
     Options options) {
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 BigQueryReadPolicyOptionList>(options,
+                                                               __func__);
   options = bigquery_internal::BigQueryReadDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = bigquery_internal::CreateDefaultBigQueryReadStub(background->cq(),
