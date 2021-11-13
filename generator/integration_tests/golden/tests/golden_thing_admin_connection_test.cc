@@ -66,7 +66,7 @@ google::longrunning::Operation CreateStartingOperation() {
 }
 
 /// @test Verify that we can list databases in multiple pages.
-TEST(GoldenThingAdminClientTest, ListDatabases) {
+TEST(GoldenThingAdminConnectionTest, ListDatabases) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   std::string const expected_parent =
       "projects/test-project/instances/test-instance";
@@ -127,7 +127,7 @@ TEST(GoldenThingAdminClientTest, ListDatabases) {
               ::testing::ElementsAre("db-1", "db-2", "db-3", "db-4", "db-5"));
 }
 
-TEST(GoldenThingAdminClientTest, ListDatabasesPermanentFailure) {
+TEST(GoldenThingAdminConnectionTest, ListDatabasesPermanentFailure) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListDatabases)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -140,7 +140,7 @@ TEST(GoldenThingAdminClientTest, ListDatabasesPermanentFailure) {
   EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
 }
 
-TEST(GoldenThingAdminClientTest, ListDatabasesTooManyFailures) {
+TEST(GoldenThingAdminConnectionTest, ListDatabasesTooManyFailures) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListDatabases)
       .Times(AtLeast(2))
@@ -155,7 +155,7 @@ TEST(GoldenThingAdminClientTest, ListDatabasesTooManyFailures) {
 }
 
 /// @test Verify that successful case works.
-TEST(GoldenThingAdminClientTest, CreateDatabaseSuccess) {
+TEST(GoldenThingAdminConnectionTest, CreateDatabaseSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncCreateDatabase)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
@@ -187,7 +187,7 @@ TEST(GoldenThingAdminClientTest, CreateDatabaseSuccess) {
   EXPECT_EQ("test-database", db->name());
 }
 
-TEST(GoldenThingAdminClientTest, CreateDatabaseCancel) {
+TEST(GoldenThingAdminConnectionTest, CreateDatabaseCancel) {
   auto const op = CreateStartingOperation();
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncCreateDatabase)
@@ -224,7 +224,7 @@ TEST(GoldenThingAdminClientTest, CreateDatabaseCancel) {
 }
 
 /// @test Verify that the successful case works.
-TEST(GoldenThingAdminClientTest, GetDatabaseSuccess) {
+TEST(GoldenThingAdminConnectionTest, GetDatabaseSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
@@ -254,7 +254,7 @@ TEST(GoldenThingAdminClientTest, GetDatabaseSuccess) {
 }
 
 /// @test Verify that permanent errors are reported immediately.
-TEST(GoldenThingAdminClientTest, GetDatabasePermanentError) {
+TEST(GoldenThingAdminConnectionTest, GetDatabasePermanentError) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetDatabase)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -267,7 +267,7 @@ TEST(GoldenThingAdminClientTest, GetDatabasePermanentError) {
 }
 
 /// @test Verify that too many transients errors are reported correctly.
-TEST(GoldenThingAdminClientTest, GetDatabaseTooManyTransients) {
+TEST(GoldenThingAdminConnectionTest, GetDatabaseTooManyTransients) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetDatabase)
       .Times(AtLeast(2))
@@ -281,7 +281,7 @@ TEST(GoldenThingAdminClientTest, GetDatabaseTooManyTransients) {
 }
 
 /// @test Verify that successful case works.
-TEST(GoldenThingAdminClientTest, UpdateDatabaseDdlSuccess) {
+TEST(GoldenThingAdminConnectionTest, UpdateDatabaseDdlSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
@@ -319,7 +319,7 @@ TEST(GoldenThingAdminClientTest, UpdateDatabaseDdlSuccess) {
   EXPECT_EQ("test-database", metadata->database());
 }
 
-TEST(GoldenThingAdminClientTest, UpdateDatabaseDdlCancel) {
+TEST(GoldenThingAdminConnectionTest, UpdateDatabaseDdlCancel) {
   auto const op = CreateStartingOperation();
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl)
@@ -356,7 +356,7 @@ TEST(GoldenThingAdminClientTest, UpdateDatabaseDdlCancel) {
 }
 
 /// @test Verify that the successful case works.
-TEST(GoldenThingAdminClientTest, DropDatabaseSuccess) {
+TEST(GoldenThingAdminConnectionTest, DropDatabaseSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
@@ -379,7 +379,7 @@ TEST(GoldenThingAdminClientTest, DropDatabaseSuccess) {
 }
 
 /// @test Verify that permanent errors are reported immediately.
-TEST(GoldenThingAdminClientTest, DropDatabasePermanentError) {
+TEST(GoldenThingAdminConnectionTest, DropDatabasePermanentError) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, DropDatabase)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -392,7 +392,7 @@ TEST(GoldenThingAdminClientTest, DropDatabasePermanentError) {
 }
 
 /// @test Verify that the successful case works.
-TEST(GoldenThingAdminClientTest, GetDatabaseDdlSuccess) {
+TEST(GoldenThingAdminConnectionTest, GetDatabaseDdlSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
@@ -417,7 +417,7 @@ TEST(GoldenThingAdminClientTest, GetDatabaseDdlSuccess) {
 }
 
 /// @test Verify that permanent errors are reported immediately.
-TEST(GoldenThingAdminClientTest, GetDatabaseDdlPermanentError) {
+TEST(GoldenThingAdminConnectionTest, GetDatabaseDdlPermanentError) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetDatabaseDdl)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -430,7 +430,7 @@ TEST(GoldenThingAdminClientTest, GetDatabaseDdlPermanentError) {
 }
 
 /// @test Verify that too many transients errors are reported correctly.
-TEST(GoldenThingAdminClientTest, GetDatabaseDdlTooManyTransients) {
+TEST(GoldenThingAdminConnectionTest, GetDatabaseDdlTooManyTransients) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetDatabaseDdl)
       .Times(AtLeast(2))
@@ -444,7 +444,7 @@ TEST(GoldenThingAdminClientTest, GetDatabaseDdlTooManyTransients) {
 }
 
 /// @test Verify that the successful case works.
-TEST(GoldenThingAdminClientTest, SetIamPolicySuccess) {
+TEST(GoldenThingAdminConnectionTest, SetIamPolicySuccess) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
   auto constexpr kText = R"pb(
@@ -481,7 +481,7 @@ TEST(GoldenThingAdminClientTest, SetIamPolicySuccess) {
 }
 
 /// @test Verify that permanent errors are reported immediately.
-TEST(GoldenThingAdminClientTest, SetIamPolicyPermanentError) {
+TEST(GoldenThingAdminConnectionTest, SetIamPolicyPermanentError) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, SetIamPolicy)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -497,7 +497,7 @@ TEST(GoldenThingAdminClientTest, SetIamPolicyPermanentError) {
 
 /// @test Verify that request without the Etag field should fail with the first
 /// transient error.
-TEST(GoldenThingAdminClientTest, SetIamPolicyNonIdempotent) {
+TEST(GoldenThingAdminConnectionTest, SetIamPolicyNonIdempotent) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, SetIamPolicy)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
@@ -512,7 +512,7 @@ TEST(GoldenThingAdminClientTest, SetIamPolicyNonIdempotent) {
 }
 
 /// @test Verify that the successful case works.
-TEST(GoldenThingAdminClientTest, GetIamPolicySuccess) {
+TEST(GoldenThingAdminConnectionTest, GetIamPolicySuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
@@ -542,7 +542,7 @@ TEST(GoldenThingAdminClientTest, GetIamPolicySuccess) {
 }
 
 /// @test Verify that permanent errors are reported immediately.
-TEST(GoldenThingAdminClientTest, GetIamPolicyPermanentError) {
+TEST(GoldenThingAdminConnectionTest, GetIamPolicyPermanentError) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -555,7 +555,7 @@ TEST(GoldenThingAdminClientTest, GetIamPolicyPermanentError) {
 }
 
 /// @test Verify that this http POST method is not retried.
-TEST(GoldenThingAdminClientTest, GetIamPolicyTooManyTransients) {
+TEST(GoldenThingAdminConnectionTest, GetIamPolicyTooManyTransients) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetIamPolicy)
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
@@ -568,7 +568,7 @@ TEST(GoldenThingAdminClientTest, GetIamPolicyTooManyTransients) {
 }
 
 /// @test Verify that the successful case works.
-TEST(GoldenThingAdminClientTest, TestIamPermissionsSuccess) {
+TEST(GoldenThingAdminConnectionTest, TestIamPermissionsSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
@@ -596,7 +596,7 @@ TEST(GoldenThingAdminClientTest, TestIamPermissionsSuccess) {
 }
 
 /// @test Verify that permanent errors are reported immediately.
-TEST(GoldenThingAdminClientTest, TestIamPermissionsPermanentError) {
+TEST(GoldenThingAdminConnectionTest, TestIamPermissionsPermanentError) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, TestIamPermissions)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -609,7 +609,7 @@ TEST(GoldenThingAdminClientTest, TestIamPermissionsPermanentError) {
 }
 
 /// @test Verify that this http POST method is not retried.
-TEST(GoldenThingAdminClientTest, TestIamPermissionsTooManyTransients) {
+TEST(GoldenThingAdminConnectionTest, TestIamPermissionsTooManyTransients) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, TestIamPermissions)
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
@@ -622,7 +622,7 @@ TEST(GoldenThingAdminClientTest, TestIamPermissionsTooManyTransients) {
 }
 
 /// @test Verify that successful case works.
-TEST(GoldenThingAdminClientTest, CreateBackupSuccess) {
+TEST(GoldenThingAdminConnectionTest, CreateBackupSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncCreateBackup)
       .WillOnce(
@@ -657,7 +657,7 @@ TEST(GoldenThingAdminClientTest, CreateBackupSuccess) {
   EXPECT_EQ("test-backup", backup->name());
 }
 
-TEST(GoldenThingAdminClientTest, CreateBackupCancel) {
+TEST(GoldenThingAdminConnectionTest, CreateBackupCancel) {
   auto const op = CreateStartingOperation();
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncCreateBackup)
@@ -694,7 +694,7 @@ TEST(GoldenThingAdminClientTest, CreateBackupCancel) {
 }
 
 /// @test Verify that the successful case works.
-TEST(GoldenThingAdminClientTest, GetBackupSuccess) {
+TEST(GoldenThingAdminConnectionTest, GetBackupSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   std::string const expected_name =
       "projects/test-project/instances/test-instance/backups/test-backup";
@@ -721,7 +721,7 @@ TEST(GoldenThingAdminClientTest, GetBackupSuccess) {
 }
 
 /// @test Verify that permanent errors are reported immediately.
-TEST(GoldenThingAdminClientTest, GetBackupPermanentError) {
+TEST(GoldenThingAdminConnectionTest, GetBackupPermanentError) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetBackup)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -732,7 +732,7 @@ TEST(GoldenThingAdminClientTest, GetBackupPermanentError) {
 }
 
 /// @test Verify that too many transients errors are reported correctly.
-TEST(GoldenThingAdminClientTest, GetBackupTooManyTransients) {
+TEST(GoldenThingAdminConnectionTest, GetBackupTooManyTransients) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetBackup)
       .Times(AtLeast(2))
@@ -744,7 +744,7 @@ TEST(GoldenThingAdminClientTest, GetBackupTooManyTransients) {
 }
 
 /// @test Verify that the successful case works.
-TEST(GoldenThingAdminClientTest, UpdateBackupSuccess) {
+TEST(GoldenThingAdminConnectionTest, UpdateBackupSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   std::string const expected_name =
       "projects/test-project/instances/test-instance/backups/test-backup";
@@ -773,7 +773,7 @@ TEST(GoldenThingAdminClientTest, UpdateBackupSuccess) {
 }
 
 /// @test Verify that permanent errors are reported immediately.
-TEST(GoldenThingAdminClientTest, UpdateBackupPermanentError) {
+TEST(GoldenThingAdminConnectionTest, UpdateBackupPermanentError) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, UpdateBackup)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -784,7 +784,7 @@ TEST(GoldenThingAdminClientTest, UpdateBackupPermanentError) {
 }
 
 /// @test Verify that http PATCH operation not retried.
-TEST(GoldenThingAdminClientTest, UpdateBackupTooManyTransients) {
+TEST(GoldenThingAdminConnectionTest, UpdateBackupTooManyTransients) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, UpdateBackup)
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
@@ -795,7 +795,7 @@ TEST(GoldenThingAdminClientTest, UpdateBackupTooManyTransients) {
 }
 
 /// @test Verify that the successful case works.
-TEST(GoldenThingAdminClientTest, DeleteBackupSuccess) {
+TEST(GoldenThingAdminConnectionTest, DeleteBackupSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   std::string const expected_name =
       "projects/test-project/instances/test-instance/backups/test-backup";
@@ -816,7 +816,7 @@ TEST(GoldenThingAdminClientTest, DeleteBackupSuccess) {
 }
 
 /// @test Verify that permanent errors are reported immediately.
-TEST(GoldenThingAdminClientTest, DeleteBackupPermanentError) {
+TEST(GoldenThingAdminConnectionTest, DeleteBackupPermanentError) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, DeleteBackup)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -829,7 +829,7 @@ TEST(GoldenThingAdminClientTest, DeleteBackupPermanentError) {
 }
 
 /// @test Verify that http DELETE operation not retried.
-TEST(GoldenThingAdminClientTest, DeleteBackupTooManyTransients) {
+TEST(GoldenThingAdminConnectionTest, DeleteBackupTooManyTransients) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, DeleteBackup)
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
@@ -842,7 +842,7 @@ TEST(GoldenThingAdminClientTest, DeleteBackupTooManyTransients) {
 }
 
 /// @test Verify that we can list backups in multiple pages.
-TEST(GoldenThingAdminClientTest, ListBackups) {
+TEST(GoldenThingAdminConnectionTest, ListBackups) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   std::string const expected_parent =
       "projects/test-project/instances/test-instance";
@@ -898,7 +898,7 @@ TEST(GoldenThingAdminClientTest, ListBackups) {
                                      "backup-4", "backup-5"));
 }
 
-TEST(GoldenThingAdminClientTest, ListBackupsPermanentFailure) {
+TEST(GoldenThingAdminConnectionTest, ListBackupsPermanentFailure) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListBackups)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -911,7 +911,7 @@ TEST(GoldenThingAdminClientTest, ListBackupsPermanentFailure) {
   EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
 }
 
-TEST(GoldenThingAdminClientTest, ListBackupsTooManyFailures) {
+TEST(GoldenThingAdminConnectionTest, ListBackupsTooManyFailures) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListBackups)
       .Times(AtLeast(2))
@@ -926,7 +926,7 @@ TEST(GoldenThingAdminClientTest, ListBackupsTooManyFailures) {
 }
 
 /// @test Verify that successful case works.
-TEST(GoldenThingAdminClientTest, RestoreDatabaseSuccess) {
+TEST(GoldenThingAdminConnectionTest, RestoreDatabaseSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncRestoreDatabase)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
@@ -963,7 +963,7 @@ TEST(GoldenThingAdminClientTest, RestoreDatabaseSuccess) {
   EXPECT_EQ("test-database", db->name());
 }
 
-TEST(GoldenThingAdminClientTest, RestoreBackupCancel) {
+TEST(GoldenThingAdminConnectionTest, RestoreBackupCancel) {
   auto const op = CreateStartingOperation();
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncRestoreDatabase)
@@ -1000,7 +1000,7 @@ TEST(GoldenThingAdminClientTest, RestoreBackupCancel) {
 }
 
 /// @test Verify that we can list database operations in multiple pages.
-TEST(GoldenThingAdminClientTest, ListDatabaseOperations) {
+TEST(GoldenThingAdminConnectionTest, ListDatabaseOperations) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   std::string const expected_parent =
       "projects/test-project/instances/test-instance";
@@ -1058,7 +1058,7 @@ TEST(GoldenThingAdminClientTest, ListDatabaseOperations) {
               ::testing::ElementsAre("op-1", "op-2", "op-3", "op-4", "op-5"));
 }
 
-TEST(GoldenThingAdminClientTest, ListDatabaseOperationsPermanentFailure) {
+TEST(GoldenThingAdminConnectionTest, ListDatabaseOperationsPermanentFailure) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListDatabaseOperations)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -1071,7 +1071,7 @@ TEST(GoldenThingAdminClientTest, ListDatabaseOperationsPermanentFailure) {
   EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
 }
 
-TEST(GoldenThingAdminClientTest, ListDatabaseOperationsTooManyFailures) {
+TEST(GoldenThingAdminConnectionTest, ListDatabaseOperationsTooManyFailures) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListDatabaseOperations)
       .Times(AtLeast(2))
@@ -1086,7 +1086,7 @@ TEST(GoldenThingAdminClientTest, ListDatabaseOperationsTooManyFailures) {
 }
 
 /// @test Verify that we can list backup operations in multiple pages.
-TEST(GoldenThingAdminClientTest, ListBackupOperations) {
+TEST(GoldenThingAdminConnectionTest, ListBackupOperations) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   std::string const expected_parent =
       "projects/test-project/instances/test-instance";
@@ -1139,7 +1139,7 @@ TEST(GoldenThingAdminClientTest, ListBackupOperations) {
               ::testing::ElementsAre("op-1", "op-2", "op-3", "op-4", "op-5"));
 }
 
-TEST(GoldenThingAdminClientTest, ListBackupOperationsPermanentFailure) {
+TEST(GoldenThingAdminConnectionTest, ListBackupOperationsPermanentFailure) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListBackupOperations)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -1152,7 +1152,7 @@ TEST(GoldenThingAdminClientTest, ListBackupOperationsPermanentFailure) {
   EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
 }
 
-TEST(GoldenThingAdminClientTest, ListBackupOperationsTooManyFailures) {
+TEST(GoldenThingAdminConnectionTest, ListBackupOperationsTooManyFailures) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListBackupOperations)
       .Times(AtLeast(2))
@@ -1166,7 +1166,7 @@ TEST(GoldenThingAdminClientTest, ListBackupOperationsTooManyFailures) {
   EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
 }
 
-TEST(GoldenThingAdminClientTest, AsyncGetDatabaseSuccess) {
+TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncGetDatabase)
       .WillOnce(
@@ -1185,7 +1185,7 @@ TEST(GoldenThingAdminClientTest, AsyncGetDatabaseSuccess) {
   EXPECT_EQ("test-database", db->name());
 }
 
-TEST(GoldenThingAdminClientTest, AsyncGetDatabaseTooManyFailures) {
+TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseTooManyFailures) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncGetDatabase)
       .Times(AtLeast(2))
@@ -1208,7 +1208,7 @@ TEST(GoldenThingAdminClientTest, AsyncGetDatabaseTooManyFailures) {
                                  HasSubstr("try again"))));
 }
 
-TEST(GoldenThingAdminClientTest, AsyncGetDatabaseCancel) {
+TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseCancel) {
   auto cancelled = false;
   promise<StatusOr<google::test::admin::database::v1::Database>> p(
       [&p, &cancelled] {
@@ -1239,7 +1239,7 @@ TEST(GoldenThingAdminClientTest, AsyncGetDatabaseCancel) {
                                  HasSubstr("try again"))));
 }
 
-TEST(GoldenThingAdminClientTest, AsyncDropDatabaseSuccess) {
+TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
@@ -1262,7 +1262,7 @@ TEST(GoldenThingAdminClientTest, AsyncDropDatabaseSuccess) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST(GoldenThingAdminClientTest, AsyncDropDatabaseFailure) {
+TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseFailure) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
@@ -1290,7 +1290,7 @@ TEST(GoldenThingAdminClientTest, AsyncDropDatabaseFailure) {
                                      HasSubstr("try again"))));
 }
 
-TEST(GoldenThingAdminClientTest, AsyncDropDatabaseCancel) {
+TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseCancel) {
   auto cancelled = false;
   promise<Status> p([&p, &cancelled] {
     cancelled = true;
