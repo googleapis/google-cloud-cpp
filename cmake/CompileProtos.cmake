@@ -320,3 +320,55 @@ function (google_cloud_cpp_grpcpp_library libname)
         ${_opt_PROTO_PATH_DIRECTORIES})
     target_sources(${libname} PRIVATE ${grpcpp_sources})
 endfunction ()
+
+macro (external_googleapis_install_pc_common target)
+    string(REPLACE "google_cloud_cpp_" "" _short_name ${target})
+    string(REPLACE "_protos" "" _short_name ${_short_name})
+    set(GOOGLE_CLOUD_CPP_PC_NAME
+        "The Google APIS C++ ${_short_name} Proto Library")
+    set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION "Compiled proto for C++.")
+    # Examine the target LINK_LIBRARIES property, use that to pull the
+    # dependencies between the google-cloud-cpp::* libraries.
+    set(_target_pc_requires)
+    get_target_property(_target_deps ${target} LINK_LIBRARIES)
+    foreach (dep ${_target_deps})
+        if ("${dep}" MATCHES "^google-cloud-cpp::")
+            string(REPLACE "google-cloud-cpp::" "google_cloud_cpp_" dep
+                           "${dep}")
+            list(APPEND _target_pc_requires " " "${dep}")
+        endif ()
+    endforeach ()
+    # These dependencies are required for all the google-cloud-cpp::* libraries.
+    list(
+        APPEND
+        _target_pc_requires
+        " grpc++"
+        " grpc"
+        " openssl"
+        " protobuf"
+        " zlib"
+        " libcares")
+    string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES ${_target_pc_requires})
+    set(GOOGLE_CLOUD_CPP_PC_LIBS "-l${target}")
+endmacro ()
+
+# Use a function to create a scope for the variables.
+function (external_googleapis_install_pc target source_dir)
+    external_googleapis_install_pc_common("${target}")
+    configure_file("${source_dir}/config.pc.in" "${target}.pc" @ONLY)
+    install(
+        FILES "${CMAKE_CURRENT_BINARY_DIR}/${target}.pc"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+        COMPONENT google_cloud_cpp_development)
+endfunction ()
+
+# TODO(#5726) - this is only needed for existing libs, do not use for new libs
+function (external_googleapis_install_legacy_pc target source_dir)
+    external_googleapis_install_pc_common("${target}")
+    string(REPLACE "google_cloud_cpp_" "googleapis_cpp_" legacy ${target})
+    configure_file("${source_dir}/config.pc.in" "${legacy}.pc" @ONLY)
+    install(
+        FILES "${CMAKE_CURRENT_BINARY_DIR}/${legacy}.pc"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+        COMPONENT google_cloud_cpp_development)
+endfunction ()

@@ -175,8 +175,10 @@ option(GOOGLE_CLOUD_CPP_ENABLE_GENERATOR "Enable building the generator." OFF)
 # The default list of libraries to build. These can be overridden by the user by
 # passing a comma-separated list, i.e
 # `-DGOOGLE_CLOUD_CPP_ENABLE=spanner,storage`.
+set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES
+    "bigtable;bigquery;iam;logging;pubsub;spanner;storage")
 set(GOOGLE_CLOUD_CPP_ENABLE
-    "bigtable;bigquery;iam;logging;pubsub;spanner;storage"
+    ${GOOGLE_CLOUD_CPP_LEGACY_FEATURES}
     CACHE STRING "The list of libraries to build.")
 string(REPLACE "," ";" GOOGLE_CLOUD_CPP_ENABLE "${GOOGLE_CLOUD_CPP_ENABLE}")
 
@@ -213,7 +215,8 @@ function (google_cloud_cpp_enable_cleanup)
         else ()
             string(TOUPPER "GOOGLE_CLOUD_CPP_ENABLE_${library}" feature_flag)
         endif ()
-        if (NOT ${feature_flag})
+        if (NOT ${feature_flag} AND ${feature_flag} IN_LIST
+                                    GOOGLE_CLOUD_CPP_LEGACY_FEATURES)
             message(
                 WARNING "Using ${feature_flag} is discouraged. Please use the"
                         " unified GOOGLE_CLOUD_CPP_ENABLE list instead.")

@@ -32,6 +32,7 @@ cmake -GNinja \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+  -DGOOGLE_CLOUD_CPP_ENABLE="bigtable;bigquery;iam;logging;pubsub;spanner;storage;experimental-storage-grpc;pubsublite" \
   -S . -B cmake-out
 cmake --build cmake-out
 cmake --install cmake-out --component google_cloud_cpp_development
@@ -64,6 +65,7 @@ expected_dirs=(
   ./include/google/cloud/logging/mocks
   ./include/google/cloud/pubsub/internal
   ./include/google/cloud/pubsub/mocks
+  ./include/google/cloud/pubsublite/v1
   ./include/google/cloud/spanner/admin/internal
   ./include/google/cloud/spanner/admin/mocks
   ./include/google/cloud/spanner/internal
@@ -97,6 +99,7 @@ expected_dirs=(
   ./lib64/cmake/google_cloud_cpp_iam
   ./lib64/cmake/google_cloud_cpp_logging
   ./lib64/cmake/google_cloud_cpp_pubsub
+  ./lib64/cmake/google_cloud_cpp_pubsublite
   ./lib64/cmake/google_cloud_cpp_spanner
   ./lib64/cmake/google_cloud_cpp_storage
   ./lib64/cmake/googleapis
