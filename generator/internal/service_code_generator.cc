@@ -316,14 +316,18 @@ void ServiceCodeGenerator::SetMethods() {
   auto const omitted_rpcs = split_arg("omitted_rpcs");
   auto const gen_async_rpcs = split_arg("gen_async_rpcs");
 
+  auto service_name = service_descriptor_->name();
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
-    if (!internal::Contains(omitted_rpcs,
-                            service_descriptor_->method(i)->name())) {
-      methods_.emplace_back(*service_descriptor_->method(i));
+    auto const* method = service_descriptor_->method(i);
+    auto method_name = method->name();
+    auto qualified_method_name = absl::StrCat(service_name, ".", method_name);
+    if (!internal::Contains(omitted_rpcs, method_name) &&
+        !internal::Contains(omitted_rpcs, qualified_method_name)) {
+      methods_.emplace_back(*method);
     }
-    if (internal::Contains(gen_async_rpcs,
-                           service_descriptor_->method(i)->name())) {
-      async_methods_.emplace_back(*service_descriptor_->method(i));
+    if (internal::Contains(gen_async_rpcs, method_name) ||
+        internal::Contains(gen_async_rpcs, qualified_method_name)) {
+      async_methods_.emplace_back(*method);
     }
   }
 }
