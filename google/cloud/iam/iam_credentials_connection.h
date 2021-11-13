@@ -68,6 +68,7 @@ std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam
 }  // namespace cloud
 }  // namespace google
@@ -81,6 +82,7 @@ std::shared_ptr<iam::IAMCredentialsConnection> MakeIAMCredentialsConnection(
     std::shared_ptr<IAMCredentialsStub> stub, Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

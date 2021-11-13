@@ -67,6 +67,8 @@ int constexpr version() { return google::cloud::version(); }
 std::string version_string();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+// TODO(#7463) - remove backwards compatibility namespaces
+namespace v1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

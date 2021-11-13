@@ -50,9 +50,7 @@
 #define GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN \
   inline namespace GOOGLE_CLOUD_CPP_NS {
 #define GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END \
-  } /* namespace GOOGLE_CLOUD_CPP_NS */       \
-  namespace v1 = GOOGLE_CLOUD_CPP_NS;         \
-  namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;
+  } /* namespace GOOGLE_CLOUD_CPP_NS */
 
 // This preprocessor symbol is deprecated and should never be used anywhere. It
 // exists solely for backward compatibility to avoid breaking anyone who may
@@ -106,6 +104,9 @@ int constexpr version() {
 std::string version_string();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+// TODO(#7463) - remove backwards compatibility namespaces
+namespace v1 = GOOGLE_CLOUD_CPP_NS;        // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace cloud
 }  // namespace google
 

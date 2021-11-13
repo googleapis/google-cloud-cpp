@@ -81,6 +81,8 @@ std::string version_string();
 std::string x_goog_api_client();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+// TODO(#7463) - remove backwards compatibility namespaces
+namespace v1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

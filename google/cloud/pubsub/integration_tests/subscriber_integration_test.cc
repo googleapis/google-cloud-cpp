@@ -45,6 +45,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::ElementsAreArray;
 using ::testing::IsEmpty;
+using ::testing::NotNull;
 
 class SubscriberIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
@@ -453,6 +454,14 @@ TEST_F(SubscriberIntegrationTest, UnifiedCredentials) {
   auto subscriber =
       Subscriber(MakeSubscriberConnection(subscription_, options));
   ASSERT_NO_FATAL_FAILURE(TestRoundtrip(publisher, subscriber));
+}
+
+/// @test Verify the backwards compatibility `v1` namespace still exists.
+TEST_F(SubscriberIntegrationTest, BackwardsCompatibility) {
+  auto connection = ::google::cloud::pubsub::v1::MakeSubscriberConnection(
+      subscription_, Options{});
+  EXPECT_THAT(connection, NotNull());
+  ASSERT_NO_FATAL_FAILURE(Subscriber(std::move(connection)));
 }
 
 }  // namespace

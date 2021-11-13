@@ -43,6 +43,7 @@ using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
+using ::testing::NotNull;
 
 bool UsingEmulator() {
   return google::cloud::internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
@@ -342,6 +343,15 @@ TEST_F(SubscriptionAdminIntegrationTest, SeekFailureSnapshot) {
       Subscription("--invalid-project--", "--invalid-subscription--"),
       Snapshot("--invalid-project--", "--invalid-snapshot--"));
   ASSERT_FALSE(response.ok());
+}
+
+/// @test Verify the backwards compatibility `v1` namespace still exists.
+TEST_F(SubscriptionAdminIntegrationTest, BackwardsCompatibility) {
+  auto connection =
+      ::google::cloud::pubsub::v1::MakeSubscriptionAdminConnection(
+          MakeTestOptions());
+  EXPECT_THAT(connection, NotNull());
+  ASSERT_NO_FATAL_FAILURE(SubscriptionAdminClient(std::move(connection)));
 }
 
 }  // namespace

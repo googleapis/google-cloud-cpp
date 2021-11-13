@@ -52,17 +52,16 @@ class ServiceCodeGenerator : public GeneratorInterface {
   Status Generate() override;
 
  protected:
+  using MethodDescriptorList = std::vector<
+      std::reference_wrapper<google::protobuf::MethodDescriptor const>>;
+
   virtual Status GenerateHeader() = 0;
   virtual Status GenerateCc() = 0;
 
   VarsDictionary const& vars() const;
   std::string vars(std::string const& key) const;
-  std::vector<
-      std::reference_wrapper<google::protobuf::MethodDescriptor const>> const&
-  methods() const;
-  std::vector<
-      std::reference_wrapper<google::protobuf::MethodDescriptor const>> const&
-  async_methods() const;
+  MethodDescriptorList const& methods() const { return methods_; }
+  MethodDescriptorList const& async_methods() const { return async_methods_; }
   void SetVars(absl::string_view header_path);
   VarsDictionary MergeServiceAndMethodVars(
       google::protobuf::MethodDescriptor const& method) const;
@@ -144,10 +143,9 @@ class ServiceCodeGenerator : public GeneratorInterface {
   VarsDictionary service_vars_;
   std::map<std::string, VarsDictionary> service_method_vars_;
   std::vector<std::string> namespaces_;
-  std::vector<std::reference_wrapper<google::protobuf::MethodDescriptor const>>
-      methods_;
-  std::vector<std::reference_wrapper<google::protobuf::MethodDescriptor const>>
-      async_methods_;
+  bool emit_backwards_compatibility_namespace_alias_ = false;
+  MethodDescriptorList methods_;
+  MethodDescriptorList async_methods_;
   Printer header_;
   Printer cc_;
 };

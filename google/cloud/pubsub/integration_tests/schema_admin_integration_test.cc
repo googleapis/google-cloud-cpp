@@ -38,6 +38,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
+using ::testing::NotNull;
 
 bool UsingEmulator() {
   return google::cloud::internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
@@ -166,6 +167,14 @@ TEST_F(SchemaAdminIntegrationTest, ValidateMessage) {
   google::pubsub::v1::ValidateMessageRequest request;
   auto response = schema_admin.ValidateMessage(request);
   EXPECT_THAT(response, Not(IsOk()));
+}
+
+/// @test Verify the backwards compatibility `v1` namespace still exists.
+TEST_F(SchemaAdminIntegrationTest, BackwardsCompatibility) {
+  auto connection =
+      ::google::cloud::pubsub::v1::MakeSchemaAdminConnection(MakeTestOptions());
+  EXPECT_THAT(connection, NotNull());
+  ASSERT_NO_FATAL_FAILURE(SchemaAdminClient(std::move(connection)));
 }
 
 }  // namespace

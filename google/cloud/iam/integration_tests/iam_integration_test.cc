@@ -43,6 +43,7 @@ using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::NotNull;
 
 bool RunQuotaLimitedTests() {
   static bool run_quota_limited_tests =
@@ -928,6 +929,13 @@ TEST_F(IamIntegrationTest, LintPolicyProtoFailure) {
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("LintPolicy")));
+}
+
+/// @test Verify the backwards compatibility `gcpcxxV1` namespace still exists.
+TEST_F(IamIntegrationTest, BackwardsCompatibility) {
+  auto connection = ::google::cloud::iam::gcpcxxV1::MakeIAMConnection();
+  EXPECT_THAT(connection, NotNull());
+  ASSERT_NO_FATAL_FAILURE(IAMClient(std::move(connection)));
 }
 
 }  // namespace

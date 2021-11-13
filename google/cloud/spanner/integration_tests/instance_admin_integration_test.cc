@@ -40,6 +40,7 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::HasSubstr;
+using ::testing::NotNull;
 using ::testing::UnorderedElementsAre;
 
 std::string const& ProjectId() {
@@ -264,6 +265,13 @@ TEST_F(InstanceAdminClientTest, InstanceIam) {
   EXPECT_THAT(
       actual->permissions(),
       UnorderedElementsAre("spanner.databases.list", "spanner.databases.get"));
+}
+
+/// @test Verify the backwards compatibility `v1` namespace still exists.
+TEST_F(InstanceAdminClientTest, BackwardsCompatibility) {
+  auto connection = ::google::cloud::spanner::v1::MakeInstanceAdminConnection();
+  EXPECT_THAT(connection, NotNull());
+  ASSERT_NO_FATAL_FAILURE(InstanceAdminClient(std::move(connection)));
 }
 
 }  // namespace

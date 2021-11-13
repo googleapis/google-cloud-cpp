@@ -33,6 +33,7 @@ using ::google::cloud::testing_util::IsOk;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::NotNull;
 
 class BigQueryReadIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
@@ -261,6 +262,14 @@ TEST_F(BigQueryReadIntegrationTest, SplitReadStreamProtoSuccess) {
 
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("SplitReadStream")));
+}
+
+/// @test Verify the backwards compatibility `gcpcxxV1` namespace still exists.
+TEST_F(BigQueryReadIntegrationTest, BackwardsCompatibility) {
+  auto connection =
+      ::google::cloud::bigquery::gcpcxxV1::MakeBigQueryReadConnection();
+  EXPECT_THAT(connection, NotNull());
+  ASSERT_NO_FATAL_FAILURE(BigQueryReadClient(std::move(connection)));
 }
 
 }  // namespace
