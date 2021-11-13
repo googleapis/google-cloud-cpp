@@ -143,7 +143,7 @@ class ServiceCodeGenerator : public GeneratorInterface {
   VarsDictionary service_vars_;
   std::map<std::string, VarsDictionary> service_method_vars_;
   std::vector<std::string> namespaces_;
-  bool emit_backwards_compatibility_namespace_alias_ = false;
+  bool define_backwards_compatibility_namespace_alias_ = false;
   MethodDescriptorList methods_;
   MethodDescriptorList async_methods_;
   Printer header_;

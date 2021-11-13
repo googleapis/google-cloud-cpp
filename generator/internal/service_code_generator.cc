@@ -65,7 +65,7 @@ ServiceCodeGenerator::ServiceCodeGenerator(
   SetVars(service_vars_[header_path_key]);
   SetMethods();
   auto e = service_vars_.find("backwards_compatibility_namespace_alias");
-  emit_backwards_compatibility_namespace_alias_ =
+  define_backwards_compatibility_namespace_alias_ =
       (e != service_vars_.end() && e->second == "true");
 }
 
@@ -281,7 +281,7 @@ void ServiceCodeGenerator::CloseNamespaces(Printer& p) {
     if (*iter == "GOOGLE_CLOUD_CPP_NS") {
       p.Print("GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END\n");
       // TODO(#7463) - remove backwards compatibility namespaces
-      if (emit_backwards_compatibility_namespace_alias_) {
+      if (define_backwards_compatibility_namespace_alias_) {
         p.Print(
             "namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;"
             "  // NOLINT(misc-unused-alias-decls)\n");

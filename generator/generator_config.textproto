@@ -29,7 +29,6 @@ service {
   product_path: "google/cloud/bigtable/admin"
   initial_copyright_year: "2021"
   emulator_endpoint_env_var: "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST"
-  backwards_compatibility_namespace_alias: true
 }
 
 service {
@@ -39,7 +38,6 @@ service {
   omitted_rpcs: ["CreateTableFromSnapshot", "SnapshotTable", "GetSnapshot", "ListSnapshots", "DeleteSnapshot"]
   emulator_endpoint_env_var: "BIGTABLE_EMULATOR_HOST"
   gen_async_rpcs: ["CheckConsistency"]
-  backwards_compatibility_namespace_alias: true
 }
 
 # IAM

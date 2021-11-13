@@ -518,7 +518,6 @@ std::shared_ptr<BigtableTableAdminConnection> MakeBigtableTableAdminConnection(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigtable_admin
 }  // namespace cloud
 }  // namespace google
@@ -538,7 +537,6 @@ MakeBigtableTableAdminConnection(std::shared_ptr<BigtableTableAdminStub> stub,
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigtable_admin_internal
 }  // namespace cloud
 }  // namespace google

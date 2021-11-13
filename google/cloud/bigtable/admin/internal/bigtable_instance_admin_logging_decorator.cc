@@ -303,7 +303,6 @@ future<Status> BigtableInstanceAdminLogging::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigtable_admin_internal
 }  // namespace cloud
 }  // namespace google
