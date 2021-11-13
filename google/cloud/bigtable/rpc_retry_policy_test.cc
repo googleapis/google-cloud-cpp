@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/rpc_retry_policy.h"
+#include "google/cloud/bigtable/admin/bigtable_instance_admin_connection.h"
 #include "google/cloud/testing_util/check_predicate_becomes_false.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <gtest/gtest.h>
@@ -35,6 +36,16 @@ grpc::Status CreatePermanentError() {
   return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "failed");
 }
 
+/// Create a Status with a status code for transient errors.
+Status TransientError() {
+  return Status(StatusCode::kUnavailable, "please try again");
+}
+
+/// Create a Status with a status code for permanent errors.
+Status PermanentError() {
+  return Status(StatusCode::kFailedPrecondition, "failed");
+}
+
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 
 auto const kLimitedTimeTestPeriod = 50_ms;
@@ -48,6 +59,15 @@ auto const kLimitedTimeTolerance = 10_ms;
 void CheckLimitedTime(RPCRetryPolicy& tested) {
   google::cloud::testing_util::CheckPredicateBecomesFalse(
       [&tested] { return tested.OnFailure(CreateTransientError()); },
+      std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
+      kLimitedTimeTolerance);
+
+  // Verify that converting to a common policy does not change behavior
+  auto common = bigtable_internal::MakeCommonRetryPolicy<
+      bigtable_admin::BigtableInstanceAdminRetryPolicy>(tested.clone());
+
+  google::cloud::testing_util::CheckPredicateBecomesFalse(
+      [&common] { return common->OnFailure(TransientError()); },
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
       kLimitedTimeTolerance);
 }
@@ -64,6 +84,12 @@ TEST(LimitedTimeRetryPolicy, PermanentFailureCheck) {
   EXPECT_FALSE(tested.IsPermanentFailure(grpc::Status::OK));
   EXPECT_FALSE(tested.IsPermanentFailure(CreateTransientError()));
   EXPECT_TRUE(tested.IsPermanentFailure(CreatePermanentError()));
+
+  auto common = bigtable_internal::MakeCommonRetryPolicy<
+      bigtable_admin::BigtableInstanceAdminRetryPolicy>(tested.clone());
+  EXPECT_FALSE(common->IsPermanentFailure(Status()));
+  EXPECT_FALSE(common->IsPermanentFailure(TransientError()));
+  EXPECT_TRUE(common->IsPermanentFailure(PermanentError()));
 }
 
 /// @test Test cloning for LimitedTimeRetryPolicy.
@@ -77,16 +103,50 @@ TEST(LimitedTimeRetryPolicy, Clone) {
 TEST(LimitedTimeRetryPolicy, OnNonRetryable) {
   LimitedTimeRetryPolicy tested(10_ms);
   EXPECT_FALSE(tested.OnFailure(CreatePermanentError()));
+
+  auto common = bigtable_internal::MakeCommonRetryPolicy<
+      bigtable_admin::BigtableInstanceAdminRetryPolicy>(tested.clone());
+  EXPECT_FALSE(common->OnFailure(PermanentError()));
 }
 
 /// @test A simple test for the LimitedErrorCountRetryPolicy.
 TEST(LimitedErrorCountRetryPolicy, Simple) {
   LimitedErrorCountRetryPolicy tested(3);
+  EXPECT_FALSE(tested.IsExhausted());
+  // Attempt 1
   EXPECT_TRUE(tested.OnFailure(CreateTransientError()));
+  EXPECT_FALSE(tested.IsExhausted());
+  // Attempt 2
   EXPECT_TRUE(tested.OnFailure(CreateTransientError()));
+  EXPECT_FALSE(tested.IsExhausted());
+  // Attempt 3
   EXPECT_TRUE(tested.OnFailure(CreateTransientError()));
+  EXPECT_FALSE(tested.IsExhausted());
+  // Attempt 4
   EXPECT_FALSE(tested.OnFailure(CreateTransientError()));
+  EXPECT_TRUE(tested.IsExhausted());
+  // Attempt 5
   EXPECT_FALSE(tested.OnFailure(CreateTransientError()));
+  EXPECT_TRUE(tested.IsExhausted());
+
+  auto common = bigtable_internal::MakeCommonRetryPolicy<
+      bigtable_admin::BigtableInstanceAdminRetryPolicy>(tested.clone());
+  EXPECT_FALSE(common->IsExhausted());
+  // Attempt 1
+  EXPECT_TRUE(common->OnFailure(TransientError()));
+  EXPECT_FALSE(common->IsExhausted());
+  // Attempt 2
+  EXPECT_TRUE(common->OnFailure(TransientError()));
+  EXPECT_FALSE(common->IsExhausted());
+  // Attempt 3
+  EXPECT_TRUE(common->OnFailure(TransientError()));
+  EXPECT_FALSE(common->IsExhausted());
+  // Attempt 4
+  EXPECT_FALSE(common->OnFailure(TransientError()));
+  EXPECT_TRUE(common->IsExhausted());
+  // Attempt 5
+  EXPECT_FALSE(common->OnFailure(TransientError()));
+  EXPECT_TRUE(common->IsExhausted());
 }
 
 /// @test Test cloning for LimitedErrorCountRetryPolicy.
@@ -104,6 +164,10 @@ TEST(LimitedErrorCountRetryPolicy, Clone) {
 TEST(LimitedErrorCountRetryPolicy, OnNonRetryable) {
   LimitedErrorCountRetryPolicy tested(3);
   EXPECT_FALSE(tested.OnFailure(CreatePermanentError()));
+
+  auto common = bigtable_internal::MakeCommonRetryPolicy<
+      bigtable_admin::BigtableInstanceAdminRetryPolicy>(tested.clone());
+  EXPECT_FALSE(common->OnFailure(PermanentError()));
 }
 
 /// @test Verify that certain known internal errors are retryable.

@@ -23,8 +23,8 @@ set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/examples"
                          "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
 set(DOXYGEN_EXCLUDE_PATTERNS "*/benchmarks/*" "*/internal/*" "*/testing/*"
                              "*/tests/*" "*/*_test.cc")
-set(DOXYGEN_EXCLUDE_SYMBOLS "benchmarks" "bigtable_admin_internal" "internal"
-                            "testing")
+set(DOXYGEN_EXCLUDE_SYMBOLS "benchmarks" "bigtable_admin_internal"
+                            "bigtable_internal" "internal" "testing")
 
 include(GoogleCloudCppCommon)
 
