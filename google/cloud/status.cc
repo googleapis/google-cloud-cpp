@@ -26,6 +26,66 @@ std::string StatusWhat(Status const& status) {
 }
 }  // namespace
 
+namespace internal {
+
+// Asserts that Abseil's status codes match ours because we cast between them.
+static_assert(static_cast<int>(StatusCode::kOk) ==
+                  static_cast<int>(absl::StatusCode::kOk),
+              "");
+static_assert(static_cast<int>(StatusCode::kCancelled) ==
+                  static_cast<int>(absl::StatusCode::kCancelled),
+              "");
+static_assert(static_cast<int>(StatusCode::kUnknown) ==
+                  static_cast<int>(absl::StatusCode::kUnknown),
+              "");
+static_assert(static_cast<int>(StatusCode::kInvalidArgument) ==
+                  static_cast<int>(absl::StatusCode::kInvalidArgument),
+              "");
+static_assert(static_cast<int>(StatusCode::kDeadlineExceeded) ==
+                  static_cast<int>(absl::StatusCode::kDeadlineExceeded),
+              "");
+static_assert(static_cast<int>(StatusCode::kNotFound) ==
+                  static_cast<int>(absl::StatusCode::kNotFound),
+              "");
+static_assert(static_cast<int>(StatusCode::kAlreadyExists) ==
+                  static_cast<int>(absl::StatusCode::kAlreadyExists),
+              "");
+static_assert(static_cast<int>(StatusCode::kPermissionDenied) ==
+                  static_cast<int>(absl::StatusCode::kPermissionDenied),
+              "");
+static_assert(static_cast<int>(StatusCode::kUnauthenticated) ==
+                  static_cast<int>(absl::StatusCode::kUnauthenticated),
+              "");
+static_assert(static_cast<int>(StatusCode::kResourceExhausted) ==
+                  static_cast<int>(absl::StatusCode::kResourceExhausted),
+              "");
+static_assert(static_cast<int>(StatusCode::kFailedPrecondition) ==
+                  static_cast<int>(absl::StatusCode::kFailedPrecondition),
+              "");
+static_assert(static_cast<int>(StatusCode::kAborted) ==
+                  static_cast<int>(absl::StatusCode::kAborted),
+              "");
+static_assert(static_cast<int>(StatusCode::kOutOfRange) ==
+                  static_cast<int>(absl::StatusCode::kOutOfRange),
+              "");
+static_assert(static_cast<int>(StatusCode::kUnimplemented) ==
+                  static_cast<int>(absl::StatusCode::kUnimplemented),
+              "");
+static_assert(static_cast<int>(StatusCode::kInternal) ==
+                  static_cast<int>(absl::StatusCode::kInternal),
+              "");
+static_assert(static_cast<int>(StatusCode::kUnavailable) ==
+                  static_cast<int>(absl::StatusCode::kUnavailable),
+              "");
+static_assert(static_cast<int>(StatusCode::kDataLoss) ==
+                  static_cast<int>(absl::StatusCode::kDataLoss),
+              "");
+
+Status MakeStatus(absl::Status status) { return Status(std::move(status)); }
+absl::Status ToAbslStatus(Status status) { return std::move(status.status_); }
+
+}  // namespace internal
+
 std::string StatusCodeToString(StatusCode code) {
   switch (code) {
     case StatusCode::kOk:

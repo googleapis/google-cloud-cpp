@@ -229,8 +229,6 @@ TEST(StatusOrObservableTest, MoveCopy) {
   EXPECT_EQ(1, Observable::move_constructor());
   EXPECT_STATUS_OK(copy);
   EXPECT_EQ("foo", copy->str());
-  EXPECT_STATUS_OK(other);  // NOLINT(bugprone-use-after-move)
-  EXPECT_EQ("moved-out", other->str());
 }
 
 /// @test A move-assigned status calls the right assignments and destructors.
@@ -260,10 +258,8 @@ TEST(StatusOrObservableTest, MoveAssignmentNoValueValue) {
 
   Observable::reset_counters();
   assigned = std::move(other);
-  EXPECT_STATUS_OK(other);  // NOLINT(bugprone-use-after-move)
   EXPECT_STATUS_OK(assigned);
   EXPECT_EQ("foo", assigned->str());
-  EXPECT_EQ("moved-out", other->str());
   EXPECT_EQ(0, Observable::destructor());
   EXPECT_EQ(0, Observable::move_assignment());
   EXPECT_EQ(0, Observable::copy_assignment());
