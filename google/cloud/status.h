@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_H
 
 #include "google/cloud/version.h"
+#include "absl/status/status.h"
 #include <iostream>
 #include <string>
 #include <tuple>
@@ -25,10 +26,11 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * Well-known status codes with `grpc::StatusCode`-compatible values.
+ * Well-known status codes with values that are compatible with
+ * `grpc::StatusCode` and `absl::StatusCode`.
  *
- * The semantics of these values are documented in:
- *     https://grpc.io/grpc/cpp/classgrpc_1_1_status.html
+ * @see https://grpc.io/grpc/cpp/classgrpc_1_1_status.html
+ * @see https://github.com/abseil/abseil-cpp/blob/master/absl/status/status.h
  */
 enum class StatusCode {
   /// Not an error; returned on success.
@@ -55,6 +57,12 @@ enum class StatusCode {
 std::string StatusCodeToString(StatusCode code);
 std::ostream& operator<<(std::ostream& os, StatusCode code);
 
+class Status;
+namespace internal {
+Status MakeStatus(absl::Status);
+absl::Status ToAbslStatus(Status);
+}  // namespace internal
+
 /**
  * Represents success or an error with info about the error.
 
@@ -75,29 +83,36 @@ class Status {
   Status() = default;
 
   explicit Status(StatusCode status_code, std::string message)
-      : code_(status_code), message_(std::move(message)) {}
+      : status_(static_cast<absl::StatusCode>(status_code), message),
+        message_(std::move(message)) {}
 
-  bool ok() const { return code_ == StatusCode::kOk; }
-
-  StatusCode code() const { return code_; }
+  bool ok() const { return status_.ok(); }
+  StatusCode code() const { return static_cast<StatusCode>(status_.code()); }
   std::string const& message() const { return message_; }
 
+  friend inline bool operator==(Status const& a, Status const& b) {
+    return a.status_ == b.status_;
+  }
+  friend inline bool operator!=(Status const& a, Status const& b) {
+    return !(a == b);
+  }
+  friend inline std::ostream& operator<<(std::ostream& os, Status const& s) {
+    return os << s.message() << " [" << s.code() << "]";
+  }
+
  private:
-  StatusCode code_{StatusCode::kOk};
+  friend Status internal::MakeStatus(absl::Status);
+  friend absl::Status internal::ToAbslStatus(Status);
+
+  explicit Status(absl::Status status)
+      : status_(std::move(status)), message_(status_.message()) {}
+
+  // The implementation primarily forwards to absl::Status, with the exception
+  // that we need to keep a copy of the message string because we need to
+  // return a const ref rather than a string_view.
+  absl::Status status_;
   std::string message_;
 };
-
-inline std::ostream& operator<<(std::ostream& os, Status const& rhs) {
-  return os << rhs.message() << " [" << StatusCodeToString(rhs.code()) << "]";
-}
-
-inline bool operator==(Status const& lhs, Status const& rhs) {
-  return lhs.code() == rhs.code() && lhs.message() == rhs.message();
-}
-
-inline bool operator!=(Status const& lhs, Status const& rhs) {
-  return !(lhs == rhs);
-}
 
 class RuntimeStatusError : public std::runtime_error {
  public:
