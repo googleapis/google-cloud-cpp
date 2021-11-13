@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
+#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
