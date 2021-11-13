@@ -59,8 +59,28 @@ target_link_libraries(
            google-cloud-cpp::api_annotations_protos
            google-cloud-cpp::api_http_protos)
 
-add_library(google_cloud_cpp_pubsublite # cmake-format: sort
-            internal/placeholder.cc)
+add_library(
+    google_cloud_cpp_pubsublite # cmake-format: sort
+    admin_client.cc
+    admin_client.h
+    admin_connection.cc
+    admin_connection.h
+    admin_connection_idempotency_policy.cc
+    admin_connection_idempotency_policy.h
+    admin_options.h
+    internal/admin_auth_decorator.cc
+    internal/admin_auth_decorator.h
+    internal/admin_logging_decorator.cc
+    internal/admin_logging_decorator.h
+    internal/admin_metadata_decorator.cc
+    internal/admin_metadata_decorator.h
+    internal/admin_option_defaults.cc
+    internal/admin_option_defaults.h
+    internal/admin_stub.cc
+    internal/admin_stub.h
+    internal/admin_stub_factory.cc
+    internal/admin_stub_factory.h
+    retry_traits.h)
 target_include_directories(
     google_cloud_cpp_pubsublite
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -92,7 +112,9 @@ create_bazel_config(google_cloud_cpp_pubsublite YEAR "2021")
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
 add_library(google_cloud_cpp_pubsublite_mocks INTERFACE)
-target_sources(google_cloud_cpp_pubsublite_mocks INTERFACE)
+target_sources(
+    google_cloud_cpp_pubsublite_mocks
+    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_admin_connection.h)
 target_link_libraries(
     google_cloud_cpp_pubsublite_mocks
     INTERFACE google-cloud-cpp::experimental-pubsublite GTest::gmock_main

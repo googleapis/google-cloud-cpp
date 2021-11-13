@@ -36,7 +36,8 @@ bazel query \
 
 ## Run the Scaffold Generator
 
-Manually edit `generator/generator_config.textproto` and add your new service.
+Manually edit `generator/generator_config.textproto` and add the new service.
+The run the micro-generator to create the scaffold and the C++ sources:
 
 ```shell
 bazel_output_base="$(bazel info output_base)"
@@ -51,11 +52,9 @@ bazel run \
 
 ## Manually add the C++ files to the CMakeLists.txt file
 
-Create the `google/cloud/$library/retry_traits.h` file, and add this file and
-any generated C++ files to the `CMakeLists.txt` file. There should be markers
-in the file, search for `EDIT HERE`.
-
-## Run the CI build to generate Bazel files
+Create the `google/cloud/$library/retry_traits.h` file, and add this file
+**and** any generated C++ files to the `CMakeLists.txt` file. There should be
+markers in the file, search for `EDIT HERE`.
 
 ```shell
 ci/cloudbuild/build.sh -t cmake-install-pr

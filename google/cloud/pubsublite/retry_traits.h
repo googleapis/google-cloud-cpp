@@ -12,19 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_RETRY_TRAITS_H
+
+#include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include <string>
 
 namespace google {
 namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-// Placeholder function so the library is non-empty and can be compiled
-// Can be removed after the library gains some real functions
-std::string placeholder() { return google::cloud::version_string(); }
+/// Define the gRPC status code semantics for retrying requests.
+struct AdminServiceRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kInternal &&
+           status.code() != StatusCode::kDeadlineExceeded &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_RETRY_TRAITS_H

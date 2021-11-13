@@ -51,6 +51,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-pubsublite",
+    deps = [
+        "//google/cloud/pubsublite:google_cloud_cpp_pubsublite",
+    ],
+)
+
+cc_library(
+    name = "experimental-pubsublite-mocks",
+    deps = [
+        "//google/cloud/pubsublite:google_cloud_cpp_pubsublite_mocks",
+    ],
+)
+
+cc_library(
     name = "pubsub_client",
     deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub instead.",
     tags = ["manual"],

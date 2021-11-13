@@ -17,6 +17,7 @@
 """Automatically generated source lists for google_cloud_cpp_pubsublite_mocks - DO NOT EDIT."""
 
 google_cloud_cpp_pubsublite_mocks_hdrs = [
+    "mocks/mock_admin_connection.h",
 ]
 
 google_cloud_cpp_pubsublite_mocks_srcs = [
