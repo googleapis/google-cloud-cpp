@@ -41,63 +41,63 @@ io::log_h2 "Verifying installed directories"
 # Finds all the installed leaf directories (i.e., directories with exactly two
 # links: . and ..). We only look at leaf directories, because obviously all
 # parent directories must also exist.
-mapfile -t actual_dirs < <(env -C "${INSTALL_PREFIX}" find -type d -links 2)
-expected_dirs=(
+mapfile -t actual_dirs < <(env -C "${INSTALL_PREFIX}" find -type d)
+# The micro generator populates a file with the expected directories generated
+# via `make install`. The list does not include hand-crafted libraries, which
+# we maintain here as a hard-coded list.
+mapfile -t expected_dirs < <(cat ci/etc/expected_install_directories)
+expected_dirs+=(
   ./include/google/api
-  ./include/google/bigtable/admin/v2
   ./include/google/bigtable/v2
+  ./include/google/cloud/bigquery/connection
   ./include/google/cloud/bigquery/connection/v1beta1
+  ./include/google/cloud/bigquery/datatransfer
   ./include/google/cloud/bigquery/datatransfer/v1
-  ./include/google/cloud/bigquery/internal
+  ./include/google/cloud/bigquery/logging
   ./include/google/cloud/bigquery/logging/v1
-  ./include/google/cloud/bigquery/mocks
-  ./include/google/cloud/bigquery/storage/v1
   ./include/google/cloud/bigquery/v2
   ./include/google/cloud/bigtable/internal
-  ./include/google/cloud/bigtable/admin/internal
+  ./include/google/cloud/dialogflow
   ./include/google/cloud/dialogflow/v2
   ./include/google/cloud/dialogflow/v2beta1
   ./include/google/cloud/grpc_utils
-  ./include/google/cloud/iam/internal
-  ./include/google/cloud/iam/mocks
   ./include/google/cloud/internal
-  ./include/google/cloud/logging/internal
-  ./include/google/cloud/logging/mocks
+  ./include/google/cloud/pubsub
   ./include/google/cloud/pubsub/internal
   ./include/google/cloud/pubsub/mocks
+  ./include/google/cloud/pubsublite
   ./include/google/cloud/pubsublite/v1
-  ./include/google/cloud/spanner/admin/internal
   ./include/google/cloud/spanner/admin/mocks
   ./include/google/cloud/spanner/internal
   ./include/google/cloud/spanner/mocks
+  ./include/google/cloud/speech
   ./include/google/cloud/speech/v1
+  ./include/google/cloud/storage
   ./include/google/cloud/storage/internal
   ./include/google/cloud/storage/oauth2
   ./include/google/cloud/storage/testing
+  ./include/google/cloud/texttospeech
   ./include/google/cloud/texttospeech/v1
+  ./include/google/devtools
+  ./include/google/devtools/cloudtrace
   ./include/google/devtools/cloudtrace/v2
-  ./include/google/iam/admin/v1
-  ./include/google/iam/credentials/v1
   ./include/google/iam/v1
   ./include/google/logging/type
-  ./include/google/logging/v2
   ./include/google/longrunning
+  ./include/google/monitoring
   ./include/google/monitoring/v3
+  ./include/google/pubsub
   ./include/google/pubsub/v1
   ./include/google/rpc
-  ./include/google/spanner/admin/database/v1
-  ./include/google/spanner/admin/instance/v1
   ./include/google/spanner/v1
+  ./include/google/storage
   ./include/google/storage/v2
   ./include/google/type
   ./lib64/cmake/bigtable_client
-  ./lib64/cmake/google_cloud_cpp_bigquery
   ./lib64/cmake/google_cloud_cpp_bigtable
   ./lib64/cmake/google_cloud_cpp_common
   ./lib64/cmake/google_cloud_cpp_googleapis
   ./lib64/cmake/google_cloud_cpp_grpc_utils
-  ./lib64/cmake/google_cloud_cpp_iam
-  ./lib64/cmake/google_cloud_cpp_logging
   ./lib64/cmake/google_cloud_cpp_pubsub
   ./lib64/cmake/google_cloud_cpp_pubsublite
   ./lib64/cmake/google_cloud_cpp_spanner

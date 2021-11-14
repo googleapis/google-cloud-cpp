@@ -17,14 +17,15 @@
 #include "google/cloud/status_or.h"
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
+#include "absl/strings/str_split.h"
 #include "generator/generator.h"
 #include "generator/generator_config.pb.h"
 #include <google/protobuf/compiler/command_line_interface.h>
 #include <google/protobuf/text_format.h>
+#include <algorithm>
 #include <fstream>
 #include <future>
 #include <iostream>
-#include <sstream>
 
 ABSL_FLAG(std::string, config_file, "",
           "Text proto configuration file specifying the code to be generated.");
@@ -52,6 +53,69 @@ GetConfig(std::string const& filepath) {
   return google::cloud::Status(google::cloud::StatusCode::kInvalidArgument,
                                "Unable to parse textproto file.");
 }
+
+std::string Basename(std::string const& path) {
+  auto const l = path.find_last_of('/');
+  if (l == std::string::npos) return path;
+  return path.substr(l + 1);
+}
+
+std::string Dirname(std::string const& path) {
+  auto const l = path.find_last_of('/');
+  if (l == std::string::npos) return path;
+  return path.substr(0, l);
+}
+
+std::vector<std::string> Parents(std::string path) {
+  std::vector<std::string> p;
+  p.push_back(path);
+  while (path.find('/') != std::string::npos) {
+    path = Dirname(path);
+    p.push_back(path);
+  }
+  return p;
+}
+
+int WriteInstallDirectories(
+    google::cloud::cpp::generator::GeneratorConfiguration const& config,
+    std::string const& output_path) {
+  std::vector<std::string> install_directories{".", "./lib64", "./lib64/cmake"};
+  for (auto const& service : config.service()) {
+    if (service.product_path().empty()) {
+      GCP_LOG(ERROR) << "Empty product path in config, service="
+                     << service.DebugString() << "\n";
+      return 1;
+    }
+    if (service.service_proto_path().empty()) {
+      GCP_LOG(ERROR) << "Empty service proto path in config, service="
+                     << service.DebugString() << "\n";
+      return 1;
+    }
+
+    auto const& product_path = service.product_path();
+    for (auto const& p : Parents("./include/" + product_path)) {
+      install_directories.push_back(p);
+    }
+    install_directories.push_back("./include/" + product_path + "/internal");
+    for (auto const& p :
+         Parents("./include/" + Dirname(service.service_proto_path()))) {
+      install_directories.push_back(p);
+    }
+    // Bigtable and Spanner use a custom path for generated code.
+    if (Basename(product_path) != "admin") {
+      install_directories.push_back("./include/" + product_path + "/mocks");
+      install_directories.push_back("./lib64/cmake/google_cloud_cpp_" +
+                                    Basename(product_path));
+    }
+  }
+  std::sort(install_directories.begin(), install_directories.end());
+  auto end =
+      std::unique(install_directories.begin(), install_directories.end());
+  std::ofstream of(output_path + "/ci/etc/expected_install_directories");
+  std::copy(install_directories.begin(), end,
+            std::ostream_iterator<std::string>(of, "\n"));
+  return 0;
+}
 }  // namespace
 
 /**
@@ -70,6 +134,8 @@ GetConfig(std::string const& filepath) {
  */
 int main(int argc, char** argv) {
   absl::ParseCommandLine(argc, argv);
+  google::cloud::LogSink::EnableStdClog(
+      google::cloud::Severity::GCP_LS_WARNING);
 
   auto proto_path = absl::GetFlag(FLAGS_protobuf_proto_path);
   auto googleapis_path = absl::GetFlag(FLAGS_googleapis_proto_path);
@@ -88,6 +154,9 @@ int main(int argc, char** argv) {
   if (!config.ok()) {
     GCP_LOG(ERROR) << "Failed to parse config file: " << config_file << "\n";
   }
+
+  auto const install_result = WriteInstallDirectories(*config, output_path);
+  if (install_result != 0) return install_result;
 
   std::vector<std::future<google::cloud::Status>> tasks;
   for (auto const& service : config->service()) {
