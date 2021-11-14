@@ -109,6 +109,10 @@ int main(int argc, char** argv) {
     for (auto const& omit_rpc : service.omitted_rpcs()) {
       args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc);
     }
+    if (service.backwards_compatibility_namespace_alias()) {
+      args.emplace_back(
+          "--cpp_codegen_opt=backwards_compatibility_namespace_alias=true");
+    }
     args.emplace_back("--cpp_codegen_opt=service_endpoint_env_var=" +
                       service.service_endpoint_env_var());
     args.emplace_back("--cpp_codegen_opt=emulator_endpoint_env_var=" +

@@ -85,6 +85,14 @@ TEST_F(CreateClientIntegrationTest, SettingPolicies) {
       UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
 }
 
+/// @test Verify the backwards compatibility `v1` namespace still exists.
+TEST_F(CreateClientIntegrationTest, BackwardsCompatibility) {
+  auto client = ::google::cloud::storage::v1::Client::CreateDefaultClient();
+  ASSERT_THAT(client, IsOk());
+  ASSERT_NO_FATAL_FAILURE(
+      UseClient(*client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

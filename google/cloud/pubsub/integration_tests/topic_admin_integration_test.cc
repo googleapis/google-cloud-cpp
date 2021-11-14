@@ -40,6 +40,7 @@ using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
+using ::testing::NotNull;
 
 bool UsingEmulator() {
   return google::cloud::internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
@@ -189,6 +190,14 @@ TEST_F(TopicAdminIntegrationTest, ListTopicSnapshotsFailure) {
   auto i = list.begin();
   EXPECT_FALSE(i == list.end());
   EXPECT_FALSE(*i);
+}
+
+/// @test Verify the backwards compatibility `v1` namespace still exists.
+TEST_F(TopicAdminIntegrationTest, BackwardsCompatibility) {
+  auto connection =
+      ::google::cloud::pubsub::v1::MakeTopicAdminConnection(MakeTestOptions());
+  EXPECT_THAT(connection, NotNull());
+  ASSERT_NO_FATAL_FAILURE(TopicAdminClient(std::move(connection)));
 }
 
 }  // namespace

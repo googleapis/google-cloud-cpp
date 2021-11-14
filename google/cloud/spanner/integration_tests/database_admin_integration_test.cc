@@ -45,6 +45,7 @@ using ::testing::EndsWith;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Not;
+using ::testing::NotNull;
 
 // Constants used to identify the encryption key.
 auto constexpr kKeyRing = "spanner-cmek";
@@ -502,6 +503,13 @@ TEST_F(DatabaseAdminClientTest, CreateWithNonexistentEncryptionKey) {
           .get();
   EXPECT_THAT(database, StatusIs(StatusCode::kFailedPrecondition,
                                  HasSubstr("KMS Key provided is not usable")));
+}
+
+/// @test Verify the backwards compatibility `v1` namespace still exists.
+TEST_F(DatabaseAdminClientTest, BackwardsCompatibility) {
+  auto connection = ::google::cloud::spanner::v1::MakeDatabaseAdminConnection();
+  EXPECT_THAT(connection, NotNull());
+  ASSERT_NO_FATAL_FAILURE(DatabaseAdminClient(std::move(connection)));
 }
 
 }  // namespace

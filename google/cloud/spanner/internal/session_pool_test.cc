@@ -373,7 +373,7 @@ TEST(SessionPool, MultipleChannelsPreAllocation) {
   Options opts;
   opts.set<spanner::SessionPoolMaxSessionsPerChannelOption>(3);
   opts.set<spanner::SessionPoolActionOnExhaustionOption>(
-      spanner::v1::ActionOnExhaustion::kFail);
+      spanner::ActionOnExhaustion::kFail);
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(db, {mock1, mock2, mock3}, threads.cq(),
                                   std::move(opts));

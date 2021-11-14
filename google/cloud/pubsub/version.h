@@ -31,7 +31,12 @@ namespace cloud {
 /**
  * Contains all the Cloud Pubsub C++ client types and functions.
  */
-namespace pubsub {}  // namespace pubsub
+namespace pubsub {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+// TODO(#7463) - remove backwards compatibility namespaces
+namespace v1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
+}  // namespace pubsub
 }  // namespace cloud
 }  // namespace google
 

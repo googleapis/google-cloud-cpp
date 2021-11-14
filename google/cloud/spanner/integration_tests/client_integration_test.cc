@@ -31,6 +31,7 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
+using ::testing::NotNull;
 using ::testing::UnorderedElementsAre;
 using ::testing::UnorderedElementsAreArray;
 
@@ -965,6 +966,13 @@ TEST_F(ClientIntegrationTest, SpannerStatistics) {
     // refine the column expectations beyond a non-empty package name.
     EXPECT_NE(std::get<1>(*row), "");
   }
+}
+
+/// @test Verify the backwards compatibility `v1` namespace still exists.
+TEST_F(ClientIntegrationTest, BackwardsCompatibility) {
+  auto connection = ::google::cloud::spanner::v1::MakeConnection(GetDatabase());
+  EXPECT_THAT(connection, NotNull());
+  ASSERT_NO_FATAL_FAILURE(Client(std::move(connection)));
 }
 
 }  // namespace

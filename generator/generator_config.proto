@@ -33,6 +33,11 @@ message ServiceConfiguration {
   repeated string gen_async_rpcs = 7;
 
   repeated string omitted_services = 8;
+
+  // If set to true generate the `gcpxxV1` alias for our inline namespace. Older
+  // versions of the generated libraries need this, but new libraries should not
+  // have it.
+  bool backwards_compatibility_namespace_alias = 9;
 }
 
 message GeneratorConfiguration {
