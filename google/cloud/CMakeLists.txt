@@ -23,23 +23,7 @@ configure_file(internal/version_info.h.in
 set(DOXYGEN_PROJECT_NAME "Google Cloud C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "C++ Client Library for Google Cloud Platform")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
-set(DOXYGEN_EXCLUDE_PATTERNS
-    "*/generator/*"
-    "*/google/cloud/README.md"
-    "*/google/cloud/internal/*"
-    "*/google/cloud/examples/hello_world_grpc/*"
-    "*/google/cloud/examples/hello_world_http/*"
-    "*/google/cloud/testing_util/*"
-    "*/google/cloud/bigtable/*"
-    "*/google/cloud/bigquery/*"
-    "*/google/cloud/iam/*"
-    "*/google/cloud/logging/*"
-    "*/google/cloud/spanner/*"
-    "*/google/cloud/storage/*"
-    "*/google/cloud/pubsub/*"
-    "*/google/cloud/grpc_utils/*"
-    "*/google/cloud/*_test.cc")
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "testing_util" "examples")
 
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::rpc_status_protos
