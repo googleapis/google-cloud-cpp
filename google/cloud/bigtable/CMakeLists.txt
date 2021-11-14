@@ -22,7 +22,7 @@ set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/examples"
                          "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
 set(DOXYGEN_EXCLUDE_SYMBOLS "benchmarks" "bigtable_admin_internal" "internal"
-                            "testing")
+                            "testing" "examples")
 
 include(GoogleCloudCppCommon)
 
