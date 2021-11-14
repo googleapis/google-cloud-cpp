@@ -114,7 +114,9 @@ elseif (GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
         "${CMAKE_CURRENT_SOURCE_DIR}"
         # Many libraries export mock classes for public consumption
         "${CMAKE_CURRENT_SOURCE_DIR}/mocks"
-        # The storage library has some public APIs in `oauth2`.
+        # The Bigtable and Spanner libraries have some public APIs in `admin`.
+        "${CMAKE_CURRENT_SOURCE_DIR}/admin"
+        # The Storage library has some public APIs in `oauth2`.
         "${CMAKE_CURRENT_SOURCE_DIR}/oauth2"
         # Scan the examples, the directory name depends on the library
         "${CMAKE_CURRENT_SOURCE_DIR}/samples"
