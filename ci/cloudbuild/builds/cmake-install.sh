@@ -27,12 +27,26 @@ export CXX=clang++
 INSTALL_PREFIX="$(mktemp -d)"
 readonly INSTALL_PREFIX
 
+mapfile -t feature_list < <(cat ci/etc/full_feature_list)
+# Add the hand-crafted libraries and custom features to the full list
+feature_list+=(
+  bigtable
+  pubsub
+  spanner
+  storage
+  experimental-storage-grpc
+  pubsublite
+)
+features="$(printf ",%s" "${feature_list[@]}")"
+features="${features:1}"
+readonly features
+
 # Compiles and installs all libraries and headers.
 cmake -GNinja \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
-  -DGOOGLE_CLOUD_CPP_ENABLE="bigtable;bigquery;iam;logging;pubsub;spanner;storage;experimental-storage-grpc;pubsublite" \
+  -DGOOGLE_CLOUD_CPP_ENABLE="${features}" \
   -S . -B cmake-out
 cmake --build cmake-out
 cmake --install cmake-out --component google_cloud_cpp_development
