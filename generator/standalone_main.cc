@@ -54,12 +54,28 @@ GetConfig(std::string const& filepath) {
                                "Unable to parse textproto file.");
 }
 
+/**
+ * Extract the basename from @p path
+ *
+ * @note The return value for absolute paths or paths without `/` is
+ *     unspecified, as we do not expect any such inputs.
+ *
+ * @return For a path of the form `a/b/c` returns `c`.
+ */
 std::string Basename(std::string const& path) {
   auto const l = path.find_last_of('/');
   if (l == std::string::npos) return path;
   return path.substr(l + 1);
 }
 
+/**
+ * Return the parent directory of @path, if any.
+ *
+ * @note The return value for absolute paths or paths without `/` is
+ *     unspecified, as we do not expect any such inputs.
+ *
+ * @return For a  path of the form `a/b/c` returns `a/b`.
+ */
 std::string Dirname(std::string const& path) {
   auto const l = path.find_last_of('/');
   if (l == std::string::npos) return path;
