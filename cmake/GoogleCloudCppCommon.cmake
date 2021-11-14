@@ -38,10 +38,10 @@ if (${CMAKE_VERSION} VERSION_LESS "3.12")
     message(STATUS "Doxygen generation only enabled for cmake 3.9 and higher")
 elseif (GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
     find_package(Doxygen REQUIRED)
-    set(DOXYGEN_RECURSIVE YES)
+    set(DOXYGEN_RECURSIVE NO)
     set(DOXYGEN_FILE_PATTERNS *.h *.cc *.dox)
-    set(DOXYGEN_EXAMPLE_RECURSIVE YES)
-    set(DOXYGEN_EXCLUDE "third_party" "cmake-build-debug" "cmake-out")
+    set(DOXYGEN_EXCLUDE_PATTERNS "*_test.cc")
+    set(DOXYGEN_EXAMPLE_RECURSIVE NO)
     set(DOXYGEN_EXCLUDE_SYMLINKS YES)
     set(DOXYGEN_QUIET YES)
     set(DOXYGEN_WARN_AS_ERROR YES)
@@ -108,9 +108,30 @@ elseif (GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
         endif ()
     endif ()
 
+    set(GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS)
+    set(GOOGLE_CLOUD_CPP_DOXYGEN_POSSIBLE_INPUTS
+        # Scan the current directory (duh)
+        "${CMAKE_CURRENT_SOURCE_DIR}"
+        # Many libraries export mock classes for public consumption
+        "${CMAKE_CURRENT_SOURCE_DIR}/mocks"
+        # The storage library has some public APIs in `oauth2`.
+        "${CMAKE_CURRENT_SOURCE_DIR}/oauth2"
+        # Scan the examples, the directory name depends on the library
+        "${CMAKE_CURRENT_SOURCE_DIR}/samples"
+        "${CMAKE_CURRENT_SOURCE_DIR}/examples"
+        # The landing page and other documentation is in the doc/
+        "${CMAKE_CURRENT_SOURCE_DIR}/doc")
+    foreach (input IN LISTS GOOGLE_CLOUD_CPP_DOXYGEN_POSSIBLE_INPUTS)
+        if (EXISTS "${input}")
+            list(APPEND GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS "${input}")
+        endif ()
+    endforeach ()
     doxygen_add_docs(
-        ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs ${CMAKE_CURRENT_SOURCE_DIR}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} COMMENT
+        ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs
+        "${GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS}"
+        WORKING_DIRECTORY
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT
         "Generate ${GOOGLE_CLOUD_CPP_SUBPROJECT} HTML documentation")
     add_dependencies(doxygen-docs ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs)
 

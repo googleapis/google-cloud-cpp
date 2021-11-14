@@ -17,7 +17,6 @@
 set(DOXYGEN_PROJECT_NAME "Cloud Pub/Sub Lite C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Cloud Pub/Sub Lite")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Beta)")
-set(DOXYGEN_EXCLUDE_PATTERNS "*/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "pubsublite_internal"
                             "pubsublite_testing" "examples")
 
