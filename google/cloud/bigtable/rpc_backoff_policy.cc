@@ -48,5 +48,33 @@ std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+std::unique_ptr<internal::BackoffPolicy> MakeCommonBackoffPolicy(
+    std::unique_ptr<bigtable::RPCBackoffPolicy> policy) {
+  class CommonBackoffPolicy : public internal::BackoffPolicy {
+   public:
+    explicit CommonBackoffPolicy(
+        std::unique_ptr<bigtable::RPCBackoffPolicy> impl)
+        : impl_(std::move(impl)) {}
+    ~CommonBackoffPolicy() override = default;
+
+    std::unique_ptr<internal::BackoffPolicy> clone() const override {
+      return absl::make_unique<CommonBackoffPolicy>(impl_->clone());
+    }
+    std::chrono::milliseconds OnCompletion() override {
+      return impl_->OnCompletion();
+    }
+
+   private:
+    std::unique_ptr<bigtable::RPCBackoffPolicy> impl_;
+  };
+
+  return absl::make_unique<CommonBackoffPolicy>(std::move(policy));
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

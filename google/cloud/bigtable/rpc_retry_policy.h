@@ -20,8 +20,10 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status.h"
+#include "absl/memory/memory.h"
 #include <grpcpp/grpcpp.h>
 #include <memory>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -107,6 +109,8 @@ class RPCRetryPolicy {
   static bool IsPermanentFailure(grpc::Status const& status) {
     return internal::SafeGrpcRetry::IsPermanentFailure(status);
   }
+
+  virtual bool IsExhausted() const { return false; }
 };
 
 /// Return an instance of the default RPCRetryPolicy.
@@ -126,6 +130,7 @@ class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
   bool OnFailure(google::cloud::Status const& status) override;
   // TODO(#2344) - remove ::grpc::Status version.
   bool OnFailure(grpc::Status const& status) override;
+  bool IsExhausted() const override;
 
  private:
   using Impl = ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -148,6 +153,7 @@ class LimitedTimeRetryPolicy : public RPCRetryPolicy {
   bool OnFailure(google::cloud::Status const& status) override;
   // TODO(#2344) - remove ::grpc::Status version.
   bool OnFailure(grpc::Status const& status) override;
+  bool IsExhausted() const override;
 
  private:
   using Impl =
@@ -157,6 +163,37 @@ class LimitedTimeRetryPolicy : public RPCRetryPolicy {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+template <typename ReturnType>
+std::unique_ptr<ReturnType> MakeCommonRetryPolicy(
+    std::unique_ptr<bigtable::RPCRetryPolicy> policy) {
+  class CommonRetryPolicy : public ReturnType {
+   public:
+    explicit CommonRetryPolicy(std::unique_ptr<bigtable::RPCRetryPolicy> impl)
+        : impl_(std::move(impl)) {}
+    ~CommonRetryPolicy() override = default;
+
+    std::unique_ptr<ReturnType> clone() const override {
+      return absl::make_unique<CommonRetryPolicy>(impl_->clone());
+    }
+    bool OnFailure(Status const& s) override { return impl_->OnFailure(s); }
+    bool IsExhausted() const override { return impl_->IsExhausted(); }
+    bool IsPermanentFailure(Status const& s) const override {
+      return bigtable::RPCRetryPolicy::IsPermanentFailure(s);
+    }
+    void OnFailureImpl() override {}
+
+   private:
+    std::unique_ptr<bigtable::RPCRetryPolicy> impl_;
+  };
+
+  return absl::make_unique<CommonRetryPolicy>(std::move(policy));
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

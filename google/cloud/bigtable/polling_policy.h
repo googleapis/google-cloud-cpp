@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/polling_policy.h"
 #include <grpcpp/grpcpp.h>
 #include <chrono>
 
@@ -162,6 +163,14 @@ std::unique_ptr<PollingPolicy> DefaultPollingPolicy(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+std::unique_ptr<PollingPolicy> MakeCommonPollingPolicy(
+    std::unique_ptr<bigtable::PollingPolicy> policy);
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 
