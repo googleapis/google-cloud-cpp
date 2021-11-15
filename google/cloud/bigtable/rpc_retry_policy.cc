@@ -43,6 +43,10 @@ bool LimitedErrorCountRetryPolicy::OnFailure(grpc::Status const& status) {
   return impl_.OnFailure(MakeStatusFromRpcError(status));
 }
 
+bool LimitedErrorCountRetryPolicy::IsExhausted() const {
+  return impl_.IsExhausted();
+}
+
 LimitedTimeRetryPolicy::LimitedTimeRetryPolicy(
     internal::RPCPolicyParameters defaults)
     : impl_(defaults.maximum_retry_period) {}
@@ -64,6 +68,8 @@ bool LimitedTimeRetryPolicy::OnFailure(google::cloud::Status const& status) {
 bool LimitedTimeRetryPolicy::OnFailure(grpc::Status const& status) {
   return impl_.OnFailure(MakeStatusFromRpcError(status));
 }
+
+bool LimitedTimeRetryPolicy::IsExhausted() const { return impl_.IsExhausted(); }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

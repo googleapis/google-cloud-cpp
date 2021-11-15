@@ -113,6 +113,14 @@ class ExponentialBackoffPolicy : public RPCBackoffPolicy {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+std::unique_ptr<internal::BackoffPolicy> MakeCommonBackoffPolicy(
+    std::unique_ptr<bigtable::RPCBackoffPolicy> policy);
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 
