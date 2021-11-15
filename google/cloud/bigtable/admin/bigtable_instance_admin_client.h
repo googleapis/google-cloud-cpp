@@ -84,7 +84,7 @@ class BigtableInstanceAdminClient {
    *  Fields marked `OutputOnly` must be left blank.
    *  Currently, at most four clusters can be specified.
    * @return
-   * [google::bigtable::admin::v2::Instance](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L39)
+   * [google::bigtable::admin::v2::Instance](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L41)
    */
   future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
       std::string const& parent, std::string const& instance_id,
@@ -98,7 +98,7 @@ class BigtableInstanceAdminClient {
    * @param name  Required. The unique name of the requested instance. Values
    * are of the form `projects/{project}/instances/{instance}`.
    * @return
-   * [google::bigtable::admin::v2::Instance](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L39)
+   * [google::bigtable::admin::v2::Instance](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L41)
    */
   StatusOr<google::bigtable::admin::v2::Instance> GetInstance(
       std::string const& name);
@@ -109,7 +109,7 @@ class BigtableInstanceAdminClient {
    * @param parent  Required. The unique name of the project for which a list of
    * instances is requested. Values are of the form `projects/{project}`.
    * @return
-   * [google::bigtable::admin::v2::ListInstancesResponse](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L295)
+   * [google::bigtable::admin::v2::ListInstancesResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L295)
    */
   StatusOr<google::bigtable::admin::v2::ListInstancesResponse> ListInstances(
       std::string const& parent);
@@ -123,7 +123,7 @@ class BigtableInstanceAdminClient {
    * @param update_mask  Required. The subset of Instance fields which should be
    * replaced. Must be explicitly set.
    * @return
-   * [google::bigtable::admin::v2::Instance](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L39)
+   * [google::bigtable::admin::v2::Instance](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L41)
    */
   future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
       google::bigtable::admin::v2::Instance const& instance,
@@ -149,7 +149,7 @@ class BigtableInstanceAdminClient {
    * @param cluster  Required. The cluster to be created.
    *  Fields marked `OutputOnly` must be left blank.
    * @return
-   * [google::bigtable::admin::v2::Cluster](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L113)
+   * [google::bigtable::admin::v2::Cluster](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L120)
    */
   future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
       std::string const& parent, std::string const& cluster_id,
@@ -161,7 +161,7 @@ class BigtableInstanceAdminClient {
    * @param name  Required. The unique name of the requested cluster. Values are
    * of the form `projects/{project}/instances/{instance}/clusters/{cluster}`.
    * @return
-   * [google::bigtable::admin::v2::Cluster](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L113)
+   * [google::bigtable::admin::v2::Cluster](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L120)
    */
   StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
       std::string const& name);
@@ -175,7 +175,7 @@ class BigtableInstanceAdminClient {
    * Clusters for all Instances in a project, e.g.,
    * `projects/myproject/instances/-`.
    * @return
-   * [google::bigtable::admin::v2::ListClustersResponse](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L385)
+   * [google::bigtable::admin::v2::ListClustersResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L385)
    */
   StatusOr<google::bigtable::admin::v2::ListClustersResponse> ListClusters(
       std::string const& parent);
@@ -201,7 +201,7 @@ class BigtableInstanceAdminClient {
    * @param app_profile  Required. The app profile to be created.
    *  Fields marked `OutputOnly` will be ignored.
    * @return
-   * [google::bigtable::admin::v2::AppProfile](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L192)
+   * [google::bigtable::admin::v2::AppProfile](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L199)
    */
   StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
       std::string const& parent, std::string const& app_profile_id,
@@ -214,7 +214,7 @@ class BigtableInstanceAdminClient {
    * are of the form
    *  `projects/{project}/instances/{instance}/appProfiles/{app_profile}`.
    * @return
-   * [google::bigtable::admin::v2::AppProfile](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L192)
+   * [google::bigtable::admin::v2::AppProfile](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L199)
    */
   StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
       std::string const& name);
@@ -228,7 +228,7 @@ class BigtableInstanceAdminClient {
    *  Use `{instance} = '-'` to list AppProfiles for all Instances in a project,
    *  e.g., `projects/myproject/instances/-`.
    * @return
-   * [google::bigtable::admin::v2::AppProfile](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L192)
+   * [google::bigtable::admin::v2::AppProfile](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L199)
    */
   StreamRange<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
       std::string const& parent);
@@ -241,7 +241,7 @@ class BigtableInstanceAdminClient {
    * @param update_mask  Required. The subset of app profile fields which should
    * be replaced. If unset, all fields will be replaced.
    * @return
-   * [google::bigtable::admin::v2::AppProfile](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L192)
+   * [google::bigtable::admin::v2::AppProfile](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L199)
    */
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
       google::bigtable::admin::v2::AppProfile const& app_profile,
@@ -264,7 +264,7 @@ class BigtableInstanceAdminClient {
    * requested. See the operation documentation for the appropriate value for
    * this field.
    * @return
-   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/iam/v1/policy.proto#L88)
+   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/policy.proto#L88)
    */
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource);
 
@@ -280,7 +280,7 @@ class BigtableInstanceAdminClient {
    * policy is a valid policy but certain Cloud Platform services (such as
    * Projects) might reject them.
    * @return
-   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/iam/v1/policy.proto#L88)
+   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/policy.proto#L88)
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy);
@@ -321,7 +321,7 @@ class BigtableInstanceAdminClient {
    * For more information see [IAM
    * Overview](https://cloud.google.com/iam/docs/overview#permissions).
    * @return
-   * [google::iam::v1::TestIamPermissionsResponse](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/iam/v1/iam_policy.proto#L141)
+   * [google::iam::v1::TestIamPermissionsResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/iam_policy.proto#L141)
    */
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions);
@@ -330,9 +330,9 @@ class BigtableInstanceAdminClient {
    * Create an instance within a project.
    *
    * @param request
-   * [google::bigtable::admin::v2::CreateInstanceRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L240)
+   * [google::bigtable::admin::v2::CreateInstanceRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L240)
    * @return
-   * [google::bigtable::admin::v2::Instance](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L39)
+   * [google::bigtable::admin::v2::Instance](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L41)
    */
   future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
       google::bigtable::admin::v2::CreateInstanceRequest const& request);
@@ -341,9 +341,9 @@ class BigtableInstanceAdminClient {
    * Gets information about an instance.
    *
    * @param request
-   * [google::bigtable::admin::v2::GetInstanceRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L268)
+   * [google::bigtable::admin::v2::GetInstanceRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L268)
    * @return
-   * [google::bigtable::admin::v2::Instance](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L39)
+   * [google::bigtable::admin::v2::Instance](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L41)
    */
   StatusOr<google::bigtable::admin::v2::Instance> GetInstance(
       google::bigtable::admin::v2::GetInstanceRequest const& request);
@@ -352,9 +352,9 @@ class BigtableInstanceAdminClient {
    * Lists information about instances in a project.
    *
    * @param request
-   * [google::bigtable::admin::v2::ListInstancesRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L280)
+   * [google::bigtable::admin::v2::ListInstancesRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L280)
    * @return
-   * [google::bigtable::admin::v2::ListInstancesResponse](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L295)
+   * [google::bigtable::admin::v2::ListInstancesResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L295)
    */
   StatusOr<google::bigtable::admin::v2::ListInstancesResponse> ListInstances(
       google::bigtable::admin::v2::ListInstancesRequest const& request);
@@ -365,9 +365,9 @@ class BigtableInstanceAdminClient {
    * labels, use PartialUpdateInstance.
    *
    * @param request
-   * [google::bigtable::admin::v2::Instance](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L39)
+   * [google::bigtable::admin::v2::Instance](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L41)
    * @return
-   * [google::bigtable::admin::v2::Instance](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L39)
+   * [google::bigtable::admin::v2::Instance](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L41)
    */
   StatusOr<google::bigtable::admin::v2::Instance> UpdateInstance(
       google::bigtable::admin::v2::Instance const& request);
@@ -377,9 +377,9 @@ class BigtableInstanceAdminClient {
    * fields of an Instance and is the preferred way to update an Instance.
    *
    * @param request
-   * [google::bigtable::admin::v2::PartialUpdateInstanceRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L312)
+   * [google::bigtable::admin::v2::PartialUpdateInstanceRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L312)
    * @return
-   * [google::bigtable::admin::v2::Instance](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L39)
+   * [google::bigtable::admin::v2::Instance](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L41)
    */
   future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
       google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request);
@@ -388,7 +388,7 @@ class BigtableInstanceAdminClient {
    * Delete an instance from a project.
    *
    * @param request
-   * [google::bigtable::admin::v2::DeleteInstanceRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L322)
+   * [google::bigtable::admin::v2::DeleteInstanceRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L322)
    */
   Status DeleteInstance(
       google::bigtable::admin::v2::DeleteInstanceRequest const& request);
@@ -397,9 +397,9 @@ class BigtableInstanceAdminClient {
    * Creates a cluster within an instance.
    *
    * @param request
-   * [google::bigtable::admin::v2::CreateClusterRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L334)
+   * [google::bigtable::admin::v2::CreateClusterRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L334)
    * @return
-   * [google::bigtable::admin::v2::Cluster](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L113)
+   * [google::bigtable::admin::v2::Cluster](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L120)
    */
   future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
       google::bigtable::admin::v2::CreateClusterRequest const& request);
@@ -408,9 +408,9 @@ class BigtableInstanceAdminClient {
    * Gets information about a cluster.
    *
    * @param request
-   * [google::bigtable::admin::v2::GetClusterRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L356)
+   * [google::bigtable::admin::v2::GetClusterRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L356)
    * @return
-   * [google::bigtable::admin::v2::Cluster](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L113)
+   * [google::bigtable::admin::v2::Cluster](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L120)
    */
   StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
       google::bigtable::admin::v2::GetClusterRequest const& request);
@@ -419,9 +419,9 @@ class BigtableInstanceAdminClient {
    * Lists information about clusters in an instance.
    *
    * @param request
-   * [google::bigtable::admin::v2::ListClustersRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L368)
+   * [google::bigtable::admin::v2::ListClustersRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L368)
    * @return
-   * [google::bigtable::admin::v2::ListClustersResponse](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L385)
+   * [google::bigtable::admin::v2::ListClustersResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L385)
    */
   StatusOr<google::bigtable::admin::v2::ListClustersResponse> ListClusters(
       google::bigtable::admin::v2::ListClustersRequest const& request);
@@ -430,9 +430,9 @@ class BigtableInstanceAdminClient {
    * Updates a cluster within an instance.
    *
    * @param request
-   * [google::bigtable::admin::v2::Cluster](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L113)
+   * [google::bigtable::admin::v2::Cluster](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L120)
    * @return
-   * [google::bigtable::admin::v2::Cluster](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L113)
+   * [google::bigtable::admin::v2::Cluster](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L120)
    */
   future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
       google::bigtable::admin::v2::Cluster const& request);
@@ -441,7 +441,7 @@ class BigtableInstanceAdminClient {
    * Deletes a cluster from an instance.
    *
    * @param request
-   * [google::bigtable::admin::v2::DeleteClusterRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L401)
+   * [google::bigtable::admin::v2::DeleteClusterRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L401)
    */
   Status DeleteCluster(
       google::bigtable::admin::v2::DeleteClusterRequest const& request);
@@ -450,9 +450,9 @@ class BigtableInstanceAdminClient {
    * Creates an app profile within an instance.
    *
    * @param request
-   * [google::bigtable::admin::v2::CreateAppProfileRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L461)
+   * [google::bigtable::admin::v2::CreateAppProfileRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L461)
    * @return
-   * [google::bigtable::admin::v2::AppProfile](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L192)
+   * [google::bigtable::admin::v2::AppProfile](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L199)
    */
   StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
       google::bigtable::admin::v2::CreateAppProfileRequest const& request);
@@ -461,9 +461,9 @@ class BigtableInstanceAdminClient {
    * Gets information about an app profile.
    *
    * @param request
-   * [google::bigtable::admin::v2::GetAppProfileRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L486)
+   * [google::bigtable::admin::v2::GetAppProfileRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L486)
    * @return
-   * [google::bigtable::admin::v2::AppProfile](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L192)
+   * [google::bigtable::admin::v2::AppProfile](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L199)
    */
   StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
       google::bigtable::admin::v2::GetAppProfileRequest const& request);
@@ -472,9 +472,9 @@ class BigtableInstanceAdminClient {
    * Lists information about app profiles in an instance.
    *
    * @param request
-   * [google::bigtable::admin::v2::ListAppProfilesRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L498)
+   * [google::bigtable::admin::v2::ListAppProfilesRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L498)
    * @return
-   * [google::bigtable::admin::v2::AppProfile](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L192)
+   * [google::bigtable::admin::v2::AppProfile](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L199)
    */
   StreamRange<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
       google::bigtable::admin::v2::ListAppProfilesRequest request);
@@ -483,9 +483,9 @@ class BigtableInstanceAdminClient {
    * Updates an app profile within an instance.
    *
    * @param request
-   * [google::bigtable::admin::v2::UpdateAppProfileRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L544)
+   * [google::bigtable::admin::v2::UpdateAppProfileRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L544)
    * @return
-   * [google::bigtable::admin::v2::AppProfile](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/instance.proto#L192)
+   * [google::bigtable::admin::v2::AppProfile](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/instance.proto#L199)
    */
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
       google::bigtable::admin::v2::UpdateAppProfileRequest const& request);
@@ -494,7 +494,7 @@ class BigtableInstanceAdminClient {
    * Deletes an app profile from an instance.
    *
    * @param request
-   * [google::bigtable::admin::v2::DeleteAppProfileRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/bigtable/admin/v2/bigtable_instance_admin.proto#L557)
+   * [google::bigtable::admin::v2::DeleteAppProfileRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/bigtable/admin/v2/bigtable_instance_admin.proto#L557)
    */
   Status DeleteAppProfile(
       google::bigtable::admin::v2::DeleteAppProfileRequest const& request);
@@ -504,9 +504,9 @@ class BigtableInstanceAdminClient {
    * policy if an instance exists but does not have a policy set.
    *
    * @param request
-   * [google::iam::v1::GetIamPolicyRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/iam/v1/iam_policy.proto#L113)
+   * [google::iam::v1::GetIamPolicyRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/iam_policy.proto#L113)
    * @return
-   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/iam/v1/policy.proto#L88)
+   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/policy.proto#L88)
    */
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);
@@ -516,9 +516,9 @@ class BigtableInstanceAdminClient {
    * existing policy.
    *
    * @param request
-   * [google::iam::v1::SetIamPolicyRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/iam/v1/iam_policy.proto#L98)
+   * [google::iam::v1::SetIamPolicyRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/iam_policy.proto#L98)
    * @return
-   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/iam/v1/policy.proto#L88)
+   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/policy.proto#L88)
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request);
@@ -527,9 +527,9 @@ class BigtableInstanceAdminClient {
    * Returns permissions that the caller has on the specified instance resource.
    *
    * @param request
-   * [google::iam::v1::TestIamPermissionsRequest](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/iam/v1/iam_policy.proto#L126)
+   * [google::iam::v1::TestIamPermissionsRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/iam_policy.proto#L126)
    * @return
-   * [google::iam::v1::TestIamPermissionsResponse](https://github.com/googleapis/googleapis/blob/9bac62dbc7a1f7b19baf578d6fbb550dbaff0d49/google/iam/v1/iam_policy.proto#L141)
+   * [google::iam::v1::TestIamPermissionsResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/iam_policy.proto#L141)
    */
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request);
