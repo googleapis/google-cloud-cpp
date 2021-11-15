@@ -77,9 +77,7 @@ std::string Basename(std::string const& path) {
  * @return For a  path of the form `a/b/c` returns `a/b`.
  */
 std::string Dirname(std::string const& path) {
-  auto const l = path.find_last_of('/');
-  if (l == std::string::npos) return path;
-  return path.substr(0, l);
+  return path.substr(0, path.find_last_of('/'));
 }
 
 std::vector<std::string> Parents(std::string path) {
