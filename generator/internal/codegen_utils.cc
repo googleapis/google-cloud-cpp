@@ -65,8 +65,9 @@ Status ProcessArgSiteDocsRoot(
                      return p.first == "site_docs_reference_root";
                    });
   if (root == command_line_args.end() || root->second.empty()) {
-    return Status(StatusCode::kInvalidArgument,
-                  "--cpp_codegen_opt=site_docs_reference_root=<path> must be specified.");
+    return Status(
+        StatusCode::kInvalidArgument,
+        "--cpp_codegen_opt=site_docs_reference_root=<path> must be specified.");
   }
   return {};
 }
