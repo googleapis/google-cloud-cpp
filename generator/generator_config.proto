@@ -38,6 +38,18 @@ message ServiceConfiguration {
   // versions of the generated libraries need this, but new libraries should not
   // have it.
   bool backwards_compatibility_namespace_alias = 9;
+
+  // The product reference documentation path in `https://cloud.google.com/`.
+  //
+  // Typically this is `$product/docs, i.e., the documentation for the product
+  // can be found at:
+  //     https://cloud.google.com/$product/docs/reference/rpc
+  // The micro generator uses this default if the field is not set.  For some
+  // products the product name is different, for example:
+  // - `cloudtasks` is found at `https://cloud.google.com/tasks/docs`
+  // - the Bigtable admin APIs are found at
+  //   `https://cloud.google.com/bigtable/docs/reference/admin/rpc`
+  string site_docs_reference_root = 10;
 }
 
 message GeneratorConfiguration {

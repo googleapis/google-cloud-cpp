@@ -29,8 +29,6 @@
 
 ABSL_FLAG(std::string, config_file, "",
           "Text proto configuration file specifying the code to be generated.");
-ABSL_FLAG(std::string, googleapis_commit_hash, "",
-          "Git commit hash of googleapis dependency.");
 ABSL_FLAG(std::string, protobuf_proto_path, "",
           "Path to root dir of protos distributed with protobuf.");
 ABSL_FLAG(std::string, googleapis_proto_path, "",
@@ -154,6 +152,14 @@ int WriteFeatureList(
   return 0;
 }
 
+std::string SiteDocsReferenceRoot(
+    google::cloud::cpp::generator::ServiceConfiguration const& service) {
+  if (service.site_docs_reference_root().empty()) {
+    return Basename(service.product_path()) + "/docs/reference/rpc";
+  }
+  return service.site_docs_reference_root();
+}
+
 }  // namespace
 
 /**
@@ -161,13 +167,13 @@ int WriteFeatureList(
  *
  * @par Command line arguments:
  *  --config-file=<path> REQUIRED should be a textproto file for
- * GeneratorConfiguration message.
- *  --googleapis_commit_hash=<hash> REQUIRED git commit hash of googleapis
- * dependency.
+ *      GeneratorConfiguration message.
+ *  --site_docs_reference_root=<path> REQUIRED the product's reference
+ *      documentation root on the cloud.google.com site.
  *  --protobuf_proto_path=<path> REQUIRED path to .proto files distributed with
- * protobuf.
+ *      protobuf.
  *  --googleapis_proto_path=<path> REQUIRED path to .proto files distributed
- * with googleapis repo.
+ *      with googleapis repo.
  *  --output_path=<path> OPTIONAL defaults to current directory.
  */
 int main(int argc, char** argv) {
@@ -177,14 +183,11 @@ int main(int argc, char** argv) {
 
   auto proto_path = absl::GetFlag(FLAGS_protobuf_proto_path);
   auto googleapis_path = absl::GetFlag(FLAGS_googleapis_proto_path);
-  auto googleapis_commit_hash = absl::GetFlag(FLAGS_googleapis_commit_hash);
   auto config_file = absl::GetFlag(FLAGS_config_file);
   auto output_path = absl::GetFlag(FLAGS_output_path);
 
   GCP_LOG(INFO) << "proto_path = " << proto_path << "\n";
   GCP_LOG(INFO) << "googleapis_path = " << googleapis_path << "\n";
-  GCP_LOG(INFO) << "googleapis_commit_hash = " << googleapis_commit_hash
-                << "\n";
   GCP_LOG(INFO) << "config_file = " << config_file << "\n";
   GCP_LOG(INFO) << "output_path = " << output_path << "\n";
 
@@ -208,8 +211,9 @@ int main(int argc, char** argv) {
     args.emplace_back("--cpp_codegen_out=" + output_path);
     args.emplace_back("--cpp_codegen_opt=product_path=" +
                       service.product_path());
-    args.emplace_back("--cpp_codegen_opt=googleapis_commit_hash=" +
-                      googleapis_commit_hash);
+
+    args.emplace_back("--cpp_codegen_opt=site_docs_reference_root=" +
+                      SiteDocsReferenceRoot(service));
     args.emplace_back("--cpp_codegen_opt=copyright_year=" +
                       service.initial_copyright_year());
     for (auto const& omit_service : service.omitted_services()) {

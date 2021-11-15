@@ -97,7 +97,6 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
                           "Codegen C++ Generator");
 
     product_path_ = "generator/integration_tests/golden/";
-    googleapis_commit_hash_ = "59f97e6044a1275f83427ab7962a154c00d915b5";
     copyright_year_ = CurrentCopyrightYear();
     omit_rpc1_ = "Omitted1";
     omit_rpc2_ = "GoldenKitchenSink.Omitted2";
@@ -114,8 +113,8 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
     args.emplace_back("--proto_path=" + code_path);
     args.emplace_back("--cpp_codegen_out=" + output_path_);
     args.emplace_back("--cpp_codegen_opt=product_path=" + product_path_);
-    args.emplace_back("--cpp_codegen_opt=googleapis_commit_hash=" +
-                      googleapis_commit_hash_);
+    args.emplace_back(
+        "--cpp_codegen_opt=site_docs_reference_root=golden/docs/reference/rpc");
     args.emplace_back("--cpp_codegen_opt=copyright_year=" + copyright_year_);
     args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc1_);
     args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc2_);
@@ -143,7 +142,6 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
   std::string product_path_;
   std::string output_path_;
   std::string golden_path_;
-  std::string googleapis_commit_hash_;
   std::string copyright_year_;
   std::string omit_rpc1_;
   std::string omit_rpc2_;

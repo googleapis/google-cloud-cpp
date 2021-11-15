@@ -57,18 +57,16 @@ Status ProcessArgProductPath(
   return {};
 }
 
-Status ProcessArgGoogleapisCommitHash(
+Status ProcessArgSiteDocsRoot(
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
-  auto googleapis_commit_hash =
+  auto const root =
       std::find_if(command_line_args.begin(), command_line_args.end(),
                    [](std::pair<std::string, std::string> const& p) {
-                     return p.first == "googleapis_commit_hash";
+                     return p.first == "site_docs_reference_root";
                    });
-  if (googleapis_commit_hash == command_line_args.end() ||
-      googleapis_commit_hash->second.empty()) {
-    return Status(
-        StatusCode::kInvalidArgument,
-        "--cpp_codegen_opt=googleapis_commit_hash=<hash> must be specified.");
+  if (root == command_line_args.end() || root->second.empty()) {
+    return Status(StatusCode::kInvalidArgument,
+                  "--cpp_codegen_opt=site_docs_reference_root=<path> must be specified.");
   }
   return {};
 }
@@ -229,7 +227,7 @@ ProcessCommandLineArgs(std::string const& parameters) {
   auto status = ProcessArgProductPath(command_line_args);
   if (!status.ok()) return status;
 
-  status = ProcessArgGoogleapisCommitHash(command_line_args);
+  status = ProcessArgSiteDocsRoot(command_line_args);
   if (!status.ok()) return status;
 
   ProcessArgCopyrightYear(command_line_args);

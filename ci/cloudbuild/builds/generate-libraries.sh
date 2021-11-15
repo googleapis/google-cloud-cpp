@@ -28,7 +28,6 @@ googleapis_hash=$(bazel query \
 io::log_h2 "Running generator"
 bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
   //generator:google-cloud-cpp-codegen -- \
-  --googleapis_commit_hash="${googleapis_hash}" \
   --protobuf_proto_path="${bazel_output_base}"/external/com_google_protobuf/src \
   --googleapis_proto_path="${bazel_output_base}"/external/com_google_googleapis \
   --output_path="${PROJECT_ROOT}" \

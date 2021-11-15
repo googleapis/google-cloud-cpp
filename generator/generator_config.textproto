@@ -29,6 +29,7 @@ service {
   product_path: "google/cloud/bigtable/admin"
   initial_copyright_year: "2021"
   emulator_endpoint_env_var: "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST"
+  site_docs_reference_root: "bigtable/docs/reference/admin/rpc"
 }
 
 service {
@@ -38,6 +39,7 @@ service {
   omitted_rpcs: ["CreateTableFromSnapshot", "SnapshotTable", "GetSnapshot", "ListSnapshots", "DeleteSnapshot"]
   emulator_endpoint_env_var: "BIGTABLE_EMULATOR_HOST"
   gen_async_rpcs: ["CheckConsistency"]
+  site_docs_reference_root: "bigtable/docs/reference/admin/rpc"
 }
 
 # IAM
@@ -71,6 +73,7 @@ service {
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT"
   emulator_endpoint_env_var: "SPANNER_EMULATOR_HOST"
   backwards_compatibility_namespace_alias: true
+  site_docs_reference_root: "spanner/docs/reference/rpc"
 }
 
 service {
@@ -80,4 +83,5 @@ service {
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT"
   emulator_endpoint_env_var: "SPANNER_EMULATOR_HOST"
   backwards_compatibility_namespace_alias: true
+  site_docs_reference_root: "spanner/docs/reference/rpc"
 }
