@@ -19,7 +19,6 @@ set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud BigQuery")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
-set(DOXYGEN_EXCLUDE_PATTERNS "*/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "bigquery_internal" "bigquery_testing"
                             "examples")
 
