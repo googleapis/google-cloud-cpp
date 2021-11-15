@@ -23,8 +23,10 @@ cc_library(
     srcs = google_cloud_cpp_generator_srcs,
     hdrs = google_cloud_cpp_generator_hdrs,
     deps = [
+        ":generator_config_cc_proto",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
+        "@com_github_nlohmann_json//:nlohmann_json",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/strings",
         "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",

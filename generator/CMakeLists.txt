@@ -21,6 +21,7 @@ include(GoogleCloudCppCommon)
 find_package(absl CONFIG REQUIRED)
 find_package(Protobuf REQUIRED)
 find_package(ProtobufWithTargets REQUIRED)
+include(IncludeNlohmannJson)
 
 add_library(
     google_cloud_cpp_generator # cmake-format: sort
@@ -54,6 +55,8 @@ add_library(
     internal/printer.h
     internal/retry_policy_generator.cc
     internal/retry_policy_generator.h
+    internal/scaffold_generator.cc
+    internal/scaffold_generator.h
     internal/service_code_generator.cc
     internal/service_code_generator.h
     internal/stub_factory_generator.cc
@@ -66,6 +69,7 @@ target_link_libraries(
     google_cloud_cpp_generator
     PUBLIC google-cloud-cpp::grpc_utils
            google-cloud-cpp::common
+           nlohmann_json::nlohmann_json
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::longrunning_operations_protos
            absl::str_format
@@ -139,6 +143,7 @@ function (google_cloud_cpp_generator_define_tests)
         internal/descriptor_utils_test.cc
         internal/predicate_utils_test.cc
         internal/printer_test.cc
+        internal/scaffold_generator_test.cc
         internal/service_code_generator_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
@@ -153,6 +158,7 @@ function (google_cloud_cpp_generator_define_tests)
         target_link_libraries(
             ${target}
             PRIVATE google_cloud_cpp_generator
+                    google_cloud_cpp_generator_config
                     google_cloud_cpp_generator_testing
                     google_cloud_cpp_testing
                     google_cloud_cpp_testing_grpc
