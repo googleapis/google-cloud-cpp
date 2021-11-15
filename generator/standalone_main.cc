@@ -130,6 +130,30 @@ int WriteInstallDirectories(
             std::ostream_iterator<std::string>(of, "\n"));
   return 0;
 }
+
+int WriteFeatureList(
+    google::cloud::cpp::generator::GeneratorConfiguration const& config,
+    std::string const& output_path) {
+  std::vector<std::string> features;
+  for (auto const& service : config.service()) {
+    if (service.product_path().empty()) {
+      GCP_LOG(ERROR) << "Empty product path in config, service="
+                     << service.DebugString() << "\n";
+      return 1;
+    }
+    auto feature = Basename(service.product_path());
+    // Spanner and Bigtable use a custom directory for generated files
+    if (feature == "admin") continue;
+    features.push_back(std::move(feature));
+  }
+  std::sort(features.begin(), features.end());
+  auto const end = std::unique(features.begin(), features.end());
+  std::ofstream of(output_path + "/ci/etc/full_feature_list");
+  std::copy(features.begin(), end,
+            std::ostream_iterator<std::string>(of, "\n"));
+  return 0;
+}
+
 }  // namespace
 
 /**
@@ -171,6 +195,8 @@ int main(int argc, char** argv) {
 
   auto const install_result = WriteInstallDirectories(*config, output_path);
   if (install_result != 0) return install_result;
+  auto const features_result = WriteFeatureList(*config, output_path);
+  if (features_result != 0) return features_result;
 
   std::vector<std::future<google::cloud::Status>> tasks;
   for (auto const& service : config->service()) {
