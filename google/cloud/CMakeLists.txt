@@ -155,8 +155,8 @@ add_library(
     version.cc
     version.h)
 target_link_libraries(
-    google_cloud_cpp_common PUBLIC absl::memory absl::optional absl::status
-                                   absl::time absl::variant Threads::Threads)
+    google_cloud_cpp_common PUBLIC absl::memory absl::optional absl::time
+                                   absl::variant Threads::Threads)
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -306,7 +306,7 @@ set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Common Components used by the Google Cloud C++ Client Libraries.")
 set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_common")
 string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES "absl_memory" " absl_optional"
-              " absl_status" " absl_time")
+              " absl_time")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"

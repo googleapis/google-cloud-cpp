@@ -15,10 +15,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/expect_exception.h"
-#include "absl/status/status.h"
-#include "absl/strings/cord.h"
 #include <gmock/gmock.h>
-#include <unistd.h>
 
 namespace google {
 namespace cloud {
@@ -70,44 +67,36 @@ TEST(Status, Basics) {
   EXPECT_EQ(s, Status(StatusCode::kUnknown, "foo"));
 }
 
-TEST(Status, ToAbseilStatus) {
+TEST(Status, PayloadIgnoredWithOk) {
+  Status const ok{};
   Status s;
-  absl::Status a = internal::MakeAbslStatus(s);
-  EXPECT_EQ(a.code(), absl::StatusCode::kOk);
-  EXPECT_EQ(a.message(), "");
-
-  s = Status{StatusCode::kUnknown, "foo"};
-  a = internal::MakeAbslStatus(s);
-  EXPECT_EQ(a.code(), absl::StatusCode::kUnknown);
-  EXPECT_EQ(a.message(), "foo");
+  EXPECT_EQ(ok, s);
+  internal::SetPayload(s, "key1", "payload1");
+  EXPECT_EQ(ok, s);
+  auto v = internal::GetPayload(s, "key1");
+  EXPECT_FALSE(v.has_value());
 }
 
-TEST(Status, FromAbseilStatus) {
-  absl::Status a;
-  Status s = internal::MakeStatus(a);
-  EXPECT_EQ(s.code(), StatusCode::kOk);
-  EXPECT_EQ(s.message(), "");
+TEST(Status, Payload) {
+  Status const err{StatusCode::kUnknown, "some error"};
+  Status s = err;
+  EXPECT_EQ(err, s);
+  internal::SetPayload(s, "key1", "payload1");
+  EXPECT_NE(err, s);
+  auto v = internal::GetPayload(s, "key1");
+  EXPECT_TRUE(v.has_value());
+  EXPECT_EQ(*v, "payload1");
 
-  a = absl::Status{absl::StatusCode::kUnknown, "bar"};
-  s = internal::MakeStatus(a);
-  EXPECT_EQ(s.code(), StatusCode::kUnknown);
-  EXPECT_EQ(s.message(), "bar");
-}
+  Status copy = s;
+  EXPECT_EQ(copy, s);
+  internal::SetPayload(s, "key2", "payload2");
+  EXPECT_NE(copy, s);
+  v = internal::GetPayload(s, "key2");
+  EXPECT_TRUE(v.has_value());
+  EXPECT_EQ(*v, "payload2");
 
-TEST(Status, RoundTripAbseil) {
-  absl::Status a;
-  EXPECT_EQ(a, internal::MakeAbslStatus(internal::MakeStatus(a)));
-
-  a = absl::Status{absl::StatusCode::kUnknown, "bar"};
-  EXPECT_EQ(a, internal::MakeAbslStatus(internal::MakeStatus(a)));
-
-  // Round tripping doesn't drop the payload.
-  a.SetPayload("key", absl::Cord("the payload"));
-  EXPECT_EQ(a, internal::MakeAbslStatus(internal::MakeStatus(a)));
-  a = internal::MakeAbslStatus(internal::MakeStatus(a));
-  absl::optional<absl::Cord> c = a.GetPayload("key");
-  EXPECT_TRUE(c.has_value());
-  EXPECT_EQ(*c, "the payload");
+  internal::SetPayload(copy, "key2", "payload2");
+  EXPECT_EQ(copy, s);
 }
 
 }  // namespace

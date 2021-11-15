@@ -16,8 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_H
 
 #include "google/cloud/version.h"
-#include "absl/status/status.h"
+#include "absl/types/optional.h"
 #include <iostream>
+#include <map>
 #include <string>
 #include <tuple>
 
@@ -26,11 +27,10 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * Well-known status codes with values that are compatible with
- * `grpc::StatusCode` and `absl::StatusCode`.
+ * Well-known status codes with `grpc::StatusCode`-compatible values.
  *
- * @see https://grpc.io/grpc/cpp/classgrpc_1_1_status.html
- * @see https://github.com/abseil/abseil-cpp/blob/master/absl/status/status.h
+ * The semantics of these values are documented in:
+ *     https://grpc.io/grpc/cpp/classgrpc_1_1_status.html
  */
 enum class StatusCode {
   /// Not an error; returned on success.
@@ -59,8 +59,9 @@ std::ostream& operator<<(std::ostream& os, StatusCode code);
 
 class Status;
 namespace internal {
-Status MakeStatus(absl::Status);
-absl::Status MakeAbslStatus(Status);
+// Gets/sets payload data for non-OK Statuses.
+void SetPayload(Status&, std::string key, std::string payload);
+absl::optional<std::string> GetPayload(Status&, std::string const& key);
 }  // namespace internal
 
 /**
@@ -83,15 +84,15 @@ class Status {
   Status() = default;
 
   explicit Status(StatusCode status_code, std::string message)
-      : status_(static_cast<absl::StatusCode>(status_code), message),
-        message_(std::move(message)) {}
+      : code_(status_code), message_(std::move(message)) {}
 
-  bool ok() const { return status_.ok(); }
-  StatusCode code() const { return static_cast<StatusCode>(status_.code()); }
+  bool ok() const { return code_ == StatusCode::kOk; }
+  StatusCode code() const { return code_; }
   std::string const& message() const { return message_; }
 
   friend inline bool operator==(Status const& a, Status const& b) {
-    return a.status_ == b.status_;
+    return a.code_ == b.code_ && a.message_ == b.message_ &&
+           a.payload_ == b.payload_;
   }
   friend inline bool operator!=(Status const& a, Status const& b) {
     return !(a == b);
@@ -101,17 +102,13 @@ class Status {
   }
 
  private:
-  friend Status internal::MakeStatus(absl::Status);
-  friend absl::Status internal::MakeAbslStatus(Status);
+  friend void internal::SetPayload(Status&, std::string, std::string);
+  friend absl::optional<std::string> internal::GetPayload(Status&,
+                                                          std::string const&);
 
-  explicit Status(absl::Status status)
-      : status_(std::move(status)), message_(status_.message()) {}
-
-  // The implementation primarily forwards to absl::Status, with the exception
-  // that we need to keep a copy of the message string because we need to
-  // return a const ref rather than a string_view.
-  absl::Status status_;
+  StatusCode code_{StatusCode::kOk};
   std::string message_;
+  std::map<std::string, std::string> payload_;
 };
 
 class RuntimeStatusError : public std::runtime_error {
