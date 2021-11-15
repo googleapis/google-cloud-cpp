@@ -49,6 +49,15 @@ void CheckLimitedTime(PollingPolicy& tested) {
       },
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
       kLimitedTimeTolerance);
+
+  auto common = bigtable_internal::MakeCommonPollingPolicy(tested.clone());
+  testing_util::CheckPredicateBecomesFalse(
+      [&common] {
+        return common->OnFailure(
+            Status(StatusCode::kUnavailable, "please try again"));
+      },
+      std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
+      kLimitedTimeTolerance);
 }
 
 /// @test A simple test for the LimitedTimeRetryPolicy.
@@ -77,6 +86,10 @@ TEST(GenericPollingPolicy, OnNonRetryable) {
       static_cast<PollingPolicy&>(tested).OnFailure(CreatePermanentError()));
   EXPECT_FALSE(
       tested.OnFailure(MakeStatusFromRpcError(CreatePermanentError())));
+
+  auto common = bigtable_internal::MakeCommonPollingPolicy(tested.clone());
+  EXPECT_FALSE(
+      common->OnFailure(MakeStatusFromRpcError(CreatePermanentError())));
 }
 
 /// @test Verify that IsPermanentError works.
