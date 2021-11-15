@@ -60,7 +60,7 @@ std::ostream& operator<<(std::ostream& os, StatusCode code);
 class Status;
 namespace internal {
 Status MakeStatus(absl::Status);
-absl::Status ToAbslStatus(Status);
+absl::Status MakeAbslStatus(Status);
 }  // namespace internal
 
 /**
@@ -102,7 +102,7 @@ class Status {
 
  private:
   friend Status internal::MakeStatus(absl::Status);
-  friend absl::Status internal::ToAbslStatus(Status);
+  friend absl::Status internal::MakeAbslStatus(Status);
 
   explicit Status(absl::Status status)
       : status_(std::move(status)), message_(status_.message()) {}

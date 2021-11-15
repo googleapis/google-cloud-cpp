@@ -72,12 +72,12 @@ TEST(Status, Basics) {
 
 TEST(Status, ToAbseilStatus) {
   Status s;
-  absl::Status a = internal::ToAbslStatus(s);
+  absl::Status a = internal::MakeAbslStatus(s);
   EXPECT_EQ(a.code(), absl::StatusCode::kOk);
   EXPECT_EQ(a.message(), "");
 
   s = Status{StatusCode::kUnknown, "foo"};
-  a = internal::ToAbslStatus(s);
+  a = internal::MakeAbslStatus(s);
   EXPECT_EQ(a.code(), absl::StatusCode::kUnknown);
   EXPECT_EQ(a.message(), "foo");
 }
@@ -96,15 +96,15 @@ TEST(Status, FromAbseilStatus) {
 
 TEST(Status, RoundTripAbseil) {
   absl::Status a;
-  EXPECT_EQ(a, internal::ToAbslStatus(internal::MakeStatus(a)));
+  EXPECT_EQ(a, internal::MakeAbslStatus(internal::MakeStatus(a)));
 
   a = absl::Status{absl::StatusCode::kUnknown, "bar"};
-  EXPECT_EQ(a, internal::ToAbslStatus(internal::MakeStatus(a)));
+  EXPECT_EQ(a, internal::MakeAbslStatus(internal::MakeStatus(a)));
 
   // Round tripping doesn't drop the payload.
   a.SetPayload("key", absl::Cord("the payload"));
-  EXPECT_EQ(a, internal::ToAbslStatus(internal::MakeStatus(a)));
-  a = internal::ToAbslStatus(internal::MakeStatus(a));
+  EXPECT_EQ(a, internal::MakeAbslStatus(internal::MakeStatus(a)));
+  a = internal::MakeAbslStatus(internal::MakeStatus(a));
   absl::optional<absl::Cord> c = a.GetPayload("key");
   EXPECT_TRUE(c.has_value());
   EXPECT_EQ(*c, "the payload");

@@ -82,7 +82,7 @@ static_assert(static_cast<int>(StatusCode::kDataLoss) ==
               "");
 
 Status MakeStatus(absl::Status status) { return Status(std::move(status)); }
-absl::Status ToAbslStatus(Status status) { return std::move(status.status_); }
+absl::Status MakeAbslStatus(Status status) { return std::move(status.status_); }
 
 }  // namespace internal
 
