@@ -88,3 +88,10 @@ service {
   emulator_endpoint_env_var: "SPANNER_EMULATOR_HOST"
   backwards_compatibility_namespace_alias: true
 }
+
+# Tasks
+service {
+  service_proto_path: "google/cloud/tasks/v2/cloudtasks.proto"
+  product_path: "google/cloud/tasks"
+  initial_copyright_year: "2021"
+}
