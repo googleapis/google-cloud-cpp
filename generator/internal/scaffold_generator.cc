@@ -91,7 +91,7 @@ std::map<std::string, std::string> ScaffoldVars(
   std::map<std::string, std::string> vars;
   for (auto const& api : index["apis"]) {
     if (!api.contains("directory")) continue;
-    auto const directory = api["directory"].get<std::string>();
+    auto const directory = api["directory"].get<std::string>() + "/";
     if (service.service_proto_path().rfind(directory, 0) != 0) continue;
     vars.emplace("title", api.value("title", ""));
     vars.emplace("description", api.value("description", ""));
