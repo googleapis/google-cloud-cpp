@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/expect_exception.h"
 #include <gmock/gmock.h>
@@ -21,7 +22,7 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-TEST(Status, StatusCodeToString) {
+TEST(StatusCode, StatusCodeToString) {
   EXPECT_EQ("OK", StatusCodeToString(StatusCode::kOk));
   EXPECT_EQ("CANCELLED", StatusCodeToString(StatusCode::kCancelled));
   EXPECT_EQ("UNKNOWN", StatusCodeToString(StatusCode::kUnknown));
@@ -47,6 +48,55 @@ TEST(Status, StatusCodeToString) {
   EXPECT_EQ("DATA_LOSS", StatusCodeToString(StatusCode::kDataLoss));
   EXPECT_EQ("UNEXPECTED_STATUS_CODE=42",
             StatusCodeToString(static_cast<StatusCode>(42)));
+}
+
+TEST(Status, Basics) {
+  Status s;
+  EXPECT_TRUE(s.ok());
+  EXPECT_EQ(s.code(), StatusCode::kOk);
+  EXPECT_EQ(s.message(), "");
+  EXPECT_EQ(s, Status());
+
+  s = Status(StatusCode::kUnknown, "foo");
+  EXPECT_FALSE(s.ok());
+  EXPECT_EQ(s.code(), StatusCode::kUnknown);
+  EXPECT_EQ(s.message(), "foo");
+  EXPECT_NE(s, Status());
+  EXPECT_NE(s, Status(StatusCode::kUnknown, ""));
+  EXPECT_NE(s, Status(StatusCode::kUnknown, "bar"));
+  EXPECT_EQ(s, Status(StatusCode::kUnknown, "foo"));
+}
+
+TEST(Status, PayloadIgnoredWithOk) {
+  Status const ok{};
+  Status s;
+  EXPECT_EQ(ok, s);
+  internal::SetPayload(s, "key1", "payload1");
+  EXPECT_EQ(ok, s);
+  auto v = internal::GetPayload(s, "key1");
+  EXPECT_FALSE(v.has_value());
+}
+
+TEST(Status, Payload) {
+  Status const err{StatusCode::kUnknown, "some error"};
+  Status s = err;
+  EXPECT_EQ(err, s);
+  internal::SetPayload(s, "key1", "payload1");
+  EXPECT_NE(err, s);
+  auto v = internal::GetPayload(s, "key1");
+  EXPECT_TRUE(v.has_value());
+  EXPECT_EQ(*v, "payload1");
+
+  Status copy = s;
+  EXPECT_EQ(copy, s);
+  internal::SetPayload(s, "key2", "payload2");
+  EXPECT_NE(copy, s);
+  v = internal::GetPayload(s, "key2");
+  EXPECT_TRUE(v.has_value());
+  EXPECT_EQ(*v, "payload2");
+
+  internal::SetPayload(copy, "key2", "payload2");
+  EXPECT_EQ(copy, s);
 }
 
 }  // namespace

@@ -16,9 +16,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_H
 
 #include "google/cloud/version.h"
+#include "absl/types/optional.h"
 #include <iostream>
 #include <string>
 #include <tuple>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -55,6 +57,12 @@ enum class StatusCode {
 std::string StatusCodeToString(StatusCode code);
 std::ostream& operator<<(std::ostream& os, StatusCode code);
 
+class Status;
+namespace internal {
+void SetPayload(Status&, std::string key, std::string payload);
+absl::optional<std::string> GetPayload(Status const&, std::string const& key);
+}  // namespace internal
+
 /**
  * Represents success or an error with info about the error.
 
@@ -78,26 +86,29 @@ class Status {
       : code_(status_code), message_(std::move(message)) {}
 
   bool ok() const { return code_ == StatusCode::kOk; }
-
   StatusCode code() const { return code_; }
   std::string const& message() const { return message_; }
 
+  friend inline bool operator==(Status const& a, Status const& b) {
+    return a.code_ == b.code_ && a.message_ == b.message_ &&
+           a.payload_ == b.payload_;
+  }
+  friend inline bool operator!=(Status const& a, Status const& b) {
+    return !(a == b);
+  }
+  friend inline std::ostream& operator<<(std::ostream& os, Status const& s) {
+    return os << s.message() << " [" << s.code() << "]";
+  }
+
  private:
+  friend void internal::SetPayload(Status&, std::string, std::string);
+  friend absl::optional<std::string> internal::GetPayload(Status const&,
+                                                          std::string const&);
+
   StatusCode code_{StatusCode::kOk};
   std::string message_;
+  std::unordered_map<std::string, std::string> payload_;
 };
-
-inline std::ostream& operator<<(std::ostream& os, Status const& rhs) {
-  return os << rhs.message() << " [" << StatusCodeToString(rhs.code()) << "]";
-}
-
-inline bool operator==(Status const& lhs, Status const& rhs) {
-  return lhs.code() == rhs.code() && lhs.message() == rhs.message();
-}
-
-inline bool operator!=(Status const& lhs, Status const& rhs) {
-  return !(lhs == rhs);
-}
 
 class RuntimeStatusError : public std::runtime_error {
  public:
