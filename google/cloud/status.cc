@@ -28,14 +28,19 @@ std::string StatusWhat(Status const& status) {
 
 namespace internal {
 
-absl::optional<std::string> GetPayload(Status& s, std::string const& key) {
-  auto it = s.payload_.find(key);
-  if (it != s.payload_.end()) return it->second;
-  return absl::nullopt;
-}
-
+// Sets the given `payload`, indexed by the given `key`, on the given `Status`,
+// IFF the status is not OK. Payloads are considered in equality comparisons.
+// The keyspace used here is separate from other keyspaces (e.g.,
+// `absl::Status`), so we only need to coordinate keys with ourselves.
 void SetPayload(Status& s, std::string key, std::string payload) {
   if (!s.ok()) s.payload_[std::move(key)] = std::move(payload);
+}
+
+// Returns the payload associated with the given `key` if available.
+absl::optional<std::string> GetPayload(Status& s, std::string const& key) {
+  auto it = s.payload_.find(key);
+  if (it == s.payload_.end()) return absl::nullopt;
+  return it->second;
 }
 
 }  // namespace internal

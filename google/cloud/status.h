@@ -18,9 +18,9 @@
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <iostream>
-#include <map>
 #include <string>
 #include <tuple>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -108,7 +108,7 @@ class Status {
 
   StatusCode code_{StatusCode::kOk};
   std::string message_;
-  std::map<std::string, std::string> payload_;
+  std::unordered_map<std::string, std::string> payload_;
 };
 
 class RuntimeStatusError : public std::runtime_error {
