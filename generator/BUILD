@@ -25,11 +25,13 @@ cc_library(
     deps = [
         ":generator_config_cc_proto",
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_github_nlohmann_json//:nlohmann_json",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/strings",
-        "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
+        "@com_google_absl//absl/strings:str_format",
+        "@com_google_googleapis//:googleapis_system_includes",
+        "@com_google_googleapis//google/api:client_cc_proto",
+        "@com_google_googleapis//google/longrunning:longrunning_cc_proto",
         "@com_google_protobuf//:protoc_lib",
     ],
 )

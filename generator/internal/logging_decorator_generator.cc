@@ -20,7 +20,6 @@
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
-#include <google/api/client.pb.h>
 #include <google/protobuf/descriptor.h>
 
 namespace google {

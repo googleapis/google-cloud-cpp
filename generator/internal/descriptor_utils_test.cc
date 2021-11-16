@@ -17,8 +17,6 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_split.h"
 #include "generator/testing/printer_mocks.h"
-#include <google/api/client.pb.h>
-#include <google/longrunning/operations.pb.h>
 #include <google/protobuf/compiler/importer.h>
 #include <google/protobuf/descriptor.pb.h>
 #include <google/protobuf/descriptor_database.h>
