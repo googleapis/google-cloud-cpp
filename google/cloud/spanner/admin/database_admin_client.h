@@ -74,7 +74,7 @@ class DatabaseAdminClient {
    * @param parent  Required. The instance whose databases should be listed.
    *  Values are of the form `projects/<project>/instances/<instance>`.
    * @return
-   * [google::spanner::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L326)
+   * @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
    */
   StreamRange<google::spanner::admin::database::v1::Database> ListDatabases(
       std::string const& parent);
@@ -98,7 +98,7 @@ class DatabaseAdminClient {
    *  If the database ID is a reserved word or if it contains a hyphen, the
    *  database ID must be enclosed in backticks (`` ` ``).
    * @return
-   * [google::spanner::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L326)
+   * @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
    */
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   CreateDatabase(std::string const& parent,
@@ -110,7 +110,7 @@ class DatabaseAdminClient {
    * @param name  Required. The name of the requested database. Values are of
    * the form `projects/<project>/instances/<instance>/databases/<database>`.
    * @return
-   * [google::spanner::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L326)
+   * @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
    */
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       std::string const& name);
@@ -128,7 +128,7 @@ class DatabaseAdminClient {
    * @param database  Required. The database to update.
    * @param statements  Required. DDL statements to be applied to the database.
    * @return
-   * [google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L547)
+   * @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata,google/spanner/admin/database/v1/spanner_database_admin.proto#L547}
    */
   future<
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
@@ -153,7 +153,7 @@ class DatabaseAdminClient {
    *  Values are of the form
    *  `projects/<project>/instances/<instance>/databases/<database>`
    * @return
-   * [google::spanner::admin::database::v1::GetDatabaseDdlResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L603)
+   * @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlResponse,google/spanner/admin/database/v1/spanner_database_admin.proto#L603}
    */
   StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(std::string const& database);
@@ -175,7 +175,7 @@ class DatabaseAdminClient {
    * policy is a valid policy but certain Cloud Platform services (such as
    * Projects) might reject them.
    * @return
-   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/policy.proto#L88)
+   * @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy);
@@ -219,7 +219,7 @@ class DatabaseAdminClient {
    * requested. See the operation documentation for the appropriate value for
    * this field.
    * @return
-   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/policy.proto#L88)
+   * @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
    */
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource);
 
@@ -243,7 +243,7 @@ class DatabaseAdminClient {
    * For more information see [IAM
    * Overview](https://cloud.google.com/iam/docs/overview#permissions).
    * @return
-   * [google::iam::v1::TestIamPermissionsResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/iam_policy.proto#L141)
+   * @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
    */
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions);
@@ -273,7 +273,7 @@ class DatabaseAdminClient {
    * `backup_id` appended to `parent` forms the full backup name of the form
    *  `projects/<project>/instances/<instance>/backups/<backup_id>`.
    * @return
-   * [google::spanner::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/backup.proto#L36)
+   * @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
    */
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
       std::string const& parent,
@@ -288,7 +288,7 @@ class DatabaseAdminClient {
    *  Values are of the form
    *  `projects/<project>/instances/<instance>/backups/<backup>`.
    * @return
-   * [google::spanner::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/backup.proto#L36)
+   * @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
    */
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
       std::string const& name);
@@ -307,7 +307,7 @@ class DatabaseAdminClient {
    * must always be specified; this prevents any future fields from being erased
    * accidentally by clients that do not know about them.
    * @return
-   * [google::spanner::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/backup.proto#L36)
+   * @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
    */
   StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
       google::spanner::admin::database::v1::Backup const& backup,
@@ -331,7 +331,7 @@ class DatabaseAdminClient {
    * @param parent  Required. The instance to list backups from.  Values are of
    * the form `projects/<project>/instances/<instance>`.
    * @return
-   * [google::spanner::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/backup.proto#L36)
+   * @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
    */
   StreamRange<google::spanner::admin::database::v1::Backup> ListBackups(
       std::string const& parent);
@@ -367,7 +367,7 @@ class DatabaseAdminClient {
    * @param backup  Name of the backup from which to restore.  Values are of the
    * form `projects/<project>/instances/<instance>/backups/<backup>`.
    * @return
-   * [google::spanner::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L326)
+   * @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
    */
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   RestoreDatabase(std::string const& parent, std::string const& database_id,
@@ -386,7 +386,7 @@ class DatabaseAdminClient {
    * @param parent  Required. The instance of the database operations.
    *  Values are of the form `projects/<project>/instances/<instance>`.
    * @return
-   * [google::longrunning::Operation](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/longrunning/operations.proto#L128)
+   * @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
    */
   StreamRange<google::longrunning::Operation> ListDatabaseOperations(
       std::string const& parent);
@@ -406,7 +406,7 @@ class DatabaseAdminClient {
    * @param parent  Required. The instance of the backup operations. Values are
    * of the form `projects/<project>/instances/<instance>`.
    * @return
-   * [google::longrunning::Operation](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/longrunning/operations.proto#L128)
+   * @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
    */
   StreamRange<google::longrunning::Operation> ListBackupOperations(
       std::string const& parent);
@@ -415,9 +415,9 @@ class DatabaseAdminClient {
    * Lists Cloud Spanner databases.
    *
    * @param request
-   * [google::spanner::admin::database::v1::ListDatabasesRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L413)
+   * @googleapis_link{google::spanner::admin::database::v1::ListDatabasesRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L413}
    * @return
-   * [google::spanner::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L326)
+   * @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
    */
   StreamRange<google::spanner::admin::database::v1::Database> ListDatabases(
       google::spanner::admin::database::v1::ListDatabasesRequest request);
@@ -433,9 +433,9 @@ class DatabaseAdminClient {
    * [Database][google.spanner.admin.database.v1.Database], if successful.
    *
    * @param request
-   * [google::spanner::admin::database::v1::CreateDatabaseRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L445)
+   * @googleapis_link{google::spanner::admin::database::v1::CreateDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L445}
    * @return
-   * [google::spanner::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L326)
+   * @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
    */
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   CreateDatabase(
@@ -446,9 +446,9 @@ class DatabaseAdminClient {
    * Gets the state of a Cloud Spanner database.
    *
    * @param request
-   * [google::spanner::admin::database::v1::GetDatabaseRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L484)
+   * @googleapis_link{google::spanner::admin::database::v1::GetDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L484}
    * @return
-   * [google::spanner::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L326)
+   * @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
    */
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       google::spanner::admin::database::v1::GetDatabaseRequest const& request);
@@ -464,9 +464,9 @@ class DatabaseAdminClient {
    * The operation has no response.
    *
    * @param request
-   * [google::spanner::admin::database::v1::UpdateDatabaseDdlRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L511)
+   * @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L511}
    * @return
-   * [google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L547)
+   * @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata,google/spanner/admin/database/v1/spanner_database_admin.proto#L547}
    */
   future<
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
@@ -480,7 +480,7 @@ class DatabaseAdminClient {
    * `expire_time`.
    *
    * @param request
-   * [google::spanner::admin::database::v1::DropDatabaseRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L579)
+   * @googleapis_link{google::spanner::admin::database::v1::DropDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L579}
    */
   Status DropDatabase(
       google::spanner::admin::database::v1::DropDatabaseRequest const& request);
@@ -491,9 +491,9 @@ class DatabaseAdminClient {
    * be queried using the [Operations][google.longrunning.Operations] API.
    *
    * @param request
-   * [google::spanner::admin::database::v1::GetDatabaseDdlRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L590)
+   * @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L590}
    * @return
-   * [google::spanner::admin::database::v1::GetDatabaseDdlResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L603)
+   * @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlResponse,google/spanner/admin/database/v1/spanner_database_admin.proto#L603}
    */
   StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(
@@ -510,9 +510,9 @@ class DatabaseAdminClient {
    * permission on [resource][google.iam.v1.SetIamPolicyRequest.resource].
    *
    * @param request
-   * [google::iam::v1::SetIamPolicyRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/iam_policy.proto#L98)
+   * @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
    * @return
-   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/policy.proto#L88)
+   * @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request);
@@ -528,9 +528,9 @@ class DatabaseAdminClient {
    * permission on [resource][google.iam.v1.GetIamPolicyRequest.resource].
    *
    * @param request
-   * [google::iam::v1::GetIamPolicyRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/iam_policy.proto#L113)
+   * @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
    * @return
-   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/policy.proto#L88)
+   * @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
    */
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);
@@ -548,9 +548,9 @@ class DatabaseAdminClient {
    * `spanner.backups.list` permission on the containing instance.
    *
    * @param request
-   * [google::iam::v1::TestIamPermissionsRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/iam_policy.proto#L126)
+   * @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
    * @return
-   * [google::iam::v1::TestIamPermissionsResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/iam_policy.proto#L141)
+   * @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
    */
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request);
@@ -570,9 +570,9 @@ class DatabaseAdminClient {
    * creation of different databases can run concurrently.
    *
    * @param request
-   * [google::spanner::admin::database::v1::CreateBackupRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/backup.proto#L123)
+   * @googleapis_link{google::spanner::admin::database::v1::CreateBackupRequest,google/spanner/admin/database/v1/backup.proto#L123}
    * @return
-   * [google::spanner::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/backup.proto#L36)
+   * @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
    */
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
       google::spanner::admin::database::v1::CreateBackupRequest const& request);
@@ -582,9 +582,9 @@ class DatabaseAdminClient {
    * [Backup][google.spanner.admin.database.v1.Backup].
    *
    * @param request
-   * [google::spanner::admin::database::v1::GetBackupRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/backup.proto#L202)
+   * @googleapis_link{google::spanner::admin::database::v1::GetBackupRequest,google/spanner/admin/database/v1/backup.proto#L202}
    * @return
-   * [google::spanner::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/backup.proto#L36)
+   * @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
    */
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
       google::spanner::admin::database::v1::GetBackupRequest const& request);
@@ -594,9 +594,9 @@ class DatabaseAdminClient {
    * [Backup][google.spanner.admin.database.v1.Backup].
    *
    * @param request
-   * [google::spanner::admin::database::v1::UpdateBackupRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/backup.proto#L186)
+   * @googleapis_link{google::spanner::admin::database::v1::UpdateBackupRequest,google/spanner/admin/database/v1/backup.proto#L186}
    * @return
-   * [google::spanner::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/backup.proto#L36)
+   * @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
    */
   StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
       google::spanner::admin::database::v1::UpdateBackupRequest const& request);
@@ -606,7 +606,7 @@ class DatabaseAdminClient {
    * [Backup][google.spanner.admin.database.v1.Backup].
    *
    * @param request
-   * [google::spanner::admin::database::v1::DeleteBackupRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/backup.proto#L215)
+   * @googleapis_link{google::spanner::admin::database::v1::DeleteBackupRequest,google/spanner/admin/database/v1/backup.proto#L215}
    */
   Status DeleteBackup(
       google::spanner::admin::database::v1::DeleteBackupRequest const& request);
@@ -617,9 +617,9 @@ class DatabaseAdminClient {
    * starting from the most recent `create_time`.
    *
    * @param request
-   * [google::spanner::admin::database::v1::ListBackupsRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/backup.proto#L228)
+   * @googleapis_link{google::spanner::admin::database::v1::ListBackupsRequest,google/spanner/admin/database/v1/backup.proto#L228}
    * @return
-   * [google::spanner::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/backup.proto#L36)
+   * @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
    */
   StreamRange<google::spanner::admin::database::v1::Backup> ListBackups(
       google::spanner::admin::database::v1::ListBackupsRequest request);
@@ -644,9 +644,9 @@ class DatabaseAdminClient {
    * first restore to complete.
    *
    * @param request
-   * [google::spanner::admin::database::v1::RestoreDatabaseRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L692)
+   * @googleapis_link{google::spanner::admin::database::v1::RestoreDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L692}
    * @return
-   * [google::spanner::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L326)
+   * @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
    */
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   RestoreDatabase(
@@ -664,9 +664,9 @@ class DatabaseAdminClient {
    * and pending operations.
    *
    * @param request
-   * [google::spanner::admin::database::v1::ListDatabaseOperationsRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/spanner_database_admin.proto#L611)
+   * @googleapis_link{google::spanner::admin::database::v1::ListDatabaseOperationsRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L611}
    * @return
-   * [google::longrunning::Operation](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/longrunning/operations.proto#L128)
+   * @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
    */
   StreamRange<google::longrunning::Operation> ListDatabaseOperations(
       google::spanner::admin::database::v1::ListDatabaseOperationsRequest
@@ -685,9 +685,9 @@ class DatabaseAdminClient {
    * from the most recently started operation.
    *
    * @param request
-   * [google::spanner::admin::database::v1::ListBackupOperationsRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/spanner/admin/database/v1/backup.proto#L300)
+   * @googleapis_link{google::spanner::admin::database::v1::ListBackupOperationsRequest,google/spanner/admin/database/v1/backup.proto#L300}
    * @return
-   * [google::longrunning::Operation](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/longrunning/operations.proto#L128)
+   * @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
    */
   StreamRange<google::longrunning::Operation> ListBackupOperations(
       google::spanner::admin::database::v1::ListBackupOperationsRequest

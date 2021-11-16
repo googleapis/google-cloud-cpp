@@ -25,7 +25,6 @@ namespace cloud {
 namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-
 GoldenThingAdminAuth::GoldenThingAdminAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
     std::shared_ptr<GoldenThingAdminStub> child)

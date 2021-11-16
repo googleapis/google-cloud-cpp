@@ -14,13 +14,11 @@
 # limitations under the License.
 # ~~~
 
-# Give application developers a hook to configure the version and hash
-# downloaded from GitHub.
+include(GoogleapisConfig)
+
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
-    "https://github.com/googleapis/googleapis/archive/53432afb877cb3c1920f73e6621daa8c24f86522.tar.gz"
+    "https://github.com/googleapis/googleapis/archive/${GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA}.tar.gz"
 )
-set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
-    "485631b0f2f54e344096263980f1ce8f357c72403da080a552df317eeda1ea7b")
 
 set(EXTERNAL_GOOGLEAPIS_SOURCE
     "${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download")

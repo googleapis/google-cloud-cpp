@@ -73,7 +73,7 @@ class AdminServiceClient {
    * the final component of the topic's name. This value is structured like:
    * `my-topic-name`.
    * @return
-   * [google::cloud::pubsublite::v1::Topic](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L102)
+   * [google::cloud::pubsublite::v1::Topic](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L102})
    */
   StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
       std::string const& parent,
@@ -85,7 +85,7 @@ class AdminServiceClient {
    *
    * @param name  Required. The name of the topic whose configuration to return.
    * @return
-   * [google::cloud::pubsublite::v1::Topic](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L102)
+   * [google::cloud::pubsublite::v1::Topic](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L102})
    */
   StatusOr<google::cloud::pubsublite::v1::Topic> GetTopic(
       std::string const& name);
@@ -95,7 +95,7 @@ class AdminServiceClient {
    *
    * @param name  Required. The topic whose partition information to return.
    * @return
-   * [google::cloud::pubsublite::v1::TopicPartitions](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L270)
+   * [google::cloud::pubsublite::v1::TopicPartitions](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L270})
    */
   StatusOr<google::cloud::pubsublite::v1::TopicPartitions> GetTopicPartitions(
       std::string const& name);
@@ -106,7 +106,7 @@ class AdminServiceClient {
    * @param parent  Required. The parent whose topics are to be listed.
    *  Structured like `projects/{project_number}/locations/{location}`.
    * @return
-   * [google::cloud::pubsublite::v1::Topic](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L102)
+   * [google::cloud::pubsublite::v1::Topic](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L102})
    */
   StreamRange<google::cloud::pubsublite::v1::Topic> ListTopics(
       std::string const& parent);
@@ -118,7 +118,7 @@ class AdminServiceClient {
    * populated.
    * @param update_mask  Required. A mask specifying the topic fields to change.
    * @return
-   * [google::cloud::pubsublite::v1::Topic](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L102)
+   * [google::cloud::pubsublite::v1::Topic](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L102})
    */
   StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
       google::cloud::pubsublite::v1::Topic const& topic,
@@ -151,7 +151,7 @@ class AdminServiceClient {
    * will become the final component of the subscription's name. This value is
    * structured like: `my-sub-name`.
    * @return
-   * [google::cloud::pubsublite::v1::Subscription](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L186)
+   * [google::cloud::pubsublite::v1::Subscription](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L186})
    */
   StatusOr<google::cloud::pubsublite::v1::Subscription> CreateSubscription(
       std::string const& parent,
@@ -164,7 +164,7 @@ class AdminServiceClient {
    * @param name  Required. The name of the subscription whose configuration to
    * return.
    * @return
-   * [google::cloud::pubsublite::v1::Subscription](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L186)
+   * [google::cloud::pubsublite::v1::Subscription](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L186})
    */
   StatusOr<google::cloud::pubsublite::v1::Subscription> GetSubscription(
       std::string const& name);
@@ -175,7 +175,7 @@ class AdminServiceClient {
    * @param parent  Required. The parent whose subscriptions are to be listed.
    *  Structured like `projects/{project_number}/locations/{location}`.
    * @return
-   * [google::cloud::pubsublite::v1::Subscription](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L186)
+   * [google::cloud::pubsublite::v1::Subscription](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L186})
    */
   StreamRange<google::cloud::pubsublite::v1::Subscription> ListSubscriptions(
       std::string const& parent);
@@ -188,7 +188,7 @@ class AdminServiceClient {
    * @param update_mask  Required. A mask specifying the subscription fields to
    * change.
    * @return
-   * [google::cloud::pubsublite::v1::Subscription](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L186)
+   * [google::cloud::pubsublite::v1::Subscription](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L186})
    */
   StatusOr<google::cloud::pubsublite::v1::Subscription> UpdateSubscription(
       google::cloud::pubsublite::v1::Subscription const& subscription,
@@ -213,7 +213,7 @@ class AdminServiceClient {
    * will become the final component of the reservation's name. This value is
    * structured like: `my-reservation-name`.
    * @return
-   * [google::cloud::pubsublite::v1::Reservation](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L80)
+   * [google::cloud::pubsublite::v1::Reservation](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L80})
    */
   StatusOr<google::cloud::pubsublite::v1::Reservation> CreateReservation(
       std::string const& parent,
@@ -227,7 +227,7 @@ class AdminServiceClient {
    * return. Structured like:
    *  projects/{project_number}/locations/{location}/reservations/{reservation_id}
    * @return
-   * [google::cloud::pubsublite::v1::Reservation](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L80)
+   * [google::cloud::pubsublite::v1::Reservation](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L80})
    */
   StatusOr<google::cloud::pubsublite::v1::Reservation> GetReservation(
       std::string const& name);
@@ -238,7 +238,7 @@ class AdminServiceClient {
    * @param parent  Required. The parent whose reservations are to be listed.
    *  Structured like `projects/{project_number}/locations/{location}`.
    * @return
-   * [google::cloud::pubsublite::v1::Reservation](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L80)
+   * [google::cloud::pubsublite::v1::Reservation](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L80})
    */
   StreamRange<google::cloud::pubsublite::v1::Reservation> ListReservations(
       std::string const& parent);
@@ -251,7 +251,7 @@ class AdminServiceClient {
    * @param update_mask  Required. A mask specifying the reservation fields to
    * change.
    * @return
-   * [google::cloud::pubsublite::v1::Reservation](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L80)
+   * [google::cloud::pubsublite::v1::Reservation](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L80})
    */
   StatusOr<google::cloud::pubsublite::v1::Reservation> UpdateReservation(
       google::cloud::pubsublite::v1::Reservation const& reservation,
@@ -280,9 +280,9 @@ class AdminServiceClient {
    * Creates a new topic.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::CreateTopicRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L227)
+   * [google::cloud::pubsublite::v1::CreateTopicRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L227})
    * @return
-   * [google::cloud::pubsublite::v1::Topic](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L102)
+   * [google::cloud::pubsublite::v1::Topic](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L102})
    */
   StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
       google::cloud::pubsublite::v1::CreateTopicRequest const& request);
@@ -291,9 +291,9 @@ class AdminServiceClient {
    * Returns the topic configuration.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::GetTopicRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L248)
+   * [google::cloud::pubsublite::v1::GetTopicRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L248})
    * @return
-   * [google::cloud::pubsublite::v1::Topic](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L102)
+   * [google::cloud::pubsublite::v1::Topic](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L102})
    */
   StatusOr<google::cloud::pubsublite::v1::Topic> GetTopic(
       google::cloud::pubsublite::v1::GetTopicRequest const& request);
@@ -302,9 +302,9 @@ class AdminServiceClient {
    * Returns the partition information for the requested topic.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::GetTopicPartitionsRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L259)
+   * [google::cloud::pubsublite::v1::GetTopicPartitionsRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L259})
    * @return
-   * [google::cloud::pubsublite::v1::TopicPartitions](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L270)
+   * [google::cloud::pubsublite::v1::TopicPartitions](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L270})
    */
   StatusOr<google::cloud::pubsublite::v1::TopicPartitions> GetTopicPartitions(
       google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request);
@@ -313,9 +313,9 @@ class AdminServiceClient {
    * Returns the list of topics for the given project.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::ListTopicsRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L276)
+   * [google::cloud::pubsublite::v1::ListTopicsRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L276})
    * @return
-   * [google::cloud::pubsublite::v1::Topic](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L102)
+   * [google::cloud::pubsublite::v1::Topic](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L102})
    */
   StreamRange<google::cloud::pubsublite::v1::Topic> ListTopics(
       google::cloud::pubsublite::v1::ListTopicsRequest request);
@@ -324,9 +324,9 @@ class AdminServiceClient {
    * Updates properties of the specified topic.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::UpdateTopicRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L311)
+   * [google::cloud::pubsublite::v1::UpdateTopicRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L311})
    * @return
-   * [google::cloud::pubsublite::v1::Topic](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L102)
+   * [google::cloud::pubsublite::v1::Topic](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L102})
    */
   StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
       google::cloud::pubsublite::v1::UpdateTopicRequest const& request);
@@ -335,7 +335,7 @@ class AdminServiceClient {
    * Deletes the specified topic.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::DeleteTopicRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L320)
+   * [google::cloud::pubsublite::v1::DeleteTopicRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L320})
    */
   Status DeleteTopic(
       google::cloud::pubsublite::v1::DeleteTopicRequest const& request);
@@ -344,7 +344,7 @@ class AdminServiceClient {
    * Lists the subscriptions attached to the specified topic.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L331)
+   * [google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L331})
    * @return std::string
    */
   StreamRange<std::string> ListTopicSubscriptions(
@@ -354,9 +354,9 @@ class AdminServiceClient {
    * Creates a new subscription.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::CreateSubscriptionRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L365)
+   * [google::cloud::pubsublite::v1::CreateSubscriptionRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L365})
    * @return
-   * [google::cloud::pubsublite::v1::Subscription](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L186)
+   * [google::cloud::pubsublite::v1::Subscription](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L186})
    */
   StatusOr<google::cloud::pubsublite::v1::Subscription> CreateSubscription(
       google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request);
@@ -365,9 +365,9 @@ class AdminServiceClient {
    * Returns the subscription configuration.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::GetSubscriptionRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L391)
+   * [google::cloud::pubsublite::v1::GetSubscriptionRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L391})
    * @return
-   * [google::cloud::pubsublite::v1::Subscription](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L186)
+   * [google::cloud::pubsublite::v1::Subscription](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L186})
    */
   StatusOr<google::cloud::pubsublite::v1::Subscription> GetSubscription(
       google::cloud::pubsublite::v1::GetSubscriptionRequest const& request);
@@ -376,9 +376,9 @@ class AdminServiceClient {
    * Returns the list of subscriptions for the given project.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::ListSubscriptionsRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L402)
+   * [google::cloud::pubsublite::v1::ListSubscriptionsRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L402})
    * @return
-   * [google::cloud::pubsublite::v1::Subscription](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L186)
+   * [google::cloud::pubsublite::v1::Subscription](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L186})
    */
   StreamRange<google::cloud::pubsublite::v1::Subscription> ListSubscriptions(
       google::cloud::pubsublite::v1::ListSubscriptionsRequest request);
@@ -387,9 +387,9 @@ class AdminServiceClient {
    * Updates properties of the specified subscription.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::UpdateSubscriptionRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L437)
+   * [google::cloud::pubsublite::v1::UpdateSubscriptionRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L437})
    * @return
-   * [google::cloud::pubsublite::v1::Subscription](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L186)
+   * [google::cloud::pubsublite::v1::Subscription](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L186})
    */
   StatusOr<google::cloud::pubsublite::v1::Subscription> UpdateSubscription(
       google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request);
@@ -398,7 +398,7 @@ class AdminServiceClient {
    * Deletes the specified subscription.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::DeleteSubscriptionRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L447)
+   * [google::cloud::pubsublite::v1::DeleteSubscriptionRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L447})
    */
   Status DeleteSubscription(
       google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request);
@@ -427,9 +427,9 @@ class AdminServiceClient {
    * and the new invocation of seek will supersede it.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::SeekSubscriptionRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L458)
+   * [google::cloud::pubsublite::v1::SeekSubscriptionRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L458})
    * @return
-   * [google::cloud::pubsublite::v1::SeekSubscriptionResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L493)
+   * [google::cloud::pubsublite::v1::SeekSubscriptionResponse](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L493})
    */
   future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
   SeekSubscription(
@@ -439,9 +439,9 @@ class AdminServiceClient {
    * Creates a new reservation.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::CreateReservationRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L516)
+   * [google::cloud::pubsublite::v1::CreateReservationRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L516})
    * @return
-   * [google::cloud::pubsublite::v1::Reservation](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L80)
+   * [google::cloud::pubsublite::v1::Reservation](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L80})
    */
   StatusOr<google::cloud::pubsublite::v1::Reservation> CreateReservation(
       google::cloud::pubsublite::v1::CreateReservationRequest const& request);
@@ -450,9 +450,9 @@ class AdminServiceClient {
    * Returns the reservation configuration.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::GetReservationRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L537)
+   * [google::cloud::pubsublite::v1::GetReservationRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L537})
    * @return
-   * [google::cloud::pubsublite::v1::Reservation](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L80)
+   * [google::cloud::pubsublite::v1::Reservation](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L80})
    */
   StatusOr<google::cloud::pubsublite::v1::Reservation> GetReservation(
       google::cloud::pubsublite::v1::GetReservationRequest const& request);
@@ -461,9 +461,9 @@ class AdminServiceClient {
    * Returns the list of reservations for the given project.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::ListReservationsRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L550)
+   * [google::cloud::pubsublite::v1::ListReservationsRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L550})
    * @return
-   * [google::cloud::pubsublite::v1::Reservation](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L80)
+   * [google::cloud::pubsublite::v1::Reservation](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L80})
    */
   StreamRange<google::cloud::pubsublite::v1::Reservation> ListReservations(
       google::cloud::pubsublite::v1::ListReservationsRequest request);
@@ -472,9 +472,9 @@ class AdminServiceClient {
    * Updates properties of the specified reservation.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::UpdateReservationRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L585)
+   * [google::cloud::pubsublite::v1::UpdateReservationRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L585})
    * @return
-   * [google::cloud::pubsublite::v1::Reservation](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/common.proto#L80)
+   * [google::cloud::pubsublite::v1::Reservation](@googleapis_link{google/cloud/pubsublite/v1/common.proto#L80})
    */
   StatusOr<google::cloud::pubsublite::v1::Reservation> UpdateReservation(
       google::cloud::pubsublite::v1::UpdateReservationRequest const& request);
@@ -483,7 +483,7 @@ class AdminServiceClient {
    * Deletes the specified reservation.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::DeleteReservationRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L594)
+   * [google::cloud::pubsublite::v1::DeleteReservationRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L594})
    */
   Status DeleteReservation(
       google::cloud::pubsublite::v1::DeleteReservationRequest const& request);
@@ -492,7 +492,7 @@ class AdminServiceClient {
    * Lists the topics attached to the specified reservation.
    *
    * @param request
-   * [google::cloud::pubsublite::v1::ListReservationTopicsRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/cloud/pubsublite/v1/admin.proto#L607)
+   * [google::cloud::pubsublite::v1::ListReservationTopicsRequest](@googleapis_link{google/cloud/pubsublite/v1/admin.proto#L607})
    * @return std::string
    */
   StreamRange<std::string> ListReservationTopics(

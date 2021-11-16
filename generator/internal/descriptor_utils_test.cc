@@ -149,7 +149,7 @@ class CreateServiceVarsTest
     // since our test file imports it
     FileDescriptorProto::descriptor()->file()->CopyTo(&file_proto_);
     simple_db_.Add(file_proto_);
-    service_vars_ = {{"googleapis_commit_hash", "foo"}};
+    service_vars_ = {};
   }
 
  private:
@@ -462,7 +462,7 @@ class CreateMethodVarsTest
     // since our test file imports it
     FileDescriptorProto::descriptor()->file()->CopyTo(&file_proto_);
     simple_db_.Add(file_proto_);
-    service_vars_ = {{"googleapis_commit_hash", "foo"}};
+    service_vars_ = {};
   }
 
  private:
@@ -499,8 +499,8 @@ TEST_F(CreateMethodVarsTest,
           MethodParameterStyle::kProtobufRequest),
       "  /**\n   * Leading comments about rpc Method0$$.\n   *\n   * @param "
       "request "
-      "[google::protobuf::Bar](https://github.com/googleapis/googleapis/blob/"
-      "$googleapis_commit_hash$/google/foo/v1/service.proto#L14)\n   */\n");
+      "@googleapis_link{google::protobuf::Bar,google/foo/v1/"
+      "service.proto#L14}\n   */\n");
 }
 
 TEST_F(CreateMethodVarsTest,
@@ -540,10 +540,10 @@ INSTANTIATE_TEST_SUITE_P(
                              "google::protobuf::Empty"),
         MethodVarsTestValues("google.protobuf.Service.Method0",
                              "default_idempotency", "kNonIdempotent"),
-        MethodVarsTestValues(
-            "google.protobuf.Service.Method0", "method_return_doxygen_link",
-            "[google::protobuf::Empty](https://github.com/googleapis/"
-            "googleapis/blob/foo/google/foo/v1/service.proto#L28)"),
+        MethodVarsTestValues("google.protobuf.Service.Method0",
+                             "method_return_doxygen_link",
+                             "@googleapis_link{google::protobuf::Empty,google/"
+                             "foo/v1/service.proto#L28}"),
         // Method1
         MethodVarsTestValues("google.protobuf.Service.Method1", "method_name",
                              "Method1"),
@@ -553,10 +553,10 @@ INSTANTIATE_TEST_SUITE_P(
                              "google::protobuf::Bar"),
         MethodVarsTestValues("google.protobuf.Service.Method1", "response_type",
                              "google::protobuf::Bar"),
-        MethodVarsTestValues(
-            "google.protobuf.Service.Method1", "method_return_doxygen_link",
-            "[google::protobuf::Bar](https://github.com/googleapis/"
-            "googleapis/blob/foo/google/foo/v1/service.proto#L14)"),
+        MethodVarsTestValues("google.protobuf.Service.Method1",
+                             "method_return_doxygen_link",
+                             "@googleapis_link{google::protobuf::Bar,google/"
+                             "foo/v1/service.proto#L14}"),
         // Method2
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "longrunning_metadata_type",
@@ -582,11 +582,10 @@ INSTANTIATE_TEST_SUITE_P(
                              "projects/*/instances/*"),
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "default_idempotency", "kNonIdempotent"),
-        MethodVarsTestValues(
-            "google.protobuf.Service.Method2",
-            "method_longrunning_deduced_return_doxygen_link",
-            "[google::protobuf::Bar](https://github.com/googleapis/"
-            "googleapis/blob/foo/google/foo/v1/service.proto#L14)"),
+        MethodVarsTestValues("google.protobuf.Service.Method2",
+                             "method_longrunning_deduced_return_doxygen_link",
+                             "@googleapis_link{google::protobuf::Bar,google/"
+                             "foo/v1/service.proto#L14}"),
         // Method3
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "longrunning_metadata_type",
@@ -700,11 +699,10 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method7",
                              "longrunning_deduced_response_type",
                              "google::protobuf::Bar"),
-        MethodVarsTestValues(
-            "google.protobuf.Service.Method7",
-            "method_longrunning_deduced_return_doxygen_link",
-            "[google::protobuf::Bar](https://github.com/googleapis/"
-            "googleapis/blob/foo/google/foo/v1/service.proto#L14)")),
+        MethodVarsTestValues("google.protobuf.Service.Method7",
+                             "method_longrunning_deduced_return_doxygen_link",
+                             "@googleapis_link{google::protobuf::Bar,google/"
+                             "foo/v1/service.proto#L14}")),
     [](testing::TestParamInfo<CreateMethodVarsTest::ParamType> const& info) {
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
       return pieces.back() + "_" + info.param.vars_key;

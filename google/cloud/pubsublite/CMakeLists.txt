@@ -14,6 +14,7 @@
 # limitations under the License.
 # ~~~
 
+include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Cloud Pub/Sub Lite C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Cloud Pub/Sub Lite")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Beta)")

@@ -16,6 +16,7 @@
 
 find_package(absl CONFIG REQUIRED)
 
+include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Bigtable C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")

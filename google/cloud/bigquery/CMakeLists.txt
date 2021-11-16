@@ -14,6 +14,7 @@
 # limitations under the License.
 # ~~~
 
+include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Google Cloud BigQuery C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud BigQuery")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")

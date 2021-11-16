@@ -48,9 +48,6 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
-char const* const kGoogleapisProtoFileLinkPrefix =
-    "https://github.com/googleapis/googleapis/blob/";
-
 std::string CppTypeToString(FieldDescriptor const* field) {
   switch (field->cpp_type()) {
     case FieldDescriptor::CPPTYPE_INT32:
@@ -78,15 +75,14 @@ std::string CppTypeToString(FieldDescriptor const* field) {
   return field->cpp_type_name();
 }
 
-std::string FormatDoxygenLink(google::protobuf::Descriptor const& message_type,
-                              std::string const& googleapis_commit_hash) {
+std::string FormatDoxygenLink(
+    google::protobuf::Descriptor const& message_type) {
   google::protobuf::SourceLocation loc;
   message_type.GetSourceLocation(&loc);
   std::string output_type_proto_file_name = message_type.file()->name();
-  return absl::StrCat("[", ProtoNameToCppName(message_type.full_name()), "](",
-                      kGoogleapisProtoFileLinkPrefix, googleapis_commit_hash,
-                      "/", output_type_proto_file_name, "#L",
-                      loc.start_line + 1, ")");
+  return absl::StrCat(
+      "@googleapis_link{", ProtoNameToCppName(message_type.full_name()), ",",
+      output_type_proto_file_name, "#L", loc.start_line + 1, "}");
 }
 
 absl::variant<std::string, google::protobuf::Descriptor const*>
@@ -124,20 +120,18 @@ struct FullyQualifiedMessageTypeVisitor {
 };
 
 struct FormatDoxygenLinkVisitor {
-  explicit FormatDoxygenLinkVisitor(std::string s)
-      : googleapis_commit_hash(std::move(s)) {}
+  explicit FormatDoxygenLinkVisitor() = default;
   std::string operator()(std::string const& s) const {
     return ProtoNameToCppName(s);
   }
   std::string operator()(google::protobuf::Descriptor const* d) const {
-    return FormatDoxygenLink(*d, googleapis_commit_hash);
+    return FormatDoxygenLink(*d);
   }
-  std::string googleapis_commit_hash;
 };
 
 void SetLongrunningOperationMethodVars(
     google::protobuf::MethodDescriptor const& method,
-    VarsDictionary& method_vars, std::string const& googleapis_commit_hash) {
+    VarsDictionary& method_vars) {
   if (method.output_type()->full_name() == "google.longrunning.Operation") {
     auto operation_info =
         method.options().GetExtension(google::longrunning::operation_info);
@@ -154,8 +148,7 @@ void SetLongrunningOperationMethodVars(
     method_vars["longrunning_deduced_response_type"] = ProtoNameToCppName(
         method_vars["longrunning_deduced_response_message_type"]);
     method_vars["method_longrunning_deduced_return_doxygen_link"] =
-        absl::visit(FormatDoxygenLinkVisitor(googleapis_commit_hash),
-                    deduced_response_type);
+        absl::visit(FormatDoxygenLinkVisitor{}, deduced_response_type);
   }
 }
 
@@ -314,18 +307,13 @@ std::string FormatApiMethodSignatureParameters(
 }
 
 std::string FormatProtobufRequestParameters(
-    google::protobuf::MethodDescriptor const& method,
-    std::string const& googleapis_commit_hash) {
+    google::protobuf::MethodDescriptor const& method) {
   std::vector<std::pair<std::string, std::string>> parameter_comments;
   google::protobuf::Descriptor const* input_type = method.input_type();
   google::protobuf::SourceLocation loc;
   input_type->GetSourceLocation(&loc);
   std::string input_type_proto_file_name = input_type->file()->name();
-  parameter_comments.emplace_back(
-      "request",
-      absl::StrCat("[", ProtoNameToCppName(input_type->full_name()), "](",
-                   kGoogleapisProtoFileLinkPrefix, googleapis_commit_hash, "/",
-                   input_type_proto_file_name, "#L", loc.start_line + 1, ")"));
+  parameter_comments.emplace_back("request", FormatDoxygenLink(*input_type));
   std::string parameter_comment_string;
   for (auto const& param : parameter_comments) {
     parameter_comment_string +=
@@ -384,8 +372,7 @@ std::string FormatMethodCommentsFromRpcComments(
   if (parameter_style == MethodParameterStyle::kApiMethodSignature) {
     parameter_comment_string = FormatApiMethodSignatureParameters(method);
   } else {
-    parameter_comment_string =
-        FormatProtobufRequestParameters(method, "$googleapis_commit_hash$");
+    parameter_comment_string = FormatProtobufRequestParameters(method);
   }
 
   std::string doxygen_formatted_function_comments = absl::StrReplaceAll(
@@ -517,14 +504,13 @@ VarsDictionary CreateServiceVars(
 }
 
 std::map<std::string, VarsDictionary> CreateMethodVars(
-    google::protobuf::ServiceDescriptor const& service,
-    VarsDictionary const& service_vars) {
+    google::protobuf::ServiceDescriptor const& service, VarsDictionary const&) {
   std::map<std::string, VarsDictionary> service_methods_vars;
   for (int i = 0; i < service.method_count(); i++) {
     auto const& method = *service.method(i);
     VarsDictionary method_vars;
-    method_vars["method_return_doxygen_link"] = FormatDoxygenLink(
-        *method.output_type(), service_vars.at("googleapis_commit_hash"));
+    method_vars["method_return_doxygen_link"] =
+        FormatDoxygenLink(*method.output_type());
     method_vars["default_idempotency"] =
         DefaultIdempotencyFromHttpOperation(method);
     method_vars["method_name"] = method.name();
@@ -534,8 +520,7 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     method_vars["response_message_type"] = method.output_type()->full_name();
     method_vars["response_type"] =
         ProtoNameToCppName(method.output_type()->full_name());
-    SetLongrunningOperationMethodVars(
-        method, method_vars, service_vars.at("googleapis_commit_hash"));
+    SetLongrunningOperationMethodVars(method, method_vars);
     if (IsPaginated(method)) {
       auto pagination_info = DeterminePagination(method);
       method_vars["range_output_field_name"] = pagination_info->first;
@@ -547,8 +532,7 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
               : ProtoNameToCppName(pagination_info->second->full_name());
       if (pagination_info->second) {
         method_vars["method_paginated_return_doxygen_link"] =
-            FormatDoxygenLink(*pagination_info->second,
-                              service_vars.at("googleapis_commit_hash"));
+            FormatDoxygenLink(*pagination_info->second);
       } else {
         method_vars["method_paginated_return_doxygen_link"] = "std::string";
       }

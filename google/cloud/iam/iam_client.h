@@ -84,7 +84,7 @@ class IAMClient {
    * @param name  Required. The resource name of the project associated with the
    * service accounts, such as `projects/my-project-123`.
    * @return
-   * [google::iam::admin::v1::ServiceAccount](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L461)
+   * @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
    */
   StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
       std::string const& name);
@@ -98,7 +98,7 @@ class IAMClient {
    * account. The `ACCOUNT` value can be the `email` address or the `unique_id`
    * of the service account.
    * @return
-   * [google::iam::admin::v1::ServiceAccount](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L461)
+   * @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
    */
   StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
       std::string const& name);
@@ -117,7 +117,7 @@ class IAMClient {
    * Currently, only the following values are user assignable: `display_name`
    * and `description`.
    * @return
-   * [google::iam::admin::v1::ServiceAccount](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L461)
+   * @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
    */
   StatusOr<google::iam::admin::v1::ServiceAccount> CreateServiceAccount(
       std::string const& name, std::string const& account_id,
@@ -164,7 +164,7 @@ class IAMClient {
    * the list response. Duplicate key types are not allowed. If no key type is
    * provided, all keys are returned.
    * @return
-   * [google::iam::admin::v1::ListServiceAccountKeysResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L692)
+   * @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysResponse,google/iam/admin/v1/iam.proto#L692}
    */
   StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(
@@ -185,7 +185,7 @@ class IAMClient {
    * @param public_key_type  The output format of the public key requested.
    *  X509_PEM is the default output format.
    * @return
-   * [google::iam::admin::v1::ServiceAccountKey](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L741)
+   * @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
    */
   StatusOr<google::iam::admin::v1::ServiceAccountKey> GetServiceAccountKey(
       std::string const& name,
@@ -206,7 +206,7 @@ class IAMClient {
    *  The default is currently a 2K RSA key.  However this may change in the
    *  future.
    * @return
-   * [google::iam::admin::v1::ServiceAccountKey](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L741)
+   * @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
    */
   StatusOr<google::iam::admin::v1::ServiceAccountKey> CreateServiceAccountKey(
       std::string const& name,
@@ -244,7 +244,7 @@ class IAMClient {
    * requested. See the operation documentation for the appropriate value for
    * this field.
    * @return
-   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/policy.proto#L88)
+   * @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
    */
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource);
 
@@ -276,7 +276,7 @@ class IAMClient {
    * policy is a valid policy but certain Cloud Platform services (such as
    * Projects) might reject them.
    * @return
-   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/policy.proto#L88)
+   * @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy);
@@ -318,7 +318,7 @@ class IAMClient {
    * For more information see [IAM
    * Overview](https://cloud.google.com/iam/docs/overview#permissions).
    * @return
-   * [google::iam::v1::TestIamPermissionsResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/iam_policy.proto#L141)
+   * @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
    */
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions);
@@ -334,7 +334,7 @@ class IAMClient {
    * will be named
    *  `//cloudresourcemanager.googleapis.com/projects/my-project`.
    * @return
-   * [google::iam::admin::v1::Role](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1004)
+   * @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
    */
   StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
       std::string const& full_resource_name);
@@ -344,9 +344,9 @@ class IAMClient {
    * belongs to a specific project.
    *
    * @param request
-   * [google::iam::admin::v1::ListServiceAccountsRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L544)
+   * @googleapis_link{google::iam::admin::v1::ListServiceAccountsRequest,google/iam/admin/v1/iam.proto#L544}
    * @return
-   * [google::iam::admin::v1::ServiceAccount](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L461)
+   * @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
    */
   StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
       google::iam::admin::v1::ListServiceAccountsRequest request);
@@ -355,9 +355,9 @@ class IAMClient {
    * Gets a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
    *
    * @param request
-   * [google::iam::admin::v1::GetServiceAccountRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L579)
+   * @googleapis_link{google::iam::admin::v1::GetServiceAccountRequest,google/iam/admin/v1/iam.proto#L579}
    * @return
-   * [google::iam::admin::v1::ServiceAccount](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L461)
+   * @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
    */
   StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
       google::iam::admin::v1::GetServiceAccountRequest const& request);
@@ -366,9 +366,9 @@ class IAMClient {
    * Creates a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
    *
    * @param request
-   * [google::iam::admin::v1::CreateServiceAccountRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L521)
+   * @googleapis_link{google::iam::admin::v1::CreateServiceAccountRequest,google/iam/admin/v1/iam.proto#L521}
    * @return
-   * [google::iam::admin::v1::ServiceAccount](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L461)
+   * @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
    */
   StatusOr<google::iam::admin::v1::ServiceAccount> CreateServiceAccount(
       google::iam::admin::v1::CreateServiceAccountRequest const& request);
@@ -377,9 +377,9 @@ class IAMClient {
    * Patches a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
    *
    * @param request
-   * [google::iam::admin::v1::PatchServiceAccountRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L616)
+   * @googleapis_link{google::iam::admin::v1::PatchServiceAccountRequest,google/iam/admin/v1/iam.proto#L616}
    * @return
-   * [google::iam::admin::v1::ServiceAccount](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L461)
+   * @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
    */
   StatusOr<google::iam::admin::v1::ServiceAccount> PatchServiceAccount(
       google::iam::admin::v1::PatchServiceAccountRequest const& request);
@@ -405,7 +405,7 @@ class IAMClient {
    * delete the service account.
    *
    * @param request
-   * [google::iam::admin::v1::DeleteServiceAccountRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L594)
+   * @googleapis_link{google::iam::admin::v1::DeleteServiceAccountRequest,google/iam/admin/v1/iam.proto#L594}
    */
   Status DeleteServiceAccount(
       google::iam::admin::v1::DeleteServiceAccountRequest const& request);
@@ -421,9 +421,9 @@ class IAMClient {
    * that has been permanently removed.
    *
    * @param request
-   * [google::iam::admin::v1::UndeleteServiceAccountRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L623)
+   * @googleapis_link{google::iam::admin::v1::UndeleteServiceAccountRequest,google/iam/admin/v1/iam.proto#L623}
    * @return
-   * [google::iam::admin::v1::UndeleteServiceAccountResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L631)
+   * @googleapis_link{google::iam::admin::v1::UndeleteServiceAccountResponse,google/iam/admin/v1/iam.proto#L631}
    */
   StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
   UndeleteServiceAccount(
@@ -441,7 +441,7 @@ class IAMClient {
    * method to enable the service account.
    *
    * @param request
-   * [google::iam::admin::v1::EnableServiceAccountRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L637)
+   * @googleapis_link{google::iam::admin::v1::EnableServiceAccountRequest,google/iam/admin/v1/iam.proto#L637}
    */
   Status EnableServiceAccount(
       google::iam::admin::v1::EnableServiceAccountRequest const& request);
@@ -467,7 +467,7 @@ class IAMClient {
    * with [DeleteServiceAccount][google.iam.admin.v1.IAM.DeleteServiceAccount].
    *
    * @param request
-   * [google::iam::admin::v1::DisableServiceAccountRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L647)
+   * @googleapis_link{google::iam::admin::v1::DisableServiceAccountRequest,google/iam/admin/v1/iam.proto#L647}
    */
   Status DisableServiceAccount(
       google::iam::admin::v1::DisableServiceAccountRequest const& request);
@@ -477,9 +477,9 @@ class IAMClient {
    * a service account.
    *
    * @param request
-   * [google::iam::admin::v1::ListServiceAccountKeysRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L657)
+   * @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysRequest,google/iam/admin/v1/iam.proto#L657}
    * @return
-   * [google::iam::admin::v1::ListServiceAccountKeysResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L692)
+   * @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysResponse,google/iam/admin/v1/iam.proto#L692}
    */
   StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(
@@ -489,9 +489,9 @@ class IAMClient {
    * Gets a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey].
    *
    * @param request
-   * [google::iam::admin::v1::GetServiceAccountKeyRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L698)
+   * @googleapis_link{google::iam::admin::v1::GetServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L698}
    * @return
-   * [google::iam::admin::v1::ServiceAccountKey](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L741)
+   * @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
    */
   StatusOr<google::iam::admin::v1::ServiceAccountKey> GetServiceAccountKey(
       google::iam::admin::v1::GetServiceAccountKeyRequest const& request);
@@ -500,9 +500,9 @@ class IAMClient {
    * Creates a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey].
    *
    * @param request
-   * [google::iam::admin::v1::CreateServiceAccountKeyRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L791)
+   * @googleapis_link{google::iam::admin::v1::CreateServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L791}
    * @return
-   * [google::iam::admin::v1::ServiceAccountKey](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L741)
+   * @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
    */
   StatusOr<google::iam::admin::v1::ServiceAccountKey> CreateServiceAccountKey(
       google::iam::admin::v1::CreateServiceAccountKeyRequest const& request);
@@ -512,9 +512,9 @@ class IAMClient {
    * a public key that you provide.
    *
    * @param request
-   * [google::iam::admin::v1::UploadServiceAccountKeyRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L816)
+   * @googleapis_link{google::iam::admin::v1::UploadServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L816}
    * @return
-   * [google::iam::admin::v1::ServiceAccountKey](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L741)
+   * @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
    */
   StatusOr<google::iam::admin::v1::ServiceAccountKey> UploadServiceAccountKey(
       google::iam::admin::v1::UploadServiceAccountKeyRequest const& request);
@@ -525,7 +525,7 @@ class IAMClient {
    * have been issued based on the service account key.
    *
    * @param request
-   * [google::iam::admin::v1::DeleteServiceAccountKeyRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L832)
+   * @googleapis_link{google::iam::admin::v1::DeleteServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L832}
    */
   Status DeleteServiceAccountKey(
       google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request);
@@ -544,9 +544,9 @@ class IAMClient {
    * method.
    *
    * @param request
-   * [google::iam::v1::GetIamPolicyRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/iam_policy.proto#L113)
+   * @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
    * @return
-   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/policy.proto#L88)
+   * @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
    */
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);
@@ -572,9 +572,9 @@ class IAMClient {
    * resources](https://cloud.google.com/iam/help/service-accounts/granting-access-to-service-accounts).
    *
    * @param request
-   * [google::iam::v1::SetIamPolicyRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/iam_policy.proto#L98)
+   * @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
    * @return
-   * [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/policy.proto#L88)
+   * @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request);
@@ -584,9 +584,9 @@ class IAMClient {
    * [ServiceAccount][google.iam.admin.v1.ServiceAccount].
    *
    * @param request
-   * [google::iam::v1::TestIamPermissionsRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/iam_policy.proto#L126)
+   * @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
    * @return
-   * [google::iam::v1::TestIamPermissionsResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/v1/iam_policy.proto#L141)
+   * @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
    */
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request);
@@ -597,9 +597,9 @@ class IAMClient {
    * role.
    *
    * @param request
-   * [google::iam::admin::v1::QueryGrantableRolesRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1062)
+   * @googleapis_link{google::iam::admin::v1::QueryGrantableRolesRequest,google/iam/admin/v1/iam.proto#L1062}
    * @return
-   * [google::iam::admin::v1::Role](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1004)
+   * @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
    */
   StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
       google::iam::admin::v1::QueryGrantableRolesRequest request);
@@ -609,9 +609,9 @@ class IAMClient {
    * or every custom role that is defined for an organization or project.
    *
    * @param request
-   * [google::iam::admin::v1::ListRolesRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1093)
+   * @googleapis_link{google::iam::admin::v1::ListRolesRequest,google/iam/admin/v1/iam.proto#L1093}
    * @return
-   * [google::iam::admin::v1::Role](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1004)
+   * @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
    */
   StreamRange<google::iam::admin::v1::Role> ListRoles(
       google::iam::admin::v1::ListRolesRequest request);
@@ -620,9 +620,9 @@ class IAMClient {
    * Gets the definition of a [Role][google.iam.admin.v1.Role].
    *
    * @param request
-   * [google::iam::admin::v1::GetRoleRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1152)
+   * @googleapis_link{google::iam::admin::v1::GetRoleRequest,google/iam/admin/v1/iam.proto#L1152}
    * @return
-   * [google::iam::admin::v1::Role](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1004)
+   * @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
    */
   StatusOr<google::iam::admin::v1::Role> GetRole(
       google::iam::admin::v1::GetRoleRequest const& request);
@@ -631,9 +631,9 @@ class IAMClient {
    * Creates a new custom [Role][google.iam.admin.v1.Role].
    *
    * @param request
-   * [google::iam::admin::v1::CreateRoleRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1184)
+   * @googleapis_link{google::iam::admin::v1::CreateRoleRequest,google/iam/admin/v1/iam.proto#L1184}
    * @return
-   * [google::iam::admin::v1::Role](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1004)
+   * @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
    */
   StatusOr<google::iam::admin::v1::Role> CreateRole(
       google::iam::admin::v1::CreateRoleRequest const& request);
@@ -642,9 +642,9 @@ class IAMClient {
    * Updates the definition of a custom [Role][google.iam.admin.v1.Role].
    *
    * @param request
-   * [google::iam::admin::v1::UpdateRoleRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1219)
+   * @googleapis_link{google::iam::admin::v1::UpdateRoleRequest,google/iam/admin/v1/iam.proto#L1219}
    * @return
-   * [google::iam::admin::v1::Role](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1004)
+   * @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
    */
   StatusOr<google::iam::admin::v1::Role> UpdateRole(
       google::iam::admin::v1::UpdateRoleRequest const& request);
@@ -670,9 +670,9 @@ class IAMClient {
    * permanently removed.
    *
    * @param request
-   * [google::iam::admin::v1::DeleteRoleRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1250)
+   * @googleapis_link{google::iam::admin::v1::DeleteRoleRequest,google/iam/admin/v1/iam.proto#L1250}
    * @return
-   * [google::iam::admin::v1::Role](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1004)
+   * @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
    */
   StatusOr<google::iam::admin::v1::Role> DeleteRole(
       google::iam::admin::v1::DeleteRoleRequest const& request);
@@ -681,9 +681,9 @@ class IAMClient {
    * Undeletes a custom [Role][google.iam.admin.v1.Role].
    *
    * @param request
-   * [google::iam::admin::v1::UndeleteRoleRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1278)
+   * @googleapis_link{google::iam::admin::v1::UndeleteRoleRequest,google/iam/admin/v1/iam.proto#L1278}
    * @return
-   * [google::iam::admin::v1::Role](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1004)
+   * @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
    */
   StatusOr<google::iam::admin::v1::Role> UndeleteRole(
       google::iam::admin::v1::UndeleteRoleRequest const& request);
@@ -694,9 +694,9 @@ class IAMClient {
    * resource.
    *
    * @param request
-   * [google::iam::admin::v1::QueryTestablePermissionsRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1361)
+   * @googleapis_link{google::iam::admin::v1::QueryTestablePermissionsRequest,google/iam/admin/v1/iam.proto#L1361}
    * @return
-   * [google::iam::admin::v1::Permission](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1306)
+   * @googleapis_link{google::iam::admin::v1::Permission,google/iam/admin/v1/iam.proto#L1306}
    */
   StreamRange<google::iam::admin::v1::Permission> QueryTestablePermissions(
       google::iam::admin::v1::QueryTestablePermissionsRequest request);
@@ -709,9 +709,9 @@ class IAMClient {
    * documentation](https://cloud.google.com/logging/docs/audit).
    *
    * @param request
-   * [google::iam::admin::v1::QueryAuditableServicesRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1391)
+   * @googleapis_link{google::iam::admin::v1::QueryAuditableServicesRequest,google/iam/admin/v1/iam.proto#L1391}
    * @return
-   * [google::iam::admin::v1::QueryAuditableServicesResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1402)
+   * @googleapis_link{google::iam::admin::v1::QueryAuditableServicesResponse,google/iam/admin/v1/iam.proto#L1402}
    */
   StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
   QueryAuditableServices(
@@ -726,9 +726,9 @@ class IAMClient {
    * even if the linter detects an issue in the IAM policy.
    *
    * @param request
-   * [google::iam::admin::v1::LintPolicyRequest](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1415)
+   * @googleapis_link{google::iam::admin::v1::LintPolicyRequest,google/iam/admin/v1/iam.proto#L1415}
    * @return
-   * [google::iam::admin::v1::LintPolicyResponse](https://github.com/googleapis/googleapis/blob/53432afb877cb3c1920f73e6621daa8c24f86522/google/iam/admin/v1/iam.proto#L1513)
+   * @googleapis_link{google::iam::admin::v1::LintPolicyResponse,google/iam/admin/v1/iam.proto#L1513}
    */
   StatusOr<google::iam::admin::v1::LintPolicyResponse> LintPolicy(
       google::iam::admin::v1::LintPolicyRequest const& request);
