@@ -17,9 +17,9 @@
 #include "google/cloud/status_or.h"
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
-#include "absl/strings/str_split.h"
 #include "generator/generator.h"
 #include "generator/generator_config.pb.h"
+#include "generator/internal/scaffold_generator.h"
 #include <google/protobuf/compiler/command_line_interface.h>
 #include <google/protobuf/text_format.h>
 #include <algorithm>
@@ -37,6 +37,8 @@ ABSL_FLAG(std::string, googleapis_proto_path, "",
           "Path to root dir of protos distributed with googleapis.");
 ABSL_FLAG(std::string, output_path, ".",
           "Path to root dir where code is emitted.");
+ABSL_FLAG(std::string, scaffold, "",
+          "Generate the library support files for the given directory.");
 
 namespace {
 google::cloud::StatusOr<google::cloud::cpp::generator::GeneratorConfiguration>
@@ -52,20 +54,6 @@ GetConfig(std::string const& filepath) {
   if (parse_result) return generator_config;
   return google::cloud::Status(google::cloud::StatusCode::kInvalidArgument,
                                "Unable to parse textproto file.");
-}
-
-/**
- * Extract the basename from @p path
- *
- * @note The return value for absolute paths or paths without `/` is
- *     unspecified, as we do not expect any such inputs.
- *
- * @return For a path of the form `a/b/c` returns `c`.
- */
-std::string Basename(std::string const& path) {
-  auto const l = path.find_last_of('/');
-  if (l == std::string::npos) return path;
-  return path.substr(l + 1);
 }
 
 /**
@@ -116,10 +104,10 @@ int WriteInstallDirectories(
       install_directories.push_back(p);
     }
     // Bigtable and Spanner use a custom path for generated code.
-    if (Basename(product_path) != "admin") {
+    auto const lib = google::cloud::generator_internal::LibraryName(service);
+    if (lib != "admin") {
       install_directories.push_back("./include/" + product_path + "/mocks");
-      install_directories.push_back("./lib64/cmake/google_cloud_cpp_" +
-                                    Basename(product_path));
+      install_directories.push_back("./lib64/cmake/google_cloud_cpp_" + lib);
     }
   }
   std::sort(install_directories.begin(), install_directories.end());
@@ -141,7 +129,7 @@ int WriteFeatureList(
                      << service.DebugString() << "\n";
       return 1;
     }
-    auto feature = Basename(service.product_path());
+    auto feature = google::cloud::generator_internal::LibraryName(service);
     // Spanner and Bigtable use a custom directory for generated files
     if (feature == "admin") continue;
     features.push_back(std::move(feature));
@@ -180,6 +168,7 @@ int main(int argc, char** argv) {
   auto googleapis_commit_hash = absl::GetFlag(FLAGS_googleapis_commit_hash);
   auto config_file = absl::GetFlag(FLAGS_config_file);
   auto output_path = absl::GetFlag(FLAGS_output_path);
+  auto scaffold = absl::GetFlag(FLAGS_scaffold);
 
   GCP_LOG(INFO) << "proto_path = " << proto_path << "\n";
   GCP_LOG(INFO) << "googleapis_path = " << googleapis_path << "\n";
@@ -200,6 +189,10 @@ int main(int argc, char** argv) {
 
   std::vector<std::future<google::cloud::Status>> tasks;
   for (auto const& service : config->service()) {
+    if (service.product_path() == scaffold) {
+      google::cloud::generator_internal::GenerateScaffold(googleapis_path,
+                                                          output_path, service);
+    }
     std::vector<std::string> args;
     // empty arg prevents first real arg from being ignored.
     args.emplace_back("");

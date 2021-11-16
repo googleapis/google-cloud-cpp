@@ -22,5 +22,6 @@ google_cloud_cpp_generator_unit_tests = [
     "internal/descriptor_utils_test.cc",
     "internal/predicate_utils_test.cc",
     "internal/printer_test.cc",
+    "internal/scaffold_generator_test.cc",
     "internal/service_code_generator_test.cc",
 ]

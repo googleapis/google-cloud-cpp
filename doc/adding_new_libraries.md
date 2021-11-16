@@ -36,20 +36,39 @@ bazel query \
 
 ## Run the Scaffold Generator
 
+Manually edit `generator/generator_config.textproto` and add your new service.
+
 ```shell
-cmake \
-  -DCOPYRIGHT_YEAR=2021 \
-  -DNAME=pubsublite \
-  -DSERVICE_NAME="Cloud Pub/Sub Lite" \
-  -P generator/scaffold/create_scaffold.cmake
+bazel_output_base="$(bazel info output_base)"
+bazel run \
+  //generator:google-cloud-cpp-codegen -- \
+  --protobuf_proto_path="${bazel_output_base}"/external/com_google_protobuf/src \
+  --googleapis_proto_path="${bazel_output_base}"/external/com_google_googleapis \
+  --output_path="${PWD}" \
+  --config_file="${PWD}/generator/generator_config.textproto" \
+  --scaffold="google/cloud/pubsublite"
 ```
 
-## Add the new library to the CI builds
+## Manually add the C++ files to the CMakeLists.txt file
 
-Edit `ci/cloudbuild/builds/cmake-install.sh`.
+Create the `google/cloud/$library/retry_traits.h` file, and add this file and
+any generated C++ files to the `CMakeLists.txt` file. There should be markers
+in the file, search for `EDIT HERE`.
 
 ## Run the CI build to generate Bazel files
 
 ```shell
 ci/cloudbuild/build.sh -t cmake-install-pr
+```
+
+## Update the root `BUILD` file
+
+Manually edit `BUILD` to reference the new targets in
+`//google/cloud/pubsublite`. Initially prefix your targets with
+`:experimental-`.
+
+## Fix formatting nits
+
+```shell
+ci/cloudbuild/build.sh -t checkers-pr
 ```
