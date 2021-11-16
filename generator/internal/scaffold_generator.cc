@@ -26,7 +26,6 @@
 namespace google {
 namespace cloud {
 namespace generator_internal {
-namespace {}  // namespace
 
 auto constexpr kApiIndexFilename = "api-index-v1.json";
 
@@ -39,7 +38,7 @@ std::string LibraryName(
 
 std::string SiteRoot(
     google::cloud::cpp::generator::ServiceConfiguration const& service) {
-  // TODO(#...) - get a configurable source for this
+  // TODO(#7605) - get a configurable source for this
   return LibraryName(service);
 }
 
