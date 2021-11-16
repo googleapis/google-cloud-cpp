@@ -16,7 +16,6 @@
 #include "google/cloud/log.h"
 #include "google/cloud/optional.h"
 #include "generator/internal/descriptor_utils.h"
-#include <google/api/client.pb.h>
 #include <google/longrunning/operations.pb.h>
 #include <string>
 

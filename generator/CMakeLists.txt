@@ -67,7 +67,7 @@ target_include_directories(google_cloud_cpp_generator
                            PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
 target_link_libraries(
     google_cloud_cpp_generator
-    PUBLIC google-cloud-cpp::grpc_utils
+    PUBLIC google_cloud_cpp_generator_config
            google-cloud-cpp::common
            nlohmann_json::nlohmann_json
            google-cloud-cpp::api_client_protos
@@ -104,12 +104,8 @@ set_target_properties(google_cloud_cpp_generator_config
 add_executable(google-cloud-cpp-codegen standalone_main.cc)
 target_link_libraries(
     google-cloud-cpp-codegen
-    LINK_PUBLIC
-    google_cloud_cpp_generator_config
-    google_cloud_cpp_generator
-    protobuf::libprotoc
-    absl::flags
-    absl::flags_parse)
+    PUBLIC google_cloud_cpp_generator_config google_cloud_cpp_generator
+           protobuf::libprotoc absl::flags absl::flags_parse)
 
 # Define the tests in a function so we have a new scope for variable names.
 function (google_cloud_cpp_generator_define_tests)

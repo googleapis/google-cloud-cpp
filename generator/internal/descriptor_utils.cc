@@ -30,10 +30,8 @@
 #include "generator/internal/option_defaults_generator.h"
 #include "generator/internal/options_generator.h"
 #include "generator/internal/predicate_utils.h"
-#include "generator/internal/retry_policy_generator.h"
 #include "generator/internal/stub_factory_generator.h"
 #include "generator/internal/stub_generator.h"
-#include <google/api/client.pb.h>
 #include <google/longrunning/operations.pb.h>
 #include <google/protobuf/compiler/code_generator.h>
 #include <regex>

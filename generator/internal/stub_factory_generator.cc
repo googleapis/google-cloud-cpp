@@ -15,7 +15,6 @@
 #include "generator/internal/stub_factory_generator.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/printer.h"
-#include <google/api/client.pb.h>
 #include <google/protobuf/descriptor.h>
 
 namespace google {
