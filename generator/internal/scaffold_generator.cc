@@ -77,8 +77,7 @@ std::map<std::string, std::string> ScaffoldVars(
     return {};
   }
   std::ifstream is(api_index_path);
-  auto index = nlohmann::json::parse(std::istreambuf_iterator<char>(is.rdbuf()),
-                                     {}, nullptr, false);
+  auto index = nlohmann::json::parse(is, nullptr, false);
   if (index.is_null()) {
     GCP_LOG(WARNING) << "Cannot parse API index file (" << api_index_path
                      << ")";
