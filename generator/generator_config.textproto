@@ -63,6 +63,13 @@ service {
   initial_copyright_year: "2021"
 }
 
+# Pub/Sub Lite
+service {
+  service_proto_path: "google/cloud/pubsublite/v1/admin.proto"
+  product_path: "google/cloud/pubsublite"
+  initial_copyright_year: "2021"
+}
+
 # Spanner
 service {
   service_proto_path: "google/spanner/admin/database/v1/spanner_database_admin.proto"

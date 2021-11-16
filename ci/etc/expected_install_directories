@@ -19,6 +19,10 @@
 ./include/google/cloud/logging
 ./include/google/cloud/logging/internal
 ./include/google/cloud/logging/mocks
+./include/google/cloud/pubsublite
+./include/google/cloud/pubsublite/internal
+./include/google/cloud/pubsublite/mocks
+./include/google/cloud/pubsublite/v1
 ./include/google/cloud/spanner
 ./include/google/cloud/spanner/admin
 ./include/google/cloud/spanner/admin/internal
@@ -40,3 +44,4 @@
 ./lib64/cmake/google_cloud_cpp_bigquery
 ./lib64/cmake/google_cloud_cpp_iam
 ./lib64/cmake/google_cloud_cpp_logging
+./lib64/cmake/google_cloud_cpp_pubsublite

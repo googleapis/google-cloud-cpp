@@ -2,7 +2,9 @@
 
 :construction:
 
-[Cloud Pub/Sub Lite](https://cloud.google.com/pubsublite/) TODO(...) - add description
+[Cloud Pub/Sub Lite](https://cloud.google.com/pubsub/lite/) is a high-volume
+messaging service built for very low cost of operation by offering zonal storage
+and pre-provisioned capacity.
 
 This directory contains an idiomatic C++ client library for interacting with
 this service.

@@ -17,8 +17,27 @@
 """Automatically generated source lists for google_cloud_cpp_pubsublite - DO NOT EDIT."""
 
 google_cloud_cpp_pubsublite_hdrs = [
+    "admin_client.h",
+    "admin_connection.h",
+    "admin_connection_idempotency_policy.h",
+    "admin_options.h",
+    "internal/admin_auth_decorator.h",
+    "internal/admin_logging_decorator.h",
+    "internal/admin_metadata_decorator.h",
+    "internal/admin_option_defaults.h",
+    "internal/admin_stub.h",
+    "internal/admin_stub_factory.h",
+    "retry_traits.h",
 ]
 
 google_cloud_cpp_pubsublite_srcs = [
-    "internal/placeholder.cc",
+    "admin_client.cc",
+    "admin_connection.cc",
+    "admin_connection_idempotency_policy.cc",
+    "internal/admin_auth_decorator.cc",
+    "internal/admin_logging_decorator.cc",
+    "internal/admin_metadata_decorator.cc",
+    "internal/admin_option_defaults.cc",
+    "internal/admin_stub.cc",
+    "internal/admin_stub_factory.cc",
 ]

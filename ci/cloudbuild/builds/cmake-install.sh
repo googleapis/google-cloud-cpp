@@ -35,7 +35,6 @@ feature_list+=(
   spanner
   storage
   experimental-storage-grpc
-  pubsublite
 )
 features="$(printf ",%s" "${feature_list[@]}")"
 features="${features:1}"
@@ -79,8 +78,6 @@ expected_dirs+=(
   ./include/google/cloud/pubsub
   ./include/google/cloud/pubsub/internal
   ./include/google/cloud/pubsub/mocks
-  ./include/google/cloud/pubsublite
-  ./include/google/cloud/pubsublite/v1
   ./include/google/cloud/spanner/admin/mocks
   ./include/google/cloud/spanner/internal
   ./include/google/cloud/spanner/mocks
@@ -113,7 +110,6 @@ expected_dirs+=(
   ./lib64/cmake/google_cloud_cpp_googleapis
   ./lib64/cmake/google_cloud_cpp_grpc_utils
   ./lib64/cmake/google_cloud_cpp_pubsub
-  ./lib64/cmake/google_cloud_cpp_pubsublite
   ./lib64/cmake/google_cloud_cpp_spanner
   ./lib64/cmake/google_cloud_cpp_storage
   ./lib64/cmake/googleapis
