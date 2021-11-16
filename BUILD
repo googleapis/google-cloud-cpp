@@ -58,7 +58,7 @@ cc_library(
 )
 
 cc_library(
-    name = "experimental-pubsublite-mocks",
+    name = "experimental-pubsublite_mocks",
     deps = [
         "//google/cloud/pubsublite:google_cloud_cpp_pubsublite_mocks",
     ],

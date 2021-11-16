@@ -37,7 +37,7 @@ bazel query \
 ## Run the Scaffold Generator
 
 Manually edit `generator/generator_config.textproto` and add the new service.
-The run the micro-generator to create the scaffold and the C++ sources:
+Then run the micro-generator to create the scaffold and the C++ sources:
 
 ```shell
 bazel_output_base="$(bazel info output_base)"
