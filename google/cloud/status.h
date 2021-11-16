@@ -61,7 +61,7 @@ class Status;
 namespace internal {
 // Gets/sets payload data for non-OK Statuses.
 void SetPayload(Status&, std::string key, std::string payload);
-absl::optional<std::string> GetPayload(Status&, std::string const& key);
+absl::optional<std::string> GetPayload(Status const&, std::string const& key);
 }  // namespace internal
 
 /**
@@ -103,7 +103,7 @@ class Status {
 
  private:
   friend void internal::SetPayload(Status&, std::string, std::string);
-  friend absl::optional<std::string> internal::GetPayload(Status&,
+  friend absl::optional<std::string> internal::GetPayload(Status const&,
                                                           std::string const&);
 
   StatusCode code_{StatusCode::kOk};

@@ -37,7 +37,8 @@ void SetPayload(Status& s, std::string key, std::string payload) {
 }
 
 // Returns the payload associated with the given `key` if available.
-absl::optional<std::string> GetPayload(Status& s, std::string const& key) {
+absl::optional<std::string> GetPayload(Status const& s,
+                                       std::string const& key) {
   auto it = s.payload_.find(key);
   if (it == s.payload_.end()) return absl::nullopt;
   return it->second;
