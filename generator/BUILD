@@ -28,6 +28,7 @@ cc_library(
         "@com_github_nlohmann_json//:nlohmann_json",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/strings",
+        "@com_google_absl//absl/strings:str_format",
         "@com_google_googleapis//:googleapis_system_includes",
         "@com_google_googleapis//google/api:client_cc_proto",
         "@com_google_googleapis//google/longrunning:longrunning_cc_proto",
