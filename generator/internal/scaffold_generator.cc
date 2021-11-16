@@ -319,6 +319,7 @@ void GenerateCMakeLists(std::ostream& os,
 # limitations under the License.
 # ~~~
 
+include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "$title$ C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the $title$")
 set(DOXYGEN_PROJECT_NUMBER "$${PROJECT_VERSION} (Experimental)")

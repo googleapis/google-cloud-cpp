@@ -70,7 +70,7 @@ class GoldenThingAdminClient {
    *
    * @param parent  Required. The instance whose databases should be listed.
    *  Values are of the form `projects/<project>/instances/<instance>`.
-   * @return [google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
+   * @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
    */
   StreamRange<google::test::admin::database::v1::Database>
   ListDatabases(std::string const& parent);
@@ -92,7 +92,7 @@ class GoldenThingAdminClient {
    *  `[a-z][a-z0-9_\-]*[a-z0-9]` and be between 2 and 30 characters in length.
    *  If the database ID is a reserved word or if it contains a hyphen, the
    *  database ID must be enclosed in backticks (`` ` ``).
-   * @return [google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
+   * @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
    */
   future<StatusOr<google::test::admin::database::v1::Database>>
   CreateDatabase(std::string const& parent, std::string const& create_statement);
@@ -102,7 +102,7 @@ class GoldenThingAdminClient {
    *
    * @param name  Required. The name of the requested database. Values are of the form
    *  `projects/<project>/instances/<instance>/databases/<database>`.
-   * @return [google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
+   * @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
    */
   StatusOr<google::test::admin::database::v1::Database>
   GetDatabase(std::string const& name);
@@ -118,7 +118,7 @@ class GoldenThingAdminClient {
    *
    * @param database  Required. The database to update.
    * @param statements  Required. DDL statements to be applied to the database.
-   * @return [google::test::admin::database::v1::UpdateDatabaseDdlMetadata](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L506)
+   * @return @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlMetadata,generator/integration_tests/test.proto#L506}
    */
   future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(std::string const& database, std::vector<std::string> const& statements);
@@ -139,7 +139,7 @@ class GoldenThingAdminClient {
    * be queried using the [Operations][google.longrunning.Operations] API.
    *
    * @param database  Required. The database whose schema we wish to get.
-   * @return [google::test::admin::database::v1::GetDatabaseDdlResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L545)
+   * @return @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlResponse,generator/integration_tests/test.proto#L545}
    */
   StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(std::string const& database);
@@ -159,7 +159,7 @@ class GoldenThingAdminClient {
    *  the policy is limited to a few 10s of KB. An empty policy is a
    *  valid policy but certain Cloud Platform services (such as Projects)
    *  might reject them.
-   * @return [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/iam/v1/policy.proto#L88)
+   * @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
    */
   StatusOr<google::iam::v1::Policy>
   SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy);
@@ -200,7 +200,7 @@ class GoldenThingAdminClient {
    *
    * @param resource  REQUIRED: The resource for which the policy is being requested.
    *  See the operation documentation for the appropriate value for this field.
-   * @return [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/iam/v1/policy.proto#L88)
+   * @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
    */
   StatusOr<google::iam::v1::Policy>
   GetIamPolicy(std::string const& resource);
@@ -223,7 +223,7 @@ class GoldenThingAdminClient {
    *  wildcards (such as '*' or 'storage.*') are not allowed. For more
    *  information see
    *  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
-   * @return [google::iam::v1::TestIamPermissionsResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/iam/v1/iam_policy.proto#L141)
+   * @return @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
    */
   StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions);
@@ -252,7 +252,7 @@ class GoldenThingAdminClient {
    * @param backup_id  Required. The id of the backup to be created. The `backup_id` appended to
    *  `parent` forms the full backup name of the form
    *  `projects/<project>/instances/<instance>/backups/<backup_id>`.
-   * @return [google::test::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L36)
+   * @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
    */
   future<StatusOr<google::test::admin::database::v1::Backup>>
   CreateBackup(std::string const& parent, google::test::admin::database::v1::Backup const& backup, std::string const& backup_id);
@@ -263,7 +263,7 @@ class GoldenThingAdminClient {
    * @param name  Required. Name of the backup.
    *  Values are of the form
    *  `projects/<project>/instances/<instance>/backups/<backup>`.
-   * @return [google::test::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L36)
+   * @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
    */
   StatusOr<google::test::admin::database::v1::Backup>
   GetBackup(std::string const& name);
@@ -280,7 +280,7 @@ class GoldenThingAdminClient {
    *  resource, not to the request message. The field mask must always be
    *  specified; this prevents any future fields from being erased accidentally
    *  by clients that do not know about them.
-   * @return [google::test::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L36)
+   * @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
    */
   StatusOr<google::test::admin::database::v1::Backup>
   UpdateBackup(google::test::admin::database::v1::Backup const& backup, google::protobuf::FieldMask const& update_mask);
@@ -302,7 +302,7 @@ class GoldenThingAdminClient {
    *
    * @param parent  Required. The instance to list backups from.  Values are of the
    *  form `projects/<project>/instances/<instance>`.
-   * @return [google::test::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L36)
+   * @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
    */
   StreamRange<google::test::admin::database::v1::Backup>
   ListBackups(std::string const& parent);
@@ -337,7 +337,7 @@ class GoldenThingAdminClient {
    *  `projects/<project>/instances/<instance>/databases/<database_id>`.
    * @param backup  Name of the backup from which to restore.  Values are of the form
    *  `projects/<project>/instances/<instance>/backups/<backup>`.
-   * @return [google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
+   * @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
    */
   future<StatusOr<google::test::admin::database::v1::Database>>
   RestoreDatabase(std::string const& parent, std::string const& database_id, std::string const& backup);
@@ -354,7 +354,7 @@ class GoldenThingAdminClient {
    *
    * @param parent  Required. The instance of the database operations.
    *  Values are of the form `projects/<project>/instances/<instance>`.
-   * @return [google::longrunning::Operation](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/longrunning/operations.proto#L128)
+   * @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
    */
   StreamRange<google::longrunning::Operation>
   ListDatabaseOperations(std::string const& parent);
@@ -373,7 +373,7 @@ class GoldenThingAdminClient {
    *
    * @param parent  Required. The instance of the backup operations. Values are of
    *  the form `projects/<project>/instances/<instance>`.
-   * @return [google::longrunning::Operation](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/longrunning/operations.proto#L128)
+   * @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
    */
   StreamRange<google::longrunning::Operation>
   ListBackupOperations(std::string const& parent);
@@ -383,7 +383,7 @@ class GoldenThingAdminClient {
    *
    * @param name  Required. The name of the requested database. Values are of the form
    *  `projects/<project>/instances/<instance>/databases/<database>`.
-   * @return [google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
+   * @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
    */
   future<StatusOr<google::test::admin::database::v1::Database>>
   AsyncGetDatabase(std::string const& name);
@@ -401,8 +401,8 @@ class GoldenThingAdminClient {
   /**
    * Lists Cloud Test databases.
    *
-   * @param request [google::test::admin::database::v1::ListDatabasesRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L377)
-   * @return [google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
+   * @param request @googleapis_link{google::test::admin::database::v1::ListDatabasesRequest,generator/integration_tests/test.proto#L377}
+   * @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
    */
   StreamRange<google::test::admin::database::v1::Database>
   ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request);
@@ -417,8 +417,8 @@ class GoldenThingAdminClient {
    * [response][google.longrunning.Operation.response] field type is
    * [Database][google.test.admin.database.v1.Database], if successful.
    *
-   * @param request [google::test::admin::database::v1::CreateDatabaseRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L409)
-   * @return [google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
+   * @param request @googleapis_link{google::test::admin::database::v1::CreateDatabaseRequest,generator/integration_tests/test.proto#L409}
+   * @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
    */
   future<StatusOr<google::test::admin::database::v1::Database>>
   CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request);
@@ -426,8 +426,8 @@ class GoldenThingAdminClient {
   /**
    * Gets the state of a Cloud Test database.
    *
-   * @param request [google::test::admin::database::v1::GetDatabaseRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L443)
-   * @return [google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
+   * @param request @googleapis_link{google::test::admin::database::v1::GetDatabaseRequest,generator/integration_tests/test.proto#L443}
+   * @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
    */
   StatusOr<google::test::admin::database::v1::Database>
   GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request);
@@ -441,8 +441,8 @@ class GoldenThingAdminClient {
    * [metadata][google.longrunning.Operation.metadata] field type is
    * [UpdateDatabaseDdlMetadata][google.test.admin.database.v1.UpdateDatabaseDdlMetadata].  The operation has no response.
    *
-   * @param request [google::test::admin::database::v1::UpdateDatabaseDdlRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L470)
-   * @return [google::test::admin::database::v1::UpdateDatabaseDdlMetadata](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L506)
+   * @param request @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlRequest,generator/integration_tests/test.proto#L470}
+   * @return @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlMetadata,generator/integration_tests/test.proto#L506}
    */
   future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request);
@@ -452,7 +452,7 @@ class GoldenThingAdminClient {
    * Completed backups for the database will be retained according to their
    * `expire_time`.
    *
-   * @param request [google::test::admin::database::v1::DropDatabaseRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L523)
+   * @param request @googleapis_link{google::test::admin::database::v1::DropDatabaseRequest,generator/integration_tests/test.proto#L523}
    */
   Status
   DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request);
@@ -462,8 +462,8 @@ class GoldenThingAdminClient {
    * DDL statements. This method does not show pending schema updates, those may
    * be queried using the [Operations][google.longrunning.Operations] API.
    *
-   * @param request [google::test::admin::database::v1::GetDatabaseDdlRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L534)
-   * @return [google::test::admin::database::v1::GetDatabaseDdlResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L545)
+   * @param request @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlRequest,generator/integration_tests/test.proto#L534}
+   * @return @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlResponse,generator/integration_tests/test.proto#L545}
    */
   StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(google::test::admin::database::v1::GetDatabaseDdlRequest const& request);
@@ -477,8 +477,8 @@ class GoldenThingAdminClient {
    * For backups, authorization requires `test.backups.setIamPolicy`
    * permission on [resource][google.iam.v1.SetIamPolicyRequest.resource].
    *
-   * @param request [google::iam::v1::SetIamPolicyRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/iam/v1/iam_policy.proto#L98)
-   * @return [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/iam/v1/policy.proto#L88)
+   * @param request @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+   * @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
    */
   StatusOr<google::iam::v1::Policy>
   SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
@@ -493,8 +493,8 @@ class GoldenThingAdminClient {
    * For backups, authorization requires `test.backups.getIamPolicy`
    * permission on [resource][google.iam.v1.GetIamPolicyRequest.resource].
    *
-   * @param request [google::iam::v1::GetIamPolicyRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/iam/v1/iam_policy.proto#L113)
-   * @return [google::iam::v1::Policy](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/iam/v1/policy.proto#L88)
+   * @param request @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+   * @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
    */
   StatusOr<google::iam::v1::Policy>
   GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
@@ -511,8 +511,8 @@ class GoldenThingAdminClient {
    * result in a NOT_FOUND error if the user has
    * `test.backups.list` permission on the containing instance.
    *
-   * @param request [google::iam::v1::TestIamPermissionsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/iam/v1/iam_policy.proto#L126)
-   * @return [google::iam::v1::TestIamPermissionsResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/iam/v1/iam_policy.proto#L141)
+   * @param request @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+   * @return @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
    */
   StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
@@ -531,8 +531,8 @@ class GoldenThingAdminClient {
    * There can be only one pending backup creation per database. Backup creation
    * of different databases can run concurrently.
    *
-   * @param request [google::test::admin::database::v1::CreateBackupRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L110)
-   * @return [google::test::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L36)
+   * @param request @googleapis_link{google::test::admin::database::v1::CreateBackupRequest,generator/integration_tests/backup.proto#L110}
+   * @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
    */
   future<StatusOr<google::test::admin::database::v1::Backup>>
   CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request);
@@ -540,8 +540,8 @@ class GoldenThingAdminClient {
   /**
    * Gets metadata on a pending or completed [Backup][google.test.admin.database.v1.Backup].
    *
-   * @param request [google::test::admin::database::v1::GetBackupRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L177)
-   * @return [google::test::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L36)
+   * @param request @googleapis_link{google::test::admin::database::v1::GetBackupRequest,generator/integration_tests/backup.proto#L177}
+   * @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
    */
   StatusOr<google::test::admin::database::v1::Backup>
   GetBackup(google::test::admin::database::v1::GetBackupRequest const& request);
@@ -549,8 +549,8 @@ class GoldenThingAdminClient {
   /**
    * Updates a pending or completed [Backup][google.test.admin.database.v1.Backup].
    *
-   * @param request [google::test::admin::database::v1::UpdateBackupRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L161)
-   * @return [google::test::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L36)
+   * @param request @googleapis_link{google::test::admin::database::v1::UpdateBackupRequest,generator/integration_tests/backup.proto#L161}
+   * @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
    */
   StatusOr<google::test::admin::database::v1::Backup>
   UpdateBackup(google::test::admin::database::v1::UpdateBackupRequest const& request);
@@ -558,7 +558,7 @@ class GoldenThingAdminClient {
   /**
    * Deletes a pending or completed [Backup][google.test.admin.database.v1.Backup].
    *
-   * @param request [google::test::admin::database::v1::DeleteBackupRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L190)
+   * @param request @googleapis_link{google::test::admin::database::v1::DeleteBackupRequest,generator/integration_tests/backup.proto#L190}
    */
   Status
   DeleteBackup(google::test::admin::database::v1::DeleteBackupRequest const& request);
@@ -568,8 +568,8 @@ class GoldenThingAdminClient {
    * Backups returned are ordered by `create_time` in descending order,
    * starting from the most recent `create_time`.
    *
-   * @param request [google::test::admin::database::v1::ListBackupsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L203)
-   * @return [google::test::admin::database::v1::Backup](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L36)
+   * @param request @googleapis_link{google::test::admin::database::v1::ListBackupsRequest,generator/integration_tests/backup.proto#L203}
+   * @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
    */
   StreamRange<google::test::admin::database::v1::Backup>
   ListBackups(google::test::admin::database::v1::ListBackupsRequest request);
@@ -593,8 +593,8 @@ class GoldenThingAdminClient {
    * initiated, without waiting for the optimize operation associated with the
    * first restore to complete.
    *
-   * @param request [google::test::admin::database::v1::RestoreDatabaseRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L634)
-   * @return [google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
+   * @param request @googleapis_link{google::test::admin::database::v1::RestoreDatabaseRequest,generator/integration_tests/test.proto#L634}
+   * @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
    */
   future<StatusOr<google::test::admin::database::v1::Database>>
   RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const& request);
@@ -609,8 +609,8 @@ class GoldenThingAdminClient {
    * include those that have completed/failed/canceled within the last 7 days,
    * and pending operations.
    *
-   * @param request [google::test::admin::database::v1::ListDatabaseOperationsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L553)
-   * @return [google::longrunning::Operation](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/longrunning/operations.proto#L128)
+   * @param request @googleapis_link{google::test::admin::database::v1::ListDatabaseOperationsRequest,generator/integration_tests/test.proto#L553}
+   * @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
    */
   StreamRange<google::longrunning::Operation>
   ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest request);
@@ -627,8 +627,8 @@ class GoldenThingAdminClient {
    * `operation.metadata.value.progress.start_time` in descending order starting
    * from the most recently started operation.
    *
-   * @param request [google::test::admin::database::v1::ListBackupOperationsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L274)
-   * @return [google::longrunning::Operation](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/longrunning/operations.proto#L128)
+   * @param request @googleapis_link{google::test::admin::database::v1::ListBackupOperationsRequest,generator/integration_tests/backup.proto#L274}
+   * @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
    */
   StreamRange<google::longrunning::Operation>
   ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest request);
@@ -636,8 +636,8 @@ class GoldenThingAdminClient {
   /**
    * Gets the state of a Cloud Test database.
    *
-   * @param request [google::test::admin::database::v1::GetDatabaseRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L443)
-   * @return [google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
+   * @param request @googleapis_link{google::test::admin::database::v1::GetDatabaseRequest,generator/integration_tests/test.proto#L443}
+   * @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
    */
   future<StatusOr<google::test::admin::database::v1::Database>>
   AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request);
@@ -647,7 +647,7 @@ class GoldenThingAdminClient {
    * Completed backups for the database will be retained according to their
    * `expire_time`.
    *
-   * @param request [google::test::admin::database::v1::DropDatabaseRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L523)
+   * @param request @googleapis_link{google::test::admin::database::v1::DropDatabaseRequest,generator/integration_tests/test.proto#L523}
    */
   future<Status>
   AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request);

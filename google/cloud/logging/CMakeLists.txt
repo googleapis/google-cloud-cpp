@@ -14,6 +14,7 @@
 # limitations under the License.
 # ~~~
 
+include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Logging C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Logging")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Beta)")

@@ -175,37 +175,19 @@ TEST(ProcessCommandLineArgs, EmptyProductPath) {
 }
 
 TEST(ProcessCommandLineArgs, ProductPathNeedsFormatting) {
-  auto result = ProcessCommandLineArgs(
-      "product_path=/google/cloud/pubsub,googleapis_commit_hash=foo");
+  auto result = ProcessCommandLineArgs("product_path=/google/cloud/pubsub");
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, Contains(Pair("product_path", "google/cloud/pubsub/")));
 }
 
 TEST(ProcessCommandLineArgs, ProductPathAlreadyFormatted) {
-  auto result = ProcessCommandLineArgs(
-      "product_path=google/cloud/pubsub/,googleapis_commit_hash=foo");
+  auto result = ProcessCommandLineArgs("product_path=google/cloud/pubsub/");
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, Contains(Pair("product_path", "google/cloud/pubsub/")));
 }
 
-TEST(ProcessCommandLineArgs, NoCommitHash) {
-  auto result = ProcessCommandLineArgs("product_path=/google/cloud/bar");
-  EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
-                               "--cpp_codegen_opt=googleapis_commit_hash=<hash>"
-                               " must be specified."));
-}
-
-TEST(ProcessCommandLineArgs, EmptyCommitHash) {
-  auto result = ProcessCommandLineArgs(
-      "product_path=/google/cloud/bar,googleapis_commit_hash=");
-  EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
-                               "--cpp_codegen_opt=googleapis_commit_hash=<hash>"
-                               " must be specified."));
-}
-
 TEST(ProcessCommandLineArgs, NoCopyrightYearParameterOrValue) {
-  auto result = ProcessCommandLineArgs(
-      "product_path=google/cloud/pubsub/,googleapis_commit_hash=foo");
+  auto result = ProcessCommandLineArgs("product_path=google/cloud/pubsub/");
   auto expected_year = CurrentCopyrightYear();
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, Contains(Pair("copyright_year", expected_year)));
@@ -214,7 +196,7 @@ TEST(ProcessCommandLineArgs, NoCopyrightYearParameterOrValue) {
 TEST(ProcessCommandLineArgs, NoCopyrightYearValue) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/pubsub/"
-      ",googleapis_commit_hash=foo,copyright_year=");
+      ",copyright_year=");
   auto expected_year = CurrentCopyrightYear();
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, Contains(Pair("copyright_year", expected_year)));
@@ -223,14 +205,14 @@ TEST(ProcessCommandLineArgs, NoCopyrightYearValue) {
 TEST(ProcessCommandLineArgs, CopyrightYearWithValue) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/pubsub/"
-      ",googleapis_commit_hash=foo,copyright_year=1995");
+      ",copyright_year=1995");
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, Contains(Pair("copyright_year", "1995")));
 }
 
 TEST(ProcessCommandLineArgs, ServiceEndpointEnvVar) {
   auto result = ProcessCommandLineArgs(
-      "product_path=google/cloud/spanner/,googleapis_commit_hash=foo"
+      "product_path=google/cloud/spanner/"
       ",service_endpoint_env_var=GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT");
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result,
@@ -241,7 +223,7 @@ TEST(ProcessCommandLineArgs, ServiceEndpointEnvVar) {
 
 TEST(ProcessCommandLineArgs, EmulatorEndpointEnvVar) {
   auto result = ProcessCommandLineArgs(
-      "product_path=google/cloud/spanner/,googleapis_commit_hash=foo"
+      "product_path=google/cloud/spanner/"
       ",emulator_endpoint_env_var=SPANNER_EMULATOR_HOST");
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, Contains(Pair("emulator_endpoint_env_var",
@@ -251,7 +233,7 @@ TEST(ProcessCommandLineArgs, EmulatorEndpointEnvVar) {
 
 TEST(ProcessCommandLineArgs, ProcessArgOmitService) {
   auto result = ProcessCommandLineArgs(
-      "product_path=google/cloud/spanner/,googleapis_commit_hash=foo"
+      "product_path=google/cloud/spanner/"
       ",omit_service=Omitted1"
       ",omit_service=Omitted2");
   ASSERT_THAT(result, IsOk());
@@ -262,7 +244,7 @@ TEST(ProcessCommandLineArgs, ProcessArgOmitService) {
 
 TEST(ProcessCommandLineArgs, ProcessArgOmitRpc) {
   auto result = ProcessCommandLineArgs(
-      "product_path=google/cloud/spanner/,googleapis_commit_hash=foo"
+      "product_path=google/cloud/spanner/"
       ",emulator_endpoint_env_var=SPANNER_EMULATOR_HOST"
       ",omit_rpc=Omitted1"
       ",omit_rpc=Omitted2");
@@ -275,7 +257,7 @@ TEST(ProcessCommandLineArgs, ProcessArgOmitRpc) {
 TEST(ProcessCommandLineArgs, ProcessArgGenAsyncRpc) {
   auto result = ProcessCommandLineArgs(
       "gen_async_rpc=Async1"
-      ",product_path=google/cloud/spanner/,googleapis_commit_hash=foo"
+      ",product_path=google/cloud/spanner/"
       ",emulator_endpoint_env_var=SPANNER_EMULATOR_HOST"
       ",gen_async_rpc=Async2");
   ASSERT_THAT(result, IsOk());
@@ -286,7 +268,7 @@ TEST(ProcessCommandLineArgs, ProcessArgGenAsyncRpc) {
 
 TEST(ProcessCommandLineArgs, ProcessArgAsyncOnlyRpc) {
   auto result = ProcessCommandLineArgs(
-      ",product_path=google/cloud/spanner/,googleapis_commit_hash=foo"
+      ",product_path=google/cloud/spanner/"
       ",emulator_endpoint_env_var=SPANNER_EMULATOR_HOST"
       ",omit_rpc=AsyncOnly"
       ",gen_async_rpc=AsyncOnly");
@@ -298,7 +280,7 @@ TEST(ProcessCommandLineArgs, ProcessArgAsyncOnlyRpc) {
 
 TEST(ProcessCommandLineArgs, ProcessArgNamespaceAlias) {
   auto result = ProcessCommandLineArgs(
-      ",product_path=google/cloud/spanner/,googleapis_commit_hash=foo"
+      ",product_path=google/cloud/spanner/"
       ",emulator_endpoint_env_var=SPANNER_EMULATOR_HOST"
       ",backwards_compatibility_namespace_alias=true");
   ASSERT_THAT(result, IsOk());
