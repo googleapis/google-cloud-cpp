@@ -59,7 +59,6 @@ std::ostream& operator<<(std::ostream& os, StatusCode code);
 
 class Status;
 namespace internal {
-// Gets/sets payload data for non-OK Statuses.
 void SetPayload(Status&, std::string key, std::string payload);
 absl::optional<std::string> GetPayload(Status const&, std::string const& key);
 }  // namespace internal
