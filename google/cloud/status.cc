@@ -36,7 +36,7 @@ void SetPayload(Status& s, std::string key, std::string payload) {
   if (!s.ok()) s.payload_[std::move(key)] = std::move(payload);
 }
 
-// Returns the payload associated with the given `key` if available.
+// Returns the payload associated with the given `key`, if available.
 absl::optional<std::string> GetPayload(Status const& s,
                                        std::string const& key) {
   auto it = s.payload_.find(key);
