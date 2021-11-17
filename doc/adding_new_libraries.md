@@ -6,8 +6,28 @@ This document describes the steps required to add a new library to
 used in these libraries, that you are familiar with existing libraries, and with
 which libraries are based on gRPC.
 
-We will use `pubsublite` as an example through this document, you will need to
+We will use `tasks` as an example through this document, you will need to
 update the instructions based on whatever library you are adding.
+
+## Set useful variables
+
+```shell
+cd $HOME/google-cloud-cpp
+rule="google/cloud/tasks/v2:tasks_proto"
+path="${rule%:*}"
+library="tasks"
+mkdir -p google/cloud/${library}
+```
+
+## Verify the C++ rules exist
+
+```shell
+bazel --batch query --noshow_progress --noshow_loading_progress \
+    "deps(@com_google_googleapis//${rule/_proto/_cc_grpc})"
+```
+
+If this fails, send a CL to add the rule. Wait until that is submitted and
+exported before proceeding any further.
 
 ## Update the list of proto files
 
@@ -16,22 +36,22 @@ CMake needs to know which proto files are created by downloading the
 
 ```shell
 cd $HOME/google-cloud-cpp
-bazel query \
-  "deps(@com_google_googleapis//google/cloud/pubsublite/v1:pubsublite_proto)" \
-  | grep "@com_google_googleapis//google/cloud/pubsublite/v1" \
+bazel --batch query --noshow_progress --noshow_loading_progress \
+  "deps(@com_google_googleapis//${rule})" \
+  | grep "@com_google_googleapis//${path}" \
   | grep -E '\.proto$' \
-  >external/googleapis/protolists/pubsublite.list
+  >external/googleapis/protolists/${library}.list
 ```
 
 ## Update the list of proto dependencies
 
 ```shell
 cd $HOME/google-cloud-cpp
-bazel query \
-  "deps(@com_google_googleapis//google/cloud/pubsublite/v1:pubsublite_proto)" \
+bazel --batch query --noshow_progress --noshow_loading_progress \
+  "deps(@com_google_googleapis//${rule})" \
   | grep "@com_google_googleapis//" | grep _proto \
-  | grep -v @com_google_googleapis//google/cloud/pubsublite/v1 \
-  >external/googleapis/protodeps/pubsublite.deps
+  | grep -v "@com_google_googleapis//${path}" \
+  >external/googleapis/protodeps/${library}.deps
 ```
 
 ## Run the Scaffold Generator
@@ -47,7 +67,13 @@ bazel run \
   --googleapis_proto_path="${bazel_output_base}"/external/com_google_googleapis \
   --output_path="${PWD}" \
   --config_file="${PWD}/generator/generator_config.textproto" \
-  --scaffold="google/cloud/pubsublite"
+  --scaffold="google/cloud/${library}"
+```
+
+## Fix formatting of existing libraries
+
+```shell
+ci/cloudbuild/build.sh -t checkers-pr
 ```
 
 ## Manually add the C++ files to the CMakeLists.txt file
@@ -63,11 +89,21 @@ ci/cloudbuild/build.sh -t cmake-install-pr
 ## Update the root `BUILD` file
 
 Manually edit `BUILD` to reference the new targets in
-`//google/cloud/pubsublite`. Initially prefix your targets with
+`//google/cloud/tasks`. Initially prefix your targets with
 `:experimental-`.
 
 ## Fix formatting nits
 
 ```shell
 ci/cloudbuild/build.sh -t checkers-pr
+```
+
+## Add the libraries to git
+
+```shell
+git add \
+  generator/generator_config.textproto \
+  ci/etc/ \
+  external/googleapis \
+  google/cloud/${library}
 ```
