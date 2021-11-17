@@ -56,6 +56,6 @@ Finally we present the full code for this example:
 @snippet mock_subscriber.cc all
 
 [googletest-link]: https://github.com/google/googletest
-[googlemock-link]: https://github.com/google/googletest/tree/master/googlemock
+[googlemock-link]: https://github.com/google/googletest/tree/main/googlemock
 
 */
