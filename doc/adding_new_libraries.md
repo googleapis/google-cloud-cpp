@@ -6,7 +6,7 @@ This document describes the steps required to add a new library to
 used in these libraries, that you are familiar with existing libraries, and with
 which libraries are based on gRPC.
 
-We will use `pubsublite` as an example through this document, you will need to
+We will use `tasks` as an example through this document, you will need to
 update the instructions based on whatever library you are adding.
 
 ## Set useful variables
@@ -89,7 +89,7 @@ ci/cloudbuild/build.sh -t cmake-install-pr
 ## Update the root `BUILD` file
 
 Manually edit `BUILD` to reference the new targets in
-`//google/cloud/pubsublite`. Initially prefix your targets with
+`//google/cloud/tasks`. Initially prefix your targets with
 `:experimental-`.
 
 ## Fix formatting nits
