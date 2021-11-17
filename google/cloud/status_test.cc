@@ -57,6 +57,12 @@ TEST(Status, Basics) {
   EXPECT_EQ(s.message(), "");
   EXPECT_EQ(s, Status());
 
+  // The message is ignored on OK statues.
+  auto ok = Status(StatusCode::kOk, "message ignored");
+  EXPECT_EQ(s, ok);
+  EXPECT_EQ("", ok.message());
+  EXPECT_EQ(StatusCode::kOk, ok.code());
+
   s = Status(StatusCode::kUnknown, "foo");
   EXPECT_FALSE(s.ok());
   EXPECT_EQ(s.code(), StatusCode::kUnknown);
