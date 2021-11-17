@@ -195,7 +195,7 @@ TEST(LogSinkTest, ClogEnvironment) {
   // statement. This makes the death test thread-safe and it also ensures that
   // the LogSink singleton instance will be reconstructed in the child and will
   // see the environment variable. See also:
-  // https://github.com/google/googletest/blob/master/googletest/docs/advanced.md#death-test-styles
+  // https://github.com/google/googletest/blob/main/docs/advanced.md#death-test-styles
   auto old_style = testing::FLAGS_gtest_death_test_style;
   testing::FLAGS_gtest_death_test_style = "threadsafe";
 
