@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/status_payload_keys.h"
 #include <google/protobuf/text_format.h>
 
 namespace google {
@@ -62,25 +63,40 @@ google::cloud::StatusCode MapStatusCode(grpc::StatusCode const& code) {
 }  // namespace
 
 google::cloud::Status MakeStatusFromRpcError(grpc::Status const& status) {
+  // Fast path for "OK" statuses, which cannot have messages or payloads.
+  if (status.ok()) return Status{};
+  auto const e = status.error_details();
+  if (!e.empty()) {
+    google::rpc::Status proto;
+    if (!proto.ParseFromString(e)) {
+      return MakeStatusFromRpcError(
+          status.error_code(),
+          status.error_message() + " (discarded invalid error_details)");
+    }
+    return MakeStatusFromRpcError(proto);
+  }
   return MakeStatusFromRpcError(status.error_code(), status.error_message());
 }
 
 google::cloud::Status MakeStatusFromRpcError(grpc::StatusCode code,
                                              std::string what) {
-  // TODO(#1912): Pass along status.error_details() once we have `absl::Status`
-  // or some version that supports binary blobs of data.
   return google::cloud::Status(MapStatusCode(code), std::move(what));
 }
 
-google::cloud::Status MakeStatusFromRpcError(
-    google::rpc::Status const& status) {
+google::cloud::Status MakeStatusFromRpcError(google::rpc::Status const& proto) {
+  // Fast path for "OK" statuses, which cannot have messages or payloads.
+  if (proto.code() == static_cast<std::int32_t>(StatusCode::kOk))
+    return Status{};
   StatusCode code = StatusCode::kUnknown;
-  if (status.code() >= 0 &&
-      status.code() <=
-          static_cast<std::int32_t>(StatusCode::kUnauthenticated)) {
-    code = static_cast<StatusCode>(status.code());
+  if (proto.code() >= 0 &&
+      proto.code() <= static_cast<std::int32_t>(StatusCode::kUnauthenticated)) {
+    code = static_cast<StatusCode>(proto.code());
   }
-  return Status(code, status.message());
+  auto status = Status(code, proto.message());
+  google::cloud::internal::SetPayload(
+      status, google::cloud::internal::kStatusPayloadGrpcProto,
+      proto.SerializeAsString());
+  return status;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
