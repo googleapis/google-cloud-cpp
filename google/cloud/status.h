@@ -89,9 +89,8 @@ class Status {
    * Ignores @p message if @p code is `StatusCode::kOk`.
    */
   explicit Status(StatusCode code, std::string message)
-      : code_(code), message_(std::move(message)) {
-    if (ok()) message_.clear();
-  }
+      : code_(code),
+        message_(code_ == StatusCode::kOk ? "" : std::move(message)) {}
 
   bool ok() const { return code_ == StatusCode::kOk; }
   StatusCode code() const { return code_; }
