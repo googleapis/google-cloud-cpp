@@ -21,7 +21,7 @@
 
 #include "google/cloud/iam/iam_connection_idempotency_policy.h"
 #include "google/cloud/iam/internal/iam_stub.h"
-#include "google/cloud/iam/retry_traits.h"
+#include "google/cloud/iam/internal/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

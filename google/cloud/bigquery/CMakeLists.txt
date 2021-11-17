@@ -52,6 +52,7 @@ add_library(
     internal/bigquery_read_stub.h
     internal/bigquery_read_stub_factory.cc
     internal/bigquery_read_stub_factory.h
+    internal/retry_traits.h
     retry_traits.h
     streaming.cc)
 target_include_directories(

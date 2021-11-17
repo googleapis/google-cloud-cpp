@@ -22,7 +22,7 @@ filegroup(
     name = "golden_filegroup",
     srcs = glob([
         "*.*",
-        "retry_traits.h",
+        "internal/retry_traits.h",
         "streaming.cc",
     ]),
 )

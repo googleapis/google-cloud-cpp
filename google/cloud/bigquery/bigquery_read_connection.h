@@ -21,7 +21,7 @@
 
 #include "google/cloud/bigquery/bigquery_read_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/internal/bigquery_read_stub.h"
-#include "google/cloud/bigquery/retry_traits.h"
+#include "google/cloud/bigquery/internal/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

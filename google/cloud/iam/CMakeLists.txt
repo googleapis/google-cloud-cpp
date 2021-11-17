@@ -69,6 +69,7 @@ add_library(
     internal/iam_stub.h
     internal/iam_stub_factory.cc
     internal/iam_stub_factory.h
+    internal/retry_traits.h
     retry_traits.h)
 target_include_directories(
     google_cloud_cpp_iam

@@ -17,27 +17,27 @@
 """Automatically generated source lists for google_cloud_cpp_tasks - DO NOT EDIT."""
 
 google_cloud_cpp_tasks_hdrs = [
+    "cloud_tasks_client.h",
+    "cloud_tasks_connection.h",
+    "cloud_tasks_connection_idempotency_policy.h",
+    "cloud_tasks_options.h",
     "internal/cloud_tasks_auth_decorator.h",
     "internal/cloud_tasks_logging_decorator.h",
     "internal/cloud_tasks_metadata_decorator.h",
     "internal/cloud_tasks_option_defaults.h",
     "internal/cloud_tasks_stub.h",
     "internal/cloud_tasks_stub_factory.h",
-    "cloud_tasks_client.h",
-    "cloud_tasks_connection.h",
-    "cloud_tasks_connection_idempotency_policy.h",
-    "cloud_tasks_options.h",
-    "retry_traits.h",
+    "internal/retry_traits.h",
 ]
 
 google_cloud_cpp_tasks_srcs = [
+    "cloud_tasks_client.cc",
+    "cloud_tasks_connection.cc",
+    "cloud_tasks_connection_idempotency_policy.cc",
     "internal/cloud_tasks_auth_decorator.cc",
     "internal/cloud_tasks_logging_decorator.cc",
     "internal/cloud_tasks_metadata_decorator.cc",
     "internal/cloud_tasks_option_defaults.cc",
     "internal/cloud_tasks_stub.cc",
     "internal/cloud_tasks_stub_factory.cc",
-    "cloud_tasks_client.cc",
-    "cloud_tasks_connection.cc",
-    "cloud_tasks_connection_idempotency_policy.cc",
 ]

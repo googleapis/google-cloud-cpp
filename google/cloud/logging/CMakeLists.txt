@@ -43,14 +43,14 @@ add_library(
     internal/logging_service_v2_stub.h
     internal/logging_service_v2_stub_factory.cc
     internal/logging_service_v2_stub_factory.h
+    internal/retry_traits.h
     logging_service_v2_client.cc
     logging_service_v2_client.h
     logging_service_v2_connection.cc
     logging_service_v2_connection.h
     logging_service_v2_connection_idempotency_policy.cc
     logging_service_v2_connection_idempotency_policy.h
-    logging_service_v2_options.h
-    retry_traits.h)
+    logging_service_v2_options.h)
 target_include_directories(
     google_cloud_cpp_logging
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

@@ -23,11 +23,11 @@ google_cloud_cpp_logging_hdrs = [
     "internal/logging_service_v2_option_defaults.h",
     "internal/logging_service_v2_stub.h",
     "internal/logging_service_v2_stub_factory.h",
+    "internal/retry_traits.h",
     "logging_service_v2_client.h",
     "logging_service_v2_connection.h",
     "logging_service_v2_connection_idempotency_policy.h",
     "logging_service_v2_options.h",
-    "retry_traits.h",
 ]
 
 google_cloud_cpp_logging_srcs = [

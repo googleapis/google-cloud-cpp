@@ -474,7 +474,7 @@ VarsDictionary CreateServiceVars(
   vars["retry_policy_name"] = absl::StrCat(descriptor.name(), "RetryPolicy");
   vars["retry_traits_name"] = absl::StrCat(descriptor.name(), "RetryTraits");
   vars["retry_traits_header_path"] =
-      absl::StrCat(vars["product_path"], "retry_traits", ".h");
+      absl::StrCat(vars["product_path"], "internal/retry_traits", ".h");
   vars["service_endpoint"] =
       descriptor.options().GetExtension(google::api::default_host);
   auto& service_endpoint_env_var = vars["service_endpoint_env_var"];

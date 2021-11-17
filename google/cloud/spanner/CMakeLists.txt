@@ -70,6 +70,7 @@ add_library(
     admin/internal/instance_admin_stub.h
     admin/internal/instance_admin_stub_factory.cc
     admin/internal/instance_admin_stub_factory.h
+    admin/internal/retry_traits.h
     admin/retry_traits.h
     backoff_policy.h
     backup.cc
