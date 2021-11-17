@@ -35,6 +35,7 @@
 #include "google/cloud/kms_key_name.h"
 #include "google/cloud/log.h"
 #include "google/cloud/project.h"
+#include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include "absl/types/optional.h"
 #include <chrono>
