@@ -63,12 +63,15 @@ google::cloud::StatusCode MapStatusCode(grpc::StatusCode const& code) {
 }  // namespace
 
 google::cloud::Status MakeStatusFromRpcError(grpc::Status const& status) {
-  auto e = status.error_details();
+  // Fast path for "OK" statuses, which cannot have messages or payloads.
+  if (status.ok()) return Status{};
+  auto const e = status.error_details();
   if (!e.empty()) {
     google::rpc::Status proto;
     if (!proto.ParseFromString(e)) {
-      return google::cloud::Status(StatusCode::kInternal,
-                                   "Invalid grpc::Status::error_details()");
+      return MakeStatusFromRpcError(
+          status.error_code(),
+          status.error_message() + " (discarded invalid error_details)");
     }
     return MakeStatusFromRpcError(proto);
   }
@@ -81,6 +84,9 @@ google::cloud::Status MakeStatusFromRpcError(grpc::StatusCode code,
 }
 
 google::cloud::Status MakeStatusFromRpcError(google::rpc::Status const& proto) {
+  // Fast path for "OK" statuses, which cannot have messages or payloads.
+  if (proto.code() == static_cast<std::int32_t>(StatusCode::kOk))
+    return Status{};
   StatusCode code = StatusCode::kUnknown;
   if (proto.code() >= 0 &&
       proto.code() <= static_cast<std::int32_t>(StatusCode::kUnauthenticated)) {
