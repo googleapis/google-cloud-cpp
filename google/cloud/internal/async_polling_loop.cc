@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_polling_loop.h"
+#include "google/cloud/log.h"
 #include <mutex>
 #include <string>
 
@@ -78,6 +79,7 @@ class AsyncPollingLoopImpl
   }
 
   void OnStart(StatusOr<Operation> op) {
+    GCP_LOG(DEBUG) << location_ << "() polling loop starting";
     if (!op || op->done()) return promise_.set_value(std::move(op));
     {
       std::unique_lock<std::mutex> lk(mu_);
@@ -88,18 +90,23 @@ class AsyncPollingLoopImpl
   }
 
   void Cancelled() {
+    GCP_LOG(DEBUG) << location_ << "() polling loop cancelled";
     promise_.set_value(
         Status{StatusCode::kCancelled,
                location_ + "() - polling loop terminated via cancel()"});
   }
 
   void Wait() {
+    std::chrono::milliseconds duration = polling_policy_->WaitPeriod();
+    GCP_LOG(DEBUG) << location_ << "() polling loop waiting "
+                   << duration.count() << "ms";
     auto self = shared_from_this();
-    cq_.MakeRelativeTimer(polling_policy_->WaitPeriod())
-        .then([self](TimerResult f) { self->OnTimer(std::move(f)); });
+    cq_.MakeRelativeTimer(duration).then(
+        [self](TimerResult f) { self->OnTimer(std::move(f)); });
   }
 
   void OnTimer(TimerResult f) {
+    GCP_LOG(DEBUG) << location_ << "() polling loop awakened";
     auto t = f.get();
     if (!t) return promise_.set_value(std::move(t).status());
     google::longrunning::GetOperationRequest request;
@@ -116,6 +123,7 @@ class AsyncPollingLoopImpl
   }
 
   void OnPoll(future<StatusOr<Operation>> f) {
+    GCP_LOG(DEBUG) << location_ << "() polling loop result";
     auto op = f.get();
     if (op && op->done()) {
       return promise_.set_value(*std::move(op));

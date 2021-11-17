@@ -3582,6 +3582,13 @@ int RunOneCommand(std::vector<std::string> argv) {
   return 0;
 }
 
+void SampleBanner(std::string const& name) {
+  std::cout << "\nRunning " << name << " sample at "
+            << absl::FormatTime("%Y-%m-%dT%H:%M:%SZ", absl::Now(),
+                                absl::UTCTimeZone())
+            << std::endl;
+}
+
 std::string PickConfig(google::cloud::spanner_admin::InstanceAdminClient client,
                        std::string const& project_id,
                        google::cloud::internal::DefaultPRNG& generator) {
@@ -3662,21 +3669,20 @@ void RunAllSlowInstanceTests(
   auto const config = PickConfig(instance_admin_client, project_id, generator);
   if (config.empty()) throw std::runtime_error("Failed to pick a config");
 
-  std::cout << "\nRunning create-instance sample" << std::endl;
+  SampleBanner("create-instance");
   CreateInstance(instance_admin_client, project_id, crud_instance_id,
                  "Test Instance", config);
 
   if (!emulator) {
-    std::cout << "\nRunning update-instance sample" << std::endl;
+    SampleBanner("update-instance");
     UpdateInstance(instance_admin_client, project_id, crud_instance_id,
                    "New name");
 
-    std::cout << "\nRunning (instance) add-database-reader sample" << std::endl;
+    SampleBanner("add-database-reader");
     AddDatabaseReader(instance_admin_client, project_id, crud_instance_id,
                       "serviceAccount:" + test_iam_service_account);
 
-    std::cout << "\nRunning (instance) remove-database-reader sample"
-              << std::endl;
+    SampleBanner("remove-database-reader");
     RemoveDatabaseReader(instance_admin_client, project_id, crud_instance_id,
                          "serviceAccount:" + test_iam_service_account);
 
@@ -3686,11 +3692,11 @@ void RunAllSlowInstanceTests(
         google::cloud::spanner_testing::RandomDatabaseName(generator);
 
     if (run_slow_backup_tests) {  // with default encryption
-      std::cout << "\nRunning spanner_create_database sample" << std::endl;
+      SampleBanner("spanner_create_database");
       CreateDatabase(database_admin_client, project_id, crud_instance_id,
                      database_id);
 
-      std::cout << "\nRunning spanner_create_backup sample" << std::endl;
+      SampleBanner("spanner_create_backup");
       auto now = DatabaseNow(
           MakeSampleClient(project_id, crud_instance_id, database_id));
       auto expire_time = TimestampAdd(now, absl::Hours(7));
@@ -3698,40 +3704,38 @@ void RunAllSlowInstanceTests(
       CreateBackup(database_admin_client, project_id, crud_instance_id,
                    database_id, backup_id, expire_time, version_time);
 
-      std::cout << "\nRunning spanner_get_backup sample" << std::endl;
+      SampleBanner("spanner_get_backup");
       GetBackup(database_admin_client, project_id, crud_instance_id, backup_id);
 
-      std::cout << "\nRunning spanner_update_backup sample" << std::endl;
+      SampleBanner("spanner_update_backup");
       expire_time = TimestampAdd(expire_time, absl::Hours(1));
       UpdateBackup(database_admin_client, project_id, crud_instance_id,
                    backup_id, expire_time);
 
-      std::cout << "\nRunning spanner_restore_backup sample" << std::endl;
+      SampleBanner("spanner_restore_backup");
       RestoreDatabase(database_admin_client, project_id, crud_instance_id,
                       restore_database_id, backup_id);
 
-      std::cout << "\nRunning spanner_drop_database sample" << std::endl;
+      SampleBanner("spanner_drop_database");
       DropDatabase(database_admin_client, project_id, crud_instance_id,
                    restore_database_id);
 
-      std::cout << "\nRunning spanner_delete_backup sample" << std::endl;
+      SampleBanner("spanner_delete_backup");
       DeleteBackup(database_admin_client, project_id, crud_instance_id,
                    backup_id);
 
-      std::cout << "\nRunning spanner_cancel_backup_create sample" << std::endl;
+      SampleBanner("spanner_cancel_backup_create");
       CreateBackupAndCancel(database_admin_client, project_id, crud_instance_id,
                             database_id, backup_id, expire_time);
 
-      std::cout << "\nRunning spanner_list_backup_operations sample"
-                << std::endl;
+      SampleBanner("spanner_list_backup_operations");
       ListBackupOperations(database_admin_client, project_id, crud_instance_id,
                            database_id);
 
-      std::cout << "\nRunning spanner_list_backups sample" << std::endl;
+      SampleBanner("spanner_list_backups");
       ListBackups(database_admin_client, project_id, crud_instance_id);
 
-      std::cout << "\nRunning spanner_list_database_operations sample"
-                << std::endl;
+      SampleBanner("spanner_list_database_operations");
       ListDatabaseOperations(database_admin_client, project_id,
                              crud_instance_id);
     }
@@ -3746,19 +3750,16 @@ void RunAllSlowInstanceTests(
       google::cloud::KmsKeyName encryption_key(
           project_id, *location, "spanner-cmek", "spanner-cmek-test-key");
 
-      std::cout << "\nRunning spanner_drop_database sample" << std::endl;
+      SampleBanner("spanner_drop_database");
       DropDatabase(database_admin_client, project_id, crud_instance_id,
                    database_id);
 
-      std::cout
-          << "\nRunning spanner_create_database_with_encryption_key sample"
-          << std::endl;
+      SampleBanner("spanner_create_database_with_encryption_key");
       CreateDatabaseWithEncryptionKey(database_admin_client, project_id,
                                       crud_instance_id, database_id,
                                       encryption_key);
 
-      std::cout << "\nRunning spanner_create_backup_with_encryption_key sample"
-                << std::endl;
+      SampleBanner("spanner_create_backup_with_encryption_key");
       auto now = DatabaseNow(
           MakeSampleClient(project_id, crud_instance_id, database_id));
       auto expire_time = TimestampAdd(now, absl::Hours(7));
@@ -3767,34 +3768,31 @@ void RunAllSlowInstanceTests(
                                     crud_instance_id, database_id, backup_id,
                                     expire_time, version_time, encryption_key);
 
-      std::cout << "\nRunning spanner_restore_backup_with_encryption_key sample"
-                << std::endl;
+      SampleBanner("spanner_restore_backup_with_encryption_key");
       RestoreDatabaseWithEncryptionKey(database_admin_client, project_id,
                                        crud_instance_id, restore_database_id,
                                        backup_id, encryption_key);
 
-      std::cout << "\nRunning spanner_drop_database sample" << std::endl;
+      SampleBanner("spanner_drop_database");
       DropDatabase(database_admin_client, project_id, crud_instance_id,
                    restore_database_id);
 
-      std::cout << "\nRunning spanner_delete_backup sample" << std::endl;
+      SampleBanner("spanner_delete_backup");
       DeleteBackup(database_admin_client, project_id, crud_instance_id,
                    backup_id);
     }
   }
 
-  std::cout << "\nRunning delete-instance sample" << std::endl;
+  SampleBanner("delete-instance");
   DeleteInstance(instance_admin_client, project_id, crud_instance_id);
 
   if (!emulator) {
-    std::cout
-        << "\nRunning spanner_create_instance_with_processing_units sample"
-        << std::endl;
+    SampleBanner("spanner_create_instance_with_processing_units");
     CreateInstanceWithProcessingUnits(instance_admin_client, project_id,
                                       crud_instance_id,
                                       "Test Low-Cost Instance", config);
 
-    std::cout << "\nRunning delete-instance sample" << std::endl;
+    SampleBanner("delete-instance");
     DeleteInstance(instance_admin_client, project_id, crud_instance_id);
   }
 }
@@ -3841,21 +3839,21 @@ void RunAll(bool emulator) {
                       std::chrono::seconds(1), std::chrono::minutes(1), 2.0)
                       .clone())));
 
-  std::cout << "\nRunning get-instance sample" << std::endl;
+  SampleBanner("get-instance");
   GetInstance(instance_admin_client, project_id, instance_id);
 
-  std::cout << "\nRunning get-instance-config sample" << std::endl;
+  SampleBanner("get-instance-config");
   GetInstanceConfig(instance_admin_client, project_id,
                     emulator ? "emulator-config" : "regional-us-central1");
 
-  std::cout << "\nRunning list-instance-configs sample" << std::endl;
+  SampleBanner("list-instance-configs");
   ListInstanceConfigs(instance_admin_client, project_id);
 
-  std::cout << "\nRunning list-instances sample" << std::endl;
+  SampleBanner("list-instances");
   ListInstances(instance_admin_client, project_id);
 
   if (!emulator) {
-    std::cout << "\nRunning (instance) get-iam-policy sample" << std::endl;
+    SampleBanner("instance-get-iam-policy");
     InstanceGetIamPolicy(instance_admin_client, project_id, instance_id);
   }
 
@@ -3891,24 +3889,21 @@ void RunAll(bool emulator) {
                           emulator);
 
   if (!emulator) {
-    std::cout << "\nRunning (instance) test-iam-permissions sample"
-              << std::endl;
+    SampleBanner("instance-test-iam-permissions");
     InstanceTestIamPermissions(instance_admin_client, project_id, instance_id);
   }
 
   std::cout << "Running samples in database " << database_id << std::endl;
 
-  std::cout << "\nRunning spanner_create_database sample" << std::endl;
+  SampleBanner("spanner_create_database");
   CreateDatabase(database_admin_client, project_id, instance_id, database_id);
 
   // TODO(#5479): Awaiting emulator support for version_retention_period.
   if (!emulator) {
-    std::cout << "\nRunning spanner_drop_database sample" << std::endl;
+    SampleBanner("spanner_drop_database");
     DropDatabase(database_admin_client, project_id, instance_id, database_id);
 
-    std::cout << "\nRunning "
-              << "spanner_create_database_with_version_retention_period sample"
-              << std::endl;
+    SampleBanner("spanner_create_database_with_version_retention_period");
     CreateDatabaseWithVersionRetentionPeriod(database_admin_client, project_id,
                                              instance_id, database_id);
   }
@@ -3924,349 +3919,317 @@ void RunAll(bool emulator) {
     google::cloud::KmsKeyName encryption_key(
         project_id, *location, "spanner-cmek", "spanner-cmek-test-key");
 
-    std::cout << "\nRunning spanner_drop_database sample" << std::endl;
+    SampleBanner("spanner_drop_database");
     DropDatabase(database_admin_client, project_id, instance_id, database_id);
 
-    std::cout << "\nRunning spanner_create_database_with_encryption_key sample"
-              << std::endl;
+    SampleBanner("spanner_create_database_with_encryption_key");
     CreateDatabaseWithEncryptionKey(database_admin_client, project_id,
                                     instance_id, database_id, encryption_key);
   }
 
-  std::cout << "\nRunning spanner_create_table_with_datatypes sample"
-            << std::endl;
+  SampleBanner("spanner_create_table_with_datatypes");
   CreateTableWithDatatypes(database_admin_client, project_id, instance_id,
                            database_id);
 
-  std::cout << "\nRunning spanner_create_table_with_timestamp_column sample"
-            << std::endl;
+  SampleBanner("spanner_create_table_with_timestamp_column");
   CreateTableWithTimestamp(database_admin_client, project_id, instance_id,
                            database_id);
 
-  std::cout << "\nRunning spanner_create_index sample" << std::endl;
+  SampleBanner("spanner_create_index");
   AddIndex(database_admin_client, project_id, instance_id, database_id);
 
-  std::cout << "\nRunning spanner get-database sample" << std::endl;
+  SampleBanner("get-database");
   GetDatabase(database_admin_client, project_id, instance_id, database_id);
 
-  std::cout << "\nRunning spanner get-database-ddl sample" << std::endl;
+  SampleBanner("spanner_get_database_ddl");
   GetDatabaseDdl(database_admin_client, project_id, instance_id, database_id);
 
-  std::cout << "\nRunning list-databases sample" << std::endl;
+  SampleBanner("list-databases");
   ListDatabases(database_admin_client, project_id, instance_id);
 
-  std::cout << "\nRunning spanner_add_column sample" << std::endl;
+  SampleBanner("spanner_add_column");
   AddColumn(database_admin_client, project_id, instance_id, database_id);
 
-  std::cout << "\nRunning spanner_add_timestamp_column sample" << std::endl;
+  SampleBanner("spanner_add_timestamp_column");
   AddTimestampColumn(database_admin_client, project_id, instance_id,
                      database_id);
 
-  std::cout << "\nRunning spanner_create_storing_index sample" << std::endl;
+  SampleBanner("spanner_create_storing_index");
   AddStoringIndex(database_admin_client, project_id, instance_id, database_id);
 
   if (!emulator) {
-    std::cout << "\nRunning (database) get-iam-policy sample" << std::endl;
+    SampleBanner("database-get-iam-policy");
     DatabaseGetIamPolicy(database_admin_client, project_id, instance_id,
                          database_id);
 
-    std::cout << "\nRunning (database) add-database-reader sample" << std::endl;
+    SampleBanner("add-database-reader-on-database");
     AddDatabaseReaderOnDatabase(database_admin_client, project_id, instance_id,
                                 database_id,
                                 "serviceAccount:" + test_iam_service_account);
 
-    std::cout << "\nRunning (database) test-iam-permissions sample"
-              << std::endl;
+    SampleBanner("database-test-iam-permissions");
     DatabaseTestIamPermissions(database_admin_client, project_id, instance_id,
                                database_id, "spanner.databases.read");
   }
 
   // Call via RunOneCommand() for better code coverage.
-  std::cout << "\nRunning spanner_quickstart sample" << std::endl;
+  SampleBanner("spanner_quickstart");
   RunOneCommand({"", "quickstart", project_id, instance_id, database_id});
 
-  std::cout << "\nRunning spanner_create_client_with_query_options sample"
-            << std::endl;
+  SampleBanner("spanner_create_client_with_query_options");
   RunOneCommand({"", "create-client-with-query-options", project_id,
                  instance_id, database_id});
 
   auto client = MakeSampleClient(project_id, instance_id, database_id);
 
-  std::cout << "\nRunning spanner_insert_data sample" << std::endl;
+  SampleBanner("spanner_insert_data");
   InsertData(client);
 
-  std::cout << "\nRunning spanner_update_data sample" << std::endl;
+  SampleBanner("spanner_update_data");
   UpdateData(client);
 
-  std::cout << "\nRunning spanner_insert_datatypes_data sample" << std::endl;
+  SampleBanner("spanner_insert_datatypes_data");
   InsertDatatypesData(client);
 
-  std::cout << "\nRunning spanner_query_with_array_parameter sample"
-            << std::endl;
+  SampleBanner("spanner_query_with_array_parameter");
   QueryWithArrayParameter(client);
 
-  std::cout << "\nRunning spanner_query_with_bool_parameter sample"
-            << std::endl;
+  SampleBanner("spanner_query_with_bool_parameter");
   QueryWithBoolParameter(client);
 
-  std::cout << "\nRunning spanner_query_with_bytes_parameter sample"
-            << std::endl;
+  SampleBanner("spanner_query_with_bytes_parameter");
   QueryWithBytesParameter(client);
 
-  std::cout << "\nRunning spanner_query_with_date_parameter sample"
-            << std::endl;
+  SampleBanner("spanner_query_with_date_parameter");
   QueryWithDateParameter(client);
 
-  std::cout << "\nRunning spanner_query_with_float_parameter sample"
-            << std::endl;
+  SampleBanner("spanner_query_with_float_parameter");
   QueryWithFloatParameter(client);
 
-  std::cout << "\nRunning spanner_query_with_int_parameter sample" << std::endl;
+  SampleBanner("spanner_query_with_int_parameter");
   QueryWithIntParameter(client);
 
-  std::cout << "\nRunning spanner_query_with_string_parameter sample"
-            << std::endl;
+  SampleBanner("spanner_query_with_string_parameter");
   QueryWithStringParameter(client);
 
-  std::cout << "\nRunning spanner_query_with_timestamp_parameter sample"
-            << std::endl;
+  SampleBanner("spanner_query_with_timestamp_parameter");
   QueryWithTimestampParameter(client, DatabaseNow(client));
 
-  std::cout << "\nRunning spanner_insert_data_with_timestamp_column sample"
-            << std::endl;
+  SampleBanner("spanner_insert_data_with_timestamp_column");
   InsertDataWithTimestamp(client);
 
-  std::cout << "\nRunning spanner_update_data_with_timestamp_column sample"
-            << std::endl;
+  SampleBanner("spanner_update_data_with_timestamp_column");
   UpdateDataWithTimestamp(client);
 
-  std::cout << "\nRunning spanner_query_data_with_timestamp_column sample"
-            << std::endl;
+  SampleBanner("spanner_query_data_with_timestamp_column");
   QueryDataWithTimestamp(client);
 
   // TODO(#6873): Remove this check when the emulator supports JSON.
   if (!emulator) {
-    std::cout << "\nRunning spanner_add_json_column sample" << std::endl;
+    SampleBanner("spanner_add_json_column");
     AddJsonColumn(database_admin_client, project_id, instance_id, database_id);
 
-    std::cout << "\nRunning spanner_update_data_with_json_column sample"
-              << std::endl;
+    SampleBanner("spanner_update_data_with_json_column");
     UpdateDataWithJson(client);
 
-    std::cout << "\nRunning spanner_query_with_json_parameter sample"
-              << std::endl;
+    SampleBanner("spanner_query_with_json_parameter");
     QueryWithJsonParameter(client);
   }
 
   // TODO(#5024): Remove this check when the emulator supports NUMERIC.
   if (!emulator) {
-    std::cout << "\nRunning spanner_add_numeric_column sample" << std::endl;
+    SampleBanner("spanner_add_numeric_column");
     AddNumericColumn(database_admin_client, project_id, instance_id,
                      database_id);
 
-    std::cout << "\nRunning spanner_update_data_with_numeric_column sample"
-              << std::endl;
+    SampleBanner("spanner_update_data_with_numeric_column");
     UpdateDataWithNumeric(client);
 
-    std::cout << "\nRunning spanner_query_with_numeric_parameter sample"
-              << std::endl;
+    SampleBanner("spanner_query_with_numeric_parameter");
     QueryWithNumericParameter(client);
   }
 
-  std::cout << "\nRunning spanner_read_only_transaction sample" << std::endl;
+  SampleBanner("spanner_read_only_transaction");
   ReadOnlyTransaction(client);
 
-  std::cout << "\nRunning spanner_set_transaction_tag sample" << std::endl;
+  SampleBanner("spanner_set_transaction_tag");
   SetTransactionTag(client);
 
-  std::cout << "\nRunning spanner_stale_data sample" << std::endl;
+  SampleBanner("spanner_stale_data");
   ReadStaleData(client);
 
-  std::cout << "\nRunning spanner_set_request_tag sample" << std::endl;
+  SampleBanner("spanner_set_request_tag");
   SetRequestTag(client);
 
   if (!emulator) {
-    std::cout << "\nRunning spanner_batch_client sample" << std::endl;
+    SampleBanner("spanner_batch_client");
     UsePartitionQuery(client);
   }
 
-  std::cout << "\nRunning spanner_read_data_with_index sample" << std::endl;
+  SampleBanner("spanner_read_data_with_index");
   ReadDataWithIndex(client);
 
-  std::cout << "\nRunning spanner_query_data_with_new_column sample"
-            << std::endl;
+  SampleBanner("spanner_query_data_with_new_column");
   QueryNewColumn(client);
 
-  std::cout << "\nRunning spanner_profile_query sample" << std::endl;
+  SampleBanner("spanner_profile_query");
   ProfileQuery(client);
 
-  std::cout << "\nRunning spanner_query_data_with_index sample" << std::endl;
+  SampleBanner("spanner_query_data_with_index");
   QueryUsingIndex(client);
 
-  std::cout << "\nRunning spanner_query_with_query_options sample" << std::endl;
+  SampleBanner("spanner_query_with_query_options");
   QueryWithQueryOptions(client);
 
-  std::cout << "\nRunning spanner_read_data_with_storing_index sample"
-            << std::endl;
+  SampleBanner("spanner_read_data_with_storing_index");
   ReadDataWithStoringIndex(client);
 
-  std::cout << "\nRunning spanner_read_write_transaction sample" << std::endl;
+  SampleBanner("spanner_read_write_transaction");
   ReadWriteTransaction(client);
 
-  std::cout << "\nRunning spanner_get_commit_stats sample" << std::endl;
+  SampleBanner("spanner_get_commit_stats");
   GetCommitStatistics(client);
 
-  std::cout << "\nRunning spanner_dml_standard_insert sample" << std::endl;
+  SampleBanner("spanner_dml_standard_insert");
   DmlStandardInsert(client);
 
-  std::cout << "\nRunning spanner_dml_standard_update sample" << std::endl;
+  SampleBanner("spanner_dml_standard_update");
   DmlStandardUpdate(client);
 
-  std::cout << "\nRunning commit-with-policies sample" << std::endl;
+  SampleBanner("commit-with-policies");
   CommitWithPolicies(client);
 
-  std::cout << "\nRunning spanner_dml_standard_update_with_timestamp sample"
-            << std::endl;
+  SampleBanner("spanner_dml_standard_update_with_timestamp");
   DmlStandardUpdateWithTimestamp(client);
 
-  std::cout << "\nRunning profile_spanner_dml_standard_update sample"
-            << std::endl;
+  SampleBanner("profile_spanner_dml_standard_update");
   ProfileDmlStandardUpdate(client);
 
-  std::cout << "\nRunning spanner_dml_write_then_read sample" << std::endl;
+  SampleBanner("spanner_dml_write_then_read");
   DmlWriteThenRead(client);
 
   if (!emulator) {
-    std::cout << "\nRunning spanner_dml_batch_update sample" << std::endl;
+    SampleBanner("spanner_dml_batch_update");
     DmlBatchUpdate(client);
   }
 
-  std::cout << "\nRunning spanner_write_data_for_struct_queries sample"
-            << std::endl;
+  SampleBanner("spanner_write_data_for_struct_queries");
   WriteDataForStructQueries(client);
 
-  std::cout << "\nRunning spanner_query_data sample" << std::endl;
+  SampleBanner("spanner_query_data");
   QueryData(client);
 
-  std::cout << "\nRunning spanner_dml_getting_started_insert sample"
-            << std::endl;
+  SampleBanner("spanner_dml_getting_started_insert");
   DmlGettingStartedInsert(client);
 
-  std::cout << "\nRunning spanner_dml_getting_started_update sample"
-            << std::endl;
+  SampleBanner("spanner_dml_getting_started_update");
   DmlGettingStartedUpdate(client);
 
-  std::cout << "\nRunning spanner_query_with_parameter sample" << std::endl;
+  SampleBanner("spanner_query_with_parameter");
   QueryWithParameter(client);
 
-  std::cout << "\nRunning spanner_read_data sample" << std::endl;
+  SampleBanner("spanner_read_data");
   ReadData(client);
 
-  std::cout << "\nRunning spanner_query_data_select_star sample" << std::endl;
+  SampleBanner("spanner_query_data_select_star");
   QueryDataSelectStar(client);
 
-  std::cout << "\nRunning spanner_query_data_with_struct sample" << std::endl;
+  SampleBanner("spanner_query_data_with_struct");
   QueryDataWithStruct(client);
 
-  std::cout << "\nRunning spanner_query_data_with_array_of_struct sample"
-            << std::endl;
+  SampleBanner("spanner_query_data_with_array_of_struct");
   QueryDataWithArrayOfStruct(client);
 
-  std::cout << "\nRunning spanner_field_access_on_struct_parameters sample"
-            << std::endl;
+  SampleBanner("spanner_field_access_on_struct_parameters");
   FieldAccessOnStructParameters(client);
 
-  std::cout << "\nRunning spanner_field_access_on_nested_struct sample"
-            << std::endl;
+  SampleBanner("spanner_field_access_on_nested_struct");
   FieldAccessOnNestedStruct(client);
 
   if (!emulator) {
-    std::cout << "\nRunning spanner_partition_read sample" << std::endl;
+    SampleBanner("spanner_partition_read");
     PartitionRead(client);
 
-    std::cout << "\nRunning spanner_partition_query sample" << std::endl;
+    SampleBanner("spanner_partition_query");
     PartitionQuery(client);
   }
 
-  std::cout << "\nRunning example-status-or sample" << std::endl;
+  SampleBanner("example-status-or");
   ExampleStatusOr(client);
 
-  std::cout << "\nRunning get-singular-row sample" << std::endl;
+  SampleBanner("get-singular-row");
   GetSingularRow(client);
 
-  std::cout << "\nRunning stream-of sample" << std::endl;
+  SampleBanner("stream-of");
   StreamOf(client);
 
-  std::cout << "\nRunning custom-retry-policy sample" << std::endl;
+  SampleBanner("custom-retry-policy");
   RunOneCommand(
       {"", "custom-retry-policy", project_id, instance_id, database_id});
 
-  std::cout << "\nRunning custom-instance-admin-policies sample" << std::endl;
+  SampleBanner("custom-instance-admin-policies");
   RunOneCommand({"", "custom-instance-admin-policies", project_id});
 
-  std::cout << "\nRunning custom-database-admin-policies sample" << std::endl;
+  SampleBanner("custom-database-admin-policies");
   RunOneCommand(
       {"", "custom-database-admin-policies", project_id, instance_id});
 
   if (!emulator) {
-    std::cout << "\nRunning spanner_dml_partitioned_update sample" << std::endl;
+    SampleBanner("spanner_dml_partitioned_update");
     DmlPartitionedUpdate(client);
 
-    std::cout << "\nRunning spanner_dml_partitioned_delete sample" << std::endl;
+    SampleBanner("spanner_dml_partitioned_delete");
     DmlPartitionedDelete(client);
   }
 
-  std::cout << "\nRunning spanner_dml_structs sample" << std::endl;
+  SampleBanner("spanner_dml_structs");
   DmlStructs(client);
 
-  std::cout << "\nRunning spanner_dml_standard_delete sample" << std::endl;
+  SampleBanner("spanner_dml_standard_delete");
   DmlStandardDelete(client);
 
-  std::cout << "\nRunning spanner_delete_data sample" << std::endl;
+  SampleBanner("spanner_delete_data");
   DeleteData(client);
 
   std::cout << "\nDeleting all data to run the mutation examples" << std::endl;
   DeleteAll(client);
 
-  std::cout << "\nRunning the insert-mutation-builder example" << std::endl;
+  SampleBanner("insert-mutation-builder");
   InsertMutationBuilder(client);
 
-  std::cout << "\nRunning the make-insert-mutation example" << std::endl;
+  SampleBanner("make-insert-mutation");
   MakeInsertMutation(client);
 
-  std::cout << "\nRunning the update-mutation-builder example" << std::endl;
+  SampleBanner("update-mutation-builder");
   UpdateMutationBuilder(client);
 
-  std::cout << "\nRunning the make-update-mutation example" << std::endl;
+  SampleBanner("make-update-mutation");
   MakeUpdateMutation(client);
 
-  std::cout << "\nRunning the insert-or-update-mutation-builder example"
-            << std::endl;
+  SampleBanner("insert-or-update-mutation-builder");
   InsertOrUpdateMutationBuilder(client);
 
-  std::cout << "\nRunning the make-insert-or-update-mutation example"
-            << std::endl;
+  SampleBanner("make-insert-or-update-mutation");
   MakeInsertOrUpdateMutation(client);
 
-  std::cout << "\nRunning the replace-mutation-builder example" << std::endl;
+  SampleBanner("replace-mutation-builder");
   ReplaceMutationBuilder(client);
 
-  std::cout << "\nRunning the make-replace-mutation example" << std::endl;
+  SampleBanner("make-replace-mutation");
   MakeReplaceMutation(client);
 
-  std::cout << "\nRunning the delete-mutation-builder example" << std::endl;
+  SampleBanner("delete-mutation-builder");
   DeleteMutationBuilder(client);
 
-  std::cout << "\nRunning the make-delete-mutation example" << std::endl;
+  SampleBanner("make-delete-mutation");
   MakeDeleteMutation(client);
 
   if (!emulator) {
-    std::cout << "\nRunning spanner_query_information_schema_database_options"
-              << " sample" << std::endl;
+    SampleBanner("spanner_query_information_schema_database_options");
     QueryInformationSchemaDatabaseOptions(client);
   }
 
-  std::cout << "\nRunning spanner_drop_database sample" << std::endl;
+  SampleBanner("spanner_drop_database");
   DeleteAll(client);
   DropDatabase(database_admin_client, project_id, instance_id, database_id);
 
@@ -4290,19 +4253,17 @@ void RunAll(bool emulator) {
                                instance_id);
     }
 
-    std::cout << "\nRunning spanner_create_database_with_default_leader sample"
-              << std::endl;
+    SampleBanner("spanner_create_database_with_default_leader");
     CreateDatabaseWithDefaultLeader(database_admin_client, project_id,
                                     instance_id, database_id,
                                     leader_options[1]);
 
-    std::cout << "\nRunning spanner_update_database_with_default_leader sample"
-              << std::endl;
+    SampleBanner("spanner_update_database_with_default_leader");
     UpdateDatabaseWithDefaultLeader(database_admin_client, project_id,
                                     instance_id, database_id,
                                     leader_options[0]);
 
-    std::cout << "\nRunning spanner_drop_database sample" << std::endl;
+    SampleBanner("spanner_drop_database");
     DropDatabase(database_admin_client, project_id, instance_id, database_id);
   }
 }
