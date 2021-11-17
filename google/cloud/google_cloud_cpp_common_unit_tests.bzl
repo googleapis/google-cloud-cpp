@@ -40,6 +40,7 @@ google_cloud_cpp_common_unit_tests = [
     "internal/parse_rfc3339_test.cc",
     "internal/random_test.cc",
     "internal/retry_policy_test.cc",
+    "internal/status_payload_keys_test.cc",
     "internal/strerror_test.cc",
     "internal/throw_delegate_test.cc",
     "internal/tuple_test.cc",
