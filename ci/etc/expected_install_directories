@@ -26,6 +26,10 @@
 ./include/google/cloud/spanner
 ./include/google/cloud/spanner/admin
 ./include/google/cloud/spanner/admin/internal
+./include/google/cloud/tasks
+./include/google/cloud/tasks/internal
+./include/google/cloud/tasks/mocks
+./include/google/cloud/tasks/v2
 ./include/google/iam
 ./include/google/iam/admin
 ./include/google/iam/admin/v1
@@ -45,3 +49,4 @@
 ./lib64/cmake/google_cloud_cpp_iam
 ./lib64/cmake/google_cloud_cpp_logging
 ./lib64/cmake/google_cloud_cpp_pubsublite
+./lib64/cmake/google_cloud_cpp_tasks

@@ -1,0 +1,4 @@
+@com_google_googleapis//google/cloud/tasks/v2:task.proto
+@com_google_googleapis//google/cloud/tasks/v2:target.proto
+@com_google_googleapis//google/cloud/tasks/v2:queue.proto
+@com_google_googleapis//google/cloud/tasks/v2:cloudtasks.proto

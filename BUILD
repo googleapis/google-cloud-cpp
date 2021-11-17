@@ -161,3 +161,17 @@ cc_library(
         "//google/cloud/bigquery:google_cloud_cpp_bigquery_mocks",
     ],
 )
+
+cc_library(
+    name = "experimental-tasks",
+    deps = [
+        "//google/cloud/tasks:google_cloud_cpp_tasks",
+    ],
+)
+
+cc_library(
+    name = "experimental-tasks_mocks",
+    deps = [
+        "//google/cloud/tasks:google_cloud_cpp_tasks_mocks",
+    ],
+)
