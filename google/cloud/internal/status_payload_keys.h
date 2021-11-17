@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_PAYLOAD_KEYS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_PAYLOAD_KEYS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STATUS_PAYLOAD_KEYS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STATUS_PAYLOAD_KEYS_H
 
 #include "google/cloud/version.h"
 #include <string>
@@ -25,7 +25,7 @@ namespace internal {
 
 // The key to use when setting/getting a `google::cloud::Status` payload
 // associated with a serialized `google::rpc::Status` protobuf. The value
-// should be a serialized instance of the protobuf.
+// should be serialized with `.SerializeAsString()`.
 extern const char kStatusPayloadGrpcProto[];
 
 }  // namespace internal
@@ -33,4 +33,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_PAYLOAD_KEYS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STATUS_PAYLOAD_KEYS_H
