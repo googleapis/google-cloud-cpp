@@ -68,11 +68,12 @@ absl::optional<std::string> GetPayload(Status const&, std::string const& key);
 
  * This class is typically used to indicate whether or not a function or other
  * operation completed successfully. Success is indicated by an "OK" status
- * (`StatusCode::kOk`), and the `.ok()` method will return true. Any non-OK
- * `Status` is considered an error. Users can inspect the error using the
- * `.code()` and `.message()` member functions, or they can simply stream the
- * `Status` object, and it will print itself in some human readable way (the
- * streamed format may change over time and you should *not* depend on the
+ * (`StatusCode::kOk`), and the `.ok()` method will return true. OK statuses
+ * will have an empty `.message()`, and all OK statuses are equivalent. Any
+ * non-OK `Status` is considered an error. Users can inspect the error using
+ * the `.code()` and `.message()` member functions, or they can simply stream
+ * the `Status` object, and it will print itself in some human readable way
+ * (the streamed format may change over time and you should *not* depend on the
  * specific format of a streamed `Status` object remaining unchanged).
  *
  * This is a regular value type that can be copied, moved, compared for
@@ -82,8 +83,14 @@ class Status {
  public:
   Status() = default;
 
-  explicit Status(StatusCode status_code, std::string message)
-      : code_(status_code), message_(std::move(message)) {}
+  /**
+   * Constructs a Status with the given @p code and @p message.
+   *
+   * Ignores @p message if @p code is `StatusCode::kOk`.
+   */
+  explicit Status(StatusCode code, std::string message)
+      : code_(code),
+        message_(code_ == StatusCode::kOk ? "" : std::move(message)) {}
 
   bool ok() const { return code_ == StatusCode::kOk; }
   StatusCode code() const { return code_; }
