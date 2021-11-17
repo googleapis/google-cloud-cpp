@@ -70,6 +70,10 @@ class BigtableInstanceAdminConnectionIdempotencyPolicy {
   virtual google::cloud::internal::Idempotency UpdateCluster(
       google::bigtable::admin::v2::Cluster const& request) = 0;
 
+  virtual google::cloud::internal::Idempotency PartialUpdateCluster(
+      google::bigtable::admin::v2::PartialUpdateClusterRequest const&
+          request) = 0;
+
   virtual google::cloud::internal::Idempotency DeleteCluster(
       google::bigtable::admin::v2::DeleteClusterRequest const& request) = 0;
 

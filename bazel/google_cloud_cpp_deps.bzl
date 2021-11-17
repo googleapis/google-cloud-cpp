@@ -74,10 +74,10 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_google_googleapis",
             urls = [
-                "https://github.com/googleapis/googleapis/archive/53432afb877cb3c1920f73e6621daa8c24f86522.tar.gz",
+                "https://github.com/googleapis/googleapis/archive/55726d62556966c095a096aed1ffda5da231f36d.tar.gz",
             ],
-            strip_prefix = "googleapis-53432afb877cb3c1920f73e6621daa8c24f86522",
-            sha256 = "485631b0f2f54e344096263980f1ce8f357c72403da080a552df317eeda1ea7b",
+            strip_prefix = "googleapis-55726d62556966c095a096aed1ffda5da231f36d",
+            sha256 = "4bd3ebb065e1908ea96b7abfec7026512ca7d220ad3228d660a7e570a9744fd8",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
             # Scaffolding for patching googleapis after download. For example:
             #   patches = ["googleapis.patch"]

@@ -102,6 +102,14 @@ BigtableInstanceAdminConnection::UpdateCluster(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::bigtable::admin::v2::Cluster>>
+BigtableInstanceAdminConnection::PartialUpdateCluster(
+    google::bigtable::admin::v2::PartialUpdateClusterRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 Status BigtableInstanceAdminConnection::DeleteCluster(
     google::bigtable::admin::v2::DeleteClusterRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
@@ -379,6 +387,37 @@ class BigtableInstanceAdminConnectionImpl
             google::bigtable::admin::v2::Cluster>,
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         idempotency_policy_->UpdateCluster(request),
+        polling_policy_prototype_->clone(), __func__);
+  }
+
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
+      google::bigtable::admin::v2::PartialUpdateClusterRequest const& request)
+      override {
+    auto stub = stub_;
+    return google::cloud::internal::AsyncLongRunningOperation<
+        google::bigtable::admin::v2::Cluster>(
+        background_->cq(), request,
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::bigtable::admin::v2::PartialUpdateClusterRequest const&
+                   request) {
+          return stub->AsyncPartialUpdateCluster(cq, std::move(context),
+                                                 request);
+        },
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::GetOperationRequest const& request) {
+          return stub->AsyncGetOperation(cq, std::move(context), request);
+        },
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::CancelOperationRequest const& request) {
+          return stub->AsyncCancelOperation(cq, std::move(context), request);
+        },
+        &google::cloud::internal::ExtractLongRunningResultResponse<
+            google::bigtable::admin::v2::Cluster>,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        idempotency_policy_->PartialUpdateCluster(request),
         polling_policy_prototype_->clone(), __func__);
   }
 

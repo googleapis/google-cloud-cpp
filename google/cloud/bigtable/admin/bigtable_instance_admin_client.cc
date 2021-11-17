@@ -101,6 +101,16 @@ BigtableInstanceAdminClient::ListClusters(std::string const& parent) {
   return connection_->ListClusters(request);
 }
 
+future<StatusOr<google::bigtable::admin::v2::Cluster>>
+BigtableInstanceAdminClient::PartialUpdateCluster(
+    google::bigtable::admin::v2::Cluster const& cluster,
+    google::protobuf::FieldMask const& update_mask) {
+  google::bigtable::admin::v2::PartialUpdateClusterRequest request;
+  *request.mutable_cluster() = cluster;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->PartialUpdateCluster(request);
+}
+
 Status BigtableInstanceAdminClient::DeleteCluster(std::string const& name) {
   google::bigtable::admin::v2::DeleteClusterRequest request;
   request.set_name(name);
@@ -254,6 +264,12 @@ future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminClient::UpdateCluster(
     google::bigtable::admin::v2::Cluster const& request) {
   return connection_->UpdateCluster(request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::Cluster>>
+BigtableInstanceAdminClient::PartialUpdateCluster(
+    google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
+  return connection_->PartialUpdateCluster(request);
 }
 
 Status BigtableInstanceAdminClient::DeleteCluster(
