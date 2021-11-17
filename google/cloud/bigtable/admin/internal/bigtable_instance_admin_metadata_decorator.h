@@ -85,6 +85,12 @@ class BigtableInstanceAdminMetadata : public BigtableInstanceAdminStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::bigtable::admin::v2::Cluster const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncPartialUpdateCluster(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::bigtable::admin::v2::PartialUpdateClusterRequest const& request)
+      override;
+
   Status DeleteCluster(grpc::ClientContext& context,
                        google::bigtable::admin::v2::DeleteClusterRequest const&
                            request) override;

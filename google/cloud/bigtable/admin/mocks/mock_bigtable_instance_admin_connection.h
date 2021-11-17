@@ -80,6 +80,12 @@ class MockBigtableInstanceAdminConnection
               (override));
 
   MOCK_METHOD(
+      future<StatusOr<google::bigtable::admin::v2::Cluster>>,
+      PartialUpdateCluster,
+      (google::bigtable::admin::v2::PartialUpdateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       Status, DeleteCluster,
       (google::bigtable::admin::v2::DeleteClusterRequest const& request),
       (override));

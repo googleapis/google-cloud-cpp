@@ -116,6 +116,15 @@ BigtableInstanceAdminMetadata::AsyncUpdateCluster(
   return child_->AsyncUpdateCluster(cq, std::move(context), request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminMetadata::AsyncPartialUpdateCluster(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
+  SetMetadata(*context, "cluster.name=" + request.cluster().name());
+  return child_->AsyncPartialUpdateCluster(cq, std::move(context), request);
+}
+
 Status BigtableInstanceAdminMetadata::DeleteCluster(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::DeleteClusterRequest const& request) {

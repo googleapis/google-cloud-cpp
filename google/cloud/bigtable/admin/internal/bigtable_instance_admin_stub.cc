@@ -158,6 +158,21 @@ DefaultBigtableInstanceAdminStub::AsyncUpdateCluster(
       request, std::move(context));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultBigtableInstanceAdminStub::AsyncPartialUpdateCluster(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::bigtable::admin::v2::PartialUpdateClusterRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncPartialUpdateCluster(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 Status DefaultBigtableInstanceAdminStub::DeleteCluster(
     grpc::ClientContext& client_context,
     google::bigtable::admin::v2::DeleteClusterRequest const& request) {

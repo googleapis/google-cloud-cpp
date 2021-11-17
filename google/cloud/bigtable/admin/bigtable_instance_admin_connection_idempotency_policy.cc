@@ -94,6 +94,12 @@ class DefaultBigtableInstanceAdminConnectionIdempotencyPolicy
     return Idempotency::kIdempotent;
   }
 
+  Idempotency PartialUpdateCluster(
+      google::bigtable::admin::v2::PartialUpdateClusterRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency DeleteCluster(
       google::bigtable::admin::v2::DeleteClusterRequest const&) override {
     return Idempotency::kNonIdempotent;

@@ -160,6 +160,26 @@ BigtableInstanceAdminAuth::AsyncUpdateCluster(
       });
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminAuth::AsyncPartialUpdateCluster(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncPartialUpdateCluster(cq, *std::move(context),
+                                                request);
+      });
+}
+
 Status BigtableInstanceAdminAuth::DeleteCluster(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::DeleteClusterRequest const& request) {

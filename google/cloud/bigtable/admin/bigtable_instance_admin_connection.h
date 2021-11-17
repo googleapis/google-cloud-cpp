@@ -86,6 +86,10 @@ class BigtableInstanceAdminConnection {
   virtual future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
       google::bigtable::admin::v2::Cluster const& request);
 
+  virtual future<StatusOr<google::bigtable::admin::v2::Cluster>>
+  PartialUpdateCluster(
+      google::bigtable::admin::v2::PartialUpdateClusterRequest const& request);
+
   virtual Status DeleteCluster(
       google::bigtable::admin::v2::DeleteClusterRequest const& request);
 
