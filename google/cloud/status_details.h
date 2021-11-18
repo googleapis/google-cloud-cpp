@@ -47,7 +47,7 @@ absl::optional<T> GetStatusDetails(google::rpc::Status const&);
  * #include <google/rpc/error_details.pb.h>
  * ...
  *   google::cloud::Status status = ...
- *   absl::optional<google::rpc::ErrorInfo> details =
+ *   absl::optional<google::rpc::ErrorInfo> ei =
  *       google::cloud::GetStatusDetails<google::rpc::ErrorInfo>(status);
  * @endcode
  *
