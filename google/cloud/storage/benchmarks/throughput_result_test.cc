@@ -109,7 +109,7 @@ TEST(ThroughputResult, QuoteCsv) {
   result.status = Status{StatusCode::kInternal, R"(message, with comma)"};
   line = ToString(result);
   ASSERT_STATUS_OK(line);
-  EXPECT_THAT(*line, HasQuotedStatus(R"("message, with comma)"));
+  EXPECT_THAT(*line, HasQuotedStatus(R"(message, with comma)"));
 
   result.status = Status{StatusCode::kInternal, "message\nwith newline"};
   line = ToString(result);

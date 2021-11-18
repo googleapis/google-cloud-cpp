@@ -16,6 +16,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/expect_exception.h"
 #include <gmock/gmock.h>
+#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -71,6 +72,18 @@ TEST(Status, Basics) {
   EXPECT_NE(s, Status(StatusCode::kUnknown, ""));
   EXPECT_NE(s, Status(StatusCode::kUnknown, "bar"));
   EXPECT_EQ(s, Status(StatusCode::kUnknown, "foo"));
+}
+
+TEST(Status, OperatorOutput) {
+  auto status = Status{};
+  auto ss = std::stringstream{};
+  ss << status;
+  EXPECT_EQ("OK", ss.str());
+
+  ss = std::stringstream{};
+  status = Status{StatusCode::kUnknown, "foo"};
+  ss << status;
+  EXPECT_EQ("UNKNOWN: foo", ss.str());
 }
 
 TEST(Status, PayloadIgnoredWithOk) {
