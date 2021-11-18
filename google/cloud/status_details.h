@@ -71,8 +71,7 @@ absl::optional<T> GetStatusDetails(google::rpc::Status const& proto) {
   for (google::protobuf::Any const& any : proto.details()) {
     if (any.Is<T>()) {
       T details;
-      any.UnpackTo(&details);
-      return details;
+      if (any.UnpackTo(&details)) return details;
     }
   }
   return absl::nullopt;
