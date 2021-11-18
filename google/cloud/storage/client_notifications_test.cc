@@ -127,7 +127,6 @@ TEST_F(NotificationsTest, CreateNotificationTooManyFailures) {
       [](Client& client) {
         return client
             .CreateNotification("test-bucket-name", "test-topic-1",
-                                payload_format::JsonApiV1(),
                                 NotificationMetadata())
             .status();
       },
@@ -141,7 +140,6 @@ TEST_F(NotificationsTest, CreateNotificationPermanentFailure) {
       [](Client& client) {
         return client
             .CreateNotification("test-bucket-name", "test-topic-1",
-                                payload_format::JsonApiV1(),
                                 NotificationMetadata())
             .status();
       },

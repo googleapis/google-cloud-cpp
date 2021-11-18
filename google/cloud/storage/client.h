@@ -3027,6 +3027,44 @@ class Client {
    * @param topic_name the Google Cloud Pub/Sub topic that will receive the
    *     notifications. This requires the full name of the topic, i.e.:
    *     `projects/<PROJECT_ID>/topics/<TOPIC_ID>`.
+   * @param metadata define any optional parameters for the notification, such
+   *     as the list of event types, or any custom attributes.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
+   * @par Example
+   * @snippet storage_notification_samples.cc create notification
+   *
+   * @see https://cloud.google.com/storage/docs/pubsub-notifications for general
+   *     information on Cloud Pub/Sub Notifications for Google Cloud Storage.
+   *
+   * @see https://cloud.google.com/pubsub/ for general information on Google
+   *     Cloud Pub/Sub service.
+   */
+  template <typename... Options>
+  StatusOr<NotificationMetadata> CreateNotification(
+      std::string const& bucket_name, std::string const& topic_name,
+      NotificationMetadata metadata, Options&&... options) {
+    return CreateNotification(bucket_name, topic_name,
+                              payload_format::JsonApiV1(), std::move(metadata),
+                              std::forward<Options>(options)...);
+  }
+
+  /**
+   * Creates a new notification config for a Bucket.
+   *
+   * Cloud Pub/Sub Notifications sends information about changes to objects
+   * in your buckets to Google Cloud Pub/Sub service. You can create multiple
+   * notifications per Bucket, with different topics and filtering options.
+   *
+   * @param bucket_name the name of the bucket.
+   * @param topic_name the Google Cloud Pub/Sub topic that will receive the
+   *     notifications. This requires the full name of the topic, i.e.:
+   *     `projects/<PROJECT_ID>/topics/<TOPIC_ID>`.
    * @param payload_format how will the data be formatted in the notifications,
    *     consider using the helpers in the `payload_format` namespace, or
    *     specify one of the valid formats defined in:

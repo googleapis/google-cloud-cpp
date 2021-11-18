@@ -48,7 +48,6 @@ void CreateNotification(google::cloud::storage::Client client,
      std::string const& topic_name) {
     StatusOr<gcs::NotificationMetadata> notification =
         client.CreateNotification(bucket_name, topic_name,
-                                  gcs::payload_format::JsonApiV1(),
                                   gcs::NotificationMetadata());
 
     if (!notification) {
@@ -151,14 +150,13 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nManually creating a notification [1]" << std::endl;
   auto n1 = client
                 .CreateNotification(
-                    bucket_name, topic_name, gcs::payload_format::JsonApiV1(),
+                    bucket_name, topic_name,
                     gcs::NotificationMetadata().set_object_name_prefix("foo/"))
                 .value();
 
   std::cout << "\nManually creating a notification [2]" << std::endl;
   auto n2 = client
                 .CreateNotification(bucket_name, topic_name,
-                                    gcs::payload_format::JsonApiV1(),
                                     gcs::NotificationMetadata())
                 .value();
 
