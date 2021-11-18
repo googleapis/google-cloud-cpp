@@ -3817,7 +3817,8 @@ void RunAll(bool emulator) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
 
   auto random_instance = google::cloud::spanner_testing::PickRandomInstance(
-      generator, project_id, "NOT name:/instances/test-instance-mr-");
+      generator, project_id,
+      "labels.samples:yes AND NOT name:/instances/test-instance-mr-");
   if (!random_instance) {
     throw std::runtime_error("Cannot find an instance to run the samples: " +
                              random_instance.status().message());
@@ -4237,7 +4238,8 @@ void RunAll(bool emulator) {
   // TODO(#7144): Awaiting emulator support for default_leader.
   if (!emulator) {
     auto random_instance = google::cloud::spanner_testing::PickRandomInstance(
-        generator, project_id, "name:/instances/test-instance-mr-");
+        generator, project_id,
+        "labels.samples:yes AND name:/instances/test-instance-mr-");
     if (!random_instance) {
       throw std::runtime_error(
           "Cannot find an instance to run the multi-region samples: " +

@@ -97,7 +97,8 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
 
   auto instance_id = spanner_testing::PickRandomInstance(
       generator_, ProjectId(),
-      "labels.restore-database-partition:generated-core");
+      "(labels.restore-database-partition:generated-core OR"
+      " labels.restore-database-partition:all)");
   ASSERT_STATUS_OK(instance_id);
   Instance in(ProjectId(), *instance_id);
   Database db(in, spanner_testing::RandomDatabaseName(generator_));
