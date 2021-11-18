@@ -21,7 +21,15 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TEST(GetStatusDetails, Basics) {
+TEST(GetStatusDetails, NoDetails) {
+  auto details = GetStatusDetails<google::rpc::ErrorInfo>(Status{});
+  EXPECT_FALSE(details.has_value());
+  details = GetStatusDetails<google::rpc::ErrorInfo>(
+      Status{StatusCode::kUnknown, "foo"});
+  EXPECT_FALSE(details.has_value());
+}
+
+TEST(GetStatusDetails, DetailsExist) {
   google::rpc::ErrorInfo error_info;
   error_info.set_reason("the reason");
   error_info.set_domain("the domain");

@@ -21,6 +21,7 @@
 #include "absl/types/optional.h"
 #include <google/protobuf/any.pb.h>
 #include <google/rpc/status.pb.h>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -34,9 +35,9 @@ absl::optional<T> GetStatusDetails(google::rpc::Status const&);
 /**
  * Gets the "error details" object of type `T` from the given status.
  *
- * Error details objects are protocol buffers that are sometimes attached to
- * non-OK Status objects to provide more details about the error message. The
- * message types are defined here:
+ * Error details objects are protocol buffers that may be attached to non-OK
+ * Status objects to provide more details about the error. The message types
+ * are defined in this proto:
  * https://github.com/googleapis/googleapis/blob/master/google/rpc/error_details.proto
  *
  * The following shows how to get a `google::rpc::ErrorInfo` message:
@@ -50,10 +51,12 @@ absl::optional<T> GetStatusDetails(google::rpc::Status const&);
  *       google::cloud::GetStatusDetails<google::rpc::ErrorInfo>(status);
  * @endcode
  *
- * @see https://github.com/googleapis/googleapis/blob/master/google/rpc/error_details.proto
+ * @see https://google.aip.dev/193
  */
 template <typename T>
 absl::optional<T> GetStatusDetails(Status const& s) {
+  static_assert(std::is_base_of<google::protobuf::Message, T>::value,
+                "The template parameter T must be a protobuf message");
   auto payload = internal::GetPayload(s, internal::kStatusPayloadGrpcProto);
   if (!payload) return absl::nullopt;
   google::rpc::Status proto;
