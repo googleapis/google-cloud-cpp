@@ -107,7 +107,8 @@ TEST_F(BackupExtraIntegrationTest, CreateBackupWithVersionTime) {
 
   auto instance_id = spanner_testing::PickRandomInstance(
       generator_, ProjectId(),
-      "labels.restore-database-partition:generated-extra");
+      "(labels.restore-database-partition:generated-extra OR"
+      " labels.restore-database-partition:all)");
   ASSERT_THAT(instance_id, IsOk()) << instance_id.status();
   Instance in(ProjectId(), *instance_id);
   Database db(in, spanner_testing::RandomDatabaseName(generator_));
@@ -352,8 +353,9 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
 
   auto instance_id = spanner_testing::PickRandomInstance(
       generator_, ProjectId(),
-      "labels.restore-database-partition:generated-extra"
-      " NOT name:/instances/test-instance-mr-");
+      "(labels.restore-database-partition:generated-extra OR"
+      " labels.restore-database-partition:all)"
+      " AND NOT name:/instances/test-instance-mr-");
   ASSERT_STATUS_OK(instance_id);
   Instance in(ProjectId(), *instance_id);
 
