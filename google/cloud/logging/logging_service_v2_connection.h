@@ -20,8 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_LOGGING_SERVICE_V2_CONNECTION_H
 
 #include "google/cloud/logging/internal/logging_service_v2_stub.h"
+#include "google/cloud/logging/internal/retry_traits.h"
 #include "google/cloud/logging/logging_service_v2_connection_idempotency_policy.h"
-#include "google/cloud/logging/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

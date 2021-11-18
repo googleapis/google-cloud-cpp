@@ -50,9 +50,9 @@ set(google_cloud_cpp_generator_golden_files
     internal/golden_thing_admin_stub.h
     internal/golden_thing_admin_stub_factory.cc
     internal/golden_thing_admin_stub_factory.h
+    internal/retry_traits.h
     mocks/mock_golden_kitchen_sink_connection.h
     mocks/mock_golden_thing_admin_connection.h
-    retry_traits.h
     streaming.cc)
 
 # Export the list of golden files to a .bzl file so we do not need to maintain
@@ -101,11 +101,11 @@ add_library(
     internal/golden_thing_admin_stub.h
     internal/golden_thing_admin_stub_factory.cc
     internal/golden_thing_admin_stub_factory.h
+    internal/retry_traits.h
     mocks/mock_golden_kitchen_sink_connection.h
     mocks/mock_golden_kitchen_sink_stub.h
     mocks/mock_golden_thing_admin_connection.h
     mocks/mock_golden_thing_admin_stub.h
-    retry_traits.h
     streaming.cc)
 
 target_include_directories(

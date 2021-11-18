@@ -80,7 +80,7 @@ add_library(
     admin/internal/bigtable_table_admin_stub.h
     admin/internal/bigtable_table_admin_stub_factory.cc
     admin/internal/bigtable_table_admin_stub_factory.h
-    admin/retry_traits.h
+    admin/internal/retry_traits.h
     admin_client.cc
     admin_client.h
     app_profile_config.cc

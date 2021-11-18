@@ -21,7 +21,7 @@
 
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_connection_idempotency_policy.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_instance_admin_stub.h"
-#include "google/cloud/bigtable/admin/retry_traits.h"
+#include "google/cloud/bigtable/admin/internal/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"

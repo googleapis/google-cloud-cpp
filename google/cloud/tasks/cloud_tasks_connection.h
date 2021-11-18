@@ -21,7 +21,7 @@
 
 #include "google/cloud/tasks/cloud_tasks_connection_idempotency_policy.h"
 #include "google/cloud/tasks/internal/cloud_tasks_stub.h"
-#include "google/cloud/tasks/retry_traits.h"
+#include "google/cloud/tasks/internal/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

@@ -15,25 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RETRY_TRAITS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RETRY_TRAITS_H
 
-#include "google/cloud/status.h"
-#include "google/cloud/version.h"
-
-namespace google {
-namespace cloud {
-namespace bigquery_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-/// Define the gRPC status code semantics for retrying requests.
-struct BigQueryReadRetryTraits {
-  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
-    return status.code() != StatusCode::kDeadlineExceeded &&
-           status.code() != StatusCode::kUnavailable;
-  }
-};
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigquery_internal
-}  // namespace cloud
-}  // namespace google
+#include "google/cloud/bigquery/internal/retry_traits.h"
+#warning "This header is deprecated, it only provided internal symbols."
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RETRY_TRAITS_H

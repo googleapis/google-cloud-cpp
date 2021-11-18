@@ -84,7 +84,7 @@ add_library(
     internal/cloud_tasks_stub.h
     internal/cloud_tasks_stub_factory.cc
     internal/cloud_tasks_stub_factory.h
-    retry_traits.h)
+    internal/retry_traits.h)
 target_include_directories(
     google_cloud_cpp_tasks
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

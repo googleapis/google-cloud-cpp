@@ -21,7 +21,7 @@
 
 #include "google/cloud/pubsublite/admin_connection_idempotency_policy.h"
 #include "google/cloud/pubsublite/internal/admin_stub.h"
-#include "google/cloud/pubsublite/retry_traits.h"
+#include "google/cloud/pubsublite/internal/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"

@@ -255,7 +255,7 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_pair("retry_policy_name", "FrobberServiceRetryPolicy"),
         std::make_pair("retry_traits_name", "FrobberServiceRetryTraits"),
         std::make_pair("retry_traits_header_path",
-                       "google/cloud/frobber/retry_traits.h"),
+                       "google/cloud/frobber/internal/retry_traits.h"),
         std::make_pair("service_endpoint", ""),
         std::make_pair("service_endpoint_env_var",
                        "GOOGLE_CLOUD_CPP_FROBBER_SERVICE_ENDPOINT"),

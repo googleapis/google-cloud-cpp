@@ -37,6 +37,7 @@ google_cloud_cpp_iam_hdrs = [
     "internal/iam_option_defaults.h",
     "internal/iam_stub.h",
     "internal/iam_stub_factory.h",
+    "internal/retry_traits.h",
     "retry_traits.h",
 ]
 

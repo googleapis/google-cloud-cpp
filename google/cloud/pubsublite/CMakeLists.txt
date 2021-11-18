@@ -81,7 +81,7 @@ add_library(
     internal/admin_stub.h
     internal/admin_stub_factory.cc
     internal/admin_stub_factory.h
-    retry_traits.h)
+    internal/retry_traits.h)
 target_include_directories(
     google_cloud_cpp_pubsublite
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,29 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_RETRY_TRAITS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_RETRY_TRAITS_H
+#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_RETRY_TRAITS_H
 
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
+namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Define the gRPC status code semantics for retrying requests.
-struct AdminServiceRetryTraits {
+struct GoldenThingAdminRetryTraits {
   static inline bool IsPermanentFailure(google::cloud::Status const& status) {
     return status.code() != StatusCode::kOk &&
-           status.code() != StatusCode::kInternal &&
+           status.code() != StatusCode::kDeadlineExceeded &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
+
+struct GoldenKitchenSinkRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
            status.code() != StatusCode::kDeadlineExceeded &&
            status.code() != StatusCode::kUnavailable;
   }
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsublite_internal
+}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_RETRY_TRAITS_H
+#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_RETRY_TRAITS_H

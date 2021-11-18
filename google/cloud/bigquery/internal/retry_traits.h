@@ -12,40 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_RETRY_TRAITS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_RETRY_TRAITS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_RETRY_TRAITS_H
 
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace bigtable_admin_internal {
+namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// Define the gRPC status code semantics for retrying requests.
-
-struct BigtableInstanceAdminRetryTraits {
+struct BigQueryReadRetryTraits {
   static inline bool IsPermanentFailure(google::cloud::Status const& status) {
-    return status.code() != StatusCode::kOk &&
-           status.code() != StatusCode::kAborted &&
-           status.code() != StatusCode::kDeadlineExceeded &&
-           status.code() != StatusCode::kUnavailable;
-  }
-};
-
-struct BigtableTableAdminRetryTraits {
-  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
-    return status.code() != StatusCode::kOk &&
-           status.code() != StatusCode::kAborted &&
-           status.code() != StatusCode::kDeadlineExceeded &&
+    return status.code() != StatusCode::kDeadlineExceeded &&
            status.code() != StatusCode::kUnavailable;
   }
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_admin_internal
+}  // namespace bigquery_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_RETRY_TRAITS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_RETRY_TRAITS_H
