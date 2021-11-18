@@ -39,11 +39,11 @@ add_library(
     internal/logging_service_v2_metadata_decorator.h
     internal/logging_service_v2_option_defaults.cc
     internal/logging_service_v2_option_defaults.h
+    internal/logging_service_v2_retry_traits.h
     internal/logging_service_v2_stub.cc
     internal/logging_service_v2_stub.h
     internal/logging_service_v2_stub_factory.cc
     internal/logging_service_v2_stub_factory.h
-    internal/retry_traits.h
     logging_service_v2_client.cc
     logging_service_v2_client.h
     logging_service_v2_connection.cc

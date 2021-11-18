@@ -20,8 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_DATABASE_ADMIN_CONNECTION_H
 
 #include "google/cloud/spanner/admin/database_admin_connection_idempotency_policy.h"
+#include "google/cloud/spanner/admin/internal/database_admin_retry_traits.h"
 #include "google/cloud/spanner/admin/internal/database_admin_stub.h"
-#include "google/cloud/spanner/admin/internal/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"

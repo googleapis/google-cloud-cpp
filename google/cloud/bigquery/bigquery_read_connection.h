@@ -20,8 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_BIGQUERY_READ_CONNECTION_H
 
 #include "google/cloud/bigquery/bigquery_read_connection_idempotency_policy.h"
+#include "google/cloud/bigquery/internal/bigquery_read_retry_traits.h"
 #include "google/cloud/bigquery/internal/bigquery_read_stub.h"
-#include "google/cloud/bigquery/internal/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

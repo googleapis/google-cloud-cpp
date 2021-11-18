@@ -20,8 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_IAM_CREDENTIALS_CONNECTION_H
 
 #include "google/cloud/iam/iam_credentials_connection_idempotency_policy.h"
+#include "google/cloud/iam/internal/iam_credentials_retry_traits.h"
 #include "google/cloud/iam/internal/iam_credentials_stub.h"
-#include "google/cloud/iam/internal/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

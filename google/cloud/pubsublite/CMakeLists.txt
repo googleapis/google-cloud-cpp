@@ -77,11 +77,11 @@ add_library(
     internal/admin_metadata_decorator.h
     internal/admin_option_defaults.cc
     internal/admin_option_defaults.h
+    internal/admin_retry_traits.h
     internal/admin_stub.cc
     internal/admin_stub.h
     internal/admin_stub_factory.cc
-    internal/admin_stub_factory.h
-    internal/retry_traits.h)
+    internal/admin_stub_factory.h)
 target_include_directories(
     google_cloud_cpp_pubsublite
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

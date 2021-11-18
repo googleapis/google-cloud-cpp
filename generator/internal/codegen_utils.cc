@@ -128,6 +128,12 @@ void ProcessArgGenerateAsyncRpc(
   ProcessRepeated("gen_async_rpc", "gen_async_rpcs", command_line_args);
 }
 
+void ProcessArgRetryGrpcStatusCode(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  ProcessRepeated("retry_grpc_status_code", "retryable_grpc_status_codes",
+                  command_line_args);
+}
+
 }  // namespace
 
 std::string CurrentCopyrightYear() {
@@ -219,6 +225,7 @@ ProcessCommandLineArgs(std::string const& parameters) {
   ProcessArgServiceEndpointEnvVar(command_line_args);
   ProcessArgEmulatorEndpointEnvVar(command_line_args);
   ProcessArgGenerateAsyncRpc(command_line_args);
+  ProcessArgRetryGrpcStatusCode(command_line_args);
   return command_line_args;
 }
 

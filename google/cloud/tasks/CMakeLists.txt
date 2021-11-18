@@ -80,11 +80,11 @@ add_library(
     internal/cloud_tasks_metadata_decorator.h
     internal/cloud_tasks_option_defaults.cc
     internal/cloud_tasks_option_defaults.h
+    internal/cloud_tasks_retry_traits.h
     internal/cloud_tasks_stub.cc
     internal/cloud_tasks_stub.h
     internal/cloud_tasks_stub_factory.cc
-    internal/cloud_tasks_stub_factory.h
-    internal/retry_traits.h)
+    internal/cloud_tasks_stub_factory.h)
 target_include_directories(
     google_cloud_cpp_tasks
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

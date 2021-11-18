@@ -30,6 +30,7 @@
 #include "generator/internal/option_defaults_generator.h"
 #include "generator/internal/options_generator.h"
 #include "generator/internal/predicate_utils.h"
+#include "generator/internal/retry_traits_generator.h"
 #include "generator/internal/stub_factory_generator.h"
 #include "generator/internal/stub_generator.h"
 #include <google/longrunning/operations.pb.h>
@@ -321,6 +322,37 @@ std::string FormatProtobufRequestParameters(
   return parameter_comment_string;
 }
 
+void SetRetryStatusCodeExpression(VarsDictionary& vars) {
+  auto iter = vars.find("retryable_grpc_status_codes");
+  if (iter == vars.end()) return;
+  std::string retry_status_code_expression;
+  std::set<std::string> codes = absl::StrSplit(iter->second, ',');
+
+  auto append_status_code = [&](std::string const& status_code) {
+    if (retry_status_code_expression.empty()) {
+      absl::StrAppend(
+          &retry_status_code_expression,
+          absl::StrCat("status.code() != StatusCode::", status_code));
+    } else {
+      absl::StrAppend(
+          &retry_status_code_expression,
+          absl::StrCat(" && status.code() != StatusCode::", status_code));
+    }
+  };
+
+  for (auto const& code : codes) {
+    std::pair<std::string, std::string> service_code =
+        absl::StrSplit(code, '.');
+    if (service_code.second.empty()) {
+      append_status_code(service_code.first);
+    }
+    if (service_code.first == vars["service_name"]) {
+      append_status_code(service_code.second);
+    }
+  }
+  vars["retry_status_code_expression"] = retry_status_code_expression;
+}
+
 }  // namespace
 
 absl::optional<ResourceRoutingInfo> ParseResourceRoutingHeader(
@@ -474,7 +506,8 @@ VarsDictionary CreateServiceVars(
   vars["retry_policy_name"] = absl::StrCat(descriptor.name(), "RetryPolicy");
   vars["retry_traits_name"] = absl::StrCat(descriptor.name(), "RetryTraits");
   vars["retry_traits_header_path"] =
-      absl::StrCat(vars["product_path"], "internal/retry_traits", ".h");
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_retry_traits.h");
   vars["service_endpoint"] =
       descriptor.options().GetExtension(google::api::default_host);
   auto& service_endpoint_env_var = vars["service_endpoint_env_var"];
@@ -498,6 +531,7 @@ VarsDictionary CreateServiceVars(
   vars["stub_factory_header_path"] =
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()), "_stub_factory.h");
+  SetRetryStatusCodeExpression(vars);
   return vars;
 }
 
@@ -548,6 +582,9 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     std::vector<std::pair<std::string, std::string>> const& vars) {
   std::vector<std::unique_ptr<GeneratorInterface>> code_generators;
   VarsDictionary service_vars = CreateServiceVars(*service, vars);
+  code_generators.push_back(absl::make_unique<AuthDecoratorGenerator>(
+      service, service_vars, CreateMethodVars(*service, service_vars),
+      context));
   code_generators.push_back(absl::make_unique<ClientGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
@@ -555,9 +592,6 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<IdempotencyPolicyGenerator>(
-      service, service_vars, CreateMethodVars(*service, service_vars),
-      context));
-  code_generators.push_back(absl::make_unique<AuthDecoratorGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<LoggingDecoratorGenerator>(
@@ -575,6 +609,11 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   code_generators.push_back(absl::make_unique<OptionsGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
+  if (service_vars.find("retry_status_code_expression") != service_vars.end()) {
+    code_generators.push_back(absl::make_unique<RetryTraitsGenerator>(
+        service, service_vars, CreateMethodVars(*service, service_vars),
+        context));
+  }
   code_generators.push_back(absl::make_unique<StubGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));

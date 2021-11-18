@@ -15,7 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_RETRY_TRAITS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_RETRY_TRAITS_H
 
-#include "google/cloud/iam/internal/retry_traits.h"
+#include "google/cloud/iam/internal/iam_credentials_retry_traits.h"
+#include "google/cloud/iam/internal/iam_retry_traits.h"
 #warning "This header is deprecated, it only provided internal symbols"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_RETRY_TRAITS_H

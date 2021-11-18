@@ -54,6 +54,7 @@ add_library(
     admin/internal/database_admin_metadata_decorator.h
     admin/internal/database_admin_option_defaults.cc
     admin/internal/database_admin_option_defaults.h
+    admin/internal/database_admin_retry_traits.h
     admin/internal/database_admin_stub.cc
     admin/internal/database_admin_stub.h
     admin/internal/database_admin_stub_factory.cc
@@ -66,11 +67,11 @@ add_library(
     admin/internal/instance_admin_metadata_decorator.h
     admin/internal/instance_admin_option_defaults.cc
     admin/internal/instance_admin_option_defaults.h
+    admin/internal/instance_admin_retry_traits.h
     admin/internal/instance_admin_stub.cc
     admin/internal/instance_admin_stub.h
     admin/internal/instance_admin_stub_factory.cc
     admin/internal/instance_admin_stub_factory.h
-    admin/internal/retry_traits.h
     admin/retry_traits.h
     backoff_policy.h
     backup.cc

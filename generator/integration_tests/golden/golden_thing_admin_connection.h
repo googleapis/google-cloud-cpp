@@ -20,8 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_GOLDEN_THING_ADMIN_CONNECTION_H
 
 #include "generator/integration_tests/golden/golden_thing_admin_connection_idempotency_policy.h"
+#include "generator/integration_tests/golden/internal/golden_thing_admin_retry_traits.h"
 #include "generator/integration_tests/golden/internal/golden_thing_admin_stub.h"
-#include "generator/integration_tests/golden/internal/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"

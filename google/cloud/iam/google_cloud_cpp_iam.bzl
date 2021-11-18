@@ -30,14 +30,15 @@ google_cloud_cpp_iam_hdrs = [
     "internal/iam_credentials_logging_decorator.h",
     "internal/iam_credentials_metadata_decorator.h",
     "internal/iam_credentials_option_defaults.h",
+    "internal/iam_credentials_retry_traits.h",
     "internal/iam_credentials_stub.h",
     "internal/iam_credentials_stub_factory.h",
     "internal/iam_logging_decorator.h",
     "internal/iam_metadata_decorator.h",
     "internal/iam_option_defaults.h",
+    "internal/iam_retry_traits.h",
     "internal/iam_stub.h",
     "internal/iam_stub_factory.h",
-    "internal/retry_traits.h",
     "retry_traits.h",
 ]
 

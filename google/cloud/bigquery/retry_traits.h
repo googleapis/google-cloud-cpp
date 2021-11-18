@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RETRY_TRAITS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RETRY_TRAITS_H
 
-#include "google/cloud/bigquery/internal/retry_traits.h"
+#include "google/cloud/bigquery/internal/bigquery_read_retry_traits.h"
 #warning "This header is deprecated, it only provided internal symbols."
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RETRY_TRAITS_H

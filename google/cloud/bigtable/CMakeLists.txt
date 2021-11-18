@@ -64,6 +64,7 @@ add_library(
     admin/internal/bigtable_instance_admin_metadata_decorator.h
     admin/internal/bigtable_instance_admin_option_defaults.cc
     admin/internal/bigtable_instance_admin_option_defaults.h
+    admin/internal/bigtable_instance_admin_retry_traits.h
     admin/internal/bigtable_instance_admin_stub.cc
     admin/internal/bigtable_instance_admin_stub.h
     admin/internal/bigtable_instance_admin_stub_factory.cc
@@ -76,11 +77,11 @@ add_library(
     admin/internal/bigtable_table_admin_metadata_decorator.h
     admin/internal/bigtable_table_admin_option_defaults.cc
     admin/internal/bigtable_table_admin_option_defaults.h
+    admin/internal/bigtable_table_admin_retry_traits.h
     admin/internal/bigtable_table_admin_stub.cc
     admin/internal/bigtable_table_admin_stub.h
     admin/internal/bigtable_table_admin_stub_factory.cc
     admin/internal/bigtable_table_admin_stub_factory.h
-    admin/internal/retry_traits.h
     admin_client.cc
     admin_client.h
     app_profile_config.cc

@@ -36,6 +36,7 @@ set(google_cloud_cpp_generator_golden_files
     internal/golden_kitchen_sink_metadata_decorator.h
     internal/golden_kitchen_sink_option_defaults.cc
     internal/golden_kitchen_sink_option_defaults.h
+    internal/golden_kitchen_sink_retry_traits.h
     internal/golden_kitchen_sink_stub.cc
     internal/golden_kitchen_sink_stub.h
     internal/golden_kitchen_sink_stub_factory.cc
@@ -46,11 +47,11 @@ set(google_cloud_cpp_generator_golden_files
     internal/golden_thing_admin_metadata_decorator.h
     internal/golden_thing_admin_option_defaults.cc
     internal/golden_thing_admin_option_defaults.h
+    internal/golden_thing_admin_retry_traits.h
     internal/golden_thing_admin_stub.cc
     internal/golden_thing_admin_stub.h
     internal/golden_thing_admin_stub_factory.cc
     internal/golden_thing_admin_stub_factory.h
-    internal/retry_traits.h
     mocks/mock_golden_kitchen_sink_connection.h
     mocks/mock_golden_thing_admin_connection.h
     streaming.cc)
@@ -101,7 +102,6 @@ add_library(
     internal/golden_thing_admin_stub.h
     internal/golden_thing_admin_stub_factory.cc
     internal/golden_thing_admin_stub_factory.h
-    internal/retry_traits.h
     mocks/mock_golden_kitchen_sink_connection.h
     mocks/mock_golden_kitchen_sink_stub.h
     mocks/mock_golden_thing_admin_connection.h
