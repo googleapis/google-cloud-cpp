@@ -386,7 +386,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/time_utils.cc
         internal/time_utils.h
         internal/unified_grpc_credentials.cc
-        internal/unified_grpc_credentials.h)
+        internal/unified_grpc_credentials.h
+        status_details.h)
     target_link_libraries(
         google_cloud_cpp_grpc_utils
         PUBLIC absl::function_ref
@@ -395,6 +396,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                absl::variant
                google-cloud-cpp::iam_protos
                google-cloud-cpp::longrunning_operations_protos
+               google-cloud-cpp::rpc_error_details_protos
                google-cloud-cpp::rpc_status_protos
                google-cloud-cpp::common
                gRPC::grpc++
@@ -505,7 +507,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/streaming_read_rpc_test.cc
             internal/streaming_write_rpc_test.cc
             internal/time_utils_test.cc
-            internal/unified_grpc_credentials_test.cc)
+            internal/unified_grpc_credentials_test.cc
+            status_details_test.cc)
 
         # List the unit tests, then setup the targets and dependencies.
         set(google_cloud_cpp_grpc_utils_integration_tests
