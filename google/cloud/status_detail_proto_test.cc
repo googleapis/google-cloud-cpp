@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/status_details.h"
+#include "google/cloud/status_detail_proto.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include <google/rpc/error_details.pb.h>
 #include <gmock/gmock.h>
@@ -21,15 +21,15 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TEST(GetStatusDetails, NoDetails) {
-  auto details = GetStatusDetails<google::rpc::ErrorInfo>(Status{});
+TEST(GetStatusDetailProto, NoDetails) {
+  auto details = GetStatusDetailProto<google::rpc::ErrorInfo>(Status{});
   EXPECT_FALSE(details.has_value());
-  details = GetStatusDetails<google::rpc::ErrorInfo>(
+  details = GetStatusDetailProto<google::rpc::ErrorInfo>(
       Status{StatusCode::kUnknown, "foo"});
   EXPECT_FALSE(details.has_value());
 }
 
-TEST(GetStatusDetails, DetailsExist) {
+TEST(GetStatusDetailProto, DetailsExist) {
   google::rpc::ErrorInfo error_info;
   error_info.set_reason("the reason");
   error_info.set_domain("the domain");
@@ -40,7 +40,7 @@ TEST(GetStatusDetails, DetailsExist) {
   proto.add_details()->PackFrom(error_info);
 
   auto status = MakeStatusFromRpcError(proto);
-  auto actual = GetStatusDetails<google::rpc::ErrorInfo>(status);
+  auto actual = GetStatusDetailProto<google::rpc::ErrorInfo>(status);
   EXPECT_TRUE(actual.has_value());
   EXPECT_EQ(actual->reason(), "the reason");
   EXPECT_EQ(actual->domain(), "the domain");

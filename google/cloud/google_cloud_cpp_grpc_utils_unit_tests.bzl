@@ -44,5 +44,5 @@ google_cloud_cpp_grpc_utils_unit_tests = [
     "internal/streaming_write_rpc_test.cc",
     "internal/time_utils_test.cc",
     "internal/unified_grpc_credentials_test.cc",
-    "status_details_test.cc",
+    "status_detail_proto_test.cc",
 ]

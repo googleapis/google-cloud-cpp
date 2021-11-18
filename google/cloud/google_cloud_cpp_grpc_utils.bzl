@@ -58,7 +58,7 @@ google_cloud_cpp_grpc_utils_hdrs = [
     "internal/streaming_write_rpc.h",
     "internal/time_utils.h",
     "internal/unified_grpc_credentials.h",
-    "status_details.h",
+    "status_detail_proto.h",
 ]
 
 google_cloud_cpp_grpc_utils_srcs = [

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_DETAILS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_DETAILS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_DETAIL_PROTO_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_DETAIL_PROTO_H
 
 #include "google/cloud/internal/status_payload_keys.h"
 #include "google/cloud/status.h"
@@ -29,15 +29,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace internal {
 template <typename T>
-absl::optional<T> GetStatusDetails(google::rpc::Status const&);
+absl::optional<T> GetStatusDetailProto(google::rpc::Status const&);
 }  // namespace internal
 
 /**
- * Gets the "error details" object of type `T` from the given status.
+ * Gets the "error details" protobuf of type `T` from the given status.
  *
  * Error details objects are protocol buffers that may be attached to non-OK
- * Status objects to provide more details about the error. The message types
- * are defined in this proto:
+ * Status objects from gRPC to provide more details about the error. The
+ * message types are defined in this proto:
  * https://github.com/googleapis/googleapis/blob/master/google/rpc/error_details.proto
  *
  * The following shows how to get a `google::rpc::ErrorInfo` message:
@@ -48,26 +48,26 @@ absl::optional<T> GetStatusDetails(google::rpc::Status const&);
  * ...
  *   google::cloud::Status status = ...
  *   absl::optional<google::rpc::ErrorInfo> ei =
- *       google::cloud::GetStatusDetails<google::rpc::ErrorInfo>(status);
+ *       google::cloud::GetStatusDetailProto<google::rpc::ErrorInfo>(status);
  * @endcode
  *
  * @see https://google.aip.dev/193
  */
 template <typename T>
-absl::optional<T> GetStatusDetails(Status const& s) {
+absl::optional<T> GetStatusDetailProto(Status const& s) {
   static_assert(std::is_base_of<google::protobuf::Message, T>::value,
                 "The template parameter T must be a protobuf message");
   auto payload = internal::GetPayload(s, internal::kStatusPayloadGrpcProto);
   if (!payload) return absl::nullopt;
   google::rpc::Status proto;
   if (!proto.ParseFromString(*payload)) return absl::nullopt;
-  return internal::GetStatusDetails<T>(proto);
+  return internal::GetStatusDetailProto<T>(proto);
 }
 
 namespace internal {
 // A private helper, not for public use.
 template <typename T>
-absl::optional<T> GetStatusDetails(google::rpc::Status const& proto) {
+absl::optional<T> GetStatusDetailProto(google::rpc::Status const& proto) {
   for (google::protobuf::Any const& any : proto.details()) {
     if (any.Is<T>()) {
       T details;
@@ -82,4 +82,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_DETAILS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_DETAIL_PROTO_H
