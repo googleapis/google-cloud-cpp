@@ -115,7 +115,7 @@ TEST(StatusOrTest, ValueAccessorNonConstThrows) {
         EXPECT_EQ(StatusCode::kInternal, ex.status().code());
         EXPECT_EQ("BAD", ex.status().message());
       },
-      "exceptions are disabled: BAD \\[INTERNAL\\]");
+      "exceptions are disabled: INTERNAL: BAD");
 
   testing_util::ExpectException<RuntimeStatusError>(
       [&] { std::move(actual).value(); },
@@ -123,7 +123,7 @@ TEST(StatusOrTest, ValueAccessorNonConstThrows) {
         EXPECT_EQ(StatusCode::kInternal, ex.status().code());
         EXPECT_EQ("BAD", ex.status().message());
       },
-      "exceptions are disabled: BAD \\[INTERNAL\\]");
+      "exceptions are disabled: INTERNAL: BAD");
 }
 
 TEST(StatusOrTest, ValueAccessorConstThrows) {
@@ -135,7 +135,7 @@ TEST(StatusOrTest, ValueAccessorConstThrows) {
         EXPECT_EQ(StatusCode::kInternal, ex.status().code());
         EXPECT_EQ("BAD", ex.status().message());
       },
-      "exceptions are disabled: BAD \\[INTERNAL\\]");
+      "exceptions are disabled: INTERNAL: BAD");
 
   testing_util::ExpectException<RuntimeStatusError>(
       [&] { std::move(actual).value(); },
@@ -143,7 +143,7 @@ TEST(StatusOrTest, ValueAccessorConstThrows) {
         EXPECT_EQ(StatusCode::kInternal, ex.status().code());
         EXPECT_EQ("BAD", ex.status().message());
       },
-      "exceptions are disabled: BAD \\[INTERNAL\\]");
+      "exceptions are disabled: INTERNAL: BAD");
 }
 
 TEST(StatusOrTest, StatusConstAccessors) {
