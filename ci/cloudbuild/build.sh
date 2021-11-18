@@ -265,6 +265,7 @@ if [[ -n "${CLOUD_FLAG}" ]]; then
     "--region=us-east1"
   )
   io::run gcloud builds submit "${args[@]}" .
+  exit
 fi
 
 # Default to --docker mode since no other mode was specified.
