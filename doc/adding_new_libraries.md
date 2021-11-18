@@ -60,6 +60,8 @@ Manually edit `generator/generator_config.textproto` and add the new service.
 Then run the micro-generator to create the scaffold and the C++ sources:
 
 ```shell
+cd $HOME/google-cloud-cpp
+mkdir -p "google/cloud/${library}"
 bazel_output_base="$(bazel info output_base)"
 bazel run \
   //generator:google-cloud-cpp-codegen -- \
@@ -78,7 +80,7 @@ ci/cloudbuild/build.sh -t checkers-pr
 
 ## Manually add the C++ files to the CMakeLists.txt file
 
-Create the `google/cloud/$library/retry_traits.h` file, and add this file
+Create the `google/cloud/$library/internal/retry_traits.h` file, and add this file
 **and** any generated C++ files to the `CMakeLists.txt` file. There should be
 markers in the file, search for `EDIT HERE`.
 
