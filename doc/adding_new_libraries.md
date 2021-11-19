@@ -81,10 +81,10 @@ ci/cloudbuild/build.sh -t checkers-pr
 ## Manually add the C++ files to the CMakeLists.txt file
 
 If the `generator/generator_config.textproto` entry for the service does not
-enumerate the `retryable_status_codes`, the file will need to be manually
-created as `google/cloud/$library/internal/<service_name>_retry_traits.h`. Then,
-add this file **and** any generated C++ files to the `CMakeLists.txt` file.
-There should be markers in the file, search for `EDIT HERE`.
+enumerate the `retryable_status_codes`, you need to manually create the file as
+`google/cloud/$library/internal/<service_name>_retry_traits.h`. Add this file
+**and** any generated C++ files to the `CMakeLists.txt` file. There should
+be markers in the file, search for `EDIT HERE`.
 
 ```shell
 ci/cloudbuild/build.sh -t cmake-install-pr
