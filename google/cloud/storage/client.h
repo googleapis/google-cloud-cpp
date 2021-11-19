@@ -73,7 +73,7 @@ struct ClientImplDetails;
  * new HTTPS session is relatively expensive, as it must go through the TCP/IP
  * and SSL handshakes. To minimize this overhead the class maintains a
  * connection pool to the service. After each request completes the connection
- * is returned to the pool, and reuse in future requests. Note that for
+ * is returned to the pool, and reused in future requests. Note that for
  * downloads (implemented by the ReadObject() member function) the connection
  * remains in use until the download completes. Therefore, having multiple
  * downloads open at the same time requires multiple connections.
@@ -81,8 +81,9 @@ struct ClientImplDetails;
  * The application can limit the maximum size of this connection pool using
  * `storage::ConnectionPoolSizeOption`. If returning a connection to the pool
  * would make the pool larger than this limit then the oldest connection in the
- * pool is closed. Note that this is the maximum size of the pool, not its size.
- * The client library does not create connections until needed.
+ * pool is closed (recall that all connections in the pool are inactive). Note
+ * that this is the maximum size of the pool, the client library does not create
+ * connections until needed.
  *
  * Note that the application may (at times) use more connections than the
  * maximum size of the pool. For example if N downloads are in progress the
