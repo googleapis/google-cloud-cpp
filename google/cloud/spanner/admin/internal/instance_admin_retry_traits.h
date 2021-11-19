@@ -30,8 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Define the gRPC status code semantics for retrying requests.
 struct InstanceAdminRetryTraits {
   static inline bool IsPermanentFailure(google::cloud::Status const& status) {
-    return status.code() != StatusCode::kDeadlineExceeded &&
-           status.code() != StatusCode::kOk &&
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kDeadlineExceeded &&
            status.code() != StatusCode::kUnavailable;
   }
 };
