@@ -3019,7 +3019,7 @@ class Client {
   /**
    * Creates a new notification config for a Bucket.
    *
-   * Cloud Pub/Sub Notifications sends information about changes to objects
+   * Cloud Pub/Sub Notifications send information about changes to objects
    * in your buckets to Google Cloud Pub/Sub service. You can create multiple
    * notifications per Bucket, with different topics and filtering options.
    *
@@ -3057,7 +3057,7 @@ class Client {
   /**
    * Creates a new notification config for a Bucket.
    *
-   * Cloud Pub/Sub Notifications sends information about changes to objects
+   * Cloud Pub/Sub Notifications send information about changes to objects
    * in your buckets to Google Cloud Pub/Sub service. You can create multiple
    * notifications per Bucket, with different topics and filtering options.
    *
