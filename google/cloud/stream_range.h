@@ -177,16 +177,17 @@ class StreamRange {
       StreamRange& sr;
       void operator()(Status&& status) {
         sr.is_end_ = status.ok();
+        sr.current_ok_ = status.ok();
         if (!status.ok()) sr.current_ = std::move(status);
       }
       void operator()(T&& t) {
         sr.is_end_ = false;
+        sr.current_ok_ = true;
         sr.current_ = std::move(t);
       }
     };
     auto v = reader_();
     absl::visit(UnpackVariant{*this}, std::move(v));
-    current_ok_ = current_.ok();
   }
 
   template <typename U>
