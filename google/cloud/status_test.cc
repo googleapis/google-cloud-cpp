@@ -51,27 +51,47 @@ TEST(StatusCode, StatusCodeToString) {
             StatusCodeToString(static_cast<StatusCode>(42)));
 }
 
+TEST(ErrorInfo, Basics) {
+  ErrorInfo e;
+  EXPECT_EQ(e, ErrorInfo{});
+
+  std::unordered_map<std::string, std::string> metadata = {{"key", "val"}};
+  e = ErrorInfo{"the reason", "the domain", metadata};
+  EXPECT_NE(e, ErrorInfo{});
+  EXPECT_EQ("the reason", e.reason());
+  EXPECT_EQ("the domain", e.domain());
+  EXPECT_EQ(metadata, e.metadata());
+
+  auto copy = e;
+  EXPECT_EQ(copy, e);
+}
+
 TEST(Status, Basics) {
   Status s;
   EXPECT_TRUE(s.ok());
   EXPECT_EQ(s.code(), StatusCode::kOk);
   EXPECT_EQ(s.message(), "");
+  EXPECT_EQ(s.error_info(), ErrorInfo{});
   EXPECT_EQ(s, Status());
 
-  // The message is ignored on OK statuses.
-  auto ok = Status(StatusCode::kOk, "message ignored");
+  ErrorInfo const error_info{"the reason", "the domain", {}};
+  // The error properties are ignored on OK statuses.
+  auto ok = Status(StatusCode::kOk, "message ignored", error_info);
   EXPECT_EQ(s, ok);
   EXPECT_EQ("", ok.message());
+  EXPECT_EQ(s.error_info(), ErrorInfo{});
   EXPECT_EQ(StatusCode::kOk, ok.code());
 
-  s = Status(StatusCode::kUnknown, "foo");
+  s = Status(StatusCode::kUnknown, "foo", error_info);
   EXPECT_FALSE(s.ok());
   EXPECT_EQ(s.code(), StatusCode::kUnknown);
   EXPECT_EQ(s.message(), "foo");
+  EXPECT_EQ(s.error_info(), error_info);
   EXPECT_NE(s, Status());
   EXPECT_NE(s, Status(StatusCode::kUnknown, ""));
   EXPECT_NE(s, Status(StatusCode::kUnknown, "bar"));
-  EXPECT_EQ(s, Status(StatusCode::kUnknown, "foo"));
+  EXPECT_NE(s, Status(StatusCode::kUnknown, "foo"));
+  EXPECT_EQ(s, Status(StatusCode::kUnknown, "foo", error_info));
 }
 
 TEST(Status, SelfAssignWorks) {
@@ -98,6 +118,19 @@ TEST(Status, OperatorOutput) {
   status = Status{StatusCode::kUnknown, "foo"};
   ss << status;
   EXPECT_EQ("UNKNOWN: foo", ss.str());
+}
+
+TEST(Status, OperatorOutputWithErrorInfo) {
+  ErrorInfo error_info{"the reason", "the domain", {{"key", "val"}}};
+  auto status = Status{StatusCode::kUnknown, "foo", error_info};
+  auto ss = std::stringstream{};
+  ss << "\n" << status;
+  EXPECT_EQ(ss.str(),
+            R"(
+UNKNOWN: foo
+    reason: the reason
+    domain: the domain
+    metadata[key]: val)");
 }
 
 TEST(Status, PayloadIgnoredWithOk) {

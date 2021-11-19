@@ -394,6 +394,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                absl::variant
                google-cloud-cpp::iam_protos
                google-cloud-cpp::longrunning_operations_protos
+               google-cloud-cpp::rpc_error_details_protos
                google-cloud-cpp::rpc_status_protos
                google-cloud-cpp::common
                gRPC::grpc++
