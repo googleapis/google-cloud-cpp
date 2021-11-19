@@ -79,13 +79,16 @@ class Status::Impl {
   using PayloadType = std::unordered_map<std::string, std::string>;
 
  public:
-  explicit Impl(StatusCode code, std::string message, PayloadType payload)
+  explicit Impl(StatusCode code, std::string message, ErrorInfo info,
+                PayloadType payload)
       : code_(code),
         message_(std::move(message)),
+        error_info_(std::move(info)),
         payload_(std::move(payload)) {}
 
   StatusCode code() const { return code_; }
   std::string const& message() const { return message_; }
+  ErrorInfo const& error_info() const { return error_info_; }
   PayloadType const& payload() const { return payload_; };
 
   // Allows mutable access to payload, which is needed in the
@@ -94,7 +97,7 @@ class Status::Impl {
 
   friend inline bool operator==(Impl const& a, Impl const& b) {
     return a.code_ == b.code_ && a.message_ == b.message_ &&
-           a.payload_ == b.payload_;
+           a.error_info_ == b.error_info_ && a.payload_ == b.payload_;
   }
 
   friend inline bool operator!=(Impl const& a, Impl const& b) {
@@ -104,6 +107,7 @@ class Status::Impl {
  private:
   StatusCode code_;
   std::string message_;
+  ErrorInfo error_info_;
   PayloadType payload_;
 };
 
@@ -123,10 +127,11 @@ Status& Status::operator=(Status const& other) {
 }
 
 // OK statuses have an impl_ == nullptr. Non-OK Statuses get an Impl.
-Status::Status(StatusCode code, std::string message)
+Status::Status(StatusCode code, std::string message, ErrorInfo info)
     : impl_(code == StatusCode::kOk
                 ? nullptr
-                : new Status::Impl{code, std::move(message), {}}) {}
+                : new Status::Impl{
+                      code, std::move(message), std::move(info), {}}) {}
 
 StatusCode Status::code() const {
   return impl_ ? impl_->code() : StatusCode::kOk;
@@ -137,13 +142,29 @@ std::string const& Status::message() const {
   return impl_ ? impl_->message() : *kEmpty;
 }
 
+ErrorInfo const& Status::error_info() const {
+  static auto const* const kEmpty = new ErrorInfo{};
+  return impl_ ? impl_->error_info() : *kEmpty;
+}
+
 bool Status::Equals(Status const& a, Status const& b) {
   return (a.ok() && b.ok()) || (a.impl_ && b.impl_ && *a.impl_ == *b.impl_);
 }
 
 std::ostream& operator<<(std::ostream& os, Status const& s) {
   if (s.ok()) return os << StatusCode::kOk;
-  return os << s.code() << ": " << s.message();
+  os << s.code() << ": " << s.message();
+  auto const& error_info = s.error_info();
+  if (!error_info.reason().empty()) {
+    os << "\n    reason: " << error_info.reason();
+  }
+  if (!error_info.domain().empty()) {
+    os << "\n    domain: " << error_info.domain();
+  }
+  for (auto const& e : error_info.metadata()) {
+    os << "\n    metadata[" << e.first << "]: " << e.second;
+  }
+  return os;
 }
 
 namespace internal {

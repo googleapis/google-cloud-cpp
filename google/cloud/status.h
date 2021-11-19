@@ -64,17 +64,52 @@ absl::optional<std::string> GetPayload(Status const&, std::string const& key);
 }  // namespace internal
 
 /**
+ * Describes the cause of the error with structured details.
+ *
+ * @see
+ * https://github.com/googleapis/googleapis/blob/master/google/rpc/error_details.proto
+ */
+class ErrorInfo {
+ public:
+  ErrorInfo() = default;
+  explicit ErrorInfo(std::string reason, std::string domain,
+                     std::unordered_map<std::string, std::string> metadata)
+      : reason_(std::move(reason)),
+        domain_(std::move(domain)),
+        metadata_(std::move(metadata)) {}
+
+  std::string const& reason() const { return reason_; }
+  std::string const& domain() const { return domain_; }
+  std::unordered_map<std::string, std::string> const& metadata() const {
+    return metadata_;
+  }
+
+  friend inline bool operator==(ErrorInfo const& a, ErrorInfo const& b) {
+    return a.reason_ == b.reason_ && a.domain_ == b.domain_ &&
+           a.metadata_ == b.metadata_;
+  }
+  friend inline bool operator!=(ErrorInfo const& a, ErrorInfo const& b) {
+    return !(a == b);
+  }
+
+ private:
+  std::string reason_;
+  std::string domain_;
+  std::unordered_map<std::string, std::string> metadata_;
+};
+
+/**
  * Represents success or an error with info about the error.
 
  * This class is typically used to indicate whether or not a function or other
- * operation completed successfully. Success is indicated by an "OK" status
- * (`StatusCode::kOk`), and the `.ok()` method will return true. OK statuses
- * will have an empty `.message()`, and all OK statuses are equivalent. Any
+ * operation completed successfully. Success is indicated by an "OK" status. OK
+ * statuses will have `.code() == StatusCode::kOk` and `.ok() == true`, with
+ * all other properties having empty values. All OK statuses are equal. Any
  * non-OK `Status` is considered an error. Users can inspect the error using
- * the `.code()` and `.message()` member functions, or they can simply stream
- * the `Status` object, and it will print itself in some human readable way
- * (the streamed format may change over time and you should *not* depend on the
- * specific format of a streamed `Status` object remaining unchanged).
+ * the member functions, or they can simply stream the `Status` object, and it
+ * will print itself in some human readable way (the streamed format may change
+ * over time and you should *not* depend on the specific format of a streamed
+ * `Status` object remaining unchanged).
  *
  * This is a regular value type that can be copied, moved, compared for
  * equality, and streamed.
@@ -93,11 +128,12 @@ class Status {
    *
    * Ignores @p message if @p code is `StatusCode::kOk`.
    */
-  explicit Status(StatusCode code, std::string message);
+  explicit Status(StatusCode code, std::string message, ErrorInfo info = {});
 
   bool ok() const { return !impl_; }
   StatusCode code() const;
   std::string const& message() const;
+  ErrorInfo const& error_info() const;
 
   friend inline bool operator==(Status const& a, Status const& b) {
     return (a.ok() && b.ok()) || Equals(a, b);
