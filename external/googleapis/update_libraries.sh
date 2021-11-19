@@ -40,6 +40,11 @@ declare -A -r LIBRARIES=(
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_proto"
   ["monitoring"]="@com_google_googleapis//google/monitoring/v3:monitoring_proto"
   ["pubsub"]="@com_google_googleapis//google/pubsub/v1:pubsub_proto"
+  ["secretmanager"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/secretmanager/v1:secretmanager_proto" \
+      "@com_google_googleapis//google/cloud/secretmanager/logging/v1:logging_proto"
+  )"
   ["spanner"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/spanner/v1:spanner_proto" \
@@ -68,12 +73,12 @@ for library in "${!LIBRARIES[@]}"; do
       "deps(${rule})" |
       grep "${path}" |
       grep -E '\.proto$' \
-        >>"external/googleapis/protolists/${library}.list"
+        >>"external/googleapis/protolists/${library}.list" || true
     bazel query --noshow_progress --noshow_loading_progress \
       "deps(${rule})" |
       grep "@com_google_googleapis//" | grep _proto |
       grep -v "${path}" \
-        >>"external/googleapis/protodeps/${library}.deps"
+        >>"external/googleapis/protodeps/${library}.deps" || true
   done
   for file in "${files[@]}"; do
     sort -u "${file}" >"${file}.sorted"

@@ -74,6 +74,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-secretmanager",
+    deps = [
+        "//google/cloud/secretmanager:google_cloud_cpp_secretmanager",
+    ],
+)
+
+cc_library(
+    name = "experimental-secretmanager_mocks",
+    deps = [
+        "//google/cloud/secretmanager:google_cloud_cpp_secretmanager_mocks",
+    ],
+)
+
+cc_library(
     name = "spanner",
     deps = [
         "//google/cloud/spanner:google_cloud_cpp_spanner",

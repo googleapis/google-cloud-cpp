@@ -78,6 +78,14 @@ service {
 
 }
 
+# Secret Manager
+service {
+  service_proto_path: "google/cloud/secretmanager/v1/service.proto"
+  product_path: "google/cloud/secretmanager"
+  initial_copyright_year: "2021"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # Spanner
 service {
   service_proto_path: "google/spanner/admin/database/v1/spanner_database_admin.proto"
