@@ -94,8 +94,10 @@ TEST_F(ClientTest, Equality) {
   EXPECT_TRUE(a != b);
   EXPECT_TRUE(a == a);
   EXPECT_TRUE(b == b);
-  auto c = a;
+  auto c = a;  // NOLINT(performance-unnecessary-copy-initialization)
   EXPECT_TRUE(a == c);
+  b = std::move(a);
+  EXPECT_TRUE(b == c);
 }
 
 TEST_F(ClientTest, OverrideRetryPolicy) {
