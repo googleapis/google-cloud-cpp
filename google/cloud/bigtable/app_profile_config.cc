@@ -19,12 +19,15 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-AppProfileConfig AppProfileConfig::MultiClusterUseAny(std::string profile_id) {
+AppProfileConfig AppProfileConfig::MultiClusterUseAny(
+    std::string profile_id, std::vector<std::string> cluster_ids) {
   AppProfileConfig tmp;
   tmp.proto_.set_app_profile_id(std::move(profile_id));
-  tmp.proto_.mutable_app_profile()
-      ->mutable_multi_cluster_routing_use_any()
-      ->Clear();
+  auto& mc_routing = *tmp.proto_.mutable_app_profile()
+                          ->mutable_multi_cluster_routing_use_any();
+  for (auto&& cluster_id : cluster_ids) {
+    mc_routing.add_cluster_ids(std::move(cluster_id));
+  }
   return tmp;
 }
 
