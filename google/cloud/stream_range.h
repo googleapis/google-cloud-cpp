@@ -169,7 +169,7 @@ class StreamRange {
  private:
   void Next() {
     // Jump to the end if we previously got an error.
-    if (!is_end_ && !current_) {
+    if (!is_end_ && !current_ok_) {
       is_end_ = true;
       return;
     }
@@ -177,10 +177,12 @@ class StreamRange {
       StreamRange& sr;
       void operator()(Status&& status) {
         sr.is_end_ = status.ok();
+        sr.current_ok_ = status.ok();
         if (!status.ok()) sr.current_ = std::move(status);
       }
       void operator()(T&& t) {
         sr.is_end_ = false;
+        sr.current_ok_ = true;
         sr.current_ = std::move(t);
       }
     };
@@ -224,6 +226,7 @@ class StreamRange {
 
   internal::StreamReader<T> reader_;
   StatusOr<T> current_;
+  bool current_ok_ = false;
   bool is_end_ = true;
 };
 
