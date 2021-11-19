@@ -107,7 +107,10 @@ class Status::Impl {
   PayloadType payload_;
 };
 
-Status::~Status() { delete impl_; }
+Status::Status() = default;
+Status::~Status() = default;
+Status::Status(Status&&) noexcept = default;
+Status& Status::operator=(Status&&) noexcept = default;
 
 // Deep copy
 Status::Status(Status const& other)
@@ -115,23 +118,7 @@ Status::Status(Status const& other)
 
 // Deep copy
 Status& Status::operator=(Status const& other) {
-  if (this != &other) {
-    delete impl_;
-    impl_ = other.ok() ? nullptr : new auto(*other.impl_);
-  }
-  return *this;
-}
-
-Status::Status(Status&& other) noexcept : impl_(other.impl_) {
-  other.impl_ = nullptr;
-}
-
-Status& Status::operator=(Status&& other) noexcept {
-  if (this != &other) {
-    delete impl_;
-    impl_ = other.impl_;
-    other.impl_ = nullptr;
-  }
+  impl_.reset(other.ok() ? nullptr : new auto(*other.impl_));
   return *this;
 }
 
@@ -151,8 +138,7 @@ std::string const& Status::message() const {
 }
 
 bool operator==(Status const& a, Status const& b) {
-  return (a.ok() && b.ok()) ||
-         (a.impl_ != nullptr && b.impl_ != nullptr && *a.impl_ == *b.impl_);
+  return (a.ok() && b.ok()) || (a.impl_ && b.impl_ && *a.impl_ == *b.impl_);
 }
 
 bool operator!=(Status const& a, Status const& b) { return !(a == b); }

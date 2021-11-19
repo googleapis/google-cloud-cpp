@@ -18,8 +18,8 @@
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <iostream>
+#include <memory>
 #include <string>
-#include <tuple>
 #include <unordered_map>
 
 namespace google {
@@ -81,7 +81,7 @@ absl::optional<std::string> GetPayload(Status const&, std::string const& key);
  */
 class Status {
  public:
-  Status() = default;
+  Status();
   ~Status();
   Status(Status const&);
   Status& operator=(Status const&);
@@ -95,7 +95,7 @@ class Status {
    */
   explicit Status(StatusCode code, std::string message);
 
-  bool ok() const { return impl_ == nullptr; }
+  bool ok() const { return !impl_; }
   StatusCode code() const;
   std::string const& message() const;
 
@@ -110,7 +110,7 @@ class Status {
 
   class Impl;
   // A null `impl_` is an OK status. Only non-OK Statuses allocate an Impl.
-  Impl* impl_{nullptr};
+  std::unique_ptr<Impl> impl_;
 };
 
 /**
