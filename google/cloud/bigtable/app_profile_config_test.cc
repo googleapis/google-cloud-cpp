@@ -20,6 +20,9 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+using ::testing::UnorderedElementsAreArray;
+
 TEST(AppProfileConfig, MultiClusterUseAny) {
   auto proto = AppProfileConfig::MultiClusterUseAny("my-profile").as_proto();
   EXPECT_EQ("my-profile", proto.app_profile_id());
@@ -30,6 +33,20 @@ TEST(AppProfileConfig, MultiClusterUseAny) {
                     decltype(std::move(std::declval<AppProfileConfig>())
                                  .as_proto())>::value,
                 "Return type from as_proto() must be rvalue-reference");
+
+  std::vector<std::string> cluster_ids = {"cluster1", "cluster2"};
+  proto = AppProfileConfig::MultiClusterUseAny("my-profile", cluster_ids)
+              .as_proto();
+  EXPECT_EQ("my-profile", proto.app_profile_id());
+  EXPECT_TRUE(proto.app_profile().has_multi_cluster_routing_use_any());
+
+  std::vector<std::string> actual;
+  auto const clusters =
+      proto.app_profile().multi_cluster_routing_use_any().cluster_ids();
+  for (auto&& cluster_id : clusters) {
+    actual.emplace_back(cluster_id);
+  }
+  EXPECT_THAT(actual, UnorderedElementsAreArray(cluster_ids));
 }
 
 TEST(AppProfileConfig, SetIgnoreWarnings) {
@@ -91,6 +108,22 @@ TEST(AppProfileUpdateConfig, SetMultiClusterUseAny) {
   EXPECT_TRUE(proto.app_profile().has_multi_cluster_routing_use_any());
   EXPECT_TRUE(
       HasFieldNameOnce(proto.update_mask(), "multi_cluster_routing_use_any"));
+
+  std::vector<std::string> cluster_ids = {"cluster1", "cluster2"};
+  proto = AppProfileUpdateConfig()
+              .set_multi_cluster_use_any(cluster_ids)
+              .as_proto();
+  EXPECT_TRUE(proto.app_profile().has_multi_cluster_routing_use_any());
+  EXPECT_TRUE(
+      HasFieldNameOnce(proto.update_mask(), "multi_cluster_routing_use_any"));
+
+  std::vector<std::string> actual;
+  auto const clusters =
+      proto.app_profile().multi_cluster_routing_use_any().cluster_ids();
+  for (auto&& cluster_id : clusters) {
+    actual.emplace_back(cluster_id);
+  }
+  EXPECT_THAT(actual, UnorderedElementsAreArray(cluster_ids));
 }
 
 TEST(AppProfileUpdateConfig, SetSingleClusterRouting) {
@@ -127,6 +160,7 @@ TEST(AppProfileUpdateConfig, SetSeveral) {
   EXPECT_FALSE(HasFieldNameOnce(proto.update_mask(), "multi_cluster_use_any"));
   EXPECT_TRUE(HasFieldNameOnce(proto.update_mask(), "single_cluster_routing"));
 }
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
