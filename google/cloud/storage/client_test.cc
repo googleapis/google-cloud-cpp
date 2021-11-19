@@ -85,8 +85,12 @@ class ClientTest : public ::testing::Test {
 };
 
 TEST_F(ClientTest, Equality) {
-  auto a = storage::Client(Options{}.set<google::cloud::UnifiedCredentialsOption>(google::cloud::MakeInsecureCredentials()));
-  auto b = storage::Client(Options{}.set<google::cloud::UnifiedCredentialsOption>(google::cloud::MakeInsecureCredentials()));
+  auto a =
+      storage::Client(Options{}.set<google::cloud::UnifiedCredentialsOption>(
+          google::cloud::MakeInsecureCredentials()));
+  auto b =
+      storage::Client(Options{}.set<google::cloud::UnifiedCredentialsOption>(
+          google::cloud::MakeInsecureCredentials()));
   EXPECT_TRUE(a != b);
   EXPECT_TRUE(a == a);
   EXPECT_TRUE(b == b);

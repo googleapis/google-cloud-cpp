@@ -3235,7 +3235,6 @@ class Client {
       internal::PolicyDocumentV4Request request);
 
   std::shared_ptr<internal::RawClient> raw_client_;
-
 };
 
 /**
