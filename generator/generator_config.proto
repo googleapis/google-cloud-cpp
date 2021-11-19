@@ -45,7 +45,7 @@ message ServiceConfiguration {
   // These codes can be service name qualified for files that define more than
   // one service. Unqualified codes are added to each service in the file.
   // If no codes are listed, do not attempt to generate the retry traits.
-  repeated string retryable_grpc_status_codes = 10;
+  repeated string retryable_status_codes = 10;
 }
 
 message GeneratorConfiguration {

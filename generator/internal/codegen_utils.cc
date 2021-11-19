@@ -130,7 +130,7 @@ void ProcessArgGenerateAsyncRpc(
 
 void ProcessArgRetryGrpcStatusCode(
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
-  ProcessRepeated("retry_grpc_status_code", "retryable_grpc_status_codes",
+  ProcessRepeated("retry_status_code", "retryable_status_codes",
                   command_line_args);
 }
 

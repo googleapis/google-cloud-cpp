@@ -21,7 +21,7 @@ service {
   initial_copyright_year: "2021"
   omitted_services: ["BigQueryWrite"]
   backwards_compatibility_namespace_alias: true
-  retryable_grpc_status_codes: ["kOk", "kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
 # Bigtable
@@ -30,7 +30,7 @@ service {
   product_path: "google/cloud/bigtable/admin"
   initial_copyright_year: "2021"
   emulator_endpoint_env_var: "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST"
-  retryable_grpc_status_codes: ["kOk", "kDeadlineExceeded", "kUnavailable", "kAborted"]
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable", "kAborted"]
 }
 
 service {
@@ -40,7 +40,7 @@ service {
   omitted_rpcs: ["CreateTableFromSnapshot", "SnapshotTable", "GetSnapshot", "ListSnapshots", "DeleteSnapshot"]
   emulator_endpoint_env_var: "BIGTABLE_EMULATOR_HOST"
   gen_async_rpcs: ["CheckConsistency"]
-  retryable_grpc_status_codes: ["kOk", "kDeadlineExceeded", "kUnavailable", "kAborted"]
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable", "kAborted"]
 }
 
 # IAM
@@ -49,7 +49,7 @@ service {
   product_path: "google/cloud/iam"
   initial_copyright_year: "2020"
   backwards_compatibility_namespace_alias: true
-  retryable_grpc_status_codes: ["kOk", "kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
 service {
@@ -58,7 +58,7 @@ service {
   initial_copyright_year: "2021"
   omitted_rpcs: ["SignBlob", "SignJwt", "UpdateServiceAccount"]
   backwards_compatibility_namespace_alias: true
-  retryable_grpc_status_codes: ["kOk", "kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
 # Logging
@@ -66,7 +66,7 @@ service {
   service_proto_path: "google/logging/v2/logging.proto"
   product_path: "google/cloud/logging"
   initial_copyright_year: "2021"
-  retryable_grpc_status_codes: ["kOk", "kInternal", "kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
 }
 
 # Pub/Sub Lite
@@ -74,7 +74,7 @@ service {
   service_proto_path: "google/cloud/pubsublite/v1/admin.proto"
   product_path: "google/cloud/pubsublite"
   initial_copyright_year: "2021"
-  retryable_grpc_status_codes: ["kOk", "kInternal", "kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
 
 }
 
@@ -86,7 +86,7 @@ service {
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT"
   emulator_endpoint_env_var: "SPANNER_EMULATOR_HOST"
   backwards_compatibility_namespace_alias: true
-  retryable_grpc_status_codes: ["kOk", "kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
 service {
@@ -96,7 +96,7 @@ service {
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT"
   emulator_endpoint_env_var: "SPANNER_EMULATOR_HOST"
   backwards_compatibility_namespace_alias: true
-  retryable_grpc_status_codes: ["kOk", "kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
 # Tasks
@@ -104,5 +104,5 @@ service {
   service_proto_path: "google/cloud/tasks/v2/cloudtasks.proto"
   product_path: "google/cloud/tasks"
   initial_copyright_year: "2021"
-  retryable_grpc_status_codes: ["kOk", "kInternal", "kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
 }

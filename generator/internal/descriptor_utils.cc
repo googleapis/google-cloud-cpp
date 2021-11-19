@@ -323,21 +323,15 @@ std::string FormatProtobufRequestParameters(
 }
 
 void SetRetryStatusCodeExpression(VarsDictionary& vars) {
-  auto iter = vars.find("retryable_grpc_status_codes");
+  auto iter = vars.find("retryable_status_codes");
   if (iter == vars.end()) return;
-  std::string retry_status_code_expression;
+  std::string retry_status_code_expression = "status.code() != StatusCode::kOk";
   std::set<std::string> codes = absl::StrSplit(iter->second, ',');
 
   auto append_status_code = [&](std::string const& status_code) {
-    if (retry_status_code_expression.empty()) {
-      absl::StrAppend(
-          &retry_status_code_expression,
-          absl::StrCat("status.code() != StatusCode::", status_code));
-    } else {
-      absl::StrAppend(
-          &retry_status_code_expression,
-          absl::StrCat(" && status.code() != StatusCode::", status_code));
-    }
+    absl::StrAppend(
+        &retry_status_code_expression,
+        absl::StrCat(" && status.code() != StatusCode::", status_code));
   };
 
   for (auto const& code : codes) {
