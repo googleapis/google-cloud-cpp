@@ -55,7 +55,7 @@ TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
   EXPECT_THAT(result, StatusIs(StatusCode::kUnavailable, "uh oh"));
 
   EXPECT_THAT(log_backend_.ExtractLines(),
-              ContainsOnce(HasSubstr("[UNAVAILABLE]")));
+              ContainsOnce(HasSubstr("UNAVAILABLE:")));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
@@ -79,7 +79,7 @@ TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
   auto const log_lines = log_backend_.ExtractLines();
   EXPECT_THAT(log_lines, ContainsOnce(HasSubstr("upload_size=" +
                                                 std::to_string(513 * 1024))));
-  EXPECT_THAT(log_lines, ContainsOnce(HasSubstr("[UNAVAILABLE]")));
+  EXPECT_THAT(log_lines, ContainsOnce(HasSubstr("UNAVAILABLE:")));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
@@ -96,7 +96,7 @@ TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
   EXPECT_THAT(result, StatusIs(StatusCode::kFailedPrecondition, "uh oh"));
 
   EXPECT_THAT(log_backend_.ExtractLines(),
-              ContainsOnce(HasSubstr("[FAILED_PRECONDITION]")));
+              ContainsOnce(HasSubstr("FAILED_PRECONDITION:")));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, NextExpectedByte) {
@@ -145,7 +145,7 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseBadStatus) {
               StatusIs(StatusCode::kFailedPrecondition, "something bad"));
 
   EXPECT_THAT(log_backend_.ExtractLines(),
-              ContainsOnce(HasSubstr("[FAILED_PRECONDITION]")));
+              ContainsOnce(HasSubstr("FAILED_PRECONDITION:")));
 }
 
 }  // namespace

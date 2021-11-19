@@ -56,7 +56,7 @@ TEST(AssertOkTest, AssertionFailed) {
         Status status(StatusCode::kInternal, "oh no!");
         ASSERT_STATUS_OK(status);
       },
-      "\n  Actual: oh no! [INTERNAL]");
+      "\n  Actual: INTERNAL: oh no!");
 }
 
 TEST(AssertOkTest, AssertionFailedStatusOr) {
@@ -65,7 +65,7 @@ TEST(AssertOkTest, AssertionFailedStatusOr) {
         StatusOr<int> status_or(Status(StatusCode::kInternal, "oh no!"));
         ASSERT_STATUS_OK(status_or);
       },
-      ", whose status is oh no! [INTERNAL]");
+      ", whose status is INTERNAL: oh no!");
 }
 
 TEST(AssertOkTest, AssertionFailedDescription) {
@@ -112,7 +112,7 @@ TEST(ExpectOkTest, ExpectationFailed) {
         Status status(StatusCode::kInternal, "oh no!");
         EXPECT_STATUS_OK(status);
       },
-      "\n  Actual: oh no! [INTERNAL]");
+      "\n  Actual: INTERNAL: oh no!");
 }
 
 TEST(ExpectOkTest, ExpectationFailedStatusOr) {
@@ -121,7 +121,7 @@ TEST(ExpectOkTest, ExpectationFailedStatusOr) {
         StatusOr<int> status_or(Status(StatusCode::kInternal, "oh no!"));
         EXPECT_STATUS_OK(status_or);
       },
-      ", whose status is oh no! [INTERNAL]");
+      ", whose status is INTERNAL: oh no!");
 }
 
 TEST(ExpectOkTest, ExpectationFailedDescription) {

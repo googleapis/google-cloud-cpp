@@ -101,7 +101,7 @@ TEST(ThrowDelegateTest, TestThrow) {
         EXPECT_EQ("NOT FOUND", ex.status().message());
       },
       "Aborting because exceptions are disabled: "
-      "NOT FOUND \\[NOT_FOUND\\]");
+      "NOT_FOUND: NOT FOUND");
 }
 
 }  // namespace

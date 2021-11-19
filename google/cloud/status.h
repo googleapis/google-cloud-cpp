@@ -104,7 +104,8 @@ class Status {
     return !(a == b);
   }
   friend inline std::ostream& operator<<(std::ostream& os, Status const& s) {
-    return os << s.message() << " [" << s.code() << "]";
+    if (s.ok()) return os << s.code();
+    return os << s.code() << ": " << s.message();
   }
 
  private:
