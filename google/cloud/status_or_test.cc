@@ -242,7 +242,6 @@ TEST(StatusOrObservableTest, MoveAssignmentNoValueNoValue) {
 
   Observable::reset_counters();
   assigned = std::move(other);
-  EXPECT_FALSE(other.ok());  // NOLINT(bugprone-use-after-move)
   EXPECT_FALSE(assigned.ok());
   EXPECT_EQ(0, Observable::destructor());
   EXPECT_EQ(0, Observable::move_assignment());
@@ -298,7 +297,6 @@ TEST(StatusOrObservableTest, MoveAssignmentValueNoValue) {
 
   Observable::reset_counters();
   assigned = std::move(other);
-  EXPECT_FALSE(other.ok());  // NOLINT(bugprone-use-after-move)
   EXPECT_FALSE(assigned.ok());
   EXPECT_EQ(1, Observable::destructor());
   EXPECT_EQ(0, Observable::move_assignment());

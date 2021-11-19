@@ -26,26 +26,6 @@ std::string StatusWhat(Status const& status) {
 }
 }  // namespace
 
-namespace internal {
-
-// Sets the given `payload`, indexed by the given `key`, on the given `Status`,
-// IFF the status is not OK. Payloads are considered in equality comparisons.
-// The keyspace used here is separate from other keyspaces (e.g.,
-// `absl::Status`), so we only need to coordinate keys with ourselves.
-void SetPayload(Status& s, std::string key, std::string payload) {
-  if (!s.ok()) s.payload_[std::move(key)] = std::move(payload);
-}
-
-// Returns the payload associated with the given `key`, if available.
-absl::optional<std::string> GetPayload(Status const& s,
-                                       std::string const& key) {
-  auto it = s.payload_.find(key);
-  if (it == s.payload_.end()) return absl::nullopt;
-  return it->second;
-}
-
-}  // namespace internal
-
 std::string StatusCodeToString(StatusCode code) {
   switch (code) {
     case StatusCode::kOk:
@@ -90,6 +70,119 @@ std::string StatusCodeToString(StatusCode code) {
 std::ostream& operator<<(std::ostream& os, StatusCode code) {
   return os << StatusCodeToString(code);
 }
+
+// Encapsulates the implementation of a non-OK status. OK Statuses are
+// represented by a nullptr Status::impl_, as an optimization for the common
+// case of OK Statuses. This class holds all the data associated with a non-OK
+// Status so we don't have to worry about bloating the common OK case.
+class Status::Impl {
+  using PayloadType = std::unordered_map<std::string, std::string>;
+
+ public:
+  explicit Impl(StatusCode code, std::string message, PayloadType payload)
+      : code_(code),
+        message_(std::move(message)),
+        payload_(std::move(payload)) {}
+
+  StatusCode code() const { return code_; }
+  std::string const& message() const { return message_; }
+  PayloadType const& payload() const { return payload_; };
+
+  // Allows mutable access to payload, which is needed in the
+  // `internal::SetPayload()` function.
+  PayloadType& payload() { return payload_; };
+
+  friend inline bool operator==(Impl const& a, Impl const& b) {
+    return a.code_ == b.code_ && a.message_ == b.message_ &&
+           a.payload_ == b.payload_;
+  }
+
+  friend inline bool operator!=(Impl const& a, Impl const& b) {
+    return !(a == b);
+  }
+
+ private:
+  StatusCode code_;
+  std::string message_;
+  PayloadType payload_;
+};
+
+Status::~Status() { delete impl_; }
+
+// Deep copy
+Status::Status(Status const& other)
+    : impl_(other.ok() ? nullptr : new auto(*other.impl_)) {}
+
+// Deep copy
+Status& Status::operator=(Status const& other) {
+  if (this != &other) {
+    delete impl_;
+    impl_ = other.ok() ? nullptr : new auto(*other.impl_);
+  }
+  return *this;
+}
+
+Status::Status(Status&& other) noexcept : impl_(other.impl_) {
+  other.impl_ = nullptr;
+}
+
+Status& Status::operator=(Status&& other) noexcept {
+  if (this != &other) {
+    delete impl_;
+    impl_ = other.impl_;
+    other.impl_ = nullptr;
+  }
+  return *this;
+}
+
+// OK statuses have an impl_ == nullptr. Non-OK Statuses get an Impl.
+Status::Status(StatusCode code, std::string message)
+    : impl_(code == StatusCode::kOk
+                ? nullptr
+                : new Status::Impl{code, std::move(message), {}}) {}
+
+StatusCode Status::code() const {
+  return impl_ ? impl_->code() : StatusCode::kOk;
+}
+
+std::string const& Status::message() const {
+  static auto const* const kEmpty = new std::string{};
+  return impl_ ? impl_->message() : *kEmpty;
+}
+
+bool operator==(Status const& a, Status const& b) {
+  return (a.ok() && b.ok()) ||
+         (a.impl_ != nullptr && b.impl_ != nullptr && *a.impl_ == *b.impl_);
+}
+
+bool operator!=(Status const& a, Status const& b) { return !(a == b); }
+
+std::ostream& operator<<(std::ostream& os, Status const& s) {
+  if (s.ok()) return os << StatusCode::kOk;
+  return os << s.code() << ": " << s.message();
+}
+
+namespace internal {
+
+// Sets the given `payload`, indexed by the given `key`, on the given `Status`,
+// IFF the status is not OK. Payloads are considered in equality comparisons.
+// The keyspace used here is separate from other keyspaces (e.g.,
+// `absl::Status`), so we only need to coordinate keys with ourselves.
+void SetPayload(Status& s, std::string key, std::string payload) {
+  if (s.impl_) s.impl_->payload()[std::move(key)] = std::move(payload);
+}
+
+// Returns the payload associated with the given `key`, if available.
+absl::optional<std::string> GetPayload(Status const& s,
+                                       std::string const& key) {
+  if (!s.impl_) return absl::nullopt;
+  auto const& payload = s.impl_->payload();
+  auto it = payload.find(key);
+  if (it == payload.end()) return absl::nullopt;
+  return it->second;
+}
+
+}  // namespace internal
 
 RuntimeStatusError::RuntimeStatusError(Status status)
     : std::runtime_error(StatusWhat(status)), status_(std::move(status)) {}

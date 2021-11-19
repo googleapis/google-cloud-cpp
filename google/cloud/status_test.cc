@@ -58,7 +58,7 @@ TEST(Status, Basics) {
   EXPECT_EQ(s.message(), "");
   EXPECT_EQ(s, Status());
 
-  // The message is ignored on OK statues.
+  // The message is ignored on OK statuses.
   auto ok = Status(StatusCode::kOk, "message ignored");
   EXPECT_EQ(s, ok);
   EXPECT_EQ("", ok.message());
@@ -72,6 +72,20 @@ TEST(Status, Basics) {
   EXPECT_NE(s, Status(StatusCode::kUnknown, ""));
   EXPECT_NE(s, Status(StatusCode::kUnknown, "bar"));
   EXPECT_EQ(s, Status(StatusCode::kUnknown, "foo"));
+}
+
+TEST(Status, SelfAssignWorks) {
+  auto s = Status(StatusCode::kUnknown, "foo");
+  auto& r = s;  // Hide the self-assign from linter.
+  s = r;
+  EXPECT_FALSE(s.ok());
+  EXPECT_EQ(s.code(), StatusCode::kUnknown);
+  EXPECT_EQ(s.message(), "foo");
+
+  s = std::move(r);
+  EXPECT_FALSE(s.ok());
+  EXPECT_EQ(s.code(), StatusCode::kUnknown);
+  EXPECT_EQ(s.message(), "foo");
 }
 
 TEST(Status, OperatorOutput) {

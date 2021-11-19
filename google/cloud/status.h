@@ -82,42 +82,40 @@ absl::optional<std::string> GetPayload(Status const&, std::string const& key);
 class Status {
  public:
   Status() = default;
+  ~Status();
+  Status(Status const&);
+  Status& operator=(Status const&);
+  Status(Status&&) noexcept;
+  Status& operator=(Status&&) noexcept;
 
   /**
    * Constructs a Status with the given @p code and @p message.
    *
    * Ignores @p message if @p code is `StatusCode::kOk`.
    */
-  explicit Status(StatusCode code, std::string message)
-      : code_(code),
-        message_(code_ == StatusCode::kOk ? "" : std::move(message)) {}
+  explicit Status(StatusCode code, std::string message);
 
-  bool ok() const { return code_ == StatusCode::kOk; }
-  StatusCode code() const { return code_; }
-  std::string const& message() const { return message_; }
+  bool ok() const { return impl_ == nullptr; }
+  StatusCode code() const;
+  std::string const& message() const;
 
-  friend inline bool operator==(Status const& a, Status const& b) {
-    return a.code_ == b.code_ && a.message_ == b.message_ &&
-           a.payload_ == b.payload_;
-  }
-  friend inline bool operator!=(Status const& a, Status const& b) {
-    return !(a == b);
-  }
-  friend inline std::ostream& operator<<(std::ostream& os, Status const& s) {
-    if (s.ok()) return os << s.code();
-    return os << s.code() << ": " << s.message();
-  }
+  friend bool operator==(Status const& a, Status const& b);
+  friend bool operator!=(Status const& a, Status const& b);
+  friend std::ostream& operator<<(std::ostream& os, Status const& s);
 
  private:
   friend void internal::SetPayload(Status&, std::string, std::string);
   friend absl::optional<std::string> internal::GetPayload(Status const&,
                                                           std::string const&);
 
-  StatusCode code_{StatusCode::kOk};
-  std::string message_;
-  std::unordered_map<std::string, std::string> payload_;
+  class Impl;
+  // A null `impl_` is an OK status. Only non-OK Statuses allocate an Impl.
+  Impl* impl_{nullptr};
 };
 
+/**
+ * A runtime error that wraps a `google::cloud::Status`.
+ */
 class RuntimeStatusError : public std::runtime_error {
  public:
   explicit RuntimeStatusError(Status status);
