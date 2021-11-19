@@ -147,14 +147,15 @@ TEST(GoldenThingAdminConnectionTest, ListDatabasesTooManyFailures) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListDatabases)
       .Times(AtLeast(2))
-      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+      .WillRepeatedly(
+          Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListDatabasesRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   auto range = conn->ListDatabases(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, begin->status().code());
 }
 
 /// @test Verify that successful case works.
@@ -232,7 +233,7 @@ TEST(GoldenThingAdminConnectionTest, GetDatabaseSuccess) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
   EXPECT_CALL(*mock, GetDatabase)
-      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "try-again")))
       .WillOnce(
           [&expected_name](
               grpc::ClientContext&,
@@ -274,13 +275,14 @@ TEST(GoldenThingAdminConnectionTest, GetDatabaseTooManyTransients) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetDatabase)
       .Times(AtLeast(2))
-      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+      .WillRepeatedly(
+          Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::GetDatabaseRequest request;
   request.set_name(
       "projects/test-project/instances/test-instance/databases/test-database");
   auto response = conn->GetDatabase(request);
-  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, response.status().code());
 }
 
 /// @test Verify that successful case works.
@@ -400,7 +402,7 @@ TEST(GoldenThingAdminConnectionTest, GetDatabaseDdlSuccess) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
   EXPECT_CALL(*mock, GetDatabaseDdl)
-      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "try-again")))
       .WillOnce([&expected_name](grpc::ClientContext&,
                                  ::google::test::admin::database::v1::
                                      GetDatabaseDdlRequest const& request) {
@@ -437,13 +439,14 @@ TEST(GoldenThingAdminConnectionTest, GetDatabaseDdlTooManyTransients) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetDatabaseDdl)
       .Times(AtLeast(2))
-      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+      .WillRepeatedly(
+          Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::GetDatabaseDdlRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
   auto response = conn->GetDatabaseDdl(request);
-  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, response.status().code());
 }
 
 /// @test Verify that the successful case works.
@@ -503,7 +506,7 @@ TEST(GoldenThingAdminConnectionTest, SetIamPolicyPermanentError) {
 TEST(GoldenThingAdminConnectionTest, SetIamPolicyNonIdempotent) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, SetIamPolicy)
-      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
+      .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   google::iam::v1::Policy policy;
   google::iam::v1::SetIamPolicyRequest request;
@@ -511,7 +514,7 @@ TEST(GoldenThingAdminConnectionTest, SetIamPolicyNonIdempotent) {
       "projects/test-project/instances/test-instance/databases/test-database");
   *request.mutable_policy() = policy;
   auto response = conn->SetIamPolicy(request);
-  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, response.status().code());
 }
 
 /// @test Verify that the successful case works.
@@ -561,13 +564,14 @@ TEST(GoldenThingAdminConnectionTest, GetIamPolicyPermanentError) {
 TEST(GoldenThingAdminConnectionTest, GetIamPolicyTooManyTransients) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetIamPolicy)
-      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+      .WillRepeatedly(
+          Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
   auto response = conn->GetIamPolicy(request);
-  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, response.status().code());
 }
 
 /// @test Verify that the successful case works.
@@ -615,13 +619,14 @@ TEST(GoldenThingAdminConnectionTest, TestIamPermissionsPermanentError) {
 TEST(GoldenThingAdminConnectionTest, TestIamPermissionsTooManyTransients) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, TestIamPermissions)
-      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+      .WillRepeatedly(
+          Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
   auto response = conn->TestIamPermissions(request);
-  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, response.status().code());
 }
 
 /// @test Verify that successful case works.
@@ -702,7 +707,7 @@ TEST(GoldenThingAdminConnectionTest, GetBackupSuccess) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance/backups/test-backup";
   EXPECT_CALL(*mock, GetBackup)
-      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "try-again")))
       .WillOnce([&expected_name](
                     grpc::ClientContext&,
                     ::google::test::admin::database::v1::GetBackupRequest const&
@@ -739,11 +744,12 @@ TEST(GoldenThingAdminConnectionTest, GetBackupTooManyTransients) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetBackup)
       .Times(AtLeast(2))
-      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+      .WillRepeatedly(
+          Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::GetBackupRequest request;
   auto response = conn->GetBackup(request);
-  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, response.status().code());
 }
 
 /// @test Verify that the successful case works.
@@ -790,11 +796,12 @@ TEST(GoldenThingAdminConnectionTest, UpdateBackupPermanentError) {
 TEST(GoldenThingAdminConnectionTest, UpdateBackupTooManyTransients) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, UpdateBackup)
-      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+      .WillRepeatedly(
+          Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   google::test::admin::database::v1::UpdateBackupRequest request;
   auto response = conn->UpdateBackup(request);
-  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, response.status().code());
 }
 
 /// @test Verify that the successful case works.
@@ -835,13 +842,14 @@ TEST(GoldenThingAdminConnectionTest, DeleteBackupPermanentError) {
 TEST(GoldenThingAdminConnectionTest, DeleteBackupTooManyTransients) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, DeleteBackup)
-      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+      .WillRepeatedly(
+          Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::DeleteBackupRequest request;
   request.set_name(
       "projects/test-project/instances/test-instance/backups/test-backup");
   auto status = conn->DeleteBackup(request);
-  EXPECT_EQ(StatusCode::kUnavailable, status.code());
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, status.code());
 }
 
 /// @test Verify that we can list backups in multiple pages.
@@ -918,14 +926,15 @@ TEST(GoldenThingAdminConnectionTest, ListBackupsTooManyFailures) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListBackups)
       .Times(AtLeast(2))
-      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+      .WillRepeatedly(
+          Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListBackupsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   auto range = conn->ListBackups(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, begin->status().code());
 }
 
 /// @test Verify that successful case works.
@@ -1078,14 +1087,15 @@ TEST(GoldenThingAdminConnectionTest, ListDatabaseOperationsTooManyFailures) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListDatabaseOperations)
       .Times(AtLeast(2))
-      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+      .WillRepeatedly(
+          Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListDatabaseOperationsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   auto range = conn->ListDatabaseOperations(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, begin->status().code());
 }
 
 /// @test Verify that we can list backup operations in multiple pages.
@@ -1159,14 +1169,15 @@ TEST(GoldenThingAdminConnectionTest, ListBackupOperationsTooManyFailures) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, ListBackupOperations)
       .Times(AtLeast(2))
-      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+      .WillRepeatedly(
+          Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   auto range = conn->ListBackupOperations(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, begin->status().code());
 }
 
 TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseSuccess) {
@@ -1197,7 +1208,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseTooManyFailures) {
              ::google::test::admin::database::v1::GetDatabaseRequest const&) {
             return make_ready_future<
                 StatusOr<google::test::admin::database::v1::Database>>(
-                Status(StatusCode::kUnavailable, "try again"));
+                Status(StatusCode::kDeadlineExceeded, "try again"));
           });
 
   auto conn = CreateTestingConnection(std::move(mock));
@@ -1205,7 +1216,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseTooManyFailures) {
   auto fut = conn->AsyncGetDatabase(dbase);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto db = fut.get();
-  ASSERT_THAT(db, StatusIs(StatusCode::kUnavailable,
+  ASSERT_THAT(db, StatusIs(StatusCode::kDeadlineExceeded,
                            AllOf(HasSubstr("Retry policy exhausted"),
                                  HasSubstr("AsyncGetDatabase"),
                                  HasSubstr("try again"))));
@@ -1216,7 +1227,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseCancel) {
   promise<StatusOr<google::test::admin::database::v1::Database>> p(
       [&p, &cancelled] {
         cancelled = true;
-        p.set_value(Status(StatusCode::kUnavailable, "try again"));
+        p.set_value(Status(StatusCode::kDeadlineExceeded, "try again"));
       });
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
@@ -1236,7 +1247,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseCancel) {
   fut.cancel();
   EXPECT_TRUE(cancelled);
   auto db = fut.get();
-  ASSERT_THAT(db, StatusIs(StatusCode::kUnavailable,
+  ASSERT_THAT(db, StatusIs(StatusCode::kDeadlineExceeded,
                            AllOf(HasSubstr("Retry loop cancelled"),
                                  HasSubstr("AsyncGetDatabase"),
                                  HasSubstr("try again"))));
@@ -1277,7 +1288,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseFailure) {
                   request) {
             EXPECT_EQ(expected_name, request.database());
             return make_ready_future(
-                Status(StatusCode::kUnavailable, "try again"));
+                Status(StatusCode::kDeadlineExceeded, "try again"));
           });
 
   auto conn = CreateTestingConnection(std::move(mock));
@@ -1287,7 +1298,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseFailure) {
   auto fut = conn->AsyncDropDatabase(request);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto status = fut.get();
-  ASSERT_THAT(status, StatusIs(StatusCode::kUnavailable,
+  ASSERT_THAT(status, StatusIs(StatusCode::kDeadlineExceeded,
                                AllOf(HasSubstr("Error in non-idempotent"),
                                      HasSubstr("AsyncDropDatabase"),
                                      HasSubstr("try again"))));
@@ -1297,7 +1308,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseCancel) {
   auto cancelled = false;
   promise<Status> p([&p, &cancelled] {
     cancelled = true;
-    p.set_value(Status(StatusCode::kUnavailable, "try again"));
+    p.set_value(Status(StatusCode::kDeadlineExceeded, "try again"));
   });
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
@@ -1324,7 +1335,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseCancel) {
   fut.cancel();
   EXPECT_TRUE(cancelled);
   auto status = fut.get();
-  ASSERT_THAT(status, StatusIs(StatusCode::kUnavailable,
+  ASSERT_THAT(status, StatusIs(StatusCode::kDeadlineExceeded,
                                AllOf(HasSubstr("Error in non-idempotent"),
                                      HasSubstr("AsyncDropDatabase"),
                                      HasSubstr("try again"))));

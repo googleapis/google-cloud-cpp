@@ -20,8 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_BIGTABLE_TABLE_ADMIN_CONNECTION_H
 
 #include "google/cloud/bigtable/admin/bigtable_table_admin_connection_idempotency_policy.h"
+#include "google/cloud/bigtable/admin/internal/bigtable_table_admin_retry_traits.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_stub.h"
-#include "google/cloud/bigtable/admin/internal/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"

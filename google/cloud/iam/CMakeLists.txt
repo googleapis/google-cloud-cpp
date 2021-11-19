@@ -55,6 +55,7 @@ add_library(
     internal/iam_credentials_metadata_decorator.h
     internal/iam_credentials_option_defaults.cc
     internal/iam_credentials_option_defaults.h
+    internal/iam_credentials_retry_traits.h
     internal/iam_credentials_stub.cc
     internal/iam_credentials_stub.h
     internal/iam_credentials_stub_factory.cc
@@ -65,11 +66,11 @@ add_library(
     internal/iam_metadata_decorator.h
     internal/iam_option_defaults.cc
     internal/iam_option_defaults.h
+    internal/iam_retry_traits.h
     internal/iam_stub.cc
     internal/iam_stub.h
     internal/iam_stub_factory.cc
     internal/iam_stub_factory.h
-    internal/retry_traits.h
     retry_traits.h)
 target_include_directories(
     google_cloud_cpp_iam

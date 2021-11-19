@@ -38,6 +38,14 @@ message ServiceConfiguration {
   // versions of the generated libraries need this, but new libraries should not
   // have it.
   bool backwards_compatibility_namespace_alias = 9;
+
+  // If all rpcs in the service have the same set of retryable status codes,
+  // typically found in the service_config.json accompanying the proto files,
+  // generate the ServiceNameRetryTraits struct using the provided codes.
+  // These codes can be service name qualified for files that define more than
+  // one service. Unqualified codes are added to each service in the file.
+  // If no codes are listed, do not attempt to generate the retry traits.
+  repeated string retryable_status_codes = 10;
 }
 
 message GeneratorConfiguration {

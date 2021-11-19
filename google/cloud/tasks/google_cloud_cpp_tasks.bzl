@@ -25,9 +25,9 @@ google_cloud_cpp_tasks_hdrs = [
     "internal/cloud_tasks_logging_decorator.h",
     "internal/cloud_tasks_metadata_decorator.h",
     "internal/cloud_tasks_option_defaults.h",
+    "internal/cloud_tasks_retry_traits.h",
     "internal/cloud_tasks_stub.h",
     "internal/cloud_tasks_stub_factory.h",
-    "internal/retry_traits.h",
 ]
 
 google_cloud_cpp_tasks_srcs = [

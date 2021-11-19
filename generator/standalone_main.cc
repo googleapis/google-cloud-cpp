@@ -206,6 +206,9 @@ int main(int argc, char** argv) {
       args.emplace_back(
           "--cpp_codegen_opt=backwards_compatibility_namespace_alias=true");
     }
+    for (auto const& retry_code : service.retryable_status_codes()) {
+      args.emplace_back("--cpp_codegen_opt=retry_status_code=" + retry_code);
+    }
     args.emplace_back("--cpp_codegen_opt=service_endpoint_env_var=" +
                       service.service_endpoint_env_var());
     args.emplace_back("--cpp_codegen_opt=emulator_endpoint_env_var=" +

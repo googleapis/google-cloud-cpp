@@ -25,9 +25,9 @@ google_cloud_cpp_bigquery_hdrs = [
     "internal/bigquery_read_logging_decorator.h",
     "internal/bigquery_read_metadata_decorator.h",
     "internal/bigquery_read_option_defaults.h",
+    "internal/bigquery_read_retry_traits.h",
     "internal/bigquery_read_stub.h",
     "internal/bigquery_read_stub_factory.h",
-    "internal/retry_traits.h",
     "retry_traits.h",
 ]
 

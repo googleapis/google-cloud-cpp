@@ -104,6 +104,9 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
     emulator_endpoint_env_var_ = "GOLDEN_KITCHEN_SINK_EMULATOR_HOST";
     gen_async_rpc1_ = "GetDatabase";
     gen_async_rpc2_ = "DropDatabase";
+    retry_code1_ = "GoldenKitchenSink.kInternal";
+    retry_code2_ = "kUnavailable";
+    retry_code3_ = "GoldenThingAdmin.kDeadlineExceeded";
 
     std::vector<std::string> args;
     // empty arg keeps first real arg from being ignored.
@@ -122,6 +125,9 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
                       emulator_endpoint_env_var_);
     args.emplace_back("--cpp_codegen_opt=gen_async_rpc=" + gen_async_rpc1_);
     args.emplace_back("--cpp_codegen_opt=gen_async_rpc=" + gen_async_rpc2_);
+    args.emplace_back("--cpp_codegen_opt=retry_status_code=" + retry_code1_);
+    args.emplace_back("--cpp_codegen_opt=retry_status_code=" + retry_code2_);
+    args.emplace_back("--cpp_codegen_opt=retry_status_code=" + retry_code3_);
     args.emplace_back("generator/integration_tests/test.proto");
 
     std::vector<char const*> c_args;
@@ -147,6 +153,9 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
   std::string emulator_endpoint_env_var_;
   std::string gen_async_rpc1_;
   std::string gen_async_rpc2_;
+  std::string retry_code1_;
+  std::string retry_code2_;
+  std::string retry_code3_;
 };
 
 TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {
@@ -174,6 +183,7 @@ INSTANTIATE_TEST_SUITE_P(
         "internal/golden_thing_admin_metadata_decorator.cc",
         "internal/golden_thing_admin_option_defaults.h",
         "internal/golden_thing_admin_option_defaults.cc",
+        "internal/golden_thing_admin_retry_traits.h",
         "internal/golden_thing_admin_stub_factory.h",
         "internal/golden_thing_admin_stub_factory.cc",
         "internal/golden_thing_admin_stub.h",
@@ -190,6 +200,7 @@ INSTANTIATE_TEST_SUITE_P(
         "internal/golden_kitchen_sink_metadata_decorator.cc",
         "internal/golden_kitchen_sink_option_defaults.h",
         "internal/golden_kitchen_sink_option_defaults.cc",
+        "internal/golden_kitchen_sink_retry_traits.h",
         "internal/golden_kitchen_sink_stub_factory.h",
         "internal/golden_kitchen_sink_stub_factory.cc",
         "internal/golden_kitchen_sink_stub.h",

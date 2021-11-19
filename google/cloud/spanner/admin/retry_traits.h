@@ -15,7 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_RETRY_TRAITS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_RETRY_TRAITS_H
 
-#include "google/cloud/spanner/admin/internal/retry_traits.h"
+#include "google/cloud/spanner/admin/internal/database_admin_retry_traits.h"
+#include "google/cloud/spanner/admin/internal/instance_admin_retry_traits.h"
 #warning "This header is deprecated, it provided internal-only symbols"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_RETRY_TRAITS_H

@@ -20,8 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_GOLDEN_KITCHEN_SINK_CONNECTION_H
 
 #include "generator/integration_tests/golden/golden_kitchen_sink_connection_idempotency_policy.h"
+#include "generator/integration_tests/golden/internal/golden_kitchen_sink_retry_traits.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub.h"
-#include "generator/integration_tests/golden/internal/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

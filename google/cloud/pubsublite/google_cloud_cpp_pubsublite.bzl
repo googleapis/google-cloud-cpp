@@ -25,9 +25,9 @@ google_cloud_cpp_pubsublite_hdrs = [
     "internal/admin_logging_decorator.h",
     "internal/admin_metadata_decorator.h",
     "internal/admin_option_defaults.h",
+    "internal/admin_retry_traits.h",
     "internal/admin_stub.h",
     "internal/admin_stub_factory.h",
-    "internal/retry_traits.h",
 ]
 
 google_cloud_cpp_pubsublite_srcs = [
