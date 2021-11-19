@@ -178,6 +178,18 @@ TEST(StatusOrTest, ValueConstArrow) {
   EXPECT_EQ(std::string("42"), actual->c_str());
 }
 
+TEST(StatusOrTest, MovedFromState) {
+  StatusOr<int> a(123);
+  EXPECT_STATUS_OK(a);
+  EXPECT_EQ(123, *a);
+
+  // Asserts that a moved-from StatusOr is equal to a default constructed one.
+  auto b = std::move(a);
+  EXPECT_EQ(a, StatusOr<int>{});  // NOLINT(bugprone-use-after-move)
+  a = std::move(b);
+  EXPECT_EQ(b, StatusOr<int>{});  // NOLINT(bugprone-use-after-move)
+}
+
 using testing_util::NoDefaultConstructor;
 
 TEST(StatusOrNoDefaultConstructor, DefaultConstructed) {
@@ -229,8 +241,6 @@ TEST(StatusOrObservableTest, MoveCopy) {
   EXPECT_EQ(1, Observable::move_constructor());
   EXPECT_STATUS_OK(copy);
   EXPECT_EQ("foo", copy->str());
-  EXPECT_STATUS_OK(other);  // NOLINT(bugprone-use-after-move)
-  EXPECT_EQ("moved-out", other->str());
 }
 
 /// @test A move-assigned status calls the right assignments and destructors.
@@ -260,10 +270,8 @@ TEST(StatusOrObservableTest, MoveAssignmentNoValueValue) {
 
   Observable::reset_counters();
   assigned = std::move(other);
-  EXPECT_STATUS_OK(other);  // NOLINT(bugprone-use-after-move)
   EXPECT_STATUS_OK(assigned);
   EXPECT_EQ("foo", assigned->str());
-  EXPECT_EQ("moved-out", other->str());
   EXPECT_EQ(0, Observable::destructor());
   EXPECT_EQ(0, Observable::move_assignment());
   EXPECT_EQ(0, Observable::copy_assignment());
@@ -316,7 +324,6 @@ TEST(StatusOrObservableTest, MoveAssignmentValueValue) {
 
   Observable::reset_counters();
   assigned = std::move(other);
-  EXPECT_STATUS_OK(other);  // NOLINT(bugprone-use-after-move)
   EXPECT_STATUS_OK(assigned);
   EXPECT_EQ(0, Observable::destructor());
   EXPECT_EQ(1, Observable::move_assignment());
@@ -324,7 +331,6 @@ TEST(StatusOrObservableTest, MoveAssignmentValueValue) {
   EXPECT_EQ(0, Observable::move_constructor());
   EXPECT_EQ(0, Observable::copy_constructor());
   EXPECT_EQ("foo", assigned->str());
-  EXPECT_EQ("moved-out", other->str());
 }
 
 /// @test A move-assigned status calls the right assignments and destructors.

@@ -98,14 +98,22 @@ class StatusOr final {
   /**
    * Initializes with an error status (UNKNOWN).
    */
-  StatusOr() : StatusOr(Status(StatusCode::kUnknown, "default")) {}
+  StatusOr() : StatusOr(MakeDefaultStatus()) {}
 
   StatusOr(StatusOr const&) = default;
   StatusOr& operator=(StatusOr const&) = default;
   // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-  StatusOr(StatusOr&&) = default;
+  StatusOr(StatusOr&& other)
+      : status_(std::move(other.status_)), value_(std::move(other.value_)) {
+    other.status_ = MakeDefaultStatus();
+  }
   // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-  StatusOr& operator=(StatusOr&&) = default;
+  StatusOr& operator=(StatusOr&& other) {
+    status_ = std::move(other.status_);
+    value_ = std::move(other.value_);
+    other.status_ = MakeDefaultStatus();
+    return *this;
+  }
 
   /**
    * Creates a new `StatusOr<T>` holding the error condition @p rhs.
@@ -246,6 +254,10 @@ class StatusOr final {
   //@}
 
  private:
+  static Status MakeDefaultStatus() {
+    return Status{StatusCode::kUnknown, "default"};
+  }
+
   void CheckHasValue() const& {
     if (!ok()) {
       internal::ThrowStatus(status_);
