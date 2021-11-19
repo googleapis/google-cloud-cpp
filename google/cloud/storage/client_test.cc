@@ -84,6 +84,22 @@ class ClientTest : public ::testing::Test {
   std::shared_ptr<testing::MockClient> mock_;
 };
 
+TEST_F(ClientTest, Equality) {
+  auto a =
+      storage::Client(Options{}.set<google::cloud::UnifiedCredentialsOption>(
+          google::cloud::MakeInsecureCredentials()));
+  auto b =
+      storage::Client(Options{}.set<google::cloud::UnifiedCredentialsOption>(
+          google::cloud::MakeInsecureCredentials()));
+  EXPECT_TRUE(a != b);
+  EXPECT_TRUE(a == a);
+  EXPECT_TRUE(b == b);
+  auto c = a;  // NOLINT(performance-unnecessary-copy-initialization)
+  EXPECT_TRUE(a == c);
+  b = std::move(a);
+  EXPECT_TRUE(b == c);
+}
+
 TEST_F(ClientTest, OverrideRetryPolicy) {
   auto client = internal::ClientImplDetails::CreateClient(
       std::shared_ptr<internal::RawClient>(mock_), ObservableRetryPolicy(3));
