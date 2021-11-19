@@ -76,9 +76,9 @@ std::ostream& operator<<(std::ostream& os, StatusCode code) {
 // case of OK Statuses. This class holds all the data associated with a non-OK
 // Status so we don't have to worry about bloating the common OK case.
 class Status::Impl {
+ public:
   using PayloadType = std::unordered_map<std::string, std::string>;
 
- public:
   explicit Impl(StatusCode code, std::string message, ErrorInfo info,
                 PayloadType payload)
       : code_(code),
