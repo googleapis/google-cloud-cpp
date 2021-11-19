@@ -294,6 +294,14 @@ class Client {
   explicit Client(std::shared_ptr<internal::RawClient> client, NoDecorations)
       : Client(InternalOnlyNoDecorations{}, std::move(client)) {}
 
+  //@{
+  // @name Equality
+  friend bool operator==(Client const& a, Client const& b) {
+    return a.raw_client_ == b.raw_client_;
+  }
+  friend bool operator!=(Client const& a, Client const& b) { return !(a == b); }
+  //@}
+
   /// Access the underlying `RawClient`.
   /// @deprecated Only intended for implementors, do not use.
   GOOGLE_CLOUD_CPP_DEPRECATED(
@@ -3132,6 +3140,8 @@ class Client {
   //@}
 
  private:
+  friend class internal::NonResumableParallelUploadState;
+  friend class internal::ResumableParallelUploadState;
   friend internal::ClientImplDetails;
 
   struct InternalOnly {};
@@ -3226,8 +3236,6 @@ class Client {
 
   std::shared_ptr<internal::RawClient> raw_client_;
 
-  friend class internal::NonResumableParallelUploadState;
-  friend class internal::ResumableParallelUploadState;
 };
 
 /**
