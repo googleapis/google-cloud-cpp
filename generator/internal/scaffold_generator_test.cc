@@ -90,7 +90,7 @@ class ScaffoldGenerator : public ::testing::Test {
         "majorVersion": "v1",
         "hostName": "test.googleapis.com",
         "title": "Test Only API",
-        "description": "A Fake Test Service"
+        "description": "Provides a placeholder to write this test."
       }
     ]
 })""";
@@ -133,10 +133,12 @@ TEST_F(ScaffoldGenerator, LibraryName) {
 
 TEST_F(ScaffoldGenerator, Vars) {
   auto const vars = ScaffoldVars(path(), path(), service());
-  EXPECT_THAT(vars, AllOf(Contains(Pair("title", "Test Only API")),
-                          Contains(Pair("description", "A Fake Test Service")),
-                          Contains(Pair("library", "test")),
-                          Contains(Pair("copyright_year", "2034"))));
+  EXPECT_THAT(
+      vars, AllOf(Contains(Pair("title", "Test Only API")),
+                  Contains(Pair("description",
+                                "Provides a placeholder to write this test.")),
+                  Contains(Pair("library", "test")),
+                  Contains(Pair("copyright_year", "2034"))));
 }
 
 TEST_F(ScaffoldGenerator, CmakeConfigIn) {
@@ -168,7 +170,8 @@ TEST_F(ScaffoldGenerator, Readme) {
   GenerateReadme(os, vars);
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr(R"""(
-[Test Only API](https://cloud.google.com/test/) A Fake Test Service
+[Test Only API](https://cloud.google.com/test/), a service that
+Provides a placeholder to write this test.
 )"""));
 }
 

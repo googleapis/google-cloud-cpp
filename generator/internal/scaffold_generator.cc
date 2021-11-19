@@ -236,10 +236,9 @@ void GenerateReadme(std::ostream& os,
 
 :construction:
 
-[$title$](https://cloud.google.com/$site_root$/) $description$
-
-This directory contains an idiomatic C++ client library for interacting with
-this service.
+This directory contains an idiomatic C++ client library for
+[$title$](https://cloud.google.com/$site_root$/), a service that
+$description$
 
 This library is **experimental**. Its APIS are subject to change without notice.
 )""";
