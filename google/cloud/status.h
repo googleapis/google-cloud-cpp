@@ -99,11 +99,16 @@ class Status {
   StatusCode code() const;
   std::string const& message() const;
 
-  friend bool operator==(Status const& a, Status const& b);
-  friend bool operator!=(Status const& a, Status const& b);
+  friend inline bool operator==(Status const& a, Status const& b) {
+    return (a.ok() && b.ok()) || Equals(a, b);
+  }
+  friend inline bool operator!=(Status const& a, Status const& b) {
+    return !(a == b);
+  }
   friend std::ostream& operator<<(std::ostream& os, Status const& s);
 
  private:
+  static bool Equals(Status const& a, Status const& b);
   friend void internal::SetPayload(Status&, std::string, std::string);
   friend absl::optional<std::string> internal::GetPayload(Status const&,
                                                           std::string const&);

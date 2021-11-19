@@ -137,11 +137,9 @@ std::string const& Status::message() const {
   return impl_ ? impl_->message() : *kEmpty;
 }
 
-bool operator==(Status const& a, Status const& b) {
+bool Status::Equals(Status const& a, Status const& b) {
   return (a.ok() && b.ok()) || (a.impl_ && b.impl_ && *a.impl_ == *b.impl_);
 }
-
-bool operator!=(Status const& a, Status const& b) { return !(a == b); }
 
 std::ostream& operator<<(std::ostream& os, Status const& s) {
   if (s.ok()) return os << StatusCode::kOk;
