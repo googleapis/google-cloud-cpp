@@ -63,28 +63,12 @@ target_link_libraries(
            google-cloud-cpp::api_annotations_protos
            google-cloud-cpp::api_http_protos)
 
-add_library(
-    google_cloud_cpp_tasks # cmake-format: sort
-    cloud_tasks_client.cc
-    cloud_tasks_client.h
-    cloud_tasks_connection.cc
-    cloud_tasks_connection.h
-    cloud_tasks_connection_idempotency_policy.cc
-    cloud_tasks_connection_idempotency_policy.h
-    cloud_tasks_options.h
-    internal/cloud_tasks_auth_decorator.cc
-    internal/cloud_tasks_auth_decorator.h
-    internal/cloud_tasks_logging_decorator.cc
-    internal/cloud_tasks_logging_decorator.h
-    internal/cloud_tasks_metadata_decorator.cc
-    internal/cloud_tasks_metadata_decorator.h
-    internal/cloud_tasks_option_defaults.cc
-    internal/cloud_tasks_option_defaults.h
-    internal/cloud_tasks_retry_traits.h
-    internal/cloud_tasks_stub.cc
-    internal/cloud_tasks_stub.h
-    internal/cloud_tasks_stub_factory.cc
-    internal/cloud_tasks_stub_factory.h)
+file(
+    GLOB source_files
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    "*.h" "*.cc" "internal/*.h" "internal/*.cc")
+list(SORT source_files)
+add_library(google_cloud_cpp_tasks ${source_files})
 target_include_directories(
     google_cloud_cpp_tasks
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -114,11 +98,17 @@ create_bazel_config(google_cloud_cpp_tasks YEAR "2021")
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
+file(
+    GLOB relative_mock_files
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    "mocks/*.h")
+list(SORT relative_mock_files)
+set(mock_files)
+foreach (file IN LISTS relative_mock_files)
+    list(APPEND mock_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
+endforeach ()
 add_library(google_cloud_cpp_tasks_mocks INTERFACE)
-target_sources(
-    google_cloud_cpp_tasks_mocks
-    INTERFACE # cmake-format: sort
-              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_cloud_tasks_connection.h)
+target_sources(google_cloud_cpp_tasks_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_tasks_mocks
     INTERFACE google-cloud-cpp::experimental-tasks GTest::gmock_main

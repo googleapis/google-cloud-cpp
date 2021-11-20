@@ -351,8 +351,11 @@ external_googleapis_set_version_and_alias($library$_protos)
 target_link_libraries(google_cloud_cpp_$library$_protos PUBLIC #
     $proto_deps$)
 
-add_library(google_cloud_cpp_$library$ # cmake-format: sort
-            $cpp_files$)
+file(GLOB source_files
+     RELATIVE "$${CMAKE_CURRENT_SOURCE_DIR}"
+     "*.h" "*.cc" "internal/*.h" "internal/*.cc")
+list(SORT source_files)
+add_library(google_cloud_cpp_$library$ $${source_files})
 target_include_directories(
     google_cloud_cpp_$library$
     PUBLIC $$<BUILD_INTERFACE:$${PROJECT_SOURCE_DIR}>
@@ -382,9 +385,16 @@ create_bazel_config(google_cloud_cpp_$library$ YEAR "2021")
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
+file(GLOB relative_mock_files
+     RELATIVE "$${CMAKE_CURRENT_SOURCE_DIR}"
+     "mocks/*.h")
+list(SORT relative_mock_files)
+set(mock_files)
+foreach (file IN LISTS relative_mock_files)
+  list(APPEND mock_files "$${CMAKE_CURRENT_SOURCE_DIR}/$${file}")
+endforeach ()
 add_library(google_cloud_cpp_$library$_mocks INTERFACE)
-target_sources(google_cloud_cpp_$library$_mocks INTERFACE # cmake-format: sort
-               $mock_files$)
+target_sources(google_cloud_cpp_$library$_mocks INTERFACE $${mock_files})
 target_link_libraries(
     google_cloud_cpp_$library$_mocks
     INTERFACE google-cloud-cpp::experimental-$library$ GTest::gmock_main
