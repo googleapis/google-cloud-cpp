@@ -210,21 +210,6 @@ target_link_libraries(google_cloud_cpp_test_protos PUBLIC #
     google-cloud-cpp::api_annotations_protos
     google-cloud-cpp::api_http_protos)
 )"""));
-
-  EXPECT_THAT(actual, HasSubstr(R"""(
-add_library(google_cloud_cpp_test # cmake-format: sort
-            # EDIT HERE: add list of C++ files
-)
-target_include_directories(
-    google_cloud_cpp_test
-)"""));
-
-  EXPECT_THAT(actual, HasSubstr(R"""(
-add_library(google_cloud_cpp_test_mocks INTERFACE)
-target_sources(google_cloud_cpp_test_mocks INTERFACE # cmake-format: sort
-               # EDIT HERE: add list of mock headers
-)
-)"""));
 }
 
 }  // namespace

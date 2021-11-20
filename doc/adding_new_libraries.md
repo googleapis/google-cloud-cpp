@@ -78,17 +78,30 @@ bazel run \
 ci/cloudbuild/build.sh -t checkers-pr
 ```
 
-## Manually add the C++ files to the CMakeLists.txt file
+## Create any custom source files
 
 If the `generator/generator_config.textproto` entry for the service does not
 enumerate the `retryable_status_codes`, you need to manually create the file as
-`google/cloud/$library/internal/<service_name>_retry_traits.h`. Add this file
-**and** any generated C++ files to the `CMakeLists.txt` file. There should
-be markers in the file, search for `EDIT HERE`.
+`google/cloud/$library/internal/<service_name>_retry_traits.h`.
+
+Likewise, for services using streaming operations you may need to implement the
+streaming `*Updater` function. Use `google/cloud/bigquery/streaming.cc` for
+inspiration.
+
+## Validate and Generate the `*.bzl` files
+
+Run the `cmake-install-pr` build.  This is one of the builds that compiles all
+the libraries, including the library you just added. It will also generate the
+`*.bzl` files for Bazel-based builds.
 
 ```shell
 ci/cloudbuild/build.sh -t cmake-install-pr
 ```
+
+## Update the README file
+
+The generated `README.md` file in `google/cloud/${library}` probably needs some
+light copy-editing to read less like it was written by a robot.
 
 ## Update the root `BUILD` file
 
