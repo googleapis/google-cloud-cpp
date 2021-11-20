@@ -66,8 +66,7 @@ absl::optional<std::string> GetPayload(Status const&, std::string const& key);
 /**
  * Describes the cause of the error with structured details.
  *
- * @see
- * https://github.com/googleapis/googleapis/blob/master/google/rpc/error_details.proto
+ * @see https://cloud.google.com/apis/design/errors#error_info
  */
 class ErrorInfo {
  public:

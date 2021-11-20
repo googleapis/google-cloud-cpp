@@ -69,6 +69,9 @@ google::cloud::StatusCode MapStatusCode(grpc::StatusCode const& code) {
 // Unpacks the ErrorInfo from the Status proto, if one exists.
 absl::optional<google::rpc::ErrorInfo> GetErrorInfoProto(
     google::rpc::Status const& proto) {
+  // While in theory there _could_ be multiple ErrorInfo protos in this
+  // repeated field, we're told that there will be at most one, and our
+  // user-facing APIs should only expose one. So if we find one, we're done.
   for (google::protobuf::Any const& any : proto.details()) {
     if (any.Is<google::rpc::ErrorInfo>()) {
       google::rpc::ErrorInfo error_info;
@@ -78,12 +81,12 @@ absl::optional<google::rpc::ErrorInfo> GetErrorInfoProto(
   return absl::nullopt;
 }
 
-void FillErrorInfo(google::rpc::Status const& status, ErrorInfo& error_info) {
+ErrorInfo GetErrorInfo(google::rpc::Status const& status) {
   auto proto = GetErrorInfoProto(status);
-  if (!proto) return;
+  if (!proto) return {};
   std::unordered_map<std::string, std::string> metadata;
   for (auto const& e : proto->metadata()) metadata[e.first] = e.second;
-  error_info = ErrorInfo{proto->reason(), proto->domain(), std::move(metadata)};
+  return ErrorInfo{proto->reason(), proto->domain(), std::move(metadata)};
 }
 
 }  // namespace
@@ -118,9 +121,7 @@ google::cloud::Status MakeStatusFromRpcError(google::rpc::Status const& proto) {
       proto.code() <= static_cast<std::int32_t>(StatusCode::kUnauthenticated)) {
     code = static_cast<StatusCode>(proto.code());
   }
-  ErrorInfo error_info;
-  FillErrorInfo(proto, error_info);
-  auto status = Status(code, proto.message(), error_info);
+  auto status = Status(code, proto.message(), GetErrorInfo(proto));
   google::cloud::internal::SetPayload(
       status, google::cloud::internal::kStatusPayloadGrpcProto,
       proto.SerializeAsString());
