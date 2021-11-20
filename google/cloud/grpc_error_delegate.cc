@@ -14,12 +14,17 @@
 
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/status_payload_keys.h"
+#include "absl/types/optional.h"
+#include <google/protobuf/any.pb.h>
 #include <google/protobuf/text_format.h>
+#include <google/rpc/error_details.pb.h>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 namespace {
+
 google::cloud::StatusCode MapStatusCode(grpc::StatusCode const& code) {
   switch (code) {
     case grpc::StatusCode::OK:
@@ -60,6 +65,30 @@ google::cloud::StatusCode MapStatusCode(grpc::StatusCode const& code) {
       return google::cloud::StatusCode::kUnknown;
   }
 }
+
+// Unpacks the ErrorInfo from the Status proto, if one exists.
+absl::optional<google::rpc::ErrorInfo> GetErrorInfoProto(
+    google::rpc::Status const& proto) {
+  // While in theory there _could_ be multiple ErrorInfo protos in this
+  // repeated field, we're told that there will be at most one, and our
+  // user-facing APIs should only expose one. So if we find one, we're done.
+  for (google::protobuf::Any const& any : proto.details()) {
+    if (any.Is<google::rpc::ErrorInfo>()) {
+      google::rpc::ErrorInfo error_info;
+      if (any.UnpackTo(&error_info)) return error_info;
+    }
+  }
+  return absl::nullopt;
+}
+
+ErrorInfo GetErrorInfo(google::rpc::Status const& status) {
+  auto proto = GetErrorInfoProto(status);
+  if (!proto) return {};
+  std::unordered_map<std::string, std::string> metadata;
+  for (auto const& e : proto->metadata()) metadata[e.first] = e.second;
+  return ErrorInfo{proto->reason(), proto->domain(), std::move(metadata)};
+}
+
 }  // namespace
 
 google::cloud::Status MakeStatusFromRpcError(grpc::Status const& status) {
@@ -92,7 +121,7 @@ google::cloud::Status MakeStatusFromRpcError(google::rpc::Status const& proto) {
       proto.code() <= static_cast<std::int32_t>(StatusCode::kUnauthenticated)) {
     code = static_cast<StatusCode>(proto.code());
   }
-  auto status = Status(code, proto.message());
+  auto status = Status(code, proto.message(), GetErrorInfo(proto));
   google::cloud::internal::SetPayload(
       status, google::cloud::internal::kStatusPayloadGrpcProto,
       proto.SerializeAsString());
