@@ -162,8 +162,9 @@ std::ostream& operator<<(std::ostream& os, Status const& s) {
   if (s.ok()) return os << StatusCode::kOk;
   os << s.code() << ": " << s.message();
   auto const& e = s.error_info();
-  if (e.reason().empty() && e.domain().empty() && e.metadata().empty())
+  if (e.reason().empty() && e.domain().empty() && e.metadata().empty()) {
     return os;
+  }
   os << " error_info={reason=" << e.reason();
   os << ", domain=" << e.domain();
   os << ", metadata={";
