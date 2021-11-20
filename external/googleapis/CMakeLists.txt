@@ -95,7 +95,6 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/cloud/dialogflow/v2/validation_result.proto"
     "google/cloud/dialogflow/v2/webhook.proto"
     "google/cloud/speech/v1/cloud_speech.proto"
-    "google/cloud/texttospeech/v1/cloud_tts.proto"
     "google/logging/type/http_request.proto"
     "google/logging/type/log_severity.proto"
     "google/logging/v2/log_entry.proto"
@@ -150,19 +149,44 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/type/quaternion.proto"
     "google/type/timeofday.proto")
 
-file(GLOB protolists "protolists/*.list")
-foreach (file IN LISTS protolists)
+function (google_cloud_cpp_load_protolist var file)
     file(READ "${file}" contents)
     string(REGEX REPLACE "\n" ";" contents "${contents}")
+    set(protos)
     foreach (line IN LISTS contents)
         string(REPLACE "@com_google_googleapis//" "" line "${line}")
         string(REPLACE ":" "/" line "${line}")
         if ("${line}" STREQUAL "")
             continue()
         endif ()
-        list(APPEND EXTERNAL_GOOGLEAPIS_PROTO_FILES "${line}")
+        list(APPEND protos "${EXTERNAL_GOOGLEAPIS_SOURCE}/${line}")
     endforeach ()
-endforeach ()
+    set(${var}
+        "${protos}"
+        PARENT_SCOPE)
+endfunction ()
+
+function (google_cloud_cpp_load_protodeps var file)
+    file(READ "${file}" contents)
+    string(REGEX REPLACE "\n" ";" contents "${contents}")
+    set(deps)
+    foreach (line IN LISTS contents)
+        if ("${line}" STREQUAL "")
+            continue()
+        endif ()
+        string(REPLACE ":" "_" line "${line}")
+        string(REPLACE "_proto" "_protos" line "${line}")
+        string(REPLACE "@com_google_googleapis//" "google-cloud-cpp::" line
+                       "${line}")
+        string(REPLACE "google-cloud-cpp::google/" "google-cloud-cpp::" line
+                       "${line}")
+        string(REPLACE "/" "_" line "${line}")
+        list(APPEND deps "${line}")
+    endforeach ()
+    set(${var}
+        "${deps}"
+        PARENT_SCOPE)
+endfunction ()
 
 include(EnableWerror)
 
@@ -170,6 +194,14 @@ set(EXTERNAL_GOOGLEAPIS_BYPRODUCTS)
 foreach (proto ${EXTERNAL_GOOGLEAPIS_PROTO_FILES})
     list(APPEND EXTERNAL_GOOGLEAPIS_BYPRODUCTS
          "${EXTERNAL_GOOGLEAPIS_SOURCE}/${proto}")
+endforeach ()
+
+file(GLOB protolists "protolists/*.list")
+foreach (file IN LISTS protolists)
+    google_cloud_cpp_load_protolist(protos "${file}")
+    foreach (proto IN LISTS protos)
+        list(APPEND EXTERNAL_GOOGLEAPIS_BYPRODUCTS "${proto}")
+    endforeach ()
 endforeach ()
 
 include(ExternalProject)
@@ -509,18 +541,17 @@ target_link_libraries(
            google-cloud-cpp::longrunning_operations_protos
            google-cloud-cpp::rpc_status_protos)
 
+google_cloud_cpp_load_protolist(cloud_texttospeech_list
+                                "protolists/texttospeech.list")
+google_cloud_cpp_load_protodeps(cloud_texttospeech_deps
+                                "protodeps/texttospeech.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_cloud_texttospeech_protos
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/texttospeech/v1/cloud_tts.proto"
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    google_cloud_cpp_cloud_texttospeech_protos ${cloud_texttospeech_list}
+    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(cloud_texttospeech_protos)
-target_link_libraries(
-    google_cloud_cpp_cloud_texttospeech_protos
-    PUBLIC google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos)
+target_link_libraries(google_cloud_cpp_cloud_texttospeech_protos
+                      PUBLIC ${cloud_texttospeech_deps})
 
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_iam_protos
