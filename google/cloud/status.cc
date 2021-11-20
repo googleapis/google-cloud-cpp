@@ -71,6 +71,13 @@ std::ostream& operator<<(std::ostream& os, StatusCode code) {
   return os << StatusCodeToString(code);
 }
 
+bool operator==(ErrorInfo const& a, ErrorInfo const& b) {
+  return a.reason_ == b.reason_ && a.domain_ == b.domain_ &&
+         a.metadata_ == b.metadata_;
+}
+
+bool operator!=(ErrorInfo const& a, ErrorInfo const& b) { return !(a == b); }
+
 // Encapsulates the implementation of a non-OK status. OK Statuses are
 // represented by a nullptr Status::impl_, as an optimization for the common
 // case of OK Statuses. This class holds all the data associated with a non-OK
@@ -154,17 +161,18 @@ bool Status::Equals(Status const& a, Status const& b) {
 std::ostream& operator<<(std::ostream& os, Status const& s) {
   if (s.ok()) return os << StatusCode::kOk;
   os << s.code() << ": " << s.message();
-  auto const& error_info = s.error_info();
-  if (!error_info.reason().empty()) {
-    os << "\n    reason: " << error_info.reason();
+  auto const& e = s.error_info();
+  if (e.reason().empty() && e.domain().empty() && e.metadata().empty())
+    return os;
+  os << " error_info={reason=" << e.reason();
+  os << ", domain=" << e.domain();
+  os << ", metadata={";
+  char const* sep = "";
+  for (auto const& e : e.metadata()) {
+    os << sep << e.first << "=" << e.second;
+    sep = ", ";
   }
-  if (!error_info.domain().empty()) {
-    os << "\n    domain: " << error_info.domain();
-  }
-  for (auto const& e : error_info.metadata()) {
-    os << "\n    metadata[" << e.first << "]: " << e.second;
-  }
-  return os;
+  return os << "}}";
 }
 
 namespace internal {

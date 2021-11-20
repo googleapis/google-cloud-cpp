@@ -83,13 +83,8 @@ class ErrorInfo {
     return metadata_;
   }
 
-  friend inline bool operator==(ErrorInfo const& a, ErrorInfo const& b) {
-    return a.reason_ == b.reason_ && a.domain_ == b.domain_ &&
-           a.metadata_ == b.metadata_;
-  }
-  friend inline bool operator!=(ErrorInfo const& a, ErrorInfo const& b) {
-    return !(a == b);
-  }
+  friend bool operator==(ErrorInfo const&, ErrorInfo const&);
+  friend bool operator!=(ErrorInfo const&, ErrorInfo const&);
 
  private:
   std::string reason_;

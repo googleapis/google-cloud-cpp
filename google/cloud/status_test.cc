@@ -124,13 +124,10 @@ TEST(Status, OperatorOutputWithErrorInfo) {
   ErrorInfo error_info{"the reason", "the domain", {{"key", "val"}}};
   auto status = Status{StatusCode::kUnknown, "foo", error_info};
   auto ss = std::stringstream{};
-  ss << "\n" << status;
+  ss << status;
   EXPECT_EQ(ss.str(),
-            R"(
-UNKNOWN: foo
-    reason: the reason
-    domain: the domain
-    metadata[key]: val)");
+            "UNKNOWN: foo error_info={reason=the reason, "
+            "domain=the domain, metadata={key=val}}");
 }
 
 TEST(Status, PayloadIgnoredWithOk) {
