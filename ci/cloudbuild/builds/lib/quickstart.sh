@@ -41,7 +41,7 @@ source module ci/lib/io.sh
 #   quickstart::build_cmake_and_make "/usr/local"
 function quickstart::build_cmake_and_make() {
   local prefix="$1"
-  cmake -G Ninja \
+  cmake "${@}" \
     -S "${PROJECT_ROOT}/ci/verify_quickstart" \
     -B "${PROJECT_ROOT}/cmake-out/quickstart" \
     "-DCMAKE_PREFIX_PATH=${prefix}"

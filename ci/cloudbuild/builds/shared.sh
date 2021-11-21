@@ -33,5 +33,5 @@ env -C cmake-out ctest -LE "integration-test" --parallel "$(nproc)"
 cmake --build cmake-out --target install
 
 # Tests the installed artifacts by building and running the quickstarts.
-quickstart::build_cmake_and_make "${INSTALL_PREFIX}"
+quickstart::build_cmake_and_make "${INSTALL_PREFIX}" -G Ninja
 quickstart::run_cmake_and_make "${INSTALL_PREFIX}"

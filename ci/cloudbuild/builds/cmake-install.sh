@@ -160,7 +160,7 @@ for repo_root in "ci/verify_current_targets" "ci/verify_deprecated_targets"; do
 done
 
 # Tests the installed artifacts by building and running the quickstarts.
-quickstart::build_cmake_and_make "${INSTALL_PREFIX}"
+quickstart::build_cmake_and_make "${INSTALL_PREFIX}" -G Ninja
 quickstart::run_cmake_and_make "${INSTALL_PREFIX}"
 
 # Deletes all the installed artifacts, and installs only the runtime components

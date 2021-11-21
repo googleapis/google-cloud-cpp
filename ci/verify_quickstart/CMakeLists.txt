@@ -18,34 +18,42 @@ cmake_minimum_required(VERSION 3.14)
 project(verify-quickstart CXX)
 
 set(LIBRARIES bigquery bigtable iam pubsub spanner storage)
+set(ARGS)
+if (CMAKE_PREFIX_PATH)
+    list(APPEND ARGS "-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}")
+endif ()
+if (CMAKE_TOOLCHAIN_FILE)
+    list(APPEND ARGS "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}")
+endif ()
 
-add_custom_target(verify-quickstart-cmake)
-add_custom_target(verify-quickstart-make)
+add_custom_target(verify-quickstart-cmake ALL)
+add_custom_target(verify-quickstart-make ALL)
 
 include(ExternalProject)
 
 foreach (library IN LISTS LIBRARIES)
-    externalproject_add(
+    ExternalProject_Add(
         verify-quickstart-cmake-${library}
         EXCLUDE_FROM_ALL ON
         PREFIX "${PROJECT_BINARY_DIR}/cmake-${library}-prefix"
-        SOURCE_DIR "${PROJECT_SOURCE_DIR}/../../google/cloud/${library}/quickstart"
+        SOURCE_DIR
+            "${PROJECT_SOURCE_DIR}/../../google/cloud/${library}/quickstart"
         BINARY_DIR "${PROJECT_BINARY_DIR}/cmake-${library}"
-        CMAKE_ARGS "-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}"
+        CMAKE_ARGS ${ARGS}
         INSTALL_COMMAND ""
-        # Use LOG_* ON to keep builds quiet on success
+                        # Use LOG_* ON to keep builds quiet on success
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
         LOG_BUILD ON
         LOG_OUTPUT_ON_FAILURE ON)
     add_dependencies(verify-quickstart-cmake verify-quickstart-cmake-${library})
 
-    externalproject_add(
+    ExternalProject_Add(
         verify-quickstart-makefile-${library}
         EXCLUDE_FROM_ALL ON
         PREFIX "${PROJECT_BINARY_DIR}/makefile-${library}-prefix"
-               SOURCE_DIR
-               "${PROJECT_SOURCE_DIR}/../../google/cloud/${library}/quickstart"
+        SOURCE_DIR
+            "${PROJECT_SOURCE_DIR}/../../google/cloud/${library}/quickstart"
         BINARY_DIR "${PROJECT_BINARY_DIR}/makefile-${library}"
         CONFIGURE_COMMAND ""
         BUILD_COMMAND
@@ -56,7 +64,7 @@ foreach (library IN LISTS LIBRARIES)
             "<SOURCE_DIR>"
             "BIN=<BINARY_DIR>"
         INSTALL_COMMAND ""
-        # Use LOG_* ON to keep builds quiet on success
+                        # Use LOG_* ON to keep builds quiet on success
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
         LOG_BUILD ON
