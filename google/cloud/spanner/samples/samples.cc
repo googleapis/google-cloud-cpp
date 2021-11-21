@@ -3607,14 +3607,14 @@ std::string PickConfig(google::cloud::spanner_admin::InstanceAdminClient client,
   std::cout << "\n" << __func__ << ":\n";
 
   std::string ret;
-  std::string first;
+  std::string last;
   int i = 0;
   for (auto const& instance_config :
        client.ListInstanceConfigs(project.FullName())) {
     if (!instance_config) break;
     if (instance_config->name().rfind(config_prefix, 0) != 0) continue;
     auto const config = instance_config->name().substr(config_prefix.size());
-    if (first.empty()) first = config;
+    last = config;
     if (config.rfind(included_prefix, 0) != 0) continue;
     if (std::find(excluded.begin(), excluded.end(), config) != excluded.end()) {
       continue;
@@ -3626,7 +3626,7 @@ std::string PickConfig(google::cloud::spanner_admin::InstanceAdminClient client,
     std::cout << "    " << i << " " << config << " " << selected << " " << ret
               << "\n";
   }
-  return ret.empty() ? first : ret;
+  return ret.empty() ? last : ret;
 }
 
 std::vector<std::string> LeaderOptions(
