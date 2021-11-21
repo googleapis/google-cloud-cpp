@@ -8,7 +8,7 @@ github:
 name: quickstart-bazel-pr
 substitutions:
   _BUILD_NAME: quickstart-bazel
-  _DISTRO: ubuntu-bionic
+  _DISTRO: ubuntu-focal
   _TRIGGER_TYPE: pr
 tags:
 - pr
