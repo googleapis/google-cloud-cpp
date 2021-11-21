@@ -36,12 +36,13 @@ StatusOr<std::string> PickRandomInstance(
   // from tests that create/delete their own instances (in particular from
   // tests calling `RandomInstanceName()`, which uses "temporary-instance-").
   auto const instance_prefix = spanner::Instance(project, "").FullName();
-  auto const name_filter = " name:" + instance_prefix + "test-instance-";
+  auto full_filter = "name:" + instance_prefix + "test-instance-";
+  if (!filter.empty()) full_filter.append(" AND (" + filter + ")");
 
   std::vector<std::string> instance_ids;
   google::spanner::admin::instance::v1::ListInstancesRequest request;
   request.set_parent(project.FullName());
-  request.set_filter(filter + name_filter);
+  request.set_filter(std::move(full_filter));
   for (auto& instance : client.ListInstances(request)) {
     if (!instance) return std::move(instance).status();
     auto instance_id = instance->name().substr(instance_prefix.size());
