@@ -347,7 +347,7 @@ google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_bigtable_protos ${bigtable_list} PROTO_PATH_DIRECTORIES
     "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(bigtable_protos)
-target_link_libraries(google_cloud_cpp_bigtable_protos PUBLIC ${cbigtable_deps})
+target_link_libraries(google_cloud_cpp_bigtable_protos PUBLIC ${bigtable_deps})
 
 # TODO(#5660) - protobuf + gcc<6 + deprecated enums do not compile
 if (NOT (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
@@ -453,8 +453,7 @@ target_link_libraries(google_cloud_cpp_logging_protos PUBLIC ${logging_deps})
 add_library(google_cloud_cpp_logging_type_protos INTERFACE)
 set_target_properties(
     "google_cloud_cpp_logging_type_protos"
-    PROPERTIES EXPORT_NAME google-cloud-cpp::logging_type_protos
-               VERSION "${PROJECT_VERSION}" SOVERSION ${PROJECT_VERSION_MAJOR})
+    PROPERTIES EXPORT_NAME google-cloud-cpp::logging_type_protos)
 target_link_libraries(google_cloud_cpp_logging_type_protos
                       INTERFACE google-cloud-cpp::logging_type_type_protos)
 
