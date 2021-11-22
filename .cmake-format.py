@@ -42,6 +42,9 @@ additional_commands = {
             "URL": 1,
             "URL_HASH": 1,
             "BUILD_ALWAYS": 1,
+            "LOG_OUTPUT_ON_FAILURE": 1,
+            "SOURCE_DIR": 1,
+            "BINARY_DIR": 1,
         },
     }
 }

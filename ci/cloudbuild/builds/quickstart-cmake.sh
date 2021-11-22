@@ -30,14 +30,20 @@ vcpkg_dir="$(vcpkg::root_dir)"
 env -C "${vcpkg_dir}" ./vcpkg remove --outdated --recurse
 env -C "${vcpkg_dir}" ./vcpkg install google-cloud-cpp
 
-# Compiles and runs all the quickstart CMake builds.
+# Compiles all the quickstart builds
+# shellcheck disable=SC2046
+libraries="$(printf ";%s" $(quickstart::libraries))"
+libraries="${libraries:1}"
+cmake -G Ninja \
+  -S "${PROJECT_ROOT}/ci/verify_quickstart" \
+  -B "${PROJECT_ROOT}/cmake-out/quickstart" \
+  -DCMAKE_TOOLCHAIN_FILE="${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake" \
+  -DLIBRARIES="${libraries}"
+cmake --build "${PROJECT_ROOT}/cmake-out/quickstart" --target verify-quickstart-cmake
+
 for lib in $(quickstart::libraries); do
   io::log_h2 "Running CMake quickstart for ${lib}"
-  src_dir="${PROJECT_ROOT}/google/cloud/${lib}/quickstart"
-  bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-${lib}"
-  flag="-DCMAKE_TOOLCHAIN_FILE=${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake"
-  cmake -H"${src_dir}" -B"${bin_dir}" "${flag}"
-  cmake --build "${bin_dir}"
+  bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/cmake-${lib}"
   mapfile -t run_args < <(quickstart::arguments "${lib}")
   "${bin_dir}/quickstart" "${run_args[@]}"
 done
