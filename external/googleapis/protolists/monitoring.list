@@ -1,0 +1,17 @@
+@com_google_googleapis//google/monitoring/v3:alert.proto
+@com_google_googleapis//google/monitoring/v3:alert_service.proto
+@com_google_googleapis//google/monitoring/v3:common.proto
+@com_google_googleapis//google/monitoring/v3:dropped_labels.proto
+@com_google_googleapis//google/monitoring/v3:group.proto
+@com_google_googleapis//google/monitoring/v3:group_service.proto
+@com_google_googleapis//google/monitoring/v3:metric.proto
+@com_google_googleapis//google/monitoring/v3:metric_service.proto
+@com_google_googleapis//google/monitoring/v3:mutation_record.proto
+@com_google_googleapis//google/monitoring/v3:notification.proto
+@com_google_googleapis//google/monitoring/v3:notification_service.proto
+@com_google_googleapis//google/monitoring/v3:query_service.proto
+@com_google_googleapis//google/monitoring/v3:service.proto
+@com_google_googleapis//google/monitoring/v3:service_service.proto
+@com_google_googleapis//google/monitoring/v3:span_context.proto
+@com_google_googleapis//google/monitoring/v3:uptime.proto
+@com_google_googleapis//google/monitoring/v3:uptime_service.proto

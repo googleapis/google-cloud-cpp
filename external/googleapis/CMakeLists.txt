@@ -39,36 +39,7 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/devtools/cloudtrace/v2/tracing.proto"
     "google/rpc/error_details.proto"
     "google/rpc/status.proto"
-    "google/iam/admin/v1/iam.proto"
-    "google/iam/admin/v1/audit_data.proto"
-    "google/iam/credentials/v1/common.proto"
-    "google/iam/credentials/v1/iamcredentials.proto"
-    "google/iam/v1/options.proto"
-    "google/iam/v1/policy.proto"
-    "google/iam/v1/iam_policy.proto"
-    "google/longrunning/operations.proto"
-    "google/bigtable/admin/v2/bigtable_instance_admin.proto"
-    "google/bigtable/admin/v2/bigtable_table_admin.proto"
-    "google/bigtable/admin/v2/common.proto"
-    "google/bigtable/admin/v2/instance.proto"
-    "google/bigtable/admin/v2/table.proto"
-    "google/bigtable/v2/bigtable.proto"
-    "google/bigtable/v2/data.proto"
     "google/cloud/bigquery/connection/v1beta1/connection.proto"
-    "google/cloud/bigquery/datatransfer/v1/datatransfer.proto"
-    "google/cloud/bigquery/datatransfer/v1/transfer.proto"
-    "google/cloud/bigquery/logging/v1/audit_data.proto"
-    "google/cloud/bigquery/storage/v1/arrow.proto"
-    "google/cloud/bigquery/storage/v1/avro.proto"
-    "google/cloud/bigquery/storage/v1/protobuf.proto"
-    "google/cloud/bigquery/storage/v1/storage.proto"
-    "google/cloud/bigquery/storage/v1/stream.proto"
-    "google/cloud/bigquery/storage/v1/table.proto"
-    "google/cloud/bigquery/v2/encryption_config.proto"
-    "google/cloud/bigquery/v2/model.proto"
-    "google/cloud/bigquery/v2/model_reference.proto"
-    "google/cloud/bigquery/v2/standard_sql.proto"
-    "google/cloud/bigquery/v2/table_reference.proto"
     "google/cloud/dialogflow/v2beta1/agent.proto"
     "google/cloud/dialogflow/v2beta1/audio_config.proto"
     "google/cloud/dialogflow/v2beta1/context.proto"
@@ -83,55 +54,10 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/cloud/dialogflow/v2beta1/session_entity_type.proto"
     "google/cloud/dialogflow/v2beta1/validation_result.proto"
     "google/cloud/dialogflow/v2beta1/webhook.proto"
-    "google/cloud/dialogflow/v2/agent.proto"
-    "google/cloud/dialogflow/v2/audio_config.proto"
-    "google/cloud/dialogflow/v2/context.proto"
-    "google/cloud/dialogflow/v2/fulfillment.proto"
-    "google/cloud/dialogflow/v2/entity_type.proto"
-    "google/cloud/dialogflow/v2/environment.proto"
-    "google/cloud/dialogflow/v2/intent.proto"
-    "google/cloud/dialogflow/v2/session.proto"
-    "google/cloud/dialogflow/v2/session_entity_type.proto"
-    "google/cloud/dialogflow/v2/validation_result.proto"
-    "google/cloud/dialogflow/v2/webhook.proto"
-    "google/cloud/speech/v1/cloud_speech.proto"
-    "google/logging/type/http_request.proto"
-    "google/logging/type/log_severity.proto"
-    "google/logging/v2/log_entry.proto"
-    "google/logging/v2/logging.proto"
-    "google/logging/v2/logging_config.proto"
-    "google/logging/v2/logging_metrics.proto"
-    "google/monitoring/v3/alert.proto"
-    "google/monitoring/v3/alert_service.proto"
-    "google/monitoring/v3/common.proto"
-    "google/monitoring/v3/dropped_labels.proto"
-    "google/monitoring/v3/group.proto"
-    "google/monitoring/v3/group_service.proto"
-    "google/monitoring/v3/metric.proto"
-    "google/monitoring/v3/metric_service.proto"
-    "google/monitoring/v3/mutation_record.proto"
-    "google/monitoring/v3/notification.proto"
-    "google/monitoring/v3/notification_service.proto"
-    "google/monitoring/v3/service.proto"
-    "google/monitoring/v3/service_service.proto"
-    "google/monitoring/v3/span_context.proto"
-    "google/monitoring/v3/uptime.proto"
-    "google/monitoring/v3/uptime_service.proto"
-    "google/pubsub/v1/pubsub.proto"
-    "google/pubsub/v1/schema.proto"
-    "google/spanner/admin/database/v1/backup.proto"
-    "google/spanner/admin/database/v1/common.proto"
-    "google/spanner/admin/database/v1/spanner_database_admin.proto"
-    "google/spanner/admin/instance/v1/spanner_instance_admin.proto"
-    "google/spanner/v1/commit_response.proto"
-    "google/spanner/v1/keys.proto"
-    "google/spanner/v1/mutation.proto"
-    "google/spanner/v1/query_plan.proto"
-    "google/spanner/v1/result_set.proto"
-    "google/spanner/v1/spanner.proto"
-    "google/spanner/v1/transaction.proto"
-    "google/spanner/v1/type.proto"
-    "google/storage/v2/storage.proto"
+    "google/iam/v1/options.proto"
+    "google/iam/v1/policy.proto"
+    "google/iam/v1/iam_policy.proto"
+    "google/longrunning/operations.proto"
     "google/type/calendar_period.proto"
     "google/type/color.proto"
     "google/type/date.proto"
@@ -317,7 +243,6 @@ set(external_googleapis_installed_libraries_list
     google_cloud_cpp_api_resource_protos
     google_cloud_cpp_devtools_cloudtrace_v2_trace_protos
     google_cloud_cpp_devtools_cloudtrace_v2_tracing_protos
-    google_cloud_cpp_logging_type_protos
     google_cloud_cpp_logging_protos
     google_cloud_cpp_monitoring_protos
     google_cloud_cpp_iam_v1_options_protos
@@ -403,93 +328,42 @@ external_googleapis_add_library(
     devtools_cloudtrace_v2_trace_protos api_annotations_protos
     api_client_protos api_field_behavior_protos rpc_status_protos)
 
+google_cloud_cpp_load_protolist(cloud_bigquery_list "protolists/bigquery.list")
+google_cloud_cpp_load_protodeps(cloud_bigquery_deps "protodeps/bigquery.deps")
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_cloud_bigquery_protos
+    ${cloud_bigquery_list}
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/connection/v1beta1/connection.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/datatransfer/v1/datatransfer.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/datatransfer/v1/transfer.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/logging/v1/audit_data.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/arrow.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/avro.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/protobuf.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/storage.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/stream.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/storage/v1/table.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/v2/encryption_config.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/v2/model.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/v2/model_reference.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/v2/standard_sql.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/v2/table_reference.proto"
     PROTO_PATH_DIRECTORIES
     "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(cloud_bigquery_protos)
-target_link_libraries(
-    google_cloud_cpp_cloud_bigquery_protos
-    PUBLIC google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::iam_v1_iam_policy_protos
-           google-cloud-cpp::iam_v1_policy_protos
-           google-cloud-cpp::rpc_status_protos
-           google-cloud-cpp::api_http_protos)
+target_link_libraries(google_cloud_cpp_cloud_bigquery_protos
+                      PUBLIC ${cloud_bigquery_deps})
 
+google_cloud_cpp_load_protolist(bigtable_list "protolists/bigtable.list")
+google_cloud_cpp_load_protodeps(bigtable_deps "protodeps/bigtable.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_bigtable_protos
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/bigtable/admin/v2/bigtable_instance_admin.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/bigtable/admin/v2/bigtable_table_admin.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/bigtable/admin/v2/common.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/bigtable/admin/v2/instance.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/bigtable/admin/v2/table.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/bigtable/v2/bigtable.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/bigtable/v2/data.proto"
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
+    google_cloud_cpp_bigtable_protos ${bigtable_list} PROTO_PATH_DIRECTORIES
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(bigtable_protos)
-target_link_libraries(
-    google_cloud_cpp_bigtable_protos
-    PUBLIC google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::iam_v1_iam_policy_protos
-           google-cloud-cpp::iam_v1_policy_protos
-           google-cloud-cpp::longrunning_operations_protos
-           google-cloud-cpp::rpc_status_protos
-           google-cloud-cpp::api_auth_protos)
+target_link_libraries(google_cloud_cpp_bigtable_protos PUBLIC ${cbigtable_deps})
 
 # TODO(#5660) - protobuf + gcc<6 + deprecated enums do not compile
 if (NOT (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
          AND (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.0)))
 
+    google_cloud_cpp_load_protolist(cloud_dialogflow_v2_list
+                                    "protolists/dialogflow.list")
+    google_cloud_cpp_load_protodeps(cloud_dialogflow_v2_deps
+                                    "protodeps/dialogflow.deps")
     google_cloud_cpp_grpcpp_library(
-        google_cloud_cpp_cloud_dialogflow_v2_protos
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/agent.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/audio_config.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/context.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/fulfillment.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/entity_type.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/environment.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/intent.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/session.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/session_entity_type.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/validation_result.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2/webhook.proto"
-        PROTO_PATH_DIRECTORIES
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+        google_cloud_cpp_cloud_dialogflow_v2_protos ${cloud_dialogflow_v2_list}
+        PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
         "${PROTO_INCLUDE_DIR}")
     external_googleapis_set_version_and_alias(cloud_dialogflow_v2_protos)
-    target_link_libraries(
-        google_cloud_cpp_cloud_dialogflow_v2_protos
-        PUBLIC google-cloud-cpp::api_annotations_protos
-               google-cloud-cpp::api_client_protos
-               google-cloud-cpp::api_field_behavior_protos
-               google-cloud-cpp::api_resource_protos
-               google-cloud-cpp::longrunning_operations_protos
-               google-cloud-cpp::rpc_status_protos
-               google-cloud-cpp::type_latlng_protos)
+    target_link_libraries(google_cloud_cpp_cloud_dialogflow_v2_protos
+                          PUBLIC ${cloud_dialogflow_v2_deps})
 
     google_cloud_cpp_grpcpp_library(
         google_cloud_cpp_cloud_dialogflow_v2beta1_protos
@@ -526,20 +400,15 @@ if (NOT (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
          google_cloud_cpp_cloud_dialogflow_v2beta1_protos)
 endif ()
 
+google_cloud_cpp_load_protolist(cloud_speech_list "protolists/speech.list")
+google_cloud_cpp_load_protodeps(cloud_speech_deps "protodeps/speech.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_cloud_speech_protos
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/speech/v1/cloud_speech.proto"
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    google_cloud_cpp_cloud_speech_protos ${cloud_speech_list}
+    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(cloud_speech_protos)
-target_link_libraries(
-    google_cloud_cpp_cloud_speech_protos
-    PUBLIC google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::longrunning_operations_protos
-           google-cloud-cpp::rpc_status_protos)
+target_link_libraries(google_cloud_cpp_cloud_speech_protos
+                      PUBLIC ${cloud_speech_deps})
 
 google_cloud_cpp_load_protolist(cloud_texttospeech_list
                                 "protolists/texttospeech.list")
@@ -553,157 +422,75 @@ external_googleapis_set_version_and_alias(cloud_texttospeech_protos)
 target_link_libraries(google_cloud_cpp_cloud_texttospeech_protos
                       PUBLIC ${cloud_texttospeech_deps})
 
+google_cloud_cpp_load_protolist(iam_list "protolists/iam.list")
+google_cloud_cpp_load_protodeps(iam_deps "protodeps/iam.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_iam_protos
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/v1/options.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/v1/policy.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/v1/iam_policy.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/admin/v1/iam.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/admin/v1/audit_data.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/credentials/v1/iamcredentials.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/credentials/v1/common.proto"
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
+    google_cloud_cpp_iam_protos ${iam_list} PROTO_PATH_DIRECTORIES
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(iam_protos)
-target_link_libraries(
-    google_cloud_cpp_iam_protos
-    PUBLIC google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::type_expr_protos)
+target_link_libraries(google_cloud_cpp_iam_protos PUBLIC ${iam_deps})
 
+google_cloud_cpp_load_protolist(logging_type_list
+                                "protolists/logging_type.list")
+google_cloud_cpp_load_protodeps(logging_type_deps "protodeps/logging_type.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_logging_type_protos
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/logging/type/http_request.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/logging/type/log_severity.proto"
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    google_cloud_cpp_logging_type_type_protos ${logging_type_list}
+    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(logging_type_protos)
-target_link_libraries(google_cloud_cpp_logging_type_protos
-                      PUBLIC google-cloud-cpp::api_annotations_protos)
+external_googleapis_set_version_and_alias(logging_type_type_protos)
+target_link_libraries(google_cloud_cpp_logging_type_type_protos
+                      PUBLIC ${logging_type_deps})
 
+google_cloud_cpp_load_protolist(logging_list "protolists/logging.list")
+google_cloud_cpp_load_protodeps(logging_deps "protodeps/logging.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_logging_protos
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/logging/v2/log_entry.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/logging/v2/logging.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/logging/v2/logging_config.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/logging/v2/logging_metrics.proto"
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
+    google_cloud_cpp_logging_protos ${logging_list} PROTO_PATH_DIRECTORIES
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(logging_protos)
-target_link_libraries(
-    google_cloud_cpp_logging_protos
-    PUBLIC google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_distribution_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_metric_protos
-           google-cloud-cpp::api_monitored_resource_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::logging_type_protos
-           google-cloud-cpp::rpc_status_protos)
+target_link_libraries(google_cloud_cpp_logging_protos PUBLIC ${logging_deps})
 
+# This is just for backwards compatibility.
+add_library(google_cloud_cpp_logging_type_protos INTERFACE)
+set_target_properties(
+    "google_cloud_cpp_logging_type_protos"
+    PROPERTIES EXPORT_NAME google-cloud-cpp::logging_type_protos
+               VERSION "${PROJECT_VERSION}" SOVERSION ${PROJECT_VERSION_MAJOR})
+target_link_libraries(google_cloud_cpp_logging_type_protos
+                      INTERFACE google-cloud-cpp::logging_type_type_protos)
+
+google_cloud_cpp_load_protolist(monitoring_list "protolists/monitoring.list")
+google_cloud_cpp_load_protodeps(monitoring_deps "protodeps/monitoring.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_monitoring_protos
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/alert.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/alert_service.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/common.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/dropped_labels.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/group.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/group_service.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/metric.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/metric_service.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/mutation_record.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/notification.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/notification_service.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/service.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/service_service.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/span_context.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/uptime.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/uptime_service.proto"
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    google_cloud_cpp_monitoring_protos ${monitoring_list}
+    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(monitoring_protos)
-target_link_libraries(
-    google_cloud_cpp_monitoring_protos
-    PUBLIC google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_distribution_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_label_protos
-           google-cloud-cpp::api_launch_stage_protos
-           google-cloud-cpp::api_metric_protos
-           google-cloud-cpp::api_monitored_resource_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::longrunning_operations_protos
-           google-cloud-cpp::rpc_status_protos
-           google-cloud-cpp::type_calendar_period_protos)
+target_link_libraries(google_cloud_cpp_monitoring_protos
+                      PUBLIC ${monitoring_deps})
 
+google_cloud_cpp_load_protolist(pubsub_list "protolists/pubsub.list")
+google_cloud_cpp_load_protodeps(pubsub_deps "protodeps/pubsub.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_pubsub_protos
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/pubsub/v1/pubsub.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/pubsub/v1/schema.proto"
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
+    google_cloud_cpp_pubsub_protos ${pubsub_list} PROTO_PATH_DIRECTORIES
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(pubsub_protos)
-target_link_libraries(
-    google_cloud_cpp_pubsub_protos
-    PUBLIC google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::rpc_status_protos)
+target_link_libraries(google_cloud_cpp_pubsub_protos PUBLIC ${pubsub_deps})
 
+google_cloud_cpp_load_protolist(spanner_list "protolists/spanner.list")
+google_cloud_cpp_load_protodeps(spanner_deps "protodeps/spanner.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_spanner_protos
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/admin/database/v1/backup.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/admin/database/v1/common.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/admin/database/v1/spanner_database_admin.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/admin/instance/v1/spanner_instance_admin.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/v1/commit_response.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/v1/keys.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/v1/mutation.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/v1/query_plan.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/v1/result_set.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/v1/spanner.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/v1/transaction.proto"
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/spanner/v1/type.proto"
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
+    google_cloud_cpp_spanner_protos ${spanner_list} PROTO_PATH_DIRECTORIES
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(spanner_protos)
-target_link_libraries(
-    google_cloud_cpp_spanner_protos
-    PUBLIC google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::iam_v1_iam_policy_protos
-           google-cloud-cpp::iam_v1_policy_protos
-           google-cloud-cpp::longrunning_operations_protos
-           google-cloud-cpp::rpc_status_protos)
+target_link_libraries(google_cloud_cpp_spanner_protos PUBLIC ${spanner_deps})
 
+google_cloud_cpp_load_protolist(storage_list "protolists/storage.list")
+google_cloud_cpp_load_protodeps(storage_deps "protodeps/storage.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_storage_protos
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/storage/v2/storage.proto"
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
+    google_cloud_cpp_storage_protos ${storage_list} PROTO_PATH_DIRECTORIES
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(storage_protos)
-target_link_libraries(
-    google_cloud_cpp_storage_protos
-    PUBLIC google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::type_date_protos
-           google-cloud-cpp::iam_v1_iam_policy_protos
-           google-cloud-cpp::iam_v1_policy_protos)
+target_link_libraries(google_cloud_cpp_storage_protos PUBLIC ${storage_deps})
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
@@ -711,6 +498,8 @@ include(GNUInstallDirs)
 
 install(
     TARGETS ${external_googleapis_installed_libraries_list}
+            google_cloud_cpp_logging_type_type_protos
+            google_cloud_cpp_logging_type_protos
     EXPORT googleapis-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
@@ -723,6 +512,8 @@ install(
 # duplication).
 install(
     TARGETS ${external_googleapis_installed_libraries_list}
+            google_cloud_cpp_logging_type_type_protos
+            google_cloud_cpp_logging_type_protos
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development
             NAMELINK_ONLY
@@ -736,12 +527,29 @@ foreach (target ${external_googleapis_installed_libraries_list})
 endforeach ()
 
 # Create and install the pkg-config files.
-foreach (target ${external_googleapis_installed_libraries_list})
+foreach (target ${external_googleapis_installed_libraries_list}
+                google_cloud_cpp_logging_type_type_protos)
     external_googleapis_install_pc("${target}" "${CMAKE_CURRENT_LIST_DIR}")
     # TODO(#5726) - also install the module with the legacy name
     external_googleapis_install_legacy_pc("${target}"
                                           "${CMAKE_CURRENT_LIST_DIR}")
 endforeach ()
+
+external_googleapis_install_pc_common(google_cloud_cpp_logging_type_protos)
+set(GOOGLE_CLOUD_CPP_PC_LIBS "")
+configure_file("${CMAKE_CURRENT_LIST_DIR}/config.pc.in"
+               "google_cloud_cpp_logging_type_protos.pc" @ONLY)
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_logging_type_protos.pc"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+    COMPONENT google_cloud_cpp_development)
+# TODO(#5726) - also install the module with the legacy name
+configure_file("${CMAKE_CURRENT_LIST_DIR}/config.pc.in"
+               "googleapis_cpp_logging_type_protos.pc" @ONLY)
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis_cpp_logging_type_protos.pc"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+    COMPONENT google_cloud_cpp_development)
 
 # Create and install the googleapis pkg-config file for backwards compatibility.
 set(GOOGLE_CLOUD_CPP_PC_NAME "The Google APIS C++ Proto Library")

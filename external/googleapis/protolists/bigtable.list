@@ -1,0 +1,7 @@
+@com_google_googleapis//google/bigtable/admin/v2:bigtable_instance_admin.proto
+@com_google_googleapis//google/bigtable/admin/v2:bigtable_table_admin.proto
+@com_google_googleapis//google/bigtable/admin/v2:common.proto
+@com_google_googleapis//google/bigtable/admin/v2:instance.proto
+@com_google_googleapis//google/bigtable/admin/v2:table.proto
+@com_google_googleapis//google/bigtable/v2:bigtable.proto
+@com_google_googleapis//google/bigtable/v2:data.proto
