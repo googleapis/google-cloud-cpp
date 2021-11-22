@@ -160,10 +160,14 @@ for repo_root in "ci/verify_current_targets" "ci/verify_deprecated_targets"; do
 done
 
 # Tests the installed artifacts by building and running the quickstarts.
+# shellcheck disable=SC2046
+libraries="$(printf ";%s" $(quickstart::libraries))"
+libraries="${libraries:1}"
 cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \
   -B "${PROJECT_ROOT}/cmake-out/quickstart" \
-  "-DCMAKE_PREFIX_PATH=${INSTALL_PREFIX}"
+  "-DCMAKE_PREFIX_PATH=${INSTALL_PREFIX}" \
+  "-DLIBRARIES=${libraries}"
 cmake --build "${PROJECT_ROOT}/cmake-out/quickstart"
 
 # Deletes all the installed artifacts, and installs only the runtime components

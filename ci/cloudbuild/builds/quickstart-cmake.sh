@@ -31,10 +31,14 @@ env -C "${vcpkg_dir}" ./vcpkg remove --outdated --recurse
 env -C "${vcpkg_dir}" ./vcpkg install google-cloud-cpp
 
 # Compiles all the quickstart builds
+# shellcheck disable=SC2046
+libraries="$(printf ";%s" $(quickstart::libraries))"
+libraries="${libraries:1}"
 cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \
   -B "${PROJECT_ROOT}/cmake-out/quickstart" \
-  -DCMAKE_TOOLCHAIN_FILE="${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake"
+  -DCMAKE_TOOLCHAIN_FILE="${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake" \
+  -DLIBRARIES="${libraries}"
 cmake --build "${PROJECT_ROOT}/cmake-out/quickstart" --target verify-quickstart-cmake
 
 for lib in $(quickstart::libraries); do

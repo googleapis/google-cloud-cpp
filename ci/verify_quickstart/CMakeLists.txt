@@ -17,7 +17,12 @@
 cmake_minimum_required(VERSION 3.14)
 project(verify-quickstart CXX)
 
-set(LIBRARIES bigquery bigtable iam pubsub spanner storage)
+# The list of libraries must be provided in the command line
+if (NOT LIBRARIES)
+    message(FATAL_ERROR "Missing -DLIBRARIES argument, for example:"
+                        " -DLIBRARIES=\"storage;spanner\"")
+endif ()
+
 set(ARGS)
 if (CMAKE_PREFIX_PATH)
     list(APPEND ARGS "-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}")
