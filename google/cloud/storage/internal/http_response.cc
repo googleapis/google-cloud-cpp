@@ -132,8 +132,19 @@ StatusCode MapHttpCodeToStatus(long code) {  // NOLINT(google-runtime-int)
   return StatusCode::kUnknown;
 }
 
-// Makes an `ErrorInfo` from an `"error"` JSON object. See
-// https://cloud.google.com/apis/design/errors#http_mapping
+// Makes an `ErrorInfo` from an `"error"` JSON object that looks like
+//   [
+//     {
+//       "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+//       "reason": "..."
+//       "domain": "..."
+//       "metdata": {
+//         "key1": "value1"
+//         ...
+//       }
+//     }
+//   ]
+// See also https://cloud.google.com/apis/design/errors#http_mapping
 ErrorInfo MakeErrorInfo(nlohmann::json const& details) {
   static auto const kErrorInfoType = "type.googleapis.com/google.rpc.ErrorInfo";
   for (auto const& e : details.items()) {
@@ -141,7 +152,7 @@ ErrorInfo MakeErrorInfo(nlohmann::json const& details) {
     if (v.value("@type", "") != kErrorInfoType) continue;
     auto reason = v.value("reason", "");
     auto domain = v.value("domain", "");
-    auto metadata_json = v.value("metadata", nlohmann::json{});
+    auto metadata_json = v.value("metadata", nlohmann::json::object());
     auto metadata = std::unordered_map<std::string, std::string>{};
     for (auto const& m : metadata_json.items()) {
       metadata[m.key()] = m.value();
@@ -169,22 +180,14 @@ Status AsStatus(HttpResponse const& http_response) {
   //       "message": "..."
   //       ...
   //       "details": [
-  //         {
-  //           "@type": "type.googleapis.com/google.rpc.ErrorInfo",
-  //           "reason": "..."
-  //           "domain": "..."
-  //           "metdata": {
-  //             "key1": "value1"
-  //             ...
-  //           }
-  //         }
+  //         ...
   //       ]
   //     }
   //   }
   // See  https://cloud.google.com/apis/design/errors#http_mapping
-  auto error = json.value("error", nlohmann::json{});
+  auto error = json.value("error", nlohmann::json::object());
   auto message = error.value("message", http_response.payload);
-  auto details = error.value("details", nlohmann::json{});
+  auto details = error.value("details", nlohmann::json::object());
   auto error_info = MakeErrorInfo(details);
   return Status(status_code, std::move(message), std::move(error_info));
 }

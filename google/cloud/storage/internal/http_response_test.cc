@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
@@ -94,6 +95,8 @@ TEST(HttpResponseTest, AsStatus) {
 }
 
 TEST(HttpResponseTest, ErrorInfo) {
+  // This example payload comes from
+  // https://cloud.google.com/apis/design/errors#http_mapping
   auto const kJsonPayload = R"(
     {
       "error": {
@@ -118,6 +121,21 @@ TEST(HttpResponseTest, ErrorInfo) {
                        "googleapis.com",
                        {{"service", "translate.googleapis.com"}}};
   std::string message = "API key not valid. Please pass a valid API key.";
+  Status expected{StatusCode::kInvalidArgument, message, error_info};
+  EXPECT_EQ(AsStatus(HttpResponse{400, kJsonPayload, {}}), expected);
+}
+
+TEST(HttpResponseTest, ErrorInfoInvalidJson) {
+  // Some valid json, but not what we're looking for.
+  auto const kJsonPayload = R"json(
+  {
+    "code":412,
+    "message":"Precondition Failed (generation = 1637611345333 vs generation_match = 0)"
+  }
+  )json";
+
+  ErrorInfo error_info{};
+  std::string message = kJsonPayload;
   Status expected{StatusCode::kInvalidArgument, message, error_info};
   EXPECT_EQ(AsStatus(HttpResponse{400, kJsonPayload, {}}), expected);
 }
