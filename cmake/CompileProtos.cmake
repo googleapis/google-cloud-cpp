@@ -330,7 +330,7 @@ macro (external_googleapis_install_pc_common target)
     # Examine the target LINK_LIBRARIES property, use that to pull the
     # dependencies between the google-cloud-cpp::* libraries.
     set(_target_pc_requires)
-    get_target_property(_target_deps ${target} LINK_LIBRARIES)
+    get_target_property(_target_deps ${target} INTERFACE_LINK_LIBRARIES)
     foreach (dep ${_target_deps})
         if ("${dep}" MATCHES "^google-cloud-cpp::")
             string(REPLACE "google-cloud-cpp::" "google_cloud_cpp_" dep
