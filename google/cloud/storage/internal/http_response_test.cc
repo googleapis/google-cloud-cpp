@@ -92,6 +92,36 @@ TEST(HttpResponseTest, AsStatus) {
   EXPECT_THAT(AsStatus(HttpResponse{600, "bad", {}}),
               StatusIs(StatusCode::kUnknown));
 }
+
+TEST(HttpResponseTest, ErrorInfo) {
+  auto const kJsonPayload = R"(
+    {
+      "error": {
+        "code": 400,
+        "message": "API key not valid. Please pass a valid API key.",
+        "status": "INVALID_ARGUMENT",
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "reason": "API_KEY_INVALID",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "translate.googleapis.com"
+            }
+          }
+        ]
+      }
+    }
+  )";
+
+  ErrorInfo error_info{"API_KEY_INVALID",
+                       "googleapis.com",
+                       {{"service", "translate.googleapis.com"}}};
+  std::string message = "API key not valid. Please pass a valid API key.";
+  Status expected{StatusCode::kInvalidArgument, message, error_info};
+  EXPECT_EQ(AsStatus(HttpResponse{400, kJsonPayload, {}}), expected);
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
