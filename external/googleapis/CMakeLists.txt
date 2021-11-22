@@ -520,7 +520,8 @@ install(
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
-foreach (target ${external_googleapis_installed_libraries_list})
+foreach (target ${external_googleapis_installed_libraries_list}
+                google_cloud_cpp_logging_type_type_protos)
     google_cloud_cpp_install_proto_library_headers("${target}")
     google_cloud_cpp_install_proto_library_protos(
         "${target}" "${EXTERNAL_GOOGLEAPIS_SOURCE}")
