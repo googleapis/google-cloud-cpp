@@ -1198,8 +1198,24 @@ sudo dnf makecache && \
 sudo dnf update -y && \
 sudo dnf install -y epel-release && \
 sudo dnf makecache && \
-sudo dnf install -y ccache cmake gcc-c++ git make openssl-devel patch pkgconfig \
-        re2-devel zlib-devel libcurl-devel c-ares-devel tar wget which
+sudo dnf install -y ccache cmake curl findutils gcc-c++ git make openssl-devel \
+        patch re2-devel zlib-devel libcurl-devel c-ares-devel tar wget which
+```
+
+Rocky Linux's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is
+slow when handling `.pc` files with lots of `Requires:` deps, which happens
+with  Abseil. If you plan to use `pkg-config` with any of the installed
+artifacts, you may want to use a recent version of the standard `pkg-config`
+binary. If not, `sudo dnf install pkgconfig` should work.
+
+```bash
+mkdir -p $HOME/Downloads/pkg-config-cpp && cd $HOME/Downloads/pkg-config-cpp
+curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    ./configure --with-internal-glib && \
+    make -j ${NCPU:-4} && \
+sudo make install && \
+sudo ldconfig
 ```
 
 The following steps will install libraries and tools in `/usr/local`. By
@@ -1210,7 +1226,7 @@ steps are one solution:
 ```bash
 (echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
 sudo tee /etc/ld.so.conf.d/usrlocal.conf
-export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig:/usr/lib64/pkgconfig
 export PATH=/usr/local/bin:${PATH}
 ```
 
