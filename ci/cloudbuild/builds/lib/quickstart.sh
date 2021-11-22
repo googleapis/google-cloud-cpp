@@ -41,11 +41,11 @@ source module ci/lib/io.sh
 #   quickstart::build_cmake_and_make "/usr/local"
 function quickstart::build_cmake_and_make() {
   local prefix="$1"
-  cmake "${@}" \
-    -S "${PROJECT_ROOT}/ci/verify_quickstart" \
-    -B "${PROJECT_ROOT}/cmake-out/quickstart" \
-    "-DCMAKE_PREFIX_PATH=${prefix}"
-  cmake --build "${PROJECT_ROOT}/cmake-out/quickstart"
+  for lib in $(quickstart::libraries); do
+    io::log_h2 "Building quickstart: ${lib}"
+    local src_dir="${PROJECT_ROOT}/google/cloud/${lib}/quickstart"
+    quickstart::build_one_quickstart "${prefix}" "${src_dir}" "${lib}"
+  done
 }
 
 function quickstart::build_gcs_grpc_quickstart() {
@@ -63,6 +63,24 @@ function quickstart::build_gcs_grpc_quickstart() {
   mkdir -p "${makefile_bin_dir}"
   PKG_CONFIG_PATH="${prefix}/lib64/pkgconfig:${prefix}/lib/pkgconfig:${PKG_CONFIG_PATH:-}" \
     make -C "${src_dir}" BIN="${makefile_bin_dir}" "${makefile_bin_dir}/quickstart_grpc"
+}
+
+function quickstart::build_one_quickstart() {
+  local prefix="$1"
+  local src_dir="$2"
+  local bin_dir_suffix="$3"
+
+  io::log "[ CMake ]"
+  local cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-cmake-${bin_dir_suffix}"
+  cmake -H"${src_dir}" -B"${cmake_bin_dir}" "-DCMAKE_PREFIX_PATH=${prefix}"
+  cmake --build "${cmake_bin_dir}"
+
+  echo
+  io::log "[ Make ]"
+  local makefile_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-makefile-${bin_dir_suffix}"
+  mkdir -p "${makefile_bin_dir}"
+  PKG_CONFIG_PATH="${prefix}/lib64/pkgconfig:${prefix}/lib/pkgconfig:${PKG_CONFIG_PATH:-}" \
+    make -C "${src_dir}" BIN="${makefile_bin_dir}"
 }
 
 # Runs the CMake and Makefile quickstart programs but DOES NOT COMPILE THEM.
@@ -90,12 +108,12 @@ function quickstart::run_gcs_grpc_quickstart() {
   io::log_h2 "Running quickstart for GCS+gRPC"
 
   io::log "[ CMake ]"
-  local cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/cmake-storage"
+  local cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-cmake-storage"
   "${cmake_bin_dir}/quickstart_grpc" "${run_args[@]}"
 
   echo
   io::log "[ Make ]"
-  local makefile_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/makefile-storage"
+  local makefile_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-makefile-storage"
   LD_LIBRARY_PATH="${prefix}/lib64:${prefix}/lib:${LD_LIBRARY_PATH:-}" \
     "${makefile_bin_dir}/quickstart_grpc" "${run_args[@]}"
 }
@@ -107,12 +125,12 @@ function quickstart::run_one_quickstart() {
   local -a run_args=("$@")
 
   io::log "[ CMake ]"
-  local cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/cmake-${bin_dir_suffix}"
+  local cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-cmake-${bin_dir_suffix}"
   "${cmake_bin_dir}/quickstart" "${run_args[@]}"
 
   echo
   io::log "[ Make ]"
-  local makefile_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/makefile-${bin_dir_suffix}"
+  local makefile_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-makefile-${bin_dir_suffix}"
   LD_LIBRARY_PATH="${prefix}/lib64:${prefix}/lib:${LD_LIBRARY_PATH:-}" \
     "${makefile_bin_dir}/quickstart" "${run_args[@]}"
 }

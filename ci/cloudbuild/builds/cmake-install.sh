@@ -160,8 +160,11 @@ for repo_root in "ci/verify_current_targets" "ci/verify_deprecated_targets"; do
 done
 
 # Tests the installed artifacts by building and running the quickstarts.
-quickstart::build_cmake_and_make "${INSTALL_PREFIX}" -G Ninja
-quickstart::run_cmake_and_make "${INSTALL_PREFIX}"
+cmake -G Ninja \
+  -S "${PROJECT_ROOT}/ci/verify_quickstart" \
+  -B "${PROJECT_ROOT}/cmake-out/quickstart" \
+  "-DCMAKE_PREFIX_PATH=${INSTALL_PREFIX}"
+cmake --build "${PROJECT_ROOT}/cmake-out/quickstart"
 
 # Deletes all the installed artifacts, and installs only the runtime components
 # to verify that we can still execute the compiled quickstart programs.
