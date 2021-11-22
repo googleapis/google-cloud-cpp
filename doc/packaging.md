@@ -1204,7 +1204,7 @@ sudo dnf install -y ccache cmake curl findutils gcc-c++ git make openssl-devel \
 
 Rocky Linux's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is
 slow when handling `.pc` files with lots of `Requires:` deps, which happens
-with  Abseil. If you plan to use `pkg-config` with any of the installed
+with Abseil. If you plan to use `pkg-config` with any of the installed
 artifacts, you may want to use a recent version of the standard `pkg-config`
 binary. If not, `sudo dnf install pkgconfig` should work.
 
