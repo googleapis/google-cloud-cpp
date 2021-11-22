@@ -190,8 +190,8 @@ INSTANTIATE_TEST_SUITE_P(
     ServiceVars, CreateServiceVarsTest,
     testing::Values(
         std::make_pair("class_comment_block",
-                       "/**\n * Leading comments about service "
-                       "FrobberService.\n * $Delimiter escapes$ $\n */"),
+                       "///\n/// Leading comments about service "
+                       "FrobberService.\n/// $Delimiter escapes$ $\n///"),
         std::make_pair("client_class_name", "FrobberServiceClient"),
         std::make_pair("client_cc_path",
                        "google/cloud/frobber/"
@@ -500,10 +500,10 @@ TEST_F(CreateMethodVarsTest,
       FormatMethodCommentsFromRpcComments(
           *service_file_descriptor->service(0)->method(0),
           MethodParameterStyle::kProtobufRequest),
-      "  /**\n   * Leading comments about rpc Method0$$.\n   *\n   * @param "
+      "  ///\n  /// Leading comments about rpc Method0$$.\n  ///\n  /// @param "
       "request "
       "@googleapis_link{google::protobuf::Bar,google/foo/v1/"
-      "service.proto#L14}\n   */\n");
+      "service.proto#L14}\n  ///\n");
 }
 
 TEST_F(CreateMethodVarsTest,
@@ -513,8 +513,8 @@ TEST_F(CreateMethodVarsTest,
   EXPECT_EQ(FormatMethodCommentsFromRpcComments(
                 *service_file_descriptor->service(0)->method(6),
                 MethodParameterStyle::kApiMethodSignature),
-            "  /**\n   * Leading comments about rpc $$Method6.\n   *\n   * "
-            "@param labels  labels $$field comment.\n   */\n");
+            "  ///\n  /// Leading comments about rpc $$Method6.\n  ///\n  /// "
+            "@param labels  labels $$field comment.\n  ///\n");
 }
 
 TEST_P(CreateMethodVarsTest, KeySetCorrectly) {

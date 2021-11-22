@@ -32,17 +32,17 @@ namespace cloud {
 namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A service account is a special type of Google account that belongs to your
- * application or a virtual machine (VM), instead of to an individual end user.
- * Your application assumes the identity of the service account to call Google
- * APIs, so that the users aren't directly involved.
- *
- * Service account credentials are used to temporarily assume the identity
- * of the service account. Supported credential types include OAuth 2.0 access
- * tokens, OpenID Connect ID tokens, self-signed JSON Web Tokens (JWTs), and
- * more.
- */
+///
+/// A service account is a special type of Google account that belongs to your
+/// application or a virtual machine (VM), instead of to an individual end user.
+/// Your application assumes the identity of the service account to call Google
+/// APIs, so that the users aren't directly involved.
+///
+/// Service account credentials are used to temporarily assume the identity
+/// of the service account. Supported credential types include OAuth 2.0 access
+/// tokens, OpenID Connect ID tokens, self-signed JSON Web Tokens (JWTs), and
+/// more.
+///
 class IAMCredentialsClient {
  public:
   explicit IAMCredentialsClient(
@@ -69,160 +69,178 @@ class IAMCredentialsClient {
   }
   //@}
 
-  /**
-   * Generates an OAuth 2.0 access token for a service account.
-   *
-   * @param name  Required. The resource name of the service account for which
-   * the credentials are requested, in the following format:
-   *  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
-   *  character is required; replacing it with a project ID is invalid.
-   * @param delegates  The sequence of service accounts in a delegation chain.
-   * Each service account must be granted the
-   * `roles/iam.serviceAccountTokenCreator` role on its next service account in
-   * the chain. The last service account in the chain must be granted the
-   * `roles/iam.serviceAccountTokenCreator` role on the service account that is
-   * specified in the `name` field of the request. The delegates must have the
-   * following format: `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.
-   * The `-` wildcard character is required; replacing it with a project ID is
-   * invalid.
-   * @param scope  Required. Code to identify the scopes to be included in the
-   * OAuth 2.0 access token. See
-   * https://developers.google.com/identity/protocols/googlescopes for more
-   *  information.
-   *  At least one value required.
-   * @param lifetime  The desired lifetime duration of the access token in
-   * seconds. Must be set to a value less than or equal to 3600 (1 hour). If a
-   * value is not specified, the token's lifetime will be set to a default value
-   * of one hour.
-   * @return
-   * @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L72}
-   */
+  ///
+  /// Generates an OAuth 2.0 access token for a service account.
+  ///
+  /// @param name  Required. The resource name of the service account for which
+  /// the credentials
+  ///  are requested, in the following format:
+  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
+  ///  wildcard character is required; replacing it with a project ID is
+  ///  invalid.
+  /// @param delegates  The sequence of service accounts in a delegation chain.
+  /// Each service
+  ///  account must be granted the `roles/iam.serviceAccountTokenCreator` role
+  ///  on its next service account in the chain. The last service account in the
+  ///  chain must be granted the `roles/iam.serviceAccountTokenCreator` role
+  ///  on the service account that is specified in the `name` field of the
+  ///  request.
+  ///  The delegates must have the following format:
+  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
+  ///  wildcard character is required; replacing it with a project ID is
+  ///  invalid.
+  /// @param scope  Required. Code to identify the scopes to be included in the
+  /// OAuth 2.0 access token.
+  ///  See https://developers.google.com/identity/protocols/googlescopes for
+  ///  more information. At least one value required.
+  /// @param lifetime  The desired lifetime duration of the access token in
+  /// seconds.
+  ///  Must be set to a value less than or equal to 3600 (1 hour). If a value is
+  ///  not specified, the token's lifetime will be set to a default value of one
+  ///  hour.
+  /// @return
+  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L72}
+  ///
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(std::string const& name,
                       std::vector<std::string> const& delegates,
                       std::vector<std::string> const& scope,
                       google::protobuf::Duration const& lifetime);
 
-  /**
-   * Generates an OpenID Connect ID token for a service account.
-   *
-   * @param name  Required. The resource name of the service account for which
-   * the credentials are requested, in the following format:
-   *  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
-   *  character is required; replacing it with a project ID is invalid.
-   * @param delegates  The sequence of service accounts in a delegation chain.
-   * Each service account must be granted the
-   * `roles/iam.serviceAccountTokenCreator` role on its next service account in
-   * the chain. The last service account in the chain must be granted the
-   * `roles/iam.serviceAccountTokenCreator` role on the service account that is
-   * specified in the `name` field of the request. The delegates must have the
-   * following format: `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.
-   * The `-` wildcard character is required; replacing it with a project ID is
-   * invalid.
-   * @param audience  Required. The audience for the token, such as the API or
-   * account that this token grants access to.
-   * @param include_email  Include the service account email in the token. If
-   * set to `true`, the token will contain `email` and `email_verified` claims.
-   * @return
-   * @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L186}
-   */
+  ///
+  /// Generates an OpenID Connect ID token for a service account.
+  ///
+  /// @param name  Required. The resource name of the service account for which
+  /// the credentials
+  ///  are requested, in the following format:
+  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
+  ///  wildcard character is required; replacing it with a project ID is
+  ///  invalid.
+  /// @param delegates  The sequence of service accounts in a delegation chain.
+  /// Each service
+  ///  account must be granted the `roles/iam.serviceAccountTokenCreator` role
+  ///  on its next service account in the chain. The last service account in the
+  ///  chain must be granted the `roles/iam.serviceAccountTokenCreator` role
+  ///  on the service account that is specified in the `name` field of the
+  ///  request.
+  ///  The delegates must have the following format:
+  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
+  ///  wildcard character is required; replacing it with a project ID is
+  ///  invalid.
+  /// @param audience  Required. The audience for the token, such as the API or
+  /// account that this token
+  ///  grants access to.
+  /// @param include_email  Include the service account email in the token. If
+  /// set to `true`, the
+  ///  token will contain `email` and `email_verified` claims.
+  /// @return
+  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L186}
+  ///
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(std::string const& name,
                   std::vector<std::string> const& delegates,
                   std::string const& audience, bool include_email);
 
-  /**
-   * Signs a blob using a service account's system-managed private key.
-   *
-   * @param name  Required. The resource name of the service account for which
-   * the credentials are requested, in the following format:
-   *  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
-   *  character is required; replacing it with a project ID is invalid.
-   * @param delegates  The sequence of service accounts in a delegation chain.
-   * Each service account must be granted the
-   * `roles/iam.serviceAccountTokenCreator` role on its next service account in
-   * the chain. The last service account in the chain must be granted the
-   * `roles/iam.serviceAccountTokenCreator` role on the service account that is
-   * specified in the `name` field of the request. The delegates must have the
-   * following format: `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.
-   * The `-` wildcard character is required; replacing it with a project ID is
-   * invalid.
-   * @param payload  Required. The bytes to sign.
-   * @return
-   * @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L109}
-   */
+  ///
+  /// Signs a blob using a service account's system-managed private key.
+  ///
+  /// @param name  Required. The resource name of the service account for which
+  /// the credentials
+  ///  are requested, in the following format:
+  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
+  ///  wildcard character is required; replacing it with a project ID is
+  ///  invalid.
+  /// @param delegates  The sequence of service accounts in a delegation chain.
+  /// Each service
+  ///  account must be granted the `roles/iam.serviceAccountTokenCreator` role
+  ///  on its next service account in the chain. The last service account in the
+  ///  chain must be granted the `roles/iam.serviceAccountTokenCreator` role
+  ///  on the service account that is specified in the `name` field of the
+  ///  request.
+  ///  The delegates must have the following format:
+  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
+  ///  wildcard character is required; replacing it with a project ID is
+  ///  invalid.
+  /// @param payload  Required. The bytes to sign.
+  /// @return
+  /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L109}
+  ///
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
       std::string const& name, std::vector<std::string> const& delegates,
       std::string const& payload);
 
-  /**
-   * Signs a JWT using a service account's system-managed private key.
-   *
-   * @param name  Required. The resource name of the service account for which
-   * the credentials are requested, in the following format:
-   *  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
-   *  character is required; replacing it with a project ID is invalid.
-   * @param delegates  The sequence of service accounts in a delegation chain.
-   * Each service account must be granted the
-   * `roles/iam.serviceAccountTokenCreator` role on its next service account in
-   * the chain. The last service account in the chain must be granted the
-   * `roles/iam.serviceAccountTokenCreator` role on the service account that is
-   * specified in the `name` field of the request. The delegates must have the
-   * following format: `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.
-   * The `-` wildcard character is required; replacing it with a project ID is
-   * invalid.
-   * @param payload  Required. The JWT payload to sign: a JSON object that
-   * contains a JWT Claims Set.
-   * @return
-   * @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L145}
-   */
+  ///
+  /// Signs a JWT using a service account's system-managed private key.
+  ///
+  /// @param name  Required. The resource name of the service account for which
+  /// the credentials
+  ///  are requested, in the following format:
+  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
+  ///  wildcard character is required; replacing it with a project ID is
+  ///  invalid.
+  /// @param delegates  The sequence of service accounts in a delegation chain.
+  /// Each service
+  ///  account must be granted the `roles/iam.serviceAccountTokenCreator` role
+  ///  on its next service account in the chain. The last service account in the
+  ///  chain must be granted the `roles/iam.serviceAccountTokenCreator` role
+  ///  on the service account that is specified in the `name` field of the
+  ///  request.
+  ///  The delegates must have the following format:
+  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
+  ///  wildcard character is required; replacing it with a project ID is
+  ///  invalid.
+  /// @param payload  Required. The JWT payload to sign: a JSON object that
+  /// contains a JWT Claims Set.
+  /// @return
+  /// @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L145}
+  ///
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
       std::string const& name, std::vector<std::string> const& delegates,
       std::string const& payload);
 
-  /**
-   * Generates an OAuth 2.0 access token for a service account.
-   *
-   * @param request
-   * @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenRequest,google/iam/credentials/v1/common.proto#L35}
-   * @return
-   * @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L72}
-   */
+  ///
+  /// Generates an OAuth 2.0 access token for a service account.
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenRequest,google/iam/credentials/v1/common.proto#L35}
+  /// @return
+  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L72}
+  ///
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
       google::iam::credentials::v1::GenerateAccessTokenRequest const& request);
 
-  /**
-   * Generates an OpenID Connect ID token for a service account.
-   *
-   * @param request
-   * @googleapis_link{google::iam::credentials::v1::GenerateIdTokenRequest,google/iam/credentials/v1/common.proto#L153}
-   * @return
-   * @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L186}
-   */
+  ///
+  /// Generates an OpenID Connect ID token for a service account.
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenRequest,google/iam/credentials/v1/common.proto#L153}
+  /// @return
+  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L186}
+  ///
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(
       google::iam::credentials::v1::GenerateIdTokenRequest const& request);
 
-  /**
-   * Signs a blob using a service account's system-managed private key.
-   *
-   * @param request
-   * @googleapis_link{google::iam::credentials::v1::SignBlobRequest,google/iam/credentials/v1/common.proto#L81}
-   * @return
-   * @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L109}
-   */
+  ///
+  /// Signs a blob using a service account's system-managed private key.
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::credentials::v1::SignBlobRequest,google/iam/credentials/v1/common.proto#L81}
+  /// @return
+  /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L109}
+  ///
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
       google::iam::credentials::v1::SignBlobRequest const& request);
 
-  /**
-   * Signs a JWT using a service account's system-managed private key.
-   *
-   * @param request
-   * @googleapis_link{google::iam::credentials::v1::SignJwtRequest,google/iam/credentials/v1/common.proto#L117}
-   * @return
-   * @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L145}
-   */
+  ///
+  /// Signs a JWT using a service account's system-managed private key.
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::credentials::v1::SignJwtRequest,google/iam/credentials/v1/common.proto#L117}
+  /// @return
+  /// @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L145}
+  ///
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
       google::iam::credentials::v1::SignJwtRequest const& request);
 

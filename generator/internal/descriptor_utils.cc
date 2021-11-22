@@ -268,12 +268,12 @@ std::string FormatClassCommentsFromServiceComments(
                    << " no leading_comments to format";
   }
   std::string doxygen_formatted_comments =
-      absl::StrCat("/**\n *",
+      absl::StrCat("///\n///",
                    absl::StrReplaceAll(
                        ChompByValue(service_source_location.leading_comments),
-                       {{"\n\n", "\n *\n * "}, {"\n", "\n * "}}),
-                   "\n */");
-  return absl::StrReplaceAll(doxygen_formatted_comments, {{"*  ", "* "}});
+                       {{"\n\n", "\n///\n/// "}, {"\n", "\n/// "}}),
+                   "\n///");
+  return absl::StrReplaceAll(doxygen_formatted_comments, {{"///  ", "/// "}});
 }
 
 std::string FormatApiMethodSignatureParameters(
@@ -293,13 +293,13 @@ std::string FormatApiMethodSignatureParameters(
           parameter,
           absl::StrReplaceAll(
               EscapePrinterDelimiter(ChompByValue(loc.leading_comments)),
-              {{"\n\n", "\n   * "}, {"\n", "\n   * "}}));
+              {{"\n\n", "\n  /// "}, {"\n", "\n  /// "}}));
     }
   }
   std::string parameter_comment_string;
   for (auto const& param : parameter_comments) {
     parameter_comment_string +=
-        absl::StrFormat("   * @param %s %s\n", param.first, param.second);
+        absl::StrFormat("  /// @param %s %s\n", param.first, param.second);
   }
 
   return parameter_comment_string;
@@ -316,7 +316,7 @@ std::string FormatProtobufRequestParameters(
   std::string parameter_comment_string;
   for (auto const& param : parameter_comments) {
     parameter_comment_string +=
-        absl::StrFormat("   * @param %s %s\n", param.first, param.second);
+        absl::StrFormat("  /// @param %s %s\n", param.first, param.second);
   }
 
   return parameter_comment_string;
@@ -401,22 +401,22 @@ std::string FormatMethodCommentsFromRpcComments(
 
   std::string doxygen_formatted_function_comments = absl::StrReplaceAll(
       EscapePrinterDelimiter(method_source_location.leading_comments),
-      {{"\n", "\n   *"}});
+      {{"\n", "\n  ///"}});
 
   std::string return_comment_string;
   if (IsLongrunningOperation(method)) {
     return_comment_string =
-        "   * @return $method_longrunning_deduced_return_doxygen_link$\n";
+        "  /// @return $method_longrunning_deduced_return_doxygen_link$\n";
   } else if (!IsResponseTypeEmpty(method) && !IsPaginated(method)) {
-    return_comment_string = "   * @return $method_return_doxygen_link$\n";
+    return_comment_string = "  /// @return $method_return_doxygen_link$\n";
   } else if (IsPaginated(method)) {
     return_comment_string =
-        "   * @return $method_paginated_return_doxygen_link$\n";
+        "  /// @return $method_paginated_return_doxygen_link$\n";
   }
 
-  return absl::StrCat("  /**\n   *", doxygen_formatted_function_comments, "\n",
+  return absl::StrCat("  ///\n  ///", doxygen_formatted_function_comments, "\n",
                       parameter_comment_string, return_comment_string,
-                      "   */\n");
+                      "  ///\n");
 }
 
 VarsDictionary CreateServiceVars(
