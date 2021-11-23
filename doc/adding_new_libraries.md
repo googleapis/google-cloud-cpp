@@ -6,9 +6,6 @@ This document describes the steps required to add a new library to
 used in these libraries, that you are familiar with existing libraries, and with
 which libraries are based on gRPC.
 
-We will use `tasks` as an example through this document, you will need to
-update the instructions based on whatever library you are adding.
-
 ## Set some useful variables
 
 ```shell
@@ -50,15 +47,13 @@ index cdaa0bc9f..b0381d72d 100755
        "@com_google_googleapis//google/spanner/v1:spanner_proto" \
 ```
 
-You can find out which proto rules exist in the relevant directory using something like:
+You can find out which proto rules exist in the relevant directory using:
 
 ```shell
 bazel --batch query --noshow_progress --noshow_loading_progress \
     "kind(cc_library, @com_google_googleapis//${path}/...)" | \
     grep -v cc_proto
 ```
-
-
 
 ## Update the list of proto files and proto dependencies
 
@@ -140,7 +135,7 @@ light copy-editing to read less like it was written by a robot.
 ## Update the root `BUILD` file
 
 Manually edit `BUILD` to reference the new targets in
-`//google/cloud/tasks`. Initially prefix your targets with
+`//google/cloud/${library}`. Initially prefix your targets with
 `:experimental-`.
 
 ## Fix formatting nits
