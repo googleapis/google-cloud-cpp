@@ -17,7 +17,6 @@
 """Automatically generated source lists for google_cloud_cpp_secretmanager - DO NOT EDIT."""
 
 google_cloud_cpp_secretmanager_hdrs = [
-    "internal/retry_traits.h",
     "internal/secret_manager_auth_decorator.h",
     "internal/secret_manager_logging_decorator.h",
     "internal/secret_manager_metadata_decorator.h",
