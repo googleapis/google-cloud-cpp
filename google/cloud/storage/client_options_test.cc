@@ -339,6 +339,33 @@ TEST_F(ClientOptionsTest, DefaultOptions) {
   EXPECT_EQ("https://private.googleapis.com", o.get<RestEndpointOption>());
 }
 
+TEST_F(ClientOptionsTest, Timeouts) {
+  EXPECT_EQ(std::chrono::seconds(42),
+            internal::DefaultOptions(oauth2::CreateAnonymousCredentials(),
+                                     Options{}.set<TransferStallTimeoutOption>(
+                                         std::chrono::seconds(42)))
+                .get<DownloadStallTimeoutOption>());
+
+  EXPECT_EQ(std::chrono::seconds(7),
+            internal::DefaultOptions(
+                oauth2::CreateAnonymousCredentials(),
+                Options{}
+                    .set<TransferStallTimeoutOption>(std::chrono::seconds(42))
+                    .set<DownloadStallTimeoutOption>(std::chrono::seconds(7)))
+                .get<DownloadStallTimeoutOption>());
+
+  EXPECT_EQ(std::chrono::seconds(7),
+            internal::DefaultOptions(oauth2::CreateAnonymousCredentials(),
+                                     Options{}.set<DownloadStallTimeoutOption>(
+                                         std::chrono::seconds(7)))
+                .get<DownloadStallTimeoutOption>());
+
+  EXPECT_NE(
+      std::chrono::seconds(0),
+      internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), Options{})
+          .get<DownloadStallTimeoutOption>());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

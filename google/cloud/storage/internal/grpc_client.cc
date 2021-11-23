@@ -347,7 +347,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
   }
   auto context = absl::make_unique<grpc::ClientContext>();
   ApplyQueryParameters(*context, request);
-  auto const timeout = options_.get<TransferStallTimeoutOption>();
+  auto const timeout = options_.get<DownloadStallTimeoutOption>();
   if (timeout.count() != 0) {
     context->set_deadline(std::chrono::system_clock::now() + timeout);
   }

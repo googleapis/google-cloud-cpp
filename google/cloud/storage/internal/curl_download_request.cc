@@ -85,7 +85,7 @@ extern "C" std::size_t CurlDownloadRequestHeader(char* contents,
 CurlDownloadRequest::CurlDownloadRequest(CurlHeaders headers, CurlHandle handle,
                                          CurlMulti multi)
     : headers_(std::move(headers)),
-      transfer_stall_timeout_(0),
+      download_stall_timeout_(0),
       handle_(std::move(handle)),
       multi_(std::move(multi)),
       spill_(CURL_MAX_WRITE_SIZE) {}
@@ -227,9 +227,9 @@ void CurlDownloadRequest::SetOptions() {
   handle_.SetSocketCallback(socket_options_);
   handle_.SetOptionUnchecked(CURLOPT_HTTP_VERSION,
                              VersionToCurlCode(http_version_));
-  if (transfer_stall_timeout_.count() != 0) {
+  if (download_stall_timeout_.count() != 0) {
     // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
-    auto const timeout = static_cast<long>(transfer_stall_timeout_.count());
+    auto const timeout = static_cast<long>(download_stall_timeout_.count());
     handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
     // Timeout if the download receives less than 1 byte/second (i.e.
     // effectively no bytes) for `transfer_stall_timeout_` seconds.

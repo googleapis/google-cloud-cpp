@@ -413,7 +413,7 @@ class ClientOptions {
    *
    * The default value is 2 minutes. Can be disabled by setting the value to 0.
    *
-   * @deprecated Use google::cloud::Options and TransferStallTimeoutOption
+   * @deprecated Use google::cloud::Options and DownloadStallTimeoutOption
    *     instead.
    */
   std::chrono::seconds download_stall_timeout() const {
@@ -421,7 +421,7 @@ class ClientOptions {
   }
 
   /**
-   * @deprecated Use google::cloud::Options and TransferStallTimeoutOption
+   * @deprecated Use google::cloud::Options and DownloadStallTimeoutOption
    *     instead.
    */
   ClientOptions& set_download_stall_timeout(std::chrono::seconds v) {
