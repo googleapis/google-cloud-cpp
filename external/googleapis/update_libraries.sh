@@ -40,6 +40,7 @@ declare -A -r LIBRARIES=(
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_proto"
   ["monitoring"]="@com_google_googleapis//google/monitoring/v3:monitoring_proto"
   ["pubsub"]="@com_google_googleapis//google/pubsub/v1:pubsub_proto"
+  ["pubsublite"]="@com_google_googleapis//google/cloud/pubsublite/v1:pubsublite_proto"
   ["secretmanager"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/secretmanager/v1:secretmanager_proto" \
@@ -53,6 +54,7 @@ declare -A -r LIBRARIES=(
   )"
   ["speech"]="@com_google_googleapis//google/cloud/speech/v1:speech_proto"
   ["storage"]="@com_google_googleapis//google/storage/v2:storage_proto"
+  ["tasks"]="@com_google_googleapis//google/cloud/tasks/v2:tasks_proto"
   ["texttospeech"]="@com_google_googleapis//google/cloud/texttospeech/v1:texttospeech_proto"
 )
 
