@@ -1,0 +1,16 @@
+@com_google_googleapis//google/cloud/bigquery/connection/v1:connection.proto
+@com_google_googleapis//google/cloud/bigquery/datatransfer/v1:datatransfer.proto
+@com_google_googleapis//google/cloud/bigquery/datatransfer/v1:transfer.proto
+@com_google_googleapis//google/cloud/bigquery/logging/v1:audit_data.proto
+@com_google_googleapis//google/cloud/bigquery/reservation/v1:reservation.proto
+@com_google_googleapis//google/cloud/bigquery/storage/v1:arrow.proto
+@com_google_googleapis//google/cloud/bigquery/storage/v1:avro.proto
+@com_google_googleapis//google/cloud/bigquery/storage/v1:protobuf.proto
+@com_google_googleapis//google/cloud/bigquery/storage/v1:storage.proto
+@com_google_googleapis//google/cloud/bigquery/storage/v1:stream.proto
+@com_google_googleapis//google/cloud/bigquery/storage/v1:table.proto
+@com_google_googleapis//google/cloud/bigquery/v2:encryption_config.proto
+@com_google_googleapis//google/cloud/bigquery/v2:model.proto
+@com_google_googleapis//google/cloud/bigquery/v2:model_reference.proto
+@com_google_googleapis//google/cloud/bigquery/v2:standard_sql.proto
+@com_google_googleapis//google/cloud/bigquery/v2:table_reference.proto

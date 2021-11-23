@@ -1,0 +1,4 @@
+@com_google_googleapis//google/iam/admin/v1:audit_data.proto
+@com_google_googleapis//google/iam/admin/v1:iam.proto
+@com_google_googleapis//google/iam/credentials/v1:common.proto
+@com_google_googleapis//google/iam/credentials/v1:iamcredentials.proto
