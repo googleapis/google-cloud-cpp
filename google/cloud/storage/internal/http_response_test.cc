@@ -97,7 +97,7 @@ TEST(HttpResponseTest, AsStatus) {
 TEST(HttpResponseTest, ErrorInfo) {
   // This example payload comes from
   // https://cloud.google.com/apis/design/errors#http_mapping
-  std::string const json_payload = R"(
+  auto constexpr kJsonPayload = R"(
     {
       "error": {
         "code": 400,
@@ -122,14 +122,14 @@ TEST(HttpResponseTest, ErrorInfo) {
                        {{"service", "translate.googleapis.com"}}};
   std::string message = "API key not valid. Please pass a valid API key.";
   Status expected{StatusCode::kInvalidArgument, message, error_info};
-  EXPECT_EQ(AsStatus(HttpResponse{400, json_payload, {}}), expected);
+  EXPECT_EQ(AsStatus(HttpResponse{400, kJsonPayload, {}}), expected);
 }
 
 TEST(HttpResponseTest, ErrorInfoInvalidJson) {
   // Some valid json, but not what we're looking for.
-  std::string const json_payload = R"({"code":123, "message":"some message" })";
-  Status expected{StatusCode::kInvalidArgument, json_payload};
-  EXPECT_EQ(AsStatus(HttpResponse{400, json_payload, {}}), expected);
+  auto constexpr kJsonPayload = R"({"code":123, "message":"some message" })";
+  Status expected{StatusCode::kInvalidArgument, kJsonPayload};
+  EXPECT_EQ(AsStatus(HttpResponse{400, kJsonPayload, {}}), expected);
 }
 
 }  // namespace
