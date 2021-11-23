@@ -6,57 +6,86 @@ This document describes the steps required to add a new library to
 used in these libraries, that you are familiar with existing libraries, and with
 which libraries are based on gRPC.
 
-We will use `tasks` as an example through this document, you will need to
-update the instructions based on whatever library you are adding.
-
-## Set useful variables
+## Set some useful variables
 
 ```shell
 cd $HOME/google-cloud-cpp
-rule="google/cloud/tasks/v2:tasks_proto"
-path="${rule%:*}"
-library="tasks"
-mkdir -p google/cloud/${library}
+library=... # The name of your new library in the google-cloud-cpp repository
+path="google/cloud/${library}"  # The path in googleapis repo, may not start with google/cloud/
 ```
 
 ## Verify the C++ rules exist
 
 ```shell
 bazel --batch query --noshow_progress --noshow_loading_progress \
-    "deps(@com_google_googleapis//${rule/_proto/_cc_grpc})"
+    "kind(cc_library, @com_google_googleapis//${path}/...)"
 ```
 
 If this fails, send a CL to add the rule. Wait until that is submitted and
 exported before proceeding any further.
 
-## Update the list of proto files
+## Edit the scripts and configuration
 
-CMake needs to know which proto files are created by downloading the
-`googleapis` tarball. A bit annoying, but easy to generate:
+Update the `external/googleapis/update_libraries.sh` script, for example:
 
-```shell
-cd $HOME/google-cloud-cpp
-bazel --batch query --noshow_progress --noshow_loading_progress \
-  "deps(@com_google_googleapis//${rule})" \
-  | grep "@com_google_googleapis//${path}" \
-  | grep -E '\.proto$' \
-  >external/googleapis/protolists/${library}.list
+```diff
+diff --git a/external/googleapis/update_libraries.sh b/external/googleapis/update_libraries.sh
+index cdaa0bc9f..b0381d72d 100755
+--- a/external/googleapis/update_libraries.sh
++++ b/external/googleapis/update_libraries.sh
+@@ -40,6 +40,11 @@ declare -A -r LIBRARIES=(
+   ["logging"]="@com_google_googleapis//google/logging/v2:logging_proto"
+   ["monitoring"]="@com_google_googleapis//google/monitoring/v3:monitoring_proto"
+   ["pubsub"]="@com_google_googleapis//google/pubsub/v1:pubsub_proto"
++  ["secretmanager"]="$(
++    printf ",%s" \
++      "@com_google_googleapis//google/cloud/secretmanager/v1:secretmanager_proto" \
++      "@com_google_googleapis//google/cloud/secretmanager/logging/v1:logging_proto"
++  )"
+   ["spanner"]="$(
+     printf ",%s" \
+       "@com_google_googleapis//google/spanner/v1:spanner_proto" \
 ```
 
-## Update the list of proto dependencies
+You can find out which proto rules exist in the relevant directory using:
+
+```shell
+bazel --batch query --noshow_progress --noshow_loading_progress \
+    "kind(cc_library, @com_google_googleapis//${path}/...)" | \
+    grep -v cc_proto
+```
+
+## Update the list of proto files and proto dependencies
 
 ```shell
 cd $HOME/google-cloud-cpp
-bazel --batch query --noshow_progress --noshow_loading_progress \
-  "deps(@com_google_googleapis//${rule})" \
-  | grep "@com_google_googleapis//" | grep _proto \
-  | grep -v "@com_google_googleapis//${path}" \
-  >external/googleapis/protodeps/${library}.deps
+external/googleapis/update_libraries.sh
 ```
 
 ## Run the Scaffold Generator
 
 Manually edit `generator/generator_config.textproto` and add the new service.
+For example:
+
+```diff
+diff --git a/generator/generator_config.textproto b/generator/generator_config.textproto
+index ab033dde9..3753287d8 100644
+--- a/generator/generator_config.textproto
++++ b/generator/generator_config.textproto
+@@ -78,6 +78,14 @@ service {
+
+ }
+
++# Secret Manager
++service {
++  service_proto_path: "google/cloud/secretmanager/v1/service.proto"
++  product_path: "google/cloud/secretmanager"
++  initial_copyright_year: "2021"
++  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
++}
++
+```
+
 Then run the micro-generator to create the scaffold and the C++ sources:
 
 ```shell
@@ -106,7 +135,7 @@ light copy-editing to read less like it was written by a robot.
 ## Update the root `BUILD` file
 
 Manually edit `BUILD` to reference the new targets in
-`//google/cloud/tasks`. Initially prefix your targets with
+`//google/cloud/${library}`. Initially prefix your targets with
 `:experimental-`.
 
 ## Fix formatting nits

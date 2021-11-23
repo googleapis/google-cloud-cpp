@@ -70,6 +70,12 @@ expected_dirs+=(
   ./include/google/cloud/internal
   ./include/google/cloud/pubsub
   ./include/google/cloud/pubsub/internal
+  # google/cloud/secretmanager/logging contains pure
+  # protos, no gRPC services. The generator does
+  # not update expected_install_directories in
+  # this case
+  ./include/google/cloud/secretmanager/logging
+  ./include/google/cloud/secretmanager/logging/v1
   ./include/google/cloud/pubsub/mocks
   ./include/google/cloud/spanner/admin/mocks
   ./include/google/cloud/spanner/internal
