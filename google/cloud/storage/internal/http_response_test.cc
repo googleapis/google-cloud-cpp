@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
@@ -92,6 +93,45 @@ TEST(HttpResponseTest, AsStatus) {
   EXPECT_THAT(AsStatus(HttpResponse{600, "bad", {}}),
               StatusIs(StatusCode::kUnknown));
 }
+
+TEST(HttpResponseTest, ErrorInfo) {
+  // This example payload comes from
+  // https://cloud.google.com/apis/design/errors#http_mapping
+  auto constexpr kJsonPayload = R"(
+    {
+      "error": {
+        "code": 400,
+        "message": "API key not valid. Please pass a valid API key.",
+        "status": "INVALID_ARGUMENT",
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "reason": "API_KEY_INVALID",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "translate.googleapis.com"
+            }
+          }
+        ]
+      }
+    }
+  )";
+
+  ErrorInfo error_info{"API_KEY_INVALID",
+                       "googleapis.com",
+                       {{"service", "translate.googleapis.com"}}};
+  std::string message = "API key not valid. Please pass a valid API key.";
+  Status expected{StatusCode::kInvalidArgument, message, error_info};
+  EXPECT_EQ(AsStatus(HttpResponse{400, kJsonPayload, {}}), expected);
+}
+
+TEST(HttpResponseTest, ErrorInfoInvalidJson) {
+  // Some valid json, but not what we're looking for.
+  auto constexpr kJsonPayload = R"({"code":123, "message":"some message" })";
+  Status expected{StatusCode::kInvalidArgument, kJsonPayload};
+  EXPECT_EQ(AsStatus(HttpResponse{400, kJsonPayload, {}}), expected);
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

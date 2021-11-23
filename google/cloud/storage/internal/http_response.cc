@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include <nlohmann/json.hpp>
 #include <iostream>
 
 namespace google {
@@ -22,26 +23,25 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-Status AsStatus(HttpResponse const& http_response) {
-  // The code here is organized by increasing range (or value) of the errors,
-  // just to make it readable. There are probably shorter (and/or more
-  // efficient) ways to write this, but we went for readability.
+namespace {
 
-  if (http_response.status_code < HttpStatusCode::kMinContinue) {
-    return Status(StatusCode::kUnknown, http_response.payload);
+// Maps HTTP status codes to enumerators in `StatusCode`. The code here is
+// organized by increasing range (or value) of the errors, just to make it
+// readable. There are probably shorter (and/or more efficient) ways to write
+// this, but we went for readability.
+StatusCode MapHttpCodeToStatus(long code) {  // NOLINT(google-runtime-int)
+  // We treat the 100s (e.g. 100 Continue) as OK results. They normally are
+  // ignored by libcurl, so we do not really expect to see them.
+  if (HttpStatusCode::kMinContinue <= code &&
+      code < HttpStatusCode::kMinSuccess) {
+    return StatusCode::kOk;
   }
-  if (HttpStatusCode::kMinContinue <= http_response.status_code &&
-      http_response.status_code < HttpStatusCode::kMinSuccess) {
-    // We treat the 100s (e.g. 100 Continue) as OK results. They normally are
-    // ignored by libcurl, so we do not really expect to see them.
-    return Status(StatusCode::kOk, std::string{});
+  // We treat the 200s as Okay results.
+  if (HttpStatusCode::kMinSuccess <= code &&
+      code < HttpStatusCode::kMinRedirects) {
+    return StatusCode::kOk;
   }
-  if (HttpStatusCode::kMinSuccess <= http_response.status_code &&
-      http_response.status_code < HttpStatusCode::kMinRedirects) {
-    // We treat the 200s as Okay results.
-    return Status(StatusCode::kOk, std::string{});
-  }
-  if (http_response.status_code == HttpStatusCode::kResumeIncomplete) {
+  if (code == HttpStatusCode::kResumeIncomplete) {
     // 308 - Resume Incomplete: this one is terrible. When performing a PUT
     // for a resumable upload this means "The client and server are out of sync
     // in this resumable upload, please reset". Unfortunately, during a
@@ -50,87 +50,147 @@ Status AsStatus(HttpResponse const& http_response) {
     // like a kOk, the first is more like a kFailedPrecondition.
     // This level of complexity / detail is something that the caller should
     // handle, i.e., the mapping depends on the operation.
-    return Status(StatusCode::kFailedPrecondition, http_response.payload);
+    return StatusCode::kFailedPrecondition;
   }
-  if (http_response.status_code == HttpStatusCode::kNotModified) {
+  if (code == HttpStatusCode::kNotModified) {
     // 304 - Not Modified: evidently GCS returns 304 for some failed
     // pre-conditions. It is somewhat strange that it also returns this error
     // code for downloads, which is always read-only and was not going to modify
     // anything. In any case, it seems too confusing to return anything other
     // than kFailedPrecondition here.
-    return Status(StatusCode::kFailedPrecondition, http_response.payload);
+    return StatusCode::kFailedPrecondition;
   }
-  if (HttpStatusCode::kMinRedirects <= http_response.status_code &&
-      http_response.status_code < HttpStatusCode::kMinRequestErrors) {
+  if (HttpStatusCode::kMinRedirects <= code &&
+      code < HttpStatusCode::kMinRequestErrors) {
     // The 300s should be handled by libcurl, we should not get them, according
     // to the Google Cloud Storage documentation these are:
     // 302 - Found
     // 303 - See Other
     // 307 - Temporary Redirect
-    return Status(StatusCode::kUnknown, http_response.payload);
+    return StatusCode::kUnknown;
   }
-  if (http_response.status_code == HttpStatusCode::kBadRequest) {
-    return Status(StatusCode::kInvalidArgument, http_response.payload);
+  if (code == HttpStatusCode::kBadRequest) {
+    return StatusCode::kInvalidArgument;
   }
-  if (http_response.status_code == HttpStatusCode::kUnauthorized) {
-    return Status(StatusCode::kUnauthenticated, http_response.payload);
+  if (code == HttpStatusCode::kUnauthorized) {
+    return StatusCode::kUnauthenticated;
   }
-  if (http_response.status_code == HttpStatusCode::kForbidden) {
-    return Status(StatusCode::kPermissionDenied, http_response.payload);
+  if (code == HttpStatusCode::kForbidden) {
+    return StatusCode::kPermissionDenied;
   }
-  if (http_response.status_code == HttpStatusCode::kNotFound) {
-    return Status(StatusCode::kNotFound, http_response.payload);
+  if (code == HttpStatusCode::kNotFound) {
+    return StatusCode::kNotFound;
   }
-  if (http_response.status_code == HttpStatusCode::kMethodNotAllowed) {
-    return Status(StatusCode::kPermissionDenied, http_response.payload);
+  if (code == HttpStatusCode::kMethodNotAllowed) {
+    return StatusCode::kPermissionDenied;
   }
-  if (http_response.status_code == HttpStatusCode::kRequestTimeout) {
+  if (code == HttpStatusCode::kRequestTimeout) {
     // GCS uses a 408 to signal that an upload has suffered a broken
     // connection, and that the client should retry.
-    return Status(StatusCode::kUnavailable, http_response.payload);
+    return StatusCode::kUnavailable;
   }
-  if (http_response.status_code == HttpStatusCode::kConflict) {
-    return Status(StatusCode::kAborted, http_response.payload);
+  if (code == HttpStatusCode::kConflict) {
+    return StatusCode::kAborted;
   }
-  if (http_response.status_code == HttpStatusCode::kGone) {
-    return Status(StatusCode::kNotFound, http_response.payload);
+  if (code == HttpStatusCode::kGone) {
+    return StatusCode::kNotFound;
   }
-  if (http_response.status_code == HttpStatusCode::kLengthRequired) {
-    return Status(StatusCode::kInvalidArgument, http_response.payload);
+  if (code == HttpStatusCode::kLengthRequired) {
+    return StatusCode::kInvalidArgument;
   }
-  if (http_response.status_code == HttpStatusCode::kPreconditionFailed) {
-    return Status(StatusCode::kFailedPrecondition, http_response.payload);
+  if (code == HttpStatusCode::kPreconditionFailed) {
+    return StatusCode::kFailedPrecondition;
   }
-  if (http_response.status_code == HttpStatusCode::kPayloadTooLarge) {
-    return Status(StatusCode::kOutOfRange, http_response.payload);
+  if (code == HttpStatusCode::kPayloadTooLarge) {
+    return StatusCode::kOutOfRange;
   }
-  if (http_response.status_code ==
-      HttpStatusCode::kRequestRangeNotSatisfiable) {
-    return Status(StatusCode::kOutOfRange, http_response.payload);
+  if (code == HttpStatusCode::kRequestRangeNotSatisfiable) {
+    return StatusCode::kOutOfRange;
   }
-  if (http_response.status_code == HttpStatusCode::kTooManyRequests) {
-    return Status(StatusCode::kUnavailable, http_response.payload);
+  if (code == HttpStatusCode::kTooManyRequests) {
+    return StatusCode::kUnavailable;
   }
-  if (HttpStatusCode::kMinRequestErrors <= http_response.status_code &&
-      http_response.status_code < HttpStatusCode::kMinInternalErrors) {
+  if (HttpStatusCode::kMinRequestErrors <= code &&
+      code < HttpStatusCode::kMinInternalErrors) {
     // 4XX - A request error.
-    return Status(StatusCode::kInvalidArgument, http_response.payload);
+    return StatusCode::kInvalidArgument;
   }
-  if (http_response.status_code == HttpStatusCode::kInternalServerError) {
-    return Status(StatusCode::kUnavailable, http_response.payload);
+  if (code == HttpStatusCode::kInternalServerError) {
+    return StatusCode::kUnavailable;
   }
-  if (http_response.status_code == HttpStatusCode::kBadGateway) {
-    return Status(StatusCode::kUnavailable, http_response.payload);
+  if (code == HttpStatusCode::kBadGateway) {
+    return StatusCode::kUnavailable;
   }
-  if (http_response.status_code == HttpStatusCode::kServiceUnavailable) {
-    return Status(StatusCode::kUnavailable, http_response.payload);
+  if (code == HttpStatusCode::kServiceUnavailable) {
+    return StatusCode::kUnavailable;
   }
-  if (HttpStatusCode::kMinInternalErrors <= http_response.status_code &&
-      http_response.status_code < HttpStatusCode::kMinInvalidCode) {
+  if (HttpStatusCode::kMinInternalErrors <= code &&
+      code < HttpStatusCode::kMinInvalidCode) {
     // 5XX - server errors are mapped to kInternal.
-    return Status(StatusCode::kInternal, http_response.payload);
+    return StatusCode::kInternal;
   }
-  return Status(StatusCode::kUnknown, http_response.payload);
+  return StatusCode::kUnknown;
+}
+
+// Makes an `ErrorInfo` from an `"error"` JSON object that looks like
+//   [
+//     {
+//       "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+//       "reason": "..."
+//       "domain": "..."
+//       "metdata": {
+//         "key1": "value1"
+//         ...
+//       }
+//     }
+//   ]
+// See also https://cloud.google.com/apis/design/errors#http_mapping
+ErrorInfo MakeErrorInfo(nlohmann::json const& details) {
+  static auto constexpr kErrorInfoType =
+      "type.googleapis.com/google.rpc.ErrorInfo";
+  for (auto const& e : details.items()) {
+    auto const& v = e.value();
+    if (v.value("@type", "") != kErrorInfoType) continue;
+    auto reason = v.value("reason", "");
+    auto domain = v.value("domain", "");
+    auto metadata_json = v.value("metadata", nlohmann::json::object());
+    auto metadata = std::unordered_map<std::string, std::string>{};
+    for (auto const& m : metadata_json.items()) {
+      metadata[m.key()] = m.value();
+    }
+    return ErrorInfo{std::move(reason), std::move(domain), std::move(metadata)};
+  }
+  return ErrorInfo{};
+}
+
+}  // namespace
+
+Status AsStatus(HttpResponse const& http_response) {
+  auto const status_code = MapHttpCodeToStatus(http_response.status_code);
+  if (status_code == StatusCode::kOk) return Status{};
+
+  // We try to parse the payload as JSON, which may allow us to provide a more
+  // structured and useful error Status. If the payload fails to parse as JSON,
+  // we simply attach the full error payload as the Status's message string.
+  auto json = nlohmann::json::parse(http_response.payload, nullptr, false);
+  if (json.is_discarded()) return Status(status_code, http_response.payload);
+
+  // We expect JSON that looks like the following:
+  //   {
+  //     "error": {
+  //       "message": "..."
+  //       ...
+  //       "details": [
+  //         ...
+  //       ]
+  //     }
+  //   }
+  // See  https://cloud.google.com/apis/design/errors#http_mapping
+  auto error = json.value("error", nlohmann::json::object());
+  auto message = error.value("message", http_response.payload);
+  auto details = error.value("details", nlohmann::json::object());
+  auto error_info = MakeErrorInfo(details);
+  return Status(status_code, std::move(message), std::move(error_info));
 }
 
 std::ostream& operator<<(std::ostream& os, HttpResponse const& rhs) {
