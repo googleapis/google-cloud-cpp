@@ -43,7 +43,8 @@ CurlRequestBuilder::CurlRequestBuilder(
       url_(std::move(base_url)),
       query_parameter_separator_(InitialQueryParameterSeparator(url_)),
       logging_enabled_(false),
-      transfer_stall_timeout_(0) {}
+      transfer_stall_timeout_(0),
+      download_stall_timeout_(0) {}
 
 CurlRequest CurlRequestBuilder::BuildRequest() && {
   ValidateBuilderState(__func__);
@@ -72,7 +73,7 @@ CurlRequestBuilder::BuildDownloadRequest() && {
   request->factory_ = factory_;
   request->logging_enabled_ = logging_enabled_;
   request->socket_options_ = socket_options_;
-  request->transfer_stall_timeout_ = transfer_stall_timeout_;
+  request->download_stall_timeout_ = download_stall_timeout_;
   request->SetOptions();
   return request;
 }
@@ -92,6 +93,7 @@ CurlRequestBuilder& CurlRequestBuilder::ApplyClientOptions(
   http_version_ =
       std::move(options.get<storage_experimental::HttpVersionOption>());
   transfer_stall_timeout_ = options.get<TransferStallTimeoutOption>();
+  download_stall_timeout_ = options.get<DownloadStallTimeoutOption>();
   return *this;
 }
 

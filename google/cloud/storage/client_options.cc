@@ -183,6 +183,14 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
           .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy().clone());
 
   o = google::cloud::internal::MergeOptions(std::move(opts), std::move(o));
+  // If the application did not set `DownloadStallTimeoutOption` then use the
+  // same value as `TransferStallTimeoutOption` (which could be the default
+  // value). Some applications need tighter timeouts for downloads, but longer
+  // timeouts for other transfers.
+  if (!o.has<DownloadStallTimeoutOption>()) {
+    o.set<DownloadStallTimeoutOption>(o.get<TransferStallTimeoutOption>());
+  }
+
   auto emulator = GetEmulator();
   if (emulator.has_value()) {
     o.set<RestEndpointOption>(*emulator).set<IamEndpointOption>(*emulator +

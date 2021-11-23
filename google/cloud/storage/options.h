@@ -206,7 +206,8 @@ struct MaximumCurlSocketSendSizeOption {
  *
  * If a transfer (upload, download, or request) *stalls*, i.e., no bytes are
  * sent or received for a significant period, it may be better to restart the
- * transfer as this may indicate a network glitch.
+ * transfer as this may indicate a network glitch.  For downloads the
+ * #DownloadStallTimeoutOption takes precedence.
  *
  * For large requests (e.g. downloads in the GiB to TiB range) this is a better
  * configuration parameter than a simple timeout, as the transfers will take
@@ -220,9 +221,22 @@ struct TransferStallTimeoutOption {
 };
 
 /**
- * @deprecated Please use TransferStallTimeoutOption instead
+ * Sets the download stall timeout.
+ *
+ * If a download *stalls*, i.e., no bytes are received for a significant period,
+ * it may be better to restart the download as this may indicate a network
+ * glitch.
+ *
+ * For large requests (e.g. downloads in the GiB to TiB range) this is a better
+ * configuration parameter than a simple timeout, as the transfers will take
+ * minutes or hours to complete. Relying on a timeout value for them would not
+ * work, as the timeout would be too large to be useful. For small requests,
+ * this is as effective as a timeout parameter, but maybe unfamiliar and thus
+ * harder to reason about.
  */
-using DownloadStallTimeoutOption = TransferStallTimeoutOption;
+struct DownloadStallTimeoutOption {
+  using Type = std::chrono::seconds;
+};
 
 /// Set the retry policy for a GCS client.
 struct RetryPolicyOption {
