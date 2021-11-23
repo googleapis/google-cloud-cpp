@@ -146,7 +146,8 @@ StatusCode MapHttpCodeToStatus(long code) {  // NOLINT(google-runtime-int)
 //   ]
 // See also https://cloud.google.com/apis/design/errors#http_mapping
 ErrorInfo MakeErrorInfo(nlohmann::json const& details) {
-  static auto const kErrorInfoType = "type.googleapis.com/google.rpc.ErrorInfo";
+  static auto const* const kErrorInfoType =
+      "type.googleapis.com/google.rpc.ErrorInfo";
   for (auto const& e : details.items()) {
     auto const& v = e.value();
     if (v.value("@type", "") != kErrorInfoType) continue;
