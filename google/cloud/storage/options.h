@@ -207,7 +207,7 @@ struct MaximumCurlSocketSendSizeOption {
  * If a transfer (upload, download, or request) *stalls*, i.e., no bytes are
  * sent or received for a significant period, it may be better to restart the
  * transfer as this may indicate a network glitch.  For downloads the
- * #DownloadStallTimeoutOption takes precedence.
+ * google::cloud::storage::DownloadStallTimeoutOption takes precedence.
  *
  * For large requests (e.g. downloads in the GiB to TiB range) this is a better
  * configuration parameter than a simple timeout, as the transfers will take
