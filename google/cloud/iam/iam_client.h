@@ -87,6 +87,11 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
   ///
+  /// [google.iam.admin.v1.ListServiceAccountsRequest]:
+  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountsRequest,google/iam/admin/v1/iam.proto#L544}
+  /// [google::iam::admin::v1::ServiceAccount]:
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
+  ///
   StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
       std::string const& name);
 
@@ -100,6 +105,11 @@ class IAMClient {
   ///  the account. The `ACCOUNT` value can be the `email` address or the
   ///  `unique_id` of the service account.
   /// @return
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
+  ///
+  /// [google.iam.admin.v1.GetServiceAccountRequest]:
+  /// @googleapis_link{google::iam::admin::v1::GetServiceAccountRequest,google/iam/admin/v1/iam.proto#L579}
+  /// [google.iam.admin.v1.ServiceAccount]:
   /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
@@ -121,6 +131,11 @@ class IAMClient {
   ///  create. Currently, only the following values are user assignable:
   ///  `display_name` and `description`.
   /// @return
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
+  ///
+  /// [google.iam.admin.v1.CreateServiceAccountRequest]:
+  /// @googleapis_link{google::iam::admin::v1::CreateServiceAccountRequest,google/iam/admin/v1/iam.proto#L521}
+  /// [google.iam.admin.v1.ServiceAccount]:
   /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccount> CreateServiceAccount(
@@ -154,6 +169,9 @@ class IAMClient {
   ///  the account. The `ACCOUNT` value can be the `email` address or the
   ///  `unique_id` of the service account.
   ///
+  /// [google.iam.admin.v1.DeleteServiceAccountRequest]:
+  /// @googleapis_link{google::iam::admin::v1::DeleteServiceAccountRequest,google/iam/admin/v1/iam.proto#L594}
+  ///
   Status DeleteServiceAccount(std::string const& name);
 
   ///
@@ -171,6 +189,11 @@ class IAMClient {
   ///  response. Duplicate key types are not allowed. If no key type
   ///  is provided, all keys are returned.
   /// @return
+  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysResponse,google/iam/admin/v1/iam.proto#L692}
+  ///
+  /// [google.iam.admin.v1.ListServiceAccountKeysRequest]:
+  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysRequest,google/iam/admin/v1/iam.proto#L657}
+  /// [google.iam.admin.v1.ListServiceAccountKeysResponse]:
   /// @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysResponse,google/iam/admin/v1/iam.proto#L692}
   ///
   StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
@@ -192,6 +215,11 @@ class IAMClient {
   /// @param public_key_type  The output format of the public key requested.
   ///  X509_PEM is the default output format.
   /// @return
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
+  ///
+  /// [google.iam.admin.v1.GetServiceAccountKeyRequest]:
+  /// @googleapis_link{google::iam::admin::v1::GetServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L698}
+  /// [google.iam.admin.v1.ServiceAccountKey]:
   /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccountKey> GetServiceAccountKey(
@@ -217,6 +245,11 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
   ///
+  /// [google.iam.admin.v1.CreateServiceAccountKeyRequest]:
+  /// @googleapis_link{google::iam::admin::v1::CreateServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L791}
+  /// [google.iam.admin.v1.ServiceAccountKey]:
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
+  ///
   StatusOr<google::iam::admin::v1::ServiceAccountKey> CreateServiceAccountKey(
       std::string const& name,
       google::iam::admin::v1::ServiceAccountPrivateKeyType private_key_type,
@@ -233,6 +266,9 @@ class IAMClient {
   ///  Using `-` as a wildcard for the `PROJECT_ID` will infer the project from
   ///  the account. The `ACCOUNT` value can be the `email` address or the
   ///  `unique_id` of the service account.
+  ///
+  /// [google.iam.admin.v1.DeleteServiceAccountKeyRequest]:
+  /// @googleapis_link{google::iam::admin::v1::DeleteServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L832}
   ///
   Status DeleteServiceAccountKey(std::string const& name);
 
@@ -253,6 +289,11 @@ class IAMClient {
   /// requested.
   ///  See the operation documentation for the appropriate value for this field.
   /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.GetIamPolicyRequest]:
+  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]:
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource);
@@ -287,6 +328,11 @@ class IAMClient {
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
   /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]:
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
@@ -332,6 +378,11 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
+  /// [google.iam.v1.TestIamPermissionsRequest]:
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]:
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions);
 
@@ -348,6 +399,11 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
   ///
+  /// [google.iam.admin.v1.QueryGrantableRolesRequest]:
+  /// @googleapis_link{google::iam::admin::v1::QueryGrantableRolesRequest,google/iam/admin/v1/iam.proto#L1062}
+  /// [google::iam::admin::v1::Role]:
+  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
+  ///
   StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
       std::string const& full_resource_name);
 
@@ -358,6 +414,11 @@ class IAMClient {
   /// @param request
   /// @googleapis_link{google::iam::admin::v1::ListServiceAccountsRequest,google/iam/admin/v1/iam.proto#L544}
   /// @return
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
+  ///
+  /// [google.iam.admin.v1.ListServiceAccountsRequest]:
+  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountsRequest,google/iam/admin/v1/iam.proto#L544}
+  /// [google::iam::admin::v1::ServiceAccount]:
   /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
   ///
   StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
@@ -371,6 +432,11 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
   ///
+  /// [google.iam.admin.v1.GetServiceAccountRequest]:
+  /// @googleapis_link{google::iam::admin::v1::GetServiceAccountRequest,google/iam/admin/v1/iam.proto#L579}
+  /// [google.iam.admin.v1.ServiceAccount]:
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
+  ///
   StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
       google::iam::admin::v1::GetServiceAccountRequest const& request);
 
@@ -382,6 +448,11 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
   ///
+  /// [google.iam.admin.v1.CreateServiceAccountRequest]:
+  /// @googleapis_link{google::iam::admin::v1::CreateServiceAccountRequest,google/iam/admin/v1/iam.proto#L521}
+  /// [google.iam.admin.v1.ServiceAccount]:
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
+  ///
   StatusOr<google::iam::admin::v1::ServiceAccount> CreateServiceAccount(
       google::iam::admin::v1::CreateServiceAccountRequest const& request);
 
@@ -391,6 +462,11 @@ class IAMClient {
   /// @param request
   /// @googleapis_link{google::iam::admin::v1::PatchServiceAccountRequest,google/iam/admin/v1/iam.proto#L616}
   /// @return
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
+  ///
+  /// [google.iam.admin.v1.PatchServiceAccountRequest]:
+  /// @googleapis_link{google::iam::admin::v1::PatchServiceAccountRequest,google/iam/admin/v1/iam.proto#L616}
+  /// [google.iam.admin.v1.ServiceAccount]:
   /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccount> PatchServiceAccount(
@@ -419,6 +495,9 @@ class IAMClient {
   /// @param request
   /// @googleapis_link{google::iam::admin::v1::DeleteServiceAccountRequest,google/iam/admin/v1/iam.proto#L594}
   ///
+  /// [google.iam.admin.v1.DeleteServiceAccountRequest]:
+  /// @googleapis_link{google::iam::admin::v1::DeleteServiceAccountRequest,google/iam/admin/v1/iam.proto#L594}
+  ///
   Status DeleteServiceAccount(
       google::iam::admin::v1::DeleteServiceAccountRequest const& request);
 
@@ -437,6 +516,11 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::admin::v1::UndeleteServiceAccountResponse,google/iam/admin/v1/iam.proto#L631}
   ///
+  /// [google.iam.admin.v1.UndeleteServiceAccountRequest]:
+  /// @googleapis_link{google::iam::admin::v1::UndeleteServiceAccountRequest,google/iam/admin/v1/iam.proto#L623}
+  /// [google.iam.admin.v1.UndeleteServiceAccountResponse]:
+  /// @googleapis_link{google::iam::admin::v1::UndeleteServiceAccountResponse,google/iam/admin/v1/iam.proto#L631}
+  ///
   StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
   UndeleteServiceAccount(
       google::iam::admin::v1::UndeleteServiceAccountRequest const& request);
@@ -453,6 +537,9 @@ class IAMClient {
   /// this method to enable the service account.
   ///
   /// @param request
+  /// @googleapis_link{google::iam::admin::v1::EnableServiceAccountRequest,google/iam/admin/v1/iam.proto#L637}
+  ///
+  /// [google.iam.admin.v1.EnableServiceAccountRequest]:
   /// @googleapis_link{google::iam::admin::v1::EnableServiceAccountRequest,google/iam/admin/v1/iam.proto#L637}
   ///
   Status EnableServiceAccount(
@@ -482,6 +569,9 @@ class IAMClient {
   /// @param request
   /// @googleapis_link{google::iam::admin::v1::DisableServiceAccountRequest,google/iam/admin/v1/iam.proto#L647}
   ///
+  /// [google.iam.admin.v1.DisableServiceAccountRequest]:
+  /// @googleapis_link{google::iam::admin::v1::DisableServiceAccountRequest,google/iam/admin/v1/iam.proto#L647}
+  ///
   Status DisableServiceAccount(
       google::iam::admin::v1::DisableServiceAccountRequest const& request);
 
@@ -492,6 +582,11 @@ class IAMClient {
   /// @param request
   /// @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysRequest,google/iam/admin/v1/iam.proto#L657}
   /// @return
+  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysResponse,google/iam/admin/v1/iam.proto#L692}
+  ///
+  /// [google.iam.admin.v1.ListServiceAccountKeysRequest]:
+  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysRequest,google/iam/admin/v1/iam.proto#L657}
+  /// [google.iam.admin.v1.ListServiceAccountKeysResponse]:
   /// @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysResponse,google/iam/admin/v1/iam.proto#L692}
   ///
   StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
@@ -506,6 +601,11 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
   ///
+  /// [google.iam.admin.v1.GetServiceAccountKeyRequest]:
+  /// @googleapis_link{google::iam::admin::v1::GetServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L698}
+  /// [google.iam.admin.v1.ServiceAccountKey]:
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
+  ///
   StatusOr<google::iam::admin::v1::ServiceAccountKey> GetServiceAccountKey(
       google::iam::admin::v1::GetServiceAccountKeyRequest const& request);
 
@@ -515,6 +615,11 @@ class IAMClient {
   /// @param request
   /// @googleapis_link{google::iam::admin::v1::CreateServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L791}
   /// @return
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
+  ///
+  /// [google.iam.admin.v1.CreateServiceAccountKeyRequest]:
+  /// @googleapis_link{google::iam::admin::v1::CreateServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L791}
+  /// [google.iam.admin.v1.ServiceAccountKey]:
   /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccountKey> CreateServiceAccountKey(
@@ -529,6 +634,11 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
   ///
+  /// [google.iam.admin.v1.UploadServiceAccountKeyRequest]:
+  /// @googleapis_link{google::iam::admin::v1::UploadServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L816}
+  /// [google.iam.admin.v1.ServiceAccountKey]:
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
+  ///
   StatusOr<google::iam::admin::v1::ServiceAccountKey> UploadServiceAccountKey(
       google::iam::admin::v1::UploadServiceAccountKeyRequest const& request);
 
@@ -538,6 +648,9 @@ class IAMClient {
   /// that have been issued based on the service account key.
   ///
   /// @param request
+  /// @googleapis_link{google::iam::admin::v1::DeleteServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L832}
+  ///
+  /// [google.iam.admin.v1.DeleteServiceAccountKeyRequest]:
   /// @googleapis_link{google::iam::admin::v1::DeleteServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L832}
   ///
   Status DeleteServiceAccountKey(
@@ -559,6 +672,11 @@ class IAMClient {
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
   /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.GetIamPolicyRequest]:
+  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]:
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
@@ -590,6 +708,11 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request);
 
@@ -600,6 +723,11 @@ class IAMClient {
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
   /// @return
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  ///
+  /// [google.iam.v1.TestIamPermissionsRequest]:
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]:
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
@@ -615,6 +743,11 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
   ///
+  /// [google.iam.admin.v1.QueryGrantableRolesRequest]:
+  /// @googleapis_link{google::iam::admin::v1::QueryGrantableRolesRequest,google/iam/admin/v1/iam.proto#L1062}
+  /// [google::iam::admin::v1::Role]:
+  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
+  ///
   StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
       google::iam::admin::v1::QueryGrantableRolesRequest request);
 
@@ -625,6 +758,11 @@ class IAMClient {
   /// @param request
   /// @googleapis_link{google::iam::admin::v1::ListRolesRequest,google/iam/admin/v1/iam.proto#L1093}
   /// @return
+  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
+  ///
+  /// [google.iam.admin.v1.ListRolesRequest]:
+  /// @googleapis_link{google::iam::admin::v1::ListRolesRequest,google/iam/admin/v1/iam.proto#L1093}
+  /// [google::iam::admin::v1::Role]:
   /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
   ///
   StreamRange<google::iam::admin::v1::Role> ListRoles(
@@ -638,6 +776,11 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
   ///
+  /// [google.iam.admin.v1.GetRoleRequest]:
+  /// @googleapis_link{google::iam::admin::v1::GetRoleRequest,google/iam/admin/v1/iam.proto#L1152}
+  /// [google.iam.admin.v1.Role]:
+  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
+  ///
   StatusOr<google::iam::admin::v1::Role> GetRole(
       google::iam::admin::v1::GetRoleRequest const& request);
 
@@ -649,6 +792,11 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
   ///
+  /// [google.iam.admin.v1.CreateRoleRequest]:
+  /// @googleapis_link{google::iam::admin::v1::CreateRoleRequest,google/iam/admin/v1/iam.proto#L1184}
+  /// [google.iam.admin.v1.Role]:
+  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
+  ///
   StatusOr<google::iam::admin::v1::Role> CreateRole(
       google::iam::admin::v1::CreateRoleRequest const& request);
 
@@ -658,6 +806,11 @@ class IAMClient {
   /// @param request
   /// @googleapis_link{google::iam::admin::v1::UpdateRoleRequest,google/iam/admin/v1/iam.proto#L1219}
   /// @return
+  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
+  ///
+  /// [google.iam.admin.v1.UpdateRoleRequest]:
+  /// @googleapis_link{google::iam::admin::v1::UpdateRoleRequest,google/iam/admin/v1/iam.proto#L1219}
+  /// [google.iam.admin.v1.Role]:
   /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
   ///
   StatusOr<google::iam::admin::v1::Role> UpdateRole(
@@ -688,6 +841,11 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
   ///
+  /// [google.iam.admin.v1.DeleteRoleRequest]:
+  /// @googleapis_link{google::iam::admin::v1::DeleteRoleRequest,google/iam/admin/v1/iam.proto#L1250}
+  /// [google.iam.admin.v1.Role]:
+  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
+  ///
   StatusOr<google::iam::admin::v1::Role> DeleteRole(
       google::iam::admin::v1::DeleteRoleRequest const& request);
 
@@ -697,6 +855,11 @@ class IAMClient {
   /// @param request
   /// @googleapis_link{google::iam::admin::v1::UndeleteRoleRequest,google/iam/admin/v1/iam.proto#L1278}
   /// @return
+  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
+  ///
+  /// [google.iam.admin.v1.UndeleteRoleRequest]:
+  /// @googleapis_link{google::iam::admin::v1::UndeleteRoleRequest,google/iam/admin/v1/iam.proto#L1278}
+  /// [google.iam.admin.v1.Role]:
   /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
   ///
   StatusOr<google::iam::admin::v1::Role> UndeleteRole(
@@ -710,6 +873,11 @@ class IAMClient {
   /// @param request
   /// @googleapis_link{google::iam::admin::v1::QueryTestablePermissionsRequest,google/iam/admin/v1/iam.proto#L1361}
   /// @return
+  /// @googleapis_link{google::iam::admin::v1::Permission,google/iam/admin/v1/iam.proto#L1306}
+  ///
+  /// [google.iam.admin.v1.QueryTestablePermissionsRequest]:
+  /// @googleapis_link{google::iam::admin::v1::QueryTestablePermissionsRequest,google/iam/admin/v1/iam.proto#L1361}
+  /// [google::iam::admin::v1::Permission]:
   /// @googleapis_link{google::iam::admin::v1::Permission,google/iam/admin/v1/iam.proto#L1306}
   ///
   StreamRange<google::iam::admin::v1::Permission> QueryTestablePermissions(
@@ -727,6 +895,11 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::admin::v1::QueryAuditableServicesResponse,google/iam/admin/v1/iam.proto#L1402}
   ///
+  /// [google.iam.admin.v1.QueryAuditableServicesRequest]:
+  /// @googleapis_link{google::iam::admin::v1::QueryAuditableServicesRequest,google/iam/admin/v1/iam.proto#L1391}
+  /// [google.iam.admin.v1.QueryAuditableServicesResponse]:
+  /// @googleapis_link{google::iam::admin::v1::QueryAuditableServicesResponse,google/iam/admin/v1/iam.proto#L1402}
+  ///
   StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
   QueryAuditableServices(
       google::iam::admin::v1::QueryAuditableServicesRequest const& request);
@@ -742,6 +915,11 @@ class IAMClient {
   /// @param request
   /// @googleapis_link{google::iam::admin::v1::LintPolicyRequest,google/iam/admin/v1/iam.proto#L1415}
   /// @return
+  /// @googleapis_link{google::iam::admin::v1::LintPolicyResponse,google/iam/admin/v1/iam.proto#L1513}
+  ///
+  /// [google.iam.admin.v1.LintPolicyRequest]:
+  /// @googleapis_link{google::iam::admin::v1::LintPolicyRequest,google/iam/admin/v1/iam.proto#L1415}
+  /// [google.iam.admin.v1.LintPolicyResponse]:
   /// @googleapis_link{google::iam::admin::v1::LintPolicyResponse,google/iam/admin/v1/iam.proto#L1513}
   ///
   StatusOr<google::iam::admin::v1::LintPolicyResponse> LintPolicy(

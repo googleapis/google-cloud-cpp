@@ -77,6 +77,11 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
+  /// [google.cloud.pubsublite.v1.CreateTopicRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::CreateTopicRequest,google/cloud/pubsublite/v1/admin.proto#L227}
+  /// [google.cloud.pubsublite.v1.Topic]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  ///
   StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
       std::string const& parent,
       google::cloud::pubsublite::v1::Topic const& topic,
@@ -90,6 +95,11 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
+  /// [google.cloud.pubsublite.v1.GetTopicRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicRequest,google/cloud/pubsublite/v1/admin.proto#L248}
+  /// [google.cloud.pubsublite.v1.Topic]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  ///
   StatusOr<google::cloud::pubsublite::v1::Topic> GetTopic(
       std::string const& name);
 
@@ -98,6 +108,11 @@ class AdminServiceClient {
   ///
   /// @param name  Required. The topic whose partition information to return.
   /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L270}
+  ///
+  /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicPartitionsRequest,google/cloud/pubsublite/v1/admin.proto#L259}
+  /// [google.cloud.pubsublite.v1.TopicPartitions]:
   /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L270}
   ///
   StatusOr<google::cloud::pubsublite::v1::TopicPartitions> GetTopicPartitions(
@@ -109,6 +124,11 @@ class AdminServiceClient {
   /// @param parent  Required. The parent whose topics are to be listed.
   ///  Structured like `projects/{project_number}/locations/{location}`.
   /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  ///
+  /// [google.cloud.pubsublite.v1.ListTopicsRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListTopicsRequest,google/cloud/pubsublite/v1/admin.proto#L276}
+  /// [google::cloud::pubsublite::v1::Topic]:
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
   StreamRange<google::cloud::pubsublite::v1::Topic> ListTopics(
@@ -124,6 +144,11 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
+  /// [google.cloud.pubsublite.v1.UpdateTopicRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::UpdateTopicRequest,google/cloud/pubsublite/v1/admin.proto#L311}
+  /// [google.cloud.pubsublite.v1.Topic]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  ///
   StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
       google::cloud::pubsublite::v1::Topic const& topic,
       google::protobuf::FieldMask const& update_mask);
@@ -133,6 +158,9 @@ class AdminServiceClient {
   ///
   /// @param name  Required. The name of the topic to delete.
   ///
+  /// [google.cloud.pubsublite.v1.DeleteTopicRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::DeleteTopicRequest,google/cloud/pubsublite/v1/admin.proto#L320}
+  ///
   Status DeleteTopic(std::string const& name);
 
   ///
@@ -140,6 +168,10 @@ class AdminServiceClient {
   ///
   /// @param name  Required. The name of the topic whose subscriptions to list.
   /// @return std::string
+  ///
+  /// [google.cloud.pubsublite.v1.ListTopicSubscriptionsRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L331}
+  /// [std::string]: std::string
   ///
   StreamRange<std::string> ListTopicSubscriptions(std::string const& name);
 
@@ -158,6 +190,11 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
+  /// [google.cloud.pubsublite.v1.CreateSubscriptionRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::CreateSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L365}
+  /// [google.cloud.pubsublite.v1.Subscription]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  ///
   StatusOr<google::cloud::pubsublite::v1::Subscription> CreateSubscription(
       std::string const& parent,
       google::cloud::pubsublite::v1::Subscription const& subscription,
@@ -171,6 +208,11 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
+  /// [google.cloud.pubsublite.v1.GetSubscriptionRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::GetSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L391}
+  /// [google.cloud.pubsublite.v1.Subscription]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  ///
   StatusOr<google::cloud::pubsublite::v1::Subscription> GetSubscription(
       std::string const& name);
 
@@ -180,6 +222,11 @@ class AdminServiceClient {
   /// @param parent  Required. The parent whose subscriptions are to be listed.
   ///  Structured like `projects/{project_number}/locations/{location}`.
   /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  ///
+  /// [google.cloud.pubsublite.v1.ListSubscriptionsRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L402}
+  /// [google::cloud::pubsublite::v1::Subscription]:
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
   StreamRange<google::cloud::pubsublite::v1::Subscription> ListSubscriptions(
@@ -196,6 +243,11 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
+  /// [google.cloud.pubsublite.v1.UpdateSubscriptionRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::UpdateSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L437}
+  /// [google.cloud.pubsublite.v1.Subscription]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  ///
   StatusOr<google::cloud::pubsublite::v1::Subscription> UpdateSubscription(
       google::cloud::pubsublite::v1::Subscription const& subscription,
       google::protobuf::FieldMask const& update_mask);
@@ -204,6 +256,9 @@ class AdminServiceClient {
   /// Deletes the specified subscription.
   ///
   /// @param name  Required. The name of the subscription to delete.
+  ///
+  /// [google.cloud.pubsublite.v1.DeleteSubscriptionRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::DeleteSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L447}
   ///
   Status DeleteSubscription(std::string const& name);
 
@@ -222,6 +277,11 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
+  /// [google.cloud.pubsublite.v1.CreateReservationRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::CreateReservationRequest,google/cloud/pubsublite/v1/admin.proto#L516}
+  /// [google.cloud.pubsublite.v1.Reservation]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  ///
   StatusOr<google::cloud::pubsublite::v1::Reservation> CreateReservation(
       std::string const& parent,
       google::cloud::pubsublite::v1::Reservation const& reservation,
@@ -237,6 +297,11 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
+  /// [google.cloud.pubsublite.v1.GetReservationRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::GetReservationRequest,google/cloud/pubsublite/v1/admin.proto#L537}
+  /// [google.cloud.pubsublite.v1.Reservation]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  ///
   StatusOr<google::cloud::pubsublite::v1::Reservation> GetReservation(
       std::string const& name);
 
@@ -246,6 +311,11 @@ class AdminServiceClient {
   /// @param parent  Required. The parent whose reservations are to be listed.
   ///  Structured like `projects/{project_number}/locations/{location}`.
   /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  ///
+  /// [google.cloud.pubsublite.v1.ListReservationsRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListReservationsRequest,google/cloud/pubsublite/v1/admin.proto#L550}
+  /// [google::cloud::pubsublite::v1::Reservation]:
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
   StreamRange<google::cloud::pubsublite::v1::Reservation> ListReservations(
@@ -261,6 +331,11 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
+  /// [google.cloud.pubsublite.v1.UpdateReservationRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::UpdateReservationRequest,google/cloud/pubsublite/v1/admin.proto#L585}
+  /// [google.cloud.pubsublite.v1.Reservation]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  ///
   StatusOr<google::cloud::pubsublite::v1::Reservation> UpdateReservation(
       google::cloud::pubsublite::v1::Reservation const& reservation,
       google::protobuf::FieldMask const& update_mask);
@@ -272,6 +347,9 @@ class AdminServiceClient {
   ///  Structured like:
   ///  projects/{project_number}/locations/{location}/reservations/{reservation_id}
   ///
+  /// [google.cloud.pubsublite.v1.DeleteReservationRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::DeleteReservationRequest,google/cloud/pubsublite/v1/admin.proto#L594}
+  ///
   Status DeleteReservation(std::string const& name);
 
   ///
@@ -282,6 +360,10 @@ class AdminServiceClient {
   ///  projects/{project_number}/locations/{location}/reservations/{reservation_id}
   /// @return std::string
   ///
+  /// [google.cloud.pubsublite.v1.ListReservationTopicsRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListReservationTopicsRequest,google/cloud/pubsublite/v1/admin.proto#L607}
+  /// [std::string]: std::string
+  ///
   StreamRange<std::string> ListReservationTopics(std::string const& name);
 
   ///
@@ -290,6 +372,11 @@ class AdminServiceClient {
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::CreateTopicRequest,google/cloud/pubsublite/v1/admin.proto#L227}
   /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  ///
+  /// [google.cloud.pubsublite.v1.CreateTopicRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::CreateTopicRequest,google/cloud/pubsublite/v1/admin.proto#L227}
+  /// [google.cloud.pubsublite.v1.Topic]:
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
   StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
@@ -303,6 +390,11 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
+  /// [google.cloud.pubsublite.v1.GetTopicRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicRequest,google/cloud/pubsublite/v1/admin.proto#L248}
+  /// [google.cloud.pubsublite.v1.Topic]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  ///
   StatusOr<google::cloud::pubsublite::v1::Topic> GetTopic(
       google::cloud::pubsublite::v1::GetTopicRequest const& request);
 
@@ -312,6 +404,11 @@ class AdminServiceClient {
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicPartitionsRequest,google/cloud/pubsublite/v1/admin.proto#L259}
   /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L270}
+  ///
+  /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicPartitionsRequest,google/cloud/pubsublite/v1/admin.proto#L259}
+  /// [google.cloud.pubsublite.v1.TopicPartitions]:
   /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L270}
   ///
   StatusOr<google::cloud::pubsublite::v1::TopicPartitions> GetTopicPartitions(
@@ -325,6 +422,11 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
+  /// [google.cloud.pubsublite.v1.ListTopicsRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListTopicsRequest,google/cloud/pubsublite/v1/admin.proto#L276}
+  /// [google::cloud::pubsublite::v1::Topic]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  ///
   StreamRange<google::cloud::pubsublite::v1::Topic> ListTopics(
       google::cloud::pubsublite::v1::ListTopicsRequest request);
 
@@ -336,6 +438,11 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
+  /// [google.cloud.pubsublite.v1.UpdateTopicRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::UpdateTopicRequest,google/cloud/pubsublite/v1/admin.proto#L311}
+  /// [google.cloud.pubsublite.v1.Topic]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  ///
   StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
       google::cloud::pubsublite::v1::UpdateTopicRequest const& request);
 
@@ -343,6 +450,9 @@ class AdminServiceClient {
   /// Deletes the specified topic.
   ///
   /// @param request
+  /// @googleapis_link{google::cloud::pubsublite::v1::DeleteTopicRequest,google/cloud/pubsublite/v1/admin.proto#L320}
+  ///
+  /// [google.cloud.pubsublite.v1.DeleteTopicRequest]:
   /// @googleapis_link{google::cloud::pubsublite::v1::DeleteTopicRequest,google/cloud/pubsublite/v1/admin.proto#L320}
   ///
   Status DeleteTopic(
@@ -355,6 +465,10 @@ class AdminServiceClient {
   /// @googleapis_link{google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L331}
   /// @return std::string
   ///
+  /// [google.cloud.pubsublite.v1.ListTopicSubscriptionsRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L331}
+  /// [std::string]: std::string
+  ///
   StreamRange<std::string> ListTopicSubscriptions(
       google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request);
 
@@ -364,6 +478,11 @@ class AdminServiceClient {
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::CreateSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L365}
   /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  ///
+  /// [google.cloud.pubsublite.v1.CreateSubscriptionRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::CreateSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L365}
+  /// [google.cloud.pubsublite.v1.Subscription]:
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
   StatusOr<google::cloud::pubsublite::v1::Subscription> CreateSubscription(
@@ -377,6 +496,11 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
+  /// [google.cloud.pubsublite.v1.GetSubscriptionRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::GetSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L391}
+  /// [google.cloud.pubsublite.v1.Subscription]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  ///
   StatusOr<google::cloud::pubsublite::v1::Subscription> GetSubscription(
       google::cloud::pubsublite::v1::GetSubscriptionRequest const& request);
 
@@ -386,6 +510,11 @@ class AdminServiceClient {
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::ListSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L402}
   /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  ///
+  /// [google.cloud.pubsublite.v1.ListSubscriptionsRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L402}
+  /// [google::cloud::pubsublite::v1::Subscription]:
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
   StreamRange<google::cloud::pubsublite::v1::Subscription> ListSubscriptions(
@@ -399,6 +528,11 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
+  /// [google.cloud.pubsublite.v1.UpdateSubscriptionRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::UpdateSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L437}
+  /// [google.cloud.pubsublite.v1.Subscription]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  ///
   StatusOr<google::cloud::pubsublite::v1::Subscription> UpdateSubscription(
       google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request);
 
@@ -406,6 +540,9 @@ class AdminServiceClient {
   /// Deletes the specified subscription.
   ///
   /// @param request
+  /// @googleapis_link{google::cloud::pubsublite::v1::DeleteSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L447}
+  ///
+  /// [google.cloud.pubsublite.v1.DeleteSubscriptionRequest]:
   /// @googleapis_link{google::cloud::pubsublite::v1::DeleteSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L447}
   ///
   Status DeleteSubscription(
@@ -439,6 +576,11 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::SeekSubscriptionResponse,google/cloud/pubsublite/v1/admin.proto#L493}
   ///
+  /// [google.cloud.pubsublite.v1.SeekSubscriptionRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::SeekSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L458}
+  /// [google.cloud.pubsublite.v1.SeekSubscriptionResponse]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::SeekSubscriptionResponse,google/cloud/pubsublite/v1/admin.proto#L493}
+  ///
   future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
   SeekSubscription(
       google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request);
@@ -449,6 +591,11 @@ class AdminServiceClient {
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::CreateReservationRequest,google/cloud/pubsublite/v1/admin.proto#L516}
   /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  ///
+  /// [google.cloud.pubsublite.v1.CreateReservationRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::CreateReservationRequest,google/cloud/pubsublite/v1/admin.proto#L516}
+  /// [google.cloud.pubsublite.v1.Reservation]:
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
   StatusOr<google::cloud::pubsublite::v1::Reservation> CreateReservation(
@@ -462,6 +609,11 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
+  /// [google.cloud.pubsublite.v1.GetReservationRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::GetReservationRequest,google/cloud/pubsublite/v1/admin.proto#L537}
+  /// [google.cloud.pubsublite.v1.Reservation]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  ///
   StatusOr<google::cloud::pubsublite::v1::Reservation> GetReservation(
       google::cloud::pubsublite::v1::GetReservationRequest const& request);
 
@@ -471,6 +623,11 @@ class AdminServiceClient {
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::ListReservationsRequest,google/cloud/pubsublite/v1/admin.proto#L550}
   /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  ///
+  /// [google.cloud.pubsublite.v1.ListReservationsRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListReservationsRequest,google/cloud/pubsublite/v1/admin.proto#L550}
+  /// [google::cloud::pubsublite::v1::Reservation]:
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
   StreamRange<google::cloud::pubsublite::v1::Reservation> ListReservations(
@@ -484,6 +641,11 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
+  /// [google.cloud.pubsublite.v1.UpdateReservationRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::UpdateReservationRequest,google/cloud/pubsublite/v1/admin.proto#L585}
+  /// [google.cloud.pubsublite.v1.Reservation]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  ///
   StatusOr<google::cloud::pubsublite::v1::Reservation> UpdateReservation(
       google::cloud::pubsublite::v1::UpdateReservationRequest const& request);
 
@@ -491,6 +653,9 @@ class AdminServiceClient {
   /// Deletes the specified reservation.
   ///
   /// @param request
+  /// @googleapis_link{google::cloud::pubsublite::v1::DeleteReservationRequest,google/cloud/pubsublite/v1/admin.proto#L594}
+  ///
+  /// [google.cloud.pubsublite.v1.DeleteReservationRequest]:
   /// @googleapis_link{google::cloud::pubsublite::v1::DeleteReservationRequest,google/cloud/pubsublite/v1/admin.proto#L594}
   ///
   Status DeleteReservation(
@@ -502,6 +667,10 @@ class AdminServiceClient {
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::ListReservationTopicsRequest,google/cloud/pubsublite/v1/admin.proto#L607}
   /// @return std::string
+  ///
+  /// [google.cloud.pubsublite.v1.ListReservationTopicsRequest]:
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListReservationTopicsRequest,google/cloud/pubsublite/v1/admin.proto#L607}
+  /// [std::string]: std::string
   ///
   StreamRange<std::string> ListReservationTopics(
       google::cloud::pubsublite::v1::ListReservationTopicsRequest request);

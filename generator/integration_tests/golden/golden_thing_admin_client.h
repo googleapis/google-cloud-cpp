@@ -72,6 +72,9 @@ class GoldenThingAdminClient {
   ///  Values are of the form `projects/<project>/instances/<instance>`.
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
   ///
+  /// [google.test.admin.database.v1.ListDatabasesRequest]: @googleapis_link{google::test::admin::database::v1::ListDatabasesRequest,generator/integration_tests/test.proto#L377}
+  /// [google.test.admin.database.v1.Database]: @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  ///
   StreamRange<google::test::admin::database::v1::Database>
   ListDatabases(std::string const& parent);
 
@@ -94,6 +97,9 @@ class GoldenThingAdminClient {
   ///  database ID must be enclosed in backticks (`` ` ``).
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
   ///
+  /// [google.test.admin.database.v1.CreateDatabaseRequest]: @googleapis_link{google::test::admin::database::v1::CreateDatabaseRequest,generator/integration_tests/test.proto#L409}
+  /// [google.test.admin.database.v1.Database]: @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   CreateDatabase(std::string const& parent, std::string const& create_statement);
 
@@ -103,6 +109,9 @@ class GoldenThingAdminClient {
   /// @param name  Required. The name of the requested database. Values are of the form
   ///  `projects/<project>/instances/<instance>/databases/<database>`.
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  ///
+  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_link{google::test::admin::database::v1::GetDatabaseRequest,generator/integration_tests/test.proto#L443}
+  /// [google.test.admin.database.v1.Database]: @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
   ///
   StatusOr<google::test::admin::database::v1::Database>
   GetDatabase(std::string const& name);
@@ -120,6 +129,9 @@ class GoldenThingAdminClient {
   /// @param statements  Required. DDL statements to be applied to the database.
   /// @return @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlMetadata,generator/integration_tests/test.proto#L506}
   ///
+  /// [google.test.admin.database.v1.UpdateDatabaseDdlRequest]: @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlRequest,generator/integration_tests/test.proto#L470}
+  /// [google.test.admin.database.v1.UpdateDatabaseDdlMetadata]: @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlMetadata,generator/integration_tests/test.proto#L506}
+  ///
   future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(std::string const& database, std::vector<std::string> const& statements);
 
@@ -129,6 +141,8 @@ class GoldenThingAdminClient {
   /// `expire_time`.
   ///
   /// @param database  Required. The database to be dropped.
+  ///
+  /// [google.test.admin.database.v1.DropDatabaseRequest]: @googleapis_link{google::test::admin::database::v1::DropDatabaseRequest,generator/integration_tests/test.proto#L523}
   ///
   Status
   DropDatabase(std::string const& database);
@@ -140,6 +154,9 @@ class GoldenThingAdminClient {
   ///
   /// @param database  Required. The database whose schema we wish to get.
   /// @return @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlResponse,generator/integration_tests/test.proto#L545}
+  ///
+  /// [google.test.admin.database.v1.GetDatabaseDdlRequest]: @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlRequest,generator/integration_tests/test.proto#L534}
+  /// [google.test.admin.database.v1.GetDatabaseDdlResponse]: @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlResponse,generator/integration_tests/test.proto#L545}
   ///
   StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(std::string const& database);
@@ -160,6 +177,9 @@ class GoldenThingAdminClient {
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
   /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]: @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy>
   SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy);
@@ -202,6 +222,9 @@ class GoldenThingAdminClient {
   ///  See the operation documentation for the appropriate value for this field.
   /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]: @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
   StatusOr<google::iam::v1::Policy>
   GetIamPolicy(std::string const& resource);
 
@@ -224,6 +247,9 @@ class GoldenThingAdminClient {
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
   /// @return @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  ///
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions);
@@ -254,6 +280,9 @@ class GoldenThingAdminClient {
   ///  `projects/<project>/instances/<instance>/backups/<backup_id>`.
   /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
   ///
+  /// [google.test.admin.database.v1.CreateBackupRequest]: @googleapis_link{google::test::admin::database::v1::CreateBackupRequest,generator/integration_tests/backup.proto#L110}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  ///
   future<StatusOr<google::test::admin::database::v1::Backup>>
   CreateBackup(std::string const& parent, google::test::admin::database::v1::Backup const& backup, std::string const& backup_id);
 
@@ -264,6 +293,9 @@ class GoldenThingAdminClient {
   ///  Values are of the form
   ///  `projects/<project>/instances/<instance>/backups/<backup>`.
   /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  ///
+  /// [google.test.admin.database.v1.GetBackupRequest]: @googleapis_link{google::test::admin::database::v1::GetBackupRequest,generator/integration_tests/backup.proto#L177}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
   ///
   StatusOr<google::test::admin::database::v1::Backup>
   GetBackup(std::string const& name);
@@ -282,6 +314,9 @@ class GoldenThingAdminClient {
   ///  by clients that do not know about them.
   /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
   ///
+  /// [google.test.admin.database.v1.UpdateBackupRequest]: @googleapis_link{google::test::admin::database::v1::UpdateBackupRequest,generator/integration_tests/backup.proto#L161}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  ///
   StatusOr<google::test::admin::database::v1::Backup>
   UpdateBackup(google::test::admin::database::v1::Backup const& backup, google::protobuf::FieldMask const& update_mask);
 
@@ -291,6 +326,8 @@ class GoldenThingAdminClient {
   /// @param name  Required. Name of the backup to delete.
   ///  Values are of the form
   ///  `projects/<project>/instances/<instance>/backups/<backup>`.
+  ///
+  /// [google.test.admin.database.v1.DeleteBackupRequest]: @googleapis_link{google::test::admin::database::v1::DeleteBackupRequest,generator/integration_tests/backup.proto#L190}
   ///
   Status
   DeleteBackup(std::string const& name);
@@ -303,6 +340,9 @@ class GoldenThingAdminClient {
   /// @param parent  Required. The instance to list backups from.  Values are of the
   ///  form `projects/<project>/instances/<instance>`.
   /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  ///
+  /// [google.test.admin.database.v1.ListBackupsRequest]: @googleapis_link{google::test::admin::database::v1::ListBackupsRequest,generator/integration_tests/backup.proto#L203}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
   ///
   StreamRange<google::test::admin::database::v1::Backup>
   ListBackups(std::string const& parent);
@@ -339,6 +379,9 @@ class GoldenThingAdminClient {
   ///  `projects/<project>/instances/<instance>/backups/<backup>`.
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
   ///
+  /// [google.test.admin.database.v1.RestoreDatabaseRequest]: @googleapis_link{google::test::admin::database::v1::RestoreDatabaseRequest,generator/integration_tests/test.proto#L634}
+  /// [google.test.admin.database.v1.Database]: @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   RestoreDatabase(std::string const& parent, std::string const& database_id, std::string const& backup);
 
@@ -355,6 +398,9 @@ class GoldenThingAdminClient {
   /// @param parent  Required. The instance of the database operations.
   ///  Values are of the form `projects/<project>/instances/<instance>`.
   /// @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
+  ///
+  /// [google.test.admin.database.v1.ListDatabaseOperationsRequest]: @googleapis_link{google::test::admin::database::v1::ListDatabaseOperationsRequest,generator/integration_tests/test.proto#L553}
+  /// [google.longrunning.Operation]: @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
   StreamRange<google::longrunning::Operation>
   ListDatabaseOperations(std::string const& parent);
@@ -375,6 +421,9 @@ class GoldenThingAdminClient {
   ///  the form `projects/<project>/instances/<instance>`.
   /// @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
+  /// [google.test.admin.database.v1.ListBackupOperationsRequest]: @googleapis_link{google::test::admin::database::v1::ListBackupOperationsRequest,generator/integration_tests/backup.proto#L274}
+  /// [google.longrunning.Operation]: @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
+  ///
   StreamRange<google::longrunning::Operation>
   ListBackupOperations(std::string const& parent);
 
@@ -384,6 +433,9 @@ class GoldenThingAdminClient {
   /// @param name  Required. The name of the requested database. Values are of the form
   ///  `projects/<project>/instances/<instance>/databases/<database>`.
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  ///
+  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_link{google::test::admin::database::v1::GetDatabaseRequest,generator/integration_tests/test.proto#L443}
+  /// [google.test.admin.database.v1.Database]: @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
   ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   AsyncGetDatabase(std::string const& name);
@@ -395,6 +447,8 @@ class GoldenThingAdminClient {
   ///
   /// @param database  Required. The database to be dropped.
   ///
+  /// [google.test.admin.database.v1.DropDatabaseRequest]: @googleapis_link{google::test::admin::database::v1::DropDatabaseRequest,generator/integration_tests/test.proto#L523}
+  ///
   future<Status>
   AsyncDropDatabase(std::string const& database);
 
@@ -403,6 +457,9 @@ class GoldenThingAdminClient {
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::ListDatabasesRequest,generator/integration_tests/test.proto#L377}
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  ///
+  /// [google.test.admin.database.v1.ListDatabasesRequest]: @googleapis_link{google::test::admin::database::v1::ListDatabasesRequest,generator/integration_tests/test.proto#L377}
+  /// [google.test.admin.database.v1.Database]: @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
   ///
   StreamRange<google::test::admin::database::v1::Database>
   ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request);
@@ -420,6 +477,9 @@ class GoldenThingAdminClient {
   /// @param request @googleapis_link{google::test::admin::database::v1::CreateDatabaseRequest,generator/integration_tests/test.proto#L409}
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
   ///
+  /// [google.test.admin.database.v1.CreateDatabaseRequest]: @googleapis_link{google::test::admin::database::v1::CreateDatabaseRequest,generator/integration_tests/test.proto#L409}
+  /// [google.test.admin.database.v1.Database]: @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request);
 
@@ -428,6 +488,9 @@ class GoldenThingAdminClient {
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::GetDatabaseRequest,generator/integration_tests/test.proto#L443}
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  ///
+  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_link{google::test::admin::database::v1::GetDatabaseRequest,generator/integration_tests/test.proto#L443}
+  /// [google.test.admin.database.v1.Database]: @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
   ///
   StatusOr<google::test::admin::database::v1::Database>
   GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request);
@@ -444,6 +507,9 @@ class GoldenThingAdminClient {
   /// @param request @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlRequest,generator/integration_tests/test.proto#L470}
   /// @return @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlMetadata,generator/integration_tests/test.proto#L506}
   ///
+  /// [google.test.admin.database.v1.UpdateDatabaseDdlRequest]: @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlRequest,generator/integration_tests/test.proto#L470}
+  /// [google.test.admin.database.v1.UpdateDatabaseDdlMetadata]: @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlMetadata,generator/integration_tests/test.proto#L506}
+  ///
   future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request);
 
@@ -453,6 +519,8 @@ class GoldenThingAdminClient {
   /// `expire_time`.
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::DropDatabaseRequest,generator/integration_tests/test.proto#L523}
+  ///
+  /// [google.test.admin.database.v1.DropDatabaseRequest]: @googleapis_link{google::test::admin::database::v1::DropDatabaseRequest,generator/integration_tests/test.proto#L523}
   ///
   Status
   DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request);
@@ -464,6 +532,9 @@ class GoldenThingAdminClient {
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlRequest,generator/integration_tests/test.proto#L534}
   /// @return @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlResponse,generator/integration_tests/test.proto#L545}
+  ///
+  /// [google.test.admin.database.v1.GetDatabaseDdlRequest]: @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlRequest,generator/integration_tests/test.proto#L534}
+  /// [google.test.admin.database.v1.GetDatabaseDdlResponse]: @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlResponse,generator/integration_tests/test.proto#L545}
   ///
   StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(google::test::admin::database::v1::GetDatabaseDdlRequest const& request);
@@ -480,6 +551,9 @@ class GoldenThingAdminClient {
   /// @param request @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
   /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]: @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
   StatusOr<google::iam::v1::Policy>
   SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
@@ -495,6 +569,9 @@ class GoldenThingAdminClient {
   ///
   /// @param request @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
   /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]: @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy>
   GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
@@ -513,6 +590,9 @@ class GoldenThingAdminClient {
   ///
   /// @param request @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
   /// @return @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  ///
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
@@ -534,6 +614,9 @@ class GoldenThingAdminClient {
   /// @param request @googleapis_link{google::test::admin::database::v1::CreateBackupRequest,generator/integration_tests/backup.proto#L110}
   /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
   ///
+  /// [google.test.admin.database.v1.CreateBackupRequest]: @googleapis_link{google::test::admin::database::v1::CreateBackupRequest,generator/integration_tests/backup.proto#L110}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  ///
   future<StatusOr<google::test::admin::database::v1::Backup>>
   CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request);
 
@@ -542,6 +625,9 @@ class GoldenThingAdminClient {
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::GetBackupRequest,generator/integration_tests/backup.proto#L177}
   /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  ///
+  /// [google.test.admin.database.v1.GetBackupRequest]: @googleapis_link{google::test::admin::database::v1::GetBackupRequest,generator/integration_tests/backup.proto#L177}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
   ///
   StatusOr<google::test::admin::database::v1::Backup>
   GetBackup(google::test::admin::database::v1::GetBackupRequest const& request);
@@ -552,6 +638,9 @@ class GoldenThingAdminClient {
   /// @param request @googleapis_link{google::test::admin::database::v1::UpdateBackupRequest,generator/integration_tests/backup.proto#L161}
   /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
   ///
+  /// [google.test.admin.database.v1.UpdateBackupRequest]: @googleapis_link{google::test::admin::database::v1::UpdateBackupRequest,generator/integration_tests/backup.proto#L161}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  ///
   StatusOr<google::test::admin::database::v1::Backup>
   UpdateBackup(google::test::admin::database::v1::UpdateBackupRequest const& request);
 
@@ -559,6 +648,8 @@ class GoldenThingAdminClient {
   /// Deletes a pending or completed [Backup][google.test.admin.database.v1.Backup].
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::DeleteBackupRequest,generator/integration_tests/backup.proto#L190}
+  ///
+  /// [google.test.admin.database.v1.DeleteBackupRequest]: @googleapis_link{google::test::admin::database::v1::DeleteBackupRequest,generator/integration_tests/backup.proto#L190}
   ///
   Status
   DeleteBackup(google::test::admin::database::v1::DeleteBackupRequest const& request);
@@ -570,6 +661,9 @@ class GoldenThingAdminClient {
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::ListBackupsRequest,generator/integration_tests/backup.proto#L203}
   /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  ///
+  /// [google.test.admin.database.v1.ListBackupsRequest]: @googleapis_link{google::test::admin::database::v1::ListBackupsRequest,generator/integration_tests/backup.proto#L203}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
   ///
   StreamRange<google::test::admin::database::v1::Backup>
   ListBackups(google::test::admin::database::v1::ListBackupsRequest request);
@@ -596,6 +690,9 @@ class GoldenThingAdminClient {
   /// @param request @googleapis_link{google::test::admin::database::v1::RestoreDatabaseRequest,generator/integration_tests/test.proto#L634}
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
   ///
+  /// [google.test.admin.database.v1.RestoreDatabaseRequest]: @googleapis_link{google::test::admin::database::v1::RestoreDatabaseRequest,generator/integration_tests/test.proto#L634}
+  /// [google.test.admin.database.v1.Database]: @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const& request);
 
@@ -611,6 +708,9 @@ class GoldenThingAdminClient {
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::ListDatabaseOperationsRequest,generator/integration_tests/test.proto#L553}
   /// @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
+  ///
+  /// [google.test.admin.database.v1.ListDatabaseOperationsRequest]: @googleapis_link{google::test::admin::database::v1::ListDatabaseOperationsRequest,generator/integration_tests/test.proto#L553}
+  /// [google.longrunning.Operation]: @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
   StreamRange<google::longrunning::Operation>
   ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest request);
@@ -630,6 +730,9 @@ class GoldenThingAdminClient {
   /// @param request @googleapis_link{google::test::admin::database::v1::ListBackupOperationsRequest,generator/integration_tests/backup.proto#L274}
   /// @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
+  /// [google.test.admin.database.v1.ListBackupOperationsRequest]: @googleapis_link{google::test::admin::database::v1::ListBackupOperationsRequest,generator/integration_tests/backup.proto#L274}
+  /// [google.longrunning.Operation]: @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
+  ///
   StreamRange<google::longrunning::Operation>
   ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest request);
 
@@ -638,6 +741,9 @@ class GoldenThingAdminClient {
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::GetDatabaseRequest,generator/integration_tests/test.proto#L443}
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  ///
+  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_link{google::test::admin::database::v1::GetDatabaseRequest,generator/integration_tests/test.proto#L443}
+  /// [google.test.admin.database.v1.Database]: @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
   ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request);
@@ -648,6 +754,8 @@ class GoldenThingAdminClient {
   /// `expire_time`.
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::DropDatabaseRequest,generator/integration_tests/test.proto#L523}
+  ///
+  /// [google.test.admin.database.v1.DropDatabaseRequest]: @googleapis_link{google::test::admin::database::v1::DropDatabaseRequest,generator/integration_tests/test.proto#L523}
   ///
   future<Status>
   AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request);

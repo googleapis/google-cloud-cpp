@@ -101,6 +101,11 @@ class IAMCredentialsClient {
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L72}
   ///
+  /// [google.iam.credentials.v1.GenerateAccessTokenRequest]:
+  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenRequest,google/iam/credentials/v1/common.proto#L35}
+  /// [google.iam.credentials.v1.GenerateAccessTokenResponse]:
+  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L72}
+  ///
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(std::string const& name,
                       std::vector<std::string> const& delegates,
@@ -136,6 +141,11 @@ class IAMCredentialsClient {
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L186}
   ///
+  /// [google.iam.credentials.v1.GenerateIdTokenRequest]:
+  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenRequest,google/iam/credentials/v1/common.proto#L153}
+  /// [google.iam.credentials.v1.GenerateIdTokenResponse]:
+  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L186}
+  ///
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(std::string const& name,
                   std::vector<std::string> const& delegates,
@@ -163,6 +173,11 @@ class IAMCredentialsClient {
   ///  invalid.
   /// @param payload  Required. The bytes to sign.
   /// @return
+  /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L109}
+  ///
+  /// [google.iam.credentials.v1.SignBlobRequest]:
+  /// @googleapis_link{google::iam::credentials::v1::SignBlobRequest,google/iam/credentials/v1/common.proto#L81}
+  /// [google.iam.credentials.v1.SignBlobResponse]:
   /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L109}
   ///
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
@@ -194,6 +209,11 @@ class IAMCredentialsClient {
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L145}
   ///
+  /// [google.iam.credentials.v1.SignJwtRequest]:
+  /// @googleapis_link{google::iam::credentials::v1::SignJwtRequest,google/iam/credentials/v1/common.proto#L117}
+  /// [google.iam.credentials.v1.SignJwtResponse]:
+  /// @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L145}
+  ///
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
       std::string const& name, std::vector<std::string> const& delegates,
       std::string const& payload);
@@ -204,6 +224,11 @@ class IAMCredentialsClient {
   /// @param request
   /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenRequest,google/iam/credentials/v1/common.proto#L35}
   /// @return
+  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L72}
+  ///
+  /// [google.iam.credentials.v1.GenerateAccessTokenRequest]:
+  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenRequest,google/iam/credentials/v1/common.proto#L35}
+  /// [google.iam.credentials.v1.GenerateAccessTokenResponse]:
   /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L72}
   ///
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
@@ -218,6 +243,11 @@ class IAMCredentialsClient {
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L186}
   ///
+  /// [google.iam.credentials.v1.GenerateIdTokenRequest]:
+  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenRequest,google/iam/credentials/v1/common.proto#L153}
+  /// [google.iam.credentials.v1.GenerateIdTokenResponse]:
+  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L186}
+  ///
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(
       google::iam::credentials::v1::GenerateIdTokenRequest const& request);
@@ -230,6 +260,11 @@ class IAMCredentialsClient {
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L109}
   ///
+  /// [google.iam.credentials.v1.SignBlobRequest]:
+  /// @googleapis_link{google::iam::credentials::v1::SignBlobRequest,google/iam/credentials/v1/common.proto#L81}
+  /// [google.iam.credentials.v1.SignBlobResponse]:
+  /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L109}
+  ///
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
       google::iam::credentials::v1::SignBlobRequest const& request);
 
@@ -239,6 +274,11 @@ class IAMCredentialsClient {
   /// @param request
   /// @googleapis_link{google::iam::credentials::v1::SignJwtRequest,google/iam/credentials/v1/common.proto#L117}
   /// @return
+  /// @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L145}
+  ///
+  /// [google.iam.credentials.v1.SignJwtRequest]:
+  /// @googleapis_link{google::iam::credentials::v1::SignJwtRequest,google/iam/credentials/v1/common.proto#L117}
+  /// [google.iam.credentials.v1.SignJwtResponse]:
   /// @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L145}
   ///
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(

@@ -85,6 +85,11 @@ class BigtableTableAdminClient {
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
   ///
+  /// [google.bigtable.admin.v2.CreateTableRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::CreateTableRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L408}
+  /// [google.bigtable.admin.v2.Table]:
+  /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
+  ///
   StatusOr<google::bigtable::admin::v2::Table> CreateTable(
       std::string const& parent, std::string const& table_id,
       google::bigtable::admin::v2::Table const& table);
@@ -96,6 +101,11 @@ class BigtableTableAdminClient {
   /// should be listed.
   ///  Values are of the form `projects/{project}/instances/{instance}`.
   /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
+  ///
+  /// [google.bigtable.admin.v2.ListTablesRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::ListTablesRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L510}
+  /// [google::bigtable::admin::v2::Table]:
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
   ///
   StreamRange<google::bigtable::admin::v2::Table> ListTables(
@@ -110,6 +120,11 @@ class BigtableTableAdminClient {
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
   ///
+  /// [google.bigtable.admin.v2.GetTableRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::GetTableRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L553}
+  /// [google.bigtable.admin.v2.Table]:
+  /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
+  ///
   StatusOr<google::bigtable::admin::v2::Table> GetTable(
       std::string const& name);
 
@@ -119,6 +134,9 @@ class BigtableTableAdminClient {
   /// @param name  Required. The unique name of the table to be deleted.
   ///  Values are of the form
   ///  `projects/{project}/instances/{instance}/tables/{table}`.
+  ///
+  /// [google.bigtable.admin.v2.DeleteTableRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::DeleteTableRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L571}
   ///
   Status DeleteTable(std::string const& name);
 
@@ -140,6 +158,11 @@ class BigtableTableAdminClient {
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
   ///
+  /// [google.bigtable.admin.v2.ModifyColumnFamiliesRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::ModifyColumnFamiliesRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L585}
+  /// [google.bigtable.admin.v2.Table]:
+  /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
+  ///
   StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
       std::string const& name,
       std::vector<google::bigtable::admin::v2::ModifyColumnFamiliesRequest::
@@ -158,6 +181,11 @@ class BigtableTableAdminClient {
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::GenerateConsistencyTokenResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L640}
   ///
+  /// [google.bigtable.admin.v2.GenerateConsistencyTokenRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::GenerateConsistencyTokenRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L626}
+  /// [google.bigtable.admin.v2.GenerateConsistencyTokenResponse]:
+  /// @googleapis_link{google::bigtable::admin::v2::GenerateConsistencyTokenResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L640}
+  ///
   StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
   GenerateConsistencyToken(std::string const& name);
 
@@ -173,6 +201,11 @@ class BigtableTableAdminClient {
   /// @param consistency_token  Required. The token created using
   /// GenerateConsistencyToken for the Table.
   /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L664}
+  ///
+  /// [google.bigtable.admin.v2.CheckConsistencyRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L647}
+  /// [google.bigtable.admin.v2.CheckConsistencyResponse]:
   /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L664}
   ///
   StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
@@ -204,6 +237,11 @@ class BigtableTableAdminClient {
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
   ///
+  /// [google.bigtable.admin.v2.CreateBackupRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::CreateBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L833}
+  /// [google.bigtable.admin.v2.Backup]:
+  /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
+  ///
   future<StatusOr<google::bigtable::admin::v2::Backup>> CreateBackup(
       std::string const& parent, std::string const& backup_id,
       google::bigtable::admin::v2::Backup const& backup);
@@ -215,6 +253,11 @@ class BigtableTableAdminClient {
   ///  Values are of the form
   ///  `projects/{project}/instances/{instance}/clusters/{cluster}/backups/{backup}`.
   /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
+  ///
+  /// [google.bigtable.admin.v2.GetBackupRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::GetBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L889}
+  /// [google.bigtable.admin.v2.Backup]:
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
   ///
   StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
@@ -237,6 +280,11 @@ class BigtableTableAdminClient {
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
   ///
+  /// [google.bigtable.admin.v2.UpdateBackupRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::UpdateBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L873}
+  /// [google.bigtable.admin.v2.Backup]:
+  /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
+  ///
   StatusOr<google::bigtable::admin::v2::Backup> UpdateBackup(
       google::bigtable::admin::v2::Backup const& backup,
       google::protobuf::FieldMask const& update_mask);
@@ -247,6 +295,9 @@ class BigtableTableAdminClient {
   /// @param name  Required. Name of the backup to delete.
   ///  Values are of the form
   ///  `projects/{project}/instances/{instance}/clusters/{cluster}/backups/{backup}`.
+  ///
+  /// [google.bigtable.admin.v2.DeleteBackupRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::DeleteBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L902}
   ///
   Status DeleteBackup(std::string const& name);
 
@@ -262,6 +313,11 @@ class BigtableTableAdminClient {
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
   ///
+  /// [google.bigtable.admin.v2.ListBackupsRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::ListBackupsRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L915}
+  /// [google::bigtable::admin::v2::Backup]:
+  /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
+  ///
   StreamRange<google::bigtable::admin::v2::Backup> ListBackups(
       std::string const& parent);
 
@@ -274,6 +330,11 @@ class BigtableTableAdminClient {
   /// requested.
   ///  See the operation documentation for the appropriate value for this field.
   /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.GetIamPolicyRequest]:
+  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]:
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource);
@@ -291,6 +352,11 @@ class BigtableTableAdminClient {
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
   /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]:
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
@@ -336,6 +402,11 @@ class BigtableTableAdminClient {
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
+  /// [google.iam.v1.TestIamPermissionsRequest]:
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]:
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions);
 
@@ -353,6 +424,11 @@ class BigtableTableAdminClient {
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L664}
   ///
+  /// [google.bigtable.admin.v2.CheckConsistencyRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L647}
+  /// [google.bigtable.admin.v2.CheckConsistencyResponse]:
+  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L664}
+  ///
   future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
   AsyncCheckConsistency(std::string const& name,
                         std::string const& consistency_token);
@@ -367,6 +443,11 @@ class BigtableTableAdminClient {
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
   ///
+  /// [google.bigtable.admin.v2.CreateTableRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::CreateTableRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L408}
+  /// [google.bigtable.admin.v2.Table]:
+  /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
+  ///
   StatusOr<google::bigtable::admin::v2::Table> CreateTable(
       google::bigtable::admin::v2::CreateTableRequest const& request);
 
@@ -376,6 +457,11 @@ class BigtableTableAdminClient {
   /// @param request
   /// @googleapis_link{google::bigtable::admin::v2::ListTablesRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L510}
   /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
+  ///
+  /// [google.bigtable.admin.v2.ListTablesRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::ListTablesRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L510}
+  /// [google::bigtable::admin::v2::Table]:
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
   ///
   StreamRange<google::bigtable::admin::v2::Table> ListTables(
@@ -389,6 +475,11 @@ class BigtableTableAdminClient {
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
   ///
+  /// [google.bigtable.admin.v2.GetTableRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::GetTableRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L553}
+  /// [google.bigtable.admin.v2.Table]:
+  /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
+  ///
   StatusOr<google::bigtable::admin::v2::Table> GetTable(
       google::bigtable::admin::v2::GetTableRequest const& request);
 
@@ -396,6 +487,9 @@ class BigtableTableAdminClient {
   /// Permanently deletes a specified table and all of its data.
   ///
   /// @param request
+  /// @googleapis_link{google::bigtable::admin::v2::DeleteTableRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L571}
+  ///
+  /// [google.bigtable.admin.v2.DeleteTableRequest]:
   /// @googleapis_link{google::bigtable::admin::v2::DeleteTableRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L571}
   ///
   Status DeleteTable(
@@ -412,6 +506,11 @@ class BigtableTableAdminClient {
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
   ///
+  /// [google.bigtable.admin.v2.ModifyColumnFamiliesRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::ModifyColumnFamiliesRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L585}
+  /// [google.bigtable.admin.v2.Table]:
+  /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
+  ///
   StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request);
 
@@ -421,6 +520,9 @@ class BigtableTableAdminClient {
   /// match a particular prefix.
   ///
   /// @param request
+  /// @googleapis_link{google::bigtable::admin::v2::DropRowRangeRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L486}
+  ///
+  /// [google.bigtable.admin.v2.DropRowRangeRequest]:
   /// @googleapis_link{google::bigtable::admin::v2::DropRowRangeRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L486}
   ///
   Status DropRowRange(
@@ -437,6 +539,11 @@ class BigtableTableAdminClient {
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::GenerateConsistencyTokenResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L640}
   ///
+  /// [google.bigtable.admin.v2.GenerateConsistencyTokenRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::GenerateConsistencyTokenRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L626}
+  /// [google.bigtable.admin.v2.GenerateConsistencyTokenResponse]:
+  /// @googleapis_link{google::bigtable::admin::v2::GenerateConsistencyTokenResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L640}
+  ///
   StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
   GenerateConsistencyToken(
       google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
@@ -450,6 +557,11 @@ class BigtableTableAdminClient {
   /// @param request
   /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L647}
   /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L664}
+  ///
+  /// [google.bigtable.admin.v2.CheckConsistencyRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L647}
+  /// [google.bigtable.admin.v2.CheckConsistencyResponse]:
   /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L664}
   ///
   StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
@@ -471,6 +583,11 @@ class BigtableTableAdminClient {
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
   ///
+  /// [google.bigtable.admin.v2.CreateBackupRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::CreateBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L833}
+  /// [google.bigtable.admin.v2.Backup]:
+  /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
+  ///
   future<StatusOr<google::bigtable::admin::v2::Backup>> CreateBackup(
       google::bigtable::admin::v2::CreateBackupRequest const& request);
 
@@ -480,6 +597,11 @@ class BigtableTableAdminClient {
   /// @param request
   /// @googleapis_link{google::bigtable::admin::v2::GetBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L889}
   /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
+  ///
+  /// [google.bigtable.admin.v2.GetBackupRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::GetBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L889}
+  /// [google.bigtable.admin.v2.Backup]:
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
   ///
   StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
@@ -493,6 +615,11 @@ class BigtableTableAdminClient {
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
   ///
+  /// [google.bigtable.admin.v2.UpdateBackupRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::UpdateBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L873}
+  /// [google.bigtable.admin.v2.Backup]:
+  /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
+  ///
   StatusOr<google::bigtable::admin::v2::Backup> UpdateBackup(
       google::bigtable::admin::v2::UpdateBackupRequest const& request);
 
@@ -500,6 +627,9 @@ class BigtableTableAdminClient {
   /// Deletes a pending or completed Cloud Bigtable backup.
   ///
   /// @param request
+  /// @googleapis_link{google::bigtable::admin::v2::DeleteBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L902}
+  ///
+  /// [google.bigtable.admin.v2.DeleteBackupRequest]:
   /// @googleapis_link{google::bigtable::admin::v2::DeleteBackupRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L902}
   ///
   Status DeleteBackup(
@@ -512,6 +642,11 @@ class BigtableTableAdminClient {
   /// @param request
   /// @googleapis_link{google::bigtable::admin::v2::ListBackupsRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L915}
   /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
+  ///
+  /// [google.bigtable.admin.v2.ListBackupsRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::ListBackupsRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L915}
+  /// [google::bigtable::admin::v2::Backup]:
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
   ///
   StreamRange<google::bigtable::admin::v2::Backup> ListBackups(
@@ -532,6 +667,11 @@ class BigtableTableAdminClient {
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
   ///
+  /// [google.bigtable.admin.v2.RestoreTableRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::RestoreTableRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L336}
+  /// [google.bigtable.admin.v2.Table]:
+  /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
+  ///
   future<StatusOr<google::bigtable::admin::v2::Table>> RestoreTable(
       google::bigtable::admin::v2::RestoreTableRequest const& request);
 
@@ -543,6 +683,11 @@ class BigtableTableAdminClient {
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
   /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.GetIamPolicyRequest]:
+  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]:
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
@@ -557,6 +702,11 @@ class BigtableTableAdminClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request);
 
@@ -567,6 +717,11 @@ class BigtableTableAdminClient {
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
   /// @return
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  ///
+  /// [google.iam.v1.TestIamPermissionsRequest]:
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]:
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
@@ -580,6 +735,11 @@ class BigtableTableAdminClient {
   /// @param request
   /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L647}
   /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L664}
+  ///
+  /// [google.bigtable.admin.v2.CheckConsistencyRequest]:
+  /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L647}
+  /// [google.bigtable.admin.v2.CheckConsistencyResponse]:
   /// @googleapis_link{google::bigtable::admin::v2::CheckConsistencyResponse,google/bigtable/admin/v2/bigtable_table_admin.proto#L664}
   ///
   future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>

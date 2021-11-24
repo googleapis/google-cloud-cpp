@@ -403,20 +403,33 @@ std::string FormatMethodCommentsFromRpcComments(
       EscapePrinterDelimiter(method_source_location.leading_comments),
       {{"\n", "\n  ///"}});
 
+  std::string trailer = "  ///\n";
+  trailer += "  /// [" + method.input_type()->full_name() + "]: ";
+  trailer += FormatDoxygenLink(*method.input_type()) + "\n";
+
   std::string return_comment_string;
   if (IsLongrunningOperation(method)) {
     return_comment_string =
         "  /// @return $method_longrunning_deduced_return_doxygen_link$\n";
+    trailer += "  /// [$longrunning_deduced_response_message_type$]: ";
+    trailer += "$method_longrunning_deduced_return_doxygen_link$\n";
   } else if (!IsResponseTypeEmpty(method) && !IsPaginated(method)) {
     return_comment_string = "  /// @return $method_return_doxygen_link$\n";
+    trailer += "  /// [" + method.output_type()->full_name() + "]: ";
+    trailer += FormatDoxygenLink(*method.output_type()) + "\n";
   } else if (IsPaginated(method)) {
     return_comment_string =
         "  /// @return $method_paginated_return_doxygen_link$\n";
+    auto info = DeterminePagination(method);
+    if (info->second != nullptr) {
+      trailer += "  /// [" + info->second->full_name() + "]: ";
+      trailer += FormatDoxygenLink(*info->second) + "\n";
+    }
   }
 
+  trailer += "  ///\n";
   return absl::StrCat("  ///\n  ///", doxygen_formatted_function_comments, "\n",
-                      parameter_comment_string, return_comment_string,
-                      "  ///\n");
+                      parameter_comment_string, return_comment_string, trailer);
 }
 
 VarsDictionary CreateServiceVars(

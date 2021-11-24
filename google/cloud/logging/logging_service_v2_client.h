@@ -78,6 +78,9 @@ class LoggingServiceV2Client {
   ///  For more information about log names, see
   ///  [LogEntry][google.logging.v2.LogEntry].
   ///
+  /// [google.logging.v2.DeleteLogRequest]:
+  /// @googleapis_link{google::logging::v2::DeleteLogRequest,google/logging/v2/logging.proto#L140}
+  ///
   Status DeleteLog(std::string const& log_name);
 
   ///
@@ -140,6 +143,11 @@ class LoggingServiceV2Client {
   /// @return
   /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L243}
   ///
+  /// [google.logging.v2.WriteLogEntriesRequest]:
+  /// @googleapis_link{google::logging::v2::WriteLogEntriesRequest,google/logging/v2/logging.proto#L162}
+  /// [google.logging.v2.WriteLogEntriesResponse]:
+  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L243}
+  ///
   StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
       std::string const& log_name,
       google::api::MonitoredResource const& resource,
@@ -184,6 +192,11 @@ class LoggingServiceV2Client {
   /// @return
   /// @googleapis_link{google::logging::v2::LogEntry,google/logging/v2/log_entry.proto#L42}
   ///
+  /// [google.logging.v2.ListLogEntriesRequest]:
+  /// @googleapis_link{google::logging::v2::ListLogEntriesRequest,google/logging/v2/logging.proto#L257}
+  /// [google::logging::v2::LogEntry]:
+  /// @googleapis_link{google::logging::v2::LogEntry,google/logging/v2/log_entry.proto#L42}
+  ///
   StreamRange<google::logging::v2::LogEntry> ListLogEntries(
       std::vector<std::string> const& resource_names, std::string const& filter,
       std::string const& order_by);
@@ -199,6 +212,10 @@ class LoggingServiceV2Client {
   ///      "folders/[FOLDER_ID]"
   /// @return std::string
   ///
+  /// [google.logging.v2.ListLogsRequest]:
+  /// @googleapis_link{google::logging::v2::ListLogsRequest,google/logging/v2/logging.proto#L356}
+  /// [std::string]: std::string
+  ///
   StreamRange<std::string> ListLogs(std::string const& parent);
 
   ///
@@ -208,6 +225,9 @@ class LoggingServiceV2Client {
   /// before the operation will be deleted.
   ///
   /// @param request
+  /// @googleapis_link{google::logging::v2::DeleteLogRequest,google/logging/v2/logging.proto#L140}
+  ///
+  /// [google.logging.v2.DeleteLogRequest]:
   /// @googleapis_link{google::logging::v2::DeleteLogRequest,google/logging/v2/logging.proto#L140}
   ///
   Status DeleteLog(google::logging::v2::DeleteLogRequest const& request);
@@ -226,6 +246,11 @@ class LoggingServiceV2Client {
   /// @return
   /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L243}
   ///
+  /// [google.logging.v2.WriteLogEntriesRequest]:
+  /// @googleapis_link{google::logging::v2::WriteLogEntriesRequest,google/logging/v2/logging.proto#L162}
+  /// [google.logging.v2.WriteLogEntriesResponse]:
+  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L243}
+  ///
   StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
       google::logging::v2::WriteLogEntriesRequest const& request);
 
@@ -240,6 +265,11 @@ class LoggingServiceV2Client {
   /// @return
   /// @googleapis_link{google::logging::v2::LogEntry,google/logging/v2/log_entry.proto#L42}
   ///
+  /// [google.logging.v2.ListLogEntriesRequest]:
+  /// @googleapis_link{google::logging::v2::ListLogEntriesRequest,google/logging/v2/logging.proto#L257}
+  /// [google::logging::v2::LogEntry]:
+  /// @googleapis_link{google::logging::v2::LogEntry,google/logging/v2/log_entry.proto#L42}
+  ///
   StreamRange<google::logging::v2::LogEntry> ListLogEntries(
       google::logging::v2::ListLogEntriesRequest request);
 
@@ -249,6 +279,11 @@ class LoggingServiceV2Client {
   /// @param request
   /// @googleapis_link{google::logging::v2::ListMonitoredResourceDescriptorsRequest,google/logging/v2/logging.proto#L331}
   /// @return
+  /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
+  ///
+  /// [google.logging.v2.ListMonitoredResourceDescriptorsRequest]:
+  /// @googleapis_link{google::logging::v2::ListMonitoredResourceDescriptorsRequest,google/logging/v2/logging.proto#L331}
+  /// [google::api::MonitoredResourceDescriptor]:
   /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
   ///
   StreamRange<google::api::MonitoredResourceDescriptor>
@@ -262,6 +297,10 @@ class LoggingServiceV2Client {
   /// @param request
   /// @googleapis_link{google::logging::v2::ListLogsRequest,google/logging/v2/logging.proto#L356}
   /// @return std::string
+  ///
+  /// [google.logging.v2.ListLogsRequest]:
+  /// @googleapis_link{google::logging::v2::ListLogsRequest,google/logging/v2/logging.proto#L356}
+  /// [std::string]: std::string
   ///
   StreamRange<std::string> ListLogs(
       google::logging::v2::ListLogsRequest request);

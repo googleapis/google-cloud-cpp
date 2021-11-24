@@ -78,6 +78,11 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
+  /// [google.cloud.secretmanager.v1.ListSecretsRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::ListSecretsRequest,google/cloud/secretmanager/v1/service.proto#L206}
+  /// [google::cloud::secretmanager::v1::Secret]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
+  ///
   StreamRange<google::cloud::secretmanager::v1::Secret> ListSecrets(
       std::string const& parent);
 
@@ -98,6 +103,11 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
+  /// [google.cloud.secretmanager.v1.CreateSecretRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::CreateSecretRequest,google/cloud/secretmanager/v1/service.proto#L248}
+  /// [google.cloud.secretmanager.v1.Secret]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
+  ///
   StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
       std::string const& parent, std::string const& secret_id,
       google::cloud::secretmanager::v1::Secret const& secret);
@@ -116,6 +126,11 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
+  /// [google.cloud.secretmanager.v1.AddSecretVersionRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::AddSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L270}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> AddSecretVersion(
       std::string const& parent,
       google::cloud::secretmanager::v1::SecretPayload const& payload);
@@ -127,6 +142,11 @@ class SecretManagerServiceClient {
   /// [Secret][google.cloud.secretmanager.v1.Secret], in the format
   /// `projects/*/secrets/*`.
   /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
+  ///
+  /// [google.cloud.secretmanager.v1.GetSecretRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::GetSecretRequest,google/cloud/secretmanager/v1/service.proto#L285}
+  /// [google.cloud.secretmanager.v1.Secret]:
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> GetSecret(
@@ -142,6 +162,11 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
+  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::UpdateSecretRequest,google/cloud/secretmanager/v1/service.proto#L354}
+  /// [google.cloud.secretmanager.v1.Secret]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
+  ///
   StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
       google::cloud::secretmanager::v1::Secret const& secret,
       google::protobuf::FieldMask const& update_mask);
@@ -152,6 +177,9 @@ class SecretManagerServiceClient {
   /// @param name  Required. The resource name of the
   /// [Secret][google.cloud.secretmanager.v1.Secret] to delete in the format
   ///  `projects/*/secrets/*`.
+  ///
+  /// [google.cloud.secretmanager.v1.DeleteSecretRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::DeleteSecretRequest,google/cloud/secretmanager/v1/service.proto#L390}
   ///
   Status DeleteSecret(std::string const& name);
 
@@ -164,6 +192,11 @@ class SecretManagerServiceClient {
   ///  [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] to list, in
   ///  the format `projects/*/secrets/*`.
   /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
+  /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::ListSecretVersionsRequest,google/cloud/secretmanager/v1/service.proto#L296}
+  /// [google::cloud::secretmanager::v1::SecretVersion]:
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StreamRange<google::cloud::secretmanager::v1::SecretVersion>
@@ -184,6 +217,11 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
+  /// [google.cloud.secretmanager.v1.GetSecretVersionRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::GetSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L339}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> GetSecretVersion(
       std::string const& name);
 
@@ -200,6 +238,11 @@ class SecretManagerServiceClient {
   ///  `projects/*/secrets/*/versions/latest` is an alias to the most recently
   ///  created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
   /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::AccessSecretVersionResponse,google/cloud/secretmanager/v1/service.proto#L378}
+  ///
+  /// [google.cloud.secretmanager.v1.AccessSecretVersionRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::AccessSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L363}
+  /// [google.cloud.secretmanager.v1.AccessSecretVersionResponse]:
   /// @googleapis_link{google::cloud::secretmanager::v1::AccessSecretVersionResponse,google/cloud/secretmanager/v1/service.proto#L378}
   ///
   StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
@@ -219,6 +262,11 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
+  /// [google.cloud.secretmanager.v1.DisableSecretVersionRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::DisableSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L407}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
   DisableSecretVersion(std::string const& name);
 
@@ -234,6 +282,11 @@ class SecretManagerServiceClient {
   /// the format
   ///  `projects/*/secrets/*/versions/*`.
   /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
+  /// [google.cloud.secretmanager.v1.EnableSecretVersionRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::EnableSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L424}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
@@ -254,6 +307,11 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
+  /// [google.cloud.secretmanager.v1.DestroySecretVersionRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::DestroySecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L441}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
   DestroySecretVersion(std::string const& name);
 
@@ -263,6 +321,11 @@ class SecretManagerServiceClient {
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::ListSecretsRequest,google/cloud/secretmanager/v1/service.proto#L206}
   /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
+  ///
+  /// [google.cloud.secretmanager.v1.ListSecretsRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::ListSecretsRequest,google/cloud/secretmanager/v1/service.proto#L206}
+  /// [google::cloud::secretmanager::v1::Secret]:
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StreamRange<google::cloud::secretmanager::v1::Secret> ListSecrets(
@@ -275,6 +338,11 @@ class SecretManagerServiceClient {
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::CreateSecretRequest,google/cloud/secretmanager/v1/service.proto#L248}
   /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
+  ///
+  /// [google.cloud.secretmanager.v1.CreateSecretRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::CreateSecretRequest,google/cloud/secretmanager/v1/service.proto#L248}
+  /// [google.cloud.secretmanager.v1.Secret]:
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
@@ -290,6 +358,11 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
+  /// [google.cloud.secretmanager.v1.AddSecretVersionRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::AddSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L270}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> AddSecretVersion(
       google::cloud::secretmanager::v1::AddSecretVersionRequest const& request);
 
@@ -299,6 +372,11 @@ class SecretManagerServiceClient {
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::GetSecretRequest,google/cloud/secretmanager/v1/service.proto#L285}
   /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
+  ///
+  /// [google.cloud.secretmanager.v1.GetSecretRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::GetSecretRequest,google/cloud/secretmanager/v1/service.proto#L285}
+  /// [google.cloud.secretmanager.v1.Secret]:
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> GetSecret(
@@ -313,6 +391,11 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
+  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::UpdateSecretRequest,google/cloud/secretmanager/v1/service.proto#L354}
+  /// [google.cloud.secretmanager.v1.Secret]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
+  ///
   StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
       google::cloud::secretmanager::v1::UpdateSecretRequest const& request);
 
@@ -320,6 +403,9 @@ class SecretManagerServiceClient {
   /// Deletes a [Secret][google.cloud.secretmanager.v1.Secret].
   ///
   /// @param request
+  /// @googleapis_link{google::cloud::secretmanager::v1::DeleteSecretRequest,google/cloud/secretmanager/v1/service.proto#L390}
+  ///
+  /// [google.cloud.secretmanager.v1.DeleteSecretRequest]:
   /// @googleapis_link{google::cloud::secretmanager::v1::DeleteSecretRequest,google/cloud/secretmanager/v1/service.proto#L390}
   ///
   Status DeleteSecret(
@@ -332,6 +418,11 @@ class SecretManagerServiceClient {
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::ListSecretVersionsRequest,google/cloud/secretmanager/v1/service.proto#L296}
   /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
+  /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::ListSecretVersionsRequest,google/cloud/secretmanager/v1/service.proto#L296}
+  /// [google::cloud::secretmanager::v1::SecretVersion]:
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StreamRange<google::cloud::secretmanager::v1::SecretVersion>
@@ -350,6 +441,11 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
+  /// [google.cloud.secretmanager.v1.GetSecretVersionRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::GetSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L339}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> GetSecretVersion(
       google::cloud::secretmanager::v1::GetSecretVersionRequest const& request);
 
@@ -363,6 +459,11 @@ class SecretManagerServiceClient {
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::AccessSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L363}
   /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::AccessSecretVersionResponse,google/cloud/secretmanager/v1/service.proto#L378}
+  ///
+  /// [google.cloud.secretmanager.v1.AccessSecretVersionRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::AccessSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L363}
+  /// [google.cloud.secretmanager.v1.AccessSecretVersionResponse]:
   /// @googleapis_link{google::cloud::secretmanager::v1::AccessSecretVersionResponse,google/cloud/secretmanager/v1/service.proto#L378}
   ///
   StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
@@ -382,6 +483,11 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
+  /// [google.cloud.secretmanager.v1.DisableSecretVersionRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::DisableSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L407}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
   DisableSecretVersion(
       google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
@@ -399,6 +505,11 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
+  /// [google.cloud.secretmanager.v1.EnableSecretVersionRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::EnableSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L424}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
       google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
           request);
@@ -414,6 +525,11 @@ class SecretManagerServiceClient {
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::DestroySecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L441}
   /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
+  /// [google.cloud.secretmanager.v1.DestroySecretVersionRequest]:
+  /// @googleapis_link{google::cloud::secretmanager::v1::DestroySecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L441}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
@@ -435,6 +551,11 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request);
 
@@ -445,6 +566,11 @@ class SecretManagerServiceClient {
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
   /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.GetIamPolicyRequest]:
+  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]:
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
@@ -462,6 +588,11 @@ class SecretManagerServiceClient {
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
   /// @return
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  ///
+  /// [google.iam.v1.TestIamPermissionsRequest]:
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]:
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
