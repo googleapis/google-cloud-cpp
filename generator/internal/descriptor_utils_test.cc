@@ -496,25 +496,30 @@ TEST_F(CreateMethodVarsTest,
        FormatMethodCommentsFromRpcCommentsProtobufRequest) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
-  EXPECT_EQ(
-      FormatMethodCommentsFromRpcComments(
-          *service_file_descriptor->service(0)->method(0),
-          MethodParameterStyle::kProtobufRequest),
-      "  ///\n  /// Leading comments about rpc Method0$$.\n  ///\n  /// @param "
-      "request "
-      "@googleapis_link{google::protobuf::Bar,google/foo/v1/"
-      "service.proto#L14}\n  ///\n");
+  EXPECT_THAT(FormatMethodCommentsFromRpcComments(
+                  *service_file_descriptor->service(0)->method(0),
+                  MethodParameterStyle::kProtobufRequest),
+              HasSubstr(R"""(  ///
+  /// Leading comments about rpc Method0$$.
+  ///
+  /// @param request @googleapis_link{google::protobuf::Bar,google/foo/v1/service.proto#L14}
+  ///
+)"""));
 }
 
 TEST_F(CreateMethodVarsTest,
        FormatMethodCommentsFromRpcCommentsApiMethodSignature) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
-  EXPECT_EQ(FormatMethodCommentsFromRpcComments(
-                *service_file_descriptor->service(0)->method(6),
-                MethodParameterStyle::kApiMethodSignature),
-            "  ///\n  /// Leading comments about rpc $$Method6.\n  ///\n  /// "
-            "@param labels  labels $$field comment.\n  ///\n");
+  EXPECT_THAT(FormatMethodCommentsFromRpcComments(
+                  *service_file_descriptor->service(0)->method(6),
+                  MethodParameterStyle::kApiMethodSignature),
+              HasSubstr(R"""(  ///
+  /// Leading comments about rpc $$Method6.
+  ///
+  /// @param labels  labels $$field comment.
+  ///
+)"""));
 }
 
 TEST_P(CreateMethodVarsTest, KeySetCorrectly) {

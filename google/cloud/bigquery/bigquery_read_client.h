@@ -98,6 +98,11 @@ class BigQueryReadClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadSession,google/cloud/bigquery/storage/v1/stream.proto#L47}
   ///
+  /// [google.cloud.bigquery.storage.v1.CreateReadSessionRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L229}
+  /// [google.cloud.bigquery.storage.v1.ReadSession]:
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L47}
+  ///
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       std::string const& parent,
       google::cloud::bigquery::storage::v1::ReadSession const& read_session,
@@ -119,6 +124,11 @@ class BigQueryReadClient {
   ///  from offset zero.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L304}
+  ///
+  /// [google.cloud.bigquery.storage.v1.ReadRowsRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L254}
+  /// [google.cloud.bigquery.storage.v1.ReadRowsResponse]:
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L304}
   ///
   StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
       std::string const& read_stream, std::int64_t offset);
@@ -149,6 +159,11 @@ class BigQueryReadClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadSession,google/cloud/bigquery/storage/v1/stream.proto#L47}
   ///
+  /// [google.cloud.bigquery.storage.v1.CreateReadSessionRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L229}
+  /// [google.cloud.bigquery.storage.v1.ReadSession]:
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L47}
+  ///
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
           request);
@@ -166,6 +181,11 @@ class BigQueryReadClient {
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsRequest,google/cloud/bigquery/storage/v1/storage.proto#L254}
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L304}
+  ///
+  /// [google.cloud.bigquery.storage.v1.ReadRowsRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L254}
+  /// [google.cloud.bigquery.storage.v1.ReadRowsResponse]:
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L304}
   ///
   StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
       google::cloud::bigquery::storage::v1::ReadRowsRequest const& request);
@@ -188,6 +208,11 @@ class BigQueryReadClient {
   /// @googleapis_link{google::cloud::bigquery::storage::v1::SplitReadStreamRequest,google/cloud/bigquery/storage/v1/storage.proto#L339}
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::SplitReadStreamResponse,google/cloud/bigquery/storage/v1/storage.proto#L359}
+  ///
+  /// [google.cloud.bigquery.storage.v1.SplitReadStreamRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L339}
+  /// [google.cloud.bigquery.storage.v1.SplitReadStreamResponse]:
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L359}
   ///
   StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
   SplitReadStream(

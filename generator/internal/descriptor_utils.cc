@@ -84,6 +84,16 @@ std::string FormatDoxygenLink(
       output_type_proto_file_name, "#L", loc.start_line + 1, "}");
 }
 
+std::string DefineReferenceLink(
+    google::protobuf::Descriptor const& message_type) {
+  google::protobuf::SourceLocation loc;
+  message_type.GetSourceLocation(&loc);
+  std::string output_type_proto_file_name = message_type.file()->name();
+  return absl::StrCat("@googleapis_reference_link{",
+                      output_type_proto_file_name, "#L", loc.start_line + 1,
+                      "}");
+}
+
 absl::variant<std::string, google::protobuf::Descriptor const*>
 FullyQualifyMessageType(google::protobuf::MethodDescriptor const& method,
                         std::string message_type) {
@@ -125,6 +135,16 @@ struct FormatDoxygenLinkVisitor {
   }
   std::string operator()(google::protobuf::Descriptor const* d) const {
     return FormatDoxygenLink(*d);
+  }
+};
+
+struct DefineReferenceLinkVisitor {
+  explicit DefineReferenceLinkVisitor() = default;
+  std::string operator()(std::string const& s) const {
+    return ProtoNameToCppName(s);
+  }
+  std::string operator()(google::protobuf::Descriptor const* d) const {
+    return DefineReferenceLink(*d);
   }
 };
 
@@ -414,9 +434,30 @@ std::string FormatMethodCommentsFromRpcComments(
         "  /// @return $method_paginated_return_doxygen_link$\n";
   }
 
+  std::string trailer = "  ///\n";
+  trailer += "  /// [" + method.input_type()->full_name() + "]: ";
+  trailer += DefineReferenceLink(*method.input_type()) + "\n";
+  if (IsLongrunningOperation(method)) {
+    auto info =
+        method.options().GetExtension(google::longrunning::operation_info);
+    auto type = DeduceLongrunningOperationResponseType(method, info);
+    trailer += "  /// [" +
+               absl::visit(FullyQualifiedMessageTypeVisitor(), type) + "]: ";
+    trailer += absl::visit(DefineReferenceLinkVisitor{}, type) + "\n";
+  } else if (IsPaginated(method)) {
+    auto info = DeterminePagination(method);
+    if (info->second != nullptr) {
+      trailer += "  /// [" + info->second->full_name() + "]: ";
+      trailer += DefineReferenceLink(*info->second) + "\n";
+    }
+  } else if (!IsResponseTypeEmpty(method)) {
+    trailer += "  /// [" + method.output_type()->full_name() + "]: ";
+    trailer += DefineReferenceLink(*method.output_type()) + "\n";
+  }
+
+  trailer += "  ///\n";
   return absl::StrCat("  ///\n  ///", doxygen_formatted_function_comments, "\n",
-                      parameter_comment_string, return_comment_string,
-                      "  ///\n");
+                      parameter_comment_string, return_comment_string, trailer);
 }
 
 VarsDictionary CreateServiceVars(

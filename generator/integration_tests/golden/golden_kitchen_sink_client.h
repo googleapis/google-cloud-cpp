@@ -93,6 +93,9 @@ class GoldenKitchenSinkClient {
   ///  hour.
   /// @return @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenResponse,generator/integration_tests/test.proto#L872}
   ///
+  /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L835}
+  /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L872}
+  ///
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(std::string const& name, std::vector<std::string> const& delegates, std::vector<std::string> const& scope, google::protobuf::Duration const& lifetime);
 
@@ -117,6 +120,9 @@ class GoldenKitchenSinkClient {
   /// @param include_email  Include the service account email in the token. If set to `true`, the
   ///  token will contain `email` and `email_verified` claims.
   /// @return @googleapis_link{google::test::admin::database::v1::GenerateIdTokenResponse,generator/integration_tests/test.proto#L914}
+  ///
+  /// [google.test.admin.database.v1.GenerateIdTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L881}
+  /// [google.test.admin.database.v1.GenerateIdTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L914}
   ///
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
   GenerateIdToken(std::string const& name, std::vector<std::string> const& delegates, std::string const& audience, bool include_email);
@@ -149,6 +155,9 @@ class GoldenKitchenSinkClient {
   ///  See [LogEntry][google.logging.v2.LogEntry]. Test delimiter$
   /// @return @googleapis_link{google::test::admin::database::v1::WriteLogEntriesResponse,generator/integration_tests/test.proto#L953}
   ///
+  /// [google.test.admin.database.v1.WriteLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L920}
+  /// [google.test.admin.database.v1.WriteLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L953}
+  ///
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
   WriteLogEntries(std::string const& log_name, std::map<std::string, std::string> const& labels);
 
@@ -162,6 +171,8 @@ class GoldenKitchenSinkClient {
   ///      "billingAccounts/[BILLING_ACCOUNT_ID]"
   ///      "folders/[FOLDER_ID]"
   /// @return std::string
+  ///
+  /// [google.test.admin.database.v1.ListLogsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L956}
   ///
   StreamRange<std::string>
   ListLogs(std::string const& parent);
@@ -182,6 +193,9 @@ class GoldenKitchenSinkClient {
   ///      "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
   /// @return @googleapis_link{google::test::admin::database::v1::TailLogEntriesResponse,generator/integration_tests/test.proto#L1214}
   ///
+  /// [google.test.admin.database.v1.TailLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1182}
+  /// [google.test.admin.database.v1.TailLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1214}
+  ///
   StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
   TailLogEntries(std::vector<std::string> const& resource_names);
 
@@ -198,6 +212,9 @@ class GoldenKitchenSinkClient {
   ///  is provided, all keys are returned.
   /// @return @googleapis_link{google::test::admin::database::v1::ListServiceAccountKeysResponse,generator/integration_tests/test.proto#L1286}
   ///
+  /// [google.test.admin.database.v1.ListServiceAccountKeysRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1254}
+  /// [google.test.admin.database.v1.ListServiceAccountKeysResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1286}
+  ///
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(std::string const& name, std::vector<google::test::admin::database::v1::ListServiceAccountKeysRequest::KeyType> const& key_types);
 
@@ -207,6 +224,9 @@ class GoldenKitchenSinkClient {
   /// @param request @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenRequest,generator/integration_tests/test.proto#L835}
   /// @return @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenResponse,generator/integration_tests/test.proto#L872}
   ///
+  /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L835}
+  /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L872}
+  ///
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request);
 
@@ -215,6 +235,9 @@ class GoldenKitchenSinkClient {
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::GenerateIdTokenRequest,generator/integration_tests/test.proto#L881}
   /// @return @googleapis_link{google::test::admin::database::v1::GenerateIdTokenResponse,generator/integration_tests/test.proto#L914}
+  ///
+  /// [google.test.admin.database.v1.GenerateIdTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L881}
+  /// [google.test.admin.database.v1.GenerateIdTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L914}
   ///
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
   GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request);
@@ -231,6 +254,9 @@ class GoldenKitchenSinkClient {
   /// @param request @googleapis_link{google::test::admin::database::v1::WriteLogEntriesRequest,generator/integration_tests/test.proto#L920}
   /// @return @googleapis_link{google::test::admin::database::v1::WriteLogEntriesResponse,generator/integration_tests/test.proto#L953}
   ///
+  /// [google.test.admin.database.v1.WriteLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L920}
+  /// [google.test.admin.database.v1.WriteLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L953}
+  ///
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
   WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request);
 
@@ -240,6 +266,8 @@ class GoldenKitchenSinkClient {
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::ListLogsRequest,generator/integration_tests/test.proto#L956}
   /// @return std::string
+  ///
+  /// [google.test.admin.database.v1.ListLogsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L956}
   ///
   StreamRange<std::string>
   ListLogs(google::test::admin::database::v1::ListLogsRequest request);
@@ -251,6 +279,9 @@ class GoldenKitchenSinkClient {
   /// @param request @googleapis_link{google::test::admin::database::v1::TailLogEntriesRequest,generator/integration_tests/test.proto#L1182}
   /// @return @googleapis_link{google::test::admin::database::v1::TailLogEntriesResponse,generator/integration_tests/test.proto#L1214}
   ///
+  /// [google.test.admin.database.v1.TailLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1182}
+  /// [google.test.admin.database.v1.TailLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1214}
+  ///
   StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
   TailLogEntries(google::test::admin::database::v1::TailLogEntriesRequest const& request);
 
@@ -259,6 +290,9 @@ class GoldenKitchenSinkClient {
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::ListServiceAccountKeysRequest,generator/integration_tests/test.proto#L1254}
   /// @return @googleapis_link{google::test::admin::database::v1::ListServiceAccountKeysResponse,generator/integration_tests/test.proto#L1286}
+  ///
+  /// [google.test.admin.database.v1.ListServiceAccountKeysRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1254}
+  /// [google.test.admin.database.v1.ListServiceAccountKeysResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1286}
   ///
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request);

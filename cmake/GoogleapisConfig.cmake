@@ -27,4 +27,5 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256)
 
 set(DOXYGEN_ALIASES
     "googleapis_link{2}=\"[\\1](https://github.com/googleapis/googleapis/blob/${GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA}/\\2)\""
+    "googleapis_reference_link{1}=\"https://github.com/googleapis/googleapis/blob/${GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA}/\\1\""
 )
