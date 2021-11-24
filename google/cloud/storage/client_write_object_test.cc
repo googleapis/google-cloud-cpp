@@ -169,6 +169,7 @@ TEST_F(WriteObjectTest, WriteObjectPermanentSessionFailurePropagates) {
   EXPECT_CALL(*mock_, CreateResumableSession).WillOnce(returner);
   EXPECT_CALL(*mock_session, UploadChunk)
       .WillRepeatedly(Return(PermanentError()));
+  EXPECT_CALL(*mock_session, next_expected_byte()).WillRepeatedly(Return(0));
   EXPECT_CALL(*mock_session, done()).WillRepeatedly(Return(false));
   EXPECT_CALL(*mock_session, session_id()).WillRepeatedly(ReturnRef(empty));
   auto client = ClientForMock();
@@ -260,6 +261,7 @@ TEST_F(WriteObjectTest, UploadStreamResumableSimulateBug) {
   std::uint64_t bytes_written = 0;
   auto last_response_value = StatusOr<internal::ResumableUploadResponse>(
       Status(StatusCode::kUnknown, ""));
+  auto session_id_value = std::string{"test-only-session-id"};
 
   // This test needs a specially tuned MockClient and ClientOptions.
   auto mock = std::make_shared<testing::MockClient>();
@@ -299,6 +301,8 @@ TEST_F(WriteObjectTest, UploadStreamResumableSimulateBug) {
                 });
         EXPECT_CALL(*mock, last_response())
             .WillRepeatedly(ReturnRef(last_response_value));
+        EXPECT_CALL(*mock, session_id)
+            .WillRepeatedly(ReturnRef(session_id_value));
 
         return make_status_or(
             std::unique_ptr<internal::ResumableUploadSession>(std::move(mock)));

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/retry_resumable_upload_session.h"
+#include <deque>
 #include <sstream>
 #include <thread>
 
@@ -70,8 +71,10 @@ RetryResumableUploadSession::UploadGenericChunk(char const* caller,
 
   auto retry_policy = retry_policy_prototype_->clone();
   auto backoff_policy = backoff_policy_prototype_->clone();
+
   while (!retry_policy->IsExhausted()) {
     std::uint64_t new_next_byte = session_->next_expected_byte();
+    AppendDebug("loop", new_next_byte);
     if (new_next_byte < next_byte) {
       std::stringstream os;
       os << caller << ": server previously confirmed " << next_byte
@@ -88,6 +91,13 @@ RetryResumableUploadSession::UploadGenericChunk(char const* caller,
       } else {
         os << ", last_response.value=" << last_response.value();
       }
+      os << ", session_id=" << session_id();
+      os << ", debug=[";
+      std::lock_guard<std::mutex> lk(mu_);
+      for (auto const& e : debug_) {
+        os << " {" << e.action << ": " << e.value << " / " << e.tid_ << "}";
+      }
+      os << "]";
       return Status(StatusCode::kInternal, os.str());
     }
     if (new_next_byte > next_byte) {
@@ -96,6 +106,7 @@ RetryResumableUploadSession::UploadGenericChunk(char const* caller,
       next_byte = new_next_byte;
     }
     auto result = upload(buffers);
+    AppendDebug("upload", static_cast<std::uint64_t>(result.status().code()));
     if (result.ok()) {
       if (result->upload_state == ResumableUploadResponse::kDone) {
         // The upload was completed. This can happen even if
@@ -130,9 +141,8 @@ RetryResumableUploadSession::UploadGenericChunk(char const* caller,
 
     result =
         ResetSession(*retry_policy, *backoff_policy, std::move(last_status));
-    if (!result.ok()) {
-      return result;
-    }
+    AppendDebug("reset", static_cast<std::uint64_t>(result.status().code()));
+    if (!result.ok()) return result;
     last_status = Status();
   }
   std::ostringstream os;
@@ -167,6 +177,13 @@ StatusOr<ResumableUploadResponse> RetryResumableUploadSession::ResetSession() {
   auto retry_policy = retry_policy_prototype_->clone();
   auto backoff_policy = backoff_policy_prototype_->clone();
   return ResetSession(*retry_policy, *backoff_policy, std::move(last_status));
+}
+
+void RetryResumableUploadSession::AppendDebug(char const* action,
+                                              std::uint64_t value) {
+  std::lock_guard<std::mutex> lk(mu_);
+  while (debug_.size() >= 16) debug_.pop_front();
+  debug_.push_back(DebugEntry{action, value, std::this_thread::get_id()});
 }
 
 std::uint64_t RetryResumableUploadSession::next_expected_byte() const {

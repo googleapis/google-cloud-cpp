@@ -929,6 +929,9 @@ TEST_F(RetryResumableUploadSessionTest, UploadFinalChunkUncommitted) {
         "", 0, {}, ResumableUploadResponse::kInProgress, {}});
   });
 
+  auto const session_id_value = std::string{"test-only-session-id"};
+  EXPECT_CALL(*mock, session_id).WillRepeatedly(ReturnRef(session_id_value));
+
   EXPECT_CALL(*mock, next_expected_byte())
       .WillOnce([&]() {
         EXPECT_EQ(1, ++count);

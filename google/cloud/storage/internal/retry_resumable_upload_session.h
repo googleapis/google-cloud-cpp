@@ -20,8 +20,11 @@
 #include "google/cloud/storage/version.h"
 #include "absl/functional/function_ref.h"
 #include "absl/types/optional.h"
+#include <deque>
 #include <memory>
+#include <mutex>
 #include <string>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -70,9 +73,19 @@ class RetryResumableUploadSession : public ResumableUploadSession {
                                                  BackoffPolicy& backoff_policy,
                                                  Status last_status);
 
+  void AppendDebug(char const* action, std::uint64_t value);
+
+  struct DebugEntry {
+    std::string action;
+    std::uint64_t value;
+    std::thread::id tid_;
+  };
+
   std::unique_ptr<ResumableUploadSession> session_;
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
+  std::mutex mu_;
+  std::deque<DebugEntry> debug_;
 };
 
 }  // namespace internal
