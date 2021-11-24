@@ -105,7 +105,7 @@ class BigtableTableAdminClient {
   ///
   /// [google.bigtable.admin.v2.ListTablesRequest]:
   /// @googleapis_link{google::bigtable::admin::v2::ListTablesRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L510}
-  /// [google::bigtable::admin::v2::Table]:
+  /// [google.bigtable.admin.v2.Table]:
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
   ///
   StreamRange<google::bigtable::admin::v2::Table> ListTables(
@@ -315,7 +315,7 @@ class BigtableTableAdminClient {
   ///
   /// [google.bigtable.admin.v2.ListBackupsRequest]:
   /// @googleapis_link{google::bigtable::admin::v2::ListBackupsRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L915}
-  /// [google::bigtable::admin::v2::Backup]:
+  /// [google.bigtable.admin.v2.Backup]:
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
   ///
   StreamRange<google::bigtable::admin::v2::Backup> ListBackups(
@@ -461,7 +461,7 @@ class BigtableTableAdminClient {
   ///
   /// [google.bigtable.admin.v2.ListTablesRequest]:
   /// @googleapis_link{google::bigtable::admin::v2::ListTablesRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L510}
-  /// [google::bigtable::admin::v2::Table]:
+  /// [google.bigtable.admin.v2.Table]:
   /// @googleapis_link{google::bigtable::admin::v2::Table,google/bigtable/admin/v2/table.proto#L61}
   ///
   StreamRange<google::bigtable::admin::v2::Table> ListTables(
@@ -646,7 +646,7 @@ class BigtableTableAdminClient {
   ///
   /// [google.bigtable.admin.v2.ListBackupsRequest]:
   /// @googleapis_link{google::bigtable::admin::v2::ListBackupsRequest,google/bigtable/admin/v2/bigtable_table_admin.proto#L915}
-  /// [google::bigtable::admin::v2::Backup]:
+  /// [google.bigtable.admin.v2.Backup]:
   /// @googleapis_link{google::bigtable::admin::v2::Backup,google/bigtable/admin/v2/table.proto#L317}
   ///
   StreamRange<google::bigtable::admin::v2::Backup> ListBackups(

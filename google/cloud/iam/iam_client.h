@@ -89,7 +89,7 @@ class IAMClient {
   ///
   /// [google.iam.admin.v1.ListServiceAccountsRequest]:
   /// @googleapis_link{google::iam::admin::v1::ListServiceAccountsRequest,google/iam/admin/v1/iam.proto#L544}
-  /// [google::iam::admin::v1::ServiceAccount]:
+  /// [google.iam.admin.v1.ServiceAccount]:
   /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
   ///
   StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
@@ -401,7 +401,7 @@ class IAMClient {
   ///
   /// [google.iam.admin.v1.QueryGrantableRolesRequest]:
   /// @googleapis_link{google::iam::admin::v1::QueryGrantableRolesRequest,google/iam/admin/v1/iam.proto#L1062}
-  /// [google::iam::admin::v1::Role]:
+  /// [google.iam.admin.v1.Role]:
   /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
   ///
   StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
@@ -418,7 +418,7 @@ class IAMClient {
   ///
   /// [google.iam.admin.v1.ListServiceAccountsRequest]:
   /// @googleapis_link{google::iam::admin::v1::ListServiceAccountsRequest,google/iam/admin/v1/iam.proto#L544}
-  /// [google::iam::admin::v1::ServiceAccount]:
+  /// [google.iam.admin.v1.ServiceAccount]:
   /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
   ///
   StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
@@ -745,7 +745,7 @@ class IAMClient {
   ///
   /// [google.iam.admin.v1.QueryGrantableRolesRequest]:
   /// @googleapis_link{google::iam::admin::v1::QueryGrantableRolesRequest,google/iam/admin/v1/iam.proto#L1062}
-  /// [google::iam::admin::v1::Role]:
+  /// [google.iam.admin.v1.Role]:
   /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
   ///
   StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
@@ -762,7 +762,7 @@ class IAMClient {
   ///
   /// [google.iam.admin.v1.ListRolesRequest]:
   /// @googleapis_link{google::iam::admin::v1::ListRolesRequest,google/iam/admin/v1/iam.proto#L1093}
-  /// [google::iam::admin::v1::Role]:
+  /// [google.iam.admin.v1.Role]:
   /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
   ///
   StreamRange<google::iam::admin::v1::Role> ListRoles(
@@ -877,7 +877,7 @@ class IAMClient {
   ///
   /// [google.iam.admin.v1.QueryTestablePermissionsRequest]:
   /// @googleapis_link{google::iam::admin::v1::QueryTestablePermissionsRequest,google/iam/admin/v1/iam.proto#L1361}
-  /// [google::iam::admin::v1::Permission]:
+  /// [google.iam.admin.v1.Permission]:
   /// @googleapis_link{google::iam::admin::v1::Permission,google/iam/admin/v1/iam.proto#L1306}
   ///
   StreamRange<google::iam::admin::v1::Permission> QueryTestablePermissions(

@@ -338,7 +338,7 @@ class BigtableInstanceAdminClient {
   ///
   /// [google.bigtable.admin.v2.ListAppProfilesRequest]:
   /// @googleapis_link{google::bigtable::admin::v2::ListAppProfilesRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L560}
-  /// [google::bigtable::admin::v2::AppProfile]:
+  /// [google.bigtable.admin.v2.AppProfile]:
   /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
   ///
   StreamRange<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
@@ -720,7 +720,7 @@ class BigtableInstanceAdminClient {
   ///
   /// [google.bigtable.admin.v2.ListAppProfilesRequest]:
   /// @googleapis_link{google::bigtable::admin::v2::ListAppProfilesRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L560}
-  /// [google::bigtable::admin::v2::AppProfile]:
+  /// [google.bigtable.admin.v2.AppProfile]:
   /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
   ///
   StreamRange<google::bigtable::admin::v2::AppProfile> ListAppProfiles(

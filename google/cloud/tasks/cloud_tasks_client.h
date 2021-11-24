@@ -72,7 +72,7 @@ class CloudTasksClient {
   ///
   /// [google.cloud.tasks.v2.ListQueuesRequest]:
   /// @googleapis_link{google::cloud::tasks::v2::ListQueuesRequest,google/cloud/tasks/v2/cloudtasks.proto#L308}
-  /// [google::cloud::tasks::v2::Queue]:
+  /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
   StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
@@ -384,7 +384,7 @@ class CloudTasksClient {
   ///
   /// [google.cloud.tasks.v2.ListTasksRequest]:
   /// @googleapis_link{google::cloud::tasks::v2::ListTasksRequest,google/cloud/tasks/v2/cloudtasks.proto#L467}
-  /// [google::cloud::tasks::v2::Task]:
+  /// [google.cloud.tasks.v2.Task]:
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///
   StreamRange<google::cloud::tasks::v2::Task> ListTasks(
@@ -520,7 +520,7 @@ class CloudTasksClient {
   ///
   /// [google.cloud.tasks.v2.ListQueuesRequest]:
   /// @googleapis_link{google::cloud::tasks::v2::ListQueuesRequest,google/cloud/tasks/v2/cloudtasks.proto#L308}
-  /// [google::cloud::tasks::v2::Queue]:
+  /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
   StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
@@ -785,7 +785,7 @@ class CloudTasksClient {
   ///
   /// [google.cloud.tasks.v2.ListTasksRequest]:
   /// @googleapis_link{google::cloud::tasks::v2::ListTasksRequest,google/cloud/tasks/v2/cloudtasks.proto#L467}
-  /// [google::cloud::tasks::v2::Task]:
+  /// [google.cloud.tasks.v2.Task]:
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///
   StreamRange<google::cloud::tasks::v2::Task> ListTasks(

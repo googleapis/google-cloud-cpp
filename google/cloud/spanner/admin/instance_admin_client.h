@@ -96,7 +96,7 @@ class InstanceAdminClient {
   ///
   /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]:
   /// @googleapis_link{google::spanner::admin::instance::v1::ListInstanceConfigsRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L415}
-  /// [google::spanner::admin::instance::v1::InstanceConfig]:
+  /// [google.spanner.admin.instance.v1.InstanceConfig]:
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
@@ -130,7 +130,7 @@ class InstanceAdminClient {
   ///
   /// [google.spanner.admin.instance.v1.ListInstancesRequest]:
   /// @googleapis_link{google::spanner::admin::instance::v1::ListInstancesRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L499}
-  /// [google::spanner::admin::instance::v1::Instance]:
+  /// [google.spanner.admin.instance.v1.Instance]:
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
   StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
@@ -407,7 +407,7 @@ class InstanceAdminClient {
   ///
   /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]:
   /// @googleapis_link{google::spanner::admin::instance::v1::ListInstanceConfigsRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L415}
-  /// [google::spanner::admin::instance::v1::InstanceConfig]:
+  /// [google.spanner.admin.instance.v1.InstanceConfig]:
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
@@ -442,7 +442,7 @@ class InstanceAdminClient {
   ///
   /// [google.spanner.admin.instance.v1.ListInstancesRequest]:
   /// @googleapis_link{google::spanner::admin::instance::v1::ListInstancesRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L499}
-  /// [google::spanner::admin::instance::v1::Instance]:
+  /// [google.spanner.admin.instance.v1.Instance]:
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
   StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(

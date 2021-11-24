@@ -80,7 +80,7 @@ class SecretManagerServiceClient {
   ///
   /// [google.cloud.secretmanager.v1.ListSecretsRequest]:
   /// @googleapis_link{google::cloud::secretmanager::v1::ListSecretsRequest,google/cloud/secretmanager/v1/service.proto#L206}
-  /// [google::cloud::secretmanager::v1::Secret]:
+  /// [google.cloud.secretmanager.v1.Secret]:
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StreamRange<google::cloud::secretmanager::v1::Secret> ListSecrets(
@@ -196,7 +196,7 @@ class SecretManagerServiceClient {
   ///
   /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest]:
   /// @googleapis_link{google::cloud::secretmanager::v1::ListSecretVersionsRequest,google/cloud/secretmanager/v1/service.proto#L296}
-  /// [google::cloud::secretmanager::v1::SecretVersion]:
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StreamRange<google::cloud::secretmanager::v1::SecretVersion>
@@ -325,7 +325,7 @@ class SecretManagerServiceClient {
   ///
   /// [google.cloud.secretmanager.v1.ListSecretsRequest]:
   /// @googleapis_link{google::cloud::secretmanager::v1::ListSecretsRequest,google/cloud/secretmanager/v1/service.proto#L206}
-  /// [google::cloud::secretmanager::v1::Secret]:
+  /// [google.cloud.secretmanager.v1.Secret]:
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StreamRange<google::cloud::secretmanager::v1::Secret> ListSecrets(
@@ -422,7 +422,7 @@ class SecretManagerServiceClient {
   ///
   /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest]:
   /// @googleapis_link{google::cloud::secretmanager::v1::ListSecretVersionsRequest,google/cloud/secretmanager/v1/service.proto#L296}
-  /// [google::cloud::secretmanager::v1::SecretVersion]:
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StreamRange<google::cloud::secretmanager::v1::SecretVersion>

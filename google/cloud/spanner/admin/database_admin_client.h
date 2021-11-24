@@ -78,7 +78,7 @@ class DatabaseAdminClient {
   ///
   /// [google.spanner.admin.database.v1.ListDatabasesRequest]:
   /// @googleapis_link{google::spanner::admin::database::v1::ListDatabasesRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L413}
-  /// [google::spanner::admin::database::v1::Database]:
+  /// [google.spanner.admin.database.v1.Database]:
   /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
   ///
   StreamRange<google::spanner::admin::database::v1::Database> ListDatabases(
@@ -405,7 +405,7 @@ class DatabaseAdminClient {
   ///
   /// [google.spanner.admin.database.v1.ListBackupsRequest]:
   /// @googleapis_link{google::spanner::admin::database::v1::ListBackupsRequest,google/spanner/admin/database/v1/backup.proto#L228}
-  /// [google::spanner::admin::database::v1::Backup]:
+  /// [google.spanner.admin.database.v1.Backup]:
   /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
   ///
   StreamRange<google::spanner::admin::database::v1::Backup> ListBackups(
@@ -472,7 +472,7 @@ class DatabaseAdminClient {
   ///
   /// [google.spanner.admin.database.v1.ListDatabaseOperationsRequest]:
   /// @googleapis_link{google::spanner::admin::database::v1::ListDatabaseOperationsRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L611}
-  /// [google::longrunning::Operation]:
+  /// [google.longrunning.Operation]:
   /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
   StreamRange<google::longrunning::Operation> ListDatabaseOperations(
@@ -498,7 +498,7 @@ class DatabaseAdminClient {
   ///
   /// [google.spanner.admin.database.v1.ListBackupOperationsRequest]:
   /// @googleapis_link{google::spanner::admin::database::v1::ListBackupOperationsRequest,google/spanner/admin/database/v1/backup.proto#L300}
-  /// [google::longrunning::Operation]:
+  /// [google.longrunning.Operation]:
   /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
   StreamRange<google::longrunning::Operation> ListBackupOperations(
@@ -514,7 +514,7 @@ class DatabaseAdminClient {
   ///
   /// [google.spanner.admin.database.v1.ListDatabasesRequest]:
   /// @googleapis_link{google::spanner::admin::database::v1::ListDatabasesRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L413}
-  /// [google::spanner::admin::database::v1::Database]:
+  /// [google.spanner.admin.database.v1.Database]:
   /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
   ///
   StreamRange<google::spanner::admin::database::v1::Database> ListDatabases(
@@ -777,7 +777,7 @@ class DatabaseAdminClient {
   ///
   /// [google.spanner.admin.database.v1.ListBackupsRequest]:
   /// @googleapis_link{google::spanner::admin::database::v1::ListBackupsRequest,google/spanner/admin/database/v1/backup.proto#L228}
-  /// [google::spanner::admin::database::v1::Backup]:
+  /// [google.spanner.admin.database.v1.Backup]:
   /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
   ///
   StreamRange<google::spanner::admin::database::v1::Backup> ListBackups(
@@ -834,7 +834,7 @@ class DatabaseAdminClient {
   ///
   /// [google.spanner.admin.database.v1.ListDatabaseOperationsRequest]:
   /// @googleapis_link{google::spanner::admin::database::v1::ListDatabaseOperationsRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L611}
-  /// [google::longrunning::Operation]:
+  /// [google.longrunning.Operation]:
   /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
   StreamRange<google::longrunning::Operation> ListDatabaseOperations(
@@ -860,7 +860,7 @@ class DatabaseAdminClient {
   ///
   /// [google.spanner.admin.database.v1.ListBackupOperationsRequest]:
   /// @googleapis_link{google::spanner::admin::database::v1::ListBackupOperationsRequest,google/spanner/admin/database/v1/backup.proto#L300}
-  /// [google::longrunning::Operation]:
+  /// [google.longrunning.Operation]:
   /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
   StreamRange<google::longrunning::Operation> ListBackupOperations(
