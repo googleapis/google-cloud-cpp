@@ -34,6 +34,7 @@ StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
     result.upload_state = kInProgress;
   }
   result.last_committed_byte = 0;
+  result.annotations += "code=" + std::to_string(response.status_code);
   // For the JSON API, the payload contains the object resource when the upload
   // is finished. In that case, we try to parse it.
   if (result.upload_state == kDone && !response.payload.empty()) {
@@ -51,13 +52,14 @@ StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
     std::ostringstream os;
     os << __func__ << "() missing range header in resumable upload response"
        << ", response=" << response;
-    result.annotations = std::move(os).str();
+    result.annotations += " " + std::move(os).str();
     return result;
   }
   // We expect a `Range:` header in the format described here:
   //    https://cloud.google.com/storage/docs/json_api/v1/how-tos/resumable-upload
   // that is the value should match `bytes=0-[0-9]+`:
   std::string const& range = r->second;
+  result.annotations += " range=" + range;
 
   char const prefix[] = "bytes=0-";
   auto constexpr kPrefixLen = sizeof(prefix) - 1;
@@ -65,7 +67,7 @@ StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
     std::ostringstream os;
     os << __func__ << "() cannot parse range: header in resumable upload"
        << " response, header=" << range << ", response=" << response;
-    result.annotations = std::move(os).str();
+    result.annotations += " " + std::move(os).str();
     return result;
   }
   char const* buffer = range.data() + kPrefixLen;
@@ -78,7 +80,7 @@ StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
     std::ostringstream os;
     os << __func__ << "() cannot parse range: header in resumable upload"
        << " response, header=" << range << ", response=" << response;
-    result.annotations = std::move(os).str();
+    result.annotations += " " + std::move(os).str();
   }
 
   return result;
