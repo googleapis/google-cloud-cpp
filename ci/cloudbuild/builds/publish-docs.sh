@@ -109,5 +109,5 @@ io::log "bucket:  gs://${bucket}"
 upload_docs "google-cloud-common" "cmake-out/google/cloud/html"
 for feature in "${FEATURE_LIST[@]}"; do
   if [[ "${feature}" == "experimental-storage-grpc" ]]; then continue; fi
-  echo upload_docs "google-cloud-${feature}" "cmake-out/google/cloud/${feature}/html"
+  upload_docs "google-cloud-${feature}" "cmake-out/google/cloud/${feature}/html"
 done
