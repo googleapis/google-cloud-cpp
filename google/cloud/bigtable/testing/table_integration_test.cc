@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/testing/table_integration_test.h"
-#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -26,11 +25,6 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace testing {
-
-bigtable_admin::BigtableTableAdminClient TableAdminClient() {
-  return bigtable_admin::BigtableTableAdminClient(
-      bigtable_admin::MakeBigtableTableAdminConnection());
-}
 
 using ::google::cloud::internal::GetEnv;
 using ::testing::ContainerEq;
@@ -62,27 +56,37 @@ void TableTestEnvironment::SetUp() {
 
   generator_ = google::cloud::internal::MakeDefaultPRNG();
 
-  namespace btadmin = ::google::bigtable::admin::v2;
-  btadmin::GcRule gc;
-  gc.set_max_num_versions(10);
+  auto admin_client =
+      bigtable::MakeAdminClient(TableTestEnvironment::project_id());
+  auto table_admin =
+      bigtable::TableAdmin(admin_client, TableTestEnvironment::instance_id());
 
-  btadmin::Table t;
-  t.set_granularity(btadmin::Table::TIMESTAMP_GRANULARITY_UNSPECIFIED);
-  auto& families = *t.mutable_column_families();
-  for (auto i = 1; i != 5; ++i) {
-    auto key = "family" + std::to_string(i);
-    *families[std::move(key)].mutable_gc_rule() = gc;
-  }
+  std::string const family1 = "family1";
+  std::string const family2 = "family2";
+  std::string const family3 = "family3";
+  std::string const family4 = "family4";
+  auto constexpr kTestMaxVersions = 10;
+  auto const test_gc_rule = bigtable::GcRule::MaxNumVersions(kTestMaxVersions);
+  bigtable::TableConfig table_config = bigtable::TableConfig(
+      {
+          {family1, test_gc_rule},
+          {family2, test_gc_rule},
+          {family3, test_gc_rule},
+          {family4, test_gc_rule},
+      },
+      {});
 
   table_id_ = RandomTableId();
-  ASSERT_STATUS_OK(TableAdminClient().CreateTable(
-      bigtable::InstanceName(project_id_, instance_id_), table_id_,
-      std::move(t)));
+  ASSERT_STATUS_OK(table_admin.CreateTable(table_id_, table_config));
 }
 
 void TableTestEnvironment::TearDown() {
-  ASSERT_STATUS_OK(TableAdminClient().DeleteTable(
-      bigtable::TableName(project_id_, instance_id_, table_id_)));
+  auto admin_client =
+      bigtable::MakeAdminClient(TableTestEnvironment::project_id());
+  auto table_admin =
+      bigtable::TableAdmin(admin_client, TableTestEnvironment::instance_id());
+
+  ASSERT_STATUS_OK(table_admin.DeleteTable(table_id_));
 }
 
 std::string TableTestEnvironment::RandomTableId() {
@@ -112,6 +116,10 @@ void TableAdminTestEnvironment::TearDown() {
 }
 
 void TableIntegrationTest::SetUp() {
+  auto admin_client =
+      bigtable::MakeAdminClient(TableTestEnvironment::project_id());
+  auto table_admin = absl::make_unique<bigtable::TableAdmin>(
+      admin_client, TableTestEnvironment::instance_id());
   data_client_ = bigtable::MakeDataClient(TableTestEnvironment::project_id(),
                                           TableTestEnvironment::instance_id());
 
@@ -141,10 +149,8 @@ void TableIntegrationTest::SetUp() {
   // If we are using the emulator, we have no quota concerns. We can just drop
   // all of the rows.
   if (bulk.size() > maximum_mutations || UsingCloudBigtableEmulator()) {
-    google::bigtable::admin::v2::DropRowRangeRequest r;
-    r.set_name(table.table_name());
-    r.set_delete_all_data_from_table(true);
-    ASSERT_STATUS_OK(TableAdminClient().DropRowRange(std::move(r)));
+    ASSERT_STATUS_OK(
+        table_admin->DropAllRows(TableTestEnvironment::table_id()));
     return;
   }
   auto failures = table.BulkApply(std::move(bulk));

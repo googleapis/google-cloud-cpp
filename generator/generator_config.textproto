@@ -24,25 +24,6 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
-# Bigtable
-service {
-  service_proto_path: "google/bigtable/admin/v2/bigtable_instance_admin.proto"
-  product_path: "google/cloud/bigtable/admin"
-  initial_copyright_year: "2021"
-  emulator_endpoint_env_var: "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable", "kAborted"]
-}
-
-service {
-  service_proto_path: "google/bigtable/admin/v2/bigtable_table_admin.proto"
-  product_path: "google/cloud/bigtable/admin"
-  initial_copyright_year: "2021"
-  omitted_rpcs: ["CreateTableFromSnapshot", "SnapshotTable", "GetSnapshot", "ListSnapshots", "DeleteSnapshot"]
-  emulator_endpoint_env_var: "BIGTABLE_EMULATOR_HOST"
-  gen_async_rpcs: ["CheckConsistency"]
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable", "kAborted"]
-}
-
 # IAM
 service {
   service_proto_path: "google/iam/credentials/v1/iamcredentials.proto"
