@@ -22,8 +22,7 @@ set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/examples"
                          "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
-set(DOXYGEN_EXCLUDE_SYMBOLS "benchmarks" "bigtable_admin_internal" "internal"
-                            "testing" "examples")
+set(DOXYGEN_EXCLUDE_SYMBOLS "benchmarks" "internal" "testing" "examples")
 
 include(GoogleCloudCppCommon)
 
@@ -42,46 +41,6 @@ include(CreateBazelConfig)
 # the client library
 add_library(
     google_cloud_cpp_bigtable # cmake-format: sort
-    admin/bigtable_instance_admin_client.cc
-    admin/bigtable_instance_admin_client.h
-    admin/bigtable_instance_admin_connection.cc
-    admin/bigtable_instance_admin_connection.h
-    admin/bigtable_instance_admin_connection_idempotency_policy.cc
-    admin/bigtable_instance_admin_connection_idempotency_policy.h
-    admin/bigtable_instance_admin_options.h
-    admin/bigtable_table_admin_client.cc
-    admin/bigtable_table_admin_client.h
-    admin/bigtable_table_admin_connection.cc
-    admin/bigtable_table_admin_connection.h
-    admin/bigtable_table_admin_connection_idempotency_policy.cc
-    admin/bigtable_table_admin_connection_idempotency_policy.h
-    admin/bigtable_table_admin_options.h
-    admin/internal/bigtable_instance_admin_auth_decorator.cc
-    admin/internal/bigtable_instance_admin_auth_decorator.h
-    admin/internal/bigtable_instance_admin_logging_decorator.cc
-    admin/internal/bigtable_instance_admin_logging_decorator.h
-    admin/internal/bigtable_instance_admin_metadata_decorator.cc
-    admin/internal/bigtable_instance_admin_metadata_decorator.h
-    admin/internal/bigtable_instance_admin_option_defaults.cc
-    admin/internal/bigtable_instance_admin_option_defaults.h
-    admin/internal/bigtable_instance_admin_retry_traits.h
-    admin/internal/bigtable_instance_admin_stub.cc
-    admin/internal/bigtable_instance_admin_stub.h
-    admin/internal/bigtable_instance_admin_stub_factory.cc
-    admin/internal/bigtable_instance_admin_stub_factory.h
-    admin/internal/bigtable_table_admin_auth_decorator.cc
-    admin/internal/bigtable_table_admin_auth_decorator.h
-    admin/internal/bigtable_table_admin_logging_decorator.cc
-    admin/internal/bigtable_table_admin_logging_decorator.h
-    admin/internal/bigtable_table_admin_metadata_decorator.cc
-    admin/internal/bigtable_table_admin_metadata_decorator.h
-    admin/internal/bigtable_table_admin_option_defaults.cc
-    admin/internal/bigtable_table_admin_option_defaults.h
-    admin/internal/bigtable_table_admin_retry_traits.h
-    admin/internal/bigtable_table_admin_stub.cc
-    admin/internal/bigtable_table_admin_stub.h
-    admin/internal/bigtable_table_admin_stub_factory.cc
-    admin/internal/bigtable_table_admin_stub_factory.h
     admin_client.cc
     admin_client.h
     app_profile_config.cc
@@ -357,7 +316,6 @@ endif ()
 
 # Only compile integration tests and benchmarks if testing is enabled.
 if (BUILD_TESTING)
-    add_subdirectory(admin/integration_tests)
     add_subdirectory(benchmarks)
     add_subdirectory(tests)
 endif ()
