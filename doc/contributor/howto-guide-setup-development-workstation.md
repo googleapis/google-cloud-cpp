@@ -304,6 +304,21 @@ git clone git@github.com:<GITHUB-USERNAME_HERE>/google-cloud-cpp.git
 cd google-cloud-cpp
 ```
 
+### Manual builds with CMake
+
+The [guide](/doc/contributor/howto-guide-setup-cmake-environment.md) generally
+works for macOS too. We recommend using `Ninja` and `vcpkg` for development.
+When using `vcpkg` you should disable the OpenSSL checks:
+
+```shell
+git clone -C $HOME https://github.com/microsoft/vcpkg.git
+env VCPKG_ROOT=$HOME/vcpkg $HOME/vcpkg/bootstrap-vcpkg.sh
+cmake -GNinja -S. -Bcmake-out/ \
+  -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake \
+  -DGOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK=OFF
+cmake --build cmake-out
+```
+
 ### Running the CI scripts
 
 The CI scripts follow a similar pattern to the scripts for Linux and Windows:
@@ -311,24 +326,6 @@ The CI scripts follow a similar pattern to the scripts for Linux and Windows:
 ```shell
 ./ci/kokoro/macos/build.sh bazel        # <-- Run the `bazel` CI build
 ./ci/kokoro/macos/build.sh cmake-vcpkg  # <-- Build with CMake
-```
-
-### Manual builds with CMake
-
-The [guide](/doc/contributor/howto-guide-setup-cmake-environment.md) generally
-works for macOS too. The only difference is the configuration for OpenSSL. The
-native OpenSSL library on macOS does not work, but the one distributed by
-`homebrew` does. You **must** set the `OPENSSL_ROOT_DIR` environment variable
-before configuring CMake, so CMake can use this alternative version. You cannot
-just pass this as a `-D` option to CMake, because the value must recurse to all
-the external projects. There is an example of this in the
-[vcpkg build script](/ci/kokoro/macos/builds/cmake-vcpkg.sh).
-
-```shell
-git clone -C $HOME https://github.com/microsoft/vcpkg.git
-env VCPKG_ROOT=$HOME/vcpkg $HOME/vcpkg/bootstrap-vcpkg.sh
-cmake -H. -Bcmake-out/ -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
-cmake --build cmake-out -- -j $(nproc)
 ```
 
 ## Appendix: Linux VM on Google Compute Engine
