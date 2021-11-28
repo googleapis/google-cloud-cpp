@@ -13,12 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
 namespace {
+
 class FakeAsyncTimer : public internal::AsyncGrpcOperation {
  public:
   explicit FakeAsyncTimer(std::chrono::system_clock::time_point deadline)
@@ -31,6 +33,7 @@ class FakeAsyncTimer : public internal::AsyncGrpcOperation {
   void Cancel() override {}
 
   bool Notify(bool ok) override {
+    internal::OptionsSpan span(options_);
     if (!ok) {
       promise_.set_value(Status(StatusCode::kCancelled, "timer canceled"));
     } else {
@@ -42,6 +45,7 @@ class FakeAsyncTimer : public internal::AsyncGrpcOperation {
  private:
   std::chrono::system_clock::time_point const deadline_;
   promise<StatusOr<std::chrono::system_clock::time_point>> promise_;
+  Options options_ = internal::CurrentOptions();
 };
 
 class FakeAsyncFunction : public internal::AsyncGrpcOperation {
@@ -53,6 +57,7 @@ class FakeAsyncFunction : public internal::AsyncGrpcOperation {
 
  private:
   bool Notify(bool ok) override {
+    internal::OptionsSpan span(options_);
     auto f = std::move(function_);
     if (!ok) return true;
     f->exec();
@@ -60,6 +65,7 @@ class FakeAsyncFunction : public internal::AsyncGrpcOperation {
   }
 
   std::unique_ptr<internal::RunAsyncBase> function_;
+  Options options_ = internal::CurrentOptions();
 };
 
 }  // namespace

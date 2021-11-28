@@ -260,6 +260,20 @@ TEST(MergeOptions, Basics) {
   EXPECT_EQ(a.get<IntOption>(), 42);           // From a
 }
 
+TEST(OptionsSpan, Basics) {
+  EXPECT_FALSE(internal::CurrentOptions().has<IntOption>());
+  {
+    internal::OptionsSpan span(Options{}.set<IntOption>(1));
+    EXPECT_EQ(internal::CurrentOptions().get<IntOption>(), 1);
+    {
+      internal::OptionsSpan span(Options{}.set<IntOption>(2));
+      EXPECT_EQ(internal::CurrentOptions().get<IntOption>(), 2);
+    }
+    EXPECT_EQ(internal::CurrentOptions().get<IntOption>(), 1);
+  }
+  EXPECT_FALSE(internal::CurrentOptions().has<IntOption>());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
