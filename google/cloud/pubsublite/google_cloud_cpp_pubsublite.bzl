@@ -28,6 +28,7 @@ google_cloud_cpp_pubsublite_hdrs = [
     "internal/admin_retry_traits.h",
     "internal/admin_stub.h",
     "internal/admin_stub_factory.h",
+    "internal/stream_factory.h",
 ]
 
 google_cloud_cpp_pubsublite_srcs = [
