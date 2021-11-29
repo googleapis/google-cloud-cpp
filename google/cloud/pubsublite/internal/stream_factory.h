@@ -1,5 +1,7 @@
 #include "absl/container/flat_hash_map.h"
+#include <google/cloud/pubsublite/v1/cursor.grpc.pb.h>
 #include <google/cloud/pubsublite/v1/publisher.grpc.pb.h>
+#include <google/cloud/pubsublite/v1/subscriber.grpc.pb.h>
 
 namespace google {
 namespace cloud {
