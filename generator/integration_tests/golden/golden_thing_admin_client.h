@@ -59,7 +59,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 /// @par Thread Safety
 ///
-/// Concurrent access to different instances of this class, even if the compare
+/// Concurrent access to different instances of this class, even if they compare
 /// equal, is guaranteed to work. Two or more threads operating on the same
 /// instance of this class is not guaranteed to work. Since copy-construction
 /// and move-construction is a relatively efficient operation, consider using
