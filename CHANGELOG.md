@@ -135,7 +135,7 @@ Generally we improved the quality of the generated documentation, including:
 
 [Cloud Tasks]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/tasks/README.md
 [Secret Manager]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/secretmanager/README.md
-[Pub/Sub Lite]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/secretmanager/README.md
+[Pub/Sub Lite]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsublite/README.md
 
 We are introducing client libraries for [Cloud Tasks], [Secret Manager],
 and [Pub/Sub Lite]. These libraries are still under development.
