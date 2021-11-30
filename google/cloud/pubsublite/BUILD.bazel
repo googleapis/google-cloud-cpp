@@ -36,8 +36,6 @@ cc_library(
     ],
 )
 
-load(":google_cloud_cpp_pubsublite_mocks.bzl", "google_cloud_cpp_pubsublite_mocks_hdrs", "google_cloud_cpp_pubsublite_mocks_srcs")
-
 cc_library(
     name = "google_cloud_cpp_pubsublite_mocks",
     srcs = glob([MOCK_SOURCE_REGEX]),

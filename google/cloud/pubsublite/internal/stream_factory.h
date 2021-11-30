@@ -15,7 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_STREAM_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_STREAM_FACTORY_H
 
-#include "absl/container/flat_hash_map.h"
+#include <unordered_map>
+
 #include "google/cloud/version.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 
@@ -34,7 +35,7 @@ using BidiStream = internal::AsyncStreamingReadWriteRpc<Request, Response>;
 template <class Request, class Response>
 using StreamFactory = std::function<std::unique_ptr<BidiStream<Request, Response>>()>;
 
-using ClientMetadata = absl::flat_hash_map<std::string, std::string>;
+using ClientMetadata = std::unordered_map<std::string, std::string>;
 
 namespace stream_factory_internal {
 
