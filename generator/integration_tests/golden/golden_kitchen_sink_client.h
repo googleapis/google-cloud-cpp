@@ -44,6 +44,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// tokens, OpenID Connect ID tokens, self-signed JSON Web Tokens (JWTs), and
 /// more.
 ///
+/// @par Equality
+///
+/// Instances of this class created via copy-construction or copy-assignment
+/// always compare equal. Instances created with equal
+/// `std::shared_ptr<*Connection>` objects compare equal. Objects that compare
+/// equal share the same underlying resources.
+///
+/// @par Performance
+///
+/// Creating a new instance of this class is a relatively expensive operation,
+/// new objects establish new connections to the service. In contrast,
+/// copy-construction, move-construction, and the corresponding assignment
+/// operations are relatively efficient as the copies share all underlying
+/// resources.
+///
+/// @par Thread Safety
+///
+/// Concurrent access to different instances of this class, even if they compare
+/// equal, is guaranteed to work. Two or more threads operating on the same
+/// instance of this class is not guaranteed to work. Since copy-construction
+/// and move-construction is a relatively efficient operation, consider using
+/// such a copy when using this class from multiple threads.
+///
 class GoldenKitchenSinkClient {
  public:
   explicit GoldenKitchenSinkClient(std::shared_ptr<GoldenKitchenSinkConnection> connection);
