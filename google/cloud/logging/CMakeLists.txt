@@ -20,6 +20,7 @@ set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Logging")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Beta)")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "logging_internal" "logging_testing"
                             "examples")
+set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::logging_protos)
@@ -146,7 +147,7 @@ set(GOOGLE_CLOUD_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Logging.")
 set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_logging")
 string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common" " googleapis_cpp_logging_protos")
+              " google_cloud_cpp_common" " google_cloud_cpp_logging_protos")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/logging/config.pc.in"

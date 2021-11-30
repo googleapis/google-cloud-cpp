@@ -20,6 +20,7 @@ set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Pub/Sub Lite API")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "pubsublite_internal"
                             "pubsublite_testing" "examples")
+set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::pubsublite_protos)
@@ -197,4 +198,4 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 external_googleapis_install_pc("google_cloud_cpp_pubsublite_protos"
-                               "${CMAKE_CURRENT_LIST_DIR}")
+                               "${PROJECT_SOURCE_DIR}/external/googleapis")

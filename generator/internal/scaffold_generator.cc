@@ -22,6 +22,11 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <iterator>
+#ifdef _WIN32
+#include <direct.h>
+#else
+#include <sys/stat.h>
+#endif  // _WIN32
 
 namespace google {
 namespace cloud {
@@ -141,6 +146,14 @@ std::map<std::string, std::string> ScaffoldVars(
   return vars;
 }
 
+void MakeDirectory(std::string const& path) {
+#if _WIN32
+  _mkdir(path.c_str());
+#else
+  mkdir(path.c_str(), 0755);
+#endif  // _WIN32
+}
+
 void GenerateScaffold(
     std::string const& googleapis_path, std::string const& output_path,
     google::cloud::cpp::generator::ServiceConfiguration const& service) {
@@ -155,10 +168,21 @@ void GenerateScaffold(
       {"README.md", GenerateReadme},
       {"BUILD", GenerateBuild},
       {"CMakeLists.txt", GenerateCMakeLists},
+      {"doc/main.dox", GenerateDoxygenMainPage},
+      {"quickstart/README.md", GenerateQuickstartReadme},
+      {"quickstart/quickstart.cc", GenerateQuickstartSkeleton},
+      {"quickstart/CMakeLists.txt", GenerateQuickstartCMake},
+      {"quickstart/Makefile", GenerateQuickstartMakefile},
+      {"quickstart/WORKSPACE", GenerateQuickstartWorkspace},
+      {"quickstart/BUILD", GenerateQuickstartBuild},
   };
 
   auto const vars = ScaffoldVars(googleapis_path, output_path, service);
+  MakeDirectory(output_path + "/");
   auto const destination = output_path + "/" + service.product_path() + "/";
+  MakeDirectory(destination);
+  MakeDirectory(destination + "doc/");
+  MakeDirectory(destination + "quickstart/");
   for (auto const& f : files) {
     std::ofstream os(destination + f.name);
     f.generator(os, vars);
@@ -174,7 +198,7 @@ void GenerateCmakeConfigIn(
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#     https://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -204,7 +228,7 @@ void GenerateConfigPcIn(std::ostream& os,
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#     https://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -255,7 +279,7 @@ void GenerateBuild(std::ostream& os,
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#     https://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -309,7 +333,7 @@ void GenerateCMakeLists(std::ostream& os,
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#     https://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -324,6 +348,7 @@ set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the $title$")
 set(DOXYGEN_PROJECT_NUMBER "$${PROJECT_VERSION} (Experimental)")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "$library$_internal" "$library$_testing"
                             "examples")
+set(DOXYGEN_EXAMPLE_PATH $${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::$library$_protos)
@@ -481,7 +506,513 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 external_googleapis_install_pc("google_cloud_cpp_$library$_protos"
-                               "$${CMAKE_CURRENT_LIST_DIR}")
+                               "$${PROJECT_SOURCE_DIR}/external/googleapis")
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateDoxygenMainPage(
+    std::ostream& os, std::map<std::string, std::string> const& variables) {
+  auto constexpr kText = R"""(/*!
+
+@mainpage $title$ C++ Client Library
+
+An idiomatic C++ client library for
+[$title$](https://cloud.google.com/$site_root$/), a service that
+$description$
+
+This library is **experimental**. Its APIS are subject to change without notice.
+
+This library requires a C++11 compiler, it is supported (and tested) on multiple
+Linux distributions, as well as Windows and macOS. The
+[README][github-readme] on [GitHub][github-link] provides detailed
+instructions to install the necessary dependencies, as well as how to compile
+the client library.
+
+### Setting up your repo
+
+In order to use the $title$ C++ client library from your own code,
+you'll need to configure your build system how to fetch and compile the Cloud
+C++ client libraries. The Cloud C++ client libraries natively supports the
+[Bazel](https://bazel.build/) and [CMake](https://cmake.org/) build systems.
+We've created a minimal, "Hello World", [quickstart repo][quickstart-link] that
+includes detailed instructions on how to compile the library for use in your
+application. You can fetch the source from [GitHub][github-link] as normal:
+
+@code{.sh}
+git clone https://github.com/googleapis/google-cloud-cpp.git
+cd google-cloud-cpp/google/cloud/$library$/quickstart
+@endcode
+
+@par Example: Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/$library$/quickstart/` directory,
+which should give you a taste of the $title$ C++ client library API.
+
+@include quickstart.cc
+
+## Environment Variables
+
+- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
+  calls. The library injects an additional Stub decorator that prints each gRPC
+  request and response.  Unless you have configured you own logging backend,
+  you should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on
+  the program's console.
+
+- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc-streams` turns on tracing for streaming
+  gRPC calls, such as `Client::Read()`, `Client::ExecuteQuery()`, and
+  `Client::ProfileQuery()`. This can produce a lot of output, so use with
+  caution!
+
+- `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
+  including whether messages will be output on multiple lines, or whether
+  string/bytes fields will be truncated.
+
+- `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library, basically
+  the library always "logs" but the logging infrastructure has no backend to
+  actually print anything until the application sets a backend or they set this
+  environment variable.
+
+### Error Handling
+
+[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
+
+This library never throws exceptions to signal error, but you can use exceptions
+to detect errors in the returned objects. In general, the library returns a
+[`StatusOr<T>`][status-or-header] if an error is possible. This is an "outcome"
+type, when the operation is successful a `StatusOr<T>` converts to `true` in
+boolean context (and its `.ok()` member function returns `true`), the
+application can then use `operator->` or `operator*` to access then `T` value.
+When the operation fails a `StatusOr<T>` converts to `false` (and `.ok()`
+returns false). It is undefined behavior to use the value in this case.
+
+If you prefer to use exceptions on error, you can use the `.value()` accessor.
+It will return the `T` value or throw on error.
+
+For operations that do not return a value the library simply returns
+`google::cloud::Status`.
+
+### Retry, Backoff, and Idempotency Policies.
+
+The library automatically retries requests that fail with transient errors, and
+uses [exponential backoff] to backoff between retries. Application developers
+can override the default policies.
+
+[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
+[gcs-quickstart]: https://cloud.google.com/$site_root$/docs/quickstarts 'Quickstarts'
+[resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
+[billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
+[gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
+[github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
+<!-- The ugly %2E disables auto-linking in Doxygen -->
+[github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/$library$/README%2Emd
+[github-install]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packagin%2Emd
+
+*/
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateQuickstartReadme(
+    std::ostream& os, std::map<std::string, std::string> const& variables) {
+  auto constexpr kText =
+      R"""(# HOWTO: using the $title$ C++ client in your project
+
+This directory contains small examples showing how to use the $title$ C++
+client library in your own project. These instructions assume that you have
+some experience as a C++ developer and that you have a working C++ toolchain
+(compiler, linker, etc.) installed on your platform.
+
+* Packaging maintainers or developers that prefer to install the library in a
+  fixed directory (such as `/usr/local` or `/opt`) should consult the
+  [packaging guide](/doc/packaging.md).
+* Developers wanting to use the libraries as part of a larger CMake or Bazel
+  project should consult the current document. Note that there are similar
+  documents for each library in their corresponding directories.
+* Developers wanting to compile the library just to run some of the examples or
+  tests should consult the
+  [building and installing](/README.md#building-and-installing) section of the
+  top-level README file.
+* Contributors and developers to `google-cloud-cpp` should consult the guide to
+  [setup a development workstation][howto-setup-dev-workstation].
+
+[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
+
+## Before you begin
+
+To run the quickstart examples you will need a working Google Cloud Platform
+(GCP) project, as well as a Cloud Spanner instance and database.
+The [quickstart][quickstart-link] covers the necessary
+steps in detail. Make a note of the GCP project id, the instance id, and the
+database id as you will need them below.
+
+## Configuring authentication for the C++ Client Library
+
+Like most Google Cloud Platform (GCP) services, Cloud Spanner requires that
+your application authenticates with the service before accessing any data. If
+you are not familiar with GCP authentication please take this opportunity to
+review the [Authentication Overview][authentication-quickstart]. This library
+uses the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to find the
+credentials file. For example:
+
+| Shell              | Command                                        |
+| :----------------- | ---------------------------------------------- |
+| Bash/zsh/ksh/etc.  | `export GOOGLE_APPLICATION_CREDENTIALS=[PATH]` |
+| sh                 | `GOOGLE_APPLICATION_CREDENTIALS=[PATH];`<br> `export GOOGLE_APPLICATION_CREDENTIALS` |
+| csh/tsch           | `setenv GOOGLE_APPLICATION_CREDENTIALS [PATH]` |
+| Windows Powershell | `$$env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]`   |
+| Windows cmd.exe    | `set GOOGLE_APPLICATION_CREDENTIALS=[PATH]`    |
+
+Setting this environment variable is the recommended way to configure the
+authentication preferences, though if the environment variable is not set, the
+library searches for a credentials file in the same location as the [Cloud
+SDK](https://cloud.google.com/sdk/). For more information about *Application
+Default Credentials*, see
+https://cloud.google.com/docs/authentication/production
+
+## Using with Bazel
+
+> :warning: If you are using Windows or macOS there are additional instructions
+> at the end of this document.
+
+1. Install Bazel using [the instructions][bazel-install] from the `bazel.build`
+   website.
+
+2. Compile this example using Bazel:
+
+   ```bash
+   cd $$HOME/google-cloud-cpp/google/cloud/$library$/quickstart
+   bazel build ...
+   ```
+
+   Note that Bazel automatically downloads and compiles all dependencies of the
+   project. As it is often the case with C++ libraries, compiling these
+   dependencies may take several minutes.
+
+3. Run the example, change the place holder(s) to appropriate values:
+
+   ```bash
+   bazel run :quickstart -- [...]
+   ```
+
+## Using with CMake
+
+> :warning: If you are using Windows or macOS there are additional instructions
+> at the end of this document.
+
+1. Install CMake. The package managers for most Linux distributions include a
+   package for CMake. Likewise, you can install CMake on Windows using a package
+   manager such as [chocolatey][choco-cmake-link], and on macOS using
+   [homebrew][homebrew-cmake-link]. You can also obtain the software directly
+   from the [cmake.org](https://cmake.org/download/).
+
+2. Install the dependencies with your favorite tools. As an example, if you use
+   [vcpkg](https://github.com/Microsoft/vcpkg.git):
+
+   ```bash
+   cd $$HOME/vcpkg
+   ./vcpkg install google-cloud-cpp[core,$library$]
+   ```
+
+   Note that, as it is often the case with C++ libraries, compiling these
+   dependencies may take several minutes.
+
+3. Configure CMake, if necessary, configure the directory where you installed
+   the dependencies:
+
+   ```bash
+   cd $$HOME/gooogle-cloud-cpp/google/cloud/$library$/quickstart
+   cmake -H. -B.build -DCMAKE_TOOLCHAIN_FILE=$$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+   cmake --build .build
+   ```
+
+4. Run the example, change the place holder to appropriate values:
+
+   ```bash
+   .build/quickstart [...]
+   ```
+
+## Platform Specific Notes
+
+### macOS
+
+gRPC [requires][grpc-roots-pem-bug] an environment variable to configure the
+trust store for SSL certificates, you can download and configure this using:
+
+```bash
+curl -Lo roots.pem https://pki.google.com/roots.pem
+export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="$$PWD/roots.pem"
+```
+
+To workaround a [bug in Bazel][bazel-grpc-macos-bug], gRPC requires this flag on
+macOS builds, you can add the option manually or include it in your `.bazelrc`
+file:
+
+```bash
+bazel build --copt=-DGRPC_BAZEL_BUILD ...
+```
+
+### Windows
+
+To correctly configure the MSVC runtime you should change the CMake minimum
+required version to 3.15 or add `-DCMAKE_POLICY_DEFAULT_CMP0091=NEW` to the
+CMake configuration step.
+
+Bazel tends to create very long file names and paths. You may need to use a
+short directory to store the build output, such as `c:\b`, and instruct Bazel
+to use it via:
+
+```shell
+bazel --output_user_root=c:\b build ...
+```
+
+gRPC [requires][grpc-roots-pem-bug] an environment variable to configure the
+trust store for SSL certificates, you can download and configure this using:
+
+```console
+@powershell -NoProfile -ExecutionPolicy unrestricted -Command ^
+    (new-object System.Net.WebClient).Downloadfile( ^
+        'https://pki.google.com/roots.pem', 'roots.pem')
+set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
+```
+
+[bazel-install]: https://docs.bazel.build/versions/main/install.html
+[quickstart-link]: https://cloud.google.com/$site_root$/docs
+[grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
+[choco-cmake-link]: https://chocolatey.org/packages/cmake
+[homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
+[cmake-download-link]: https://cmake.org/download/
+[bazel-grpc-macos-bug]: https://github.com/bazelbuild/bazel/issues/4341
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateQuickstartSkeleton(
+    std::ostream& os, std::map<std::string, std::string> const& variables) {
+  auto constexpr kText = R"""(// Copyright $copyright_year$ Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "google/cloud/$library$/ EDIT HERE .h"
+#include <iostream>
+#include <stdexcept>
+
+int main(int argc, char* argv[]) try {
+  if (argc != 4) {
+    std::cerr << "Usage: " << argv[0]
+              << " project-id \n";
+    return 1;
+  }
+
+  namespace $library$ = ::google::cloud::$library$;
+  auto client = $library$::Client(
+      $library$::MakeConnection(/* EDIT HERE */));
+
+  // EDIT HERE: add some code
+
+  return 0;
+} catch (std::exception const& ex) {
+  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+  return 1;
+}
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateQuickstartCMake(
+    std::ostream& os, std::map<std::string, std::string> const& variables) {
+  auto constexpr kText = R"""(# Copyright $copyright_year$ Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
+#
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations under
+# the License.
+
+# This file shows how to use the $title$ C++ client library from a larger
+# CMake project.
+
+cmake_minimum_required(VERSION 3.5)
+project(google-cloud-cpp-$library$-quickstart CXX)
+
+find_package(google_cloud_cpp_$library$ REQUIRED)
+
+# MSVC requires some additional code to select the correct runtime library
+if (VCPKG_TARGET_TRIPLET MATCHES "-static$$")
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$$<$$<CONFIG:Debug>:Debug>")
+else ()
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$$<$$<CONFIG:Debug>:Debug>DLL")
+endif ()
+
+# Define your targets.
+add_executable(quickstart quickstart.cc)
+target_link_libraries(quickstart google-cloud-cpp::experimental-$library$)
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateQuickstartMakefile(
+    std::ostream& os, std::map<std::string, std::string> const& variables) {
+  auto constexpr kText = R"""(# Copyright $copyright_year$ Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# This is a minimal Makefile to show how to use the $title$ C++ client
+# for developers that use make(1) as their build system.
+
+# The CXX, CXXFLAGS and CXXLD variables are hard-coded. These values work for
+# our tests, but applications would typically make them configurable parameters.
+CXX=g++
+CXXFLAGS=
+CXXLD=$$(CXX)
+BIN=.
+
+all: $$(BIN)/quickstart
+
+# Configuration variables to compile and link against the $title$ C++
+# client library.
+CLIENT_MODULE     := google_cloud_cpp_$library$
+CLIENT_CXXFLAGS   := $$(shell pkg-config $$(CLIENT_MODULE) --cflags)
+CLIENT_CXXLDFLAGS := $$(shell pkg-config $$(CLIENT_MODULE) --libs-only-L)
+CLIENT_LIBS       := $$(shell pkg-config $$(CLIENT_MODULE) --libs-only-l)
+
+$$(BIN)/quickstart: quickstart.cc
+	$$(CXXLD) $$(CXXFLAGS) $$(CLIENT_CXXFLAGS) $$(CLIENT_CXXLDFLAGS) -o $$@ $$^ $$(CLIENT_LIBS)
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateQuickstartWorkspace(
+    std::ostream& os, std::map<std::string, std::string> const& variables) {
+  // The version and SHA are hardcoded in this template, but it does not matter
+  // too much, renovate bot would update it as soon as it is merged.
+  auto constexpr kText = R"""(# Copyright $copyright_year$ Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# A minimal WORKSPACE file showing how to use the $title$ C++
+# client library in Bazel-based projects.
+workspace(name = "$library$_quickstart")
+
+# Add the necessary Starlark functions to fetch google-cloud-cpp.
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# Fetch the Google Cloud C++ libraries.
+# NOTE: Update this version and SHA256 as needed.
+http_archive(
+    name = "com_github_googleapis_google_cloud_cpp",
+    sha256 = "b024dfde34efd328001d6446e1416fa008caa40d9020c424a8f8a3711061af35",
+    strip_prefix = "google-cloud-cpp-1.33.0",
+    url = "https://github.com/googleapis/google-cloud-cpp/archive/v1.33.0.tar.gz",
+)
+
+# Load indirect dependencies due to
+#     https://github.com/bazelbuild/bazel/issues/1943
+load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+
+google_cloud_cpp_deps()
+
+load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
+
+switched_rules_by_language(
+    name = "com_google_googleapis_imports",
+    cc = True,
+    grpc = True,
+)
+
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+
+grpc_deps()
+
+load("@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
+
+grpc_extra_deps()
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateQuickstartBuild(
+    std::ostream& os, std::map<std::string, std::string> const& variables) {
+  // The version and SHA are hardcoded in this template, but it does not matter
+  // too much, renovate bot would update it as soon as it is merged.
+  auto constexpr kText = R"""(# Copyright $copyright_year$ Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+licenses(["notice"])  # Apache 2.0
+
+cc_binary(
+    name = "quickstart",
+    srcs = [
+        "quickstart.cc",
+    ],
+    deps = [
+        "@com_github_googleapis_google_cloud_cpp//:experimental-$library$",
+    ],
+)
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
