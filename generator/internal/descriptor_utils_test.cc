@@ -183,7 +183,7 @@ TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
       {std::make_pair("product_path", "google/cloud/frobber/")});
   auto iter = service_vars_.find(GetParam().first);
   EXPECT_TRUE(iter != service_vars_.end());
-  EXPECT_EQ(iter->second, GetParam().second);
+  EXPECT_THAT(iter->second, HasSubstr(GetParam().second));
 }
 
 INSTANTIATE_TEST_SUITE_P(
