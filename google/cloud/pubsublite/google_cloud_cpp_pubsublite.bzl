@@ -41,4 +41,5 @@ google_cloud_cpp_pubsublite_srcs = [
     "internal/admin_option_defaults.cc",
     "internal/admin_stub.cc",
     "internal/admin_stub_factory.cc",
+    "internal/stream_factory_test.cc",
 ]
