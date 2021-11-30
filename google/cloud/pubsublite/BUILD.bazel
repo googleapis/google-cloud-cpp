@@ -16,12 +16,18 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(":google_cloud_cpp_pubsublite.bzl", "google_cloud_cpp_pubsublite_hdrs", "google_cloud_cpp_pubsublite_srcs")
+SOURCE_REGEX = "**/*.cc"
+TEST_SOURCE_REGEX = "**/*_test.cc"
+MOCK_SOURCE_REGEX = "mocks/*.cc"
+
+HEADER_REGEX = "**/*.h"
+MOCK_HEADER_REGEX = "mocks/*.h"
+
 
 cc_library(
     name = "google_cloud_cpp_pubsublite",
-    srcs = google_cloud_cpp_pubsublite_srcs,
-    hdrs = google_cloud_cpp_pubsublite_hdrs,
+    srcs = glob(include=[SOURCE_REGEX], exclude=[TEST_SOURCE_REGEX, MOCK_SOURCE_REGEX]),
+    hdrs = glob(include=[HEADER_REGEX], exclude=[MOCK_HEADER_REGEX]),
     visibility = ["//:__pkg__"],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
@@ -34,8 +40,8 @@ load(":google_cloud_cpp_pubsublite_mocks.bzl", "google_cloud_cpp_pubsublite_mock
 
 cc_library(
     name = "google_cloud_cpp_pubsublite_mocks",
-    srcs = google_cloud_cpp_pubsublite_mocks_srcs,
-    hdrs = google_cloud_cpp_pubsublite_mocks_hdrs,
+    srcs = glob([MOCK_SOURCE_REGEX]),
+    hdrs = glob([MOCK_HEADER_REGEX]),
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_pubsublite",
@@ -43,3 +49,18 @@ cc_library(
         "//google/cloud:google_cloud_cpp_grpc_utils",
     ],
 )
+
+[
+    cc_test(
+        name = test.replace("/", "_").replace(".cc", ""),
+        srcs = [test],
+    deps = [
+        ":google_cloud_cpp_pubsublite",
+        ":google_cloud_cpp_pubsublite_mocks",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "@com_google_googletest//:gtest_main",
+    ],
+    ) for test in glob([TEST_SOURCE_REGEX])
+]
