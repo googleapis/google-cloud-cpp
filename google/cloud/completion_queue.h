@@ -32,7 +32,7 @@ class CompletionQueue;
 
 namespace internal {
 std::shared_ptr<CompletionQueueImpl> GetCompletionQueueImpl(
-    CompletionQueue& cq);
+    const CompletionQueue& cq);
 }  // namespace internal
 
 /**
@@ -250,14 +250,14 @@ class CompletionQueue {
 
  private:
   friend std::shared_ptr<internal::CompletionQueueImpl>
-  internal::GetCompletionQueueImpl(CompletionQueue& cq);
+  internal::GetCompletionQueueImpl(const CompletionQueue& cq);
   std::shared_ptr<internal::CompletionQueueImpl> impl_;
 };
 
 namespace internal {
 
 inline std::shared_ptr<CompletionQueueImpl> GetCompletionQueueImpl(
-    CompletionQueue& cq) {
+    const CompletionQueue& cq) {
   return cq.impl_;
 }
 
