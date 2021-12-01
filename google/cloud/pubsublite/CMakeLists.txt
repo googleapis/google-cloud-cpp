@@ -5,7 +5,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#     https://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,6 +20,7 @@ set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Pub/Sub Lite API")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "pubsublite_internal"
                             "pubsublite_testing" "examples")
+set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::pubsublite_protos)
@@ -41,12 +42,12 @@ include(CompileProtos)
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_pubsublite_protos
     # cmake-format: sort
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/pubsublite/v1/topic_stats.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/pubsublite/v1/subscriber.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/pubsublite/v1/publisher.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/pubsublite/v1/cursor.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/pubsublite/v1/common.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/pubsublite/v1/admin.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/pubsublite/v1/common.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/pubsublite/v1/cursor.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/pubsublite/v1/publisher.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/pubsublite/v1/subscriber.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/pubsublite/v1/topic_stats.proto
     PROTO_PATH_DIRECTORIES
     "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
@@ -54,13 +55,13 @@ external_googleapis_set_version_and_alias(pubsublite_protos)
 target_link_libraries(
     google_cloud_cpp_pubsublite_protos
     PUBLIC #
-           google-cloud-cpp::longrunning_operations_protos
-           google-cloud-cpp::rpc_status_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_client_protos
            google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_http_protos)
+           google-cloud-cpp::api_client_protos
+           google-cloud-cpp::api_field_behavior_protos
+           google-cloud-cpp::api_http_protos
+           google-cloud-cpp::api_resource_protos
+           google-cloud-cpp::longrunning_operations_protos
+           google-cloud-cpp::rpc_status_protos)
 
 file(
     GLOB source_files
@@ -197,4 +198,4 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 external_googleapis_install_pc("google_cloud_cpp_pubsublite_protos"
-                               "${CMAKE_CURRENT_LIST_DIR}")
+                               "${PROJECT_SOURCE_DIR}/external/googleapis")

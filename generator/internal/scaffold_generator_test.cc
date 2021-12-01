@@ -18,11 +18,6 @@
 #include <cstdlib>
 #include <fstream>
 #include <sstream>
-#ifdef _WIN32
-#include <direct.h>
-#else
-#include <sys/stat.h>
-#endif  // _WIN32
 
 namespace google {
 namespace cloud {
@@ -34,14 +29,6 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Pair;
-
-void MakeDirectory(std::string const& path) {
-#if _WIN32
-  _mkdir(path.c_str());
-#else
-  mkdir(path.c_str(), 0755);
-#endif  // _WIN32
-}
 
 void RemoveDirectory(std::string const& path) {
 #if _WIN32
@@ -213,6 +200,73 @@ target_link_libraries(google_cloud_cpp_test_protos PUBLIC #
     google-cloud-cpp::api_annotations_protos
     google-cloud-cpp::api_http_protos)
 )"""));
+}
+
+TEST_F(ScaffoldGenerator, DoxygenMainPage) {
+  auto const vars = ScaffoldVars(path(), path(), service());
+  std::ostringstream os;
+  GenerateDoxygenMainPage(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, HasSubstr(R"""(
+[Test Only API](https://cloud.google.com/test/), a service that
+Provides a placeholder to write this test.
+)"""));
+}
+
+TEST_F(ScaffoldGenerator, QuickstartReadme) {
+  auto const vars = ScaffoldVars(path(), path(), service());
+  std::ostringstream os;
+  GenerateQuickstartReadme(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(
+      actual,
+      HasSubstr(R"""(# HOWTO: using the Test Only API C++ client in your project
+)"""));
+}
+
+TEST_F(ScaffoldGenerator, QuickstartSkeleton) {
+  auto const vars = ScaffoldVars(path(), path(), service());
+  std::ostringstream os;
+  GenerateQuickstartSkeleton(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, HasSubstr("2034"));
+  EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
+}
+
+TEST_F(ScaffoldGenerator, QuickstartCMake) {
+  auto const vars = ScaffoldVars(path(), path(), service());
+  std::ostringstream os;
+  GenerateQuickstartCMake(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, HasSubstr("2034"));
+  EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
+}
+
+TEST_F(ScaffoldGenerator, QuickstartMakefile) {
+  auto const vars = ScaffoldVars(path(), path(), service());
+  std::ostringstream os;
+  GenerateQuickstartMakefile(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, HasSubstr("2034"));
+  EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
+}
+
+TEST_F(ScaffoldGenerator, QuickstartWorkspace) {
+  auto const vars = ScaffoldVars(path(), path(), service());
+  std::ostringstream os;
+  GenerateQuickstartWorkspace(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, HasSubstr("2034"));
+  EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
+}
+
+TEST_F(ScaffoldGenerator, QuickstartBuild) {
+  auto const vars = ScaffoldVars(path(), path(), service());
+  std::ostringstream os;
+  GenerateQuickstartBuild(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, HasSubstr("2034"));
+  EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
 }
 
 }  // namespace

@@ -170,7 +170,7 @@ done
 
 # Tests the installed artifacts by building and running the quickstarts.
 # shellcheck disable=SC2046
-libraries="$(printf ";%s" $(quickstart::libraries))"
+libraries="$(printf ";%s" $(features::list | grep -v experimental-))"
 libraries="${libraries:1}"
 cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \

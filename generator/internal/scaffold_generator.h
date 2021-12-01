@@ -42,6 +42,8 @@ std::map<std::string, std::string> ScaffoldVars(
     std::string const& googleapis_path, std::string const& project_root,
     google::cloud::cpp::generator::ServiceConfiguration const& service);
 
+void MakeDirectory(std::string const& path);
+
 void GenerateScaffold(
     std::string const& googleapis_path, std::string const& output_path,
     google::cloud::cpp::generator::ServiceConfiguration const& service);
@@ -56,6 +58,20 @@ void GenerateBuild(std::ostream& os,
                    std::map<std::string, std::string> const& variables);
 void GenerateCMakeLists(std::ostream& os,
                         std::map<std::string, std::string> const& variables);
+void GenerateDoxygenMainPage(
+    std::ostream& os, std::map<std::string, std::string> const& variables);
+void GenerateQuickstartReadme(
+    std::ostream& os, std::map<std::string, std::string> const& variables);
+void GenerateQuickstartSkeleton(
+    std::ostream& os, std::map<std::string, std::string> const& variables);
+void GenerateQuickstartCMake(
+    std::ostream& os, std::map<std::string, std::string> const& variables);
+void GenerateQuickstartMakefile(
+    std::ostream& os, std::map<std::string, std::string> const& variables);
+void GenerateQuickstartWorkspace(
+    std::ostream& os, std::map<std::string, std::string> const& variables);
+void GenerateQuickstartBuild(
+    std::ostream& os, std::map<std::string, std::string> const& variables);
 
 }  // namespace generator_internal
 }  // namespace cloud

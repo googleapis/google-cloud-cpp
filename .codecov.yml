@@ -17,3 +17,6 @@ ignore:
   - "google/cloud/iam"
   - "google/cloud/logging"
   - "google/cloud/spanner/admin"
+  - "google/cloud/pubsublite"
+  - "google/cloud/secretmanager"
+  - "google/cloud/tasks"

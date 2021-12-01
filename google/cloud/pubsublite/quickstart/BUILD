@@ -12,11 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include(CMakeFindDependencyMacro)
-# google_cloud_cpp_googleapis finds both gRPC and Protobuf, no need to load them here.
-find_dependency(google_cloud_cpp_googleapis)
-find_dependency(google_cloud_cpp_common)
-find_dependency(google_cloud_cpp_grpc_utils)
-find_dependency(absl)
+licenses(["notice"])  # Apache 2.0
 
-include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_logging-targets.cmake")
+cc_binary(
+    name = "quickstart",
+    srcs = [
+        "quickstart.cc",
+    ],
+    deps = [
+        "@com_github_googleapis_google_cloud_cpp//:experimental-pubsublite",
+    ],
+)
