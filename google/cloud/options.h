@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/type_list.h"
 #include "google/cloud/version.h"
+#include "absl/base/attributes.h"
 #include "absl/memory/memory.h"
 #include <set>
 #include <typeindex>
@@ -277,11 +278,11 @@ void CheckExpectedOptionsImpl(OptionList<T...> const&, Options const& opts,
  * For example,
  *
  * @code
- * struct FooOption { int value; };
- * struct BarOption { int value; };
+ * struct FooOption { using Type = int; };
+ * struct BarOption { using Type = int; };
  * using MyOptions = OptionList<FooOption, BarOption>;
  *
- * struct BazOption { int value; };
+ * struct BazOption { using Type = int; };
  *
  * // All valid ways to call this with varying expectations.
  * CheckExpectedOptions<FooOption>(opts, "test caller");
@@ -305,6 +306,40 @@ void CheckExpectedOptions(Options const& opts, char const* caller) {
  * option already exists in @p a.
  */
 Options MergeOptions(Options a, Options b);
+
+/**
+ * The prevailing options for the current operation.
+ */
+Options const& CurrentOptions();
+
+/**
+ * RAII object to set/restore the prevailing options for the enclosing scope.
+ *
+ * @code
+ * struct IntOption { using Type = int; };
+ * assert(!internal::CurrentOptions().has<IntOption>());
+ * {
+ *   internal::OptionsSpan span(Options{}.set<IntOption>(1));
+ *   assert(internal::CurrentOptions().get<IntOption>() == 1);
+ *   {
+ *     internal::OptionsSpan span(Options{}.set<IntOption>(2));
+ *     assert(internal::CurrentOptions().get<IntOption>() == 2);
+ *   }
+ *   assert(internal::CurrentOptions().get<IntOption>() == 1);
+ * }
+ * assert(!internal::CurrentOptions().has<IntOption>());
+ * @endcode
+ *
+ * @param opts the `Options` to install.
+ */
+class ABSL_MUST_USE_RESULT OptionsSpan {
+ public:
+  explicit OptionsSpan(Options opts);
+  ~OptionsSpan();
+
+ private:
+  Options opts_;
+};
 
 }  // namespace internal
 

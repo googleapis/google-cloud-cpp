@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_connection_ready.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -60,6 +61,7 @@ void AsyncConnectionReadyFuture::RunIteration(ChannelStateType state) {
     explicit OnStateChange(std::shared_ptr<AsyncConnectionReadyFuture> s)
         : self_(std::move(s)) {}
     bool Notify(bool ok) override {
+      OptionsSpan span(options_);
       self_->Notify(ok);
       return true;
     }
@@ -67,6 +69,7 @@ void AsyncConnectionReadyFuture::RunIteration(ChannelStateType state) {
 
    private:
     std::shared_ptr<AsyncConnectionReadyFuture> const self_;
+    Options options_ = CurrentOptions();
   };
 
   auto op = std::make_shared<OnStateChange>(shared_from_this());

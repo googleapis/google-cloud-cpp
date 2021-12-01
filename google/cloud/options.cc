@@ -15,6 +15,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
+#include <algorithm>
 #include <iterator>
 #include <set>
 #include <unordered_map>
@@ -39,6 +40,27 @@ Options MergeOptions(Options a, Options b) {
               std::make_move_iterator(b.m_.end()));
   return a;
 }
+
+namespace {
+
+// The prevailing options for the current operation.  Thread local, so
+// additional propagation must be done whenever work for the operation
+// is done in another thread.
+Options& ThreadLocalOptions() {
+  thread_local Options current_options;
+  return current_options;
+}
+
+}  // namespace
+
+Options const& CurrentOptions() { return ThreadLocalOptions(); }
+
+OptionsSpan::OptionsSpan(Options opts) : opts_(std::move(opts)) {
+  using std::swap;
+  swap(opts_, ThreadLocalOptions());
+}
+
+OptionsSpan::~OptionsSpan() { ThreadLocalOptions() = std::move(opts_); }
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/default_completion_queue_impl.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/options.h"
 #include "absl/memory/memory.h"
 #include <grpcpp/alarm.h>
 #include <sstream>
@@ -68,12 +69,16 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
     alarm_.Set(&cq, deadline, tag);
   }
 
-  void Cancel() override { alarm_.Cancel(); }
+  void Cancel() override {
+    OptionsSpan span(options_);
+    alarm_.Cancel();
+  }
 
  private:
   explicit AsyncTimerFuture() : promise_(null_promise_t{}) {}
 
   bool Notify(bool ok) override {
+    OptionsSpan span(options_);
     promise_.set_value(ok ? ValueType(deadline_) : Canceled());
     return true;
   }
@@ -85,6 +90,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   promise<ValueType> promise_;
   std::chrono::system_clock::time_point deadline_;
   grpc::Alarm alarm_;
+  Options options_ = CurrentOptions();
 };
 
 }  // namespace
@@ -105,6 +111,7 @@ class DefaultCompletionQueueImpl::WakeUpRunAsyncLoop
 
  private:
   bool Notify(bool ok) override {
+    OptionsSpan span(options_);
     if (!ok) return true;  // do not run async operations on shutdown CQs
     if (auto self = weak_.lock()) self->DrainRunAsyncLoop();
     return true;
@@ -112,6 +119,7 @@ class DefaultCompletionQueueImpl::WakeUpRunAsyncLoop
 
   std::weak_ptr<DefaultCompletionQueueImpl> weak_;
   grpc::Alarm alarm_;
+  Options options_ = CurrentOptions();
 };
 
 // A helper class to wake up the asynchronous thread and drain the RunAsync()
@@ -130,6 +138,7 @@ class DefaultCompletionQueueImpl::WakeUpRunAsyncOnIdle
 
  private:
   bool Notify(bool ok) override {
+    OptionsSpan span(options_);
     if (!ok) return true;  // do not run async operations on shutdown CQs
     if (auto self = weak_.lock()) self->DrainRunAsyncOnIdle();
     return true;
@@ -137,6 +146,7 @@ class DefaultCompletionQueueImpl::WakeUpRunAsyncOnIdle
 
   std::weak_ptr<DefaultCompletionQueueImpl> weak_;
   grpc::Alarm alarm_;
+  Options options_ = CurrentOptions();
 };
 
 DefaultCompletionQueueImpl::DefaultCompletionQueueImpl()
