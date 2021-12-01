@@ -107,7 +107,6 @@ Generally we improved the quality of the generated documentation, including:
 
 * feat(generator): document details about `*Client` ([#7673](https://github.com/googleapis/google-cloud-cpp/pull/7673))
 * feat(generator): link each method input and output types ([#7665](https://github.com/googleapis/google-cloud-cpp/pull/7665))
-* feat(common): add tracing for the LRO polling loop ([#7615](https://github.com/googleapis/google-cloud-cpp/pull/7615))
 * fix(spanner): GetSingularRow accepts by value ([#7589](https://github.com/googleapis/google-cloud-cpp/pull/7589))
 * fix(spanner): avoid use-after-move bugs ([#7588](https://github.com/googleapis/google-cloud-cpp/pull/7588))
 * docs(spanner): no doxygen for admin_internal ([#7552](https://github.com/googleapis/google-cloud-cpp/pull/7552))
