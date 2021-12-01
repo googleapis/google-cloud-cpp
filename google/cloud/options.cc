@@ -46,18 +46,21 @@ namespace {
 // The prevailing options for the current operation.  Thread local, so
 // additional propagation must be done whenever work for the operation
 // is done in another thread.
-thread_local Options current_options;
+Options& ThreadLocalOptions() {
+  thread_local Options current_options;
+  return current_options;
+}
 
 }  // namespace
 
-Options const& CurrentOptions() { return current_options; }
+Options const& CurrentOptions() { return ThreadLocalOptions(); }
 
 OptionsSpan::OptionsSpan(Options opts) : opts_(std::move(opts)) {
   using std::swap;
-  swap(opts_, current_options);
+  swap(opts_, ThreadLocalOptions());
 }
 
-OptionsSpan::~OptionsSpan() { current_options = std::move(opts_); }
+OptionsSpan::~OptionsSpan() { ThreadLocalOptions() = std::move(opts_); }
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
