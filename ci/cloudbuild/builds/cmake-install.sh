@@ -54,7 +54,6 @@ expected_dirs+=(
   ./include/google/bigtable/v2
   ./include/google/cloud/bigquery/connection
   ./include/google/cloud/bigquery/connection/v1
-  ./include/google/cloud/bigquery/connection/v1beta1
   ./include/google/cloud/bigquery/datatransfer
   ./include/google/cloud/bigquery/datatransfer/v1
   ./include/google/cloud/bigquery/logging
@@ -65,7 +64,6 @@ expected_dirs+=(
   ./include/google/cloud/bigtable/internal
   ./include/google/cloud/dialogflow
   ./include/google/cloud/dialogflow/v2
-  ./include/google/cloud/dialogflow/v2beta1
   ./include/google/cloud/grpc_utils
   ./include/google/cloud/internal
   ./include/google/cloud/pubsub
