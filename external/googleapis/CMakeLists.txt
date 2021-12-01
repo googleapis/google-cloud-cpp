@@ -39,21 +39,6 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/devtools/cloudtrace/v2/tracing.proto"
     "google/rpc/error_details.proto"
     "google/rpc/status.proto"
-    "google/cloud/bigquery/connection/v1beta1/connection.proto"
-    "google/cloud/dialogflow/v2beta1/agent.proto"
-    "google/cloud/dialogflow/v2beta1/audio_config.proto"
-    "google/cloud/dialogflow/v2beta1/context.proto"
-    "google/cloud/dialogflow/v2beta1/document.proto"
-    "google/cloud/dialogflow/v2beta1/fulfillment.proto"
-    "google/cloud/dialogflow/v2beta1/entity_type.proto"
-    "google/cloud/dialogflow/v2beta1/environment.proto"
-    "google/cloud/dialogflow/v2beta1/gcs.proto"
-    "google/cloud/dialogflow/v2beta1/intent.proto"
-    "google/cloud/dialogflow/v2beta1/knowledge_base.proto"
-    "google/cloud/dialogflow/v2beta1/session.proto"
-    "google/cloud/dialogflow/v2beta1/session_entity_type.proto"
-    "google/cloud/dialogflow/v2beta1/validation_result.proto"
-    "google/cloud/dialogflow/v2beta1/webhook.proto"
     "google/iam/v1/options.proto"
     "google/iam/v1/policy.proto"
     "google/iam/v1/iam_policy.proto"
@@ -331,11 +316,8 @@ external_googleapis_add_library(
 google_cloud_cpp_load_protolist(cloud_bigquery_list "protolists/bigquery.list")
 google_cloud_cpp_load_protodeps(cloud_bigquery_deps "protodeps/bigquery.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_cloud_bigquery_protos
-    ${cloud_bigquery_list}
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/bigquery/connection/v1beta1/connection.proto"
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    google_cloud_cpp_cloud_bigquery_protos ${cloud_bigquery_list}
+    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(cloud_bigquery_protos)
 target_link_libraries(google_cloud_cpp_cloud_bigquery_protos
@@ -365,39 +347,8 @@ if (NOT (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     target_link_libraries(google_cloud_cpp_cloud_dialogflow_v2_protos
                           PUBLIC ${cloud_dialogflow_v2_deps})
 
-    google_cloud_cpp_grpcpp_library(
-        google_cloud_cpp_cloud_dialogflow_v2beta1_protos
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/agent.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/audio_config.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/context.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/document.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/fulfillment.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/entity_type.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/environment.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/gcs.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/intent.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/knowledge_base.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/session.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/session_entity_type.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/validation_result.proto"
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/dialogflow/v2beta1/webhook.proto"
-        PROTO_PATH_DIRECTORIES
-        "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-        "${PROTO_INCLUDE_DIR}")
-    external_googleapis_set_version_and_alias(cloud_dialogflow_v2beta1_protos)
-    target_link_libraries(
-        google_cloud_cpp_cloud_dialogflow_v2beta1_protos
-        PUBLIC google-cloud-cpp::api_annotations_protos
-               google-cloud-cpp::api_client_protos
-               google-cloud-cpp::api_field_behavior_protos
-               google-cloud-cpp::api_resource_protos
-               google-cloud-cpp::longrunning_operations_protos
-               google-cloud-cpp::rpc_status_protos
-               google-cloud-cpp::type_latlng_protos)
-
     list(APPEND external_googleapis_installed_libraries_list
-         google_cloud_cpp_cloud_dialogflow_v2_protos
-         google_cloud_cpp_cloud_dialogflow_v2beta1_protos)
+         google_cloud_cpp_cloud_dialogflow_v2_protos)
 endif ()
 
 google_cloud_cpp_load_protolist(cloud_speech_list "protolists/speech.list")
