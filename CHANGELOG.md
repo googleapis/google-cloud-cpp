@@ -88,7 +88,56 @@
   https://github.com/googleapis/google-cloud-cpp/issues/5976.
 </details>
 
-## v1.34.0 - TBD
+## v1.35.0 - TBD
+
+## v1.34.0 - 2021-12
+
+### [BigQuery](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigquery/README.md) [IAM](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/README.md)
+
+Generally we improved the quality of the generated documentation, including:
+
+* feat(generator): document details about `*Client` ([#7673](https://github.com/googleapis/google-cloud-cpp/pull/7673))
+* feat(generator): link each method input and output types ([#7665](https://github.com/googleapis/google-cloud-cpp/pull/7665))
+
+### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
+
+* feat(bigtableadmin): add multi-cluster routing for specific clusters ([#7636](https://github.com/googleapis/google-cloud-cpp/pull/7636))
+
+### [Spanner](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/spanner/README.md)
+
+* feat(generator): document details about `*Client` ([#7673](https://github.com/googleapis/google-cloud-cpp/pull/7673))
+* feat(generator): link each method input and output types ([#7665](https://github.com/googleapis/google-cloud-cpp/pull/7665))
+* fix(spanner): GetSingularRow accepts by value ([#7589](https://github.com/googleapis/google-cloud-cpp/pull/7589))
+* fix(spanner): avoid use-after-move bugs ([#7588](https://github.com/googleapis/google-cloud-cpp/pull/7588))
+* docs(spanner): no doxygen for admin_internal ([#7552](https://github.com/googleapis/google-cloud-cpp/pull/7552))
+
+### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
+
+* feat(storage): better debugging for session rewinds ([#7662](https://github.com/googleapis/google-cloud-cpp/pull/7662))
+* feat(storage): separate option for download timeouts ([#7655](https://github.com/googleapis/google-cloud-cpp/pull/7655))
+* feat: GCS parse "error info" from JSON when available ([#7654](https://github.com/googleapis/google-cloud-cpp/pull/7654))
+* doc(storage): describe connection pool ([#7637](https://github.com/googleapis/google-cloud-cpp/pull/7637))
+* feat(storage): `storage::Client` is a value type ([#7634](https://github.com/googleapis/google-cloud-cpp/pull/7634))
+* feat(storage): default payload format for CreateNotification ([#7633](https://github.com/googleapis/google-cloud-cpp/pull/7633))
+* feat(generator): more stable googleapis proto links ([#7606](https://github.com/googleapis/google-cloud-cpp/pull/7606))
+* feat(GCS+gRPC): endpoint overrides with secure credentials ([#7572](https://github.com/googleapis/google-cloud-cpp/pull/7572))
+* feat(GCS+gRPC): synthetic object metadata links ([#7563](https://github.com/googleapis/google-cloud-cpp/pull/7563))
+* fix(GCS+gRPC): correct format Object ids ([#7559](https://github.com/googleapis/google-cloud-cpp/pull/7559))
+
+### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
+
+* feat: expose and log ErrorInfo if present  ([#7640](https://github.com/googleapis/google-cloud-cpp/pull/7640))
+* feat(common): add tracing for the LRO polling loop ([#7615](https://github.com/googleapis/google-cloud-cpp/pull/7615))
+* feat(common): add internal-only payload support to Status ([#7603](https://github.com/googleapis/google-cloud-cpp/pull/7603))
+
+### New Libraries
+
+[Cloud Tasks]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/tasks/README.md
+[Secret Manager]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/secretmanager/README.md
+[Pub/Sub Lite]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsublite/README.md
+
+We are introducing client libraries for [Cloud Tasks], [Secret Manager],
+and [Pub/Sub Lite]. These libraries are still under development.
 
 ## v1.33.0 - 2021-11
 
