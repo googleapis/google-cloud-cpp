@@ -17,12 +17,13 @@ the client library.
 ### Setting up your repo
 
 In order to use the Cloud Tasks API C++ client library from your own code,
-you'll need to configure your build system how to fetch and compile the Cloud
-C++ client libraries. The Cloud C++ client libraries natively supports the
-[Bazel](https://bazel.build/) and [CMake](https://cmake.org/) build systems.
-We've created a minimal, "Hello World", [quickstart repo][quickstart-link] that
-includes detailed instructions on how to compile the library for use in your
-application. You can fetch the source from [GitHub][github-link] as normal:
+you'll need to configure your build system to discover and compile the Cloud
+C++ client libraries. In some cases your build system or package manager may
+need to download the libraries too. The Cloud C++ client libraries natively
+support [Bazel](https://bazel.build/) and [CMake](https://cmake.org/) as build
+systems. We've created a minimal, "Hello World", [quickstart][quickstart-link]
+that includes detailed instructions on how to compile the library for use in
+your application. You can fetch the source from [GitHub][github-link] as normal:
 
 @code{.sh}
 git clone https://github.com/googleapis/google-cloud-cpp.git
@@ -41,7 +42,7 @@ which should give you a taste of the Cloud Tasks API C++ client library API.
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
-  request and response.  Unless you have configured you own logging backend,
+  request and response.  Unless you have configured your own logging backend,
   you should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on
   the program's console.
 
@@ -54,9 +55,9 @@ which should give you a taste of the Cloud Tasks API C++ client library API.
   including whether messages will be output on multiple lines, or whether
   string/bytes fields will be truncated.
 
-- `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library, basically
+- `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library. Basically
   the library always "logs" but the logging infrastructure has no backend to
-  actually print anything until the application sets a backend or they set this
+  actually print anything until the application sets a backend or it sets this
   environment variable.
 
 ### Error Handling
@@ -68,9 +69,9 @@ to detect errors in the returned objects. In general, the library returns a
 [`StatusOr<T>`][status-or-header] if an error is possible. This is an "outcome"
 type, when the operation is successful a `StatusOr<T>` converts to `true` in
 boolean context (and its `.ok()` member function returns `true`), the
-application can then use `operator->` or `operator*` to access then `T` value.
+application can then use `operator->` or `operator*` to access the `T` value.
 When the operation fails a `StatusOr<T>` converts to `false` (and `.ok()`
-returns false). It is undefined behavior to use the value in this case.
+returns `false`). It is undefined behavior to use the value in this case.
 
 If you prefer to use exceptions on error, you can use the `.value()` accessor.
 It will return the `T` value or throw on error.
@@ -93,6 +94,6 @@ can override the default policies.
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
 [github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/tasks/README%2Emd
-[github-install]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packagin%2Emd
+[github-install]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging%2Emd
 
 */
