@@ -21,6 +21,7 @@
 
 #include "generator/integration_tests/golden/golden_kitchen_sink_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -69,7 +70,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class GoldenKitchenSinkClient {
  public:
-  explicit GoldenKitchenSinkClient(std::shared_ptr<GoldenKitchenSinkConnection> connection);
+  explicit GoldenKitchenSinkClient(std::shared_ptr<GoldenKitchenSinkConnection> connection, Options options = {});
   ~GoldenKitchenSinkClient();
 
   //@{
@@ -120,7 +121,7 @@ class GoldenKitchenSinkClient {
   /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L872}
   ///
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(std::string const& name, std::vector<std::string> const& delegates, std::vector<std::string> const& scope, google::protobuf::Duration const& lifetime);
+  GenerateAccessToken(std::string const& name, std::vector<std::string> const& delegates, std::vector<std::string> const& scope, google::protobuf::Duration const& lifetime, Options options = {});
 
   ///
   /// Generates an OpenID Connect ID token for a service account.
@@ -148,7 +149,7 @@ class GoldenKitchenSinkClient {
   /// [google.test.admin.database.v1.GenerateIdTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L914}
   ///
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
-  GenerateIdToken(std::string const& name, std::vector<std::string> const& delegates, std::string const& audience, bool include_email);
+  GenerateIdToken(std::string const& name, std::vector<std::string> const& delegates, std::string const& audience, bool include_email, Options options = {});
 
   ///
   /// Writes log entries to Logging. This API method is the
@@ -182,7 +183,7 @@ class GoldenKitchenSinkClient {
   /// [google.test.admin.database.v1.WriteLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L953}
   ///
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
-  WriteLogEntries(std::string const& log_name, std::map<std::string, std::string> const& labels);
+  WriteLogEntries(std::string const& log_name, std::map<std::string, std::string> const& labels, Options options = {});
 
   ///
   /// Lists the logs in projects, organizations, folders, or billing accounts.
@@ -198,7 +199,7 @@ class GoldenKitchenSinkClient {
   /// [google.test.admin.database.v1.ListLogsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L956}
   ///
   StreamRange<std::string>
-  ListLogs(std::string const& parent);
+  ListLogs(std::string const& parent, Options options = {});
 
   ///
   /// Streaming read of log entries as they are ingested. Until the stream is
@@ -220,7 +221,7 @@ class GoldenKitchenSinkClient {
   /// [google.test.admin.database.v1.TailLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1214}
   ///
   StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
-  TailLogEntries(std::vector<std::string> const& resource_names);
+  TailLogEntries(std::vector<std::string> const& resource_names, Options options = {});
 
   ///
   /// Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for a service account.
@@ -239,7 +240,7 @@ class GoldenKitchenSinkClient {
   /// [google.test.admin.database.v1.ListServiceAccountKeysResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1286}
   ///
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
-  ListServiceAccountKeys(std::string const& name, std::vector<google::test::admin::database::v1::ListServiceAccountKeysRequest::KeyType> const& key_types);
+  ListServiceAccountKeys(std::string const& name, std::vector<google::test::admin::database::v1::ListServiceAccountKeysRequest::KeyType> const& key_types, Options options = {});
 
   ///
   /// Generates an OAuth 2.0 access token for a service account.
@@ -251,7 +252,7 @@ class GoldenKitchenSinkClient {
   /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L872}
   ///
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request);
+  GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request, Options options = {});
 
   ///
   /// Generates an OpenID Connect ID token for a service account.
@@ -263,7 +264,7 @@ class GoldenKitchenSinkClient {
   /// [google.test.admin.database.v1.GenerateIdTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L914}
   ///
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
-  GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request);
+  GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request, Options options = {});
 
   ///
   /// Writes log entries to Logging. This API method is the
@@ -281,7 +282,7 @@ class GoldenKitchenSinkClient {
   /// [google.test.admin.database.v1.WriteLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L953}
   ///
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
-  WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request);
+  WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request, Options options = {});
 
   ///
   /// Lists the logs in projects, organizations, folders, or billing accounts.
@@ -293,7 +294,7 @@ class GoldenKitchenSinkClient {
   /// [google.test.admin.database.v1.ListLogsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L956}
   ///
   StreamRange<std::string>
-  ListLogs(google::test::admin::database::v1::ListLogsRequest request);
+  ListLogs(google::test::admin::database::v1::ListLogsRequest request, Options options = {});
 
   ///
   /// Streaming read of log entries as they are ingested. Until the stream is
@@ -306,7 +307,7 @@ class GoldenKitchenSinkClient {
   /// [google.test.admin.database.v1.TailLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1214}
   ///
   StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
-  TailLogEntries(google::test::admin::database::v1::TailLogEntriesRequest const& request);
+  TailLogEntries(google::test::admin::database::v1::TailLogEntriesRequest const& request, Options options = {});
 
   ///
   /// Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for a service account.
@@ -318,10 +319,11 @@ class GoldenKitchenSinkClient {
   /// [google.test.admin.database.v1.ListServiceAccountKeysResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1286}
   ///
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
-  ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request);
+  ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request, Options options = {});
 
  private:
   std::shared_ptr<GoldenKitchenSinkConnection> connection_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

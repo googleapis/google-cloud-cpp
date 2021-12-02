@@ -17,9 +17,9 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/golden_thing_admin_client.h"
+#include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.h"
 #include <memory>
 #include "generator/integration_tests/golden/golden_thing_admin_options.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.h"
 #include <thread>
 
 namespace google {
@@ -27,18 +27,20 @@ namespace cloud {
 namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-GoldenThingAdminClient::GoldenThingAdminClient(std::shared_ptr<GoldenThingAdminConnection> connection) : connection_(std::move(connection)) {}
+GoldenThingAdminClient::GoldenThingAdminClient(std::shared_ptr<GoldenThingAdminConnection> connection, Options options) : connection_(std::move(connection)), options_(golden_internal::GoldenThingAdminDefaultOptions(std::move(options))) {}
 GoldenThingAdminClient::~GoldenThingAdminClient() = default;
 
 StreamRange<google::test::admin::database::v1::Database>
-GoldenThingAdminClient::ListDatabases(std::string const& parent) {
+GoldenThingAdminClient::ListDatabases(std::string const& parent, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::ListDatabasesRequest request;
   request.set_parent(parent);
   return connection_->ListDatabases(request);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
-GoldenThingAdminClient::CreateDatabase(std::string const& parent, std::string const& create_statement) {
+GoldenThingAdminClient::CreateDatabase(std::string const& parent, std::string const& create_statement, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::CreateDatabaseRequest request;
   request.set_parent(parent);
   request.set_create_statement(create_statement);
@@ -46,14 +48,16 @@ GoldenThingAdminClient::CreateDatabase(std::string const& parent, std::string co
 }
 
 StatusOr<google::test::admin::database::v1::Database>
-GoldenThingAdminClient::GetDatabase(std::string const& name) {
+GoldenThingAdminClient::GetDatabase(std::string const& name, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::GetDatabaseRequest request;
   request.set_name(name);
   return connection_->GetDatabase(request);
 }
 
 future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
-GoldenThingAdminClient::UpdateDatabaseDdl(std::string const& database, std::vector<std::string> const& statements) {
+GoldenThingAdminClient::UpdateDatabaseDdl(std::string const& database, std::vector<std::string> const& statements, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   request.set_database(database);
   *request.mutable_statements() = {statements.begin(), statements.end()};
@@ -61,21 +65,24 @@ GoldenThingAdminClient::UpdateDatabaseDdl(std::string const& database, std::vect
 }
 
 Status
-GoldenThingAdminClient::DropDatabase(std::string const& database) {
+GoldenThingAdminClient::DropDatabase(std::string const& database, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(database);
   return connection_->DropDatabase(request);
 }
 
 StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
-GoldenThingAdminClient::GetDatabaseDdl(std::string const& database) {
+GoldenThingAdminClient::GetDatabaseDdl(std::string const& database, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::GetDatabaseDdlRequest request;
   request.set_database(database);
   return connection_->GetDatabaseDdl(request);
 }
 
 StatusOr<google::iam::v1::Policy>
-GoldenThingAdminClient::SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy) {
+GoldenThingAdminClient::SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
   *request.mutable_policy() = policy;
@@ -85,8 +92,8 @@ GoldenThingAdminClient::SetIamPolicy(std::string const& resource, google::iam::v
 StatusOr<google::iam::v1::Policy>
 GoldenThingAdminClient::SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options options) {
   internal::CheckExpectedOptions<GoldenThingAdminBackoffPolicyOption>(options, __func__);
-  options = golden_internal::GoldenThingAdminDefaultOptions(std::move(options));
-  auto backoff_policy = options.get<GoldenThingAdminBackoffPolicyOption>()->clone();
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+  auto backoff_policy = internal::CurrentOptions().get<GoldenThingAdminBackoffPolicyOption>()->clone();
   for (;;) {
     auto recent = GetIamPolicy(resource);
     if (!recent) {
@@ -105,14 +112,16 @@ GoldenThingAdminClient::SetIamPolicy(std::string const& resource, IamUpdater con
 }
 
 StatusOr<google::iam::v1::Policy>
-GoldenThingAdminClient::GetIamPolicy(std::string const& resource) {
+GoldenThingAdminClient::GetIamPolicy(std::string const& resource, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-GoldenThingAdminClient::TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions) {
+GoldenThingAdminClient::TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
   *request.mutable_permissions() = {permissions.begin(), permissions.end()};
@@ -120,7 +129,8 @@ GoldenThingAdminClient::TestIamPermissions(std::string const& resource, std::vec
 }
 
 future<StatusOr<google::test::admin::database::v1::Backup>>
-GoldenThingAdminClient::CreateBackup(std::string const& parent, google::test::admin::database::v1::Backup const& backup, std::string const& backup_id) {
+GoldenThingAdminClient::CreateBackup(std::string const& parent, google::test::admin::database::v1::Backup const& backup, std::string const& backup_id, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::CreateBackupRequest request;
   request.set_parent(parent);
   *request.mutable_backup() = backup;
@@ -129,14 +139,16 @@ GoldenThingAdminClient::CreateBackup(std::string const& parent, google::test::ad
 }
 
 StatusOr<google::test::admin::database::v1::Backup>
-GoldenThingAdminClient::GetBackup(std::string const& name) {
+GoldenThingAdminClient::GetBackup(std::string const& name, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::GetBackupRequest request;
   request.set_name(name);
   return connection_->GetBackup(request);
 }
 
 StatusOr<google::test::admin::database::v1::Backup>
-GoldenThingAdminClient::UpdateBackup(google::test::admin::database::v1::Backup const& backup, google::protobuf::FieldMask const& update_mask) {
+GoldenThingAdminClient::UpdateBackup(google::test::admin::database::v1::Backup const& backup, google::protobuf::FieldMask const& update_mask, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::UpdateBackupRequest request;
   *request.mutable_backup() = backup;
   *request.mutable_update_mask() = update_mask;
@@ -144,21 +156,24 @@ GoldenThingAdminClient::UpdateBackup(google::test::admin::database::v1::Backup c
 }
 
 Status
-GoldenThingAdminClient::DeleteBackup(std::string const& name) {
+GoldenThingAdminClient::DeleteBackup(std::string const& name, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::DeleteBackupRequest request;
   request.set_name(name);
   return connection_->DeleteBackup(request);
 }
 
 StreamRange<google::test::admin::database::v1::Backup>
-GoldenThingAdminClient::ListBackups(std::string const& parent) {
+GoldenThingAdminClient::ListBackups(std::string const& parent, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::ListBackupsRequest request;
   request.set_parent(parent);
   return connection_->ListBackups(request);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
-GoldenThingAdminClient::RestoreDatabase(std::string const& parent, std::string const& database_id, std::string const& backup) {
+GoldenThingAdminClient::RestoreDatabase(std::string const& parent, std::string const& database_id, std::string const& backup, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   request.set_parent(parent);
   request.set_database_id(database_id);
@@ -167,125 +182,148 @@ GoldenThingAdminClient::RestoreDatabase(std::string const& parent, std::string c
 }
 
 StreamRange<google::longrunning::Operation>
-GoldenThingAdminClient::ListDatabaseOperations(std::string const& parent) {
+GoldenThingAdminClient::ListDatabaseOperations(std::string const& parent, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::ListDatabaseOperationsRequest request;
   request.set_parent(parent);
   return connection_->ListDatabaseOperations(request);
 }
 
 StreamRange<google::longrunning::Operation>
-GoldenThingAdminClient::ListBackupOperations(std::string const& parent) {
+GoldenThingAdminClient::ListBackupOperations(std::string const& parent, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent(parent);
   return connection_->ListBackupOperations(request);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
-GoldenThingAdminClient::AsyncGetDatabase(std::string const& name) {
+GoldenThingAdminClient::AsyncGetDatabase(std::string const& name, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::GetDatabaseRequest request;
   request.set_name(name);
   return connection_->AsyncGetDatabase(request);
 }
 
 future<Status>
-GoldenThingAdminClient::AsyncDropDatabase(std::string const& database) {
+GoldenThingAdminClient::AsyncDropDatabase(std::string const& database, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(database);
   return connection_->AsyncDropDatabase(request);
 }
 
 StreamRange<google::test::admin::database::v1::Database>
-GoldenThingAdminClient::ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request) {
+GoldenThingAdminClient::ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->ListDatabases(std::move(request));
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
-GoldenThingAdminClient::CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+GoldenThingAdminClient::CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->CreateDatabase(request);
 }
 
 StatusOr<google::test::admin::database::v1::Database>
-GoldenThingAdminClient::GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request) {
+GoldenThingAdminClient::GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->GetDatabase(request);
 }
 
 future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
-GoldenThingAdminClient::UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+GoldenThingAdminClient::UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->UpdateDatabaseDdl(request);
 }
 
 Status
-GoldenThingAdminClient::DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request) {
+GoldenThingAdminClient::DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->DropDatabase(request);
 }
 
 StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
-GoldenThingAdminClient::GetDatabaseDdl(google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
+GoldenThingAdminClient::GetDatabaseDdl(google::test::admin::database::v1::GetDatabaseDdlRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->GetDatabaseDdl(request);
 }
 
 StatusOr<google::iam::v1::Policy>
-GoldenThingAdminClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+GoldenThingAdminClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy>
-GoldenThingAdminClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+GoldenThingAdminClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-GoldenThingAdminClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+GoldenThingAdminClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->TestIamPermissions(request);
 }
 
 future<StatusOr<google::test::admin::database::v1::Backup>>
-GoldenThingAdminClient::CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request) {
+GoldenThingAdminClient::CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->CreateBackup(request);
 }
 
 StatusOr<google::test::admin::database::v1::Backup>
-GoldenThingAdminClient::GetBackup(google::test::admin::database::v1::GetBackupRequest const& request) {
+GoldenThingAdminClient::GetBackup(google::test::admin::database::v1::GetBackupRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->GetBackup(request);
 }
 
 StatusOr<google::test::admin::database::v1::Backup>
-GoldenThingAdminClient::UpdateBackup(google::test::admin::database::v1::UpdateBackupRequest const& request) {
+GoldenThingAdminClient::UpdateBackup(google::test::admin::database::v1::UpdateBackupRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->UpdateBackup(request);
 }
 
 Status
-GoldenThingAdminClient::DeleteBackup(google::test::admin::database::v1::DeleteBackupRequest const& request) {
+GoldenThingAdminClient::DeleteBackup(google::test::admin::database::v1::DeleteBackupRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->DeleteBackup(request);
 }
 
 StreamRange<google::test::admin::database::v1::Backup>
-GoldenThingAdminClient::ListBackups(google::test::admin::database::v1::ListBackupsRequest request) {
+GoldenThingAdminClient::ListBackups(google::test::admin::database::v1::ListBackupsRequest request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->ListBackups(std::move(request));
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
-GoldenThingAdminClient::RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+GoldenThingAdminClient::RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->RestoreDatabase(request);
 }
 
 StreamRange<google::longrunning::Operation>
-GoldenThingAdminClient::ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest request) {
+GoldenThingAdminClient::ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->ListDatabaseOperations(std::move(request));
 }
 
 StreamRange<google::longrunning::Operation>
-GoldenThingAdminClient::ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest request) {
+GoldenThingAdminClient::ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->ListBackupOperations(std::move(request));
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
-GoldenThingAdminClient::AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request) {
+GoldenThingAdminClient::AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->AsyncGetDatabase(request);
 }
 
 future<Status>
-GoldenThingAdminClient::AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request) {
+GoldenThingAdminClient::AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->AsyncDropDatabase(request);
 }
 
