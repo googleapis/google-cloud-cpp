@@ -68,7 +68,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DatabaseAdminClient {
  public:
   explicit DatabaseAdminClient(
-      std::shared_ptr<DatabaseAdminConnection> connection);
+      std::shared_ptr<DatabaseAdminConnection> connection,
+      Options options = {});
   ~DatabaseAdminClient();
 
   //@{
@@ -105,7 +106,7 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
   ///
   StreamRange<google::spanner::admin::database::v1::Database> ListDatabases(
-      std::string const& parent);
+      std::string const& parent, Options options = {});
 
   ///
   /// Creates a new Cloud Spanner database and starts to prepare it for serving.
@@ -135,8 +136,8 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
   ///
   future<StatusOr<google::spanner::admin::database::v1::Database>>
-  CreateDatabase(std::string const& parent,
-                 std::string const& create_statement);
+  CreateDatabase(std::string const& parent, std::string const& create_statement,
+                 Options options = {});
 
   ///
   /// Gets the state of a Cloud Spanner database.
@@ -153,7 +154,7 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
   ///
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
-      std::string const& name);
+      std::string const& name, Options options = {});
 
   ///
   /// Updates the schema of a Cloud Spanner database by
@@ -178,7 +179,8 @@ class DatabaseAdminClient {
   future<
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(std::string const& database,
-                    std::vector<std::string> const& statements);
+                    std::vector<std::string> const& statements,
+                    Options options = {});
 
   ///
   /// Drops (aka deletes) a Cloud Spanner database.
@@ -190,7 +192,7 @@ class DatabaseAdminClient {
   /// [google.spanner.admin.database.v1.DropDatabaseRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L579}
   ///
-  Status DropDatabase(std::string const& database);
+  Status DropDatabase(std::string const& database, Options options = {});
 
   ///
   /// Returns the schema of a Cloud Spanner database as a list of formatted
@@ -209,7 +211,7 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L603}
   ///
   StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
-  GetDatabaseDdl(std::string const& database);
+  GetDatabaseDdl(std::string const& database, Options options = {});
 
   ///
   /// Sets the access control policy on a database or backup resource.
@@ -237,7 +239,8 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      std::string const& resource, google::iam::v1::Policy const& policy);
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options options = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -285,7 +288,8 @@ class DatabaseAdminClient {
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource);
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options options = {});
 
   ///
   /// Returns permissions that the caller has on the specified database or
@@ -316,7 +320,8 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      std::string const& resource, std::vector<std::string> const& permissions);
+      std::string const& resource, std::vector<std::string> const& permissions,
+      Options options = {});
 
   ///
   /// Starts creating a new Cloud Spanner Backup.
@@ -355,7 +360,7 @@ class DatabaseAdminClient {
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
       std::string const& parent,
       google::spanner::admin::database::v1::Backup const& backup,
-      std::string const& backup_id);
+      std::string const& backup_id, Options options = {});
 
   ///
   /// Gets metadata on a pending or completed
@@ -373,7 +378,7 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L36}
   ///
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
-      std::string const& name);
+      std::string const& name, Options options = {});
 
   ///
   /// Updates a pending or completed
@@ -400,7 +405,7 @@ class DatabaseAdminClient {
   ///
   StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
       google::spanner::admin::database::v1::Backup const& backup,
-      google::protobuf::FieldMask const& update_mask);
+      google::protobuf::FieldMask const& update_mask, Options options = {});
 
   ///
   /// Deletes a pending or completed
@@ -413,7 +418,7 @@ class DatabaseAdminClient {
   /// [google.spanner.admin.database.v1.DeleteBackupRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L215}
   ///
-  Status DeleteBackup(std::string const& name);
+  Status DeleteBackup(std::string const& name, Options options = {});
 
   ///
   /// Lists completed and pending backups.
@@ -432,7 +437,7 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L36}
   ///
   StreamRange<google::spanner::admin::database::v1::Backup> ListBackups(
-      std::string const& parent);
+      std::string const& parent, Options options = {});
 
   ///
   /// Create a new database by restoring from a completed backup. The new
@@ -476,7 +481,7 @@ class DatabaseAdminClient {
   ///
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   RestoreDatabase(std::string const& parent, std::string const& database_id,
-                  std::string const& backup);
+                  std::string const& backup, Options options = {});
 
   ///
   /// Lists database [longrunning-operations][google.longrunning.Operation].
@@ -499,7 +504,7 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   StreamRange<google::longrunning::Operation> ListDatabaseOperations(
-      std::string const& parent);
+      std::string const& parent, Options options = {});
 
   ///
   /// Lists the backup [long-running operations][google.longrunning.Operation]
@@ -525,7 +530,7 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   StreamRange<google::longrunning::Operation> ListBackupOperations(
-      std::string const& parent);
+      std::string const& parent, Options options = {});
 
   ///
   /// Lists Cloud Spanner databases.
@@ -541,7 +546,8 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
   ///
   StreamRange<google::spanner::admin::database::v1::Database> ListDatabases(
-      google::spanner::admin::database::v1::ListDatabasesRequest request);
+      google::spanner::admin::database::v1::ListDatabasesRequest request,
+      Options options = {});
 
   ///
   /// Creates a new Cloud Spanner database and starts to prepare it for serving.
@@ -566,7 +572,8 @@ class DatabaseAdminClient {
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   CreateDatabase(
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
-          request);
+          request,
+      Options options = {});
 
   ///
   /// Gets the state of a Cloud Spanner database.
@@ -582,7 +589,8 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
   ///
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
-      google::spanner::admin::database::v1::GetDatabaseRequest const& request);
+      google::spanner::admin::database::v1::GetDatabaseRequest const& request,
+      Options options = {});
 
   ///
   /// Updates the schema of a Cloud Spanner database by
@@ -608,7 +616,8 @@ class DatabaseAdminClient {
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
-          request);
+          request,
+      Options options = {});
 
   ///
   /// Drops (aka deletes) a Cloud Spanner database.
@@ -622,7 +631,8 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L579}
   ///
   Status DropDatabase(
-      google::spanner::admin::database::v1::DropDatabaseRequest const& request);
+      google::spanner::admin::database::v1::DropDatabaseRequest const& request,
+      Options options = {});
 
   ///
   /// Returns the schema of a Cloud Spanner database as a list of formatted
@@ -642,7 +652,8 @@ class DatabaseAdminClient {
   StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(
       google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
-          request);
+          request,
+      Options options = {});
 
   ///
   /// Sets the access control policy on a database or backup resource.
@@ -664,7 +675,8 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+      google::iam::v1::SetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Gets the access control policy for a database or backup resource.
@@ -687,7 +699,8 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+      google::iam::v1::GetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Returns permissions that the caller has on the specified database or
@@ -712,7 +725,8 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options options = {});
 
   ///
   /// Starts creating a new Cloud Spanner Backup.
@@ -739,7 +753,8 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L36}
   ///
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
-      google::spanner::admin::database::v1::CreateBackupRequest const& request);
+      google::spanner::admin::database::v1::CreateBackupRequest const& request,
+      Options options = {});
 
   ///
   /// Gets metadata on a pending or completed
@@ -756,7 +771,8 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L36}
   ///
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
-      google::spanner::admin::database::v1::GetBackupRequest const& request);
+      google::spanner::admin::database::v1::GetBackupRequest const& request,
+      Options options = {});
 
   ///
   /// Updates a pending or completed
@@ -773,7 +789,8 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L36}
   ///
   StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
-      google::spanner::admin::database::v1::UpdateBackupRequest const& request);
+      google::spanner::admin::database::v1::UpdateBackupRequest const& request,
+      Options options = {});
 
   ///
   /// Deletes a pending or completed
@@ -786,7 +803,8 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L215}
   ///
   Status DeleteBackup(
-      google::spanner::admin::database::v1::DeleteBackupRequest const& request);
+      google::spanner::admin::database::v1::DeleteBackupRequest const& request,
+      Options options = {});
 
   ///
   /// Lists completed and pending backups.
@@ -804,7 +822,8 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L36}
   ///
   StreamRange<google::spanner::admin::database::v1::Backup> ListBackups(
-      google::spanner::admin::database::v1::ListBackupsRequest request);
+      google::spanner::admin::database::v1::ListBackupsRequest request,
+      Options options = {});
 
   ///
   /// Create a new database by restoring from a completed backup. The new
@@ -838,7 +857,8 @@ class DatabaseAdminClient {
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   RestoreDatabase(
       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
-          request);
+          request,
+      Options options = {});
 
   ///
   /// Lists database [longrunning-operations][google.longrunning.Operation].
@@ -862,7 +882,8 @@ class DatabaseAdminClient {
   ///
   StreamRange<google::longrunning::Operation> ListDatabaseOperations(
       google::spanner::admin::database::v1::ListDatabaseOperationsRequest
-          request);
+          request,
+      Options options = {});
 
   ///
   /// Lists the backup [long-running operations][google.longrunning.Operation]
@@ -887,11 +908,12 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   StreamRange<google::longrunning::Operation> ListBackupOperations(
-      google::spanner::admin::database::v1::ListBackupOperationsRequest
-          request);
+      google::spanner::admin::database::v1::ListBackupOperationsRequest request,
+      Options options = {});
 
  private:
   std::shared_ptr<DatabaseAdminConnection> connection_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

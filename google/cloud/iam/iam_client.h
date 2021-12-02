@@ -79,7 +79,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class IAMClient {
  public:
-  explicit IAMClient(std::shared_ptr<IAMConnection> connection);
+  explicit IAMClient(std::shared_ptr<IAMConnection> connection,
+                     Options options = {});
   ~IAMClient();
 
   //@{
@@ -116,7 +117,7 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L461}
   ///
   StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
-      std::string const& name);
+      std::string const& name, Options options = {});
 
   ///
   /// Gets a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
@@ -136,7 +137,7 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L461}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
-      std::string const& name);
+      std::string const& name, Options options = {});
 
   ///
   /// Creates a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
@@ -163,7 +164,8 @@ class IAMClient {
   ///
   StatusOr<google::iam::admin::v1::ServiceAccount> CreateServiceAccount(
       std::string const& name, std::string const& account_id,
-      google::iam::admin::v1::ServiceAccount const& service_account);
+      google::iam::admin::v1::ServiceAccount const& service_account,
+      Options options = {});
 
   ///
   /// Deletes a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
@@ -195,7 +197,7 @@ class IAMClient {
   /// [google.iam.admin.v1.DeleteServiceAccountRequest]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L594}
   ///
-  Status DeleteServiceAccount(std::string const& name);
+  Status DeleteServiceAccount(std::string const& name, Options options = {});
 
   ///
   /// Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for
@@ -224,7 +226,8 @@ class IAMClient {
       std::string const& name,
       std::vector<
           google::iam::admin::v1::ListServiceAccountKeysRequest::KeyType> const&
-          key_types);
+          key_types,
+      Options options = {});
 
   ///
   /// Gets a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey].
@@ -247,7 +250,8 @@ class IAMClient {
   ///
   StatusOr<google::iam::admin::v1::ServiceAccountKey> GetServiceAccountKey(
       std::string const& name,
-      google::iam::admin::v1::ServiceAccountPublicKeyType public_key_type);
+      google::iam::admin::v1::ServiceAccountPublicKeyType public_key_type,
+      Options options = {});
 
   ///
   /// Creates a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey].
@@ -276,7 +280,8 @@ class IAMClient {
   StatusOr<google::iam::admin::v1::ServiceAccountKey> CreateServiceAccountKey(
       std::string const& name,
       google::iam::admin::v1::ServiceAccountPrivateKeyType private_key_type,
-      google::iam::admin::v1::ServiceAccountKeyAlgorithm key_algorithm);
+      google::iam::admin::v1::ServiceAccountKeyAlgorithm key_algorithm,
+      Options options = {});
 
   ///
   /// Deletes a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey].
@@ -293,7 +298,7 @@ class IAMClient {
   /// [google.iam.admin.v1.DeleteServiceAccountKeyRequest]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L832}
   ///
-  Status DeleteServiceAccountKey(std::string const& name);
+  Status DeleteServiceAccountKey(std::string const& name, Options options = {});
 
   ///
   /// Gets the IAM policy that is attached to a
@@ -319,7 +324,8 @@ class IAMClient {
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource);
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options options = {});
 
   ///
   /// Sets the IAM policy that is attached to a
@@ -359,7 +365,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      std::string const& resource, google::iam::v1::Policy const& policy);
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options options = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -407,7 +414,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      std::string const& resource, std::vector<std::string> const& permissions);
+      std::string const& resource, std::vector<std::string> const& permissions,
+      Options options = {});
 
   ///
   /// Lists roles that can be granted on a Google Cloud resource. A role is
@@ -428,7 +436,7 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
   ///
   StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
-      std::string const& full_resource_name);
+      std::string const& full_resource_name, Options options = {});
 
   ///
   /// Lists every [ServiceAccount][google.iam.admin.v1.ServiceAccount] that
@@ -445,7 +453,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L461}
   ///
   StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
-      google::iam::admin::v1::ListServiceAccountsRequest request);
+      google::iam::admin::v1::ListServiceAccountsRequest request,
+      Options options = {});
 
   ///
   /// Gets a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
@@ -461,7 +470,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L461}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
-      google::iam::admin::v1::GetServiceAccountRequest const& request);
+      google::iam::admin::v1::GetServiceAccountRequest const& request,
+      Options options = {});
 
   ///
   /// Creates a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
@@ -477,7 +487,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L461}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccount> CreateServiceAccount(
-      google::iam::admin::v1::CreateServiceAccountRequest const& request);
+      google::iam::admin::v1::CreateServiceAccountRequest const& request,
+      Options options = {});
 
   ///
   /// Patches a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
@@ -493,7 +504,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L461}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccount> PatchServiceAccount(
-      google::iam::admin::v1::PatchServiceAccountRequest const& request);
+      google::iam::admin::v1::PatchServiceAccountRequest const& request,
+      Options options = {});
 
   ///
   /// Deletes a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
@@ -522,7 +534,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L594}
   ///
   Status DeleteServiceAccount(
-      google::iam::admin::v1::DeleteServiceAccountRequest const& request);
+      google::iam::admin::v1::DeleteServiceAccountRequest const& request,
+      Options options = {});
 
   ///
   /// Restores a deleted [ServiceAccount][google.iam.admin.v1.ServiceAccount].
@@ -546,7 +559,8 @@ class IAMClient {
   ///
   StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
   UndeleteServiceAccount(
-      google::iam::admin::v1::UndeleteServiceAccountRequest const& request);
+      google::iam::admin::v1::UndeleteServiceAccountRequest const& request,
+      Options options = {});
 
   ///
   /// Enables a [ServiceAccount][google.iam.admin.v1.ServiceAccount] that was
@@ -566,7 +580,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L637}
   ///
   Status EnableServiceAccount(
-      google::iam::admin::v1::EnableServiceAccountRequest const& request);
+      google::iam::admin::v1::EnableServiceAccountRequest const& request,
+      Options options = {});
 
   ///
   /// Disables a [ServiceAccount][google.iam.admin.v1.ServiceAccount]
@@ -596,7 +611,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L647}
   ///
   Status DisableServiceAccount(
-      google::iam::admin::v1::DisableServiceAccountRequest const& request);
+      google::iam::admin::v1::DisableServiceAccountRequest const& request,
+      Options options = {});
 
   ///
   /// Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for
@@ -614,7 +630,8 @@ class IAMClient {
   ///
   StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(
-      google::iam::admin::v1::ListServiceAccountKeysRequest const& request);
+      google::iam::admin::v1::ListServiceAccountKeysRequest const& request,
+      Options options = {});
 
   ///
   /// Gets a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey].
@@ -630,7 +647,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L741}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccountKey> GetServiceAccountKey(
-      google::iam::admin::v1::GetServiceAccountKeyRequest const& request);
+      google::iam::admin::v1::GetServiceAccountKeyRequest const& request,
+      Options options = {});
 
   ///
   /// Creates a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey].
@@ -646,7 +664,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L741}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccountKey> CreateServiceAccountKey(
-      google::iam::admin::v1::CreateServiceAccountKeyRequest const& request);
+      google::iam::admin::v1::CreateServiceAccountKeyRequest const& request,
+      Options options = {});
 
   ///
   /// Creates a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey],
@@ -663,7 +682,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L741}
   ///
   StatusOr<google::iam::admin::v1::ServiceAccountKey> UploadServiceAccountKey(
-      google::iam::admin::v1::UploadServiceAccountKeyRequest const& request);
+      google::iam::admin::v1::UploadServiceAccountKeyRequest const& request,
+      Options options = {});
 
   ///
   /// Deletes a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey].
@@ -677,7 +697,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L832}
   ///
   Status DeleteServiceAccountKey(
-      google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request);
+      google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request,
+      Options options = {});
 
   ///
   /// Gets the IAM policy that is attached to a
@@ -703,7 +724,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+      google::iam::v1::GetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Sets the IAM policy that is attached to a
@@ -737,7 +759,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+      google::iam::v1::SetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Tests whether the caller has the specified permissions on a
@@ -754,7 +777,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options options = {});
 
   ///
   /// Lists roles that can be granted on a Google Cloud resource. A role is
@@ -772,7 +796,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
   ///
   StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
-      google::iam::admin::v1::QueryGrantableRolesRequest request);
+      google::iam::admin::v1::QueryGrantableRolesRequest request,
+      Options options = {});
 
   ///
   /// Lists every predefined [Role][google.iam.admin.v1.Role] that IAM supports,
@@ -789,7 +814,7 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
   ///
   StreamRange<google::iam::admin::v1::Role> ListRoles(
-      google::iam::admin::v1::ListRolesRequest request);
+      google::iam::admin::v1::ListRolesRequest request, Options options = {});
 
   ///
   /// Gets the definition of a [Role][google.iam.admin.v1.Role].
@@ -805,7 +830,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
   ///
   StatusOr<google::iam::admin::v1::Role> GetRole(
-      google::iam::admin::v1::GetRoleRequest const& request);
+      google::iam::admin::v1::GetRoleRequest const& request,
+      Options options = {});
 
   ///
   /// Creates a new custom [Role][google.iam.admin.v1.Role].
@@ -821,7 +847,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
   ///
   StatusOr<google::iam::admin::v1::Role> CreateRole(
-      google::iam::admin::v1::CreateRoleRequest const& request);
+      google::iam::admin::v1::CreateRoleRequest const& request,
+      Options options = {});
 
   ///
   /// Updates the definition of a custom [Role][google.iam.admin.v1.Role].
@@ -837,7 +864,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
   ///
   StatusOr<google::iam::admin::v1::Role> UpdateRole(
-      google::iam::admin::v1::UpdateRoleRequest const& request);
+      google::iam::admin::v1::UpdateRoleRequest const& request,
+      Options options = {});
 
   ///
   /// Deletes a custom [Role][google.iam.admin.v1.Role].
@@ -870,7 +898,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
   ///
   StatusOr<google::iam::admin::v1::Role> DeleteRole(
-      google::iam::admin::v1::DeleteRoleRequest const& request);
+      google::iam::admin::v1::DeleteRoleRequest const& request,
+      Options options = {});
 
   ///
   /// Undeletes a custom [Role][google.iam.admin.v1.Role].
@@ -886,7 +915,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
   ///
   StatusOr<google::iam::admin::v1::Role> UndeleteRole(
-      google::iam::admin::v1::UndeleteRoleRequest const& request);
+      google::iam::admin::v1::UndeleteRoleRequest const& request,
+      Options options = {});
 
   ///
   /// Lists every permission that you can test on a resource. A permission is
@@ -904,7 +934,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1306}
   ///
   StreamRange<google::iam::admin::v1::Permission> QueryTestablePermissions(
-      google::iam::admin::v1::QueryTestablePermissionsRequest request);
+      google::iam::admin::v1::QueryTestablePermissionsRequest request,
+      Options options = {});
 
   ///
   /// Returns a list of services that allow you to opt into audit logs that are
@@ -925,7 +956,8 @@ class IAMClient {
   ///
   StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
   QueryAuditableServices(
-      google::iam::admin::v1::QueryAuditableServicesRequest const& request);
+      google::iam::admin::v1::QueryAuditableServicesRequest const& request,
+      Options options = {});
 
   ///
   /// Lints, or validates, an IAM policy. Currently checks the
@@ -946,10 +978,12 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1513}
   ///
   StatusOr<google::iam::admin::v1::LintPolicyResponse> LintPolicy(
-      google::iam::admin::v1::LintPolicyRequest const& request);
+      google::iam::admin::v1::LintPolicyRequest const& request,
+      Options options = {});
 
  private:
   std::shared_ptr<IAMConnection> connection_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

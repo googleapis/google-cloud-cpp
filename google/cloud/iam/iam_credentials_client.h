@@ -21,6 +21,7 @@
 
 #include "google/cloud/iam/iam_credentials_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -69,7 +70,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IAMCredentialsClient {
  public:
   explicit IAMCredentialsClient(
-      std::shared_ptr<IAMCredentialsConnection> connection);
+      std::shared_ptr<IAMCredentialsConnection> connection,
+      Options options = {});
   ~IAMCredentialsClient();
 
   //@{
@@ -133,7 +135,8 @@ class IAMCredentialsClient {
   GenerateAccessToken(std::string const& name,
                       std::vector<std::string> const& delegates,
                       std::vector<std::string> const& scope,
-                      google::protobuf::Duration const& lifetime);
+                      google::protobuf::Duration const& lifetime,
+                      Options options = {});
 
   ///
   /// Generates an OpenID Connect ID token for a service account.
@@ -172,7 +175,8 @@ class IAMCredentialsClient {
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(std::string const& name,
                   std::vector<std::string> const& delegates,
-                  std::string const& audience, bool include_email);
+                  std::string const& audience, bool include_email,
+                  Options options = {});
 
   ///
   /// Signs a blob using a service account's system-managed private key.
@@ -205,7 +209,7 @@ class IAMCredentialsClient {
   ///
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
       std::string const& name, std::vector<std::string> const& delegates,
-      std::string const& payload);
+      std::string const& payload, Options options = {});
 
   ///
   /// Signs a JWT using a service account's system-managed private key.
@@ -239,7 +243,7 @@ class IAMCredentialsClient {
   ///
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
       std::string const& name, std::vector<std::string> const& delegates,
-      std::string const& payload);
+      std::string const& payload, Options options = {});
 
   ///
   /// Generates an OAuth 2.0 access token for a service account.
@@ -256,7 +260,8 @@ class IAMCredentialsClient {
   ///
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
-      google::iam::credentials::v1::GenerateAccessTokenRequest const& request);
+      google::iam::credentials::v1::GenerateAccessTokenRequest const& request,
+      Options options = {});
 
   ///
   /// Generates an OpenID Connect ID token for a service account.
@@ -273,7 +278,8 @@ class IAMCredentialsClient {
   ///
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(
-      google::iam::credentials::v1::GenerateIdTokenRequest const& request);
+      google::iam::credentials::v1::GenerateIdTokenRequest const& request,
+      Options options = {});
 
   ///
   /// Signs a blob using a service account's system-managed private key.
@@ -289,7 +295,8 @@ class IAMCredentialsClient {
   /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L109}
   ///
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
-      google::iam::credentials::v1::SignBlobRequest const& request);
+      google::iam::credentials::v1::SignBlobRequest const& request,
+      Options options = {});
 
   ///
   /// Signs a JWT using a service account's system-managed private key.
@@ -305,10 +312,12 @@ class IAMCredentialsClient {
   /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L145}
   ///
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
-      google::iam::credentials::v1::SignJwtRequest const& request);
+      google::iam::credentials::v1::SignJwtRequest const& request,
+      Options options = {});
 
  private:
   std::shared_ptr<IAMCredentialsConnection> connection_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -21,6 +21,7 @@
 
 #include "google/cloud/logging/logging_service_v2_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -61,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LoggingServiceV2Client {
  public:
   explicit LoggingServiceV2Client(
-      std::shared_ptr<LoggingServiceV2Connection> connection);
+      std::shared_ptr<LoggingServiceV2Connection> connection,
+      Options options = {});
   ~LoggingServiceV2Client();
 
   //@{
@@ -104,7 +106,7 @@ class LoggingServiceV2Client {
   /// [google.logging.v2.DeleteLogRequest]:
   /// @googleapis_reference_link{google/logging/v2/logging.proto#L140}
   ///
-  Status DeleteLog(std::string const& log_name);
+  Status DeleteLog(std::string const& log_name, Options options = {});
 
   ///
   /// Writes log entries to Logging. This API method is the
@@ -175,7 +177,8 @@ class LoggingServiceV2Client {
       std::string const& log_name,
       google::api::MonitoredResource const& resource,
       std::map<std::string, std::string> const& labels,
-      std::vector<google::logging::v2::LogEntry> const& entries);
+      std::vector<google::logging::v2::LogEntry> const& entries,
+      Options options = {});
 
   ///
   /// Lists log entries.  Use this method to retrieve log entries that
@@ -222,7 +225,7 @@ class LoggingServiceV2Client {
   ///
   StreamRange<google::logging::v2::LogEntry> ListLogEntries(
       std::vector<std::string> const& resource_names, std::string const& filter,
-      std::string const& order_by);
+      std::string const& order_by, Options options = {});
 
   ///
   /// Lists the logs in projects, organizations, folders, or billing accounts.
@@ -238,7 +241,8 @@ class LoggingServiceV2Client {
   /// [google.logging.v2.ListLogsRequest]:
   /// @googleapis_reference_link{google/logging/v2/logging.proto#L356}
   ///
-  StreamRange<std::string> ListLogs(std::string const& parent);
+  StreamRange<std::string> ListLogs(std::string const& parent,
+                                    Options options = {});
 
   ///
   /// Deletes all the log entries in a log. The log reappears if it receives new
@@ -252,7 +256,8 @@ class LoggingServiceV2Client {
   /// [google.logging.v2.DeleteLogRequest]:
   /// @googleapis_reference_link{google/logging/v2/logging.proto#L140}
   ///
-  Status DeleteLog(google::logging::v2::DeleteLogRequest const& request);
+  Status DeleteLog(google::logging::v2::DeleteLogRequest const& request,
+                   Options options = {});
 
   ///
   /// Writes log entries to Logging. This API method is the
@@ -274,7 +279,8 @@ class LoggingServiceV2Client {
   /// @googleapis_reference_link{google/logging/v2/logging.proto#L243}
   ///
   StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
-      google::logging::v2::WriteLogEntriesRequest const& request);
+      google::logging::v2::WriteLogEntriesRequest const& request,
+      Options options = {});
 
   ///
   /// Lists log entries.  Use this method to retrieve log entries that
@@ -293,7 +299,7 @@ class LoggingServiceV2Client {
   /// @googleapis_reference_link{google/logging/v2/log_entry.proto#L42}
   ///
   StreamRange<google::logging::v2::LogEntry> ListLogEntries(
-      google::logging::v2::ListLogEntriesRequest request);
+      google::logging::v2::ListLogEntriesRequest request, Options options = {});
 
   ///
   /// Lists the descriptors for monitored resource types used by Logging.
@@ -310,7 +316,8 @@ class LoggingServiceV2Client {
   ///
   StreamRange<google::api::MonitoredResourceDescriptor>
   ListMonitoredResourceDescriptors(
-      google::logging::v2::ListMonitoredResourceDescriptorsRequest request);
+      google::logging::v2::ListMonitoredResourceDescriptorsRequest request,
+      Options options = {});
 
   ///
   /// Lists the logs in projects, organizations, folders, or billing accounts.
@@ -324,10 +331,11 @@ class LoggingServiceV2Client {
   /// @googleapis_reference_link{google/logging/v2/logging.proto#L356}
   ///
   StreamRange<std::string> ListLogs(
-      google::logging::v2::ListLogsRequest request);
+      google::logging::v2::ListLogsRequest request, Options options = {});
 
  private:
   std::shared_ptr<LoggingServiceV2Connection> connection_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

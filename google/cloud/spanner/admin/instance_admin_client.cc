@@ -28,33 +28,45 @@ namespace spanner_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 InstanceAdminClient::InstanceAdminClient(
-    std::shared_ptr<InstanceAdminConnection> connection)
-    : connection_(std::move(connection)) {}
+    std::shared_ptr<InstanceAdminConnection> connection, Options options)
+    : connection_(std::move(connection)),
+      options_(spanner_admin_internal::InstanceAdminDefaultOptions(
+          std::move(options))) {}
 InstanceAdminClient::~InstanceAdminClient() = default;
 
 StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
-InstanceAdminClient::ListInstanceConfigs(std::string const& parent) {
+InstanceAdminClient::ListInstanceConfigs(std::string const& parent,
+                                         Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::spanner::admin::instance::v1::ListInstanceConfigsRequest request;
   request.set_parent(parent);
   return connection_->ListInstanceConfigs(request);
 }
 
 StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
-InstanceAdminClient::GetInstanceConfig(std::string const& name) {
+InstanceAdminClient::GetInstanceConfig(std::string const& name,
+                                       Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::spanner::admin::instance::v1::GetInstanceConfigRequest request;
   request.set_name(name);
   return connection_->GetInstanceConfig(request);
 }
 
 StreamRange<google::spanner::admin::instance::v1::Instance>
-InstanceAdminClient::ListInstances(std::string const& parent) {
+InstanceAdminClient::ListInstances(std::string const& parent, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::spanner::admin::instance::v1::ListInstancesRequest request;
   request.set_parent(parent);
   return connection_->ListInstances(request);
 }
 
 StatusOr<google::spanner::admin::instance::v1::Instance>
-InstanceAdminClient::GetInstance(std::string const& name) {
+InstanceAdminClient::GetInstance(std::string const& name, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::spanner::admin::instance::v1::GetInstanceRequest request;
   request.set_name(name);
   return connection_->GetInstance(request);
@@ -63,7 +75,10 @@ InstanceAdminClient::GetInstance(std::string const& name) {
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminClient::CreateInstance(
     std::string const& parent, std::string const& instance_id,
-    google::spanner::admin::instance::v1::Instance const& instance) {
+    google::spanner::admin::instance::v1::Instance const& instance,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::spanner::admin::instance::v1::CreateInstanceRequest request;
   request.set_parent(parent);
   request.set_instance_id(instance_id);
@@ -74,21 +89,29 @@ InstanceAdminClient::CreateInstance(
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminClient::UpdateInstance(
     google::spanner::admin::instance::v1::Instance const& instance,
-    google::protobuf::FieldMask const& field_mask) {
+    google::protobuf::FieldMask const& field_mask, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::spanner::admin::instance::v1::UpdateInstanceRequest request;
   *request.mutable_instance() = instance;
   *request.mutable_field_mask() = field_mask;
   return connection_->UpdateInstance(request);
 }
 
-Status InstanceAdminClient::DeleteInstance(std::string const& name) {
+Status InstanceAdminClient::DeleteInstance(std::string const& name,
+                                           Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::spanner::admin::instance::v1::DeleteInstanceRequest request;
   request.set_name(name);
   return connection_->DeleteInstance(request);
 }
 
 StatusOr<google::iam::v1::Policy> InstanceAdminClient::SetIamPolicy(
-    std::string const& resource, google::iam::v1::Policy const& policy) {
+    std::string const& resource, google::iam::v1::Policy const& policy,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
   *request.mutable_policy() = policy;
@@ -99,10 +122,11 @@ StatusOr<google::iam::v1::Policy> InstanceAdminClient::SetIamPolicy(
     std::string const& resource, IamUpdater const& updater, Options options) {
   internal::CheckExpectedOptions<InstanceAdminBackoffPolicyOption>(options,
                                                                    __func__);
-  options =
-      spanner_admin_internal::InstanceAdminDefaultOptions(std::move(options));
-  auto backoff_policy =
-      options.get<InstanceAdminBackoffPolicyOption>()->clone();
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  auto backoff_policy = internal::CurrentOptions()
+                            .get<InstanceAdminBackoffPolicyOption>()
+                            ->clone();
   for (;;) {
     auto recent = GetIamPolicy(resource);
     if (!recent) {
@@ -121,7 +145,9 @@ StatusOr<google::iam::v1::Policy> InstanceAdminClient::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> InstanceAdminClient::GetIamPolicy(
-    std::string const& resource) {
+    std::string const& resource, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
@@ -129,7 +155,10 @@ StatusOr<google::iam::v1::Policy> InstanceAdminClient::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 InstanceAdminClient::TestIamPermissions(
-    std::string const& resource, std::vector<std::string> const& permissions) {
+    std::string const& resource, std::vector<std::string> const& permissions,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
   *request.mutable_permissions() = {permissions.begin(), permissions.end()};
@@ -138,62 +167,87 @@ InstanceAdminClient::TestIamPermissions(
 
 StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
 InstanceAdminClient::ListInstanceConfigs(
-    google::spanner::admin::instance::v1::ListInstanceConfigsRequest request) {
+    google::spanner::admin::instance::v1::ListInstanceConfigsRequest request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->ListInstanceConfigs(std::move(request));
 }
 
 StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
 InstanceAdminClient::GetInstanceConfig(
     google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
-        request) {
+        request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetInstanceConfig(request);
 }
 
 StreamRange<google::spanner::admin::instance::v1::Instance>
 InstanceAdminClient::ListInstances(
-    google::spanner::admin::instance::v1::ListInstancesRequest request) {
+    google::spanner::admin::instance::v1::ListInstancesRequest request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->ListInstances(std::move(request));
 }
 
 StatusOr<google::spanner::admin::instance::v1::Instance>
 InstanceAdminClient::GetInstance(
-    google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
+    google::spanner::admin::instance::v1::GetInstanceRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetInstance(request);
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminClient::CreateInstance(
-    google::spanner::admin::instance::v1::CreateInstanceRequest const&
-        request) {
+    google::spanner::admin::instance::v1::CreateInstanceRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->CreateInstance(request);
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminClient::UpdateInstance(
-    google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-        request) {
+    google::spanner::admin::instance::v1::UpdateInstanceRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->UpdateInstance(request);
 }
 
 Status InstanceAdminClient::DeleteInstance(
-    google::spanner::admin::instance::v1::DeleteInstanceRequest const&
-        request) {
+    google::spanner::admin::instance::v1::DeleteInstanceRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->DeleteInstance(request);
 }
 
 StatusOr<google::iam::v1::Policy> InstanceAdminClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::SetIamPolicyRequest const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy> InstanceAdminClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::GetIamPolicyRequest const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 InstanceAdminClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->TestIamPermissions(request);
 }
 

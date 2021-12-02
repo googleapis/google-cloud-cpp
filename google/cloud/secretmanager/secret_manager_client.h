@@ -21,6 +21,7 @@
 
 #include "google/cloud/secretmanager/secret_manager_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -67,7 +68,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SecretManagerServiceClient {
  public:
   explicit SecretManagerServiceClient(
-      std::shared_ptr<SecretManagerServiceConnection> connection);
+      std::shared_ptr<SecretManagerServiceConnection> connection,
+      Options options = {});
   ~SecretManagerServiceClient();
 
   //@{
@@ -107,7 +109,7 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StreamRange<google::cloud::secretmanager::v1::Secret> ListSecrets(
-      std::string const& parent);
+      std::string const& parent, Options options = {});
 
   ///
   /// Creates a new [Secret][google.cloud.secretmanager.v1.Secret] containing no
@@ -133,7 +135,8 @@ class SecretManagerServiceClient {
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
       std::string const& parent, std::string const& secret_id,
-      google::cloud::secretmanager::v1::Secret const& secret);
+      google::cloud::secretmanager::v1::Secret const& secret,
+      Options options = {});
 
   ///
   /// Creates a new [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]
@@ -156,7 +159,8 @@ class SecretManagerServiceClient {
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> AddSecretVersion(
       std::string const& parent,
-      google::cloud::secretmanager::v1::SecretPayload const& payload);
+      google::cloud::secretmanager::v1::SecretPayload const& payload,
+      Options options = {});
 
   ///
   /// Gets metadata for a given [Secret][google.cloud.secretmanager.v1.Secret].
@@ -173,7 +177,7 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> GetSecret(
-      std::string const& name);
+      std::string const& name, Options options = {});
 
   ///
   /// Updates metadata of an existing
@@ -192,7 +196,7 @@ class SecretManagerServiceClient {
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
       google::cloud::secretmanager::v1::Secret const& secret,
-      google::protobuf::FieldMask const& update_mask);
+      google::protobuf::FieldMask const& update_mask, Options options = {});
 
   ///
   /// Deletes a [Secret][google.cloud.secretmanager.v1.Secret].
@@ -204,7 +208,7 @@ class SecretManagerServiceClient {
   /// [google.cloud.secretmanager.v1.DeleteSecretRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L390}
   ///
-  Status DeleteSecret(std::string const& name);
+  Status DeleteSecret(std::string const& name, Options options = {});
 
   ///
   /// Lists [SecretVersions][google.cloud.secretmanager.v1.SecretVersion]. This
@@ -223,7 +227,7 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StreamRange<google::cloud::secretmanager::v1::SecretVersion>
-  ListSecretVersions(std::string const& parent);
+  ListSecretVersions(std::string const& parent, Options options = {});
 
   ///
   /// Gets metadata for a
@@ -246,7 +250,7 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> GetSecretVersion(
-      std::string const& name);
+      std::string const& name, Options options = {});
 
   ///
   /// Accesses a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -269,7 +273,7 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L378}
   ///
   StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
-  AccessSecretVersion(std::string const& name);
+  AccessSecretVersion(std::string const& name, Options options = {});
 
   ///
   /// Disables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -291,7 +295,7 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  DisableSecretVersion(std::string const& name);
+  DisableSecretVersion(std::string const& name, Options options = {});
 
   ///
   /// Enables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -313,7 +317,7 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
-      std::string const& name);
+      std::string const& name, Options options = {});
 
   ///
   /// Destroys a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -336,7 +340,7 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  DestroySecretVersion(std::string const& name);
+  DestroySecretVersion(std::string const& name, Options options = {});
 
   ///
   /// Lists [Secrets][google.cloud.secretmanager.v1.Secret].
@@ -352,7 +356,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StreamRange<google::cloud::secretmanager::v1::Secret> ListSecrets(
-      google::cloud::secretmanager::v1::ListSecretsRequest request);
+      google::cloud::secretmanager::v1::ListSecretsRequest request,
+      Options options = {});
 
   ///
   /// Creates a new [Secret][google.cloud.secretmanager.v1.Secret] containing no
@@ -369,7 +374,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
-      google::cloud::secretmanager::v1::CreateSecretRequest const& request);
+      google::cloud::secretmanager::v1::CreateSecretRequest const& request,
+      Options options = {});
 
   ///
   /// Creates a new [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]
@@ -387,7 +393,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> AddSecretVersion(
-      google::cloud::secretmanager::v1::AddSecretVersionRequest const& request);
+      google::cloud::secretmanager::v1::AddSecretVersionRequest const& request,
+      Options options = {});
 
   ///
   /// Gets metadata for a given [Secret][google.cloud.secretmanager.v1.Secret].
@@ -403,7 +410,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> GetSecret(
-      google::cloud::secretmanager::v1::GetSecretRequest const& request);
+      google::cloud::secretmanager::v1::GetSecretRequest const& request,
+      Options options = {});
 
   ///
   /// Updates metadata of an existing
@@ -420,7 +428,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
-      google::cloud::secretmanager::v1::UpdateSecretRequest const& request);
+      google::cloud::secretmanager::v1::UpdateSecretRequest const& request,
+      Options options = {});
 
   ///
   /// Deletes a [Secret][google.cloud.secretmanager.v1.Secret].
@@ -432,7 +441,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L390}
   ///
   Status DeleteSecret(
-      google::cloud::secretmanager::v1::DeleteSecretRequest const& request);
+      google::cloud::secretmanager::v1::DeleteSecretRequest const& request,
+      Options options = {});
 
   ///
   /// Lists [SecretVersions][google.cloud.secretmanager.v1.SecretVersion]. This
@@ -450,7 +460,8 @@ class SecretManagerServiceClient {
   ///
   StreamRange<google::cloud::secretmanager::v1::SecretVersion>
   ListSecretVersions(
-      google::cloud::secretmanager::v1::ListSecretVersionsRequest request);
+      google::cloud::secretmanager::v1::ListSecretVersionsRequest request,
+      Options options = {});
 
   ///
   /// Gets metadata for a
@@ -470,7 +481,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> GetSecretVersion(
-      google::cloud::secretmanager::v1::GetSecretVersionRequest const& request);
+      google::cloud::secretmanager::v1::GetSecretVersionRequest const& request,
+      Options options = {});
 
   ///
   /// Accesses a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -492,7 +504,8 @@ class SecretManagerServiceClient {
   StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
   AccessSecretVersion(
       google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
-          request);
+          request,
+      Options options = {});
 
   ///
   /// Disables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -514,7 +527,8 @@ class SecretManagerServiceClient {
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
   DisableSecretVersion(
       google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
-          request);
+          request,
+      Options options = {});
 
   ///
   /// Enables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -535,7 +549,8 @@ class SecretManagerServiceClient {
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
       google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
-          request);
+          request,
+      Options options = {});
 
   ///
   /// Destroys a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -558,7 +573,8 @@ class SecretManagerServiceClient {
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
   DestroySecretVersion(
       google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
-          request);
+          request,
+      Options options = {});
 
   ///
   /// Sets the access control policy on the specified secret. Replaces any
@@ -580,7 +596,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+      google::iam::v1::SetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Gets the access control policy for a secret.
@@ -597,7 +614,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+      google::iam::v1::GetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Returns permissions that a caller has for the specified secret.
@@ -619,10 +637,12 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options options = {});
 
  private:
   std::shared_ptr<SecretManagerServiceConnection> connection_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

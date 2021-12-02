@@ -84,7 +84,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class InstanceAdminClient {
  public:
   explicit InstanceAdminClient(
-      std::shared_ptr<InstanceAdminConnection> connection);
+      std::shared_ptr<InstanceAdminConnection> connection,
+      Options options = {});
   ~InstanceAdminClient();
 
   //@{
@@ -123,7 +124,7 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
-  ListInstanceConfigs(std::string const& parent);
+  ListInstanceConfigs(std::string const& parent, Options options = {});
 
   ///
   /// Gets information about a particular instance configuration.
@@ -140,7 +141,7 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
   StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
-  GetInstanceConfig(std::string const& name);
+  GetInstanceConfig(std::string const& name, Options options = {});
 
   ///
   /// Lists all instances in the given project.
@@ -157,7 +158,7 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
   StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
-      std::string const& parent);
+      std::string const& parent, Options options = {});
 
   ///
   /// Gets information about a particular instance.
@@ -174,7 +175,7 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
-      std::string const& name);
+      std::string const& name, Options options = {});
 
   ///
   /// Creates an instance and begins preparing it to begin serving. The
@@ -231,9 +232,9 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  CreateInstance(
-      std::string const& parent, std::string const& instance_id,
-      google::spanner::admin::instance::v1::Instance const& instance);
+  CreateInstance(std::string const& parent, std::string const& instance_id,
+                 google::spanner::admin::instance::v1::Instance const& instance,
+                 Options options = {});
 
   ///
   /// Updates an instance, and begins allocating or releasing resources
@@ -297,7 +298,8 @@ class InstanceAdminClient {
   ///
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   UpdateInstance(google::spanner::admin::instance::v1::Instance const& instance,
-                 google::protobuf::FieldMask const& field_mask);
+                 google::protobuf::FieldMask const& field_mask,
+                 Options options = {});
 
   ///
   /// Deletes an instance.
@@ -319,7 +321,7 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L565}
   ///
-  Status DeleteInstance(std::string const& name);
+  Status DeleteInstance(std::string const& name, Options options = {});
 
   ///
   /// Sets the access control policy on an instance resource. Replaces any
@@ -345,7 +347,8 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      std::string const& resource, google::iam::v1::Policy const& policy);
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options options = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -390,7 +393,8 @@ class InstanceAdminClient {
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource);
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options options = {});
 
   ///
   /// Returns permissions that the caller has on the specified instance
@@ -418,7 +422,8 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      std::string const& resource, std::vector<std::string> const& permissions);
+      std::string const& resource, std::vector<std::string> const& permissions,
+      Options options = {});
 
   ///
   /// Lists the supported instance configurations for a given project.
@@ -435,7 +440,8 @@ class InstanceAdminClient {
   ///
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
   ListInstanceConfigs(
-      google::spanner::admin::instance::v1::ListInstanceConfigsRequest request);
+      google::spanner::admin::instance::v1::ListInstanceConfigsRequest request,
+      Options options = {});
 
   ///
   /// Gets information about a particular instance configuration.
@@ -453,7 +459,8 @@ class InstanceAdminClient {
   StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
   GetInstanceConfig(
       google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
-          request);
+          request,
+      Options options = {});
 
   ///
   /// Lists all instances in the given project.
@@ -469,7 +476,8 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
   StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
-      google::spanner::admin::instance::v1::ListInstancesRequest request);
+      google::spanner::admin::instance::v1::ListInstancesRequest request,
+      Options options = {});
 
   ///
   /// Gets information about a particular instance.
@@ -485,7 +493,8 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
-      google::spanner::admin::instance::v1::GetInstanceRequest const& request);
+      google::spanner::admin::instance::v1::GetInstanceRequest const& request,
+      Options options = {});
 
   ///
   /// Creates an instance and begins preparing it to begin serving. The
@@ -536,7 +545,8 @@ class InstanceAdminClient {
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   CreateInstance(
       google::spanner::admin::instance::v1::CreateInstanceRequest const&
-          request);
+          request,
+      Options options = {});
 
   ///
   /// Updates an instance, and begins allocating or releasing resources
@@ -593,7 +603,8 @@ class InstanceAdminClient {
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   UpdateInstance(
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-          request);
+          request,
+      Options options = {});
 
   ///
   /// Deletes an instance.
@@ -616,7 +627,8 @@ class InstanceAdminClient {
   ///
   Status DeleteInstance(
       google::spanner::admin::instance::v1::DeleteInstanceRequest const&
-          request);
+          request,
+      Options options = {});
 
   ///
   /// Sets the access control policy on an instance resource. Replaces any
@@ -636,7 +648,8 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+      google::iam::v1::SetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Gets the access control policy for an instance resource. Returns an empty
@@ -656,7 +669,8 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+      google::iam::v1::GetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Returns permissions that the caller has on the specified instance
@@ -678,10 +692,12 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options options = {});
 
  private:
   std::shared_ptr<InstanceAdminConnection> connection_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -27,19 +27,24 @@ namespace cloud {
 namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-IAMClient::IAMClient(std::shared_ptr<IAMConnection> connection)
-    : connection_(std::move(connection)) {}
+IAMClient::IAMClient(std::shared_ptr<IAMConnection> connection, Options options)
+    : connection_(std::move(connection)),
+      options_(iam_internal::IAMDefaultOptions(std::move(options))) {}
 IAMClient::~IAMClient() = default;
 
 StreamRange<google::iam::admin::v1::ServiceAccount>
-IAMClient::ListServiceAccounts(std::string const& name) {
+IAMClient::ListServiceAccounts(std::string const& name, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::admin::v1::ListServiceAccountsRequest request;
   request.set_name(name);
   return connection_->ListServiceAccounts(request);
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount> IAMClient::GetServiceAccount(
-    std::string const& name) {
+    std::string const& name, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::admin::v1::GetServiceAccountRequest request;
   request.set_name(name);
   return connection_->GetServiceAccount(request);
@@ -48,7 +53,10 @@ StatusOr<google::iam::admin::v1::ServiceAccount> IAMClient::GetServiceAccount(
 StatusOr<google::iam::admin::v1::ServiceAccount>
 IAMClient::CreateServiceAccount(
     std::string const& name, std::string const& account_id,
-    google::iam::admin::v1::ServiceAccount const& service_account) {
+    google::iam::admin::v1::ServiceAccount const& service_account,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::admin::v1::CreateServiceAccountRequest request;
   request.set_name(name);
   request.set_account_id(account_id);
@@ -56,7 +64,10 @@ IAMClient::CreateServiceAccount(
   return connection_->CreateServiceAccount(request);
 }
 
-Status IAMClient::DeleteServiceAccount(std::string const& name) {
+Status IAMClient::DeleteServiceAccount(std::string const& name,
+                                       Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::admin::v1::DeleteServiceAccountRequest request;
   request.set_name(name);
   return connection_->DeleteServiceAccount(request);
@@ -67,7 +78,10 @@ IAMClient::ListServiceAccountKeys(
     std::string const& name,
     std::vector<
         google::iam::admin::v1::ListServiceAccountKeysRequest::KeyType> const&
-        key_types) {
+        key_types,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::admin::v1::ListServiceAccountKeysRequest request;
   request.set_name(name);
   *request.mutable_key_types() = {key_types.begin(), key_types.end()};
@@ -77,7 +91,10 @@ IAMClient::ListServiceAccountKeys(
 StatusOr<google::iam::admin::v1::ServiceAccountKey>
 IAMClient::GetServiceAccountKey(
     std::string const& name,
-    google::iam::admin::v1::ServiceAccountPublicKeyType public_key_type) {
+    google::iam::admin::v1::ServiceAccountPublicKeyType public_key_type,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::admin::v1::GetServiceAccountKeyRequest request;
   request.set_name(name);
   request.set_public_key_type(public_key_type);
@@ -88,7 +105,10 @@ StatusOr<google::iam::admin::v1::ServiceAccountKey>
 IAMClient::CreateServiceAccountKey(
     std::string const& name,
     google::iam::admin::v1::ServiceAccountPrivateKeyType private_key_type,
-    google::iam::admin::v1::ServiceAccountKeyAlgorithm key_algorithm) {
+    google::iam::admin::v1::ServiceAccountKeyAlgorithm key_algorithm,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::admin::v1::CreateServiceAccountKeyRequest request;
   request.set_name(name);
   request.set_private_key_type(private_key_type);
@@ -96,21 +116,29 @@ IAMClient::CreateServiceAccountKey(
   return connection_->CreateServiceAccountKey(request);
 }
 
-Status IAMClient::DeleteServiceAccountKey(std::string const& name) {
+Status IAMClient::DeleteServiceAccountKey(std::string const& name,
+                                          Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::admin::v1::DeleteServiceAccountKeyRequest request;
   request.set_name(name);
   return connection_->DeleteServiceAccountKey(request);
 }
 
 StatusOr<google::iam::v1::Policy> IAMClient::GetIamPolicy(
-    std::string const& resource) {
+    std::string const& resource, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy> IAMClient::SetIamPolicy(
-    std::string const& resource, google::iam::v1::Policy const& policy) {
+    std::string const& resource, google::iam::v1::Policy const& policy,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
   *request.mutable_policy() = policy;
@@ -120,8 +148,10 @@ StatusOr<google::iam::v1::Policy> IAMClient::SetIamPolicy(
 StatusOr<google::iam::v1::Policy> IAMClient::SetIamPolicy(
     std::string const& resource, IamUpdater const& updater, Options options) {
   internal::CheckExpectedOptions<IAMBackoffPolicyOption>(options, __func__);
-  options = iam_internal::IAMDefaultOptions(std::move(options));
-  auto backoff_policy = options.get<IAMBackoffPolicyOption>()->clone();
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  auto backoff_policy =
+      internal::CurrentOptions().get<IAMBackoffPolicyOption>()->clone();
   for (;;) {
     auto recent = GetIamPolicy(resource);
     if (!recent) {
@@ -141,7 +171,10 @@ StatusOr<google::iam::v1::Policy> IAMClient::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 IAMClient::TestIamPermissions(std::string const& resource,
-                              std::vector<std::string> const& permissions) {
+                              std::vector<std::string> const& permissions,
+                              Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
   *request.mutable_permissions() = {permissions.begin(), permissions.end()};
@@ -149,7 +182,9 @@ IAMClient::TestIamPermissions(std::string const& resource,
 }
 
 StreamRange<google::iam::admin::v1::Role> IAMClient::QueryGrantableRoles(
-    std::string const& full_resource_name) {
+    std::string const& full_resource_name, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::admin::v1::QueryGrantableRolesRequest request;
   request.set_full_resource_name(full_resource_name);
   return connection_->QueryGrantableRoles(request);
@@ -157,141 +192,211 @@ StreamRange<google::iam::admin::v1::Role> IAMClient::QueryGrantableRoles(
 
 StreamRange<google::iam::admin::v1::ServiceAccount>
 IAMClient::ListServiceAccounts(
-    google::iam::admin::v1::ListServiceAccountsRequest request) {
+    google::iam::admin::v1::ListServiceAccountsRequest request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->ListServiceAccounts(std::move(request));
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount> IAMClient::GetServiceAccount(
-    google::iam::admin::v1::GetServiceAccountRequest const& request) {
+    google::iam::admin::v1::GetServiceAccountRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetServiceAccount(request);
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
 IAMClient::CreateServiceAccount(
-    google::iam::admin::v1::CreateServiceAccountRequest const& request) {
+    google::iam::admin::v1::CreateServiceAccountRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->CreateServiceAccount(request);
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount> IAMClient::PatchServiceAccount(
-    google::iam::admin::v1::PatchServiceAccountRequest const& request) {
+    google::iam::admin::v1::PatchServiceAccountRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->PatchServiceAccount(request);
 }
 
 Status IAMClient::DeleteServiceAccount(
-    google::iam::admin::v1::DeleteServiceAccountRequest const& request) {
+    google::iam::admin::v1::DeleteServiceAccountRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->DeleteServiceAccount(request);
 }
 
 StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
 IAMClient::UndeleteServiceAccount(
-    google::iam::admin::v1::UndeleteServiceAccountRequest const& request) {
+    google::iam::admin::v1::UndeleteServiceAccountRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->UndeleteServiceAccount(request);
 }
 
 Status IAMClient::EnableServiceAccount(
-    google::iam::admin::v1::EnableServiceAccountRequest const& request) {
+    google::iam::admin::v1::EnableServiceAccountRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->EnableServiceAccount(request);
 }
 
 Status IAMClient::DisableServiceAccount(
-    google::iam::admin::v1::DisableServiceAccountRequest const& request) {
+    google::iam::admin::v1::DisableServiceAccountRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->DisableServiceAccount(request);
 }
 
 StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
 IAMClient::ListServiceAccountKeys(
-    google::iam::admin::v1::ListServiceAccountKeysRequest const& request) {
+    google::iam::admin::v1::ListServiceAccountKeysRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->ListServiceAccountKeys(request);
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccountKey>
 IAMClient::GetServiceAccountKey(
-    google::iam::admin::v1::GetServiceAccountKeyRequest const& request) {
+    google::iam::admin::v1::GetServiceAccountKeyRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetServiceAccountKey(request);
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccountKey>
 IAMClient::CreateServiceAccountKey(
-    google::iam::admin::v1::CreateServiceAccountKeyRequest const& request) {
+    google::iam::admin::v1::CreateServiceAccountKeyRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->CreateServiceAccountKey(request);
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccountKey>
 IAMClient::UploadServiceAccountKey(
-    google::iam::admin::v1::UploadServiceAccountKeyRequest const& request) {
+    google::iam::admin::v1::UploadServiceAccountKeyRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->UploadServiceAccountKey(request);
 }
 
 Status IAMClient::DeleteServiceAccountKey(
-    google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request) {
+    google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->DeleteServiceAccountKey(request);
 }
 
 StatusOr<google::iam::v1::Policy> IAMClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::GetIamPolicyRequest const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy> IAMClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::SetIamPolicyRequest const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 IAMClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::iam::admin::v1::Role> IAMClient::QueryGrantableRoles(
-    google::iam::admin::v1::QueryGrantableRolesRequest request) {
+    google::iam::admin::v1::QueryGrantableRolesRequest request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->QueryGrantableRoles(std::move(request));
 }
 
 StreamRange<google::iam::admin::v1::Role> IAMClient::ListRoles(
-    google::iam::admin::v1::ListRolesRequest request) {
+    google::iam::admin::v1::ListRolesRequest request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->ListRoles(std::move(request));
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMClient::GetRole(
-    google::iam::admin::v1::GetRoleRequest const& request) {
+    google::iam::admin::v1::GetRoleRequest const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetRole(request);
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMClient::CreateRole(
-    google::iam::admin::v1::CreateRoleRequest const& request) {
+    google::iam::admin::v1::CreateRoleRequest const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->CreateRole(request);
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMClient::UpdateRole(
-    google::iam::admin::v1::UpdateRoleRequest const& request) {
+    google::iam::admin::v1::UpdateRoleRequest const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->UpdateRole(request);
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMClient::DeleteRole(
-    google::iam::admin::v1::DeleteRoleRequest const& request) {
+    google::iam::admin::v1::DeleteRoleRequest const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->DeleteRole(request);
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMClient::UndeleteRole(
-    google::iam::admin::v1::UndeleteRoleRequest const& request) {
+    google::iam::admin::v1::UndeleteRoleRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->UndeleteRole(request);
 }
 
 StreamRange<google::iam::admin::v1::Permission>
 IAMClient::QueryTestablePermissions(
-    google::iam::admin::v1::QueryTestablePermissionsRequest request) {
+    google::iam::admin::v1::QueryTestablePermissionsRequest request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->QueryTestablePermissions(std::move(request));
 }
 
 StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
 IAMClient::QueryAuditableServices(
-    google::iam::admin::v1::QueryAuditableServicesRequest const& request) {
+    google::iam::admin::v1::QueryAuditableServicesRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->QueryAuditableServices(request);
 }
 
 StatusOr<google::iam::admin::v1::LintPolicyResponse> IAMClient::LintPolicy(
-    google::iam::admin::v1::LintPolicyRequest const& request) {
+    google::iam::admin::v1::LintPolicyRequest const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->LintPolicy(request);
 }
 
