@@ -331,25 +331,20 @@ google_cloud_cpp_grpcpp_library(
 external_googleapis_set_version_and_alias(bigtable_protos)
 target_link_libraries(google_cloud_cpp_bigtable_protos PUBLIC ${bigtable_deps})
 
-# TODO(#5660) - protobuf + gcc<6 + deprecated enums do not compile
-if (NOT (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-         AND (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.0)))
+google_cloud_cpp_load_protolist(cloud_dialogflow_v2_list
+                                "protolists/dialogflow.list")
+google_cloud_cpp_load_protodeps(cloud_dialogflow_v2_deps
+                                "protodeps/dialogflow.deps")
+google_cloud_cpp_grpcpp_library(
+    google_cloud_cpp_cloud_dialogflow_v2_protos ${cloud_dialogflow_v2_list}
+    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    "${PROTO_INCLUDE_DIR}")
+external_googleapis_set_version_and_alias(cloud_dialogflow_v2_protos)
+target_link_libraries(google_cloud_cpp_cloud_dialogflow_v2_protos
+                      PUBLIC ${cloud_dialogflow_v2_deps})
 
-    google_cloud_cpp_load_protolist(cloud_dialogflow_v2_list
-                                    "protolists/dialogflow.list")
-    google_cloud_cpp_load_protodeps(cloud_dialogflow_v2_deps
-                                    "protodeps/dialogflow.deps")
-    google_cloud_cpp_grpcpp_library(
-        google_cloud_cpp_cloud_dialogflow_v2_protos ${cloud_dialogflow_v2_list}
-        PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-        "${PROTO_INCLUDE_DIR}")
-    external_googleapis_set_version_and_alias(cloud_dialogflow_v2_protos)
-    target_link_libraries(google_cloud_cpp_cloud_dialogflow_v2_protos
-                          PUBLIC ${cloud_dialogflow_v2_deps})
-
-    list(APPEND external_googleapis_installed_libraries_list
-         google_cloud_cpp_cloud_dialogflow_v2_protos)
-endif ()
+list(APPEND external_googleapis_installed_libraries_list
+     google_cloud_cpp_cloud_dialogflow_v2_protos)
 
 google_cloud_cpp_load_protolist(cloud_speech_list "protolists/speech.list")
 google_cloud_cpp_load_protodeps(cloud_speech_deps "protodeps/speech.deps")
