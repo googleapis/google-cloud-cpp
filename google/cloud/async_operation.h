@@ -22,6 +22,7 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
  * The result of an async timer operation.
  *
@@ -59,6 +60,10 @@ namespace internal {
  * hides it in a class derived from `AsyncOperation`. A shared pointer to the
  * `AsyncOperation` is returned by the completion queue so library developers
  * can cancel the operation if needed.
+ *
+ * @note Sub-classes of `AsyncGrpcOperation` should snapshot the prevailing
+ *     `Options` during construction, and restore them using an `OptionsSpan`
+ *     during `Notify()` and `Cancel()` callbacks.
  */
 class AsyncGrpcOperation : public AsyncOperation {
  public:
