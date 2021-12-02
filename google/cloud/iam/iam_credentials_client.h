@@ -21,6 +21,7 @@
 
 #include "google/cloud/iam/iam_credentials_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -69,7 +70,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IAMCredentialsClient {
  public:
   explicit IAMCredentialsClient(
-      std::shared_ptr<IAMCredentialsConnection> connection);
+      std::shared_ptr<IAMCredentialsConnection> connection,
+      Options options = {});
   ~IAMCredentialsClient();
 
   //@{
@@ -121,6 +123,7 @@ class IAMCredentialsClient {
   ///  Must be set to a value less than or equal to 3600 (1 hour). If a value is
   ///  not specified, the token's lifetime will be set to a default value of one
   ///  hour.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L72}
   ///
@@ -133,7 +136,8 @@ class IAMCredentialsClient {
   GenerateAccessToken(std::string const& name,
                       std::vector<std::string> const& delegates,
                       std::vector<std::string> const& scope,
-                      google::protobuf::Duration const& lifetime);
+                      google::protobuf::Duration const& lifetime,
+                      Options options = {});
 
   ///
   /// Generates an OpenID Connect ID token for a service account.
@@ -161,6 +165,7 @@ class IAMCredentialsClient {
   /// @param include_email  Include the service account email in the token. If
   /// set to `true`, the
   ///  token will contain `email` and `email_verified` claims.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L186}
   ///
@@ -172,7 +177,8 @@ class IAMCredentialsClient {
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(std::string const& name,
                   std::vector<std::string> const& delegates,
-                  std::string const& audience, bool include_email);
+                  std::string const& audience, bool include_email,
+                  Options options = {});
 
   ///
   /// Signs a blob using a service account's system-managed private key.
@@ -195,6 +201,7 @@ class IAMCredentialsClient {
   ///  wildcard character is required; replacing it with a project ID is
   ///  invalid.
   /// @param payload  Required. The bytes to sign.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L109}
   ///
@@ -205,7 +212,7 @@ class IAMCredentialsClient {
   ///
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
       std::string const& name, std::vector<std::string> const& delegates,
-      std::string const& payload);
+      std::string const& payload, Options options = {});
 
   ///
   /// Signs a JWT using a service account's system-managed private key.
@@ -229,6 +236,7 @@ class IAMCredentialsClient {
   ///  invalid.
   /// @param payload  Required. The JWT payload to sign: a JSON object that
   /// contains a JWT Claims Set.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L145}
   ///
@@ -239,13 +247,14 @@ class IAMCredentialsClient {
   ///
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
       std::string const& name, std::vector<std::string> const& delegates,
-      std::string const& payload);
+      std::string const& payload, Options options = {});
 
   ///
   /// Generates an OAuth 2.0 access token for a service account.
   ///
   /// @param request
   /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenRequest,google/iam/credentials/v1/common.proto#L35}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L72}
   ///
@@ -256,13 +265,15 @@ class IAMCredentialsClient {
   ///
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
-      google::iam::credentials::v1::GenerateAccessTokenRequest const& request);
+      google::iam::credentials::v1::GenerateAccessTokenRequest const& request,
+      Options options = {});
 
   ///
   /// Generates an OpenID Connect ID token for a service account.
   ///
   /// @param request
   /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenRequest,google/iam/credentials/v1/common.proto#L153}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L186}
   ///
@@ -273,13 +284,15 @@ class IAMCredentialsClient {
   ///
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(
-      google::iam::credentials::v1::GenerateIdTokenRequest const& request);
+      google::iam::credentials::v1::GenerateIdTokenRequest const& request,
+      Options options = {});
 
   ///
   /// Signs a blob using a service account's system-managed private key.
   ///
   /// @param request
   /// @googleapis_link{google::iam::credentials::v1::SignBlobRequest,google/iam/credentials/v1/common.proto#L81}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L109}
   ///
@@ -289,13 +302,15 @@ class IAMCredentialsClient {
   /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L109}
   ///
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
-      google::iam::credentials::v1::SignBlobRequest const& request);
+      google::iam::credentials::v1::SignBlobRequest const& request,
+      Options options = {});
 
   ///
   /// Signs a JWT using a service account's system-managed private key.
   ///
   /// @param request
   /// @googleapis_link{google::iam::credentials::v1::SignJwtRequest,google/iam/credentials/v1/common.proto#L117}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L145}
   ///
@@ -305,10 +320,12 @@ class IAMCredentialsClient {
   /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L145}
   ///
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
-      google::iam::credentials::v1::SignJwtRequest const& request);
+      google::iam::credentials::v1::SignJwtRequest const& request,
+      Options options = {});
 
  private:
   std::shared_ptr<IAMCredentialsConnection> connection_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

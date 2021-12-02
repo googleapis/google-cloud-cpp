@@ -442,6 +442,8 @@ std::string FormatMethodCommentsFromRpcComments(
   } else {
     parameter_comment_string = FormatProtobufRequestParameters(method);
   }
+  parameter_comment_string +=
+      absl::StrFormat("  /// @param options  Optional. Operation options.\n");
 
   std::string doxygen_formatted_function_comments = absl::StrReplaceAll(
       EscapePrinterDelimiter(method_source_location.leading_comments),

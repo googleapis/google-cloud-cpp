@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CloudTasksClient {
  public:
-  explicit CloudTasksClient(std::shared_ptr<CloudTasksConnection> connection);
+  explicit CloudTasksClient(std::shared_ptr<CloudTasksConnection> connection,
+                            Options options = {});
   ~CloudTasksClient();
 
   //@{
@@ -90,6 +91,7 @@ class CloudTasksClient {
   ///
   /// @param parent  Required. The location name.
   ///  For example: `projects/PROJECT_ID/locations/LOCATION_ID`
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -99,13 +101,14 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
   ///
   StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
-      std::string const& parent);
+      std::string const& parent, Options options = {});
 
   ///
   /// Gets a queue.
   ///
   /// @param name  Required. The resource name of the queue. For example:
   ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -114,7 +117,8 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
   ///
-  StatusOr<google::cloud::tasks::v2::Queue> GetQueue(std::string const& name);
+  StatusOr<google::cloud::tasks::v2::Queue> GetQueue(std::string const& name,
+                                                     Options options = {});
 
   ///
   /// Creates a queue.
@@ -138,6 +142,7 @@ class CloudTasksClient {
   /// @param queue  Required. The queue to create.
   ///  [Queue's name][google.cloud.tasks.v2.Queue.name] cannot be the same as an
   ///  existing queue.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -147,7 +152,8 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
-      std::string const& parent, google::cloud::tasks::v2::Queue const& queue);
+      std::string const& parent, google::cloud::tasks::v2::Queue const& queue,
+      Options options = {});
 
   ///
   /// Updates a queue.
@@ -173,6 +179,7 @@ class CloudTasksClient {
   /// @param update_mask  A mask used to specify which fields of the queue are
   /// being updated.
   ///  If empty, then all fields will be updated.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -183,7 +190,7 @@ class CloudTasksClient {
   ///
   StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
       google::cloud::tasks::v2::Queue const& queue,
-      google::protobuf::FieldMask const& update_mask);
+      google::protobuf::FieldMask const& update_mask, Options options = {});
 
   ///
   /// Deletes a queue.
@@ -201,11 +208,12 @@ class CloudTasksClient {
   ///
   /// @param name  Required. The queue name. For example:
   ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`
+  /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.tasks.v2.DeleteQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L419}
   ///
-  Status DeleteQueue(std::string const& name);
+  Status DeleteQueue(std::string const& name, Options options = {});
 
   ///
   /// Purges a queue by deleting all of its tasks.
@@ -218,6 +226,7 @@ class CloudTasksClient {
   ///
   /// @param name  Required. The queue name. For example:
   ///  `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -226,7 +235,8 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
   ///
-  StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(std::string const& name);
+  StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(std::string const& name,
+                                                       Options options = {});
 
   ///
   /// Pauses the queue.
@@ -240,6 +250,7 @@ class CloudTasksClient {
   ///
   /// @param name  Required. The queue name. For example:
   ///  `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -248,7 +259,8 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
   ///
-  StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(std::string const& name);
+  StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(std::string const& name,
+                                                       Options options = {});
 
   ///
   /// Resume a queue.
@@ -268,6 +280,7 @@ class CloudTasksClient {
   ///
   /// @param name  Required. The queue name. For example:
   ///  `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -276,8 +289,8 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
   ///
-  StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(
-      std::string const& name);
+  StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(std::string const& name,
+                                                        Options options = {});
 
   ///
   /// Gets the access control policy for a [Queue][google.cloud.tasks.v2.Queue].
@@ -293,6 +306,7 @@ class CloudTasksClient {
   /// @param resource  REQUIRED: The resource for which the policy is being
   /// requested.
   ///  See the operation documentation for the appropriate value for this field.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -301,7 +315,8 @@ class CloudTasksClient {
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource);
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options options = {});
 
   ///
   /// Sets the access control policy for a [Queue][google.cloud.tasks.v2.Queue].
@@ -324,6 +339,7 @@ class CloudTasksClient {
   ///  the policy is limited to a few 10s of KB. An empty policy is a
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -333,7 +349,8 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      std::string const& resource, google::iam::v1::Policy const& policy);
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options options = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -378,6 +395,7 @@ class CloudTasksClient {
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -387,7 +405,8 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      std::string const& resource, std::vector<std::string> const& permissions);
+      std::string const& resource, std::vector<std::string> const& permissions,
+      Options options = {});
 
   ///
   /// Lists the tasks in a queue.
@@ -402,6 +421,7 @@ class CloudTasksClient {
   ///
   /// @param parent  Required. The queue name. For example:
   ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///
@@ -411,13 +431,14 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
   ///
   StreamRange<google::cloud::tasks::v2::Task> ListTasks(
-      std::string const& parent);
+      std::string const& parent, Options options = {});
 
   ///
   /// Gets a task.
   ///
   /// @param name  Required. The task name. For example:
   ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///
@@ -426,7 +447,8 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Task]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
   ///
-  StatusOr<google::cloud::tasks::v2::Task> GetTask(std::string const& name);
+  StatusOr<google::cloud::tasks::v2::Task> GetTask(std::string const& name,
+                                                   Options options = {});
 
   ///
   /// Creates a task and adds it to a queue.
@@ -465,6 +487,7 @@ class CloudTasksClient {
   ///  task commands. The infrastructure relies on an approximately
   ///  uniform distribution of task ids to store and serve tasks
   ///  efficiently.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///
@@ -474,7 +497,8 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
   ///
   StatusOr<google::cloud::tasks::v2::Task> CreateTask(
-      std::string const& parent, google::cloud::tasks::v2::Task const& task);
+      std::string const& parent, google::cloud::tasks::v2::Task const& task,
+      Options options = {});
 
   ///
   /// Deletes a task.
@@ -485,11 +509,12 @@ class CloudTasksClient {
   ///
   /// @param name  Required. The task name. For example:
   ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`
+  /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.tasks.v2.DeleteTaskRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L619}
   ///
-  Status DeleteTask(std::string const& name);
+  Status DeleteTask(std::string const& name, Options options = {});
 
   ///
   /// Forces a task to run now.
@@ -521,6 +546,7 @@ class CloudTasksClient {
   ///
   /// @param name  Required. The task name. For example:
   ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///
@@ -529,7 +555,8 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Task]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
   ///
-  StatusOr<google::cloud::tasks::v2::Task> RunTask(std::string const& name);
+  StatusOr<google::cloud::tasks::v2::Task> RunTask(std::string const& name,
+                                                   Options options = {});
 
   ///
   /// Lists queues.
@@ -538,6 +565,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::ListQueuesRequest,google/cloud/tasks/v2/cloudtasks.proto#L308}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -547,13 +575,15 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
   ///
   StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
-      google::cloud::tasks::v2::ListQueuesRequest request);
+      google::cloud::tasks::v2::ListQueuesRequest request,
+      Options options = {});
 
   ///
   /// Gets a queue.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::GetQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L369}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -563,7 +593,8 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> GetQueue(
-      google::cloud::tasks::v2::GetQueueRequest const& request);
+      google::cloud::tasks::v2::GetQueueRequest const& request,
+      Options options = {});
 
   ///
   /// Creates a queue.
@@ -580,6 +611,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::CreateQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L381}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -589,7 +621,8 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
-      google::cloud::tasks::v2::CreateQueueRequest const& request);
+      google::cloud::tasks::v2::CreateQueueRequest const& request,
+      Options options = {});
 
   ///
   /// Updates a queue.
@@ -609,6 +642,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::UpdateQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L402}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -618,7 +652,8 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
-      google::cloud::tasks::v2::UpdateQueueRequest const& request);
+      google::cloud::tasks::v2::UpdateQueueRequest const& request,
+      Options options = {});
 
   ///
   /// Deletes a queue.
@@ -636,12 +671,14 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::DeleteQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L419}
+  /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.tasks.v2.DeleteQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L419}
   ///
   Status DeleteQueue(
-      google::cloud::tasks::v2::DeleteQueueRequest const& request);
+      google::cloud::tasks::v2::DeleteQueueRequest const& request,
+      Options options = {});
 
   ///
   /// Purges a queue by deleting all of its tasks.
@@ -654,6 +691,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::PurgeQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L431}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -663,7 +701,8 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(
-      google::cloud::tasks::v2::PurgeQueueRequest const& request);
+      google::cloud::tasks::v2::PurgeQueueRequest const& request,
+      Options options = {});
 
   ///
   /// Pauses the queue.
@@ -677,6 +716,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::PauseQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L443}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -686,7 +726,8 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(
-      google::cloud::tasks::v2::PauseQueueRequest const& request);
+      google::cloud::tasks::v2::PauseQueueRequest const& request,
+      Options options = {});
 
   ///
   /// Resume a queue.
@@ -706,6 +747,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::ResumeQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L455}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -715,7 +757,8 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(
-      google::cloud::tasks::v2::ResumeQueueRequest const& request);
+      google::cloud::tasks::v2::ResumeQueueRequest const& request,
+      Options options = {});
 
   ///
   /// Gets the access control policy for a [Queue][google.cloud.tasks.v2.Queue].
@@ -730,6 +773,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -739,7 +783,8 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+      google::iam::v1::GetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Sets the access control policy for a [Queue][google.cloud.tasks.v2.Queue].
@@ -756,6 +801,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -765,7 +811,8 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+      google::iam::v1::SetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Returns permissions that a caller has on a
@@ -779,6 +826,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -788,7 +836,8 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options options = {});
 
   ///
   /// Lists the tasks in a queue.
@@ -803,6 +852,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::ListTasksRequest,google/cloud/tasks/v2/cloudtasks.proto#L467}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///
@@ -812,13 +862,14 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
   ///
   StreamRange<google::cloud::tasks::v2::Task> ListTasks(
-      google::cloud::tasks::v2::ListTasksRequest request);
+      google::cloud::tasks::v2::ListTasksRequest request, Options options = {});
 
   ///
   /// Gets a task.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::GetTaskRequest,google/cloud/tasks/v2/cloudtasks.proto#L529}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///
@@ -828,7 +879,8 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
   ///
   StatusOr<google::cloud::tasks::v2::Task> GetTask(
-      google::cloud::tasks::v2::GetTaskRequest const& request);
+      google::cloud::tasks::v2::GetTaskRequest const& request,
+      Options options = {});
 
   ///
   /// Creates a task and adds it to a queue.
@@ -839,6 +891,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::CreateTaskRequest,google/cloud/tasks/v2/cloudtasks.proto#L555}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///
@@ -848,7 +901,8 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
   ///
   StatusOr<google::cloud::tasks::v2::Task> CreateTask(
-      google::cloud::tasks::v2::CreateTaskRequest const& request);
+      google::cloud::tasks::v2::CreateTaskRequest const& request,
+      Options options = {});
 
   ///
   /// Deletes a task.
@@ -859,11 +913,13 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::DeleteTaskRequest,google/cloud/tasks/v2/cloudtasks.proto#L619}
+  /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.tasks.v2.DeleteTaskRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L619}
   ///
-  Status DeleteTask(google::cloud::tasks::v2::DeleteTaskRequest const& request);
+  Status DeleteTask(google::cloud::tasks::v2::DeleteTaskRequest const& request,
+                    Options options = {});
 
   ///
   /// Forces a task to run now.
@@ -895,6 +951,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::RunTaskRequest,google/cloud/tasks/v2/cloudtasks.proto#L632}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///
@@ -904,10 +961,12 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
   ///
   StatusOr<google::cloud::tasks::v2::Task> RunTask(
-      google::cloud::tasks::v2::RunTaskRequest const& request);
+      google::cloud::tasks::v2::RunTaskRequest const& request,
+      Options options = {});
 
  private:
   std::shared_ptr<CloudTasksConnection> connection_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

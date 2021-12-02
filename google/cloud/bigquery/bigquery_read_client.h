@@ -21,6 +21,7 @@
 
 #include "google/cloud/bigquery/bigquery_read_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -62,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BigQueryReadClient {
  public:
   explicit BigQueryReadClient(
-      std::shared_ptr<BigQueryReadConnection> connection);
+      std::shared_ptr<BigQueryReadConnection> connection, Options options = {});
   ~BigQueryReadClient();
 
   //@{
@@ -118,6 +119,7 @@ class BigQueryReadClient {
   ///  table. Error will be returned if the max count is greater than the
   ///  current system max limit of 1,000. Streams must be read starting from
   ///  offset 0.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadSession,google/cloud/bigquery/storage/v1/stream.proto#L47}
   ///
@@ -129,7 +131,7 @@ class BigQueryReadClient {
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       std::string const& parent,
       google::cloud::bigquery::storage::v1::ReadSession const& read_session,
-      std::int32_t max_stream_count);
+      std::int32_t max_stream_count, Options options = {});
 
   ///
   /// Reads rows from the stream in the format prescribed by the ReadSession.
@@ -145,6 +147,7 @@ class BigQueryReadClient {
   /// from Read.
   ///  Requesting a larger offset is undefined. If not specified, start reading
   ///  from offset zero.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L304}
   ///
@@ -154,7 +157,8 @@ class BigQueryReadClient {
   /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L304}
   ///
   StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
-      std::string const& read_stream, std::int64_t offset);
+      std::string const& read_stream, std::int64_t offset,
+      Options options = {});
 
   ///
   /// Creates a new read session. A read session divides the contents of a
@@ -179,6 +183,7 @@ class BigQueryReadClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::bigquery::storage::v1::CreateReadSessionRequest,google/cloud/bigquery/storage/v1/storage.proto#L229}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadSession,google/cloud/bigquery/storage/v1/stream.proto#L47}
   ///
@@ -189,7 +194,8 @@ class BigQueryReadClient {
   ///
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
-          request);
+          request,
+      Options options = {});
 
   ///
   /// Reads rows from the stream in the format prescribed by the ReadSession.
@@ -202,6 +208,7 @@ class BigQueryReadClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsRequest,google/cloud/bigquery/storage/v1/storage.proto#L254}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L304}
   ///
@@ -211,7 +218,8 @@ class BigQueryReadClient {
   /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L304}
   ///
   StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
-      google::cloud::bigquery::storage::v1::ReadRowsRequest const& request);
+      google::cloud::bigquery::storage::v1::ReadRowsRequest const& request,
+      Options options = {});
 
   ///
   /// Splits a given `ReadStream` into two `ReadStream` objects. These
@@ -229,6 +237,7 @@ class BigQueryReadClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::bigquery::storage::v1::SplitReadStreamRequest,google/cloud/bigquery/storage/v1/storage.proto#L339}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::SplitReadStreamResponse,google/cloud/bigquery/storage/v1/storage.proto#L359}
   ///
@@ -240,10 +249,12 @@ class BigQueryReadClient {
   StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
   SplitReadStream(
       google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
-          request);
+          request,
+      Options options = {});
 
  private:
   std::shared_ptr<BigQueryReadConnection> connection_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -503,6 +503,7 @@ TEST_F(CreateMethodVarsTest,
   /// Leading comments about rpc Method0$$.
   ///
   /// @param request @googleapis_link{google::protobuf::Bar,google/foo/v1/service.proto#L14}
+  /// @param options  Optional. Operation options.
   ///
 )"""));
 }
@@ -518,6 +519,7 @@ TEST_F(CreateMethodVarsTest,
   /// Leading comments about rpc $$Method6.
   ///
   /// @param labels  labels $$field comment.
+  /// @param options  Optional. Operation options.
   ///
 )"""));
 }
