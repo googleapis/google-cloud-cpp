@@ -115,6 +115,7 @@ class GoldenKitchenSinkClient {
   ///  Must be set to a value less than or equal to 3600 (1 hour). If a value is
   ///  not specified, the token's lifetime will be set to a default value of one
   ///  hour.
+  /// @param options  Optional. Operation options.
   /// @return @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenResponse,generator/integration_tests/test.proto#L872}
   ///
   /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L835}
@@ -143,6 +144,7 @@ class GoldenKitchenSinkClient {
   ///  grants access to.
   /// @param include_email  Include the service account email in the token. If set to `true`, the
   ///  token will contain `email` and `email_verified` claims.
+  /// @param options  Optional. Operation options.
   /// @return @googleapis_link{google::test::admin::database::v1::GenerateIdTokenResponse,generator/integration_tests/test.proto#L914}
   ///
   /// [google.test.admin.database.v1.GenerateIdTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L881}
@@ -177,6 +179,7 @@ class GoldenKitchenSinkClient {
   ///  entries in `entries`. If a log entry already has a label with the same key
   ///  as a label in this parameter, then the log entry's label is not changed.
   ///  See [LogEntry][google.logging.v2.LogEntry]. Test delimiter$
+  /// @param options  Optional. Operation options.
   /// @return @googleapis_link{google::test::admin::database::v1::WriteLogEntriesResponse,generator/integration_tests/test.proto#L953}
   ///
   /// [google.test.admin.database.v1.WriteLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L920}
@@ -194,6 +197,7 @@ class GoldenKitchenSinkClient {
   ///      "organizations/[ORGANIZATION_ID]"
   ///      "billingAccounts/[BILLING_ACCOUNT_ID]"
   ///      "folders/[FOLDER_ID]"
+  /// @param options  Optional. Operation options.
   /// @return std::string
   ///
   /// [google.test.admin.database.v1.ListLogsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L956}
@@ -215,6 +219,7 @@ class GoldenKitchenSinkClient {
   ///      "organization/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
   ///      "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
   ///      "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
+  /// @param options  Optional. Operation options.
   /// @return @googleapis_link{google::test::admin::database::v1::TailLogEntriesResponse,generator/integration_tests/test.proto#L1214}
   ///
   /// [google.test.admin.database.v1.TailLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1182}
@@ -234,6 +239,7 @@ class GoldenKitchenSinkClient {
   /// @param key_types  Filters the types of keys the user wants to include in the list
   ///  response. Duplicate key types are not allowed. If no key type
   ///  is provided, all keys are returned.
+  /// @param options  Optional. Operation options.
   /// @return @googleapis_link{google::test::admin::database::v1::ListServiceAccountKeysResponse,generator/integration_tests/test.proto#L1286}
   ///
   /// [google.test.admin.database.v1.ListServiceAccountKeysRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1254}
@@ -246,6 +252,7 @@ class GoldenKitchenSinkClient {
   /// Generates an OAuth 2.0 access token for a service account.
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenRequest,generator/integration_tests/test.proto#L835}
+  /// @param options  Optional. Operation options.
   /// @return @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenResponse,generator/integration_tests/test.proto#L872}
   ///
   /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L835}
@@ -258,6 +265,7 @@ class GoldenKitchenSinkClient {
   /// Generates an OpenID Connect ID token for a service account.
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::GenerateIdTokenRequest,generator/integration_tests/test.proto#L881}
+  /// @param options  Optional. Operation options.
   /// @return @googleapis_link{google::test::admin::database::v1::GenerateIdTokenResponse,generator/integration_tests/test.proto#L914}
   ///
   /// [google.test.admin.database.v1.GenerateIdTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L881}
@@ -276,6 +284,7 @@ class GoldenKitchenSinkClient {
   /// folders)
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::WriteLogEntriesRequest,generator/integration_tests/test.proto#L920}
+  /// @param options  Optional. Operation options.
   /// @return @googleapis_link{google::test::admin::database::v1::WriteLogEntriesResponse,generator/integration_tests/test.proto#L953}
   ///
   /// [google.test.admin.database.v1.WriteLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L920}
@@ -289,6 +298,7 @@ class GoldenKitchenSinkClient {
   /// Only logs that have entries are listed.
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::ListLogsRequest,generator/integration_tests/test.proto#L956}
+  /// @param options  Optional. Operation options.
   /// @return std::string
   ///
   /// [google.test.admin.database.v1.ListLogsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L956}
@@ -301,6 +311,7 @@ class GoldenKitchenSinkClient {
   /// terminated, it will continue reading logs.
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::TailLogEntriesRequest,generator/integration_tests/test.proto#L1182}
+  /// @param options  Optional. Operation options.
   /// @return @googleapis_link{google::test::admin::database::v1::TailLogEntriesResponse,generator/integration_tests/test.proto#L1214}
   ///
   /// [google.test.admin.database.v1.TailLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1182}
@@ -313,6 +324,7 @@ class GoldenKitchenSinkClient {
   /// Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for a service account.
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::ListServiceAccountKeysRequest,generator/integration_tests/test.proto#L1254}
+  /// @param options  Optional. Operation options.
   /// @return @googleapis_link{google::test::admin::database::v1::ListServiceAccountKeysResponse,generator/integration_tests/test.proto#L1286}
   ///
   /// [google.test.admin.database.v1.ListServiceAccountKeysRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1254}
