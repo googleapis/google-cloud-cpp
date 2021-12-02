@@ -28,12 +28,6 @@ project(
     VERSION 1.35.0
     LANGUAGES CXX C)
 
-# Configure the Compiler options, we use C++11 features by default.
-set(GOOGLE_CLOUD_CPP_CXX_STANDARD
-    ""
-    CACHE STRING "Unused. Prefer CMAKE_CXX_STANDARD")
-mark_as_advanced(GOOGLE_CLOUD_CPP_CXX_STANDARD)
-
 # Allow applications to override the CMAKE_CXX_STANDARD, but if not set use 11.
 if (NOT CMAKE_CXX_STANDARD)
     set(CMAKE_CXX_STANDARD 11)
@@ -46,33 +40,37 @@ endif ()
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (NOT ("${GOOGLE_CLOUD_CPP_CXX_STANDARD}" STREQUAL ""))
-    message(
-        WARNING
-            "GOOGLE_CLOUD_CPP_CXX_STANDARD is retired, use CMAKE_CXX_STANDARD")
-endif ()
-
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
-    # GCC >= 5.4 is required by Abseil, so we must require it too.
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.4)
+    # GCC >= 5.1 is required by Abseil, so we must require it too. We only test
+    # with >= 6.3 because that is easy to install in our CI systems.
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.1)
         message(
             FATAL_ERROR
-                "GCC version must be at least 5.4. Older versions"
-                " either lack C++11 support or have bugs that prevent us from"
-                " using them.")
+                "GCC version must be at least 5.1. Older versions either lack"
+                " C++11 support or are not supported by some of our"
+                " dependencies.")
+    elseif (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.3)
+        message(
+            WARNING "The `google-cloud-cpp` library is tested with GCC >= 6.3."
+                    " We will consider patches for older versions.")
     endif ()
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 
     # Clang > 3.8 is required by the versions of protobuf that can compile
     # googleapis protos. We only test with >= 6.0 because that is easy to
     # install in our CI systems.
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.0)
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.0)
         message(
             FATAL_ERROR
-                "Clang version must be at least 6.0. Older versions"
-                " either lack C++11 support or have bugs that prevent us from"
-                " using them.")
+                "Clang version must be at least 4.0. Older versions either lack"
+                " C++11 support or are not supported by some of our"
+                " dependencies.")
+    elseif (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.0)
+        message(
+            WARNING
+                "The `google-cloud-cpp` library is tested with Clang >= 6.0."
+                " We will consider patches for older versions.")
     endif ()
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 
@@ -91,14 +89,14 @@ include(SelectMSVCRuntime)
 option(GOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK
        "If enabled, check that the user has defined OPENSSL_ROOT_DIR on macOS"
        ON)
-if (APPLE)
-    # This is an easy mistake to make, and the error messages are very
-    # confusing. Help our users by giving them some guidance.
-    if ("${GOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK}"
-        AND NOT DEFINED ENV{OPENSSL_ROOT_DIR})
-        message(
-            FATAL_ERROR
-                [===[
+# This is an easy mistake to make, and the error messages are very confusing.
+# Help our users by giving them some guidance.
+if (APPLE
+    AND GOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK
+    AND NOT DEFINED ENV{OPENSSL_ROOT_DIR})
+    message(
+        FATAL_ERROR
+            [===[
 The Google Cloud C++ client libraries use the native OpenSSL library. In most
 macOS systems, you need to set the OPENSSL_ROOT_DIR environment variable to find
 this dependency, for example:
@@ -112,11 +110,9 @@ require setting OPENSSL_ROOT_DIR, you can disable this check using:
 cmake -DGOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK=OFF ...
 
 ]===])
-    endif ()
-endif (APPLE)
+endif ()
 
-# If ccache is installed use it for the build. This makes the Travis
-# configuration agnostic as to wether ccache is installed or not.
+# If ccache is installed use it for the build.
 option(GOOGLE_CLOUD_CPP_ENABLE_CCACHE "Automatically use ccache if available"
        ON)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_CCACHE)
@@ -135,14 +131,6 @@ endif ()
 option(GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN "Generate Doxygen documentation" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
 
-# The default source for dependencies.
-set(GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
-    "unused"
-    CACHE STRING "This option is no longer used.")
-set_property(CACHE GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
-             PROPERTY STRINGS "external" "package" "unused")
-mark_as_advanced(GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER)
-
 # Generate docs with relative URLs matching with the directory structure on
 # googleapis.dev hosting.
 option(GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV
@@ -153,8 +141,6 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV)
 option(GOOGLE_CLOUD_CPP_USE_MAIN_FOR_REFDOC_LINKS
        "Use main as the version part for refdoc relative links" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_USE_MAIN_FOR_REFDOC_LINKS)
-
-set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
 
 include(CMakeDependentOption)
 
@@ -301,3 +287,19 @@ if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES
     AND storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     add_subdirectory(google/cloud/examples)
 endif ()
+
+# Obsolete / retired flags and options. Removing them just cleans up a bit of
+# our code at the cost of breaking customers, while putting them here makes them
+# basically invisible to us.
+set(GOOGLE_CLOUD_CPP_CXX_STANDARD
+    ""
+    CACHE STRING "Unused. Prefer CMAKE_CXX_STANDARD")
+mark_as_advanced(GOOGLE_CLOUD_CPP_CXX_STANDARD)
+
+# The default source for dependencies.
+set(GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
+    "unused"
+    CACHE STRING "This option is no longer used.")
+set_property(CACHE GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
+             PROPERTY STRINGS "external" "package" "unused")
+mark_as_advanced(GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER)
