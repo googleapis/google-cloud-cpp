@@ -115,6 +115,7 @@ class InstanceAdminClient {
   /// supported instance
   ///  configurations is requested. Values are of the form
   ///  `projects/<project>`.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
@@ -132,6 +133,7 @@ class InstanceAdminClient {
   /// @param name  Required. The name of the requested instance configuration.
   /// Values are of
   ///  the form `projects/<project>/instanceConfigs/<config>`.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
@@ -149,6 +151,7 @@ class InstanceAdminClient {
   /// @param parent  Required. The name of the project for which a list of
   /// instances is
   ///  requested. Values are of the form `projects/<project>`.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -166,6 +169,7 @@ class InstanceAdminClient {
   /// @param name  Required. The name of the requested instance. Values are of
   /// the form
   ///  `projects/<project>/instances/<instance>`.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -223,6 +227,7 @@ class InstanceAdminClient {
   /// @param instance  Required. The instance to create.  The name may be
   /// omitted, but if
   ///  specified must be `<parent>/instances/<instance_id>`.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -288,6 +293,7 @@ class InstanceAdminClient {
   ///  The field mask must always be specified; this prevents any future fields
   ///  in [Instance][google.spanner.admin.instance.v1.Instance] from being
   ///  erased accidentally by clients that do not know about them.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -317,6 +323,7 @@ class InstanceAdminClient {
   /// @param name  Required. The name of the instance to be deleted. Values are
   /// of the form
   ///  `projects/<project>/instances/<instance>`
+  /// @param options  Optional. Operation options.
   ///
   /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L565}
@@ -338,6 +345,7 @@ class InstanceAdminClient {
   ///  the policy is limited to a few 10s of KB. An empty policy is a
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -385,6 +393,7 @@ class InstanceAdminClient {
   /// @param resource  REQUIRED: The resource for which the policy is being
   /// requested.
   ///  See the operation documentation for the appropriate value for this field.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -413,6 +422,7 @@ class InstanceAdminClient {
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -430,6 +440,7 @@ class InstanceAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::instance::v1::ListInstanceConfigsRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L415}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
@@ -448,6 +459,7 @@ class InstanceAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::instance::v1::GetInstanceConfigRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L449}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
@@ -467,6 +479,7 @@ class InstanceAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::instance::v1::ListInstancesRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L499}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -484,6 +497,7 @@ class InstanceAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::instance::v1::GetInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L461}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -534,6 +548,7 @@ class InstanceAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::instance::v1::CreateInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L478}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -592,6 +607,7 @@ class InstanceAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::instance::v1::UpdateInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L552}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -621,6 +637,7 @@ class InstanceAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::instance::v1::DeleteInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L565}
+  /// @param options  Optional. Operation options.
   ///
   /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L565}
@@ -639,6 +656,7 @@ class InstanceAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -660,6 +678,7 @@ class InstanceAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -683,6 +702,7 @@ class InstanceAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///

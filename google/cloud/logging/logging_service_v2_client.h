@@ -102,6 +102,7 @@ class LoggingServiceV2Client {
   ///  `"organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity"`.
   ///  For more information about log names, see
   ///  [LogEntry][google.logging.v2.LogEntry].
+  /// @param options  Optional. Operation options.
   ///
   /// [google.logging.v2.DeleteLogRequest]:
   /// @googleapis_reference_link{google/logging/v2/logging.proto#L140}
@@ -165,6 +166,7 @@ class LoggingServiceV2Client {
   ///  [quota limit](https://cloud.google.com/logging/quota-policy) for calls to
   ///  `entries.write`, you should try to include several log entries in this
   ///  list, rather than calling this method for each individual log entry.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L243}
   ///
@@ -215,6 +217,7 @@ class LoggingServiceV2Client {
   ///  `LogEntry.timestamp` (oldest first), and the second option returns
   ///  entries in order of decreasing timestamps (newest first).  Entries with
   ///  equal timestamps are returned in order of their `insert_id` values.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::logging::v2::LogEntry,google/logging/v2/log_entry.proto#L42}
   ///
@@ -236,6 +239,7 @@ class LoggingServiceV2Client {
   ///      "organizations/[ORGANIZATION_ID]"
   ///      "billingAccounts/[BILLING_ACCOUNT_ID]"
   ///      "folders/[FOLDER_ID]"
+  /// @param options  Optional. Operation options.
   /// @return std::string
   ///
   /// [google.logging.v2.ListLogsRequest]:
@@ -252,6 +256,7 @@ class LoggingServiceV2Client {
   ///
   /// @param request
   /// @googleapis_link{google::logging::v2::DeleteLogRequest,google/logging/v2/logging.proto#L140}
+  /// @param options  Optional. Operation options.
   ///
   /// [google.logging.v2.DeleteLogRequest]:
   /// @googleapis_reference_link{google/logging/v2/logging.proto#L140}
@@ -270,6 +275,7 @@ class LoggingServiceV2Client {
   ///
   /// @param request
   /// @googleapis_link{google::logging::v2::WriteLogEntriesRequest,google/logging/v2/logging.proto#L162}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L243}
   ///
@@ -290,6 +296,7 @@ class LoggingServiceV2Client {
   ///
   /// @param request
   /// @googleapis_link{google::logging::v2::ListLogEntriesRequest,google/logging/v2/logging.proto#L257}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::logging::v2::LogEntry,google/logging/v2/log_entry.proto#L42}
   ///
@@ -306,6 +313,7 @@ class LoggingServiceV2Client {
   ///
   /// @param request
   /// @googleapis_link{google::logging::v2::ListMonitoredResourceDescriptorsRequest,google/logging/v2/logging.proto#L331}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
   ///
@@ -325,6 +333,7 @@ class LoggingServiceV2Client {
   ///
   /// @param request
   /// @googleapis_link{google::logging::v2::ListLogsRequest,google/logging/v2/logging.proto#L356}
+  /// @param options  Optional. Operation options.
   /// @return std::string
   ///
   /// [google.logging.v2.ListLogsRequest]:

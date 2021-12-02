@@ -91,6 +91,7 @@ class CloudTasksClient {
   ///
   /// @param parent  Required. The location name.
   ///  For example: `projects/PROJECT_ID/locations/LOCATION_ID`
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -107,6 +108,7 @@ class CloudTasksClient {
   ///
   /// @param name  Required. The resource name of the queue. For example:
   ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -140,6 +142,7 @@ class CloudTasksClient {
   /// @param queue  Required. The queue to create.
   ///  [Queue's name][google.cloud.tasks.v2.Queue.name] cannot be the same as an
   ///  existing queue.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -176,6 +179,7 @@ class CloudTasksClient {
   /// @param update_mask  A mask used to specify which fields of the queue are
   /// being updated.
   ///  If empty, then all fields will be updated.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -204,6 +208,7 @@ class CloudTasksClient {
   ///
   /// @param name  Required. The queue name. For example:
   ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`
+  /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.tasks.v2.DeleteQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L419}
@@ -221,6 +226,7 @@ class CloudTasksClient {
   ///
   /// @param name  Required. The queue name. For example:
   ///  `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -244,6 +250,7 @@ class CloudTasksClient {
   ///
   /// @param name  Required. The queue name. For example:
   ///  `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -273,6 +280,7 @@ class CloudTasksClient {
   ///
   /// @param name  Required. The queue name. For example:
   ///  `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -298,6 +306,7 @@ class CloudTasksClient {
   /// @param resource  REQUIRED: The resource for which the policy is being
   /// requested.
   ///  See the operation documentation for the appropriate value for this field.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -330,6 +339,7 @@ class CloudTasksClient {
   ///  the policy is limited to a few 10s of KB. An empty policy is a
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -385,6 +395,7 @@ class CloudTasksClient {
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -410,6 +421,7 @@ class CloudTasksClient {
   ///
   /// @param parent  Required. The queue name. For example:
   ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///
@@ -426,6 +438,7 @@ class CloudTasksClient {
   ///
   /// @param name  Required. The task name. For example:
   ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///
@@ -474,6 +487,7 @@ class CloudTasksClient {
   ///  task commands. The infrastructure relies on an approximately
   ///  uniform distribution of task ids to store and serve tasks
   ///  efficiently.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///
@@ -495,6 +509,7 @@ class CloudTasksClient {
   ///
   /// @param name  Required. The task name. For example:
   ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`
+  /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.tasks.v2.DeleteTaskRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L619}
@@ -531,6 +546,7 @@ class CloudTasksClient {
   ///
   /// @param name  Required. The task name. For example:
   ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///
@@ -549,6 +565,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::ListQueuesRequest,google/cloud/tasks/v2/cloudtasks.proto#L308}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -566,6 +583,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::GetQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L369}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -593,6 +611,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::CreateQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L381}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -623,6 +642,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::UpdateQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L402}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -651,6 +671,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::DeleteQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L419}
+  /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.tasks.v2.DeleteQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L419}
@@ -670,6 +691,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::PurgeQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L431}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -694,6 +716,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::PauseQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L443}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -724,6 +747,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::ResumeQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L455}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
   ///
@@ -749,6 +773,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -776,6 +801,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -800,6 +826,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -825,6 +852,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::ListTasksRequest,google/cloud/tasks/v2/cloudtasks.proto#L467}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///
@@ -841,6 +869,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::GetTaskRequest,google/cloud/tasks/v2/cloudtasks.proto#L529}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///
@@ -862,6 +891,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::CreateTaskRequest,google/cloud/tasks/v2/cloudtasks.proto#L555}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///
@@ -883,6 +913,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::DeleteTaskRequest,google/cloud/tasks/v2/cloudtasks.proto#L619}
+  /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.tasks.v2.DeleteTaskRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L619}
@@ -920,6 +951,7 @@ class CloudTasksClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tasks::v2::RunTaskRequest,google/cloud/tasks/v2/cloudtasks.proto#L632}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
   ///

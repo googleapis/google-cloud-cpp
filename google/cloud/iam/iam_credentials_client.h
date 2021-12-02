@@ -123,6 +123,7 @@ class IAMCredentialsClient {
   ///  Must be set to a value less than or equal to 3600 (1 hour). If a value is
   ///  not specified, the token's lifetime will be set to a default value of one
   ///  hour.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L72}
   ///
@@ -164,6 +165,7 @@ class IAMCredentialsClient {
   /// @param include_email  Include the service account email in the token. If
   /// set to `true`, the
   ///  token will contain `email` and `email_verified` claims.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L186}
   ///
@@ -199,6 +201,7 @@ class IAMCredentialsClient {
   ///  wildcard character is required; replacing it with a project ID is
   ///  invalid.
   /// @param payload  Required. The bytes to sign.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L109}
   ///
@@ -233,6 +236,7 @@ class IAMCredentialsClient {
   ///  invalid.
   /// @param payload  Required. The JWT payload to sign: a JSON object that
   /// contains a JWT Claims Set.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L145}
   ///
@@ -250,6 +254,7 @@ class IAMCredentialsClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenRequest,google/iam/credentials/v1/common.proto#L35}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L72}
   ///
@@ -268,6 +273,7 @@ class IAMCredentialsClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenRequest,google/iam/credentials/v1/common.proto#L153}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L186}
   ///
@@ -286,6 +292,7 @@ class IAMCredentialsClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::credentials::v1::SignBlobRequest,google/iam/credentials/v1/common.proto#L81}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L109}
   ///
@@ -303,6 +310,7 @@ class IAMCredentialsClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::credentials::v1::SignJwtRequest,google/iam/credentials/v1/common.proto#L117}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L145}
   ///

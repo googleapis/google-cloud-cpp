@@ -98,6 +98,7 @@ class AdminServiceClient {
   /// the final component of
   ///  the topic's name.
   ///  This value is structured like: `my-topic-name`.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
@@ -116,6 +117,7 @@ class AdminServiceClient {
   ///
   /// @param name  Required. The name of the topic whose configuration to
   /// return.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
@@ -131,6 +133,7 @@ class AdminServiceClient {
   /// Returns the partition information for the requested topic.
   ///
   /// @param name  Required. The topic whose partition information to return.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L270}
   ///
@@ -147,6 +150,7 @@ class AdminServiceClient {
   ///
   /// @param parent  Required. The parent whose topics are to be listed.
   ///  Structured like `projects/{project_number}/locations/{location}`.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
@@ -165,6 +169,7 @@ class AdminServiceClient {
   /// populated.
   /// @param update_mask  Required. A mask specifying the topic fields to
   /// change.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
@@ -181,6 +186,7 @@ class AdminServiceClient {
   /// Deletes the specified topic.
   ///
   /// @param name  Required. The name of the topic to delete.
+  /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.pubsublite.v1.DeleteTopicRequest]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L320}
@@ -191,6 +197,7 @@ class AdminServiceClient {
   /// Lists the subscriptions attached to the specified topic.
   ///
   /// @param name  Required. The name of the topic whose subscriptions to list.
+  /// @param options  Optional. Operation options.
   /// @return std::string
   ///
   /// [google.cloud.pubsublite.v1.ListTopicSubscriptionsRequest]:
@@ -211,6 +218,7 @@ class AdminServiceClient {
   /// which will become the final component
   ///  of the subscription's name.
   ///  This value is structured like: `my-sub-name`.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
@@ -229,6 +237,7 @@ class AdminServiceClient {
   ///
   /// @param name  Required. The name of the subscription whose configuration to
   /// return.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
@@ -245,6 +254,7 @@ class AdminServiceClient {
   ///
   /// @param parent  Required. The parent whose subscriptions are to be listed.
   ///  Structured like `projects/{project_number}/locations/{location}`.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
@@ -264,6 +274,7 @@ class AdminServiceClient {
   ///  Topic field must not be populated.
   /// @param update_mask  Required. A mask specifying the subscription fields to
   /// change.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
@@ -280,6 +291,7 @@ class AdminServiceClient {
   /// Deletes the specified subscription.
   ///
   /// @param name  Required. The name of the subscription to delete.
+  /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.pubsublite.v1.DeleteSubscriptionRequest]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L447}
@@ -298,6 +310,7 @@ class AdminServiceClient {
   /// will become the final component of
   ///  the reservation's name.
   ///  This value is structured like: `my-reservation-name`.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
@@ -318,6 +331,7 @@ class AdminServiceClient {
   /// return.
   ///  Structured like:
   ///  projects/{project_number}/locations/{location}/reservations/{reservation_id}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
@@ -334,6 +348,7 @@ class AdminServiceClient {
   ///
   /// @param parent  Required. The parent whose reservations are to be listed.
   ///  Structured like `projects/{project_number}/locations/{location}`.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
@@ -352,6 +367,7 @@ class AdminServiceClient {
   /// must be populated.
   /// @param update_mask  Required. A mask specifying the reservation fields to
   /// change.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
@@ -370,6 +386,7 @@ class AdminServiceClient {
   /// @param name  Required. The name of the reservation to delete.
   ///  Structured like:
   ///  projects/{project_number}/locations/{location}/reservations/{reservation_id}
+  /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.pubsublite.v1.DeleteReservationRequest]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L594}
@@ -382,6 +399,7 @@ class AdminServiceClient {
   /// @param name  Required. The name of the reservation whose topics to list.
   ///  Structured like:
   ///  projects/{project_number}/locations/{location}/reservations/{reservation_id}
+  /// @param options  Optional. Operation options.
   /// @return std::string
   ///
   /// [google.cloud.pubsublite.v1.ListReservationTopicsRequest]:
@@ -395,6 +413,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::CreateTopicRequest,google/cloud/pubsublite/v1/admin.proto#L227}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
@@ -412,6 +431,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicRequest,google/cloud/pubsublite/v1/admin.proto#L248}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
@@ -429,6 +449,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicPartitionsRequest,google/cloud/pubsublite/v1/admin.proto#L259}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L270}
   ///
@@ -446,6 +467,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::ListTopicsRequest,google/cloud/pubsublite/v1/admin.proto#L276}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
@@ -463,6 +485,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::UpdateTopicRequest,google/cloud/pubsublite/v1/admin.proto#L311}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
@@ -480,6 +503,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::DeleteTopicRequest,google/cloud/pubsublite/v1/admin.proto#L320}
+  /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.pubsublite.v1.DeleteTopicRequest]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L320}
@@ -493,6 +517,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L331}
+  /// @param options  Optional. Operation options.
   /// @return std::string
   ///
   /// [google.cloud.pubsublite.v1.ListTopicSubscriptionsRequest]:
@@ -507,6 +532,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::CreateSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L365}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
@@ -524,6 +550,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::GetSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L391}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
@@ -541,6 +568,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::ListSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L402}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
@@ -558,6 +586,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::UpdateSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L437}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
@@ -575,6 +604,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::DeleteSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L447}
+  /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.pubsublite.v1.DeleteSubscriptionRequest]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L447}
@@ -608,6 +638,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::SeekSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L458}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::SeekSubscriptionResponse,google/cloud/pubsublite/v1/admin.proto#L493}
   ///
@@ -626,6 +657,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::CreateReservationRequest,google/cloud/pubsublite/v1/admin.proto#L516}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
@@ -643,6 +675,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::GetReservationRequest,google/cloud/pubsublite/v1/admin.proto#L537}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
@@ -660,6 +693,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::ListReservationsRequest,google/cloud/pubsublite/v1/admin.proto#L550}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
@@ -677,6 +711,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::UpdateReservationRequest,google/cloud/pubsublite/v1/admin.proto#L585}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
@@ -694,6 +729,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::DeleteReservationRequest,google/cloud/pubsublite/v1/admin.proto#L594}
+  /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.pubsublite.v1.DeleteReservationRequest]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L594}
@@ -707,6 +743,7 @@ class AdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::ListReservationTopicsRequest,google/cloud/pubsublite/v1/admin.proto#L607}
+  /// @param options  Optional. Operation options.
   /// @return std::string
   ///
   /// [google.cloud.pubsublite.v1.ListReservationTopicsRequest]:

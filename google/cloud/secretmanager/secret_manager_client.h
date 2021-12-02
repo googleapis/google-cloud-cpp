@@ -100,6 +100,7 @@ class SecretManagerServiceClient {
   /// the
   ///  [Secrets][google.cloud.secretmanager.v1.Secret], in the format
   ///  `projects/*`.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
@@ -125,6 +126,7 @@ class SecretManagerServiceClient {
   ///  and underscore (`_`) characters.
   /// @param secret  Required. A [Secret][google.cloud.secretmanager.v1.Secret]
   /// with initial field values.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
@@ -149,6 +151,7 @@ class SecretManagerServiceClient {
   ///  format `projects/*/secrets/*`.
   /// @param payload  Required. The secret payload of the
   /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -168,6 +171,7 @@ class SecretManagerServiceClient {
   /// @param name  Required. The resource name of the
   /// [Secret][google.cloud.secretmanager.v1.Secret], in the format
   /// `projects/*/secrets/*`.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
@@ -186,6 +190,7 @@ class SecretManagerServiceClient {
   /// @param secret  Required. [Secret][google.cloud.secretmanager.v1.Secret]
   /// with updated field values.
   /// @param update_mask  Required. Specifies the fields to be updated.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
@@ -204,6 +209,7 @@ class SecretManagerServiceClient {
   /// @param name  Required. The resource name of the
   /// [Secret][google.cloud.secretmanager.v1.Secret] to delete in the format
   ///  `projects/*/secrets/*`.
+  /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.secretmanager.v1.DeleteSecretRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L390}
@@ -218,6 +224,7 @@ class SecretManagerServiceClient {
   /// [Secret][google.cloud.secretmanager.v1.Secret] associated with the
   ///  [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] to list, in
   ///  the format `projects/*/secrets/*`.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -241,6 +248,7 @@ class SecretManagerServiceClient {
   ///  `projects/*/secrets/*/versions/*`.
   ///  `projects/*/secrets/*/versions/latest` is an alias to the most recently
   ///  created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -264,6 +272,7 @@ class SecretManagerServiceClient {
   ///  `projects/*/secrets/*/versions/*`.
   ///  `projects/*/secrets/*/versions/latest` is an alias to the most recently
   ///  created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::AccessSecretVersionResponse,google/cloud/secretmanager/v1/service.proto#L378}
   ///
@@ -286,6 +295,7 @@ class SecretManagerServiceClient {
   /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to disable in
   /// the format
   ///  `projects/*/secrets/*/versions/*`.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -308,6 +318,7 @@ class SecretManagerServiceClient {
   /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to enable in
   /// the format
   ///  `projects/*/secrets/*/versions/*`.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -331,6 +342,7 @@ class SecretManagerServiceClient {
   /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to destroy in
   /// the format
   ///  `projects/*/secrets/*/versions/*`.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -347,6 +359,7 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::ListSecretsRequest,google/cloud/secretmanager/v1/service.proto#L206}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
@@ -365,6 +378,7 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::CreateSecretRequest,google/cloud/secretmanager/v1/service.proto#L248}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
@@ -384,6 +398,7 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::AddSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L270}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -401,6 +416,7 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::GetSecretRequest,google/cloud/secretmanager/v1/service.proto#L285}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
@@ -419,6 +435,7 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::UpdateSecretRequest,google/cloud/secretmanager/v1/service.proto#L354}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
@@ -436,6 +453,7 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::DeleteSecretRequest,google/cloud/secretmanager/v1/service.proto#L390}
+  /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.secretmanager.v1.DeleteSecretRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L390}
@@ -450,6 +468,7 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::ListSecretVersionsRequest,google/cloud/secretmanager/v1/service.proto#L296}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -472,6 +491,7 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::GetSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L339}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -493,6 +513,7 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::AccessSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L363}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::AccessSecretVersionResponse,google/cloud/secretmanager/v1/service.proto#L378}
   ///
@@ -516,6 +537,7 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::DisableSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L407}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -539,6 +561,7 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::EnableSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L424}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -562,6 +585,7 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::DestroySecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L441}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -587,6 +611,7 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -605,6 +630,7 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -628,6 +654,7 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///

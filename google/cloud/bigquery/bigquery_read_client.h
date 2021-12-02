@@ -119,6 +119,7 @@ class BigQueryReadClient {
   ///  table. Error will be returned if the max count is greater than the
   ///  current system max limit of 1,000. Streams must be read starting from
   ///  offset 0.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadSession,google/cloud/bigquery/storage/v1/stream.proto#L47}
   ///
@@ -146,6 +147,7 @@ class BigQueryReadClient {
   /// from Read.
   ///  Requesting a larger offset is undefined. If not specified, start reading
   ///  from offset zero.
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L304}
   ///
@@ -181,6 +183,7 @@ class BigQueryReadClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::bigquery::storage::v1::CreateReadSessionRequest,google/cloud/bigquery/storage/v1/storage.proto#L229}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadSession,google/cloud/bigquery/storage/v1/stream.proto#L47}
   ///
@@ -205,6 +208,7 @@ class BigQueryReadClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsRequest,google/cloud/bigquery/storage/v1/storage.proto#L254}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L304}
   ///
@@ -233,6 +237,7 @@ class BigQueryReadClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::bigquery::storage::v1::SplitReadStreamRequest,google/cloud/bigquery/storage/v1/storage.proto#L339}
+  /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::SplitReadStreamResponse,google/cloud/bigquery/storage/v1/storage.proto#L359}
   ///
