@@ -41,31 +41,22 @@ endif ()
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-
-    # GCC >= 5.1 is required by Abseil, so we must require it too. We only test
-    # with >= 6.3 because that is easy to install in our CI systems.
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.1)
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
         message(
             FATAL_ERROR
-                "GCC version must be at least 5.1. Older versions either lack"
-                " C++11 support or are not supported by some of our"
-                " dependencies.")
+                "GCC version must be at least 5.0. Older versions either lack"
+                " C++11 support or have bugs that prevent us from using them.")
     elseif (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.3)
         message(
             WARNING "The `google-cloud-cpp` library is tested with GCC >= 6.3."
                     " We will consider patches for older versions.")
     endif ()
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-
-    # Clang > 3.8 is required by the versions of protobuf that can compile
-    # googleapis protos. We only test with >= 6.0 because that is easy to
-    # install in our CI systems.
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.0)
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 3.8)
         message(
             FATAL_ERROR
-                "Clang version must be at least 4.0. Older versions either lack"
-                " C++11 support or are not supported by some of our"
-                " dependencies.")
+                "Clang version must be at least 3.8. Older versions either lack"
+                " C++11 support or have bugs that prevent us from using them.")
     elseif (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.0)
         message(
             WARNING
@@ -73,7 +64,6 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
                 " We will consider patches for older versions.")
     endif ()
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-
     if (CMAKE_VERSION VERSION_LESS 3.15)
         message(
             FATAL_ERROR
