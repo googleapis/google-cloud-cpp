@@ -619,13 +619,8 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::ProtoToWrapper(
   result.etag = std::move(*proto.mutable_etag());
   for (auto& binding : *proto.mutable_bindings()) {
     std::vector<google::protobuf::FieldDescriptor const*> field_descs;
-    // On newer versions of Protobuf (circa 3.9.1) `GetReflection()` changed
-    // from a virtual member function to a static member function. clang-tidy
-    // warns (and we turn all warnings to errors) about using the static
-    // version via the object, as we do below. Disable the warning because that
-    // seems like the only portable solution.
-    // NOLINTNEXTLINE(readability-static-accessed-through-instance)
-    binding.GetReflection()->ListFields(binding, &field_descs);
+    google::iam::v1::Binding::GetReflection()->ListFields(binding,
+                                                          &field_descs);
     for (auto const* field_desc : field_descs) {
       if (field_desc->name() != "members" && field_desc->name() != "role") {
         std::stringstream os;
