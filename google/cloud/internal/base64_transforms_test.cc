@@ -68,12 +68,12 @@ TEST(Base64, RFC4648TestVectors) {
   // https://tools.ietf.org/html/rfc4648#section-10
   std::vector<std::pair<std::string, std::string>> test_cases = {
       {"", ""},
-      {"a", "Zg=="},
-      {"ab", "Zm8="},
-      {"abc", "Zm9v"},
-      {"abcd", "Zm9vYg=="},
-      {"abcde", "Zm9vYmE="},
-      {"abcdef", "Zm9vYmFy"},
+      {"a", "YQ=="},
+      {"ab", "YWI="},
+      {"abc", "YWJj"},
+      {"abcd", "YWJjZA=="},
+      {"abcde", "YWJjZGU="},
+      {"abcdef", "YWJjZGVm"},
   };
   for (auto const& test_case : test_cases) {
     Base64Encoder enc;
