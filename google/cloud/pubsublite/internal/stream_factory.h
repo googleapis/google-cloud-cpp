@@ -15,14 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_STREAM_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_STREAM_FACTORY_H
 
-#include <unordered_map>
-
-#include "google/cloud/version.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
-
+#include "google/cloud/version.h"
 #include <google/cloud/pubsublite/v1/cursor.grpc.pb.h>
 #include <google/cloud/pubsublite/v1/publisher.grpc.pb.h>
 #include <google/cloud/pubsublite/v1/subscriber.grpc.pb.h>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -37,68 +35,77 @@ using StreamFactory = std::function<std::unique_ptr<BidiStream<Request, Response
 
 using ClientMetadata = std::unordered_map<std::string, std::string>;
 
-inline std::unique_ptr<grpc::ClientContext> MakeGrpcClientContext(const ClientMetadata& metadata) {
-    auto context = absl::make_unique<grpc::ClientContext>();
-    for (const auto& kv : metadata) {
-        context->AddMetadata(kv.first, kv.second);
-    }
-    return context;
+inline std::unique_ptr<grpc::ClientContext> MakeGrpcClientContext(
+    ClientMetadata const& metadata) {
+  auto context = absl::make_unique<grpc::ClientContext>();
+  for (const auto& kv : metadata) {
+    context->AddMetadata(kv.first, kv.second);
+  }
+  return context;
 }
 
-inline StreamFactory<pubsublite::v1::PublishRequest, pubsublite::v1::PublishResponse> MakeStreamFactory(
+inline StreamFactory<pubsublite::v1::PublishRequest,
+                     pubsublite::v1::PublishResponse>
+MakeStreamFactory(
     std::shared_ptr<pubsublite::v1::PublisherService::StubInterface> stub,
-    const google::cloud::CompletionQueue& cq, ClientMetadata metadata = {}) {
-        return [=]{
-            return internal::MakeStreamingReadWriteRpc<
-                pubsublite::v1::PublishRequest, pubsublite::v1::PublishResponse>(
-                    cq, MakeGrpcClientContext(metadata),
-                    [stub](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
-                        return stub->PrepareAsyncPublish(context, cq);
-                    });
-        };
-    }
+    google::cloud::CompletionQueue const& cq, ClientMetadata metadata = {}) {
+  return [=] {
+    return internal::MakeStreamingReadWriteRpc<pubsublite::v1::PublishRequest,
+                                               pubsublite::v1::PublishResponse>(
+        cq, MakeGrpcClientContext(metadata),
+        [stub](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+          return stub->PrepareAsyncPublish(context, cq);
+        });
+  };
+}
 
-inline StreamFactory<pubsublite::v1::SubscribeRequest, pubsublite::v1::SubscribeResponse> MakeStreamFactory(
+inline StreamFactory<pubsublite::v1::SubscribeRequest,
+                     pubsublite::v1::SubscribeResponse>
+MakeStreamFactory(
     std::shared_ptr<pubsublite::v1::SubscriberService::StubInterface> stub,
-    const google::cloud::CompletionQueue& cq, ClientMetadata metadata = {}) {
-        return [=]{
-            return google::cloud::internal::MakeStreamingReadWriteRpc<
-                pubsublite::v1::SubscribeRequest, pubsublite::v1::SubscribeResponse>(
-                    cq, MakeGrpcClientContext(metadata),
-                    [stub](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
-                        return stub->PrepareAsyncSubscribe(context, cq);
-                    });
-        };
-    }
+    google::cloud::CompletionQueue const& cq, ClientMetadata metadata = {}) {
+  return [=] {
+    return google::cloud::internal::MakeStreamingReadWriteRpc<
+        pubsublite::v1::SubscribeRequest, pubsublite::v1::SubscribeResponse>(
+        cq, MakeGrpcClientContext(metadata),
+        [stub](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+          return stub->PrepareAsyncSubscribe(context, cq);
+        });
+  };
+}
 
-
-
-inline StreamFactory<pubsublite::v1::StreamingCommitCursorRequest, pubsublite::v1::StreamingCommitCursorResponse> MakeStreamFactory(
+inline StreamFactory<pubsublite::v1::StreamingCommitCursorRequest,
+                     pubsublite::v1::StreamingCommitCursorResponse>
+MakeStreamFactory(
     std::shared_ptr<pubsublite::v1::CursorService::StubInterface> stub,
-    const google::cloud::CompletionQueue& cq, ClientMetadata metadata = {}) {
-        return [=]{
-            return google::cloud::internal::MakeStreamingReadWriteRpc<
-                pubsublite::v1::StreamingCommitCursorRequest, pubsublite::v1::StreamingCommitCursorResponse>(
-                    cq, MakeGrpcClientContext(metadata),
-                    [stub](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
-                        return stub->PrepareAsyncStreamingCommitCursor(context, cq);
-                    });
-        };
-    }
+    google::cloud::CompletionQueue const& cq, ClientMetadata metadata = {}) {
+  return [=] {
+    return google::cloud::internal::MakeStreamingReadWriteRpc<
+        pubsublite::v1::StreamingCommitCursorRequest,
+        pubsublite::v1::StreamingCommitCursorResponse>(
+        cq, MakeGrpcClientContext(metadata),
+        [stub](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+          return stub->PrepareAsyncStreamingCommitCursor(context, cq);
+        });
+  };
+}
 
-
-inline StreamFactory<pubsublite::v1::PartitionAssignmentRequest, pubsublite::v1::PartitionAssignment> MakeStreamFactory(
-    std::shared_ptr<pubsublite::v1::PartitionAssignmentService::StubInterface> stub,
-    const google::cloud::CompletionQueue& cq, ClientMetadata metadata = {}) {
-        return [=]{
-            return google::cloud::internal::MakeStreamingReadWriteRpc<
-                pubsublite::v1::PartitionAssignmentRequest, pubsublite::v1::PartitionAssignment>(
-                    cq, MakeGrpcClientContext(metadata),
-                    [stub](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
-                        return stub->PrepareAsyncAssignPartitions(context, cq);
-                    });
-        };
-    }
+inline StreamFactory<pubsublite::v1::PartitionAssignmentRequest,
+                     pubsublite::v1::PartitionAssignment>
+MakeStreamFactory(
+    std::shared_ptr<pubsublite::v1::PartitionAssignmentService::StubInterface>
+        stub,
+    google::cloud::CompletionQueue const& cq, ClientMetadata metadata = {}) {
+  return [=] {
+    return google::cloud::internal::MakeStreamingReadWriteRpc<
+        pubsublite::v1::PartitionAssignmentRequest,
+        pubsublite::v1::PartitionAssignment>(
+        cq, MakeGrpcClientContext(metadata),
+        [stub](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+          return stub->PrepareAsyncAssignPartitions(context, cq);
+        });
+  };
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
