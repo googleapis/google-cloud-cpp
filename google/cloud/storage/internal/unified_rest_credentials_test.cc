@@ -91,7 +91,7 @@ TEST_F(UnifiedRestCredentialsTest, LoadSuccess) {
       {"type", "service_account"},
       {"project_id", "invalid-test-only-project"},
       {"private_key_id", kKeyId},
-      {"private_key", google::cloud::storage::testing::kWellFormatedKey},
+      {"private_key", google::cloud::storage::testing::kWellFormattedKey},
       {"client_email", kClientEmail},
       {"client_id", "invalid-test-only-client-id"},
       {"auth_uri", "https://accounts.google.com/o/oauth2/auth"},

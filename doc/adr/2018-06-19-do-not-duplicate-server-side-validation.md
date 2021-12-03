@@ -11,7 +11,7 @@ the server is going to validate its inputs as well. Furthermore, any such
 validation is wasteful: most of the time the application will pass on valid
 arguments, checking them twice is just wasting client-side CPU cycles. Moreover,
 the server-side is the source of truth, so having the validations performed on
-the client side wil require extra work if the server restrictions are ever
+the client side will require extra work if the server restrictions are ever
 modified.
 
 **Decision**: the client libraries do not validate any of the request

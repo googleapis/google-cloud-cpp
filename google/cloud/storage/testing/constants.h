@@ -93,7 +93,7 @@ char const kP12KeyFileContents[] =
 
 // This is an invalidated private key. It was created using the Google Cloud
 // Platform console, but then the key (and service account) were deleted.
-auto constexpr kWellFormatedKey = R"""(-----BEGIN PRIVATE KEY-----
+auto constexpr kWellFormattedKey = R"""(-----BEGIN PRIVATE KEY-----
 MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCltiF2oP3KJJ+S
 tTc1McylY+TuAi3AdohX7mmqIjd8a3eBYDHs7FlnUrFC4CRijCr0rUqYfg2pmk4a
 6TaKbQRAhWDJ7XD931g7EBvCtd8+JQBNWVKnP9ByJUaO0hWVniM50KTsWtyX3up/

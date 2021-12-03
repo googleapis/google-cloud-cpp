@@ -804,7 +804,7 @@ TEST_F(MutationBatcherTest, ApplyCompletesImmediately) {
   });
   EXPECT_CALL(*reader, StartCall).Times(1);
   batcher_raw_ptr->SetOnBulkApply([this] {
-    // Simulate completion queue finishing this stream before contol is
+    // Simulate completion queue finishing this stream before control is
     // returned from AsyncBulkApplyImpl
     std::async([this] {
       cq_impl_->SimulateCompletion(true);

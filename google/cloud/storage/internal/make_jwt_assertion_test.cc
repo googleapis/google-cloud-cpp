@@ -39,7 +39,7 @@ TEST(MakeJWTAssertionNoThrow, Basic) {
       {"exp", "1511903600"},
   };
   auto const assertion = MakeJWTAssertionNoThrow(header.dump(), payload.dump(),
-                                                 testing::kWellFormatedKey);
+                                                 testing::kWellFormattedKey);
   ASSERT_THAT(assertion, IsOk());
 
   std::vector<std::string> components = absl::StrSplit(*assertion, '.');

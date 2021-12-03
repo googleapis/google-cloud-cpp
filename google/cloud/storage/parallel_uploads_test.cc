@@ -1001,7 +1001,7 @@ TEST(ParallelUploadPersistentState, NotJson) {
               StatusIs(StatusCode::kInternal, HasSubstr("not a valid JSON")));
 }
 
-TEST(ParallelUploadPersistentState, RootNotOject) {
+TEST(ParallelUploadPersistentState, RootNotObject) {
   auto res = ParallelUploadPersistentState::FromString("\"blah\"");
   EXPECT_THAT(res,
               StatusIs(StatusCode::kInternal, HasSubstr("not a JSON object")));

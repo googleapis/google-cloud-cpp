@@ -96,7 +96,7 @@ The actual contents are not interesting.
   std::cout << "\nRunning the MakeObjectPublic() example" << std::endl;
   MakeObjectPublic(client, {bucket_name, object_name});
 
-  std::cout << "\nRunning the ReadObjectUnathenticated() example" << std::endl;
+  std::cout << "\nRunning the ReadObjectUnauthenticated() example" << std::endl;
   ReadObjectUnauthenticated({bucket_name, object_name});
 
   (void)client.DeleteObject(bucket_name, object_name);

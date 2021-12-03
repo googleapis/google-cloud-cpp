@@ -128,9 +128,9 @@ TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
         AddQueryParameterOption(name_val.first, name_val.second);
   }
 
-  VirtualHostname virtual_hotname;
+  VirtualHostname virtual_hostname;
   if (url_style == UrlStyle::VIRTUAL_HOSTED_STYLE) {
-    virtual_hotname = VirtualHostname(true);
+    virtual_hostname = VirtualHostname(true);
     request.set_multiple_options(VirtualHostname(true));
   }
 
@@ -147,7 +147,7 @@ TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
       SignedUrlDuration(valid_for), header_extensions[0], header_extensions[1],
       header_extensions[2], header_extensions[3], header_extensions[4],
       query_params[0], query_params[1], query_params[2], query_params[3],
-      query_params[4], virtual_hotname, domain_named_bucket, Scheme(scheme));
+      query_params[4], virtual_hostname, domain_named_bucket, Scheme(scheme));
   ASSERT_STATUS_OK(request.Validate());
   request.AddMissingRequiredHeaders();
   ASSERT_STATUS_OK(request.Validate());
@@ -198,9 +198,9 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
   if (url_style == UrlStyle::BUCKET_BOUND_HOSTNAME) {
     domain_named_bucket = BucketBoundHostname(input.bucketboundhostname());
   }
-  VirtualHostname virtual_hotname;
+  VirtualHostname virtual_hostname;
   if (url_style == UrlStyle::VIRTUAL_HOSTED_STYLE) {
-    virtual_hotname = VirtualHostname(true);
+    virtual_hostname = VirtualHostname(true);
   }
 
   std::vector<PolicyDocumentCondition> conditions;
@@ -246,7 +246,7 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
   auto doc_res = client.GenerateSignedPostPolicyV4(
       doc, extension_fields[0], extension_fields[1], extension_fields[2],
       extension_fields[3], extension_fields[4], Scheme(scheme),
-      domain_named_bucket, virtual_hotname);
+      domain_named_bucket, virtual_hostname);
   ASSERT_STATUS_OK(doc_res);
   EXPECT_EQ(expected_policy, doc_res->policy);
   auto actual_policy_vec = internal::Base64Decode(doc_res->policy);

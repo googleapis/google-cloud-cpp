@@ -32,16 +32,16 @@ enum OpType {
   /// an
   /// equivalent function.
   kOpInsert,
-  /// The experiment performed a downlad, using Client::InsertObject() or an
+  /// The experiment performed a download, using Client::InsertObject() or an
   /// equivalent function.
   /// This was the first download of this object in the experiment.
   // TODO(#4350) - use a separate field to count downloads / uploads
   kOpRead0,
-  /// The experiment performed a downlad, using Client::InsertObject() or an
+  /// The experiment performed a download, using Client::InsertObject() or an
   /// equivalent function.
   /// This was the second download of this object in the experiment.
   kOpRead1,
-  /// The experiment performed a downlad, using Client::InsertObject() or an
+  /// The experiment performed a download, using Client::InsertObject() or an
   /// equivalent function.
   /// This was the third download of this object in the experiment.
   kOpRead2,

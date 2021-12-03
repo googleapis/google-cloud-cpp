@@ -180,7 +180,7 @@ TEST(MutationsTest, FailedMutation) {
 }
 
 /// @test Verify that MultipleRowMutations works as expected.
-TEST(MutationsTest, MutipleRowMutations) {
+TEST(MutationsTest, MultipleRowMutations) {
   BulkMutation actual;
 
   // Prepare a non-empty request to verify MoveTo() does something.

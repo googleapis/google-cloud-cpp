@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# There are a few commmands that need to be run in order to re-deploy a change
+# There are a few commands that need to be run in order to re-deploy a change
 # to the bigquery.yaml file, and this script runs those commands. These
 # commands are enough to RE-deploy the service, but there are about 10
 # additional commands needed to set up the service in the first place. See
