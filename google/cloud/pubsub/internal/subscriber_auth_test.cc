@@ -31,6 +31,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::IsNull;
 using ::testing::Not;
 using ::testing::Return;
+using ::testing::StrictMock;
 
 TEST(SubscriberAuthTest, CreateSubscription) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
@@ -128,19 +129,15 @@ TEST(SubscriberAuthTest, ModifyPushConfig) {
   EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(SubscriberAuthTest, AsyncStreamingPull) {
-  using ErrorStream =
-      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
-          google::pubsub::v1::StreamingPullRequest,
-          google::pubsub::v1::StreamingPullResponse>;
-
-  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
-  EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([](::testing::Unused, ::testing::Unused, ::testing::Unused) {
-        return absl::make_unique<ErrorStream>(
-            Status(StatusCode::kPermissionDenied, "uh-oh"));
+TEST(SubscriberAuthTest, AsyncStreamingPullFailedAuth) {
+  auto mock = std::make_shared<StrictMock<pubsub_testing::MockSubscriberStub>>();
+  auto auth = std::make_shared<testing_util::MockAuthenticationStrategy>();
+  EXPECT_CALL(*auth, AsyncConfigureContext)
+      .WillOnce([](std::unique_ptr<grpc::ClientContext>) -> future<StatusOr<std::unique_ptr<grpc::ClientContext>>> {
+        return make_ready_future(StatusOr<std::unique_ptr<grpc::ClientContext>>(
+            Status(StatusCode::kInvalidArgument, "cannot-set-credentials")));
       });
-  auto under_test = SubscriberAuth(MakeTypicalAsyncMockAuth(), mock);
+  auto under_test = SubscriberAuth(auth, mock);
   google::cloud::CompletionQueue cq;
   google::pubsub::v1::StreamingPullRequest request;
   auto auth_failure = under_test.AsyncStreamingPull(
@@ -148,11 +145,34 @@ TEST(SubscriberAuthTest, AsyncStreamingPull) {
   ASSERT_FALSE(auth_failure->Start().get());
   EXPECT_THAT(auth_failure->Finish().get(),
               StatusIs(StatusCode::kInvalidArgument));
+}
 
-  auto auth_success = under_test.AsyncStreamingPull(
+TEST(SubscriberAuthTest, AsyncStreamingPullAuthSuccess) {
+  using ErrorStream =
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
+          google::pubsub::v1::StreamingPullRequest,
+          google::pubsub::v1::StreamingPullResponse>;
+
+  auto mock = std::make_shared<StrictMock<pubsub_testing::MockSubscriberStub>>();
+  EXPECT_CALL(*mock, AsyncStreamingPull)
+      .WillOnce([](::testing::Unused, ::testing::Unused, ::testing::Unused) {
+        return absl::make_unique<ErrorStream>(
+            Status(StatusCode::kPermissionDenied, "uh-oh"));
+      });
+  auto auth = std::make_shared<testing_util::MockAuthenticationStrategy>();
+  EXPECT_CALL(*auth, AsyncConfigureContext)
+      .WillOnce([](std::unique_ptr<grpc::ClientContext> context) {
+        context->set_credentials(
+            grpc::AccessTokenCredentials("test-only-invalid"));
+        return make_ready_future(make_status_or(std::move(context)));
+      });
+  auto under_test = SubscriberAuth(auth, mock);
+  google::cloud::CompletionQueue cq;
+  google::pubsub::v1::StreamingPullRequest request;
+  auto auth_failure = under_test.AsyncStreamingPull(
       cq, absl::make_unique<grpc::ClientContext>(), request);
-  ASSERT_FALSE(auth_success->Start().get());
-  EXPECT_THAT(auth_success->Finish().get(),
+  ASSERT_FALSE(auth_failure->Start().get());
+  EXPECT_THAT(auth_failure->Finish().get(),
               StatusIs(StatusCode::kPermissionDenied));
 }
 
