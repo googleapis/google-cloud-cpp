@@ -17,17 +17,28 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 SOURCE_GLOB = "**/*.cc"
+
 TEST_SOURCE_GLOB = "**/*_test.cc"
+
 MOCK_SOURCE_GLOB = "mocks/*.cc"
 
 HEADER_GLOB = "**/*.h"
-MOCK_HEADER_GLOB = "mocks/*.h"
 
+MOCK_HEADER_GLOB = "mocks/*.h"
 
 cc_library(
     name = "google_cloud_cpp_pubsublite",
-    srcs = glob(include=[SOURCE_GLOB], exclude=[TEST_SOURCE_GLOB, MOCK_SOURCE_GLOB]),
-    hdrs = glob(include=[HEADER_GLOB], exclude=[MOCK_HEADER_GLOB]),
+    srcs = glob(
+        include = [SOURCE_GLOB],
+        exclude = [
+            TEST_SOURCE_GLOB,
+            MOCK_SOURCE_GLOB,
+        ],
+    ),
+    hdrs = glob(
+        include = [HEADER_GLOB],
+        exclude = [MOCK_HEADER_GLOB],
+    ),
     visibility = ["//:__pkg__"],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
@@ -52,13 +63,14 @@ cc_library(
     cc_test(
         name = test.replace("/", "_").replace(".cc", ""),
         srcs = [test],
-    deps = [
-        ":google_cloud_cpp_pubsublite",
-        ":google_cloud_cpp_pubsublite_mocks",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
-        "@com_google_googletest//:gtest_main",
-    ],
-    ) for test in glob([TEST_SOURCE_GLOB])
+        deps = [
+            ":google_cloud_cpp_pubsublite",
+            ":google_cloud_cpp_pubsublite_mocks",
+            "//google/cloud:google_cloud_cpp_common",
+            "//google/cloud/testing_util:google_cloud_cpp_testing",
+            "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+            "@com_google_googletest//:gtest_main",
+        ],
+    )
+    for test in glob([TEST_SOURCE_GLOB])
 ]
