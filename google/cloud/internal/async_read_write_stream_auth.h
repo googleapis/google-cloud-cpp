@@ -20,6 +20,7 @@
 #include "google/cloud/version.h"
 #include <functional>
 #include <memory>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -28,79 +29,97 @@ namespace internal {
 
 template <typename Request, typename Response>
 class AsyncStreamingReadWriteRpcAuth
-    : public AsyncStreamingReadWriteRpc<Request, Response>,
-      public std::enable_shared_from_this<
-          AsyncStreamingReadWriteRpcAuth<Request, Response>> {
+    : public AsyncStreamingReadWriteRpc<Request, Response> {
  public:
   using StreamFactory = std::function<
-      std::shared_ptr<AsyncStreamingReadWriteRpc<Request, Response>>(
+      std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>>(
           std::unique_ptr<grpc::ClientContext>)>;
 
   AsyncStreamingReadWriteRpcAuth(
       std::unique_ptr<grpc::ClientContext> context,
       std::shared_ptr<GrpcAuthenticationStrategy> auth, StreamFactory factory)
-      : context_(std::move(context)),
-        auth_(std::move(auth)),
-        factory_(std::move(factory)) {}
+      : auth_(std::move(auth)),
+        state_(std::make_shared<SharedState>(std::move(factory), std::move(context))) {}
 
   void Cancel() override {
-    if (context_) return context_->TryCancel();
-    if (stream_) return stream_->Cancel();
+    state_->Cancel();
   }
 
   future<bool> Start() override {
     using Result = StatusOr<std::unique_ptr<grpc::ClientContext>>;
 
-    auto weak =
-        std::weak_ptr<AsyncStreamingReadWriteRpcAuth>(this->shared_from_this());
-    return auth_->AsyncConfigureContext(std::move(context_))
+    std::unique_ptr<grpc::ClientContext> context;
+    {
+      std::lock_guard<std::mutex> g{state_->mu};
+      context = std::move(state_->initial_context);
+    }
+    auto weak = std::weak_ptr<SharedState>(state_);
+    return auth_->AsyncConfigureContext(std::move(context))
         .then([weak](future<Result> f) mutable {
-          if (auto self = weak.lock()) return self->OnStart(f.get());
+          if (auto state = weak.lock()) return state->OnStart(f.get());
           return make_ready_future(false);
         });
   }
 
   future<absl::optional<Response>> Read() override {
-    if (!stream_) return make_ready_future(absl::optional<Response>{});
-    return stream_->Read();
+    std::lock_guard<std::mutex> g{state_->mu};
+    return state_->stream->Read();
   }
 
   future<bool> Write(Request const& request,
                      grpc::WriteOptions options) override {
-    if (!stream_) return make_ready_future(false);
-    return stream_->Write(request, std::move(options));
+    std::lock_guard<std::mutex> g{state_->mu};
+    return state_->stream->Write(request, std::move(options));
   }
 
   future<bool> WritesDone() override {
-    if (!stream_) return make_ready_future(false);
-    return stream_->WritesDone();
+    std::lock_guard<std::mutex> g{state_->mu};
+    return state_->stream->WritesDone();
   }
 
   future<Status> Finish() override {
-    if (!stream_) {
-      return make_ready_future(
-          Status(StatusCode::kInvalidArgument,
-                 "uninitialized GrpcReadWriteStreamAuth<>"));
-    }
-    return stream_->Finish();
+    return state_->Finish();
   }
 
  private:
-  future<bool> OnStart(StatusOr<std::unique_ptr<grpc::ClientContext>> context) {
-    if (!context) {
-      stream_ =
-          absl::make_unique<AsyncStreamingReadWriteRpcError<Request, Response>>(
-              std::move(context).status());
-      return make_ready_future(false);
-    }
-    stream_ = factory_(*std::move(context));
-    return stream_->Start();
-  }
+  struct SharedState {
+    SharedState(StreamFactory factory, std::unique_ptr<grpc::ClientContext> initial_context) : factory(std::move(factory)), initial_context(std::move(initial_context)), stream(absl::make_unique<AsyncStreamingReadWriteRpcError<Request, Response>>(Status(StatusCode::kFailedPrecondition, "Stream is not yet started."))) {}
 
-  std::unique_ptr<grpc::ClientContext> context_;
-  std::shared_ptr<GrpcAuthenticationStrategy> auth_;
-  StreamFactory factory_;
-  std::shared_ptr<AsyncStreamingReadWriteRpc<Request, Response>> stream_;
+    future<bool> OnStart(StatusOr<std::unique_ptr<grpc::ClientContext>> context) {
+      std::lock_guard<std::mutex> g{mu};
+      if (cancelled) return make_ready_future(false);
+      if (context) {
+        stream = factory(*std::move(context));
+      } else {
+        stream = absl::make_unique<AsyncStreamingReadWriteRpcError<Request, Response>>(
+              std::move(context).status());
+      }
+      return stream->Start();
+    }
+
+    future<Status> Finish() {
+      std::lock_guard<std::mutex> g{mu};
+      cancelled = true;  // ensure stream is not recreated after Finish
+      return stream->Finish();
+    }
+
+    void Cancel() {
+      std::lock_guard<std::mutex> g{mu};
+      if (cancelled) return;
+      cancelled = true;
+      if (initial_context) initial_context->TryCancel();
+      stream->Cancel();
+    }
+
+    const StreamFactory factory;
+    std::mutex mu;
+    std::unique_ptr<grpc::ClientContext> initial_context;  // ABSL_GUARDED_BY(mu)
+    std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>> stream;  // ABSL_GUARDED_BY(mu)
+    bool cancelled = false;  // ABSL_GUARDED_BY(mu)
+  };
+
+  const std::shared_ptr<GrpcAuthenticationStrategy> auth_;
+  const std::shared_ptr<SharedState> state_;
 };
 
 }  // namespace internal
