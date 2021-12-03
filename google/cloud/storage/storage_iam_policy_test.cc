@@ -25,31 +25,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 static_assert(std::is_copy_constructible<NativeExpression>::value,
-              "NativeExpression shoud be copy constructible");
+              "NativeExpression should be copy constructible");
 static_assert(std::is_move_constructible<NativeExpression>::value,
-              "NativeExpression shoud be move constructible");
+              "NativeExpression should be move constructible");
 static_assert(std::is_copy_assignable<NativeExpression>::value,
-              "NativeExpression shoud be copy assignable");
+              "NativeExpression should be copy assignable");
 static_assert(std::is_move_assignable<NativeExpression>::value,
-              "NativeExpression shoud be move assignable");
+              "NativeExpression should be move assignable");
 
 static_assert(std::is_copy_constructible<NativeIamBinding>::value,
-              "NativeIamBinding shoud be copy constructible");
+              "NativeIamBinding should be copy constructible");
 static_assert(std::is_move_constructible<NativeIamBinding>::value,
-              "NativeIamBinding shoud be move constructible");
+              "NativeIamBinding should be move constructible");
 static_assert(std::is_copy_assignable<NativeIamBinding>::value,
-              "NativeIamBinding shoud be copy assignable");
+              "NativeIamBinding should be copy assignable");
 static_assert(std::is_move_assignable<NativeIamBinding>::value,
-              "NativeIamBinding shoud be move assignable");
+              "NativeIamBinding should be move assignable");
 
 static_assert(std::is_copy_constructible<NativeIamPolicy>::value,
-              "NativeIamPolicy shoud be copy constructible");
+              "NativeIamPolicy should be copy constructible");
 static_assert(std::is_move_constructible<NativeIamPolicy>::value,
-              "NativeIamPolicy shoud be move constructible");
+              "NativeIamPolicy should be move constructible");
 static_assert(std::is_copy_assignable<NativeIamPolicy>::value,
-              "NativeIamPolicy shoud be copy assignable");
+              "NativeIamPolicy should be copy assignable");
 static_assert(std::is_move_assignable<NativeIamPolicy>::value,
-              "NativeIamPolicy shoud be move assignable");
+              "NativeIamPolicy should be move assignable");
 
 TEST(NativeIamExpression, CtorAndAccessors) {
   NativeExpression expr("expr", "title", "descr", "loc");

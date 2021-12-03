@@ -1,7 +1,7 @@
 /*!
 @page bigtable-samples-data-client Example: Advanced Reading and Writing Samples
 
-This example is for advanced reading and writing opertions on bigtable data client, that illustrates how to:
+This example is for advanced reading and writing operations on bigtable data client, that illustrates how to:
 
 - Use ReadModifyWrite to append a string to a value.
 - Use ReadModifyWrite to increment a value.
@@ -29,7 +29,7 @@ The example uses the following headers:
 
 @snippet data_snippets.cc connect data
 
-### Use ReadModifyWrite to increament a value and append a string to a value.
+### Use ReadModifyWrite to increment a value and append a string to a value.
 
 @snippet data_snippets.cc read modify write
 

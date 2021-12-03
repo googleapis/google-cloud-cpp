@@ -471,7 +471,7 @@ class NonResumableParallelUploadState {
  * destructor, but if they fail, they fail silently. In order to proactively
  * cleanup these files, one can call `EagerCleanup()`.
  *
- * In oder to resume an interrupted upload, provide `UseResumableUploadSession`
+ * In order to resume an interrupted upload, provide `UseResumableUploadSession`
  * to `PrepareParallelUpload` with value set to what `resumable_session_id()`
  * returns.
  */

@@ -132,7 +132,7 @@ TEST_F(WriteObjectTest, WriteObjectErrorInChunk) {
             .WillOnce(Return(Status(StatusCode::kDataLoss, "ooops")));
         EXPECT_CALL(*mock, session_id()).WillRepeatedly(ReturnRef(session_id));
         // The call to Close() below should have no effect and no "final" chunk
-        // should be uplaoded.
+        // should be uploaded.
         EXPECT_CALL(*mock, UploadFinalChunk).Times(0);
 
         return make_status_or(

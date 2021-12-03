@@ -61,7 +61,7 @@ void FilterLimitRowRegex(google::cloud::bigtable::Table table,
   namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
-    // Filter the results, only include rows where row_key matchs given regular
+    // Filter the results, only include rows where row_key matches given regular
     // expression
     cbt::Filter filter = cbt::Filter::RowKeysRegex(".*#20190501$");
     // Read and print the rows.

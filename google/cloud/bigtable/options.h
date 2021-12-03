@@ -72,7 +72,7 @@ struct InstanceAdminEndpointOption {
 /**
  * Minimum time in ms to refresh connections.
  *
- * The server wll not disconnect idle connections before this time.
+ * The server will not disconnect idle connections before this time.
  */
 struct MinConnectionRefreshOption {
   using Type = std::chrono::milliseconds;

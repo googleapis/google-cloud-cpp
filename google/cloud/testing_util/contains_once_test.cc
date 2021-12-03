@@ -60,10 +60,10 @@ TEST(ContainsOnce, NoMatchOrMultipleMatches) {
   EXPECT_THAT(v3, Not(ContainsOnce("foo")));
   EXPECT_THAT(v3, Not(ContainsOnce("bar")));
 
-  std::vector<std::string> v4 = {"bar", "baz"};
-  EXPECT_THAT(v4, Not(ContainsOnce(AnyOf("bar", "baz"))));
+  std::vector<std::string> v4 = {"abc", "abd"};
+  EXPECT_THAT(v4, Not(ContainsOnce(AnyOf("abc", "abd"))));
   EXPECT_THAT(v4, Not(ContainsOnce(HasSubstr("oo"))));
-  EXPECT_THAT(v4, Not(ContainsOnce(HasSubstr("ba"))));
+  EXPECT_THAT(v4, Not(ContainsOnce(HasSubstr("ab"))));
   EXPECT_THAT(v4, Not(ContainsOnce(IsEmpty())));
   EXPECT_THAT(v4, Not(ContainsOnce(Not(IsEmpty()))));
 }

@@ -190,13 +190,13 @@ TEST(Row, TemplatedGetAsTuple) {
   EXPECT_EQ(std::make_tuple(1, "blah", true), *std::move(row).get<RowType>());
 }
 
-TEST(MakeTestRow, ExplicitColumNames) {
+TEST(MakeTestRow, ExplicitColumnNames) {
   auto row = MakeTestRow({{"a", Value(42)}, {"b", Value(52)}});
   EXPECT_EQ(Value(42), *row.get("a"));
   EXPECT_EQ(Value(52), *row.get("b"));
 }
 
-TEST(MakeTestRow, ImplicitColumNames) {
+TEST(MakeTestRow, ImplicitColumnNames) {
   auto row = MakeTestRow(42, 52);
   EXPECT_EQ(Value(42), *row.get("0"));
   EXPECT_EQ(Value(52), *row.get("1"));

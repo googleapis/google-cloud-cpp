@@ -40,4 +40,4 @@ RUN pip3 install --upgrade pip
 RUN pip3 install cmake_format==0.6.8
 RUN pip3 install black==19.3b0
 
-RUN cargo install typos-cli --version 1.0.3 --root /usr/local
+RUN cargo install typos-cli --version 1.3.1 --root /usr/local

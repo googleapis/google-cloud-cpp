@@ -37,7 +37,7 @@ TEST(SelfSigningServiceAccountCredentials, CreateBearerToken) {
   auto const info = SelfSigningServiceAccountCredentialsInfo{
       /*.client_email*/ "--invalid--@developer.gserviceaccount.com",
       /*.private_key_id*/ "test-private-key-id",
-      /*.private_key*/ testing::kWellFormatedKey,
+      /*.private_key*/ testing::kWellFormattedKey,
       /*.audience*/ "https://storage.googleapis.com",
   };
   auto const now = std::chrono::system_clock::now();
@@ -75,7 +75,7 @@ TEST(SelfSigningServiceAccountCredentials, Basic) {
   auto const info = SelfSigningServiceAccountCredentialsInfo{
       /*.client_email*/ "--invalid--@developer.gserviceaccount.com",
       /*.private_key_id*/ "test-private-key-id",
-      /*.private_key*/ testing::kWellFormatedKey,
+      /*.private_key*/ testing::kWellFormattedKey,
       /*.audience*/ "test-audience",
   };
   auto actual = std::make_shared<SelfSigningServiceAccountCredentials>(info);

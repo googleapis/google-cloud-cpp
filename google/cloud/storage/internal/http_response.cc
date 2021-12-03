@@ -138,7 +138,7 @@ StatusCode MapHttpCodeToStatus(long code) {  // NOLINT(google-runtime-int)
 //       "@type": "type.googleapis.com/google.rpc.ErrorInfo",
 //       "reason": "..."
 //       "domain": "..."
-//       "metdata": {
+//       "metadata": {
 //         "key1": "value1"
 //         ...
 //       }

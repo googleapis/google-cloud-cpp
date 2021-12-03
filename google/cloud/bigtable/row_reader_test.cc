@@ -533,7 +533,7 @@ TEST_F(RowReaderTest, FailedParseWithNoRetryThrowsNoExcept) {
   EXPECT_FALSE(*it);
 }
 
-TEST_F(RowReaderTest, FailedStreamWithAllRequiedRowsSeenShouldNotRetry) {
+TEST_F(RowReaderTest, FailedStreamWithAllRequiredRowsSeenShouldNotRetry) {
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
   auto parser = absl::make_unique<ReadRowsParserMock>();
