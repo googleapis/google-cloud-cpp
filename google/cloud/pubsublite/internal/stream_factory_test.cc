@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/stream_factory.h"
-
 #include <gmock/gmock.h>
 
 namespace google {
