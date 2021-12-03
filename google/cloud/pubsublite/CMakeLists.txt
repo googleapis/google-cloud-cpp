@@ -63,7 +63,8 @@ target_link_libraries(
            google-cloud-cpp::longrunning_operations_protos
            google-cloud-cpp::rpc_status_protos)
 
-file(GLOB source_files
+file(
+    GLOB source_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
     "*.h" "*.cc" "internal/*.h" "internal/*.cc")
 list(FILTER source_files EXCLUDE REGEX ".*_test.cc")
@@ -121,10 +122,11 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_pubsublite_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-file(GLOB test_files
-     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-     "*_test.cc" "internal/*_test.cc")
-            
+file(
+    GLOB test_files
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    "*_test.cc" "internal/*_test.cc")
+
 # Define the tests in a function so we have a new scope for variable names.
 function (google_cloud_cpp_pubsublite_client_define_tests)
     # The tests require googletest to be installed. Force CMake to use the

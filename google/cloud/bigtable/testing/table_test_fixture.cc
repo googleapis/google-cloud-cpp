@@ -52,7 +52,7 @@ std::shared_ptr<MockDataClient> TableTestFixture::SetupMockClient() {
   return client;
 }
 
-TableTestFixture::TableTestFixture(CompletionQueue cq)
+TableTestFixture::TableTestFixture(CompletionQueue const& cq)
     : cq_impl_(std::dynamic_pointer_cast<
                ::google::cloud::testing_util::FakeCompletionQueueImpl>(
           google::cloud::internal::GetCompletionQueueImpl(cq))),

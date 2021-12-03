@@ -31,14 +31,15 @@ template <class Request, class Response>
 using BidiStream = internal::AsyncStreamingReadWriteRpc<Request, Response>;
 
 template <class Request, class Response>
-using StreamFactory = std::function<std::unique_ptr<BidiStream<Request, Response>>()>;
+using StreamFactory =
+    std::function<std::unique_ptr<BidiStream<Request, Response>>()>;
 
 using ClientMetadata = std::unordered_map<std::string, std::string>;
 
 inline std::unique_ptr<grpc::ClientContext> MakeGrpcClientContext(
     ClientMetadata const& metadata) {
   auto context = absl::make_unique<grpc::ClientContext>();
-  for (const auto& kv : metadata) {
+  for (auto const& kv : metadata) {
     context->AddMetadata(kv.first, kv.second);
   }
   return context;
