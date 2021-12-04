@@ -50,6 +50,9 @@ struct ReadSourceResult {
   HttpResponse response;
   HashValues hashes;
   absl::optional<std::int64_t> generation;
+  absl::optional<std::int64_t> metageneration;
+  absl::optional<std::string> storage_class;
+  absl::optional<std::uint64_t> size;
 
   ReadSourceResult() = default;
   ReadSourceResult(std::size_t b, HttpResponse r)

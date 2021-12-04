@@ -91,8 +91,14 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
               HashValues{{}, GrpcClient::MD5FromProto(checksums.md5_hash())});
         }
       }
-      if (response.has_metadata() && !result.generation) {
-        result.generation = response.metadata().generation();
+      if (response.has_metadata()) {
+        result.generation =
+            result.generation.value_or(response.metadata().generation());
+        result.metageneration = result.metageneration.value_or(
+            response.metadata().metageneration());
+        result.storage_class =
+            result.storage_class.value_or(response.metadata().storage_class());
+        result.size = result.size.value_or(response.metadata().size());
       }
     }
   };
