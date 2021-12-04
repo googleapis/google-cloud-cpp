@@ -21,7 +21,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 std::unique_ptr<BackoffPolicy> ExponentialBackoffPolicy::clone() const {
-  return absl::make_unique<ExponentialBackoffPolicy>(*this);
+  return absl::make_unique<ExponentialBackoffPolicy>(initial_delay_,
+                                                     maximum_delay_, scaling_);
 }
 
 std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {

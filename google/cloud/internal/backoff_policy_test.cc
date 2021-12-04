@@ -88,6 +88,12 @@ TEST(ExponentialBackoffPolicy, Clone) {
   delay = tested->OnCompletion();
   EXPECT_LE(ms(25), delay);
   EXPECT_GE(ms(50), delay);
+
+  // Ensure the initial state of the policy is cloned, not the current state.
+  tested = tested->clone();
+  delay = tested->OnCompletion();
+  EXPECT_LE(ms(10), delay);
+  EXPECT_GE(ms(20), delay);
 }
 
 /// @test Test for testing randomness for 2 objects of

@@ -52,6 +52,10 @@ TEST(ExponentialBackoffRetryPolicy, Clone) {
 
   EXPECT_GE(10_ms, tested->OnCompletion(CreateTransientError()));
   EXPECT_LE(10_ms, tested->OnCompletion(CreateTransientError()));
+
+  // Ensure the initial state of the policy is cloned, not the current state.
+  tested = tested->clone();
+  EXPECT_GE(10_ms, tested->OnCompletion(CreateTransientError()));
 }
 
 /// @test Test for testing randomness for 2 objects of
