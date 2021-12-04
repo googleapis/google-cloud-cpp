@@ -5,7 +5,7 @@ C++ client library in your own project. These instructions assume that you have
 some experience as a C++ developer and that you have a working C++ toolchain
 (compiler, linker, etc.) installed on your platform.
 
-* Packaging maintainers or developers that prefer to install the library in a
+* Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
   [packaging guide](/doc/packaging.md).
 * Developers wanting to use the libraries as part of a larger CMake or Bazel

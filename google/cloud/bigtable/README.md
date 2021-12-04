@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) try {
 ```
 <!-- inject-quickstart-end -->
 
-* Packaging maintainers or developers that prefer to install the library in a
+* Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
   [packaging guide](/doc/packaging.md).
 * Developers wanting to use this client library as part of a larger CMake or
