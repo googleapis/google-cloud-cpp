@@ -43,14 +43,33 @@ std::string ExtractHashValue(std::string const& hash_header,
 ReadSourceResult MakeReadResult(std::size_t bytes_received,
                                 HttpResponse response) {
   auto r = ReadSourceResult{bytes_received, std::move(response)};
-  for (auto const& kv : r.response.headers) {
-    if (!r.generation && kv.first == "x-goog-generation") {
-      r.generation = std::stoll(kv.second);
-    }
-    if (kv.first != "x-goog-hash") continue;
+  auto const end = r.response.headers.end();
+  auto f = r.response.headers.find("x-goog-generation");
+  if (f != end && !r.generation) r.generation = std::stoll(f->second);
+  f = r.response.headers.find("x-goog-metageneration");
+  if (f != end && !r.metageneration) r.metageneration = std::stoll(f->second);
+  f = r.response.headers.find("x-goog-storage-class");
+  if (f != end && !r.storage_class) r.storage_class = f->second;
+  f = r.response.headers.find("x-goog-stored-content-length");
+  if (f != end && !r.size) r.size = std::stoull(f->second);
+
+  // Prefer "Content-Range" over "Content-Length" because the former works for
+  // ranged downloads.
+  f = r.response.headers.find("content-range");
+  if (f != end && !r.size) {
+    auto const l = f->second.find_last_of('/');
+    if (l != std::string::npos) r.size = std::stoll(f->second.substr(l + 1));
+  }
+  f = r.response.headers.find("content-length");
+  if (f != end && !r.size) r.size = std::stoll(f->second);
+
+  // x-goog-hash is special in that it does appear multiple times in the
+  // headers, and we want to accumulate all the values.
+  auto const range = r.response.headers.equal_range("x-goog-hash");
+  for (auto i = range.first; i != range.second; ++i) {
     HashValues h;
-    h.crc32c = ExtractHashValue(kv.second, "crc32c=");
-    h.md5 = ExtractHashValue(kv.second, "md5=");
+    h.crc32c = ExtractHashValue(i->second, "crc32c=");
+    h.md5 = ExtractHashValue(i->second, "md5=");
     r.hashes = Merge(std::move(r.hashes), std::move(h));
   }
   return r;
