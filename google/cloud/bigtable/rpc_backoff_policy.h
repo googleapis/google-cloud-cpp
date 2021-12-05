@@ -87,9 +87,14 @@ class ExponentialBackoffPolicy : public RPCBackoffPolicy {
  public:
   // NOLINTNEXTLINE(google-explicit-constructor)
   ExponentialBackoffPolicy(internal::RPCPolicyParameters defaults);
-  template <typename DurationT1, typename DurationT2>
-  ExponentialBackoffPolicy(DurationT1 initial_delay, DurationT2 maximum_delay)
-      : impl_(initial_delay / 2, maximum_delay, 2.0) {}
+  template <typename Rep1, typename Period1, typename Rep2, typename Period2>
+  ExponentialBackoffPolicy(std::chrono::duration<Rep1, Period1> initial_delay,
+                           std::chrono::duration<Rep2, Period2> maximum_delay)
+      : initial_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
+            initial_delay)),
+        maximum_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
+            maximum_delay)),
+        impl_(initial_delay_ / 2, maximum_delay_, 2.0) {}
 
   std::unique_ptr<RPCBackoffPolicy> clone() const override;
   void Setup(grpc::ClientContext& context) const override;
@@ -99,6 +104,9 @@ class ExponentialBackoffPolicy : public RPCBackoffPolicy {
   std::chrono::milliseconds OnCompletion(grpc::Status const& status) override;
 
  private:
+  std::chrono::microseconds initial_delay_;
+  std::chrono::microseconds maximum_delay_;
+
   using Impl = ::google::cloud::internal::ExponentialBackoffPolicy;
   Impl impl_;
 };

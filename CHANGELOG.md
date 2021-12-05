@@ -90,6 +90,12 @@
 
 ## v1.35.0 - TBD
 
+### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
+
+* Backoff policies are now cloned from their initial state, instead of their
+  current state. Any accumulated delay will be reset to its initial value in the
+  clone. The previous behavior was a bug, and thus it has been fixed. ([#7696](https://github.com/googleapis/google-cloud-cpp/pull/7696))
+
 ## v1.34.0 - 2021-12
 
 ### [BigQuery](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigquery/README.md) [IAM](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/README.md)

@@ -30,7 +30,8 @@ ExponentialBackoffPolicy::ExponentialBackoffPolicy(
 }
 
 std::unique_ptr<RPCBackoffPolicy> ExponentialBackoffPolicy::clone() const {
-  return std::unique_ptr<RPCBackoffPolicy>(new ExponentialBackoffPolicy(*this));
+  return std::unique_ptr<RPCBackoffPolicy>(
+      new ExponentialBackoffPolicy(initial_delay_, maximum_delay_));
 }
 
 void ExponentialBackoffPolicy::Setup(grpc::ClientContext&) const {}

@@ -126,9 +126,9 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   ExponentialBackoffPolicy(std::chrono::duration<Rep1, Period1> initial_delay,
                            std::chrono::duration<Rep2, Period2> maximum_delay,
                            double scaling)
-      : current_delay_range_(
-            std::chrono::duration_cast<std::chrono::microseconds>(
-                2 * initial_delay)),
+      : initial_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
+            initial_delay)),
+        current_delay_range_(2 * initial_delay_),
         maximum_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
             maximum_delay)),
         scaling_(scaling) {
@@ -143,7 +143,8 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   //    know specifically which one is at fault)
   //  - We want uncorrelated data streams for each copy anyway.
   ExponentialBackoffPolicy(ExponentialBackoffPolicy const& rhs) noexcept
-      : current_delay_range_(rhs.current_delay_range_),
+      : initial_delay_(rhs.initial_delay_),
+        current_delay_range_(rhs.current_delay_range_),
         maximum_delay_(rhs.maximum_delay_),
         scaling_(rhs.scaling_) {}
 
@@ -151,6 +152,7 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   std::chrono::milliseconds OnCompletion() override;
 
  private:
+  std::chrono::microseconds initial_delay_;
   std::chrono::microseconds current_delay_range_;
   std::chrono::microseconds maximum_delay_;
   double scaling_;
