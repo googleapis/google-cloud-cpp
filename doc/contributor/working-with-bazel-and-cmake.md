@@ -1,6 +1,6 @@
 # Working with Bazel and CMake
 
-The Google Cloud C++ Client Libraries support application developers that use
+The Google Cloud C++ Client Libraries support application developers who use
 either Bazel or CMake as their build system. This document describes how to
 keep the two build systems in sync, and how that works behind the scenes.
 

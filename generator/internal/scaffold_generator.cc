@@ -297,7 +297,7 @@ this library.
 <!-- inject-quickstart-start -->
 <!-- inject-quickstart-end -->
 
-* Packaging maintainers or developers that prefer to install the library in a
+* Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
   [packaging guide](/doc/packaging.md).
 * Developers wanting to use the libraries as part of a larger CMake or Bazel
@@ -684,7 +684,7 @@ client library in your own project. These instructions assume that you have
 some experience as a C++ developer and that you have a working C++ toolchain
 (compiler, linker, etc.) installed on your platform.
 
-* Packaging maintainers or developers that prefer to install the library in a
+* Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
   [packaging guide](/doc/packaging.md).
 * Developers wanting to use the libraries as part of a larger CMake or Bazel
@@ -952,7 +952,7 @@ void GenerateQuickstartMakefile(
 # limitations under the License.
 
 # This is a minimal Makefile to show how to use the $title$ C++ client
-# for developers that use make(1) as their build system.
+# for developers who use make(1) as their build system.
 
 # The CXX, CXXFLAGS and CXXLD variables are hard-coded. These values work for
 # our tests, but applications would typically make them configurable parameters.
