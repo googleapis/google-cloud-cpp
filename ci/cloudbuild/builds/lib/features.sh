@@ -22,15 +22,24 @@ if ((CI_CLOUDBUILD_BUILDS_LIB_FEATURES_SH__++ != 0)); then
   return 0
 fi # include guard
 
-function features::list() {
+function features::libraries() {
   local feature_list
-  mapfile -t feature_list < <(cat ci/etc/full_feature_list)
-  # Add the hand-crafted libraries and custom features to the full list
+  mapfile -t feature_list <ci/etc/full_feature_list
+  # Add the hand-crafted libraries
   feature_list+=(
     bigtable
     pubsub
     spanner
     storage
+  )
+  printf "%s\n" "${feature_list[@]}"
+}
+
+function features::list() {
+  local feature_list
+  mapfile -t feature_list < <(features::libraries)
+  # Add any custom features to the full list of libraries
+  feature_list+=(
     experimental-storage-grpc
   )
   printf "%s\n" "${feature_list[@]}"

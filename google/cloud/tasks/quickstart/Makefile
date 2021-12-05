@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # This is a minimal Makefile to show how to use the Cloud Tasks API C++ client
-# for developers that use make(1) as their build system.
+# for developers who use make(1) as their build system.
 
 # The CXX, CXXFLAGS and CXXLD variables are hard-coded. These values work for
 # our tests, but applications would typically make them configurable parameters.

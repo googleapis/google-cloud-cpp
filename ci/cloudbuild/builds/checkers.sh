@@ -19,6 +19,7 @@ set -euo pipefail
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/lib/io.sh
 source module ci/cloudbuild/builds/lib/git.sh
+source module ci/cloudbuild/builds/lib/features.sh
 
 # Runs sed expressions (specified after -e) over the given files, editing them
 # in place. This function is exported so it can be run in subshells, such as
@@ -82,16 +83,15 @@ printf "%-30s" "Running markdown generators:" >&2
 time {
   declare -A -r GENERATOR_MAP=(
     ["ci/generate-markdown/generate-readme.sh"]="README.md"
-    ["ci/generate-markdown/generate-bigquery-readme.sh"]="google/cloud/bigquery/README.md"
-    ["ci/generate-markdown/generate-bigtable-readme.sh"]="google/cloud/bigtable/README.md"
-    ["ci/generate-markdown/generate-iam-readme.sh"]="google/cloud/iam/README.md"
-    ["ci/generate-markdown/generate-pubsub-readme.sh"]="google/cloud/pubsub/README.md"
-    ["ci/generate-markdown/generate-spanner-readme.sh"]="google/cloud/spanner/README.md"
-    ["ci/generate-markdown/generate-storage-readme.sh"]="google/cloud/storage/README.md"
     ["ci/generate-markdown/generate-packaging.sh"]="doc/packaging.md"
   )
   for generator in "${!GENERATOR_MAP[@]}"; do
     "${generator}" >"${GENERATOR_MAP[${generator}]}"
+  done
+
+  mapfile -t libraries < <(features::libraries)
+  for library in "${libraries[@]}"; do
+    ci/generate-markdown/update-library-readme.sh "${library}"
   done
 }
 
