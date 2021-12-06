@@ -130,10 +130,12 @@ TEST(SubscriberAuthTest, ModifyPushConfig) {
 }
 
 TEST(SubscriberAuthTest, AsyncStreamingPullFailedAuth) {
-  auto mock = std::make_shared<StrictMock<pubsub_testing::MockSubscriberStub>>();
+  auto mock =
+      std::make_shared<StrictMock<pubsub_testing::MockSubscriberStub>>();
   auto auth = std::make_shared<testing_util::MockAuthenticationStrategy>();
   EXPECT_CALL(*auth, AsyncConfigureContext)
-      .WillOnce([](std::unique_ptr<grpc::ClientContext>) -> future<StatusOr<std::unique_ptr<grpc::ClientContext>>> {
+      .WillOnce([](std::unique_ptr<grpc::ClientContext>)
+                    -> future<StatusOr<std::unique_ptr<grpc::ClientContext>>> {
         return make_ready_future(StatusOr<std::unique_ptr<grpc::ClientContext>>(
             Status(StatusCode::kInvalidArgument, "cannot-set-credentials")));
       });
@@ -153,7 +155,8 @@ TEST(SubscriberAuthTest, AsyncStreamingPullAuthSuccess) {
           google::pubsub::v1::StreamingPullRequest,
           google::pubsub::v1::StreamingPullResponse>;
 
-  auto mock = std::make_shared<StrictMock<pubsub_testing::MockSubscriberStub>>();
+  auto mock =
+      std::make_shared<StrictMock<pubsub_testing::MockSubscriberStub>>();
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .WillOnce([](::testing::Unused, ::testing::Unused, ::testing::Unused) {
         return absl::make_unique<ErrorStream>(

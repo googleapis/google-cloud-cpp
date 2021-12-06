@@ -39,11 +39,10 @@ class AsyncStreamingReadWriteRpcAuth
       std::unique_ptr<grpc::ClientContext> context,
       std::shared_ptr<GrpcAuthenticationStrategy> auth, StreamFactory factory)
       : auth_(std::move(auth)),
-        state_(std::make_shared<SharedState>(std::move(factory), std::move(context))) {}
+        state_(std::make_shared<SharedState>(std::move(factory),
+                                             std::move(context))) {}
 
-  void Cancel() override {
-    state_->Cancel();
-  }
+  void Cancel() override { state_->Cancel(); }
 
   future<bool> Start() override {
     using Result = StatusOr<std::unique_ptr<grpc::ClientContext>>;
@@ -71,9 +70,7 @@ class AsyncStreamingReadWriteRpcAuth
     return state_->stream->WritesDone();
   }
 
-  future<Status> Finish() override {
-    return state_->Finish();
-  }
+  future<Status> Finish() override { return state_->Finish(); }
 
  private:
   struct SharedState {
@@ -90,14 +87,16 @@ class AsyncStreamingReadWriteRpcAuth
       return std::move(initial_context);
     }
 
-    future<bool> OnStart(StatusOr<std::unique_ptr<grpc::ClientContext>> context) {
+    future<bool> OnStart(
+        StatusOr<std::unique_ptr<grpc::ClientContext>> context) {
       std::lock_guard<std::mutex> g{mu};
       if (cancelled) return make_ready_future(false);
       if (context) {
         stream = factory(*std::move(context));
       } else {
-        stream = absl::make_unique<AsyncStreamingReadWriteRpcError<Request, Response>>(
-              std::move(context).status());
+        stream = absl::make_unique<
+            AsyncStreamingReadWriteRpcError<Request, Response>>(
+            std::move(context).status());
       }
       return stream->Start();
     }
@@ -118,8 +117,10 @@ class AsyncStreamingReadWriteRpcAuth
 
     StreamFactory const factory;
     std::mutex mu;
-    std::unique_ptr<grpc::ClientContext> initial_context;  // ABSL_GUARDED_BY(mu)
-    std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>> stream;  // ABSL_GUARDED_BY(mu)
+    std::unique_ptr<grpc::ClientContext>
+        initial_context;  // ABSL_GUARDED_BY(mu)
+    std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>>
+        stream;              // ABSL_GUARDED_BY(mu)
     bool cancelled = false;  // ABSL_GUARDED_BY(mu)
   };
 

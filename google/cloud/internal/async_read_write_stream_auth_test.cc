@@ -55,7 +55,8 @@ class MockStream : public BaseStream {
 };
 
 TEST(AsyncStreamReadWriteAuth, Start) {
-  auto factory = AuthStream::StreamFactory([](std::unique_ptr<grpc::ClientContext>) {
+  auto factory = AuthStream::StreamFactory([](std::unique_ptr<
+                                               grpc::ClientContext>) {
     auto mock = absl::make_unique<StrictMock<MockStream>>();
     EXPECT_CALL(*mock, Start).WillOnce([] { return make_ready_future(true); });
     EXPECT_CALL(*mock, Write)

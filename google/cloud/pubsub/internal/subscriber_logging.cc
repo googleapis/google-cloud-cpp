@@ -103,8 +103,8 @@ SubscriberLogging::AsyncStreamingPull(
                  << " << request=" << DebugString(request, tracing_options_);
   auto stream = child_->AsyncStreamingPull(cq, std::move(context), request);
   if (!trace_streams_) return stream;
-  return absl::make_unique<LoggingAsyncPullStream>(std::move(stream),
-                                                  tracing_options_, request_id);
+  return absl::make_unique<LoggingAsyncPullStream>(
+      std::move(stream), tracing_options_, request_id);
 }
 
 future<Status> SubscriberLogging::AsyncAcknowledge(
