@@ -74,7 +74,7 @@ See each library's `README.md` file for more information about:
 This is a quickstart guide for developers wanting to compile the libraries and
 run the examples included with the libraries.
 
-* Packaging maintainers or developers that prefer to install the library in a
+* Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
   [packaging guide](/doc/packaging.md).
 * Developers wanting to use the libraries as part of a larger CMake or Bazel
