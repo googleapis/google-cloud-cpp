@@ -387,7 +387,7 @@ TEST_F(TableAsyncReadRowsTest, MultipleChunksImmediatelySatisfied) {
   ASSERT_EQ(0U, cq_impl_->size());
 }
 
-/// @test Verify that a single row can span multiple responses.
+/// @test Verify that a single row can span mutiple responses.
 TEST_F(TableAsyncReadRowsTest, ResponseInMultipleChunks) {
   auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 
