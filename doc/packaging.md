@@ -227,6 +227,7 @@ curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
+      -DJSON_BuildTests=OFF \
       -H. -Bcmake-out/nlohmann/json && \
 sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -434,6 +435,7 @@ curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
+      -DJSON_BuildTests=OFF \
       -H. -Bcmake-out/nlohmann/json && \
 sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -571,6 +573,7 @@ curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
+      -DJSON_BuildTests=OFF \
       -H. -Bcmake-out/nlohmann/json && \
 sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -724,6 +727,7 @@ curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
+      -DJSON_BuildTests=OFF \
       -H. -Bcmake-out/nlohmann/json && \
 sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -942,6 +946,7 @@ curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
+      -DJSON_BuildTests=OFF \
       -H. -Bcmake-out/nlohmann/json && \
 sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -1164,6 +1169,7 @@ curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
+      -DJSON_BuildTests=OFF \
       -H. -Bcmake-out/nlohmann/json && \
 sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -1330,6 +1336,7 @@ curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
+      -DJSON_BuildTests=OFF \
       -H. -Bcmake-out/nlohmann/json && \
 sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -1520,6 +1527,7 @@ curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
+      -DJSON_BuildTests=OFF \
       -H. -Bcmake-out/nlohmann/json && \
 sudo cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
 sudo ldconfig

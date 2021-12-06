@@ -109,6 +109,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.4.tar.gz | \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
+      -DJSON_BuildTests=OFF \
       -H. -Bcmake-out -GNinja && \
     cmake --build cmake-out --target install -- -j ${NCPU} && \
     ldconfig && \
