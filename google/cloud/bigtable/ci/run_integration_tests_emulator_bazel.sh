@@ -37,6 +37,8 @@ source module /google/cloud/bigtable/tools/run_emulator_utils.sh
 
 # These can only run against production
 production_only_targets=(
+  "//google/cloud/bigtable/admin/integration_tests:admin_backup_integration_test"
+  "//google/cloud/bigtable/admin/integration_tests:admin_iam_policy_integration_test"
   "//google/cloud/bigtable/examples:bigtable_table_admin_backup_snippets"
   "//google/cloud/bigtable/examples:table_admin_iam_policy_snippets"
   "//google/cloud/bigtable/tests:admin_backup_integration_test"

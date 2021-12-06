@@ -51,9 +51,6 @@ mapfile -t actual_dirs < <(env -C "${INSTALL_PREFIX}" find -type d)
 mapfile -t expected_dirs < <(cat ci/etc/expected_install_directories)
 expected_dirs+=(
   ./include/google/api
-  ./include/google/bigtable
-  ./include/google/bigtable/admin
-  ./include/google/bigtable/admin/v2
   ./include/google/bigtable/v2
   ./include/google/cloud/bigquery/connection
   ./include/google/cloud/bigquery/connection/v1
@@ -64,7 +61,6 @@ expected_dirs+=(
   ./include/google/cloud/bigquery/reservation
   ./include/google/cloud/bigquery/reservation/v1
   ./include/google/cloud/bigquery/v2
-  ./include/google/cloud/bigtable
   ./include/google/cloud/bigtable/internal
   ./include/google/cloud/dialogflow
   ./include/google/cloud/dialogflow/v2
