@@ -28,7 +28,7 @@ namespace testing {
 /// Common fixture for the bigtable::Table tests.
 class TableTestFixture : public ::testing::Test {
  protected:
-  explicit TableTestFixture(CompletionQueue const& cq);
+  explicit TableTestFixture(CompletionQueue cq);
   std::shared_ptr<MockDataClient> SetupMockClient();
 
   static char const kProjectId[];
