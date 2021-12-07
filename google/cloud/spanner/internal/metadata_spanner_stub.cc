@@ -46,14 +46,13 @@ MetadataSpannerStub::BatchCreateSessions(
   return child_->BatchCreateSessions(client_context, request);
 }
 
-std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-    spanner_proto::BatchCreateSessionsResponse>>
+future<StatusOr<spanner_proto::BatchCreateSessionsResponse>>
 MetadataSpannerStub::AsyncBatchCreateSessions(
-    grpc::ClientContext& client_context,
-    spanner_proto::BatchCreateSessionsRequest const& request,
-    grpc::CompletionQueue* cq) {
-  SetMetadata(client_context, "database=" + request.database());
-  return child_->AsyncBatchCreateSessions(client_context, request, cq);
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    spanner_proto::BatchCreateSessionsRequest const& request) {
+  SetMetadata(*context, "database=" + request.database());
+  return child_->AsyncBatchCreateSessions(cq, std::move(context), request);
 }
 
 StatusOr<spanner_proto::Session> MetadataSpannerStub::GetSession(
@@ -77,14 +76,12 @@ Status MetadataSpannerStub::DeleteSession(
   return child_->DeleteSession(client_context, request);
 }
 
-std::unique_ptr<
-    grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
-MetadataSpannerStub::AsyncDeleteSession(
-    grpc::ClientContext& client_context,
-    spanner_proto::DeleteSessionRequest const& request,
-    grpc::CompletionQueue* cq) {
-  SetMetadata(client_context, "name=" + request.name());
-  return child_->AsyncDeleteSession(client_context, request, cq);
+future<Status> MetadataSpannerStub::AsyncDeleteSession(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    spanner_proto::DeleteSessionRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeleteSession(cq, std::move(context), request);
 }
 
 StatusOr<spanner_proto::ResultSet> MetadataSpannerStub::ExecuteSql(
@@ -94,14 +91,12 @@ StatusOr<spanner_proto::ResultSet> MetadataSpannerStub::ExecuteSql(
   return child_->ExecuteSql(client_context, request);
 }
 
-std::unique_ptr<
-    grpc::ClientAsyncResponseReaderInterface<spanner_proto::ResultSet>>
-MetadataSpannerStub::AsyncExecuteSql(
-    grpc::ClientContext& client_context,
-    spanner_proto::ExecuteSqlRequest const& request,
-    grpc::CompletionQueue* cq) {
-  SetMetadata(client_context, "session=" + request.session());
-  return child_->AsyncExecuteSql(client_context, request, cq);
+future<StatusOr<spanner_proto::ResultSet>> MetadataSpannerStub::AsyncExecuteSql(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    spanner_proto::ExecuteSqlRequest const& request) {
+  SetMetadata(*context, "session=" + request.session());
+  return child_->AsyncExecuteSql(cq, std::move(context), request);
 }
 
 std::unique_ptr<grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>

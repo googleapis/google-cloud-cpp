@@ -38,13 +38,12 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
                google::spanner::v1::BatchCreateSessionsRequest const&),
               (override));
 
-  MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-                  google::spanner::v1::BatchCreateSessionsResponse>>,
-              AsyncBatchCreateSessions,
-              (grpc::ClientContext&,
-               google::spanner::v1::BatchCreateSessionsRequest const&,
-               grpc::CompletionQueue*),
-              (override));
+  MOCK_METHOD(
+      future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>,
+      AsyncBatchCreateSessions,
+      (CompletionQueue & cq, std::unique_ptr<grpc::ClientContext> context,
+       google::spanner::v1::BatchCreateSessionsRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::spanner::v1::Session>, GetSession,
               (grpc::ClientContext&,
@@ -61,25 +60,19 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
                google::spanner::v1::DeleteSessionRequest const&),
               (override));
 
-  MOCK_METHOD(
-      std::unique_ptr<
-          grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>,
-      AsyncDeleteSession,
-      (grpc::ClientContext&, google::spanner::v1::DeleteSessionRequest const&,
-       grpc::CompletionQueue*),
-      (override));
+  MOCK_METHOD(future<Status>, AsyncDeleteSession,
+              (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+               google::spanner::v1::DeleteSessionRequest const&),
+              (override));
 
   MOCK_METHOD(StatusOr<google::spanner::v1::ResultSet>, ExecuteSql,
               (grpc::ClientContext&,
                google::spanner::v1::ExecuteSqlRequest const&),
               (override));
 
-  MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-                  google::spanner::v1::ResultSet>>,
-              AsyncExecuteSql,
-              (grpc::ClientContext&,
-               google::spanner::v1::ExecuteSqlRequest const&,
-               grpc::CompletionQueue*),
+  MOCK_METHOD(future<StatusOr<google::spanner::v1::ResultSet>>, AsyncExecuteSql,
+              (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+               google::spanner::v1::ExecuteSqlRequest const&),
               (override));
 
   MOCK_METHOD(

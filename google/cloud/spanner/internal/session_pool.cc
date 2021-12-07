@@ -17,7 +17,7 @@
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/completion_queue.h"
-#include "google/cloud/internal/async_retry_unary_rpc.h"
+#include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status.h"
@@ -415,31 +415,29 @@ SessionPool::AsyncBatchCreateSessions(
   request.mutable_session_template()->mutable_labels()->insert(labels.begin(),
                                                                labels.end());
   request.set_session_count(std::int32_t{num_sessions});
-  return google::cloud::internal::StartRetryAsyncUnaryRpc(
-      cq, __func__, retry_policy_prototype_->clone(),
-      backoff_policy_prototype_->clone(), Idempotency::kIdempotent,
-      [stub](grpc::ClientContext* context,
-             spanner_proto::BatchCreateSessionsRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return stub->AsyncBatchCreateSessions(*context, request, cq);
+  return google::cloud::internal::AsyncRetryLoop(
+      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+      Idempotency::kIdempotent, cq,
+      [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+             spanner_proto::BatchCreateSessionsRequest const& request) {
+        return stub->AsyncBatchCreateSessions(cq, std::move(context), request);
       },
-      std::move(request));
+      std::move(request), __func__);
 }
 
-future<StatusOr<google::protobuf::Empty>> SessionPool::AsyncDeleteSession(
+future<Status> SessionPool::AsyncDeleteSession(
     CompletionQueue& cq, std::shared_ptr<SpannerStub> const& stub,
     std::string session_name) {
   spanner_proto::DeleteSessionRequest request;
   request.set_name(std::move(session_name));
-  return google::cloud::internal::StartRetryAsyncUnaryRpc(
-      cq, __func__, retry_policy_prototype_->clone(),
-      backoff_policy_prototype_->clone(), Idempotency::kIdempotent,
-      [stub](grpc::ClientContext* context,
-             spanner_proto::DeleteSessionRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return stub->AsyncDeleteSession(*context, request, cq);
+  return google::cloud::internal::AsyncRetryLoop(
+      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+      Idempotency::kIdempotent, cq,
+      [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+             spanner_proto::DeleteSessionRequest const& request) {
+        return stub->AsyncDeleteSession(cq, std::move(context), request);
       },
-      std::move(request));
+      std::move(request), __func__);
 }
 
 /// Refresh the session `session_name` by executing a `SELECT 1` query on it.
@@ -452,15 +450,14 @@ future<StatusOr<spanner_proto::ResultSet>> SessionPool::AsyncRefreshSession(
   request.set_sql("SELECT 1;");
   request.mutable_request_options()->set_priority(
       spanner_proto::RequestOptions::PRIORITY_LOW);
-  return google::cloud::internal::StartRetryAsyncUnaryRpc(
-      cq, __func__, retry_policy_prototype_->clone(),
-      backoff_policy_prototype_->clone(), Idempotency::kIdempotent,
-      [stub](grpc::ClientContext* context,
-             spanner_proto::ExecuteSqlRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return stub->AsyncExecuteSql(*context, request, cq);
+  return google::cloud::internal::AsyncRetryLoop(
+      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+      Idempotency::kIdempotent, cq,
+      [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+             spanner_proto::ExecuteSqlRequest const& request) {
+        return stub->AsyncExecuteSql(cq, std::move(context), request);
       },
-      std::move(request));
+      std::move(request), __func__);
 }
 
 Status SessionPool::HandleBatchCreateSessionsDone(

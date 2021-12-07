@@ -36,7 +36,7 @@ struct SessionPoolFriendForTest {
                                                   num_sessions);
   }
 
-  static future<StatusOr<google::protobuf::Empty>> AsyncDeleteSession(
+  static future<Status> AsyncDeleteSession(
       std::shared_ptr<SessionPool> const& session_pool, CompletionQueue& cq,
       std::shared_ptr<SpannerStub> const& stub, std::string session_name) {
     return session_pool->AsyncDeleteSession(cq, stub, std::move(session_name));
@@ -100,12 +100,8 @@ TEST_F(SessionPoolIntegrationTest, SessionAsyncCRUD) {
   std::vector<future<Status>> async_delete;
   for (auto const& s : create_response->session()) {
     auto const& session_name = s.name();
-    async_delete.push_back(
-        SessionPoolFriendForTest::AsyncDeleteSession(session_pool, cq, stub,
-                                                     session_name)
-            .then([](future<StatusOr<google::protobuf::Empty>> f) {
-              return f.get().status();
-            }));
+    async_delete.push_back(SessionPoolFriendForTest::AsyncDeleteSession(
+        session_pool, cq, stub, session_name));
   }
   for (auto& ad : async_delete) {
     auto status = ad.get();

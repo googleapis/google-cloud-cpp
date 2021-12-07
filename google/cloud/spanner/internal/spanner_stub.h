@@ -55,12 +55,12 @@ class SpannerStub {
   BatchCreateSessions(
       grpc::ClientContext& client_context,
       google::spanner::v1::BatchCreateSessionsRequest const& request) = 0;
-  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::spanner::v1::BatchCreateSessionsResponse>>
+
+  virtual future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::BatchCreateSessionsRequest const& request,
-      grpc::CompletionQueue* cq) = 0;
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::spanner::v1::BatchCreateSessionsRequest const& request) = 0;
   virtual StatusOr<google::spanner::v1::Session> GetSession(
       grpc::ClientContext& client_context,
       google::spanner::v1::GetSessionRequest const& request) = 0;
@@ -70,19 +70,17 @@ class SpannerStub {
   virtual Status DeleteSession(
       grpc::ClientContext& client_context,
       google::spanner::v1::DeleteSessionRequest const& request) = 0;
-  virtual std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
-  AsyncDeleteSession(grpc::ClientContext& client_context,
-                     google::spanner::v1::DeleteSessionRequest const& request,
-                     grpc::CompletionQueue* cq) = 0;
+  virtual future<Status> AsyncDeleteSession(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::spanner::v1::DeleteSessionRequest const& request) = 0;
   virtual StatusOr<google::spanner::v1::ResultSet> ExecuteSql(
       grpc::ClientContext& client_context,
       google::spanner::v1::ExecuteSqlRequest const& request) = 0;
-  virtual std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::spanner::v1::ResultSet>>
-  AsyncExecuteSql(grpc::ClientContext& client_context,
-                  google::spanner::v1::ExecuteSqlRequest const& request,
-                  grpc::CompletionQueue* cq) = 0;
+  virtual future<StatusOr<google::spanner::v1::ResultSet>> AsyncExecuteSql(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::spanner::v1::ExecuteSqlRequest const& request) = 0;
   virtual std::unique_ptr<
       grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
   ExecuteStreamingSql(

@@ -41,12 +41,11 @@ class MetadataSpannerStub : public SpannerStub {
   BatchCreateSessions(
       grpc::ClientContext& client_context,
       google::spanner::v1::BatchCreateSessionsRequest const& request) override;
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::spanner::v1::BatchCreateSessionsResponse>>
+  future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::BatchCreateSessionsRequest const& request,
-      grpc::CompletionQueue* cq) override;
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::spanner::v1::BatchCreateSessionsRequest const& request) override;
   StatusOr<google::spanner::v1::Session> GetSession(
       grpc::ClientContext& client_context,
       google::spanner::v1::GetSessionRequest const& request) override;
@@ -56,19 +55,17 @@ class MetadataSpannerStub : public SpannerStub {
   Status DeleteSession(
       grpc::ClientContext& client_context,
       google::spanner::v1::DeleteSessionRequest const& request) override;
-  std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
-  AsyncDeleteSession(grpc::ClientContext& client_context,
-                     google::spanner::v1::DeleteSessionRequest const& request,
-                     grpc::CompletionQueue* cq) override;
+  future<Status> AsyncDeleteSession(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::spanner::v1::DeleteSessionRequest const& request) override;
   StatusOr<google::spanner::v1::ResultSet> ExecuteSql(
       grpc::ClientContext& client_context,
       google::spanner::v1::ExecuteSqlRequest const& request) override;
-  std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::spanner::v1::ResultSet>>
-  AsyncExecuteSql(grpc::ClientContext& client_context,
-                  google::spanner::v1::ExecuteSqlRequest const& request,
-                  grpc::CompletionQueue* cq) override;
+  future<StatusOr<google::spanner::v1::ResultSet>> AsyncExecuteSql(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::spanner::v1::ExecuteSqlRequest const& request) override;
   std::unique_ptr<
       grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
   ExecuteStreamingSql(
