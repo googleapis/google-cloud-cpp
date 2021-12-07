@@ -90,6 +90,12 @@
 
 ## v1.35.0 - TBD
 
+## v1.34.1 - 2021-12
+
+### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
+
+* fix(storage): more strict parsing for HttpResponse ([#7707](https://github.com/googleapis/google-cloud-cpp/pull/7707))
+
 ## v1.34.0 - 2021-12
 
 ### [BigQuery](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigquery/README.md) [IAM](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/README.md)
