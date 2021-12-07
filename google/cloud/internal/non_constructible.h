@@ -19,8 +19,8 @@
 
 namespace google {
 namespace cloud {
-namespace internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace internal {
 
 /**
  * A type that is not constructible.
@@ -35,8 +35,8 @@ struct NonConstructible {
   NonConstructible(NonConstructible&&) = delete;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
