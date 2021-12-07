@@ -132,6 +132,13 @@ TEST(HttpResponseTest, ErrorInfoInvalidJson) {
   EXPECT_EQ(AsStatus(HttpResponse{400, kJsonPayload, {}}), expected);
 }
 
+TEST(HttpResponseTest, ErrorInfoInvalidOnlyString) {
+  // Some valid json, but not what we're looking for.
+  auto constexpr kJsonPayload = R"("uh-oh some error here")";
+  Status expected{StatusCode::kInvalidArgument, kJsonPayload};
+  EXPECT_EQ(AsStatus(HttpResponse{400, kJsonPayload, {}}), expected);
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
