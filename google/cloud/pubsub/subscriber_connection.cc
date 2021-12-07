@@ -101,7 +101,7 @@ future<Status> SubscriberConnection::Subscribe(SubscribeParams) {
 
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
     Subscription subscription,
-    std::initializer_list<pubsub_internal::NonConstructible>) {
+    std::initializer_list<internal::NonConstructible>) {
   return MakeSubscriberConnection(std::move(subscription));
 }
 

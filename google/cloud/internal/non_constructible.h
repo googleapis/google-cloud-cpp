@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_NON_CONSTRUCTIBLE_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_NON_CONSTRUCTIBLE_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_NON_CONSTRUCTIBLE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_NON_CONSTRUCTIBLE_H
 
-#include "google/cloud/pubsub/version.h"
-#include "google/cloud/options.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace pubsub_internal {
+namespace internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
@@ -37,8 +36,8 @@ struct NonConstructible {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsub_internal
+}  // namespace internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_NON_CONSTRUCTIBLE_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_NON_CONSTRUCTIBLE_H

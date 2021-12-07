@@ -17,7 +17,6 @@
 
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
-#include "google/cloud/pubsub/internal/non_constructible.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/publisher_options.h"
@@ -25,6 +24,7 @@
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/non_constructible.h"
 #include "google/cloud/status_or.h"
 #include <initializer_list>
 #include <string>
@@ -90,7 +90,7 @@ class PublisherConnection {
  * @deprecated Please use `MakePublisherConnection(topic)` instead.
  */
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
-    Topic topic, std::initializer_list<pubsub_internal::NonConstructible>);
+    Topic topic, std::initializer_list<internal::NonConstructible>);
 
 /**
  * Creates a new `PublisherConnection` object to work with `Publisher`.

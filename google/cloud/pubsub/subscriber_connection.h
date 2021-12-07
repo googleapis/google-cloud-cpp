@@ -19,13 +19,13 @@
 #include "google/cloud/pubsub/application_callback.h"
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
-#include "google/cloud/pubsub/internal/non_constructible.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/subscriber_options.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/version.h"
+#include "google/cloud/internal/non_constructible.h"
 #include "google/cloud/status_or.h"
 #include <functional>
 #include <initializer_list>
@@ -79,7 +79,7 @@ class SubscriberConnection {
  */
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
     Subscription subscription,
-    std::initializer_list<pubsub_internal::NonConstructible>);
+    std::initializer_list<internal::NonConstructible>);
 
 /**
  * Creates a new `SubscriberConnection` object to work with `Subscriber`.

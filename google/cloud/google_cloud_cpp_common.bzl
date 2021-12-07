@@ -53,6 +53,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/invoke_result.h",
     "internal/ios_flags_saver.h",
     "internal/log_impl.h",
+    "internal/non_constructible.h",
     "internal/pagination_range.h",
     "internal/parse_rfc3339.h",
     "internal/port_platform.h",

@@ -17,10 +17,10 @@
 
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
-#include "google/cloud/pubsub/internal/non_constructible.h"
 #include "google/cloud/pubsub/internal/schema_stub.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/version.h"
+#include "google/cloud/internal/non_constructible.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/schema.pb.h>
@@ -102,7 +102,7 @@ class SchemaAdminConnection {
  * @deprecated Please use `MakeSchemaAdminConnection()` instead.
  */
 std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
-    std::initializer_list<pubsub_internal::NonConstructible>);
+    std::initializer_list<internal::NonConstructible>);
 
 /**
  * Creates a new `SchemaAdminConnection` object to work with
