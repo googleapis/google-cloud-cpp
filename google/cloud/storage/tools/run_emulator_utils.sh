@@ -91,7 +91,7 @@ start_emulator() {
   if [[ "${connected}" == "no" ]]; then
     io::log_red "Cannot connect to emulator; aborting test."
     io::log_red "curl connection test result."
-    curl "${HTTPBIN_ENDPOINT}/get"
+    curl "${HTTPBIN_ENDPOINT}/get" || true
     io::log_red "emulator log."
     cat gcs_emulator.log
     exit 1
