@@ -173,7 +173,7 @@ Status AsStatus(HttpResponse const& http_response) {
   // structured and useful error Status. If the payload fails to parse as JSON,
   // we simply attach the full error payload as the Status's message string.
   auto json = nlohmann::json::parse(http_response.payload, nullptr, false);
-  if (json.is_discarded()) return Status(status_code, http_response.payload);
+  if (!json.is_object()) return Status(status_code, http_response.payload);
 
   // We expect JSON that looks like the following:
   //   {
