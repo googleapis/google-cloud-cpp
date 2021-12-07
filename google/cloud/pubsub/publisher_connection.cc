@@ -18,7 +18,6 @@
 #include "google/cloud/pubsub/internal/default_batch_sink.h"
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/flow_controlled_publisher_connection.h"
-#include "google/cloud/pubsub/internal/non_constructible.h"
 #include "google/cloud/pubsub/internal/ordering_key_publisher_connection.h"
 #include "google/cloud/pubsub/internal/publisher_auth.h"
 #include "google/cloud/pubsub/internal/publisher_logging.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/pubsub/internal/sequential_batch_sink.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/future_void.h"
+#include "google/cloud/internal/non_constructible.h"
 #include "google/cloud/log.h"
 #include <memory>
 
@@ -124,7 +124,7 @@ void PublisherConnection::Flush(FlushParams) {}
 void PublisherConnection::ResumePublish(ResumePublishParams) {}
 
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
-    Topic topic, std::initializer_list<pubsub_internal::NonConstructible>) {
+    Topic topic, std::initializer_list<internal::NonConstructible>) {
   return MakePublisherConnection(std::move(topic));
 }
 

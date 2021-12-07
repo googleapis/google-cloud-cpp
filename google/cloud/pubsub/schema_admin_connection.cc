@@ -167,7 +167,7 @@ std::shared_ptr<pubsub_internal::SchemaStub> DecorateSchemaAdminStub(
 SchemaAdminConnection::~SchemaAdminConnection() = default;
 
 std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
-    std::initializer_list<pubsub_internal::NonConstructible>) {
+    std::initializer_list<internal::NonConstructible>) {
   return MakeSchemaAdminConnection();
 }
 

@@ -98,6 +98,7 @@ add_library(
     internal/ios_flags_saver.h
     internal/log_impl.cc
     internal/log_impl.h
+    internal/non_constructible.h
     internal/pagination_range.h
     internal/parse_rfc3339.cc
     internal/parse_rfc3339.h

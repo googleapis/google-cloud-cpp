@@ -341,7 +341,7 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminConnection::Seek(
 }
 
 std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
-    std::initializer_list<pubsub_internal::NonConstructible>) {
+    std::initializer_list<internal::NonConstructible>) {
   return MakeSubscriptionAdminConnection();
 }
 
