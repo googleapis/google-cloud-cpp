@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/query_options.h"
+#include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/version.h"
 #include <gmock/gmock.h>
 
@@ -81,6 +82,32 @@ TEST(QueryOptionsTest, OptimizerStatisticsPackage) {
 
   copy.set_optimizer_statistics_package(absl::nullopt);
   EXPECT_EQ(copy, default_constructed);
+}
+
+TEST(QueryOptionsTest, FromOptionsEmpty) {
+  auto const opts = Options{};
+  QueryOptions const query_opts(opts);
+  EXPECT_FALSE(query_opts.optimizer_version());
+  EXPECT_FALSE(query_opts.optimizer_statistics_package());
+  EXPECT_FALSE(query_opts.request_priority());
+  EXPECT_FALSE(query_opts.request_tag());
+}
+
+TEST(QueryOptionsTest, FromOptionsFull) {
+  auto const opts = Options{}
+                        .set<RequestOptimizerVersionOption>("1")
+                        .set<RequestOptimizerStatisticsPackageOption>("latest")
+                        .set<RequestPriorityOption>(RequestPriority::kHigh)
+                        .set<RequestTagOption>("tag");
+  QueryOptions const query_opts(opts);
+  ASSERT_TRUE(query_opts.optimizer_version());
+  EXPECT_EQ(*query_opts.optimizer_version(), "1");
+  ASSERT_TRUE(query_opts.optimizer_statistics_package());
+  EXPECT_EQ(*query_opts.optimizer_statistics_package(), "latest");
+  ASSERT_TRUE(query_opts.request_priority());
+  EXPECT_EQ(*query_opts.request_priority(), RequestPriority::kHigh);
+  ASSERT_TRUE(query_opts.request_tag());
+  EXPECT_EQ(*query_opts.request_tag(), "tag");
 }
 
 }  // namespace

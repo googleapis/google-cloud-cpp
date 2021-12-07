@@ -36,6 +36,7 @@
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/internal/non_constructible.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
@@ -43,6 +44,7 @@
 #include <google/spanner/v1/spanner.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <functional>
+#include <initializer_list>
 #include <memory>
 #include <string>
 #include <vector>
@@ -128,10 +130,31 @@ class Client {
    * with unit testing, callers may create fake/mock `Connection` objects that
    * are injected into the `Client`.
    */
-  explicit Client(std::shared_ptr<Connection> conn, ClientOptions opts = {})
+  explicit Client(std::shared_ptr<Connection> conn, Options opts = {})
       : conn_(std::move(conn)), opts_(std::move(opts)) {}
 
-  /// No default construction. Use `Client(std::shared_ptr<Connection>)`
+  /**
+   * Constructs a `Client` object using the specified @p conn and @p opts.
+   *
+   * Note that the previous constructor, which uses the new way to represent
+   * options of all varieties (`google::cloud::Options`), is now preferred.
+   */
+  explicit Client(std::shared_ptr<Connection> conn, ClientOptions const& opts)
+      : conn_(std::move(conn)), opts_(opts) {}
+
+  /**
+   * Constructs a `Client` object using the specified @p conn and an empty
+   * initializer list.
+   *
+   * @note This constructor exists solely for backwards compatibility. It
+   *     prevents existing code that uses `Client(conn, {})` from breaking
+   *     due to ambiguity introduced by the `Options` overload.
+   */
+  explicit Client(std::shared_ptr<Connection> conn,
+                  std::initializer_list<internal::NonConstructible>)
+      : Client(std::move(conn)) {}
+
+  /// No default construction.
   Client() = delete;
 
   //@{
@@ -648,7 +671,8 @@ class Client {
   QueryOptions OverlayQueryOptions(QueryOptions const&);
 
   std::shared_ptr<Connection> conn_;
-  ClientOptions opts_;
+  Options opts_;
+  QueryOptions query_opts_{opts_};
 };
 
 /**

@@ -81,6 +81,7 @@ add_library(
     bytes.h
     client.cc
     client.h
+    client_options.cc
     client_options.h
     commit_options.h
     commit_result.h
@@ -157,6 +158,7 @@ add_library(
     partition_options.h
     partitioned_dml_result.h
     polling_policy.h
+    query_options.cc
     query_options.h
     query_partition.cc
     query_partition.h

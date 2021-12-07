@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/client_options.h"
+#include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/query_options.h"
 #include "google/cloud/spanner/version.h"
 #include <gmock/gmock.h>
@@ -35,6 +36,34 @@ TEST(ClientOptionsTest, OptimizerVersion) {
 
   copy.set_query_options(QueryOptions{});
   EXPECT_EQ(copy, default_constructed);
+}
+
+TEST(ClientOptionsTest, OptionsConversionEmpty) {
+  ClientOptions const client_options;
+  auto const options = Options(client_options);
+  EXPECT_FALSE(options.has<RequestOptimizerVersionOption>());
+  EXPECT_FALSE(options.has<RequestOptimizerStatisticsPackageOption>());
+  EXPECT_FALSE(options.has<RequestPriorityOption>());
+  EXPECT_FALSE(options.has<RequestTagOption>());
+}
+
+TEST(ClientOptionsTest, OptionsConversionFull) {
+  auto query_options = QueryOptions{}
+                           .set_optimizer_version("1")
+                           .set_optimizer_statistics_package("latest")
+                           .set_request_priority(RequestPriority::kHigh)
+                           .set_request_tag("tag");
+  ClientOptions client_options;
+  client_options.set_query_options(std::move(query_options));
+  auto const options = Options(client_options);
+  EXPECT_TRUE(options.has<RequestOptimizerVersionOption>());
+  EXPECT_EQ(options.get<RequestOptimizerVersionOption>(), "1");
+  EXPECT_TRUE(options.has<RequestOptimizerStatisticsPackageOption>());
+  EXPECT_EQ(options.get<RequestOptimizerStatisticsPackageOption>(), "latest");
+  EXPECT_TRUE(options.has<RequestPriorityOption>());
+  EXPECT_EQ(options.get<RequestPriorityOption>(), RequestPriority::kHigh);
+  EXPECT_TRUE(options.has<RequestTagOption>());
+  EXPECT_EQ(options.get<RequestTagOption>(), "tag");
 }
 
 }  // namespace
