@@ -100,13 +100,10 @@ Working in your fork of `google-cloud-cpp`: bump the version numbers to the
 send the PR for review against `main`. You need to:
 
 - Update the version number in the top-level `CMakeLists.txt` file.
-- Run the cmake configuration step, which will update the
-  `google/cloud/internal/version_info.h` file. Hint: Running
-  `ci/cloudbuild/build.sh -t clang-tidy-pr` will do this, and you can `CTRL-C`
-  the build after CMake's configure step is finished.
 - Update the ABI baseline to include the new version numbers in the inline
   namespace by running `ci/cloudbuild/build.sh -t check-api-pr`, which will
   leave the updated files in `ci/abi-dumps`.
+- This will also update the `google/cloud/internal/version_info.h` file.
 
 **NOTE:** The Renovate bot will automatically update the Bazel deps in the
 quickstart `WORKSPACE` files after it sees the new release published. Watch for
@@ -154,15 +151,14 @@ In your development fork:
 * Switch to the existing release branch, e.g. `git checkout v1.17.x`.
 * Bump the version numbers for the patch release
   * Create a new branch off the release branch
-  * Follow the instructions in the "Bump the version number in `main`"
-    instructions from above, but update the patch number, not the minor number.
+  * Update the minor version in the top-level `CMakeLists.txt` file.
+  * Run `ci/cloudbuild/build.sh -t check-api-pr` to update both the API
+    baselines and `google/cloud/internal/version_info.h`.
   * **Send this PR for review and merge it before continuing**
 * Create a new branch off the release branch, which now contains the new patch
   version and baseline ABI dumps.
 * Create or cherry-pick commits with the desired changes.
-* Update `CHANELOG.md` to reflect the changes made.
-* Bump the minor version number in the top-level CMakeLists.txt and run the
-  cmake configuration step to update the different `version_info.h` files.
+* Update `CHANGELOG.md` to reflect the changes made.
 * After merging the PR(s) with all the above changes, use the Release UI on
   GitHub to create a pre-release along with a new tag for the release.
 * After review, publish the release.
