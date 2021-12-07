@@ -59,7 +59,7 @@ Status SubscriberRoundRobin::ModifyPushConfig(
   return Child()->ModifyPushConfig(context, request);
 }
 
-std::shared_ptr<SubscriberStub::AsyncPullStream>
+std::unique_ptr<SubscriberStub::AsyncPullStream>
 SubscriberRoundRobin::AsyncStreamingPull(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
