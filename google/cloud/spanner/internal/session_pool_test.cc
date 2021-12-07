@@ -42,7 +42,6 @@ namespace {
 
 using ::google::cloud::spanner_testing::FakeSteadyClock;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
-using ::google::cloud::testing_util::MockAsyncResponseReader;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
@@ -409,32 +408,23 @@ TEST(SessionPool, SessionRefresh) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s2"}))));
 
-  auto reader = absl::make_unique<
-      StrictMock<MockAsyncResponseReader<spanner_proto::ResultSet>>>();
+  spanner_proto::ResultSet result;
+  auto constexpr kResultSetText = R"pb(
+    metadata: {
+      row_type: { fields: { type: { code: INT64 } } }
+      transaction: {}
+    }
+    rows: { values: { string_value: "1" } }
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(kResultSetText, &result));
+
   EXPECT_CALL(*mock, AsyncExecuteSql)
-      .WillOnce([&reader](grpc::ClientContext&,
-                          spanner_proto::ExecuteSqlRequest const& request,
-                          grpc::CompletionQueue*) {
+      .WillOnce([&result](CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          spanner_proto::ExecuteSqlRequest const& request) {
         EXPECT_EQ("s2", request.session());
-        // This is safe. See comments in MockAsyncResponseReader.
-        return std::unique_ptr<
-            grpc::ClientAsyncResponseReaderInterface<spanner_proto::ResultSet>>(
-            reader.get());
+        return make_ready_future(make_status_or(std::move(result)));
       });
-  EXPECT_CALL(*reader, Finish)
-      .WillOnce(
-          [](spanner_proto::ResultSet* result, grpc::Status* status, void*) {
-            // This is the actual spanner response to a "SELECT 1"
-            auto constexpr kResultSetText = R"pb(
-              metadata: {
-                row_type: { fields: { type: { code: INT64 } } }
-                transaction: {}
-              }
-              rows: { values: { string_value: "1" } }
-            )pb";
-            ASSERT_TRUE(TextFormat::ParseFromString(kResultSetText, result));
-            *status = grpc::Status::OK;
-          });
 
   auto db = spanner::Database("project", "instance", "database");
   auto impl = std::make_shared<FakeCompletionQueueImpl>();
@@ -463,12 +453,7 @@ TEST(SessionPool, SessionRefresh) {
 
   // Simulate completion of pending operations, which will result in
   // a call to RefreshExpiringSessions(). This should refresh "s2" and
-  // satisfy the AsyncExecuteSql() and Finish() expectations.
-  impl->SimulateCompletion(true);
-
-  // Simulate completion again, making another RefreshExpiringSessions()
-  // call, which should do nothing.  If anything goes wrong with this
-  // process, we'll get unsatisfied/uninteresting gMock errors.
+  // satisfy the AsyncExecuteSql() expectation.
   impl->SimulateCompletion(true);
 }
 

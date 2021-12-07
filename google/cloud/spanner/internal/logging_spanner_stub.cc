@@ -47,19 +47,18 @@ LoggingSpannerStub::BatchCreateSessions(
       client_context, request, __func__, tracing_options_);
 }
 
-std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-    spanner_proto::BatchCreateSessionsResponse>>
+future<StatusOr<spanner_proto::BatchCreateSessionsResponse>>
 LoggingSpannerStub::AsyncBatchCreateSessions(
-    grpc::ClientContext& client_context,
-    spanner_proto::BatchCreateSessionsRequest const& request,
-    grpc::CompletionQueue* cq) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    spanner_proto::BatchCreateSessionsRequest const& request) {
   return LogWrapper(
-      [this](grpc::ClientContext& context,
-             spanner_proto::BatchCreateSessionsRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return child_->AsyncBatchCreateSessions(context, request, cq);
+      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+             spanner_proto::BatchCreateSessionsRequest const& request) {
+        return child_->AsyncBatchCreateSessions(cq, std::move(context),
+                                                request);
       },
-      client_context, request, cq, __func__, tracing_options_);
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
 StatusOr<spanner_proto::Session> LoggingSpannerStub::GetSession(
@@ -95,19 +94,16 @@ Status LoggingSpannerStub::DeleteSession(
       client_context, request, __func__, tracing_options_);
 }
 
-std::unique_ptr<
-    grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
-LoggingSpannerStub::AsyncDeleteSession(
-    grpc::ClientContext& client_context,
-    spanner_proto::DeleteSessionRequest const& request,
-    grpc::CompletionQueue* cq) {
+future<Status> LoggingSpannerStub::AsyncDeleteSession(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    spanner_proto::DeleteSessionRequest const& request) {
   return LogWrapper(
-      [this](grpc::ClientContext& context,
-             spanner_proto::DeleteSessionRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return child_->AsyncDeleteSession(context, request, cq);
+      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+             spanner_proto::DeleteSessionRequest const& request) {
+        return child_->AsyncDeleteSession(cq, std::move(context), request);
       },
-      client_context, request, cq, __func__, tracing_options_);
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
 StatusOr<spanner_proto::ResultSet> LoggingSpannerStub::ExecuteSql(
@@ -121,19 +117,16 @@ StatusOr<spanner_proto::ResultSet> LoggingSpannerStub::ExecuteSql(
       client_context, request, __func__, tracing_options_);
 }
 
-std::unique_ptr<
-    grpc::ClientAsyncResponseReaderInterface<spanner_proto::ResultSet>>
-LoggingSpannerStub::AsyncExecuteSql(
-    grpc::ClientContext& client_context,
-    spanner_proto::ExecuteSqlRequest const& request,
-    grpc::CompletionQueue* cq) {
+future<StatusOr<spanner_proto::ResultSet>> LoggingSpannerStub::AsyncExecuteSql(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    spanner_proto::ExecuteSqlRequest const& request) {
   return LogWrapper(
-      [this](grpc::ClientContext& context,
-             spanner_proto::ExecuteSqlRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return child_->AsyncExecuteSql(context, request, cq);
+      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+             spanner_proto::ExecuteSqlRequest const& request) {
+        return child_->AsyncExecuteSql(cq, std::move(context), request);
       },
-      client_context, request, cq, __func__, tracing_options_);
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
 std::unique_ptr<grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>
