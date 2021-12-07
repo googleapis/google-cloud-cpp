@@ -30,7 +30,14 @@ shift
 BAZEL_VERB="$1"
 shift
 
-bazel_test_args=()
+EMULATOR_SHA="$(find "${HOME}/.local/" -type f -name '*.py' -print0 |
+  xargs -0 sha256sum | sort | sha256sum -)"
+readonly EMULATOR_SHA
+
+bazel_test_args=(
+  # Run the tests again if the emulator has changed
+  --test_env=CLOUD_STORAGE_EMULATOR_SHA="${EMULATOR_SHA}"
+)
 excluded_targets=()
 
 # Separate caller-provided excluded targets (starting with "-//..."), so that
