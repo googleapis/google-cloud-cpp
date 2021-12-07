@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/query_options.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -34,6 +35,12 @@ class ClientOptions {
   ClientOptions& operator=(ClientOptions const&) = default;
   ClientOptions(ClientOptions&&) = default;
   ClientOptions& operator=(ClientOptions&&) = default;
+
+  /**
+   * Convert the `ClientOptions` to the new, recommended way to represent
+   * options of all varieties, `google::cloud::Options`.
+   */
+  explicit operator Options() const;
 
   /// Returns the `QueryOptions`
   QueryOptions const& query_options() const { return query_options_; }

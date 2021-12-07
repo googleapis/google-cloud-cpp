@@ -318,7 +318,7 @@ QueryOptions Client::OverlayQueryOptions(QueryOptions const& preferred) {
       google::cloud::internal::GetEnv("SPANNER_OPTIMIZER_STATISTICS_PACKAGE"));
 
   return spanner_internal::OverlayQueryOptions(
-      preferred, opts_.query_options(), *kOptimizerVersionEnvValue,
+      preferred, query_opts_, *kOptimizerVersionEnvValue,
       *kOptimizerStatisticsPackageEnvValue);
 }
 

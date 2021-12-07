@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/request_priority.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/optional.h"
+#include "google/cloud/options.h"
 #include "absl/types/optional.h"
 #include <string>
 
@@ -40,6 +41,12 @@ class QueryOptions {
   QueryOptions& operator=(QueryOptions const&) = default;
   QueryOptions(QueryOptions&&) = default;
   QueryOptions& operator=(QueryOptions&&) = default;
+
+  /**
+   * Construct from the the new, recommended way to represent options of all
+   * varieties, `google::cloud::Options`.
+   */
+  explicit QueryOptions(Options const& opts);
 
   /// Returns the optimizer version
   absl::optional<std::string> const& optimizer_version() const {

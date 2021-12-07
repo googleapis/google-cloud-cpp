@@ -157,6 +157,22 @@ using SessionPoolOptionList = OptionList<
     SessionPoolKeepAliveIntervalOption, SessionPoolLabelsOption>;
 
 /**
+ * Option for `google::cloud::Options` to set the optimizer version used in an
+ * SQL query.
+ */
+struct RequestOptimizerVersionOption {
+  using Type = std::string;
+};
+
+/**
+ * Option for `google::cloud::Options` to set the optimizer statistics package
+ * used in an SQL query.
+ */
+struct RequestOptimizerStatisticsPackageOption {
+  using Type = std::string;
+};
+
+/**
  * Option for `google::cloud::Options` to set a `spanner::RequestPriority`.
  */
 struct RequestPriorityOption {
@@ -171,7 +187,7 @@ struct RequestTagOption {
 };
 
 /**
- * List of all Request options.
+ * List of Request options for `client::ExecuteBatchDml()`.
  */
 using RequestOptionList = OptionList<RequestPriorityOption, RequestTagOption>;
 
