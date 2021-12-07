@@ -101,9 +101,9 @@ send the PR for review against `main`. You need to:
 
 - Update the version number in the top-level `CMakeLists.txt` file.
 - Update the ABI baseline to include the new version numbers in the inline
-  namespace by running `ci/cloudbuild/build.sh -t check-api-pr`, which will
-  leave the updated files in `ci/abi-dumps`.
-- This will also update the `google/cloud/internal/version_info.h` file.
+  namespace by running `ci/cloudbuild/build.sh -t check-api-pr`. This will will
+  leave the updated ABI files in `ci/abi-dumps`, and also update the
+  `google/cloud/internal/version_info.h` file.
 
 **NOTE:** The Renovate bot will automatically update the Bazel deps in the
 quickstart `WORKSPACE` files after it sees the new release published. Watch for
