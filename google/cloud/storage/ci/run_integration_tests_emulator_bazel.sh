@@ -85,9 +85,25 @@ printf '{"name": "%s"}' "${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME
   curl -X POST -H "Content-Type: application/json" --data-binary @- \
     "${CLOUD_STORAGE_EMULATOR_ENDPOINT}/storage/v1/b?project=${GOOGLE_CLOUD_PROJECT}"
 
+# This is just the SHA for the *description* of the testbench, it includes its
+# version and other info, but no details about the contents.
 TESTBENCH_SHA="$(pip show googleapis-storage-testbench | sha256sum)"
+# With these two commands we extract the SHA of the testbench contents. It
+# excludes the contents of its deps (say gRPC, or Flask), as those are unlikely
+# to affect the results of the test.
+TESTBENCH_LOCATION="$(pip show googleapis-storage-testbench | sed -n 's/^Location: //p')"
+TESTBENCH_CONTENTS_SHA="$(
+  cd "${TESTBENCH_LOCATION}"
+  pip show --files googleapis-storage-testbench |
+    sed -n '/^Files:/,$p' |
+    grep '\.py$' |
+    xargs sha256sum |
+    sort |
+    sha256sum -
+)"
 emulator_args=(
   "--test_env=TESTBENCH_SHA=${TESTBENCH_SHA}"
+  "--test_env=TESTBENCH_CONTENTS_SHA=${TESTBENCH_CONTENTS_SHA}"
   "--test_env=CLOUD_STORAGE_EMULATOR_ENDPOINT=${CLOUD_STORAGE_EMULATOR_ENDPOINT}"
   "--test_env=CLOUD_STORAGE_GRPC_ENDPOINT=${CLOUD_STORAGE_GRPC_ENDPOINT}"
   "--test_env=HTTPBIN_ENDPOINT=${HTTPBIN_ENDPOINT}"
