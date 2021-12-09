@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/request_priority.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/options.h"
 #include "absl/types/optional.h"
 #include <string>
 
@@ -35,6 +36,18 @@ class CommitOptions {
  public:
   /// Default options: no stats.
   CommitOptions() = default;
+
+  /**
+   * Constructs from the the new, recommended way to represent options
+   * of all varieties, `google::cloud::Options`.
+   */
+  explicit CommitOptions(Options const& opts);
+
+  /**
+   * Converts to the new, recommended way to represent options of all
+   * varieties, `google::cloud::Options`.
+   */
+  explicit operator Options() const;
 
   /// Set whether the `CommitResult` should contain `CommitStats`.
   CommitOptions& set_return_stats(bool return_stats) {

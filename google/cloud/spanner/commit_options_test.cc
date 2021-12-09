@@ -39,6 +39,17 @@ TEST(CommitOptionsTest, SetValues) {
   EXPECT_EQ("tag", options.transaction_tag());
 }
 
+TEST(CommitOptionsTest, OptionsRoundTrip) {
+  CommitOptions options;
+  options.set_return_stats(true);
+  options.set_request_priority(RequestPriority::kLow);
+  options.set_transaction_tag("tag");
+  CommitOptions rt_options(Options{options});
+  EXPECT_TRUE(rt_options.return_stats());
+  EXPECT_EQ(RequestPriority::kLow, rt_options.request_priority());
+  EXPECT_EQ("tag", rt_options.transaction_tag());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner

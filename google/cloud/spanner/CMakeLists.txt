@@ -83,6 +83,7 @@ add_library(
     client.h
     client_options.cc
     client_options.h
+    commit_options.cc
     commit_options.h
     commit_result.h
     connection.h

@@ -187,6 +187,21 @@ struct RequestTagOption {
 };
 
 /**
+ * Option for `google::cloud::Options` to set a per-transaction tag.
+ */
+struct TransactionTagOption {
+  using Type = std::string;
+};
+
+/**
+ * Option for `google::cloud::Options` to return additional statistics
+ * about the committed transaction in a `spanner::CommitResult`.
+ */
+struct CommitReturnStatsOption {
+  using Type = bool;
+};
+
+/**
  * List of Request options for `client::ExecuteBatchDml()`.
  */
 using RequestOptionList = OptionList<RequestPriorityOption, RequestTagOption>;
