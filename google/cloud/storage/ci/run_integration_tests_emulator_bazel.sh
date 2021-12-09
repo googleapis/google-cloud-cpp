@@ -89,7 +89,7 @@ printf '{"name": "%s"}' "${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME
 # version and other info, but no details about the contents.
 TESTBENCH_SHA="$(pip show googleapis-storage-testbench | sha256sum)"
 # With these two commands we extract the SHA of the testbench contents. It
-# excludes the contents of its deps (say gRPC, or Flask), those are unlikely
+# excludes the contents of its deps (say gRPC, or Flask), as those are unlikely
 # to affect the results of the test.
 TESTBENCH_LOCATION="$(pip show googleapis-storage-testbench | sed -n 's/^Location: //p')"
 TESTBENCH_CONTENTS_SHA="$(
