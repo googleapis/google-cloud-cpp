@@ -147,8 +147,7 @@ time {
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier
 printf "%-30s" "Running buildifier:" >&2
 time {
-  git ls-files -z | grep -zE '\.(BUILD|bzl)$' | xargs -0 buildifier -mode=fix
-  git ls-files -z | grep -zE '(^|/)(BUILD|WORKSPACE)$' |
+  git ls-files -z | grep -zE '\.(BUILD|bzl|bazel)$' |
     xargs -0 buildifier -mode=fix
 }
 

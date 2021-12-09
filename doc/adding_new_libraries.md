@@ -132,9 +132,9 @@ ci/cloudbuild/build.sh -t cmake-install-pr
 The generated `README.md` file in `google/cloud/${library}` probably needs some
 light copy-editing to read less like it was written by a robot.
 
-## Update the root `BUILD` file
+## Update the root `BUILD.bazel` file
 
-Manually edit `BUILD` to reference the new targets in
+Manually edit `BUILD.bazel` to reference the new targets in
 `//google/cloud/${library}`. Initially prefix your targets with
 `:experimental-`.
 

@@ -61,7 +61,7 @@ sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang
 sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-10 100
 ```
 
-Install buildifier tool, which we use to format `BUILD` files:
+Install the buildifier tool, which we use to format `BUILD.bazel` files:
 
 ```console
 sudo wget -q -O /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/0.29.0/buildifier
