@@ -822,7 +822,7 @@ TEST(ClientTest, CommitMutatorWithTags) {
     return Mutations{};
   };
   auto result = client.Commit(
-      mutator, CommitOptions{}.set_transaction_tag(transaction_tag));
+      mutator, Options{}.set<TransactionTagOption>(transaction_tag));
   EXPECT_STATUS_OK(result);
   EXPECT_EQ(*timestamp, result->commit_timestamp);
 }
@@ -946,7 +946,7 @@ TEST(ClientTest, CommitStats) {
 
   Client client(conn);
   auto result =
-      client.Commit(Mutations{}, CommitOptions{}.set_return_stats(true));
+      client.Commit(Mutations{}, Options{}.set<CommitReturnStatsOption>(true));
   ASSERT_STATUS_OK(result);
   EXPECT_EQ(*timestamp, result->commit_timestamp);
   ASSERT_TRUE(result->commit_stats.has_value());

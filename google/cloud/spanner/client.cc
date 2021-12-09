@@ -23,6 +23,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
+#include "absl/types/optional.h"
 #include <grpcpp/grpcpp.h>
 #include <thread>
 
@@ -30,6 +31,18 @@ namespace google {
 namespace cloud {
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+namespace {
+
+// Extracts an option value as an `absl::optional`.
+template <typename OptionType>
+absl::optional<typename OptionType::Type> OptOpt(Options const& opts) {
+  absl::optional<typename OptionType::Type> optopt;
+  if (opts.has<OptionType>()) optopt = opts.get<OptionType>();
+  return optopt;
+}
+
+}  // namespace
 
 RowStream Client::Read(std::string table, KeySet keys,
                        std::vector<std::string> columns,
@@ -184,21 +197,23 @@ StatusOr<BatchDmlResult> Client::ExecuteBatchDml(
     Transaction transaction, std::vector<SqlStatement> statements,
     Options opts) {
   internal::CheckExpectedOptions<RequestOptionList>(opts, __func__);
-  return conn_->ExecuteBatchDml(
-      {std::move(transaction), std::move(statements), std::move(opts)});
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
+  return conn_->ExecuteBatchDml({std::move(transaction), std::move(statements),
+                                 internal::CurrentOptions()});
 }
 
 StatusOr<CommitResult> Client::Commit(
     std::function<StatusOr<Mutations>(Transaction)> const& mutator,
     std::unique_ptr<TransactionRerunPolicy> rerun_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    CommitOptions const& options) {
+    std::unique_ptr<BackoffPolicy> backoff_policy, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
+
   // The status-code discriminator of TransactionRerunPolicy.
   using RerunnablePolicy = spanner_internal::SafeTransactionRerun;
 
-  auto const opts =
-      Transaction::ReadWriteOptions().WithTag(options.transaction_tag());
-  Transaction txn = MakeReadWriteTransaction(opts);
+  auto const txn_opts = Transaction::ReadWriteOptions().WithTag(
+      OptOpt<TransactionTagOption>(internal::CurrentOptions()));
+  Transaction txn = MakeReadWriteTransaction(txn_opts);
   for (int rerun = 0;; ++rerun) {
     StatusOr<Mutations> mutations;
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -214,7 +229,7 @@ StatusOr<CommitResult> Client::Commit(
       }
       mutations = status;
     } catch (...) {
-      auto rb_status = Rollback(txn);
+      auto rb_status = Rollback(txn, internal::CurrentOptions());
       if (!RerunnablePolicy::IsOk(rb_status)) {
         GCP_LOG(WARNING) << "Rollback() failure in Client::Commit(): "
                          << rb_status.message();
@@ -224,14 +239,14 @@ StatusOr<CommitResult> Client::Commit(
 #endif
     auto status = mutations.status();
     if (RerunnablePolicy::IsOk(status)) {
-      auto result = Commit(txn, *mutations, options);
+      auto result = Commit(txn, *mutations, internal::CurrentOptions());
       status = result.status();
       if (!RerunnablePolicy::IsTransientFailure(status)) {
         return result;
       }
     } else {
       if (!RerunnablePolicy::IsTransientFailure(status)) {
-        auto rb_status = Rollback(txn);
+        auto rb_status = Rollback(txn, internal::CurrentOptions());
         if (!RerunnablePolicy::IsOk(rb_status)) {
           GCP_LOG(WARNING) << "Rollback() failure in Client::Commit(): "
                            << rb_status.message();
@@ -252,11 +267,11 @@ StatusOr<CommitResult> Client::Commit(
             if (s) s->set_bad();
             return true;
           });
-      txn = MakeReadWriteTransaction(opts);
+      txn = MakeReadWriteTransaction(txn_opts);
     } else {
       // Create a new transaction for the next loop, but reuse the session
       // so that we have a slightly better chance of avoiding another abort.
-      txn = MakeReadWriteTransaction(txn, opts);
+      txn = MakeReadWriteTransaction(txn, txn_opts);
     }
     std::this_thread::sleep_for(backoff_policy->OnCompletion());
   }
@@ -264,7 +279,8 @@ StatusOr<CommitResult> Client::Commit(
 
 StatusOr<CommitResult> Client::Commit(
     std::function<StatusOr<Mutations>(Transaction)> const& mutator,
-    CommitOptions const& options) {
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   auto const rerun_maximum_duration = std::chrono::minutes(10);
   auto default_commit_rerun_policy =
       LimitedTimeTransactionRerunPolicy(rerun_maximum_duration).clone();
@@ -278,22 +294,24 @@ StatusOr<CommitResult> Client::Commit(
           .clone();
 
   return Commit(mutator, std::move(default_commit_rerun_policy),
-                std::move(default_commit_backoff_policy), options);
+                std::move(default_commit_backoff_policy),
+                internal::CurrentOptions());
 }
 
-StatusOr<CommitResult> Client::Commit(Mutations mutations,
-                                      CommitOptions const& options) {
+StatusOr<CommitResult> Client::Commit(Mutations mutations, Options opts) {
   return Commit([&mutations](Transaction const&) { return mutations; },
-                options);
+                std::move(opts));
 }
 
 StatusOr<CommitResult> Client::Commit(Transaction transaction,
-                                      Mutations mutations,
-                                      CommitOptions const& options) {
-  return conn_->Commit({std::move(transaction), std::move(mutations), options});
+                                      Mutations mutations, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
+  return conn_->Commit({std::move(transaction), std::move(mutations),
+                        CommitOptions(internal::CurrentOptions())});
 }
 
-Status Client::Rollback(Transaction transaction) {
+Status Client::Rollback(Transaction transaction, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->Rollback({std::move(transaction)});
 }
 

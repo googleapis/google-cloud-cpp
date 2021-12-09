@@ -22,6 +22,7 @@
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/database.h"
+#include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/partition_options.h"
@@ -131,28 +132,17 @@ class Client {
    * are injected into the `Client`.
    */
   explicit Client(std::shared_ptr<Connection> conn, Options opts = {})
-      : conn_(std::move(conn)), opts_(std::move(opts)) {}
+      : conn_(std::move(conn)),
+        opts_(spanner_internal::DefaultOptions(std::move(opts))) {}
 
-  /**
-   * Constructs a `Client` object using the specified @p conn and @p opts.
-   *
-   * Note that the previous constructor, which uses the new way to represent
-   * options of all varieties (`google::cloud::Options`), is now preferred.
-   */
+  //@{
+  /// Backwards compatibility for `ClientOptions`.
   explicit Client(std::shared_ptr<Connection> conn, ClientOptions const& opts)
-      : conn_(std::move(conn)), opts_(opts) {}
-
-  /**
-   * Constructs a `Client` object using the specified @p conn and an empty
-   * initializer list.
-   *
-   * @note This constructor exists solely for backwards compatibility. It
-   *     prevents existing code that uses `Client(conn, {})` from breaking
-   *     due to ambiguity introduced by the `Options` overload.
-   */
+      : Client(std::move(conn), Options(opts)) {}
   explicit Client(std::shared_ptr<Connection> conn,
                   std::initializer_list<internal::NonConstructible>)
       : Client(std::move(conn)) {}
+  //@}
 
   /// No default construction.
   Client() = delete;
@@ -302,9 +292,9 @@ class Client {
    * @snippet samples.cc spanner-query-data-select-star
    *
    * @param statement The SQL statement to execute.
-   * @param opts The `QueryOptions` to use for this call. If given, these will
-   *     take precedence over the options set at the client and environment
-   *     levels.
+   * @param opts (optional) The `QueryOptions` to use for this call. If given,
+   *     these will take precedence over the options set at the client and
+   *     environment levels.
    *
    * @note No individual row in the `RowStream` can exceed 100 MiB, and no
    *     column value can exceed 10 MiB.
@@ -334,9 +324,9 @@ class Client {
    * documentation of that method for full details.
    *
    * @param partition A `QueryPartition`, obtained by calling `PartitionQuery`.
-   * @param opts The `QueryOptions` to use for this call. If given, these will
-   *     take precedence over the options set at the client and environment
-   *     levels.
+   * @param opts (optional) The `QueryOptions` to use for this call. If given,
+   *     these will take precedence over the options set at the client and
+   *     environment levels.
    *
    * @note No individual row in the `RowStream` can exceed 100 MiB, and no
    *     column value can exceed 10 MiB.
@@ -367,9 +357,9 @@ class Client {
    *     statistics and `ExecutionPlan` are available.
    *
    * @param statement The SQL statement to execute.
-   * @param opts The `QueryOptions` to use for this call. If given, these will
-   *     take precedence over the options set at the client and environment
-   *     levels.
+   * @param opts (optional) The `QueryOptions` to use for this call. If given,
+   *     these will take precedence over the options set at the client and
+   *     environment levels.
    *
    * @note No individual row in the `ProfileQueryResult` can exceed 100 MiB, and
    *     no column value can exceed 10 MiB.
@@ -435,9 +425,9 @@ class Client {
    *
    * @param transaction Execute this query as part of an existing transaction.
    * @param statement The SQL statement to execute.
-   * @param opts The `QueryOptions` to use for this call. If given, these will
-   *     take precedence over the options set at the client and environment
-   *     levels.
+   * @param opts (optional) The `QueryOptions` to use for this call. If given,
+   *     these will take precedence over the options set at the client and
+   *     environment levels.
    *
    * @par Example
    * @snippet samples.cc execute-dml
@@ -459,9 +449,9 @@ class Client {
    *
    * @param transaction Execute this query as part of an existing transaction.
    * @param statement The SQL statement to execute.
-   * @param opts The `QueryOptions` to use for this call. If given, these will
-   *     take precedence over the options set at the client and environment
-   *     levels.
+   * @param opts (optional) The `QueryOptions` to use for this call. If given,
+   *     these will take precedence over the options set at the client and
+   *     environment levels.
    *
    * @par Example:
    * @snippet samples.cc profile-dml
@@ -483,9 +473,9 @@ class Client {
    *
    * @param transaction Execute this query as part of an existing transaction.
    * @param statement The SQL statement to execute.
-   * @param opts The `QueryOptions` to use for this call. If given, these will
-   *     take precedence over the options set at the client and environment
-   *     levels.
+   * @param opts (optional) The `QueryOptions` to use for this call. If given,
+   *     these will take precedence over the options set at the client and
+   *     environment levels.
    *
    * @par Example:
    * @snippet samples.cc analyze-query
@@ -516,8 +506,8 @@ class Client {
    *     are visible to statement i+1. Each statement must be a DML statement.
    *     Execution will stop at the first failed statement; the remaining
    *     statements will not run. Must not be empty.
-   * @param opts The options to use for this call.  Expected options are any
-   *     of the types in the following option lists.
+   * @param opts (optional) The options to use for this call.  Expected options
+   *     are any of the types in the following option lists.
    *       - `google::cloud::RequestOptionList`
    *
    * @par Example
@@ -556,7 +546,11 @@ class Client {
    * @param rerun_policy controls for how long (or how many times) the mutator
    *     will be rerun after the transaction aborts.
    * @param backoff_policy controls how long `Commit` waits between reruns.
-   * @param options to apply to the commit.
+   * @param opts (optional) The options to use for this call.  Expected options
+   *     include any of the following types:
+   *       - `google::cloud::spanner::CommitReturnStatsOption`
+   *       - `google::cloud::spanner::RequestPriorityOption`
+   *       - `google::cloud::spanner::TransactionTagOption`
    *
    * @throw Rethrows any exception thrown by @p `mutator` (after rolling back
    *     the transaction). However, a `RuntimeStatusError` exception is
@@ -569,8 +563,26 @@ class Client {
   StatusOr<CommitResult> Commit(
       std::function<StatusOr<Mutations>(Transaction)> const& mutator,
       std::unique_ptr<TransactionRerunPolicy> rerun_policy,
+      std::unique_ptr<BackoffPolicy> backoff_policy, Options opts = {});
+
+  //@{
+  /// Backwards compatibility for `CommitOptions`.
+  StatusOr<CommitResult> Commit(
+      std::function<StatusOr<Mutations>(Transaction)> const& mutator,
+      std::unique_ptr<TransactionRerunPolicy> rerun_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy,
-      CommitOptions const& options = {});
+      CommitOptions const& commit_options) {
+    return Commit(mutator, std::move(rerun_policy), std::move(backoff_policy),
+                  Options(commit_options));
+  }
+  StatusOr<CommitResult> Commit(
+      std::function<StatusOr<Mutations>(Transaction)> const& mutator,
+      std::unique_ptr<TransactionRerunPolicy> rerun_policy,
+      std::unique_ptr<BackoffPolicy> backoff_policy,
+      std::initializer_list<internal::NonConstructible>) {
+    return Commit(mutator, std::move(rerun_policy), std::move(backoff_policy));
+  }
+  //@}
 
   /**
    * Commits a read-write transaction.
@@ -578,14 +590,28 @@ class Client {
    * Same as above, but uses the default rerun and backoff policies.
    *
    * @param mutator the function called to create mutations
-   * @param options to apply to the commit.
+   * @param opts (optional) The options to use for this call.
    *
    * @par Example
    * @snippet samples.cc commit-with-mutator
    */
   StatusOr<CommitResult> Commit(
       std::function<StatusOr<Mutations>(Transaction)> const& mutator,
-      CommitOptions const& options = {});
+      Options opts = {});
+
+  //@{
+  /// Backwards compatibility for `CommitOptions`.
+  StatusOr<CommitResult> Commit(
+      std::function<StatusOr<Mutations>(Transaction)> const& mutator,
+      CommitOptions const& commit_options) {
+    return Commit(mutator, Options(commit_options));
+  }
+  StatusOr<CommitResult> Commit(
+      std::function<StatusOr<Mutations>(Transaction)> const& mutator,
+      std::initializer_list<internal::NonConstructible>) {
+    return Commit(mutator);
+  }
+  //@}
 
   /**
    * Commits the @p mutations, using the @p options, atomically in order.
@@ -596,8 +622,19 @@ class Client {
    * @par Example
    * @snippet samples.cc commit-with-mutations
    */
+  StatusOr<CommitResult> Commit(Mutations mutations, Options opts = {});
+
+  //@{
+  /// Backwards compatibility for `CommitOptions`.
   StatusOr<CommitResult> Commit(Mutations mutations,
-                                CommitOptions const& options = {});
+                                CommitOptions const& commit_options) {
+    return Commit(std::move(mutations), Options(commit_options));
+  }
+  StatusOr<CommitResult> Commit(
+      Mutations mutations, std::initializer_list<internal::NonConstructible>) {
+    return Commit(std::move(mutations));
+  }
+  //@}
 
   /**
    * Commits a read-write transaction.
@@ -619,13 +656,27 @@ class Client {
    * @param mutations The mutations to be executed when this transaction
    *     commits. All mutations are applied atomically, in the order they appear
    *     in this list.
-   * @param options to apply to the commit.
+   * @param opts (optional) The options to use for this call.
    *
    * @return A `StatusOr` containing the result of the commit or error status
    *     on failure.
    */
   StatusOr<CommitResult> Commit(Transaction transaction, Mutations mutations,
-                                CommitOptions const& options = {});
+                                Options opts = {});
+
+  //@{
+  /// Backwards compatibility for `CommitOptions`.
+  StatusOr<CommitResult> Commit(Transaction transaction, Mutations mutations,
+                                CommitOptions const& commit_options) {
+    return Commit(std::move(transaction), std::move(mutations),
+                  Options(commit_options));
+  }
+  StatusOr<CommitResult> Commit(
+      Transaction transaction, Mutations mutations,
+      std::initializer_list<internal::NonConstructible>) {
+    return Commit(std::move(transaction), std::move(mutations));
+  }
+  //@}
 
   /**
    * Rolls back a read-write transaction, releasing any locks it holds.
@@ -638,10 +689,11 @@ class Client {
    * @warning It is an error to call `Rollback` with a read-only transaction.
    *
    * @param transaction The transaction to roll back.
+   * @param opts (optional) The options to use for this call.
    *
    * @return The error status of the rollback.
    */
-  Status Rollback(Transaction transaction);
+  Status Rollback(Transaction transaction, Options opts = {});
 
   /**
    * Executes a Partitioned DML SQL query.
@@ -649,9 +701,9 @@ class Client {
    * @param statement the SQL statement to execute. Please see the
    *     [spanner documentation][dml-partitioned] for the restrictions on the
    *     SQL statements supported by this function.
-   * @param opts The `QueryOptions` to use for this call. If given, these will
-   *     take precedence over the options set at the client and environment
-   *     levels.
+   * @param opts (optional) The `QueryOptions` to use for this call. If given,
+   *     these will take precedence over the options set at the client and
+   *     environment levels.
    *
    * @par Example
    * @snippet samples.cc execute-sql-partitioned
@@ -698,8 +750,7 @@ class Client {
  * @see `Connection`
  *
  * @param db See `Database`.
- * @param opts (optional) configure the `Connection` created by
- *     this function.
+ * @param opts (optional) Configure the `Connection` created by this function.
  */
 std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
                                                     Options opts = {});

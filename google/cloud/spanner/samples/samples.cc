@@ -2059,7 +2059,8 @@ void SetTransactionTag(google::cloud::spanner::Client client) {
   // Sets the transaction tag to "app=concert,env=dev". This will be
   // applied to all the individual operations inside this transaction.
   auto commit_options =
-      spanner::CommitOptions{}.set_transaction_tag("app=concert,env=dev");
+      google::cloud::Options{}.set<spanner::TransactionTagOption>(
+          "app=concert,env=dev");
   auto commit = client.Commit(
       [&client](
           spanner::Transaction const& txn) -> StatusOr<spanner::Mutations> {
@@ -2379,7 +2380,7 @@ void GetCommitStatistics(google::cloud::spanner::Client client) {
               .EmplaceRow(1, 1, 200000)
               .EmplaceRow(2, 2, 400000)
               .Build()},
-      spanner::CommitOptions{}.set_return_stats(true));
+      google::cloud::Options{}.set<spanner::CommitReturnStatsOption>(true));
   //! [commit-options]
 
   if (!commit) throw std::runtime_error(commit.status().message());
