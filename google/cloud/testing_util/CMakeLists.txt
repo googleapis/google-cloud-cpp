@@ -32,6 +32,8 @@ if (BUILD_TESTING)
         expect_future_error.h
         integration_test.cc
         integration_test.h
+        mock_fake_clock.cc
+        mock_fake_clock.h
         scoped_environment.cc
         scoped_environment.h
         scoped_log.cc

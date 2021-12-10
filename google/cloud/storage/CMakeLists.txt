@@ -405,8 +405,6 @@ if (BUILD_TESTING)
         testing/client_unit_test.h
         testing/constants.h
         testing/mock_client.h
-        testing/mock_fake_clock.cc
-        testing/mock_fake_clock.h
         testing/mock_http_request.cc
         testing/mock_http_request.h
         testing/mock_storage_stub.h

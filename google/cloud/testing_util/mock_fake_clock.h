@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 201 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,16 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_FAKE_CLOCK_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_FAKE_CLOCK_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_FAKE_CLOCK_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_FAKE_CLOCK_H
 
+#include "google/cloud/version.h"
 #include <gmock/gmock.h>
 #include <chrono>
 
 namespace google {
 namespace cloud {
-namespace storage {
-namespace testing {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace testing_util {
 
 /**
  * Represents a fake std::chrono::system_clock.
@@ -46,9 +47,9 @@ struct FakeClock : public std::chrono::system_clock {
   }
 };
 
-}  // namespace testing
-}  // namespace storage
+}  // namespace testing_util
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_FAKE_CLOCK_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_FAKE_CLOCK_H
