@@ -111,11 +111,7 @@ TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   ASSERT_STATUS_OK(get_details);
 
   EXPECT_EQ(access_id, get_details->access_id());
-  HmacKeyMetadata original = key->first;
-  // TODO(#3806) - remove this workaround: the etag may have changed since the
-  // key was created.
-  original.set_etag(get_details->etag());
-  EXPECT_EQ(original, *get_details);
+  EXPECT_EQ(key->first, *get_details);
 
   StatusOr<HmacKeyMetadata> update_details =
       client.UpdateHmacKey(access_id, HmacKeyMetadata().set_state("INACTIVE"));
