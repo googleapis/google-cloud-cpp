@@ -971,7 +971,7 @@ CLIENT_CXXLDFLAGS := $$(shell pkg-config $$(CLIENT_MODULE) --libs-only-L)
 CLIENT_LIBS       := $$(shell pkg-config $$(CLIENT_MODULE) --libs-only-l)
 
 $$(BIN)/quickstart: quickstart.cc
-	$$(CXXLD) $$(CXXFLAGS) $$(CLIENT_CXXFLAGS) $$(CLIENT_CXXLDFLAGS) -o $$@ $$^ $$(CLIENT_LIBS)
+\t$$(CXXLD) $$(CXXFLAGS) $$(CLIENT_CXXFLAGS) $$(CLIENT_CXXLDFLAGS) -o $$@ $$^ $$(CLIENT_LIBS)
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
