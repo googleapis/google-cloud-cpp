@@ -21,12 +21,12 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 QueryOptions::QueryOptions(Options const& opts) {
-  if (opts.has<RequestOptimizerVersionOption>()) {
-    optimizer_version_ = opts.get<RequestOptimizerVersionOption>();
+  if (opts.has<QueryOptimizerVersionOption>()) {
+    optimizer_version_ = opts.get<QueryOptimizerVersionOption>();
   }
-  if (opts.has<RequestOptimizerStatisticsPackageOption>()) {
+  if (opts.has<QueryOptimizerStatisticsPackageOption>()) {
     optimizer_statistics_package_ =
-        opts.get<RequestOptimizerStatisticsPackageOption>();
+        opts.get<QueryOptimizerStatisticsPackageOption>();
   }
   if (opts.has<RequestPriorityOption>()) {
     request_priority_ = opts.get<RequestPriorityOption>();

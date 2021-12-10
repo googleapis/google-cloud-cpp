@@ -41,8 +41,8 @@ TEST(ClientOptionsTest, OptimizerVersion) {
 TEST(ClientOptionsTest, OptionsConversionEmpty) {
   ClientOptions const client_options;
   auto const options = Options(client_options);
-  EXPECT_FALSE(options.has<RequestOptimizerVersionOption>());
-  EXPECT_FALSE(options.has<RequestOptimizerStatisticsPackageOption>());
+  EXPECT_FALSE(options.has<QueryOptimizerVersionOption>());
+  EXPECT_FALSE(options.has<QueryOptimizerStatisticsPackageOption>());
   EXPECT_FALSE(options.has<RequestPriorityOption>());
   EXPECT_FALSE(options.has<RequestTagOption>());
 }
@@ -56,10 +56,10 @@ TEST(ClientOptionsTest, OptionsConversionFull) {
   ClientOptions client_options;
   client_options.set_query_options(std::move(query_options));
   auto const options = Options(client_options);
-  EXPECT_TRUE(options.has<RequestOptimizerVersionOption>());
-  EXPECT_EQ(options.get<RequestOptimizerVersionOption>(), "1");
-  EXPECT_TRUE(options.has<RequestOptimizerStatisticsPackageOption>());
-  EXPECT_EQ(options.get<RequestOptimizerStatisticsPackageOption>(), "latest");
+  EXPECT_TRUE(options.has<QueryOptimizerVersionOption>());
+  EXPECT_EQ(options.get<QueryOptimizerVersionOption>(), "1");
+  EXPECT_TRUE(options.has<QueryOptimizerStatisticsPackageOption>());
+  EXPECT_EQ(options.get<QueryOptimizerStatisticsPackageOption>(), "latest");
   EXPECT_TRUE(options.has<RequestPriorityOption>());
   EXPECT_EQ(options.get<RequestPriorityOption>(), RequestPriority::kHigh);
   EXPECT_TRUE(options.has<RequestTagOption>());
