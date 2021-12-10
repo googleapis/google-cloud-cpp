@@ -37,8 +37,12 @@ fi # include guard
 
 function init::repo_root() {
   local dir="$1"
-  while [[ ! -f "${dir}/WORKSPACE" ]]; do
+  while [[ ! -f "${dir}/WORKSPACE.bazel" ]]; do
     dir="$(dirname "$dir")"
+    if [[ "${dir}" == "/" ]]; then
+      echo >&2 "FATAL: Unable to find repo root."
+      exit 1
+    fi
   done
   echo "${dir}"
 }

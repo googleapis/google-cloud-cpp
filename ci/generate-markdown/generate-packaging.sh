@@ -115,7 +115,7 @@ To find out about other configuration options, consider using
 Once installed, follow any of the [quickstart guides](/README.md#quickstart) to
 use `google-cloud-cpp` in your CMake or Make-based project. If you are planning
 to use Bazel for your own project, there is no need to install
-`google-cloud-cpp`, we provide Bazel `BUILD` files for this purpose. The
+`google-cloud-cpp`, we provide `BUILD.bazel` files for this purpose. The
 quickstart guides also cover this use-case.
 
 ## Required Libraries

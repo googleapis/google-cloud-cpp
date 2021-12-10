@@ -6,7 +6,7 @@ root = true
 charset = utf-8
 indent_style = space
 
-[BUILD]
+[*.BUILD,*.bzl,*.bazel]
 indent_size = 4
 
 [CMakeLists.*]

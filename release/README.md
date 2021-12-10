@@ -106,8 +106,8 @@ send the PR for review against `main`. You need to:
   `google/cloud/internal/version_info.h` file.
 
 **NOTE:** The Renovate bot will automatically update the Bazel deps in the
-quickstart `WORKSPACE` files after it sees the new release published. Watch for
-this PR to come through, kick off the builds, approve, and merge it.
+quickstart `WORKSPACE.bazel` files after it sees the new release published.
+Watch for this PR to come through, kick off the builds, approve, and merge it.
 
 ## Review the protections for the `v[0-9].*` branches
 

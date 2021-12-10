@@ -166,15 +166,15 @@ void GenerateScaffold(
       {"config.cmake.in", GenerateCmakeConfigIn},
       {"config.pc.in", GenerateConfigPcIn},
       {"README.md", GenerateReadme},
-      {"BUILD", GenerateBuild},
+      {"BUILD.bazel", GenerateBuild},
       {"CMakeLists.txt", GenerateCMakeLists},
       {"doc/main.dox", GenerateDoxygenMainPage},
       {"quickstart/README.md", GenerateQuickstartReadme},
       {"quickstart/quickstart.cc", GenerateQuickstartSkeleton},
       {"quickstart/CMakeLists.txt", GenerateQuickstartCMake},
       {"quickstart/Makefile", GenerateQuickstartMakefile},
-      {"quickstart/WORKSPACE", GenerateQuickstartWorkspace},
-      {"quickstart/BUILD", GenerateQuickstartBuild},
+      {"quickstart/WORKSPACE.bazel", GenerateQuickstartWorkspace},
+      {"quickstart/BUILD.bazel", GenerateQuickstartBuild},
   };
 
   auto const vars = ScaffoldVars(googleapis_path, output_path, service);
