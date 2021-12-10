@@ -77,6 +77,16 @@ TEST(FilesystemTest, PermissionsOperatorBitxorEquals) {
   EXPECT_EQ(0600, static_cast<unsigned>(lhs));
 }
 
+TEST(FilesystemTest, Equality) {
+  auto a = file_status(file_type::socket, perms::group_read);
+  auto b = a;
+  EXPECT_EQ(a, b);
+  auto c = file_status(file_type::regular, perms::group_read);
+  EXPECT_NE(c, a);
+  c = file_status(file_type::socket, perms::owner_read);
+  EXPECT_NE(c, a);
+}
+
 TEST(FilesystemTest, StatusDirectory) {
   std::error_code ec;
   auto file_status = status(".", ec);

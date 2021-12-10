@@ -116,6 +116,13 @@ class file_status {  // NOLINT(readability-identifier-naming)
   perms permissions() const noexcept { return permissions_; }
   void permissions(perms permissions) noexcept { permissions_ = permissions; }
 
+  friend bool operator==(file_status const& a, file_status const& b) noexcept {
+    return a.type_ == b.type_ && a.permissions_ == b.permissions_;
+  }
+  friend bool operator!=(file_status const& a, file_status const& b) noexcept {
+    return !(a == b);
+  }
+
  private:
   file_type type_;
   perms permissions_;
