@@ -257,13 +257,21 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   ASSERT_STATUS_OK(profile_2);
   EXPECT_EQ("new description", profile_2->description());
 
-  ASSERT_STATUS_OK(client_.DeleteAppProfile(name_1));
+  btadmin::DeleteAppProfileRequest req_1;
+  req_1.set_ignore_warnings(true);
+  req_1.set_name(name_1);
+
+  ASSERT_STATUS_OK(client_.DeleteAppProfile(std::move(req_1)));
   profiles = profile_names(client_.ListAppProfiles(instance_name));
   ASSERT_STATUS_OK(profiles);
   EXPECT_THAT(*profiles, Not(Contains(name_1)));
   EXPECT_THAT(*profiles, ContainsOnce(name_2));
 
-  ASSERT_STATUS_OK(client_.DeleteAppProfile(name_2));
+  btadmin::DeleteAppProfileRequest req_2;
+  req_2.set_ignore_warnings(true);
+  req_2.set_name(name_2);
+
+  ASSERT_STATUS_OK(client_.DeleteAppProfile(std::move(req_2)));
   profiles = profile_names(client_.ListAppProfiles(instance_name));
   ASSERT_STATUS_OK(profiles);
   EXPECT_THAT(*profiles, Not(Contains(name_1)));

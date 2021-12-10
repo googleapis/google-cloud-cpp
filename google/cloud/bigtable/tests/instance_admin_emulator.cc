@@ -444,6 +444,11 @@ class InstanceAdminEmulator final
     if (i == app_profiles_.end()) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "app profile not found");
     }
+    if (!request->ignore_warnings()) {
+      return grpc::Status(
+          grpc::StatusCode::FAILED_PRECONDITION,
+          "Deleting an app profile will cause all requests using it to fail.");
+    }
     app_profiles_.erase(i);
     return grpc::Status::OK;
   }
