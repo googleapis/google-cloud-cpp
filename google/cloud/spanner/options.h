@@ -160,7 +160,7 @@ using SessionPoolOptionList = OptionList<
  * Option for `google::cloud::Options` to set the optimizer version used in an
  * SQL query.
  */
-struct RequestOptimizerVersionOption {
+struct QueryOptimizerVersionOption {
   using Type = std::string;
 };
 
@@ -168,7 +168,7 @@ struct RequestOptimizerVersionOption {
  * Option for `google::cloud::Options` to set the optimizer statistics package
  * used in an SQL query.
  */
-struct RequestOptimizerStatisticsPackageOption {
+struct QueryOptimizerStatisticsPackageOption {
   using Type = std::string;
 };
 

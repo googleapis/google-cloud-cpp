@@ -24,12 +24,12 @@ ClientOptions::operator Options() const {
   Options opts;
   auto optimizer_version = query_options_.optimizer_version();
   if (optimizer_version) {
-    opts.set<RequestOptimizerVersionOption>(*optimizer_version);
+    opts.set<QueryOptimizerVersionOption>(*optimizer_version);
   }
   auto optimizer_statistics_package =
       query_options_.optimizer_statistics_package();
   if (optimizer_statistics_package) {
-    opts.set<RequestOptimizerStatisticsPackageOption>(
+    opts.set<QueryOptimizerStatisticsPackageOption>(
         *optimizer_statistics_package);
   }
   auto request_priority = query_options_.request_priority();

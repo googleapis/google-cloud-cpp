@@ -95,8 +95,8 @@ TEST(QueryOptionsTest, FromOptionsEmpty) {
 
 TEST(QueryOptionsTest, FromOptionsFull) {
   auto const opts = Options{}
-                        .set<RequestOptimizerVersionOption>("1")
-                        .set<RequestOptimizerStatisticsPackageOption>("latest")
+                        .set<QueryOptimizerVersionOption>("1")
+                        .set<QueryOptimizerStatisticsPackageOption>("latest")
                         .set<RequestPriorityOption>(RequestPriority::kHigh)
                         .set<RequestTagOption>("tag");
   QueryOptions const query_opts(opts);
