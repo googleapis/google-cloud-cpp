@@ -15,9 +15,9 @@
 #include "google/cloud/storage/oauth2/compute_engine_credentials.h"
 #include "google/cloud/storage/internal/compute_engine_util.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
-#include "google/cloud/storage/testing/mock_fake_clock.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include "google/cloud/internal/setenv.h"
+#include "google/cloud/testing_util/mock_fake_clock.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
@@ -33,9 +33,9 @@ namespace {
 
 using ::google::cloud::storage::internal::GceMetadataHostname;
 using ::google::cloud::storage::internal::HttpResponse;
-using ::google::cloud::storage::testing::FakeClock;
 using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
+using ::google::cloud::testing_util::FakeClock;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;

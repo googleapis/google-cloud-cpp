@@ -16,12 +16,12 @@
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/constants.h"
-#include "google/cloud/storage/testing/mock_fake_clock.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include "google/cloud/storage/testing/write_base64.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/setenv.h"
+#include "google/cloud/testing_util/mock_fake_clock.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
@@ -39,12 +39,12 @@ namespace oauth2 {
 namespace {
 
 using ::google::cloud::storage::internal::HttpResponse;
-using ::google::cloud::storage::testing::FakeClock;
 using ::google::cloud::storage::testing::kP12KeyFileContents;
 using ::google::cloud::storage::testing::kP12ServiceAccountId;
 using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::google::cloud::storage::testing::WriteBase64AsBinary;
+using ::google::cloud::testing_util::FakeClock;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
