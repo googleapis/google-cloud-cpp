@@ -17,6 +17,8 @@
 """Automatically generated source lists for bigtable_client_testing - DO NOT EDIT."""
 
 bigtable_client_testing_hdrs = [
+    "admin/mocks/mock_bigtable_instance_admin_connection.h",
+    "admin/mocks/mock_bigtable_table_admin_connection.h",
     "testing/cleanup_stale_resources.h",
     "testing/embedded_server_test_fixture.h",
     "testing/inprocess_admin_client.h",
