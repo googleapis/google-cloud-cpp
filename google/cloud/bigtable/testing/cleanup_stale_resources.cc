@@ -64,15 +64,18 @@ Status CleanupStaleBackups(google::cloud::bigtable::TableAdmin admin) {
   return Status{};
 }
 
-Status CleanupStaleInstances(google::cloud::bigtable::InstanceAdmin admin) {
+Status CleanupStaleInstances(
+    std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> c,
+    std::string const& project_id) {
   auto const threshold =
       std::chrono::system_clock::now() - std::chrono::hours(48);
   auto const max_instance_id = RandomInstanceId(threshold);
   auto const re = std::regex(RandomInstanceIdRegex());
 
-  auto instances = admin.ListInstances();
+  auto admin = bigtable_admin::BigtableInstanceAdminClient(std::move(c));
+  auto instances = admin.ListInstances(InstanceName(project_id, "-"));
   if (!instances) return std::move(instances).status();
-  for (auto const& i : instances->instances) {
+  for (auto const& i : instances->instances()) {
     std::vector<std::string> const components = absl::StrSplit(i.name(), '/');
     if (components.empty()) continue;
     auto const id = components.back();
@@ -80,7 +83,7 @@ Status CleanupStaleInstances(google::cloud::bigtable::InstanceAdmin admin) {
     if (id >= max_instance_id) continue;
     // Failure to cleanup is not an error.
     std::cout << "Deleting instance " << id << std::endl;
-    (void)admin.DeleteInstance(id);
+    (void)admin.DeleteInstance(InstanceName(project_id, id));
   }
   return Status{};
 }

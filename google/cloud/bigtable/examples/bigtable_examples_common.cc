@@ -42,9 +42,9 @@ bool RunAdminIntegrationTests() {
              .value_or("") == "yes";
 }
 
-google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
-    std::string const& name, std::vector<std::string> const& args,
-    TableCommandType const& function) {
+Commands::value_type MakeCommandEntry(std::string const& name,
+                                      std::vector<std::string> const& args,
+                                      TableCommandType const& function) {
   auto command = [=](std::vector<std::string> argv) {
     if ((argv.size() == 1 && argv[0] == "--help") ||
         argv.size() != 3 + args.size()) {
@@ -93,10 +93,9 @@ Commands::value_type MakeCommandEntry(
       if (!args.empty()) os << " " << absl::StrJoin(args, " ");
       throw Usage{std::move(os).str()};
     }
-    google::cloud::bigtable::InstanceAdmin instance(
-        google::cloud::bigtable::MakeInstanceAdminClient(argv[0]));
-    argv.erase(argv.begin(), argv.begin() + kFixedArguments);
-    function(instance, argv);
+    auto client = bigtable_admin::BigtableInstanceAdminClient(
+        bigtable_admin::MakeBigtableInstanceAdminConnection());
+    function(client, argv);
   };
   return {name, command};
 }

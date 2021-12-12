@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/admin/bigtable_instance_admin_client.h"
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
-#include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
@@ -104,6 +104,7 @@ void HelloWorldAppProfile(std::vector<std::string> const& argv) {
 
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
+  namespace cbta = ::google::cloud::bigtable_admin;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
   if (!examples::RunAdminIntegrationTests()) return;
@@ -132,15 +133,21 @@ void RunAll(std::vector<std::string> const& argv) {
                     google::cloud::internal::Sample(
                         generator, 8, "abcdefghilklmnopqrstuvwxyz0123456789");
 
-  cbt::InstanceAdmin instance_admin(cbt::MakeInstanceAdminClient(project_id));
+  auto instance_admin = cbta::BigtableInstanceAdminClient(
+      cbta::MakeBigtableInstanceAdminConnection());
+  google::bigtable::admin::v2::AppProfile ap;
+  ap.mutable_multi_cluster_routing_use_any()->Clear();
   auto profile = instance_admin.CreateAppProfile(
-      instance_id, cbt::AppProfileConfig::MultiClusterUseAny(profile_id));
+      cbt::InstanceName(project_id, instance_id), profile_id, std::move(ap));
   if (!profile) throw std::runtime_error(profile.status().message());
 
   std::cout << "\nRunning the AppProfile hello world example" << std::endl;
   HelloWorldAppProfile({project_id, instance_id, table_id, profile_id});
 
-  instance_admin.DeleteAppProfile(instance_id, profile_id);
+  google::bigtable::admin::v2::DeleteAppProfileRequest req;
+  req.set_name(cbt::AppProfileName(project_id, instance_id, profile_id));
+  req.set_ignore_warnings(true);
+  instance_admin.DeleteAppProfile(std::move(req));
   admin.DeleteTable(table_id);
 }
 

@@ -211,6 +211,8 @@ create_bazel_config(google_cloud_cpp_bigtable)
 if (BUILD_TESTING)
     add_library(
         bigtable_client_testing # cmake-format: sort
+        admin/mocks/mock_bigtable_instance_admin_connection.h
+        admin/mocks/mock_bigtable_table_admin_connection.h
         testing/cleanup_stale_resources.cc
         testing/cleanup_stale_resources.h
         testing/embedded_server_test_fixture.cc
