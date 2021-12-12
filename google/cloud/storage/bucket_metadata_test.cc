@@ -167,18 +167,6 @@ BucketMetadata CreateBucketMetadataForTest() {
   return internal::BucketMetadataParser::FromString(text).value();
 }
 
-TEST(BucketMetadataTest, NormalizePap) {
-  EXPECT_EQ(internal::NormalizePap(absl::nullopt), absl::nullopt);
-  EXPECT_EQ(internal::NormalizePap(PublicAccessPreventionInherited()),
-            PublicAccessPreventionInherited());
-  EXPECT_EQ(internal::NormalizePap("unspecified"),
-            PublicAccessPreventionInherited());
-  EXPECT_EQ(internal::NormalizePap(PublicAccessPreventionEnforced()),
-            PublicAccessPreventionEnforced());
-  EXPECT_EQ(internal::NormalizePap(std::string{"something"}),
-            std::string{"something"});
-}
-
 /// @test Verify that we parse JSON objects into BucketMetadata objects.
 TEST(BucketMetadataTest, Parse) {
   auto actual = CreateBucketMetadataForTest();

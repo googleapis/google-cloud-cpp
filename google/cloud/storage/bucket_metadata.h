@@ -37,9 +37,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 struct BucketMetadataParser;
 class GrpcClient;
-// TODO(#7365) - remove once PAP reaches GA
-absl::optional<std::string> const& NormalizePap(
-    absl::optional<std::string> const& pap);
 }  // namespace internal
 
 /**
@@ -227,9 +224,9 @@ inline std::string PublicAccessPreventionUnspecified() { return "unspecified"; }
 inline bool operator==(BucketIamConfiguration const& lhs,
                        BucketIamConfiguration const& rhs) {
   return std::tie(lhs.uniform_bucket_level_access,
-                  internal::NormalizePap(lhs.public_access_prevention)) ==
+                  lhs.public_access_prevention) ==
          std::tie(rhs.uniform_bucket_level_access,
-                  internal::NormalizePap(rhs.public_access_prevention));
+                  rhs.public_access_prevention);
 }
 
 inline bool operator<(BucketIamConfiguration const& lhs,
