@@ -106,7 +106,7 @@ BucketMetadata CreateBucketMetadataForTest() {
           "enabled": true,
           "lockedTime": "2020-01-02T03:04:05Z"
         },
-        "publicAccessPrevention": "unspecified"
+        "publicAccessPrevention": "inherited"
       },
       "id": "test-bucket",
       "kind": "storage#bucket",
@@ -167,18 +167,6 @@ BucketMetadata CreateBucketMetadataForTest() {
   return internal::BucketMetadataParser::FromString(text).value();
 }
 
-TEST(BucketMetadataTest, NormalizePap) {
-  EXPECT_EQ(internal::NormalizePap(absl::nullopt), absl::nullopt);
-  EXPECT_EQ(internal::NormalizePap(PublicAccessPreventionInherited()),
-            PublicAccessPreventionInherited());
-  EXPECT_EQ(internal::NormalizePap("unspecified"),
-            PublicAccessPreventionInherited());
-  EXPECT_EQ(internal::NormalizePap(PublicAccessPreventionEnforced()),
-            PublicAccessPreventionEnforced());
-  EXPECT_EQ(internal::NormalizePap(std::string{"something"}),
-            std::string{"something"});
-}
-
 /// @test Verify that we parse JSON objects into BucketMetadata objects.
 TEST(BucketMetadataTest, Parse) {
   auto actual = CreateBucketMetadataForTest();
@@ -211,7 +199,7 @@ TEST(BucketMetadataTest, Parse) {
       google::cloud::internal::FormatRfc3339(
           actual.iam_configuration().uniform_bucket_level_access->locked_time));
   EXPECT_EQ(actual.iam_configuration().public_access_prevention.value_or(""),
-            "unspecified");
+            "inherited");
   EXPECT_EQ("test-bucket", actual.id());
   EXPECT_EQ("storage#bucket", actual.kind());
   EXPECT_EQ(2, actual.labels().size());
@@ -328,7 +316,7 @@ TEST(BucketMetadataTest, IOStream) {
   // iam_policy()
   EXPECT_THAT(actual, HasSubstr("BucketIamConfiguration={"));
   EXPECT_THAT(actual, HasSubstr("locked_time=2020-01-02T03:04:05Z"));
-  EXPECT_THAT(actual, HasSubstr("public_access_prevention=unspecified"));
+  EXPECT_THAT(actual, HasSubstr("public_access_prevention=inherited"));
 
   // lifecycle()
   EXPECT_THAT(actual, HasSubstr("age=30"));
@@ -411,7 +399,7 @@ TEST(BucketMetadataTest, ToJsonString) {
   ASSERT_EQ(1U, actual.count("iamConfiguration"));
   nlohmann::json expected_iam_configuration{
       {"uniformBucketLevelAccess", nlohmann::json{{"enabled", true}}},
-      {"publicAccessPrevention", "unspecified"}};
+      {"publicAccessPrevention", "inherited"}};
   EXPECT_EQ(expected_iam_configuration, actual["iamConfiguration"]);
 
   // labels()

@@ -28,15 +28,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
-absl::optional<std::string> const& NormalizePap(
-    absl::optional<std::string> const& pap) {
-  static auto const* normalized =
-      new absl::optional<std::string>(PublicAccessPreventionInherited());
-  if (!pap.has_value() || *pap != "unspecified") return pap;
-  return *normalized;
-}
-}  // namespace internal
 
 std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
   os << "CorsEntry={";
