@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_CLEANUP_STALE_RESOURCES_H
 
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_client.h"
-#include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 
 namespace google {
 namespace cloud {
@@ -33,7 +33,9 @@ namespace testing {
  * times out, and (b) avoiding flakes caused by quota exhaustion is necessary
  * for healthy builds.
  */
-Status CleanupStaleTables(TableAdmin admin);
+Status CleanupStaleTables(
+    std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> c,
+    std::string const& project_id, std::string const& instance_id);
 
 /**
  * Remove stale test backups.
@@ -45,7 +47,9 @@ Status CleanupStaleTables(TableAdmin admin);
  * times out, and (b) avoiding flakes caused by quota exhaustion is necessary
  * for healthy builds.
  */
-Status CleanupStaleBackups(TableAdmin admin);
+Status CleanupStaleBackups(
+    std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> c,
+    std::string const& project_id, std::string const& instance_id);
 
 /**
  * Remove stale test instances.

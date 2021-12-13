@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/project.h"
 #include "absl/strings/str_split.h"
@@ -23,44 +24,53 @@ namespace cloud {
 namespace bigtable {
 namespace testing {
 
-Status CleanupStaleTables(google::cloud::bigtable::TableAdmin admin) {
+Status CleanupStaleTables(
+    std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> c,
+    std::string const& project_id, std::string const& instance_id) {
   auto const threshold =
       std::chrono::system_clock::now() - std::chrono::hours(48);
   auto const max_table_id = RandomTableId(threshold);
   auto const re = std::regex(RandomTableIdRegex());
 
-  auto tables = admin.ListTables(TableAdmin::NAME_ONLY);
-  if (!tables) return std::move(tables).status();
-  for (auto const& t : *tables) {
-    std::vector<std::string> const components = absl::StrSplit(t.name(), '/');
+  google::bigtable::admin::v2::ListTablesRequest r;
+  r.set_parent(InstanceName(project_id, instance_id));
+  r.set_view(google::bigtable::admin::v2::Table::NAME_ONLY);
+  auto admin = bigtable_admin::BigtableTableAdminClient(std::move(c));
+  auto tables = admin.ListTables(std::move(r));
+  for (auto const& t : tables) {
+    if (!t) return std::move(t).status();
+    std::vector<std::string> const components = absl::StrSplit(t->name(), '/');
     if (components.empty()) continue;
     auto const id = components.back();
     if (!std::regex_match(id, re)) continue;
     if (id >= max_table_id) continue;
     // Failure to cleanup is not an error.
     std::cout << "Deleting table " << id << std::endl;
-    (void)admin.DeleteTable(id);
+    (void)admin.DeleteTable(t->name());
   }
   return Status{};
 }
 
-Status CleanupStaleBackups(google::cloud::bigtable::TableAdmin admin) {
+Status CleanupStaleBackups(
+    std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> c,
+    std::string const& project_id, std::string const& instance_id) {
   auto const threshold =
       std::chrono::system_clock::now() - std::chrono::hours(48);
   auto const max_backup_id = RandomBackupId(threshold);
   auto const re = std::regex(RandomBackupIdRegex());
 
-  auto backups = admin.ListBackups({});
-  if (!backups) return std::move(backups).status();
-  for (auto const& b : *backups) {
-    std::vector<std::string> const components = absl::StrSplit(b.name(), '/');
+  auto admin = bigtable_admin::BigtableTableAdminClient(std::move(c));
+  auto backups = admin.ListBackups(ClusterName(project_id, instance_id, "-"));
+  for (auto const& b : backups) {
+    if (!b) return std::move(b).status();
+    std::vector<std::string> const components = absl::StrSplit(b->name(), '/');
     if (components.empty()) continue;
     auto const id = components.back();
     if (!std::regex_match(id, re)) continue;
     if (id >= max_backup_id) continue;
     // Failure to cleanup is not an error.
     std::cout << "Deleting id " << id << std::endl;
-    (void)admin.DeleteBackup({b});
+    (void)admin.DeleteBackup(b->name());
   }
   return Status{};
 }
@@ -84,7 +94,7 @@ Status CleanupStaleInstances(
     if (id >= max_instance_id) continue;
     // Failure to cleanup is not an error.
     std::cout << "Deleting instance " << id << std::endl;
-    (void)admin.DeleteInstance(InstanceName(project_id, id));
+    (void)admin.DeleteInstance(i.name());
   }
   return Status{};
 }

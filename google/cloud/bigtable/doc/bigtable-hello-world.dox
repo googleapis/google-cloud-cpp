@@ -38,17 +38,17 @@ To manage tables, connect to Cloud Bigtable using
 
 @snippet bigtable_hello_world.cc connect admin
 
-@see [bigtable::TableAdmin][TableAdmin] for more information on how to perform
-    administrative operations on tables.
+@see [bigtable_admin::BigtableTableAdminClient][TableAdmin] for more information
+    on how to perform administrative operations on tables.
 
 ## Creating a table
 
-Create a table with [TableAdmin::CreateTable()][TableAdmin-CreateTable]:
+Create a table with [BigtableTableAdminClient::CreateTable()][TableAdmin-CreateTable]:
 
 @snippet bigtable_hello_world.cc create table
 
-@see [bigtable::TableAdmin][TableAdmin] for additional operations to list,
-    read, modify, and delete tables.
+@see [bigtable::BigtableTableAdminClient][TableAdmin] for additional operations
+    to list, read, modify, and delete tables.
 @see https://cloud.google.com/bigtable/docs/overview for an overview of the
     Cloud Bigtable storage model, including an introduction to important
     Cloud Bigtable concepts, such as *row keys*, *column families*, *columns*,
@@ -114,7 +114,7 @@ Use [Table::ReadRows()][Table-ReadRows] to scan all of the rows in a table.
 
 ## Deleting a table
 
-Delete a table with [TableAdmin::DeleteTable()][TableAdmin-DeleteTable].
+Delete a table with [BigtableTableAdminClient::DeleteTable()][TableAdmin-DeleteTable].
 
 @snippet bigtable_hello_world.cc delete table
 
@@ -135,8 +135,8 @@ Here is the full example
 [Table-BulkApply]: @ref google::cloud::bigtable::Table::BulkApply
 [Table-ReadRow]:   @ref google::cloud::bigtable::Table::ReadRow
 [Table-ReadRows]:  @ref google::cloud::bigtable::Table::ReadRows
-[TableAdmin]:      @ref google::cloud::bigtable::TableAdmin
-[TableAdmin-CreateTable]:  @ref google::cloud::bigtable::TableAdmin::CreateTable
-[TableAdmin-DeleteTable]:  @ref google::cloud::bigtable::TableAdmin::DeleteTable
+[TableAdmin]:      @ref google::cloud::bigtable_admin::BigtableTableAdminClient
+[TableAdmin-CreateTable]:  @ref google::cloud::bigtable_admin::BigtableTableAdminClient::CreateTable
+[TableAdmin-DeleteTable]:  @ref google::cloud::bigtable_admin::BigtableTableAdminClient::DeleteTable
 
 */

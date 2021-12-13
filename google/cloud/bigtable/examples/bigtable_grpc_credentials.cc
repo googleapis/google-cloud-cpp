@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
-#include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/crash_handler.h"
 #include <fstream>
@@ -30,6 +31,7 @@ void AccessToken(std::vector<std::string> const& argv) {
 
   // Create a namespace alias to make the code easier to read.
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::GrpcCredentialOption;
   using ::google::cloud::Options;
   using ::google::cloud::StatusOr;
@@ -44,11 +46,16 @@ void AccessToken(std::vector<std::string> const& argv) {
                                                          call_credentials);
     auto options = Options{}.set<GrpcCredentialOption>(credentials);
 
-    cbt::TableAdmin admin(cbt::MakeAdminClient(project_id, options),
-                          instance_id);
+    cbta::BigtableTableAdminClient admin(
+        cbta::MakeBigtableTableAdminConnection(options));
 
-    auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
-    if (!tables) throw std::runtime_error(tables.status().message());
+    google::bigtable::admin::v2::ListTablesRequest r;
+    r.set_parent(cbt::InstanceName(project_id, instance_id));
+    r.set_view(google::bigtable::admin::v2::Table::NAME_ONLY);
+    auto tables = admin.ListTables(std::move(r));
+    for (auto const& table : tables) {
+      if (!table) throw std::runtime_error(table.status().message());
+    }
   }
   //! [test access token]
   (argv.at(0), argv.at(1), argv.at(2));
@@ -62,6 +69,7 @@ void JWTAccessToken(std::vector<std::string> const& argv) {
   }
   // Create a namespace alias to make the code easier to read.
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::GrpcCredentialOption;
   using ::google::cloud::Options;
   using ::google::cloud::StatusOr;
@@ -86,11 +94,16 @@ void JWTAccessToken(std::vector<std::string> const& argv) {
                                                          call_credentials);
     auto options = Options{}.set<GrpcCredentialOption>(credentials);
 
-    cbt::TableAdmin admin(cbt::MakeAdminClient(project_id, options),
-                          instance_id);
+    cbta::BigtableTableAdminClient admin(
+        cbta::MakeBigtableTableAdminConnection(options));
 
-    auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
-    if (!tables) throw std::runtime_error(tables.status().message());
+    google::bigtable::admin::v2::ListTablesRequest r;
+    r.set_parent(cbt::InstanceName(project_id, instance_id));
+    r.set_view(google::bigtable::admin::v2::Table::NAME_ONLY);
+    auto tables = admin.ListTables(std::move(r));
+    for (auto const& table : tables) {
+      if (!table) throw std::runtime_error(table.status().message());
+    }
   }
   //! [test jwt access token]
   (argv.at(0), argv.at(1), argv.at(2));
@@ -102,6 +115,7 @@ void GCECredentials(std::vector<std::string> const& argv) {
   }
   // Create a namespace alias to make the code easier to read.
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::GrpcCredentialOption;
   using ::google::cloud::Options;
   using ::google::cloud::StatusOr;
@@ -115,11 +129,16 @@ void GCECredentials(std::vector<std::string> const& argv) {
                                                          call_credentials);
     auto options = Options{}.set<GrpcCredentialOption>(credentials);
 
-    cbt::TableAdmin admin(cbt::MakeAdminClient(project_id, options),
-                          instance_id);
+    cbta::BigtableTableAdminClient admin(
+        cbta::MakeBigtableTableAdminConnection(options));
 
-    auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
-    if (!tables) throw std::runtime_error(tables.status().message());
+    google::bigtable::admin::v2::ListTablesRequest r;
+    r.set_parent(cbt::InstanceName(project_id, instance_id));
+    r.set_view(google::bigtable::admin::v2::Table::NAME_ONLY);
+    auto tables = admin.ListTables(std::move(r));
+    for (auto const& table : tables) {
+      if (!table) throw std::runtime_error(table.status().message());
+    }
   }
   //! [test gce credentials]
   (argv.at(0), argv.at(1));

@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_client.h"
 //! [bigtable includes]
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/algorithm.h"

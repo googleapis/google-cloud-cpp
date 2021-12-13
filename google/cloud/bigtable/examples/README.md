@@ -65,13 +65,13 @@ $ ./bigtable_hello_world hello-world <project_id> <instance_id> <table_id>
 
 ## Administer Instances
 
-### Hello World - `InstanceAdmin`
+### Hello World - Instance Admin
 
 View the [Hello Instance Admin][instance-admin-code] example to see sample usage of instance
 administration of the Bigtable client library. More details on this sample code can be found
 [here][doxygen-instance-admin].
 
-### Running `InstanceAdmin` Samples
+### Running Instance Admin Samples
 
 | Target                               | Description                         |
 | ------------------------------------ | ----------------------------------- |
@@ -88,12 +88,12 @@ $ ./bigtable_instance_admin_snippets create-instance <project-id> <instance-id> 
 
 ## Administer Tables
 
-### Hello World - `TableAdmin`
+### Hello World - Table Admin
 
 View the [Hello Table Admin][table-admin-code] example to see sample usage of table
 administration of the Bigtable client library. More details on this sample code can be found [here][doxygen-table-admin].
 
-### Running `TableAdmin` Samples
+### Running Table Admin Samples
 
 | Target                                   | Description                         |
 | ---------------------------------------- | ----------------------------------- |

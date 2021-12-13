@@ -1,7 +1,7 @@
 /*!
-@page bigtable-hello-table-admin Example: C++ Hello World for TableAdmin
+@page bigtable-hello-table-admin Example: C++ Hello World for Table Admin
 
-This example illustrates how to use the `TableAdmin` class to:
+This example illustrates how to use the `BigtableTableAdminClient` class to:
 
 - Create a table.
 - List tables.
@@ -33,10 +33,10 @@ To make the example less verbose we define some aliases:
 
 @snippet bigtable_hello_table_admin.cc aliases
 
-## Connect to the TableAdmin API
+## Connect to the Cloud Bigtable Table Admin Endpoint.
 
-Use the [bigtable::TableAdmin][TableAdmin] class to obtain information about
-Cloud Bigtable *tables* and to modify them:
+Use the [bigtable_admin::BigtableTableAdminClient][TableAdmin] class to obtain
+information about Cloud Bigtable *tables* and to modify them:
 
 @snippet bigtable_hello_table_admin.cc connect admin
 
@@ -47,13 +47,14 @@ Cloud Bigtable *tables* and to modify them:
 
 ## Creating a Table
 
-Use [TableAdmin::CreateTable()][TableAdmin-CreateTable] to create a new table:
+Use [BigtableTableAdminClient::CreateTable()][TableAdmin-CreateTable] to create
+a new table:
 
 @snippet bigtable_hello_table_admin.cc create table
 
-Note that when you create a table you can define one or more
-column families for the table, and each column families is configured with
-a garbage collection rule to automatically delete excess cells.
+Note that when you create a table you can define one or more column families for
+the table, and each column families is configured with a garbage collection rule
+to automatically delete excess cells.
 
 @see [bigtable::GcRule][GcRule] to learn about the garbage collection rules,
     including how to delete cells that are [too old][GcRule-MaxAge],
@@ -63,7 +64,7 @@ a garbage collection rule to automatically delete excess cells.
 ## Listing Tables in an Instance
 
 Get all the tables in an instance using
-[TableAdmin::ListTables()][TableAdmin-ListTables]:
+[BigtableTableAdminClient::ListTables()][TableAdmin-ListTables]:
 
 @snippet bigtable_hello_table_admin.cc listing tables
 
@@ -73,7 +74,7 @@ query only a subset of the table metadata.
 ## Retrieve Table Metadata
 
 Or retrieve the metadata, including column family definitions, using
-[TableAdmin::GetTable()][TableAdmin-GetTable]:
+[BigtableTableAdminClient::GetTable()][TableAdmin-GetTable]:
 
 @snippet bigtable_hello_table_admin.cc retrieve table metadata
 
@@ -97,17 +98,14 @@ You can also [add][ColumnFamilyModification-Create] new column families,
 
 ## Delete all the Rows in a Table
 
-Use [TableAdmin::DropAllRows()][TableAdmin-DropAllRows] to delete all the rows
+Use [BigtableTableAdminClient::DropRowRange()][TableAdmin-DropRowRange] to delete all the rows
 in a table:
 
 @snippet bigtable_hello_table_admin.cc drop all rows
 
-@see [TableAdmin::DropRowsByPrefix()][TableAdmin-DropRowsByPrefix] to only
-    delete the rows whose key starts with a give prefix.
-
 ## Delete a Table
 
-Finally use [TableAdmin::DeleteTable()][TableAdmin-DeleteTable] to delete a
+Finally use [BigtableTableAdminClient::DeleteTable()][TableAdmin-DeleteTable] to delete a
 a table:
 
 @snippet bigtable_hello_table_admin.cc delete table
@@ -130,14 +128,13 @@ Here is the full example
 [ColumnFamilyModification-Create]: @ref google::cloud::bigtable::ColumnFamilyModification::Create()
 [ColumnFamilyModification-Update]: @ref google::cloud::bigtable::ColumnFamilyModification::Update()
 [ColumnFamilyModification-Drop]: @ref google::cloud::bigtable::ColumnFamilyModification::Drop()
-[TableAdmin]:              @ref google::cloud::bigtable::TableAdmin
-[TableAdmin-CreateTable]:  @ref google::cloud::bigtable::TableAdmin::CreateTable()
-[TableAdmin-DeleteTable]:  @ref google::cloud::bigtable::TableAdmin::DeleteTable()
-[TableAdmin-GetTable]:     @ref google::cloud::bigtable::TableAdmin::GetTable()
-[TableAdmin-ListTables]:   @ref google::cloud::bigtable::TableAdmin::ListTables()
-[TableAdmin-ModifyColumnFamilies]:  @ref google::cloud::bigtable::TableAdmin::ModifyColumnFamilies()
-[TableAdmin-DropAllRows]:  @ref google::cloud::bigtable::TableAdmin::DropAllRows()
-[TableAdmin-DropRowsByPrefix]:  @ref google::cloud::bigtable::TableAdmin::DropRowsByPrefix()
+[TableAdmin]:              @ref google::cloud::bigtable_admin::BigtableTableAdminClient
+[TableAdmin-CreateTable]:  @ref google::cloud::bigtable_admin::BigtableTableAdminClient::CreateTable()
+[TableAdmin-DeleteTable]:  @ref google::cloud::bigtable_admin::BigtableTableAdminClient::DeleteTable()
+[TableAdmin-GetTable]:     @ref google::cloud::bigtable_admin::BigtableTableAdminClient::GetTable()
+[TableAdmin-ListTables]:   @ref google::cloud::bigtable_admin::BigtableTableAdminClient::ListTables()
+[TableAdmin-ModifyColumnFamilies]:  @ref google::cloud::bigtable_admin::BigtableTableAdminClient::ModifyColumnFamilies()
+[TableAdmin-DropRowRange]:  @ref google::cloud::bigtable_admin::BigtableTableAdminClient::DropRowRange()
 
 [TableView-proto]: https://cloud.google.com/bigtable/docs/reference/admin/rpc/google.bigtable.admin.v2#google.bigtable.admin.v2.Table.View
 */

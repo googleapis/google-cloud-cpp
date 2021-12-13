@@ -14,10 +14,10 @@
 
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
 #include "google/cloud/bigtable/admin/mocks/mock_bigtable_instance_admin_connection.h"
-#include "google/cloud/bigtable/testing/mock_admin_client.h"
+#include "google/cloud/bigtable/admin/mocks/mock_bigtable_table_admin_connection.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/project.h"
-#include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -27,13 +27,17 @@ namespace testing {
 namespace {
 
 using ::google::cloud::internal::DefaultPRNG;
+using ::google::cloud::internal::MakeStreamRange;
+using ::google::cloud::internal::StreamReader;
 using ::testing::HasSubstr;
-using ::testing::ReturnRef;
 
 TEST(CleanupStaleResources, CleanupOldTables) {
-  using MockAdminClient = ::google::cloud::bigtable::testing::MockAdminClient;
+  using MockConnection =
+      ::google::cloud::bigtable_admin_mocks::MockBigtableTableAdminConnection;
   namespace btadmin = ::google::bigtable::admin::v2;
 
+  std::string const project_id = "test-project-id";
+  std::string const instance_id = "test-instance-id";
   auto const expired_tp =
       std::chrono::system_clock::now() - std::chrono::hours(72);
   auto const active_tp = std::chrono::system_clock::now();
@@ -42,55 +46,53 @@ TEST(CleanupStaleResources, CleanupOldTables) {
   auto const id_2 = RandomTableId(generator, expired_tp);
   auto const id_3 = RandomTableId(generator, active_tp);
   auto const id_4 = RandomTableId(generator, active_tp);
+  auto const instance_name = InstanceName(project_id, instance_id);
+  auto const name_1 = TableName(project_id, instance_id, id_1);
+  auto const name_2 = TableName(project_id, instance_id, id_2);
+  std::vector<std::string> const ids = {id_1, id_2, id_3, id_4};
+  auto iter = ids.begin();
 
-  std::string const project_id = "test-project-id";
-  std::string const instance_id = "test-instance-id";
-
-  auto mock = std::make_shared<MockAdminClient>();
-  EXPECT_CALL(*mock, project()).WillRepeatedly(ReturnRef(project_id));
+  auto mock = std::make_shared<MockConnection>();
 
   EXPECT_CALL(*mock, ListTables)
-      .WillOnce([&](grpc::ClientContext*,
-                    btadmin::ListTablesRequest const& request,
-                    btadmin::ListTablesResponse* response) {
-        for (auto const& id : {id_1, id_2, id_3, id_4}) {
-          auto& t = *response->add_tables();
-          t.set_name(request.parent() + "/tables/" + id);
-        }
-        response->clear_next_page_token();
-        return grpc::Status::OK;
+      .WillOnce([&](btadmin::ListTablesRequest const& request) {
+        EXPECT_EQ(request.parent(), instance_name);
+        EXPECT_EQ(request.view(), btadmin::Table::NAME_ONLY);
+
+        auto reader = [&]() -> StreamReader<btadmin::Table>::result_type {
+          if (iter != ids.end()) {
+            btadmin::Table t;
+            t.set_name(instance_name + "/tables/" + *iter);
+            ++iter;
+            return t;
+          }
+          return Status();
+        };
+        return MakeStreamRange<btadmin::Table>(std::move(reader));
       });
 
-  bigtable::TableAdmin admin(mock, instance_id);
-  auto const name_1 = admin.TableName(id_1);
-  auto const name_2 = admin.TableName(id_2);
   // Verify only `name_1` and `name_2` are deleted.
   EXPECT_CALL(*mock, DeleteTable)
-      .WillOnce([&](grpc::ClientContext*,
-                    btadmin::DeleteTableRequest const& request,
-                    google::protobuf::Empty*) {
+      .WillOnce([&](btadmin::DeleteTableRequest const& request) {
         EXPECT_EQ(request.name(), name_1);
-        return grpc::Status::OK;
+        return Status();
       })
-      .WillOnce([&](grpc::ClientContext*,
-                    btadmin::DeleteTableRequest const& request,
-                    google::protobuf::Empty*) {
+      .WillOnce([&](btadmin::DeleteTableRequest const& request) {
         EXPECT_EQ(request.name(), name_2);
-        return grpc::Status::OK;
+        return Status();
       });
 
-  CleanupStaleTables(admin);
+  CleanupStaleTables(mock, project_id, instance_id);
 }
 
 TEST(CleanupStaleResources, CleanupStaleBackups) {
-  using MockAdminClient = ::google::cloud::bigtable::testing::MockAdminClient;
-  using ::google::protobuf::util::TimeUtil;
+  using MockConnection =
+      ::google::cloud::bigtable_admin_mocks::MockBigtableTableAdminConnection;
   namespace btadmin = ::google::bigtable::admin::v2;
 
   std::string const project_id = "test-project-id";
   std::string const instance_id = "test-instance-id";
   std::string const cluster_id = "test-instance-id-c1";
-
   auto const expired_tp =
       std::chrono::system_clock::now() - std::chrono::hours(72);
   auto const active_tp = std::chrono::system_clock::now();
@@ -100,53 +102,43 @@ TEST(CleanupStaleResources, CleanupStaleBackups) {
   auto const id_3 = RandomBackupId(generator, active_tp);
   auto const id_4 = RandomBackupId(generator, active_tp);
   auto const id_5 = RandomBackupId(generator, expired_tp);
+  auto const cluster_name = ClusterName(project_id, instance_id, cluster_id);
+  std::vector<std::string> const ids = {id_1, id_2, id_3, id_4, id_5};
+  auto iter = ids.begin();
 
-  std::string const prefix = "project/" + project_id + "/instances/" +
-                             instance_id + "/clusters/" + cluster_id +
-                             "/backups/";
-  google::bigtable::admin::v2::Backup backup_2;
-  backup_2.set_name(prefix + id_2);
-  *backup_2.mutable_expire_time() =
-      TimeUtil::GetCurrentTime() - TimeUtil::HoursToDuration(24 * 8);
-
-  auto mock = std::make_shared<MockAdminClient>();
-  EXPECT_CALL(*mock, project()).WillRepeatedly(ReturnRef(project_id));
+  auto mock = std::make_shared<MockConnection>();
 
   EXPECT_CALL(*mock, ListBackups)
-      .WillOnce([&](grpc::ClientContext*, btadmin::ListBackupsRequest const&,
-                    btadmin::ListBackupsResponse* response) {
-        for (auto const& backup : {id_1, id_2, id_3, id_4, id_5}) {
-          auto& b = *response->add_backups();
-          google::bigtable::admin::v2::Backup backup_1;
-          b.set_name(prefix + backup);
-        }
-        response->clear_next_page_token();
-        return grpc::Status::OK;
-      });
+      .WillOnce([&](btadmin::ListBackupsRequest const& request) {
+        EXPECT_EQ(request.parent(), ClusterName(project_id, instance_id, "-"));
 
-  bigtable::TableAdmin admin(mock, instance_id);
+        auto reader = [&]() -> StreamReader<btadmin::Backup>::result_type {
+          if (iter != ids.end()) {
+            btadmin::Backup b;
+            b.set_name(cluster_name + "/tables/" + *iter);
+            ++iter;
+            return b;
+          }
+          return Status();
+        };
+        return MakeStreamRange<btadmin::Backup>(std::move(reader));
+      });
 
   EXPECT_CALL(*mock, DeleteBackup)
-      .WillOnce([&](grpc::ClientContext*,
-                    btadmin::DeleteBackupRequest const& request,
-                    google::protobuf::Empty*) {
+      .WillOnce([&](btadmin::DeleteBackupRequest const& request) {
         EXPECT_THAT(request.name(), HasSubstr(id_1));
-        return grpc::Status::OK;
+        return Status();
       })
-      .WillOnce([&](grpc::ClientContext*,
-                    btadmin::DeleteBackupRequest const& request,
-                    google::protobuf::Empty*) {
+      .WillOnce([&](btadmin::DeleteBackupRequest const& request) {
         EXPECT_THAT(request.name(), HasSubstr(id_2));
-        return grpc::Status::OK;
+        return Status();
       })
-      .WillOnce([&](grpc::ClientContext*,
-                    btadmin::DeleteBackupRequest const& request,
-                    google::protobuf::Empty*) {
+      .WillOnce([&](btadmin::DeleteBackupRequest const& request) {
         EXPECT_THAT(request.name(), HasSubstr(id_5));
-        return grpc::Status::OK;
+        return Status();
       });
 
-  CleanupStaleBackups(admin);
+  CleanupStaleBackups(mock, project_id, instance_id);
 }
 
 TEST(CleanupStaleResources, CleanupOldInstances) {

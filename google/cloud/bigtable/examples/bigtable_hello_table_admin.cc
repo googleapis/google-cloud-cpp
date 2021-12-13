@@ -15,7 +15,8 @@
 //! [all code]
 
 //! [bigtable includes]
-#include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
+#include "google/cloud/bigtable/resource_names.h"
 //! [bigtable includes]
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
@@ -23,6 +24,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/crash_handler.h"
+#include <chrono>
 #include <iostream>
 
 namespace {
@@ -41,38 +43,58 @@ void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
 
   //! [aliases]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::StatusOr;
   //! [aliases]
 
   // Connect to the Cloud Bigtable admin endpoint.
   //! [connect admin]
-  cbt::TableAdmin admin(cbt::MakeAdminClient(project_id), instance_id);
+  cbta::BigtableTableAdminClient admin(
+      cbta::MakeBigtableTableAdminConnection());
   //! [connect admin]
 
   //! [create table]
+  // Define the schema
+  google::bigtable::admin::v2::GcRule gc_max_versions;
+  gc_max_versions.set_max_num_versions(10);
+
+  google::bigtable::admin::v2::GcRule gc_max_age;
+  auto constexpr kSecondsPerDay =
+      std::chrono::seconds(std::chrono::hours(24)).count();
+  gc_max_age.mutable_max_age()->set_seconds(3 * kSecondsPerDay);
+
+  google::bigtable::admin::v2::Table t;
+  auto& families = *t.mutable_column_families();
+  *families["fam"].mutable_gc_rule() = gc_max_versions;
+  *families["foo"].mutable_gc_rule() = gc_max_age;
+
   std::cout << "Creating a table:\n";
-  StatusOr<google::bigtable::admin::v2::Table> schema = admin.CreateTable(
-      table_id,
-      cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)},
-                        {"foo", cbt::GcRule::MaxAge(std::chrono::hours(72))}},
-                       {}));
+  std::string instance_name = cbt::InstanceName(project_id, instance_id);
+  StatusOr<google::bigtable::admin::v2::Table> schema =
+      admin.CreateTable(instance_name, table_id, std::move(t));
   std::cout << "DONE\n";
   //! [create table]
 
   //! [listing tables]
   std::cout << "Listing tables:\n";
-  auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
-  if (!tables) throw std::runtime_error(tables.status().message());
-  for (auto const& table : *tables) {
-    std::cout << "    " << table.name() << "\n";
+  google::bigtable::admin::v2::ListTablesRequest list_req;
+  list_req.set_parent(instance_name);
+  list_req.set_view(google::bigtable::admin::v2::Table::NAME_ONLY);
+  auto tables = admin.ListTables(std::move(list_req));
+  for (auto const& table : tables) {
+    if (!table) throw std::runtime_error(table.status().message());
+    std::cout << "    " << table->name() << "\n";
   }
   std::cout << "DONE\n";
   //! [listing tables]
 
   //! [retrieve table metadata]
   std::cout << "Get table metadata:\n";
+  google::bigtable::admin::v2::GetTableRequest get_req;
+  get_req.set_name(schema->name());
+  get_req.set_view(google::bigtable::admin::v2::Table::FULL);
   StatusOr<google::bigtable::admin::v2::Table> table =
-      admin.GetTable(table_id, cbt::TableAdmin::FULL);
+      admin.GetTable(std::move(get_req));
   if (!table) throw std::runtime_error(table.status().message());
   std::cout << "Table name : " << table->name() << "\n";
 
@@ -88,13 +110,16 @@ void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
 
   //! [modify column family]
   std::cout << "Update a column family GC rule:\n";
+  google::bigtable::admin::v2::GcRule updated_gc;
+  updated_gc.set_max_num_versions(5);
+
+  using ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest;
+  ModifyColumnFamiliesRequest::Modification mod;
+  mod.set_id("fam");
+  *mod.mutable_update()->mutable_gc_rule() = std::move(updated_gc);
+
   StatusOr<google::bigtable::admin::v2::Table> updated_schema =
-      admin.ModifyColumnFamilies(
-          table_id,
-          {cbt::ColumnFamilyModification::Update(
-              "fam", cbt::GcRule::Union(
-                         cbt::GcRule::MaxNumVersions(5),
-                         cbt::GcRule::MaxAge(std::chrono::hours(24 * 7))))});
+      admin.ModifyColumnFamilies(table->name(), {std::move(mod)});
   if (!updated_schema) {
     throw std::runtime_error(updated_schema.status().message());
   }
@@ -103,14 +128,17 @@ void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
 
   //! [drop all rows]
   std::cout << "Deleting all the rows in " << table_id << "\n";
-  google::cloud::Status status = admin.DropAllRows(table_id);
+  google::bigtable::admin::v2::DropRowRangeRequest drop_req;
+  drop_req.set_name(table->name());
+  drop_req.set_delete_all_data_from_table(true);
+  google::cloud::Status status = admin.DropRowRange(std::move(drop_req));
   if (!status.ok()) throw std::runtime_error(status.message());
   std::cout << "DONE\n";
   //! [drop all rows]
 
   //! [delete table]
   std::cout << "Deleting table:\n";
-  google::cloud::Status delete_status = admin.DeleteTable(table_id);
+  google::cloud::Status delete_status = admin.DeleteTable(table->name());
   if (!delete_status.ok()) throw std::runtime_error(delete_status.message());
   std::cout << "DONE\n";
   //! [delete table]
@@ -119,8 +147,9 @@ void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
 
-  if (!argv.empty()) throw google::cloud::bigtable::examples::Usage{"auto"};
+  if (!argv.empty()) throw examples::Usage{"auto"};
   if (!examples::RunAdminIntegrationTests()) return;
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
@@ -132,12 +161,11 @@ void RunAll(std::vector<std::string> const& argv) {
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
                                .value();
 
-  cbt::TableAdmin admin(cbt::MakeAdminClient(project_id), instance_id);
-
-  google::cloud::bigtable::testing::CleanupStaleTables(admin);
+  auto conn = cbta::MakeBigtableTableAdminConnection();
+  cbt::testing::CleanupStaleTables(conn, project_id, instance_id);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
+  auto table_id = cbt::testing::RandomTableId(generator);
 
   std::cout << "\nRunning the HelloWorldTableAdmin() example" << std::endl;
   HelloWorldTableAdmin({project_id, instance_id, table_id});

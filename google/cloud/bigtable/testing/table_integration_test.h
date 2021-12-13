@@ -19,7 +19,6 @@
 #include "google/cloud/bigtable/cell.h"
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include <gmock/gmock.h>
