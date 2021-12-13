@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
 #include "google/cloud/bigtable/testing/random_names.h"
+#include "google/cloud/project.h"
 #include "absl/strings/str_split.h"
 #include <regex>
 
@@ -73,7 +74,7 @@ Status CleanupStaleInstances(
   auto const re = std::regex(RandomInstanceIdRegex());
 
   auto admin = bigtable_admin::BigtableInstanceAdminClient(std::move(c));
-  auto instances = admin.ListInstances(InstanceName(project_id, "-"));
+  auto instances = admin.ListInstances(Project(project_id).FullName());
   if (!instances) return std::move(instances).status();
   for (auto const& i : instances->instances()) {
     std::vector<std::string> const components = absl::StrSplit(i.name(), '/');

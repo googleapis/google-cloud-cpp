@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/admin/mocks/mock_bigtable_instance_admin_connection.h"
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
 #include "google/cloud/bigtable/testing/random_names.h"
+#include "google/cloud/project.h"
 #include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
 
@@ -153,6 +154,7 @@ TEST(CleanupStaleResources, CleanupOldInstances) {
       MockBigtableInstanceAdminConnection;
   namespace btadmin = ::google::bigtable::admin::v2;
 
+  std::string const project_id = "test-project-id";
   auto const expired_tp =
       std::chrono::system_clock::now() - std::chrono::hours(72);
   DefaultPRNG generator;
@@ -161,12 +163,14 @@ TEST(CleanupStaleResources, CleanupOldInstances) {
   auto const id_2 = RandomInstanceId(generator, expired_tp);
   auto const id_3 = RandomInstanceId(generator, active_tp);
   auto const id_4 = RandomInstanceId(generator, active_tp);
+  auto const name_1 = InstanceName(project_id, id_1);
+  auto const name_2 = InstanceName(project_id, id_2);
 
-  std::string const project_id = "test-project-id";
   auto mock = std::make_shared<MockConnection>();
 
   EXPECT_CALL(*mock, ListInstances)
       .WillOnce([&](btadmin::ListInstancesRequest const& request) {
+        EXPECT_EQ(request.parent(), Project(project_id).FullName());
         btadmin::ListInstancesResponse response;
         for (auto const& id : {id_1, id_2, id_3, id_4}) {
           auto& instance = *response.add_instances();
@@ -174,10 +178,6 @@ TEST(CleanupStaleResources, CleanupOldInstances) {
         }
         return make_status_or(response);
       });
-
-  auto admin = bigtable_admin::BigtableInstanceAdminClient(mock);
-  auto const name_1 = InstanceName(project_id, id_1);
-  auto const name_2 = InstanceName(project_id, id_2);
 
   // Verify only `name_1` and `name_2` are deleted.
   EXPECT_CALL(*mock, DeleteInstance)
