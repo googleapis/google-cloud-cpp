@@ -39,6 +39,32 @@ include(CTest)
 # Export the version information for Bazel.
 include(CreateBazelConfig)
 
+# Create a header-only library for the mocks. We use a CMake `INTERFACE` library
+# for these, a regular library would not work on macOS (where the library needs
+# at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
+# that they need absolute paths for their sources.
+add_library(google_cloud_cpp_bigtable_mocks INTERFACE)
+target_sources(
+    google_cloud_cpp_bigtable_mocks
+    INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}/admin/mocks/mock_bigtable_instance_admin_connection.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/admin/mocks/mock_bigtable_table_admin_connection.h
+)
+target_link_libraries(
+    google_cloud_cpp_bigtable_mocks
+    INTERFACE google-cloud-cpp::bigtable GTest::gmock_main GTest::gmock
+              GTest::gtest)
+create_bazel_config(google_cloud_cpp_bigtable_mocks YEAR "2021")
+target_include_directories(
+    google_cloud_cpp_bigtable_mocks
+    INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+              $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+              $<INSTALL_INTERFACE:include>)
+target_compile_options(google_cloud_cpp_bigtable_mocks
+                       INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+add_library(google-cloud-cpp::bigtable_mocks ALIAS
+            google_cloud_cpp_bigtable_mocks)
+
 # the client library
 add_library(
     google_cloud_cpp_bigtable # cmake-format: sort
@@ -211,8 +237,6 @@ create_bazel_config(google_cloud_cpp_bigtable)
 if (BUILD_TESTING)
     add_library(
         bigtable_client_testing # cmake-format: sort
-        admin/mocks/mock_bigtable_instance_admin_connection.h
-        admin/mocks/mock_bigtable_table_admin_connection.h
         testing/cleanup_stale_resources.cc
         testing/cleanup_stale_resources.h
         testing/embedded_server_test_fixture.cc
@@ -240,6 +264,7 @@ if (BUILD_TESTING)
         bigtable_client_testing
         PUBLIC absl::memory
                google-cloud-cpp::bigtable
+               google-cloud-cpp::bigtable_mocks
                google-cloud-cpp::bigtable_protos
                google-cloud-cpp::common
                google-cloud-cpp::grpc_utils
@@ -396,8 +421,10 @@ install(
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
-google_cloud_cpp_install_headers(google_cloud_cpp_bigtable
-                                 include/google/cloud/bigtable)
+google_cloud_cpp_install_headers("google_cloud_cpp_bigtable"
+                                 "include/google/cloud/bigtable")
+google_cloud_cpp_install_headers("google_cloud_cpp_bigtable_mocks"
+                                 "include/google/cloud/bigtable")
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Bigtable C++ Client Library")

@@ -51,6 +51,24 @@ cc_library(
     ],
 )
 
+load(":google_cloud_cpp_bigtable_mocks.bzl", "google_cloud_cpp_bigtable_mocks_hdrs", "google_cloud_cpp_bigtable_mocks_srcs")
+
+cc_library(
+    name = "google_cloud_cpp_bigtable_mocks",
+    srcs = google_cloud_cpp_bigtable_mocks_srcs,
+    hdrs = google_cloud_cpp_bigtable_mocks_hdrs,
+    visibility = [
+        "//:__pkg__",
+        "//google/cloud/bigtable:__subpackages__",
+    ],
+    deps = [
+        ":bigtable_client_internal",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "@com_google_googletest//:gtest_main",
+    ],
+)
+
 load(":bigtable_client_testing.bzl", "bigtable_client_testing_hdrs", "bigtable_client_testing_srcs")
 
 cc_library(
@@ -59,6 +77,7 @@ cc_library(
     hdrs = bigtable_client_testing_hdrs,
     deps = [
         ":bigtable_client_internal",
+        ":google_cloud_cpp_bigtable_mocks",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
