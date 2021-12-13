@@ -15,8 +15,9 @@
 //! [all code]
 
 //! [bigtable includes] [START bigtable_hw_imports]
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/table_admin.h"
 //! [bigtable includes] [END bigtable_hw_imports]
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/testing/random_names.h"
@@ -40,22 +41,28 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
   // Create a namespace alias to make the code easier to read.
   //! [aliases]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::StatusOr;
   //! [aliases]
 
   // Connect to the Cloud Bigtable Admin API.
   //! [connect admin] [START bigtable_hw_connect]
-  cbt::TableAdmin table_admin(cbt::MakeAdminClient(project_id), instance_id);
+  cbta::BigtableTableAdminClient table_admin(
+      cbta::MakeBigtableTableAdminConnection());
   //! [connect admin] [END bigtable_hw_connect]
 
   //! [create table] [START bigtable_hw_create_table]
   // Define the desired schema for the Table.
-  cbt::GcRule gc_rule = cbt::GcRule::MaxNumVersions(1);
-  cbt::TableConfig schema({{"family", gc_rule}}, {});
+  google::bigtable::admin::v2::GcRule gc;
+  gc.set_max_num_versions(1);
+  google::bigtable::admin::v2::Table t;
+  auto& families = *t.mutable_column_families();
+  *families["family"].mutable_gc_rule() = std::move(gc);
 
   // Create a table.
-  StatusOr<google::bigtable::admin::v2::Table> returned_schema =
-      table_admin.CreateTable(table_id, schema);
+  std::string instance_name = cbt::InstanceName(project_id, instance_id);
+  StatusOr<google::bigtable::admin::v2::Table> schema =
+      table_admin.CreateTable(instance_name, table_id, std::move(t));
   //! [create table]
 
   // Create an object to access the Cloud Bigtable Data API.
@@ -124,7 +131,7 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
 
   // Delete the table
   //! [delete table] [START bigtable_hw_delete_table]
-  google::cloud::Status status = table_admin.DeleteTable(table_id);
+  google::cloud::Status status = table_admin.DeleteTable(table.table_name());
   if (!status.ok()) throw std::runtime_error(status.message());
   //! [delete table] [END bigtable_hw_delete_table]
 }
@@ -145,10 +152,8 @@ void RunAll(std::vector<std::string> const& argv) {
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
                                .value();
 
-  cbt::TableAdmin admin(cbt::MakeAdminClient(project_id), instance_id);
-
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
+  auto table_id = cbt::testing::RandomTableId(generator);
 
   std::cout << "\nRunning the BigtableHelloWorld() example" << std::endl;
   BigtableHelloWorld({project_id, instance_id, table_id});

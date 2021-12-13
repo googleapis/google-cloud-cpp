@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
 #include "google/cloud/bigtable/testing/random_names.h"
 //! [bigtable includes]
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/table_admin.h"
 //! [bigtable includes]
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -705,20 +706,25 @@ void ConfigureConnectionPoolSize(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1), argv.at(2));
 }
 
-void RunMutateExamples(google::cloud::bigtable::TableAdmin admin,
-                       google::cloud::internal::DefaultPRNG& generator) {
+void RunMutateExamples(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    google::cloud::internal::DefaultPRNG& generator,
+    std::string const& project_id, std::string const& instance_id) {
   namespace cbt = ::google::cloud::bigtable;
 
-  auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
-  auto schema = admin.CreateTable(
-      table_id,
-      cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)}}, {}));
+  // Create a table to run the tests on
+  auto table_id = cbt::testing::RandomTableId(generator);
+  google::bigtable::admin::v2::GcRule gc;
+  gc.set_max_num_versions(10);
+  google::bigtable::admin::v2::Table t;
+  auto& families = *t.mutable_column_families();
+  *families["fam"].mutable_gc_rule() = std::move(gc);
+  auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
+                                  table_id, std::move(t));
   if (!schema) throw std::runtime_error(schema.status().message());
 
-  google::cloud::bigtable::Table table(
-      google::cloud::bigtable::MakeDataClient(admin.project(),
-                                              admin.instance_id()),
-      table_id, cbt::AlwaysRetryMutationPolicy());
+  cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id,
+                   cbt::AlwaysRetryMutationPolicy());
 
   std::cout << "Running MutateInsertUpdateRows() example [1]" << std::endl;
   MutateInsertUpdateRows(table, {"row1", "fam:col1=value1.1",
@@ -727,25 +733,28 @@ void RunMutateExamples(google::cloud::bigtable::TableAdmin admin,
   MutateInsertUpdateRows(table, {"row2", "fam:col1=value2.1",
                                  "fam:col2=value2.2", "fam:col3=value2.3"});
 
-  admin.DeleteTable(table_id);
+  admin.DeleteTable(schema->name());
 }
 
-void RunWriteExamples(google::cloud::bigtable::TableAdmin admin,
-                      google::cloud::internal::DefaultPRNG& generator) {
+void RunWriteExamples(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    google::cloud::internal::DefaultPRNG& generator,
+    std::string const& project_id, std::string const& instance_id) {
   namespace cbt = ::google::cloud::bigtable;
 
+  // Create a table to run the tests on
   auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
-  auto schema = admin.CreateTable(
-      table_id, cbt::TableConfig(
-                    {{"stats_summary", cbt::GcRule::MaxNumVersions(11)}}, {}));
+  google::bigtable::admin::v2::GcRule gc;
+  gc.set_max_num_versions(11);
+  google::bigtable::admin::v2::Table t;
+  auto& families = *t.mutable_column_families();
+  *families["stats_summary"].mutable_gc_rule() = std::move(gc);
+  auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
+                                  table_id, std::move(t));
   if (!schema) throw std::runtime_error(schema.status().message());
 
-  // Some temporary variables to make the snippet below more readable.
-  auto const project_id = admin.project();
-  auto const instance_id = admin.instance_id();
-  google::cloud::bigtable::Table table(
-      google::cloud::bigtable::MakeDataClient(project_id, instance_id),
-      table_id, cbt::AlwaysRetryMutationPolicy());
+  cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id,
+                   cbt::AlwaysRetryMutationPolicy());
 
   std::cout << "Running WriteSimple() example" << std::endl;
   WriteSimple(table, {});
@@ -756,27 +765,32 @@ void RunWriteExamples(google::cloud::bigtable::TableAdmin admin,
   std::cout << "Running WriteConditionally() example" << std::endl;
   WriteConditionally(table, {});
 
-  admin.DeleteTable(table_id);
+  admin.DeleteTable(schema->name());
 }
 
-void RunDataExamples(google::cloud::bigtable::TableAdmin admin,
-                     google::cloud::internal::DefaultPRNG& generator) {
+void RunDataExamples(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    google::cloud::internal::DefaultPRNG& generator,
+    std::string const& project_id, std::string const& instance_id) {
   namespace cbt = ::google::cloud::bigtable;
 
-  auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
+  // Create a table to run the tests on
+  auto table_id = cbt::testing::RandomTableId(generator);
   std::cout << "Creating table " << table_id << std::endl;
-  auto schema = admin.CreateTable(
-      table_id,
-      cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)}}, {}));
+  google::bigtable::admin::v2::GcRule gc;
+  gc.set_max_num_versions(10);
+  google::bigtable::admin::v2::Table t;
+  auto& families = *t.mutable_column_families();
+  *families["fam"].mutable_gc_rule() = std::move(gc);
+  auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
+                                  table_id, std::move(t));
   if (!schema) throw std::runtime_error(schema.status().message());
 
-  google::cloud::bigtable::Table table(
-      google::cloud::bigtable::MakeDataClient(admin.project(),
-                                              admin.instance_id()),
-      table_id, cbt::AlwaysRetryMutationPolicy());
+  cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id,
+                   cbt::AlwaysRetryMutationPolicy());
 
   std::cout << "\nRunning ConfigureConnectionPoolSize()" << std::endl;
-  ConfigureConnectionPoolSize({admin.project(), admin.instance_id(), table_id});
+  ConfigureConnectionPoolSize({project_id, instance_id, table_id});
 
   std::cout << "\nPreparing data for MutateDeleteColumns()" << std::endl;
   MutateInsertUpdateRows(
@@ -854,14 +868,15 @@ void RunDataExamples(google::cloud::bigtable::TableAdmin admin,
   std::cout << "Running ReadModifyWrite() example [3]" << std::endl;
   ReadModifyWrite(table, {"read-modify-write"});
 
-  admin.DeleteTable(table_id);
+  admin.DeleteTable(schema->name());
 }
 
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
 
-  if (!argv.empty()) throw google::cloud::bigtable::examples::Usage{"auto"};
+  if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
       "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
@@ -872,18 +887,18 @@ void RunAll(std::vector<std::string> const& argv) {
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
                                .value();
 
-  cbt::TableAdmin admin(cbt::MakeAdminClient(project_id), instance_id);
-
+  auto conn = cbta::MakeBigtableTableAdminConnection();
   // If a previous run of these samples crashes before cleaning up there may be
   // old tables left over. As there are quotas on the total number of tables we
   // remove stale tables after 48 hours.
-  google::cloud::bigtable::testing::CleanupStaleTables(admin);
+  cbt::testing::CleanupStaleTables(conn, project_id, instance_id);
+  auto admin = cbta::BigtableTableAdminClient(std::move(conn));
 
   // Initialize a generator with some amount of entropy.
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  RunMutateExamples(admin, generator);
-  RunWriteExamples(admin, generator);
-  RunDataExamples(admin, generator);
+  RunMutateExamples(admin, generator, project_id, instance_id);
+  RunWriteExamples(admin, generator, project_id, instance_id);
+  RunDataExamples(admin, generator, project_id, instance_id);
 }
 
 }  // anonymous namespace

@@ -32,7 +32,7 @@ To make the example less verbose we define some aliases:
 
 @snippet bigtable_hello_instance_admin.cc aliases
 
-## Connect to the Cloud Bigtable instance admin endpoint.
+## Connect to the Cloud Bigtable Instance Admin Endpoint.
 
 Create an object of type [bigtable::InstanceAdmin][InstanceAdmin] to obtain
 information about *Instances*, *Clusters*, *Application Profiles*, and to change

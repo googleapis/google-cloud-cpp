@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_client.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -79,8 +80,6 @@ protobuf::FieldMask Mask(std::string const& path) {
   return mask;
 }
 
-/// @test Verify that `bigtable::TableAdmin` Backup CRUD operations work as
-/// expected.
 TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   auto const table_id = bigtable::testing::TableTestEnvironment::table_id();
   auto const instance_name =

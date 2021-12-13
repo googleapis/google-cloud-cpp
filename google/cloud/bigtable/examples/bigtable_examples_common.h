@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXAMPLES_BIGTABLE_EXAMPLES_COMMON_H
 
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_client.h"
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <chrono>
@@ -62,8 +62,9 @@ google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
     std::string const& name, std::vector<std::string> const& args,
     TableCommandType const& function);
 
-using TableAdminCommandType = std::function<void(
-    google::cloud::bigtable::TableAdmin, std::vector<std::string>)>;
+using TableAdminCommandType =
+    std::function<void(google::cloud::bigtable_admin::BigtableTableAdminClient,
+                       std::vector<std::string>)>;
 
 Commands::value_type MakeCommandEntry(std::string const& name,
                                       std::vector<std::string> const& args,

@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/benchmarks/mutation_batcher_throughput_options.h"
 #include "google/cloud/bigtable/mutation_batcher.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/getenv.h"
@@ -136,6 +137,7 @@ int main(int argc, char* argv[]) {
   if (options->exit_after_parse) return 0;
 
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::CompletionQueue;
   using ::google::cloud::future;
   using ::google::cloud::Options;
@@ -145,8 +147,8 @@ int main(int argc, char* argv[]) {
   using ::google::cloud::internal::AutomaticallyCreatedBackgroundThreads;
   using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
 
-  cbt::TableAdmin admin(cbt::MakeAdminClient(options->project_id),
-                        options->instance_id);
+  auto admin =
+      cbta::BigtableTableAdminClient(cbta::MakeBigtableTableAdminConnection());
 
   int key_width = 0;
   for (auto i = options->mutation_count - 1; i != 0; i /= 10) ++key_width;
@@ -157,25 +159,33 @@ int main(int argc, char* argv[]) {
     auto generator = google::cloud::internal::MakeDefaultPRNG();
     table_id = RandomTableId(generator);
 
+    google::bigtable::admin::v2::GcRule gc;
+    gc.set_max_num_versions(10);
+
+    google::bigtable::admin::v2::CreateTableRequest r;
+    r.set_parent(cbt::InstanceName(options->project_id, options->instance_id));
+    r.set_table_id(table_id);
     // Provide initial splits to the table
-    std::vector<std::string> splits;
     for (auto i = 0; i != options->shard_count; ++i) {
       auto row_index = options->mutation_count * i / options->shard_count;
-      splits.emplace_back(MakeRowString(key_width, row_index));
+      r.add_initial_splits()->set_key(MakeRowString(key_width, row_index));
     }
+    auto& families = *r.mutable_table()->mutable_column_families();
+    *families[options->column_family].mutable_gc_rule() = std::move(gc);
 
     std::cout << "# Creating Table\n";
-    auto status = admin.CreateTable(
-        table_id, cbt::TableConfig({{options->column_family,
-                                     cbt::GcRule::MaxNumVersions(10)}},
-                                   splits));
-    if (!status) {
-      std::cout << status.status() << std::endl;
+    auto table = admin.CreateTable(std::move(r));
+    if (!table) {
+      std::cout << table.status() << std::endl;
       return 1;
     }
     std::cout << "#\n";
   } else {
-    auto table = admin.GetTable(table_id, cbt::TableAdmin::NAME_ONLY);
+    google::bigtable::admin::v2::GetTableRequest r;
+    r.set_name(
+        cbt::TableName(options->project_id, options->instance_id, table_id));
+    r.set_view(google::bigtable::admin::v2::Table_View_NAME_ONLY);
+    auto table = admin.GetTable(std::move(r));
     if (!table) {
       std::cout << "Error trying to get Table " << table_id << ":\n"
                 << table.status() << std::endl;
@@ -301,7 +311,8 @@ int main(int argc, char* argv[]) {
   // If we created a table, delete it.
   if (options->table_id.empty()) {
     std::cout << "#\n# Deleting Table\n";
-    auto status = admin.DeleteTable(table_id);
+    auto status = admin.DeleteTable(
+        cbt::TableName(options->project_id, options->instance_id, table_id));
     if (!status.ok()) {
       std::cout << status << std::endl;
       return -1;

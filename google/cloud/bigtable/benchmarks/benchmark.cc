@@ -13,8 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/benchmarks/benchmark.h"
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/benchmarks/random_mutation.h"
-#include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/getenv.h"
 #include <future>
@@ -97,24 +98,34 @@ Benchmark::~Benchmark() {
 
 std::string Benchmark::CreateTable() {
   // Create the table, with an initial split.
-  bigtable::TableAdmin admin(
-      bigtable::MakeAdminClient(options_.project_id, opts_),
-      options_.instance_id);
+  auto admin_opts = opts_;
+  admin_opts.set<EndpointOption>(opts_.get<AdminEndpointOption>());
+  auto admin = bigtable_admin::BigtableTableAdminClient(
+      bigtable_admin::MakeBigtableTableAdminConnection(admin_opts));
 
-  std::vector<std::string> splits{"user0", "user1", "user2", "user3", "user4",
-                                  "user5", "user6", "user7", "user8", "user9"};
-  (void)admin.CreateTable(
-      options_.table_id,
-      bigtable::TableConfig(
-          {{kColumnFamily, bigtable::GcRule::MaxNumVersions(1)}}, splits));
+  google::bigtable::admin::v2::GcRule gc;
+  gc.set_max_num_versions(1);
+
+  google::bigtable::admin::v2::CreateTableRequest r;
+  r.set_parent(InstanceName(options_.project_id, options_.instance_id));
+  r.set_table_id(options_.table_id);
+  for (auto i = 0; i != 10; i++) {
+    r.add_initial_splits()->set_key("user" + std::to_string(i));
+  }
+  auto& families = *r.mutable_table()->mutable_column_families();
+  *families[kColumnFamily].mutable_gc_rule() = std::move(gc);
+
+  (void)admin.CreateTable(std::move(r));
   return options_.table_id;
 }
 
 void Benchmark::DeleteTable() {
-  bigtable::TableAdmin admin(
-      bigtable::MakeAdminClient(options_.project_id, opts_),
-      options_.instance_id);
-  auto status = admin.DeleteTable(options_.table_id);
+  auto admin_opts = opts_;
+  admin_opts.set<EndpointOption>(opts_.get<AdminEndpointOption>());
+  auto admin = bigtable_admin::BigtableTableAdminClient(
+      bigtable_admin::MakeBigtableTableAdminConnection(admin_opts));
+  auto status = admin.DeleteTable(
+      TableName(options_.project_id, options_.instance_id, options_.table_id));
   if (!status.ok()) {
     std::cerr << "Failed to delete table: " << status
               << ". Continuing anyway.\n";

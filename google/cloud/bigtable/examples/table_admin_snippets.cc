@@ -12,78 +12,112 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/crash_handler.h"
+#include "google/bigtable/admin/v2/bigtable_table_admin.pb.h"
 #include <sstream>
 
 namespace {
 
 using ::google::cloud::bigtable::examples::Usage;
 
-void CreateTable(google::cloud::bigtable::TableAdmin const& admin,
+void CreateTable(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
                  std::vector<std::string> const& argv) {
   //! [create table] [START bigtable_create_table]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id) {
-    StatusOr<google::bigtable::admin::v2::Table> schema = admin.CreateTable(
-        table_id,
-        cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)},
-                          {"foo", cbt::GcRule::MaxAge(std::chrono::hours(72))}},
-                         {}));
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id) {
+    std::string instance_name = cbt::InstanceName(project_id, instance_id);
+    // Example garbage collection rule.
+    google::bigtable::admin::v2::GcRule gc;
+    gc.set_max_num_versions(10);
+
+    google::bigtable::admin::v2::Table t;
+    auto& families = *t.mutable_column_families();
+    *families["fam"].mutable_gc_rule() = std::move(gc);
+
+    StatusOr<google::bigtable::admin::v2::Table> schema =
+        admin.CreateTable(instance_name, table_id, std::move(t));
     if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Table successfully created: " << schema->DebugString()
               << "\n";
   }
   //! [create table] [END bigtable_create_table]
-  (std::move(admin), argv.at(0));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void ListTables(google::cloud::bigtable::TableAdmin const& admin,
-                std::vector<std::string> const&) {
+void ListTables(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+                std::vector<std::string> const& argv) {
   //! [list tables] [START bigtable_list_tables]
   namespace cbt = ::google::cloud::bigtable;
-  using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin) {
-    StatusOr<std::vector<google::bigtable::admin::v2::Table>> tables =
-        admin.ListTables(cbt::TableAdmin::NAME_ONLY);
+  namespace cbta = ::google::cloud::bigtable_admin;
+  using ::google::cloud::StreamRange;
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id) {
+    std::string instance_name = cbt::InstanceName(project_id, instance_id);
 
-    if (!tables) throw std::runtime_error(tables.status().message());
-    for (auto const& table : *tables) {
-      std::cout << table.name() << "\n";
+    google::bigtable::admin::v2::ListTablesRequest r;
+    r.set_parent(instance_name);
+    r.set_view(google::bigtable::admin::v2::Table::NAME_ONLY);
+
+    StreamRange<google::bigtable::admin::v2::Table> tables =
+        admin.ListTables(std::move(r));
+    for (auto const& table : tables) {
+      if (!table) throw std::runtime_error(table.status().message());
+      std::cout << table->name() << "\n";
     }
   }
   //! [list tables] [END bigtable_list_tables]
-  (std::move(admin));
+  (std::move(admin), argv.at(0), argv.at(1));
 }
 
-void GetTable(google::cloud::bigtable::TableAdmin const& admin,
+void GetTable(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
               std::vector<std::string> const& argv) {
   //! [get table] [START bigtable_get_table_metadata]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id) {
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+
+    google::bigtable::admin::v2::GetTableRequest r;
+    r.set_name(table_name);
+    r.set_view(google::bigtable::admin::v2::Table::FULL);
+
     StatusOr<google::bigtable::admin::v2::Table> table =
-        admin.GetTable(table_id, cbt::TableAdmin::FULL);
+        admin.GetTable(std::move(r));
     if (!table) throw std::runtime_error(table.status().message());
     std::cout << table->name() << " details=\n" << table->DebugString() << "\n";
   }
   //! [get table] [END bigtable_get_table_metadata]
-  (std::move(admin), argv.at(0));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void CheckTableExists(google::cloud::bigtable::TableAdmin const& admin,
-                      std::vector<std::string> const& argv) {
+void CheckTableExists(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    std::vector<std::string> const& argv) {
   //! [START bigtable_check_table_exists]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id) {
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+
+    google::bigtable::admin::v2::GetTableRequest r;
+    r.set_name(table_name);
+    r.set_view(google::bigtable::admin::v2::Table::NAME_ONLY);
+
     StatusOr<google::bigtable::admin::v2::Table> table =
-        admin.GetTable(table_id, cbt::TableAdmin::NAME_ONLY);
+        admin.GetTable(std::move(r));
     if (!table) {
       if (table.status().code() == google::cloud::StatusCode::kNotFound) {
         std::cout << "Table " << table_id << " does not exist\n";
@@ -95,194 +129,304 @@ void CheckTableExists(google::cloud::bigtable::TableAdmin const& admin,
     std::cout << "Table " << table_id << " was found\n";
   }
   //! [END bigtable_check_table_exists]
-  (std::move(admin), argv.at(0));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void GetOrCreateTable(google::cloud::bigtable::TableAdmin const& admin,
-                      std::vector<std::string> const& argv) {
+void GetOrCreateTable(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    std::vector<std::string> const& argv) {
   // [START bigtable_get_or_create_table]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id) {
-    StatusOr<google::bigtable::admin::v2::Table> table =
-        admin.GetTable(table_id, cbt::TableAdmin::FULL);
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id) {
+    std::string instance_name = cbt::InstanceName(project_id, instance_id);
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+
+    google::bigtable::admin::v2::GetTableRequest r;
+    r.set_name(table_name);
+    r.set_view(google::bigtable::admin::v2::Table::FULL);
+
+    StatusOr<google::bigtable::admin::v2::Table> table = admin.GetTable(r);
     if (!table &&
         table.status().code() == google::cloud::StatusCode::kNotFound) {
       // The table does not exist, try to create the table.
-      table = admin.CreateTable(
-          table_id,
-          cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)}}, {}));
+      table = admin.CreateTable(instance_name, table_id, {});
       if (!table) throw std::runtime_error(table.status().message());
       // The schema returned by a `CreateTable()` request does not include all
       // the metadata for a table, we need to explicitly request the rest:
-      table = admin.GetTable(table_id, cbt::TableAdmin::FULL);
+      table = admin.GetTable(std::move(r));
     }
     if (!table) throw std::runtime_error(table.status().message());
     std::cout << "Table metadata: " << table->DebugString() << "\n";
   }
   // [END bigtable_get_or_create_table]
-  (std::move(admin), argv.at(0));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void DeleteTable(google::cloud::bigtable::TableAdmin const& admin,
+void DeleteTable(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
                  std::vector<std::string> const& argv) {
   //! [delete table] [START bigtable_delete_table]
   namespace cbt = ::google::cloud::bigtable;
-  [](cbt::TableAdmin admin, std::string const& table_id) {
-    google::cloud::Status status = admin.DeleteTable(table_id);
+  namespace cbta = ::google::cloud::bigtable_admin;
+  using ::google::cloud::Status;
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+    Status status = admin.DeleteTable(table_name);
     if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Table successfully deleted\n";
   }
   //! [delete table] [END bigtable_delete_table]
-  (std::move(admin), argv.at(0));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void ModifyTable(google::cloud::bigtable::TableAdmin const& admin,
+void ModifyTable(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
                  std::vector<std::string> const& argv) {
   //! [modify table]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
+  using ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id) {
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+    auto constexpr kSecondsPerDay =
+        std::chrono::seconds(std::chrono::hours(24)).count();
+
+    // Drop
+    ModifyColumnFamiliesRequest::Modification m1;
+    m1.set_id("foo");
+    m1.set_drop(true);
+
+    // Update
+    ModifyColumnFamiliesRequest::Modification m2;
+    m2.set_id("fam");
+    google::bigtable::admin::v2::GcRule gc2;
+    gc2.set_max_num_versions(5);
+    *m2.mutable_update()->mutable_gc_rule() = std::move(gc2);
+
+    // Create
+    ModifyColumnFamiliesRequest::Modification m3;
+    m3.set_id("fam");
+    google::bigtable::admin::v2::GcRule gc3;
+    gc3.mutable_max_age()->set_seconds(7 * kSecondsPerDay);
+    *m3.mutable_update()->mutable_gc_rule() = std::move(gc3);
+
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(
-            table_id,
-            {cbt::ColumnFamilyModification::Drop("foo"),
-             cbt::ColumnFamilyModification::Update(
-                 "fam", cbt::GcRule::Union(
-                            cbt::GcRule::MaxNumVersions(5),
-                            cbt::GcRule::MaxAge(std::chrono::hours(24 * 7)))),
-             cbt::ColumnFamilyModification::Create(
-                 "bar", cbt::GcRule::Intersection(
-                            cbt::GcRule::MaxNumVersions(3),
-                            cbt::GcRule::MaxAge(std::chrono::hours(72))))});
+            table_name, {std::move(m1), std::move(m2), std::move(m3)});
 
     if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   //! [modify table]
-  (std::move(admin), argv.at(0));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void CreateMaxAgeFamily(google::cloud::bigtable::TableAdmin const& admin,
-                        std::vector<std::string> const& argv) {
+void CreateMaxAgeFamily(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    std::vector<std::string> const& argv) {
   // [START bigtable_create_family_gc_max_age]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
+  using ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id,
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id,
      std::string const& family_name) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+    auto constexpr kSecondsPerDay =
+        std::chrono::seconds(std::chrono::hours(24)).count();
+
+    ModifyColumnFamiliesRequest::Modification mod;
+    mod.set_id(family_name);
+    google::bigtable::admin::v2::GcRule gc;
+    gc.mutable_max_age()->set_seconds(5 * kSecondsPerDay);
+    *mod.mutable_create()->mutable_gc_rule() = std::move(gc);
+
     StatusOr<google::bigtable::admin::v2::Table> schema =
-        admin.ModifyColumnFamilies(
-            table_id,
-            {cbt::ColumnFamilyModification::Create(
-                family_name, cbt::GcRule::MaxAge(std::chrono::hours(5 * 24)))});
+        admin.ModifyColumnFamilies(table_name, {std::move(mod)});
 
     if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_create_family_gc_max_age]
-  (std::move(admin), argv.at(0), argv.at(1));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void CreateMaxVersionsFamily(google::cloud::bigtable::TableAdmin const& admin,
-                             std::vector<std::string> const& argv) {
+void CreateMaxVersionsFamily(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    std::vector<std::string> const& argv) {
   // [START bigtable_create_family_gc_max_versions]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
+  using ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id,
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id,
      std::string const& family_name) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+
+    ModifyColumnFamiliesRequest::Modification mod;
+    mod.set_id(family_name);
+    google::bigtable::admin::v2::GcRule gc;
+    gc.set_max_num_versions(2);
+    *mod.mutable_create()->mutable_gc_rule() = std::move(gc);
+
     StatusOr<google::bigtable::admin::v2::Table> schema =
-        admin.ModifyColumnFamilies(
-            table_id, {cbt::ColumnFamilyModification::Create(
-                          family_name, cbt::GcRule::MaxNumVersions(2))});
+        admin.ModifyColumnFamilies(table_name, {std::move(mod)});
 
     if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_create_family_gc_max_versions]
-  (std::move(admin), argv.at(0), argv.at(1));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void CreateUnionFamily(google::cloud::bigtable::TableAdmin const& admin,
-                       std::vector<std::string> const& argv) {
+void CreateUnionFamily(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    std::vector<std::string> const& argv) {
   // [START bigtable_create_family_gc_union]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
+  using ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id,
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id,
      std::string const& family_name) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+    auto constexpr kSecondsPerDay =
+        std::chrono::seconds(std::chrono::hours(24)).count();
+
+    google::bigtable::admin::v2::GcRule gc1;
+    gc1.set_max_num_versions(1);
+
+    google::bigtable::admin::v2::GcRule gc2;
+    gc2.mutable_max_age()->set_seconds(5 * kSecondsPerDay);
+
+    google::bigtable::admin::v2::GcRule gc_union;
+    *gc_union.mutable_union_()->add_rules() = std::move(gc1);
+    *gc_union.mutable_union_()->add_rules() = std::move(gc2);
+
+    ModifyColumnFamiliesRequest::Modification mod;
+    mod.set_id(family_name);
+    *mod.mutable_create()->mutable_gc_rule() = std::move(gc_union);
+
     StatusOr<google::bigtable::admin::v2::Table> schema =
-        admin.ModifyColumnFamilies(
-            table_id,
-            {cbt::ColumnFamilyModification::Create(
-                family_name,
-                cbt::GcRule::Union(
-                    cbt::GcRule::MaxNumVersions(1),
-                    cbt::GcRule::MaxAge(5 * std::chrono::hours(24))))});
+        admin.ModifyColumnFamilies(table_name, {std::move(mod)});
 
     if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_create_family_gc_union]
-  (std::move(admin), argv.at(0), argv.at(1));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void CreateIntersectionFamily(google::cloud::bigtable::TableAdmin const& admin,
-                              std::vector<std::string> const& argv) {
+void CreateIntersectionFamily(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    std::vector<std::string> const& argv) {
   // [START bigtable_create_family_gc_intersection]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
+  using ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id,
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id,
      std::string const& family_name) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+    auto constexpr kSecondsPerDay =
+        std::chrono::seconds(std::chrono::hours(24)).count();
+
+    google::bigtable::admin::v2::GcRule gc1;
+    gc1.set_max_num_versions(1);
+
+    google::bigtable::admin::v2::GcRule gc2;
+    gc2.mutable_max_age()->set_seconds(5 * kSecondsPerDay);
+
+    google::bigtable::admin::v2::GcRule gc_intersection;
+    *gc_intersection.mutable_intersection()->add_rules() = std::move(gc1);
+    *gc_intersection.mutable_intersection()->add_rules() = std::move(gc2);
+
+    ModifyColumnFamiliesRequest::Modification mod;
+    mod.set_id(family_name);
+    *mod.mutable_create()->mutable_gc_rule() = std::move(gc_intersection);
+
     StatusOr<google::bigtable::admin::v2::Table> schema =
-        admin.ModifyColumnFamilies(
-            table_id,
-            {cbt::ColumnFamilyModification::Create(
-                family_name,
-                cbt::GcRule::Intersection(
-                    cbt::GcRule::MaxNumVersions(1),
-                    cbt::GcRule::MaxAge(5 * std::chrono::hours(24))))});
+        admin.ModifyColumnFamilies(table_name, {std::move(mod)});
 
     if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_create_family_gc_intersection]
-  (std::move(admin), argv.at(0), argv.at(1));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void CreateNestedFamily(google::cloud::bigtable::TableAdmin const& admin,
-                        std::vector<std::string> const& argv) {
+void CreateNestedFamily(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    std::vector<std::string> const& argv) {
   // [START bigtable_create_family_gc_nested]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
+  using ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id,
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id,
      std::string const& family_name) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+    auto constexpr kSecondsPerDay =
+        std::chrono::seconds(std::chrono::hours(24)).count();
+
+    google::bigtable::admin::v2::GcRule gc1;
+    gc1.set_max_num_versions(10);
+
+    google::bigtable::admin::v2::GcRule gc2_1;
+    gc2_1.set_max_num_versions(1);
+    google::bigtable::admin::v2::GcRule gc2_2;
+    gc2_2.mutable_max_age()->set_seconds(5 * kSecondsPerDay);
+
+    google::bigtable::admin::v2::GcRule gc2;
+    *gc2.mutable_intersection()->add_rules() = std::move(gc2_1);
+    *gc2.mutable_intersection()->add_rules() = std::move(gc2_2);
+
+    google::bigtable::admin::v2::GcRule gc;
+    *gc.mutable_union_()->add_rules() = std::move(gc1);
+    *gc.mutable_union_()->add_rules() = std::move(gc2);
+
+    ModifyColumnFamiliesRequest::Modification mod;
+    mod.set_id(family_name);
+    *mod.mutable_create()->mutable_gc_rule() = std::move(gc);
+
     StatusOr<google::bigtable::admin::v2::Table> schema =
-        admin.ModifyColumnFamilies(
-            table_id,
-            {cbt::ColumnFamilyModification::Create(
-                family_name,
-                cbt::GcRule::Union(
-                    cbt::GcRule::MaxNumVersions(10),
-                    cbt::GcRule::Intersection(
-                        cbt::GcRule::MaxNumVersions(1),
-                        cbt::GcRule::MaxAge(5 * std::chrono::hours(24)))))});
+        admin.ModifyColumnFamilies(table_name, {std::move(mod)});
 
     if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_create_family_gc_nested]
-  (std::move(admin), argv.at(0), argv.at(1));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void GetFamilyMetadata(google::cloud::bigtable::TableAdmin const& admin,
-                       std::vector<std::string> const& argv) {
+void GetFamilyMetadata(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    std::vector<std::string> const& argv) {
   // [START bigtable_get_family_metadata]
   // [START bigtable_get_family]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id,
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id,
      std::string const& family_name) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+
+    google::bigtable::admin::v2::GetTableRequest r;
+    r.set_name(table_name);
+    r.set_view(google::bigtable::admin::v2::Table::FULL);
+
     StatusOr<google::bigtable::admin::v2::Table> schema =
-        admin.GetTable(table_id, cbt::TableAdmin::FULL);
+        admin.GetTable(std::move(r));
 
     if (!schema) throw std::runtime_error(schema.status().message());
     auto pos = schema->column_families().find(family_name);
@@ -295,28 +439,40 @@ void GetFamilyMetadata(google::cloud::bigtable::TableAdmin const& admin,
   }
   // [END bigtable_get_family]
   // [END bigtable_get_family_metadata]
-  (std::move(admin), argv.at(0), argv.at(1));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void GetOrCreateFamily(google::cloud::bigtable::TableAdmin const& admin,
-                       std::vector<std::string> const& argv) {
+void GetOrCreateFamily(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    std::vector<std::string> const& argv) {
   // [START bigtable_get_or_create_family]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
+  using ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id,
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id,
      std::string const& family_name) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+
+    google::bigtable::admin::v2::GetTableRequest r;
+    r.set_name(table_name);
+    r.set_view(google::bigtable::admin::v2::Table::FULL);
+
     StatusOr<google::bigtable::admin::v2::Table> schema =
-        admin.GetTable(table_id, cbt::TableAdmin::FULL);
+        admin.GetTable(std::move(r));
 
     if (!schema) throw std::runtime_error(schema.status().message());
     auto pos = schema->column_families().find(family_name);
     if (pos == schema->column_families().end()) {
       // Try to create the column family instead:
-      auto modified = admin.ModifyColumnFamilies(
-          table_id,
-          {cbt::ColumnFamilyModification::Create(
-              family_name, cbt::GcRule::MaxAge(std::chrono::hours(5 * 24)))});
+      ModifyColumnFamiliesRequest::Modification mod;
+      mod.set_id(family_name);
+      google::bigtable::admin::v2::GcRule gc;
+      gc.set_max_num_versions(5);
+      *mod.mutable_create()->mutable_gc_rule() = std::move(gc);
 
+      auto modified = admin.ModifyColumnFamilies(table_name, {std::move(mod)});
       if (!modified) throw std::runtime_error(schema.status().message());
       schema = *std::move(modified);
       pos = schema->column_families().find(family_name);
@@ -331,36 +487,54 @@ void GetOrCreateFamily(google::cloud::bigtable::TableAdmin const& admin,
               << "\nColumn family details: " << family.DebugString() << "\n";
   }
   // [END bigtable_get_or_create_family]
-  (std::move(admin), argv.at(0), argv.at(1));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void DeleteColumnFamily(google::cloud::bigtable::TableAdmin const& admin,
-                        std::vector<std::string> const& argv) {
+void DeleteColumnFamily(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    std::vector<std::string> const& argv) {
   // [START bigtable_delete_family]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
+  using ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id,
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id,
      std::string const& family_name) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+
+    ModifyColumnFamiliesRequest::Modification mod;
+    mod.set_id(family_name);
+    mod.set_drop(true);
+
     StatusOr<google::bigtable::admin::v2::Table> schema =
-        admin.ModifyColumnFamilies(
-            table_id, {cbt::ColumnFamilyModification::Drop(family_name)});
+        admin.ModifyColumnFamilies(table_name, {std::move(mod)});
 
     if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_delete_family]
-  (std::move(admin), argv.at(0), argv.at(1));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void CheckFamilyExists(google::cloud::bigtable::TableAdmin const& admin,
-                       std::vector<std::string> const& argv) {
+void CheckFamilyExists(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    std::vector<std::string> const& argv) {
   // [START bigtable_check_family_exists]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id,
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id,
      std::string const& family_name) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+
+    google::bigtable::admin::v2::GetTableRequest r;
+    r.set_name(table_name);
+    r.set_view(google::bigtable::admin::v2::Table::FULL);
+
     StatusOr<google::bigtable::admin::v2::Table> schema =
-        admin.GetTable(table_id, cbt::TableAdmin::FULL);
+        admin.GetTable(std::move(r));
 
     if (!schema) throw std::runtime_error(schema.status().message());
     auto pos = schema->column_families().find(family_name);
@@ -371,17 +545,26 @@ void CheckFamilyExists(google::cloud::bigtable::TableAdmin const& admin,
     std::cout << "The column family <" << family_name << "> does exist\n";
   }
   // [END bigtable_check_family_exists]
-  (std::move(admin), argv.at(0), argv.at(1));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void ListColumnFamilies(google::cloud::bigtable::TableAdmin const& admin,
-                        std::vector<std::string> const& argv) {
+void ListColumnFamilies(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    std::vector<std::string> const& argv) {
   // [START bigtable_list_column_families]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id) {
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+
+    google::bigtable::admin::v2::GetTableRequest r;
+    r.set_name(table_name);
+    r.set_view(google::bigtable::admin::v2::Table::FULL);
+
     StatusOr<google::bigtable::admin::v2::Table> schema =
-        admin.GetTable(table_id, cbt::TableAdmin::FULL);
+        admin.GetTable(std::move(r));
 
     if (!schema) throw std::runtime_error(schema.status().message());
     for (auto const& kv : schema->column_families()) {
@@ -392,62 +575,95 @@ void ListColumnFamilies(google::cloud::bigtable::TableAdmin const& admin,
     }
   }
   // [END bigtable_list_column_families]
-  (std::move(admin), argv.at(0));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void UpdateGcRule(google::cloud::bigtable::TableAdmin const& admin,
+void UpdateGcRule(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
                   std::vector<std::string> const& argv) {
   // [START bigtable_update_gc_rule]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
+  using ::google::bigtable::admin::v2::ModifyColumnFamiliesRequest;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id,
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id,
      std::string const& family_name) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+
+    ModifyColumnFamiliesRequest::Modification mod;
+    mod.set_id(family_name);
+    google::bigtable::admin::v2::GcRule gc;
+    gc.set_max_num_versions(1);
+    *mod.mutable_update()->mutable_gc_rule() = std::move(gc);
+
     StatusOr<google::bigtable::admin::v2::Table> schema =
-        admin.ModifyColumnFamilies(
-            table_id, {cbt::ColumnFamilyModification::Update(
-                          family_name, cbt::GcRule::MaxNumVersions(1))});
+        admin.ModifyColumnFamilies(table_name, {std::move(mod)});
 
     if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_update_gc_rule]
-  (std::move(admin), argv.at(0), argv.at(1));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void DropAllRows(google::cloud::bigtable::TableAdmin const& admin,
+void DropAllRows(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
                  std::vector<std::string> const& argv) {
   //! [drop all rows]
   // [START bigtable_truncate_table]
   // [START bigtable_delete_rows]
   namespace cbt = ::google::cloud::bigtable;
-  [](cbt::TableAdmin admin, std::string const& table_id) {
-    google::cloud::Status status = admin.DropAllRows(table_id);
+  namespace cbta = ::google::cloud::bigtable_admin;
+  using ::google::cloud::Status;
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+
+    google::bigtable::admin::v2::DropRowRangeRequest r;
+    r.set_name(table_name);
+    r.set_delete_all_data_from_table(true);
+
+    Status status = admin.DropRowRange(std::move(r));
     if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "All rows successfully deleted\n";
   }
   // [END bigtable_delete_rows]
   // [END bigtable_truncate_table]
   //! [drop all rows]
-  (std::move(admin), argv.at(0));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void DropRowsByPrefix(google::cloud::bigtable::TableAdmin const& admin,
-                      std::vector<std::string> const& argv) {
+void DropRowsByPrefix(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    std::vector<std::string> const& argv) {
   //! [drop rows by prefix] [START bigtable_delete_rows_prefix]
   namespace cbt = ::google::cloud::bigtable;
-  [](cbt::TableAdmin admin, std::string const& table_id,
+  namespace cbta = ::google::cloud::bigtable_admin;
+  using ::google::cloud::Status;
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id,
      std::string const& prefix) {
-    google::cloud::Status status = admin.DropRowsByPrefix(table_id, prefix);
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+
+    google::bigtable::admin::v2::DropRowRangeRequest r;
+    r.set_name(table_name);
+    r.set_row_key_prefix(prefix);
+
+    Status status = admin.DropRowRange(std::move(r));
     if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "All rows starting with " << prefix
               << " successfully deleted\n";
   }
   //! [drop rows by prefix] [END bigtable_delete_rows_prefix]
-  (std::move(admin), argv.at(0), argv.at(1));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin const& admin,
-                             std::vector<std::string> const& argv) {
+// TODO(#7732) - update this sample to use the helper method
+void WaitForConsistencyCheck(
+    google::cloud::bigtable_admin::BigtableTableAdminClient const&,
+    std::vector<std::string> const& argv) {
+  auto old_admin = google::cloud::bigtable::TableAdmin(
+      google::cloud::bigtable::MakeAdminClient(argv.at(0)), argv.at(1));
+
   //! [wait for consistency check]
   namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::future;
@@ -460,7 +676,7 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin const& admin,
     }
     future<StatusOr<cbt::Consistency>> consistent_future =
         admin.WaitForConsistency(table_id, *consistency_token);
-    auto final = consistent_future.then(
+    future<void> fut = consistent_future.then(
         [&consistency_token](future<StatusOr<cbt::Consistency>> f) {
           auto is_consistent = f.get();
           if (!is_consistent) {
@@ -475,23 +691,27 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin const& admin,
                 << " the same token (" << *consistency_token << ")\n";
           }
         });
-    final.get();  // simplify example by blocking until operation is done.
+    fut.get();  // simplify example by blocking until operation is done.
   }
   //! [wait for consistency check]
-  (std::move(admin), argv.at(0));
+  (std::move(old_admin), argv.at(2));
 }
 
-void CheckConsistency(google::cloud::bigtable::TableAdmin const& admin,
-                      std::vector<std::string> const& argv) {
+void CheckConsistency(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    std::vector<std::string> const& argv) {
   //! [check consistency]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id,
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id,
      std::string const& consistency_token) {
-    StatusOr<cbt::Consistency> result =
-        admin.CheckConsistency(table_id, consistency_token);
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+    StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse> result =
+        admin.CheckConsistency(table_name, consistency_token);
     if (!result) throw std::runtime_error(result.status().message());
-    if (*result == cbt::Consistency::kConsistent) {
+    if (result->consistent()) {
       std::cout << "Table is consistent with token " << consistency_token
                 << "\n";
     } else {
@@ -501,26 +721,32 @@ void CheckConsistency(google::cloud::bigtable::TableAdmin const& admin,
     }
   }
   //! [check consistency]
-  (std::move(admin), argv.at(0), argv.at(1));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin const& admin,
-                              std::vector<std::string> const& argv) {
+void GenerateConsistencyToken(
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    std::vector<std::string> const& argv) {
   //! [generate consistency token]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id) {
-    StatusOr<std::string> token = admin.GenerateConsistencyToken(table_id);
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+    StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
+        token = admin.GenerateConsistencyToken(table_name);
     if (!token) throw std::runtime_error(token.status().message());
-    std::cout << "generated token is : " << *token << "\n";
+    std::cout << "generated token is : " << token->consistency_token() << "\n";
   }
   //! [generate consistency token]
-  (std::move(admin), argv.at(0));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
   if (!examples::RunAdminIntegrationTests()) return;
@@ -534,110 +760,127 @@ void RunAll(std::vector<std::string> const& argv) {
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
                                .value();
 
-  cbt::TableAdmin admin(cbt::MakeAdminClient(project_id), instance_id);
-
+  auto conn = cbta::MakeBigtableTableAdminConnection();
   // If a previous run of these samples crashes before cleaning up there may be
   // old tables left over. As there are quotas on the total number of tables we
   // remove stale tables after 48 hours.
   std::cout << "\nCleaning up old tables" << std::endl;
-  google::cloud::bigtable::testing::CleanupStaleTables(admin);
+  cbt::testing::CleanupStaleTables(conn, project_id, instance_id);
+  auto admin = cbta::BigtableTableAdminClient(std::move(conn));
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   // This table is actually created and used to test the positive case (e.g.
   // GetTable() and "table does exist")
-  auto table_id_1 = google::cloud::bigtable::testing::RandomTableId(generator);
+  auto table_id_1 = cbt::testing::RandomTableId(generator);
   // This table does not exist and used to test the negative case (e.g.
   // GetTable() but "table does not exist")
-  auto table_id_2 = google::cloud::bigtable::testing::RandomTableId(generator);
+  auto table_id_2 = cbt::testing::RandomTableId(generator);
 
-  auto table_1 = admin.CreateTable(
-      table_id_1, cbt::TableConfig(
-                      {
-                          {"fam", cbt::GcRule::MaxNumVersions(10)},
-                          {"foo", cbt::GcRule::MaxNumVersions(3)},
-                      },
-                      {}));
+  // Create a table to run the tests on.
+  google::bigtable::admin::v2::Table t;
+  auto& families = *t.mutable_column_families();
+  google::bigtable::admin::v2::GcRule gc1;
+  gc1.set_max_num_versions(10);
+  *families["fam"].mutable_gc_rule() = std::move(gc1);
+  google::bigtable::admin::v2::GcRule gc2;
+  gc2.set_max_num_versions(3);
+  *families["foo"].mutable_gc_rule() = std::move(gc2);
+
+  auto table_1 = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
+                                   table_id_1, std::move(t));
   if (!table_1) throw std::runtime_error(table_1.status().message());
 
   std::cout << "\nRunning ListTables() example" << std::endl;
-  ListTables(admin, {});
+  ListTables(admin, {project_id, instance_id});
 
   std::cout << "\nRunning GetTable() example" << std::endl;
-  GetTable(admin, {table_id_1});
+  GetTable(admin, {project_id, instance_id, table_id_1});
 
   std::cout << "\nRunning CheckTableExists() example [1]" << std::endl;
-  CheckTableExists(admin, {table_id_1});
+  CheckTableExists(admin, {project_id, instance_id, table_id_1});
 
   std::cout << "\nRunning CheckTableExists() example [2]" << std::endl;
-  CheckTableExists(admin, {table_id_2});
+  CheckTableExists(admin, {project_id, instance_id, table_id_2});
 
   std::cout << "\nRunning GetOrCreateTable() example [1]" << std::endl;
-  GetOrCreateTable(admin, {table_id_1});
+  GetOrCreateTable(admin, {project_id, instance_id, table_id_1});
 
   std::cout << "\nRunning GetOrCreateTable() example [2]" << std::endl;
-  GetOrCreateTable(admin, {table_id_2});
+  GetOrCreateTable(admin, {project_id, instance_id, table_id_2});
 
   std::cout << "\nRunning DeleteTable() example" << std::endl;
-  DeleteTable(admin, {table_id_2});
+  DeleteTable(admin, {project_id, instance_id, table_id_2});
 
   std::cout << "\nRunning ModifyTable() example" << std::endl;
-  ModifyTable(admin, {table_id_1});
+  ModifyTable(admin, {project_id, instance_id, table_id_1});
 
   std::cout << "\nRunning CreateMaxAgeFamily() example" << std::endl;
-  CreateMaxAgeFamily(admin, {table_id_1, "max-age-family"});
+  CreateMaxAgeFamily(admin,
+                     {project_id, instance_id, table_id_1, "max-age-family"});
 
   std::cout << "\nRunning CreateMaxAgeFamily() example" << std::endl;
-  CreateMaxVersionsFamily(admin, {table_id_1, "max-versions-family"});
+  CreateMaxVersionsFamily(
+      admin, {project_id, instance_id, table_id_1, "max-versions-family"});
 
   std::cout << "\nRunning CreateUnionFamily() example" << std::endl;
-  CreateUnionFamily(admin, {table_id_1, "union-family"});
+  CreateUnionFamily(admin,
+                    {project_id, instance_id, table_id_1, "union-family"});
 
   std::cout << "\nRunning CreateIntersectionFamily() example" << std::endl;
-  CreateIntersectionFamily(admin, {table_id_1, "intersection-family"});
+  CreateIntersectionFamily(
+      admin, {project_id, instance_id, table_id_1, "intersection-family"});
 
   std::cout << "\nRunning CreateNestedFamily() example" << std::endl;
-  CreateNestedFamily(admin, {table_id_1, "nested-family"});
+  CreateNestedFamily(admin,
+                     {project_id, instance_id, table_id_1, "nested-family"});
 
   std::cout << "\nRunning ListColumnFamilies() example" << std::endl;
-  ListColumnFamilies(admin, {table_id_1});
+  ListColumnFamilies(admin, {project_id, instance_id, table_id_1});
 
   std::cout << "\nRunning GetFamilyMetadata() example" << std::endl;
-  GetFamilyMetadata(admin, {table_id_1, "nested-family"});
+  GetFamilyMetadata(admin,
+                    {project_id, instance_id, table_id_1, "nested-family"});
 
   std::cout << "\nRunning GetOrCreateFamily() example" << std::endl;
-  GetOrCreateFamily(admin, {table_id_1, "get-or-create-family"});
+  GetOrCreateFamily(
+      admin, {project_id, instance_id, table_id_1, "get-or-create-family"});
 
   std::cout << "\nRunning DeleteColumnFamily() example" << std::endl;
-  DeleteColumnFamily(admin, {table_id_1, "nested-family"});
+  DeleteColumnFamily(admin,
+                     {project_id, instance_id, table_id_1, "nested-family"});
 
   std::cout << "\nRunning CheckFamilyExists() example [1]" << std::endl;
-  CheckFamilyExists(admin, {table_id_1, "nested-family"});
+  CheckFamilyExists(admin,
+                    {project_id, instance_id, table_id_1, "nested-family"});
 
   std::cout << "\nRunning CheckFamilyExists() example [2]" << std::endl;
-  CheckFamilyExists(admin, {table_id_1, "max-age-family"});
+  CheckFamilyExists(admin,
+                    {project_id, instance_id, table_id_1, "max-age-family"});
 
   std::cout << "\nRunning UpdateGcRule() example" << std::endl;
-  UpdateGcRule(admin, {table_id_1, "max-age-family"});
+  UpdateGcRule(admin, {project_id, instance_id, table_id_1, "max-age-family"});
 
   std::cout << "\nRunning WaitForConsistencyCheck() example" << std::endl;
-  WaitForConsistencyCheck(admin, {table_id_1});
+  WaitForConsistencyCheck(admin, {project_id, instance_id, table_id_1});
 
   std::cout << "\nRunning GenerateConsistencyToken() example" << std::endl;
-  GenerateConsistencyToken(admin, {table_id_1});
+  GenerateConsistencyToken(admin, {project_id, instance_id, table_id_1});
 
-  auto token = admin.GenerateConsistencyToken(table_id_1);
+  auto token = admin.GenerateConsistencyToken(table_1->name());
   if (!token) throw std::runtime_error(token.status().message());
 
   std::cout << "\nRunning CheckConsistency() example" << std::endl;
-  CheckConsistency(admin, {table_id_1, *token});
+  CheckConsistency(
+      admin, {project_id, instance_id, table_id_1, token->consistency_token()});
 
   std::cout << "\nRunning DropRowsByPrefix() example" << std::endl;
-  DropRowsByPrefix(admin, {table_id_1, "test-prefix/foo/bar/"});
+  DropRowsByPrefix(
+      admin, {project_id, instance_id, table_id_1, "test-prefix/foo/bar/"});
 
   std::cout << "\nRunning DropAllRows() example" << std::endl;
-  DropAllRows(admin, {table_id_1});
+  DropAllRows(admin, {project_id, instance_id, table_id_1});
 
-  (void)admin.DeleteTable(table_id_1);
+  (void)admin.DeleteTable(table_1->name());
 }
 
 }  // anonymous namespace

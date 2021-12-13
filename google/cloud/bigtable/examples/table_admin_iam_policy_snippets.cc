@@ -12,8 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
-#include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/bigtable/iam_binding.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
@@ -25,29 +27,35 @@ namespace {
 
 using ::google::cloud::bigtable::examples::Usage;
 
-void GetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
+void GetIamPolicy(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
                   std::vector<std::string> const& argv) {
   //! [get iam policy]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id) {
-    StatusOr<google::iam::v1::Policy> policy = admin.GetIamPolicy(table_id);
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+    StatusOr<google::iam::v1::Policy> policy = admin.GetIamPolicy(table_name);
     if (!policy) throw std::runtime_error(policy.status().message());
     std::cout << "The IAM Policy for " << table_id << " is\n"
               << policy->DebugString() << "\n";
   }
   //! [get iam policy]
-  (std::move(admin), argv.at(0));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void SetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
+void SetIamPolicy(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
                   std::vector<std::string> const& argv) {
   //! [set iam policy]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id,
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id,
      std::string const& role, std::string const& member) {
-    StatusOr<google::iam::v1::Policy> current = admin.GetIamPolicy(table_id);
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+    StatusOr<google::iam::v1::Policy> current = admin.GetIamPolicy(table_name);
     if (!current) throw std::runtime_error(current.status().message());
     // This example adds the member to all existing bindings for that role. If
     // there are no such bindings, it adds a new one. This might not be what the
@@ -63,52 +71,56 @@ void SetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
       *current->add_bindings() = cbt::IamBinding(role, {member});
     }
     StatusOr<google::iam::v1::Policy> policy =
-        admin.SetIamPolicy(table_id, *current);
+        admin.SetIamPolicy(table_name, *current);
     if (!policy) throw std::runtime_error(policy.status().message());
     std::cout << "The IAM Policy for " << table_id << " is\n"
               << policy->DebugString() << "\n";
   }
   //! [set iam policy]
-  (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
+   argv.at(4));
 }
 
 void TestIamPermissions(std::vector<std::string> const& argv) {
   if (argv.size() < 4) {
     throw Usage{
-        "test-iam-permissions <project-id> <instance-id> <resource-id>"
+        "test-iam-permissions <project-id> <instance-id> <table-id>"
         " <permission> [<permission>...]"};
   }
 
   auto it = argv.cbegin();
   auto const project_id = *it++;
   auto const instance_id = *it++;
-  auto const resource = *it++;
+  auto const table_id = *it++;
   std::vector<std::string> const permissions(it, argv.cend());
 
-  google::cloud::bigtable::TableAdmin admin(
-      google::cloud::bigtable::MakeAdminClient(project_id), instance_id);
+  auto admin = google::cloud::bigtable_admin::BigtableTableAdminClient(
+      google::cloud::bigtable_admin::MakeBigtableTableAdminConnection());
 
   //! [test iam permissions]
-
   using ::google::cloud::StatusOr;
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
 
-  [](cbt::TableAdmin admin, std::string const& resource,
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id,
      std::vector<std::string> const& permissions) {
-    StatusOr<std::vector<std::string>> result =
-        admin.TestIamPermissions(resource, permissions);
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+    auto result = admin.TestIamPermissions(table_name, permissions);
     if (!result) throw std::runtime_error(result.status().message());
     std::cout << "The current user has the following permissions [";
-    std::cout << absl::StrJoin(*result, ", ");
+    std::cout << absl::StrJoin(result->permissions(), ", ");
     std::cout << "]\n";
   }
   //! [test iam permissions]
-  (std::move(admin), std::move(resource), std::move(permissions));
+  (std::move(admin), std::move(project_id), std::move(instance_id),
+   std::move(table_id), std::move(permissions));
 }
 
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
@@ -126,44 +138,46 @@ void RunAll(std::vector<std::string> const& argv) {
           "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT")
           .value();
 
-  cbt::TableAdmin admin(cbt::MakeAdminClient(project_id), instance_id);
-
-  google::cloud::CompletionQueue cq;
-  std::thread th([&cq] { cq.Run(); });
-  examples::AutoShutdownCQ shutdown(cq, std::move(th));
+  auto conn = cbta::MakeBigtableTableAdminConnection();
 
   // If a previous run of these samples crashes before cleaning up there may be
   // old tables left over. As there are quotas on the total number of tables we
   // remove stale tables after 48 hours.
   std::cout << "\nCleaning up old tables" << std::endl;
-  google::cloud::bigtable::testing::CleanupStaleTables(admin);
+  cbt::testing::CleanupStaleTables(conn, project_id, instance_id);
 
+  auto admin = cbta::BigtableTableAdminClient(std::move(conn));
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   // This table is actually created and used to test the positive case (e.g.
   // GetTable() and "table does exist")
-  auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
+  auto table_id = cbt::testing::RandomTableId(generator);
 
-  auto table = admin.CreateTable(
-      table_id, cbt::TableConfig(
-                    {
-                        {"fam", cbt::GcRule::MaxNumVersions(10)},
-                        {"foo", cbt::GcRule::MaxNumVersions(3)},
-                    },
-                    {}));
+  // Create a table to run the tests on.
+  google::bigtable::admin::v2::Table t;
+  auto& families = *t.mutable_column_families();
+  google::bigtable::admin::v2::GcRule gc1;
+  gc1.set_max_num_versions(10);
+  *families["fam"].mutable_gc_rule() = std::move(gc1);
+  google::bigtable::admin::v2::GcRule gc2;
+  gc2.set_max_num_versions(3);
+  *families["foo"].mutable_gc_rule() = std::move(gc2);
+
+  auto table = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
+                                 table_id, std::move(t));
   if (!table) throw std::runtime_error(table.status().message());
 
   std::cout << "\nRunning GetIamPolicy() example" << std::endl;
-  GetIamPolicy(admin, {table_id});
+  GetIamPolicy(admin, {project_id, instance_id, table_id});
 
   std::cout << "\nRunning SetIamPolicy() example" << std::endl;
-  SetIamPolicy(admin, {table_id, "roles/bigtable.user",
+  SetIamPolicy(admin, {project_id, instance_id, table_id, "roles/bigtable.user",
                        "serviceAccount:" + service_account});
 
   std::cout << "\nRunning TestIamPermissions() example" << std::endl;
   TestIamPermissions(
       {project_id, instance_id, table_id, "bigtable.tables.get"});
 
-  (void)admin.DeleteTable(table_id);
+  (void)admin.DeleteTable(cbt::TableName(project_id, instance_id, table_id));
 }
 
 }  // anonymous namespace

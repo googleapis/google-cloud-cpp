@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_client.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/backoff_policy.h"
 #include "google/cloud/internal/getenv.h"
@@ -157,7 +158,6 @@ TEST_F(TableAdminIntegrationTest, DropAllRows) {
   ASSERT_TRUE(actual_cells.empty());
 }
 
-/// @test Verify that `bigtable::TableAdmin` CRUD operations work as expected.
 TEST_F(TableAdminIntegrationTest, CreateListGetDeleteTable) {
   auto const table_id = RandomTableId();
   auto const instance_name =
@@ -257,8 +257,6 @@ TEST_F(TableAdminIntegrationTest, CreateListGetDeleteTable) {
   EXPECT_THAT(*tables, Not(Contains(table_name)));
 }
 
-/// @test Verify that `bigtable::TableAdmin` WaitForConsistencyCheck works as
-/// expected.
 TEST_F(TableAdminIntegrationTest, WaitForConsistencyCheck) {
   // WaitForConsistencyCheck() only makes sense on a replicated table, we need
   // to create an instance with at least 2 clusters to test it.
@@ -380,7 +378,6 @@ TEST_F(TableAdminIntegrationTest, WaitForConsistencyCheck) {
   EXPECT_STATUS_OK(instance_admin_client.DeleteInstance(instance_name));
 }
 
-/// @test Verify rpc logging for `bigtable::TableAdmin`
 TEST_F(TableAdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   // In our ci builds, we set GOOGLE_CLOUD_CPP_ENABLE_TRACING to log our tests,
   // by default. We should unset this variable and create a fresh client in

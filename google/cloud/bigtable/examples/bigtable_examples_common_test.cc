@@ -55,12 +55,14 @@ TEST(BigtableExamplesCommon, MakeTableAdminCommandEntry) {
   google::cloud::testing_util::ScopedEnvironment emulator(
       "BIGTABLE_EMULATOR_HOST", "localhost:9090");
   int call_count = 0;
-  auto command = [&call_count](bigtable::TableAdmin const&,
+  auto command = [&call_count](bigtable_admin::BigtableTableAdminClient const&,
                                std::vector<std::string> const& argv) {
     ++call_count;
-    ASSERT_EQ(2, argv.size());
-    EXPECT_EQ("a", argv[0]);
-    EXPECT_EQ("b", argv[1]);
+    ASSERT_EQ(4, argv.size());
+    EXPECT_EQ("project", argv[0]);
+    EXPECT_EQ("instance", argv[1]);
+    EXPECT_EQ("a", argv[2]);
+    EXPECT_EQ("b", argv[3]);
   };
   auto const actual = MakeCommandEntry("command-name", {"foo", "bar"}, command);
   EXPECT_EQ("command-name", actual.first);
@@ -73,7 +75,7 @@ TEST(BigtableExamplesCommon, MakeTableAdminCommandEntry) {
       },
       Usage);
 
-  ASSERT_NO_FATAL_FAILURE(actual.second({"unused", "unused", "a", "b"}));
+  ASSERT_NO_FATAL_FAILURE(actual.second({"project", "instance", "a", "b"}));
   EXPECT_EQ(1, call_count);
 }
 

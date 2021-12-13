@@ -13,8 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/benchmarks/embedded_server.h"
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <thread>
@@ -46,17 +47,19 @@ TEST(EmbeddedServer, Admin) {
   auto options =
       Options{}
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-          .set<AdminEndpointOption>(server->address());
+          .set<EndpointOption>(server->address());
 
-  TableAdmin admin(MakeAdminClient("fake-project", options), "fake-instance");
+  auto admin = bigtable_admin::BigtableTableAdminClient(
+      bigtable_admin::MakeBigtableTableAdminConnection(options));
 
-  auto gc = GcRule::MaxNumVersions(42);
   EXPECT_EQ(0, server->create_table_count());
-  admin.CreateTable("fake-table-01", TableConfig({{"fam", gc}}, {}));
+  admin.CreateTable(InstanceName("fake-project", "fake-instance"),
+                    "fake-table-01", {});
   EXPECT_EQ(1, server->create_table_count());
 
   EXPECT_EQ(0, server->delete_table_count());
-  admin.DeleteTable("fake-table-02");
+  admin.DeleteTable(
+      TableName("fake-project", "fake-instance", "fake-table-02"));
   EXPECT_EQ(1, server->delete_table_count());
 
   server->Shutdown();

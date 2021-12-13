@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
 #include "google/cloud/bigtable/testing/random_names.h"
@@ -314,6 +315,7 @@ void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
@@ -326,29 +328,31 @@ void RunAll(std::vector<std::string> const& argv) {
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
                                .value();
 
-  cbt::TableAdmin admin(cbt::MakeAdminClient(project_id), instance_id);
-
+  auto conn = cbta::MakeBigtableTableAdminConnection();
   // If a previous run of these samples crashes before cleaning up there may be
   // old tables left over. As there are quotas on the total number of tables we
   // remove stale tables after 48 hours.
-  google::cloud::bigtable::testing::CleanupStaleTables(admin);
+  cbt::testing::CleanupStaleTables(conn, project_id, instance_id);
+  auto admin = cbta::BigtableTableAdminClient(std::move(conn));
 
   // Initialize a generator with some amount of entropy.
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto const table_id =
-      google::cloud::bigtable::testing::RandomTableId(generator);
+  auto const table_id = cbt::testing::RandomTableId(generator);
 
+  // Create a table to run the tests on
   std::cout << "\nCreating table to run the examples (" << table_id << ")"
             << std::endl;
-  auto schema = admin.CreateTable(
-      table_id,
-      cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)}}, {}));
+  google::bigtable::admin::v2::GcRule gc;
+  gc.set_max_num_versions(10);
+  google::bigtable::admin::v2::Table t;
+  auto& families = *t.mutable_column_families();
+  *families["fam"].mutable_gc_rule() = std::move(gc);
+  auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
+                                  table_id, std::move(t));
   if (!schema) throw std::runtime_error(schema.status().message());
 
-  google::cloud::bigtable::Table table(
-      google::cloud::bigtable::MakeDataClient(admin.project(),
-                                              admin.instance_id()),
-      table_id, cbt::AlwaysRetryMutationPolicy());
+  cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id,
+                   cbt::AlwaysRetryMutationPolicy());
 
   std::cout << "\nRunning the AsyncApply() example" << std::endl;
   AsyncApply(table, {"row-0001"});

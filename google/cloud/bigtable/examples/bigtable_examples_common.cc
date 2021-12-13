@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
-#include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include <google/protobuf/util/time_util.h>
@@ -73,10 +72,9 @@ Commands::value_type MakeCommandEntry(std::string const& name,
       if (!args.empty()) os << " " << absl::StrJoin(args, " ");
       throw Usage{std::move(os).str()};
     }
-    google::cloud::bigtable::TableAdmin table(
-        google::cloud::bigtable::MakeAdminClient(argv[0]), argv[1]);
-    argv.erase(argv.begin(), argv.begin() + kFixedArguments);
-    function(table, argv);
+    auto client = bigtable_admin::BigtableTableAdminClient(
+        bigtable_admin::MakeBigtableTableAdminConnection());
+    function(client, argv);
   };
   return {name, command};
 }

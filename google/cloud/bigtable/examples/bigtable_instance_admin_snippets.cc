@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_client.h"
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
+#include "google/cloud/bigtable/iam_binding.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
@@ -817,13 +819,12 @@ void RunAll(std::vector<std::string> const& argv) {
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto conn = cbta::MakeBigtableInstanceAdminConnection();
-  google::cloud::bigtable::testing::CleanupStaleInstances(conn, project_id);
+  cbt::testing::CleanupStaleInstances(conn, project_id);
   cbta::BigtableInstanceAdminClient admin(std::move(conn));
 
   // Create a different instance id to run the replicated instance example.
   {
-    auto const id =
-        google::cloud::bigtable::testing::RandomInstanceId(generator);
+    auto const id = cbt::testing::RandomInstanceId(generator);
     std::cout << "\nRunning CreateReplicatedInstance() example" << std::endl;
     CreateReplicatedInstance(admin, {project_id, id, zone_a, zone_b});
     std::cout << "\nRunning GetInstance() example" << std::endl;
@@ -833,8 +834,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
   // Create a different instance id to run the development instance example.
   {
-    auto const id =
-        google::cloud::bigtable::testing::RandomInstanceId(generator);
+    auto const id = cbt::testing::RandomInstanceId(generator);
     std::cout << "\nRunning CreateDevInstance() example" << std::endl;
     CreateDevInstance(admin, {project_id, id, zone_a});
     std::cout << "\nRunning UpdateInstance() example" << std::endl;
@@ -842,8 +842,7 @@ void RunAll(std::vector<std::string> const& argv) {
     (void)admin.DeleteInstance(cbt::InstanceName(project_id, id));
   }
 
-  auto const instance_id =
-      google::cloud::bigtable::testing::RandomInstanceId(generator);
+  auto const instance_id = cbt::testing::RandomInstanceId(generator);
 
   std::cout << "\nRunning CheckInstanceExists() example [1]" << std::endl;
   CheckInstanceExists(admin, {project_id, instance_id});
