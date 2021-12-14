@@ -16,8 +16,8 @@
 
 set -euo pipefail
 
-readonly GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION="348.0.0"
-readonly GOOGLE_CLOUD_CPP_SDK_SHA256="8341a9b21088fd382522be247c7e51c61d8ea4ff86e6ededfa601afd5223e153"
+readonly GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION="367.0.0"
+readonly GOOGLE_CLOUD_CPP_SDK_SHA256="94328b9c6559a1b7ec2eeaab9ef0e4702215e16e8327c5b99718750526ae1efe"
 
 readonly SITE="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads"
 readonly TARBALL="google-cloud-sdk-${GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION}-linux-x86_64.tar.gz"
