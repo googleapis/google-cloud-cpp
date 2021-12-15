@@ -181,10 +181,8 @@ function integration::bazel_with_emulators() {
   "google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}"
 
-  # We retry these tests because the emulator crashes due to #441.
   io::log_h2 "Running Bigtable integration tests (with emulator)"
-  ci/retry-command.sh 3 0 \
-    "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
+  "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}"
 
   # This test is run separately because the access token changes every time and
@@ -260,7 +258,6 @@ function integration::ctest_with_emulators() {
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 
   io::log_h2 "Running Bigtable integration tests (with emulator)"
-  ci/retry-command.sh 3 0 \
-    "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
+  "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 }

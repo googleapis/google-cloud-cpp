@@ -694,7 +694,13 @@ void WaitForConsistencyCheck(
     fut.get();  // simplify example by blocking until operation is done.
   }
   //! [wait for consistency check]
-  (std::move(old_admin), argv.at(2));
+  (old_admin, argv.at(2));
+
+  // TODO(#7740) - remove this extra call when lifetime issues are fixed.
+  //
+  // Use old_admin outside of the lambda to extend its lifetime long enough to
+  // avoid a crash.
+  (void)old_admin.ListTables(google::bigtable::admin::v2::Table::NAME_ONLY);
 }
 
 void CheckConsistency(
