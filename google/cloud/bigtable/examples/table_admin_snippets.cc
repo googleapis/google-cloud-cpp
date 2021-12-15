@@ -20,7 +20,9 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/crash_handler.h"
 #include "google/bigtable/admin/v2/bigtable_table_admin.pb.h"
+#include <chrono>
 #include <sstream>
+#include <thread>
 
 namespace {
 
@@ -696,11 +698,9 @@ void WaitForConsistencyCheck(
   //! [wait for consistency check]
   (old_admin, argv.at(2));
 
-  // TODO(#7740) - remove this extra call when lifetime issues are fixed.
-  //
-  // Use old_admin outside of the lambda to extend its lifetime long enough to
-  // avoid a crash.
-  (void)old_admin.ListTables(google::bigtable::admin::v2::Table::NAME_ONLY);
+  // TODO(#7740) - remove this sleep when lifetime issues are fixed.
+  // Extend the lifetime of old_admin long enough to avoid a crash.
+  std::this_thread::sleep_for(std::chrono::milliseconds(500));
 }
 
 void CheckConsistency(
