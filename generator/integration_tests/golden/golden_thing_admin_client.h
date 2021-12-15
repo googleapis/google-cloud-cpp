@@ -103,6 +103,19 @@ class GoldenThingAdminClient {
   ListDatabases(std::string const& parent, Options options = {});
 
   ///
+  /// Lists Cloud Test databases.
+  ///
+  /// @param request @googleapis_link{google::test::admin::database::v1::ListDatabasesRequest,generator/integration_tests/test.proto#L377}
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  ///
+  /// [google.test.admin.database.v1.ListDatabasesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L377}
+  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
+  ///
+  StreamRange<google::test::admin::database::v1::Database>
+  ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request, Options options = {});
+
+  ///
   /// Creates a new Cloud Test database and starts to prepare it for serving.
   /// The returned [long-running operation][google.longrunning.Operation] will
   /// have a name of the format `<database_name>/operations/<operation_id>` and
@@ -129,6 +142,26 @@ class GoldenThingAdminClient {
   CreateDatabase(std::string const& parent, std::string const& create_statement, Options options = {});
 
   ///
+  /// Creates a new Cloud Test database and starts to prepare it for serving.
+  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// have a name of the format `<database_name>/operations/<operation_id>` and
+  /// can be used to track preparation of the database. The
+  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// [CreateDatabaseMetadata][google.test.admin.database.v1.CreateDatabaseMetadata]. The
+  /// [response][google.longrunning.Operation.response] field type is
+  /// [Database][google.test.admin.database.v1.Database], if successful.
+  ///
+  /// @param request @googleapis_link{google::test::admin::database::v1::CreateDatabaseRequest,generator/integration_tests/test.proto#L409}
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  ///
+  /// [google.test.admin.database.v1.CreateDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L409}
+  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
+  ///
+  future<StatusOr<google::test::admin::database::v1::Database>>
+  CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request, Options options = {});
+
+  ///
   /// Gets the state of a Cloud Test database.
   ///
   /// @param name  Required. The name of the requested database. Values are of the form
@@ -141,6 +174,19 @@ class GoldenThingAdminClient {
   ///
   StatusOr<google::test::admin::database::v1::Database>
   GetDatabase(std::string const& name, Options options = {});
+
+  ///
+  /// Gets the state of a Cloud Test database.
+  ///
+  /// @param request @googleapis_link{google::test::admin::database::v1::GetDatabaseRequest,generator/integration_tests/test.proto#L443}
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  ///
+  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L443}
+  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
+  ///
+  StatusOr<google::test::admin::database::v1::Database>
+  GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request, Options options = {});
 
   ///
   /// Updates the schema of a Cloud Test database by
@@ -163,6 +209,25 @@ class GoldenThingAdminClient {
   UpdateDatabaseDdl(std::string const& database, std::vector<std::string> const& statements, Options options = {});
 
   ///
+  /// Updates the schema of a Cloud Test database by
+  /// creating/altering/dropping tables, columns, indexes, etc. The returned
+  /// [long-running operation][google.longrunning.Operation] will have a name of
+  /// the format `<database_name>/operations/<operation_id>` and can be used to
+  /// track execution of the schema change(s). The
+  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// [UpdateDatabaseDdlMetadata][google.test.admin.database.v1.UpdateDatabaseDdlMetadata].  The operation has no response.
+  ///
+  /// @param request @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlRequest,generator/integration_tests/test.proto#L470}
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlMetadata,generator/integration_tests/test.proto#L506}
+  ///
+  /// [google.test.admin.database.v1.UpdateDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L470}
+  /// [google.test.admin.database.v1.UpdateDatabaseDdlMetadata]: @googleapis_reference_link{generator/integration_tests/test.proto#L506}
+  ///
+  future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
+  UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request, Options options = {});
+
+  ///
   /// Drops (aka deletes) a Cloud Test database.
   /// Completed backups for the database will be retained according to their
   /// `expire_time`.
@@ -174,6 +239,19 @@ class GoldenThingAdminClient {
   ///
   Status
   DropDatabase(std::string const& database, Options options = {});
+
+  ///
+  /// Drops (aka deletes) a Cloud Test database.
+  /// Completed backups for the database will be retained according to their
+  /// `expire_time`.
+  ///
+  /// @param request @googleapis_link{google::test::admin::database::v1::DropDatabaseRequest,generator/integration_tests/test.proto#L523}
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.test.admin.database.v1.DropDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L523}
+  ///
+  Status
+  DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request, Options options = {});
 
   ///
   /// Returns the schema of a Cloud Test database as a list of formatted
@@ -189,6 +267,21 @@ class GoldenThingAdminClient {
   ///
   StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(std::string const& database, Options options = {});
+
+  ///
+  /// Returns the schema of a Cloud Test database as a list of formatted
+  /// DDL statements. This method does not show pending schema updates, those may
+  /// be queried using the [Operations][google.longrunning.Operations] API.
+  ///
+  /// @param request @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlRequest,generator/integration_tests/test.proto#L534}
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlResponse,generator/integration_tests/test.proto#L545}
+  ///
+  /// [google.test.admin.database.v1.GetDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L534}
+  /// [google.test.admin.database.v1.GetDatabaseDdlResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L545}
+  ///
+  StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
+  GetDatabaseDdl(google::test::admin::database::v1::GetDatabaseDdlRequest const& request, Options options = {});
 
   ///
   /// Sets the access control policy on a database or backup resource.
@@ -239,6 +332,25 @@ class GoldenThingAdminClient {
   SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options options = {});
 
   ///
+  /// Sets the access control policy on a database or backup resource.
+  /// Replaces any existing policy.
+  ///
+  /// Authorization requires `test.databases.setIamPolicy`
+  /// permission on [resource][google.iam.v1.SetIamPolicyRequest.resource].
+  /// For backups, authorization requires `test.backups.setIamPolicy`
+  /// permission on [resource][google.iam.v1.SetIamPolicyRequest.resource].
+  ///
+  /// @param request @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  ///
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options options = {});
+
+  ///
   /// Gets the access control policy for a database or backup resource.
   /// Returns an empty policy if a database or backup exists but does not have a
   /// policy set.
@@ -258,6 +370,26 @@ class GoldenThingAdminClient {
   ///
   StatusOr<google::iam::v1::Policy>
   GetIamPolicy(std::string const& resource, Options options = {});
+
+  ///
+  /// Gets the access control policy for a database or backup resource.
+  /// Returns an empty policy if a database or backup exists but does not have a
+  /// policy set.
+  ///
+  /// Authorization requires `test.databases.getIamPolicy` permission on
+  /// [resource][google.iam.v1.GetIamPolicyRequest.resource].
+  /// For backups, authorization requires `test.backups.getIamPolicy`
+  /// permission on [resource][google.iam.v1.GetIamPolicyRequest.resource].
+  ///
+  /// @param request @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  ///
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options options = {});
 
   ///
   /// Returns permissions that the caller has on the specified database or backup
@@ -285,6 +417,28 @@ class GoldenThingAdminClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options options = {});
+
+  ///
+  /// Returns permissions that the caller has on the specified database or backup
+  /// resource.
+  ///
+  /// Attempting this RPC on a non-existent Cloud Test database will
+  /// result in a NOT_FOUND error if the user has
+  /// `test.databases.list` permission on the containing Cloud
+  /// Test instance. Otherwise returns an empty set of permissions.
+  /// Calling this method on a backup that does not exist will
+  /// result in a NOT_FOUND error if the user has
+  /// `test.backups.list` permission on the containing instance.
+  ///
+  /// @param request @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  ///
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  ///
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options options = {});
 
   ///
   /// Starts creating a new Cloud Test Backup.
@@ -320,6 +474,30 @@ class GoldenThingAdminClient {
   CreateBackup(std::string const& parent, google::test::admin::database::v1::Backup const& backup, std::string const& backup_id, Options options = {});
 
   ///
+  /// Starts creating a new Cloud Test Backup.
+  /// The returned backup [long-running operation][google.longrunning.Operation]
+  /// will have a name of the format
+  /// `projects/<project>/instances/<instance>/backups/<backup>/operations/<operation_id>`
+  /// and can be used to track creation of the backup. The
+  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// [CreateBackupMetadata][google.test.admin.database.v1.CreateBackupMetadata]. The
+  /// [response][google.longrunning.Operation.response] field type is
+  /// [Backup][google.test.admin.database.v1.Backup], if successful. Cancelling the returned operation will stop the
+  /// creation and delete the backup.
+  /// There can be only one pending backup creation per database. Backup creation
+  /// of different databases can run concurrently.
+  ///
+  /// @param request @googleapis_link{google::test::admin::database::v1::CreateBackupRequest,generator/integration_tests/backup.proto#L110}
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  ///
+  /// [google.test.admin.database.v1.CreateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L110}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L36}
+  ///
+  future<StatusOr<google::test::admin::database::v1::Backup>>
+  CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request, Options options = {});
+
+  ///
   /// Gets metadata on a pending or completed [Backup][google.test.admin.database.v1.Backup].
   ///
   /// @param name  Required. Name of the backup.
@@ -333,6 +511,19 @@ class GoldenThingAdminClient {
   ///
   StatusOr<google::test::admin::database::v1::Backup>
   GetBackup(std::string const& name, Options options = {});
+
+  ///
+  /// Gets metadata on a pending or completed [Backup][google.test.admin.database.v1.Backup].
+  ///
+  /// @param request @googleapis_link{google::test::admin::database::v1::GetBackupRequest,generator/integration_tests/backup.proto#L177}
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  ///
+  /// [google.test.admin.database.v1.GetBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L177}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L36}
+  ///
+  StatusOr<google::test::admin::database::v1::Backup>
+  GetBackup(google::test::admin::database::v1::GetBackupRequest const& request, Options options = {});
 
   ///
   /// Updates a pending or completed [Backup][google.test.admin.database.v1.Backup].
@@ -356,6 +547,19 @@ class GoldenThingAdminClient {
   UpdateBackup(google::test::admin::database::v1::Backup const& backup, google::protobuf::FieldMask const& update_mask, Options options = {});
 
   ///
+  /// Updates a pending or completed [Backup][google.test.admin.database.v1.Backup].
+  ///
+  /// @param request @googleapis_link{google::test::admin::database::v1::UpdateBackupRequest,generator/integration_tests/backup.proto#L161}
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  ///
+  /// [google.test.admin.database.v1.UpdateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L161}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L36}
+  ///
+  StatusOr<google::test::admin::database::v1::Backup>
+  UpdateBackup(google::test::admin::database::v1::UpdateBackupRequest const& request, Options options = {});
+
+  ///
   /// Deletes a pending or completed [Backup][google.test.admin.database.v1.Backup].
   ///
   /// @param name  Required. Name of the backup to delete.
@@ -367,6 +571,17 @@ class GoldenThingAdminClient {
   ///
   Status
   DeleteBackup(std::string const& name, Options options = {});
+
+  ///
+  /// Deletes a pending or completed [Backup][google.test.admin.database.v1.Backup].
+  ///
+  /// @param request @googleapis_link{google::test::admin::database::v1::DeleteBackupRequest,generator/integration_tests/backup.proto#L190}
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.test.admin.database.v1.DeleteBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L190}
+  ///
+  Status
+  DeleteBackup(google::test::admin::database::v1::DeleteBackupRequest const& request, Options options = {});
 
   ///
   /// Lists completed and pending backups.
@@ -383,6 +598,21 @@ class GoldenThingAdminClient {
   ///
   StreamRange<google::test::admin::database::v1::Backup>
   ListBackups(std::string const& parent, Options options = {});
+
+  ///
+  /// Lists completed and pending backups.
+  /// Backups returned are ordered by `create_time` in descending order,
+  /// starting from the most recent `create_time`.
+  ///
+  /// @param request @googleapis_link{google::test::admin::database::v1::ListBackupsRequest,generator/integration_tests/backup.proto#L203}
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  ///
+  /// [google.test.admin.database.v1.ListBackupsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L203}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L36}
+  ///
+  StreamRange<google::test::admin::database::v1::Backup>
+  ListBackups(google::test::admin::database::v1::ListBackupsRequest request, Options options = {});
 
   ///
   /// Create a new database by restoring from a completed backup. The new
@@ -424,307 +654,6 @@ class GoldenThingAdminClient {
   RestoreDatabase(std::string const& parent, std::string const& database_id, std::string const& backup, Options options = {});
 
   ///
-  /// Lists database [longrunning-operations][google.longrunning.Operation].
-  /// A database operation has a name of the form
-  /// `projects/<project>/instances/<instance>/databases/<database>/operations/<operation>`.
-  /// The long-running operation
-  /// [metadata][google.longrunning.Operation.metadata] field type
-  /// `metadata.type_url` describes the type of the metadata. Operations returned
-  /// include those that have completed/failed/canceled within the last 7 days,
-  /// and pending operations.
-  ///
-  /// @param parent  Required. The instance of the database operations.
-  ///  Values are of the form `projects/<project>/instances/<instance>`.
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
-  ///
-  /// [google.test.admin.database.v1.ListDatabaseOperationsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L553}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  ///
-  StreamRange<google::longrunning::Operation>
-  ListDatabaseOperations(std::string const& parent, Options options = {});
-
-  ///
-  /// Lists the backup [long-running operations][google.longrunning.Operation] in
-  /// the given instance. A backup operation has a name of the form
-  /// `projects/<project>/instances/<instance>/backups/<backup>/operations/<operation>`.
-  /// The long-running operation
-  /// [metadata][google.longrunning.Operation.metadata] field type
-  /// `metadata.type_url` describes the type of the metadata. Operations returned
-  /// include those that have completed/failed/canceled within the last 7 days,
-  /// and pending operations. Operations returned are ordered by
-  /// `operation.metadata.value.progress.start_time` in descending order starting
-  /// from the most recently started operation.
-  ///
-  /// @param parent  Required. The instance of the backup operations. Values are of
-  ///  the form `projects/<project>/instances/<instance>`.
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
-  ///
-  /// [google.test.admin.database.v1.ListBackupOperationsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L274}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  ///
-  StreamRange<google::longrunning::Operation>
-  ListBackupOperations(std::string const& parent, Options options = {});
-
-  ///
-  /// Gets the state of a Cloud Test database.
-  ///
-  /// @param name  Required. The name of the requested database. Values are of the form
-  ///  `projects/<project>/instances/<instance>/databases/<database>`.
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
-  ///
-  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L443}
-  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
-  ///
-  future<StatusOr<google::test::admin::database::v1::Database>>
-  AsyncGetDatabase(std::string const& name, Options options = {});
-
-  ///
-  /// Drops (aka deletes) a Cloud Test database.
-  /// Completed backups for the database will be retained according to their
-  /// `expire_time`.
-  ///
-  /// @param database  Required. The database to be dropped.
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.test.admin.database.v1.DropDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L523}
-  ///
-  future<Status>
-  AsyncDropDatabase(std::string const& database, Options options = {});
-
-  ///
-  /// Lists Cloud Test databases.
-  ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::ListDatabasesRequest,generator/integration_tests/test.proto#L377}
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
-  ///
-  /// [google.test.admin.database.v1.ListDatabasesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L377}
-  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
-  ///
-  StreamRange<google::test::admin::database::v1::Database>
-  ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request, Options options = {});
-
-  ///
-  /// Creates a new Cloud Test database and starts to prepare it for serving.
-  /// The returned [long-running operation][google.longrunning.Operation] will
-  /// have a name of the format `<database_name>/operations/<operation_id>` and
-  /// can be used to track preparation of the database. The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
-  /// [CreateDatabaseMetadata][google.test.admin.database.v1.CreateDatabaseMetadata]. The
-  /// [response][google.longrunning.Operation.response] field type is
-  /// [Database][google.test.admin.database.v1.Database], if successful.
-  ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::CreateDatabaseRequest,generator/integration_tests/test.proto#L409}
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
-  ///
-  /// [google.test.admin.database.v1.CreateDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L409}
-  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
-  ///
-  future<StatusOr<google::test::admin::database::v1::Database>>
-  CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request, Options options = {});
-
-  ///
-  /// Gets the state of a Cloud Test database.
-  ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::GetDatabaseRequest,generator/integration_tests/test.proto#L443}
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
-  ///
-  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L443}
-  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
-  ///
-  StatusOr<google::test::admin::database::v1::Database>
-  GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request, Options options = {});
-
-  ///
-  /// Updates the schema of a Cloud Test database by
-  /// creating/altering/dropping tables, columns, indexes, etc. The returned
-  /// [long-running operation][google.longrunning.Operation] will have a name of
-  /// the format `<database_name>/operations/<operation_id>` and can be used to
-  /// track execution of the schema change(s). The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
-  /// [UpdateDatabaseDdlMetadata][google.test.admin.database.v1.UpdateDatabaseDdlMetadata].  The operation has no response.
-  ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlRequest,generator/integration_tests/test.proto#L470}
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlMetadata,generator/integration_tests/test.proto#L506}
-  ///
-  /// [google.test.admin.database.v1.UpdateDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L470}
-  /// [google.test.admin.database.v1.UpdateDatabaseDdlMetadata]: @googleapis_reference_link{generator/integration_tests/test.proto#L506}
-  ///
-  future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
-  UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request, Options options = {});
-
-  ///
-  /// Drops (aka deletes) a Cloud Test database.
-  /// Completed backups for the database will be retained according to their
-  /// `expire_time`.
-  ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::DropDatabaseRequest,generator/integration_tests/test.proto#L523}
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.test.admin.database.v1.DropDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L523}
-  ///
-  Status
-  DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request, Options options = {});
-
-  ///
-  /// Returns the schema of a Cloud Test database as a list of formatted
-  /// DDL statements. This method does not show pending schema updates, those may
-  /// be queried using the [Operations][google.longrunning.Operations] API.
-  ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlRequest,generator/integration_tests/test.proto#L534}
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlResponse,generator/integration_tests/test.proto#L545}
-  ///
-  /// [google.test.admin.database.v1.GetDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L534}
-  /// [google.test.admin.database.v1.GetDatabaseDdlResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L545}
-  ///
-  StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
-  GetDatabaseDdl(google::test::admin::database::v1::GetDatabaseDdlRequest const& request, Options options = {});
-
-  ///
-  /// Sets the access control policy on a database or backup resource.
-  /// Replaces any existing policy.
-  ///
-  /// Authorization requires `test.databases.setIamPolicy`
-  /// permission on [resource][google.iam.v1.SetIamPolicyRequest.resource].
-  /// For backups, authorization requires `test.backups.setIamPolicy`
-  /// permission on [resource][google.iam.v1.SetIamPolicyRequest.resource].
-  ///
-  /// @param request @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
-  ///
-  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L88}
-  ///
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options options = {});
-
-  ///
-  /// Gets the access control policy for a database or backup resource.
-  /// Returns an empty policy if a database or backup exists but does not have a
-  /// policy set.
-  ///
-  /// Authorization requires `test.databases.getIamPolicy` permission on
-  /// [resource][google.iam.v1.GetIamPolicyRequest.resource].
-  /// For backups, authorization requires `test.backups.getIamPolicy`
-  /// permission on [resource][google.iam.v1.GetIamPolicyRequest.resource].
-  ///
-  /// @param request @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
-  ///
-  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L88}
-  ///
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options options = {});
-
-  ///
-  /// Returns permissions that the caller has on the specified database or backup
-  /// resource.
-  ///
-  /// Attempting this RPC on a non-existent Cloud Test database will
-  /// result in a NOT_FOUND error if the user has
-  /// `test.databases.list` permission on the containing Cloud
-  /// Test instance. Otherwise returns an empty set of permissions.
-  /// Calling this method on a backup that does not exist will
-  /// result in a NOT_FOUND error if the user has
-  /// `test.backups.list` permission on the containing instance.
-  ///
-  /// @param request @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
-  ///
-  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
-  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
-  ///
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options options = {});
-
-  ///
-  /// Starts creating a new Cloud Test Backup.
-  /// The returned backup [long-running operation][google.longrunning.Operation]
-  /// will have a name of the format
-  /// `projects/<project>/instances/<instance>/backups/<backup>/operations/<operation_id>`
-  /// and can be used to track creation of the backup. The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
-  /// [CreateBackupMetadata][google.test.admin.database.v1.CreateBackupMetadata]. The
-  /// [response][google.longrunning.Operation.response] field type is
-  /// [Backup][google.test.admin.database.v1.Backup], if successful. Cancelling the returned operation will stop the
-  /// creation and delete the backup.
-  /// There can be only one pending backup creation per database. Backup creation
-  /// of different databases can run concurrently.
-  ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::CreateBackupRequest,generator/integration_tests/backup.proto#L110}
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
-  ///
-  /// [google.test.admin.database.v1.CreateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L110}
-  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L36}
-  ///
-  future<StatusOr<google::test::admin::database::v1::Backup>>
-  CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request, Options options = {});
-
-  ///
-  /// Gets metadata on a pending or completed [Backup][google.test.admin.database.v1.Backup].
-  ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::GetBackupRequest,generator/integration_tests/backup.proto#L177}
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
-  ///
-  /// [google.test.admin.database.v1.GetBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L177}
-  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L36}
-  ///
-  StatusOr<google::test::admin::database::v1::Backup>
-  GetBackup(google::test::admin::database::v1::GetBackupRequest const& request, Options options = {});
-
-  ///
-  /// Updates a pending or completed [Backup][google.test.admin.database.v1.Backup].
-  ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::UpdateBackupRequest,generator/integration_tests/backup.proto#L161}
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
-  ///
-  /// [google.test.admin.database.v1.UpdateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L161}
-  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L36}
-  ///
-  StatusOr<google::test::admin::database::v1::Backup>
-  UpdateBackup(google::test::admin::database::v1::UpdateBackupRequest const& request, Options options = {});
-
-  ///
-  /// Deletes a pending or completed [Backup][google.test.admin.database.v1.Backup].
-  ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::DeleteBackupRequest,generator/integration_tests/backup.proto#L190}
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.test.admin.database.v1.DeleteBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L190}
-  ///
-  Status
-  DeleteBackup(google::test::admin::database::v1::DeleteBackupRequest const& request, Options options = {});
-
-  ///
-  /// Lists completed and pending backups.
-  /// Backups returned are ordered by `create_time` in descending order,
-  /// starting from the most recent `create_time`.
-  ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::ListBackupsRequest,generator/integration_tests/backup.proto#L203}
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
-  ///
-  /// [google.test.admin.database.v1.ListBackupsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L203}
-  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L36}
-  ///
-  StreamRange<google::test::admin::database::v1::Backup>
-  ListBackups(google::test::admin::database::v1::ListBackupsRequest request, Options options = {});
-
-  ///
   /// Create a new database by restoring from a completed backup. The new
   /// database must be in the same project and in an instance with the same
   /// instance configuration as the instance containing
@@ -763,6 +692,27 @@ class GoldenThingAdminClient {
   /// include those that have completed/failed/canceled within the last 7 days,
   /// and pending operations.
   ///
+  /// @param parent  Required. The instance of the database operations.
+  ///  Values are of the form `projects/<project>/instances/<instance>`.
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
+  ///
+  /// [google.test.admin.database.v1.ListDatabaseOperationsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L553}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  ///
+  StreamRange<google::longrunning::Operation>
+  ListDatabaseOperations(std::string const& parent, Options options = {});
+
+  ///
+  /// Lists database [longrunning-operations][google.longrunning.Operation].
+  /// A database operation has a name of the form
+  /// `projects/<project>/instances/<instance>/databases/<database>/operations/<operation>`.
+  /// The long-running operation
+  /// [metadata][google.longrunning.Operation.metadata] field type
+  /// `metadata.type_url` describes the type of the metadata. Operations returned
+  /// include those that have completed/failed/canceled within the last 7 days,
+  /// and pending operations.
+  ///
   /// @param request @googleapis_link{google::test::admin::database::v1::ListDatabaseOperationsRequest,generator/integration_tests/test.proto#L553}
   /// @param options  Optional. Operation options.
   /// @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
@@ -772,6 +722,29 @@ class GoldenThingAdminClient {
   ///
   StreamRange<google::longrunning::Operation>
   ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest request, Options options = {});
+
+  ///
+  /// Lists the backup [long-running operations][google.longrunning.Operation] in
+  /// the given instance. A backup operation has a name of the form
+  /// `projects/<project>/instances/<instance>/backups/<backup>/operations/<operation>`.
+  /// The long-running operation
+  /// [metadata][google.longrunning.Operation.metadata] field type
+  /// `metadata.type_url` describes the type of the metadata. Operations returned
+  /// include those that have completed/failed/canceled within the last 7 days,
+  /// and pending operations. Operations returned are ordered by
+  /// `operation.metadata.value.progress.start_time` in descending order starting
+  /// from the most recently started operation.
+  ///
+  /// @param parent  Required. The instance of the backup operations. Values are of
+  ///  the form `projects/<project>/instances/<instance>`.
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
+  ///
+  /// [google.test.admin.database.v1.ListBackupOperationsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L274}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  ///
+  StreamRange<google::longrunning::Operation>
+  ListBackupOperations(std::string const& parent, Options options = {});
 
   ///
   /// Lists the backup [long-running operations][google.longrunning.Operation] in
@@ -798,6 +771,20 @@ class GoldenThingAdminClient {
   ///
   /// Gets the state of a Cloud Test database.
   ///
+  /// @param name  Required. The name of the requested database. Values are of the form
+  ///  `projects/<project>/instances/<instance>/databases/<database>`.
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  ///
+  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L443}
+  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
+  ///
+  future<StatusOr<google::test::admin::database::v1::Database>>
+  AsyncGetDatabase(std::string const& name, Options options = {});
+
+  ///
+  /// Gets the state of a Cloud Test database.
+  ///
   /// @param request @googleapis_link{google::test::admin::database::v1::GetDatabaseRequest,generator/integration_tests/test.proto#L443}
   /// @param options  Optional. Operation options.
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
@@ -807,6 +794,19 @@ class GoldenThingAdminClient {
   ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request, Options options = {});
+
+  ///
+  /// Drops (aka deletes) a Cloud Test database.
+  /// Completed backups for the database will be retained according to their
+  /// `expire_time`.
+  ///
+  /// @param database  Required. The database to be dropped.
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.test.admin.database.v1.DropDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L523}
+  ///
+  future<Status>
+  AsyncDropDatabase(std::string const& database, Options options = {});
 
   ///
   /// Drops (aka deletes) a Cloud Test database.

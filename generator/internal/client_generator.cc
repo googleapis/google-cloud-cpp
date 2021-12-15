@@ -207,35 +207,6 @@ Status ClientGenerator::GenerateHeader() {
         });
       }
     }
-  }
-
-  for (google::protobuf::MethodDescriptor const& method : async_methods()) {
-    auto method_signature_extension =
-        method.options().GetRepeatedExtension(google::api::method_signature);
-    for (int i = 0; i < method_signature_extension.size(); ++i) {
-      std::string method_string =
-          absl::StrCat("  Async$method_name$($method_signature", i,
-                       "$, Options options = {});\n\n");
-      HeaderPrintMethod(
-          method,
-          {MethodPattern(
-              {
-                  {FormatMethodCommentsFromRpcComments(
-                      method, MethodParameterStyle::kApiMethodSignature)},
-                  {IsResponseTypeEmpty,
-                   // clang-format off
-                   "  future<Status>\n",
-                   "  future<StatusOr<$response_type$>>\n"},
-                  {method_string}
-                  // clang-format on
-              },
-              All(IsNonStreaming, Not(IsLongrunningOperation),
-                  Not(IsPaginated)))},
-          __FILE__, __LINE__);
-    }
-  }
-
-  for (auto const& method : methods()) {
     HeaderPrintMethod(
         method,
         {MethodPattern(
@@ -288,7 +259,30 @@ Status ClientGenerator::GenerateHeader() {
         __FILE__, __LINE__);
   }
 
-  for (auto const& method : async_methods()) {
+  for (google::protobuf::MethodDescriptor const& method : async_methods()) {
+    auto method_signature_extension =
+        method.options().GetRepeatedExtension(google::api::method_signature);
+    for (int i = 0; i < method_signature_extension.size(); ++i) {
+      std::string method_string =
+          absl::StrCat("  Async$method_name$($method_signature", i,
+                       "$, Options options = {});\n\n");
+      HeaderPrintMethod(
+          method,
+          {MethodPattern(
+              {
+                  {FormatMethodCommentsFromRpcComments(
+                      method, MethodParameterStyle::kApiMethodSignature)},
+                  {IsResponseTypeEmpty,
+                   // clang-format off
+                   "  future<Status>\n",
+                   "  future<StatusOr<$response_type$>>\n"},
+                  {method_string}
+                  // clang-format on
+              },
+              All(IsNonStreaming, Not(IsLongrunningOperation),
+                  Not(IsPaginated)))},
+          __FILE__, __LINE__);
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern(
@@ -473,41 +467,6 @@ Status ClientGenerator::GenerateCc() {
         });
       }
     }
-  }
-
-  for (google::protobuf::MethodDescriptor const& method : async_methods()) {
-    auto method_signature_extension =
-        method.options().GetRepeatedExtension(google::api::method_signature);
-    for (int i = 0; i < method_signature_extension.size(); ++i) {
-      std::string method_string = absl::StrCat(
-          "$client_class_name$::Async$method_name$($method_signature", i,
-          "$, Options options) {\n");
-      std::string method_request_string =
-          absl::StrCat("$method_request_setters", i, "$");
-      CcPrintMethod(
-          method,
-          {MethodPattern(
-              {
-                  {IsResponseTypeEmpty,
-                   // clang-format off
-                   "future<Status>\n",
-                   "future<StatusOr<$response_type$>>\n"},
-                  {method_string},
-                  {"  internal::OptionsSpan span(internal::MergeOptions("
-                   "std::move(options), options_));\n"},
-                  {"  $request_type$ request;\n"},
-                   {method_request_string},
-                  {"  return connection_->Async$method_name$(request);\n"
-                   "}\n\n"}
-                  // clang-format on
-              },
-              All(IsNonStreaming, Not(IsLongrunningOperation),
-                  Not(IsPaginated)))},
-          __FILE__, __LINE__);
-    }
-  }
-
-  for (auto const& method : methods()) {
     CcPrintMethod(
         method,
         {MethodPattern(
@@ -570,7 +529,36 @@ Status ClientGenerator::GenerateCc() {
         __FILE__, __LINE__);
   }
 
-  for (auto const& method : async_methods()) {
+  for (google::protobuf::MethodDescriptor const& method : async_methods()) {
+    auto method_signature_extension =
+        method.options().GetRepeatedExtension(google::api::method_signature);
+    for (int i = 0; i < method_signature_extension.size(); ++i) {
+      std::string method_string = absl::StrCat(
+          "$client_class_name$::Async$method_name$($method_signature", i,
+          "$, Options options) {\n");
+      std::string method_request_string =
+          absl::StrCat("$method_request_setters", i, "$");
+      CcPrintMethod(
+          method,
+          {MethodPattern(
+              {
+                  {IsResponseTypeEmpty,
+                   // clang-format off
+                   "future<Status>\n",
+                   "future<StatusOr<$response_type$>>\n"},
+                  {method_string},
+                  {"  internal::OptionsSpan span(internal::MergeOptions("
+                   "std::move(options), options_));\n"},
+                  {"  $request_type$ request;\n"},
+                   {method_request_string},
+                  {"  return connection_->Async$method_name$(request);\n"
+                   "}\n\n"}
+                  // clang-format on
+              },
+              All(IsNonStreaming, Not(IsLongrunningOperation),
+                  Not(IsPaginated)))},
+          __FILE__, __LINE__);
+    }
     CcPrintMethod(
         method,
         {MethodPattern(

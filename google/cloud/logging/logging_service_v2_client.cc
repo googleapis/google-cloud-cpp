@@ -41,6 +41,13 @@ Status LoggingServiceV2Client::DeleteLog(std::string const& log_name,
   return connection_->DeleteLog(request);
 }
 
+Status LoggingServiceV2Client::DeleteLog(
+    google::logging::v2::DeleteLogRequest const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->DeleteLog(request);
+}
+
 StatusOr<google::logging::v2::WriteLogEntriesResponse>
 LoggingServiceV2Client::WriteLogEntries(
     std::string const& log_name, google::api::MonitoredResource const& resource,
@@ -54,6 +61,15 @@ LoggingServiceV2Client::WriteLogEntries(
   *request.mutable_resource() = resource;
   *request.mutable_labels() = {labels.begin(), labels.end()};
   *request.mutable_entries() = {entries.begin(), entries.end()};
+  return connection_->WriteLogEntries(request);
+}
+
+StatusOr<google::logging::v2::WriteLogEntriesResponse>
+LoggingServiceV2Client::WriteLogEntries(
+    google::logging::v2::WriteLogEntriesRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->WriteLogEntries(request);
 }
 
@@ -71,31 +87,6 @@ LoggingServiceV2Client::ListLogEntries(
   return connection_->ListLogEntries(request);
 }
 
-StreamRange<std::string> LoggingServiceV2Client::ListLogs(
-    std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::logging::v2::ListLogsRequest request;
-  request.set_parent(parent);
-  return connection_->ListLogs(request);
-}
-
-Status LoggingServiceV2Client::DeleteLog(
-    google::logging::v2::DeleteLogRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->DeleteLog(request);
-}
-
-StatusOr<google::logging::v2::WriteLogEntriesResponse>
-LoggingServiceV2Client::WriteLogEntries(
-    google::logging::v2::WriteLogEntriesRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->WriteLogEntries(request);
-}
-
 StreamRange<google::logging::v2::LogEntry>
 LoggingServiceV2Client::ListLogEntries(
     google::logging::v2::ListLogEntriesRequest request, Options options) {
@@ -111,6 +102,15 @@ LoggingServiceV2Client::ListMonitoredResourceDescriptors(
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->ListMonitoredResourceDescriptors(std::move(request));
+}
+
+StreamRange<std::string> LoggingServiceV2Client::ListLogs(
+    std::string const& parent, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  google::logging::v2::ListLogsRequest request;
+  request.set_parent(parent);
+  return connection_->ListLogs(request);
 }
 
 StreamRange<std::string> LoggingServiceV2Client::ListLogs(

@@ -121,6 +121,25 @@ class IAMClient {
       std::string const& name, Options options = {});
 
   ///
+  /// Lists every [ServiceAccount][google.iam.admin.v1.ServiceAccount] that
+  /// belongs to a specific project.
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountsRequest,google/iam/admin/v1/iam.proto#L544}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
+  ///
+  /// [google.iam.admin.v1.ListServiceAccountsRequest]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L544}
+  /// [google.iam.admin.v1.ServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L461}
+  ///
+  StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
+      google::iam::admin::v1::ListServiceAccountsRequest request,
+      Options options = {});
+
+  ///
   /// Gets a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
   ///
   /// @param name  Required. The resource name of the service account in the
@@ -140,6 +159,24 @@ class IAMClient {
   ///
   StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
       std::string const& name, Options options = {});
+
+  ///
+  /// Gets a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::admin::v1::GetServiceAccountRequest,google/iam/admin/v1/iam.proto#L579}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
+  ///
+  /// [google.iam.admin.v1.GetServiceAccountRequest]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L579}
+  /// [google.iam.admin.v1.ServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L461}
+  ///
+  StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
+      google::iam::admin::v1::GetServiceAccountRequest const& request,
+      Options options = {});
 
   ///
   /// Creates a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
@@ -168,323 +205,6 @@ class IAMClient {
   StatusOr<google::iam::admin::v1::ServiceAccount> CreateServiceAccount(
       std::string const& name, std::string const& account_id,
       google::iam::admin::v1::ServiceAccount const& service_account,
-      Options options = {});
-
-  ///
-  /// Deletes a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
-  ///
-  /// **Warning:** After you delete a service account, you might not be able to
-  /// undelete it. If you know that you need to re-enable the service account in
-  /// the future, use
-  /// [DisableServiceAccount][google.iam.admin.v1.IAM.DisableServiceAccount]
-  /// instead.
-  ///
-  /// If you delete a service account, IAM permanently removes the service
-  /// account 30 days later. Google Cloud cannot recover the service account
-  /// after it is permanently removed, even if you file a support request.
-  ///
-  /// To help avoid unplanned outages, we recommend that you disable the service
-  /// account before you delete it. Use
-  /// [DisableServiceAccount][google.iam.admin.v1.IAM.DisableServiceAccount] to
-  /// disable the service account, then wait at least 24 hours and watch for
-  /// unintended consequences. If there are no unintended consequences, you can
-  /// delete the service account.
-  ///
-  /// @param name  Required. The resource name of the service account in the
-  /// following format:
-  ///  `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`.
-  ///  Using `-` as a wildcard for the `PROJECT_ID` will infer the project from
-  ///  the account. The `ACCOUNT` value can be the `email` address or the
-  ///  `unique_id` of the service account.
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.iam.admin.v1.DeleteServiceAccountRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L594}
-  ///
-  Status DeleteServiceAccount(std::string const& name, Options options = {});
-
-  ///
-  /// Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for
-  /// a service account.
-  ///
-  /// @param name  Required. The resource name of the service account in the
-  /// following format:
-  ///  `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`.
-  ///  Using `-` as a wildcard for the `PROJECT_ID`, will infer the project from
-  ///  the account. The `ACCOUNT` value can be the `email` address or the
-  ///  `unique_id` of the service account.
-  /// @param key_types  Filters the types of keys the user wants to include in
-  /// the list
-  ///  response. Duplicate key types are not allowed. If no key type
-  ///  is provided, all keys are returned.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysResponse,google/iam/admin/v1/iam.proto#L692}
-  ///
-  /// [google.iam.admin.v1.ListServiceAccountKeysRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L657}
-  /// [google.iam.admin.v1.ListServiceAccountKeysResponse]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L692}
-  ///
-  StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
-  ListServiceAccountKeys(
-      std::string const& name,
-      std::vector<
-          google::iam::admin::v1::ListServiceAccountKeysRequest::KeyType> const&
-          key_types,
-      Options options = {});
-
-  ///
-  /// Gets a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey].
-  ///
-  /// @param name  Required. The resource name of the service account key in the
-  /// following format:
-  ///  `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}`.
-  ///  Using `-` as a wildcard for the `PROJECT_ID` will infer the project from
-  ///  the account. The `ACCOUNT` value can be the `email` address or the
-  ///  `unique_id` of the service account.
-  /// @param public_key_type  The output format of the public key requested.
-  ///  X509_PEM is the default output format.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
-  ///
-  /// [google.iam.admin.v1.GetServiceAccountKeyRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L698}
-  /// [google.iam.admin.v1.ServiceAccountKey]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L741}
-  ///
-  StatusOr<google::iam::admin::v1::ServiceAccountKey> GetServiceAccountKey(
-      std::string const& name,
-      google::iam::admin::v1::ServiceAccountPublicKeyType public_key_type,
-      Options options = {});
-
-  ///
-  /// Creates a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey].
-  ///
-  /// @param name  Required. The resource name of the service account in the
-  /// following format:
-  ///  `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`.
-  ///  Using `-` as a wildcard for the `PROJECT_ID` will infer the project from
-  ///  the account. The `ACCOUNT` value can be the `email` address or the
-  ///  `unique_id` of the service account.
-  /// @param private_key_type  The output format of the private key. The default
-  /// value is
-  ///  `TYPE_GOOGLE_CREDENTIALS_FILE`, which is the Google Credentials File
-  ///  format.
-  /// @param key_algorithm  Which type of key and algorithm to use for the key.
-  ///  The default is currently a 2K RSA key.  However this may change in the
-  ///  future.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
-  ///
-  /// [google.iam.admin.v1.CreateServiceAccountKeyRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L791}
-  /// [google.iam.admin.v1.ServiceAccountKey]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L741}
-  ///
-  StatusOr<google::iam::admin::v1::ServiceAccountKey> CreateServiceAccountKey(
-      std::string const& name,
-      google::iam::admin::v1::ServiceAccountPrivateKeyType private_key_type,
-      google::iam::admin::v1::ServiceAccountKeyAlgorithm key_algorithm,
-      Options options = {});
-
-  ///
-  /// Deletes a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey].
-  /// Deleting a service account key does not revoke short-lived credentials
-  /// that have been issued based on the service account key.
-  ///
-  /// @param name  Required. The resource name of the service account key in the
-  /// following format:
-  ///  `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}`.
-  ///  Using `-` as a wildcard for the `PROJECT_ID` will infer the project from
-  ///  the account. The `ACCOUNT` value can be the `email` address or the
-  ///  `unique_id` of the service account.
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.iam.admin.v1.DeleteServiceAccountKeyRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L832}
-  ///
-  Status DeleteServiceAccountKey(std::string const& name, Options options = {});
-
-  ///
-  /// Gets the IAM policy that is attached to a
-  /// [ServiceAccount][google.iam.admin.v1.ServiceAccount]. This IAM policy
-  /// specifies which members have access to the service account.
-  ///
-  /// This method does not tell you whether the service account has been granted
-  /// any roles on other resources. To check whether a service account has role
-  /// grants on a resource, use the `getIamPolicy` method for that resource. For
-  /// example, to view the role grants for a project, call the Resource Manager
-  /// API's
-  /// [`projects.getIamPolicy`](https://cloud.google.com/resource-manager/reference/rest/v1/projects/getIamPolicy)
-  /// method.
-  ///
-  /// @param resource  REQUIRED: The resource for which the policy is being
-  /// requested.
-  ///  See the operation documentation for the appropriate value for this field.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
-  ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
-  ///
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
-                                                 Options options = {});
-
-  ///
-  /// Sets the IAM policy that is attached to a
-  /// [ServiceAccount][google.iam.admin.v1.ServiceAccount].
-  ///
-  /// Use this method to grant or revoke access to the service account. For
-  /// example, you could grant a member the ability to impersonate the service
-  /// account.
-  ///
-  /// This method does not enable the service account to access other resources.
-  /// To grant roles to a service account on a resource, follow these steps:
-  ///
-  /// 1. Call the resource's `getIamPolicy` method to get its current IAM
-  /// policy.
-  /// 2. Edit the policy so that it binds the service account to an IAM role for
-  /// the resource.
-  /// 3. Call the resource's `setIamPolicy` method to update its IAM policy.
-  ///
-  /// For detailed instructions, see
-  /// [Granting roles to a service account for specific
-  /// resources](https://cloud.google.com/iam/help/service-accounts/granting-access-to-service-accounts).
-  ///
-  /// @param resource  REQUIRED: The resource for which the policy is being
-  /// specified.
-  ///  See the operation documentation for the appropriate value for this field.
-  /// @param policy  REQUIRED: The complete policy to be applied to the
-  /// `resource`. The size of
-  ///  the policy is limited to a few 10s of KB. An empty policy is a
-  ///  valid policy but certain Cloud Platform services (such as Projects)
-  ///  might reject them.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
-  ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
-  ///
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      std::string const& resource, google::iam::v1::Policy const& policy,
-      Options options = {});
-
-  /**
-   * Updates the IAM policy for @p resource using an optimistic concurrency
-   * control loop.
-   *
-   * The loop fetches the current policy for @p resource, and passes it to @p
-   * updater, which should return the new policy. This new policy should use the
-   * current etag so that the read-modify-write cycle can detect races and rerun
-   * the update when there is a mismatch. If the new policy does not have an
-   * etag, the existing policy will be blindly overwritten. If @p updater does
-   * not yield a policy, the control loop is terminated and kCancelled is
-   * returned.
-   *
-   * @param resource  Required. The resource for which the policy is being
-   * specified. See the operation documentation for the appropriate value for
-   * this field.
-   * @param updater  Required. Functor to map the current policy to a new one.
-   * @param options  Optional. Options to control the loop. Expected options
-   * are:
-   *       - `IAMBackoffPolicyOption`
-   * @return google::iam::v1::Policy
-   */
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
-                                                 IamUpdater const& updater,
-                                                 Options options = {});
-
-  ///
-  /// Tests whether the caller has the specified permissions on a
-  /// [ServiceAccount][google.iam.admin.v1.ServiceAccount].
-  ///
-  /// @param resource  REQUIRED: The resource for which the policy detail is
-  /// being requested.
-  ///  See the operation documentation for the appropriate value for this field.
-  /// @param permissions  The set of permissions to check for the `resource`.
-  /// Permissions with
-  ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
-  ///  information see
-  ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
-  ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
-  ///
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      std::string const& resource, std::vector<std::string> const& permissions,
-      Options options = {});
-
-  ///
-  /// Lists roles that can be granted on a Google Cloud resource. A role is
-  /// grantable if the IAM policy for the resource can contain bindings to the
-  /// role.
-  ///
-  /// @param full_resource_name  Required. The full resource name to query from
-  /// the list of grantable roles.
-  ///  The name follows the Google Cloud Platform resource format.
-  ///  For example, a Cloud Platform project with id `my-project` will be named
-  ///  `//cloudresourcemanager.googleapis.com/projects/my-project`.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
-  ///
-  /// [google.iam.admin.v1.QueryGrantableRolesRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1062}
-  /// [google.iam.admin.v1.Role]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
-  ///
-  StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
-      std::string const& full_resource_name, Options options = {});
-
-  ///
-  /// Lists every [ServiceAccount][google.iam.admin.v1.ServiceAccount] that
-  /// belongs to a specific project.
-  ///
-  /// @param request
-  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountsRequest,google/iam/admin/v1/iam.proto#L544}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
-  ///
-  /// [google.iam.admin.v1.ListServiceAccountsRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L544}
-  /// [google.iam.admin.v1.ServiceAccount]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L461}
-  ///
-  StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
-      google::iam::admin::v1::ListServiceAccountsRequest request,
-      Options options = {});
-
-  ///
-  /// Gets a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
-  ///
-  /// @param request
-  /// @googleapis_link{google::iam::admin::v1::GetServiceAccountRequest,google/iam/admin/v1/iam.proto#L579}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::admin::v1::ServiceAccount,google/iam/admin/v1/iam.proto#L461}
-  ///
-  /// [google.iam.admin.v1.GetServiceAccountRequest]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L579}
-  /// [google.iam.admin.v1.ServiceAccount]:
-  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L461}
-  ///
-  StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
-      google::iam::admin::v1::GetServiceAccountRequest const& request,
       Options options = {});
 
   ///
@@ -522,6 +242,39 @@ class IAMClient {
   StatusOr<google::iam::admin::v1::ServiceAccount> PatchServiceAccount(
       google::iam::admin::v1::PatchServiceAccountRequest const& request,
       Options options = {});
+
+  ///
+  /// Deletes a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
+  ///
+  /// **Warning:** After you delete a service account, you might not be able to
+  /// undelete it. If you know that you need to re-enable the service account in
+  /// the future, use
+  /// [DisableServiceAccount][google.iam.admin.v1.IAM.DisableServiceAccount]
+  /// instead.
+  ///
+  /// If you delete a service account, IAM permanently removes the service
+  /// account 30 days later. Google Cloud cannot recover the service account
+  /// after it is permanently removed, even if you file a support request.
+  ///
+  /// To help avoid unplanned outages, we recommend that you disable the service
+  /// account before you delete it. Use
+  /// [DisableServiceAccount][google.iam.admin.v1.IAM.DisableServiceAccount] to
+  /// disable the service account, then wait at least 24 hours and watch for
+  /// unintended consequences. If there are no unintended consequences, you can
+  /// delete the service account.
+  ///
+  /// @param name  Required. The resource name of the service account in the
+  /// following format:
+  ///  `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`.
+  ///  Using `-` as a wildcard for the `PROJECT_ID` will infer the project from
+  ///  the account. The `ACCOUNT` value can be the `email` address or the
+  ///  `unique_id` of the service account.
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.iam.admin.v1.DeleteServiceAccountRequest]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L594}
+  ///
+  Status DeleteServiceAccount(std::string const& name, Options options = {});
 
   ///
   /// Deletes a [ServiceAccount][google.iam.admin.v1.ServiceAccount].
@@ -638,6 +391,37 @@ class IAMClient {
   /// Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for
   /// a service account.
   ///
+  /// @param name  Required. The resource name of the service account in the
+  /// following format:
+  ///  `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`.
+  ///  Using `-` as a wildcard for the `PROJECT_ID`, will infer the project from
+  ///  the account. The `ACCOUNT` value can be the `email` address or the
+  ///  `unique_id` of the service account.
+  /// @param key_types  Filters the types of keys the user wants to include in
+  /// the list
+  ///  response. Duplicate key types are not allowed. If no key type
+  ///  is provided, all keys are returned.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysResponse,google/iam/admin/v1/iam.proto#L692}
+  ///
+  /// [google.iam.admin.v1.ListServiceAccountKeysRequest]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L657}
+  /// [google.iam.admin.v1.ListServiceAccountKeysResponse]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L692}
+  ///
+  StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
+  ListServiceAccountKeys(
+      std::string const& name,
+      std::vector<
+          google::iam::admin::v1::ListServiceAccountKeysRequest::KeyType> const&
+          key_types,
+      Options options = {});
+
+  ///
+  /// Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for
+  /// a service account.
+  ///
   /// @param request
   /// @googleapis_link{google::iam::admin::v1::ListServiceAccountKeysRequest,google/iam/admin/v1/iam.proto#L657}
   /// @param options  Optional. Operation options.
@@ -657,6 +441,31 @@ class IAMClient {
   ///
   /// Gets a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey].
   ///
+  /// @param name  Required. The resource name of the service account key in the
+  /// following format:
+  ///  `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}`.
+  ///  Using `-` as a wildcard for the `PROJECT_ID` will infer the project from
+  ///  the account. The `ACCOUNT` value can be the `email` address or the
+  ///  `unique_id` of the service account.
+  /// @param public_key_type  The output format of the public key requested.
+  ///  X509_PEM is the default output format.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
+  ///
+  /// [google.iam.admin.v1.GetServiceAccountKeyRequest]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L698}
+  /// [google.iam.admin.v1.ServiceAccountKey]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L741}
+  ///
+  StatusOr<google::iam::admin::v1::ServiceAccountKey> GetServiceAccountKey(
+      std::string const& name,
+      google::iam::admin::v1::ServiceAccountPublicKeyType public_key_type,
+      Options options = {});
+
+  ///
+  /// Gets a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey].
+  ///
   /// @param request
   /// @googleapis_link{google::iam::admin::v1::GetServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L698}
   /// @param options  Optional. Operation options.
@@ -670,6 +479,37 @@ class IAMClient {
   ///
   StatusOr<google::iam::admin::v1::ServiceAccountKey> GetServiceAccountKey(
       google::iam::admin::v1::GetServiceAccountKeyRequest const& request,
+      Options options = {});
+
+  ///
+  /// Creates a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey].
+  ///
+  /// @param name  Required. The resource name of the service account in the
+  /// following format:
+  ///  `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`.
+  ///  Using `-` as a wildcard for the `PROJECT_ID` will infer the project from
+  ///  the account. The `ACCOUNT` value can be the `email` address or the
+  ///  `unique_id` of the service account.
+  /// @param private_key_type  The output format of the private key. The default
+  /// value is
+  ///  `TYPE_GOOGLE_CREDENTIALS_FILE`, which is the Google Credentials File
+  ///  format.
+  /// @param key_algorithm  Which type of key and algorithm to use for the key.
+  ///  The default is currently a 2K RSA key.  However this may change in the
+  ///  future.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L741}
+  ///
+  /// [google.iam.admin.v1.CreateServiceAccountKeyRequest]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L791}
+  /// [google.iam.admin.v1.ServiceAccountKey]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L741}
+  ///
+  StatusOr<google::iam::admin::v1::ServiceAccountKey> CreateServiceAccountKey(
+      std::string const& name,
+      google::iam::admin::v1::ServiceAccountPrivateKeyType private_key_type,
+      google::iam::admin::v1::ServiceAccountKeyAlgorithm key_algorithm,
       Options options = {});
 
   ///
@@ -714,6 +554,24 @@ class IAMClient {
   /// Deleting a service account key does not revoke short-lived credentials
   /// that have been issued based on the service account key.
   ///
+  /// @param name  Required. The resource name of the service account key in the
+  /// following format:
+  ///  `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}`.
+  ///  Using `-` as a wildcard for the `PROJECT_ID` will infer the project from
+  ///  the account. The `ACCOUNT` value can be the `email` address or the
+  ///  `unique_id` of the service account.
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.iam.admin.v1.DeleteServiceAccountKeyRequest]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L832}
+  ///
+  Status DeleteServiceAccountKey(std::string const& name, Options options = {});
+
+  ///
+  /// Deletes a [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey].
+  /// Deleting a service account key does not revoke short-lived credentials
+  /// that have been issued based on the service account key.
+  ///
   /// @param request
   /// @googleapis_link{google::iam::admin::v1::DeleteServiceAccountKeyRequest,google/iam/admin/v1/iam.proto#L832}
   /// @param options  Optional. Operation options.
@@ -724,6 +582,34 @@ class IAMClient {
   Status DeleteServiceAccountKey(
       google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request,
       Options options = {});
+
+  ///
+  /// Gets the IAM policy that is attached to a
+  /// [ServiceAccount][google.iam.admin.v1.ServiceAccount]. This IAM policy
+  /// specifies which members have access to the service account.
+  ///
+  /// This method does not tell you whether the service account has been granted
+  /// any roles on other resources. To check whether a service account has role
+  /// grants on a resource, use the `getIamPolicy` method for that resource. For
+  /// example, to view the role grants for a project, call the Resource Manager
+  /// API's
+  /// [`projects.getIamPolicy`](https://cloud.google.com/resource-manager/reference/rest/v1/projects/getIamPolicy)
+  /// method.
+  ///
+  /// @param resource  REQUIRED: The resource for which the policy is being
+  /// requested.
+  ///  See the operation documentation for the appropriate value for this field.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  ///
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options options = {});
 
   ///
   /// Gets the IAM policy that is attached to a
@@ -774,6 +660,73 @@ class IAMClient {
   /// [Granting roles to a service account for specific
   /// resources](https://cloud.google.com/iam/help/service-accounts/granting-access-to-service-accounts).
   ///
+  /// @param resource  REQUIRED: The resource for which the policy is being
+  /// specified.
+  ///  See the operation documentation for the appropriate value for this field.
+  /// @param policy  REQUIRED: The complete policy to be applied to the
+  /// `resource`. The size of
+  ///  the policy is limited to a few 10s of KB. An empty policy is a
+  ///  valid policy but certain Cloud Platform services (such as Projects)
+  ///  might reject them.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  ///
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options options = {});
+
+  /**
+   * Updates the IAM policy for @p resource using an optimistic concurrency
+   * control loop.
+   *
+   * The loop fetches the current policy for @p resource, and passes it to @p
+   * updater, which should return the new policy. This new policy should use the
+   * current etag so that the read-modify-write cycle can detect races and rerun
+   * the update when there is a mismatch. If the new policy does not have an
+   * etag, the existing policy will be blindly overwritten. If @p updater does
+   * not yield a policy, the control loop is terminated and kCancelled is
+   * returned.
+   *
+   * @param resource  Required. The resource for which the policy is being
+   * specified. See the operation documentation for the appropriate value for
+   * this field.
+   * @param updater  Required. Functor to map the current policy to a new one.
+   * @param options  Optional. Options to control the loop. Expected options
+   * are:
+   *       - `IAMBackoffPolicyOption`
+   * @return google::iam::v1::Policy
+   */
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
+                                                 IamUpdater const& updater,
+                                                 Options options = {});
+
+  ///
+  /// Sets the IAM policy that is attached to a
+  /// [ServiceAccount][google.iam.admin.v1.ServiceAccount].
+  ///
+  /// Use this method to grant or revoke access to the service account. For
+  /// example, you could grant a member the ability to impersonate the service
+  /// account.
+  ///
+  /// This method does not enable the service account to access other resources.
+  /// To grant roles to a service account on a resource, follow these steps:
+  ///
+  /// 1. Call the resource's `getIamPolicy` method to get its current IAM
+  /// policy.
+  /// 2. Edit the policy so that it binds the service account to an IAM role for
+  /// the resource.
+  /// 3. Call the resource's `setIamPolicy` method to update its IAM policy.
+  ///
+  /// For detailed instructions, see
+  /// [Granting roles to a service account for specific
+  /// resources](https://cloud.google.com/iam/help/service-accounts/granting-access-to-service-accounts).
+  ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
   /// @param options  Optional. Operation options.
@@ -787,6 +740,31 @@ class IAMClient {
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request,
+      Options options = {});
+
+  ///
+  /// Tests whether the caller has the specified permissions on a
+  /// [ServiceAccount][google.iam.admin.v1.ServiceAccount].
+  ///
+  /// @param resource  REQUIRED: The resource for which the policy detail is
+  /// being requested.
+  ///  See the operation documentation for the appropriate value for this field.
+  /// @param permissions  The set of permissions to check for the `resource`.
+  /// Permissions with
+  ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
+  ///  information see
+  ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  ///
+  /// [google.iam.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  ///
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      std::string const& resource, std::vector<std::string> const& permissions,
       Options options = {});
 
   ///
@@ -807,6 +785,28 @@ class IAMClient {
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
       Options options = {});
+
+  ///
+  /// Lists roles that can be granted on a Google Cloud resource. A role is
+  /// grantable if the IAM policy for the resource can contain bindings to the
+  /// role.
+  ///
+  /// @param full_resource_name  Required. The full resource name to query from
+  /// the list of grantable roles.
+  ///  The name follows the Google Cloud Platform resource format.
+  ///  For example, a Cloud Platform project with id `my-project` will be named
+  ///  `//cloudresourcemanager.googleapis.com/projects/my-project`.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::admin::v1::Role,google/iam/admin/v1/iam.proto#L1004}
+  ///
+  /// [google.iam.admin.v1.QueryGrantableRolesRequest]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1062}
+  /// [google.iam.admin.v1.Role]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1004}
+  ///
+  StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
+      std::string const& full_resource_name, Options options = {});
 
   ///
   /// Lists roles that can be granted on a Google Cloud resource. A role is

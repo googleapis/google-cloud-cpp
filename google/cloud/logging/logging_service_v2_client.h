@@ -110,6 +110,22 @@ class LoggingServiceV2Client {
   Status DeleteLog(std::string const& log_name, Options options = {});
 
   ///
+  /// Deletes all the log entries in a log. The log reappears if it receives new
+  /// entries. Log entries written shortly before the delete operation might not
+  /// be deleted. Entries received after the delete operation with a timestamp
+  /// before the operation will be deleted.
+  ///
+  /// @param request
+  /// @googleapis_link{google::logging::v2::DeleteLogRequest,google/logging/v2/logging.proto#L140}
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.logging.v2.DeleteLogRequest]:
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L140}
+  ///
+  Status DeleteLog(google::logging::v2::DeleteLogRequest const& request,
+                   Options options = {});
+
+  ///
   /// Writes log entries to Logging. This API method is the
   /// only way to send log entries to Logging. This method
   /// is used, directly or indirectly, by the Logging agent
@@ -183,6 +199,30 @@ class LoggingServiceV2Client {
       Options options = {});
 
   ///
+  /// Writes log entries to Logging. This API method is the
+  /// only way to send log entries to Logging. This method
+  /// is used, directly or indirectly, by the Logging agent
+  /// (fluentd) and all logging libraries configured to use Logging.
+  /// A single request may contain log entries for a maximum of 1000
+  /// different resources (projects, organizations, billing accounts or
+  /// folders)
+  ///
+  /// @param request
+  /// @googleapis_link{google::logging::v2::WriteLogEntriesRequest,google/logging/v2/logging.proto#L162}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L243}
+  ///
+  /// [google.logging.v2.WriteLogEntriesRequest]:
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L162}
+  /// [google.logging.v2.WriteLogEntriesResponse]:
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L243}
+  ///
+  StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
+      google::logging::v2::WriteLogEntriesRequest const& request,
+      Options options = {});
+
+  ///
   /// Lists log entries.  Use this method to retrieve log entries that
   /// originated from a project/folder/organization/billing account.  For ways
   /// to export log entries, see [Exporting
@@ -231,64 +271,6 @@ class LoggingServiceV2Client {
       std::string const& order_by, Options options = {});
 
   ///
-  /// Lists the logs in projects, organizations, folders, or billing accounts.
-  /// Only logs that have entries are listed.
-  ///
-  /// @param parent  Required. The resource name that owns the logs:
-  ///      "projects/[PROJECT_ID]"
-  ///      "organizations/[ORGANIZATION_ID]"
-  ///      "billingAccounts/[BILLING_ACCOUNT_ID]"
-  ///      "folders/[FOLDER_ID]"
-  /// @param options  Optional. Operation options.
-  /// @return std::string
-  ///
-  /// [google.logging.v2.ListLogsRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L356}
-  ///
-  StreamRange<std::string> ListLogs(std::string const& parent,
-                                    Options options = {});
-
-  ///
-  /// Deletes all the log entries in a log. The log reappears if it receives new
-  /// entries. Log entries written shortly before the delete operation might not
-  /// be deleted. Entries received after the delete operation with a timestamp
-  /// before the operation will be deleted.
-  ///
-  /// @param request
-  /// @googleapis_link{google::logging::v2::DeleteLogRequest,google/logging/v2/logging.proto#L140}
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.logging.v2.DeleteLogRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L140}
-  ///
-  Status DeleteLog(google::logging::v2::DeleteLogRequest const& request,
-                   Options options = {});
-
-  ///
-  /// Writes log entries to Logging. This API method is the
-  /// only way to send log entries to Logging. This method
-  /// is used, directly or indirectly, by the Logging agent
-  /// (fluentd) and all logging libraries configured to use Logging.
-  /// A single request may contain log entries for a maximum of 1000
-  /// different resources (projects, organizations, billing accounts or
-  /// folders)
-  ///
-  /// @param request
-  /// @googleapis_link{google::logging::v2::WriteLogEntriesRequest,google/logging/v2/logging.proto#L162}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L243}
-  ///
-  /// [google.logging.v2.WriteLogEntriesRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L162}
-  /// [google.logging.v2.WriteLogEntriesResponse]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L243}
-  ///
-  StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
-      google::logging::v2::WriteLogEntriesRequest const& request,
-      Options options = {});
-
-  ///
   /// Lists log entries.  Use this method to retrieve log entries that
   /// originated from a project/folder/organization/billing account.  For ways
   /// to export log entries, see [Exporting
@@ -326,6 +308,24 @@ class LoggingServiceV2Client {
   ListMonitoredResourceDescriptors(
       google::logging::v2::ListMonitoredResourceDescriptorsRequest request,
       Options options = {});
+
+  ///
+  /// Lists the logs in projects, organizations, folders, or billing accounts.
+  /// Only logs that have entries are listed.
+  ///
+  /// @param parent  Required. The resource name that owns the logs:
+  ///      "projects/[PROJECT_ID]"
+  ///      "organizations/[ORGANIZATION_ID]"
+  ///      "billingAccounts/[BILLING_ACCOUNT_ID]"
+  ///      "folders/[FOLDER_ID]"
+  /// @param options  Optional. Operation options.
+  /// @return std::string
+  ///
+  /// [google.logging.v2.ListLogsRequest]:
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L356}
+  ///
+  StreamRange<std::string> ListLogs(std::string const& parent,
+                                    Options options = {});
 
   ///
   /// Lists the logs in projects, organizations, folders, or billing accounts.

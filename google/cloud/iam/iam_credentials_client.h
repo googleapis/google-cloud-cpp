@@ -140,6 +140,25 @@ class IAMCredentialsClient {
                       Options options = {});
 
   ///
+  /// Generates an OAuth 2.0 access token for a service account.
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenRequest,google/iam/credentials/v1/common.proto#L35}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L72}
+  ///
+  /// [google.iam.credentials.v1.GenerateAccessTokenRequest]:
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L35}
+  /// [google.iam.credentials.v1.GenerateAccessTokenResponse]:
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L72}
+  ///
+  StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
+  GenerateAccessToken(
+      google::iam::credentials::v1::GenerateAccessTokenRequest const& request,
+      Options options = {});
+
+  ///
   /// Generates an OpenID Connect ID token for a service account.
   ///
   /// @param name  Required. The resource name of the service account for which
@@ -181,6 +200,25 @@ class IAMCredentialsClient {
                   Options options = {});
 
   ///
+  /// Generates an OpenID Connect ID token for a service account.
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenRequest,google/iam/credentials/v1/common.proto#L153}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L186}
+  ///
+  /// [google.iam.credentials.v1.GenerateIdTokenRequest]:
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L153}
+  /// [google.iam.credentials.v1.GenerateIdTokenResponse]:
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L186}
+  ///
+  StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
+  GenerateIdToken(
+      google::iam::credentials::v1::GenerateIdTokenRequest const& request,
+      Options options = {});
+
+  ///
   /// Signs a blob using a service account's system-managed private key.
   ///
   /// @param name  Required. The resource name of the service account for which
@@ -213,6 +251,24 @@ class IAMCredentialsClient {
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
       std::string const& name, std::vector<std::string> const& delegates,
       std::string const& payload, Options options = {});
+
+  ///
+  /// Signs a blob using a service account's system-managed private key.
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::credentials::v1::SignBlobRequest,google/iam/credentials/v1/common.proto#L81}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L109}
+  ///
+  /// [google.iam.credentials.v1.SignBlobRequest]:
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L81}
+  /// [google.iam.credentials.v1.SignBlobResponse]:
+  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L109}
+  ///
+  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
+      google::iam::credentials::v1::SignBlobRequest const& request,
+      Options options = {});
 
   ///
   /// Signs a JWT using a service account's system-managed private key.
@@ -248,62 +304,6 @@ class IAMCredentialsClient {
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
       std::string const& name, std::vector<std::string> const& delegates,
       std::string const& payload, Options options = {});
-
-  ///
-  /// Generates an OAuth 2.0 access token for a service account.
-  ///
-  /// @param request
-  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenRequest,google/iam/credentials/v1/common.proto#L35}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L72}
-  ///
-  /// [google.iam.credentials.v1.GenerateAccessTokenRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L35}
-  /// [google.iam.credentials.v1.GenerateAccessTokenResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L72}
-  ///
-  StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(
-      google::iam::credentials::v1::GenerateAccessTokenRequest const& request,
-      Options options = {});
-
-  ///
-  /// Generates an OpenID Connect ID token for a service account.
-  ///
-  /// @param request
-  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenRequest,google/iam/credentials/v1/common.proto#L153}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L186}
-  ///
-  /// [google.iam.credentials.v1.GenerateIdTokenRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L153}
-  /// [google.iam.credentials.v1.GenerateIdTokenResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L186}
-  ///
-  StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
-  GenerateIdToken(
-      google::iam::credentials::v1::GenerateIdTokenRequest const& request,
-      Options options = {});
-
-  ///
-  /// Signs a blob using a service account's system-managed private key.
-  ///
-  /// @param request
-  /// @googleapis_link{google::iam::credentials::v1::SignBlobRequest,google/iam/credentials/v1/common.proto#L81}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L109}
-  ///
-  /// [google.iam.credentials.v1.SignBlobRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L81}
-  /// [google.iam.credentials.v1.SignBlobResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L109}
-  ///
-  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
-      google::iam::credentials::v1::SignBlobRequest const& request,
-      Options options = {});
 
   ///
   /// Signs a JWT using a service account's system-managed private key.

@@ -104,6 +104,26 @@ class CloudTasksClient {
       std::string const& parent, Options options = {});
 
   ///
+  /// Lists queues.
+  ///
+  /// Queues are returned in lexicographical order.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::tasks::v2::ListQueuesRequest,google/cloud/tasks/v2/cloudtasks.proto#L308}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  ///
+  /// [google.cloud.tasks.v2.ListQueuesRequest]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L308}
+  /// [google.cloud.tasks.v2.Queue]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  ///
+  StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
+      google::cloud::tasks::v2::ListQueuesRequest request,
+      Options options = {});
+
+  ///
   /// Gets a queue.
   ///
   /// @param name  Required. The resource name of the queue. For example:
@@ -119,6 +139,24 @@ class CloudTasksClient {
   ///
   StatusOr<google::cloud::tasks::v2::Queue> GetQueue(std::string const& name,
                                                      Options options = {});
+
+  ///
+  /// Gets a queue.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::tasks::v2::GetQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L369}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  ///
+  /// [google.cloud.tasks.v2.GetQueueRequest]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L369}
+  /// [google.cloud.tasks.v2.Queue]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  ///
+  StatusOr<google::cloud::tasks::v2::Queue> GetQueue(
+      google::cloud::tasks::v2::GetQueueRequest const& request,
+      Options options = {});
 
   ///
   /// Creates a queue.
@@ -153,6 +191,34 @@ class CloudTasksClient {
   ///
   StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
       std::string const& parent, google::cloud::tasks::v2::Queue const& queue,
+      Options options = {});
+
+  ///
+  /// Creates a queue.
+  ///
+  /// Queues created with this method allow tasks to live for a maximum of 31
+  /// days. After a task is 31 days old, the task will be deleted regardless of
+  /// whether it was dispatched or not.
+  ///
+  /// WARNING: Using this method may have unintended side effects if you are
+  /// using an App Engine `queue.yaml` or `queue.xml` file to manage your
+  /// queues. Read [Overview of Queue Management and
+  /// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using
+  /// this method.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::tasks::v2::CreateQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L381}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  ///
+  /// [google.cloud.tasks.v2.CreateQueueRequest]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L381}
+  /// [google.cloud.tasks.v2.Queue]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  ///
+  StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
+      google::cloud::tasks::v2::CreateQueueRequest const& request,
       Options options = {});
 
   ///
@@ -193,6 +259,37 @@ class CloudTasksClient {
       google::protobuf::FieldMask const& update_mask, Options options = {});
 
   ///
+  /// Updates a queue.
+  ///
+  /// This method creates the queue if it does not exist and updates
+  /// the queue if it does exist.
+  ///
+  /// Queues created with this method allow tasks to live for a maximum of 31
+  /// days. After a task is 31 days old, the task will be deleted regardless of
+  /// whether it was dispatched or not.
+  ///
+  /// WARNING: Using this method may have unintended side effects if you are
+  /// using an App Engine `queue.yaml` or `queue.xml` file to manage your
+  /// queues. Read [Overview of Queue Management and
+  /// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using
+  /// this method.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::tasks::v2::UpdateQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L402}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  ///
+  /// [google.cloud.tasks.v2.UpdateQueueRequest]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L402}
+  /// [google.cloud.tasks.v2.Queue]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  ///
+  StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
+      google::cloud::tasks::v2::UpdateQueueRequest const& request,
+      Options options = {});
+
+  ///
   /// Deletes a queue.
   ///
   /// This command will delete the queue even if it has tasks in it.
@@ -214,6 +311,31 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L419}
   ///
   Status DeleteQueue(std::string const& name, Options options = {});
+
+  ///
+  /// Deletes a queue.
+  ///
+  /// This command will delete the queue even if it has tasks in it.
+  ///
+  /// Note: If you delete a queue, a queue with the same name can't be created
+  /// for 7 days.
+  ///
+  /// WARNING: Using this method may have unintended side effects if you are
+  /// using an App Engine `queue.yaml` or `queue.xml` file to manage your
+  /// queues. Read [Overview of Queue Management and
+  /// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using
+  /// this method.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::tasks::v2::DeleteQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L419}
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.cloud.tasks.v2.DeleteQueueRequest]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L419}
+  ///
+  Status DeleteQueue(
+      google::cloud::tasks::v2::DeleteQueueRequest const& request,
+      Options options = {});
 
   ///
   /// Purges a queue by deleting all of its tasks.
@@ -239,6 +361,30 @@ class CloudTasksClient {
                                                        Options options = {});
 
   ///
+  /// Purges a queue by deleting all of its tasks.
+  ///
+  /// All tasks created before this method is called are permanently deleted.
+  ///
+  /// Purge operations can take up to one minute to take effect. Tasks
+  /// might be dispatched before the purge takes effect. A purge is
+  /// irreversible.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::tasks::v2::PurgeQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L431}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  ///
+  /// [google.cloud.tasks.v2.PurgeQueueRequest]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L431}
+  /// [google.cloud.tasks.v2.Queue]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  ///
+  StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(
+      google::cloud::tasks::v2::PurgeQueueRequest const& request,
+      Options options = {});
+
+  ///
   /// Pauses the queue.
   ///
   /// If a queue is paused then the system will stop dispatching tasks
@@ -261,6 +407,31 @@ class CloudTasksClient {
   ///
   StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(std::string const& name,
                                                        Options options = {});
+
+  ///
+  /// Pauses the queue.
+  ///
+  /// If a queue is paused then the system will stop dispatching tasks
+  /// until the queue is resumed via
+  /// [ResumeQueue][google.cloud.tasks.v2.CloudTasks.ResumeQueue]. Tasks can
+  /// still be added when the queue is paused. A queue is paused if its
+  /// [state][google.cloud.tasks.v2.Queue.state] is
+  /// [PAUSED][google.cloud.tasks.v2.Queue.State.PAUSED].
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::tasks::v2::PauseQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L443}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  ///
+  /// [google.cloud.tasks.v2.PauseQueueRequest]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L443}
+  /// [google.cloud.tasks.v2.Queue]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  ///
+  StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(
+      google::cloud::tasks::v2::PauseQueueRequest const& request,
+      Options options = {});
 
   ///
   /// Resume a queue.
@@ -293,6 +464,37 @@ class CloudTasksClient {
                                                         Options options = {});
 
   ///
+  /// Resume a queue.
+  ///
+  /// This method resumes a queue after it has been
+  /// [PAUSED][google.cloud.tasks.v2.Queue.State.PAUSED] or
+  /// [DISABLED][google.cloud.tasks.v2.Queue.State.DISABLED]. The state of a
+  /// queue is stored in the queue's [state][google.cloud.tasks.v2.Queue.state];
+  /// after calling this method it will be set to
+  /// [RUNNING][google.cloud.tasks.v2.Queue.State.RUNNING].
+  ///
+  /// WARNING: Resuming many high-QPS queues at the same time can
+  /// lead to target overloading. If you are resuming high-QPS
+  /// queues, follow the 500/50/5 pattern described in
+  /// [Managing Cloud Tasks Scaling
+  /// Risks](https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::tasks::v2::ResumeQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L455}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
+  ///
+  /// [google.cloud.tasks.v2.ResumeQueueRequest]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L455}
+  /// [google.cloud.tasks.v2.Queue]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
+  ///
+  StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(
+      google::cloud::tasks::v2::ResumeQueueRequest const& request,
+      Options options = {});
+
+  ///
   /// Gets the access control policy for a [Queue][google.cloud.tasks.v2.Queue].
   /// Returns an empty policy if the resource exists and does not have a policy
   /// set.
@@ -317,6 +519,32 @@ class CloudTasksClient {
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
                                                  Options options = {});
+
+  ///
+  /// Gets the access control policy for a [Queue][google.cloud.tasks.v2.Queue].
+  /// Returns an empty policy if the resource exists and does not have a policy
+  /// set.
+  ///
+  /// Authorization requires the following
+  /// [Google IAM](https://cloud.google.com/iam) permission on the specified
+  /// resource parent:
+  ///
+  /// * `cloudtasks.queues.getIamPolicy`
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  ///
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Sets the access control policy for a [Queue][google.cloud.tasks.v2.Queue].
@@ -378,6 +606,34 @@ class CloudTasksClient {
                                                  Options options = {});
 
   ///
+  /// Sets the access control policy for a [Queue][google.cloud.tasks.v2.Queue].
+  /// Replaces any existing policy.
+  ///
+  /// Note: The Cloud Console does not check queue-level IAM permissions yet.
+  /// Project-level permissions are required to use the Cloud Console.
+  ///
+  /// Authorization requires the following
+  /// [Google IAM](https://cloud.google.com/iam) permission on the specified
+  /// resource parent:
+  ///
+  /// * `cloudtasks.queues.setIamPolicy`
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  ///
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request,
+      Options options = {});
+
+  ///
   /// Returns permissions that a caller has on a
   /// [Queue][google.cloud.tasks.v2.Queue]. If the resource does not exist, this
   /// will return an empty set of permissions, not a
@@ -409,6 +665,31 @@ class CloudTasksClient {
       Options options = {});
 
   ///
+  /// Returns permissions that a caller has on a
+  /// [Queue][google.cloud.tasks.v2.Queue]. If the resource does not exist, this
+  /// will return an empty set of permissions, not a
+  /// [NOT_FOUND][google.rpc.Code.NOT_FOUND] error.
+  ///
+  /// Note: This operation is designed to be used for building permission-aware
+  /// UIs and command-line tools, not for authorization checking. This operation
+  /// may "fail open" without warning.
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  ///
+  /// [google.iam.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  ///
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options options = {});
+
+  ///
   /// Lists the tasks in a queue.
   ///
   /// By default, only the [BASIC][google.cloud.tasks.v2.Task.View.BASIC] view
@@ -434,6 +715,31 @@ class CloudTasksClient {
       std::string const& parent, Options options = {});
 
   ///
+  /// Lists the tasks in a queue.
+  ///
+  /// By default, only the [BASIC][google.cloud.tasks.v2.Task.View.BASIC] view
+  /// is retrieved due to performance considerations;
+  /// [response_view][google.cloud.tasks.v2.ListTasksRequest.response_view]
+  /// controls the subset of information which is returned.
+  ///
+  /// The tasks may be returned in any order. The ordering may change at any
+  /// time.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::tasks::v2::ListTasksRequest,google/cloud/tasks/v2/cloudtasks.proto#L467}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
+  ///
+  /// [google.cloud.tasks.v2.ListTasksRequest]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L467}
+  /// [google.cloud.tasks.v2.Task]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
+  ///
+  StreamRange<google::cloud::tasks::v2::Task> ListTasks(
+      google::cloud::tasks::v2::ListTasksRequest request, Options options = {});
+
+  ///
   /// Gets a task.
   ///
   /// @param name  Required. The task name. For example:
@@ -449,6 +755,24 @@ class CloudTasksClient {
   ///
   StatusOr<google::cloud::tasks::v2::Task> GetTask(std::string const& name,
                                                    Options options = {});
+
+  ///
+  /// Gets a task.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::tasks::v2::GetTaskRequest,google/cloud/tasks/v2/cloudtasks.proto#L529}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
+  ///
+  /// [google.cloud.tasks.v2.GetTaskRequest]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L529}
+  /// [google.cloud.tasks.v2.Task]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
+  ///
+  StatusOr<google::cloud::tasks::v2::Task> GetTask(
+      google::cloud::tasks::v2::GetTaskRequest const& request,
+      Options options = {});
 
   ///
   /// Creates a task and adds it to a queue.
@@ -501,6 +825,28 @@ class CloudTasksClient {
       Options options = {});
 
   ///
+  /// Creates a task and adds it to a queue.
+  ///
+  /// Tasks cannot be updated after creation; there is no UpdateTask command.
+  ///
+  /// * The maximum task size is 100KB.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::tasks::v2::CreateTaskRequest,google/cloud/tasks/v2/cloudtasks.proto#L555}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
+  ///
+  /// [google.cloud.tasks.v2.CreateTaskRequest]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L555}
+  /// [google.cloud.tasks.v2.Task]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
+  ///
+  StatusOr<google::cloud::tasks::v2::Task> CreateTask(
+      google::cloud::tasks::v2::CreateTaskRequest const& request,
+      Options options = {});
+
+  ///
   /// Deletes a task.
   ///
   /// A task can be deleted if it is scheduled or dispatched. A task
@@ -515,6 +861,23 @@ class CloudTasksClient {
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L619}
   ///
   Status DeleteTask(std::string const& name, Options options = {});
+
+  ///
+  /// Deletes a task.
+  ///
+  /// A task can be deleted if it is scheduled or dispatched. A task
+  /// cannot be deleted if it has executed successfully or permanently
+  /// failed.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::tasks::v2::DeleteTaskRequest,google/cloud/tasks/v2/cloudtasks.proto#L619}
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.cloud.tasks.v2.DeleteTaskRequest]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L619}
+  ///
+  Status DeleteTask(google::cloud::tasks::v2::DeleteTaskRequest const& request,
+                    Options options = {});
 
   ///
   /// Forces a task to run now.
@@ -557,369 +920,6 @@ class CloudTasksClient {
   ///
   StatusOr<google::cloud::tasks::v2::Task> RunTask(std::string const& name,
                                                    Options options = {});
-
-  ///
-  /// Lists queues.
-  ///
-  /// Queues are returned in lexicographical order.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::tasks::v2::ListQueuesRequest,google/cloud/tasks/v2/cloudtasks.proto#L308}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
-  ///
-  /// [google.cloud.tasks.v2.ListQueuesRequest]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L308}
-  /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
-  ///
-  StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
-      google::cloud::tasks::v2::ListQueuesRequest request,
-      Options options = {});
-
-  ///
-  /// Gets a queue.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::tasks::v2::GetQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L369}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
-  ///
-  /// [google.cloud.tasks.v2.GetQueueRequest]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L369}
-  /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
-  ///
-  StatusOr<google::cloud::tasks::v2::Queue> GetQueue(
-      google::cloud::tasks::v2::GetQueueRequest const& request,
-      Options options = {});
-
-  ///
-  /// Creates a queue.
-  ///
-  /// Queues created with this method allow tasks to live for a maximum of 31
-  /// days. After a task is 31 days old, the task will be deleted regardless of
-  /// whether it was dispatched or not.
-  ///
-  /// WARNING: Using this method may have unintended side effects if you are
-  /// using an App Engine `queue.yaml` or `queue.xml` file to manage your
-  /// queues. Read [Overview of Queue Management and
-  /// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using
-  /// this method.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::tasks::v2::CreateQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L381}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
-  ///
-  /// [google.cloud.tasks.v2.CreateQueueRequest]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L381}
-  /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
-  ///
-  StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
-      google::cloud::tasks::v2::CreateQueueRequest const& request,
-      Options options = {});
-
-  ///
-  /// Updates a queue.
-  ///
-  /// This method creates the queue if it does not exist and updates
-  /// the queue if it does exist.
-  ///
-  /// Queues created with this method allow tasks to live for a maximum of 31
-  /// days. After a task is 31 days old, the task will be deleted regardless of
-  /// whether it was dispatched or not.
-  ///
-  /// WARNING: Using this method may have unintended side effects if you are
-  /// using an App Engine `queue.yaml` or `queue.xml` file to manage your
-  /// queues. Read [Overview of Queue Management and
-  /// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using
-  /// this method.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::tasks::v2::UpdateQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L402}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
-  ///
-  /// [google.cloud.tasks.v2.UpdateQueueRequest]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L402}
-  /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
-  ///
-  StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
-      google::cloud::tasks::v2::UpdateQueueRequest const& request,
-      Options options = {});
-
-  ///
-  /// Deletes a queue.
-  ///
-  /// This command will delete the queue even if it has tasks in it.
-  ///
-  /// Note: If you delete a queue, a queue with the same name can't be created
-  /// for 7 days.
-  ///
-  /// WARNING: Using this method may have unintended side effects if you are
-  /// using an App Engine `queue.yaml` or `queue.xml` file to manage your
-  /// queues. Read [Overview of Queue Management and
-  /// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using
-  /// this method.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::tasks::v2::DeleteQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L419}
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.cloud.tasks.v2.DeleteQueueRequest]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L419}
-  ///
-  Status DeleteQueue(
-      google::cloud::tasks::v2::DeleteQueueRequest const& request,
-      Options options = {});
-
-  ///
-  /// Purges a queue by deleting all of its tasks.
-  ///
-  /// All tasks created before this method is called are permanently deleted.
-  ///
-  /// Purge operations can take up to one minute to take effect. Tasks
-  /// might be dispatched before the purge takes effect. A purge is
-  /// irreversible.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::tasks::v2::PurgeQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L431}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
-  ///
-  /// [google.cloud.tasks.v2.PurgeQueueRequest]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L431}
-  /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
-  ///
-  StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(
-      google::cloud::tasks::v2::PurgeQueueRequest const& request,
-      Options options = {});
-
-  ///
-  /// Pauses the queue.
-  ///
-  /// If a queue is paused then the system will stop dispatching tasks
-  /// until the queue is resumed via
-  /// [ResumeQueue][google.cloud.tasks.v2.CloudTasks.ResumeQueue]. Tasks can
-  /// still be added when the queue is paused. A queue is paused if its
-  /// [state][google.cloud.tasks.v2.Queue.state] is
-  /// [PAUSED][google.cloud.tasks.v2.Queue.State.PAUSED].
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::tasks::v2::PauseQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L443}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
-  ///
-  /// [google.cloud.tasks.v2.PauseQueueRequest]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L443}
-  /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
-  ///
-  StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(
-      google::cloud::tasks::v2::PauseQueueRequest const& request,
-      Options options = {});
-
-  ///
-  /// Resume a queue.
-  ///
-  /// This method resumes a queue after it has been
-  /// [PAUSED][google.cloud.tasks.v2.Queue.State.PAUSED] or
-  /// [DISABLED][google.cloud.tasks.v2.Queue.State.DISABLED]. The state of a
-  /// queue is stored in the queue's [state][google.cloud.tasks.v2.Queue.state];
-  /// after calling this method it will be set to
-  /// [RUNNING][google.cloud.tasks.v2.Queue.State.RUNNING].
-  ///
-  /// WARNING: Resuming many high-QPS queues at the same time can
-  /// lead to target overloading. If you are resuming high-QPS
-  /// queues, follow the 500/50/5 pattern described in
-  /// [Managing Cloud Tasks Scaling
-  /// Risks](https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::tasks::v2::ResumeQueueRequest,google/cloud/tasks/v2/cloudtasks.proto#L455}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L34}
-  ///
-  /// [google.cloud.tasks.v2.ResumeQueueRequest]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L455}
-  /// [google.cloud.tasks.v2.Queue]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L34}
-  ///
-  StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(
-      google::cloud::tasks::v2::ResumeQueueRequest const& request,
-      Options options = {});
-
-  ///
-  /// Gets the access control policy for a [Queue][google.cloud.tasks.v2.Queue].
-  /// Returns an empty policy if the resource exists and does not have a policy
-  /// set.
-  ///
-  /// Authorization requires the following
-  /// [Google IAM](https://cloud.google.com/iam) permission on the specified
-  /// resource parent:
-  ///
-  /// * `cloudtasks.queues.getIamPolicy`
-  ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
-  ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
-  ///
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request,
-      Options options = {});
-
-  ///
-  /// Sets the access control policy for a [Queue][google.cloud.tasks.v2.Queue].
-  /// Replaces any existing policy.
-  ///
-  /// Note: The Cloud Console does not check queue-level IAM permissions yet.
-  /// Project-level permissions are required to use the Cloud Console.
-  ///
-  /// Authorization requires the following
-  /// [Google IAM](https://cloud.google.com/iam) permission on the specified
-  /// resource parent:
-  ///
-  /// * `cloudtasks.queues.setIamPolicy`
-  ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
-  ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
-  ///
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request,
-      Options options = {});
-
-  ///
-  /// Returns permissions that a caller has on a
-  /// [Queue][google.cloud.tasks.v2.Queue]. If the resource does not exist, this
-  /// will return an empty set of permissions, not a
-  /// [NOT_FOUND][google.rpc.Code.NOT_FOUND] error.
-  ///
-  /// Note: This operation is designed to be used for building permission-aware
-  /// UIs and command-line tools, not for authorization checking. This operation
-  /// may "fail open" without warning.
-  ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
-  ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
-  ///
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options options = {});
-
-  ///
-  /// Lists the tasks in a queue.
-  ///
-  /// By default, only the [BASIC][google.cloud.tasks.v2.Task.View.BASIC] view
-  /// is retrieved due to performance considerations;
-  /// [response_view][google.cloud.tasks.v2.ListTasksRequest.response_view]
-  /// controls the subset of information which is returned.
-  ///
-  /// The tasks may be returned in any order. The ordering may change at any
-  /// time.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::tasks::v2::ListTasksRequest,google/cloud/tasks/v2/cloudtasks.proto#L467}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
-  ///
-  /// [google.cloud.tasks.v2.ListTasksRequest]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L467}
-  /// [google.cloud.tasks.v2.Task]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
-  ///
-  StreamRange<google::cloud::tasks::v2::Task> ListTasks(
-      google::cloud::tasks::v2::ListTasksRequest request, Options options = {});
-
-  ///
-  /// Gets a task.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::tasks::v2::GetTaskRequest,google/cloud/tasks/v2/cloudtasks.proto#L529}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
-  ///
-  /// [google.cloud.tasks.v2.GetTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L529}
-  /// [google.cloud.tasks.v2.Task]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
-  ///
-  StatusOr<google::cloud::tasks::v2::Task> GetTask(
-      google::cloud::tasks::v2::GetTaskRequest const& request,
-      Options options = {});
-
-  ///
-  /// Creates a task and adds it to a queue.
-  ///
-  /// Tasks cannot be updated after creation; there is no UpdateTask command.
-  ///
-  /// * The maximum task size is 100KB.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::tasks::v2::CreateTaskRequest,google/cloud/tasks/v2/cloudtasks.proto#L555}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L33}
-  ///
-  /// [google.cloud.tasks.v2.CreateTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L555}
-  /// [google.cloud.tasks.v2.Task]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L33}
-  ///
-  StatusOr<google::cloud::tasks::v2::Task> CreateTask(
-      google::cloud::tasks::v2::CreateTaskRequest const& request,
-      Options options = {});
-
-  ///
-  /// Deletes a task.
-  ///
-  /// A task can be deleted if it is scheduled or dispatched. A task
-  /// cannot be deleted if it has executed successfully or permanently
-  /// failed.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::tasks::v2::DeleteTaskRequest,google/cloud/tasks/v2/cloudtasks.proto#L619}
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.cloud.tasks.v2.DeleteTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L619}
-  ///
-  Status DeleteTask(google::cloud::tasks::v2::DeleteTaskRequest const& request,
-                    Options options = {});
 
   ///
   /// Forces a task to run now.

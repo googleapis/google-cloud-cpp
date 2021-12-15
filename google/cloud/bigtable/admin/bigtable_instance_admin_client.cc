@@ -51,6 +51,15 @@ BigtableInstanceAdminClient::CreateInstance(
   return connection_->CreateInstance(request);
 }
 
+future<StatusOr<google::bigtable::admin::v2::Instance>>
+BigtableInstanceAdminClient::CreateInstance(
+    google::bigtable::admin::v2::CreateInstanceRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->CreateInstance(request);
+}
+
 StatusOr<google::bigtable::admin::v2::Instance>
 BigtableInstanceAdminClient::GetInstance(std::string const& name,
                                          Options options) {
@@ -58,6 +67,15 @@ BigtableInstanceAdminClient::GetInstance(std::string const& name,
       internal::MergeOptions(std::move(options), options_));
   google::bigtable::admin::v2::GetInstanceRequest request;
   request.set_name(name);
+  return connection_->GetInstance(request);
+}
+
+StatusOr<google::bigtable::admin::v2::Instance>
+BigtableInstanceAdminClient::GetInstance(
+    google::bigtable::admin::v2::GetInstanceRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetInstance(request);
 }
 
@@ -69,6 +87,23 @@ BigtableInstanceAdminClient::ListInstances(std::string const& parent,
   google::bigtable::admin::v2::ListInstancesRequest request;
   request.set_parent(parent);
   return connection_->ListInstances(request);
+}
+
+StatusOr<google::bigtable::admin::v2::ListInstancesResponse>
+BigtableInstanceAdminClient::ListInstances(
+    google::bigtable::admin::v2::ListInstancesRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->ListInstances(request);
+}
+
+StatusOr<google::bigtable::admin::v2::Instance>
+BigtableInstanceAdminClient::UpdateInstance(
+    google::bigtable::admin::v2::Instance const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->UpdateInstance(request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
@@ -83,12 +118,29 @@ BigtableInstanceAdminClient::PartialUpdateInstance(
   return connection_->PartialUpdateInstance(request);
 }
 
+future<StatusOr<google::bigtable::admin::v2::Instance>>
+BigtableInstanceAdminClient::PartialUpdateInstance(
+    google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->PartialUpdateInstance(request);
+}
+
 Status BigtableInstanceAdminClient::DeleteInstance(std::string const& name,
                                                    Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   google::bigtable::admin::v2::DeleteInstanceRequest request;
   request.set_name(name);
+  return connection_->DeleteInstance(request);
+}
+
+Status BigtableInstanceAdminClient::DeleteInstance(
+    google::bigtable::admin::v2::DeleteInstanceRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->DeleteInstance(request);
 }
 
@@ -105,6 +157,15 @@ BigtableInstanceAdminClient::CreateCluster(
   return connection_->CreateCluster(request);
 }
 
+future<StatusOr<google::bigtable::admin::v2::Cluster>>
+BigtableInstanceAdminClient::CreateCluster(
+    google::bigtable::admin::v2::CreateClusterRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->CreateCluster(request);
+}
+
 StatusOr<google::bigtable::admin::v2::Cluster>
 BigtableInstanceAdminClient::GetCluster(std::string const& name,
                                         Options options) {
@@ -112,6 +173,15 @@ BigtableInstanceAdminClient::GetCluster(std::string const& name,
       internal::MergeOptions(std::move(options), options_));
   google::bigtable::admin::v2::GetClusterRequest request;
   request.set_name(name);
+  return connection_->GetCluster(request);
+}
+
+StatusOr<google::bigtable::admin::v2::Cluster>
+BigtableInstanceAdminClient::GetCluster(
+    google::bigtable::admin::v2::GetClusterRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetCluster(request);
 }
 
@@ -123,6 +193,23 @@ BigtableInstanceAdminClient::ListClusters(std::string const& parent,
   google::bigtable::admin::v2::ListClustersRequest request;
   request.set_parent(parent);
   return connection_->ListClusters(request);
+}
+
+StatusOr<google::bigtable::admin::v2::ListClustersResponse>
+BigtableInstanceAdminClient::ListClusters(
+    google::bigtable::admin::v2::ListClustersRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->ListClusters(request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::Cluster>>
+BigtableInstanceAdminClient::UpdateCluster(
+    google::bigtable::admin::v2::Cluster const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->UpdateCluster(request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
@@ -137,12 +224,29 @@ BigtableInstanceAdminClient::PartialUpdateCluster(
   return connection_->PartialUpdateCluster(request);
 }
 
+future<StatusOr<google::bigtable::admin::v2::Cluster>>
+BigtableInstanceAdminClient::PartialUpdateCluster(
+    google::bigtable::admin::v2::PartialUpdateClusterRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->PartialUpdateCluster(request);
+}
+
 Status BigtableInstanceAdminClient::DeleteCluster(std::string const& name,
                                                   Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   google::bigtable::admin::v2::DeleteClusterRequest request;
   request.set_name(name);
+  return connection_->DeleteCluster(request);
+}
+
+Status BigtableInstanceAdminClient::DeleteCluster(
+    google::bigtable::admin::v2::DeleteClusterRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->DeleteCluster(request);
 }
 
@@ -161,12 +265,30 @@ BigtableInstanceAdminClient::CreateAppProfile(
 }
 
 StatusOr<google::bigtable::admin::v2::AppProfile>
+BigtableInstanceAdminClient::CreateAppProfile(
+    google::bigtable::admin::v2::CreateAppProfileRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->CreateAppProfile(request);
+}
+
+StatusOr<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminClient::GetAppProfile(std::string const& name,
                                            Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   google::bigtable::admin::v2::GetAppProfileRequest request;
   request.set_name(name);
+  return connection_->GetAppProfile(request);
+}
+
+StatusOr<google::bigtable::admin::v2::AppProfile>
+BigtableInstanceAdminClient::GetAppProfile(
+    google::bigtable::admin::v2::GetAppProfileRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetAppProfile(request);
 }
 
@@ -178,6 +300,15 @@ BigtableInstanceAdminClient::ListAppProfiles(std::string const& parent,
   google::bigtable::admin::v2::ListAppProfilesRequest request;
   request.set_parent(parent);
   return connection_->ListAppProfiles(request);
+}
+
+StreamRange<google::bigtable::admin::v2::AppProfile>
+BigtableInstanceAdminClient::ListAppProfiles(
+    google::bigtable::admin::v2::ListAppProfilesRequest request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->ListAppProfiles(std::move(request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
@@ -192,6 +323,15 @@ BigtableInstanceAdminClient::UpdateAppProfile(
   return connection_->UpdateAppProfile(request);
 }
 
+future<StatusOr<google::bigtable::admin::v2::AppProfile>>
+BigtableInstanceAdminClient::UpdateAppProfile(
+    google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->UpdateAppProfile(request);
+}
+
 Status BigtableInstanceAdminClient::DeleteAppProfile(std::string const& name,
                                                      Options options) {
   internal::OptionsSpan span(
@@ -201,12 +341,27 @@ Status BigtableInstanceAdminClient::DeleteAppProfile(std::string const& name,
   return connection_->DeleteAppProfile(request);
 }
 
+Status BigtableInstanceAdminClient::DeleteAppProfile(
+    google::bigtable::admin::v2::DeleteAppProfileRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->DeleteAppProfile(request);
+}
+
 StatusOr<google::iam::v1::Policy> BigtableInstanceAdminClient::GetIamPolicy(
     std::string const& resource, Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
+  return connection_->GetIamPolicy(request);
+}
+
+StatusOr<google::iam::v1::Policy> BigtableInstanceAdminClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetIamPolicy(request);
 }
 
@@ -247,6 +402,13 @@ StatusOr<google::iam::v1::Policy> BigtableInstanceAdminClient::SetIamPolicy(
   }
 }
 
+StatusOr<google::iam::v1::Policy> BigtableInstanceAdminClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->SetIamPolicy(request);
+}
+
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 BigtableInstanceAdminClient::TestIamPermissions(
     std::string const& resource, std::vector<std::string> const& permissions,
@@ -257,168 +419,6 @@ BigtableInstanceAdminClient::TestIamPermissions(
   request.set_resource(resource);
   *request.mutable_permissions() = {permissions.begin(), permissions.end()};
   return connection_->TestIamPermissions(request);
-}
-
-future<StatusOr<google::bigtable::admin::v2::Instance>>
-BigtableInstanceAdminClient::CreateInstance(
-    google::bigtable::admin::v2::CreateInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->CreateInstance(request);
-}
-
-StatusOr<google::bigtable::admin::v2::Instance>
-BigtableInstanceAdminClient::GetInstance(
-    google::bigtable::admin::v2::GetInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->GetInstance(request);
-}
-
-StatusOr<google::bigtable::admin::v2::ListInstancesResponse>
-BigtableInstanceAdminClient::ListInstances(
-    google::bigtable::admin::v2::ListInstancesRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->ListInstances(request);
-}
-
-StatusOr<google::bigtable::admin::v2::Instance>
-BigtableInstanceAdminClient::UpdateInstance(
-    google::bigtable::admin::v2::Instance const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->UpdateInstance(request);
-}
-
-future<StatusOr<google::bigtable::admin::v2::Instance>>
-BigtableInstanceAdminClient::PartialUpdateInstance(
-    google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->PartialUpdateInstance(request);
-}
-
-Status BigtableInstanceAdminClient::DeleteInstance(
-    google::bigtable::admin::v2::DeleteInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->DeleteInstance(request);
-}
-
-future<StatusOr<google::bigtable::admin::v2::Cluster>>
-BigtableInstanceAdminClient::CreateCluster(
-    google::bigtable::admin::v2::CreateClusterRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->CreateCluster(request);
-}
-
-StatusOr<google::bigtable::admin::v2::Cluster>
-BigtableInstanceAdminClient::GetCluster(
-    google::bigtable::admin::v2::GetClusterRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->GetCluster(request);
-}
-
-StatusOr<google::bigtable::admin::v2::ListClustersResponse>
-BigtableInstanceAdminClient::ListClusters(
-    google::bigtable::admin::v2::ListClustersRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->ListClusters(request);
-}
-
-future<StatusOr<google::bigtable::admin::v2::Cluster>>
-BigtableInstanceAdminClient::UpdateCluster(
-    google::bigtable::admin::v2::Cluster const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->UpdateCluster(request);
-}
-
-future<StatusOr<google::bigtable::admin::v2::Cluster>>
-BigtableInstanceAdminClient::PartialUpdateCluster(
-    google::bigtable::admin::v2::PartialUpdateClusterRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->PartialUpdateCluster(request);
-}
-
-Status BigtableInstanceAdminClient::DeleteCluster(
-    google::bigtable::admin::v2::DeleteClusterRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->DeleteCluster(request);
-}
-
-StatusOr<google::bigtable::admin::v2::AppProfile>
-BigtableInstanceAdminClient::CreateAppProfile(
-    google::bigtable::admin::v2::CreateAppProfileRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->CreateAppProfile(request);
-}
-
-StatusOr<google::bigtable::admin::v2::AppProfile>
-BigtableInstanceAdminClient::GetAppProfile(
-    google::bigtable::admin::v2::GetAppProfileRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->GetAppProfile(request);
-}
-
-StreamRange<google::bigtable::admin::v2::AppProfile>
-BigtableInstanceAdminClient::ListAppProfiles(
-    google::bigtable::admin::v2::ListAppProfilesRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->ListAppProfiles(std::move(request));
-}
-
-future<StatusOr<google::bigtable::admin::v2::AppProfile>>
-BigtableInstanceAdminClient::UpdateAppProfile(
-    google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->UpdateAppProfile(request);
-}
-
-Status BigtableInstanceAdminClient::DeleteAppProfile(
-    google::bigtable::admin::v2::DeleteAppProfileRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->DeleteAppProfile(request);
-}
-
-StatusOr<google::iam::v1::Policy> BigtableInstanceAdminClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->GetIamPolicy(request);
-}
-
-StatusOr<google::iam::v1::Policy> BigtableInstanceAdminClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>

@@ -113,6 +113,24 @@ class SecretManagerServiceClient {
       std::string const& parent, Options options = {});
 
   ///
+  /// Lists [Secrets][google.cloud.secretmanager.v1.Secret].
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::secretmanager::v1::ListSecretsRequest,google/cloud/secretmanager/v1/service.proto#L206}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
+  ///
+  /// [google.cloud.secretmanager.v1.ListSecretsRequest]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L206}
+  /// [google.cloud.secretmanager.v1.Secret]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
+  ///
+  StreamRange<google::cloud::secretmanager::v1::Secret> ListSecrets(
+      google::cloud::secretmanager::v1::ListSecretsRequest request,
+      Options options = {});
+
+  ///
   /// Creates a new [Secret][google.cloud.secretmanager.v1.Secret] containing no
   /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion].
   ///
@@ -141,6 +159,25 @@ class SecretManagerServiceClient {
       Options options = {});
 
   ///
+  /// Creates a new [Secret][google.cloud.secretmanager.v1.Secret] containing no
+  /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion].
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::secretmanager::v1::CreateSecretRequest,google/cloud/secretmanager/v1/service.proto#L248}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
+  ///
+  /// [google.cloud.secretmanager.v1.CreateSecretRequest]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L248}
+  /// [google.cloud.secretmanager.v1.Secret]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
+  ///
+  StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
+      google::cloud::secretmanager::v1::CreateSecretRequest const& request,
+      Options options = {});
+
+  ///
   /// Creates a new [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]
   /// containing secret data and attaches it to an existing
   /// [Secret][google.cloud.secretmanager.v1.Secret].
@@ -166,232 +203,6 @@ class SecretManagerServiceClient {
       Options options = {});
 
   ///
-  /// Gets metadata for a given [Secret][google.cloud.secretmanager.v1.Secret].
-  ///
-  /// @param name  Required. The resource name of the
-  /// [Secret][google.cloud.secretmanager.v1.Secret], in the format
-  /// `projects/*/secrets/*`.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
-  ///
-  /// [google.cloud.secretmanager.v1.GetSecretRequest]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L285}
-  /// [google.cloud.secretmanager.v1.Secret]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
-  ///
-  StatusOr<google::cloud::secretmanager::v1::Secret> GetSecret(
-      std::string const& name, Options options = {});
-
-  ///
-  /// Updates metadata of an existing
-  /// [Secret][google.cloud.secretmanager.v1.Secret].
-  ///
-  /// @param secret  Required. [Secret][google.cloud.secretmanager.v1.Secret]
-  /// with updated field values.
-  /// @param update_mask  Required. Specifies the fields to be updated.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
-  ///
-  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L354}
-  /// [google.cloud.secretmanager.v1.Secret]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
-  ///
-  StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
-      google::cloud::secretmanager::v1::Secret const& secret,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
-
-  ///
-  /// Deletes a [Secret][google.cloud.secretmanager.v1.Secret].
-  ///
-  /// @param name  Required. The resource name of the
-  /// [Secret][google.cloud.secretmanager.v1.Secret] to delete in the format
-  ///  `projects/*/secrets/*`.
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.cloud.secretmanager.v1.DeleteSecretRequest]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L390}
-  ///
-  Status DeleteSecret(std::string const& name, Options options = {});
-
-  ///
-  /// Lists [SecretVersions][google.cloud.secretmanager.v1.SecretVersion]. This
-  /// call does not return secret data.
-  ///
-  /// @param parent  Required. The resource name of the
-  /// [Secret][google.cloud.secretmanager.v1.Secret] associated with the
-  ///  [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] to list, in
-  ///  the format `projects/*/secrets/*`.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
-  ///
-  /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L296}
-  /// [google.cloud.secretmanager.v1.SecretVersion]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
-  ///
-  StreamRange<google::cloud::secretmanager::v1::SecretVersion>
-  ListSecretVersions(std::string const& parent, Options options = {});
-
-  ///
-  /// Gets metadata for a
-  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
-  ///
-  /// `projects/*/secrets/*/versions/latest` is an alias to the most recently
-  /// created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
-  ///
-  /// @param name  Required. The resource name of the
-  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
-  ///  `projects/*/secrets/*/versions/*`.
-  ///  `projects/*/secrets/*/versions/latest` is an alias to the most recently
-  ///  created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
-  ///
-  /// [google.cloud.secretmanager.v1.GetSecretVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L339}
-  /// [google.cloud.secretmanager.v1.SecretVersion]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
-  ///
-  StatusOr<google::cloud::secretmanager::v1::SecretVersion> GetSecretVersion(
-      std::string const& name, Options options = {});
-
-  ///
-  /// Accesses a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
-  /// This call returns the secret data.
-  ///
-  /// `projects/*/secrets/*/versions/latest` is an alias to the most recently
-  /// created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
-  ///
-  /// @param name  Required. The resource name of the
-  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
-  ///  `projects/*/secrets/*/versions/*`.
-  ///  `projects/*/secrets/*/versions/latest` is an alias to the most recently
-  ///  created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::AccessSecretVersionResponse,google/cloud/secretmanager/v1/service.proto#L378}
-  ///
-  /// [google.cloud.secretmanager.v1.AccessSecretVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L363}
-  /// [google.cloud.secretmanager.v1.AccessSecretVersionResponse]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L378}
-  ///
-  StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
-  AccessSecretVersion(std::string const& name, Options options = {});
-
-  ///
-  /// Disables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
-  ///
-  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
-  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
-  /// [DISABLED][google.cloud.secretmanager.v1.SecretVersion.State.DISABLED].
-  ///
-  /// @param name  Required. The resource name of the
-  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to disable in
-  /// the format
-  ///  `projects/*/secrets/*/versions/*`.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
-  ///
-  /// [google.cloud.secretmanager.v1.DisableSecretVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L407}
-  /// [google.cloud.secretmanager.v1.SecretVersion]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
-  ///
-  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  DisableSecretVersion(std::string const& name, Options options = {});
-
-  ///
-  /// Enables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
-  ///
-  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
-  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
-  /// [ENABLED][google.cloud.secretmanager.v1.SecretVersion.State.ENABLED].
-  ///
-  /// @param name  Required. The resource name of the
-  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to enable in
-  /// the format
-  ///  `projects/*/secrets/*/versions/*`.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
-  ///
-  /// [google.cloud.secretmanager.v1.EnableSecretVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L424}
-  /// [google.cloud.secretmanager.v1.SecretVersion]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
-  ///
-  StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
-      std::string const& name, Options options = {});
-
-  ///
-  /// Destroys a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
-  ///
-  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
-  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
-  /// [DESTROYED][google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]
-  /// and irrevocably destroys the secret data.
-  ///
-  /// @param name  Required. The resource name of the
-  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to destroy in
-  /// the format
-  ///  `projects/*/secrets/*/versions/*`.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
-  ///
-  /// [google.cloud.secretmanager.v1.DestroySecretVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L441}
-  /// [google.cloud.secretmanager.v1.SecretVersion]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
-  ///
-  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  DestroySecretVersion(std::string const& name, Options options = {});
-
-  ///
-  /// Lists [Secrets][google.cloud.secretmanager.v1.Secret].
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::secretmanager::v1::ListSecretsRequest,google/cloud/secretmanager/v1/service.proto#L206}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
-  ///
-  /// [google.cloud.secretmanager.v1.ListSecretsRequest]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L206}
-  /// [google.cloud.secretmanager.v1.Secret]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
-  ///
-  StreamRange<google::cloud::secretmanager::v1::Secret> ListSecrets(
-      google::cloud::secretmanager::v1::ListSecretsRequest request,
-      Options options = {});
-
-  ///
-  /// Creates a new [Secret][google.cloud.secretmanager.v1.Secret] containing no
-  /// [SecretVersions][google.cloud.secretmanager.v1.SecretVersion].
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::secretmanager::v1::CreateSecretRequest,google/cloud/secretmanager/v1/service.proto#L248}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
-  ///
-  /// [google.cloud.secretmanager.v1.CreateSecretRequest]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L248}
-  /// [google.cloud.secretmanager.v1.Secret]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
-  ///
-  StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
-      google::cloud::secretmanager::v1::CreateSecretRequest const& request,
-      Options options = {});
-
-  ///
   /// Creates a new [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]
   /// containing secret data and attaches it to an existing
   /// [Secret][google.cloud.secretmanager.v1.Secret].
@@ -410,6 +221,24 @@ class SecretManagerServiceClient {
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> AddSecretVersion(
       google::cloud::secretmanager::v1::AddSecretVersionRequest const& request,
       Options options = {});
+
+  ///
+  /// Gets metadata for a given [Secret][google.cloud.secretmanager.v1.Secret].
+  ///
+  /// @param name  Required. The resource name of the
+  /// [Secret][google.cloud.secretmanager.v1.Secret], in the format
+  /// `projects/*/secrets/*`.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
+  ///
+  /// [google.cloud.secretmanager.v1.GetSecretRequest]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L285}
+  /// [google.cloud.secretmanager.v1.Secret]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
+  ///
+  StatusOr<google::cloud::secretmanager::v1::Secret> GetSecret(
+      std::string const& name, Options options = {});
 
   ///
   /// Gets metadata for a given [Secret][google.cloud.secretmanager.v1.Secret].
@@ -433,6 +262,26 @@ class SecretManagerServiceClient {
   /// Updates metadata of an existing
   /// [Secret][google.cloud.secretmanager.v1.Secret].
   ///
+  /// @param secret  Required. [Secret][google.cloud.secretmanager.v1.Secret]
+  /// with updated field values.
+  /// @param update_mask  Required. Specifies the fields to be updated.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
+  ///
+  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L354}
+  /// [google.cloud.secretmanager.v1.Secret]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
+  ///
+  StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
+      google::cloud::secretmanager::v1::Secret const& secret,
+      google::protobuf::FieldMask const& update_mask, Options options = {});
+
+  ///
+  /// Updates metadata of an existing
+  /// [Secret][google.cloud.secretmanager.v1.Secret].
+  ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::UpdateSecretRequest,google/cloud/secretmanager/v1/service.proto#L354}
   /// @param options  Optional. Operation options.
@@ -451,6 +300,19 @@ class SecretManagerServiceClient {
   ///
   /// Deletes a [Secret][google.cloud.secretmanager.v1.Secret].
   ///
+  /// @param name  Required. The resource name of the
+  /// [Secret][google.cloud.secretmanager.v1.Secret] to delete in the format
+  ///  `projects/*/secrets/*`.
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.cloud.secretmanager.v1.DeleteSecretRequest]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L390}
+  ///
+  Status DeleteSecret(std::string const& name, Options options = {});
+
+  ///
+  /// Deletes a [Secret][google.cloud.secretmanager.v1.Secret].
+  ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::DeleteSecretRequest,google/cloud/secretmanager/v1/service.proto#L390}
   /// @param options  Optional. Operation options.
@@ -461,6 +323,26 @@ class SecretManagerServiceClient {
   Status DeleteSecret(
       google::cloud::secretmanager::v1::DeleteSecretRequest const& request,
       Options options = {});
+
+  ///
+  /// Lists [SecretVersions][google.cloud.secretmanager.v1.SecretVersion]. This
+  /// call does not return secret data.
+  ///
+  /// @param parent  Required. The resource name of the
+  /// [Secret][google.cloud.secretmanager.v1.Secret] associated with the
+  ///  [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] to list, in
+  ///  the format `projects/*/secrets/*`.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
+  /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L296}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
+  StreamRange<google::cloud::secretmanager::v1::SecretVersion>
+  ListSecretVersions(std::string const& parent, Options options = {});
 
   ///
   /// Lists [SecretVersions][google.cloud.secretmanager.v1.SecretVersion]. This
@@ -489,6 +371,30 @@ class SecretManagerServiceClient {
   /// `projects/*/secrets/*/versions/latest` is an alias to the most recently
   /// created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
   ///
+  /// @param name  Required. The resource name of the
+  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
+  ///  `projects/*/secrets/*/versions/*`.
+  ///  `projects/*/secrets/*/versions/latest` is an alias to the most recently
+  ///  created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
+  /// [google.cloud.secretmanager.v1.GetSecretVersionRequest]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L339}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion> GetSecretVersion(
+      std::string const& name, Options options = {});
+
+  ///
+  /// Gets metadata for a
+  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  ///
+  /// `projects/*/secrets/*/versions/latest` is an alias to the most recently
+  /// created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::GetSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L339}
   /// @param options  Optional. Operation options.
@@ -503,6 +409,30 @@ class SecretManagerServiceClient {
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> GetSecretVersion(
       google::cloud::secretmanager::v1::GetSecretVersionRequest const& request,
       Options options = {});
+
+  ///
+  /// Accesses a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  /// This call returns the secret data.
+  ///
+  /// `projects/*/secrets/*/versions/latest` is an alias to the most recently
+  /// created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  ///
+  /// @param name  Required. The resource name of the
+  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
+  ///  `projects/*/secrets/*/versions/*`.
+  ///  `projects/*/secrets/*/versions/latest` is an alias to the most recently
+  ///  created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::AccessSecretVersionResponse,google/cloud/secretmanager/v1/service.proto#L378}
+  ///
+  /// [google.cloud.secretmanager.v1.AccessSecretVersionRequest]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L363}
+  /// [google.cloud.secretmanager.v1.AccessSecretVersionResponse]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L378}
+  ///
+  StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
+  AccessSecretVersion(std::string const& name, Options options = {});
 
   ///
   /// Accesses a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -535,6 +465,29 @@ class SecretManagerServiceClient {
   /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
   /// [DISABLED][google.cloud.secretmanager.v1.SecretVersion.State.DISABLED].
   ///
+  /// @param name  Required. The resource name of the
+  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to disable in
+  /// the format
+  ///  `projects/*/secrets/*/versions/*`.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
+  /// [google.cloud.secretmanager.v1.DisableSecretVersionRequest]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L407}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+  DisableSecretVersion(std::string const& name, Options options = {});
+
+  ///
+  /// Disables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  ///
+  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
+  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
+  /// [DISABLED][google.cloud.secretmanager.v1.SecretVersion.State.DISABLED].
+  ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::DisableSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L407}
   /// @param options  Optional. Operation options.
@@ -559,6 +512,29 @@ class SecretManagerServiceClient {
   /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
   /// [ENABLED][google.cloud.secretmanager.v1.SecretVersion.State.ENABLED].
   ///
+  /// @param name  Required. The resource name of the
+  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to enable in
+  /// the format
+  ///  `projects/*/secrets/*/versions/*`.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
+  /// [google.cloud.secretmanager.v1.EnableSecretVersionRequest]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L424}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
+      std::string const& name, Options options = {});
+
+  ///
+  /// Enables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  ///
+  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
+  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
+  /// [ENABLED][google.cloud.secretmanager.v1.SecretVersion.State.ENABLED].
+  ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::EnableSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L424}
   /// @param options  Optional. Operation options.
@@ -574,6 +550,30 @@ class SecretManagerServiceClient {
       google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
           request,
       Options options = {});
+
+  ///
+  /// Destroys a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
+  ///
+  /// Sets the [state][google.cloud.secretmanager.v1.SecretVersion.state] of the
+  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to
+  /// [DESTROYED][google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]
+  /// and irrevocably destroys the secret data.
+  ///
+  /// @param name  Required. The resource name of the
+  /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to destroy in
+  /// the format
+  ///  `projects/*/secrets/*/versions/*`.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
+  /// [google.cloud.secretmanager.v1.DestroySecretVersionRequest]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L441}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
+  ///
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+  DestroySecretVersion(std::string const& name, Options options = {});
 
   ///
   /// Destroys a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].

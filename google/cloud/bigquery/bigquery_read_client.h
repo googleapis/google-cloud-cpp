@@ -134,33 +134,6 @@ class BigQueryReadClient {
       std::int32_t max_stream_count, Options options = {});
 
   ///
-  /// Reads rows from the stream in the format prescribed by the ReadSession.
-  /// Each response contains one or more table rows, up to a maximum of 100 MiB
-  /// per response; read requests which attempt to read individual rows larger
-  /// than 100 MiB will fail.
-  ///
-  /// Each request also returns a set of stream statistics reflecting the
-  /// current state of the stream.
-  ///
-  /// @param read_stream  Required. Stream to read rows from.
-  /// @param offset  The offset requested must be less than the last row read
-  /// from Read.
-  ///  Requesting a larger offset is undefined. If not specified, start reading
-  ///  from offset zero.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L304}
-  ///
-  /// [google.cloud.bigquery.storage.v1.ReadRowsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L254}
-  /// [google.cloud.bigquery.storage.v1.ReadRowsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L304}
-  ///
-  StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
-      std::string const& read_stream, std::int64_t offset,
-      Options options = {});
-
-  ///
   /// Creates a new read session. A read session divides the contents of a
   /// BigQuery table into one or more streams, which can then be used to read
   /// data from the table. The read session also specifies properties of the
@@ -195,6 +168,33 @@ class BigQueryReadClient {
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
           request,
+      Options options = {});
+
+  ///
+  /// Reads rows from the stream in the format prescribed by the ReadSession.
+  /// Each response contains one or more table rows, up to a maximum of 100 MiB
+  /// per response; read requests which attempt to read individual rows larger
+  /// than 100 MiB will fail.
+  ///
+  /// Each request also returns a set of stream statistics reflecting the
+  /// current state of the stream.
+  ///
+  /// @param read_stream  Required. Stream to read rows from.
+  /// @param offset  The offset requested must be less than the last row read
+  /// from Read.
+  ///  Requesting a larger offset is undefined. If not specified, start reading
+  ///  from offset zero.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L304}
+  ///
+  /// [google.cloud.bigquery.storage.v1.ReadRowsRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L254}
+  /// [google.cloud.bigquery.storage.v1.ReadRowsResponse]:
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L304}
+  ///
+  StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
+      std::string const& read_stream, std::int64_t offset,
       Options options = {});
 
   ///

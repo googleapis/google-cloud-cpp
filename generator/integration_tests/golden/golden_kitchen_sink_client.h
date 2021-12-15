@@ -125,6 +125,19 @@ class GoldenKitchenSinkClient {
   GenerateAccessToken(std::string const& name, std::vector<std::string> const& delegates, std::vector<std::string> const& scope, google::protobuf::Duration const& lifetime, Options options = {});
 
   ///
+  /// Generates an OAuth 2.0 access token for a service account.
+  ///
+  /// @param request @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenRequest,generator/integration_tests/test.proto#L835}
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenResponse,generator/integration_tests/test.proto#L872}
+  ///
+  /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L835}
+  /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L872}
+  ///
+  StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
+  GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request, Options options = {});
+
+  ///
   /// Generates an OpenID Connect ID token for a service account.
   ///
   /// @param name  Required. The resource name of the service account for which the credentials
@@ -152,6 +165,19 @@ class GoldenKitchenSinkClient {
   ///
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
   GenerateIdToken(std::string const& name, std::vector<std::string> const& delegates, std::string const& audience, bool include_email, Options options = {});
+
+  ///
+  /// Generates an OpenID Connect ID token for a service account.
+  ///
+  /// @param request @googleapis_link{google::test::admin::database::v1::GenerateIdTokenRequest,generator/integration_tests/test.proto#L881}
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::test::admin::database::v1::GenerateIdTokenResponse,generator/integration_tests/test.proto#L914}
+  ///
+  /// [google.test.admin.database.v1.GenerateIdTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L881}
+  /// [google.test.admin.database.v1.GenerateIdTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L914}
+  ///
+  StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
+  GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request, Options options = {});
 
   ///
   /// Writes log entries to Logging. This API method is the
@@ -189,6 +215,25 @@ class GoldenKitchenSinkClient {
   WriteLogEntries(std::string const& log_name, std::map<std::string, std::string> const& labels, Options options = {});
 
   ///
+  /// Writes log entries to Logging. This API method is the
+  /// only way to send log entries to Logging. This method
+  /// is used, directly or indirectly, by the Logging agent
+  /// (fluentd) and all logging libraries configured to use Logging.
+  /// A single request may contain log entries for a maximum of 1000
+  /// different resources (projects, organizations, billing accounts or
+  /// folders)
+  ///
+  /// @param request @googleapis_link{google::test::admin::database::v1::WriteLogEntriesRequest,generator/integration_tests/test.proto#L920}
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::test::admin::database::v1::WriteLogEntriesResponse,generator/integration_tests/test.proto#L953}
+  ///
+  /// [google.test.admin.database.v1.WriteLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L920}
+  /// [google.test.admin.database.v1.WriteLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L953}
+  ///
+  StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
+  WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request, Options options = {});
+
+  ///
   /// Lists the logs in projects, organizations, folders, or billing accounts.
   /// Only logs that have entries are listed.
   ///
@@ -204,6 +249,19 @@ class GoldenKitchenSinkClient {
   ///
   StreamRange<std::string>
   ListLogs(std::string const& parent, Options options = {});
+
+  ///
+  /// Lists the logs in projects, organizations, folders, or billing accounts.
+  /// Only logs that have entries are listed.
+  ///
+  /// @param request @googleapis_link{google::test::admin::database::v1::ListLogsRequest,generator/integration_tests/test.proto#L956}
+  /// @param options  Optional. Operation options.
+  /// @return std::string
+  ///
+  /// [google.test.admin.database.v1.ListLogsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L956}
+  ///
+  StreamRange<std::string>
+  ListLogs(google::test::admin::database::v1::ListLogsRequest request, Options options = {});
 
   ///
   /// Streaming read of log entries as they are ingested. Until the stream is
@@ -229,6 +287,20 @@ class GoldenKitchenSinkClient {
   TailLogEntries(std::vector<std::string> const& resource_names, Options options = {});
 
   ///
+  /// Streaming read of log entries as they are ingested. Until the stream is
+  /// terminated, it will continue reading logs.
+  ///
+  /// @param request @googleapis_link{google::test::admin::database::v1::TailLogEntriesRequest,generator/integration_tests/test.proto#L1182}
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::test::admin::database::v1::TailLogEntriesResponse,generator/integration_tests/test.proto#L1214}
+  ///
+  /// [google.test.admin.database.v1.TailLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1182}
+  /// [google.test.admin.database.v1.TailLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1214}
+  ///
+  StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
+  TailLogEntries(google::test::admin::database::v1::TailLogEntriesRequest const& request, Options options = {});
+
+  ///
   /// Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for a service account.
   ///
   /// @param name  Required. The resource name of the service account in the following format:
@@ -247,78 +319,6 @@ class GoldenKitchenSinkClient {
   ///
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(std::string const& name, std::vector<google::test::admin::database::v1::ListServiceAccountKeysRequest::KeyType> const& key_types, Options options = {});
-
-  ///
-  /// Generates an OAuth 2.0 access token for a service account.
-  ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenRequest,generator/integration_tests/test.proto#L835}
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenResponse,generator/integration_tests/test.proto#L872}
-  ///
-  /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L835}
-  /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L872}
-  ///
-  StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request, Options options = {});
-
-  ///
-  /// Generates an OpenID Connect ID token for a service account.
-  ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::GenerateIdTokenRequest,generator/integration_tests/test.proto#L881}
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::GenerateIdTokenResponse,generator/integration_tests/test.proto#L914}
-  ///
-  /// [google.test.admin.database.v1.GenerateIdTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L881}
-  /// [google.test.admin.database.v1.GenerateIdTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L914}
-  ///
-  StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
-  GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request, Options options = {});
-
-  ///
-  /// Writes log entries to Logging. This API method is the
-  /// only way to send log entries to Logging. This method
-  /// is used, directly or indirectly, by the Logging agent
-  /// (fluentd) and all logging libraries configured to use Logging.
-  /// A single request may contain log entries for a maximum of 1000
-  /// different resources (projects, organizations, billing accounts or
-  /// folders)
-  ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::WriteLogEntriesRequest,generator/integration_tests/test.proto#L920}
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::WriteLogEntriesResponse,generator/integration_tests/test.proto#L953}
-  ///
-  /// [google.test.admin.database.v1.WriteLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L920}
-  /// [google.test.admin.database.v1.WriteLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L953}
-  ///
-  StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
-  WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request, Options options = {});
-
-  ///
-  /// Lists the logs in projects, organizations, folders, or billing accounts.
-  /// Only logs that have entries are listed.
-  ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::ListLogsRequest,generator/integration_tests/test.proto#L956}
-  /// @param options  Optional. Operation options.
-  /// @return std::string
-  ///
-  /// [google.test.admin.database.v1.ListLogsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L956}
-  ///
-  StreamRange<std::string>
-  ListLogs(google::test::admin::database::v1::ListLogsRequest request, Options options = {});
-
-  ///
-  /// Streaming read of log entries as they are ingested. Until the stream is
-  /// terminated, it will continue reading logs.
-  ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::TailLogEntriesRequest,generator/integration_tests/test.proto#L1182}
-  /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::TailLogEntriesResponse,generator/integration_tests/test.proto#L1214}
-  ///
-  /// [google.test.admin.database.v1.TailLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1182}
-  /// [google.test.admin.database.v1.TailLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1214}
-  ///
-  StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
-  TailLogEntries(google::test::admin::database::v1::TailLogEntriesRequest const& request, Options options = {});
 
   ///
   /// Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for a service account.
