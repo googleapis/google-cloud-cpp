@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
+#include <fstream>
 
 namespace google {
 namespace cloud {
@@ -418,6 +419,29 @@ TEST_F(RestClientIntegrationTest, PostFormData) {
   EXPECT_THAT((*form)[form_pair_1.first], Eq(form_pair_1.second));
   EXPECT_THAT((*form)[form_pair_2.first], Eq(form_pair_2.second));
   EXPECT_THAT((*form)[form_pair_3.first], Eq(form_pair_3.second));
+}
+
+TEST_F(RestClientIntegrationTest, BigQueryListDatasets) {
+  options_.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
+  std::string bigquery_endpoint = "https://bigquery.googleapis.com";
+  auto client = PooledRestClient::GetRestClient(bigquery_endpoint, options_);
+  RestRequest request;
+  request.SetPath("bigquery/v2/projects/bigquery-public-data/datasets");
+  request.AddQueryParameter({"maxResults", "10"});
+  auto response = client->Get(request);
+  if (!response.ok()) {
+    std::cout << response.status().message() << "\n";
+    std::cout << response.status().error_info().domain() << "\n";
+    std::cout << response.status().error_info().reason() << "\n";
+    for (auto const& m : response.status().error_info().metadata()) {
+      std::cout << m.first << ", " << m.second << "\n";
+    }
+  } else {
+    auto response_payload = std::move(**response).ExtractPayload();
+    auto response_json = ReadAll(std::move(response_payload));
+    ASSERT_THAT(response_json, IsOk());
+    std::cout << *response_json << "\n";
+  }
 }
 
 }  // namespace

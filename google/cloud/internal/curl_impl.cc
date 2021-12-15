@@ -618,6 +618,7 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
 
 Status CurlImpl::MakeRequestImpl() {
   TRACE_STATE() << "url_ " << url_ << "\n";
+  std::cout << __func__ << "url = " << url_ << "\n";
   // Setting BUFFERSIZE is a request, not an order. libcurl can and will write
   // fewer bytes as it wishes.
   handle_.SetOption(CURLOPT_BUFFERSIZE, kDefaultCurlWriteBufferSize);
