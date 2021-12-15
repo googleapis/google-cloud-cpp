@@ -25,9 +25,7 @@ source module ci/lib/io.sh
 io::log_h2 "Using bazel version"
 : "${USE_BAZEL_VERSION:="3.5.0"}"
 export USE_BAZEL_VERSION
-bazelisk version
-
-io::log_h2 "try reproduce bazelisk cache error by making a change"
+bazelisk version || rm -fr $HOME/Library/Caches/bazelisk || bazelisk version
 
 bazel_args=(
   # On macOS gRPC does not compile correctly unless one defines this:
