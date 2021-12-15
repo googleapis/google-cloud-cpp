@@ -26,7 +26,7 @@ source module ci/lib/io.sh
 io::log_h2 "Using bazel version"
 : "${USE_BAZEL_VERSION:="3.5.0"}"
 export USE_BAZEL_VERSION
-bazelisk version
+bazelisk version || rm -fr "$HOME"/Library/Caches/bazelisk || bazelisk version
 # Kokoro needs bazel to be shutdown here, otherwise it will hang. This shutdown
 # is different (because it's in a different WORKSPACE) than the shutdown below
 # that's done in each quickstart workspace.
