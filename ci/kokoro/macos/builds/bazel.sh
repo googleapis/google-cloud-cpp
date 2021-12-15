@@ -27,7 +27,7 @@ io::log_h2 "Using bazel version"
 export USE_BAZEL_VERSION
 bazelisk version
 
-io::log_h2 "Bazelisk resolved."
+io::log_h2 "try reproduce bazelisk cache error by making a change"
 
 bazel_args=(
   # On macOS gRPC does not compile correctly unless one defines this:
