@@ -622,6 +622,7 @@ endif ()
 if (GOOGLE_CLOUD_CPP_ENABLE_REST)
     include(IncludeNlohmannJson)
     include(FindCurlWithTargets)
+    find_package(OpenSSL REQUIRED)
 
     # the library
     add_library(
@@ -639,6 +640,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/curl_wrappers.h
         internal/http_payload.cc
         internal/http_payload.h
+        internal/make_jwt_assertion.cc
+        internal/make_jwt_assertion.h
         internal/oauth2_access_token_credentials.cc
         internal/oauth2_access_token_credentials.h
         internal/oauth2_anonymous_credentials.cc
@@ -652,19 +655,35 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/oauth2_credentials.h
         internal/oauth2_error_credentials.cc
         internal/oauth2_error_credentials.h
+        internal/oauth2_google_application_default_credentials_file.cc
+        internal/oauth2_google_application_default_credentials_file.h
+        internal/oauth2_google_credentials.cc
+        internal/oauth2_google_credentials.h
+        internal/oauth2_impersonate_service_account_credentials.cc
+        internal/oauth2_impersonate_service_account_credentials.h
+        internal/oauth2_minimal_iam_credentials_rest.cc
+        internal/oauth2_minimal_iam_credentials_rest.h
         internal/oauth2_refreshing_credentials_wrapper.cc
         internal/oauth2_refreshing_credentials_wrapper.h
+        internal/oauth2_service_account_credentials.cc
+        internal/oauth2_service_account_credentials.h
+        internal/openssl_util.cc
+        internal/openssl_util.h
         internal/rest_client.cc
         internal/rest_client.h
         internal/rest_options.h
         internal/rest_request.cc
         internal/rest_request.h
         internal/rest_response.cc
-        internal/rest_response.h)
+        internal/rest_response.h
+        internal/unified_rest_credentials.cc
+        internal/unified_rest_credentials.h
+        internal/write_base64.cc
+        internal/write_base64.h)
     target_link_libraries(
         google_cloud_cpp_rest_internal
         PUBLIC absl::span google-cloud-cpp::common CURL::libcurl
-               nlohmann_json::nlohmann_json)
+               nlohmann_json::nlohmann_json OpenSSL::SSL OpenSSL::Crypto)
     google_cloud_cpp_add_common_options(google_cloud_cpp_rest_internal)
     target_include_directories(
         google_cloud_cpp_rest_internal
@@ -716,14 +735,21 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
             internal/curl_impl_test.cc
             internal/curl_wrappers_test.cc
             internal/http_payload_test.cc
+            internal/make_jwt_assertion_test.cc
             internal/oauth2_access_token_credentials_test.cc
             internal/oauth2_anonymous_credentials_test.cc
             internal/oauth2_authorized_user_credentials_test.cc
             internal/oauth2_compute_engine_credentials_test.cc
+            internal/oauth2_google_application_default_credentials_file_test.cc
+            internal/oauth2_google_credentials_test.cc
+            internal/oauth2_impersonate_service_account_credentials_test.cc
             internal/oauth2_refreshing_credentials_wrapper_test.cc
+            internal/oauth2_service_account_credentials_test.cc
+            internal/openssl_util_test.cc
             internal/rest_client_test.cc
             internal/rest_request_test.cc
-            internal/rest_response_test.cc)
+            internal/rest_response_test.cc
+            internal/unified_rest_credentials_test.cc)
 
         # List the integration tests, then setup the targets and dependencies.
         set(google_cloud_cpp_rest_internal_integration_tests

@@ -15,6 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_OPTIONS_H
 
+//#include "google/cloud/credentials.h"
+#include "google/cloud/internal/curl_options.h"
+#include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <chrono>
@@ -26,16 +29,187 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#if 0
+/**
+ * Set the HTTP version used by the client.
+ *
+ * If this option is not provided, or is set to `default` then the library uses
+ * [libcurl's default], typically HTTP/2 with SSL. Possible settings include:
+ * - "1.0": use HTTP/1.0, this is not recommended as would require a new
+ *   connection for each request.
+ * - "1.1": use HTTP/1.1, this may be useful when the overhead of HTTP/2 is
+ *   unacceptable. Note that this may require additional connections.
+ * - "2TLS": use HTTP/2 with TLS
+ * - "2.0": use HTTP/2 with our without TLS.
+ *
+ * [libcurl's default]: https://curl.se/libcurl/c/CURLOPT_HTTP_VERSION.html
+ */
+struct HttpVersionOption {
+  using Type = std::string;
+};
+#endif
+
+#if 0
+/// This is only intended for testing against staging or development versions
+/// of the service. It is not for public use.
+struct TargetApiVersionOption {
+  using Type = std::string;
+};
+
+/// This is only intended for testing. It is not for public use.
+struct CAPathOption {
+  using Type = std::string;
+};
+
+/// Configure the IAM endpoint for the GCS client library.
+struct IamEndpointOption {
+  using Type = std::string;
+};
+
+/// Configure oauth2::Credentials for the GCS client library.
+struct Oauth2CredentialsOption {
+  using Type = std::shared_ptr<oauth2::Credentials>;
+};
+
+/// Set the Google Cloud Platform project id.
+struct ProjectIdOption {
+  using Type = std::string;
+};
+
+/**
+ * Set the maximum connection pool size.
+ *
+ * The C++ client library uses this value to limit the growth of the
+ * connection pool. Once an operation (a RPC or a download) completes the
+ * connection used for that operation is returned to the pool. If the pool is
+ * full the connection is immediately released. If the pool has room the
+ * connection is cached for the next RPC or download.
+ *
+ * @note The behavior of this pool may change in the future, depending on the
+ * low-level implementation details of the library.
+ *
+ * @note The library does not create connections proactively, setting a high
+ * value may result in very few connections if your application does not need
+ * them.
+ *
+ * @warning The library may create more connections than this option configures,
+ * for example if your application requests many simultaneous downloads.
+ */
+struct ConnectionPoolSizeOption {
+  using Type = std::size_t;
+};
+
+/**
+ * Control the formatted I/O download buffer.
+ *
+ * When using formatted I/O operations (typically `operator>>(std::istream&...)`
+ * this option controls the size of the in-memory buffer kept to satisfy any I/O
+ * requests.
+ *
+ * Applications seeking optional performance for downloads should avoid
+ * formatted I/O, and prefer using `std::istream::read()`. This option has no
+ * effect in that case.
+ */
+struct DownloadBufferSizeOption {
+  using Type = std::size_t;
+};
+
+/**
+ * Control the formatted I/O upload buffer.
+ *
+ * When using formatted I/O operations (typically `operator<<(std::istream&...)`
+ * this option controls the size of the in-memory buffer kept before a chunk is
+ * uploaded. Note that GCS only accepts chunks in multiples of 256KiB, so this
+ * option is always rounded up to the next such multiple.
+ *
+ * Applications seeking optional performance for downloads should avoid
+ * formatted I/O, and prefer using `std::istream::write()`. This option has no
+ * effect in that case.
+ */
+struct UploadBufferSizeOption {
+  using Type = std::size_t;
+};
+
+/**
+ * Defines the threshold to switch from simple to resumable uploads for files.
+ *
+ * When uploading small files the faster approach is to use a simple upload. For
+ * very large files this is not feasible, as the whole file may not fit in
+ * memory (we are ignoring memory mapped files in this discussion). The library
+ * automatically switches to resumable upload for files larger than this
+ * threshold.
+ */
+struct MaximumSimpleUploadSizeOption {
+  using Type = std::size_t;
+};
+#endif
+
 /// Configure the UserIp query parameter.
 /// For use with GPC services that manage quota per ip address.
 struct UserIpOption {
   using Type = std::string;
 };
 
+/// Configure oauth2::Credentials
+/// At a minimum, this is needed for GCS.
+/// TODO(sdhart): look into leveraging GUAC here.
+struct Oauth2CredentialsOption {
+  using Type = std::shared_ptr<oauth2_internal::Credentials>;
+};
+
 /// Configure the REST endpoint for the GCS client library.
 struct RestEndpointOption {
   using Type = std::string;
 };
+
+#if 0
+/**
+ * Disables automatic OpenSSL locking.
+ *
+ * With older versions of OpenSSL any locking must be provided by locking
+ * callbacks in the application or intermediate libraries. The C++ client
+ * library automatically provides the locking callbacks. If your application
+ * already provides such callbacks, and you prefer to use them, set this option
+ * to `false`.
+ *
+ * @note This option is only useful for applications linking against
+ * OpenSSL 1.0.2.
+ */
+struct EnableCurlSslLockingOption {
+  using Type = bool;
+};
+
+/**
+ * Disables automatic OpenSSL sigpipe handler.
+ *
+ * With some versions of OpenSSL it might be necessary to setup a SIGPIPE
+ * handler. If your application already provides such a handler, set this option
+ * to `false` to disable the handler in the GCS C++ client library.
+ */
+struct EnableCurlSigpipeHandlerOption {
+  using Type = bool;
+};
+/**
+ * Control the maximum socket receive buffer.
+ *
+ * The default is to let the operating system pick a value. Applications that
+ * perform multiple downloads in parallel may need to use smaller receive
+ * buffers to avoid exhausting the OS resources dedicated to TCP buffers.
+ */
+struct MaximumCurlSocketRecvSizeOption {
+  using Type = std::size_t;
+};
+
+/**
+ * Control the maximum socket send buffer.
+ *
+ * The default is to let the operating system pick a value, this is almost
+ * always a good choice.
+ */
+struct MaximumCurlSocketSendSizeOption {
+  using Type = std::size_t;
+};
+#endif
 
 /**
  * Sets the transfer stall timeout.
@@ -76,8 +250,8 @@ struct DownloadStallTimeoutOption {
 
 /// The complete list of options accepted by `CurlRestClient`
 using RestOptionList =
-    ::google::cloud::OptionList<UserIpOption, RestEndpointOption,
-                                TransferStallTimeoutOption,
+    ::google::cloud::OptionList<UserIpOption, Oauth2CredentialsOption,
+                                RestEndpointOption, TransferStallTimeoutOption,
                                 DownloadStallTimeoutOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

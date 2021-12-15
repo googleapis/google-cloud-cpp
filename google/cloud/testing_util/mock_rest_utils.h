@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,10 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_REST_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_REST_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_REST_UTILS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_REST_UTILS_H
 
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/http_payload.h"
 #include "google/cloud/internal/rest_client.h"
+#include "google/cloud/internal/rest_response.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 
@@ -25,31 +28,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
 
 class MockRestClient : public rest_internal::RestClient {
- public:
-  MOCK_METHOD(StatusOr<std::unique_ptr<rest_internal::RestResponse>>, Delete,
-              (rest_internal::RestRequest const& request), (override));
-  MOCK_METHOD(StatusOr<std::unique_ptr<rest_internal::RestResponse>>, Get,
-              (rest_internal::RestRequest const& request), (override));
-  MOCK_METHOD(StatusOr<std::unique_ptr<rest_internal::RestResponse>>, Patch,
-              (rest_internal::RestRequest const& request,
-               std::vector<absl::Span<char const>> const& payload),
-              (override));
-  MOCK_METHOD(StatusOr<std::unique_ptr<rest_internal::RestResponse>>, Post,
-              (rest_internal::RestRequest const& request,
-               std::vector<absl::Span<char const>> const& payload),
-              (override));
-  MOCK_METHOD(
-      StatusOr<std::unique_ptr<rest_internal::RestResponse>>, Post,
-      (rest_internal::RestRequest request,
-       (std::vector<std::pair<std::string, std::string>> const& form_data)),
-      (override));
-  MOCK_METHOD(StatusOr<std::unique_ptr<rest_internal::RestResponse>>, Put,
-              (rest_internal::RestRequest const& request,
-               std::vector<absl::Span<char const>> const& payload),
-              (override));
-};
-
-class MockRestClientOld : public rest_internal::RestClient {
  public:
   static std::unique_ptr<RestClient> GetRestClient(std::string endpoint,
                                                    Options options) {
@@ -82,12 +60,6 @@ class MockRestClientOld : public rest_internal::RestClient {
       std::vector<absl::Span<char const>> const& payload) override {
     return impl_->Post(request, payload);
   }
-  StatusOr<std::unique_ptr<rest_internal::RestResponse>> Post(
-      rest_internal::RestRequest request,
-      std::vector<std::pair<std::string, std::string>> const& form_data)
-      override {
-    return impl_->Post(request, form_data);
-  }
   StatusOr<std::unique_ptr<rest_internal::RestResponse>> Put(
       rest_internal::RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) override {
@@ -111,11 +83,6 @@ class MockRestClientOld : public rest_internal::RestClient {
                 (rest_internal::RestRequest const& request,
                  std::vector<absl::Span<char const>> const& payload),
                 (override));
-    MOCK_METHOD(
-        StatusOr<std::unique_ptr<rest_internal::RestResponse>>, Post,
-        (rest_internal::RestRequest request,
-         (std::vector<std::pair<std::string, std::string>> const& form_data)),
-        (override));
     MOCK_METHOD(StatusOr<std::unique_ptr<rest_internal::RestResponse>>, Put,
                 (rest_internal::RestRequest const& request,
                  std::vector<absl::Span<char const>> const& payload),
@@ -132,9 +99,28 @@ class MockRestClientOld : public rest_internal::RestClient {
   std::shared_ptr<Impl> impl_;
 };
 
+class MockRestResponse : public rest_internal::RestResponse {
+ public:
+  ~MockRestResponse() override = default;
+  MOCK_METHOD(rest_internal::HttpStatusCode, StatusCode, (), (const, override));
+  MOCK_METHOD((std::multimap<std::string, std::string>), Headers, (),
+              (const, override));
+  MOCK_METHOD(std::unique_ptr<rest_internal::HttpPayload>, ExtractPayload, (),
+              (ref(&&), override));
+};
+
+class MockHttpPayload : public rest_internal::HttpPayload {
+ public:
+  ~MockHttpPayload() override = default;
+  MOCK_METHOD(StatusOr<std::size_t>, Read, (absl::Span<char> buffer),
+              (override));
+  MOCK_METHOD((std::multimap<std::string, std::string>), Trailers, (),
+              (const, override));
+};
+
 }  // namespace testing_util
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_REST_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_MOCK_REST_UTILS_H
