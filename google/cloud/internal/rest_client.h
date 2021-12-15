@@ -103,6 +103,8 @@ class CurlRestClient : public RestClient {
 
   friend class std::unique_ptr<RestClient> GetPooledRestClient(
       std::string endpoint_address, Options options);
+  friend class DefaultRestClient;
+  friend class PooledRestClient;
 
   CurlRestClient(std::string endpoint_address,
                  std::shared_ptr<CurlHandleFactory> factory, Options options);
@@ -113,6 +115,27 @@ class CurlRestClient : public RestClient {
   std::shared_ptr<CurlHandleFactory> handle_factory_;
   std::string x_goog_api_client_header_;
   Options options_;
+};
+
+// Provides factory function to create a CurlRestClient that does not manage a
+// pool of connections.
+// This factory function is contained in a class in order to allow injection as
+// a template parameter for testing purposes.
+class DefaultRestClient {
+ public:
+  static std::unique_ptr<RestClient> GetRestClient(std::string endpoint_address,
+                                                   Options options);
+};
+
+// Provides factory function to create a CurlRestClient that manages a pool of
+// connections which are reused in order to minimize costs of setup and
+// teardown.
+// This factory function is contained in a class in order to allow injection as
+// a template parameter for testing purposes.
+class PooledRestClient {
+ public:
+  static std::unique_ptr<RestClient> GetRestClient(std::string endpoint_address,
+                                                   Options options);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

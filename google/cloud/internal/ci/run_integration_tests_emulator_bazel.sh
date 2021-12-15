@@ -51,6 +51,7 @@ emulator_args=(
 
 # We need to forward some environment variables suitable for running against
 # the emulator.
+echo "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" "${emulator_args[@]}" "//google/cloud:internal_rest_client_integration_test"
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" "${emulator_args[@]}" \
   "//google/cloud:internal_rest_client_integration_test"
 

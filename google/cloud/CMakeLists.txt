@@ -675,7 +675,9 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/rest_request.cc
         internal/rest_request.h
         internal/rest_response.cc
-        internal/rest_response.h)
+        internal/rest_response.h
+        internal/unified_rest_credentials.cc
+        internal/unified_rest_credentials.h)
     target_link_libraries(
         google_cloud_cpp_rest_internal
         PUBLIC absl::span google-cloud-cpp::common CURL::libcurl
@@ -745,7 +747,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
             internal/openssl_util_test.cc
             internal/rest_client_test.cc
             internal/rest_request_test.cc
-            internal/rest_response_test.cc)
+            internal/rest_response_test.cc
+            internal/unified_rest_credentials_test.cc)
 
         # List the integration tests, then setup the targets and dependencies.
         set(google_cloud_cpp_rest_internal_integration_tests

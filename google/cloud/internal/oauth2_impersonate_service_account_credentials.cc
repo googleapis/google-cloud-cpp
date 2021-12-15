@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_impersonate_service_account_credentials.h"
+#include "google/cloud/internal/unified_rest_credentials.h"
 
 namespace google {
 namespace cloud {
@@ -33,6 +34,15 @@ GenerateAccessTokenRequest MakeRequest(
 auto constexpr kUseSlack = std::chrono::seconds(30);
 
 }  // namespace
+
+ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
+    google::cloud::internal::ImpersonateServiceAccountConfig const& config,
+    CurrentTimeFn current_time_fn)
+    : ImpersonateServiceAccountCredentials(
+          config,
+          MakeMinimalIamCredentialsRestStub(
+              rest_internal::MapCredentials(config.base_credentials())),
+          std::move(current_time_fn)) {}
 
 ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
     google::cloud::internal::ImpersonateServiceAccountConfig const& config,

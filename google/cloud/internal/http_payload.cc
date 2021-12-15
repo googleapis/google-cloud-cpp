@@ -15,8 +15,6 @@
 #include "google/cloud/internal/http_payload.h"
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/log.h"
-#include "absl/strings/ascii.h"
-#include "absl/strings/str_split.h"
 
 namespace google {
 namespace cloud {
