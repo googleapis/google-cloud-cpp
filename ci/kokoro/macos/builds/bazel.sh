@@ -25,6 +25,7 @@ source module ci/lib/io.sh
 io::log_h2 "Using bazel version"
 : "${USE_BAZEL_VERSION:="3.5.0"}"
 export USE_BAZEL_VERSION
+io::log_yellow "bazelisk version || rm -fr $HOME/Library/Caches/bazelisk || bazelisk version"
 bazelisk version || rm -fr $HOME/Library/Caches/bazelisk || bazelisk version
 
 bazel_args=(
