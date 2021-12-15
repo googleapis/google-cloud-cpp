@@ -46,12 +46,28 @@ StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceClient::CreateTopic(
   return connection_->CreateTopic(request);
 }
 
+StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceClient::CreateTopic(
+    google::cloud::pubsublite::v1::CreateTopicRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->CreateTopic(request);
+}
+
 StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceClient::GetTopic(
     std::string const& name, Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   google::cloud::pubsublite::v1::GetTopicRequest request;
   request.set_name(name);
+  return connection_->GetTopic(request);
+}
+
+StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceClient::GetTopic(
+    google::cloud::pubsublite::v1::GetTopicRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetTopic(request);
 }
 
@@ -65,6 +81,15 @@ AdminServiceClient::GetTopicPartitions(std::string const& name,
   return connection_->GetTopicPartitions(request);
 }
 
+StatusOr<google::cloud::pubsublite::v1::TopicPartitions>
+AdminServiceClient::GetTopicPartitions(
+    google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->GetTopicPartitions(request);
+}
+
 StreamRange<google::cloud::pubsublite::v1::Topic>
 AdminServiceClient::ListTopics(std::string const& parent, Options options) {
   internal::OptionsSpan span(
@@ -72,6 +97,14 @@ AdminServiceClient::ListTopics(std::string const& parent, Options options) {
   google::cloud::pubsublite::v1::ListTopicsRequest request;
   request.set_parent(parent);
   return connection_->ListTopics(request);
+}
+
+StreamRange<google::cloud::pubsublite::v1::Topic>
+AdminServiceClient::ListTopics(
+    google::cloud::pubsublite::v1::ListTopicsRequest request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->ListTopics(std::move(request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceClient::UpdateTopic(
@@ -85,12 +118,28 @@ StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceClient::UpdateTopic(
   return connection_->UpdateTopic(request);
 }
 
+StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceClient::UpdateTopic(
+    google::cloud::pubsublite::v1::UpdateTopicRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->UpdateTopic(request);
+}
+
 Status AdminServiceClient::DeleteTopic(std::string const& name,
                                        Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   google::cloud::pubsublite::v1::DeleteTopicRequest request;
   request.set_name(name);
+  return connection_->DeleteTopic(request);
+}
+
+Status AdminServiceClient::DeleteTopic(
+    google::cloud::pubsublite::v1::DeleteTopicRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->DeleteTopic(request);
 }
 
@@ -101,6 +150,14 @@ StreamRange<std::string> AdminServiceClient::ListTopicSubscriptions(
   google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request;
   request.set_name(name);
   return connection_->ListTopicSubscriptions(request);
+}
+
+StreamRange<std::string> AdminServiceClient::ListTopicSubscriptions(
+    google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->ListTopicSubscriptions(std::move(request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Subscription>
@@ -118,11 +175,29 @@ AdminServiceClient::CreateSubscription(
 }
 
 StatusOr<google::cloud::pubsublite::v1::Subscription>
+AdminServiceClient::CreateSubscription(
+    google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->CreateSubscription(request);
+}
+
+StatusOr<google::cloud::pubsublite::v1::Subscription>
 AdminServiceClient::GetSubscription(std::string const& name, Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   google::cloud::pubsublite::v1::GetSubscriptionRequest request;
   request.set_name(name);
+  return connection_->GetSubscription(request);
+}
+
+StatusOr<google::cloud::pubsublite::v1::Subscription>
+AdminServiceClient::GetSubscription(
+    google::cloud::pubsublite::v1::GetSubscriptionRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetSubscription(request);
 }
 
@@ -134,6 +209,15 @@ AdminServiceClient::ListSubscriptions(std::string const& parent,
   google::cloud::pubsublite::v1::ListSubscriptionsRequest request;
   request.set_parent(parent);
   return connection_->ListSubscriptions(request);
+}
+
+StreamRange<google::cloud::pubsublite::v1::Subscription>
+AdminServiceClient::ListSubscriptions(
+    google::cloud::pubsublite::v1::ListSubscriptionsRequest request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->ListSubscriptions(std::move(request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Subscription>
@@ -148,162 +232,6 @@ AdminServiceClient::UpdateSubscription(
   return connection_->UpdateSubscription(request);
 }
 
-Status AdminServiceClient::DeleteSubscription(std::string const& name,
-                                              Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::cloud::pubsublite::v1::DeleteSubscriptionRequest request;
-  request.set_name(name);
-  return connection_->DeleteSubscription(request);
-}
-
-StatusOr<google::cloud::pubsublite::v1::Reservation>
-AdminServiceClient::CreateReservation(
-    std::string const& parent,
-    google::cloud::pubsublite::v1::Reservation const& reservation,
-    std::string const& reservation_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::cloud::pubsublite::v1::CreateReservationRequest request;
-  request.set_parent(parent);
-  *request.mutable_reservation() = reservation;
-  request.set_reservation_id(reservation_id);
-  return connection_->CreateReservation(request);
-}
-
-StatusOr<google::cloud::pubsublite::v1::Reservation>
-AdminServiceClient::GetReservation(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::cloud::pubsublite::v1::GetReservationRequest request;
-  request.set_name(name);
-  return connection_->GetReservation(request);
-}
-
-StreamRange<google::cloud::pubsublite::v1::Reservation>
-AdminServiceClient::ListReservations(std::string const& parent,
-                                     Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::cloud::pubsublite::v1::ListReservationsRequest request;
-  request.set_parent(parent);
-  return connection_->ListReservations(request);
-}
-
-StatusOr<google::cloud::pubsublite::v1::Reservation>
-AdminServiceClient::UpdateReservation(
-    google::cloud::pubsublite::v1::Reservation const& reservation,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::cloud::pubsublite::v1::UpdateReservationRequest request;
-  *request.mutable_reservation() = reservation;
-  *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateReservation(request);
-}
-
-Status AdminServiceClient::DeleteReservation(std::string const& name,
-                                             Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::cloud::pubsublite::v1::DeleteReservationRequest request;
-  request.set_name(name);
-  return connection_->DeleteReservation(request);
-}
-
-StreamRange<std::string> AdminServiceClient::ListReservationTopics(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::cloud::pubsublite::v1::ListReservationTopicsRequest request;
-  request.set_name(name);
-  return connection_->ListReservationTopics(request);
-}
-
-StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceClient::CreateTopic(
-    google::cloud::pubsublite::v1::CreateTopicRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->CreateTopic(request);
-}
-
-StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceClient::GetTopic(
-    google::cloud::pubsublite::v1::GetTopicRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->GetTopic(request);
-}
-
-StatusOr<google::cloud::pubsublite::v1::TopicPartitions>
-AdminServiceClient::GetTopicPartitions(
-    google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->GetTopicPartitions(request);
-}
-
-StreamRange<google::cloud::pubsublite::v1::Topic>
-AdminServiceClient::ListTopics(
-    google::cloud::pubsublite::v1::ListTopicsRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->ListTopics(std::move(request));
-}
-
-StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceClient::UpdateTopic(
-    google::cloud::pubsublite::v1::UpdateTopicRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->UpdateTopic(request);
-}
-
-Status AdminServiceClient::DeleteTopic(
-    google::cloud::pubsublite::v1::DeleteTopicRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->DeleteTopic(request);
-}
-
-StreamRange<std::string> AdminServiceClient::ListTopicSubscriptions(
-    google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->ListTopicSubscriptions(std::move(request));
-}
-
-StatusOr<google::cloud::pubsublite::v1::Subscription>
-AdminServiceClient::CreateSubscription(
-    google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->CreateSubscription(request);
-}
-
-StatusOr<google::cloud::pubsublite::v1::Subscription>
-AdminServiceClient::GetSubscription(
-    google::cloud::pubsublite::v1::GetSubscriptionRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->GetSubscription(request);
-}
-
-StreamRange<google::cloud::pubsublite::v1::Subscription>
-AdminServiceClient::ListSubscriptions(
-    google::cloud::pubsublite::v1::ListSubscriptionsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->ListSubscriptions(std::move(request));
-}
-
 StatusOr<google::cloud::pubsublite::v1::Subscription>
 AdminServiceClient::UpdateSubscription(
     google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request,
@@ -311,6 +239,15 @@ AdminServiceClient::UpdateSubscription(
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->UpdateSubscription(request);
+}
+
+Status AdminServiceClient::DeleteSubscription(std::string const& name,
+                                              Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  google::cloud::pubsublite::v1::DeleteSubscriptionRequest request;
+  request.set_name(name);
+  return connection_->DeleteSubscription(request);
 }
 
 Status AdminServiceClient::DeleteSubscription(
@@ -332,11 +269,34 @@ AdminServiceClient::SeekSubscription(
 
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceClient::CreateReservation(
+    std::string const& parent,
+    google::cloud::pubsublite::v1::Reservation const& reservation,
+    std::string const& reservation_id, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  google::cloud::pubsublite::v1::CreateReservationRequest request;
+  request.set_parent(parent);
+  *request.mutable_reservation() = reservation;
+  request.set_reservation_id(reservation_id);
+  return connection_->CreateReservation(request);
+}
+
+StatusOr<google::cloud::pubsublite::v1::Reservation>
+AdminServiceClient::CreateReservation(
     google::cloud::pubsublite::v1::CreateReservationRequest const& request,
     Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->CreateReservation(request);
+}
+
+StatusOr<google::cloud::pubsublite::v1::Reservation>
+AdminServiceClient::GetReservation(std::string const& name, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  google::cloud::pubsublite::v1::GetReservationRequest request;
+  request.set_name(name);
+  return connection_->GetReservation(request);
 }
 
 StatusOr<google::cloud::pubsublite::v1::Reservation>
@@ -346,6 +306,16 @@ AdminServiceClient::GetReservation(
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->GetReservation(request);
+}
+
+StreamRange<google::cloud::pubsublite::v1::Reservation>
+AdminServiceClient::ListReservations(std::string const& parent,
+                                     Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  google::cloud::pubsublite::v1::ListReservationsRequest request;
+  request.set_parent(parent);
+  return connection_->ListReservations(request);
 }
 
 StreamRange<google::cloud::pubsublite::v1::Reservation>
@@ -359,11 +329,32 @@ AdminServiceClient::ListReservations(
 
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceClient::UpdateReservation(
+    google::cloud::pubsublite::v1::Reservation const& reservation,
+    google::protobuf::FieldMask const& update_mask, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  google::cloud::pubsublite::v1::UpdateReservationRequest request;
+  *request.mutable_reservation() = reservation;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateReservation(request);
+}
+
+StatusOr<google::cloud::pubsublite::v1::Reservation>
+AdminServiceClient::UpdateReservation(
     google::cloud::pubsublite::v1::UpdateReservationRequest const& request,
     Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->UpdateReservation(request);
+}
+
+Status AdminServiceClient::DeleteReservation(std::string const& name,
+                                             Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  google::cloud::pubsublite::v1::DeleteReservationRequest request;
+  request.set_name(name);
+  return connection_->DeleteReservation(request);
 }
 
 Status AdminServiceClient::DeleteReservation(
@@ -372,6 +363,15 @@ Status AdminServiceClient::DeleteReservation(
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->DeleteReservation(request);
+}
+
+StreamRange<std::string> AdminServiceClient::ListReservationTopics(
+    std::string const& name, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  google::cloud::pubsublite::v1::ListReservationTopicsRequest request;
+  request.set_name(name);
+  return connection_->ListReservationTopics(request);
 }
 
 StreamRange<std::string> AdminServiceClient::ListReservationTopics(

@@ -39,6 +39,12 @@ GoldenKitchenSinkClient::GenerateAccessToken(std::string const& name, std::vecto
   return connection_->GenerateAccessToken(request);
 }
 
+StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
+GoldenKitchenSinkClient::GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+  return connection_->GenerateAccessToken(request);
+}
+
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
 GoldenKitchenSinkClient::GenerateIdToken(std::string const& name, std::vector<std::string> const& delegates, std::string const& audience, bool include_email, Options options) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
@@ -47,6 +53,12 @@ GoldenKitchenSinkClient::GenerateIdToken(std::string const& name, std::vector<st
   *request.mutable_delegates() = {delegates.begin(), delegates.end()};
   request.set_audience(audience);
   request.set_include_email(include_email);
+  return connection_->GenerateIdToken(request);
+}
+
+StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
+GoldenKitchenSinkClient::GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->GenerateIdToken(request);
 }
 
@@ -59,12 +71,24 @@ GoldenKitchenSinkClient::WriteLogEntries(std::string const& log_name, std::map<s
   return connection_->WriteLogEntries(request);
 }
 
+StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
+GoldenKitchenSinkClient::WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+  return connection_->WriteLogEntries(request);
+}
+
 StreamRange<std::string>
 GoldenKitchenSinkClient::ListLogs(std::string const& parent, Options options) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::ListLogsRequest request;
   request.set_parent(parent);
   return connection_->ListLogs(request);
+}
+
+StreamRange<std::string>
+GoldenKitchenSinkClient::ListLogs(google::test::admin::database::v1::ListLogsRequest request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+  return connection_->ListLogs(std::move(request));
 }
 
 StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
@@ -75,6 +99,12 @@ GoldenKitchenSinkClient::TailLogEntries(std::vector<std::string> const& resource
   return connection_->TailLogEntries(request);
 }
 
+StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
+GoldenKitchenSinkClient::TailLogEntries(google::test::admin::database::v1::TailLogEntriesRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+  return connection_->TailLogEntries(request);
+}
+
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkClient::ListServiceAccountKeys(std::string const& name, std::vector<google::test::admin::database::v1::ListServiceAccountKeysRequest::KeyType> const& key_types, Options options) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
@@ -82,36 +112,6 @@ GoldenKitchenSinkClient::ListServiceAccountKeys(std::string const& name, std::ve
   request.set_name(name);
   *request.mutable_key_types() = {key_types.begin(), key_types.end()};
   return connection_->ListServiceAccountKeys(request);
-}
-
-StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
-GoldenKitchenSinkClient::GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
-  return connection_->GenerateAccessToken(request);
-}
-
-StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
-GoldenKitchenSinkClient::GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
-  return connection_->GenerateIdToken(request);
-}
-
-StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
-GoldenKitchenSinkClient::WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
-  return connection_->WriteLogEntries(request);
-}
-
-StreamRange<std::string>
-GoldenKitchenSinkClient::ListLogs(google::test::admin::database::v1::ListLogsRequest request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
-  return connection_->ListLogs(std::move(request));
-}
-
-StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
-GoldenKitchenSinkClient::TailLogEntries(google::test::admin::database::v1::TailLogEntriesRequest const& request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
-  return connection_->TailLogEntries(request);
 }
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>

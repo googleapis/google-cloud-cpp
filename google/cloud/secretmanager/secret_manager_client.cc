@@ -42,6 +42,15 @@ SecretManagerServiceClient::ListSecrets(std::string const& parent,
   return connection_->ListSecrets(request);
 }
 
+StreamRange<google::cloud::secretmanager::v1::Secret>
+SecretManagerServiceClient::ListSecrets(
+    google::cloud::secretmanager::v1::ListSecretsRequest request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->ListSecrets(std::move(request));
+}
+
 StatusOr<google::cloud::secretmanager::v1::Secret>
 SecretManagerServiceClient::CreateSecret(
     std::string const& parent, std::string const& secret_id,
@@ -52,6 +61,15 @@ SecretManagerServiceClient::CreateSecret(
   request.set_parent(parent);
   request.set_secret_id(secret_id);
   *request.mutable_secret() = secret;
+  return connection_->CreateSecret(request);
+}
+
+StatusOr<google::cloud::secretmanager::v1::Secret>
+SecretManagerServiceClient::CreateSecret(
+    google::cloud::secretmanager::v1::CreateSecretRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->CreateSecret(request);
 }
 
@@ -68,6 +86,15 @@ SecretManagerServiceClient::AddSecretVersion(
   return connection_->AddSecretVersion(request);
 }
 
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceClient::AddSecretVersion(
+    google::cloud::secretmanager::v1::AddSecretVersionRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->AddSecretVersion(request);
+}
+
 StatusOr<google::cloud::secretmanager::v1::Secret>
 SecretManagerServiceClient::GetSecret(std::string const& name,
                                       Options options) {
@@ -75,6 +102,15 @@ SecretManagerServiceClient::GetSecret(std::string const& name,
       internal::MergeOptions(std::move(options), options_));
   google::cloud::secretmanager::v1::GetSecretRequest request;
   request.set_name(name);
+  return connection_->GetSecret(request);
+}
+
+StatusOr<google::cloud::secretmanager::v1::Secret>
+SecretManagerServiceClient::GetSecret(
+    google::cloud::secretmanager::v1::GetSecretRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetSecret(request);
 }
 
@@ -90,12 +126,29 @@ SecretManagerServiceClient::UpdateSecret(
   return connection_->UpdateSecret(request);
 }
 
+StatusOr<google::cloud::secretmanager::v1::Secret>
+SecretManagerServiceClient::UpdateSecret(
+    google::cloud::secretmanager::v1::UpdateSecretRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->UpdateSecret(request);
+}
+
 Status SecretManagerServiceClient::DeleteSecret(std::string const& name,
                                                 Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   google::cloud::secretmanager::v1::DeleteSecretRequest request;
   request.set_name(name);
+  return connection_->DeleteSecret(request);
+}
+
+Status SecretManagerServiceClient::DeleteSecret(
+    google::cloud::secretmanager::v1::DeleteSecretRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->DeleteSecret(request);
 }
 
@@ -109,6 +162,15 @@ SecretManagerServiceClient::ListSecretVersions(std::string const& parent,
   return connection_->ListSecretVersions(request);
 }
 
+StreamRange<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceClient::ListSecretVersions(
+    google::cloud::secretmanager::v1::ListSecretVersionsRequest request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->ListSecretVersions(std::move(request));
+}
+
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
 SecretManagerServiceClient::GetSecretVersion(std::string const& name,
                                              Options options) {
@@ -119,6 +181,15 @@ SecretManagerServiceClient::GetSecretVersion(std::string const& name,
   return connection_->GetSecretVersion(request);
 }
 
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceClient::GetSecretVersion(
+    google::cloud::secretmanager::v1::GetSecretVersionRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->GetSecretVersion(request);
+}
+
 StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
 SecretManagerServiceClient::AccessSecretVersion(std::string const& name,
                                                 Options options) {
@@ -126,6 +197,15 @@ SecretManagerServiceClient::AccessSecretVersion(std::string const& name,
       internal::MergeOptions(std::move(options), options_));
   google::cloud::secretmanager::v1::AccessSecretVersionRequest request;
   request.set_name(name);
+  return connection_->AccessSecretVersion(request);
+}
+
+StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
+SecretManagerServiceClient::AccessSecretVersion(
+    google::cloud::secretmanager::v1::AccessSecretVersionRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->AccessSecretVersion(request);
 }
 
@@ -140,12 +220,31 @@ SecretManagerServiceClient::DisableSecretVersion(std::string const& name,
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceClient::DisableSecretVersion(
+    google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
+        request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->DisableSecretVersion(request);
+}
+
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
 SecretManagerServiceClient::EnableSecretVersion(std::string const& name,
                                                 Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   google::cloud::secretmanager::v1::EnableSecretVersionRequest request;
   request.set_name(name);
+  return connection_->EnableSecretVersion(request);
+}
+
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceClient::EnableSecretVersion(
+    google::cloud::secretmanager::v1::EnableSecretVersionRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->EnableSecretVersion(request);
 }
 
@@ -157,105 +256,6 @@ SecretManagerServiceClient::DestroySecretVersion(std::string const& name,
   google::cloud::secretmanager::v1::DestroySecretVersionRequest request;
   request.set_name(name);
   return connection_->DestroySecretVersion(request);
-}
-
-StreamRange<google::cloud::secretmanager::v1::Secret>
-SecretManagerServiceClient::ListSecrets(
-    google::cloud::secretmanager::v1::ListSecretsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->ListSecrets(std::move(request));
-}
-
-StatusOr<google::cloud::secretmanager::v1::Secret>
-SecretManagerServiceClient::CreateSecret(
-    google::cloud::secretmanager::v1::CreateSecretRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->CreateSecret(request);
-}
-
-StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceClient::AddSecretVersion(
-    google::cloud::secretmanager::v1::AddSecretVersionRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->AddSecretVersion(request);
-}
-
-StatusOr<google::cloud::secretmanager::v1::Secret>
-SecretManagerServiceClient::GetSecret(
-    google::cloud::secretmanager::v1::GetSecretRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->GetSecret(request);
-}
-
-StatusOr<google::cloud::secretmanager::v1::Secret>
-SecretManagerServiceClient::UpdateSecret(
-    google::cloud::secretmanager::v1::UpdateSecretRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->UpdateSecret(request);
-}
-
-Status SecretManagerServiceClient::DeleteSecret(
-    google::cloud::secretmanager::v1::DeleteSecretRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->DeleteSecret(request);
-}
-
-StreamRange<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceClient::ListSecretVersions(
-    google::cloud::secretmanager::v1::ListSecretVersionsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->ListSecretVersions(std::move(request));
-}
-
-StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceClient::GetSecretVersion(
-    google::cloud::secretmanager::v1::GetSecretVersionRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->GetSecretVersion(request);
-}
-
-StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
-SecretManagerServiceClient::AccessSecretVersion(
-    google::cloud::secretmanager::v1::AccessSecretVersionRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->AccessSecretVersion(request);
-}
-
-StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceClient::DisableSecretVersion(
-    google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
-        request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->DisableSecretVersion(request);
-}
-
-StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceClient::EnableSecretVersion(
-    google::cloud::secretmanager::v1::EnableSecretVersionRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->EnableSecretVersion(request);
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>

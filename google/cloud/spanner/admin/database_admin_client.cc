@@ -43,6 +43,15 @@ DatabaseAdminClient::ListDatabases(std::string const& parent, Options options) {
   return connection_->ListDatabases(request);
 }
 
+StreamRange<google::spanner::admin::database::v1::Database>
+DatabaseAdminClient::ListDatabases(
+    google::spanner::admin::database::v1::ListDatabasesRequest request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->ListDatabases(std::move(request));
+}
+
 future<StatusOr<google::spanner::admin::database::v1::Database>>
 DatabaseAdminClient::CreateDatabase(std::string const& parent,
                                     std::string const& create_statement,
@@ -55,12 +64,30 @@ DatabaseAdminClient::CreateDatabase(std::string const& parent,
   return connection_->CreateDatabase(request);
 }
 
+future<StatusOr<google::spanner::admin::database::v1::Database>>
+DatabaseAdminClient::CreateDatabase(
+    google::spanner::admin::database::v1::CreateDatabaseRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->CreateDatabase(request);
+}
+
 StatusOr<google::spanner::admin::database::v1::Database>
 DatabaseAdminClient::GetDatabase(std::string const& name, Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   google::spanner::admin::database::v1::GetDatabaseRequest request;
   request.set_name(name);
+  return connection_->GetDatabase(request);
+}
+
+StatusOr<google::spanner::admin::database::v1::Database>
+DatabaseAdminClient::GetDatabase(
+    google::spanner::admin::database::v1::GetDatabaseRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetDatabase(request);
 }
 
@@ -77,12 +104,31 @@ DatabaseAdminClient::UpdateDatabaseDdl(
   return connection_->UpdateDatabaseDdl(request);
 }
 
+future<
+    StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+DatabaseAdminClient::UpdateDatabaseDdl(
+    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+        request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->UpdateDatabaseDdl(request);
+}
+
 Status DatabaseAdminClient::DropDatabase(std::string const& database,
                                          Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   google::spanner::admin::database::v1::DropDatabaseRequest request;
   request.set_database(database);
+  return connection_->DropDatabase(request);
+}
+
+Status DatabaseAdminClient::DropDatabase(
+    google::spanner::admin::database::v1::DropDatabaseRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->DropDatabase(request);
 }
 
@@ -93,6 +139,15 @@ DatabaseAdminClient::GetDatabaseDdl(std::string const& database,
       internal::MergeOptions(std::move(options), options_));
   google::spanner::admin::database::v1::GetDatabaseDdlRequest request;
   request.set_database(database);
+  return connection_->GetDatabaseDdl(request);
+}
+
+StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
+DatabaseAdminClient::GetDatabaseDdl(
+    google::spanner::admin::database::v1::GetDatabaseDdlRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetDatabaseDdl(request);
 }
 
@@ -133,12 +188,26 @@ StatusOr<google::iam::v1::Policy> DatabaseAdminClient::SetIamPolicy(
   }
 }
 
+StatusOr<google::iam::v1::Policy> DatabaseAdminClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->SetIamPolicy(request);
+}
+
 StatusOr<google::iam::v1::Policy> DatabaseAdminClient::GetIamPolicy(
     std::string const& resource, Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
+  return connection_->GetIamPolicy(request);
+}
+
+StatusOr<google::iam::v1::Policy> DatabaseAdminClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetIamPolicy(request);
 }
 
@@ -151,6 +220,15 @@ DatabaseAdminClient::TestIamPermissions(
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
   *request.mutable_permissions() = {permissions.begin(), permissions.end()};
+  return connection_->TestIamPermissions(request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DatabaseAdminClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->TestIamPermissions(request);
 }
 
@@ -168,12 +246,30 @@ DatabaseAdminClient::CreateBackup(
   return connection_->CreateBackup(request);
 }
 
+future<StatusOr<google::spanner::admin::database::v1::Backup>>
+DatabaseAdminClient::CreateBackup(
+    google::spanner::admin::database::v1::CreateBackupRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->CreateBackup(request);
+}
+
 StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminClient::GetBackup(std::string const& name, Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   google::spanner::admin::database::v1::GetBackupRequest request;
   request.set_name(name);
+  return connection_->GetBackup(request);
+}
+
+StatusOr<google::spanner::admin::database::v1::Backup>
+DatabaseAdminClient::GetBackup(
+    google::spanner::admin::database::v1::GetBackupRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetBackup(request);
 }
 
@@ -189,12 +285,29 @@ DatabaseAdminClient::UpdateBackup(
   return connection_->UpdateBackup(request);
 }
 
+StatusOr<google::spanner::admin::database::v1::Backup>
+DatabaseAdminClient::UpdateBackup(
+    google::spanner::admin::database::v1::UpdateBackupRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->UpdateBackup(request);
+}
+
 Status DatabaseAdminClient::DeleteBackup(std::string const& name,
                                          Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   google::spanner::admin::database::v1::DeleteBackupRequest request;
   request.set_name(name);
+  return connection_->DeleteBackup(request);
+}
+
+Status DatabaseAdminClient::DeleteBackup(
+    google::spanner::admin::database::v1::DeleteBackupRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->DeleteBackup(request);
 }
 
@@ -205,6 +318,15 @@ DatabaseAdminClient::ListBackups(std::string const& parent, Options options) {
   google::spanner::admin::database::v1::ListBackupsRequest request;
   request.set_parent(parent);
   return connection_->ListBackups(request);
+}
+
+StreamRange<google::spanner::admin::database::v1::Backup>
+DatabaseAdminClient::ListBackups(
+    google::spanner::admin::database::v1::ListBackupsRequest request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->ListBackups(std::move(request));
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
@@ -221,6 +343,15 @@ DatabaseAdminClient::RestoreDatabase(std::string const& parent,
   return connection_->RestoreDatabase(request);
 }
 
+future<StatusOr<google::spanner::admin::database::v1::Database>>
+DatabaseAdminClient::RestoreDatabase(
+    google::spanner::admin::database::v1::RestoreDatabaseRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->RestoreDatabase(request);
+}
+
 StreamRange<google::longrunning::Operation>
 DatabaseAdminClient::ListDatabaseOperations(std::string const& parent,
                                             Options options) {
@@ -232,6 +363,15 @@ DatabaseAdminClient::ListDatabaseOperations(std::string const& parent,
 }
 
 StreamRange<google::longrunning::Operation>
+DatabaseAdminClient::ListDatabaseOperations(
+    google::spanner::admin::database::v1::ListDatabaseOperationsRequest request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->ListDatabaseOperations(std::move(request));
+}
+
+StreamRange<google::longrunning::Operation>
 DatabaseAdminClient::ListBackupOperations(std::string const& parent,
                                           Options options) {
   internal::OptionsSpan span(
@@ -239,146 +379,6 @@ DatabaseAdminClient::ListBackupOperations(std::string const& parent,
   google::spanner::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent(parent);
   return connection_->ListBackupOperations(request);
-}
-
-StreamRange<google::spanner::admin::database::v1::Database>
-DatabaseAdminClient::ListDatabases(
-    google::spanner::admin::database::v1::ListDatabasesRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->ListDatabases(std::move(request));
-}
-
-future<StatusOr<google::spanner::admin::database::v1::Database>>
-DatabaseAdminClient::CreateDatabase(
-    google::spanner::admin::database::v1::CreateDatabaseRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->CreateDatabase(request);
-}
-
-StatusOr<google::spanner::admin::database::v1::Database>
-DatabaseAdminClient::GetDatabase(
-    google::spanner::admin::database::v1::GetDatabaseRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->GetDatabase(request);
-}
-
-future<
-    StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-DatabaseAdminClient::UpdateDatabaseDdl(
-    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
-        request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->UpdateDatabaseDdl(request);
-}
-
-Status DatabaseAdminClient::DropDatabase(
-    google::spanner::admin::database::v1::DropDatabaseRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->DropDatabase(request);
-}
-
-StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
-DatabaseAdminClient::GetDatabaseDdl(
-    google::spanner::admin::database::v1::GetDatabaseDdlRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->GetDatabaseDdl(request);
-}
-
-StatusOr<google::iam::v1::Policy> DatabaseAdminClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->SetIamPolicy(request);
-}
-
-StatusOr<google::iam::v1::Policy> DatabaseAdminClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->GetIamPolicy(request);
-}
-
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DatabaseAdminClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->TestIamPermissions(request);
-}
-
-future<StatusOr<google::spanner::admin::database::v1::Backup>>
-DatabaseAdminClient::CreateBackup(
-    google::spanner::admin::database::v1::CreateBackupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->CreateBackup(request);
-}
-
-StatusOr<google::spanner::admin::database::v1::Backup>
-DatabaseAdminClient::GetBackup(
-    google::spanner::admin::database::v1::GetBackupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->GetBackup(request);
-}
-
-StatusOr<google::spanner::admin::database::v1::Backup>
-DatabaseAdminClient::UpdateBackup(
-    google::spanner::admin::database::v1::UpdateBackupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->UpdateBackup(request);
-}
-
-Status DatabaseAdminClient::DeleteBackup(
-    google::spanner::admin::database::v1::DeleteBackupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->DeleteBackup(request);
-}
-
-StreamRange<google::spanner::admin::database::v1::Backup>
-DatabaseAdminClient::ListBackups(
-    google::spanner::admin::database::v1::ListBackupsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->ListBackups(std::move(request));
-}
-
-future<StatusOr<google::spanner::admin::database::v1::Database>>
-DatabaseAdminClient::RestoreDatabase(
-    google::spanner::admin::database::v1::RestoreDatabaseRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->RestoreDatabase(request);
-}
-
-StreamRange<google::longrunning::Operation>
-DatabaseAdminClient::ListDatabaseOperations(
-    google::spanner::admin::database::v1::ListDatabaseOperationsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->ListDatabaseOperations(std::move(request));
 }
 
 StreamRange<google::longrunning::Operation>

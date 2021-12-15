@@ -133,386 +133,6 @@ class BigtableInstanceAdminClient {
       Options options = {});
 
   ///
-  /// Gets information about an instance.
-  ///
-  /// @param name  Required. The unique name of the requested instance. Values
-  /// are of the form
-  ///  `projects/{project}/instances/{instance}`.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L41}
-  ///
-  /// [google.bigtable.admin.v2.GetInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L308}
-  /// [google.bigtable.admin.v2.Instance]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L41}
-  ///
-  StatusOr<google::bigtable::admin::v2::Instance> GetInstance(
-      std::string const& name, Options options = {});
-
-  ///
-  /// Lists information about instances in a project.
-  ///
-  /// @param parent  Required. The unique name of the project for which a list
-  /// of instances is requested.
-  ///  Values are of the form `projects/{project}`.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::ListInstancesResponse,google/bigtable/admin/v2/bigtable_instance_admin.proto#L335}
-  ///
-  /// [google.bigtable.admin.v2.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L320}
-  /// [google.bigtable.admin.v2.ListInstancesResponse]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L335}
-  ///
-  StatusOr<google::bigtable::admin::v2::ListInstancesResponse> ListInstances(
-      std::string const& parent, Options options = {});
-
-  ///
-  /// Partially updates an instance within a project. This method can modify all
-  /// fields of an Instance and is the preferred way to update an Instance.
-  ///
-  /// @param instance  Required. The Instance which will (partially) replace the
-  /// current value.
-  /// @param update_mask  Required. The subset of Instance fields which should
-  /// be replaced.
-  ///  Must be explicitly set.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L41}
-  ///
-  /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L352}
-  /// [google.bigtable.admin.v2.Instance]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L41}
-  ///
-  future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
-      google::bigtable::admin::v2::Instance const& instance,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
-
-  ///
-  /// Delete an instance from a project.
-  ///
-  /// @param name  Required. The unique name of the instance to be deleted.
-  ///  Values are of the form `projects/{project}/instances/{instance}`.
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.bigtable.admin.v2.DeleteInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L362}
-  ///
-  Status DeleteInstance(std::string const& name, Options options = {});
-
-  ///
-  /// Creates a cluster within an instance.
-  ///
-  /// Note that exactly one of Cluster.serve_nodes and
-  /// Cluster.cluster_config.cluster_autoscaling_config can be set. If
-  /// serve_nodes is set to non-zero, then the cluster is manually scaled. If
-  /// cluster_config.cluster_autoscaling_config is non-empty, then autoscaling
-  /// is enabled.
-  ///
-  /// @param parent  Required. The unique name of the instance in which to
-  /// create the new cluster.
-  ///  Values are of the form
-  ///  `projects/{project}/instances/{instance}`.
-  /// @param cluster_id  Required. The ID to be used when referring to the new
-  /// cluster within its instance,
-  ///  e.g., just `mycluster` rather than
-  ///  `projects/myproject/instances/myinstance/clusters/mycluster`.
-  /// @param cluster  Required. The cluster to be created.
-  ///  Fields marked `OutputOnly` must be left blank.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L137}
-  ///
-  /// [google.bigtable.admin.v2.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L374}
-  /// [google.bigtable.admin.v2.Cluster]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L137}
-  ///
-  future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
-      std::string const& parent, std::string const& cluster_id,
-      google::bigtable::admin::v2::Cluster const& cluster,
-      Options options = {});
-
-  ///
-  /// Gets information about a cluster.
-  ///
-  /// @param name  Required. The unique name of the requested cluster. Values
-  /// are of the form
-  ///  `projects/{project}/instances/{instance}/clusters/{cluster}`.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L137}
-  ///
-  /// [google.bigtable.admin.v2.GetClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L396}
-  /// [google.bigtable.admin.v2.Cluster]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L137}
-  ///
-  StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
-      std::string const& name, Options options = {});
-
-  ///
-  /// Lists information about clusters in an instance.
-  ///
-  /// @param parent  Required. The unique name of the instance for which a list
-  /// of clusters is requested.
-  ///  Values are of the form `projects/{project}/instances/{instance}`.
-  ///  Use `{instance} = '-'` to list Clusters for all Instances in a project,
-  ///  e.g., `projects/myproject/instances/-`.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::ListClustersResponse,google/bigtable/admin/v2/bigtable_instance_admin.proto#L425}
-  ///
-  /// [google.bigtable.admin.v2.ListClustersRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L408}
-  /// [google.bigtable.admin.v2.ListClustersResponse]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L425}
-  ///
-  StatusOr<google::bigtable::admin::v2::ListClustersResponse> ListClusters(
-      std::string const& parent, Options options = {});
-
-  ///
-  /// Partially updates a cluster within a project. This method is the preferred
-  /// way to update a Cluster.
-  ///
-  /// To enable and update autoscaling, set
-  /// cluster_config.cluster_autoscaling_config. When autoscaling is enabled,
-  /// serve_nodes is treated as an OUTPUT_ONLY field, meaning that updates to it
-  /// are ignored. Note that an update cannot simultaneously set serve_nodes to
-  /// non-zero and cluster_config.cluster_autoscaling_config to non-empty, and
-  /// also specify both in the update_mask.
-  ///
-  /// To disable autoscaling, clear cluster_config.cluster_autoscaling_config,
-  /// and explicitly set a serve_node count via the update_mask.
-  ///
-  /// @param cluster  Required. The Cluster which contains the partial updates
-  /// to be applied, subject to
-  ///  the update_mask.
-  /// @param update_mask  Required. The subset of Cluster fields which should be
-  /// replaced.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L137}
-  ///
-  /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L513}
-  /// [google.bigtable.admin.v2.Cluster]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L137}
-  ///
-  future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
-      google::bigtable::admin::v2::Cluster const& cluster,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
-
-  ///
-  /// Deletes a cluster from an instance.
-  ///
-  /// @param name  Required. The unique name of the cluster to be deleted.
-  /// Values are of the form
-  ///  `projects/{project}/instances/{instance}/clusters/{cluster}`.
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.bigtable.admin.v2.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L441}
-  ///
-  Status DeleteCluster(std::string const& name, Options options = {});
-
-  ///
-  /// Creates an app profile within an instance.
-  ///
-  /// @param parent  Required. The unique name of the instance in which to
-  /// create the new app profile.
-  ///  Values are of the form
-  ///  `projects/{project}/instances/{instance}`.
-  /// @param app_profile_id  Required. The ID to be used when referring to the
-  /// new app profile within its
-  ///  instance, e.g., just `myprofile` rather than
-  ///  `projects/myproject/instances/myinstance/appProfiles/myprofile`.
-  /// @param app_profile  Required. The app profile to be created.
-  ///  Fields marked `OutputOnly` will be ignored.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
-  ///
-  /// [google.bigtable.admin.v2.CreateAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L523}
-  /// [google.bigtable.admin.v2.AppProfile]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L236}
-  ///
-  StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
-      std::string const& parent, std::string const& app_profile_id,
-      google::bigtable::admin::v2::AppProfile const& app_profile,
-      Options options = {});
-
-  ///
-  /// Gets information about an app profile.
-  ///
-  /// @param name  Required. The unique name of the requested app profile.
-  /// Values are of the form
-  ///  `projects/{project}/instances/{instance}/appProfiles/{app_profile}`.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
-  ///
-  /// [google.bigtable.admin.v2.GetAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L548}
-  /// [google.bigtable.admin.v2.AppProfile]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L236}
-  ///
-  StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
-      std::string const& name, Options options = {});
-
-  ///
-  /// Lists information about app profiles in an instance.
-  ///
-  /// @param parent  Required. The unique name of the instance for which a list
-  /// of app profiles is
-  ///  requested. Values are of the form
-  ///  `projects/{project}/instances/{instance}`.
-  ///  Use `{instance} = '-'` to list AppProfiles for all Instances in a
-  ///  project, e.g., `projects/myproject/instances/-`.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
-  ///
-  /// [google.bigtable.admin.v2.ListAppProfilesRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L560}
-  /// [google.bigtable.admin.v2.AppProfile]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L236}
-  ///
-  StreamRange<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
-      std::string const& parent, Options options = {});
-
-  ///
-  /// Updates an app profile within an instance.
-  ///
-  /// @param app_profile  Required. The app profile which will (partially)
-  /// replace the current value.
-  /// @param update_mask  Required. The subset of app profile fields which
-  /// should be replaced.
-  ///  If unset, all fields will be replaced.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
-  ///
-  /// [google.bigtable.admin.v2.UpdateAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L606}
-  /// [google.bigtable.admin.v2.AppProfile]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L236}
-  ///
-  future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
-      google::bigtable::admin::v2::AppProfile const& app_profile,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
-
-  ///
-  /// Deletes an app profile from an instance.
-  ///
-  /// @param name  Required. The unique name of the app profile to be deleted.
-  /// Values are of the form
-  ///  `projects/{project}/instances/{instance}/appProfiles/{app_profile}`.
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.bigtable.admin.v2.DeleteAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L619}
-  ///
-  Status DeleteAppProfile(std::string const& name, Options options = {});
-
-  ///
-  /// Gets the access control policy for an instance resource. Returns an empty
-  /// policy if an instance exists but does not have a policy set.
-  ///
-  /// @param resource  REQUIRED: The resource for which the policy is being
-  /// requested.
-  ///  See the operation documentation for the appropriate value for this field.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
-  ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
-  ///
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
-                                                 Options options = {});
-
-  ///
-  /// Sets the access control policy on an instance resource. Replaces any
-  /// existing policy.
-  ///
-  /// @param resource  REQUIRED: The resource for which the policy is being
-  /// specified.
-  ///  See the operation documentation for the appropriate value for this field.
-  /// @param policy  REQUIRED: The complete policy to be applied to the
-  /// `resource`. The size of
-  ///  the policy is limited to a few 10s of KB. An empty policy is a
-  ///  valid policy but certain Cloud Platform services (such as Projects)
-  ///  might reject them.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
-  ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
-  ///
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      std::string const& resource, google::iam::v1::Policy const& policy,
-      Options options = {});
-
-  /**
-   * Updates the IAM policy for @p resource using an optimistic concurrency
-   * control loop.
-   *
-   * The loop fetches the current policy for @p resource, and passes it to @p
-   * updater, which should return the new policy. This new policy should use the
-   * current etag so that the read-modify-write cycle can detect races and rerun
-   * the update when there is a mismatch. If the new policy does not have an
-   * etag, the existing policy will be blindly overwritten. If @p updater does
-   * not yield a policy, the control loop is terminated and kCancelled is
-   * returned.
-   *
-   * @param resource  Required. The resource for which the policy is being
-   * specified. See the operation documentation for the appropriate value for
-   * this field.
-   * @param updater  Required. Functor to map the current policy to a new one.
-   * @param options  Optional. Options to control the loop. Expected options
-   * are:
-   *       - `BigtableInstanceAdminBackoffPolicyOption`
-   * @return google::iam::v1::Policy
-   */
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
-                                                 IamUpdater const& updater,
-                                                 Options options = {});
-
-  ///
-  /// Returns permissions that the caller has on the specified instance
-  /// resource.
-  ///
-  /// @param resource  REQUIRED: The resource for which the policy detail is
-  /// being requested.
-  ///  See the operation documentation for the appropriate value for this field.
-  /// @param permissions  The set of permissions to check for the `resource`.
-  /// Permissions with
-  ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
-  ///  information see
-  ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
-  ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
-  ///
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      std::string const& resource, std::vector<std::string> const& permissions,
-      Options options = {});
-
-  ///
   /// Create an instance within a project.
   ///
   /// Note that exactly one of Cluster.serve_nodes and
@@ -539,6 +159,24 @@ class BigtableInstanceAdminClient {
   ///
   /// Gets information about an instance.
   ///
+  /// @param name  Required. The unique name of the requested instance. Values
+  /// are of the form
+  ///  `projects/{project}/instances/{instance}`.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L41}
+  ///
+  /// [google.bigtable.admin.v2.GetInstanceRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L308}
+  /// [google.bigtable.admin.v2.Instance]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L41}
+  ///
+  StatusOr<google::bigtable::admin::v2::Instance> GetInstance(
+      std::string const& name, Options options = {});
+
+  ///
+  /// Gets information about an instance.
+  ///
   /// @param request
   /// @googleapis_link{google::bigtable::admin::v2::GetInstanceRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L308}
   /// @param options  Optional. Operation options.
@@ -553,6 +191,24 @@ class BigtableInstanceAdminClient {
   StatusOr<google::bigtable::admin::v2::Instance> GetInstance(
       google::bigtable::admin::v2::GetInstanceRequest const& request,
       Options options = {});
+
+  ///
+  /// Lists information about instances in a project.
+  ///
+  /// @param parent  Required. The unique name of the project for which a list
+  /// of instances is requested.
+  ///  Values are of the form `projects/{project}`.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::ListInstancesResponse,google/bigtable/admin/v2/bigtable_instance_admin.proto#L335}
+  ///
+  /// [google.bigtable.admin.v2.ListInstancesRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L320}
+  /// [google.bigtable.admin.v2.ListInstancesResponse]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L335}
+  ///
+  StatusOr<google::bigtable::admin::v2::ListInstancesResponse> ListInstances(
+      std::string const& parent, Options options = {});
 
   ///
   /// Lists information about instances in a project.
@@ -596,6 +252,28 @@ class BigtableInstanceAdminClient {
   /// Partially updates an instance within a project. This method can modify all
   /// fields of an Instance and is the preferred way to update an Instance.
   ///
+  /// @param instance  Required. The Instance which will (partially) replace the
+  /// current value.
+  /// @param update_mask  Required. The subset of Instance fields which should
+  /// be replaced.
+  ///  Must be explicitly set.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L41}
+  ///
+  /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L352}
+  /// [google.bigtable.admin.v2.Instance]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L41}
+  ///
+  future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
+      google::bigtable::admin::v2::Instance const& instance,
+      google::protobuf::FieldMask const& update_mask, Options options = {});
+
+  ///
+  /// Partially updates an instance within a project. This method can modify all
+  /// fields of an Instance and is the preferred way to update an Instance.
+  ///
   /// @param request
   /// @googleapis_link{google::bigtable::admin::v2::PartialUpdateInstanceRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L352}
   /// @param options  Optional. Operation options.
@@ -614,6 +292,18 @@ class BigtableInstanceAdminClient {
   ///
   /// Delete an instance from a project.
   ///
+  /// @param name  Required. The unique name of the instance to be deleted.
+  ///  Values are of the form `projects/{project}/instances/{instance}`.
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.bigtable.admin.v2.DeleteInstanceRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L362}
+  ///
+  Status DeleteInstance(std::string const& name, Options options = {});
+
+  ///
+  /// Delete an instance from a project.
+  ///
   /// @param request
   /// @googleapis_link{google::bigtable::admin::v2::DeleteInstanceRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L362}
   /// @param options  Optional. Operation options.
@@ -623,6 +313,39 @@ class BigtableInstanceAdminClient {
   ///
   Status DeleteInstance(
       google::bigtable::admin::v2::DeleteInstanceRequest const& request,
+      Options options = {});
+
+  ///
+  /// Creates a cluster within an instance.
+  ///
+  /// Note that exactly one of Cluster.serve_nodes and
+  /// Cluster.cluster_config.cluster_autoscaling_config can be set. If
+  /// serve_nodes is set to non-zero, then the cluster is manually scaled. If
+  /// cluster_config.cluster_autoscaling_config is non-empty, then autoscaling
+  /// is enabled.
+  ///
+  /// @param parent  Required. The unique name of the instance in which to
+  /// create the new cluster.
+  ///  Values are of the form
+  ///  `projects/{project}/instances/{instance}`.
+  /// @param cluster_id  Required. The ID to be used when referring to the new
+  /// cluster within its instance,
+  ///  e.g., just `mycluster` rather than
+  ///  `projects/myproject/instances/myinstance/clusters/mycluster`.
+  /// @param cluster  Required. The cluster to be created.
+  ///  Fields marked `OutputOnly` must be left blank.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L137}
+  ///
+  /// [google.bigtable.admin.v2.CreateClusterRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L374}
+  /// [google.bigtable.admin.v2.Cluster]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L137}
+  ///
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
+      std::string const& parent, std::string const& cluster_id,
+      google::bigtable::admin::v2::Cluster const& cluster,
       Options options = {});
 
   ///
@@ -652,6 +375,24 @@ class BigtableInstanceAdminClient {
   ///
   /// Gets information about a cluster.
   ///
+  /// @param name  Required. The unique name of the requested cluster. Values
+  /// are of the form
+  ///  `projects/{project}/instances/{instance}/clusters/{cluster}`.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L137}
+  ///
+  /// [google.bigtable.admin.v2.GetClusterRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L396}
+  /// [google.bigtable.admin.v2.Cluster]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L137}
+  ///
+  StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
+      std::string const& name, Options options = {});
+
+  ///
+  /// Gets information about a cluster.
+  ///
   /// @param request
   /// @googleapis_link{google::bigtable::admin::v2::GetClusterRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L396}
   /// @param options  Optional. Operation options.
@@ -666,6 +407,26 @@ class BigtableInstanceAdminClient {
   StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
       google::bigtable::admin::v2::GetClusterRequest const& request,
       Options options = {});
+
+  ///
+  /// Lists information about clusters in an instance.
+  ///
+  /// @param parent  Required. The unique name of the instance for which a list
+  /// of clusters is requested.
+  ///  Values are of the form `projects/{project}/instances/{instance}`.
+  ///  Use `{instance} = '-'` to list Clusters for all Instances in a project,
+  ///  e.g., `projects/myproject/instances/-`.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::ListClustersResponse,google/bigtable/admin/v2/bigtable_instance_admin.proto#L425}
+  ///
+  /// [google.bigtable.admin.v2.ListClustersRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L408}
+  /// [google.bigtable.admin.v2.ListClustersResponse]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L425}
+  ///
+  StatusOr<google::bigtable::admin::v2::ListClustersResponse> ListClusters(
+      std::string const& parent, Options options = {});
 
   ///
   /// Lists information about clusters in an instance.
@@ -721,6 +482,38 @@ class BigtableInstanceAdminClient {
   /// To disable autoscaling, clear cluster_config.cluster_autoscaling_config,
   /// and explicitly set a serve_node count via the update_mask.
   ///
+  /// @param cluster  Required. The Cluster which contains the partial updates
+  /// to be applied, subject to
+  ///  the update_mask.
+  /// @param update_mask  Required. The subset of Cluster fields which should be
+  /// replaced.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L137}
+  ///
+  /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L513}
+  /// [google.bigtable.admin.v2.Cluster]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L137}
+  ///
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
+      google::bigtable::admin::v2::Cluster const& cluster,
+      google::protobuf::FieldMask const& update_mask, Options options = {});
+
+  ///
+  /// Partially updates a cluster within a project. This method is the preferred
+  /// way to update a Cluster.
+  ///
+  /// To enable and update autoscaling, set
+  /// cluster_config.cluster_autoscaling_config. When autoscaling is enabled,
+  /// serve_nodes is treated as an OUTPUT_ONLY field, meaning that updates to it
+  /// are ignored. Note that an update cannot simultaneously set serve_nodes to
+  /// non-zero and cluster_config.cluster_autoscaling_config to non-empty, and
+  /// also specify both in the update_mask.
+  ///
+  /// To disable autoscaling, clear cluster_config.cluster_autoscaling_config,
+  /// and explicitly set a serve_node count via the update_mask.
+  ///
   /// @param request
   /// @googleapis_link{google::bigtable::admin::v2::PartialUpdateClusterRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L513}
   /// @param options  Optional. Operation options.
@@ -739,6 +532,19 @@ class BigtableInstanceAdminClient {
   ///
   /// Deletes a cluster from an instance.
   ///
+  /// @param name  Required. The unique name of the cluster to be deleted.
+  /// Values are of the form
+  ///  `projects/{project}/instances/{instance}/clusters/{cluster}`.
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.bigtable.admin.v2.DeleteClusterRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L441}
+  ///
+  Status DeleteCluster(std::string const& name, Options options = {});
+
+  ///
+  /// Deletes a cluster from an instance.
+  ///
   /// @param request
   /// @googleapis_link{google::bigtable::admin::v2::DeleteClusterRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L441}
   /// @param options  Optional. Operation options.
@@ -748,6 +554,33 @@ class BigtableInstanceAdminClient {
   ///
   Status DeleteCluster(
       google::bigtable::admin::v2::DeleteClusterRequest const& request,
+      Options options = {});
+
+  ///
+  /// Creates an app profile within an instance.
+  ///
+  /// @param parent  Required. The unique name of the instance in which to
+  /// create the new app profile.
+  ///  Values are of the form
+  ///  `projects/{project}/instances/{instance}`.
+  /// @param app_profile_id  Required. The ID to be used when referring to the
+  /// new app profile within its
+  ///  instance, e.g., just `myprofile` rather than
+  ///  `projects/myproject/instances/myinstance/appProfiles/myprofile`.
+  /// @param app_profile  Required. The app profile to be created.
+  ///  Fields marked `OutputOnly` will be ignored.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
+  ///
+  /// [google.bigtable.admin.v2.CreateAppProfileRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L523}
+  /// [google.bigtable.admin.v2.AppProfile]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L236}
+  ///
+  StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
+      std::string const& parent, std::string const& app_profile_id,
+      google::bigtable::admin::v2::AppProfile const& app_profile,
       Options options = {});
 
   ///
@@ -771,6 +604,24 @@ class BigtableInstanceAdminClient {
   ///
   /// Gets information about an app profile.
   ///
+  /// @param name  Required. The unique name of the requested app profile.
+  /// Values are of the form
+  ///  `projects/{project}/instances/{instance}/appProfiles/{app_profile}`.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
+  ///
+  /// [google.bigtable.admin.v2.GetAppProfileRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L548}
+  /// [google.bigtable.admin.v2.AppProfile]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L236}
+  ///
+  StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
+      std::string const& name, Options options = {});
+
+  ///
+  /// Gets information about an app profile.
+  ///
   /// @param request
   /// @googleapis_link{google::bigtable::admin::v2::GetAppProfileRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L548}
   /// @param options  Optional. Operation options.
@@ -785,6 +636,27 @@ class BigtableInstanceAdminClient {
   StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
       google::bigtable::admin::v2::GetAppProfileRequest const& request,
       Options options = {});
+
+  ///
+  /// Lists information about app profiles in an instance.
+  ///
+  /// @param parent  Required. The unique name of the instance for which a list
+  /// of app profiles is
+  ///  requested. Values are of the form
+  ///  `projects/{project}/instances/{instance}`.
+  ///  Use `{instance} = '-'` to list AppProfiles for all Instances in a
+  ///  project, e.g., `projects/myproject/instances/-`.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
+  ///
+  /// [google.bigtable.admin.v2.ListAppProfilesRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L560}
+  /// [google.bigtable.admin.v2.AppProfile]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L236}
+  ///
+  StreamRange<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
+      std::string const& parent, Options options = {});
 
   ///
   /// Lists information about app profiles in an instance.
@@ -807,6 +679,27 @@ class BigtableInstanceAdminClient {
   ///
   /// Updates an app profile within an instance.
   ///
+  /// @param app_profile  Required. The app profile which will (partially)
+  /// replace the current value.
+  /// @param update_mask  Required. The subset of app profile fields which
+  /// should be replaced.
+  ///  If unset, all fields will be replaced.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
+  ///
+  /// [google.bigtable.admin.v2.UpdateAppProfileRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L606}
+  /// [google.bigtable.admin.v2.AppProfile]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L236}
+  ///
+  future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
+      google::bigtable::admin::v2::AppProfile const& app_profile,
+      google::protobuf::FieldMask const& update_mask, Options options = {});
+
+  ///
+  /// Updates an app profile within an instance.
+  ///
   /// @param request
   /// @googleapis_link{google::bigtable::admin::v2::UpdateAppProfileRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L606}
   /// @param options  Optional. Operation options.
@@ -825,6 +718,19 @@ class BigtableInstanceAdminClient {
   ///
   /// Deletes an app profile from an instance.
   ///
+  /// @param name  Required. The unique name of the app profile to be deleted.
+  /// Values are of the form
+  ///  `projects/{project}/instances/{instance}/appProfiles/{app_profile}`.
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.bigtable.admin.v2.DeleteAppProfileRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L619}
+  ///
+  Status DeleteAppProfile(std::string const& name, Options options = {});
+
+  ///
+  /// Deletes an app profile from an instance.
+  ///
   /// @param request
   /// @googleapis_link{google::bigtable::admin::v2::DeleteAppProfileRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L619}
   /// @param options  Optional. Operation options.
@@ -835,6 +741,25 @@ class BigtableInstanceAdminClient {
   Status DeleteAppProfile(
       google::bigtable::admin::v2::DeleteAppProfileRequest const& request,
       Options options = {});
+
+  ///
+  /// Gets the access control policy for an instance resource. Returns an empty
+  /// policy if an instance exists but does not have a policy set.
+  ///
+  /// @param resource  REQUIRED: The resource for which the policy is being
+  /// requested.
+  ///  See the operation documentation for the appropriate value for this field.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  ///
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options options = {});
 
   ///
   /// Gets the access control policy for an instance resource. Returns an empty
@@ -859,6 +784,56 @@ class BigtableInstanceAdminClient {
   /// Sets the access control policy on an instance resource. Replaces any
   /// existing policy.
   ///
+  /// @param resource  REQUIRED: The resource for which the policy is being
+  /// specified.
+  ///  See the operation documentation for the appropriate value for this field.
+  /// @param policy  REQUIRED: The complete policy to be applied to the
+  /// `resource`. The size of
+  ///  the policy is limited to a few 10s of KB. An empty policy is a
+  ///  valid policy but certain Cloud Platform services (such as Projects)
+  ///  might reject them.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  ///
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options options = {});
+
+  /**
+   * Updates the IAM policy for @p resource using an optimistic concurrency
+   * control loop.
+   *
+   * The loop fetches the current policy for @p resource, and passes it to @p
+   * updater, which should return the new policy. This new policy should use the
+   * current etag so that the read-modify-write cycle can detect races and rerun
+   * the update when there is a mismatch. If the new policy does not have an
+   * etag, the existing policy will be blindly overwritten. If @p updater does
+   * not yield a policy, the control loop is terminated and kCancelled is
+   * returned.
+   *
+   * @param resource  Required. The resource for which the policy is being
+   * specified. See the operation documentation for the appropriate value for
+   * this field.
+   * @param updater  Required. Functor to map the current policy to a new one.
+   * @param options  Optional. Options to control the loop. Expected options
+   * are:
+   *       - `BigtableInstanceAdminBackoffPolicyOption`
+   * @return google::iam::v1::Policy
+   */
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
+                                                 IamUpdater const& updater,
+                                                 Options options = {});
+
+  ///
+  /// Sets the access control policy on an instance resource. Replaces any
+  /// existing policy.
+  ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
   /// @param options  Optional. Operation options.
@@ -872,6 +847,31 @@ class BigtableInstanceAdminClient {
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request,
+      Options options = {});
+
+  ///
+  /// Returns permissions that the caller has on the specified instance
+  /// resource.
+  ///
+  /// @param resource  REQUIRED: The resource for which the policy detail is
+  /// being requested.
+  ///  See the operation documentation for the appropriate value for this field.
+  /// @param permissions  The set of permissions to check for the `resource`.
+  /// Permissions with
+  ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
+  ///  information see
+  ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  ///
+  /// [google.iam.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  ///
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      std::string const& resource, std::vector<std::string> const& permissions,
       Options options = {});
 
   ///

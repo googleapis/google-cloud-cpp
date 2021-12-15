@@ -113,6 +113,24 @@ class AdminServiceClient {
       std::string const& topic_id, Options options = {});
 
   ///
+  /// Creates a new topic.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::pubsublite::v1::CreateTopicRequest,google/cloud/pubsublite/v1/admin.proto#L227}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  ///
+  /// [google.cloud.pubsublite.v1.CreateTopicRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L227}
+  /// [google.cloud.pubsublite.v1.Topic]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
+  ///
+  StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
+      google::cloud::pubsublite::v1::CreateTopicRequest const& request,
+      Options options = {});
+
+  ///
   /// Returns the topic configuration.
   ///
   /// @param name  Required. The name of the topic whose configuration to
@@ -128,6 +146,24 @@ class AdminServiceClient {
   ///
   StatusOr<google::cloud::pubsublite::v1::Topic> GetTopic(
       std::string const& name, Options options = {});
+
+  ///
+  /// Returns the topic configuration.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicRequest,google/cloud/pubsublite/v1/admin.proto#L248}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  ///
+  /// [google.cloud.pubsublite.v1.GetTopicRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L248}
+  /// [google.cloud.pubsublite.v1.Topic]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
+  ///
+  StatusOr<google::cloud::pubsublite::v1::Topic> GetTopic(
+      google::cloud::pubsublite::v1::GetTopicRequest const& request,
+      Options options = {});
 
   ///
   /// Returns the partition information for the requested topic.
@@ -146,6 +182,24 @@ class AdminServiceClient {
       std::string const& name, Options options = {});
 
   ///
+  /// Returns the partition information for the requested topic.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicPartitionsRequest,google/cloud/pubsublite/v1/admin.proto#L259}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L270}
+  ///
+  /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L259}
+  /// [google.cloud.pubsublite.v1.TopicPartitions]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L270}
+  ///
+  StatusOr<google::cloud::pubsublite::v1::TopicPartitions> GetTopicPartitions(
+      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request,
+      Options options = {});
+
+  ///
   /// Returns the list of topics for the given project.
   ///
   /// @param parent  Required. The parent whose topics are to be listed.
@@ -161,6 +215,24 @@ class AdminServiceClient {
   ///
   StreamRange<google::cloud::pubsublite::v1::Topic> ListTopics(
       std::string const& parent, Options options = {});
+
+  ///
+  /// Returns the list of topics for the given project.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListTopicsRequest,google/cloud/pubsublite/v1/admin.proto#L276}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  ///
+  /// [google.cloud.pubsublite.v1.ListTopicsRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L276}
+  /// [google.cloud.pubsublite.v1.Topic]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
+  ///
+  StreamRange<google::cloud::pubsublite::v1::Topic> ListTopics(
+      google::cloud::pubsublite::v1::ListTopicsRequest request,
+      Options options = {});
 
   ///
   /// Updates properties of the specified topic.
@@ -183,6 +255,24 @@ class AdminServiceClient {
       google::protobuf::FieldMask const& update_mask, Options options = {});
 
   ///
+  /// Updates properties of the specified topic.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::pubsublite::v1::UpdateTopicRequest,google/cloud/pubsublite/v1/admin.proto#L311}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  ///
+  /// [google.cloud.pubsublite.v1.UpdateTopicRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L311}
+  /// [google.cloud.pubsublite.v1.Topic]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
+  ///
+  StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
+      google::cloud::pubsublite::v1::UpdateTopicRequest const& request,
+      Options options = {});
+
+  ///
   /// Deletes the specified topic.
   ///
   /// @param name  Required. The name of the topic to delete.
@@ -192,6 +282,20 @@ class AdminServiceClient {
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L320}
   ///
   Status DeleteTopic(std::string const& name, Options options = {});
+
+  ///
+  /// Deletes the specified topic.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::pubsublite::v1::DeleteTopicRequest,google/cloud/pubsublite/v1/admin.proto#L320}
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.cloud.pubsublite.v1.DeleteTopicRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L320}
+  ///
+  Status DeleteTopic(
+      google::cloud::pubsublite::v1::DeleteTopicRequest const& request,
+      Options options = {});
 
   ///
   /// Lists the subscriptions attached to the specified topic.
@@ -205,6 +309,21 @@ class AdminServiceClient {
   ///
   StreamRange<std::string> ListTopicSubscriptions(std::string const& name,
                                                   Options options = {});
+
+  ///
+  /// Lists the subscriptions attached to the specified topic.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L331}
+  /// @param options  Optional. Operation options.
+  /// @return std::string
+  ///
+  /// [google.cloud.pubsublite.v1.ListTopicSubscriptionsRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L331}
+  ///
+  StreamRange<std::string> ListTopicSubscriptions(
+      google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request,
+      Options options = {});
 
   ///
   /// Creates a new subscription.
@@ -233,6 +352,24 @@ class AdminServiceClient {
       std::string const& subscription_id, Options options = {});
 
   ///
+  /// Creates a new subscription.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::pubsublite::v1::CreateSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L365}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  ///
+  /// [google.cloud.pubsublite.v1.CreateSubscriptionRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L365}
+  /// [google.cloud.pubsublite.v1.Subscription]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
+  ///
+  StatusOr<google::cloud::pubsublite::v1::Subscription> CreateSubscription(
+      google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request,
+      Options options = {});
+
+  ///
   /// Returns the subscription configuration.
   ///
   /// @param name  Required. The name of the subscription whose configuration to
@@ -250,6 +387,24 @@ class AdminServiceClient {
       std::string const& name, Options options = {});
 
   ///
+  /// Returns the subscription configuration.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::pubsublite::v1::GetSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L391}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  ///
+  /// [google.cloud.pubsublite.v1.GetSubscriptionRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L391}
+  /// [google.cloud.pubsublite.v1.Subscription]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
+  ///
+  StatusOr<google::cloud::pubsublite::v1::Subscription> GetSubscription(
+      google::cloud::pubsublite::v1::GetSubscriptionRequest const& request,
+      Options options = {});
+
+  ///
   /// Returns the list of subscriptions for the given project.
   ///
   /// @param parent  Required. The parent whose subscriptions are to be listed.
@@ -265,6 +420,24 @@ class AdminServiceClient {
   ///
   StreamRange<google::cloud::pubsublite::v1::Subscription> ListSubscriptions(
       std::string const& parent, Options options = {});
+
+  ///
+  /// Returns the list of subscriptions for the given project.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L402}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  ///
+  /// [google.cloud.pubsublite.v1.ListSubscriptionsRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L402}
+  /// [google.cloud.pubsublite.v1.Subscription]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
+  ///
+  StreamRange<google::cloud::pubsublite::v1::Subscription> ListSubscriptions(
+      google::cloud::pubsublite::v1::ListSubscriptionsRequest request,
+      Options options = {});
 
   ///
   /// Updates properties of the specified subscription.
@@ -288,300 +461,6 @@ class AdminServiceClient {
       google::protobuf::FieldMask const& update_mask, Options options = {});
 
   ///
-  /// Deletes the specified subscription.
-  ///
-  /// @param name  Required. The name of the subscription to delete.
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.cloud.pubsublite.v1.DeleteSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L447}
-  ///
-  Status DeleteSubscription(std::string const& name, Options options = {});
-
-  ///
-  /// Creates a new reservation.
-  ///
-  /// @param parent  Required. The parent location in which to create the
-  /// reservation.
-  ///  Structured like `projects/{project_number}/locations/{location}`.
-  /// @param reservation  Required. Configuration of the reservation to create.
-  /// Its `name` field is ignored.
-  /// @param reservation_id  Required. The ID to use for the reservation, which
-  /// will become the final component of
-  ///  the reservation's name.
-  ///  This value is structured like: `my-reservation-name`.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
-  ///
-  /// [google.cloud.pubsublite.v1.CreateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L516}
-  /// [google.cloud.pubsublite.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
-  ///
-  StatusOr<google::cloud::pubsublite::v1::Reservation> CreateReservation(
-      std::string const& parent,
-      google::cloud::pubsublite::v1::Reservation const& reservation,
-      std::string const& reservation_id, Options options = {});
-
-  ///
-  /// Returns the reservation configuration.
-  ///
-  /// @param name  Required. The name of the reservation whose configuration to
-  /// return.
-  ///  Structured like:
-  ///  projects/{project_number}/locations/{location}/reservations/{reservation_id}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
-  ///
-  /// [google.cloud.pubsublite.v1.GetReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L537}
-  /// [google.cloud.pubsublite.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
-  ///
-  StatusOr<google::cloud::pubsublite::v1::Reservation> GetReservation(
-      std::string const& name, Options options = {});
-
-  ///
-  /// Returns the list of reservations for the given project.
-  ///
-  /// @param parent  Required. The parent whose reservations are to be listed.
-  ///  Structured like `projects/{project_number}/locations/{location}`.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
-  ///
-  /// [google.cloud.pubsublite.v1.ListReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L550}
-  /// [google.cloud.pubsublite.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
-  ///
-  StreamRange<google::cloud::pubsublite::v1::Reservation> ListReservations(
-      std::string const& parent, Options options = {});
-
-  ///
-  /// Updates properties of the specified reservation.
-  ///
-  /// @param reservation  Required. The reservation to update. Its `name` field
-  /// must be populated.
-  /// @param update_mask  Required. A mask specifying the reservation fields to
-  /// change.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
-  ///
-  /// [google.cloud.pubsublite.v1.UpdateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L585}
-  /// [google.cloud.pubsublite.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
-  ///
-  StatusOr<google::cloud::pubsublite::v1::Reservation> UpdateReservation(
-      google::cloud::pubsublite::v1::Reservation const& reservation,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
-
-  ///
-  /// Deletes the specified reservation.
-  ///
-  /// @param name  Required. The name of the reservation to delete.
-  ///  Structured like:
-  ///  projects/{project_number}/locations/{location}/reservations/{reservation_id}
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.cloud.pubsublite.v1.DeleteReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L594}
-  ///
-  Status DeleteReservation(std::string const& name, Options options = {});
-
-  ///
-  /// Lists the topics attached to the specified reservation.
-  ///
-  /// @param name  Required. The name of the reservation whose topics to list.
-  ///  Structured like:
-  ///  projects/{project_number}/locations/{location}/reservations/{reservation_id}
-  /// @param options  Optional. Operation options.
-  /// @return std::string
-  ///
-  /// [google.cloud.pubsublite.v1.ListReservationTopicsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L607}
-  ///
-  StreamRange<std::string> ListReservationTopics(std::string const& name,
-                                                 Options options = {});
-
-  ///
-  /// Creates a new topic.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::CreateTopicRequest,google/cloud/pubsublite/v1/admin.proto#L227}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
-  ///
-  /// [google.cloud.pubsublite.v1.CreateTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L227}
-  /// [google.cloud.pubsublite.v1.Topic]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
-  ///
-  StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
-      google::cloud::pubsublite::v1::CreateTopicRequest const& request,
-      Options options = {});
-
-  ///
-  /// Returns the topic configuration.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicRequest,google/cloud/pubsublite/v1/admin.proto#L248}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
-  ///
-  /// [google.cloud.pubsublite.v1.GetTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L248}
-  /// [google.cloud.pubsublite.v1.Topic]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
-  ///
-  StatusOr<google::cloud::pubsublite::v1::Topic> GetTopic(
-      google::cloud::pubsublite::v1::GetTopicRequest const& request,
-      Options options = {});
-
-  ///
-  /// Returns the partition information for the requested topic.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicPartitionsRequest,google/cloud/pubsublite/v1/admin.proto#L259}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L270}
-  ///
-  /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L259}
-  /// [google.cloud.pubsublite.v1.TopicPartitions]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L270}
-  ///
-  StatusOr<google::cloud::pubsublite::v1::TopicPartitions> GetTopicPartitions(
-      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request,
-      Options options = {});
-
-  ///
-  /// Returns the list of topics for the given project.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ListTopicsRequest,google/cloud/pubsublite/v1/admin.proto#L276}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
-  ///
-  /// [google.cloud.pubsublite.v1.ListTopicsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L276}
-  /// [google.cloud.pubsublite.v1.Topic]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
-  ///
-  StreamRange<google::cloud::pubsublite::v1::Topic> ListTopics(
-      google::cloud::pubsublite::v1::ListTopicsRequest request,
-      Options options = {});
-
-  ///
-  /// Updates properties of the specified topic.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::UpdateTopicRequest,google/cloud/pubsublite/v1/admin.proto#L311}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
-  ///
-  /// [google.cloud.pubsublite.v1.UpdateTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L311}
-  /// [google.cloud.pubsublite.v1.Topic]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
-  ///
-  StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
-      google::cloud::pubsublite::v1::UpdateTopicRequest const& request,
-      Options options = {});
-
-  ///
-  /// Deletes the specified topic.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::DeleteTopicRequest,google/cloud/pubsublite/v1/admin.proto#L320}
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.cloud.pubsublite.v1.DeleteTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L320}
-  ///
-  Status DeleteTopic(
-      google::cloud::pubsublite::v1::DeleteTopicRequest const& request,
-      Options options = {});
-
-  ///
-  /// Lists the subscriptions attached to the specified topic.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L331}
-  /// @param options  Optional. Operation options.
-  /// @return std::string
-  ///
-  /// [google.cloud.pubsublite.v1.ListTopicSubscriptionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L331}
-  ///
-  StreamRange<std::string> ListTopicSubscriptions(
-      google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request,
-      Options options = {});
-
-  ///
-  /// Creates a new subscription.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::CreateSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L365}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
-  ///
-  /// [google.cloud.pubsublite.v1.CreateSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L365}
-  /// [google.cloud.pubsublite.v1.Subscription]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
-  ///
-  StatusOr<google::cloud::pubsublite::v1::Subscription> CreateSubscription(
-      google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request,
-      Options options = {});
-
-  ///
-  /// Returns the subscription configuration.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::GetSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L391}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
-  ///
-  /// [google.cloud.pubsublite.v1.GetSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L391}
-  /// [google.cloud.pubsublite.v1.Subscription]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
-  ///
-  StatusOr<google::cloud::pubsublite::v1::Subscription> GetSubscription(
-      google::cloud::pubsublite::v1::GetSubscriptionRequest const& request,
-      Options options = {});
-
-  ///
-  /// Returns the list of subscriptions for the given project.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ListSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L402}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
-  ///
-  /// [google.cloud.pubsublite.v1.ListSubscriptionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L402}
-  /// [google.cloud.pubsublite.v1.Subscription]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
-  ///
-  StreamRange<google::cloud::pubsublite::v1::Subscription> ListSubscriptions(
-      google::cloud::pubsublite::v1::ListSubscriptionsRequest request,
-      Options options = {});
-
-  ///
   /// Updates properties of the specified subscription.
   ///
   /// @param request
@@ -598,6 +477,17 @@ class AdminServiceClient {
   StatusOr<google::cloud::pubsublite::v1::Subscription> UpdateSubscription(
       google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request,
       Options options = {});
+
+  ///
+  /// Deletes the specified subscription.
+  ///
+  /// @param name  Required. The name of the subscription to delete.
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.cloud.pubsublite.v1.DeleteSubscriptionRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L447}
+  ///
+  Status DeleteSubscription(std::string const& name, Options options = {});
 
   ///
   /// Deletes the specified subscription.
@@ -655,6 +545,32 @@ class AdminServiceClient {
   ///
   /// Creates a new reservation.
   ///
+  /// @param parent  Required. The parent location in which to create the
+  /// reservation.
+  ///  Structured like `projects/{project_number}/locations/{location}`.
+  /// @param reservation  Required. Configuration of the reservation to create.
+  /// Its `name` field is ignored.
+  /// @param reservation_id  Required. The ID to use for the reservation, which
+  /// will become the final component of
+  ///  the reservation's name.
+  ///  This value is structured like: `my-reservation-name`.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  ///
+  /// [google.cloud.pubsublite.v1.CreateReservationRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L516}
+  /// [google.cloud.pubsublite.v1.Reservation]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
+  ///
+  StatusOr<google::cloud::pubsublite::v1::Reservation> CreateReservation(
+      std::string const& parent,
+      google::cloud::pubsublite::v1::Reservation const& reservation,
+      std::string const& reservation_id, Options options = {});
+
+  ///
+  /// Creates a new reservation.
+  ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::CreateReservationRequest,google/cloud/pubsublite/v1/admin.proto#L516}
   /// @param options  Optional. Operation options.
@@ -669,6 +585,25 @@ class AdminServiceClient {
   StatusOr<google::cloud::pubsublite::v1::Reservation> CreateReservation(
       google::cloud::pubsublite::v1::CreateReservationRequest const& request,
       Options options = {});
+
+  ///
+  /// Returns the reservation configuration.
+  ///
+  /// @param name  Required. The name of the reservation whose configuration to
+  /// return.
+  ///  Structured like:
+  ///  projects/{project_number}/locations/{location}/reservations/{reservation_id}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  ///
+  /// [google.cloud.pubsublite.v1.GetReservationRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L537}
+  /// [google.cloud.pubsublite.v1.Reservation]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
+  ///
+  StatusOr<google::cloud::pubsublite::v1::Reservation> GetReservation(
+      std::string const& name, Options options = {});
 
   ///
   /// Returns the reservation configuration.
@@ -691,6 +626,23 @@ class AdminServiceClient {
   ///
   /// Returns the list of reservations for the given project.
   ///
+  /// @param parent  Required. The parent whose reservations are to be listed.
+  ///  Structured like `projects/{project_number}/locations/{location}`.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  ///
+  /// [google.cloud.pubsublite.v1.ListReservationsRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L550}
+  /// [google.cloud.pubsublite.v1.Reservation]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
+  ///
+  StreamRange<google::cloud::pubsublite::v1::Reservation> ListReservations(
+      std::string const& parent, Options options = {});
+
+  ///
+  /// Returns the list of reservations for the given project.
+  ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::ListReservationsRequest,google/cloud/pubsublite/v1/admin.proto#L550}
   /// @param options  Optional. Operation options.
@@ -705,6 +657,26 @@ class AdminServiceClient {
   StreamRange<google::cloud::pubsublite::v1::Reservation> ListReservations(
       google::cloud::pubsublite::v1::ListReservationsRequest request,
       Options options = {});
+
+  ///
+  /// Updates properties of the specified reservation.
+  ///
+  /// @param reservation  Required. The reservation to update. Its `name` field
+  /// must be populated.
+  /// @param update_mask  Required. A mask specifying the reservation fields to
+  /// change.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  ///
+  /// [google.cloud.pubsublite.v1.UpdateReservationRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L585}
+  /// [google.cloud.pubsublite.v1.Reservation]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
+  ///
+  StatusOr<google::cloud::pubsublite::v1::Reservation> UpdateReservation(
+      google::cloud::pubsublite::v1::Reservation const& reservation,
+      google::protobuf::FieldMask const& update_mask, Options options = {});
 
   ///
   /// Updates properties of the specified reservation.
@@ -727,6 +699,19 @@ class AdminServiceClient {
   ///
   /// Deletes the specified reservation.
   ///
+  /// @param name  Required. The name of the reservation to delete.
+  ///  Structured like:
+  ///  projects/{project_number}/locations/{location}/reservations/{reservation_id}
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.cloud.pubsublite.v1.DeleteReservationRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L594}
+  ///
+  Status DeleteReservation(std::string const& name, Options options = {});
+
+  ///
+  /// Deletes the specified reservation.
+  ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::DeleteReservationRequest,google/cloud/pubsublite/v1/admin.proto#L594}
   /// @param options  Optional. Operation options.
@@ -737,6 +722,21 @@ class AdminServiceClient {
   Status DeleteReservation(
       google::cloud::pubsublite::v1::DeleteReservationRequest const& request,
       Options options = {});
+
+  ///
+  /// Lists the topics attached to the specified reservation.
+  ///
+  /// @param name  Required. The name of the reservation whose topics to list.
+  ///  Structured like:
+  ///  projects/{project_number}/locations/{location}/reservations/{reservation_id}
+  /// @param options  Optional. Operation options.
+  /// @return std::string
+  ///
+  /// [google.cloud.pubsublite.v1.ListReservationTopicsRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L607}
+  ///
+  StreamRange<std::string> ListReservationTopics(std::string const& name,
+                                                 Options options = {});
 
   ///
   /// Lists the topics attached to the specified reservation.

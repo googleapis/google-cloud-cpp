@@ -46,6 +46,16 @@ BigQueryReadClient::CreateReadSession(
   return connection_->CreateReadSession(request);
 }
 
+StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
+BigQueryReadClient::CreateReadSession(
+    google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+        request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->CreateReadSession(request);
+}
+
 StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
 BigQueryReadClient::ReadRows(std::string const& read_stream,
                              std::int64_t offset, Options options) {
@@ -55,16 +65,6 @@ BigQueryReadClient::ReadRows(std::string const& read_stream,
   request.set_read_stream(read_stream);
   request.set_offset(offset);
   return connection_->ReadRows(request);
-}
-
-StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
-BigQueryReadClient::CreateReadSession(
-    google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
-        request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  return connection_->CreateReadSession(request);
 }
 
 StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>

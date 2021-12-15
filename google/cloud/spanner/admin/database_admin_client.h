@@ -110,6 +110,24 @@ class DatabaseAdminClient {
       std::string const& parent, Options options = {});
 
   ///
+  /// Lists Cloud Spanner databases.
+  ///
+  /// @param request
+  /// @googleapis_link{google::spanner::admin::database::v1::ListDatabasesRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L413}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
+  ///
+  /// [google.spanner.admin.database.v1.ListDatabasesRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L413}
+  /// [google.spanner.admin.database.v1.Database]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
+  ///
+  StreamRange<google::spanner::admin::database::v1::Database> ListDatabases(
+      google::spanner::admin::database::v1::ListDatabasesRequest request,
+      Options options = {});
+
+  ///
   /// Creates a new Cloud Spanner database and starts to prepare it for serving.
   /// The returned [long-running operation][google.longrunning.Operation] will
   /// have a name of the format `<database_name>/operations/<operation_id>` and
@@ -142,6 +160,33 @@ class DatabaseAdminClient {
                  Options options = {});
 
   ///
+  /// Creates a new Cloud Spanner database and starts to prepare it for serving.
+  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// have a name of the format `<database_name>/operations/<operation_id>` and
+  /// can be used to track preparation of the database. The
+  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// [CreateDatabaseMetadata][google.spanner.admin.database.v1.CreateDatabaseMetadata].
+  /// The [response][google.longrunning.Operation.response] field type is
+  /// [Database][google.spanner.admin.database.v1.Database], if successful.
+  ///
+  /// @param request
+  /// @googleapis_link{google::spanner::admin::database::v1::CreateDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L445}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
+  ///
+  /// [google.spanner.admin.database.v1.CreateDatabaseRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L445}
+  /// [google.spanner.admin.database.v1.Database]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
+  ///
+  future<StatusOr<google::spanner::admin::database::v1::Database>>
+  CreateDatabase(
+      google::spanner::admin::database::v1::CreateDatabaseRequest const&
+          request,
+      Options options = {});
+
+  ///
   /// Gets the state of a Cloud Spanner database.
   ///
   /// @param name  Required. The name of the requested database. Values are of
@@ -158,6 +203,24 @@ class DatabaseAdminClient {
   ///
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       std::string const& name, Options options = {});
+
+  ///
+  /// Gets the state of a Cloud Spanner database.
+  ///
+  /// @param request
+  /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L484}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
+  ///
+  /// [google.spanner.admin.database.v1.GetDatabaseRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L484}
+  /// [google.spanner.admin.database.v1.Database]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
+  ///
+  StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
+      google::spanner::admin::database::v1::GetDatabaseRequest const& request,
+      Options options = {});
 
   ///
   /// Updates the schema of a Cloud Spanner database by
@@ -187,6 +250,34 @@ class DatabaseAdminClient {
                     Options options = {});
 
   ///
+  /// Updates the schema of a Cloud Spanner database by
+  /// creating/altering/dropping tables, columns, indexes, etc. The returned
+  /// [long-running operation][google.longrunning.Operation] will have a name of
+  /// the format `<database_name>/operations/<operation_id>` and can be used to
+  /// track execution of the schema change(s). The
+  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// [UpdateDatabaseDdlMetadata][google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata].
+  /// The operation has no response.
+  ///
+  /// @param request
+  /// @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L511}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata,google/spanner/admin/database/v1/spanner_database_admin.proto#L547}
+  ///
+  /// [google.spanner.admin.database.v1.UpdateDatabaseDdlRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L511}
+  /// [google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L547}
+  ///
+  future<
+      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+  UpdateDatabaseDdl(
+      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+          request,
+      Options options = {});
+
+  ///
   /// Drops (aka deletes) a Cloud Spanner database.
   /// Completed backups for the database will be retained according to their
   /// `expire_time`.
@@ -198,6 +289,22 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L579}
   ///
   Status DropDatabase(std::string const& database, Options options = {});
+
+  ///
+  /// Drops (aka deletes) a Cloud Spanner database.
+  /// Completed backups for the database will be retained according to their
+  /// `expire_time`.
+  ///
+  /// @param request
+  /// @googleapis_link{google::spanner::admin::database::v1::DropDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L579}
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.spanner.admin.database.v1.DropDatabaseRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L579}
+  ///
+  Status DropDatabase(
+      google::spanner::admin::database::v1::DropDatabaseRequest const& request,
+      Options options = {});
 
   ///
   /// Returns the schema of a Cloud Spanner database as a list of formatted
@@ -218,6 +325,28 @@ class DatabaseAdminClient {
   ///
   StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(std::string const& database, Options options = {});
+
+  ///
+  /// Returns the schema of a Cloud Spanner database as a list of formatted
+  /// DDL statements. This method does not show pending schema updates, those
+  /// may be queried using the [Operations][google.longrunning.Operations] API.
+  ///
+  /// @param request
+  /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L590}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlResponse,google/spanner/admin/database/v1/spanner_database_admin.proto#L603}
+  ///
+  /// [google.spanner.admin.database.v1.GetDatabaseDdlRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L590}
+  /// [google.spanner.admin.database.v1.GetDatabaseDdlResponse]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L603}
+  ///
+  StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
+  GetDatabaseDdl(
+      google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
+          request,
+      Options options = {});
 
   ///
   /// Sets the access control policy on a database or backup resource.
@@ -275,6 +404,30 @@ class DatabaseAdminClient {
                                                  Options options = {});
 
   ///
+  /// Sets the access control policy on a database or backup resource.
+  /// Replaces any existing policy.
+  ///
+  /// Authorization requires `spanner.databases.setIamPolicy`
+  /// permission on [resource][google.iam.v1.SetIamPolicyRequest.resource].
+  /// For backups, authorization requires `spanner.backups.setIamPolicy`
+  /// permission on [resource][google.iam.v1.SetIamPolicyRequest.resource].
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  ///
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request,
+      Options options = {});
+
+  ///
   /// Gets the access control policy for a database or backup resource.
   /// Returns an empty policy if a database or backup exists but does not have a
   /// policy set.
@@ -298,6 +451,31 @@ class DatabaseAdminClient {
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
                                                  Options options = {});
+
+  ///
+  /// Gets the access control policy for a database or backup resource.
+  /// Returns an empty policy if a database or backup exists but does not have a
+  /// policy set.
+  ///
+  /// Authorization requires `spanner.databases.getIamPolicy` permission on
+  /// [resource][google.iam.v1.GetIamPolicyRequest.resource].
+  /// For backups, authorization requires `spanner.backups.getIamPolicy`
+  /// permission on [resource][google.iam.v1.GetIamPolicyRequest.resource].
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  ///
+  /// [google.iam.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  ///
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Returns permissions that the caller has on the specified database or
@@ -330,6 +508,33 @@ class DatabaseAdminClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions,
+      Options options = {});
+
+  ///
+  /// Returns permissions that the caller has on the specified database or
+  /// backup resource.
+  ///
+  /// Attempting this RPC on a non-existent Cloud Spanner database will
+  /// result in a NOT_FOUND error if the user has
+  /// `spanner.databases.list` permission on the containing Cloud
+  /// Spanner instance. Otherwise returns an empty set of permissions.
+  /// Calling this method on a backup that does not exist will
+  /// result in a NOT_FOUND error if the user has
+  /// `spanner.backups.list` permission on the containing instance.
+  ///
+  /// @param request
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  ///
+  /// [google.iam.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  ///
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
       Options options = {});
 
   ///
@@ -373,6 +578,35 @@ class DatabaseAdminClient {
       std::string const& backup_id, Options options = {});
 
   ///
+  /// Starts creating a new Cloud Spanner Backup.
+  /// The returned backup [long-running operation][google.longrunning.Operation]
+  /// will have a name of the format
+  /// `projects/<project>/instances/<instance>/backups/<backup>/operations/<operation_id>`
+  /// and can be used to track creation of the backup. The
+  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// [CreateBackupMetadata][google.spanner.admin.database.v1.CreateBackupMetadata].
+  /// The [response][google.longrunning.Operation.response] field type is
+  /// [Backup][google.spanner.admin.database.v1.Backup], if successful.
+  /// Cancelling the returned operation will stop the creation and delete the
+  /// backup. There can be only one pending backup creation per database. Backup
+  /// creation of different databases can run concurrently.
+  ///
+  /// @param request
+  /// @googleapis_link{google::spanner::admin::database::v1::CreateBackupRequest,google/spanner/admin/database/v1/backup.proto#L123}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
+  ///
+  /// [google.spanner.admin.database.v1.CreateBackupRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L123}
+  /// [google.spanner.admin.database.v1.Backup]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L36}
+  ///
+  future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
+      google::spanner::admin::database::v1::CreateBackupRequest const& request,
+      Options options = {});
+
+  ///
   /// Gets metadata on a pending or completed
   /// [Backup][google.spanner.admin.database.v1.Backup].
   ///
@@ -390,6 +624,25 @@ class DatabaseAdminClient {
   ///
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
       std::string const& name, Options options = {});
+
+  ///
+  /// Gets metadata on a pending or completed
+  /// [Backup][google.spanner.admin.database.v1.Backup].
+  ///
+  /// @param request
+  /// @googleapis_link{google::spanner::admin::database::v1::GetBackupRequest,google/spanner/admin/database/v1/backup.proto#L202}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
+  ///
+  /// [google.spanner.admin.database.v1.GetBackupRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L202}
+  /// [google.spanner.admin.database.v1.Backup]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L36}
+  ///
+  StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
+      google::spanner::admin::database::v1::GetBackupRequest const& request,
+      Options options = {});
 
   ///
   /// Updates a pending or completed
@@ -420,6 +673,25 @@ class DatabaseAdminClient {
       google::protobuf::FieldMask const& update_mask, Options options = {});
 
   ///
+  /// Updates a pending or completed
+  /// [Backup][google.spanner.admin.database.v1.Backup].
+  ///
+  /// @param request
+  /// @googleapis_link{google::spanner::admin::database::v1::UpdateBackupRequest,google/spanner/admin/database/v1/backup.proto#L186}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
+  ///
+  /// [google.spanner.admin.database.v1.UpdateBackupRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L186}
+  /// [google.spanner.admin.database.v1.Backup]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L36}
+  ///
+  StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
+      google::spanner::admin::database::v1::UpdateBackupRequest const& request,
+      Options options = {});
+
+  ///
   /// Deletes a pending or completed
   /// [Backup][google.spanner.admin.database.v1.Backup].
   ///
@@ -432,6 +704,21 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L215}
   ///
   Status DeleteBackup(std::string const& name, Options options = {});
+
+  ///
+  /// Deletes a pending or completed
+  /// [Backup][google.spanner.admin.database.v1.Backup].
+  ///
+  /// @param request
+  /// @googleapis_link{google::spanner::admin::database::v1::DeleteBackupRequest,google/spanner/admin/database/v1/backup.proto#L215}
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.spanner.admin.database.v1.DeleteBackupRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L215}
+  ///
+  Status DeleteBackup(
+      google::spanner::admin::database::v1::DeleteBackupRequest const& request,
+      Options options = {});
 
   ///
   /// Lists completed and pending backups.
@@ -452,6 +739,26 @@ class DatabaseAdminClient {
   ///
   StreamRange<google::spanner::admin::database::v1::Backup> ListBackups(
       std::string const& parent, Options options = {});
+
+  ///
+  /// Lists completed and pending backups.
+  /// Backups returned are ordered by `create_time` in descending order,
+  /// starting from the most recent `create_time`.
+  ///
+  /// @param request
+  /// @googleapis_link{google::spanner::admin::database::v1::ListBackupsRequest,google/spanner/admin/database/v1/backup.proto#L228}
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
+  ///
+  /// [google.spanner.admin.database.v1.ListBackupsRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L228}
+  /// [google.spanner.admin.database.v1.Backup]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L36}
+  ///
+  StreamRange<google::spanner::admin::database::v1::Backup> ListBackups(
+      google::spanner::admin::database::v1::ListBackupsRequest request,
+      Options options = {});
 
   ///
   /// Create a new database by restoring from a completed backup. The new
@@ -499,364 +806,6 @@ class DatabaseAdminClient {
                   std::string const& backup, Options options = {});
 
   ///
-  /// Lists database [longrunning-operations][google.longrunning.Operation].
-  /// A database operation has a name of the form
-  /// `projects/<project>/instances/<instance>/databases/<database>/operations/<operation>`.
-  /// The long-running operation
-  /// [metadata][google.longrunning.Operation.metadata] field type
-  /// `metadata.type_url` describes the type of the metadata. Operations
-  /// returned include those that have completed/failed/canceled within the last
-  /// 7 days, and pending operations.
-  ///
-  /// @param parent  Required. The instance of the database operations.
-  ///  Values are of the form `projects/<project>/instances/<instance>`.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
-  ///
-  /// [google.spanner.admin.database.v1.ListDatabaseOperationsRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L611}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  ///
-  StreamRange<google::longrunning::Operation> ListDatabaseOperations(
-      std::string const& parent, Options options = {});
-
-  ///
-  /// Lists the backup [long-running operations][google.longrunning.Operation]
-  /// in the given instance. A backup operation has a name of the form
-  /// `projects/<project>/instances/<instance>/backups/<backup>/operations/<operation>`.
-  /// The long-running operation
-  /// [metadata][google.longrunning.Operation.metadata] field type
-  /// `metadata.type_url` describes the type of the metadata. Operations
-  /// returned include those that have completed/failed/canceled within the last
-  /// 7 days, and pending operations. Operations returned are ordered by
-  /// `operation.metadata.value.progress.start_time` in descending order
-  /// starting from the most recently started operation.
-  ///
-  /// @param parent  Required. The instance of the backup operations. Values are
-  /// of
-  ///  the form `projects/<project>/instances/<instance>`.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
-  ///
-  /// [google.spanner.admin.database.v1.ListBackupOperationsRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L300}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  ///
-  StreamRange<google::longrunning::Operation> ListBackupOperations(
-      std::string const& parent, Options options = {});
-
-  ///
-  /// Lists Cloud Spanner databases.
-  ///
-  /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::ListDatabasesRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L413}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
-  ///
-  /// [google.spanner.admin.database.v1.ListDatabasesRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L413}
-  /// [google.spanner.admin.database.v1.Database]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
-  ///
-  StreamRange<google::spanner::admin::database::v1::Database> ListDatabases(
-      google::spanner::admin::database::v1::ListDatabasesRequest request,
-      Options options = {});
-
-  ///
-  /// Creates a new Cloud Spanner database and starts to prepare it for serving.
-  /// The returned [long-running operation][google.longrunning.Operation] will
-  /// have a name of the format `<database_name>/operations/<operation_id>` and
-  /// can be used to track preparation of the database. The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
-  /// [CreateDatabaseMetadata][google.spanner.admin.database.v1.CreateDatabaseMetadata].
-  /// The [response][google.longrunning.Operation.response] field type is
-  /// [Database][google.spanner.admin.database.v1.Database], if successful.
-  ///
-  /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::CreateDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L445}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
-  ///
-  /// [google.spanner.admin.database.v1.CreateDatabaseRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L445}
-  /// [google.spanner.admin.database.v1.Database]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
-  ///
-  future<StatusOr<google::spanner::admin::database::v1::Database>>
-  CreateDatabase(
-      google::spanner::admin::database::v1::CreateDatabaseRequest const&
-          request,
-      Options options = {});
-
-  ///
-  /// Gets the state of a Cloud Spanner database.
-  ///
-  /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L484}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
-  ///
-  /// [google.spanner.admin.database.v1.GetDatabaseRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L484}
-  /// [google.spanner.admin.database.v1.Database]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L326}
-  ///
-  StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
-      google::spanner::admin::database::v1::GetDatabaseRequest const& request,
-      Options options = {});
-
-  ///
-  /// Updates the schema of a Cloud Spanner database by
-  /// creating/altering/dropping tables, columns, indexes, etc. The returned
-  /// [long-running operation][google.longrunning.Operation] will have a name of
-  /// the format `<database_name>/operations/<operation_id>` and can be used to
-  /// track execution of the schema change(s). The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
-  /// [UpdateDatabaseDdlMetadata][google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata].
-  /// The operation has no response.
-  ///
-  /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L511}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata,google/spanner/admin/database/v1/spanner_database_admin.proto#L547}
-  ///
-  /// [google.spanner.admin.database.v1.UpdateDatabaseDdlRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L511}
-  /// [google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L547}
-  ///
-  future<
-      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-  UpdateDatabaseDdl(
-      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
-          request,
-      Options options = {});
-
-  ///
-  /// Drops (aka deletes) a Cloud Spanner database.
-  /// Completed backups for the database will be retained according to their
-  /// `expire_time`.
-  ///
-  /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::DropDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L579}
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.spanner.admin.database.v1.DropDatabaseRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L579}
-  ///
-  Status DropDatabase(
-      google::spanner::admin::database::v1::DropDatabaseRequest const& request,
-      Options options = {});
-
-  ///
-  /// Returns the schema of a Cloud Spanner database as a list of formatted
-  /// DDL statements. This method does not show pending schema updates, those
-  /// may be queried using the [Operations][google.longrunning.Operations] API.
-  ///
-  /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L590}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlResponse,google/spanner/admin/database/v1/spanner_database_admin.proto#L603}
-  ///
-  /// [google.spanner.admin.database.v1.GetDatabaseDdlRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L590}
-  /// [google.spanner.admin.database.v1.GetDatabaseDdlResponse]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L603}
-  ///
-  StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
-  GetDatabaseDdl(
-      google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
-          request,
-      Options options = {});
-
-  ///
-  /// Sets the access control policy on a database or backup resource.
-  /// Replaces any existing policy.
-  ///
-  /// Authorization requires `spanner.databases.setIamPolicy`
-  /// permission on [resource][google.iam.v1.SetIamPolicyRequest.resource].
-  /// For backups, authorization requires `spanner.backups.setIamPolicy`
-  /// permission on [resource][google.iam.v1.SetIamPolicyRequest.resource].
-  ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
-  ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
-  ///
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request,
-      Options options = {});
-
-  ///
-  /// Gets the access control policy for a database or backup resource.
-  /// Returns an empty policy if a database or backup exists but does not have a
-  /// policy set.
-  ///
-  /// Authorization requires `spanner.databases.getIamPolicy` permission on
-  /// [resource][google.iam.v1.GetIamPolicyRequest.resource].
-  /// For backups, authorization requires `spanner.backups.getIamPolicy`
-  /// permission on [resource][google.iam.v1.GetIamPolicyRequest.resource].
-  ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
-  ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
-  ///
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request,
-      Options options = {});
-
-  ///
-  /// Returns permissions that the caller has on the specified database or
-  /// backup resource.
-  ///
-  /// Attempting this RPC on a non-existent Cloud Spanner database will
-  /// result in a NOT_FOUND error if the user has
-  /// `spanner.databases.list` permission on the containing Cloud
-  /// Spanner instance. Otherwise returns an empty set of permissions.
-  /// Calling this method on a backup that does not exist will
-  /// result in a NOT_FOUND error if the user has
-  /// `spanner.backups.list` permission on the containing instance.
-  ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
-  ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
-  ///
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options options = {});
-
-  ///
-  /// Starts creating a new Cloud Spanner Backup.
-  /// The returned backup [long-running operation][google.longrunning.Operation]
-  /// will have a name of the format
-  /// `projects/<project>/instances/<instance>/backups/<backup>/operations/<operation_id>`
-  /// and can be used to track creation of the backup. The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
-  /// [CreateBackupMetadata][google.spanner.admin.database.v1.CreateBackupMetadata].
-  /// The [response][google.longrunning.Operation.response] field type is
-  /// [Backup][google.spanner.admin.database.v1.Backup], if successful.
-  /// Cancelling the returned operation will stop the creation and delete the
-  /// backup. There can be only one pending backup creation per database. Backup
-  /// creation of different databases can run concurrently.
-  ///
-  /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::CreateBackupRequest,google/spanner/admin/database/v1/backup.proto#L123}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
-  ///
-  /// [google.spanner.admin.database.v1.CreateBackupRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L123}
-  /// [google.spanner.admin.database.v1.Backup]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L36}
-  ///
-  future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
-      google::spanner::admin::database::v1::CreateBackupRequest const& request,
-      Options options = {});
-
-  ///
-  /// Gets metadata on a pending or completed
-  /// [Backup][google.spanner.admin.database.v1.Backup].
-  ///
-  /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::GetBackupRequest,google/spanner/admin/database/v1/backup.proto#L202}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
-  ///
-  /// [google.spanner.admin.database.v1.GetBackupRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L202}
-  /// [google.spanner.admin.database.v1.Backup]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L36}
-  ///
-  StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
-      google::spanner::admin::database::v1::GetBackupRequest const& request,
-      Options options = {});
-
-  ///
-  /// Updates a pending or completed
-  /// [Backup][google.spanner.admin.database.v1.Backup].
-  ///
-  /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::UpdateBackupRequest,google/spanner/admin/database/v1/backup.proto#L186}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
-  ///
-  /// [google.spanner.admin.database.v1.UpdateBackupRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L186}
-  /// [google.spanner.admin.database.v1.Backup]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L36}
-  ///
-  StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
-      google::spanner::admin::database::v1::UpdateBackupRequest const& request,
-      Options options = {});
-
-  ///
-  /// Deletes a pending or completed
-  /// [Backup][google.spanner.admin.database.v1.Backup].
-  ///
-  /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::DeleteBackupRequest,google/spanner/admin/database/v1/backup.proto#L215}
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.spanner.admin.database.v1.DeleteBackupRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L215}
-  ///
-  Status DeleteBackup(
-      google::spanner::admin::database::v1::DeleteBackupRequest const& request,
-      Options options = {});
-
-  ///
-  /// Lists completed and pending backups.
-  /// Backups returned are ordered by `create_time` in descending order,
-  /// starting from the most recent `create_time`.
-  ///
-  /// @param request
-  /// @googleapis_link{google::spanner::admin::database::v1::ListBackupsRequest,google/spanner/admin/database/v1/backup.proto#L228}
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
-  ///
-  /// [google.spanner.admin.database.v1.ListBackupsRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L228}
-  /// [google.spanner.admin.database.v1.Backup]:
-  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L36}
-  ///
-  StreamRange<google::spanner::admin::database::v1::Backup> ListBackups(
-      google::spanner::admin::database::v1::ListBackupsRequest request,
-      Options options = {});
-
-  ///
   /// Create a new database by restoring from a completed backup. The new
   /// database must be in the same project and in an instance with the same
   /// instance configuration as the instance containing
@@ -902,6 +851,30 @@ class DatabaseAdminClient {
   /// returned include those that have completed/failed/canceled within the last
   /// 7 days, and pending operations.
   ///
+  /// @param parent  Required. The instance of the database operations.
+  ///  Values are of the form `projects/<project>/instances/<instance>`.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
+  ///
+  /// [google.spanner.admin.database.v1.ListDatabaseOperationsRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L611}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  ///
+  StreamRange<google::longrunning::Operation> ListDatabaseOperations(
+      std::string const& parent, Options options = {});
+
+  ///
+  /// Lists database [longrunning-operations][google.longrunning.Operation].
+  /// A database operation has a name of the form
+  /// `projects/<project>/instances/<instance>/databases/<database>/operations/<operation>`.
+  /// The long-running operation
+  /// [metadata][google.longrunning.Operation.metadata] field type
+  /// `metadata.type_url` describes the type of the metadata. Operations
+  /// returned include those that have completed/failed/canceled within the last
+  /// 7 days, and pending operations.
+  ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::database::v1::ListDatabaseOperationsRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L611}
   /// @param options  Optional. Operation options.
@@ -917,6 +890,33 @@ class DatabaseAdminClient {
       google::spanner::admin::database::v1::ListDatabaseOperationsRequest
           request,
       Options options = {});
+
+  ///
+  /// Lists the backup [long-running operations][google.longrunning.Operation]
+  /// in the given instance. A backup operation has a name of the form
+  /// `projects/<project>/instances/<instance>/backups/<backup>/operations/<operation>`.
+  /// The long-running operation
+  /// [metadata][google.longrunning.Operation.metadata] field type
+  /// `metadata.type_url` describes the type of the metadata. Operations
+  /// returned include those that have completed/failed/canceled within the last
+  /// 7 days, and pending operations. Operations returned are ordered by
+  /// `operation.metadata.value.progress.start_time` in descending order
+  /// starting from the most recently started operation.
+  ///
+  /// @param parent  Required. The instance of the backup operations. Values are
+  /// of
+  ///  the form `projects/<project>/instances/<instance>`.
+  /// @param options  Optional. Operation options.
+  /// @return
+  /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
+  ///
+  /// [google.spanner.admin.database.v1.ListBackupOperationsRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L300}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  ///
+  StreamRange<google::longrunning::Operation> ListBackupOperations(
+      std::string const& parent, Options options = {});
 
   ///
   /// Lists the backup [long-running operations][google.longrunning.Operation]
