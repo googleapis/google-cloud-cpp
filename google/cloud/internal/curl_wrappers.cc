@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/internal/curl_options.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/log.h"
 #include <openssl/crypto.h>
 #include <openssl/opensslv.h>
