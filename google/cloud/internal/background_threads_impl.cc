@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/log.h"
 #include <algorithm>
+#include <system_error>
 
 namespace google {
 namespace cloud {
@@ -35,7 +37,18 @@ AutomaticallyCreatedBackgroundThreads::
 
 void AutomaticallyCreatedBackgroundThreads::Shutdown() {
   cq_.Shutdown();
-  for (auto& t : pool_) t.join();
+  for (auto& t : pool_) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    try {
+#endif
+      t.join();
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    } catch (std::system_error const& e) {
+      GCP_LOG(FATAL) << "AutomaticallyCreatedBackgroundThreads::Shutdown: "
+                     << e.what();
+    }
+#endif
+  }
   pool_.clear();
 }
 
