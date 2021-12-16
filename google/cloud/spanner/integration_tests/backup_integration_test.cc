@@ -116,9 +116,9 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
 
   // List the backup operations
   std::ostringstream backup_op_filter;
-  backup_op_filter << "(metadata.database:" << db.database_id() << ") AND "
-                   << "(metadata.@type:type.googleapis.com/"
-                   << "google.spanner.admin.database.v1.CreateBackupMetadata)";
+  backup_op_filter << "(metadata.@type=type.googleapis.com/"
+                   << "google.spanner.admin.database.v1.CreateBackupMetadata)"
+                   << " AND (metadata.database=" << db.FullName() << ")";
   std::vector<std::string> db_names;
   for (auto const& operation : database_admin_client_.ListBackupOperations(
            in, backup_op_filter.str())) {
