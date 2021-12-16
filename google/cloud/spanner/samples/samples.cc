@@ -1138,11 +1138,12 @@ void ListBackupOperations(
     std::string const& project_id, std::string const& instance_id,
     std::string const& database_id) {
   google::cloud::spanner::Instance in(project_id, instance_id);
+  google::cloud::spanner::Database database(in, database_id);
   google::spanner::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent(in.FullName());
-  request.set_filter(std::string("(metadata.database:") + database_id +
-                     ") AND " + "(metadata.@type:type.googleapis.com/" +
-                     "google.spanner.admin.database.v1.CreateBackupMetadata)");
+  request.set_filter(std::string("(metadata.@type=type.googleapis.com/") +
+                     "google.spanner.admin.database.v1.CreateBackupMetadata)" +
+                     " AND (metadata.database=" + database.FullName() + ")");
   for (auto const& operation : client.ListBackupOperations(request)) {
     if (!operation) throw std::runtime_error(operation.status().message());
     google::spanner::admin::database::v1::CreateBackupMetadata metadata;
@@ -3589,6 +3590,7 @@ void SampleBanner(std::string const& name) {
             << absl::FormatTime("%Y-%m-%dT%H:%M:%SZ", absl::Now(),
                                 absl::UTCTimeZone())
             << std::endl;
+  GCP_LOG(DEBUG) << "Running " << name << " sample";
 }
 
 std::string PickConfig(google::cloud::spanner_admin::InstanceAdminClient client,
