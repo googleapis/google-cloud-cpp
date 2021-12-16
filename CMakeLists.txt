@@ -238,6 +238,17 @@ if (${GOOGLE_CLOUD_CPP_ENABLE_GRPC})
     add_subdirectory(external/googleapis)
 endif ()
 
+# The only case where REST support is not needed is when not compiling services
+# with REST interfaces.
+set(GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION ON)
+if (NOT "${GOOGLE_CLOUD_CPP_ENABLE}" MATCHES "storage")
+    set(GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION OFF)
+endif ()
+cmake_dependent_option(
+    GOOGLE_CLOUD_CPP_ENABLE_REST "Enable building the REST transport library."
+    ON "GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION" OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_REST)
+
 # Enable testing in this directory so we can do a top-level `make test`. This
 # also includes the BUILD_TESTING option, which is on by default.
 include(CTest)
