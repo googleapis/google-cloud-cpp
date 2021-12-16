@@ -241,7 +241,7 @@ endif ()
 # The only case where REST support is not needed is when not compiling services
 # with REST interfaces.
 set(GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION ON)
-if (NOT "${GOOGLE_CLOUD_CPP_ENABLE}" MATCHES "storage")
+if (NOT storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     set(GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION OFF)
 endif ()
 cmake_dependent_option(

@@ -608,7 +608,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
 endif ()
 
 if (GOOGLE_CLOUD_CPP_ENABLE_REST)
-    find_package(CURL)
+    include(FindCurlWithTargets)
 
     # the library
     add_library(
