@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CURL_WRAPPERS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CURL_WRAPPERS_H
 
-#include "google/cloud/version.h"
 #include "google/cloud/options.h"
+#include "google/cloud/version.h"
 #include <curl/curl.h>
 #include <map>
 #include <memory>
