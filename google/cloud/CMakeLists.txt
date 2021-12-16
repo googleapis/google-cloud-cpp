@@ -643,7 +643,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
     include(CreateBazelConfig)
     create_bazel_config(google_cloud_cpp_rest_internal YEAR 2021)
 
-    # Define the benchmarks in a function so we have a new scope for variable
+    # Define the unit tests in a function so we have a new scope for variable
     # names.
     function (google_cloud_cpp_rest_internal_add_test fname labels)
         google_cloud_cpp_add_executable(target "rest_internal" "${fname}")

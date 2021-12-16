@@ -70,37 +70,6 @@ struct ConnectionPoolSizeOption {
 };
 
 /**
- * Control the formatted I/O download buffer.
- *
- * When using formatted I/O operations (typically `operator>>(std::istream&...)`
- * this option controls the size of the in-memory buffer kept to satisfy any I/O
- * requests.
- *
- * Applications seeking optional performance for downloads should avoid
- * formatted I/O, and prefer using `std::istream::read()`. This option has no
- * effect in that case.
- */
-struct DownloadBufferSizeOption {
-  using Type = std::size_t;
-};
-
-/**
- * Control the formatted I/O upload buffer.
- *
- * When using formatted I/O operations (typically `operator<<(std::istream&...)`
- * this option controls the size of the in-memory buffer kept before a chunk is
- * uploaded. Note that GCS only accepts chunks in multiples of 256KiB, so this
- * option is always rounded up to the next such multiple.
- *
- * Applications seeking optional performance for downloads should avoid
- * formatted I/O, and prefer using `std::istream::write()`. This option has no
- * effect in that case.
- */
-struct UploadBufferSizeOption {
-  using Type = std::size_t;
-};
-
-/**
  * Disables automatic OpenSSL locking.
  *
  * With older versions of OpenSSL any locking must be provided by locking
@@ -149,10 +118,9 @@ struct MaximumCurlSocketSendSizeOption {
 };
 
 using CurlOptionList = ::google::cloud::OptionList<
-    ConnectionPoolSizeOption, DownloadBufferSizeOption, UploadBufferSizeOption,
-    EnableCurlSslLockingOption, EnableCurlSigpipeHandlerOption,
-    MaximumCurlSocketRecvSizeOption, MaximumCurlSocketSendSizeOption,
-    CAPathOption, HttpVersionOption>;
+    ConnectionPoolSizeOption, EnableCurlSslLockingOption,
+    EnableCurlSigpipeHandlerOption, MaximumCurlSocketRecvSizeOption,
+    MaximumCurlSocketSendSizeOption, CAPathOption, HttpVersionOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
