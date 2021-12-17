@@ -210,10 +210,6 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForTimestampRangeTest) {
  * We expect the server (and not the client library) to reject invalid ranges.
  */
 TEST_F(MutationIntegrationTest, DeleteFromColumnForReversedTimestampRangeTest) {
-  // TODO(#151) - remove workarounds for emulator bug(s).
-  if (UsingCloudBigtableEmulator()) {
-    return;
-  }
   auto table = GetTable();
   // Create a vector of cell which will be inserted into bigtable
   std::string const key = "row";
@@ -246,10 +242,6 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForReversedTimestampRangeTest) {
  * We expect the server (and not the client library) to reject invalid ranges.
  */
 TEST_F(MutationIntegrationTest, DeleteFromColumnForEmptyTimestampRangeTest) {
-  // TODO(#151) - remove workarounds for emulator bug(s).
-  if (UsingCloudBigtableEmulator()) {
-    return;
-  }
   auto table = GetTable();
   // Create a vector of cell which will be inserted into bigtable
   std::string const key = "row";
