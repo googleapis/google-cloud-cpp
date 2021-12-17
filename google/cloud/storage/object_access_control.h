@@ -28,7 +28,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 struct ObjectAccessControlParser;
-class GrpcClient;
+struct GrpcObjectAccessControlParser;
 }  // namespace internal
 
 /**
@@ -89,7 +89,7 @@ class ObjectAccessControl : private internal::AccessControlCommon {
 
  private:
   friend struct internal::ObjectAccessControlParser;
-  friend class internal::GrpcClient;
+  friend struct internal::GrpcObjectAccessControlParser;
 
   std::int64_t generation_ = 0;
   std::string object_;

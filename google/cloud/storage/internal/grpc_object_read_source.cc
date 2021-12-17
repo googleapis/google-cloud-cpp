@@ -13,8 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
-#include "google/cloud/storage/internal/grpc_client.h"
-#include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
 #include "absl/functional/function_ref.h"
 #include "absl/strings/string_view.h"
 #include <algorithm>
@@ -83,12 +82,16 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
         if (checksums.has_crc32c()) {
           result.hashes = Merge(
               std::move(result.hashes),
-              HashValues{GrpcClient::Crc32cFromProto(checksums.crc32c()), {}});
+              HashValues{
+                  GrpcObjectMetadataParser::Crc32cFromProto(checksums.crc32c()),
+                  {}});
         }
         if (!checksums.md5_hash().empty()) {
-          result.hashes = Merge(
-              std::move(result.hashes),
-              HashValues{{}, GrpcClient::MD5FromProto(checksums.md5_hash())});
+          result.hashes =
+              Merge(std::move(result.hashes),
+                    HashValues{{},
+                               GrpcObjectMetadataParser::MD5FromProto(
+                                   checksums.md5_hash())});
         }
       }
       if (response.has_metadata()) {

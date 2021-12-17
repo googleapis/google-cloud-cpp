@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/grpc_client.h"
-#include "google/cloud/storage/internal/notification_metadata_parser.h"
+#include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/internal/sha256_hash.h"
@@ -146,7 +145,7 @@ TEST(GrpcClientFromProto, ObjectSimple) {
 })""");
   EXPECT_STATUS_OK(expected);
 
-  auto actual = GrpcClient::FromProto(
+  auto actual = GrpcObjectMetadataParser::FromProto(
       input,
       Options{}.set<RestEndpointOption>("https://storage.googleapis.com"));
   EXPECT_EQ(actual, *expected);
@@ -161,9 +160,9 @@ TEST(GrpcClientFromProto, ObjectCustomerEncryptionRoundtrip) {
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
   auto const expected =
       CustomerEncryption{"test-encryption-algorithm", "MDEyMzQ1Njc="};
-  auto const middle = GrpcClient::FromProto(start);
+  auto const middle = GrpcObjectMetadataParser::FromProto(start);
   EXPECT_EQ(middle, expected);
-  auto const end = GrpcClient::ToProto(middle);
+  auto const end = GrpcObjectMetadataParser::ToProto(middle);
   ASSERT_STATUS_OK(end);
   EXPECT_THAT(*end, IsProtoEqual(start));
 }
@@ -175,9 +174,9 @@ TEST(GrpcClientFromProto, OwnerRoundtrip) {
   google::storage::v2::Owner start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
   auto const expected = Owner{"test-entity", "test-entity-id"};
-  auto const middle = GrpcClient::FromProto(start);
+  auto const middle = GrpcObjectMetadataParser::FromProto(start);
   EXPECT_EQ(middle, expected);
-  auto const end = GrpcClient::ToProto(middle);
+  auto const end = GrpcObjectMetadataParser::ToProto(middle);
   EXPECT_THAT(end, IsProtoEqual(start));
 }
 
@@ -188,8 +187,8 @@ TEST(GrpcClientFromProto, Crc32cRoundtrip) {
       "6Y46Mg==",
   };
   for (auto const& start : values) {
-    auto const end =
-        GrpcClient::Crc32cFromProto(GrpcClient::Crc32cToProto(start).value());
+    auto const end = GrpcObjectMetadataParser::Crc32cFromProto(
+        GrpcObjectMetadataParser::Crc32cToProto(start).value());
     EXPECT_EQ(start, end);
   }
 }
@@ -212,119 +211,10 @@ TEST(GrpcClientFromProto, MD5Roundtrip) {
   };
   for (auto const& test : cases) {
     auto const p = std::string{test.proto.begin(), test.proto.end()};
-    EXPECT_EQ(GrpcClient::MD5FromProto(p), test.rest);
-    EXPECT_THAT(GrpcClient::MD5ToProto(test.rest).value(),
+    EXPECT_EQ(GrpcObjectMetadataParser::MD5FromProto(p), test.rest);
+    EXPECT_THAT(GrpcObjectMetadataParser::MD5ToProto(test.rest).value(),
                 testing::ElementsAreArray(p));
   }
-}
-
-TEST(GrpcClientFromProto, ObjectAccessControlSimple) {
-  google::storage::v2::ObjectAccessControl input;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-     role: "test-role"
-     id: "test-id"
-     entity: "test-entity"
-     entity_id: "test-entity-id"
-     email: "test-email"
-     domain: "test-domain"
-     project_team: {
-       project_number: "test-project-number"
-       team: "test-team"
-     }
-     )""",
-                                                            &input));
-
-  auto const expected = ObjectAccessControlParser::FromString(R"""({
-     "role": "test-role",
-     "id": "test-id",
-     "kind": "storage#objectAccessControl",
-     "bucket": "test-bucket",
-     "object": "test-object",
-     "generation": "42",
-     "entity": "test-entity",
-     "entityId": "test-entity-id",
-     "email": "test-email",
-     "domain": "test-domain",
-     "projectTeam": {
-       "projectNumber": "test-project-number",
-       "team": "test-team"
-     }
-  })""");
-  ASSERT_STATUS_OK(expected);
-
-  auto actual = GrpcClient::FromProto(input, "test-bucket", "test-object", 42);
-  EXPECT_EQ(*expected, actual);
-}
-
-TEST(GrpcClientToProto, PredefinedAclObject) {
-  EXPECT_EQ(storage_proto::OBJECT_ACL_AUTHENTICATED_READ,
-            GrpcClient::ToProtoObject(PredefinedAcl::AuthenticatedRead()));
-  EXPECT_EQ(storage_proto::OBJECT_ACL_PRIVATE,
-            GrpcClient::ToProtoObject(PredefinedAcl::Private()));
-  EXPECT_EQ(storage_proto::OBJECT_ACL_PROJECT_PRIVATE,
-            GrpcClient::ToProtoObject(PredefinedAcl::ProjectPrivate()));
-  EXPECT_EQ(storage_proto::OBJECT_ACL_PUBLIC_READ,
-            GrpcClient::ToProtoObject(PredefinedAcl::PublicRead()));
-  EXPECT_EQ(storage_proto::PREDEFINED_OBJECT_ACL_UNSPECIFIED,
-            GrpcClient::ToProtoObject(PredefinedAcl::PublicReadWrite()));
-  EXPECT_EQ(google::storage::v2::OBJECT_ACL_BUCKET_OWNER_FULL_CONTROL,
-            GrpcClient::ToProtoObject(PredefinedAcl::BucketOwnerFullControl()));
-  EXPECT_EQ(google::storage::v2::OBJECT_ACL_BUCKET_OWNER_READ,
-            GrpcClient::ToProtoObject(PredefinedAcl::BucketOwnerRead()));
-}
-
-TEST(GrpcClientToProto, ObjectAccessControlSimple) {
-  auto acl = ObjectAccessControlParser::FromString(R"""({
-     "role": "test-role",
-     "id": "test-id",
-     "kind": "storage#objectAccessControl",
-     "bucket": "test-bucket",
-     "object": "test-object",
-     "generation": "42",
-     "entity": "test-entity",
-     "entityId": "test-entity-id",
-     "email": "test-email",
-     "domain": "test-domain",
-     "projectTeam": {
-       "projectNumber": "test-project-number",
-       "team": "test-team"
-     }
-  })""");
-  ASSERT_STATUS_OK(acl);
-  auto actual = GrpcClient::ToProto(*acl);
-
-  google::storage::v2::ObjectAccessControl expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-     role: "test-role"
-     id: "test-id"
-     entity: "test-entity"
-     entity_id: "test-entity-id"
-     email: "test-email"
-     domain: "test-domain"
-     project_team: {
-       project_number: "test-project-number"
-       team: "test-team"
-     }
-     )""",
-                                                            &expected));
-
-  EXPECT_THAT(actual, IsProtoEqual(expected));
-}
-
-TEST(GrpcClientToProto, ObjectAccessControlMinimalFields) {
-  ObjectAccessControl acl;
-  acl.set_role("test-role");
-  acl.set_entity("test-entity");
-  auto actual = GrpcClient::ToProto(acl);
-
-  google::storage::v2::ObjectAccessControl expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-     role: "test-role"
-     entity: "test-entity"
-     )""",
-                                                            &expected));
-
-  EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 }  // namespace

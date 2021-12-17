@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/internal/grpc_resumable_upload_session.h"
 #include "google/cloud/storage/internal/grpc_configure_client_context.h"
+#include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
+#include "google/cloud/storage/internal/grpc_object_request_parser.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "absl/memory/memory.h"
 #include <crc32c/crc32c.h>
@@ -108,13 +110,13 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
     auto options = grpc::WriteOptions();
     if (final_chunk && !has_more) {
       if (!hashes.md5.empty()) {
-        auto md5 = GrpcClient::MD5ToProto(hashes.md5);
+        auto md5 = GrpcObjectMetadataParser::MD5ToProto(hashes.md5);
         if (md5) {
           request.mutable_object_checksums()->set_md5_hash(*std::move(md5));
         }
       }
       if (!hashes.crc32c.empty()) {
-        auto crc32c = GrpcClient::Crc32cToProto(hashes.crc32c);
+        auto crc32c = GrpcObjectMetadataParser::Crc32cToProto(hashes.crc32c);
         if (crc32c) {
           request.mutable_object_checksums()->set_crc32c(*std::move(crc32c));
         }
@@ -141,8 +143,8 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
       return last_response_;
     }
     done_ = final_chunk;
-    last_response_ =
-        GrpcClient::FromProto(*std::move(result), client_->options());
+    last_response_ = GrpcObjectRequestParser::FromProto(*std::move(result),
+                                                        client_->options());
     return last_response_;
   };
 
