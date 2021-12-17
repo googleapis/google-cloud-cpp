@@ -53,6 +53,5 @@
 ./lib64/cmake/google_cloud_cpp_iam
 ./lib64/cmake/google_cloud_cpp_logging
 ./lib64/cmake/google_cloud_cpp_pubsublite
-./lib64/cmake/google_cloud_cpp_rest_internal
 ./lib64/cmake/google_cloud_cpp_secretmanager
 ./lib64/cmake/google_cloud_cpp_tasks
