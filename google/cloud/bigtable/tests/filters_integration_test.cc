@@ -354,10 +354,6 @@ TEST_F(FilterIntegrationTest, CellsRowOffset) {
 
 TEST_F(FilterIntegrationTest, RowSample) {
   using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-  // TODO(#151) - remove workarounds for emulator bug(s).
-  if (UsingCloudBigtableEmulator()) {
-    return;
-  }
 
   auto table = GetTable();
   std::string const prefix = "row-sample-prefix";
@@ -439,11 +435,6 @@ TEST_F(FilterIntegrationTest, StripValueTransformer) {
 }
 
 TEST_F(FilterIntegrationTest, ApplyLabelTransformer) {
-  // TODO(#151) - remove workarounds for emulator bug(s).
-  if (UsingCloudBigtableEmulator()) {
-    return;
-  }
-
   auto table = GetTable();
   std::string const prefix = "apply-label-transformer-prefix";
   std::vector<Cell> created{

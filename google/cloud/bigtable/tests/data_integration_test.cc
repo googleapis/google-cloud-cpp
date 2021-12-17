@@ -191,11 +191,8 @@ TEST_F(DataIntegrationTest, TableReadRowsAllRows) {
                      RowReader::NO_ROWS_LIMIT, Filter::PassAllFilter());
   CheckEqualUnordered(created, MoveCellsFromReader(read3));
 
-  if (!UsingCloudBigtableEmulator()) {
-    // TODO(#151) - remove workarounds for emulator bug(s).
-    auto read4 = table.ReadRows(RowSet(), Filter::PassAllFilter());
-    CheckEqualUnordered(created, MoveCellsFromReader(read4));
-  }
+  auto read4 = table.ReadRows(RowSet(), Filter::PassAllFilter());
+  CheckEqualUnordered(created, MoveCellsFromReader(read4));
 }
 
 TEST_F(DataIntegrationTest, TableReadRowsPartialRows) {
@@ -460,11 +457,6 @@ TEST_F(DataIntegrationTest, TableCellValueInt64Test) {
 }
 
 TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
-  if (UsingCloudBigtableEmulator()) {
-    // TODO(#151) - remove workarounds for emulator bug(s).
-    return;
-  }
-
   auto table = GetTable();
 
   std::string const row_key = "row-key-1";
