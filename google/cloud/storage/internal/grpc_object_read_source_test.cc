@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
-#include "google/cloud/storage/internal/grpc_client.h"
+#include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
@@ -203,9 +203,9 @@ TEST(GrpcObjectReadSource, CaptureChecksums) {
         storage_proto::ReadObjectResponse response;
         response.mutable_checksummed_data()->set_content("The quick brown");
         response.mutable_object_checksums()->set_md5_hash(
-            GrpcClient::MD5ToProto(expected_md5).value());
+            GrpcObjectMetadataParser::MD5ToProto(expected_md5).value());
         response.mutable_object_checksums()->set_crc32c(
-            GrpcClient::Crc32cToProto(expected_crc32c).value());
+            GrpcObjectMetadataParser::Crc32cToProto(expected_crc32c).value());
         return response;
       })
       .WillOnce([&] {
@@ -215,9 +215,9 @@ TEST(GrpcObjectReadSource, CaptureChecksums) {
         // The headers may be included more than once in the stream,
         // `GrpcObjectReadSource` should return them only once.
         response.mutable_object_checksums()->set_md5_hash(
-            GrpcClient::MD5ToProto(expected_md5).value());
+            GrpcObjectMetadataParser::MD5ToProto(expected_md5).value());
         response.mutable_object_checksums()->set_crc32c(
-            GrpcClient::Crc32cToProto(expected_crc32c).value());
+            GrpcObjectMetadataParser::Crc32cToProto(expected_crc32c).value());
         return response;
       })
       .WillOnce(Return(Status{}));

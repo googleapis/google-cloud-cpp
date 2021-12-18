@@ -181,46 +181,6 @@ class GrpcClient : public RawClient,
   StatusOr<EmptyResponse> DeleteNotification(
       DeleteNotificationRequest const&) override;
 
-  static StatusOr<google::storage::v2::Object::CustomerEncryption> ToProto(
-      CustomerEncryption rhs);
-  static CustomerEncryption FromProto(
-      google::storage::v2::Object::CustomerEncryption rhs);
-
-  static ObjectMetadata FromProto(google::storage::v2::Object object,
-                                  Options const& options);
-
-  static google::storage::v2::ObjectAccessControl ToProto(
-      ObjectAccessControl const& acl);
-  static ObjectAccessControl FromProto(
-      google::storage::v2::ObjectAccessControl acl,
-      std::string const& bucket_name, std::string const& object_name,
-      std::uint64_t generation);
-
-  static google::storage::v2::Owner ToProto(Owner);
-  static Owner FromProto(google::storage::v2::Owner);
-
-  static google::storage::v2::PredefinedObjectAcl ToProtoObject(
-      PredefinedAcl const& acl);
-
-  static StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
-      InsertObjectMediaRequest const& request);
-  static ResumableUploadResponse FromProto(
-      google::storage::v2::WriteObjectResponse const& p,
-      Options const& options);
-  static StatusOr<google::storage::v2::StartResumableWriteRequest> ToProto(
-      ResumableUploadRequest const& request);
-  static google::storage::v2::QueryWriteStatusRequest ToProto(
-      QueryResumableUploadRequest const& request);
-
-  static StatusOr<google::storage::v2::ReadObjectRequest> ToProto(
-      ReadObjectRangeRequest const& request);
-
-  static std::string Crc32cFromProto(std::uint32_t);
-  static StatusOr<std::uint32_t> Crc32cToProto(std::string const&);
-  static std::string MD5FromProto(std::string const&);
-  static StatusOr<std::string> MD5ToProto(std::string const&);
-  static std::string ComputeMD5Hash(std::string const& payload);
-
  protected:
   explicit GrpcClient(Options opts);
   explicit GrpcClient(std::shared_ptr<StorageStub> stub, Options opts);

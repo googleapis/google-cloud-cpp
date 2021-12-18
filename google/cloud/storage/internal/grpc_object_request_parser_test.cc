@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/storage/internal/grpc_object_request_parser.h"
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -60,7 +61,7 @@ auto constexpr kText = "The quick brown fox jumps over the lazy dog";
 //     MD5         : 4ad12fa3657faa80c2b9a92d652c3721
 auto constexpr kAlt = "How vexingly quick daft zebras jump!";
 
-TEST(GrpcClientObjectRequest, InsertObjectMediaRequestSimple) {
+TEST(GrpcObjectRequestParser, InsertObjectMediaRequestSimple) {
   storage_proto::WriteObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
@@ -82,11 +83,11 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestSimple) {
   InsertObjectMediaRequest request(
       "test-bucket-name", "test-object-name",
       "The quick brown fox jumps over the lazy dog");
-  auto actual = GrpcClient::ToProto(request).value();
+  auto actual = GrpcObjectRequestParser::ToProto(request).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientObjectRequest, InsertObjectMediaRequestHashOptions) {
+TEST(GrpcObjectRequestParser, InsertObjectMediaRequestHashOptions) {
   // See top-of-file comments for details on the magic numbers
   struct Test {
     std::function<void(InsertObjectMediaRequest&)> apply_options;
@@ -186,13 +187,13 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestHashOptions) {
     InsertObjectMediaRequest request("test-bucket-name", "test-object-name",
                                      kAlt);
     test.apply_options(request);
-    auto actual = GrpcClient::ToProto(request);
+    auto actual = GrpcObjectRequestParser::ToProto(request);
     ASSERT_STATUS_OK(actual) << "expected=" << test.expected_checksums;
     EXPECT_THAT(actual->object_checksums(), IsProtoEqual(expected));
   }
 }
 
-TEST(GrpcClientObjectRequest, InsertObjectMediaRequestAllOptions) {
+TEST(GrpcObjectRequestParser, InsertObjectMediaRequestAllOptions) {
   storage_proto::WriteObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
@@ -247,11 +248,11 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestAllOptions) {
       UserIp("test-user-ip"), EncryptionKey::FromBinaryKey("01234567"),
       KmsKeyName("test-kms-key-name"));
 
-  auto actual = GrpcClient::ToProto(request).value();
+  auto actual = GrpcObjectRequestParser::ToProto(request).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientObjectRequest, InsertObjectMediaRequestWithObjectMetadata) {
+TEST(GrpcObjectRequestParser, InsertObjectMediaRequestWithObjectMetadata) {
   storage_proto::WriteObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
@@ -300,11 +301,11 @@ TEST(GrpcClientObjectRequest, InsertObjectMediaRequestWithObjectMetadata) {
           .set_storage_class("test-storage-class")
           .set_temporary_hold(true)));
 
-  auto actual = GrpcClient::ToProto(request).value();
+  auto actual = GrpcObjectRequestParser::ToProto(request).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientObjectRequest, ResumableUploadRequestSimple) {
+TEST(GrpcObjectRequestParser, ResumableUploadRequestSimple) {
   google::storage::v2::StartResumableWriteRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
       write_object_spec: {
@@ -317,11 +318,11 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestSimple) {
 
   ResumableUploadRequest req("test-bucket", "test-object");
 
-  auto actual = GrpcClient::ToProto(req).value();
+  auto actual = GrpcObjectRequestParser::ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientObjectRequest, ResumableUploadRequestAllFields) {
+TEST(GrpcObjectRequestParser, ResumableUploadRequestAllFields) {
   google::storage::v2::StartResumableWriteRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
@@ -371,11 +372,11 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestAllFields) {
       EncryptionKey::FromBinaryKey("01234567"),
       KmsKeyName("test-kms-key-name"));
 
-  auto actual = GrpcClient::ToProto(req).value();
+  auto actual = GrpcObjectRequestParser::ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientObjectRequest, ResumableUploadRequestWithObjectMetadataFields) {
+TEST(GrpcObjectRequestParser, ResumableUploadRequestWithObjectMetadataFields) {
   google::storage::v2::StartResumableWriteRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
       write_object_spec: {
@@ -417,11 +418,11 @@ TEST(GrpcClientObjectRequest, ResumableUploadRequestWithObjectMetadataFields) {
           .set_temporary_hold(true)
           .set_acl(std::move(acls))));
 
-  auto actual = GrpcClient::ToProto(req).value();
+  auto actual = GrpcObjectRequestParser::ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientObjectRequest, QueryResumableUploadRequestSimple) {
+TEST(GrpcObjectRequestParser, QueryResumableUploadRequestSimple) {
   google::storage::v2::QueryWriteStatusRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
@@ -431,11 +432,11 @@ TEST(GrpcClientObjectRequest, QueryResumableUploadRequestSimple) {
 
   QueryResumableUploadRequest req("test-upload-id");
 
-  auto actual = GrpcClient::ToProto(req);
+  auto actual = GrpcObjectRequestParser::ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientObjectRequest, ReadObjectRangeRequestSimple) {
+TEST(GrpcObjectRequestParser, ReadObjectRangeRequestSimple) {
   google::storage::v2::ReadObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
@@ -445,11 +446,11 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestSimple) {
 
   ReadObjectRangeRequest req("test-bucket", "test-object");
 
-  auto const actual = GrpcClient::ToProto(req).value();
+  auto const actual = GrpcObjectRequestParser::ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientObjectRequest, ReadObjectRangeRequestAllFields) {
+TEST(GrpcObjectRequestParser, ReadObjectRangeRequestAllFields) {
   google::storage::v2::ReadObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
@@ -483,11 +484,11 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestAllFields) {
       UserProject("test-user-project"), QuotaUser("test-quota-user"),
       UserIp("test-user-ip"), EncryptionKey::FromBinaryKey("01234567"));
 
-  auto const actual = GrpcClient::ToProto(req).value();
+  auto const actual = GrpcObjectRequestParser::ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLast) {
+TEST(GrpcObjectRequestParser, ReadObjectRangeRequestReadLast) {
   google::storage::v2::ReadObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
@@ -500,11 +501,11 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLast) {
   ReadObjectRangeRequest req("test-bucket", "test-object");
   req.set_multiple_options(ReadLast(2000));
 
-  auto const actual = GrpcClient::ToProto(req).value();
+  auto const actual = GrpcObjectRequestParser::ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLastZero) {
+TEST(GrpcObjectRequestParser, ReadObjectRangeRequestReadLastZero) {
   google::storage::v2::ReadObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
@@ -515,7 +516,7 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLastZero) {
   ReadObjectRangeRequest req("test-bucket", "test-object");
   req.set_multiple_options(ReadLast(0));
 
-  auto const actual = GrpcClient::ToProto(req).value();
+  auto const actual = GrpcObjectRequestParser::ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 
   auto client = GrpcClient::Create(DefaultOptionsGrpc(
@@ -524,6 +525,29 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLastZero) {
           .set<EndpointOption>("localhost:1")));
   StatusOr<std::unique_ptr<ObjectReadSource>> reader = client->ReadObject(req);
   EXPECT_THAT(reader, StatusIs(StatusCode::kOutOfRange));
+}
+
+TEST(GrpcObjectRequestParser, PredefinedAclObject) {
+  EXPECT_EQ(storage_proto::OBJECT_ACL_AUTHENTICATED_READ,
+            GrpcObjectRequestParser::ToProtoObject(
+                PredefinedAcl::AuthenticatedRead()));
+  EXPECT_EQ(storage_proto::OBJECT_ACL_PRIVATE,
+            GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::Private()));
+  EXPECT_EQ(
+      storage_proto::OBJECT_ACL_PROJECT_PRIVATE,
+      GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::ProjectPrivate()));
+  EXPECT_EQ(
+      storage_proto::OBJECT_ACL_PUBLIC_READ,
+      GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::PublicRead()));
+  EXPECT_EQ(
+      storage_proto::PREDEFINED_OBJECT_ACL_UNSPECIFIED,
+      GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::PublicReadWrite()));
+  EXPECT_EQ(google::storage::v2::OBJECT_ACL_BUCKET_OWNER_FULL_CONTROL,
+            GrpcObjectRequestParser::ToProtoObject(
+                PredefinedAcl::BucketOwnerFullControl()));
+  EXPECT_EQ(
+      google::storage::v2::OBJECT_ACL_BUCKET_OWNER_READ,
+      GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::BucketOwnerRead()));
 }
 
 }  // namespace

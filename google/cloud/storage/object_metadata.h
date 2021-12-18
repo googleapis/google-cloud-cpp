@@ -33,7 +33,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 struct ObjectMetadataParser;
-class GrpcClient;
+struct GrpcObjectMetadataParser;
 }  // namespace internal
 
 /// A simple representation for the customerEncryption field.
@@ -253,7 +253,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
 
  private:
   friend struct internal::ObjectMetadataParser;
-  friend class internal::GrpcClient;
+  friend struct internal::GrpcObjectMetadataParser;
 
   friend std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs);
   // Keep the fields in alphabetical order.

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_resumable_upload_session.h"
+#include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/grpc_options.h"
@@ -79,9 +80,10 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
   std::string const payload = "test payload";
   auto const size = payload.size();
   HashValues hashes{ComputeCrc32cChecksum(payload), ComputeMD5Hash(payload)};
-  auto const crc32c_proto = GrpcClient::Crc32cToProto(hashes.crc32c);
+  auto const crc32c_proto =
+      GrpcObjectMetadataParser::Crc32cToProto(hashes.crc32c);
   ASSERT_STATUS_OK(crc32c_proto);
-  auto const md5_proto = GrpcClient::MD5ToProto(hashes.md5);
+  auto const md5_proto = GrpcObjectMetadataParser::MD5ToProto(hashes.md5);
   ASSERT_STATUS_OK(md5_proto);
 
   auto writer = absl::make_unique<MockInsertStream>();

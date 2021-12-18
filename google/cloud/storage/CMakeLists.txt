@@ -317,8 +317,14 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc_client.cc
         internal/grpc_client.h
         internal/grpc_configure_client_context.h
+        internal/grpc_object_access_control_parser.cc
+        internal/grpc_object_access_control_parser.h
+        internal/grpc_object_metadata_parser.cc
+        internal/grpc_object_metadata_parser.h
         internal/grpc_object_read_source.cc
         internal/grpc_object_read_source.h
+        internal/grpc_object_request_parser.cc
+        internal/grpc_object_request_parser.h
         internal/grpc_resumable_upload_session.cc
         internal/grpc_resumable_upload_session.h
         internal/grpc_resumable_upload_session_url.cc
@@ -576,11 +582,12 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
             # cmake-format: sort
             internal/grpc_client_failures_test.cc
             internal/grpc_client_insert_object_media_test.cc
-            internal/grpc_client_object_request_test.cc
             internal/grpc_client_read_object_test.cc
-            internal/grpc_client_test.cc
             internal/grpc_configure_client_context_test.cc
+            internal/grpc_object_access_control_parser_test.cc
+            internal/grpc_object_metadata_parser_test.cc
             internal/grpc_object_read_source_test.cc
+            internal/grpc_object_request_parser_test.cc
             internal/grpc_resumable_upload_session_test.cc
             internal/grpc_resumable_upload_session_url_test.cc
             internal/storage_auth_test.cc
