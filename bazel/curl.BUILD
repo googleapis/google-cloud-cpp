@@ -439,8 +439,9 @@ cc_library(
     }),
     visibility = ["//visibility:public"],
     deps = [
-        # Use the same version of zlib that gRPC does.
+        # Use the same version of zlib and c-ares that gRPC does.
         "//external:madler_zlib",
+        "//external:cares",
         ":define-ca-bundle-location",
     ] + select({
         ":windows": [],
@@ -464,6 +465,8 @@ genrule(
         "#    define HAVE_BORINGSSL 1",
         "#  endif",
         "#endif",
+        "",
+        "#  define USE_ARES 1",
         "",
         "#if defined(_WIN32)",
         "#  include \"lib/config-win32.h\"",
