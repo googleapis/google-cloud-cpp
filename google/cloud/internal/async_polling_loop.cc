@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/async_polling_loop.h"
 #include "google/cloud/log.h"
+#include <algorithm>
 #include <mutex>
 #include <string>
 
@@ -38,7 +39,7 @@ class AsyncPollingLoopImpl
         polling_policy_(std::move(polling_policy)),
         location_(std::move(location)),
         promise_(null_promise_t{}),
-        canceled_(false) {}
+        delayed_cancel_(false) {}
 
   future<StatusOr<Operation>> Start(future<StatusOr<Operation>> op) {
     auto self = shared_from_this();
@@ -61,7 +62,10 @@ class AsyncPollingLoopImpl
     google::longrunning::CancelOperationRequest request;
     {
       std::unique_lock<std::mutex> lk(mu_);
-      if (op_name_.empty()) return;
+      if (op_name_.empty()) {
+        delayed_cancel_ = true;  // Wait for OnStart() to set `op_name_`.
+        return;
+      }
       request.set_name(op_name_);
     }
     // Cancels are best effort, so we use weak pointers.
@@ -73,27 +77,21 @@ class AsyncPollingLoopImpl
   }
 
   void OnCancel(Status const& status) {
-    if (!status.ok()) return;
-    std::unique_lock<std::mutex> lk(mu_);
-    canceled_ = true;
+    GCP_LOG(DEBUG) << location_ << "() cancelled: " << status;
   }
 
   void OnStart(StatusOr<Operation> op) {
-    GCP_LOG(DEBUG) << location_ << "() polling loop starting";
     if (!op || op->done()) return promise_.set_value(std::move(op));
+    GCP_LOG(DEBUG) << location_ << "() polling loop starting for "
+                   << op->name();
+    bool do_cancel = false;
     {
       std::unique_lock<std::mutex> lk(mu_);
-      if (canceled_) return Cancelled();
+      std::swap(delayed_cancel_, do_cancel);
       op_name_ = std::move(*op->mutable_name());
     }
-    Wait();
-  }
-
-  void Cancelled() {
-    GCP_LOG(DEBUG) << location_ << "() polling loop cancelled";
-    promise_.set_value(
-        Status{StatusCode::kCancelled,
-               location_ + "() - polling loop terminated via cancel()"});
+    if (do_cancel) DoCancel();
+    return Wait();
   }
 
   void Wait() {
@@ -112,7 +110,6 @@ class AsyncPollingLoopImpl
     google::longrunning::GetOperationRequest request;
     {
       std::unique_lock<std::mutex> lk(mu_);
-      if (canceled_) return Cancelled();
       request.set_name(op_name_);
     }
     auto self = shared_from_this();
@@ -140,10 +137,9 @@ class AsyncPollingLoopImpl
     }
     if (op) {
       std::unique_lock<std::mutex> lk(mu_);
-      if (canceled_) return Cancelled();
       op_name_ = std::move(*op->mutable_name());
     }
-    Wait();
+    return Wait();
   }
 
   // These member variables are initialized in the constructor or from
@@ -156,10 +152,10 @@ class AsyncPollingLoopImpl
   std::string location_;
   promise<StatusOr<Operation>> promise_;
 
-  // `canceled_` and `op_name_`, in contrast, are also used from `DoCancel()`,
-  // which is called asynchronously, so they require synchronization.
+  // `delayed_cancel_` and `op_name_`, in contrast, are also used from
+  // `DoCancel()`, which is called asynchronously, so they need locking.
   std::mutex mu_;
-  bool canceled_;        // GUARDED_BY(mu_)
+  bool delayed_cancel_;  // GUARDED_BY(mu_)
   std::string op_name_;  // GUARDED_BY(mu_)
 };
 

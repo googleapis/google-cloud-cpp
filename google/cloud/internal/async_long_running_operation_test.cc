@@ -34,7 +34,6 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::longrunning::Operation;
-using ::testing::AtLeast;
 using ::testing::Return;
 
 class MockStub {
@@ -197,8 +196,6 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessResponse) {
 }
 
 TEST(AsyncLongRunningTest, RequestPollThenCancel) {
-  Instance expected;
-  expected.set_name("test-instance-name");
   google::longrunning::Operation starting_op;
   starting_op.set_name("test-op-name");
 
@@ -219,11 +216,14 @@ TEST(AsyncLongRunningTest, RequestPollThenCancel) {
         return make_ready_future(make_status_or(starting_op));
       });
   EXPECT_CALL(*mock, AsyncGetOperation)
-      .Times(AtLeast(1))
-      .WillRepeatedly([&](CompletionQueue&,
-                          std::unique_ptr<grpc::ClientContext>,
-                          google::longrunning::GetOperationRequest const&) {
+      .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                    google::longrunning::GetOperationRequest const&) {
         return make_ready_future(make_status_or(starting_op));
+      })
+      .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                    google::longrunning::GetOperationRequest const&) {
+        return make_ready_future(StatusOr<google::longrunning::Operation>(
+            Status{StatusCode::kCancelled, "cancelled"}));
       });
   EXPECT_CALL(*mock, AsyncCancelOperation)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
@@ -232,7 +232,9 @@ TEST(AsyncLongRunningTest, RequestPollThenCancel) {
       });
   auto policy = absl::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
-  EXPECT_CALL(*policy, OnFailure).WillRepeatedly(Return(true));
+  EXPECT_CALL(*policy, OnFailure).WillRepeatedly([](Status const& status) {
+    return status.code() != StatusCode::kCancelled;
+  });
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
   CreateInstanceRequest request;

@@ -222,7 +222,7 @@ TEST(GoldenThingAdminConnectionTest, CreateDatabaseCancel) {
   get.PopFront().set_value(op);
   auto g = get.PopFront();
   fut.cancel();
-  g.set_value(op);
+  g.set_value(Status{StatusCode::kCancelled, "cancelled"});
   auto db = fut.get();
   EXPECT_THAT(db, StatusIs(StatusCode::kCancelled));
 }
@@ -355,7 +355,7 @@ TEST(GoldenThingAdminConnectionTest, UpdateDatabaseDdlCancel) {
   get.PopFront().set_value(op);
   auto g = get.PopFront();
   fut.cancel();
-  g.set_value(op);
+  g.set_value(Status{StatusCode::kCancelled, "cancelled"});
   auto db = fut.get();
   EXPECT_THAT(db, StatusIs(StatusCode::kCancelled));
 }
@@ -696,7 +696,7 @@ TEST(GoldenThingAdminConnectionTest, CreateBackupCancel) {
   get.PopFront().set_value(op);
   auto g = get.PopFront();
   fut.cancel();
-  g.set_value(op);
+  g.set_value(Status{StatusCode::kCancelled, "cancelled"});
   auto db = fut.get();
   EXPECT_THAT(db, StatusIs(StatusCode::kCancelled));
 }
@@ -1006,7 +1006,7 @@ TEST(GoldenThingAdminConnectionTest, RestoreBackupCancel) {
   get.PopFront().set_value(op);
   auto g = get.PopFront();
   fut.cancel();
-  g.set_value(op);
+  g.set_value(Status{StatusCode::kCancelled, "cancelled"});
   auto db = fut.get();
   EXPECT_THAT(db, StatusIs(StatusCode::kCancelled));
 }

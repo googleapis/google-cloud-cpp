@@ -100,6 +100,52 @@ TEST(AsyncPollingLoopTest, ImmediateSuccess) {
   EXPECT_THAT(*actual, IsProtoEqual(op));
 }
 
+TEST(AsyncPollingLoopTest, ImmediateCancel) {
+  google::longrunning::Operation starting_op;
+  starting_op.set_name("test-op-name");
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillOnce([](std::chrono::nanoseconds) {
+        return make_ready_future(
+            make_status_or(std::chrono::system_clock::now()));
+      });
+  CompletionQueue cq(mock_cq);
+
+  auto mock = std::make_shared<MockStub>();
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   google::longrunning::GetOperationRequest const&) {
+        return make_ready_future(StatusOr<Operation>(Status{
+            StatusCode::kCancelled, "test-function: operation cancelled"}));
+      });
+  EXPECT_CALL(*mock, AsyncCancelOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   google::longrunning::CancelOperationRequest const& request) {
+        EXPECT_EQ(request.name(), "test-op-name");
+        return make_ready_future(Status{});
+      });
+  auto policy = absl::make_unique<MockPollingPolicy>();
+  EXPECT_CALL(*policy, clone()).Times(0);
+  EXPECT_CALL(*policy, OnFailure).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kCancelled));
+    return false;
+  });
+  EXPECT_CALL(*policy, WaitPeriod)
+      .WillOnce(Return(std::chrono::milliseconds(1)));
+
+  promise<StatusOr<google::longrunning::Operation>> p;
+  auto pending =
+      AsyncPollingLoop(cq, p.get_future(), MakePoll(mock), MakeCancel(mock),
+                       std::move(policy), "test-function");
+  pending.cancel();
+  p.set_value(starting_op);
+  auto actual = pending.get();
+  EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled,
+                               AllOf(HasSubstr("test-function"),
+                                     HasSubstr("operation cancelled"))));
+}
+
 TEST(AsyncPollingLoopTest, PollThenSuccess) {
   Instance instance;
   instance.set_name("test-instance-name");
@@ -352,13 +398,8 @@ TEST(AsyncPollingLoopTest, PollLifetime) {
 }
 
 TEST(AsyncPollingLoopTest, PollThenCancelDuringTimer) {
-  Instance instance;
-  instance.set_name("test-instance-name");
   google::longrunning::Operation starting_op;
   starting_op.set_name("test-op-name");
-  google::longrunning::Operation expected = starting_op;
-  expected.set_done(true);
-  expected.mutable_metadata()->PackFrom(instance);
 
   using TimerType = StatusOr<std::chrono::system_clock::time_point>;
   AsyncSequencer<TimerType> timer_sequencer;
@@ -385,7 +426,11 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringTimer) {
       });
   auto policy = absl::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
-  EXPECT_CALL(*policy, OnFailure).WillRepeatedly(Return(true));
+  EXPECT_CALL(*policy, OnFailure)
+      .Times(2)
+      .WillRepeatedly([](Status const& status) {
+        return status.code() != StatusCode::kCancelled;
+      });
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
 
@@ -398,21 +443,18 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringTimer) {
   auto t = timer_sequencer.PopFront();
   pending.cancel();
   t.set_value(std::chrono::system_clock::now());
+  get_sequencer.PopFront().set_value(
+      Status{StatusCode::kCancelled, "test-function: operation cancelled"});
 
   auto actual = pending.get();
-  EXPECT_THAT(actual, StatusIs(Not(Eq(StatusCode::kOk)),
+  EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled,
                                AllOf(HasSubstr("test-function"),
-                                     HasSubstr("terminated via cancel"))));
+                                     HasSubstr("operation cancelled"))));
 }
 
 TEST(AsyncPollingLoopTest, PollThenCancelDuringPoll) {
-  Instance instance;
-  instance.set_name("test-instance-name");
   google::longrunning::Operation starting_op;
   starting_op.set_name("test-op-name");
-  google::longrunning::Operation expected = starting_op;
-  expected.set_done(true);
-  expected.mutable_metadata()->PackFrom(instance);
 
   using TimerType = StatusOr<std::chrono::system_clock::time_point>;
   AsyncSequencer<TimerType> timer_sequencer;
@@ -439,7 +481,11 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringPoll) {
       });
   auto policy = absl::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
-  EXPECT_CALL(*policy, OnFailure).WillRepeatedly(Return(true));
+  EXPECT_CALL(*policy, OnFailure)
+      .Times(2)
+      .WillRepeatedly([](Status const& status) {
+        return status.code() != StatusCode::kCancelled;
+      });
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
 
@@ -452,12 +498,13 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringPoll) {
   timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
   auto g = get_sequencer.PopFront();
   pending.cancel();
-  g.set_value(starting_op);
+  g.set_value(
+      Status{StatusCode::kCancelled, "test-function: operation cancelled"});
 
   auto actual = pending.get();
-  EXPECT_THAT(actual, StatusIs(Not(Eq(StatusCode::kOk)),
+  EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled,
                                AllOf(HasSubstr("test-function"),
-                                     HasSubstr("terminated via cancel"))));
+                                     HasSubstr("operation cancelled"))));
 }
 
 }  // namespace
