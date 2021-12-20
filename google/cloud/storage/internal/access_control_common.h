@@ -69,6 +69,7 @@ inline bool operator>=(ProjectTeam const& lhs, ProjectTeam const& rhs) {
 }
 
 namespace internal {
+struct GrpcBucketAccessControlParser;
 struct GrpcObjectAccessControlParser;
 
 /**
@@ -131,6 +132,7 @@ class AccessControlCommon {
   std::string const& self_link() const { return self_link_; }
 
  private:
+  friend struct GrpcBucketAccessControlParser;
   friend struct GrpcObjectAccessControlParser;
   friend struct internal::AccessControlCommonParser;
 

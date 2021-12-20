@@ -27,6 +27,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 struct BucketAccessControlParser;
+struct GrpcBucketAccessControlParser;
 }  // namespace internal
 
 /**
@@ -82,6 +83,7 @@ class BucketAccessControl : private internal::AccessControlCommon {
   }
 
   friend struct internal::BucketAccessControlParser;
+  friend struct internal::GrpcBucketAccessControlParser;
 };
 
 std::ostream& operator<<(std::ostream& os, BucketAccessControl const& rhs);
