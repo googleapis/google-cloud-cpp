@@ -51,7 +51,17 @@ the KOKORO_JOB_NAME environment variable.
 # TODO(#4896): Enable generator integration tests for windows.
 $env:GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS = "no"
 
-$env:BUILD_CACHE = "gs://cloud-cpp-kokoro-results/build-cache/google-cloud-cpp/main/vcpkg-binary-cache/windows/${BuildName}/"
+try {
+    $BRANCH = & git branch --show-current | Out-String
+} catch {
+    Write-Host "$(Get-Date -Format o) cannot get git branch, defaulting to 'main'"
+    $BRANCH = "main"
+}
+if (Test-Path env:KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH) {
+    $BRANCH = $env:KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH
+}
+
+$env:BUILD_CACHE = "gs://cloud-cpp-kokoro-results/build-cache/google-cloud-cpp/${BRANCH}/vcpkg-binary-cache/windows/${BuildName}/"
 $DependencyScriptArgs=@()
 if (($BuildName -eq "cmake") -or ($BuildName -eq "cmake-debug")) {
     $env:CONFIG = "Debug"
