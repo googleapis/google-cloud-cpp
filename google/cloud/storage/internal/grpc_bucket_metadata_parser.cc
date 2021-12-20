@@ -24,6 +24,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
+
 absl::CivilDay ToCivilDay(google::type::Date const& date) {
   return absl::CivilDay(date.year(), date.month(), date.day());
 }
