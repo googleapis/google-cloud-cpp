@@ -314,6 +314,8 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         google_cloud_cpp_storage_grpc
         grpc_plugin.cc
         grpc_plugin.h
+        internal/grpc_bucket_access_control_parser.cc
+        internal/grpc_bucket_access_control_parser.h
         internal/grpc_client.cc
         internal/grpc_client.h
         internal/grpc_configure_client_context.h
@@ -580,6 +582,7 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     if (BUILD_TESTING)
         set(storage_client_grpc_unit_tests
             # cmake-format: sort
+            internal/grpc_bucket_access_control_parser_test.cc
             internal/grpc_client_failures_test.cc
             internal/grpc_client_insert_object_media_test.cc
             internal/grpc_client_read_object_test.cc
