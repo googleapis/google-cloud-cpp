@@ -22,12 +22,12 @@ source module ci/cloudbuild/builds/lib/quickstart.sh
 
 export CC=gcc
 export CXX=g++
+mapfile -t cmake_args < <(cmake::common_args)
 
 INSTALL_PREFIX="/var/tmp/google-cloud-cpp"
-cmake -GNinja \
+cmake "${cmake_args[@]}" \
   -DBUILD_SHARED_LIBS=ON \
-  -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
-  -S . -B cmake-out
+  -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
 cmake --build cmake-out
 env -C cmake-out ctest -LE "integration-test" --parallel "$(nproc)"
 cmake --build cmake-out --target install

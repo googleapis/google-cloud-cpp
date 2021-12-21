@@ -22,8 +22,9 @@ source module ci/cloudbuild/builds/lib/integration.sh
 
 export CC=gcc
 export CXX=g++
+mapfile -t cmake_args < <(cmake::common_args)
 
-cmake -GNinja -DCMAKE_CXX_STANDARD=20 -S . -B cmake-out
+cmake "${cmake_args[@]}" -DCMAKE_CXX_STANDARD=20
 cmake --build cmake-out
 env -C cmake-out ctest -LE "integration-test" --parallel "$(nproc)"
 

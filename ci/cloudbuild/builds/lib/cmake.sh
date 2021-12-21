@@ -23,6 +23,7 @@ if ((CI_CLOUDBUILD_BUILDS_LIB_CMAKE_SH__++ != 0)); then
 fi # include guard
 
 source module ci/lib/io.sh
+source module ci/cloudbuild/builds/lib/features.sh
 
 io::log "Using CMake version"
 cmake --version
@@ -47,3 +48,12 @@ if command -v ccache >/dev/null 2>&1; then
   }
   trap show_stats_handler EXIT
 fi
+
+function cmake::common_args() {
+  local args
+  args=(
+    -DGOOGLE_CLOUD_CPP_ENABLE="$(features::always_build_cmake)"
+  )
+  args+=(-GNinja -S . -B cmake-out)
+  printf "%s\n" "${args[@]}"
+}

@@ -20,8 +20,8 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/cloudbuild/builds/lib/features.sh
 
-mapfile -t FEATURE_LIST < <(features::list)
-read -r ENABLED_FEATURES < <(features::cmake_definition)
+mapfile -t FEATURE_LIST < <(features::list_full)
+read -r ENABLED_FEATURES < <(features::list_full_cmake)
 
 version=""
 doc_args=(

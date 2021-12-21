@@ -18,13 +18,15 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
+source module ci/cloudbuild/builds/lib/features.sh
 
 # We run this test in a Docker image that includes the oldest Clang that we
 # support, which happens to be 6.0 currently.
 export CC=clang
 export CXX=clang++
 
-cmake -GNinja -DBUILD_SHARED_LIBS=yes -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON \
-  -H. -Bcmake-out
+cmake -GNinja -H. -Bcmake-out \
+  -DGOOGLE_CLOUD_CPP_ENABLE="$(features::always_build_cmake)" \
+  -DBUILD_SHARED_LIBS=yes -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON
 cmake --build cmake-out
 env -C cmake-out ctest --output-on-failure -LE "integration-test" -j "$(nproc)"
