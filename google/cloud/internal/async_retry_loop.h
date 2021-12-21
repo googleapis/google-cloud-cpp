@@ -152,20 +152,13 @@ class AsyncRetryLoopImpl
 
   void OnBackoffTimer(StatusOr<std::chrono::system_clock::time_point> tp) {
     SetIdle();
+    if (Cancelled()) return;
     if (!tp) {
-      if (Cancelled()) {
-        // The retry loop has been canceled and that cancelled the timer.
-        SetDone(
-            RetryLoopError("Retry loop cancelled", location_, last_status_));
-
-      } else {
-        // Some kind of error in the CompletionQueue, probably shutting down.
-        SetDone(RetryLoopError("Timer failure in", location_,
-                               std::move(tp).status()));
-      }
+      // Some kind of error in the CompletionQueue, probably shutting down.
+      SetDone(RetryLoopError("Timer failure in", location_,
+                             std::move(tp).status()));
       return;
     }
-    if (Cancelled()) return;
     StartAttempt();
   }
 
