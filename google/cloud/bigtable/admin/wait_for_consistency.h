@@ -1,0 +1,51 @@
+// Copyright 2021 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_WAIT_FOR_CONSISTENCY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_WAIT_FOR_CONSISTENCY_H
+
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
+
+namespace google {
+namespace cloud {
+namespace bigtable_admin {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+/**
+ * Checks consistency of a table with multiple calls using a separate thread
+ *
+ * @param cq the completion queue that will execute the asynchronous
+ *    calls. The application must ensure that one or more threads are
+ *    blocked on `cq.Run()`.
+ * @param table_name the fully qualified name of the table. Values are of the
+ *     form: `projects/{project}/instances/{instance}/tables/{table}`.
+ * @param consistency_token the consistency token of the table.
+ * @return the consistency status for the table. The status is OK if and only if
+ *     the table is consistent.
+ *
+ * @par Example
+ * @snippet table_admin_snippets.cc wait for consistency check
+ */
+future<Status> AsyncWaitForConsistency(CompletionQueue cq,
+                                       BigtableTableAdminClient client,
+                                       std::string table_name,
+                                       std::string consistency_token,
+                                       Options const& options = {});
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_admin
+}  // namespace cloud
+}  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_WAIT_FOR_CONSISTENCY_H
