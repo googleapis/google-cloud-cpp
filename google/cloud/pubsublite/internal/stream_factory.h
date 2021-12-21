@@ -48,8 +48,10 @@ inline std::unique_ptr<grpc::ClientContext> MakeGrpcClientContext(
 inline StreamFactory<pubsublite::v1::PublishRequest,
                      pubsublite::v1::PublishResponse>
 MakeStreamFactory(
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
     std::shared_ptr<pubsublite::v1::PublisherService::StubInterface> stub,
-    google::cloud::CompletionQueue const& cq, ClientMetadata metadata = {}) {
+    google::cloud::CompletionQueue const& cq,
+    ClientMetadata const& metadata = {}) {
   return [=] {
     return internal::MakeStreamingReadWriteRpc<pubsublite::v1::PublishRequest,
                                                pubsublite::v1::PublishResponse>(
@@ -63,8 +65,10 @@ MakeStreamFactory(
 inline StreamFactory<pubsublite::v1::SubscribeRequest,
                      pubsublite::v1::SubscribeResponse>
 MakeStreamFactory(
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
     std::shared_ptr<pubsublite::v1::SubscriberService::StubInterface> stub,
-    google::cloud::CompletionQueue const& cq, ClientMetadata metadata = {}) {
+    google::cloud::CompletionQueue const& cq,
+    ClientMetadata const& metadata = {}) {
   return [=] {
     return google::cloud::internal::MakeStreamingReadWriteRpc<
         pubsublite::v1::SubscribeRequest, pubsublite::v1::SubscribeResponse>(
@@ -78,8 +82,10 @@ MakeStreamFactory(
 inline StreamFactory<pubsublite::v1::StreamingCommitCursorRequest,
                      pubsublite::v1::StreamingCommitCursorResponse>
 MakeStreamFactory(
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
     std::shared_ptr<pubsublite::v1::CursorService::StubInterface> stub,
-    google::cloud::CompletionQueue const& cq, ClientMetadata metadata = {}) {
+    google::cloud::CompletionQueue const& cq,
+    ClientMetadata const& metadata = {}) {
   return [=] {
     return google::cloud::internal::MakeStreamingReadWriteRpc<
         pubsublite::v1::StreamingCommitCursorRequest,
@@ -95,8 +101,9 @@ inline StreamFactory<pubsublite::v1::PartitionAssignmentRequest,
                      pubsublite::v1::PartitionAssignment>
 MakeStreamFactory(
     std::shared_ptr<pubsublite::v1::PartitionAssignmentService::StubInterface>
-        stub,
-    google::cloud::CompletionQueue const& cq, ClientMetadata metadata = {}) {
+        stub,  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::CompletionQueue const& cq,
+    ClientMetadata const& metadata = {}) {
   return [=] {
     return google::cloud::internal::MakeStreamingReadWriteRpc<
         pubsublite::v1::PartitionAssignmentRequest,
