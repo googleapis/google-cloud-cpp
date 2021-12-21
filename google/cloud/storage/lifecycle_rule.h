@@ -33,7 +33,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 struct LifecycleRuleParser;
-class GrpcClient;
+struct GrpcBucketMetadataParser;
 }  // namespace internal
 
 /// Implement a wrapper for Lifecycle Rules actions.
@@ -309,7 +309,7 @@ class LifecycleRule {
 
  private:
   friend struct internal::LifecycleRuleParser;
-  friend class internal::GrpcClient;
+  friend struct internal::GrpcBucketMetadataParser;
 
   LifecycleRule() = default;
 

@@ -29,6 +29,54 @@ struct GrpcBucketMetadataParser {
   static google::storage::v2::Bucket::Billing ToProto(BucketBilling const& rhs);
   static BucketBilling FromProto(
       google::storage::v2::Bucket::Billing const& rhs);
+
+  static google::storage::v2::Bucket::Cors ToProto(CorsEntry const& rhs);
+  static CorsEntry FromProto(google::storage::v2::Bucket::Cors const& rhs);
+
+  static google::storage::v2::Bucket::Encryption ToProto(
+      BucketEncryption const& rhs);
+  static BucketEncryption FromProto(
+      google::storage::v2::Bucket::Encryption const& rhs);
+
+  static google::storage::v2::Bucket::IamConfig ToProto(
+      BucketIamConfiguration const& rhs);
+  static BucketIamConfiguration FromProto(
+      google::storage::v2::Bucket::IamConfig const& rhs);
+
+  static google::storage::v2::Bucket::Lifecycle::Rule::Action ToProto(
+      LifecycleRuleAction rhs);
+  static LifecycleRuleAction FromProto(
+      google::storage::v2::Bucket::Lifecycle::Rule::Action rhs);
+
+  static google::storage::v2::Bucket::Lifecycle::Rule::Condition ToProto(
+      LifecycleRuleCondition rhs);
+  static LifecycleRuleCondition FromProto(
+      google::storage::v2::Bucket::Lifecycle::Rule::Condition rhs);
+
+  static google::storage::v2::Bucket::Lifecycle::Rule ToProto(
+      LifecycleRule rhs);
+  static LifecycleRule FromProto(
+      google::storage::v2::Bucket::Lifecycle::Rule rhs);
+
+  static google::storage::v2::Bucket::Lifecycle ToProto(BucketLifecycle rhs);
+  static BucketLifecycle FromProto(google::storage::v2::Bucket::Lifecycle rhs);
+
+  static google::storage::v2::Bucket::Logging ToProto(BucketLogging const& rhs);
+  static BucketLogging FromProto(
+      google::storage::v2::Bucket::Logging const& rhs);
+
+  static google::storage::v2::Bucket::RetentionPolicy ToProto(
+      BucketRetentionPolicy const& rhs);
+  static BucketRetentionPolicy FromProto(
+      google::storage::v2::Bucket::RetentionPolicy const& rhs);
+
+  static google::storage::v2::Bucket::Versioning ToProto(
+      BucketVersioning const& rhs);
+  static BucketVersioning FromProto(
+      google::storage::v2::Bucket::Versioning const& rhs);
+
+  static google::storage::v2::Bucket::Website ToProto(BucketWebsite rhs);
+  static BucketWebsite FromProto(google::storage::v2::Bucket::Website rhs);
 };
 
 }  // namespace internal
