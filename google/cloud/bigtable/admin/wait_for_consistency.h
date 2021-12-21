@@ -28,9 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @param cq the completion queue that will execute the asynchronous
  *    calls. The application must ensure that one or more threads are
  *    blocked on `cq.Run()`.
+ * @param client the Table Admin client.
  * @param table_name the fully qualified name of the table. Values are of the
  *     form: `projects/{project}/instances/{instance}/tables/{table}`.
  * @param consistency_token the consistency token of the table.
+ * @param options (optional) configuration options. Users who wish to modify the
+ *     default polling behavior can supply a custom polling policy with
+ *     `BigtableTableAdminPollingPolicyOption`.
  * @return the consistency status for the table. The status is OK if and only if
  *     the table is consistent.
  *
