@@ -128,6 +128,20 @@ class AsyncStreamingReadWriteRpcAuth
   std::shared_ptr<SharedState> const state_;
 };
 
+template <typename Request, typename Response>
+std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>>
+MakeAuthorizedStreamingReadWriteRpc(
+    CompletionQueue const& cq, std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+    PrepareAsyncReadWriteRpc<Request, Response> async_call) {
+  return absl::make_unique<AsyncStreamingReadWriteRpcAuth<Request, Response>>(
+      std::move(context), std::move(auth),
+      [=](std::unique_ptr<grpc::ClientContext> ctx) {
+        return MakeStreamingReadWriteRpc<Request, Response>(cq, std::move(ctx),
+                                                            async_call);
+      });
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
