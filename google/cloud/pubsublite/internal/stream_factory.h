@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_STREAM_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_STREAM_FACTORY_H
 
+#include "google/cloud/internal/async_read_write_stream_auth.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/version.h"
 #include <google/cloud/pubsublite/v1/cursor.grpc.pb.h>
@@ -51,11 +52,12 @@ MakeStreamFactory(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     std::shared_ptr<pubsublite::v1::PublisherService::StubInterface> stub,
     google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
     ClientMetadata const& metadata = {}) {
   return [=] {
-    return internal::MakeStreamingReadWriteRpc<pubsublite::v1::PublishRequest,
-                                               pubsublite::v1::PublishResponse>(
-        cq, MakeGrpcClientContext(metadata),
+    return internal::MakeAuthorizedStreamingReadWriteRpc<
+        pubsublite::v1::PublishRequest, pubsublite::v1::PublishResponse>(
+        cq, MakeGrpcClientContext(metadata), std::move(auth),
         [stub](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
           return stub->PrepareAsyncPublish(context, cq);
         });
@@ -68,11 +70,12 @@ MakeStreamFactory(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     std::shared_ptr<pubsublite::v1::SubscriberService::StubInterface> stub,
     google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
     ClientMetadata const& metadata = {}) {
   return [=] {
-    return google::cloud::internal::MakeStreamingReadWriteRpc<
+    return google::cloud::internal::MakeAuthorizedStreamingReadWriteRpc<
         pubsublite::v1::SubscribeRequest, pubsublite::v1::SubscribeResponse>(
-        cq, MakeGrpcClientContext(metadata),
+        cq, MakeGrpcClientContext(metadata), std::move(auth),
         [stub](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
           return stub->PrepareAsyncSubscribe(context, cq);
         });
@@ -85,12 +88,13 @@ MakeStreamFactory(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     std::shared_ptr<pubsublite::v1::CursorService::StubInterface> stub,
     google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
     ClientMetadata const& metadata = {}) {
   return [=] {
-    return google::cloud::internal::MakeStreamingReadWriteRpc<
+    return google::cloud::internal::MakeAuthorizedStreamingReadWriteRpc<
         pubsublite::v1::StreamingCommitCursorRequest,
         pubsublite::v1::StreamingCommitCursorResponse>(
-        cq, MakeGrpcClientContext(metadata),
+        cq, MakeGrpcClientContext(metadata), std::move(auth),
         [stub](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
           return stub->PrepareAsyncStreamingCommitCursor(context, cq);
         });
@@ -103,12 +107,13 @@ MakeStreamFactory(
     std::shared_ptr<pubsublite::v1::PartitionAssignmentService::StubInterface>
         stub,  // NOLINT(performance-unnecessary-value-param)
     google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
     ClientMetadata const& metadata = {}) {
   return [=] {
-    return google::cloud::internal::MakeStreamingReadWriteRpc<
+    return google::cloud::internal::MakeAuthorizedStreamingReadWriteRpc<
         pubsublite::v1::PartitionAssignmentRequest,
         pubsublite::v1::PartitionAssignment>(
-        cq, MakeGrpcClientContext(metadata),
+        cq, MakeGrpcClientContext(metadata), std::move(auth),
         [stub](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
           return stub->PrepareAsyncAssignPartitions(context, cq);
         });
