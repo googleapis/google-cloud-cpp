@@ -67,7 +67,8 @@ file(
     GLOB source_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
     "*.h" "*.cc" "internal/*.h" "internal/*.cc")
-list(SORT source_files)
+list(FILTER source_files EXCLUDE REGEX ".*_test.cc")
+
 add_library(google_cloud_cpp_pubsublite ${source_files})
 target_include_directories(
     google_cloud_cpp_pubsublite
@@ -93,7 +94,6 @@ add_library(google-cloud-cpp::experimental-pubsublite ALIAS
 # To avoid maintaining the list of files for the library, export them to a .bzl
 # file.
 include(CreateBazelConfig)
-create_bazel_config(google_cloud_cpp_pubsublite YEAR "2021")
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -114,7 +114,6 @@ target_link_libraries(
     google_cloud_cpp_pubsublite_mocks
     INTERFACE google-cloud-cpp::experimental-pubsublite GTest::gmock_main
               GTest::gmock GTest::gtest)
-create_bazel_config(google_cloud_cpp_pubsublite_mocks YEAR "2021")
 target_include_directories(
     google_cloud_cpp_pubsublite_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -122,6 +121,51 @@ target_include_directories(
               $<INSTALL_INTERFACE:include>)
 target_compile_options(google_cloud_cpp_pubsublite_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+
+file(
+    GLOB test_files
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    "*_test.cc" "internal/*_test.cc")
+
+# Define the tests in a function so we have a new scope for variable names.
+function (google_cloud_cpp_pubsublite_client_define_tests)
+    # The tests require googletest to be installed. Force CMake to use the
+    # config file for googletest (that is, the CMake file installed by
+    # googletest itself), because the generic `FindGTest` module does not define
+    # the GTest::gmock target, and the target names are also weird.
+    find_package(GTest CONFIG REQUIRED)
+
+    # Generate a target for each unit test.
+    foreach (fname ${test_files})
+        google_cloud_cpp_add_executable(target "pubsublite" "${fname}")
+        target_link_libraries(
+            ${target}
+            PRIVATE google_cloud_cpp_testing
+                    google_cloud_cpp_testing_grpc
+                    google_cloud_cpp_pubsublite
+                    google_cloud_cpp_pubsublite_mocks
+                    absl::str_format
+                    GTest::gmock_main
+                    GTest::gmock
+                    GTest::gtest)
+        google_cloud_cpp_add_common_options(${target})
+
+        # With googletest it is relatively easy to exceed the default number of
+        # sections (~65,000) in a single .obj file. Add the /bigobj option to
+        # all the tests, even if it is not needed.
+        if (MSVC)
+            target_compile_options(${target} PRIVATE "/bigobj")
+        endif ()
+        add_test(NAME ${target} COMMAND ${target})
+    endforeach ()
+endfunction ()
+
+# Only define the tests if testing is enabled. Package maintainers may not want
+# to build all the tests everytime they create a new package or when the package
+# is installed from source.
+if (BUILD_TESTING)
+    google_cloud_cpp_pubsublite_client_define_tests()
+endif (BUILD_TESTING)
 
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)

@@ -181,7 +181,7 @@ using PrepareAsyncReadWriteRpc = absl::FunctionRef<
 template <typename Request, typename Response>
 std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>>
 MakeStreamingReadWriteRpc(
-    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    CompletionQueue const& cq, std::unique_ptr<grpc::ClientContext> context,
     PrepareAsyncReadWriteRpc<Request, Response> async_call) {
   auto cq_impl = GetCompletionQueueImpl(cq);
   auto stream = async_call(context.get(), &cq_impl->cq());
