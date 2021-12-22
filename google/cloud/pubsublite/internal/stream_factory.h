@@ -49,10 +49,11 @@ inline std::unique_ptr<grpc::ClientContext> MakeGrpcClientContext(
 inline StreamFactory<pubsublite::v1::PublishRequest,
                      pubsublite::v1::PublishResponse>
 MakeStreamFactory(
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<pubsublite::v1::PublisherService::StubInterface> stub,
+    std::shared_ptr<pubsublite::v1::PublisherService::StubInterface> const&
+        stub,
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> const&
+        auth,
     ClientMetadata const& metadata = {}) {
   return [=] {
     return internal::MakeAuthorizedStreamingReadWriteRpc<
@@ -67,10 +68,11 @@ MakeStreamFactory(
 inline StreamFactory<pubsublite::v1::SubscribeRequest,
                      pubsublite::v1::SubscribeResponse>
 MakeStreamFactory(
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<pubsublite::v1::SubscriberService::StubInterface> stub,
+    std::shared_ptr<pubsublite::v1::SubscriberService::StubInterface> const&
+        stub,
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> const&
+        auth,
     ClientMetadata const& metadata = {}) {
   return [=] {
     return google::cloud::internal::MakeAuthorizedStreamingReadWriteRpc<
@@ -85,10 +87,10 @@ MakeStreamFactory(
 inline StreamFactory<pubsublite::v1::StreamingCommitCursorRequest,
                      pubsublite::v1::StreamingCommitCursorResponse>
 MakeStreamFactory(
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<pubsublite::v1::CursorService::StubInterface> stub,
+    std::shared_ptr<pubsublite::v1::CursorService::StubInterface> const& stub,
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> const&
+        auth,
     ClientMetadata const& metadata = {}) {
   return [=] {
     return google::cloud::internal::MakeAuthorizedStreamingReadWriteRpc<
@@ -104,10 +106,11 @@ MakeStreamFactory(
 inline StreamFactory<pubsublite::v1::PartitionAssignmentRequest,
                      pubsublite::v1::PartitionAssignment>
 MakeStreamFactory(
-    std::shared_ptr<pubsublite::v1::PartitionAssignmentService::StubInterface>
-        stub,  // NOLINT(performance-unnecessary-value-param)
+    std::shared_ptr<
+        pubsublite::v1::PartitionAssignmentService::StubInterface> const& stub,
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> const&
+        auth,
     ClientMetadata const& metadata = {}) {
   return [=] {
     return google::cloud::internal::MakeAuthorizedStreamingReadWriteRpc<
