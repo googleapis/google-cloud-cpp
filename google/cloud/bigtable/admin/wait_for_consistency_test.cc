@@ -33,6 +33,7 @@ namespace {
 namespace btadmin = ::google::bigtable::admin::v2;
 using MockConnection =
     ::google::cloud::bigtable_admin_mocks::MockBigtableTableAdminConnection;
+using RespType = StatusOr<btadmin::CheckConsistencyResponse>;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 
@@ -64,6 +65,12 @@ Options SlowTestOptions() {
   return Options{}.set<BigtableTableAdminPollingPolicyOption>(polling.clone());
 }
 
+RespType MakeResponse(bool consistent) {
+  btadmin::CheckConsistencyResponse r;
+  r.set_consistent(consistent);
+  return make_status_or(std::move(r));
+}
+
 TEST(AsyncWaitForConsistency, Simple) {
   std::string const table_name =
       bigtable::TableName("test-project", "test-instance", "test-table");
@@ -77,12 +84,12 @@ TEST(AsyncWaitForConsistency, Simple) {
       .WillOnce([&](btadmin::CheckConsistencyRequest const& request) {
         EXPECT_EQ(request.name(), table_name);
         EXPECT_EQ(request.consistency_token(), token);
-        btadmin::CheckConsistencyResponse response;
-        response.set_consistent(true);
-        return make_ready_future(make_status_or(response));
+        return make_ready_future(MakeResponse(true));
       });
 
-  auto status = AsyncWaitForConsistency(cq, client, table_name, token).get();
+  auto status = bigtable_admin_internal::AsyncWaitForConsistency(
+                    cq, client, table_name, token)
+                    .get();
   EXPECT_STATUS_OK(status);
 }
 
@@ -99,20 +106,16 @@ TEST(AsyncWaitForConsistency, NotConsistentThenSuccess) {
       .WillOnce([&](btadmin::CheckConsistencyRequest const& request) {
         EXPECT_EQ(request.name(), table_name);
         EXPECT_EQ(request.consistency_token(), token);
-        btadmin::CheckConsistencyResponse response;
-        response.set_consistent(false);
-        return make_ready_future(make_status_or(response));
+        return make_ready_future(MakeResponse(false));
       })
       .WillOnce([&](btadmin::CheckConsistencyRequest const& request) {
         EXPECT_EQ(request.name(), table_name);
         EXPECT_EQ(request.consistency_token(), token);
-        btadmin::CheckConsistencyResponse response;
-        response.set_consistent(true);
-        return make_ready_future(make_status_or(response));
+        return make_ready_future(MakeResponse(true));
       });
 
-  auto status = AsyncWaitForConsistency(background.cq(), client, table_name,
-                                        token, TestOptions())
+  auto status = bigtable_admin_internal::AsyncWaitForConsistency(
+                    background.cq(), client, table_name, token, TestOptions())
                     .get();
   EXPECT_STATUS_OK(status);
 }
@@ -130,12 +133,12 @@ TEST(AsyncWaitForConsistency, PermanentFailure) {
       .WillOnce([&](btadmin::CheckConsistencyRequest const& request) {
         EXPECT_EQ(request.name(), table_name);
         EXPECT_EQ(request.consistency_token(), token);
-        return make_ready_future<StatusOr<btadmin::CheckConsistencyResponse>>(
+        return make_ready_future<RespType>(
             Status(StatusCode::kPermissionDenied, "fail"));
       });
 
-  auto status = AsyncWaitForConsistency(background.cq(), client, table_name,
-                                        token, TestOptions())
+  auto status = bigtable_admin_internal::AsyncWaitForConsistency(
+                    background.cq(), client, table_name, token, TestOptions())
                     .get();
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied, "fail"));
 }
@@ -154,12 +157,12 @@ TEST(AsyncWaitForConsistency, TooManyTransientFailures) {
       .WillRepeatedly([&](btadmin::CheckConsistencyRequest const& request) {
         EXPECT_EQ(request.name(), table_name);
         EXPECT_EQ(request.consistency_token(), token);
-        return make_ready_future<StatusOr<btadmin::CheckConsistencyResponse>>(
+        return make_ready_future<RespType>(
             Status(StatusCode::kUnavailable, "try again"));
       });
 
-  auto status = AsyncWaitForConsistency(background.cq(), client, table_name,
-                                        token, TestOptions())
+  auto status = bigtable_admin_internal::AsyncWaitForConsistency(
+                    background.cq(), client, table_name, token, TestOptions())
                     .get();
   EXPECT_THAT(status,
               StatusIs(StatusCode::kUnavailable, HasSubstr("try again")));
@@ -179,13 +182,11 @@ TEST(AsyncWaitForConsistency, NeverConsistent) {
       .WillRepeatedly([&](btadmin::CheckConsistencyRequest const& request) {
         EXPECT_EQ(request.name(), table_name);
         EXPECT_EQ(request.consistency_token(), token);
-        btadmin::CheckConsistencyResponse response;
-        response.set_consistent(false);
-        return make_ready_future(make_status_or(response));
+        return make_ready_future(MakeResponse(false));
       });
 
-  auto status = AsyncWaitForConsistency(background.cq(), client, table_name,
-                                        token, TestOptions())
+  auto status = bigtable_admin_internal::AsyncWaitForConsistency(
+                    background.cq(), client, table_name, token, TestOptions())
                     .get();
   EXPECT_THAT(status, StatusIs(StatusCode::kDeadlineExceeded,
                                HasSubstr("Polling loop terminated")));
@@ -200,16 +201,13 @@ class AsyncWaitForConsistencyCancelTest : public ::testing::Test {
     return n;
   }
 
-  future<StatusOr<btadmin::CheckConsistencyResponse>> SimulateRequest() {
+  future<RespType> SimulateRequest() {
     promise<bool> p([this] {
       std::lock_guard<std::mutex> lk(mu_);
       ++cancel_count_;
     });
-    auto f = p.get_future().then([](future<bool> g) {
-      btadmin::CheckConsistencyResponse r;
-      r.set_consistent(g.get());
-      return make_status_or(r);
-    });
+    auto f = p.get_future().then(
+        [](future<bool> g) { return MakeResponse(g.get()); });
     std::lock_guard<std::mutex> lk(mu_);
     requests_.push_back(std::move(p));
     cv_.notify_one();
@@ -251,8 +249,8 @@ TEST_F(AsyncWaitForConsistencyCancelTest, CancelAndSuccess) {
         return SimulateRequest();
       });
 
-  auto actual =
-      AsyncWaitForConsistency(cq, client, table_name, token, TestOptions());
+  auto actual = bigtable_admin_internal::AsyncWaitForConsistency(
+      cq, client, table_name, token, TestOptions());
 
   // First simulate a regular request, that is not consistent.
   auto p = WaitForRequest();
@@ -287,8 +285,8 @@ TEST_F(AsyncWaitForConsistencyCancelTest, CancelWithFailure) {
         return SimulateRequest();
       });
 
-  auto actual =
-      AsyncWaitForConsistency(cq, client, table_name, token, TestOptions());
+  auto actual = bigtable_admin_internal::AsyncWaitForConsistency(
+      cq, client, table_name, token, TestOptions());
 
   // First simulate a regular request.
   auto p = WaitForRequest();
@@ -322,8 +320,8 @@ TEST_F(AsyncWaitForConsistencyCancelTest, CancelDuringTimer) {
         return SimulateRequest();
       });
 
-  auto actual =
-      AsyncWaitForConsistency(cq, client, table_name, token, SlowTestOptions());
+  auto actual = bigtable_admin_internal::AsyncWaitForConsistency(
+      cq, client, table_name, token, SlowTestOptions());
 
   // First simulate a regular request.
   auto p = WaitForRequest();
@@ -358,8 +356,8 @@ TEST_F(AsyncWaitForConsistencyCancelTest, ShutdownDuringTimer) {
         return SimulateRequest();
       });
 
-  auto actual =
-      AsyncWaitForConsistency(cq, client, table_name, token, SlowTestOptions());
+  auto actual = bigtable_admin_internal::AsyncWaitForConsistency(
+      cq, client, table_name, token, SlowTestOptions());
 
   // First simulate a regular request.
   auto p = WaitForRequest();
