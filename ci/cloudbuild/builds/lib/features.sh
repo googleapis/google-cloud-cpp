@@ -62,7 +62,7 @@ function features::list_full() {
 
 function features::list_full_cmake() {
   local features
-  mapfile -t feature_list < <(features::list)
+  mapfile -t feature_list < <(features::list_full)
   features="$(printf ",%s" "${feature_list[@]}")"
   echo "${features:1}"
 }
