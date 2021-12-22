@@ -17,7 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 bigtable_client_unit_tests = [
-    "admin/wait_for_consistency_test.cc",
+    "admin/internal/wait_for_consistency_test.cc",
     "admin_client_test.cc",
     "app_profile_config_test.cc",
     "async_read_stream_test.cc",
