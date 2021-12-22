@@ -79,7 +79,7 @@ Every file should contain license boilerplate, for new files use:
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     http://www.apache.org/licenses/LICENSE-2.0
+//     https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -88,7 +88,8 @@ Every file should contain license boilerplate, for new files use:
 // limitations under the License.
 ```
 
-where `YYYY` is the year when the file is being introduced. Do not change existing files boilerplate.
+where `YYYY` is the year when the file is being introduced. Do not change the
+copyright line for existing files, even when they are moved.
 
 ## Doxygen Comments
 
