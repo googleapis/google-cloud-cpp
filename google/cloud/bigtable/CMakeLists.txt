@@ -108,8 +108,8 @@ add_library(
     admin/internal/bigtable_table_admin_stub.h
     admin/internal/bigtable_table_admin_stub_factory.cc
     admin/internal/bigtable_table_admin_stub_factory.h
-    admin/wait_for_consistency.cc
-    admin/wait_for_consistency.h
+    admin/internal/wait_for_consistency.cc
+    admin/internal/wait_for_consistency.h
     admin_client.cc
     admin_client.h
     app_profile_config.cc
@@ -283,7 +283,7 @@ if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
     set(bigtable_client_unit_tests
         # cmake-format: sort
-        admin/wait_for_consistency_test.cc
+        admin/internal/wait_for_consistency_test.cc
         admin_client_test.cc
         app_profile_config_test.cc
         async_read_stream_test.cc
