@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/internal/sha256_hash.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
@@ -165,19 +166,6 @@ TEST(GrpcClientFromProto, ObjectCustomerEncryptionRoundtrip) {
   auto const end = GrpcObjectMetadataParser::ToProto(middle);
   ASSERT_STATUS_OK(end);
   EXPECT_THAT(*end, IsProtoEqual(start));
-}
-
-TEST(GrpcClientFromProto, OwnerRoundtrip) {
-  auto constexpr kText = R"pb(
-    entity: "test-entity" entity_id: "test-entity-id"
-  )pb";
-  google::storage::v2::Owner start;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
-  auto const expected = Owner{"test-entity", "test-entity-id"};
-  auto const middle = GrpcObjectMetadataParser::FromProto(start);
-  EXPECT_EQ(middle, expected);
-  auto const end = GrpcObjectMetadataParser::ToProto(middle);
-  EXPECT_THAT(end, IsProtoEqual(start));
 }
 
 TEST(GrpcClientFromProto, Crc32cRoundtrip) {

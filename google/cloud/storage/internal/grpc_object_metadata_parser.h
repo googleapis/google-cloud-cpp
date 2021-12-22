@@ -15,8 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_OBJECT_METADATA_PARSER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_OBJECT_METADATA_PARSER_H
 
-#include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/options.h"
 #include <google/storage/v2/storage.pb.h>
 
 namespace google {
@@ -26,9 +27,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 struct GrpcObjectMetadataParser {
-  static google::storage::v2::Owner ToProto(Owner);
-  static Owner FromProto(google::storage::v2::Owner);
-
   static StatusOr<google::storage::v2::Object::CustomerEncryption> ToProto(
       CustomerEncryption rhs);
   static CustomerEncryption FromProto(
