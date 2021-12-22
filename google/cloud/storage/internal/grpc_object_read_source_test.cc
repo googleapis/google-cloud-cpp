@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
+#include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"

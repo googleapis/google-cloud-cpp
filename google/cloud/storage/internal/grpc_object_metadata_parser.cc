@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc_object_access_control_parser.h"
+#include "google/cloud/storage/internal/grpc_owner_parser.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/big_endian.h"
@@ -24,20 +25,6 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-
-google::storage::v2::Owner GrpcObjectMetadataParser::ToProto(Owner rhs) {
-  google::storage::v2::Owner result;
-  *result.mutable_entity() = std::move(rhs.entity);
-  *result.mutable_entity_id() = std::move(rhs.entity_id);
-  return result;
-}
-
-Owner GrpcObjectMetadataParser::FromProto(google::storage::v2::Owner rhs) {
-  Owner result;
-  result.entity = std::move(*rhs.mutable_entity());
-  result.entity_id = std::move(*rhs.mutable_entity_id());
-  return result;
-}
 
 CustomerEncryption GrpcObjectMetadataParser::FromProto(
     google::storage::v2::Object::CustomerEncryption rhs) {
@@ -123,7 +110,7 @@ ObjectMetadata GrpcObjectMetadataParser::FromProto(
 
   metadata.metageneration_ = object.metageneration();
   if (object.has_owner()) {
-    metadata.owner_ = FromProto(*object.mutable_owner());
+    metadata.owner_ = GrpcOwnerParser::FromProto(*object.mutable_owner());
   }
   metadata.storage_class_ = std::move(*object.mutable_storage_class());
   if (object.has_create_time()) {
