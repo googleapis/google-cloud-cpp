@@ -71,7 +71,11 @@ class AsyncSequencer {
 
   future<T> PushBack(std::string name) {
     std::unique_lock<std::mutex> lk(mu_);
-    queue_.emplace_back(promise<T>{}, std::move(name));
+    queue_.emplace_back(promise<T>([this] {
+                          std::lock_guard<std::mutex> lk(mu_);
+                          ++cancel_count_;
+                        }),
+                        std::move(name));
     auto f = queue_.back().first.get_future();
     max_size_ = (std::max)(max_size_, queue_.size());
     lk.unlock();
@@ -87,6 +91,13 @@ class AsyncSequencer {
     return p;
   }
 
+  std::size_t CancelCount() {
+    std::lock_guard<std::mutex> lk(mu_);
+    auto n = cancel_count_;
+    cancel_count_ = 0;
+    return n;
+  }
+
   std::size_t MaxSize() const { return max_size_; }
 
  private:
@@ -94,6 +105,7 @@ class AsyncSequencer {
   std::condition_variable cv_;
   std::deque<std::pair<promise<T>, std::string>> queue_;
   std::size_t max_size_ = 0;
+  std::size_t cancel_count_ = 0;
 };
 
 }  // namespace testing_util

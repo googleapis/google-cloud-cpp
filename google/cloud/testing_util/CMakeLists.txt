@@ -68,6 +68,7 @@ if (BUILD_TESTING)
 
     set(google_cloud_cpp_testing_unit_tests
         # cmake-format: sort
+        async_sequencer_test.cc
         command_line_parsing_test.cc
         contains_once_test.cc
         crash_handler_test.cc
