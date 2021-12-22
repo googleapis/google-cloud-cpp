@@ -13,9 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
-#include "google/cloud/bigtable/admin/wait_for_consistency.h"
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
-#include "google/cloud/bigtable/resource_names.h"
+#include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
@@ -660,49 +659,44 @@ void DropRowsByPrefix(
   (std::move(admin), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
+// TODO(#7732) - update this sample to use the helper method
 void WaitForConsistencyCheck(
-    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
+    google::cloud::bigtable_admin::BigtableTableAdminClient const&,
     std::vector<std::string> const& argv) {
+  auto old_admin = google::cloud::bigtable::TableAdmin(
+      google::cloud::bigtable::MakeAdminClient(argv.at(0)), argv.at(1));
+
   //! [wait for consistency check]
   namespace cbt = ::google::cloud::bigtable;
-  namespace cbta = ::google::cloud::bigtable_admin;
-  using ::google::cloud::CompletionQueue;
   using ::google::cloud::future;
-  using ::google::cloud::Status;
   using ::google::cloud::StatusOr;
-  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
-     std::string const& instance_id, std::string const& table_id) {
-    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
-
-    // First, generate the consistency token
-    StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
-        result = admin.GenerateConsistencyToken(table_name);
-    if (!result) {
-      throw std::runtime_error(result.status().message());
+  [](cbt::TableAdmin admin, std::string const& table_id) {
+    StatusOr<std::string> consistency_token =
+        admin.GenerateConsistencyToken(table_id);
+    if (!consistency_token) {
+      throw std::runtime_error(consistency_token.status().message());
     }
-    std::string consistency_token = result->consistency_token();
-
-    // Spin off a thread to run the operation. An application will likely want
-    // to run this CompletionQueue on a background thread pool.
-    CompletionQueue cq;
-    std::thread cq_runner([&cq] { cq.Run(); });
-
-    future<Status> consistent_future =
-        cbta::AsyncWaitForConsistency(cq, admin, table_name, consistency_token);
-
-    // Block this thread to wait for consistency.
-    Status status = consistent_future.get();
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
-    std::cout << "Table is consistent with token " << consistency_token << "\n";
-
-    // Clean up the CQ and the thread.
-    cq.Shutdown();
-    cq_runner.join();
+    future<StatusOr<cbt::Consistency>> consistent_future =
+        admin.WaitForConsistency(table_id, *consistency_token);
+    future<void> fut = consistent_future.then(
+        [&consistency_token](future<StatusOr<cbt::Consistency>> f) {
+          auto is_consistent = f.get();
+          if (!is_consistent) {
+            throw std::runtime_error(is_consistent.status().message());
+          }
+          if (*is_consistent == cbt::Consistency::kConsistent) {
+            std::cout << "Table is consistent with token " << *consistency_token
+                      << "\n";
+          } else {
+            std::cout
+                << "Table is not yet consistent, Please try again later with"
+                << " the same token (" << *consistency_token << ")\n";
+          }
+        });
+    fut.get();  // simplify example by blocking until operation is done.
   }
   //! [wait for consistency check]
-  (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
+  (old_admin, argv.at(2));
 
   // TODO(#7740) - remove this sleep when lifetime issues are fixed.
   // Extend the lifetime of old_admin long enough to avoid a crash.

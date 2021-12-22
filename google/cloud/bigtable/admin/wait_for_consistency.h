@@ -19,7 +19,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_admin {
+namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
@@ -41,14 +41,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @par Example
  * @snippet table_admin_snippets.cc wait for consistency check
  */
-future<Status> AsyncWaitForConsistency(CompletionQueue cq,
-                                       BigtableTableAdminClient client,
-                                       std::string table_name,
-                                       std::string consistency_token,
-                                       Options const& options = {});
+future<Status> AsyncWaitForConsistency(
+    CompletionQueue cq, bigtable_admin::BigtableTableAdminClient client,
+    std::string table_name, std::string consistency_token,
+    Options const& options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_admin
+}  // namespace bigtable_admin_internal
 }  // namespace cloud
 }  // namespace google
 

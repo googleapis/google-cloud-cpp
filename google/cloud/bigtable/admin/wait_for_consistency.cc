@@ -20,7 +20,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_admin {
+namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
@@ -32,7 +32,7 @@ class AsyncWaitForConsistencyImpl
     : public std::enable_shared_from_this<AsyncWaitForConsistencyImpl> {
  public:
   AsyncWaitForConsistencyImpl(CompletionQueue cq,
-                              BigtableTableAdminClient client,
+                              bigtable_admin::BigtableTableAdminClient client,
                               std::string table_name,
                               std::string consistency_token,
                               Options const& options)
@@ -40,9 +40,10 @@ class AsyncWaitForConsistencyImpl
         client_(std::move(client)),
         table_name_(std::move(table_name)),
         consistency_token_(std::move(consistency_token)),
-        options_(bigtable_admin_internal::BigtableTableAdminDefaultOptions(
-            std::move(options))),
-        polling_policy_(options_.get<BigtableTableAdminPollingPolicyOption>()) {
+        options_(BigtableTableAdminDefaultOptions(std::move(options))),
+        polling_policy_(
+            options_
+                .get<bigtable_admin::BigtableTableAdminPollingPolicyOption>()) {
   }
 
   future<Status> Start() {
@@ -153,7 +154,7 @@ class AsyncWaitForConsistencyImpl
   }
 
   CompletionQueue cq_;
-  BigtableTableAdminClient client_;
+  bigtable_admin::BigtableTableAdminClient client_;
   std::string table_name_;
   std::string consistency_token_;
   Options options_;
@@ -167,11 +168,10 @@ class AsyncWaitForConsistencyImpl
 
 }  // namespace
 
-future<Status> AsyncWaitForConsistency(CompletionQueue cq,
-                                       BigtableTableAdminClient client,
-                                       std::string table_name,
-                                       std::string consistency_token,
-                                       Options const& options) {
+future<Status> AsyncWaitForConsistency(
+    CompletionQueue cq, bigtable_admin::BigtableTableAdminClient client,
+    std::string table_name, std::string consistency_token,
+    Options const& options) {
   auto loop = std::make_shared<AsyncWaitForConsistencyImpl>(
       std::move(cq), std::move(client), std::move(table_name),
       std::move(consistency_token), options);
@@ -179,6 +179,6 @@ future<Status> AsyncWaitForConsistency(CompletionQueue cq,
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_admin
+}  // namespace bigtable_admin_internal
 }  // namespace cloud
 }  // namespace google
