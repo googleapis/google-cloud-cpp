@@ -22,8 +22,9 @@ source module ci/cloudbuild/builds/lib/integration.sh
 
 export CC=gcc
 export CXX=g++
+mapfile -t cmake_args < <(cmake::common_args)
 
-cmake -GNinja -DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=NO -S . -B cmake-out
+cmake "${cmake_args[@]}" -DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=NO
 cmake --build cmake-out
 env -C cmake-out ctest -LE "integration-test" --parallel "$(nproc)"
 

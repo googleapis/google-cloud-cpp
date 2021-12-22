@@ -25,11 +25,12 @@ source module ci/cloudbuild/builds/lib/cmake.sh
 
 export CC=clang
 export CXX=clang++
+mapfile -t cmake_args < <(cmake::common_args)
 
 scan_build=(
   "scan-build"
   "-o"
   "${HOME}/scan-build"
 )
-"${scan_build[@]}" cmake -GNinja -S . -B cmake-out
+"${scan_build[@]}" cmake "${cmake_args[@]}"
 "${scan_build[@]}" cmake --build cmake-out

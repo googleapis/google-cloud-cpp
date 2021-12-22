@@ -24,8 +24,9 @@ source module ci/cloudbuild/builds/lib/cmake.sh
 export CC=gcc
 export CXX=g++
 
-cmake -GNinja -DBUILD_SHARED_LIBS=yes -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON \
-  -H. -Bcmake-out
+cmake -GNinja -H. -Bcmake-out \
+  -DGOOGLE_CLOUD_CPP_ENABLE="$(features::always_build_cmake)" \
+  -DBUILD_SHARED_LIBS=yes -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON
 cmake --build cmake-out
 (
   cd cmake-out

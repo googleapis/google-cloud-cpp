@@ -28,15 +28,15 @@ export CXX=clang++
 INSTALL_PREFIX="$(mktemp -d)"
 readonly INSTALL_PREFIX
 
-read -r ENABLED_FEATURES < <(features::cmake_definition)
+read -r ENABLED_FEATURES < <(features::list_full_cmake)
+mapfile -t cmake_args < <(cmake::common_args)
 
 # Compiles and installs all libraries and headers.
-cmake -GNinja \
+cmake "${cmake_args[@]}" \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
-  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}" \
-  -S . -B cmake-out
+  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
 cmake --build cmake-out
 cmake --install cmake-out --component google_cloud_cpp_development
 
@@ -170,7 +170,7 @@ done
 
 # Tests the installed artifacts by building and running the quickstarts.
 # shellcheck disable=SC2046
-libraries="$(printf ";%s" $(features::list | grep -v experimental-))"
+libraries="$(printf ";%s" $(features::list_full | grep -v experimental-))"
 libraries="${libraries:1}"
 cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \
