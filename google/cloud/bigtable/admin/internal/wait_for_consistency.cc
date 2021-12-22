@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/admin/wait_for_consistency.h"
+#include "google/cloud/bigtable/admin/internal/wait_for_consistency.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_option_defaults.h"
