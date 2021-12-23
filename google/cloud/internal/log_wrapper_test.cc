@@ -60,6 +60,7 @@ TEST(LogWrapper, DefaultOptions) {
   TracingOptions tracing_options;
   // clang-format off
   std::string const text =
+      R"pb(google.spanner.v1.Mutation { )pb"
       R"pb(insert { )pb"
       R"pb(table: "Singers" )pb"
       R"pb(columns: "SingerId" )pb"
@@ -72,7 +73,8 @@ TEST(LogWrapper, DefaultOptions) {
       R"pb(values { string_value: "test-fname-2" } )pb"
       R"pb(values { string_value: "test-lname-2" } )pb"
       R"pb(} )pb"
-      R"pb(} )pb";
+      R"pb(} )pb"
+      R"pb(})pb";
   // clang-format on
   EXPECT_EQ(text, internal::DebugString(MakeMutation(), tracing_options));
 }
@@ -81,35 +83,36 @@ TEST(LogWrapper, MultiLine) {
   TracingOptions tracing_options;
   tracing_options.SetOptions("single_line_mode=off");
   // clang-format off
-  std::string const text = R"pb(insert {
-  table: "Singers"
-  columns: "SingerId"
-  columns: "FirstName"
-  columns: "LastName"
-  values {
+  std::string const text = R"pb(google.spanner.v1.Mutation {
+  insert {
+    table: "Singers"
+    columns: "SingerId"
+    columns: "FirstName"
+    columns: "LastName"
     values {
-      string_value: "1"
+      values {
+        string_value: "1"
+      }
+      values {
+        string_value: "test-fname-1"
+      }
+      values {
+        string_value: "test-lname-1"
+      }
     }
     values {
-      string_value: "test-fname-1"
-    }
-    values {
-      string_value: "test-lname-1"
+      values {
+        string_value: "2"
+      }
+      values {
+        string_value: "test-fname-2"
+      }
+      values {
+        string_value: "test-lname-2"
+      }
     }
   }
-  values {
-    values {
-      string_value: "2"
-    }
-    values {
-      string_value: "test-fname-2"
-    }
-    values {
-      string_value: "test-lname-2"
-    }
-  }
-}
-)pb";
+})pb";
   // clang-format on
   EXPECT_EQ(text, internal::DebugString(MakeMutation(), tracing_options));
 }
@@ -118,7 +121,9 @@ TEST(LogWrapper, Truncate) {
   TracingOptions tracing_options;
   tracing_options.SetOptions("truncate_string_field_longer_than=8");
   // clang-format off
-  std::string const text =R"pb(insert { )pb"
+  std::string const text =
+            R"pb(google.spanner.v1.Mutation { )pb"
+            R"pb(insert { )pb"
             R"pb(table: "Singers" )pb"
             R"pb(columns: "SingerId" )pb"
             R"pb(columns: "FirstNam...<truncated>..." )pb"
@@ -130,7 +135,8 @@ TEST(LogWrapper, Truncate) {
             R"pb(values { string_value: "test-fna...<truncated>..." } )pb"
             R"pb(values { string_value: "test-lna...<truncated>..." } )pb"
             R"pb(} )pb"
-            R"pb(} )pb";
+            R"pb(} )pb"
+            R"pb(})pb";
   // clang-format on
   EXPECT_EQ(text, internal::DebugString(MakeMutation(), tracing_options));
 }
