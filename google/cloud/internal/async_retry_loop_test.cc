@@ -113,10 +113,6 @@ class AsyncRetryLoopCancelTest : public ::testing::Test {
         .WillRepeatedly([this](std::chrono::nanoseconds d) {
           return SimulateRelativeTimer(d);
         });
-    EXPECT_CALL(*mock, MakeDeadlineTimer)
-        .WillRepeatedly([this](std::chrono::system_clock::time_point tp) {
-          return SimulateDeadlineTimer(tp);
-        });
     return mock;
   }
 
@@ -408,7 +404,7 @@ TEST_F(AsyncRetryLoopCancelTest, CancelAndSuccess) {
              int x) { return SimulateRequest(x); },
       42, "test-location");
 
-  // First simulate a regular request that results in a
+  // First simulate a regular request that results in a transient failure.
   auto p = WaitForRequest();
   p.set_value(transient);
   // Then simulate the backoff timer expiring.
@@ -426,16 +422,12 @@ TEST_F(AsyncRetryLoopCancelTest, CancelAndSuccess) {
 }
 
 TEST_F(AsyncRetryLoopCancelTest, CancelWithFailure) {
-  using ms = std::chrono::milliseconds;
-
   auto const transient = Status(StatusCode::kUnavailable, "try-again");
 
   auto mock = MakeMockCompletionQueue();
   google::cloud::CompletionQueue cq(mock);
   future<StatusOr<int>> actual = AsyncRetryLoop(
-      LimitedErrorCountRetryPolicy<TestRetryablePolicy>(5).clone(),
-      ExponentialBackoffPolicy(ms(1), ms(2), 2.0).clone(),
-      Idempotency::kIdempotent, cq,
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
       [this](google::cloud::CompletionQueue&,
              std::unique_ptr<grpc::ClientContext>,
              int x) { return SimulateRequest(x); },
@@ -461,16 +453,12 @@ TEST_F(AsyncRetryLoopCancelTest, CancelWithFailure) {
 }
 
 TEST_F(AsyncRetryLoopCancelTest, CancelDuringTimer) {
-  using ms = std::chrono::milliseconds;
-
   auto const transient = Status(StatusCode::kUnavailable, "try-again");
 
   auto mock = MakeMockCompletionQueue();
   google::cloud::CompletionQueue cq(mock);
   future<StatusOr<int>> actual = AsyncRetryLoop(
-      LimitedErrorCountRetryPolicy<TestRetryablePolicy>(5).clone(),
-      ExponentialBackoffPolicy(ms(2000), ms(8000), 2.0).clone(),
-      Idempotency::kIdempotent, cq,
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
       [this](google::cloud::CompletionQueue&,
              std::unique_ptr<grpc::ClientContext>,
              int x) { return SimulateRequest(x); },
@@ -498,16 +486,12 @@ TEST_F(AsyncRetryLoopCancelTest, CancelDuringTimer) {
 }
 
 TEST_F(AsyncRetryLoopCancelTest, ShutdownDuringTimer) {
-  using ms = std::chrono::milliseconds;
-
   auto const transient = Status(StatusCode::kUnavailable, "try-again");
 
   auto mock = MakeMockCompletionQueue();
   google::cloud::CompletionQueue cq(mock);
   future<StatusOr<int>> actual = AsyncRetryLoop(
-      LimitedErrorCountRetryPolicy<TestRetryablePolicy>(5).clone(),
-      ExponentialBackoffPolicy(ms(2000), ms(8000), 2.0).clone(),
-      Idempotency::kIdempotent, cq,
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
       [this](google::cloud::CompletionQueue&,
              std::unique_ptr<grpc::ClientContext>,
              int x) { return SimulateRequest(x); },
