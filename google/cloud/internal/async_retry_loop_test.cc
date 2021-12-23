@@ -84,7 +84,9 @@ class AsyncRetryLoopCancelTest : public ::testing::Test {
   }
 
   future<TimerResult> SimulateRelativeTimer(std::chrono::nanoseconds d) {
-    auto tp = std::chrono::system_clock::now() + d;
+    using std::chrono::system_clock;
+    auto tp = system_clock::now() +
+              std::chrono::duration_cast<system_clock::duration>(d);
     return sequencer_.PushBack("RelativeTimer")
         .then([tp](future<Status> g) -> TimerResult {
           auto status = g.get();
