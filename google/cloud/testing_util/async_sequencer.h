@@ -95,8 +95,9 @@ class AsyncSequencer {
   std::size_t CancelCount() { return CancelCount("unnamed"); }
   std::size_t CancelCount(std::string name) {
     std::lock_guard<std::mutex> lk(mu_);
-    auto n = cancel_counts_[name];
-    cancel_counts_[std::move(name)] = 0;
+    std::size_t n = 0;
+    auto& count = cancel_counts_[std::move(name)];
+    std::swap(n, count);
     return n;
   }
 
