@@ -63,12 +63,17 @@ TEST(AsyncSequencerTest, CancelCount) {
   AsyncSequencer<void> async;
   auto f1 = async.PushBack();
   auto f2 = async.PushBack();
+  auto f3 = async.PushBack("other");
   EXPECT_EQ(0, async.CancelCount());
   f1.cancel();
   f2.cancel();
+  f3.cancel();
   EXPECT_EQ(2, async.CancelCount());
   // Verify that the counter resets to 0 after each call.
   EXPECT_EQ(0, async.CancelCount());
+
+  EXPECT_EQ(1, async.CancelCount("other"));
+  EXPECT_EQ(0, async.CancelCount("other"));
 }
 
 TEST(AsyncSequencerTest, MaxSize) {
