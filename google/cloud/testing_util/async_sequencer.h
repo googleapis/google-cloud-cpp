@@ -21,6 +21,7 @@
 #include <deque>
 #include <mutex>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -71,9 +72,9 @@ class AsyncSequencer {
 
   future<T> PushBack(std::string name) {
     std::unique_lock<std::mutex> lk(mu_);
-    queue_.emplace_back(promise<T>([this] {
+    queue_.emplace_back(promise<T>([this, name] {
                           std::lock_guard<std::mutex> lk(mu_);
-                          ++cancel_count_;
+                          ++cancel_counts_[name];
                         }),
                         std::move(name));
     auto f = queue_.back().first.get_future();
@@ -91,10 +92,12 @@ class AsyncSequencer {
     return p;
   }
 
-  std::size_t CancelCount() {
+  std::size_t CancelCount() { return CancelCount("unnamed"); }
+  std::size_t CancelCount(std::string name) {
     std::lock_guard<std::mutex> lk(mu_);
-    auto n = cancel_count_;
-    cancel_count_ = 0;
+    std::size_t n = 0;
+    auto& count = cancel_counts_[std::move(name)];
+    std::swap(n, count);
     return n;
   }
 
@@ -105,7 +108,7 @@ class AsyncSequencer {
   std::condition_variable cv_;
   std::deque<std::pair<promise<T>, std::string>> queue_;
   std::size_t max_size_ = 0;
-  std::size_t cancel_count_ = 0;
+  std::unordered_map<std::string, std::size_t> cancel_counts_;
 };
 
 }  // namespace testing_util
