@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <google/protobuf/text_format.h>
 #include <atomic>
 
@@ -26,11 +27,13 @@ std::string DebugString(google::protobuf::Message const& m,
   std::string str;
   google::protobuf::TextFormat::Printer p;
   p.SetSingleLineMode(options.single_line_mode());
+  if (!options.single_line_mode()) p.SetInitialIndentLevel(1);
   p.SetUseShortRepeatedPrimitives(options.use_short_repeated_primitives());
   p.SetTruncateStringFieldLongerThan(
       options.truncate_string_field_longer_than());
   p.PrintToString(m, &str);
-  return str;
+  return absl::StrCat(m.GetTypeName(), " {",
+                      (options.single_line_mode() ? " " : "\n"), str, "}");
 }
 
 std::string RequestIdForLogging() {
