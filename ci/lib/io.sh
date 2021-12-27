@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This bash library includes various I/O functions, including logging functions.
+# This bash library includes various I/O funtions, including logging functions.
 #
 # Example:
 #

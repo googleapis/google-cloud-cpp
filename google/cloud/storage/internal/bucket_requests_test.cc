@@ -85,7 +85,7 @@ TEST(BucketMetadataParserTest, ParseAclFailure) {
 }
 
 /// @test Verify that we parse JSON objects into BucketMetadata objects.
-TEST(BucketMetadataParserTest, ParseDefaultObjectAclFailure) {
+TEST(BucketMetadataParserTest, ParseDefaultObjecAclFailure) {
   auto actual = internal::BucketMetadataParser::FromString(
       R"""({"defaultObjectAcl: ["invalid-item"]})""");
   EXPECT_THAT(actual, Not(IsOk()));
