@@ -113,41 +113,42 @@ struct FutureValueType<future<T>> {
  *
  * @par Solution
  *
- * We keep a counter reflecting the current iteration of the retry loop. This
- * counter is incremented before starting a request and before starting a
- * backoff timer.
+ * We keep a counter reflecting the number of operations performed by the retry
+ * loop. This counter is incremented before starting a request and before
+ * starting a backoff timer.
  *
  * The `pending_operation_` variable is updated **only** if the current
- * iteration matches the iteration before the operation started. This means the
- * `pending_operation_` variable always reflects the last pending operation, it
- * can never be set to an older operation.
+ * operation matches the operation counter. This means the `pending_operation_`
+ * variable always reflects the last pending operation, it can never be set to
+ * an older operation.
  *
  * @par Observations
  *
  * - The initial value of `cancelled_` is false.
  * - `Cancel()` is the only operation that changes `cancelled_`, and it holds
- *   the `mu_` mutex while doing son.
+ *   the `mu_` mutex while doing so.
  * - Once `cancelled_` is set to `true` it is never set to `false`
  *
  * While `cancelled_` is false the loop is (basically) single threaded:
  *   - Each gRPC request or backoff timer is sequenced-after a call to
- *     `StartIteration()`, see `StartAttempt()` and `StartBackoff()`.
+ *     `StartOperation()`, see `StartAttempt()` and `StartBackoff()`.
  *   - Each gRPC request or backoff timer must complete before the next one
- *     starts, as it is their callbacks who start the next step.
- *   - `StartIteration()` is always sequenced-before calls to `SetPending()`.
- *   - `SetPending()` never sets the `pending_operation_` to the future for
- *     an operation that already completed.
+ *     starts, as it is their callbacks (`OnAttempt()` and `OnBackoff()`) that
+ *     start the next step.
+ *   - `StartOperation()` is always sequenced-before calls to `SetPending()`.
+ *   - `SetPending()` never sets `pending_operation_` to the `future<void>`
+ *     representing an operation that has already completed.
  *
  * As to when the `cancelled_` flag changes to `true`:
- *   - `StartIteration()` and `SetPending()` both lock the same mutex `mu_` as
+ *   - `StartOperation()` and `SetPending()` both lock the same mutex `mu_` as
  *     `Cancel()`.
  *   - It follows that if `Cancel()` is invoked, then the `true` value will be
- *     visible any future calls to `StartIteration()` or `SetPending()`.
- *   - If the next call is `StartIteration()` then no new operation is issued,
+ *     visible to any future calls to `StartOperation()` or `SetPending()`.
+ *   - If the next call is `StartOperation()` then no new operation is issued,
  *     as both `StartAttempt()` and `StartBackoff()` return immediately in this
  *     case.
- *   - Note that if `cancelled_` is true, `StartIteration()` terminates the
- *     retry loop by calling `SetDoneWithCancel()` if `cancelled_` is true.
+ *   - Note that if `cancelled_` is true, `StartOperation()` terminates the
+ *     retry loop by calling `SetDoneWithCancel()`.
  *   - If the next call is `SetPending()` the pending operation is immediately
  *     cancelled.
  *
@@ -200,18 +201,18 @@ class AsyncRetryLoopImpl
 
   struct State {
     bool cancelled;
-    std::uint64_t iteration;
+    std::uint_fast32_t operation;
   };
 
-  State StartIteration() {
+  State StartOperation() {
     std::unique_lock<std::mutex> lk(mu_);
-    if (!cancelled_) return State{false, ++iteration_};
+    if (!cancelled_) return State{false, ++operation_};
     return SetDoneWithCancel(std::move(lk));
   }
 
-  State OnIteration() {
+  State OnOperation() {
     std::unique_lock<std::mutex> lk(mu_);
-    if (!cancelled_) return State{false, iteration_};
+    if (!cancelled_) return State{false, operation_};
     return SetDoneWithCancel(std::move(lk));
   }
 
@@ -221,12 +222,12 @@ class AsyncRetryLoopImpl
       return SetDone(
           RetryLoopError("Retry policy exhausted in", location_, last_status_));
     }
-    auto state = StartIteration();
+    auto state = StartOperation();
     if (state.cancelled) return;
     auto context = absl::make_unique<grpc::ClientContext>();
     SetupContext<RetryPolicyType>::Setup(*retry_policy_, *context);
     SetPending(
-        state.iteration,
+        state.operation,
         functor_(cq_, std::move(context), request_).then([self](future<T> f) {
           self->OnAttempt(f.get());
         }));
@@ -234,9 +235,9 @@ class AsyncRetryLoopImpl
 
   void StartBackoff() {
     auto self = this->shared_from_this();
-    auto state = StartIteration();
+    auto state = StartOperation();
     if (state.cancelled) return;
-    SetPending(state.iteration,
+    SetPending(state.operation,
                cq_.MakeRelativeTimer(backoff_policy_->OnCompletion())
                    .then([self](future<TimerArgType> f) {
                      self->OnBackoff(f.get());
@@ -264,7 +265,7 @@ class AsyncRetryLoopImpl
   }
 
   void OnBackoff(TimerArgType tp) {
-    auto state = OnIteration();
+    auto state = OnOperation();
     // Check for the retry loop cancellation first. We want to report that
     // status instead of the timer failure in that case.
     if (state.cancelled) return;
@@ -276,9 +277,9 @@ class AsyncRetryLoopImpl
     StartAttempt();
   }
 
-  void SetPending(std::uint_fast64_t iteration, future<void> op) {
+  void SetPending(std::uint_fast32_t iteration, future<void> op) {
     std::unique_lock<std::mutex> lk(mu_);
-    if (iteration_ == iteration) pending_operation_ = std::move(op);
+    if (operation_ == iteration) pending_operation_ = std::move(op);
     if (cancelled_) return Cancel(std::move(lk));
   }
 
@@ -328,7 +329,7 @@ class AsyncRetryLoopImpl
   std::mutex mu_;
   bool cancelled_ = false;
   bool done_ = false;
-  std::uint_fast32_t iteration_ = 0;
+  std::uint_fast32_t operation_ = 0;
   future<void> pending_operation_;
 };
 
