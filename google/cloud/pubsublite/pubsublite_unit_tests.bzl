@@ -16,6 +16,6 @@
 
 """Automatically generated unit tests list - DO NOT EDIT."""
 
-unit_test_files = [
+pubsublite_unit_tests = [
     "internal/stream_factory_test.cc",
 ]
