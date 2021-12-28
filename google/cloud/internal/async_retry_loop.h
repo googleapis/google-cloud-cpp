@@ -277,9 +277,9 @@ class AsyncRetryLoopImpl
     StartAttempt();
   }
 
-  void SetPending(std::uint_fast32_t iteration, future<void> op) {
+  void SetPending(std::uint_fast32_t operation, future<void> op) {
     std::unique_lock<std::mutex> lk(mu_);
-    if (operation_ == iteration) pending_operation_ = std::move(op);
+    if (operation_ == operation) pending_operation_ = std::move(op);
     if (cancelled_) return Cancel(std::move(lk));
   }
 
