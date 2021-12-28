@@ -188,6 +188,23 @@ class MockBackoffPolicy : public BackoffPolicy {
   MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (), (override));
 };
 
+class RetryPolicyWithSetup {
+ public:
+  virtual ~RetryPolicyWithSetup() = default;
+  virtual bool OnFailure(Status const&) = 0;
+  virtual void Setup(grpc::ClientContext&) const = 0;
+  virtual bool IsExhausted() const = 0;
+  virtual bool IsPermanentFailure(Status const&) const = 0;
+};
+
+class MockRetryPolicy : public RetryPolicyWithSetup {
+ public:
+  MOCK_METHOD(bool, OnFailure, (Status const&), (override));
+  MOCK_METHOD(void, Setup, (grpc::ClientContext&), (const, override));
+  MOCK_METHOD(bool, IsExhausted, (), (const, override));
+  MOCK_METHOD(bool, IsPermanentFailure, (Status const&), (const, override));
+};
+
 /// @test Verify the backoff policy is queried after each failure.
 TEST(AsyncRetryLoopTest, UsesBackoffPolicy) {
   using ms = std::chrono::milliseconds;
@@ -326,22 +343,32 @@ TEST(AsyncRetryLoopTest, ExhaustedDuringBackoff) {
                                      HasSubstr("test-location"))));
 }
 
-class RetryPolicyWithSetup {
- public:
-  virtual ~RetryPolicyWithSetup() = default;
-  virtual bool OnFailure(Status const&) = 0;
-  virtual void Setup(grpc::ClientContext&) const = 0;
-  virtual bool IsExhausted() const = 0;
-  virtual bool IsPermanentFailure(Status const&) const = 0;
-};
+TEST(AsyncRetryLoopTest, ExhaustedBeforeStart) {
+  auto mock = absl::make_unique<MockRetryPolicy>();
+  EXPECT_CALL(*mock, IsExhausted)
+      .WillOnce(Return(false))
+      .WillRepeatedly(Return(true));
+  EXPECT_CALL(*mock, OnFailure).WillOnce(Return(true));
+  EXPECT_CALL(*mock, IsPermanentFailure).WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock, Setup).Times(1);
 
-class MockRetryPolicy : public RetryPolicyWithSetup {
- public:
-  MOCK_METHOD(bool, OnFailure, (Status const&), (override));
-  MOCK_METHOD(void, Setup, (grpc::ClientContext&), (const, override));
-  MOCK_METHOD(bool, IsExhausted, (), (const, override));
-  MOCK_METHOD(bool, IsPermanentFailure, (Status const&), (const, override));
-};
+  AutomaticallyCreatedBackgroundThreads background;
+  StatusOr<int> actual =
+      AsyncRetryLoop(
+          std::unique_ptr<RetryPolicyWithSetup>(std::move(mock)),
+          TestBackoffPolicy(), Idempotency::kIdempotent, background.cq(),
+          [](google::cloud::CompletionQueue&,
+             std::unique_ptr<grpc::ClientContext>, int) {
+            return make_ready_future(StatusOr<int>(
+                Status(StatusCode::kUnavailable, "test-message-try-again")));
+          },
+          42, "test-location")
+          .get();
+  EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable,
+                               AllOf(HasSubstr("test-message-try-again"),
+                                     HasSubstr("Retry policy exhausted"),
+                                     HasSubstr("test-location"))));
+}
 
 TEST(AsyncRetryLoopTest, SetsTimeout) {
   auto mock = absl::make_unique<MockRetryPolicy>();
