@@ -63,13 +63,29 @@ target_link_libraries(
            google-cloud-cpp::longrunning_operations_protos
            google-cloud-cpp::rpc_status_protos)
 
-file(
-    GLOB source_files
-    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "*.h" "*.cc" "internal/*.h" "internal/*.cc")
-list(FILTER source_files EXCLUDE REGEX ".*_test.cc")
-
-add_library(google_cloud_cpp_pubsublite ${source_files})
+add_library(
+    google_cloud_cpp_pubsublite # cmake-format: sort
+    admin_client.cc
+    admin_client.h
+    admin_connection.cc
+    admin_connection.h
+    admin_connection_idempotency_policy.cc
+    admin_connection_idempotency_policy.h
+    admin_options.h
+    internal/admin_auth_decorator.cc
+    internal/admin_auth_decorator.h
+    internal/admin_logging_decorator.cc
+    internal/admin_logging_decorator.h
+    internal/admin_metadata_decorator.cc
+    internal/admin_metadata_decorator.h
+    internal/admin_option_defaults.cc
+    internal/admin_option_defaults.h
+    internal/admin_retry_traits.h
+    internal/admin_stub.cc
+    internal/admin_stub.h
+    internal/admin_stub_factory.cc
+    internal/admin_stub_factory.h
+    internal/stream_factory.h)
 target_include_directories(
     google_cloud_cpp_pubsublite
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -94,26 +110,21 @@ add_library(google-cloud-cpp::experimental-pubsublite ALIAS
 # To avoid maintaining the list of files for the library, export them to a .bzl
 # file.
 include(CreateBazelConfig)
+create_bazel_config(google_cloud_cpp_pubsublite YEAR "2021")
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
-file(
-    GLOB relative_mock_files
-    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "mocks/*.h")
-list(SORT relative_mock_files)
-set(mock_files)
-foreach (file IN LISTS relative_mock_files)
-    list(APPEND mock_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
-endforeach ()
 add_library(google_cloud_cpp_pubsublite_mocks INTERFACE)
-target_sources(google_cloud_cpp_pubsublite_mocks INTERFACE ${mock_files})
+target_sources(
+    google_cloud_cpp_pubsublite_mocks
+    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_admin_connection.h)
 target_link_libraries(
     google_cloud_cpp_pubsublite_mocks
     INTERFACE google-cloud-cpp::experimental-pubsublite GTest::gmock_main
               GTest::gmock GTest::gtest)
+create_bazel_config(google_cloud_cpp_pubsublite_mocks YEAR "2021")
 target_include_directories(
     google_cloud_cpp_pubsublite_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -121,11 +132,6 @@ target_include_directories(
               $<INSTALL_INTERFACE:include>)
 target_compile_options(google_cloud_cpp_pubsublite_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-
-file(
-    GLOB test_files
-    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "*_test.cc" "internal/*_test.cc")
 
 # Define the tests in a function so we have a new scope for variable names.
 function (google_cloud_cpp_pubsublite_client_define_tests)
@@ -135,8 +141,14 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
+    set(pubsublite_unit_tests # cmake-format: sort
+                              internal/stream_factory_test.cc)
+
+    export_list_to_bazel("pubsublite_unit_tests.bzl" "pubsublite_unit_tests"
+                         YEAR "2021")
+
     # Generate a target for each unit test.
-    foreach (fname ${test_files})
+    foreach (fname ${pubsublite_unit_tests})
         google_cloud_cpp_add_executable(target "pubsublite" "${fname}")
         target_link_libraries(
             ${target}
