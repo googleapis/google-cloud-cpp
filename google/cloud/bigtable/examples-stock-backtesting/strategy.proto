@@ -1,0 +1,28 @@
+syntax = "proto2";
+
+package google.cloud.bigtable.examples;
+
+// A simple condition (chasing ups and downs):
+// If threshold is a positive value, once
+// (|sample| - |base|) / |base| > |threshold|, buy in with the amount
+// of |moneyin|.
+// If threshold is a negtive value, once
+// // (|sample| - |base|) / |base| < |threshold|, sell out with the amount
+// of |moneyin|.
+// Next TAG: 5
+message Condition {
+  optional string base = 1;
+
+  optional string sample = 2;
+
+  optional double threshold = 3;
+
+  optional uint64 moneyin = 4;
+}
+
+// Trading strategy is consist of several conditions.
+// Next TAG: 2
+message Strategy {
+  repeated Condition conditions = 1;
+}
+
