@@ -35,6 +35,11 @@ template <class Request, class Response>
 using StreamFactory =
     std::function<std::unique_ptr<BidiStream<Request, Response>>()>;
 
+template <class Request, class Response>
+using ContextStreamFactory =
+    std::function<std::unique_ptr<BidiStream<Request, Response>>(
+        std::unique_ptr<grpc::ClientContext> context)>;
+
 using ClientMetadata = std::unordered_map<std::string, std::string>;
 
 inline std::unique_ptr<grpc::ClientContext> MakeGrpcClientContext(
@@ -46,6 +51,46 @@ inline std::unique_ptr<grpc::ClientContext> MakeGrpcClientContext(
   return context;
 }
 
+template <class Request, class Response>
+StreamFactory<Request, Response> AddClientMetadata(
+    ClientMetadata const& metadata,
+    ContextStreamFactory<Request, Response> underlying) {
+  return [=] { return underlying(MakeGrpcClientContext(metadata)); };
+}
+
+template <typename Request, typename Response>
+inline ContextStreamFactory<Request, Response> AddAuthContext(
+    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> const&
+        auth,
+    ContextStreamFactory<Request, Response> const& underlying) {
+  return [=](std::unique_ptr<grpc::ClientContext> context) {
+    return absl::make_unique<
+        internal::AsyncStreamingReadWriteRpcAuth<Request, Response>>(
+        std::move(context), auth,
+        [=](std::unique_ptr<grpc::ClientContext> ctx) {
+          return underlying(std::move(ctx));
+        });
+  };
+}
+
+template <class Obj, class R, class... Args>
+using MemFn = R (Obj::*)(Args...);
+
+template <class Stub, class Request, class Response>
+inline ContextStreamFactory<Request, Response> MakeRawStreamFactory(
+    google::cloud::CompletionQueue const& cq, std::shared_ptr<Stub> const& stub,
+    MemFn<Stub,
+          std::unique_ptr<
+              grpc::ClientAsyncReaderWriterInterface<Request, Response>>,
+          grpc::ClientContext*, grpc::CompletionQueue*>
+        new_stream) {
+  return [=](std::unique_ptr<grpc::ClientContext> context)
+             -> std::unique_ptr<BidiStream<Request, Response>> {
+    return internal::MakeStreamingReadWriteRpc<Request, Response>(
+        cq, std::move(context), absl::bind_front(new_stream, stub));
+  };
+}
+
 inline StreamFactory<pubsublite::v1::PublishRequest,
                      pubsublite::v1::PublishResponse>
 MakeStreamFactory(
@@ -55,14 +100,12 @@ MakeStreamFactory(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> const&
         auth,
     ClientMetadata const& metadata = {}) {
-  return [=] {
-    return internal::MakeAuthorizedStreamingReadWriteRpc<
-        pubsublite::v1::PublishRequest, pubsublite::v1::PublishResponse>(
-        cq, MakeGrpcClientContext(metadata), std::move(auth),
-        [stub](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
-          return stub->PrepareAsyncPublish(context, cq);
-        });
-  };
+  return AddClientMetadata(
+      metadata,
+      AddAuthContext(
+          auth, MakeRawStreamFactory(cq, stub,
+                                     &pubsublite::v1::PublisherService::
+                                         StubInterface::PrepareAsyncPublish)));
 }
 
 inline StreamFactory<pubsublite::v1::SubscribeRequest,
@@ -74,14 +117,12 @@ MakeStreamFactory(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> const&
         auth,
     ClientMetadata const& metadata = {}) {
-  return [=] {
-    return google::cloud::internal::MakeAuthorizedStreamingReadWriteRpc<
-        pubsublite::v1::SubscribeRequest, pubsublite::v1::SubscribeResponse>(
-        cq, MakeGrpcClientContext(metadata), std::move(auth),
-        [stub](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
-          return stub->PrepareAsyncSubscribe(context, cq);
-        });
-  };
+  return AddClientMetadata(
+      metadata,
+      AddAuthContext(auth, MakeRawStreamFactory(
+                               cq, stub,
+                               &pubsublite::v1::SubscriberService::
+                                   StubInterface::PrepareAsyncSubscribe)));
 }
 
 inline StreamFactory<pubsublite::v1::StreamingCommitCursorRequest,
@@ -89,18 +130,14 @@ inline StreamFactory<pubsublite::v1::StreamingCommitCursorRequest,
 MakeStreamFactory(
     std::shared_ptr<pubsublite::v1::CursorService::StubInterface> const& stub,
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> const&
-        auth,
+    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
     ClientMetadata const& metadata = {}) {
-  return [=] {
-    return google::cloud::internal::MakeAuthorizedStreamingReadWriteRpc<
-        pubsublite::v1::StreamingCommitCursorRequest,
-        pubsublite::v1::StreamingCommitCursorResponse>(
-        cq, MakeGrpcClientContext(metadata), std::move(auth),
-        [stub](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
-          return stub->PrepareAsyncStreamingCommitCursor(context, cq);
-        });
-  };
+  return AddClientMetadata(
+      metadata,
+      AddAuthContext(auth, MakeRawStreamFactory(
+                               cq, stub,
+                               &pubsublite::v1::CursorService::StubInterface::
+                                   PrepareAsyncStreamingCommitCursor)));
 }
 
 inline StreamFactory<pubsublite::v1::PartitionAssignmentRequest,
@@ -112,15 +149,13 @@ MakeStreamFactory(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> const&
         auth,
     ClientMetadata const& metadata = {}) {
-  return [=] {
-    return google::cloud::internal::MakeAuthorizedStreamingReadWriteRpc<
-        pubsublite::v1::PartitionAssignmentRequest,
-        pubsublite::v1::PartitionAssignment>(
-        cq, MakeGrpcClientContext(metadata), std::move(auth),
-        [stub](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
-          return stub->PrepareAsyncAssignPartitions(context, cq);
-        });
-  };
+  return AddClientMetadata(
+      metadata,
+      AddAuthContext(
+          auth, MakeRawStreamFactory(
+                    cq, stub,
+                    &pubsublite::v1::PartitionAssignmentService::StubInterface::
+                        PrepareAsyncAssignPartitions)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
