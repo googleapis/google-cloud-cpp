@@ -1,0 +1,16 @@
+# proto-file: experimental/users/joezqren/spacewalk_stock_backtesting/data/simple_up_200_down_100.textproto
+# proto-message: TradingStrategy
+
+conditions {
+  base: "price::close_price"
+  sample: "price::open_price"
+  threshold: 0.02
+  moneyin: 200
+}
+conditions {
+  base: "price::close_price"
+  sample: "price::open_price"
+  threshold: -0.03
+  moneyin: 100
+}
+
