@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     http://www.apache.org/licenses/LICENSE-2.0
+//     https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,12 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/admin/internal/wait_for_consistency.h"
-#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
+#include "google/cloud/bigtable/admin/bigtable_table_admin_connection.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
 #include "google/cloud/bigtable/admin/mocks/mock_bigtable_table_admin_connection.h"
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/internal/background_threads_impl.h"
-#include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/async_sequencer.h"
+#include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -34,6 +35,8 @@ namespace btadmin = ::google::bigtable::admin::v2;
 using MockConnection =
     ::google::cloud::bigtable_admin_mocks::MockBigtableTableAdminConnection;
 using RespType = StatusOr<btadmin::CheckConsistencyResponse>;
+using TimerResult = StatusOr<std::chrono::system_clock::time_point>;
+using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 
@@ -44,19 +47,6 @@ Options TestOptions() {
   auto retry =
       BigtableTableAdminLimitedErrorCountRetryPolicy(kLimitedErrorCount);
   auto backoff = ExponentialBackoffPolicy(us(1), us(5), 2.0);
-  auto polling =
-      GenericPollingPolicy<BigtableTableAdminRetryPolicyOption::Type,
-                           BigtableTableAdminBackoffPolicyOption::Type>(
-          retry.clone(), backoff.clone());
-
-  return Options{}.set<BigtableTableAdminPollingPolicyOption>(polling.clone());
-}
-
-Options SlowTestOptions() {
-  using std::chrono::hours;
-  auto retry =
-      BigtableTableAdminLimitedErrorCountRetryPolicy(kLimitedErrorCount);
-  auto backoff = ExponentialBackoffPolicy(hours(24), hours(24), 2.0);
   auto polling =
       GenericPollingPolicy<BigtableTableAdminRetryPolicyOption::Type,
                            BigtableTableAdminBackoffPolicyOption::Type>(
@@ -78,7 +68,6 @@ TEST(AsyncWaitForConsistency, Simple) {
 
   CompletionQueue cq;
   auto mock = std::make_shared<MockConnection>();
-  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .WillOnce([&](btadmin::CheckConsistencyRequest const& request) {
@@ -88,7 +77,7 @@ TEST(AsyncWaitForConsistency, Simple) {
       });
 
   auto status = bigtable_admin_internal::AsyncWaitForConsistency(
-                    cq, client, table_name, token)
+                    cq, mock, table_name, token)
                     .get();
   EXPECT_STATUS_OK(status);
 }
@@ -100,7 +89,6 @@ TEST(AsyncWaitForConsistency, NotConsistentThenSuccess) {
 
   internal::AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<MockConnection>();
-  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .WillOnce([&](btadmin::CheckConsistencyRequest const& request) {
@@ -115,7 +103,7 @@ TEST(AsyncWaitForConsistency, NotConsistentThenSuccess) {
       });
 
   auto status = bigtable_admin_internal::AsyncWaitForConsistency(
-                    background.cq(), client, table_name, token, TestOptions())
+                    background.cq(), mock, table_name, token, TestOptions())
                     .get();
   EXPECT_STATUS_OK(status);
 }
@@ -127,7 +115,6 @@ TEST(AsyncWaitForConsistency, PermanentFailure) {
 
   internal::AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<MockConnection>();
-  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .WillOnce([&](btadmin::CheckConsistencyRequest const& request) {
@@ -138,7 +125,7 @@ TEST(AsyncWaitForConsistency, PermanentFailure) {
       });
 
   auto status = bigtable_admin_internal::AsyncWaitForConsistency(
-                    background.cq(), client, table_name, token, TestOptions())
+                    background.cq(), mock, table_name, token, TestOptions())
                     .get();
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied, "fail"));
 }
@@ -150,7 +137,6 @@ TEST(AsyncWaitForConsistency, TooManyTransientFailures) {
 
   internal::AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<MockConnection>();
-  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .Times(kLimitedErrorCount + 1)
@@ -162,7 +148,7 @@ TEST(AsyncWaitForConsistency, TooManyTransientFailures) {
       });
 
   auto status = bigtable_admin_internal::AsyncWaitForConsistency(
-                    background.cq(), client, table_name, token, TestOptions())
+                    background.cq(), mock, table_name, token, TestOptions())
                     .get();
   EXPECT_THAT(status,
               StatusIs(StatusCode::kUnavailable, HasSubstr("try again")));
@@ -175,7 +161,6 @@ TEST(AsyncWaitForConsistency, NeverConsistent) {
 
   internal::AutomaticallyCreatedBackgroundThreads background;
   auto mock = std::make_shared<MockConnection>();
-  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .Times(kLimitedErrorCount + 1)
@@ -186,60 +171,99 @@ TEST(AsyncWaitForConsistency, NeverConsistent) {
       });
 
   auto status = bigtable_admin_internal::AsyncWaitForConsistency(
-                    background.cq(), client, table_name, token, TestOptions())
+                    background.cq(), mock, table_name, token, TestOptions())
                     .get();
   EXPECT_THAT(status, StatusIs(StatusCode::kDeadlineExceeded,
                                HasSubstr("Polling loop terminated")));
 }
 
+TEST(AsyncWaitForConsistency, PassesOptionsToConnection) {
+  std::string const table_name =
+      bigtable::TableName("test-project", "test-instance", "test-table");
+  std::string const token = "test-token";
+
+  struct TestOption {
+    using Type = std::string;
+  };
+
+  CompletionQueue cq;
+  auto mock = std::make_shared<MockConnection>();
+
+  EXPECT_CALL(*mock, AsyncCheckConsistency)
+      .WillOnce([&](btadmin::CheckConsistencyRequest const& request) {
+        EXPECT_EQ(request.name(), table_name);
+        EXPECT_EQ(request.consistency_token(), token);
+        EXPECT_TRUE(internal::CurrentOptions().has<TestOption>());
+        return make_ready_future(MakeResponse(true));
+      });
+
+  EXPECT_FALSE(internal::CurrentOptions().has<TestOption>());
+  auto status =
+      bigtable_admin_internal::AsyncWaitForConsistency(
+          cq, mock, table_name, token, Options{}.set<TestOption>("value"))
+          .get();
+  EXPECT_STATUS_OK(status);
+}
+
 class AsyncWaitForConsistencyCancelTest : public ::testing::Test {
  protected:
-  int CancelCount() {
-    std::lock_guard<std::mutex> lk(mu_);
-    int n = cancel_count_;
-    cancel_count_ = 0;
-    return n;
-  }
+  std::size_t RequestCancelCount() { return sequencer_.CancelCount("Request"); }
+  std::size_t TimerCancelCount() { return sequencer_.CancelCount("Timer"); }
 
   future<RespType> SimulateRequest() {
-    promise<bool> p([this] {
-      std::lock_guard<std::mutex> lk(mu_);
-      ++cancel_count_;
-    });
-    auto f = p.get_future().then(
-        [](future<bool> g) { return MakeResponse(g.get()); });
-    std::lock_guard<std::mutex> lk(mu_);
-    requests_.push_back(std::move(p));
-    cv_.notify_one();
-    return f;
+    return sequencer_.PushBack("Request").then(
+        [](future<Status> g) -> RespType {
+          auto status = g.get();
+          if (!status.ok()) return status;
+          return MakeResponse(true);
+        });
   }
 
-  promise<bool> WaitForRequest() {
-    std::unique_lock<std::mutex> lk(mu_);
-    cv_.wait(lk, [&] { return !requests_.empty(); });
-    auto p = std::move(requests_.front());
-    requests_.pop_front();
-    return p;
+  future<TimerResult> SimulateTimer(std::chrono::nanoseconds d) {
+    using std::chrono::system_clock;
+    auto tp = system_clock::now() +
+              std::chrono::duration_cast<system_clock::duration>(d);
+    return sequencer_.PushBack("Timer").then(
+        [tp](future<Status> g) -> TimerResult {
+          auto status = g.get();
+          if (!status.ok()) return status;
+          return tp;
+        });
+  }
+
+  promise<Status> WaitForRequest() {
+    auto p = sequencer_.PopFrontWithName();
+    EXPECT_EQ("Request", p.second);
+    return std::move(p.first);
+  }
+  promise<Status> WaitForTimer() {
+    auto p = sequencer_.PopFrontWithName();
+    EXPECT_THAT(p.second, "Timer");
+    return std::move(p.first);
+  }
+
+  std::shared_ptr<testing_util::MockCompletionQueueImpl>
+  MakeMockCompletionQueue() {
+    auto mock = std::make_shared<testing_util::MockCompletionQueueImpl>();
+    EXPECT_CALL(*mock, MakeRelativeTimer)
+        .WillRepeatedly(
+            [this](std::chrono::nanoseconds d) { return SimulateTimer(d); });
+    return mock;
   }
 
  private:
-  // We will simulate the asynchronous requests by pushing promises into this
-  // queue. The test pulls element from the queue to verify the work.
-  std::mutex mu_;
-  std::condition_variable cv_;
-  std::deque<promise<bool>> requests_;
-  int cancel_count_ = 0;
+  AsyncSequencer<Status> sequencer_;
 };
 
 TEST_F(AsyncWaitForConsistencyCancelTest, CancelAndSuccess) {
   std::string const table_name =
       bigtable::TableName("test-project", "test-instance", "test-table");
   std::string const token = "test-token";
+  auto const transient = Status(StatusCode::kUnavailable, "try-again");
 
-  auto fake = std::make_shared<testing_util::FakeCompletionQueueImpl>();
-  CompletionQueue cq(fake);
+  auto mock_cq = MakeMockCompletionQueue();
+  CompletionQueue cq(mock_cq);
   auto mock = std::make_shared<MockConnection>();
-  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .Times(2)
@@ -250,19 +274,22 @@ TEST_F(AsyncWaitForConsistencyCancelTest, CancelAndSuccess) {
       });
 
   auto actual = bigtable_admin_internal::AsyncWaitForConsistency(
-      cq, client, table_name, token, TestOptions());
+      cq, mock, table_name, token, TestOptions());
 
-  // First simulate a regular request, that is not consistent.
+  // First simulate a regular request that results in a transient failure.
   auto p = WaitForRequest();
-  p.set_value(false);
+  p.set_value(transient);
   // Then simulate the backoff timer expiring.
-  fake->SimulateCompletion(true);
-  // Then another request that gets cancelled, but is consistent.
+  p = WaitForTimer();
+  p.set_value(Status{});
+  // Then another request that gets cancelled.
   p = WaitForRequest();
-  EXPECT_EQ(0, CancelCount());
+  EXPECT_EQ(0, RequestCancelCount());
+  EXPECT_EQ(0, TimerCancelCount());
   actual.cancel();
-  EXPECT_EQ(1, CancelCount());
-  p.set_value(true);
+  EXPECT_EQ(1, RequestCancelCount());
+  EXPECT_EQ(0, TimerCancelCount());
+  p.set_value(Status{});
   auto value = actual.get();
   ASSERT_STATUS_OK(value);
 }
@@ -271,11 +298,11 @@ TEST_F(AsyncWaitForConsistencyCancelTest, CancelWithFailure) {
   std::string const table_name =
       bigtable::TableName("test-project", "test-instance", "test-table");
   std::string const token = "test-token";
+  auto const transient = Status(StatusCode::kUnavailable, "try-again");
 
-  auto fake = std::make_shared<testing_util::FakeCompletionQueueImpl>();
-  CompletionQueue cq(fake);
+  auto mock_cq = MakeMockCompletionQueue();
+  CompletionQueue cq(mock_cq);
   auto mock = std::make_shared<MockConnection>();
-  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .Times(2)
@@ -286,18 +313,22 @@ TEST_F(AsyncWaitForConsistencyCancelTest, CancelWithFailure) {
       });
 
   auto actual = bigtable_admin_internal::AsyncWaitForConsistency(
-      cq, client, table_name, token, TestOptions());
+      cq, mock, table_name, token, TestOptions());
 
   // First simulate a regular request.
   auto p = WaitForRequest();
-  p.set_value(false);
+  p.set_value(transient);
   // Then simulate the backoff timer expiring.
-  fake->SimulateCompletion(true);
+  p = WaitForTimer();
+  p.set_value(Status{});
+  // This triggers a second request, which is called and fails too
   p = WaitForRequest();
-  EXPECT_EQ(0, CancelCount());
+  EXPECT_EQ(0, RequestCancelCount());
+  EXPECT_EQ(0, TimerCancelCount());
   actual.cancel();
-  EXPECT_EQ(1, CancelCount());
-  p.set_value(false);
+  EXPECT_EQ(1, RequestCancelCount());
+  EXPECT_EQ(0, TimerCancelCount());
+  p.set_value(transient);
   auto value = actual.get();
   EXPECT_THAT(value, StatusIs(StatusCode::kCancelled,
                               HasSubstr("Operation cancelled")));
@@ -307,11 +338,11 @@ TEST_F(AsyncWaitForConsistencyCancelTest, CancelDuringTimer) {
   std::string const table_name =
       bigtable::TableName("test-project", "test-instance", "test-table");
   std::string const token = "test-token";
+  auto const transient = Status(StatusCode::kUnavailable, "try-again");
 
-  auto fake = std::make_shared<testing_util::FakeCompletionQueueImpl>();
-  CompletionQueue cq(fake);
+  auto mock_cq = MakeMockCompletionQueue();
+  CompletionQueue cq(mock_cq);
   auto mock = std::make_shared<MockConnection>();
-  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .WillOnce([&](btadmin::CheckConsistencyRequest const& request) {
@@ -321,17 +352,22 @@ TEST_F(AsyncWaitForConsistencyCancelTest, CancelDuringTimer) {
       });
 
   auto actual = bigtable_admin_internal::AsyncWaitForConsistency(
-      cq, client, table_name, token, SlowTestOptions());
+      cq, mock, table_name, token, TestOptions());
 
   // First simulate a regular request.
   auto p = WaitForRequest();
-  p.set_value(false);
+  p.set_value(transient);
+
+  // Wait for the timer to be set
+  p = WaitForTimer();
   // At this point there is a timer in the completion queue, cancel the call and
   // simulate a cancel for the timer.
-  EXPECT_EQ(0, CancelCount());
+  EXPECT_EQ(0, RequestCancelCount());
+  EXPECT_EQ(0, TimerCancelCount());
   actual.cancel();
-  EXPECT_EQ(0, CancelCount());
-  fake->SimulateCompletion(false);
+  EXPECT_EQ(0, RequestCancelCount());
+  EXPECT_EQ(1, TimerCancelCount());
+  p.set_value(Status(StatusCode::kCancelled, "timer cancel"));
   // the retry loop should *not* create any more calls, the value should be
   // available immediately.
   auto value = actual.get();
@@ -343,11 +379,11 @@ TEST_F(AsyncWaitForConsistencyCancelTest, ShutdownDuringTimer) {
   std::string const table_name =
       bigtable::TableName("test-project", "test-instance", "test-table");
   std::string const token = "test-token";
+  auto const transient = Status(StatusCode::kUnavailable, "try-again");
 
-  auto fake = std::make_shared<testing_util::FakeCompletionQueueImpl>();
-  CompletionQueue cq(fake);
+  auto mock_cq = MakeMockCompletionQueue();
+  CompletionQueue cq(mock_cq);
   auto mock = std::make_shared<MockConnection>();
-  auto client = BigtableTableAdminClient(mock);
 
   EXPECT_CALL(*mock, AsyncCheckConsistency)
       .WillOnce([&](btadmin::CheckConsistencyRequest const& request) {
@@ -357,19 +393,27 @@ TEST_F(AsyncWaitForConsistencyCancelTest, ShutdownDuringTimer) {
       });
 
   auto actual = bigtable_admin_internal::AsyncWaitForConsistency(
-      cq, client, table_name, token, SlowTestOptions());
+      cq, mock, table_name, token, TestOptions());
 
   // First simulate a regular request.
   auto p = WaitForRequest();
-  p.set_value(false);
+  p.set_value(transient);
+
+  // Wait for the timer to be set
+  p = WaitForTimer();
+
   // At this point there is a timer in the completion queue, simulate a
   // CancelAll() + Shutdown().
-  fake->CancelAll();
-  fake->Shutdown();
+  EXPECT_CALL(*mock_cq, CancelAll).Times(1);
+  EXPECT_CALL(*mock_cq, Shutdown).Times(1);
+  cq.CancelAll();
+  cq.Shutdown();
+  p.set_value(Status(StatusCode::kCancelled, "timer cancelled"));
+
   // the retry loop should exit
   auto value = actual.get();
   EXPECT_THAT(value,
-              StatusIs(StatusCode::kCancelled, HasSubstr("timer canceled")));
+              StatusIs(StatusCode::kCancelled, HasSubstr("timer cancelled")));
 }
 
 }  // namespace
