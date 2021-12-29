@@ -18,7 +18,6 @@
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
-#include "absl/functional/bind_front.h"
 #include <functional>
 #include <memory>
 #include <mutex>
