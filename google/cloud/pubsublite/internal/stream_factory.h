@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_STREAM_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_STREAM_FACTORY_H
 
+#include "absl/functional/bind_front.h"
 #include "google/cloud/internal/async_read_write_stream_auth.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/version.h"
