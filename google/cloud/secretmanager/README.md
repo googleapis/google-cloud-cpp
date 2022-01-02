@@ -7,10 +7,8 @@ This directory contains an idiomatic C++ client library for
 stores sensitive data such as API keys, passwords, and certificates.
 Provides convenience while improving security.
 
-This library is **experimental**. Its APIS are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++
+client libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms
 

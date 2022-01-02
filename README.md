@@ -34,6 +34,8 @@ This repository contains idiomatic C++ client libraries for the following
 * [Google Cloud Spanner](google/cloud/spanner/README.md) [[quickstart]](google/cloud/spanner/quickstart/README.md)
 * [Google Cloud Pub/Sub](google/cloud/pubsub/README.md) [[quickstart]](google/cloud/pubsub/quickstart/README.md)
 * [Google Cloud Storage](google/cloud/storage/README.md) [[quickstart]](google/cloud/storage/quickstart/README.md)
+* [Secret Manager API](google/cloud/secretmanager/README.md) [[quickstart]](google/cloud/secretmanager/README.md)
+* [Cloud Tasks API](google/cloud/tasks/README.md) [[quickstart]](google/cloud/tasks/README.md)
 
 See each library's `README.md` file for more information about:
 
