@@ -250,6 +250,36 @@ TEST(GrpcOptionList, Unexpected) {
       Contains(ContainsRegex("caller: Unexpected option.+UnexpectedOption")));
 }
 
+TEST(GrpcClientContext, Configure) {
+  auto setup = [](grpc::ClientContext& context) {
+    // This might not be the most useful setting, but it is the most easily
+    // tested setting.
+    context.set_compression_algorithm(GRPC_COMPRESS_DEFLATE);
+  };
+  auto opts = Options{}.set<internal::GrpcSetupOption>(setup);
+
+  grpc::ClientContext context;
+  EXPECT_EQ(GRPC_COMPRESS_NONE, context.compression_algorithm());
+  internal::ConfigureContext(context, std::move(opts));
+  EXPECT_EQ(GRPC_COMPRESS_DEFLATE, context.compression_algorithm());
+}
+
+TEST(GrpcClientContext, ConfigurePoll) {
+  auto setup_poll = [](grpc::ClientContext& context) {
+    // This might not be the most useful setting, but it is the most easily
+    // tested setting.
+    context.set_compression_algorithm(GRPC_COMPRESS_DEFLATE);
+  };
+  auto opts = Options{}.set<internal::GrpcSetupPollOption>(setup_poll);
+
+  grpc::ClientContext context;
+  EXPECT_EQ(GRPC_COMPRESS_NONE, context.compression_algorithm());
+  internal::ConfigureContext(context, opts);
+  EXPECT_EQ(GRPC_COMPRESS_NONE, context.compression_algorithm());
+  internal::ConfigurePollContext(context, std::move(opts));
+  EXPECT_EQ(GRPC_COMPRESS_DEFLATE, context.compression_algorithm());
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

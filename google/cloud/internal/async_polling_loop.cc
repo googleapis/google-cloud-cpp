@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_polling_loop.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/log.h"
 #include <algorithm>
 #include <mutex>
@@ -70,10 +71,11 @@ class AsyncPollingLoopImpl
     }
     // Cancels are best effort, so we use weak pointers.
     auto w = WeakFromThis();
-    cancel_(cq_, absl::make_unique<grpc::ClientContext>(), request)
-        .then([w](future<Status> f) {
-          if (auto self = w.lock()) self->OnCancel(f.get());
-        });
+    auto context = absl::make_unique<grpc::ClientContext>();
+    ConfigurePollContext(*context, CurrentOptions());
+    cancel_(cq_, std::move(context), request).then([w](future<Status> f) {
+      if (auto self = w.lock()) self->OnCancel(f.get());
+    });
   }
 
   void OnCancel(Status const& status) {
@@ -113,7 +115,9 @@ class AsyncPollingLoopImpl
       request.set_name(op_name_);
     }
     auto self = shared_from_this();
-    poll_(cq_, absl::make_unique<grpc::ClientContext>(), request)
+    auto context = absl::make_unique<grpc::ClientContext>();
+    ConfigurePollContext(*context, CurrentOptions());
+    poll_(cq_, std::move(context), request)
         .then([self](future<StatusOr<Operation>> g) {
           self->OnPoll(std::move(g));
         });

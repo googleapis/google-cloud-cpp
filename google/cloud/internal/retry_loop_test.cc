@@ -159,6 +159,23 @@ TEST(RetryLoopTest, TooManyTransientFailuresIdempotent) {
   EXPECT_THAT(actual.status().message(), HasSubstr("Retry policy exhausted"));
 }
 
+TEST(RetryLoopTest, ConfigureContext) {
+  auto setup = [](grpc::ClientContext& context) {
+    context.set_compression_algorithm(GRPC_COMPRESS_DEFLATE);
+  };
+  OptionsSpan span(Options{}.set<internal::GrpcSetupOption>(setup));
+
+  StatusOr<int> actual = RetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      [](grpc::ClientContext& context, int) {
+        // Ensure that our options have taken affect on the ClientContext
+        // before we start using it.
+        EXPECT_EQ(GRPC_COMPRESS_DEFLATE, context.compression_algorithm());
+        return StatusOr<int>(0);
+      },
+      0, "error message");
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
