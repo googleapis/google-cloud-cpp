@@ -105,7 +105,6 @@ The following libraries are now considered stable and complete:
 
 ### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
 
-* feat(pubsublite): stream factories for PSL bidi streams ([#7671](https://github.com/googleapis/google-cloud-cpp/pull/7671))
 * feat(bigtable): generate admin APIs ([#7700](https://github.com/googleapis/google-cloud-cpp/pull/7700))
 
 ### [IAM](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/README.md)
