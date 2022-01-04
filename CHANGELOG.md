@@ -107,7 +107,6 @@ The following libraries are now considered stable and complete:
 
 * feat(pubsublite): stream factories for PSL bidi streams ([#7671](https://github.com/googleapis/google-cloud-cpp/pull/7671))
 * feat(bigtable): generate admin APIs ([#7700](https://github.com/googleapis/google-cloud-cpp/pull/7700))
-* fix(common): backoff policy clones initial state ([#7696](https://github.com/googleapis/google-cloud-cpp/pull/7696))
 
 ### [IAM](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/README.md)
 
@@ -146,8 +145,6 @@ The following libraries are now considered stable and complete:
 * feat(GCS+gRPC): implement BucketBilling parser ([#7765](https://github.com/googleapis/google-cloud-cpp/pull/7765))
 * feat(GCS+gRPC): implement BucketAccessControl parser ([#7763](https://github.com/googleapis/google-cloud-cpp/pull/7763))
 * fix(common): revamp the async polling loop ([#7762](https://github.com/googleapis/google-cloud-cpp/pull/7762))
-* feature(rest): port storage/internal curl types to internal for future use ([#7745](https://github.com/googleapis/google-cloud-cpp/pull/7745))
-* feat: file_status supports op== ([#7724](https://github.com/googleapis/google-cloud-cpp/pull/7724))
 * feat(storage): capture metadata info in downloads ([#7694](https://github.com/googleapis/google-cloud-cpp/pull/7694))
 * fix: missing dependency for WIN32 ([#7718](https://github.com/googleapis/google-cloud-cpp/pull/7718))
 * fix(storage): more strict parsing for HttpResponse ([#7702](https://github.com/googleapis/google-cloud-cpp/pull/7702))
