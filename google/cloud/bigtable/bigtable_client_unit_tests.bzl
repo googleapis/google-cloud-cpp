@@ -50,6 +50,7 @@ bigtable_client_unit_tests = [
     "internal/logging_data_client_test.cc",
     "internal/logging_instance_admin_client_test.cc",
     "internal/prefix_range_end_test.cc",
+    "internal/wait_for_consistency_test.cc",
     "metadata_update_policy_test.cc",
     "mutation_batcher_test.cc",
     "mutations_test.cc",
