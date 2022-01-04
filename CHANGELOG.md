@@ -136,10 +136,8 @@ The following libraries are now considered stable and complete:
 * Backoff policies are now cloned from their initial state, instead of their
   current state. Any accumulated delay will be reset to its initial value in the
   clone. The previous behavior was a bug, and thus it has been fixed. ([#7696](https://github.com/googleapis/google-cloud-cpp/pull/7696))
-* doc: declare Secret Manager and Task as GA ([#7792](https://github.com/googleapis/google-cloud-cpp/pull/7792))
 * fix: extremely rare race conditions in retry loop ([#7789](https://github.com/googleapis/google-cloud-cpp/pull/7789))
 * feat(common): include the request/response type name in the RPC log ([#7782](https://github.com/googleapis/google-cloud-cpp/pull/7782))
-* feat(GCS+gRPC): implement parser for BucketMetadata components ([#7766](https://github.com/googleapis/google-cloud-cpp/pull/7766))
 * feat(pubsublite): stream factories for PSL bidi streams ([#7671](https://github.com/googleapis/google-cloud-cpp/pull/7671))
 * feat(GCS+gRPC): implement BucketBilling parser ([#7765](https://github.com/googleapis/google-cloud-cpp/pull/7765))
 * feat(GCS+gRPC): implement BucketAccessControl parser ([#7763](https://github.com/googleapis/google-cloud-cpp/pull/7763))
