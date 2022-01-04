@@ -90,6 +90,13 @@
 
 ## v1.35.0 - TBD
 
+### New GA Libraries
+
+The following libraries are now considered stable and complete:
+
+* [Secret Manager API](google/cloud/secretmanager/README.md) [[quickstart]](google/cloud/secretmanager/README.md)
+* [Cloud Tasks API](google/cloud/tasks/README.md) [[quickstart]](google/cloud/tasks/README.md)
+
 ### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
 
 * Backoff policies are now cloned from their initial state, instead of their
