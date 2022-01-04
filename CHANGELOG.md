@@ -88,7 +88,9 @@
   https://github.com/googleapis/google-cloud-cpp/issues/5976.
 </details>
 
-## v1.35.0 - TBD
+## v1.36.0 - TBD
+
+## v1.35.0 - 2022-01
 
 ### New GA Libraries
 
@@ -97,11 +99,49 @@ The following libraries are now considered stable and complete:
 * [Secret Manager API](google/cloud/secretmanager/README.md) [[quickstart]](google/cloud/secretmanager/README.md)
 * [Cloud Tasks API](google/cloud/tasks/README.md) [[quickstart]](google/cloud/tasks/README.md)
 
+## [BigQuery](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigquery/README.md)
+
+* feat(generator): add options support to generated clients ([#7683](https://github.com/googleapis/google-cloud-cpp/pull/7683))
+
+### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
+
+* feat(bigtable): generate admin APIs ([#7700](https://github.com/googleapis/google-cloud-cpp/pull/7700))
+
+### [IAM](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/README.md)
+
+* feat(generator): add options support to generated clients ([#7683](https://github.com/googleapis/google-cloud-cpp/pull/7683))
+
+### [Pub/Sub](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/README.md)
+
+* fix(pubsub): Change AsyncReadWriteStreamAuth to be usable with unique_ptr ([#7692](https://github.com/googleapis/google-cloud-cpp/pull/7692))
+
+### [Spanner](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/spanner/README.md)
+
+* fix(spanner): switch order of ListBackupOperations() filter conjuncts ([#7746](https://github.com/googleapis/google-cloud-cpp/pull/7746))
+* feat(spanner): add per-operation options to Commit() and Rollback() ([#7714](https://github.com/googleapis/google-cloud-cpp/pull/7714))
+* feat(spanner): spanner::Client construction from Options ([#7706](https://github.com/googleapis/google-cloud-cpp/pull/7706))
+* feat(generator): add options support to generated clients ([#7683](https://github.com/googleapis/google-cloud-cpp/pull/7683))
+
+### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
+
+* feat(GCS+gRPC): implement parser for BucketMetadata components ([#7766](https://github.com/googleapis/google-cloud-cpp/pull/7766))
+* feat(GCS+gRPC): implement BucketBilling parser ([#7765](https://github.com/googleapis/google-cloud-cpp/pull/7765))
+* feat(GCS+gRPC): implement BucketAccessControl parser ([#7763](https://github.com/googleapis/google-cloud-cpp/pull/7763))
+* feat(storage): capture metadata info in downloads ([#7694](https://github.com/googleapis/google-cloud-cpp/pull/7694))
+* fix: missing dependency for WIN32 ([#7718](https://github.com/googleapis/google-cloud-cpp/pull/7718))
+* fix(storage): more strict parsing for HttpResponse ([#7702](https://github.com/googleapis/google-cloud-cpp/pull/7702))
+
 ### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
 
 * Backoff policies are now cloned from their initial state, instead of their
   current state. Any accumulated delay will be reset to its initial value in the
   clone. The previous behavior was a bug, and thus it has been fixed. ([#7696](https://github.com/googleapis/google-cloud-cpp/pull/7696))
+* fix: extremely rare race conditions in retry loop ([#7789](https://github.com/googleapis/google-cloud-cpp/pull/7789))
+* feat(common): include the request/response type name in the RPC log ([#7782](https://github.com/googleapis/google-cloud-cpp/pull/7782))
+* fix(common): revamp the async polling loop ([#7762](https://github.com/googleapis/google-cloud-cpp/pull/7762))
+* fix: missing dependency for WIN32 ([#7718](https://github.com/googleapis/google-cloud-cpp/pull/7718))
+* doc(common): add a note about AsyncGrpcOperation and OptionsSpan ([#7682](https://github.com/googleapis/google-cloud-cpp/pull/7682))
+* feat(common): add support for call-tree-specific options ([#7669](https://github.com/googleapis/google-cloud-cpp/pull/7669))
 
 ## v1.34.0 - 2021-12
 
