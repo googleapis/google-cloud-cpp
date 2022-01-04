@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/admin/internal/wait_for_consistency.h"
+#include "google/cloud/bigtable/internal/wait_for_consistency.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_option_defaults.h"
 #include <chrono>

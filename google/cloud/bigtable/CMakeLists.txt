@@ -108,8 +108,6 @@ add_library(
     admin/internal/bigtable_table_admin_stub.h
     admin/internal/bigtable_table_admin_stub_factory.cc
     admin/internal/bigtable_table_admin_stub_factory.h
-    admin/internal/wait_for_consistency.cc
-    admin/internal/wait_for_consistency.h
     admin_client.cc
     admin_client.h
     app_profile_config.cc
@@ -175,6 +173,8 @@ add_library(
     internal/rpc_policy_parameters.h
     internal/rpc_policy_parameters.inc
     internal/unary_client_utils.h
+    internal/wait_for_consistency.cc
+    internal/wait_for_consistency.h
     metadata_update_policy.cc
     metadata_update_policy.h
     mutation_batcher.cc
@@ -283,7 +283,6 @@ if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
     set(bigtable_client_unit_tests
         # cmake-format: sort
-        admin/internal/wait_for_consistency_test.cc
         admin_client_test.cc
         app_profile_config_test.cc
         async_read_stream_test.cc
@@ -317,6 +316,7 @@ if (BUILD_TESTING)
         internal/logging_data_client_test.cc
         internal/logging_instance_admin_client_test.cc
         internal/prefix_range_end_test.cc
+        internal/wait_for_consistency_test.cc
         metadata_update_policy_test.cc
         mutation_batcher_test.cc
         mutations_test.cc
