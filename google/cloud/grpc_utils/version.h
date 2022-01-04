@@ -16,6 +16,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_VERSION_H
 
 #include "google/cloud/version.h"
+#warning \
+    "We moved the helpers in the google::cloud::grpc_utils namespace to " \
+      "`google::cloud`, please use them directly. The aliases to maintain " \
+      "backwards compatibility will be removed on or about 2023-01-01. "    \
+      "More details at "                                                    \
+      "https://github.com/googleapis/google-cloud-cpp/issues/3932")
 
 namespace google {
 namespace cloud {
