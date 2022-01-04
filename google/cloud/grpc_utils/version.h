@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_VERSION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_VERSION_H
 
-#include "google/cloud/internal/attributes.h"
 #include "google/cloud/version.h"
 #warning \
     "We moved the helpers in the google::cloud::grpc_utils namespace to " \

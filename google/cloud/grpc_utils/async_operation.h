@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_ASYNC_OPERATION_H
 
 #include "google/cloud/async_operation.h"
-#include "google/cloud/grpc_utils/version.h"
+#include "google/cloud/version.h"
 #warning \
     "We moved the helpers in the google::cloud::grpc_utils namespace to " \
       "`google::cloud`, please use them directly. The aliases to maintain " \
