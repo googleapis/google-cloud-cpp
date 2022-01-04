@@ -26,6 +26,11 @@ cc_library(
         "grpc_error_delegate.h",
         "version.h",
     ],
+    deprecation = (
+        "please use //google/cloud:google_cloud_cpp_grpc_utils instead." +
+        " This target will be removed on or about 2023-01-01. More details at" +
+        " https://github.com/googleapis/google-cloud-cpp/issues/3932"
+    ),
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
