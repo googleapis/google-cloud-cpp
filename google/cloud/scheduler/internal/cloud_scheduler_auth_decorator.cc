@@ -30,7 +30,8 @@ CloudSchedulerAuth::CloudSchedulerAuth(
     std::shared_ptr<CloudSchedulerStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::scheduler::v1::ListJobsResponse> CloudSchedulerAuth::ListJobs(
+StatusOr<google::cloud::scheduler::v1::ListJobsResponse>
+CloudSchedulerAuth::ListJobs(
     grpc::ClientContext& context,
     google::cloud::scheduler::v1::ListJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);

@@ -31,106 +31,94 @@ CloudSchedulerStub::~CloudSchedulerStub() = default;
 
 StatusOr<google::cloud::scheduler::v1::ListJobsResponse>
 DefaultCloudSchedulerStub::ListJobs(
-  grpc::ClientContext& client_context,
-  google::cloud::scheduler::v1::ListJobsRequest const& request) {
-    google::cloud::scheduler::v1::ListJobsResponse response;
-    auto status =
-        grpc_stub_->ListJobs(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::cloud::scheduler::v1::ListJobsRequest const& request) {
+  google::cloud::scheduler::v1::ListJobsResponse response;
+  auto status = grpc_stub_->ListJobs(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-DefaultCloudSchedulerStub::GetJob(
-  grpc::ClientContext& client_context,
-  google::cloud::scheduler::v1::GetJobRequest const& request) {
-    google::cloud::scheduler::v1::Job response;
-    auto status =
-        grpc_stub_->GetJob(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::scheduler::v1::Job> DefaultCloudSchedulerStub::GetJob(
+    grpc::ClientContext& client_context,
+    google::cloud::scheduler::v1::GetJobRequest const& request) {
+  google::cloud::scheduler::v1::Job response;
+  auto status = grpc_stub_->GetJob(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::scheduler::v1::Job>
 DefaultCloudSchedulerStub::CreateJob(
-  grpc::ClientContext& client_context,
-  google::cloud::scheduler::v1::CreateJobRequest const& request) {
-    google::cloud::scheduler::v1::Job response;
-    auto status =
-        grpc_stub_->CreateJob(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::cloud::scheduler::v1::CreateJobRequest const& request) {
+  google::cloud::scheduler::v1::Job response;
+  auto status = grpc_stub_->CreateJob(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::scheduler::v1::Job>
 DefaultCloudSchedulerStub::UpdateJob(
-  grpc::ClientContext& client_context,
-  google::cloud::scheduler::v1::UpdateJobRequest const& request) {
-    google::cloud::scheduler::v1::Job response;
-    auto status =
-        grpc_stub_->UpdateJob(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::cloud::scheduler::v1::UpdateJobRequest const& request) {
+  google::cloud::scheduler::v1::Job response;
+  auto status = grpc_stub_->UpdateJob(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultCloudSchedulerStub::DeleteJob(
-  grpc::ClientContext& client_context,
-  google::cloud::scheduler::v1::DeleteJobRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteJob(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultCloudSchedulerStub::DeleteJob(
+    grpc::ClientContext& client_context,
+    google::cloud::scheduler::v1::DeleteJobRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteJob(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-DefaultCloudSchedulerStub::PauseJob(
-  grpc::ClientContext& client_context,
-  google::cloud::scheduler::v1::PauseJobRequest const& request) {
-    google::cloud::scheduler::v1::Job response;
-    auto status =
-        grpc_stub_->PauseJob(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::scheduler::v1::Job> DefaultCloudSchedulerStub::PauseJob(
+    grpc::ClientContext& client_context,
+    google::cloud::scheduler::v1::PauseJobRequest const& request) {
+  google::cloud::scheduler::v1::Job response;
+  auto status = grpc_stub_->PauseJob(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::scheduler::v1::Job>
 DefaultCloudSchedulerStub::ResumeJob(
-  grpc::ClientContext& client_context,
-  google::cloud::scheduler::v1::ResumeJobRequest const& request) {
-    google::cloud::scheduler::v1::Job response;
-    auto status =
-        grpc_stub_->ResumeJob(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::cloud::scheduler::v1::ResumeJobRequest const& request) {
+  google::cloud::scheduler::v1::Job response;
+  auto status = grpc_stub_->ResumeJob(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-DefaultCloudSchedulerStub::RunJob(
-  grpc::ClientContext& client_context,
-  google::cloud::scheduler::v1::RunJobRequest const& request) {
-    google::cloud::scheduler::v1::Job response;
-    auto status =
-        grpc_stub_->RunJob(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::scheduler::v1::Job> DefaultCloudSchedulerStub::RunJob(
+    grpc::ClientContext& client_context,
+    google::cloud::scheduler::v1::RunJobRequest const& request) {
+  google::cloud::scheduler::v1::Job response;
+  auto status = grpc_stub_->RunJob(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

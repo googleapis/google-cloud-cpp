@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_CLOUD_SCHEDULER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_CLOUD_SCHEDULER_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/scheduler/cloud_scheduler_connection.h"
 #include "google/cloud/scheduler/cloud_scheduler_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 

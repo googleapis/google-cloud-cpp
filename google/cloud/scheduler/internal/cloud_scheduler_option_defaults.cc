@@ -17,14 +17,14 @@
 // source: google/cloud/scheduler/v1/cloudscheduler.proto
 
 #include "google/cloud/scheduler/internal/cloud_scheduler_option_defaults.h"
+#include "google/cloud/scheduler/cloud_scheduler_connection.h"
+#include "google/cloud/scheduler/cloud_scheduler_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/options.h"
-#include "google/cloud/scheduler/cloud_scheduler_connection.h"
-#include "google/cloud/scheduler/cloud_scheduler_options.h"
 #include <memory>
 
 namespace google {
@@ -39,7 +39,8 @@ auto constexpr kBackoffScaling = 2.0;
 Options CloudSchedulerDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_CLOUD_SCHEDULER_ENDPOINT");
-    options.set<EndpointOption>(env && !env->empty() ? *env : "cloudscheduler.googleapis.com");
+    options.set<EndpointOption>(
+        env && !env->empty() ? *env : "cloudscheduler.googleapis.com");
   }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
@@ -56,14 +57,17 @@ Options CloudSchedulerDefaultOptions(Options options) {
   if (!options.has<scheduler::CloudSchedulerRetryPolicyOption>()) {
     options.set<scheduler::CloudSchedulerRetryPolicyOption>(
         scheduler::CloudSchedulerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<scheduler::CloudSchedulerBackoffPolicyOption>()) {
     options.set<scheduler::CloudSchedulerBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<scheduler::CloudSchedulerConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<scheduler::CloudSchedulerConnectionIdempotencyPolicyOption>()) {
     options.set<scheduler::CloudSchedulerConnectionIdempotencyPolicyOption>(
         scheduler::MakeDefaultCloudSchedulerConnectionIdempotencyPolicy());
   }

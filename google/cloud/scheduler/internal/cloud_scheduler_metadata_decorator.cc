@@ -30,7 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudSchedulerMetadata::CloudSchedulerMetadata(
     std::shared_ptr<CloudSchedulerStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::scheduler::v1::ListJobsResponse>
 CloudSchedulerMetadata::ListJobs(
@@ -40,56 +41,49 @@ CloudSchedulerMetadata::ListJobs(
   return child_->ListJobs(context, request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerMetadata::GetJob(
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerMetadata::GetJob(
     grpc::ClientContext& context,
     google::cloud::scheduler::v1::GetJobRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetJob(context, request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerMetadata::CreateJob(
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerMetadata::CreateJob(
     grpc::ClientContext& context,
     google::cloud::scheduler::v1::CreateJobRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->CreateJob(context, request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerMetadata::UpdateJob(
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerMetadata::UpdateJob(
     grpc::ClientContext& context,
     google::cloud::scheduler::v1::UpdateJobRequest const& request) {
   SetMetadata(context, "job.name=" + request.job().name());
   return child_->UpdateJob(context, request);
 }
 
-Status
-CloudSchedulerMetadata::DeleteJob(
+Status CloudSchedulerMetadata::DeleteJob(
     grpc::ClientContext& context,
     google::cloud::scheduler::v1::DeleteJobRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->DeleteJob(context, request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerMetadata::PauseJob(
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerMetadata::PauseJob(
     grpc::ClientContext& context,
     google::cloud::scheduler::v1::PauseJobRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->PauseJob(context, request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerMetadata::ResumeJob(
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerMetadata::ResumeJob(
     grpc::ClientContext& context,
     google::cloud::scheduler::v1::ResumeJobRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->ResumeJob(context, request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerMetadata::RunJob(
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerMetadata::RunJob(
     grpc::ClientContext& context,
     google::cloud::scheduler::v1::RunJobRequest const& request) {
   SetMetadata(context, "name=" + request.name());
@@ -97,7 +91,7 @@ CloudSchedulerMetadata::RunJob(
 }
 
 void CloudSchedulerMetadata::SetMetadata(grpc::ClientContext& context,
-                                        std::string const& request_params) {
+                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   context.AddMetadata("x-goog-api-client", api_client_header_);
 }

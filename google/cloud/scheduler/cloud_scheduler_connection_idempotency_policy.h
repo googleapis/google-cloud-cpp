@@ -35,36 +35,36 @@ class CloudSchedulerConnectionIdempotencyPolicy {
   virtual ~CloudSchedulerConnectionIdempotencyPolicy() = 0;
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<CloudSchedulerConnectionIdempotencyPolicy> clone() const = 0;
+  virtual std::unique_ptr<CloudSchedulerConnectionIdempotencyPolicy> clone()
+      const = 0;
 
-  virtual google::cloud::internal::Idempotency
-  ListJobs(google::cloud::scheduler::v1::ListJobsRequest request) = 0;
+  virtual google::cloud::internal::Idempotency ListJobs(
+      google::cloud::scheduler::v1::ListJobsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  GetJob(google::cloud::scheduler::v1::GetJobRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency GetJob(
+      google::cloud::scheduler::v1::GetJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  CreateJob(google::cloud::scheduler::v1::CreateJobRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency CreateJob(
+      google::cloud::scheduler::v1::CreateJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  UpdateJob(google::cloud::scheduler::v1::UpdateJobRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency UpdateJob(
+      google::cloud::scheduler::v1::UpdateJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  DeleteJob(google::cloud::scheduler::v1::DeleteJobRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency DeleteJob(
+      google::cloud::scheduler::v1::DeleteJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  PauseJob(google::cloud::scheduler::v1::PauseJobRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency PauseJob(
+      google::cloud::scheduler::v1::PauseJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  ResumeJob(google::cloud::scheduler::v1::ResumeJobRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency ResumeJob(
+      google::cloud::scheduler::v1::ResumeJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  RunJob(google::cloud::scheduler::v1::RunJobRequest const& request) = 0;
-
+  virtual google::cloud::internal::Idempotency RunJob(
+      google::cloud::scheduler::v1::RunJobRequest const& request) = 0;
 };
 
 std::unique_ptr<CloudSchedulerConnectionIdempotencyPolicy>
-    MakeDefaultCloudSchedulerConnectionIdempotencyPolicy();
+MakeDefaultCloudSchedulerConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler

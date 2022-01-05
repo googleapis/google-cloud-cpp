@@ -27,40 +27,40 @@ namespace cloud {
 namespace scheduler_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MockCloudSchedulerConnection : public scheduler::CloudSchedulerConnection {
+class MockCloudSchedulerConnection
+    : public scheduler::CloudSchedulerConnection {
  public:
-  MOCK_METHOD(StreamRange<google::cloud::scheduler::v1::Job>,
-  ListJobs,
-  (google::cloud::scheduler::v1::ListJobsRequest request), (override));
+  MOCK_METHOD(StreamRange<google::cloud::scheduler::v1::Job>, ListJobs,
+              (google::cloud::scheduler::v1::ListJobsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>,
-  GetJob,
-  (google::cloud::scheduler::v1::GetJobRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>, GetJob,
+              (google::cloud::scheduler::v1::GetJobRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>,
-  CreateJob,
-  (google::cloud::scheduler::v1::CreateJobRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>, CreateJob,
+              (google::cloud::scheduler::v1::CreateJobRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>,
-  UpdateJob,
-  (google::cloud::scheduler::v1::UpdateJobRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>, UpdateJob,
+              (google::cloud::scheduler::v1::UpdateJobRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteJob,
-  (google::cloud::scheduler::v1::DeleteJobRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteJob,
+              (google::cloud::scheduler::v1::DeleteJobRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>,
-  PauseJob,
-  (google::cloud::scheduler::v1::PauseJobRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>, PauseJob,
+              (google::cloud::scheduler::v1::PauseJobRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>,
-  ResumeJob,
-  (google::cloud::scheduler::v1::ResumeJobRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>, ResumeJob,
+              (google::cloud::scheduler::v1::ResumeJobRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>,
-  RunJob,
-  (google::cloud::scheduler::v1::RunJobRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>, RunJob,
+              (google::cloud::scheduler::v1::RunJobRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

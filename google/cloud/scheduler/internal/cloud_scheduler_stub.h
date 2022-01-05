@@ -34,87 +34,81 @@ class CloudSchedulerStub {
   virtual ~CloudSchedulerStub() = 0;
 
   virtual StatusOr<google::cloud::scheduler::v1::ListJobsResponse> ListJobs(
-    grpc::ClientContext& context,
-    google::cloud::scheduler::v1::ListJobsRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::scheduler::v1::ListJobsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::scheduler::v1::Job> GetJob(
-    grpc::ClientContext& context,
-    google::cloud::scheduler::v1::GetJobRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::scheduler::v1::GetJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::scheduler::v1::Job> CreateJob(
-    grpc::ClientContext& context,
-    google::cloud::scheduler::v1::CreateJobRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::scheduler::v1::CreateJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::scheduler::v1::Job> UpdateJob(
-    grpc::ClientContext& context,
-    google::cloud::scheduler::v1::UpdateJobRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::scheduler::v1::UpdateJobRequest const& request) = 0;
 
   virtual Status DeleteJob(
-    grpc::ClientContext& context,
-    google::cloud::scheduler::v1::DeleteJobRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::scheduler::v1::DeleteJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::scheduler::v1::Job> PauseJob(
-    grpc::ClientContext& context,
-    google::cloud::scheduler::v1::PauseJobRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::scheduler::v1::PauseJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::scheduler::v1::Job> ResumeJob(
-    grpc::ClientContext& context,
-    google::cloud::scheduler::v1::ResumeJobRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::scheduler::v1::ResumeJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::scheduler::v1::Job> RunJob(
-    grpc::ClientContext& context,
-    google::cloud::scheduler::v1::RunJobRequest const& request) = 0;
-
+      grpc::ClientContext& context,
+      google::cloud::scheduler::v1::RunJobRequest const& request) = 0;
 };
 
 class DefaultCloudSchedulerStub : public CloudSchedulerStub {
  public:
   explicit DefaultCloudSchedulerStub(
-      std::unique_ptr<google::cloud::scheduler::v1::CloudScheduler::StubInterface> grpc_stub)
+      std::unique_ptr<
+          google::cloud::scheduler::v1::CloudScheduler::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::cloud::scheduler::v1::ListJobsResponse>
-  ListJobs(
-    grpc::ClientContext& client_context,
-    google::cloud::scheduler::v1::ListJobsRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::ListJobsResponse> ListJobs(
+      grpc::ClientContext& client_context,
+      google::cloud::scheduler::v1::ListJobsRequest const& request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job>
-  GetJob(
-    grpc::ClientContext& client_context,
-    google::cloud::scheduler::v1::GetJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job> GetJob(
+      grpc::ClientContext& client_context,
+      google::cloud::scheduler::v1::GetJobRequest const& request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job>
-  CreateJob(
-    grpc::ClientContext& client_context,
-    google::cloud::scheduler::v1::CreateJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job> CreateJob(
+      grpc::ClientContext& client_context,
+      google::cloud::scheduler::v1::CreateJobRequest const& request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job>
-  UpdateJob(
-    grpc::ClientContext& client_context,
-    google::cloud::scheduler::v1::UpdateJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job> UpdateJob(
+      grpc::ClientContext& client_context,
+      google::cloud::scheduler::v1::UpdateJobRequest const& request) override;
 
-  Status
-  DeleteJob(
-    grpc::ClientContext& client_context,
-    google::cloud::scheduler::v1::DeleteJobRequest const& request) override;
+  Status DeleteJob(
+      grpc::ClientContext& client_context,
+      google::cloud::scheduler::v1::DeleteJobRequest const& request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job>
-  PauseJob(
-    grpc::ClientContext& client_context,
-    google::cloud::scheduler::v1::PauseJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job> PauseJob(
+      grpc::ClientContext& client_context,
+      google::cloud::scheduler::v1::PauseJobRequest const& request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job>
-  ResumeJob(
-    grpc::ClientContext& client_context,
-    google::cloud::scheduler::v1::ResumeJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job> ResumeJob(
+      grpc::ClientContext& client_context,
+      google::cloud::scheduler::v1::ResumeJobRequest const& request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job>
-  RunJob(
-    grpc::ClientContext& client_context,
-    google::cloud::scheduler::v1::RunJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job> RunJob(
+      grpc::ClientContext& client_context,
+      google::cloud::scheduler::v1::RunJobRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::scheduler::v1::CloudScheduler::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::scheduler::v1::CloudScheduler::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

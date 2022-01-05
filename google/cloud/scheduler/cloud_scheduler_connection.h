@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_CLOUD_SCHEDULER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_CLOUD_SCHEDULER_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/scheduler/cloud_scheduler_connection_idempotency_policy.h"
 #include "google/cloud/scheduler/internal/cloud_scheduler_retry_traits.h"
 #include "google/cloud/scheduler/internal/cloud_scheduler_stub.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -34,11 +34,13 @@ namespace cloud {
 namespace scheduler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using CloudSchedulerRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    scheduler_internal::CloudSchedulerRetryTraits>;
+using CloudSchedulerRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        scheduler_internal::CloudSchedulerRetryTraits>;
 
-using CloudSchedulerLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    scheduler_internal::CloudSchedulerRetryTraits>;
+using CloudSchedulerLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        scheduler_internal::CloudSchedulerRetryTraits>;
 
 using CloudSchedulerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -48,30 +50,29 @@ class CloudSchedulerConnection {
  public:
   virtual ~CloudSchedulerConnection() = 0;
 
-  virtual StreamRange<google::cloud::scheduler::v1::Job>
-  ListJobs(google::cloud::scheduler::v1::ListJobsRequest request);
+  virtual StreamRange<google::cloud::scheduler::v1::Job> ListJobs(
+      google::cloud::scheduler::v1::ListJobsRequest request);
 
-  virtual StatusOr<google::cloud::scheduler::v1::Job>
-  GetJob(google::cloud::scheduler::v1::GetJobRequest const& request);
+  virtual StatusOr<google::cloud::scheduler::v1::Job> GetJob(
+      google::cloud::scheduler::v1::GetJobRequest const& request);
 
-  virtual StatusOr<google::cloud::scheduler::v1::Job>
-  CreateJob(google::cloud::scheduler::v1::CreateJobRequest const& request);
+  virtual StatusOr<google::cloud::scheduler::v1::Job> CreateJob(
+      google::cloud::scheduler::v1::CreateJobRequest const& request);
 
-  virtual StatusOr<google::cloud::scheduler::v1::Job>
-  UpdateJob(google::cloud::scheduler::v1::UpdateJobRequest const& request);
+  virtual StatusOr<google::cloud::scheduler::v1::Job> UpdateJob(
+      google::cloud::scheduler::v1::UpdateJobRequest const& request);
 
-  virtual Status
-  DeleteJob(google::cloud::scheduler::v1::DeleteJobRequest const& request);
+  virtual Status DeleteJob(
+      google::cloud::scheduler::v1::DeleteJobRequest const& request);
 
-  virtual StatusOr<google::cloud::scheduler::v1::Job>
-  PauseJob(google::cloud::scheduler::v1::PauseJobRequest const& request);
+  virtual StatusOr<google::cloud::scheduler::v1::Job> PauseJob(
+      google::cloud::scheduler::v1::PauseJobRequest const& request);
 
-  virtual StatusOr<google::cloud::scheduler::v1::Job>
-  ResumeJob(google::cloud::scheduler::v1::ResumeJobRequest const& request);
+  virtual StatusOr<google::cloud::scheduler::v1::Job> ResumeJob(
+      google::cloud::scheduler::v1::ResumeJobRequest const& request);
 
-  virtual StatusOr<google::cloud::scheduler::v1::Job>
-  RunJob(google::cloud::scheduler::v1::RunJobRequest const& request);
-
+  virtual StatusOr<google::cloud::scheduler::v1::Job> RunJob(
+      google::cloud::scheduler::v1::RunJobRequest const& request);
 };
 
 std::shared_ptr<CloudSchedulerConnection> MakeCloudSchedulerConnection(
@@ -88,9 +89,8 @@ namespace scheduler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<scheduler::CloudSchedulerConnection>
-MakeCloudSchedulerConnection(
-    std::shared_ptr<CloudSchedulerStub> stub,
-    Options options);
+MakeCloudSchedulerConnection(std::shared_ptr<CloudSchedulerStub> stub,
+                             Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler_internal
