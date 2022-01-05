@@ -1,10 +1,15 @@
-# Adding new Libraries to `google-cloud-cpp`
+# HOWTO: adding generated libraries
 
 This document describes the steps required to add a new library to
 `google-cloud-cpp`. The document is intended for contributors to the
 `google-cloud-cpp` libraries, it assumes you are familiar with the build systems
 used in these libraries, that you are familiar with existing libraries, and with
 which libraries are based on gRPC.
+
+> :warning: for libraries that include multiple services, the scaffold README
+> files (and any other documentation) will use the **last** service description
+> as the description of the library. Adjust the ordering and/or fix the
+> documentation after the fact.
 
 ## Set some useful variables
 
@@ -101,6 +106,11 @@ bazel run \
   --scaffold="google/cloud/${library}"
 ```
 
+> :warning: the generated `BUILD.bazel` file may require manual editing for a
+> library that contains multiple services.  Generally the scaffold will only
+> add **one** dependency from `@com_github_googleapis//${path}`, where you may
+> need multiple dependencies for more complex libraries.
+
 ## Fix formatting of existing libraries
 
 ```shell
@@ -132,11 +142,18 @@ ci/cloudbuild/build.sh -t cmake-install-pr
 The generated `README.md` file in `google/cloud/${library}` probably needs some
 light copy-editing to read less like it was written by a robot.
 
-## Update the root `BUILD.bazel` file
+## Update the root files
 
 Manually edit `BUILD.bazel` to reference the new targets in
 `//google/cloud/${library}`. Initially prefix your targets with
 `:experimental-`.
+
+Manually edit `.bazelignore` to include the newest
+`google/cloud/${library}/quickstart/` directory. The ubsan build fails
+otherwise.
+
+Manually edit `.codecov.yml` to exclude generated code from the code coverage
+reports.
 
 ## Fix formatting nits
 
