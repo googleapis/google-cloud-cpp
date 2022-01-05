@@ -74,6 +74,20 @@ cc_library(
 )
 
 cc_library(
+    name = "secretmanager",
+    deps = [
+        "//google/cloud/secretmanager:google_cloud_cpp_secretmanager",
+    ],
+)
+
+cc_library(
+    name = "secretmanager_mocks",
+    deps = [
+        "//google/cloud/secretmanager:google_cloud_cpp_secretmanager_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-secretmanager",
     deps = [
         "//google/cloud/secretmanager:google_cloud_cpp_secretmanager",
@@ -173,6 +187,20 @@ cc_library(
     name = "bigquery-mocks",
     deps = [
         "//google/cloud/bigquery:google_cloud_cpp_bigquery_mocks",
+    ],
+)
+
+cc_library(
+    name = "tasks",
+    deps = [
+        "//google/cloud/tasks:google_cloud_cpp_tasks",
+    ],
+)
+
+cc_library(
+    name = "tasks_mocks",
+    deps = [
+        "//google/cloud/tasks:google_cloud_cpp_tasks_mocks",
     ],
 )
 
