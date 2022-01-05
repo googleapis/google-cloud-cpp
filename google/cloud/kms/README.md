@@ -3,7 +3,9 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for
-[Cloud Key Management Service (KMS) API][cloud-service-docs], a service that Manages keys and performs cryptographic operations in a central cloud service, for direct use by other cloud resources and applications.
+[Cloud Key Management Service (KMS)][cloud-service-docs], a service that manages
+keys and performs cryptographic operations in a central cloud service, for
+direct use by other cloud resources and applications.
 
 This library is **experimental**. Its APIS are subject to change without notice.
 

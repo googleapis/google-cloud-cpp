@@ -163,6 +163,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-kms",
+    deps = [
+        "//google/cloud/kms:google_cloud_cpp_kms",
+    ],
+)
+
+cc_library(
+    name = "experimental-kms-mocks",
+    deps = [
+        "//google/cloud/kms:google_cloud_cpp_kms_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-logging",
     deps = [
         "//google/cloud/logging:google_cloud_cpp_logging",

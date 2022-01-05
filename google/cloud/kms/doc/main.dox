@@ -1,10 +1,11 @@
 /*!
 
-@mainpage Cloud Key Management Service (KMS) API C++ Client Library
+@mainpage Cloud Key Management Service (KMS) C++ Client Library
 
 An idiomatic C++ client library for
-[Cloud Key Management Service (KMS) API](https://cloud.google.com/kms/), a service that
-Manages keys and performs cryptographic operations in a central cloud service, for direct use by other cloud resources and applications.
+[Cloud Key Management Service (KMS)](https://cloud.google.com/kms/), a service
+that manages keys and performs cryptographic operations in a central cloud
+service, for direct use by other cloud resources and applications.
 
 This library is **experimental**. Its APIS are subject to change without notice.
 
@@ -16,7 +17,7 @@ the client library.
 
 ### Setting up your repo
 
-In order to use the Cloud Key Management Service (KMS) API C++ client library from your own code,
+In order to use the KMS C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
 C++ client libraries. In some cases your build system or package manager may
 need to download the libraries too. The Cloud C++ client libraries natively
@@ -34,7 +35,7 @@ cd google-cloud-cpp/google/cloud/kms/quickstart
 
 The following shows the code that you'll run in the
 `google/cloud/kms/quickstart/` directory,
-which should give you a taste of the Cloud Key Management Service (KMS) API C++ client library API.
+which should give you a taste of the KMS C++ client library API.
 
 @include quickstart.cc
 

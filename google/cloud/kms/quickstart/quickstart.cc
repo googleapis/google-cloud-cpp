@@ -12,20 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/kms/ EDIT HERE .h"
+#include "google/cloud/kms/key_management_client.h"
+#include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 4) {
-    std::cerr << "Usage: " << argv[0] << " project-id \n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
 
   namespace kms = ::google::cloud::kms;
-  auto client = kms::Client(kms::MakeConnection(/* EDIT HERE */));
+  auto client = kms::KeyManagementServiceClient(
+      kms::MakeKeyManagementServiceConnection());
+  auto const project = google::cloud::Project(argv[1]);
 
-  // EDIT HERE: add some code
+  for (auto r : client.ListKeyRings(project.FullName())) {
+    if (!r) throw std::runtime_error(r.status().message());
+    std::cout << r->DebugString() << "\n";
+  }
 
   return 0;
 } catch (std::exception const& ex) {

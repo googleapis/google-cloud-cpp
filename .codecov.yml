@@ -15,6 +15,7 @@ ignore:
   - "google/cloud/bigquery"
   - "google/cloud/bigtable/admin"
   - "google/cloud/iam"
+  - "google/cloud/kms"
   - "google/cloud/logging"
   - "google/cloud/spanner/admin"
   - "google/cloud/pubsublite"

@@ -7,6 +7,7 @@ cmake-build-release/
 google/cloud/bigquery/quickstart/
 google/cloud/bigtable/quickstart/
 google/cloud/iam/quickstart/
+google/cloud/kms/quickstart/
 google/cloud/logging/quickstart/
 google/cloud/pubsublite/quickstart/
 google/cloud/pubsub/quickstart/
