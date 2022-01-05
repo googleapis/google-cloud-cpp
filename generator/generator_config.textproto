@@ -114,3 +114,18 @@ service {
   initial_copyright_year: "2021"
   retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
 }
+
+# Workflows
+service {
+  service_proto_path: "google/cloud/workflows/v1/workflows.proto"
+  product_path: "google/cloud/workflows"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/workflows/executions/v1/executions.proto"
+  product_path: "google/cloud/workflows"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}

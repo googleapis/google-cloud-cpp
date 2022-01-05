@@ -217,3 +217,17 @@ cc_library(
         "//google/cloud/tasks:google_cloud_cpp_tasks_mocks",
     ],
 )
+
+cc_library(
+    name = "experimental-workflows",
+    deps = [
+        "//google/cloud/workflows:google_cloud_cpp_workflows",
+    ],
+)
+
+cc_library(
+    name = "experimental-workflows_mocks",
+    deps = [
+        "//google/cloud/workflows:google_cloud_cpp_workflows_mocks",
+    ],
+)

@@ -87,6 +87,11 @@ expected_dirs+=(
   ./include/google/cloud/storage/testing
   ./include/google/cloud/texttospeech
   ./include/google/cloud/texttospeech/v1
+  # google/cloud/workflows/type contains pure
+  # protos, no gRPC services. The generator does
+  # not update expected_install_directories in
+  # this case
+  ./include/google/cloud/workflows/type
   ./include/google/devtools
   ./include/google/devtools/cloudtrace
   ./include/google/devtools/cloudtrace/v2
