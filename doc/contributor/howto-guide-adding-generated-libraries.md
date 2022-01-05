@@ -1,4 +1,4 @@
-# HOWTO: adding generated libraries
+# How-to Guide: Adding generated libraries
 
 This document describes the steps required to add a new library to
 `google-cloud-cpp`. The document is intended for contributors to the
