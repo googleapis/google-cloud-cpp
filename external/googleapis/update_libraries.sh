@@ -56,6 +56,12 @@ declare -A -r LIBRARIES=(
   ["storage"]="@com_google_googleapis//google/storage/v2:storage_proto"
   ["tasks"]="@com_google_googleapis//google/cloud/tasks/v2:tasks_proto"
   ["texttospeech"]="@com_google_googleapis//google/cloud/texttospeech/v1:texttospeech_proto"
+  ["workflows"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/workflows/v1:workflows_proto" \
+      "@com_google_googleapis//google/cloud/workflows/type:type_proto" \
+      "@com_google_googleapis//google/cloud/workflows/executions/v1:executions_proto"
+  )"
 )
 
 for library in "${!LIBRARIES[@]}"; do
