@@ -1,10 +1,10 @@
 /*!
 
-@mainpage Workflow Executions API C++ Client Library
+@mainpage Workflows API C++ Client Library
 
 An idiomatic C++ client library for
-[Workflow Executions API](https://cloud.google.com/workflows/), a service that
-Execute workflows created with Workflows API.
+[Workflows API](https://cloud.google.com/workflows/), a service to orchestrate
+and automate Google Cloud and HTTP-based API services with serverless workflows.
 
 This library is **experimental**. Its APIS are subject to change without notice.
 

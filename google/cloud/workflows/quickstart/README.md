@@ -1,4 +1,4 @@
-# HOWTO: using the Workflow Executions API C++ client in your project
+# HOWTO: using the Workflows API C++ client in your project
 
 This directory contains small examples showing how to use the Workflow Executions API C++
 client library in your own project. These instructions assume that you have
