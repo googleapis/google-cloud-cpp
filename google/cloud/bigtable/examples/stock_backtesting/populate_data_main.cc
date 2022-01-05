@@ -1,5 +1,20 @@
-// Parse the input csv file, and write the data into the BigTable.
+// Copyright 2021 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
+// [START examples_populate_data_main]
+
+// Parse the input csv file, and write the data into the BigTable.
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/table.h"
@@ -27,7 +42,7 @@ namespace cbt = ::google::cloud::bigtable;
 // Assume input filepath is in the format of
 // {ticker}_historical_{price|dividend}.csv, and parse out the ticker and
 // data type.
-bool ParseFilepath(const std::string& filepath, std::string* ticker,
+bool ParseFilepath(std::string const& filepath, std::string* ticker,
                    DataType* data_type, std::string* col_family) {
   std::vector<absl::string_view> filepath_splitted =
       absl::StrSplit(filepath, '/', absl::SkipWhitespace());
@@ -46,7 +61,7 @@ bool ParseFilepath(const std::string& filepath, std::string* ticker,
 
   *ticker = absl::AsciiStrToUpper(filename_splitted.front());
 
-  const std::string input_mode =
+  std::string const input_mode =
       absl::AsciiStrToUpper(filename_splitted.back());
   if (input_mode == "PRICE") {
     *data_type = DataType::kPrice;
@@ -63,12 +78,12 @@ bool ParseFilepath(const std::string& filepath, std::string* ticker,
   return true;
 }
 
-std::string PrepareRowKey(absl::string_view ticker, const absl::Time time) {
+std::string PrepareRowKey(absl::string_view ticker, absl::Time const time) {
   auto year = time.In(absl::UTCTimeZone()).year;
   return absl::StrCat(ticker, kRowKeyDelimeter, year);
 }
 
-std::chrono::milliseconds PrepareTimestamp(const absl::Time time) {
+std::chrono::milliseconds PrepareTimestamp(absl::Time const time) {
   return absl::ToChronoMilliseconds(time - absl::UnixEpoch());
 }
 
@@ -97,10 +112,10 @@ int main(int argc, char* argv[]) {
   }
 
   // Prerequsite check.
-  const std::string data_filepath = argv[1];
-  const std::string project_id = argv[2];
-  const std::string instance_id = argv[3];
-  const std::string table_id = argv[4];
+  std::string const data_filepath = argv[1];
+  std::string const project_id = argv[2];
+  std::string const instance_id = argv[3];
+  std::string const table_id = argv[4];
   if (data_filepath.empty() || project_id.empty() || instance_id.empty() ||
       table_id.empty()) {
     std::cerr << "Please specify necessary parameters." << std::endl;
@@ -144,8 +159,8 @@ int main(int argc, char* argv[]) {
                 << std::endl;
       continue;
     }
-    const std::string row_key = PrepareRowKey(ticker, time);
-    const std::chrono::milliseconds timestamp = PrepareTimestamp(time);
+    std::string const row_key = PrepareRowKey(ticker, time);
+    std::chrono::milliseconds const timestamp = PrepareTimestamp(time);
 
     cbt::SingleRowMutation row_mutation(row_key);
 
@@ -205,3 +220,4 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
+// [END examples_populate_data_main]

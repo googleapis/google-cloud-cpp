@@ -1,10 +1,10 @@
-# Copyright 2020 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#     https://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +14,7 @@
 
 # A minimal WORKSPACE file showing how to use the Google Cloud Bigtable C++
 # client library in Bazel-based projects.
-workspace(name = "bigtable_example_stock_backtesting")
+workspace(name = "google-cloud-cpp-bigtable-example-stock-backtesting")
 
 # Add the necessary Starlark functions to fetch google-cloud-cpp.
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
@@ -27,17 +27,6 @@ http_archive(
     strip_prefix = "google-cloud-cpp-1.34.1",
     url = "https://github.com/googleapis/google-cloud-cpp/archive/v1.34.1.tar.gz",
 )
-
-# Fetch the ABSL C++ libraries.
-# NOTE: Update this version and SHA256 as needed.
-http_archive(
-            name = "com_google_absl",
-            strip_prefix = "abseil-cpp-20211102.0",
-            urls = [
-                "https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz",
-            ],
-            sha256 = "dcf71b9cba8dc0ca9940c4b316a0c796be8fab42b070bb6b7cab62b48f0e66c4",
-        )
 
 # Load indirect dependencies due to
 #     https://github.com/bazelbuild/bazel/issues/1943
