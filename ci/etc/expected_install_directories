@@ -34,6 +34,10 @@
 ./include/google/cloud/tasks/internal
 ./include/google/cloud/tasks/mocks
 ./include/google/cloud/tasks/v2
+./include/google/cloud/websecurityscanner
+./include/google/cloud/websecurityscanner/internal
+./include/google/cloud/websecurityscanner/mocks
+./include/google/cloud/websecurityscanner/v1
 ./include/google/cloud/workflows
 ./include/google/cloud/workflows/executions
 ./include/google/cloud/workflows/executions/v1
@@ -61,4 +65,5 @@
 ./lib64/cmake/google_cloud_cpp_pubsublite
 ./lib64/cmake/google_cloud_cpp_secretmanager
 ./lib64/cmake/google_cloud_cpp_tasks
+./lib64/cmake/google_cloud_cpp_websecurityscanner
 ./lib64/cmake/google_cloud_cpp_workflows
