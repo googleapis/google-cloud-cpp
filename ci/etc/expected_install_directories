@@ -5,6 +5,10 @@
 ./include/google/bigtable/admin
 ./include/google/bigtable/admin/v2
 ./include/google/cloud
+./include/google/cloud/assuredworkloads
+./include/google/cloud/assuredworkloads/internal
+./include/google/cloud/assuredworkloads/mocks
+./include/google/cloud/assuredworkloads/v1
 ./include/google/cloud/bigquery
 ./include/google/cloud/bigquery/internal
 ./include/google/cloud/bigquery/mocks
@@ -55,6 +59,7 @@
 ./include/google/spanner/admin/instance/v1
 ./lib64
 ./lib64/cmake
+./lib64/cmake/google_cloud_cpp_assuredworkloads
 ./lib64/cmake/google_cloud_cpp_bigquery
 ./lib64/cmake/google_cloud_cpp_iam
 ./lib64/cmake/google_cloud_cpp_logging
