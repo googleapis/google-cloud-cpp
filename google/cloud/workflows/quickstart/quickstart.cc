@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/workflows/workflows_client.h"
+#include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -26,7 +27,7 @@ int main(int argc, char* argv[]) try {
   auto client =
       workflows::WorkflowsClient(workflows::MakeWorkflowsConnection());
 
-  auto const project = std::string{"projects/"} + argv[1];
+  auto const project = google::cloud::Project(argv[1]).FullName();
   for (auto w : client.ListWorkflows(project)) {
     if (!w) throw std::runtime_error(w.status().message());
     std::cout << w->DebugString() << "\n";
