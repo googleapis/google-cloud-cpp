@@ -2,6 +2,7 @@ bigquery
 iam
 logging
 pubsublite
+scheduler
 secretmanager
 tasks
 workflows
