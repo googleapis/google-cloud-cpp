@@ -130,31 +130,19 @@ function run() {
 }
 
 # Outputs the release notes for the given tag. Looks for the release notes in
-# the CHANGELOG.md file starting at a heading that looks like "## <tag>". For
-# example `get_release notes v0.6.0` would look for a line like "## v0.6.0". If
-# no release notes could be found, a default string is output telling the
-# operator to insert the release notes manually.
+# the CHANGELOG.md file starting at a heading that looks like "## <tag>", and
+# ending at the next heading that looks like `##` with a version number. For
+# example `get_release_notes v0.6.0` would look for a line like "## v0.6.0" and
+# stop at "## v0.5.0".
 function get_release_notes() {
   local tag="$1"
-  local found=false
-  local notes=()
-  while IFS= read -r line; do
-    if grep -q "^## " <<<"${line}"; then
-      if grep -q "${tag}" <<<"${line}"; then
-        found=true
-        continue # Skip the heading
-      fi
-      $found && break # Found the following heading; done
-    fi
-    $found && notes+=("$line")
-  done <CHANGELOG.md
-  # The sed here removes leading blank lines
-  local clean
-  clean="$(printf "%s\n" "${notes[@]}" | sed '/./,$!d')"
-  if [[ -z "${clean}" ]]; then
-    clean="*Insert release notes from CHANGELOG.md*"
-  fi
-  echo "${clean}"
+  local begin="^## ${tag}"
+  local end="^## v[0-9]+\.[0-9]+\.[0-9]"
+  local notes
+  # Note: the use of command substitution here removes trailing blank lines
+  notes="$(awk "/${begin}/ {x=1; next} /${end}/ { x=0 } x" CHANGELOG.md)"
+  # Removes leading blank lines
+  sed '/./,$!d' <<<"${notes}"
 }
 
 function exit_handler() {
@@ -231,7 +219,8 @@ echo "got release notes"
 banner "Creating release"
 run gh -R "${REPO_ARG}" release create \
   --prerelease \
-  --notes-file=<(printf "%s\n\n%s" "${NEW_TAG} Release" "${RELEASE_NOTES}") \
+  --title="${NEW_TAG}" \
+  --notes-file=<(printf "%s" "${RELEASE_NOTES}") \
   "${NEW_TAG}"
 
 banner "Success!"
