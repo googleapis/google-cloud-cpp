@@ -36,6 +36,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/iam/credentials/v1:credentials_proto" \
       "@com_google_googleapis//google/iam/admin/v1:admin_proto"
   )"
+  ["kms"]="@com_google_googleapis//google/cloud/kms/v1:kms_proto"
   ["logging_type"]="@com_google_googleapis//google/logging/type:type_proto"
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_proto"
   ["monitoring"]="@com_google_googleapis//google/monitoring/v3:monitoring_proto"
