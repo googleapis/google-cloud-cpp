@@ -3,8 +3,9 @@
 @mainpage Assured Workloads API C++ Client Library
 
 An idiomatic C++ client library for
-[Assured Workloads API](https://cloud.google.com/assuredworkloads/), a service that
-<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+[Assured Workloads API](https://cloud.google.com/assured-workloads/), a service
+to accelerate your path to running more secure and compliant workloads on Google
+Cloud.
 
 This library is **experimental**. Its APIS are subject to change without notice.
 
@@ -86,7 +87,7 @@ uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
-[gcs-quickstart]: https://cloud.google.com/assuredworkloads/docs/quickstarts 'Quickstarts'
+[gcs-quickstart]: https://cloud.google.com/assured-workloads/docs/quickstarts 'Quickstarts'
 [resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
 [billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
 [authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
