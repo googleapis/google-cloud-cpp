@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for
-[Assured Workloads API][cloud-service-docs], a service that <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+[Assured Workloads API][cloud-service-docs], a service to accelerate your path
+to running more secure and compliant workloads on Google Cloud.
 
 This library is **experimental**. Its APIS are subject to change without notice.
 
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/assuredworkloads
+[cloud-service-docs]: https://cloud.google.com/assured-workloads
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-assuredworkloads/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/assuredworkloads
 
@@ -38,22 +39,26 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/assuredworkloads/ EDIT HERE .h"
+#include "google/cloud/assuredworkloads/assured_workloads_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 4) {
-    std::cerr << "Usage: " << argv[0]
-              << " project-id \n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " organization-id location-id\n";
     return 1;
   }
 
   namespace assuredworkloads = ::google::cloud::assuredworkloads;
-  auto client = assuredworkloads::Client(
-      assuredworkloads::MakeConnection(/* EDIT HERE */));
+  auto client = assuredworkloads::AssuredWorkloadsServiceClient(
+      assuredworkloads::MakeAssuredWorkloadsServiceConnection());
+  auto const parent =
+      std::string("organizations/") + argv[1] + "/locations/" + argv[2];
 
-  // EDIT HERE: add some code
+  for (auto w : client.ListWorkloads(parent)) {
+    if (!w) throw std::runtime_error(w.status().message());
+    std::cout << w->DebugString() << "\n";
+  }
 
   return 0;
 } catch (std::exception const& ex) {
