@@ -20,4 +20,5 @@ ignore:
   - "google/cloud/pubsublite"
   - "google/cloud/secretmanager"
   - "google/cloud/tasks"
+  - "google/cloud/websecurityscanner"
   - "google/cloud/workflows"

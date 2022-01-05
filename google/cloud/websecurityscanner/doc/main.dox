@@ -3,8 +3,9 @@
 @mainpage Web Security Scanner API C++ Client Library
 
 An idiomatic C++ client library for
-[Web Security Scanner API](https://cloud.google.com/websecurityscanner/), a service that
-Scans your Compute and App Engine apps for common web vulnerabilities.
+[Web Security Scanner](https://cloud.google.com/security-command-center/), a
+service that scans your Compute and App Engine apps for common web
+vulnerabilities.
 
 This library is **experimental**. Its APIS are subject to change without notice.
 
@@ -86,7 +87,7 @@ uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
-[gcs-quickstart]: https://cloud.google.com/websecurityscanner/docs/quickstarts 'Quickstarts'
+[gcs-quickstart]: https://cloud.google.com/security-command-center/docs/quickstarts 'Quickstarts'
 [resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
 [billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
 [authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'

@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for
-[Web Security Scanner API][cloud-service-docs], a service that Scans your Compute and App Engine apps for common web vulnerabilities.
+[Web Security Scanner][cloud-service-docs], a service that scans your
+Compute and App Engine apps for common web vulnerabilities.
 
 This library is **experimental**. Its APIS are subject to change without notice.
 
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/websecurityscanner
+[cloud-service-docs]: https://cloud.google.com/security-command-center
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-websecurityscanner/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/websecurityscanner
 
@@ -38,22 +39,27 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/websecurityscanner/ EDIT HERE .h"
+#include "google/cloud/websecurityscanner/web_security_scanner_client.h"
+#include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 4) {
-    std::cerr << "Usage: " << argv[0]
-              << " project-id \n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
 
   namespace websecurityscanner = ::google::cloud::websecurityscanner;
-  auto client = websecurityscanner::Client(
-      websecurityscanner::MakeConnection(/* EDIT HERE */));
-
-  // EDIT HERE: add some code
+  auto client = websecurityscanner::WebSecurityScannerClient(
+      websecurityscanner::MakeWebSecurityScannerConnection());
+  auto const project = google::cloud::Project(argv[1]);
+  google::cloud::websecurityscanner::v1::ListScanConfigsRequest request;
+  request.set_parent(project.FullName());
+  for (auto c : client.ListScanConfigs(request)) {
+    if (!c) throw std::runtime_error(c.status().message());
+    std::cout << c->DebugString() << "\n";
+  }
 
   return 0;
 } catch (std::exception const& ex) {

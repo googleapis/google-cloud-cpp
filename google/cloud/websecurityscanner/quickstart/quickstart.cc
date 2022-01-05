@@ -12,21 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/websecurityscanner/ EDIT HERE .h"
+#include "google/cloud/websecurityscanner/web_security_scanner_client.h"
+#include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 4) {
-    std::cerr << "Usage: " << argv[0] << " project-id \n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
 
   namespace websecurityscanner = ::google::cloud::websecurityscanner;
-  auto client = websecurityscanner::Client(
-      websecurityscanner::MakeConnection(/* EDIT HERE */));
-
-  // EDIT HERE: add some code
+  auto client = websecurityscanner::WebSecurityScannerClient(
+      websecurityscanner::MakeWebSecurityScannerConnection());
+  auto const project = google::cloud::Project(argv[1]);
+  google::cloud::websecurityscanner::v1::ListScanConfigsRequest request;
+  request.set_parent(project.FullName());
+  for (auto c : client.ListScanConfigs(request)) {
+    if (!c) throw std::runtime_error(c.status().message());
+    std::cout << c->DebugString() << "\n";
+  }
 
   return 0;
 } catch (std::exception const& ex) {
