@@ -10,6 +10,7 @@ google/cloud/iam/quickstart/
 google/cloud/logging/quickstart/
 google/cloud/pubsublite/quickstart/
 google/cloud/pubsub/quickstart/
+google/cloud/scheduler/quickstart/
 google/cloud/secretmanager/quickstart/
 google/cloud/spanner/quickstart/
 google/cloud/storage/quickstart/

@@ -3,8 +3,8 @@
 @mainpage Cloud Scheduler API C++ Client Library
 
 An idiomatic C++ client library for
-[Cloud Scheduler API](https://cloud.google.com/scheduler/), a service that
-Creates and manages jobs run on a regular recurring schedule.
+[Cloud Scheduler](https://cloud.google.com/scheduler/), a service that
+creates and manages jobs run on a regular recurring schedule.
 
 This library is **experimental**. Its APIS are subject to change without notice.
 

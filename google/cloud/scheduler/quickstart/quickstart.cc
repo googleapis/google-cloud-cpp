@@ -12,20 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/scheduler/ EDIT HERE .h"
+#include "google/cloud/scheduler/cloud_scheduler_client.h"
+#include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 4) {
-    std::cerr << "Usage: " << argv[0] << " project-id \n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
 
   namespace scheduler = ::google::cloud::scheduler;
-  auto client = scheduler::Client(scheduler::MakeConnection(/* EDIT HERE */));
-
-  // EDIT HERE: add some code
+  auto client = scheduler::CloudSchedulerClient(
+      scheduler::MakeCloudSchedulerConnection());
+  auto const project = google::cloud::Project(argv[1]);
+  for (auto j : client.ListJobs(project.FullName())) {
+    if (!j) throw std::runtime_error(j.status().message());
+    std::cout << j->DebugString() << "\n";
+  }
 
   return 0;
 } catch (std::exception const& ex) {

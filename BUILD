@@ -74,6 +74,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-scheduler",
+    deps = [
+        "//google/cloud/scheduler:google_cloud_cpp_scheduler",
+    ],
+)
+
+cc_library(
+    name = "experimental-scheduler_mocks",
+    deps = [
+        "//google/cloud/scheduler:google_cloud_cpp_scheduler_mocks",
+    ],
+)
+
+cc_library(
     name = "secretmanager",
     deps = [
         "//google/cloud/secretmanager:google_cloud_cpp_secretmanager",
