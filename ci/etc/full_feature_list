@@ -1,5 +1,6 @@
 bigquery
 iam
+kms
 logging
 pubsublite
 secretmanager

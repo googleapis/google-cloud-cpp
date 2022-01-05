@@ -16,6 +16,10 @@
 ./include/google/cloud/iam
 ./include/google/cloud/iam/internal
 ./include/google/cloud/iam/mocks
+./include/google/cloud/kms
+./include/google/cloud/kms/internal
+./include/google/cloud/kms/mocks
+./include/google/cloud/kms/v1
 ./include/google/cloud/logging
 ./include/google/cloud/logging/internal
 ./include/google/cloud/logging/mocks
@@ -57,6 +61,7 @@
 ./lib64/cmake
 ./lib64/cmake/google_cloud_cpp_bigquery
 ./lib64/cmake/google_cloud_cpp_iam
+./lib64/cmake/google_cloud_cpp_kms
 ./lib64/cmake/google_cloud_cpp_logging
 ./lib64/cmake/google_cloud_cpp_pubsublite
 ./lib64/cmake/google_cloud_cpp_secretmanager
