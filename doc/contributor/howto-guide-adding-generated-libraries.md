@@ -186,14 +186,6 @@ otherwise.
 Manually edit `.codecov.yml` to exclude generated code from the code coverage
 reports.
 
-## Commit these changes
-
-```shell
-git commit -m"Manually update READMEs, quickstart, and top-level stuff" \
-  "google/cloud/${library}" \
-  BUILD .codecov.yml .bazelignore
-```
-
 ## Fix formatting nits
 
 ```shell
@@ -205,4 +197,12 @@ git commit -m"Fix formatting" "google/cloud/${library}"
 
 ```shell
 ci/cloudbuild/build.sh -t cmake-install-pr
+```
+
+## Commit these changes
+
+```shell
+git commit -m"Manually update READMEs, quickstart, and top-level stuff" \
+  "google/cloud/${library}" \
+  BUILD .codecov.yml .bazelignore
 ```
