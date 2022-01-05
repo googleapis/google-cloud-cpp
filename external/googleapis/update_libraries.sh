@@ -16,6 +16,7 @@
 set -euo pipefail
 
 declare -A -r LIBRARIES=(
+  ["assuredworkloads"]="@com_google_googleapis//google/cloud/assuredworkloads/v1:assuredworkloads_proto"
   ["bigquery"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/bigquery/v2:bigquery_proto" \
