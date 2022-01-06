@@ -155,8 +155,8 @@ ci/cloudbuild/build.sh -t cmake-install-pr
 ## Commit all the generated files
 
 ```shell
-git commit -m"Run generators and format their outputs" \
-  ci/ external/ "google/cloud/${library}"
+git add external ci "google/cloud/${library}"
+git commit -m"Run generators and format their outputs"
 ```
 
 ## Update the quickstart
@@ -191,7 +191,6 @@ reports.
 
 ```shell
 ci/cloudbuild/build.sh -t checkers-pr
-git commit -m"Fix formatting" "google/cloud/${library}"
 ```
 
 ## Verify everything compiles
