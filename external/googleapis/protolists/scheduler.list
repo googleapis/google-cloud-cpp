@@ -1,0 +1,3 @@
+@com_google_googleapis//google/cloud/scheduler/v1:cloudscheduler.proto
+@com_google_googleapis//google/cloud/scheduler/v1:job.proto
+@com_google_googleapis//google/cloud/scheduler/v1:target.proto
