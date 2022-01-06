@@ -19,23 +19,23 @@ licenses(["notice"])  # Apache 2.0
 load(
     "@com_google_googleapis_imports//:imports.bzl",
     "cc_proto_library",
-     )
+)
 
 proto_library(
     name = "strategy_proto",
     srcs = [
-        "strategy.proto"
-        ],
+        "strategy.proto",
+    ],
     deps = [
-        ],
+    ],
 )
 
 cc_proto_library(
     name = "strategy_cc_proto",
     deps = [
         ":strategy_proto",
-        ],
-    )
+    ],
+)
 
 cc_binary(
     name = "populate_data",

@@ -20,7 +20,7 @@ package google.cloud.bigtable.examples;
 // If threshold is a positive value, once
 // (|sample| - |base|) / |base| > |threshold|, buy in with the amount
 // of |moneyin|.
-// If threshold is a negtive value, once
+// If threshold is a negative value, once
 // // (|sample| - |base|) / |base| < |threshold|, sell out with the amount
 // of |moneyin|.
 // Next TAG: 5
@@ -39,4 +39,3 @@ message Condition {
 message Strategy {
   repeated Condition conditions = 1;
 }
-

@@ -18,8 +18,8 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/table.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "absl/strings/ascii.h"
-#include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/string_view.h"
 #include "absl/time/time.h"
@@ -34,7 +34,7 @@ enum class DataType { kNotDefined, kPrice, kDividend };
 
 constexpr int kMaxMutationBulkSize = 1000;
 
-constexpr char kRowKeyDelimeter[] = "#";
+constexpr char kRowKeyDelimiter[] = "#";
 
 // Create a namespace alias to make the code easier to read.
 namespace cbt = ::google::cloud::bigtable;
@@ -44,25 +44,24 @@ namespace cbt = ::google::cloud::bigtable;
 // data type.
 bool ParseFilepath(std::string const& filepath, std::string* ticker,
                    DataType* data_type, std::string* col_family) {
-  std::vector<absl::string_view> filepath_splitted =
+  std::vector<absl::string_view> filepath_split =
       absl::StrSplit(filepath, '/', absl::SkipWhitespace());
-  absl::string_view basename = filepath_splitted.back();
+  absl::string_view basename = filepath_split.back();
 
-  std::vector<absl::string_view> basename_splitted =
+  std::vector<absl::string_view> basename_split =
       absl::StrSplit(basename, '.', absl::SkipWhitespace());
-  if (basename_splitted.size() != 2) {
+  if (basename_split.size() != 2) {
     std::cerr << "Invalid input basename: " << basename << std::endl;
     return false;
   }
-  absl::string_view filename = basename_splitted.front();
+  absl::string_view filename = basename_split.front();
 
-  std::vector<absl::string_view> filename_splitted =
+  std::vector<absl::string_view> filename_split =
       absl::StrSplit(filename, '_', absl::SkipWhitespace());
 
-  *ticker = absl::AsciiStrToUpper(filename_splitted.front());
+  *ticker = absl::AsciiStrToUpper(filename_split.front());
 
-  std::string const input_mode =
-      absl::AsciiStrToUpper(filename_splitted.back());
+  std::string const input_mode = absl::AsciiStrToUpper(filename_split.back());
   if (input_mode == "PRICE") {
     *data_type = DataType::kPrice;
     *col_family = "price";
@@ -70,7 +69,7 @@ bool ParseFilepath(std::string const& filepath, std::string* ticker,
     *data_type = DataType::kDividend;
     *col_family = "dividend";
   } else {
-    std::cerr << "Unrecognized input data type: " << filename_splitted.back()
+    std::cerr << "Unrecognized input data type: " << filename_split.back()
               << std::endl;
     return false;
   }
@@ -80,7 +79,7 @@ bool ParseFilepath(std::string const& filepath, std::string* ticker,
 
 std::string PrepareRowKey(absl::string_view ticker, absl::Time const time) {
   auto year = time.In(absl::UTCTimeZone()).year;
-  return absl::StrCat(ticker, kRowKeyDelimeter, year);
+  return absl::StrCat(ticker, kRowKeyDelimiter, year);
 }
 
 std::chrono::milliseconds PrepareTimestamp(absl::Time const time) {
@@ -111,7 +110,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  // Prerequsite check.
+  // Prerequisite check.
   std::string const data_filepath = argv[1];
   std::string const project_id = argv[2];
   std::string const instance_id = argv[3];
@@ -147,13 +146,13 @@ int main(int argc, char* argv[]) {
 
   std::string line;
   while (std::getline(input_file, line)) {
-    std::vector<std::string> line_splitted =
+    std::vector<std::string> line_split =
         absl::StrSplit(line, ',', absl::SkipWhitespace());
-    auto splitted_ptr = line_splitted.begin();
+    auto split_ptr = line_split.begin();
 
     absl::Time time;
     std::string time_error;
-    if (!absl::ParseTime("%Y-%m-%d", *splitted_ptr, &time, &time_error)) {
+    if (!absl::ParseTime("%Y-%m-%d", *split_ptr, &time, &time_error)) {
       // Skip the header.
       std::cout << "Can't parse the line: " << line << "; Continue."
                 << std::endl;
@@ -165,39 +164,38 @@ int main(int argc, char* argv[]) {
     cbt::SingleRowMutation row_mutation(row_key);
 
     if (data_type == DataType::kPrice) {
-      // Splitted line in the format of Date,Open,High,Low,Close,Adj
-      // Close,Volume
-      ++splitted_ptr;
+      // Split line in the format of Date,Open,High,Low,Close,Adj Close,Volume
+      ++split_ptr;
       row_mutation.emplace_back(
-          cbt::SetCell(col_family, "open_price", timestamp, *splitted_ptr));
+          cbt::SetCell(col_family, "open_price", timestamp, *split_ptr));
       num_cell_mutation++;
 
-      ++splitted_ptr;
+      ++split_ptr;
       row_mutation.emplace_back(
-          cbt::SetCell(col_family, "high_price", timestamp, *splitted_ptr));
+          cbt::SetCell(col_family, "high_price", timestamp, *split_ptr));
       num_cell_mutation++;
 
-      ++splitted_ptr;
+      ++split_ptr;
       row_mutation.emplace_back(
-          cbt::SetCell(col_family, "low_price", timestamp, *splitted_ptr));
+          cbt::SetCell(col_family, "low_price", timestamp, *split_ptr));
       num_cell_mutation++;
 
-      ++splitted_ptr;
+      ++split_ptr;
       row_mutation.emplace_back(
-          cbt::SetCell(col_family, "close_price", timestamp, *splitted_ptr));
+          cbt::SetCell(col_family, "close_price", timestamp, *split_ptr));
       num_cell_mutation++;
 
-      ++splitted_ptr;
-      row_mutation.emplace_back(cbt::SetCell(col_family, "adj_close_price",
-                                             timestamp, *splitted_ptr));
+      ++split_ptr;
+      row_mutation.emplace_back(
+          cbt::SetCell(col_family, "adj_close_price", timestamp, *split_ptr));
       num_cell_mutation++;
 
       // Don't use Volume.
     } else if (data_type == DataType::kDividend) {
-      // Splitted line in the format of Date,Dividend
-      ++splitted_ptr;
+      // Split line in the format of Date,Dividend
+      ++split_ptr;
       row_mutation.emplace_back(
-          cbt::SetCell(col_family, "dividend", timestamp, *splitted_ptr));
+          cbt::SetCell(col_family, "dividend", timestamp, *split_ptr));
       num_cell_mutation++;
     }
 

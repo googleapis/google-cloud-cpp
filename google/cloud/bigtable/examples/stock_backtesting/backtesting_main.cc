@@ -16,10 +16,10 @@
 #include "google/cloud/bigtable/cell.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/table.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/ascii.h"
 #include "absl/strings/numbers.h"
-#include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
 #include "absl/time/civil_time.h"
 #include "absl/time/time.h"
@@ -38,8 +38,8 @@ namespace {
 constexpr char kMinStartDate[] = "2014-01-02";
 constexpr char kMaxEndDate[] = "2018-12-31";
 
-constexpr char kRowKeyDelimeter[] = "#";
-constexpr char kColumnDelimeter[] = "::";
+constexpr char kRowKeyDelimiter[] = "#";
+constexpr char kColumnDelimiter[] = "::";
 
 // Create a namespace alias to make the code easier to read.
 namespace cbt = ::google::cloud::bigtable;
@@ -54,7 +54,7 @@ std::vector<std::string> PrepareRowKeys(std::string const& ticker,
   auto const start_year = start_date.year();
   auto const end_year = end_date.year();
   for (auto i = start_year; i <= end_year; ++i) {
-    row_keys.emplace_back(absl::StrCat(ticker, kRowKeyDelimeter, i));
+    row_keys.emplace_back(absl::StrCat(ticker, kRowKeyDelimiter, i));
   }
 
   return row_keys;
@@ -73,26 +73,26 @@ cbt::Filter PrepareFilter(cbt::examples::Strategy const& strategy,
   for (auto const& condition : strategy.conditions()) {
     if (existing_signal.find(condition.base()) == existing_signal.end()) {
       existing_signal.insert(condition.base());
-      std::vector<std::string> splitted =
-          absl::StrSplit(condition.base(), kColumnDelimeter);
+      std::vector<std::string> split =
+          absl::StrSplit(condition.base(), kColumnDelimiter);
       // In the format of column_family::column_qualifier.
-      if (splitted.size() != 2) {
+      if (split.size() != 2) {
         throw std::runtime_error("Invalid strategy definition.");
       }
       column_filters.emplace_back(
-          cbt::Filter::ColumnName(splitted.front(), splitted.back()));
+          cbt::Filter::ColumnName(split.front(), split.back()));
     }
 
     if (existing_signal.find(condition.sample()) == existing_signal.end()) {
       existing_signal.insert(condition.sample());
-      std::vector<std::string> splitted =
-          absl::StrSplit(condition.sample(), kColumnDelimeter);
+      std::vector<std::string> split =
+          absl::StrSplit(condition.sample(), kColumnDelimiter);
       // In the format of column_family::column_qualifier.
-      if (splitted.size() != 2) {
+      if (split.size() != 2) {
         throw std::runtime_error("Invalid strategy definition.");
       }
       column_filters.emplace_back(
-          cbt::Filter::ColumnName(splitted.front(), splitted.back()));
+          cbt::Filter::ColumnName(split.front(), split.back()));
     }
   }
 
@@ -165,7 +165,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  // Prerequsite check.
+  // Prerequisite check.
   std::string const strategy_filepath = argv[1];
   std::string ticker = argv[2];
   absl::AsciiStrToUpper(&ticker);
@@ -246,7 +246,7 @@ int main(int argc, char* argv[]) {
         continue;
       }
 
-      signal_map[absl::StrCat(cell.family_name(), kColumnDelimeter,
+      signal_map[absl::StrCat(cell.family_name(), kColumnDelimiter,
                               cell.column_qualifier())]
           .emplace(ts_cd, price_value);
     }
