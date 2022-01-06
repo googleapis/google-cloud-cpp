@@ -7,9 +7,9 @@ An idiomatic C++ client library for
 messaging service built for very low cost of operation by offering zonal storage
 and pre-provisioned capacity.
 
-This library is **experimental**. Its APIS are subject to change without notice.
+This library is **experimental**. Its APIs are subject to change without notice.
 
-This library requires a C++11 compiler, it is supported (and tested) on multiple
+This library requires a C++11 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The
 [README][github-readme] on [GitHub][github-link] provides detailed
 instructions to install the necessary dependencies, as well as how to compile
@@ -22,7 +22,7 @@ you'll need to configure your build system to discover and compile the Cloud
 C++ client libraries. In some cases your build system or package manager may
 need to download the libraries too. The Cloud C++ client libraries natively
 support [Bazel](https://bazel.build/) and [CMake](https://cmake.org/) as build
-systems. We've created a minimal, "Hello World", [quickstart][quickstart-link]
+systems. We've created a minimal, "Hello World", [quickstart][github-quickstart]
 that includes detailed instructions on how to compile the library for use in
 your application. You can fetch the source from [GitHub][github-link] as normal:
 
@@ -96,5 +96,6 @@ can override the default policies.
 <!-- The ugly %2E disables auto-linking in Doxygen -->
 [github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsublite/README%2Emd
 [github-install]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging%2Emd
+[github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsublite/quickstart/README%2Emd
 
 */

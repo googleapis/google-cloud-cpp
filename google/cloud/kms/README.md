@@ -7,7 +7,7 @@ This directory contains an idiomatic C++ client library for
 keys and performs cryptographic operations in a central cloud service, for
 direct use by other cloud resources and applications.
 
-This library is **experimental**. Its APIS are subject to change without notice.
+This library is **experimental**. Its APIs are subject to change without notice.
 
 Please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
