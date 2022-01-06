@@ -120,6 +120,19 @@ GoldenKitchenSinkClient::ListServiceAccountKeys(google::test::admin::database::v
   return connection_->ListServiceAccountKeys(request);
 }
 
+Status
+GoldenKitchenSinkClient::DoNothing(Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+  google::protobuf::Empty request;
+  return connection_->DoNothing(request);
+}
+
+Status
+GoldenKitchenSinkClient::DoNothing(google::protobuf::Empty const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+  return connection_->DoNothing(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden
 }  // namespace cloud

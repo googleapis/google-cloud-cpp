@@ -333,6 +333,27 @@ class GoldenKitchenSinkClient {
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request, Options options = {});
 
+  ///
+  /// Does Nothing.
+  ///
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.protobuf.Empty]: @googleapis_reference_link{google/protobuf/empty.proto#L52}
+  ///
+  Status
+  DoNothing(Options options = {});
+
+  ///
+  /// Does Nothing.
+  ///
+  /// @param request @googleapis_link{google::protobuf::Empty,google/protobuf/empty.proto#L52}
+  /// @param options  Optional. Operation options.
+  ///
+  /// [google.protobuf.Empty]: @googleapis_reference_link{google/protobuf/empty.proto#L52}
+  ///
+  Status
+  DoNothing(google::protobuf::Empty const& request, Options options = {});
+
  private:
   std::shared_ptr<GoldenKitchenSinkConnection> connection_;
   Options options_;
