@@ -261,6 +261,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-websecurityscanner",
+    deps = [
+        "//google/cloud/websecurityscanner:google_cloud_cpp_websecurityscanner",
+    ],
+)
+
+cc_library(
+    name = "experimental-websecurityscanner_mocks",
+    deps = [
+        "//google/cloud/websecurityscanner:google_cloud_cpp_websecurityscanner_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-workflows",
     deps = [
         "//google/cloud/workflows:google_cloud_cpp_workflows",
