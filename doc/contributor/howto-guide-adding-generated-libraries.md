@@ -205,5 +205,5 @@ ci/cloudbuild/build.sh -t cmake-install-pr
 ```shell
 git commit -m"Manually update READMEs, quickstart, and top-level stuff" \
   "google/cloud/${library}" \
-  BUILD .codecov.yml .bazelignore
+  BUILD.bazel .codecov.yml .bazelignore
 ```
