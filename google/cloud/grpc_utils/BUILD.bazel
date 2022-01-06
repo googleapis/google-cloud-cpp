@@ -31,6 +31,7 @@ cc_library(
         " This target will be removed on or about 2023-01-01. More details at" +
         " https://github.com/googleapis/google-cloud-cpp/issues/3932"
     ),
+    tags = ["manual"],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
