@@ -96,7 +96,6 @@ git commit -m"feat(${library}): generate ${library} library" external/ generator
 ## Update the list of proto files and proto dependencies
 
 ```shell
-cd $HOME/google-cloud-cpp
 external/googleapis/update_libraries.sh
 ```
 
@@ -143,9 +142,11 @@ inspiration.
 
 Run the `cmake-install-pr` build.  This is one of the builds that compiles all
 the libraries, including the library you just added. It will also generate the
-`*.bzl` files for Bazel-based builds. It **will** fail on this run, because
-it `quickstart.cc` file is not ready, you will fix that after creating a commit
-with all the generated changes.
+`*.bzl` files for Bazel-based builds.
+
+> :warning: It **will** fail on this run, because the `quickstart.cc` file is
+> not ready. you will fix that after creating a commit with all the generated
+> changes.
 
 ```shell
 ci/cloudbuild/build.sh -t cmake-install-pr
