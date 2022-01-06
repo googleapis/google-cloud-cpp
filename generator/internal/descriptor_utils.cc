@@ -182,50 +182,47 @@ void SetMethodSignatureMethodVars(
         absl::StrSplit(method_signature_extension[i], ',');
     std::string method_signature;
     std::string method_request_setters;
-    for (unsigned int j = 0; j < parameters.size(); ++j) {
+    for (auto& parameter : parameters) {
+      if (parameter.empty()) continue;
       google::protobuf::FieldDescriptor const* parameter_descriptor =
-          input_type->FindFieldByName(parameters[j]);
+          input_type->FindFieldByName(parameter);
       if (parameter_descriptor->is_map()) {
         method_signature += absl::StrFormat(
             "std::map<%s, %s> const& %s",
             CppTypeToString(parameter_descriptor->message_type()->map_key()),
             CppTypeToString(parameter_descriptor->message_type()->map_value()),
-            parameters[j]);
+            parameter);
         method_request_setters += absl::StrFormat(
-            "  *request.mutable_%s() = {%s.begin(), %s.end()};\n",
-            parameters[j], parameters[j], parameters[j]);
+            "  *request.mutable_%s() = {%s.begin(), %s.end()};\n", parameter,
+            parameter, parameter);
       } else if (parameter_descriptor->is_repeated()) {
-        method_signature += absl::StrFormat(
-            "std::vector<%s> const& %s", CppTypeToString(parameter_descriptor),
-            parameters[j]);
+        method_signature +=
+            absl::StrFormat("std::vector<%s> const& %s",
+                            CppTypeToString(parameter_descriptor), parameter);
         method_request_setters += absl::StrFormat(
-            "  *request.mutable_%s() = {%s.begin(), %s.end()};\n",
-            parameters[j], parameters[j], parameters[j]);
+            "  *request.mutable_%s() = {%s.begin(), %s.end()};\n", parameter,
+            parameter, parameter);
       } else if (parameter_descriptor->type() ==
                  FieldDescriptor::TYPE_MESSAGE) {
         method_signature += absl::StrFormat(
-            "%s const& %s", CppTypeToString(parameter_descriptor),
-            parameters[j]);
+            "%s const& %s", CppTypeToString(parameter_descriptor), parameter);
         method_request_setters += absl::StrFormat(
-            "  *request.mutable_%s() = %s;\n", parameters[j], parameters[j]);
+            "  *request.mutable_%s() = %s;\n", parameter, parameter);
       } else {
         switch (parameter_descriptor->cpp_type()) {
           case FieldDescriptor::CPPTYPE_STRING:
             method_signature += absl::StrFormat(
                 "%s const& %s", CppTypeToString(parameter_descriptor),
-                parameters[j]);
+                parameter);
             break;
           default:
             method_signature += absl::StrFormat(
-                "%s %s", CppTypeToString(parameter_descriptor), parameters[j]);
+                "%s %s", CppTypeToString(parameter_descriptor), parameter);
         }
-        method_request_setters += absl::StrFormat("  request.set_%s(%s);\n",
-                                                  parameters[j], parameters[j]);
+        method_request_setters +=
+            absl::StrFormat("  request.set_%s(%s);\n", parameter, parameter);
       }
-
-      if (j < parameters.size() - 1) {
-        method_signature += ", ";
-      }
+      method_signature += ", ";
     }
     std::string key = "method_signature" + std::to_string(i);
     method_vars[key] = method_signature;
@@ -329,6 +326,7 @@ std::string FormatApiMethodSignatureParameters(
     google::protobuf::Descriptor const* input_type = method.input_type();
     std::vector<std::string> parameters = absl::StrSplit(signature, ',');
     for (auto const& parameter : parameters) {
+      if (parameter.empty()) continue;
       google::protobuf::FieldDescriptor const* parameter_descriptor =
           input_type->FindFieldByName(parameter);
       google::protobuf::SourceLocation loc;
