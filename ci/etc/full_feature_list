@@ -1,6 +1,7 @@
 assuredworkloads
 bigquery
 iam
+kms
 logging
 pubsublite
 scheduler
