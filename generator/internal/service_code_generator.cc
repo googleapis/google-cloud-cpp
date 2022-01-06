@@ -139,6 +139,7 @@ ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
     for (auto const& extension : method_signature_extension) {
       std::vector<std::string> parameters = absl::StrSplit(extension, ',');
       for (auto const& parameter : parameters) {
+        if (parameter.empty()) continue;
         auto path = IncludePathForWellKnownProtobufType(
             *input_type->FindFieldByName(parameter));
         if (path) include_paths.push_back(*path);

@@ -830,6 +830,14 @@ service GoldenKitchenSink {
     option (google.api.method_signature) = "name,key_types";
   }
 
+  // Does Nothing.
+  rpc DoNothing(google.protobuf.Empty) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get: "/v1/doNothing"
+    };
+    option (google.api.method_signature) = "";
+  }
+
 }
 
 message GenerateAccessTokenRequest {

@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -80,6 +80,12 @@ StreamRange<google::test::admin::database::v1::TailLogEntriesResponse> GoldenKit
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkConnection::ListServiceAccountKeys(
     google::test::admin::database::v1::ListServiceAccountKeysRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status
+GoldenKitchenSinkConnection::DoNothing(
+    google::protobuf::Empty const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -205,6 +211,19 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
         [this](grpc::ClientContext& context,
             google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
           return stub_->ListServiceAccountKeys(context, request);
+        },
+        request, __func__);
+  }
+
+  Status
+  DoNothing(
+      google::protobuf::Empty const& request) override {
+    return google::cloud::internal::RetryLoop(
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        idempotency_policy_->DoNothing(request),
+        [this](grpc::ClientContext& context,
+            google::protobuf::Empty const& request) {
+          return stub_->DoNothing(context, request);
         },
         request, __func__);
   }

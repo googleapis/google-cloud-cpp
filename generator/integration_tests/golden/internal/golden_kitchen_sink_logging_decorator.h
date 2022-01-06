@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -62,6 +62,10 @@ class GoldenKitchenSinkLogging : public GoldenKitchenSinkStub {
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
+
+  Status DoNothing(
+    grpc::ClientContext& context,
+    google::protobuf::Empty const& request) override;
 
  private:
   std::shared_ptr<GoldenKitchenSinkStub> child_;

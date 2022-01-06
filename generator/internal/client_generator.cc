@@ -120,7 +120,7 @@ Status ClientGenerator::GenerateHeader() {
     for (int i = 0; i < method_signature_extension.size(); ++i) {
       std::string method_string =
           absl::StrCat("  $method_name$($method_signature", i,
-                       "$, Options options = {});\n\n");
+                       "$Options options = {});\n\n");
       HeaderPrintMethod(
           method,
           {MethodPattern(
@@ -265,7 +265,7 @@ Status ClientGenerator::GenerateHeader() {
     for (int i = 0; i < method_signature_extension.size(); ++i) {
       std::string method_string =
           absl::StrCat("  Async$method_name$($method_signature", i,
-                       "$, Options options = {});\n\n");
+                       "$Options options = {});\n\n");
       HeaderPrintMethod(
           method,
           {MethodPattern(
@@ -358,7 +358,7 @@ Status ClientGenerator::GenerateCc() {
     for (int i = 0; i < method_signature_extension.size(); ++i) {
       std::string method_string =
           absl::StrCat("$client_class_name$::$method_name$($method_signature",
-                       i, "$, Options options) {\n");
+                       i, "$Options options) {\n");
       std::string method_request_string =
           absl::StrCat("$method_request_setters", i, "$");
       CcPrintMethod(
@@ -535,7 +535,7 @@ Status ClientGenerator::GenerateCc() {
     for (int i = 0; i < method_signature_extension.size(); ++i) {
       std::string method_string = absl::StrCat(
           "$client_class_name$::Async$method_name$($method_signature", i,
-          "$, Options options) {\n");
+          "$Options options) {\n");
       std::string method_request_string =
           absl::StrCat("$method_request_setters", i, "$");
       CcPrintMethod(

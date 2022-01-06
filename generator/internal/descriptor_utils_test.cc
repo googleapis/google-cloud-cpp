@@ -415,6 +415,7 @@ char const* const kServiceProto =
     "    option (google.api.method_signature) = \"toggle\";\n"
     "    option (google.api.method_signature) = \"name,title\";\n"
     "    option (google.api.method_signature) = \"name,swallow_types\";\n"
+    "    option (google.api.method_signature) = \"\";\n"
     "  }\n"
     "  // Leading comments about rpc $Method6.\n"
     "  rpc Method6(Foo) returns (Empty) {\n"
@@ -640,22 +641,24 @@ INSTANTIATE_TEST_SUITE_P(
                              "default_idempotency", "kNonIdempotent"),
         // Method5
         MethodVarsTestValues("google.protobuf.Service.Method5",
-                             "method_signature0", "std::string const& name"),
+                             "method_signature0", "std::string const& name, "),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_signature1",
                              "std::int32_t number, "
-                             "google::protobuf::Foo const& widget"),
+                             "google::protobuf::Foo const& widget, "),
         MethodVarsTestValues("google.protobuf.Service.Method5",
-                             "method_signature2", "bool toggle"),
+                             "method_signature2", "bool toggle, "),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_signature3",
                              "std::string const& name, "
-                             "std::string const& title"),
+                             "std::string const& title, "),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_signature4",
                              "std::string const& name, "
                              "std::vector<google::protobuf::Bar::SwallowType>"
-                             " const& swallow_types"),
+                             " const& swallow_types, "),
+        MethodVarsTestValues("google.protobuf.Service.Method5",
+                             "method_signature5", ""),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_request_setters0",
                              "  request.set_name(name);\n"),
@@ -692,7 +695,7 @@ INSTANTIATE_TEST_SUITE_P(
                              "default_idempotency", "kIdempotent"),
         MethodVarsTestValues(
             "google.protobuf.Service.Method6", "method_signature0",
-            "std::map<std::string, std::string> const& labels"),
+            "std::map<std::string, std::string> const& labels, "),
         MethodVarsTestValues(
             "google.protobuf.Service.Method6", "method_request_setters0",
             "  *request.mutable_labels() = {labels.begin(), labels.end()};\n"),

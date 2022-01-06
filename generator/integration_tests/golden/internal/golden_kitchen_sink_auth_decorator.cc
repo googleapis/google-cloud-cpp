@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -79,6 +79,14 @@ StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> Gold
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListServiceAccountKeys(context, request);
+}
+
+Status GoldenKitchenSinkAuth::DoNothing(
+    grpc::ClientContext& context,
+    google::protobuf::Empty const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DoNothing(context, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

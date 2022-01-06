@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -118,6 +118,19 @@ StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkClient::ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request, Options options) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->ListServiceAccountKeys(request);
+}
+
+Status
+GoldenKitchenSinkClient::DoNothing(Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+  google::protobuf::Empty request;
+  return connection_->DoNothing(request);
+}
+
+Status
+GoldenKitchenSinkClient::DoNothing(google::protobuf::Empty const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+  return connection_->DoNothing(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

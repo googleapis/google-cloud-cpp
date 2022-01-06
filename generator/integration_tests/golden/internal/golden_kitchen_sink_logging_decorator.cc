@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -112,6 +112,18 @@ GoldenKitchenSinkLogging::ListServiceAccountKeys(
       [this](grpc::ClientContext& context,
              google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
         return child_->ListServiceAccountKeys(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status
+GoldenKitchenSinkLogging::DoNothing(
+    grpc::ClientContext& context,
+    google::protobuf::Empty const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::protobuf::Empty const& request) {
+        return child_->DoNothing(context, request);
       },
       context, request, __func__, tracing_options_);
 }
