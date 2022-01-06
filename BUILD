@@ -21,6 +21,20 @@ exports_files([
 ])
 
 cc_library(
+    name = "experimental-accessapproval",
+    deps = [
+        "//google/cloud/accessapproval:google_cloud_cpp_accessapproval",
+    ],
+)
+
+cc_library(
+    name = "experimental-accessapproval_mocks",
+    deps = [
+        "//google/cloud/accessapproval:google_cloud_cpp_accessapproval_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-assuredworkloads",
     deps = [
         "//google/cloud/assuredworkloads:google_cloud_cpp_assuredworkloads",

@@ -4,6 +4,7 @@ cmake-out/
 cmake-build-debug/
 cmake-build-coverage/
 cmake-build-release/
+google/cloud/accessapproval/quickstart/
 google/cloud/assuredworkloads/quickstart/
 google/cloud/bigquery/quickstart/
 google/cloud/bigtable/quickstart/
