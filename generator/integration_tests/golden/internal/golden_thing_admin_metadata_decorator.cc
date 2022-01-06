@@ -40,14 +40,6 @@ GoldenThingAdminMetadata::ListDatabases(
   return child_->ListDatabases(context, request);
 }
 
-Status
-GoldenThingAdminMetadata::DoNothing(
-    grpc::ClientContext& context,
-    google::protobuf::Empty const& request) {
-  SetMetadata(context, {});
-  return child_->DoNothing(context, request);
-}
-
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminMetadata::AsyncCreateDatabase(
     google::cloud::CompletionQueue& cq,

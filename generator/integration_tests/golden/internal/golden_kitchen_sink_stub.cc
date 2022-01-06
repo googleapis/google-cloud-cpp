@@ -105,6 +105,19 @@ DefaultGoldenKitchenSinkStub::ListServiceAccountKeys(
     return response;
 }
 
+Status
+DefaultGoldenKitchenSinkStub::DoNothing(
+  grpc::ClientContext& client_context,
+  google::protobuf::Empty const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DoNothing(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
 }  // namespace cloud

@@ -116,6 +116,18 @@ GoldenKitchenSinkLogging::ListServiceAccountKeys(
       context, request, __func__, tracing_options_);
 }
 
+Status
+GoldenKitchenSinkLogging::DoNothing(
+    grpc::ClientContext& context,
+    google::protobuf::Empty const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::protobuf::Empty const& request) {
+        return child_->DoNothing(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
 }  // namespace cloud

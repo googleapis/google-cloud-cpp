@@ -52,6 +52,9 @@ class GoldenKitchenSinkConnectionIdempotencyPolicy {
   virtual google::cloud::internal::Idempotency
   ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) = 0;
 
+  virtual google::cloud::internal::Idempotency
+  DoNothing(google::protobuf::Empty const& request) = 0;
+
 };
 
 std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>

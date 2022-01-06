@@ -53,6 +53,10 @@ class MockGoldenKitchenSinkConnection : public golden::GoldenKitchenSinkConnecti
   ListServiceAccountKeys,
   (google::test::admin::database::v1::ListServiceAccountKeysRequest const& request), (override));
 
+  MOCK_METHOD(Status,
+  DoNothing,
+  (google::protobuf::Empty const& request), (override));
+
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

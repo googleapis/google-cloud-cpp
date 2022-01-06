@@ -59,6 +59,10 @@ class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
 
+  Status DoNothing(
+    grpc::ClientContext& context,
+    google::protobuf::Empty const& request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);

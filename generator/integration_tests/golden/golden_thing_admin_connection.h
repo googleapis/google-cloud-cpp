@@ -54,9 +54,6 @@ class GoldenThingAdminConnection {
   virtual StreamRange<google::test::admin::database::v1::Database>
   ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request);
 
-  virtual Status
-  DoNothing(google::protobuf::Empty const& request);
-
   virtual future<StatusOr<google::test::admin::database::v1::Database>>
   CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request);
 

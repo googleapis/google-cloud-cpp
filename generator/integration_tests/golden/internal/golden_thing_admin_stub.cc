@@ -43,19 +43,6 @@ DefaultGoldenThingAdminStub::ListDatabases(
     return response;
 }
 
-Status
-DefaultGoldenThingAdminStub::DoNothing(
-  grpc::ClientContext& client_context,
-  google::protobuf::Empty const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DoNothing(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
-}
-
 future<StatusOr<google::longrunning::Operation>>
 DefaultGoldenThingAdminStub::AsyncCreateDatabase(
       google::cloud::CompletionQueue& cq,

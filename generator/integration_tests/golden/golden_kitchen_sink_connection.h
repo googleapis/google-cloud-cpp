@@ -70,6 +70,9 @@ class GoldenKitchenSinkConnection {
   virtual StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request);
 
+  virtual Status
+  DoNothing(google::protobuf::Empty const& request);
+
 };
 
 std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(

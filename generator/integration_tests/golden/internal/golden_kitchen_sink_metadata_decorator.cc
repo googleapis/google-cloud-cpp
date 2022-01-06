@@ -80,6 +80,14 @@ GoldenKitchenSinkMetadata::ListServiceAccountKeys(
   return child_->ListServiceAccountKeys(context, request);
 }
 
+Status
+GoldenKitchenSinkMetadata::DoNothing(
+    grpc::ClientContext& context,
+    google::protobuf::Empty const& request) {
+  SetMetadata(context, {});
+  return child_->DoNothing(context, request);
+}
+
 void GoldenKitchenSinkMetadata::SetMetadata(grpc::ClientContext& context,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

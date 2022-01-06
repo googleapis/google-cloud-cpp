@@ -38,14 +38,6 @@ StatusOr<google::test::admin::database::v1::ListDatabasesResponse> GoldenThingAd
   return child_->ListDatabases(context, request);
 }
 
-Status GoldenThingAdminAuth::DoNothing(
-    grpc::ClientContext& context,
-    google::protobuf::Empty const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->DoNothing(context, request);
-}
-
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminAuth::AsyncCreateDatabase(
       google::cloud::CompletionQueue& cq,

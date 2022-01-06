@@ -46,18 +46,6 @@ GoldenThingAdminLogging::ListDatabases(
       context, request, __func__, tracing_options_);
 }
 
-Status
-GoldenThingAdminLogging::DoNothing(
-    grpc::ClientContext& context,
-    google::protobuf::Empty const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             google::protobuf::Empty const& request) {
-        return child_->DoNothing(context, request);
-      },
-      context, request, __func__, tracing_options_);
-}
-
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminLogging::AsyncCreateDatabase(
       google::cloud::CompletionQueue& cq,

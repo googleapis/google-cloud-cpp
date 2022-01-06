@@ -45,11 +45,6 @@ class DefaultGoldenThingAdminConnectionIdempotencyPolicy : public GoldenThingAdm
   }
 
   Idempotency
-  DoNothing(google::protobuf::Empty const&) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency
   CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const&) override {
     return Idempotency::kNonIdempotent;
   }

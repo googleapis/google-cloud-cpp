@@ -42,9 +42,6 @@ class GoldenThingAdminConnectionIdempotencyPolicy {
   ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  DoNothing(google::protobuf::Empty const& request) = 0;
-
-  virtual google::cloud::internal::Idempotency
   CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency

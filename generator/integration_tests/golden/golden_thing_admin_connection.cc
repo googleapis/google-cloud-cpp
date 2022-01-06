@@ -48,12 +48,6 @@ StreamRange<google::test::admin::database::v1::Database> GoldenThingAdminConnect
     });
 }
 
-Status
-GoldenThingAdminConnection::DoNothing(
-    google::protobuf::Empty const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminConnection::CreateDatabase(
     google::test::admin::database::v1::CreateDatabaseRequest const&) {
@@ -238,19 +232,6 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           std::move(messages.begin(), messages.end(), result.begin());
           return result;
         });
-  }
-
-  Status
-  DoNothing(
-      google::protobuf::Empty const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DoNothing(request),
-        [this](grpc::ClientContext& context,
-            google::protobuf::Empty const& request) {
-          return stub_->DoNothing(context, request);
-        },
-        request, __func__);
   }
 
   future<StatusOr<google::test::admin::database::v1::Database>>

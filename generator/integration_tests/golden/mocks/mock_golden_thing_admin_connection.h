@@ -33,10 +33,6 @@ class MockGoldenThingAdminConnection : public golden::GoldenThingAdminConnection
   ListDatabases,
   (google::test::admin::database::v1::ListDatabasesRequest request), (override));
 
-  MOCK_METHOD(Status,
-  DoNothing,
-  (google::protobuf::Empty const& request), (override));
-
   MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::Database>>,
   CreateDatabase,
   (google::test::admin::database::v1::CreateDatabaseRequest const& request), (override));

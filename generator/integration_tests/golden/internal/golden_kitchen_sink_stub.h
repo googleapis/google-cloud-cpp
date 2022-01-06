@@ -59,6 +59,10 @@ class GoldenKitchenSinkStub {
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) = 0;
 
+  virtual Status DoNothing(
+    grpc::ClientContext& context,
+    google::protobuf::Empty const& request) = 0;
+
 };
 
 class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
@@ -96,6 +100,11 @@ class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
   ListServiceAccountKeys(
     grpc::ClientContext& client_context,
     google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
+
+  Status
+  DoNothing(
+    grpc::ClientContext& client_context,
+    google::protobuf::Empty const& request) override;
 
  private:
   std::unique_ptr<google::test::admin::database::v1::GoldenKitchenSink::StubInterface> grpc_stub_;

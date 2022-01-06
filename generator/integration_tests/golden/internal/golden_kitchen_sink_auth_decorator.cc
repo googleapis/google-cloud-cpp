@@ -81,6 +81,14 @@ StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> Gold
   return child_->ListServiceAccountKeys(context, request);
 }
 
+Status GoldenKitchenSinkAuth::DoNothing(
+    grpc::ClientContext& context,
+    google::protobuf::Empty const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DoNothing(context, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
 }  // namespace cloud

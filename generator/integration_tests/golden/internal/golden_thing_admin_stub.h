@@ -40,10 +40,6 @@ class GoldenThingAdminStub {
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListDatabasesRequest const& request) = 0;
 
-  virtual Status DoNothing(
-    grpc::ClientContext& context,
-    google::protobuf::Empty const& request) = 0;
-
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -147,11 +143,6 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
   ListDatabases(
     grpc::ClientContext& client_context,
     google::test::admin::database::v1::ListDatabasesRequest const& request) override;
-
-  Status
-  DoNothing(
-    grpc::ClientContext& client_context,
-    google::protobuf::Empty const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
       google::cloud::CompletionQueue& cq,
