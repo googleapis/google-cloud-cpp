@@ -47,6 +47,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ConnectionImpl : public spanner::Connection {
  public:
   ConnectionImpl(spanner::Database db,
+                 std::unique_ptr<BackgroundThreads> background_threads,
                  std::vector<std::shared_ptr<SpannerStub>> stubs,
                  Options const& opts);
 

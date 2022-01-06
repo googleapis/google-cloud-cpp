@@ -348,14 +348,16 @@ std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
       opts, __func__);
   opts = spanner_internal::DefaultOptions(std::move(opts));
 
+  auto background = internal::MakeBackgroundThreadsFactory(opts)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), opts);
   std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs(
       opts.get<GrpcNumChannelsOption>());
   int id = 0;
-  std::generate(stubs.begin(), stubs.end(), [&id, db, opts] {
-    return spanner_internal::CreateDefaultSpannerStub(db, opts, id++);
+  std::generate(stubs.begin(), stubs.end(), [&db, &auth, &opts, &id] {
+    return spanner_internal::CreateDefaultSpannerStub(db, auth, opts, id++);
   });
   return std::make_shared<spanner_internal::ConnectionImpl>(
-      std::move(db), std::move(stubs), opts);
+      std::move(db), std::move(background), std::move(stubs), opts);
 }
 
 std::shared_ptr<Connection> MakeConnection(

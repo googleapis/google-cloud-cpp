@@ -34,8 +34,11 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 
 TEST(SpannerStub, CreateDefaultStub) {
+  auto opts = spanner_internal::DefaultOptions();
+  auto auth =
+      internal::CreateAuthenticationStrategy(opts.get<GrpcCredentialOption>());
   auto stub = CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"),
-                                       spanner_internal::DefaultOptions(),
+                                       std::move(auth), std::move(opts),
                                        /*channel_id=*/0);
   EXPECT_NE(stub, nullptr);
 }
@@ -47,9 +50,11 @@ TEST(SpannerStub, CreateDefaultStubWithLogging) {
                   .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
                   .set<EndpointOption>("localhost:1")
                   .set<TracingComponentsOption>({"rpc"});
-  auto stub =
-      CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"), opts,
-                               /*channel_id=*/0);
+  auto auth =
+      internal::CreateAuthenticationStrategy(opts.get<GrpcCredentialOption>());
+  auto stub = CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"),
+                                       std::move(auth), std::move(opts),
+                                       /*channel_id=*/0);
   EXPECT_NE(stub, nullptr);
 
   grpc::ClientContext context;

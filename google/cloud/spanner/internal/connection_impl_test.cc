@@ -235,8 +235,9 @@ std::shared_ptr<ConnectionImpl> MakeConnectionImpl(
   // No actual credential needed for unit tests
   opts.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
   opts = spanner_internal::DefaultOptions(std::move(opts));
-  return std::make_shared<ConnectionImpl>(std::move(db), std::move(stubs),
-                                          std::move(opts));
+  auto background = internal::MakeBackgroundThreadsFactory(opts)();
+  return std::make_shared<ConnectionImpl>(std::move(db), std::move(background),
+                                          std::move(stubs), std::move(opts));
 }
 
 // Create a `Connection` suitable for use in tests that continue retrying
