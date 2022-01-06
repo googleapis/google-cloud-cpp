@@ -35,6 +35,12 @@ class MockGoldenThingAdminStub
        ::google::test::admin::database::v1::ListDatabasesRequest const&),
       (override));
   MOCK_METHOD(
+      Status,
+      DoNothing,
+      (grpc::ClientContext&,
+       ::google::protobuf::Empty const&),
+      (override));
+  MOCK_METHOD(
       future<StatusOr<::google::longrunning::Operation>>, AsyncCreateDatabase,
       (google::cloud::CompletionQueue&,
        std::unique_ptr<grpc::ClientContext>,
