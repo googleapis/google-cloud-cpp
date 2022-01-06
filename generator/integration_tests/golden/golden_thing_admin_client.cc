@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -42,6 +42,19 @@ StreamRange<google::test::admin::database::v1::Database>
 GoldenThingAdminClient::ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request, Options options) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   return connection_->ListDatabases(std::move(request));
+}
+
+Status
+GoldenThingAdminClient::DoNothing(Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+  google::protobuf::Empty request;
+  return connection_->DoNothing(request);
+}
+
+Status
+GoldenThingAdminClient::DoNothing(google::protobuf::Empty const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+  return connection_->DoNothing(request);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
