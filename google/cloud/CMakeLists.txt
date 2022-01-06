@@ -621,7 +621,9 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/curl_handle_factory.h
         internal/curl_options.h
         internal/curl_wrappers.cc
-        internal/curl_wrappers.h)
+        internal/curl_wrappers.h
+        internal/rest_request.cc
+        internal/rest_request.h)
     target_link_libraries(
         google_cloud_cpp_rest_internal
         PUBLIC absl::span google-cloud-cpp::common CURL::libcurl)
@@ -672,7 +674,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
             internal/binary_data_as_debug_string_test.cc
             internal/curl_handle_factory_test.cc
             internal/curl_handle_test.cc
-            internal/curl_wrappers_test.cc)
+            internal/curl_wrappers_test.cc
+            internal/rest_request_test.cc)
 
         # Export the list of unit and integration tests so the Bazel BUILD file
         # can pick them up.
