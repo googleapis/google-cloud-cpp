@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -46,6 +46,12 @@ StreamRange<google::test::admin::database::v1::Database> GoldenThingAdminConnect
     [](google::test::admin::database::v1::ListDatabasesResponse const&) {
       return std::vector<google::test::admin::database::v1::Database>();
     });
+}
+
+Status
+GoldenThingAdminConnection::DoNothing(
+    google::protobuf::Empty const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
@@ -232,6 +238,19 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           std::move(messages.begin(), messages.end(), result.begin());
           return result;
         });
+  }
+
+  Status
+  DoNothing(
+      google::protobuf::Empty const& request) override {
+    return google::cloud::internal::RetryLoop(
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        idempotency_policy_->DoNothing(request),
+        [this](grpc::ClientContext& context,
+            google::protobuf::Empty const& request) {
+          return stub_->DoNothing(context, request);
+        },
+        request, __func__);
   }
 
   future<StatusOr<google::test::admin::database::v1::Database>>

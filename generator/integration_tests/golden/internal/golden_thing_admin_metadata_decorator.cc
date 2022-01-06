@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -38,6 +38,14 @@ GoldenThingAdminMetadata::ListDatabases(
     google::test::admin::database::v1::ListDatabasesRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListDatabases(context, request);
+}
+
+Status
+GoldenThingAdminMetadata::DoNothing(
+    grpc::ClientContext& context,
+    google::protobuf::Empty const& request) {
+  SetMetadata(context, {});
+  return child_->DoNothing(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

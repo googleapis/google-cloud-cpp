@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,6 +41,19 @@ DefaultGoldenThingAdminStub::ListDatabases(
       return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
+}
+
+Status
+DefaultGoldenThingAdminStub::DoNothing(
+  grpc::ClientContext& client_context,
+  google::protobuf::Empty const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DoNothing(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
