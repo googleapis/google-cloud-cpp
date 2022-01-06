@@ -44,12 +44,11 @@ class MockGrpcGoldenThingAdminStub : public ::google::test::admin::database::
        ::google::test::admin::database::v1::ListDatabasesRequest const& request,
        ::google::test::admin::database::v1::ListDatabasesResponse* response),
       (override));
-  MOCK_METHOD(
-      ::grpc::Status, DoNothing,
-      (::grpc::ClientContext * context,
-       ::google::protobuf::Empty const& request,
-       ::google::protobuf::Empty* response),
-      (override));
+  MOCK_METHOD(::grpc::Status, DoNothing,
+              (::grpc::ClientContext * context,
+               ::google::protobuf::Empty const& request,
+               ::google::protobuf::Empty* response),
+              (override));
   MOCK_METHOD(::grpc::Status, CreateDatabase,
               (::grpc::ClientContext * context,
                ::google::test::admin::database::v1::CreateDatabaseRequest const&
