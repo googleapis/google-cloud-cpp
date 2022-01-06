@@ -90,7 +90,8 @@ Create your first commit with purely hand-crafted changes
 
 ```shell
 cd $HOME/google-cloud-cpp
-git commit -m"feat(${library}): generate ${library} library" external/ generator/
+git checkout -b feat-${library}-generate-library # Don't forget
+git commit -m"feat(${library}): generate library" external/ generator/
 ```
 
 ## Update the list of proto files and proto dependencies
