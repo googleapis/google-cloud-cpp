@@ -14,6 +14,14 @@
 # proto-file: generator/generator_config.proto
 # proto-message: GeneratorConfiguration
 
+# Access Approval
+service {
+  service_proto_path: "google/cloud/accessapproval/v1/accessapproval.proto"
+  product_path: "google/cloud/accessapproval"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # Assured Workloads
 service {
   service_proto_path: "google/cloud/assuredworkloads/v1/assuredworkloads.proto"
