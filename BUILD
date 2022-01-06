@@ -28,7 +28,7 @@ cc_library(
 )
 
 cc_library(
-    name = "experimental-accessapproval-mocks",
+    name = "experimental-accessapproval_mocks",
     deps = [
         "//google/cloud/accessapproval:google_cloud_cpp_accessapproval_mocks",
     ],
