@@ -97,7 +97,7 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
                           "Codegen C++ Generator");
 
     product_path_ = "generator/integration_tests/golden/";
-    copyright_year_ = CurrentCopyrightYear();
+    copyright_year_ = "2022";
     omit_rpc1_ = "Omitted1";
     omit_rpc2_ = "GoldenKitchenSink.Omitted2";
     service_endpoint_env_var_ = "GOLDEN_KITCHEN_SINK_ENDPOINT";

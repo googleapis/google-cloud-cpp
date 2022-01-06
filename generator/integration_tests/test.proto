@@ -63,14 +63,6 @@ service GoldenThingAdmin {
     option (google.api.method_signature) = "parent";
   }
 
-  // Does Nothing.
-  rpc DoNothing(google.protobuf.Empty) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      get: "/v1/doNothing"
-    };
-    option (google.api.method_signature) = "";
-  }
-
   // Creates a new Cloud Test database and starts to prepare it for serving.
   // The returned [long-running operation][google.longrunning.Operation] will
   // have a name of the format `<database_name>/operations/<operation_id>` and
@@ -836,6 +828,14 @@ service GoldenKitchenSink {
       get: "/v1/{name=projects/*/serviceAccounts/*}/keys"
     };
     option (google.api.method_signature) = "name,key_types";
+  }
+
+  // Does Nothing.
+  rpc DoNothing(google.protobuf.Empty) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get: "/v1/doNothing"
+    };
+    option (google.api.method_signature) = "";
   }
 
 }

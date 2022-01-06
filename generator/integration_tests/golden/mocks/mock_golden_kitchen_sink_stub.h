@@ -65,6 +65,12 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
       (grpc::ClientContext&, ::google::test::admin::database::v1::
                                  ListServiceAccountKeysRequest const&),
       (override));
+  MOCK_METHOD(
+      Status,
+      DoNothing,
+      (grpc::ClientContext&,
+       ::google::protobuf::Empty const&),
+      (override));
 };
 
 class MockTailLogEntriesStreamingReadRpc
