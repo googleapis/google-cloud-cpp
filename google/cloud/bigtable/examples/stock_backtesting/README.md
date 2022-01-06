@@ -43,4 +43,3 @@ $ bazel run backtesting <path_to_strategy_file> <ticker> <start_date> <end_date>
 The program will report errors if strategy is not defined correctly, the
 start/end date is out of range, etc; otherwise it reports the end status at
 the end date, including how many stocks and how much money are in hand.
-
