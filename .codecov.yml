@@ -12,6 +12,7 @@ coverage:
 #     generator/generator_config.textproto | sort -u
 #
 ignore:
+  - "google/cloud/assuredworkloads"
   - "google/cloud/bigquery"
   - "google/cloud/bigtable/admin"
   - "google/cloud/iam"

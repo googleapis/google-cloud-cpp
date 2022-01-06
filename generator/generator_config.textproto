@@ -14,6 +14,14 @@
 # proto-file: generator/generator_config.proto
 # proto-message: GeneratorConfiguration
 
+# Assured Workloads
+service {
+  service_proto_path: "google/cloud/assuredworkloads/v1/assuredworkloads.proto"
+  product_path: "google/cloud/assuredworkloads"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # BigQuery
 service {
   service_proto_path: "google/cloud/bigquery/storage/v1/storage.proto"

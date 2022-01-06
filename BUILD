@@ -21,6 +21,20 @@ exports_files([
 ])
 
 cc_library(
+    name = "experimental-assuredworkloads",
+    deps = [
+        "//google/cloud/assuredworkloads:google_cloud_cpp_assuredworkloads",
+    ],
+)
+
+cc_library(
+    name = "experimental-assuredworkloads-mocks",
+    deps = [
+        "//google/cloud/assuredworkloads:google_cloud_cpp_assuredworkloads_mocks",
+    ],
+)
+
+cc_library(
     name = "bigtable",
     deps = [
         "//google/cloud/bigtable:bigtable_client_internal",
