@@ -21,7 +21,7 @@ CURRENT_TARGETS = [
     ":bigtable",
     ":iam",
     ":experimental-logging",
-    ":experimental-logging-mocks",
+    ":experimental-logging_mocks",
     ":pubsub",
     ":spanner",
     ":storage",
