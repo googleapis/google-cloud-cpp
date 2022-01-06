@@ -60,14 +60,7 @@ bazel --batch query --noshow_progress --noshow_loading_progress \
     grep -v cc_proto
 ```
 
-## Update the list of proto files and proto dependencies
-
-```shell
-cd $HOME/google-cloud-cpp
-external/googleapis/update_libraries.sh
-```
-
-## Run the Scaffold Generator
+## Update the Generator Configuration
 
 Manually edit `generator/generator_config.textproto` and add the new service.
 For example:
@@ -91,6 +84,24 @@ index ab033dde9..3753287d8 100644
 +
 ```
 
+## Commit these changes
+
+Create your first commit with purely hand-crafted changes
+
+```shell
+cd $HOME/google-cloud-cpp
+git checkout -b feat-${library}-generate-library # Don't forget
+git commit -m"feat(${library}): generate library" external/ generator/
+```
+
+## Update the list of proto files and proto dependencies
+
+```shell
+external/googleapis/update_libraries.sh
+```
+
+## Run the Scaffold Generator
+
 Then run the micro-generator to create the scaffold and the C++ sources:
 
 ```shell
@@ -111,9 +122,10 @@ bazel run \
 > add **one** dependency from `@com_github_googleapis//${path}`, where you may
 > need multiple dependencies for more complex libraries.
 
-## Fix formatting of existing libraries
+## Fix formatting of existing libraries and the generated code 
 
 ```shell
+git add "google/cloud/${library}"
 ci/cloudbuild/build.sh -t checkers-pr
 ```
 
@@ -133,14 +145,35 @@ Run the `cmake-install-pr` build.  This is one of the builds that compiles all
 the libraries, including the library you just added. It will also generate the
 `*.bzl` files for Bazel-based builds.
 
+> :warning: It **will** fail on this run, because the `quickstart.cc` file is
+> not ready. you will fix that after creating a commit with all the generated
+> changes.
+
 ```shell
 ci/cloudbuild/build.sh -t cmake-install-pr
 ```
 
-## Update the README file
+## Commit all the generated files
 
-The generated `README.md` file in `google/cloud/${library}` probably needs some
-light copy-editing to read less like it was written by a robot.
+```shell
+git add external ci "google/cloud/${library}"
+git commit -m"Run generators and format their outputs"
+```
+
+## Update the quickstart
+
+The generated quickstart will need some editing. Use a simple operation, maybe
+an admin operation listing top-level resources, to demonstrate how to use the
+API.
+
+## Update the README files
+
+The following files probably need some light copy-editing to read less like they
+were written by a robot:
+
+- `google/cloud/${library}/README.md`
+- `google/cloud/${library}/quickstart/README.md`
+- `google/cloud/${library}/doc/main.dox`
 
 ## Update the root files
 
@@ -161,12 +194,16 @@ reports.
 ci/cloudbuild/build.sh -t checkers-pr
 ```
 
-## Add the libraries to git
+## Verify everything compiles
 
 ```shell
-git add \
-  generator/generator_config.textproto \
-  ci/etc/ \
-  external/googleapis \
-  google/cloud/${library}
+ci/cloudbuild/build.sh -t cmake-install-pr
+```
+
+## Commit these changes
+
+```shell
+git commit -m"Manually update READMEs, quickstart, and top-level stuff" \
+  "google/cloud/${library}" \
+  BUILD .codecov.yml .bazelignore
 ```
