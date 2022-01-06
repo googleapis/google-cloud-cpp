@@ -46,6 +46,13 @@ message ServiceConfiguration {
   // one service. Unqualified codes are added to each service in the file.
   // If no codes are listed, do not attempt to generate the retry traits.
   repeated string retryable_status_codes = 10;
+
+  // If set, the `*Client` class is not generated. This is useful in services
+  // where the public API needs a hand-crafted wrapper, for example, because
+  // the retry/resume policy is more complex, or because the proto-level API
+  // does not provide good application-level concepts (consider chunking for
+  // rows or values).
+  bool omit_client = 11;
 }
 
 message GeneratorConfiguration {

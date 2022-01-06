@@ -209,6 +209,9 @@ int main(int argc, char** argv) {
     for (auto const& retry_code : service.retryable_status_codes()) {
       args.emplace_back("--cpp_codegen_opt=retry_status_code=" + retry_code);
     }
+    if (service.omit_client()) {
+      args.emplace_back("--cpp_codegen_opt=omit_client=true");
+    }
     args.emplace_back("--cpp_codegen_opt=service_endpoint_env_var=" +
                       service.service_endpoint_env_var());
     args.emplace_back("--cpp_codegen_opt=emulator_endpoint_env_var=" +
