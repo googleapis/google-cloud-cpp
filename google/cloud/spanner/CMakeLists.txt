@@ -140,6 +140,8 @@ add_library(
     internal/session.h
     internal/session_pool.cc
     internal/session_pool.h
+    internal/spanner_auth.cc
+    internal/spanner_auth.h
     internal/spanner_stub.cc
     internal/spanner_stub.h
     internal/status_utils.cc
@@ -325,6 +327,7 @@ function (spanner_client_define_tests)
         internal/partial_result_set_resume_test.cc
         internal/partial_result_set_source_test.cc
         internal/session_pool_test.cc
+        internal/spanner_auth_test.cc
         internal/spanner_stub_test.cc
         internal/status_utils_test.cc
         internal/transaction_impl_test.cc

@@ -66,7 +66,9 @@ TEST_F(SessionPoolIntegrationTest, SessionAsyncCRUD) {
       std::make_shared<spanner::ExponentialBackoffPolicy>(
           std::chrono::seconds(10), std::chrono::minutes(1), 2.0));
 
-  auto stub = CreateDefaultSpannerStub(db, opts, /*channel_id=*/0);
+  auto stub = CreateDefaultSpannerStub(
+      db, internal::CreateAuthenticationStrategy(cq, opts), opts,
+      /*channel_id=*/0);
   auto session_pool = MakeSessionPool(db, {stub}, cq, opts);
 
   // Make an asynchronous request, but immediately block until the response

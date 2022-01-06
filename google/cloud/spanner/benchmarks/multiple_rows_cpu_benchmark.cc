@@ -25,6 +25,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/testing_util/timer.h"
 #include "absl/memory/memory.h"
 #include "absl/time/civil_time.h"
@@ -305,11 +306,13 @@ class ExperimentImpl {
     auto opts = google::cloud::internal::MakeOptions(
         spanner::ConnectionOptions().set_num_channels(num_channels));
     opts = spanner_internal::DefaultOptions(std::move(opts));
+    auto auth = google::cloud::internal::CreateAuthenticationStrategy(
+        opts.get<google::cloud::GrpcCredentialOption>());
     std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
     stubs.reserve(num_channels);
     for (int channel_id = 0; channel_id < num_channels; ++channel_id) {
-      stubs.push_back(
-          spanner_internal::CreateDefaultSpannerStub(db, opts, channel_id));
+      stubs.push_back(spanner_internal::CreateDefaultSpannerStub(db, auth, opts,
+                                                                 channel_id));
     }
     return stubs;
   }

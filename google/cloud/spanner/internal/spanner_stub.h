@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/v1/spanner.grpc.pb.h>
@@ -115,13 +116,15 @@ class SpannerStub {
 };
 
 /**
- * Creates a SpannerStub configured with @p options and @p channel_id.
+ * Creates a SpannerStub configured with @p opts and @p channel_id.
  *
  * @p channel_id should be unique among all stubs in the same Connection pool,
  * to ensure they use different underlying connections.
  */
 std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
-    spanner::Database const& db, Options const& opts, int channel_id);
+    spanner::Database const& db,
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    Options const& opts, int channel_id);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal

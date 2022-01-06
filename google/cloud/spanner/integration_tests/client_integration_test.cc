@@ -968,6 +968,22 @@ TEST_F(ClientIntegrationTest, SpannerStatistics) {
   }
 }
 
+/// @test Verify the use of unified credentials.
+TEST_F(ClientIntegrationTest, UnifiedCredentials) {
+  auto options =
+      Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
+  if (emulator_) {
+    options = Options{}
+                  .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
+                      "test-only-invalid", std::chrono::system_clock::now() +
+                                               std::chrono::minutes(15)))
+                  .set<internal::UseInsecureChannelOption>(true);
+  }
+  // Reconnect to the database using the new credentials.
+  client_ = absl::make_unique<Client>(MakeConnection(GetDatabase(), options));
+  ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
+}
+
 /// @test Verify the backwards compatibility `v1` namespace still exists.
 TEST_F(ClientIntegrationTest, BackwardsCompatibility) {
   auto connection = ::google::cloud::spanner::v1::MakeConnection(GetDatabase());

@@ -101,15 +101,15 @@ Status MissingTransactionStatus(std::string const& operation) {
                     operation + ")");
 }
 
-ConnectionImpl::ConnectionImpl(spanner::Database db,
-                               std::vector<std::shared_ptr<SpannerStub>> stubs,
-                               Options const& opts)
+ConnectionImpl::ConnectionImpl(
+    spanner::Database db, std::unique_ptr<BackgroundThreads> background_threads,
+    std::vector<std::shared_ptr<SpannerStub>> stubs, Options const& opts)
     : db_(std::move(db)),
       retry_policy_prototype_(
           opts.get<spanner::SpannerRetryPolicyOption>()->clone()),
       backoff_policy_prototype_(
           opts.get<spanner::SpannerBackoffPolicyOption>()->clone()),
-      background_threads_(internal::MakeBackgroundThreadsFactory(opts)()),
+      background_threads_(std::move(background_threads)),
       session_pool_(MakeSessionPool(db_, std::move(stubs),
                                     background_threads_->cq(), opts)),
       rpc_stream_tracing_enabled_(internal::Contains(
