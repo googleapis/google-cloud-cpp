@@ -26,7 +26,8 @@ cc_library(
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
-        "@com_google_googleapis//google/cloud/billing/budgets/v1:billing_cc_grpc",
+        "@com_google_googleapis//google/cloud/billing/budgets/v1:budgets_cc_grpc",
+        "@com_google_googleapis//google/cloud/billing/v1:billing_cc_grpc",
     ],
 )
 
