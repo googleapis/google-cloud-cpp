@@ -51,6 +51,10 @@ class Generator : public google::protobuf::compiler::CodeGenerator {
                 std::string const& parameter,
                 google::protobuf::compiler::GeneratorContext* generator_context,
                 std::string* error) const override;
+
+  uint64_t GetSupportedFeatures() const override {
+    return FEATURE_PROTO3_OPTIONAL;
+  }
 };
 
 }  // namespace generator
