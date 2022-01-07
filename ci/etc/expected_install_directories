@@ -56,6 +56,10 @@
 ./include/google/cloud/tasks/internal
 ./include/google/cloud/tasks/mocks
 ./include/google/cloud/tasks/v2
+./include/google/cloud/webrisk
+./include/google/cloud/webrisk/internal
+./include/google/cloud/webrisk/mocks
+./include/google/cloud/webrisk/v1
 ./include/google/cloud/websecurityscanner
 ./include/google/cloud/websecurityscanner/internal
 ./include/google/cloud/websecurityscanner/mocks
@@ -92,5 +96,6 @@
 ./lib64/cmake/google_cloud_cpp_scheduler
 ./lib64/cmake/google_cloud_cpp_secretmanager
 ./lib64/cmake/google_cloud_cpp_tasks
+./lib64/cmake/google_cloud_cpp_webrisk
 ./lib64/cmake/google_cloud_cpp_websecurityscanner
 ./lib64/cmake/google_cloud_cpp_workflows

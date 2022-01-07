@@ -9,5 +9,6 @@ pubsublite
 scheduler
 secretmanager
 tasks
+webrisk
 websecurityscanner
 workflows
