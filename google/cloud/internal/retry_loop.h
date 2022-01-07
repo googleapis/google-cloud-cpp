@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RETRY_LOOP_H
 
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/internal/retry_policy.h"
@@ -69,6 +70,7 @@ auto RetryLoopImpl(std::unique_ptr<RetryPolicy> retry_policy,
   while (!retry_policy->IsExhausted()) {
     // Need to create a new context for each retry.
     grpc::ClientContext context;
+    ConfigureContext(context, CurrentOptions());
     auto result = functor(context, request);
     if (result.ok()) {
       return result;

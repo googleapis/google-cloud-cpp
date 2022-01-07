@@ -22,6 +22,18 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+void ConfigureContext(grpc::ClientContext& context, Options const& opts) {
+  if (opts.has<GrpcSetupOption>()) {
+    opts.get<GrpcSetupOption>()(context);
+  }
+}
+
+void ConfigurePollContext(grpc::ClientContext& context, Options const& opts) {
+  if (opts.has<GrpcSetupPollOption>()) {
+    opts.get<GrpcSetupPollOption>()(context);
+  }
+}
+
 grpc::ChannelArguments MakeChannelArguments(Options const& opts) {
   auto channel_arguments = opts.get<GrpcChannelArgumentsNativeOption>();
   for (auto const& p : opts.get<GrpcChannelArgumentsOption>()) {

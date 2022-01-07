@@ -157,6 +157,42 @@ using GrpcOptionList =
 
 namespace internal {
 
+/**
+ * A generic function to directly configure a gRPC context.
+ *
+ * This function takes effect before the context is used to make any requests.
+ *
+ * @warning It is NOT recommended to call `set_auth_context()` or
+ *     `set_credentials()` directly on the context. Instead, use the Google
+ *     Unified Auth Credentials library, via
+ *     #google::cloud::UnifiedCredentialsOption.
+ */
+struct GrpcSetupOption {
+  using Type = std::function<void(grpc::ClientContext&)>;
+};
+
+/**
+ * A generic function to directly configure a gRPC context for polling
+ * long-running operations.
+ *
+ * This function takes effect before the context is used to make any poll or
+ * cancel requests for long-running operations.
+ *
+ * @warning It is NOT recommended to call `set_auth_context()` or
+ *     `set_credentials()` directly on the context. Instead, use the Google
+ *     Unified Auth Credentials library, via
+ *     #google::cloud::UnifiedCredentialsOption.
+ */
+struct GrpcSetupPollOption {
+  using Type = std::function<void(grpc::ClientContext&)>;
+};
+
+/// Configure the ClientContext using options.
+void ConfigureContext(grpc::ClientContext& context, Options const& opts);
+
+/// Configure the ClientContext for polling operations using options.
+void ConfigurePollContext(grpc::ClientContext& context, Options const& opts);
+
 /// Creates a new `grpc::ChannelArguments` configured with @p opts.
 grpc::ChannelArguments MakeChannelArguments(Options const& opts);
 
