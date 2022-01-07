@@ -23,14 +23,12 @@ some experience as a C++ developer and that you have a working C++ toolchain
 ## Before you begin
 
 To run the quickstart examples you will need a working Google Cloud Platform
-(GCP) project, as well as a Cloud Spanner instance and database.
-The [quickstart][quickstart-link] covers the necessary
-steps in detail. Make a note of the GCP project id, the instance id, and the
-database id as you will need them below.
+(GCP) project. The [quickstart][quickstart-link] covers the necessary
+steps in detail.
 
 ## Configuring authentication for the C++ Client Library
 
-Like most Google Cloud Platform (GCP) services, Cloud Spanner requires that
+Like most Google Cloud Platform (GCP) services, Cloud Logging requires that
 your application authenticates with the service before accessing any data. If
 you are not familiar with GCP authentication please take this opportunity to
 review the [Authentication Overview][authentication-quickstart]. This library
@@ -159,7 +157,7 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
-[quickstart-link]: https://cloud.google.com/logging/docs
+[quickstart-link]: https://cloud.google.com/logging/docs/quickstart
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake

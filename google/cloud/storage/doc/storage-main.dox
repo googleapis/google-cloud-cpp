@@ -11,7 +11,7 @@ read and modify the metadata associated with objects and buckets, configure
 encryption keys, configure notifications via Cloud Pub/Sub, and change the
 access control list of object or buckets.
 
-This library requires a C++11 compiler, it is supported (and tested) on multiple
+This library requires a C++11 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The
 [README][github-readme] on [GitHub][github-link] provides detailed
 instructions to install the necessary dependencies, as well as how to compile

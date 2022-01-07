@@ -6,7 +6,7 @@ This directory contains an idiomatic C++ client library for
 [Assured Workloads API][cloud-service-docs], a service to accelerate your path
 to running more secure and compliant workloads on Google Cloud.
 
-This library is **experimental**. Its APIS are subject to change without notice.
+This library is **experimental**. Its APIs are subject to change without notice.
 
 Please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).

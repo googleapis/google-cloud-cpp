@@ -577,9 +577,9 @@ An idiomatic C++ client library for
 [$title$](https://cloud.google.com/$site_root$/), a service that
 $description$
 
-This library is **experimental**. Its APIS are subject to change without notice.
+This library is **experimental**. Its APIs are subject to change without notice.
 
-This library requires a C++11 compiler, it is supported (and tested) on multiple
+This library requires a C++11 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The
 [README][github-readme] on [GitHub][github-link] provides detailed
 instructions to install the necessary dependencies, as well as how to compile
@@ -592,7 +592,7 @@ you'll need to configure your build system to discover and compile the Cloud
 C++ client libraries. In some cases your build system or package manager may
 need to download the libraries too. The Cloud C++ client libraries natively
 support [Bazel](https://bazel.build/) and [CMake](https://cmake.org/) as build
-systems. We've created a minimal, "Hello World", [quickstart][quickstart-link]
+systems. We've created a minimal, "Hello World", [quickstart][github-quickstart]
 that includes detailed instructions on how to compile the library for use in
 your application. You can fetch the source from [GitHub][github-link] as normal:
 
@@ -666,6 +666,7 @@ can override the default policies.
 <!-- The ugly %2E disables auto-linking in Doxygen -->
 [github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/$library$/README%2Emd
 [github-install]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging%2Emd
+[github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/$library$/quickstart/README%2Emd
 
 */
 )""";
@@ -702,14 +703,12 @@ some experience as a C++ developer and that you have a working C++ toolchain
 ## Before you begin
 
 To run the quickstart examples you will need a working Google Cloud Platform
-(GCP) project, as well as a Cloud Spanner instance and database.
-The [quickstart][quickstart-link] covers the necessary
-steps in detail. Make a note of the GCP project id, the instance id, and the
-database id as you will need them below.
+(GCP) project. The [quickstart][quickstart-link] covers the necessary
+steps in detail.
 
 ## Configuring authentication for the C++ Client Library
 
-Like most Google Cloud Platform (GCP) services, Cloud Spanner requires that
+Like most Google Cloud Platform (GCP) services, $title$ requires that
 your application authenticates with the service before accessing any data. If
 you are not familiar with GCP authentication please take this opportunity to
 review the [Authentication Overview][authentication-quickstart]. This library
@@ -838,7 +837,7 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
-[quickstart-link]: https://cloud.google.com/$site_root$/docs
+[quickstart-link]: https://cloud.google.com/$site_root$/docs/quickstart
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
