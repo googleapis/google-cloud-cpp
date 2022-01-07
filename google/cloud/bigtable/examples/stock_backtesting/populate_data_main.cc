@@ -51,7 +51,7 @@ bool ParseFilepath(std::string const& filepath, std::string* ticker,
   std::vector<absl::string_view> basename_split =
       absl::StrSplit(basename, '.', absl::SkipWhitespace());
   if (basename_split.size() != 2) {
-    std::cerr << "Invalid input basename: " << basename << std::endl;
+    std::cerr << "Invalid input basename: " << basename;
     return false;
   }
   absl::string_view filename = basename_split.front();
@@ -69,8 +69,7 @@ bool ParseFilepath(std::string const& filepath, std::string* ticker,
     *data_type = DataType::kDividend;
     *col_family = "dividend";
   } else {
-    std::cerr << "Unrecognized input data type: " << filename_split.back()
-              << std::endl;
+    std::cerr << "Unrecognized input data type: " << filename_split.back();
     return false;
   }
 
@@ -93,8 +92,7 @@ void CommitBulk(cbt::Table* table, cbt::BulkMutation* bulk_mutation) {
       table->BulkApply(std::move(*bulk_mutation));
 
   if (!failures.empty()) {
-    std::cerr << failures.size() << " of the mutations in the bulk failed."
-              << std::endl;
+    std::cerr << failures.size() << " of the mutations in the bulk failed.";
   }
 
   // After the BulkApply() the bulk_mutation is discarded. Reinitialize.
@@ -106,7 +104,7 @@ void CommitBulk(cbt::Table* table, cbt::BulkMutation* bulk_mutation) {
 int main(int argc, char* argv[]) {
   if (argc != 5) {
     std::cerr << "Usage: populate_data <data_filepath> "
-              << "<project_id> <instance_id> <table_id>" << std::endl;
+              << "<project_id> <instance_id> <table_id>";
     return 1;
   }
 
@@ -117,14 +115,14 @@ int main(int argc, char* argv[]) {
   std::string const table_id = argv[4];
   if (data_filepath.empty() || project_id.empty() || instance_id.empty() ||
       table_id.empty()) {
-    std::cerr << "Please specify necessary parameters." << std::endl;
+    std::cerr << "Please specify necessary parameters.";
     return 1;
   }
 
   DataType data_type = DataType::kNotDefined;
   std::string ticker, col_family;
   if (!ParseFilepath(data_filepath, &ticker, &data_type, &col_family)) {
-    std::cerr << "Invalid input filepath: " << data_filepath << std::endl;
+    std::cerr << "Invalid input filepath: " << data_filepath;
     return 1;
   }
 
@@ -140,7 +138,7 @@ int main(int argc, char* argv[]) {
   // Read input data and populate the Bigtable.
   std::fstream input_file(data_filepath);
   if (!input_file.is_open()) {
-    std::cerr << "Error in opening file: " << data_filepath << std::endl;
+    std::cerr << "Error in opening file: " << data_filepath;
     return 1;
   }
 
