@@ -1,10 +1,10 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     http://www.apache.org/licenses/LICENSE-2.0
+//     https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,6 +27,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class RestClient;
 
+// This class is a regular type that contains the path, headers, and query
+// parameters for use in sending a request to a REST-ful service. It is intended
+// to be passed to the appropriate HTTP method on RestClient, along with a
+// payload if required.
 class RestRequest {
  public:
   using HttpHeaders = std::unordered_map<std::string, std::vector<std::string>>;
@@ -38,28 +42,45 @@ class RestRequest {
   RestRequest(std::string path, HttpParameters parameters);
   RestRequest(std::string path, HttpHeaders headers, HttpParameters parameters);
 
-  RestRequest(RestRequest const&) = default;
-  RestRequest& operator=(RestRequest const&) = default;
-  RestRequest(RestRequest&&) = default;
-  RestRequest& operator=(RestRequest&&) = default;
+  inline std::string const& path() const { return path_; }
+  inline HttpHeaders const& headers() const { return headers_; }
+  inline HttpParameters const& parameters() const { return parameters_; }
 
-  std::string const& path() const;
-  HttpHeaders const& headers() const;
-  HttpParameters const& parameters() const;
+  RestRequest& SetPath(std::string path) &;
+  inline RestRequest&& SetPath(std::string path) && {
+    return std::move(SetPath(std::move(path)));
+  }
 
-  RestRequest& SetPath(std::string path);
   // Adding a header/value pair that already exists results in the new value
   // appended to the list of values for the existing header.
-  RestRequest& AddHeader(std::string header, std::string value);
-  RestRequest& AddHeader(std::pair<std::string, std::string> header);
+  RestRequest& AddHeader(std::string header, std::string value) &;
+  inline RestRequest&& AddHeader(std::string header, std::string value) && {
+    return std::move(AddHeader(std::move(header), std::move(value)));
+  }
+  RestRequest& AddHeader(std::pair<std::string, std::string> header) &;
+  inline RestRequest&& AddHeader(
+      std::pair<std::string, std::string> header) && {
+    return std::move(AddHeader(std::move(header)));
+  }
+
   // Adding a duplicate param and or value results in both the new and original
   // pairs stored in order of addition.
-  RestRequest& AddQueryParameter(std::string parameter, std::string value);
-  RestRequest& AddQueryParameter(std::pair<std::string, std::string> parameter);
+  RestRequest& AddQueryParameter(std::string parameter, std::string value) &;
+  inline RestRequest&& AddQueryParameter(std::string parameter,
+                                         std::string value) && {
+    return std::move(AddQueryParameter(std::move(parameter), std::move(value)));
+  }
+  RestRequest& AddQueryParameter(
+      std::pair<std::string, std::string> parameter) &;
+  inline RestRequest&& AddQueryParameter(
+      std::pair<std::string, std::string> parameter) && {
+    return std::move(AddQueryParameter(std::move(parameter)));
+  }
 
   // Vector is empty if header name is not found.
   // Header names are case-insensitive; header values are case-sensitive.
   std::vector<std::string> GetHeader(std::string header) const;
+
   // Returns all values associated with parameter name.
   // Parameter names and values are case-sensitive.
   std::vector<std::string> GetQueryParameter(

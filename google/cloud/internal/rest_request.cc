@@ -1,10 +1,10 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     http://www.apache.org/licenses/LICENSE-2.0
+//     https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,12 +32,12 @@ RestRequest::RestRequest(std::string path, HttpHeaders headers,
       headers_(std::move(headers)),
       parameters_(std::move(parameters)) {}
 
-RestRequest& RestRequest::SetPath(std::string path) {
+RestRequest& RestRequest::SetPath(std::string path) & {
   path_ = std::move(path);
   return *this;
 }
 
-RestRequest& RestRequest::AddHeader(std::string header, std::string value) {
+RestRequest& RestRequest::AddHeader(std::string header, std::string value) & {
   std::transform(header.begin(), header.end(), header.begin(),
                  [](unsigned char c) { return std::tolower(c); });
   auto iter = headers_.find(header);
@@ -51,23 +51,21 @@ RestRequest& RestRequest::AddHeader(std::string header, std::string value) {
 }
 
 RestRequest& RestRequest::AddHeader(
-    std::pair<std::string, std::string> header) {
+    std::pair<std::string, std::string> header) & {
   return AddHeader(std::move(header.first), std::move(header.second));
 }
 
 RestRequest& RestRequest::AddQueryParameter(std::string parameter,
-                                            std::string value) {
+                                            std::string value) & {
   parameters_.emplace_back(std::move(parameter), std::move(value));
   return *this;
 }
 
 RestRequest& RestRequest::AddQueryParameter(
-    std::pair<std::string, std::string> parameter) {
+    std::pair<std::string, std::string> parameter) & {
   return AddQueryParameter(std::move(parameter.first),
                            std::move(parameter.second));
 }
-
-std::string const& RestRequest::path() const { return path_; }
 
 std::vector<std::string> RestRequest::GetHeader(std::string header) const {
   std::transform(header.begin(), header.end(), header.begin(),
@@ -88,13 +86,6 @@ std::vector<std::string> RestRequest::GetQueryParameter(
     }
   }
   return parameter_values;
-}
-
-RestRequest::HttpHeaders const& RestRequest::headers() const {
-  return headers_;
-}
-RestRequest::HttpParameters const& RestRequest::parameters() const {
-  return parameters_;
 }
 
 bool operator==(RestRequest const& lhs, RestRequest const& rhs) {

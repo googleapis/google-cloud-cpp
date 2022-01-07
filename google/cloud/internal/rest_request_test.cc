@@ -1,10 +1,10 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     http://www.apache.org/licenses/LICENSE-2.0
+//     https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/rest_request.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -75,6 +74,28 @@ TEST_F(RestRequestTest, ConstructorPathHeadersParameters) {
                   "header2", std::vector<std::string>{"value2a", "value2b"})));
   EXPECT_THAT(request.parameters(),
               Contains(std::make_pair("param1", "value1")));
+}
+
+TEST_F(RestRequestTest, RvalueBuilder) {
+  auto request = RestRequest()
+                     .SetPath("foo/bar")
+                     .AddHeader("header1", "value1")
+                     .AddHeader(std::make_pair("header2", "value2a"))
+                     .AddHeader("header2", "value2b")
+                     .AddQueryParameter("param1", "value1")
+                     .AddQueryParameter(std::make_pair("param2", "value2"));
+  EXPECT_THAT(request.path(), Eq("foo/bar"));
+  EXPECT_THAT(
+      request.headers(),
+      Contains(std::make_pair("header1", std::vector<std::string>{"value1"})));
+  EXPECT_THAT(request.headers(),
+              Contains(std::make_pair(
+                  "header2", std::vector<std::string>{"value2a", "value2b"})));
+  ASSERT_THAT(request.parameters().size(), Eq(2));
+  EXPECT_THAT(request.parameters()[0],
+              Eq(std::make_pair(std::string("param1"), std::string("value1"))));
+  EXPECT_THAT(request.parameters()[1],
+              Eq(std::make_pair(std::string("param2"), std::string("value2"))));
 }
 
 TEST_F(RestRequestTest, GetHeaderNotFound) {
