@@ -17,7 +17,7 @@
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Secret Manager API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Secret Manager API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "secretmanager_internal"
                             "secretmanager_testing" "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
@@ -80,13 +80,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_secretmanager)
 set_target_properties(
     google_cloud_cpp_secretmanager
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-secretmanager
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::secretmanager VERSION
+                                                           "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_secretmanager
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-secretmanager ALIAS
+add_library(google-cloud-cpp::secretmanager ALIAS
             google_cloud_cpp_secretmanager)
 
 # To avoid maintaining the list of files for the library, export them to a .bzl
@@ -111,8 +111,11 @@ add_library(google_cloud_cpp_secretmanager_mocks INTERFACE)
 target_sources(google_cloud_cpp_secretmanager_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_secretmanager_mocks
-    INTERFACE google-cloud-cpp::experimental-secretmanager GTest::gmock_main
-              GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::secretmanager GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(
+    google_cloud_cpp_secretmanager_mocks
+    PROPERTIES EXPORT_NAME google-cloud-cpp::secretmanager_mocks)
 create_bazel_config(google_cloud_cpp_secretmanager_mocks YEAR "2021")
 target_include_directories(
     google_cloud_cpp_secretmanager_mocks

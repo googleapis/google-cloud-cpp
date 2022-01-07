@@ -17,7 +17,7 @@
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Cloud Tasks API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud Tasks API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "tasks_internal" "tasks_testing"
                             "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
@@ -82,13 +82,12 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_tasks)
 set_target_properties(
     google_cloud_cpp_tasks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-tasks
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::tasks VERSION "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_tasks
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-tasks ALIAS google_cloud_cpp_tasks)
+add_library(google-cloud-cpp::tasks ALIAS google_cloud_cpp_tasks)
 
 # To avoid maintaining the list of files for the library, export them to a .bzl
 # file.
@@ -114,6 +113,8 @@ target_link_libraries(
     google_cloud_cpp_tasks_mocks
     INTERFACE google-cloud-cpp::experimental-tasks GTest::gmock_main
               GTest::gmock GTest::gtest)
+set_target_properties(google_cloud_cpp_tasks_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::tasks_mocks)
 create_bazel_config(google_cloud_cpp_tasks_mocks YEAR "2021")
 target_include_directories(
     google_cloud_cpp_tasks_mocks
