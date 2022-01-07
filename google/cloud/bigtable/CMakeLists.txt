@@ -54,6 +54,8 @@ target_link_libraries(
     google_cloud_cpp_bigtable_mocks
     INTERFACE google-cloud-cpp::bigtable GTest::gmock_main GTest::gmock
               GTest::gtest)
+set_target_properties(google_cloud_cpp_bigtable_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::bigtable_mocks)
 create_bazel_config(google_cloud_cpp_bigtable_mocks YEAR "2021")
 target_include_directories(
     google_cloud_cpp_bigtable_mocks

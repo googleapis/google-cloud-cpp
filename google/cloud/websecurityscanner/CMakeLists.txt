@@ -118,6 +118,10 @@ target_link_libraries(
     google_cloud_cpp_websecurityscanner_mocks
     INTERFACE google-cloud-cpp::experimental-websecurityscanner
               GTest::gmock_main GTest::gmock GTest::gtest)
+set_target_properties(
+    google_cloud_cpp_websecurityscanner_mocks
+    PROPERTIES EXPORT_NAME
+               google-cloud-cpp::experimental-websecurityscanner_mocks)
 create_bazel_config(google_cloud_cpp_websecurityscanner_mocks YEAR "2022")
 target_include_directories(
     google_cloud_cpp_websecurityscanner_mocks
