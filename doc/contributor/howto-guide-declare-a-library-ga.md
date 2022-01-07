@@ -2,7 +2,7 @@
 
 This document describes the steps required to promote a `google-cloud-cpp`
 library to GA. The document is intended for contributors to the
-`google-cloud-cpp` libraries, it assumes you are familiar with the build systems
+`google-cloud-cpp` libraries. It assumes you are familiar with the build systems
 used in these libraries, and that you are familiar with existing libraries.
 
 This document applies to both hand-crafted and generated libraries, but mostly
@@ -10,7 +10,7 @@ it will be using generated libraries as examples.
 
 ## Overview
 
-Largely declaring a library "GA" is a matter of updating the documentation and
+Declaring a library "GA" is largely a matter of updating the documentation and
 the target names to indicate that the library is no longer experimental. You
 typically need to take three steps, with an intermediate release before the
 last step:
@@ -42,20 +42,16 @@ library.  This program is typically created when the library is generated.
 Verify that the following documents describe the library as GA, or at least do
 not describe the library as experimental:
 
-- `README.md`: link the new library README files from the list of GA libraries
+- `README.md`: link the new library README files from the list of GA libraries.
 - `CHANGELOG.md`: update the release notes for the next release announcing the
   new libraries.
 - `google/cloud/${library}/README.md`: remove the comments stating that the
-  library is experimental. Change them to say that the library is GA, but that
+  library is experimental. Change them to say that the library is GA, and that
   `google-cloud-cpp` does not follow semantic versioning.
-- `google/cloud/${library}/doc/main.dox`: remove the comments stating that the
-  library is experimental. Change them to say that the library is GA, but that
-  `google-cloud-cpp` does not follow semantic versioning.
-- `google/cloud/${library}/quickstart/README.md`: no changes.
-
-Note that `google/cloud/${library}/CMakeLists.txt` sets the
-`DOXYGEN_PROJECT_NUMBER` to `${PROJECT_VERSION} (Experimental)`. Change that to
-simply `${PROJECT_VERSION}`.
+- `google/cloud/${library}/doc/main.dox`: ditto.
+- `google/cloud/${library}/quickstart/README.md`: hopefully no changes.
+- `google/cloud/${library}/CMakeLists.txt` sets the `DOXYGEN_PROJECT_NUMBER`
+  to `${PROJECT_VERSION} (Experimental)`. Change that to `${PROJECT_VERSION}`.
 
 ## Update the targets and rules
 
@@ -89,5 +85,5 @@ index ad00ed7eb..996572a0c 100644
 ## Remove the `experimental-` rules and targets
 
 Once a release is created *and* the release is included in `vcpkg`, change the
-quickstart guide to reference the rules and targets without a `experimental-`
+quickstart guide to reference the rules and targets without an `experimental-`
 prefix. Then you can remove these rules and targets.
