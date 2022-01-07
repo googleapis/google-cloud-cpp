@@ -2,7 +2,7 @@
 
 :construction:
 
-This directory contains an idiomatic C++ client library for
+This directory contains an idiomatic C++ client library for the
 [Cloud Billing API][cloud-service-docs], a service that interacts with billing
 accounts, billing budgets, and billing catalogs.
 
