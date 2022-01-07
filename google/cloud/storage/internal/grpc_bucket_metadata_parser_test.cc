@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_bucket_metadata_parser.h"
+#include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -24,8 +26,195 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::ElementsAreArray;
+
+TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
+  google::storage::v2::Bucket input;
+  // Keep the proto fields in the order they show up in the proto file, easier
+  // to add new fields and to inspect the test for missing fields
+  auto constexpr kText = R"pb(
+    name: "projects/_/buckets/test-bucket-id"
+    bucket_id: "test-bucket-id"
+    project: "projects/123456"
+    metageneration: 1234567
+    location: "test-location"
+    location_type: "REGIONAL"
+    storage_class: "test-storage-class"
+    rpo: "test-rpo"
+    acl: { role: "test-role1" entity: "test-entity1" }
+    acl: { role: "test-role2" entity: "test-entity2" }
+    default_object_acl: { role: "test-role3" entity: "test-entity3" }
+    default_object_acl: { role: "test-role4" entity: "test-entity4" }
+    lifecycle {
+      rule {
+        action { type: "Delete" }
+        condition {
+          age_days: 90
+          is_live: false
+          matches_storage_class: "NEARLINE"
+        }
+      }
+      rule {
+        action { type: "SetStorageClass" storage_class: "NEARLINE" }
+        condition {
+          age_days: 7
+          is_live: true
+          matches_storage_class: "STANDARD"
+        }
+      }
+    }
+    create_time: { seconds: 1565194924 nanos: 123456000 }
+    cors: {
+      origin: "test-origin-0"
+      origin: "test-origin-1"
+      method: "GET"
+      method: "PUT"
+      response_header: "test-header-0"
+      response_header: "test-header-1"
+      max_age_seconds: 1800
+    }
+    cors: {
+      origin: "test-origin-2"
+      origin: "test-origin-3"
+      method: "POST"
+      response_header: "test-header-3"
+      max_age_seconds: 3600
+    }
+    update_time: { seconds: 1565194924 nanos: 123456000 }
+    default_event_based_hold: true
+    labels: { key: "test-key-1" value: "test-value-1" }
+    labels: { key: "test-key-2" value: "test-value-2" }
+    website { main_page_suffix: "index.html" not_found_page: "404.html" }
+    versioning { enabled: true }
+    logging {
+      log_bucket: "test-log-bucket"
+      log_object_prefix: "test-log-object-prefix"
+    }
+    owner { entity: "test-entity" entity_id: "test-entity-id" }
+    encryption { default_kms_key: "test-default-kms-key-name" }
+    billing { requester_pays: true }
+    retention_policy {
+      effective_time { seconds: 1565194924 nanos: 123456000 }
+      is_locked: true
+      retention_period: 86400
+    }
+    iam_config {
+      uniform_bucket_level_access {
+        enabled: true
+        lock_time { seconds: 1565194924 nanos: 123456000 }
+      }
+    }
+  )pb";
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &input));
+
+  // To get the dates in RFC-3339 format I used:
+  //     date --rfc-3339=seconds --date=@1565194924
+  auto const expected = BucketMetadataParser::FromString(R"""({
+    "acl": [{
+      "kind": "storage#bucketAccessControl",
+      "bucket": "test-bucket-id",
+      "role": "test-role1",
+      "entity": "test-entity1"
+    }, {
+      "kind": "storage#bucketAccessControl",
+      "bucket": "test-bucket-id",
+      "role": "test-role2",
+      "entity": "test-entity2"
+    }],
+    "defaultObjectAcl": [{
+      "kind": "storage#objectAccessControl",
+      "bucket": "test-bucket-id",
+      "role": "test-role3",
+      "entity": "test-entity3"
+    }, {
+      "kind": "storage#objectAccessControl",
+      "bucket": "test-bucket-id",
+      "role": "test-role4",
+      "entity": "test-entity4"
+    }],
+    "lifecycle": {
+      "rule": [{
+        "action": { "type": "Delete" },
+        "condition": {
+          "age": 90,
+          "isLive": false,
+          "matchesStorageClass": "NEARLINE"
+        }
+      },
+      {
+        "action": { "type": "SetStorageClass", "storageClass": "NEARLINE" },
+        "condition": {
+          "age": 7,
+          "isLive": true,
+          "matchesStorageClass": "STANDARD"
+        }
+      }]
+    },
+    "timeCreated": "2019-08-07T16:22:04.123456000Z",
+    "id": "test-bucket-id",
+    "kind": "storage#bucket",
+    "name": "test-bucket-id",
+    "projectNumber": 123456,
+    "metageneration": "1234567",
+    "cors": [{
+      "origin": ["test-origin-0", "test-origin-1"],
+      "method": ["GET", "PUT"],
+      "responseHeader": ["test-header-0", "test-header-1"],
+      "maxAgeSeconds": 1800
+    }, {
+      "origin": ["test-origin-2", "test-origin-3"],
+      "method": ["POST"],
+      "responseHeader": ["test-header-3"],
+      "maxAgeSeconds": 3600
+    }],
+    "location": "test-location",
+    "storageClass": "test-storage-class",
+    "updated": "2019-08-07T16:22:04.123456000Z",
+    "defaultEventBasedHold": true,
+    "labels": {
+        "test-key-1": "test-value-1",
+        "test-key-2": "test-value-2"
+    },
+    "website": {
+      "mainPageSuffix": "index.html",
+      "notFoundPage": "404.html"
+    },
+    "versioning": { "enabled": true },
+    "logging": {
+      "logBucket": "test-log-bucket",
+      "logObjectPrefix": "test-log-object-prefix"
+    },
+    "owner": { "entity": "test-entity", "entityId": "test-entity-id" },
+    "encryption": { "defaultKmsKeyName": "test-default-kms-key-name" },
+    "billing": { "requesterPays": true },
+    "retentionPolicy": {
+      "effectiveTime": "2019-08-07T16:22:04.123456000Z",
+      "isLocked": true,
+      "retentionPeriod": 86400
+    },
+    "rpo": "test-rpo",
+    "locationType": "REGIONAL",
+    "iamConfiguration": {
+      "uniformBucketLevelAccess": {
+        "enabled": true,
+        "lockedTime": "2019-08-07T16:22:04.123456000Z"
+      }
+    }
+  })""");
+  ASSERT_THAT(expected, IsOk());
+
+  auto const middle = GrpcBucketMetadataParser::FromProto(input);
+  EXPECT_EQ(middle, *expected);
+
+  auto const p1 = GrpcBucketMetadataParser::ToProto(middle);
+  auto const p2 = GrpcBucketMetadataParser::ToProto(*expected);
+  EXPECT_THAT(p1, IsProtoEqual(p2));
+
+  auto const actual = GrpcBucketMetadataParser::ToProto(middle);
+  EXPECT_THAT(actual, IsProtoEqual(input));
+}
 
 TEST(GrpcBucketMetadataParser, BucketBillingRoundtrip) {
   auto constexpr kText = R"pb(

@@ -60,6 +60,7 @@ inline bool operator>=(Owner const& lhs, Owner const& rhs) {
 }
 
 namespace internal {
+struct GrpcBucketMetadataParser;
 struct GrpcObjectMetadataParser;
 template <typename Derived>
 struct CommonMetadataParser;
@@ -101,6 +102,7 @@ class CommonMetadata {
   std::chrono::system_clock::time_point updated() const { return updated_; }
 
  private:
+  friend struct GrpcBucketMetadataParser;
   friend struct GrpcObjectMetadataParser;
   template <typename ParserDerived>
   friend struct CommonMetadataParser;

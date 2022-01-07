@@ -36,7 +36,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 struct BucketMetadataParser;
-class GrpcClient;
+struct GrpcBucketMetadataParser;
 }  // namespace internal
 
 /**
@@ -890,7 +890,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
 
  private:
   friend struct internal::BucketMetadataParser;
-  friend class internal::GrpcClient;
+  friend struct internal::GrpcBucketMetadataParser;
 
   friend std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);
   // Keep the fields in alphabetical order.
