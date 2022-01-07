@@ -159,9 +159,9 @@ void CalculateProfit(
 
 int main(int argc, char* argv[]) {
   if (argc != 8) {
-    std::cerr << "Usage: backtesting <strategy_filepath> <ticker> "
-              << "<start_date> <end_date> <project_id> <instance_id> <table_id>"
-              << std::endl;
+    std::cerr
+        << "Usage: backtesting <strategy_filepath> <ticker> "
+        << "<start_date> <end_date> <project_id> <instance_id> <table_id>";
     return 1;
   }
 
@@ -177,7 +177,7 @@ int main(int argc, char* argv[]) {
   if (strategy_filepath.empty() || ticker.empty() || start_date_str.empty() ||
       end_date_str.empty() || project_id.empty() || instance_id.empty() ||
       table_id.empty()) {
-    std::cerr << "Please specify necessary parameters." << std::endl;
+    std::cerr << "Please specify necessary parameters.";
     return 1;
   }
 
@@ -185,31 +185,31 @@ int main(int argc, char* argv[]) {
   if (!absl::ParseCivilTime(start_date_str, &start_date) ||
       !absl::ParseCivilTime(end_date_str, &end_date)) {
     std::cerr << "Can't parse the dates: " << start_date_str << " and "
-              << end_date_str << std::endl;
+              << end_date_str;
     return 1;
   }
   if (!absl::ParseCivilTime(kMinStartDate, &min_start_date) ||
       !absl::ParseCivilTime(kMaxEndDate, &max_end_date)) {
-    std::cerr << "Can't parse the backtesting window." << std::endl;
+    std::cerr << "Can't parse the backtesting window.";
     return 1;
   }
   if (start_date < min_start_date || end_date > max_end_date ||
       start_date >= end_date) {
-    std::cerr << "Backtesting only supports time window "
-              << "[2016-10-31, 2021-10-29).";
+    std::cerr << "Backtesting only supports time window [" << kMinStartDate
+              << ", " << kMaxEndDate << ")";
     return 1;
   }
 
   // Read the input strategy file.
   std::fstream input_file(strategy_filepath);
   if (!input_file.is_open()) {
-    std::cerr << "Error in opening file: " << strategy_filepath << std::endl;
+    std::cerr << "Error in opening file: " << strategy_filepath;
     return 1;
   }
   std::string input_str(std::istreambuf_iterator<char>{input_file}, {});
   cbt::examples::Strategy strategy;
   if (!google::protobuf::TextFormat::ParseFromString(input_str, &strategy)) {
-    std::cerr << "Can't parse the input strategy." << std::endl;
+    std::cerr << "Can't parse the input strategy.";
     return 1;
   }
 
@@ -226,13 +226,13 @@ int main(int argc, char* argv[]) {
   for (auto const& row_key : row_keys) {
     auto result = table.ReadRow(row_key, filter).value();
     if (!result.first) {
-      std::cerr << "Error in reading row key: " << row_key << "; continue."
-                << std::endl;
+      std::cerr << "Error in reading row key: " << row_key << "; continue.";
       continue;
     }
 
     auto const& cells = result.second.cells();
     for (auto const& cell : cells) {
+      // As an example to convert std::chrono to absl::CivilDay.
       absl::Duration const ts_duration = absl::FromChrono(cell.timestamp());
       absl::Time const ts_time =
           absl::time_internal::FromUnixDuration(ts_duration);
@@ -241,8 +241,7 @@ int main(int argc, char* argv[]) {
 
       double price_value;
       if (!absl::SimpleAtod(cell.value(), &price_value)) {
-        std::cerr << "Can't parse the cell value: " << cell.value()
-                  << std::endl;
+        std::cerr << "Can't parse the cell value: " << cell.value();
         continue;
       }
 
