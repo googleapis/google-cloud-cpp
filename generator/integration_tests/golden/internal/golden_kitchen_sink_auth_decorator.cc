@@ -17,6 +17,7 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_auth_decorator.h"
+#include "google/cloud/internal/async_read_write_stream_auth.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <memory>
 
@@ -87,6 +88,21 @@ Status GoldenKitchenSinkAuth::DoNothing(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DoNothing(context, request);
+}
+
+std::unique_ptr<GoldenKitchenSinkStub::AsyncAppendRowsStream>
+GoldenKitchenSinkAuth::AsyncAppendRows(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
+    google::test::admin::database::v1::AppendRowsRequest, google::test::admin::database::v1::AppendRowsResponse>;
+
+  auto child = child_;
+  auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) mutable {
+    return child->AsyncAppendRows(cq, std::move(ctx));
+  };
+  return absl::make_unique<StreamAuth>(
+    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

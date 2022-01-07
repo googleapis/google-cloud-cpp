@@ -91,6 +91,19 @@ DefaultLoggingServiceV2Stub::ListLogs(
   return response;
 }
 
+std::unique_ptr<LoggingServiceV2Stub::AsyncTailLogEntriesStream>
+DefaultLoggingServiceV2Stub::AsyncTailLogEntries(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::logging::v2::TailLogEntriesRequest,
+      google::logging::v2::TailLogEntriesResponse>(
+      cq, std::move(context),
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncTailLogEntries(context, cq);
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_internal
 }  // namespace cloud

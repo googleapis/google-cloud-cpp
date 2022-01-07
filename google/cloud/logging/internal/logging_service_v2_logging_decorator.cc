@@ -17,6 +17,7 @@
 // source: google/logging/v2/logging.proto
 
 #include "google/cloud/logging/internal/logging_service_v2_logging_decorator.h"
+#include "google/cloud/internal/async_read_write_stream_logging.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/logging/v2/logging.grpc.pb.h>
@@ -93,6 +94,25 @@ LoggingServiceV2Logging::ListLogs(
         return child_->ListLogs(context, request);
       },
       context, request, __func__, tracing_options_);
+}
+
+std::unique_ptr<LoggingServiceV2Stub::AsyncTailLogEntriesStream>
+LoggingServiceV2Logging::AsyncTailLogEntries(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  using LoggingStream =
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
+          google::logging::v2::TailLogEntriesRequest,
+          google::logging::v2::TailLogEntriesResponse>;
+
+  auto request_id = internal::RequestIdForLogging();
+  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  auto stream = child_->AsyncTailLogEntries(cq, std::move(context));
+  if (components_.count("rpc-streams") > 0) {
+    stream = absl::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

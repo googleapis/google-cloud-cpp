@@ -54,6 +54,9 @@ Status StubGenerator::GenerateHeader() {
        "google/cloud/status_or.h",
        HasStreamingReadMethod() ? "google/cloud/internal/streaming_read_rpc.h"
                                 : "",
+       HasBidirStreamingMethod()
+           ? "google/cloud/internal/async_read_write_stream_impl.h"
+           : "",
        "google/cloud/version.h"});
   HeaderSystemIncludes(
       {vars("proto_grpc_header_path"),
@@ -73,6 +76,17 @@ Status StubGenerator::GenerateHeader() {
   // clang-format on
 
   for (auto const& method : methods()) {
+    if (IsBidirStreaming(method)) {
+      HeaderPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(  using Async$method_name$Stream = ::google::cloud::internal::AsyncStreamingReadWriteRpc<$request_type$, $response_type$>;
+  virtual std::unique_ptr<Async$method_name$Stream> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context) = 0;
+
+)""");
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern(
@@ -168,6 +182,16 @@ Status StubGenerator::GenerateHeader() {
 
   for (auto const& method : methods()) {
     // emit methods
+    if (IsBidirStreaming(method)) {
+      HeaderPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(  std::unique_ptr<Async$method_name$Stream> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+
+)""");
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern({{IsResponseTypeEmpty,
@@ -286,6 +310,23 @@ Status StubGenerator::GenerateCc() {
 
   // default stub class member methods
   for (auto const& method : methods()) {
+    if (IsBidirStreaming(method)) {
+      CcPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(std::unique_ptr<$stub_class_name$::Async$method_name$Stream>
+Default$stub_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  return google::cloud::internal::MakeStreamingReadWriteRpc<$request_type$, $response_type$>(
+      cq, std::move(context),
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsync$method_name$(context, cq);
+      });
+}
+
+)""");
+      continue;
+    }
     CcPrintMethod(
         method,
         {MethodPattern(

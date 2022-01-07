@@ -68,6 +68,14 @@ Status AuthDecoratorGenerator::GenerateHeader() {
 )""");
 
   for (auto const& method : methods()) {
+    if (IsBidirStreaming(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  std::unique_ptr<Async$method_name$Stream> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+)""");
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern({{IsResponseTypeEmpty,
@@ -158,7 +166,12 @@ Status AuthDecoratorGenerator::GenerateCc() {
 )""");
 
   // includes
-  CcLocalIncludes({vars("auth_header_path")});
+  CcLocalIncludes({
+      vars("auth_header_path"),
+      HasBidirStreamingMethod()
+          ? "google/cloud/internal/async_read_write_stream_auth.h"
+          : "",
+  });
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
   CcPrint("\n");
 
@@ -175,6 +188,25 @@ Status AuthDecoratorGenerator::GenerateCc() {
 
   // Auth decorator class member methods
   for (auto const& method : methods()) {
+    if (IsBidirStreaming(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+std::unique_ptr<$stub_class_name$::Async$method_name$Stream>
+$auth_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
+    $request_type$, $response_type$>;
+
+  auto child = child_;
+  auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) mutable {
+    return child->Async$method_name$(cq, std::move(ctx));
+  };
+  return absl::make_unique<StreamAuth>(
+    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+}
+)""");
+      continue;
+    }
     CcPrintMethod(
         method,
         {MethodPattern({{IsResponseTypeEmpty,

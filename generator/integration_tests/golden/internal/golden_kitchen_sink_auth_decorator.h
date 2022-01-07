@@ -67,6 +67,10 @@ class GoldenKitchenSinkAuth : public GoldenKitchenSinkStub {
       grpc::ClientContext& context,
       google::protobuf::Empty const& request) override;
 
+  std::unique_ptr<AsyncAppendRowsStream> AsyncAppendRows(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<GoldenKitchenSinkStub> child_;

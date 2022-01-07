@@ -232,6 +232,20 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
       (::grpc::ClientContext * context,
        ::google::protobuf::Empty const& request, ::grpc::CompletionQueue* cq),
       (override));
+
+  using AppendRowsInterface = ::grpc::ClientReaderWriterInterface<
+      ::google::test::admin::database::v1::AppendRowsRequest,
+      ::google::test::admin::database::v1::AppendRowsResponse>;
+  using AppendRowsAsyncInterface = ::grpc::ClientAsyncReaderWriterInterface<
+      ::google::test::admin::database::v1::AppendRowsRequest,
+      ::google::test::admin::database::v1::AppendRowsResponse>;
+  MOCK_METHOD(AppendRowsInterface*, AppendRowsRaw,
+              (::grpc::ClientContext * context), (override));
+  MOCK_METHOD(AppendRowsAsyncInterface*, AsyncAppendRowsRaw,
+              (::grpc::ClientContext*, ::grpc::CompletionQueue*, void*),
+              (override));
+  MOCK_METHOD(AppendRowsAsyncInterface*, PrepareAsyncAppendRowsRaw,
+              (::grpc::ClientContext*, ::grpc::CompletionQueue*), (override));
 };
 
 class GoldenKitchenSinkStubTest : public ::testing::Test {

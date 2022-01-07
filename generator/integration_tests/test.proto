@@ -846,6 +846,17 @@ service GoldenKitchenSink {
     option (google.api.method_signature) = "";
   }
 
+  // A much simplified version of the AppendRows in google.cloud.bigquery.storage.v1.BigQueryWrite
+  rpc AppendRows(stream AppendRowsRequest) returns (stream AppendRowsResponse) {
+  }
+}
+
+message AppendRowsRequest {
+  string stream = 1;
+}
+
+message AppendRowsResponse {
+  string response = 1;
 }
 
 message GenerateAccessTokenRequest {
