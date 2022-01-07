@@ -288,6 +288,14 @@ TEST(ProcessCommandLineArgs, ProcessArgNamespaceAlias) {
                                      HasSubstr("true"))));
 }
 
+TEST(ProcessCommandLineArgs, ProcessOmitClient) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/spanner/"
+      ",omit_client=true");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, Contains(Pair("omit_client", "true")));
+}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud

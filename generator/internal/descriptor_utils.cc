@@ -641,10 +641,13 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     std::vector<std::pair<std::string, std::string>> const& vars) {
   std::vector<std::unique_ptr<GeneratorInterface>> code_generators;
   VarsDictionary service_vars = CreateServiceVars(*service, vars);
+  auto found = service_vars.find("omit_client");
+  if (found == service_vars.end() || found->second != "true") {
+    code_generators.push_back(absl::make_unique<ClientGenerator>(
+        service, service_vars, CreateMethodVars(*service, service_vars),
+        context));
+  }
   code_generators.push_back(absl::make_unique<AuthDecoratorGenerator>(
-      service, service_vars, CreateMethodVars(*service, service_vars),
-      context));
-  code_generators.push_back(absl::make_unique<ClientGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<ConnectionGenerator>(
