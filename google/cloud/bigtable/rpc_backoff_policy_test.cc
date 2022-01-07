@@ -34,7 +34,6 @@ grpc::Status CreateTransientError() {
 /// @test A simple test for the ExponentialBackoffRetryPolicy.
 TEST(ExponentialBackoffRetryPolicy, Simple) {
   ExponentialBackoffPolicy tested(10_ms, 500_ms);
-  auto common = bigtable_internal::MakeCommonBackoffPolicy(tested.clone());
 
   EXPECT_GE(10_ms, tested.OnCompletion(CreateTransientError()));
   EXPECT_NE(500_ms, tested.OnCompletion(CreateTransientError()));
@@ -46,6 +45,7 @@ TEST(ExponentialBackoffRetryPolicy, Simple) {
   EXPECT_GE(500_ms, tested.OnCompletion(CreateTransientError()));
 
   // Verify that converting to a common backoff policy preserves behavior.
+  auto common = bigtable_internal::MakeCommonBackoffPolicy(tested.clone());
   EXPECT_GE(10_ms, common->OnCompletion());
   EXPECT_NE(500_ms, common->OnCompletion());
   EXPECT_NE(500_ms, common->OnCompletion());
