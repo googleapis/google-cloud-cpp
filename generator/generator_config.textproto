@@ -169,6 +169,14 @@ service {
   retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
 }
 
+# Web Risk
+service {
+  service_proto_path: "google/cloud/webrisk/v1/webrisk.proto"
+  product_path: "google/cloud/webrisk"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # Web Security Scanner
 service {
   service_proto_path: "google/cloud/websecurityscanner/v1/web_security_scanner.proto"
