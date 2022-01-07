@@ -3,8 +3,8 @@
 @mainpage Web Risk API C++ Client Library
 
 An idiomatic C++ client library for
-[Web Risk API](https://cloud.google.com/webrisk/), a service that
-<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+[Web Risk](https://cloud.google.com/web-risk/), a service to detect malicious
+URLs on your website and in client applications.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -86,7 +86,7 @@ uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
-[gcs-quickstart]: https://cloud.google.com/webrisk/docs/quickstarts 'Quickstarts'
+[gcs-quickstart]: https://cloud.google.com/web-risk/docs/quickstarts 'Quickstarts'
 [resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
 [billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
 [authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'

@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for
-[Web Risk API][cloud-service-docs], a service that <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+[Web Risk](https://cloud.google.com/web-risk/), a service to detect malicious
+URLs on your website and in client applications.
 
 This library is **experimental**. Its APIS are subject to change without notice.
 
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/webrisk
+[cloud-service-docs]: https://cloud.google.com/web-risk
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-webrisk/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/webrisk
 
@@ -38,26 +39,27 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/webrisk/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/webrisk/web_risk_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc > 2) {
+    std::cerr << "Usage: " << argv[0]
+              << " [uri (default https://www.google.com)]\n";
     return 1;
   }
 
   namespace webrisk = ::google::cloud::webrisk;
-  auto client = webrisk::Client(
-      webrisk::MakeConnection(/* EDIT HERE */));
+  auto client =
+      webrisk::WebRiskServiceClient(webrisk::MakeWebRiskServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName()) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
-  }
+  auto const uri = std::string{argc == 2 ? argv[1] : "https://www.google.com/"};
+  auto const threat_types = std::vector<webrisk::v1::ThreatType>{
+      webrisk::v1::MALWARE, webrisk::v1::UNWANTED_SOFTWARE};
+  auto response = client.SearchUris("https://www.google.com/", threat_types);
+  if (!response) throw std::runtime_error(response.status().message());
+  std::cout << response->DebugString() << "\n";
 
   return 0;
 } catch (std::exception const& ex) {
