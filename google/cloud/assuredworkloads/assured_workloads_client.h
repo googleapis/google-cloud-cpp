@@ -97,12 +97,12 @@ class AssuredWorkloadsServiceClient {
   /// @param workload  Required. Assured Workload to create
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   /// [google.cloud.assuredworkloads.v1.CreateWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L99}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L101}
   /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
   CreateWorkload(std::string const& parent,
@@ -113,15 +113,15 @@ class AssuredWorkloadsServiceClient {
   /// Creates Assured Workload.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::CreateWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L99}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::CreateWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L101}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   /// [google.cloud.assuredworkloads.v1.CreateWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L99}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L101}
   /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
   CreateWorkload(
@@ -141,12 +141,12 @@ class AssuredWorkloadsServiceClient {
   /// @param update_mask  Required. The list of fields to be updated.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   /// [google.cloud.assuredworkloads.v1.UpdateWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L120}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L122}
   /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   StatusOr<google::cloud::assuredworkloads::v1::Workload> UpdateWorkload(
       google::cloud::assuredworkloads::v1::Workload const& workload,
@@ -159,15 +159,15 @@ class AssuredWorkloadsServiceClient {
   /// Only one update operation per workload can be in progress.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::UpdateWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L120}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::UpdateWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L122}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   /// [google.cloud.assuredworkloads.v1.UpdateWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L120}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L122}
   /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   StatusOr<google::cloud::assuredworkloads::v1::Workload> UpdateWorkload(
       google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request,
@@ -184,7 +184,7 @@ class AssuredWorkloadsServiceClient {
   /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.assuredworkloads.v1.DeleteWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L132}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L135}
   ///
   Status DeleteWorkload(std::string const& name, Options options = {});
 
@@ -194,11 +194,11 @@ class AssuredWorkloadsServiceClient {
   /// FAILED_PRECONDITION error.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::DeleteWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L132}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::DeleteWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L135}
   /// @param options  Optional. Operation options.
   ///
   /// [google.cloud.assuredworkloads.v1.DeleteWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L132}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L135}
   ///
   Status DeleteWorkload(
       google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request,
@@ -208,19 +208,19 @@ class AssuredWorkloadsServiceClient {
   /// Gets Assured Workload associated with a CRM Node
   ///
   /// @param name  Required. The resource name of the Workload to fetch. This is
-  /// the workloads's
-  ///  relative path in the API, formatted as
+  /// the
+  ///  workloads's relative path in the API, formatted as
   ///  "organizations/{organization_id}/locations/{location_id}/workloads/{workload_id}".
   ///  For example,
   ///  "organizations/123/locations/us-east1/workloads/assured-workload-1".
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   /// [google.cloud.assuredworkloads.v1.GetWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L149}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L152}
   /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   StatusOr<google::cloud::assuredworkloads::v1::Workload> GetWorkload(
       std::string const& name, Options options = {});
@@ -229,15 +229,15 @@ class AssuredWorkloadsServiceClient {
   /// Gets Assured Workload associated with a CRM Node
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::GetWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L149}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::GetWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L152}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   /// [google.cloud.assuredworkloads.v1.GetWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L149}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L152}
   /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   StatusOr<google::cloud::assuredworkloads::v1::Workload> GetWorkload(
       google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request,
@@ -250,12 +250,12 @@ class AssuredWorkloadsServiceClient {
   ///  Must be of the form `organizations/{org_id}/locations/{location}`.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   /// [google.cloud.assuredworkloads.v1.ListWorkloadsRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L164}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L167}
   /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   StreamRange<google::cloud::assuredworkloads::v1::Workload> ListWorkloads(
       std::string const& parent, Options options = {});
@@ -264,15 +264,15 @@ class AssuredWorkloadsServiceClient {
   /// Lists Assured Workloads under a CRM Node.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::ListWorkloadsRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L164}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::ListWorkloadsRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L167}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   /// [google.cloud.assuredworkloads.v1.ListWorkloadsRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L164}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L167}
   /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   StreamRange<google::cloud::assuredworkloads::v1::Workload> ListWorkloads(
       google::cloud::assuredworkloads::v1::ListWorkloadsRequest request,
