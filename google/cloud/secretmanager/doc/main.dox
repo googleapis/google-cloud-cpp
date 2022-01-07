@@ -6,7 +6,8 @@ An idiomatic C++ client library for
 [Secret Manager API](https://cloud.google.com/secretmanager/), a service that
 stores sensitive data such as API keys, passwords, and certificates.
 
-This library is **experimental**. Its APIs are subject to change without notice.
+While this library is **GA**, please note that the Google Cloud C++
+client libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 This library requires a C++11 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The
