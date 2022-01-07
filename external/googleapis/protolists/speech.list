@@ -1,1 +1,2 @@
 @com_google_googleapis//google/cloud/speech/v1:cloud_speech.proto
+@com_google_googleapis//google/cloud/speech/v1:resource.proto
