@@ -59,6 +59,28 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable", "kAborted"]
 }
 
+# Billing
+service {
+  service_proto_path: "google/cloud/billing/v1/cloud_billing.proto"
+  product_path: "google/cloud/billing"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/billing/v1/cloud_catalog.proto"
+  product_path: "google/cloud/billing"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/billing/budgets/v1/budget_service.proto"
+  product_path: "google/cloud/billing"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # IAM
 service {
   service_proto_path: "google/iam/credentials/v1/iamcredentials.proto"
