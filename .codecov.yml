@@ -16,6 +16,7 @@ ignore:
   - "google/cloud/assuredworkloads"
   - "google/cloud/bigquery"
   - "google/cloud/bigtable/admin"
+  - "google/cloud/billing"
   - "google/cloud/iam"
   - "google/cloud/kms"
   - "google/cloud/logging"

@@ -65,6 +65,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-billing",
+    deps = [
+        "//google/cloud/billing:google_cloud_cpp_billing",
+    ],
+)
+
+cc_library(
+    name = "experimental-billing_mocks",
+    deps = [
+        "//google/cloud/billing:google_cloud_cpp_billing_mocks",
+    ],
+)
+
+cc_library(
     name = "pubsub",
     deps = [
         "//google/cloud/pubsub:google_cloud_cpp_pubsub",

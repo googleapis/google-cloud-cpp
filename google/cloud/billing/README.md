@@ -3,9 +3,10 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for
-[Cloud Billing Budget API][cloud-service-docs], a service that The Cloud Billing Budget API stores Cloud Billing budgets, which define a budget plan and the rules to execute as spend is tracked against that plan.
+[Cloud Billing API][cloud-service-docs], a service that interacts with billing
+accounts, billing budgets, and billing catalogs.
 
-This library is **experimental**. Its APIS are subject to change without notice.
+This library is **experimental**. Its APIs are subject to change without notice.
 
 Please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -38,25 +39,23 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/billing/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/billing/cloud_billing_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 1) {
+    std::cerr << "Usage: " << argv[0] << "\n";
     return 1;
   }
 
   namespace billing = ::google::cloud::billing;
-  auto client = billing::Client(
-      billing::MakeConnection(/* EDIT HERE */));
+  auto client =
+      billing::CloudBillingClient(billing::MakeCloudBillingConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName()) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  for (auto a : client.ListBillingAccounts()) {
+    if (!a) throw std::runtime_error(a.status().message());
+    std::cout << a->DebugString() << "\n";
   }
 
   return 0;
