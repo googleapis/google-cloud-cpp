@@ -478,6 +478,9 @@ target_link_libraries(
     google_cloud_cpp_$library$_mocks
     INTERFACE google-cloud-cpp::experimental-$library$ GTest::gmock_main
               GTest::gmock GTest::gtest)
+set_target_properties(
+    google_cloud_cpp_$library$_mocks
+    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-$library$_mocks)
 create_bazel_config(google_cloud_cpp_$library$_mocks YEAR "$copyright_year$")
 target_include_directories(
     google_cloud_cpp_$library$_mocks

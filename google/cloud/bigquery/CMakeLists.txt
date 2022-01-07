@@ -93,6 +93,8 @@ target_link_libraries(
     google_cloud_cpp_bigquery_mocks
     INTERFACE google-cloud-cpp::bigquery GTest::gmock_main GTest::gmock
               GTest::gtest)
+set_target_properties(google_cloud_cpp_bigquery_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::bigquery_mocks)
 create_bazel_config(google_cloud_cpp_bigquery_mocks YEAR "2021")
 target_include_directories(
     google_cloud_cpp_bigquery_mocks

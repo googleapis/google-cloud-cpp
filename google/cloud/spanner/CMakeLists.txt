@@ -237,6 +237,8 @@ target_link_libraries(
     google_cloud_cpp_spanner_mocks
     INTERFACE google-cloud-cpp::spanner GTest::gmock_main GTest::gmock
               GTest::gtest)
+set_target_properties(google_cloud_cpp_spanner_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::spanner_mocks)
 create_bazel_config(google_cloud_cpp_spanner_mocks YEAR "2019")
 target_include_directories(
     google_cloud_cpp_spanner_mocks
