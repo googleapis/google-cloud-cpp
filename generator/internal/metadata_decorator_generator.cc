@@ -212,7 +212,7 @@ $metadata_class_name$::Async$method_name$(
     std::unique_ptr<grpc::ClientContext> context,
     $request_type$ const& request) {
   SetMetadata(*context, {});
-  return child_->$method_name$(cq, std::move(context), request);
+  return child_->Async$method_name$(cq, std::move(context), request);
 }
 
 )"""}},

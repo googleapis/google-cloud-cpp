@@ -124,6 +124,11 @@ class DefaultGoldenThingAdminConnectionIdempotencyPolicy : public GoldenThingAdm
     return Idempotency::kIdempotent;
   }
 
+  Idempotency
+  LongRunningWithoutRouting(google::test::admin::database::v1::RestoreDatabaseRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
 };
 }  // namespace
 

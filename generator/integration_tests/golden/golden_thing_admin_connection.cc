@@ -174,6 +174,14 @@ StreamRange<google::longrunning::Operation> GoldenThingAdminConnection::ListBack
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
+GoldenThingAdminConnection::LongRunningWithoutRouting(
+    google::test::admin::database::v1::RestoreDatabaseRequest const&) {
+  return google::cloud::make_ready_future<
+    StatusOr<google::test::admin::database::v1::Database>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminConnection::AsyncGetDatabase(
     google::test::admin::database::v1::GetDatabaseRequest const&) {
   return google::cloud::make_ready_future<
@@ -546,6 +554,32 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
           std::move(messages.begin(), messages.end(), result.begin());
           return result;
         });
+  }
+
+  future<StatusOr<google::test::admin::database::v1::Database>>
+  LongRunningWithoutRouting(google::test::admin::database::v1::RestoreDatabaseRequest const& request) override {
+    auto stub = stub_;
+    return google::cloud::internal::AsyncLongRunningOperation<google::test::admin::database::v1::Database>(
+          background_->cq(), request,
+          [stub](google::cloud::CompletionQueue& cq,
+                 std::unique_ptr<grpc::ClientContext> context,
+                 google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+            return stub->AsyncLongRunningWithoutRouting(cq, std::move(context), request);
+          },
+          [stub](google::cloud::CompletionQueue& cq,
+                 std::unique_ptr<grpc::ClientContext> context,
+                 google::longrunning::GetOperationRequest const& request) {
+            return stub->AsyncGetOperation(cq, std::move(context), request);
+          },
+          [stub](google::cloud::CompletionQueue& cq,
+                 std::unique_ptr<grpc::ClientContext> context,
+                 google::longrunning::CancelOperationRequest const& request) {
+            return stub->AsyncCancelOperation(cq, std::move(context), request);
+          },
+          &google::cloud::internal::ExtractLongRunningResultResponse<google::test::admin::database::v1::Database>,
+          retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+          idempotency_policy_->LongRunningWithoutRouting(request),
+          polling_policy_prototype_->clone(), __func__);
   }
 
   future<StatusOr<google::test::admin::database::v1::Database>>

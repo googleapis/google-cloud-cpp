@@ -300,6 +300,12 @@ GoldenThingAdminClient::ListBackupOperations(google::test::admin::database::v1::
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
+GoldenThingAdminClient::LongRunningWithoutRouting(google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options options) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+  return connection_->LongRunningWithoutRouting(request);
+}
+
+future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminClient::AsyncGetDatabase(std::string const& name, Options options) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
   google::test::admin::database::v1::GetDatabaseRequest request;

@@ -172,6 +172,15 @@ GoldenThingAdminMetadata::ListBackupOperations(
   return child_->ListBackupOperations(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+GoldenThingAdminMetadata::AsyncLongRunningWithoutRouting(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  SetMetadata(*context, {});
+  return child_->AsyncLongRunningWithoutRouting(cq, std::move(context), request);
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminMetadata::AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,
