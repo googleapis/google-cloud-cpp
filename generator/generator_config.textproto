@@ -22,6 +22,14 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Access Context Manager
+service {
+  service_proto_path: "google/identity/accesscontextmanager/v1/access_context_manager.proto"
+  product_path: "google/cloud/accesscontextmanager"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Assured Workloads
 service {
   service_proto_path: "google/cloud/assuredworkloads/v1/assuredworkloads.proto"
