@@ -107,21 +107,32 @@ class PollingPolicy {
 template <typename Retry = LimitedTimeRetryPolicy,
           typename Backoff = ExponentialBackoffPolicy>
 class GenericPollingPolicy : public PollingPolicy {
+  static_assert(std::is_convertible<Retry*, RPCRetryPolicy*>::value,
+                "Retry must derive from RPCRetryPolicy");
+  static_assert(std::is_convertible<Backoff*, RPCBackoffPolicy*>::value,
+                "Backoff must derive from RPCBackoffPolicy");
+
  public:
   explicit GenericPollingPolicy(internal::RPCPolicyParameters defaults)
       : rpc_retry_policy_(Retry(defaults)),
-        rpc_backoff_policy_(Backoff(defaults)) {}
+        rpc_backoff_policy_(Backoff(defaults)),
+        retry_clone_(rpc_retry_policy_.clone()),
+        backoff_clone_(rpc_backoff_policy_.clone()) {}
   GenericPollingPolicy(Retry retry, Backoff backoff)
       : rpc_retry_policy_(std::move(retry)),
-        rpc_backoff_policy_(std::move(backoff)) {}
+        rpc_backoff_policy_(std::move(backoff)),
+        retry_clone_(rpc_retry_policy_.clone()),
+        backoff_clone_(rpc_backoff_policy_.clone()) {}
 
   std::unique_ptr<PollingPolicy> clone() const override {
-    return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy(*this));
+    return std::unique_ptr<PollingPolicy>(
+        new GenericPollingPolicy<Retry, Backoff>(rpc_retry_policy_,
+                                                 rpc_backoff_policy_));
   }
 
   void Setup(grpc::ClientContext& context) override {
-    rpc_retry_policy_.Setup(context);
-    rpc_backoff_policy_.Setup(context);
+    retry_clone_->Setup(context);
+    backoff_clone_->Setup(context);
   }
 
   bool IsPermanentError(google::cloud::Status const& status) override {
@@ -129,18 +140,21 @@ class GenericPollingPolicy : public PollingPolicy {
   }
 
   bool OnFailure(google::cloud::Status const& status) override {
-    return rpc_retry_policy_.OnFailure(status);
+    return retry_clone_->OnFailure(status);
   }
 
   bool Exhausted() override { return !OnFailure(google::cloud::Status()); }
 
   std::chrono::milliseconds WaitPeriod() override {
-    return rpc_backoff_policy_.OnCompletion(grpc::Status::OK);
+    return backoff_clone_->OnCompletion(grpc::Status::OK);
   }
 
  private:
   Retry rpc_retry_policy_;
   Backoff rpc_backoff_policy_;
+
+  std::unique_ptr<RPCRetryPolicy> retry_clone_;
+  std::unique_ptr<RPCBackoffPolicy> backoff_clone_;
 };
 
 std::unique_ptr<PollingPolicy> DefaultPollingPolicy(

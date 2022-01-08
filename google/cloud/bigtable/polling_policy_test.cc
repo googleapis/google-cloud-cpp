@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/polling_policy.h"
+#include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/check_predicate_becomes_false.h"
@@ -38,8 +39,6 @@ auto const kLimitedTimeTolerance = 10_ms;
 /**
  * @test Verify that a polling policy configured to run for 50ms
  * works correctly.
- *
- * This eliminates some amount of code duplication in the following tests.
  */
 void CheckLimitedTime(PollingPolicy& tested) {
   testing_util::CheckPredicateBecomesFalse(
@@ -61,11 +60,18 @@ TEST(GenericPollingPolicy, Simple) {
 
 /// @test Test cloning for LimitedTimeRetryPolicy.
 TEST(GenericPollingPolicy, Clone) {
-  LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
+  auto const transient = Status(StatusCode::kUnavailable, "try again");
+
+  LimitedErrorCountRetryPolicy retry(1);
   ExponentialBackoffPolicy backoff(internal::kBigtableLimits);
-  GenericPollingPolicy<> original(retry, backoff);
-  auto tested = original.clone();
-  CheckLimitedTime(*tested);
+  GenericPollingPolicy<LimitedErrorCountRetryPolicy> original(retry, backoff);
+  EXPECT_TRUE(original.OnFailure(transient));
+  EXPECT_FALSE(original.OnFailure(transient));
+
+  // Ensure the initial state of the policy is cloned, not the current state.
+  auto clone = original.clone();
+  EXPECT_TRUE(clone->OnFailure(transient));
+  EXPECT_FALSE(clone->OnFailure(transient));
 }
 
 /// @test Verify that non-retryable errors cause an immediate failure.
@@ -91,6 +97,19 @@ TEST(GenericPollingPolicy, IsPermanentError) {
       grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "")));
   EXPECT_FALSE(static_cast<PollingPolicy&>(tested).IsPermanentError(
       grpc::Status(grpc::StatusCode::UNAVAILABLE, "")));
+}
+
+/// @test Verify that the backoff policy's wait period is used.
+TEST(GenericPollingPolicy, WaitPeriod) {
+  LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
+  ExponentialBackoffPolicy backoff(10_ms, 50_ms);
+  GenericPollingPolicy<> tested(retry, backoff);
+  EXPECT_GE(10_ms, tested.WaitPeriod());
+  EXPECT_LE(10_ms, tested.WaitPeriod());
+
+  // Ensure the initial state of the policy is cloned, not the current state.
+  auto clone = tested.clone();
+  EXPECT_GE(10_ms, clone->WaitPeriod());
 }
 
 }  // anonymous namespace
