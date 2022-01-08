@@ -9,6 +9,9 @@
 ./include/google/cloud/accessapproval/internal
 ./include/google/cloud/accessapproval/mocks
 ./include/google/cloud/accessapproval/v1
+./include/google/cloud/accesscontextmanager
+./include/google/cloud/accesscontextmanager/internal
+./include/google/cloud/accesscontextmanager/mocks
 ./include/google/cloud/assuredworkloads
 ./include/google/cloud/assuredworkloads/internal
 ./include/google/cloud/assuredworkloads/mocks
@@ -75,6 +78,9 @@
 ./include/google/iam/admin/v1
 ./include/google/iam/credentials
 ./include/google/iam/credentials/v1
+./include/google/identity
+./include/google/identity/accesscontextmanager
+./include/google/identity/accesscontextmanager/v1
 ./include/google/logging
 ./include/google/logging/v2
 ./include/google/spanner
@@ -86,6 +92,7 @@
 ./lib64
 ./lib64/cmake
 ./lib64/cmake/google_cloud_cpp_accessapproval
+./lib64/cmake/google_cloud_cpp_accesscontextmanager
 ./lib64/cmake/google_cloud_cpp_assuredworkloads
 ./lib64/cmake/google_cloud_cpp_bigquery
 ./lib64/cmake/google_cloud_cpp_billing
