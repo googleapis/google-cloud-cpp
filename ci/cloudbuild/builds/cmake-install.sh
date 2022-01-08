@@ -96,6 +96,9 @@ expected_dirs+=(
   ./include/google/devtools/cloudtrace
   ./include/google/devtools/cloudtrace/v2
   ./include/google/iam/v1
+  # This contains pure protos. The generator does not
+  # updated expected_install_directories in this case.
+  ./include/google/identity/accesscontextmanager/type
   ./include/google/logging/type
   ./include/google/longrunning
   ./include/google/monitoring

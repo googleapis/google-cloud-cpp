@@ -12,23 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/accesscontextmanager/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/accesscontextmanager/access_context_manager_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " policy-id\n";
     return 1;
   }
 
   namespace accesscontextmanager = ::google::cloud::accesscontextmanager;
-  auto client = accesscontextmanager::Client(
-      accesscontextmanager::MakeConnection(/* EDIT HERE */));
+  auto client = accesscontextmanager::AccessContextManagerClient(
+      accesscontextmanager::MakeAccessContextManagerConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName()) {
+  auto const parent = std::string("accessPolicies/") + argv[1];
+  for (auto r : client.ListAccessLevels(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

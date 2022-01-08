@@ -3,7 +3,7 @@
 @mainpage Access Context Manager API C++ Client Library
 
 An idiomatic C++ client library for the [Access Context Manager API][cloud-service-docs], a service
-to An API for setting attribute based access control to requests to GCP services.
+for setting attribute based access control on requests to GCP services.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 

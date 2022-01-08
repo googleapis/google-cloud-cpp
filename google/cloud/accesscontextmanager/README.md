@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Access Context Manager API][cloud-service-docs], a service to An API for setting attribute based access control to requests to GCP services.
+[Access Context Manager API][cloud-service-docs], a service for setting
+attribute based access control on requests to GCP services.
 
 This library is **experimental**. Its APIS are subject to change without notice.
 
@@ -38,23 +39,22 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/accesscontextmanager/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/accesscontextmanager/access_context_manager_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " policy-id\n";
     return 1;
   }
 
   namespace accesscontextmanager = ::google::cloud::accesscontextmanager;
-  auto client = accesscontextmanager::Client(
-      accesscontextmanager::MakeConnection(/* EDIT HERE */));
+  auto client = accesscontextmanager::AccessContextManagerClient(
+      accesscontextmanager::MakeAccessContextManagerConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName()) {
+  auto const parent = std::string("accessPolicies/") + argv[1];
+  for (auto r : client.ListAccessLevels(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
