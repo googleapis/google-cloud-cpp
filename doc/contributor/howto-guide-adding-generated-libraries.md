@@ -129,6 +129,13 @@ git add "google/cloud/${library}"
 ci/cloudbuild/build.sh -t checkers-pr
 ```
 
+## Commit all the generated files
+
+```shell
+git add external ci "google/cloud/${library}"
+git commit -m"Run generators and format their outputs"
+```
+
 ## Create any custom source files
 
 If the `generator/generator_config.textproto` entry for the service does not
@@ -138,27 +145,6 @@ enumerate the `retryable_status_codes`, you need to manually create the file as
 Likewise, for services using streaming operations you may need to implement the
 streaming `*Updater` function. Use `google/cloud/bigquery/streaming.cc` for
 inspiration.
-
-## Validate and Generate the `*.bzl` files
-
-Run the `cmake-install-pr` build.  This is one of the builds that compiles all
-the libraries, including the library you just added. It will also generate the
-`*.bzl` files for Bazel-based builds.
-
-> :warning: It **will** fail on this run, because the `quickstart.cc` file is
-> not ready. you will fix that after creating a commit with all the generated
-> changes.
-
-```shell
-ci/cloudbuild/build.sh -t cmake-install-pr
-```
-
-## Commit all the generated files
-
-```shell
-git add external ci "google/cloud/${library}"
-git commit -m"Run generators and format their outputs"
-```
 
 ## Update the quickstart
 
