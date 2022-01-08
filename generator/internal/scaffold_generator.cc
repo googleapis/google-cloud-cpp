@@ -260,8 +260,8 @@ void GenerateReadme(std::ostream& os,
 
 :construction:
 
-This directory contains an idiomatic C++ client library for
-[$title$][cloud-service-docs], a service that $description$
+This directory contains an idiomatic C++ client library for the
+[$title$][cloud-service-docs], a service to $description$
 
 This library is **experimental**. Its APIS are subject to change without notice.
 
@@ -534,7 +534,7 @@ set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR $${PROJECT_VERSION_MAJOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR $${PROJECT_VERSION_MINOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH $${PROJECT_VERSION_PATCH})
 set(GOOGLE_CLOUD_PC_NAME "The $title$ C++ Client Library")
-set(GOOGLE_CLOUD_PC_DESCRIPTION "Provides C++ APIs to access $title$.")
+set(GOOGLE_CLOUD_PC_DESCRIPTION "Provides C++ APIs to use the $title$.")
 set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_$library$")
 string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
               " google_cloud_cpp_common" " google_cloud_cpp_$library$_protos")
@@ -576,9 +576,8 @@ void GenerateDoxygenMainPage(
 
 @mainpage $title$ C++ Client Library
 
-An idiomatic C++ client library for
-[$title$](https://cloud.google.com/$site_root$/), a service that
-$description$
+An idiomatic C++ client library for the [$title$][cloud-service-docs], a service
+to $description$
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -659,6 +658,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
+[cloud-service-docs]: https://cloud.google.com/$site_root$
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [gcs-quickstart]: https://cloud.google.com/$site_root$/docs/quickstarts 'Quickstarts'
 [resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
@@ -1006,8 +1006,8 @@ void GenerateQuickstartWorkspace(
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# A minimal WORKSPACE file showing how to use the $title$ C++
-# client library in Bazel-based projects.
+# A minimal WORKSPACE file showing how to use the $title$
+# C++ client library in Bazel-based projects.
 workspace(name = "$library$_quickstart")
 
 # Add the necessary Starlark functions to fetch google-cloud-cpp.
