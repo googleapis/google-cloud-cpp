@@ -345,12 +345,24 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(":google_cloud_cpp_$library$.bzl", "google_cloud_cpp_$library$_hdrs", "google_cloud_cpp_$library$_srcs")
+SOURCE_GLOB = "**/*.cc"
+
+MOCK_SOURCE_GLOB = "mocks/*.cc"
+
+HEADER_GLOB = "**/*.h"
+
+MOCK_HEADER_GLOB = "mocks/*.h"
 
 cc_library(
     name = "google_cloud_cpp_$library$",
-    srcs = google_cloud_cpp_$library$_srcs,
-    hdrs = google_cloud_cpp_$library$_hdrs,
+    srcs = glob(
+        include=[SOURCE_GLOB],
+        exclude=[MOCK_SOURCE_GLOB],
+    ),
+    hdrs = glob(
+        include=[HEADER_GLOB],
+        exclude=[MOCK_HEADER_GLOB],
+    ),
     visibility = ["//:__pkg__"],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
@@ -359,12 +371,14 @@ cc_library(
     ],
 )
 
-load(":google_cloud_cpp_$library$_mocks.bzl", "google_cloud_cpp_$library$_mocks_hdrs", "google_cloud_cpp_$library$_mocks_srcs")
-
 cc_library(
     name = "google_cloud_cpp_$library$_mocks",
-    srcs = google_cloud_cpp_$library$_mocks_srcs,
-    hdrs = google_cloud_cpp_$library$_mocks_hdrs,
+    srcs = glob(
+        include=[MOCK_SOURCE_GLOB],
+    ),
+    hdrs = glob(
+        include=[MOCK_HEADER_GLOB],
+    ),
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_$library$",
@@ -455,11 +469,6 @@ target_compile_options(google_cloud_cpp_$library$
 
 add_library(google-cloud-cpp::experimental-$library$ ALIAS google_cloud_cpp_$library$)
 
-# To avoid maintaining the list of files for the library, export them to a .bzl
-# file.
-include(CreateBazelConfig)
-create_bazel_config(google_cloud_cpp_$library$ YEAR "2021")
-
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
@@ -481,7 +490,6 @@ target_link_libraries(
 set_target_properties(
     google_cloud_cpp_$library$_mocks
     PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-$library$_mocks)
-create_bazel_config(google_cloud_cpp_$library$_mocks YEAR "$copyright_year$")
 target_include_directories(
     google_cloud_cpp_$library$_mocks
     INTERFACE $$<BUILD_INTERFACE:$${PROJECT_SOURCE_DIR}>
