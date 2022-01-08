@@ -415,6 +415,32 @@ class MockGrpcGoldenThingAdminStub : public ::google::test::admin::database::
            request,
        ::grpc::CompletionQueue* cq),
       (override));
+
+  MOCK_METHOD(
+      ::grpc::Status, LongRunningWithoutRouting,
+      (::grpc::ClientContext * context,
+       ::google::test::admin::database::v1::RestoreDatabaseRequest const&
+           request,
+       ::google::longrunning::Operation* response),
+      (override));
+  MOCK_METHOD(
+      ::grpc::ClientAsyncResponseReaderInterface<
+          ::google::longrunning::Operation>*,
+      AsyncLongRunningWithoutRoutingRaw,
+      (::grpc::ClientContext * context,
+       ::google::test::admin::database::v1::RestoreDatabaseRequest const&
+           request,
+       ::grpc::CompletionQueue* cq),
+      (override));
+  MOCK_METHOD(
+      ::grpc::ClientAsyncResponseReaderInterface<
+          ::google::longrunning::Operation>*,
+      PrepareAsyncLongRunningWithoutRoutingRaw,
+      (::grpc::ClientContext * context,
+       ::google::test::admin::database::v1::RestoreDatabaseRequest const&
+           request,
+       ::grpc::CompletionQueue* cq),
+      (override));
 };
 
 class MockLongrunningOperationsStub

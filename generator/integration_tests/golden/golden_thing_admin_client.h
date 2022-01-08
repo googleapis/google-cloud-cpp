@@ -94,10 +94,10 @@ class GoldenThingAdminClient {
   /// @param parent  Required. The instance whose databases should be listed.
   ///  Values are of the form `projects/<project>/instances/<instance>`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L337}
   ///
-  /// [google.test.admin.database.v1.ListDatabasesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L377}
-  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
+  /// [google.test.admin.database.v1.ListDatabasesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L385}
+  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L337}
   ///
   StreamRange<google::test::admin::database::v1::Database>
   ListDatabases(std::string const& parent, Options options = {});
@@ -105,12 +105,12 @@ class GoldenThingAdminClient {
   ///
   /// Lists Cloud Test databases.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::ListDatabasesRequest,generator/integration_tests/test.proto#L377}
+  /// @param request @googleapis_link{google::test::admin::database::v1::ListDatabasesRequest,generator/integration_tests/test.proto#L385}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L337}
   ///
-  /// [google.test.admin.database.v1.ListDatabasesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L377}
-  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
+  /// [google.test.admin.database.v1.ListDatabasesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L385}
+  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L337}
   ///
   StreamRange<google::test::admin::database::v1::Database>
   ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request, Options options = {});
@@ -133,10 +133,10 @@ class GoldenThingAdminClient {
   ///  If the database ID is a reserved word or if it contains a hyphen, the
   ///  database ID must be enclosed in backticks (`` ` ``).
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L337}
   ///
-  /// [google.test.admin.database.v1.CreateDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L409}
-  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
+  /// [google.test.admin.database.v1.CreateDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L417}
+  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L337}
   ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   CreateDatabase(std::string const& parent, std::string const& create_statement, Options options = {});
@@ -151,12 +151,12 @@ class GoldenThingAdminClient {
   /// [response][google.longrunning.Operation.response] field type is
   /// [Database][google.test.admin.database.v1.Database], if successful.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::CreateDatabaseRequest,generator/integration_tests/test.proto#L409}
+  /// @param request @googleapis_link{google::test::admin::database::v1::CreateDatabaseRequest,generator/integration_tests/test.proto#L417}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L337}
   ///
-  /// [google.test.admin.database.v1.CreateDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L409}
-  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
+  /// [google.test.admin.database.v1.CreateDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L417}
+  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L337}
   ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request, Options options = {});
@@ -167,10 +167,10 @@ class GoldenThingAdminClient {
   /// @param name  Required. The name of the requested database. Values are of the form
   ///  `projects/<project>/instances/<instance>/databases/<database>`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L337}
   ///
-  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L443}
-  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
+  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L451}
+  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L337}
   ///
   StatusOr<google::test::admin::database::v1::Database>
   GetDatabase(std::string const& name, Options options = {});
@@ -178,12 +178,12 @@ class GoldenThingAdminClient {
   ///
   /// Gets the state of a Cloud Test database.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::GetDatabaseRequest,generator/integration_tests/test.proto#L443}
+  /// @param request @googleapis_link{google::test::admin::database::v1::GetDatabaseRequest,generator/integration_tests/test.proto#L451}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L337}
   ///
-  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L443}
-  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
+  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L451}
+  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L337}
   ///
   StatusOr<google::test::admin::database::v1::Database>
   GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request, Options options = {});
@@ -200,10 +200,10 @@ class GoldenThingAdminClient {
   /// @param database  Required. The database to update.
   /// @param statements  Required. DDL statements to be applied to the database.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlMetadata,generator/integration_tests/test.proto#L506}
+  /// @return @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlMetadata,generator/integration_tests/test.proto#L514}
   ///
-  /// [google.test.admin.database.v1.UpdateDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L470}
-  /// [google.test.admin.database.v1.UpdateDatabaseDdlMetadata]: @googleapis_reference_link{generator/integration_tests/test.proto#L506}
+  /// [google.test.admin.database.v1.UpdateDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L478}
+  /// [google.test.admin.database.v1.UpdateDatabaseDdlMetadata]: @googleapis_reference_link{generator/integration_tests/test.proto#L514}
   ///
   future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(std::string const& database, std::vector<std::string> const& statements, Options options = {});
@@ -217,12 +217,12 @@ class GoldenThingAdminClient {
   /// [metadata][google.longrunning.Operation.metadata] field type is
   /// [UpdateDatabaseDdlMetadata][google.test.admin.database.v1.UpdateDatabaseDdlMetadata].  The operation has no response.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlRequest,generator/integration_tests/test.proto#L470}
+  /// @param request @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlRequest,generator/integration_tests/test.proto#L478}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlMetadata,generator/integration_tests/test.proto#L506}
+  /// @return @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlMetadata,generator/integration_tests/test.proto#L514}
   ///
-  /// [google.test.admin.database.v1.UpdateDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L470}
-  /// [google.test.admin.database.v1.UpdateDatabaseDdlMetadata]: @googleapis_reference_link{generator/integration_tests/test.proto#L506}
+  /// [google.test.admin.database.v1.UpdateDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L478}
+  /// [google.test.admin.database.v1.UpdateDatabaseDdlMetadata]: @googleapis_reference_link{generator/integration_tests/test.proto#L514}
   ///
   future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request, Options options = {});
@@ -235,7 +235,7 @@ class GoldenThingAdminClient {
   /// @param database  Required. The database to be dropped.
   /// @param options  Optional. Operation options.
   ///
-  /// [google.test.admin.database.v1.DropDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L523}
+  /// [google.test.admin.database.v1.DropDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L531}
   ///
   Status
   DropDatabase(std::string const& database, Options options = {});
@@ -245,10 +245,10 @@ class GoldenThingAdminClient {
   /// Completed backups for the database will be retained according to their
   /// `expire_time`.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::DropDatabaseRequest,generator/integration_tests/test.proto#L523}
+  /// @param request @googleapis_link{google::test::admin::database::v1::DropDatabaseRequest,generator/integration_tests/test.proto#L531}
   /// @param options  Optional. Operation options.
   ///
-  /// [google.test.admin.database.v1.DropDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L523}
+  /// [google.test.admin.database.v1.DropDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L531}
   ///
   Status
   DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request, Options options = {});
@@ -260,10 +260,10 @@ class GoldenThingAdminClient {
   ///
   /// @param database  Required. The database whose schema we wish to get.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlResponse,generator/integration_tests/test.proto#L545}
+  /// @return @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlResponse,generator/integration_tests/test.proto#L553}
   ///
-  /// [google.test.admin.database.v1.GetDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L534}
-  /// [google.test.admin.database.v1.GetDatabaseDdlResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L545}
+  /// [google.test.admin.database.v1.GetDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L542}
+  /// [google.test.admin.database.v1.GetDatabaseDdlResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L553}
   ///
   StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(std::string const& database, Options options = {});
@@ -273,12 +273,12 @@ class GoldenThingAdminClient {
   /// DDL statements. This method does not show pending schema updates, those may
   /// be queried using the [Operations][google.longrunning.Operations] API.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlRequest,generator/integration_tests/test.proto#L534}
+  /// @param request @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlRequest,generator/integration_tests/test.proto#L542}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlResponse,generator/integration_tests/test.proto#L545}
+  /// @return @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlResponse,generator/integration_tests/test.proto#L553}
   ///
-  /// [google.test.admin.database.v1.GetDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L534}
-  /// [google.test.admin.database.v1.GetDatabaseDdlResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L545}
+  /// [google.test.admin.database.v1.GetDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L542}
+  /// [google.test.admin.database.v1.GetDatabaseDdlResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L553}
   ///
   StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(google::test::admin::database::v1::GetDatabaseDdlRequest const& request, Options options = {});
@@ -645,10 +645,10 @@ class GoldenThingAdminClient {
   /// @param backup  Name of the backup from which to restore.  Values are of the form
   ///  `projects/<project>/instances/<instance>/backups/<backup>`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L337}
   ///
-  /// [google.test.admin.database.v1.RestoreDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L634}
-  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
+  /// [google.test.admin.database.v1.RestoreDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L642}
+  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L337}
   ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   RestoreDatabase(std::string const& parent, std::string const& database_id, std::string const& backup, Options options = {});
@@ -672,12 +672,12 @@ class GoldenThingAdminClient {
   /// initiated, without waiting for the optimize operation associated with the
   /// first restore to complete.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::RestoreDatabaseRequest,generator/integration_tests/test.proto#L634}
+  /// @param request @googleapis_link{google::test::admin::database::v1::RestoreDatabaseRequest,generator/integration_tests/test.proto#L642}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L337}
   ///
-  /// [google.test.admin.database.v1.RestoreDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L634}
-  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
+  /// [google.test.admin.database.v1.RestoreDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L642}
+  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L337}
   ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options options = {});
@@ -697,7 +697,7 @@ class GoldenThingAdminClient {
   /// @param options  Optional. Operation options.
   /// @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
-  /// [google.test.admin.database.v1.ListDatabaseOperationsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L553}
+  /// [google.test.admin.database.v1.ListDatabaseOperationsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L561}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   StreamRange<google::longrunning::Operation>
@@ -713,11 +713,11 @@ class GoldenThingAdminClient {
   /// include those that have completed/failed/canceled within the last 7 days,
   /// and pending operations.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::ListDatabaseOperationsRequest,generator/integration_tests/test.proto#L553}
+  /// @param request @googleapis_link{google::test::admin::database::v1::ListDatabaseOperationsRequest,generator/integration_tests/test.proto#L561}
   /// @param options  Optional. Operation options.
   /// @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
-  /// [google.test.admin.database.v1.ListDatabaseOperationsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L553}
+  /// [google.test.admin.database.v1.ListDatabaseOperationsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L561}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   StreamRange<google::longrunning::Operation>
@@ -769,15 +769,28 @@ class GoldenThingAdminClient {
   ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest request, Options options = {});
 
   ///
+  /// Tests longrunning operations without routing headers
+  ///
+  /// @param request @googleapis_link{google::test::admin::database::v1::RestoreDatabaseRequest,generator/integration_tests/test.proto#L642}
+  /// @param options  Optional. Operation options.
+  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L337}
+  ///
+  /// [google.test.admin.database.v1.RestoreDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L642}
+  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L337}
+  ///
+  future<StatusOr<google::test::admin::database::v1::Database>>
+  LongRunningWithoutRouting(google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options options = {});
+
+  ///
   /// Gets the state of a Cloud Test database.
   ///
   /// @param name  Required. The name of the requested database. Values are of the form
   ///  `projects/<project>/instances/<instance>/databases/<database>`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L337}
   ///
-  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L443}
-  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
+  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L451}
+  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L337}
   ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   AsyncGetDatabase(std::string const& name, Options options = {});
@@ -785,12 +798,12 @@ class GoldenThingAdminClient {
   ///
   /// Gets the state of a Cloud Test database.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::GetDatabaseRequest,generator/integration_tests/test.proto#L443}
+  /// @param request @googleapis_link{google::test::admin::database::v1::GetDatabaseRequest,generator/integration_tests/test.proto#L451}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L329}
+  /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L337}
   ///
-  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L443}
-  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L329}
+  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L451}
+  /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L337}
   ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request, Options options = {});
@@ -803,7 +816,7 @@ class GoldenThingAdminClient {
   /// @param database  Required. The database to be dropped.
   /// @param options  Optional. Operation options.
   ///
-  /// [google.test.admin.database.v1.DropDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L523}
+  /// [google.test.admin.database.v1.DropDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L531}
   ///
   future<Status>
   AsyncDropDatabase(std::string const& database, Options options = {});
@@ -813,10 +826,10 @@ class GoldenThingAdminClient {
   /// Completed backups for the database will be retained according to their
   /// `expire_time`.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::DropDatabaseRequest,generator/integration_tests/test.proto#L523}
+  /// @param request @googleapis_link{google::test::admin::database::v1::DropDatabaseRequest,generator/integration_tests/test.proto#L531}
   /// @param options  Optional. Operation options.
   ///
-  /// [google.test.admin.database.v1.DropDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L523}
+  /// [google.test.admin.database.v1.DropDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L531}
   ///
   future<Status>
   AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request, Options options = {});

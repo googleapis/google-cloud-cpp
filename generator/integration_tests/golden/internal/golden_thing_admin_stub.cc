@@ -255,6 +255,20 @@ DefaultGoldenThingAdminStub::ListBackupOperations(
     return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultGoldenThingAdminStub::AsyncLongRunningWithoutRouting(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::test::admin::database::v1::RestoreDatabaseRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncLongRunningWithoutRouting(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 DefaultGoldenThingAdminStub::AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,

@@ -310,6 +310,14 @@ service GoldenThingAdmin {
     };
     option (google.api.method_signature) = "parent";
   }
+
+  // Tests longrunning operations without routing headers
+  rpc LongRunningWithoutRouting(RestoreDatabaseRequest) returns (google.longrunning.Operation) {
+    option (google.longrunning.operation_info) = {
+      response_type: "google.test.admin.database.v1.Database"
+      metadata_type: "google.test.admin.database.v1.RestoreDatabaseMetadata"
+    };
+  }
 }
 
 // Information about the database restore.

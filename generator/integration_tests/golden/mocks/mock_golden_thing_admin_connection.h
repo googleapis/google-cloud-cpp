@@ -98,6 +98,10 @@ class MockGoldenThingAdminConnection : public golden::GoldenThingAdminConnection
   (google::test::admin::database::v1::ListBackupOperationsRequest request), (override));
 
   MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::Database>>,
+  LongRunningWithoutRouting,
+  (google::test::admin::database::v1::RestoreDatabaseRequest const& request), (override));
+
+  MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::Database>>,
   AsyncGetDatabase,
   (google::test::admin::database::v1::GetDatabaseRequest const& request), (override));
 
