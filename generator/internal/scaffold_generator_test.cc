@@ -209,8 +209,11 @@ TEST_F(ScaffoldGenerator, DoxygenMainPage) {
   GenerateDoxygenMainPage(os, vars);
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr(R"""(
-[Test Only API](https://cloud.google.com/test/), a service that
-Provides a placeholder to write this test.
+An idiomatic C++ client library for the [Test Only API][cloud-service-docs], a service
+to Provides a placeholder to write this test.
+)"""));
+  EXPECT_THAT(actual, HasSubstr(R"""(
+[cloud-service-docs]: https://cloud.google.com/test
 )"""));
 }
 
