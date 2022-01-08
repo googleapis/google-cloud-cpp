@@ -307,9 +307,9 @@ cc_library(
 )
 
 cc_library(
-    name = "experimental-websecurityscanner",
+    name = "experimental-webrisk",
     deps = [
-        "//google/cloud/websecurityscanner:google_cloud_cpp_websecurityscanner",
+        "//google/cloud/webrisk:google_cloud_cpp_webrisk",
     ],
 )
 
@@ -321,9 +321,9 @@ cc_library(
 )
 
 cc_library(
-    name = "experimental-webrisk",
+    name = "experimental-websecurityscanner",
     deps = [
-        "//google/cloud/webrisk:google_cloud_cpp_webrisk",
+        "//google/cloud/websecurityscanner:google_cloud_cpp_websecurityscanner",
     ],
 )
 
