@@ -464,6 +464,29 @@ TEST_F(MetadataDecoratorTest, AsyncDropDatabase) {
   EXPECT_EQ(TransientError(), status.get());
 }
 
+TEST_F(MetadataDecoratorTest, LongRunningWithoutRouting) {
+  EXPECT_CALL(*mock_, AsyncLongRunningWithoutRouting)
+      .WillOnce([this](google::cloud::CompletionQueue&,
+                       std::unique_ptr<grpc::ClientContext> context,
+                       google::test::admin::database::v1::
+                           RestoreDatabaseRequest const&) {
+        EXPECT_STATUS_OK(
+            IsContextMDValid(*context,
+                             "google.test.admin.database.v1.GoldenThingAdmin."
+                             "LongRunningWithoutRouting",
+                             expected_api_client_header_));
+        return LongrunningTransientError();
+      });
+
+  GoldenThingAdminMetadata stub(mock_);
+  CompletionQueue cq;
+  google::test::admin::database::v1::RestoreDatabaseRequest request;
+  request.set_parent("projects/my_project/instances/my_instance");
+  auto status = stub.AsyncLongRunningWithoutRouting(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_EQ(TransientError(), status.get().status());
+}
+
 TEST_F(MetadataDecoratorTest, GetOperation) {
   EXPECT_CALL(*mock_, AsyncGetOperation)
       .WillOnce([this](google::cloud::CompletionQueue&,
