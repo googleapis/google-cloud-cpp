@@ -140,7 +140,7 @@ BucketMetadata GrpcBucketMetadataParser::FromProto(
 
   // The protos use `projects/{project}` format, but the field may be absent or
   // may have a project id (instead of number), we need to do some parsing. We
-  // are forgiving here, it is better to drop one field rather than dropping
+  // are forgiving here. It is better to drop one field rather than dropping
   // the full message.
   if (rhs.project().rfind("projects/", 0) == 0) {
     auto s = rhs.project().substr(std::strlen("projects/"));

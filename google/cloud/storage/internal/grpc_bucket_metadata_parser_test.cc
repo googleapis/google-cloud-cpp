@@ -32,8 +32,8 @@ using ::testing::ElementsAreArray;
 
 TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
   google::storage::v2::Bucket input;
-  // Keep the proto fields in the order they show up in the proto file, easier
-  // to add new fields and to inspect the test for missing fields
+  // Keep the proto fields in the order they show up in the proto file. It is
+  // easier to add new fields and to inspect the test for missing fields
   auto constexpr kText = R"pb(
     name: "projects/_/buckets/test-bucket-id"
     bucket_id: "test-bucket-id"
@@ -82,7 +82,7 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
       response_header: "test-header-3"
       max_age_seconds: 3600
     }
-    update_time: { seconds: 1565194924 nanos: 123456000 }
+    update_time: { seconds: 1565194925 nanos: 123456000 }
     default_event_based_hold: true
     labels: { key: "test-key-1" value: "test-value-1" }
     labels: { key: "test-key-2" value: "test-value-2" }
@@ -96,14 +96,14 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
     encryption { default_kms_key: "test-default-kms-key-name" }
     billing { requester_pays: true }
     retention_policy {
-      effective_time { seconds: 1565194924 nanos: 123456000 }
+      effective_time { seconds: 1565194926 nanos: 123456000 }
       is_locked: true
       retention_period: 86400
     }
     iam_config {
       uniform_bucket_level_access {
         enabled: true
-        lock_time { seconds: 1565194924 nanos: 123456000 }
+        lock_time { seconds: 1565194927 nanos: 123456000 }
       }
     }
   )pb";
@@ -171,7 +171,7 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
     }],
     "location": "test-location",
     "storageClass": "test-storage-class",
-    "updated": "2019-08-07T16:22:04.123456000Z",
+    "updated": "2019-08-07T16:22:05.123456000Z",
     "defaultEventBasedHold": true,
     "labels": {
         "test-key-1": "test-value-1",
@@ -190,7 +190,7 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
     "encryption": { "defaultKmsKeyName": "test-default-kms-key-name" },
     "billing": { "requesterPays": true },
     "retentionPolicy": {
-      "effectiveTime": "2019-08-07T16:22:04.123456000Z",
+      "effectiveTime": "2019-08-07T16:22:06.123456000Z",
       "isLocked": true,
       "retentionPeriod": 86400
     },
@@ -199,7 +199,7 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
     "iamConfiguration": {
       "uniformBucketLevelAccess": {
         "enabled": true,
-        "lockedTime": "2019-08-07T16:22:04.123456000Z"
+        "lockedTime": "2019-08-07T16:22:07.123456000Z"
       }
     }
   })""");
