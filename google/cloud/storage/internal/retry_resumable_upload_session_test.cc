@@ -153,8 +153,8 @@ TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnUpload) {
 
   EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
 
-  // We only tolerate 4 transient errors, the first call to UploadChunk() will
-  // consume the full budget.
+  // The exact number transient errors tolerated by the policy is not relevant,
+  // as the expectations will return a permanent error.
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(10).clone(),
                                       TestBackoffPolicy());
@@ -181,8 +181,8 @@ TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnReset) {
 
   EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
 
-  // We only tolerate 4 transient errors, the first call to UploadChunk() will
-  // consume the full budget.
+  // The exact number transient errors tolerated by the policy is not relevant,
+  // as the expectations will return a permanent error.
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(10).clone(),
                                       TestBackoffPolicy());
@@ -222,8 +222,8 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadChunk) {
     return StatusOr<ResumableUploadResponse>(TransientError());
   });
 
-  // We only tolerate 4 transient errors, the first call to UploadChunk() will
-  // consume the full budget.
+  // We only tolerate 2 transient errors, while the expectations are configured
+  // to return 3 transients.
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(2).clone(),
                                       TestBackoffPolicy());
@@ -240,16 +240,6 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnReset) {
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
 
-  // The sequence of messages is split across two EXPECT_CALL() and hard to see,
-  // basically we want this to happen:
-  //
-  // RetryResumableUploadSession::UploadChunk() is called
-  // 1. next_expected_byte() -> returns 0
-  // 2. next_expected_byte() -> returns 0
-  // 3. UploadChunk() -> returns transient error
-  // 4. ResetSession() -> returns transient error
-  // 5. ResetSession() -> returns transient error, the policy is exhausted
-  //
   EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
 
   ::testing::InSequence sequence;
@@ -283,29 +273,19 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransiensOnSeparateChunks) {
 
   std::uint64_t next_expected_byte = 0;
 
-  // In this test we do not care about how many times or when next
-  // expected_byte() is called, but it does need to return the right values,
-  // the other mock functions set the correct return value using a local
+  // In this test we do not care about how many times or when
+  // next_expected_byte() is called, but it does need to return the right
+  // values, the other mock functions set the correct return value using a local
   // variable.
   EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly([&]() {
     return next_expected_byte;
   });
 
+  // There are a lot of calls expected. Basically we want to verify that the
+  // transient error count is reset after each UploadChunk() succeeds, even
+  // if counting all the transients across all the UploadChunk() calls exceeds
+  // the retry limit.
   ::testing::InSequence sequence;
-  // The sequence of messages is split across two EXPECT_CALL() and hard to see,
-  // basically we want this to happen:
-  //
-  // Ignore next_expected_byte() in tests - it will always return 0.
-  // 1. UploadChunk() -> returns transient error
-  // 2. ResetSession() -> returns success (0 bytes committed)
-  // 3. UploadChunk() -> returns success
-  // 4. UploadChunk() -> returns transient error
-  // 5. ResetSession() -> returns success (0 bytes committed)
-  // 6. UploadChunk() -> returns success
-  // 7. UploadChunk() -> returns transient error
-  // 8. ResetSession() -> returns success (0 bytes committed)
-  // 9. UploadChunk() -> returns success
-  //
   EXPECT_CALL(*mock, UploadChunk).WillOnce([&](ConstBufferSequence const& p) {
     EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
     return StatusOr<ResumableUploadResponse>(TransientError());
@@ -409,8 +389,8 @@ TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnUploadFinalChunk) {
 
   EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
 
-  // We only tolerate 4 transient errors, the first call to UploadChunk() will
-  // consume the full budget.
+  // The retry policy settings are irrelevant, as the first permanent error
+  // should break the retry loop.
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(10).clone(),
                                       TestBackoffPolicy());
@@ -429,16 +409,6 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadFinalChunk) {
 
   EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
   ::testing::InSequence sequence;
-  // The sequence of messages is split across two EXPECT_CALL() and hard to see,
-  // basically we want this to happen:
-  //
-  // Ignore next_expected_byte() in tests - it will always return 0.
-  // 1. UploadFinalChunk() -> returns transient error
-  // 2. ResetSession() -> returns success (0 bytes committed)
-  // 3. UploadFinalChunk() -> returns transient error
-  // 4. ResetSession() -> returns success (0 bytes committed)
-  // 5. UploadFinalChunk() -> returns transient error, the policy is exhausted.
-  //
   EXPECT_CALL(*mock, UploadFinalChunk)
       .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s,
                     HashValues const& h) {
@@ -477,8 +447,8 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadFinalChunk) {
         return StatusOr<ResumableUploadResponse>(TransientError());
       });
 
-  // We only tolerate 4 transient errors, the first call to UploadChunk() will
-  // consume the full budget.
+  // We only tolerate 3 transient errors, which will be consumed by the
+  // failures in UploadFinalChunk.
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(2).clone(),
                                       TestBackoffPolicy());
@@ -704,7 +674,10 @@ TEST_F(RetryResumableUploadSessionTest, UploadFinalChunkUncommitted) {
 
   response = session.UploadFinalChunk({{payload}}, 2 * quantum, HashValues{});
   ASSERT_FALSE(response);
-  EXPECT_THAT(response, StatusIs(StatusCode::kInternal, HasSubstr("github")));
+  EXPECT_THAT(response, StatusIs(StatusCode::kInternal,
+                                 HasSubstr("https://github.com/")));
+  EXPECT_THAT(response, StatusIs(StatusCode::kInternal,
+                                 HasSubstr("google-cloud-cpp/issues/new")));
 }
 
 /// @test Verify that retry exhaustion following a short write fails.
