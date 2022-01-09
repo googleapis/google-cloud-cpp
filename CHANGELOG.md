@@ -99,7 +99,7 @@ affect production code.
 
 Nevertheless, we apologize for the inconvenience, and while we would have
 preferred to avoid breaking changes, it was inevitable to introduce some
-breaking changes to fix a data loss bug.
+breaking changes to fix a data loss bug (see [#7835]).
 
 If you are affected by this change, you will need to change your tests following
 this guide. Any place where you return a `ResumableUploadResponse` needs to
@@ -133,6 +133,8 @@ the number of committed bytes vs. the index in the last committed byte.
 Changing the order of the fields was intentional. It will create a build
 failure, which is easier to detect and repair than a run-time error in
 your tests.
+
+[#7835]: https://github.com/googleapis/google-cloud-cpp/issues/7835
 
 ## v1.35.0 - 2022-01
 
