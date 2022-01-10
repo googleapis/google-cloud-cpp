@@ -50,6 +50,7 @@ google_cloud_cpp_common_unit_tests = [
     "kms_key_name_test.cc",
     "log_test.cc",
     "options_test.cc",
+    "polling_policy_test.cc",
     "project_test.cc",
     "status_or_test.cc",
     "status_test.cc",
