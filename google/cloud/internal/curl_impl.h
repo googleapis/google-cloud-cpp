@@ -56,24 +56,21 @@ class CurlImpl {
 
   std::string const& url() const { return url_; }
 
-  std::string MakeEscapedString(
-      std::string const&) {  // NOLINT
-                             // [readability-convert-member-functions-to-static]
+  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
+  std::string MakeEscapedString(std::string const&) {
     // TODO(sdhart): implement this function
     return {};
   }
 
-  Status MakeRequest(
-      CurlImpl::HttpMethod,  // NOLINT
-                             // [readability-convert-member-functions-to-static]
-      std::vector<absl::Span<char const>> const&) {
+  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
+  Status MakeRequest(CurlImpl::HttpMethod,
+                     std::vector<absl::Span<char const>> const&) {
     // TODO(sdhart): implement this function
     return {};
   }
 
-  StatusOr<std::size_t> Read(
-      absl::Span<char>) {  // NOLINT
-                           // [readability-convert-member-functions-to-static]
+  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
+  StatusOr<std::size_t> Read(absl::Span<char>) {
     // TODO(sdhart): implement this function
     return 0;
   }
