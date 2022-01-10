@@ -35,6 +35,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-accesscontextmanager",
+    deps = [
+        "//google/cloud/accesscontextmanager:google_cloud_cpp_accesscontextmanager",
+    ],
+)
+
+cc_library(
+    name = "experimental-accesscontextmanager_mocks",
+    deps = [
+        "//google/cloud/accesscontextmanager:google_cloud_cpp_accesscontextmanager_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-assuredworkloads",
     deps = [
         "//google/cloud/assuredworkloads:google_cloud_cpp_assuredworkloads",
