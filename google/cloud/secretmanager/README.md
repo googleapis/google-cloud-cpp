@@ -1,7 +1,5 @@
 # Secret Manager API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for
 [Secret Manager API][cloud-service-root], a service that
 stores sensitive data such as API keys, passwords, and certificates.

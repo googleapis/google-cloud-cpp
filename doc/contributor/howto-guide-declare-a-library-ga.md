@@ -42,16 +42,24 @@ library.  This program is typically created when the library is generated.
 Verify that the following documents describe the library as GA, or at least do
 not describe the library as experimental:
 
-- `README.md`: link the new library README files from the list of GA libraries.
-- `CHANGELOG.md`: update the release notes for the next release announcing the
-  new libraries.
-- `google/cloud/${library}/README.md`: remove the comments stating that the
-  library is experimental. Change them to say that the library is GA, and that
-  `google-cloud-cpp` does not follow semantic versioning.
-- `google/cloud/${library}/doc/main.dox`: ditto.
-- `google/cloud/${library}/quickstart/README.md`: hopefully no changes.
-- `google/cloud/${library}/CMakeLists.txt` sets the `DOXYGEN_PROJECT_NUMBER`
-  to `${PROJECT_VERSION} (Experimental)`. Change that to `${PROJECT_VERSION}`.
+- `README.md`:
+  - Link the new library README files from the list of GA libraries.
+- `CHANGELOG.md`:
+  - Update the release notes for the next release announcing the new libraries.
+- `google/cloud/${library}/README.md`:
+  - Remove the `:construction:` image
+  - Change the comments stating that the library is experimental to state that
+    the library is GA, and that `google-cloud-cpp` does not follow semantic
+    versioning.
+- `google/cloud/${library}/doc/main.dox`:
+  - Change the comments stating that the library is experimental to state that
+    the library is GA, and that `google-cloud-cpp` does not follow semantic
+    versioning.
+- `google/cloud/${library}/quickstart/README.md`:
+  - Hopefully this file requires no changes.
+- `google/cloud/${library}/CMakeLists.txt`:
+  - Change the definition of the `DOXYGEN_PROJECT_NUMBER` variable from
+    `${PROJECT_VERSION} (Experimental)` to `${PROJECT_VERSION}`.
 
 ## Update the targets and rules
 
