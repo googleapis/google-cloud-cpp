@@ -27,13 +27,15 @@ namespace internal {
 /**
  * A lock guard like std::lock_guard which has annotations for lock
  * ordering checks regardless of which standard library is used.
- * 
+ *
  * This can be used as a drop in replacement for std::lock_guard.
  */
 class ABSL_SCOPED_LOCKABLE LockGuard final {
  public:
   explicit LockGuard(std::mutex& mu) ABSL_EXCLUSIVE_LOCK_FUNCTION(mu)
-      : mu_(mu) { mu_.lock(); }
+      : mu_(mu) {
+    mu_.lock();
+  }
 
   ~LockGuard() ABSL_UNLOCK_FUNCTION() { mu_.unlock(); }
 
