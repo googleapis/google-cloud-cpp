@@ -26,6 +26,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 struct GrpcBucketMetadataParser {
+  static google::storage::v2::Bucket ToProto(BucketMetadata const& rhs);
+  static BucketMetadata FromProto(google::storage::v2::Bucket const& rhs);
+
   static google::storage::v2::Bucket::Billing ToProto(BucketBilling const& rhs);
   static BucketBilling FromProto(
       google::storage::v2::Bucket::Billing const& rhs);

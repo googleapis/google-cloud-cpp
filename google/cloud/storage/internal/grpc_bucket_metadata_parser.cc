@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_bucket_metadata_parser.h"
+#include "google/cloud/storage/internal/grpc_bucket_access_control_parser.h"
+#include "google/cloud/storage/internal/grpc_object_access_control_parser.h"
+#include "google/cloud/storage/internal/grpc_owner_parser.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/time_utils.h"
 #include "absl/algorithm/container.h"
@@ -38,6 +41,132 @@ google::type::Date ToProtoDate(absl::CivilDay d) {
 }
 
 }  // namespace
+
+google::storage::v2::Bucket GrpcBucketMetadataParser::ToProto(
+    BucketMetadata const& rhs) {
+  google::storage::v2::Bucket result;
+  // These are in the order of the proto fields, to make it easier to find them
+  // later.
+  result.set_name("projects/_/buckets/" + rhs.id());
+  result.set_bucket_id(rhs.id());
+  result.set_project("projects/" + std::to_string(rhs.project_number()));
+  result.set_metageneration(rhs.metageneration());
+  result.set_location(rhs.location());
+  result.set_location_type(rhs.location_type());
+  result.set_storage_class(rhs.storage_class());
+  result.set_rpo(rhs.rpo());
+  for (auto const& v : rhs.acl()) {
+    *result.add_acl() = GrpcBucketAccessControlParser::ToProto(v);
+  }
+  for (auto const& v : rhs.default_acl()) {
+    *result.add_default_object_acl() =
+        GrpcObjectAccessControlParser::ToProto(v);
+  }
+  if (rhs.has_lifecycle()) {
+    *result.mutable_lifecycle() = ToProto(rhs.lifecycle());
+  }
+  *result.mutable_create_time() =
+      google::cloud::internal::ToProtoTimestamp(rhs.time_created());
+  for (auto const& v : rhs.cors()) {
+    *result.add_cors() = ToProto(v);
+  }
+  *result.mutable_update_time() =
+      google::cloud::internal::ToProtoTimestamp(rhs.updated());
+  result.set_default_event_based_hold(rhs.default_event_based_hold());
+  for (auto const& kv : rhs.labels()) {
+    (*result.mutable_labels())[kv.first] = kv.second;
+  }
+  if (rhs.has_website()) *result.mutable_website() = ToProto(rhs.website());
+  if (rhs.has_versioning()) {
+    *result.mutable_versioning() = ToProto(*rhs.versioning());
+  }
+  if (rhs.has_logging()) *result.mutable_logging() = ToProto(rhs.logging());
+  if (rhs.has_owner()) {
+    *result.mutable_owner() = GrpcOwnerParser::ToProto(rhs.owner());
+  }
+  if (rhs.has_encryption()) {
+    *result.mutable_encryption() = ToProto(rhs.encryption());
+  }
+  if (rhs.has_billing()) {
+    *result.mutable_billing() = ToProto(rhs.billing());
+  }
+  if (rhs.has_retention_policy()) {
+    *result.mutable_retention_policy() = ToProto(rhs.retention_policy());
+  }
+  if (rhs.has_iam_configuration()) {
+    *result.mutable_iam_config() = ToProto(rhs.iam_configuration());
+  }
+  return result;
+}
+
+BucketMetadata GrpcBucketMetadataParser::FromProto(
+    google::storage::v2::Bucket const& rhs) {
+  BucketMetadata metadata;
+
+  // These are sorted as the fields in the BucketMetadata class, to make them
+  // easier to find in the future.
+  for (auto const& v : rhs.acl()) {
+    metadata.acl_.push_back(
+        GrpcBucketAccessControlParser::FromProto(v, rhs.bucket_id()));
+  }
+  if (rhs.has_billing()) metadata.billing_ = FromProto(rhs.billing());
+  metadata.default_event_based_hold_ = rhs.default_event_based_hold();
+  for (auto const& v : rhs.cors()) {
+    metadata.cors_.push_back(FromProto(v));
+  }
+  for (auto const& v : rhs.default_object_acl()) {
+    metadata.default_acl_.push_back(GrpcObjectAccessControlParser::FromProto(
+        v, rhs.bucket_id(), /*object_name*/ std::string{}, /*generation=*/0));
+  }
+  if (rhs.has_encryption()) metadata.encryption_ = FromProto(rhs.encryption());
+  if (rhs.has_iam_config()) {
+    metadata.iam_configuration_ = FromProto(rhs.iam_config());
+  }
+  metadata.id_ = rhs.bucket_id();
+  metadata.kind_ = "storage#bucket";
+  for (auto const& kv : rhs.labels()) {
+    metadata.labels_.emplace(std::make_pair(kv.first, kv.second));
+  }
+  if (rhs.has_lifecycle()) metadata.lifecycle_ = FromProto(rhs.lifecycle());
+  metadata.location_ = rhs.location();
+  metadata.location_type_ = rhs.location_type();
+  if (rhs.has_logging()) metadata.logging_ = FromProto(rhs.logging());
+  metadata.metageneration_ = rhs.metageneration();
+  // The proto name is in `projects/_/buckets/{bucket_id}` format
+  metadata.name_ = rhs.bucket_id();
+  if (rhs.has_owner()) {
+    metadata.owner_ = GrpcOwnerParser::FromProto(rhs.owner());
+  }
+
+  // The protos use `projects/{project}` format, but the field may be absent or
+  // may have a project id (instead of number), we need to do some parsing. We
+  // are forgiving here. It is better to drop one field rather than dropping
+  // the full message.
+  if (rhs.project().rfind("projects/", 0) == 0) {
+    auto s = rhs.project().substr(std::strlen("projects/"));
+    char* end;
+    auto number = std::strtol(s.c_str(), &end, 10);
+    if (end != nullptr && *end == '\0') metadata.project_number_ = number;
+  }
+
+  if (rhs.has_retention_policy()) {
+    metadata.retention_policy_ = FromProto(rhs.retention_policy());
+  }
+  metadata.rpo_ = rhs.rpo();
+  metadata.storage_class_ = rhs.storage_class();
+  if (rhs.has_create_time()) {
+    metadata.time_created_ =
+        google::cloud::internal::ToChronoTimePoint(rhs.create_time());
+  }
+  if (rhs.has_update_time()) {
+    metadata.updated_ =
+        google::cloud::internal::ToChronoTimePoint(rhs.update_time());
+  }
+  if (rhs.has_versioning()) metadata.versioning_ = FromProto(rhs.versioning());
+  if (rhs.has_website()) metadata.website_ = FromProto(rhs.website());
+
+  return metadata;
+}
 
 google::storage::v2::Bucket::Billing GrpcBucketMetadataParser::ToProto(
     BucketBilling const& rhs) {
