@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,15 +15,13 @@
 # proto-file: simple_up_200_down_100.textproto
 # proto-message: Strategy
 
+base: "price::close_price"
+sample: "price::open_price"
 conditions {
-  base: "price::close_price"
-  sample: "price::open_price"
   threshold: 0.02
   moneyin: 200
 }
 conditions {
-  base: "price::close_price"
-  sample: "price::open_price"
   threshold: -0.03
   moneyin: 100
 }

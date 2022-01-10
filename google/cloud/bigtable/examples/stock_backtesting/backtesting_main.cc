@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// [START examples_backtesting_main]
 #include "google/cloud/bigtable/cell.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/table.h"
@@ -70,23 +69,10 @@ cbt::Filter PrepareFilter(cbt::examples::Strategy const& strategy,
   // Column filters, only select the targeting columns.
   std::vector<cbt::Filter> column_filters;
   std::set<std::string> existing_signal;
-  for (auto const& condition : strategy.conditions()) {
-    if (existing_signal.find(condition.base()) == existing_signal.end()) {
-      existing_signal.insert(condition.base());
-      std::vector<std::string> split =
-          absl::StrSplit(condition.base(), kColumnDelimiter);
-      // In the format of column_family::column_qualifier.
-      if (split.size() != 2) {
-        throw std::runtime_error("Invalid strategy definition.");
-      }
-      column_filters.emplace_back(
-          cbt::Filter::ColumnName(split.front(), split.back()));
-    }
-
-    if (existing_signal.find(condition.sample()) == existing_signal.end()) {
-      existing_signal.insert(condition.sample());
-      std::vector<std::string> split =
-          absl::StrSplit(condition.sample(), kColumnDelimiter);
+  for (auto const& signal : {strategy.base(), strategy.sample()}) {
+    if (existing_signal.find(signal) == existing_signal.end()) {
+      existing_signal.insert(signal);
+      std::vector<std::string> split = absl::StrSplit(signal, kColumnDelimiter);
       // In the format of column_family::column_qualifier.
       if (split.size() != 2) {
         throw std::runtime_error("Invalid strategy definition.");
@@ -116,16 +102,12 @@ void CalculateProfit(
     std::unordered_map<std::string, std::map<absl::CivilDay, double>> const&
         time_series,
     cbt::examples::Strategy const& strategy) {
-  // Assume the base and sample fields are the same across conditions.
-  auto base_it =
-      time_series.find(strategy.conditions(0).base())->second.begin();
-  auto sample_it =
-      time_series.find(strategy.conditions(0).sample())->second.begin();
+  auto base_it = time_series.find(strategy.base())->second.begin();
+  auto sample_it = time_series.find(strategy.sample())->second.begin();
   ++sample_it;
 
   double shares = 0.0, wallet = 0.0;
-  while (sample_it !=
-         time_series.find(strategy.conditions(0).sample())->second.end()) {
+  while (sample_it != time_series.find(strategy.sample())->second.end()) {
     double const sample_price = sample_it->second;
     double const base_price = base_it->second;
     double const change = (sample_price - base_price) / base_price;
@@ -161,7 +143,7 @@ int main(int argc, char* argv[]) {
   if (argc != 8) {
     std::cerr
         << "Usage: backtesting <strategy_filepath> <ticker> "
-        << "<start_date> <end_date> <project_id> <instance_id> <table_id>";
+        << "<start_date> <end_date> <project_id> <instance_id> <table_id> \n";
     return 1;
   }
 
@@ -177,7 +159,7 @@ int main(int argc, char* argv[]) {
   if (strategy_filepath.empty() || ticker.empty() || start_date_str.empty() ||
       end_date_str.empty() || project_id.empty() || instance_id.empty() ||
       table_id.empty()) {
-    std::cerr << "Please specify necessary parameters.";
+    std::cerr << "Please specify necessary parameters. \n";
     return 1;
   }
 
@@ -185,31 +167,32 @@ int main(int argc, char* argv[]) {
   if (!absl::ParseCivilTime(start_date_str, &start_date) ||
       !absl::ParseCivilTime(end_date_str, &end_date)) {
     std::cerr << "Can't parse the dates: " << start_date_str << " and "
-              << end_date_str;
+              << end_date_str
+              << ". Both should be in the formart of YYYY-mm-dd \n";
     return 1;
   }
   if (!absl::ParseCivilTime(kMinStartDate, &min_start_date) ||
       !absl::ParseCivilTime(kMaxEndDate, &max_end_date)) {
-    std::cerr << "Can't parse the backtesting window.";
+    std::cerr << "Can't parse the backtesting window. \n";
     return 1;
   }
   if (start_date < min_start_date || end_date > max_end_date ||
       start_date >= end_date) {
-    std::cerr << "Backtesting only supports time window [" << kMinStartDate
-              << ", " << kMaxEndDate << ")";
+    std::cerr << "Backtesting only supports time window [" << min_start_date
+              << ", " << max_end_date << ") \n";
     return 1;
   }
 
   // Read the input strategy file.
   std::fstream input_file(strategy_filepath);
   if (!input_file.is_open()) {
-    std::cerr << "Error in opening file: " << strategy_filepath;
+    std::cerr << "Error in opening file: " << strategy_filepath << "\n";
     return 1;
   }
   std::string input_str(std::istreambuf_iterator<char>{input_file}, {});
   cbt::examples::Strategy strategy;
   if (!google::protobuf::TextFormat::ParseFromString(input_str, &strategy)) {
-    std::cerr << "Can't parse the input strategy.";
+    std::cerr << "Can't parse the input strategy. \n";
     return 1;
   }
 
@@ -226,7 +209,7 @@ int main(int argc, char* argv[]) {
   for (auto const& row_key : row_keys) {
     auto result = table.ReadRow(row_key, filter).value();
     if (!result.first) {
-      std::cerr << "Error in reading row key: " << row_key << "; continue.";
+      std::cerr << "Error in reading row key: " << row_key << "; continue. \n";
       continue;
     }
 
@@ -234,14 +217,13 @@ int main(int argc, char* argv[]) {
     for (auto const& cell : cells) {
       // As an example to convert std::chrono to absl::CivilDay.
       absl::Duration const ts_duration = absl::FromChrono(cell.timestamp());
-      absl::Time const ts_time =
-          absl::time_internal::FromUnixDuration(ts_duration);
+      absl::Time const ts_time = absl::UnixEpoch() + ts_duration;
       absl::CivilDay const ts_cd =
           absl::ToCivilDay(ts_time, absl::UTCTimeZone());
 
       double price_value;
       if (!absl::SimpleAtod(cell.value(), &price_value)) {
-        std::cerr << "Can't parse the cell value: " << cell.value();
+        std::cerr << "Can't parse the cell value: " << cell.value() << "\n";
         continue;
       }
 
@@ -255,4 +237,3 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
-// [END examples_backtesting_main]
