@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_OPTIONS_H
 
-//#include "google/cloud/internal/curl_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <chrono>

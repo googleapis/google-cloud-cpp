@@ -621,7 +621,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/curl_handle.h
         internal/curl_handle_factory.cc
         internal/curl_handle_factory.h
-        internal/curl_impl.cc
         internal/curl_impl.h
         internal/curl_options.h
         internal/curl_wrappers.cc
