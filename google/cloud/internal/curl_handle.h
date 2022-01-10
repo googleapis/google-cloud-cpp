@@ -28,6 +28,9 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+class CurlHandle;
+class CurlHandleFactory;
+
 void AssertOptionSuccessImpl(
     CURLcode e, CURLoption opt, char const* where,
     absl::FunctionRef<std::string()> const& format_parameter);
@@ -60,6 +63,8 @@ void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where, T) {
     return std::string{"a value of type="} + typeid(T).name();
   });
 }
+
+CurlHandle GetCurlHandle(std::shared_ptr<CurlHandleFactory> const& factory);
 
 /**
  * Wraps CURL* handles in a safer C++ interface.
@@ -166,8 +171,9 @@ class CurlHandle {
   explicit CurlHandle(CurlPtr ptr) : handle_(std::move(ptr)) {}
 
   friend class CurlHandleFactory;
-  friend class CurlRestClient;
   friend class CurlImpl;
+  friend CurlHandle GetCurlHandle(
+      std::shared_ptr<CurlHandleFactory> const& factory);
 
   CurlPtr handle_;
   std::shared_ptr<DebugInfo> debug_info_;

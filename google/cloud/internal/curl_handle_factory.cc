@@ -159,6 +159,10 @@ void PooledCurlHandleFactory::SetCurlOptions(CURL* handle) {
   }
 }
 
+CurlHandle GetCurlHandle(std::shared_ptr<CurlHandleFactory> const& factory) {
+  return CurlHandle(factory->CreateHandle());
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
