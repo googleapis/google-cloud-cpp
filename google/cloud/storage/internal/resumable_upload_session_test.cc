@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/resumable_upload_session.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -22,6 +23,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 
 TEST(ResumableUploadResponseTest, Base) {
@@ -30,29 +32,29 @@ TEST(ResumableUploadResponseTest, Base) {
                                  R"""({"name": "test-object-name"})""",
                                  {{"ignored-header", "value"},
                                   {"location", "location-value"},
-                                  {"range", "bytes=0-2000"}}})
+                                  {"range", "bytes=0-1999"}}})
                     .value();
   ASSERT_TRUE(actual.payload.has_value());
   EXPECT_EQ("test-object-name", actual.payload->name());
   EXPECT_EQ("location-value", actual.upload_session_url);
-  EXPECT_EQ(2000, actual.last_committed_byte);
+  EXPECT_EQ(2000, actual.committed_size);
   EXPECT_EQ(ResumableUploadResponse::kDone, actual.upload_state);
 
   std::ostringstream os;
   os << actual;
   auto actual_str = os.str();
   EXPECT_THAT(actual_str, HasSubstr("upload_session_url=location-value"));
-  EXPECT_THAT(actual_str, HasSubstr("last_committed_byte=2000"));
+  EXPECT_THAT(actual_str, HasSubstr("committed_size=2000"));
   EXPECT_THAT(actual_str, HasSubstr("annotations="));
 }
 
 TEST(ResumableUploadResponseTest, NoLocation) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
-                    HttpResponse{308, {}, {{"range", "bytes=0-2000"}}})
+                    HttpResponse{308, {}, {{"range", "bytes=0-1999"}}})
                     .value();
   EXPECT_FALSE(actual.payload.has_value());
   EXPECT_EQ("", actual.upload_session_url);
-  EXPECT_EQ(2000, actual.last_committed_byte);
+  EXPECT_EQ(2000, actual.committed_size);
   EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
@@ -65,71 +67,48 @@ TEST(ResumableUploadResponseTest, NoRange) {
   ASSERT_TRUE(actual.payload.has_value());
   EXPECT_EQ("test-object-name", actual.payload->name());
   EXPECT_EQ("location-value", actual.upload_session_url);
-  EXPECT_EQ(0, actual.last_committed_byte);
+  EXPECT_FALSE(actual.committed_size.has_value());
   EXPECT_EQ(ResumableUploadResponse::kDone, actual.upload_state);
 }
 
 TEST(ResumableUploadResponseTest, MissingBytesInRange) {
-  auto actual = ResumableUploadResponse::FromHttpResponse(
-                    HttpResponse{308,
-                                 {},
-                                 {{"location", "location-value"},
-                                  {"range", "units=0-2000"}}})
-                    .value();
-  EXPECT_FALSE(actual.payload.has_value());
-  EXPECT_EQ("location-value", actual.upload_session_url);
-  EXPECT_EQ(0, actual.last_committed_byte);
-  EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
+  auto actual = ResumableUploadResponse::FromHttpResponse(HttpResponse{
+      308, {}, {{"location", "location-value"}, {"range", "units=0-2000"}}});
+  EXPECT_THAT(actual,
+              StatusIs(StatusCode::kInternal, HasSubstr("units=0-2000")));
 }
 
 TEST(ResumableUploadResponseTest, MissingRangeEnd) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
-                    HttpResponse{308, {}, {{"range", "bytes=0-"}}})
-                    .value();
-  EXPECT_FALSE(actual.payload.has_value());
-  EXPECT_EQ("", actual.upload_session_url);
-  EXPECT_EQ(0, actual.last_committed_byte);
-  EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
+      HttpResponse{308, {}, {{"range", "bytes=0-"}}});
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInternal, HasSubstr("bytes=0-")));
 }
 
 TEST(ResumableUploadResponseTest, InvalidRangeEnd) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
-                    HttpResponse{308, {}, {{"range", "bytes=0-abcd"}}})
-                    .value();
-  EXPECT_FALSE(actual.payload.has_value());
-  EXPECT_EQ("", actual.upload_session_url);
-  EXPECT_EQ(0, actual.last_committed_byte);
-  EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
+      HttpResponse{308, {}, {{"range", "bytes=0-abcd"}}});
+  EXPECT_THAT(actual,
+              StatusIs(StatusCode::kInternal, HasSubstr("bytes=0-abcd")));
 }
 
 TEST(ResumableUploadResponseTest, InvalidRangeBegin) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
-                    HttpResponse{308, {}, {{"range", "bytes=abcd-2000"}}})
-                    .value();
-  EXPECT_FALSE(actual.payload.has_value());
-  EXPECT_EQ("", actual.upload_session_url);
-  EXPECT_EQ(0, actual.last_committed_byte);
-  EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
+      HttpResponse{308, {}, {{"range", "bytes=abcd-2000"}}});
+  EXPECT_THAT(actual,
+              StatusIs(StatusCode::kInternal, HasSubstr("bytes=abcd-2000")));
 }
 
 TEST(ResumableUploadResponseTest, UnexpectedRangeBegin) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
-                    HttpResponse{308, {}, {{"range", "bytes=3000-2000"}}})
-                    .value();
-  EXPECT_FALSE(actual.payload.has_value());
-  EXPECT_EQ("", actual.upload_session_url);
-  EXPECT_EQ(0, actual.last_committed_byte);
-  EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
+      HttpResponse{308, {}, {{"range", "bytes=3000-2000"}}});
+  EXPECT_THAT(actual,
+              StatusIs(StatusCode::kInternal, HasSubstr("bytes=3000-2000")));
 }
 
 TEST(ResumableUploadResponseTest, NegativeEnd) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
-                    HttpResponse{308, {}, {{"range", "bytes=0--7"}}})
-                    .value();
-  EXPECT_FALSE(actual.payload.has_value());
-  EXPECT_EQ("", actual.upload_session_url);
-  EXPECT_EQ(0, actual.last_committed_byte);
-  EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
+      HttpResponse{308, {}, {{"range", "bytes=0--7"}}});
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInternal, HasSubstr("bytes=0--7")));
 }
 
 }  // namespace

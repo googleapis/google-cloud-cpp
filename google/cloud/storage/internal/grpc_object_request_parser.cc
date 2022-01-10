@@ -256,12 +256,8 @@ ResumableUploadResponse GrpcObjectRequestParser::FromProto(
     google::storage::v2::WriteObjectResponse const& p, Options const& options) {
   ResumableUploadResponse response;
   response.upload_state = ResumableUploadResponse::kInProgress;
-  if (p.has_persisted_size() && p.persisted_size() > 0) {
-    // TODO(#6880) - cleanup the committed_byte vs. size thing
-    response.last_committed_byte =
-        static_cast<std::uint64_t>(p.persisted_size()) - 1;
-  } else {
-    response.last_committed_byte = 0;
+  if (p.has_persisted_size()) {
+    response.committed_size = static_cast<std::uint64_t>(p.persisted_size());
   }
   if (p.has_resource()) {
     response.payload =

@@ -62,15 +62,15 @@ TEST_F(WriteObjectTest, WriteObject) {
         EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
         EXPECT_CALL(*mock, UploadChunk)
             .WillRepeatedly(Return(make_status_or(ResumableUploadResponse{
-                "fake-url", 0, {}, ResumableUploadResponse::kInProgress, {}})));
+                "fake-url", ResumableUploadResponse::kInProgress, 0, {}, {}})));
         EXPECT_CALL(*mock, ResetSession())
             .WillOnce(Return(make_status_or(ResumableUploadResponse{
-                "fake-url", 0, {}, ResumableUploadResponse::kInProgress, {}})));
+                "fake-url", ResumableUploadResponse::kInProgress, 0, {}, {}})));
         EXPECT_CALL(*mock, UploadFinalChunk)
             .WillOnce(
                 Return(StatusOr<ResumableUploadResponse>(TransientError())))
             .WillOnce(Return(make_status_or(ResumableUploadResponse{
-                "fake-url", 0, expected, ResumableUploadResponse::kDone, {}})));
+                "fake-url", ResumableUploadResponse::kDone, 0, expected, {}})));
 
         return make_status_or(
             std::unique_ptr<internal::ResumableUploadSession>(std::move(mock)));
@@ -227,7 +227,7 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
               bytes_written += internal::TotalBytes(data);
               EXPECT_EQ(bytes_written, size);
               return make_status_or(ResumableUploadResponse{
-                  "fake-url", 0, expected, ResumableUploadResponse::kDone, {}});
+                  "fake-url", ResumableUploadResponse::kDone, 0, expected, {}});
             });
 
         return make_status_or(
@@ -285,7 +285,7 @@ TEST_F(WriteObjectTest, UploadFile) {
               bytes_written += internal::TotalBytes(data);
               EXPECT_EQ(bytes_written, size);
               return make_status_or(ResumableUploadResponse{
-                  "fake-url", 0, expected, ResumableUploadResponse::kDone, {}});
+                  "fake-url", ResumableUploadResponse::kDone, 0, expected, {}});
             });
 
         return make_status_or(

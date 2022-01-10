@@ -36,7 +36,7 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(
       hash_validator_(std::move(hash_validator)),
       auto_finalize_(auto_finalize),
       last_response_(ResumableUploadResponse{
-          {}, 0, {}, ResumableUploadResponse::kInProgress, {}}) {
+          {}, ResumableUploadResponse::kInProgress, 0, absl::nullopt, {}}) {
   current_ios_buffer_.resize(max_buffer_size_);
   auto* pbeg = current_ios_buffer_.data();
   auto* pend = pbeg + current_ios_buffer_.size();

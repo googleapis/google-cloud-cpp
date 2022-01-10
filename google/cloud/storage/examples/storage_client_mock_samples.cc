@@ -89,16 +89,16 @@ TEST(StorageMockingSamples, MockWriteObject) {
         EXPECT_CALL(*mock_result, UploadChunk)
             .WillRepeatedly(Return(google::cloud::make_status_or(
                 ResumableUploadResponse{"fake-url",
-                                        0,
-                                        {},
                                         ResumableUploadResponse::kInProgress,
+                                        /*committed_size=*/absl::nullopt,
+                                        /*object_metadata=*/absl::nullopt,
                                         {}})));
         EXPECT_CALL(*mock_result, UploadFinalChunk)
             .WillRepeatedly(Return(google::cloud::make_status_or(
                 ResumableUploadResponse{"fake-url",
-                                        0,
-                                        expected_metadata,
                                         ResumableUploadResponse::kDone,
+                                        /*committed_size=*/absl::nullopt,
+                                        /*object_metadata=*/expected_metadata,
                                         {}})));
 
         std::unique_ptr<gcs::internal::ResumableUploadSession> result(

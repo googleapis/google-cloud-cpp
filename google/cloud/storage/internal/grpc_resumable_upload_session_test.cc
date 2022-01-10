@@ -126,14 +126,14 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
       });
 
   auto upload = session.UploadChunk({{payload}});
-  EXPECT_STATUS_OK(upload);
-  EXPECT_EQ(size - 1, upload->last_committed_byte);
+  ASSERT_STATUS_OK(upload);
+  EXPECT_EQ(size, upload->committed_size.value_or(0));
   EXPECT_EQ(size, session.next_expected_byte());
   EXPECT_FALSE(session.done());
 
   upload = session.UploadFinalChunk({{payload}}, 2 * size, hashes);
   EXPECT_STATUS_OK(upload);
-  EXPECT_EQ(2 * size - 1, upload->last_committed_byte);
+  EXPECT_EQ(2 * size, upload->committed_size.value_or(0));
   EXPECT_EQ(2 * size, session.next_expected_byte());
   EXPECT_TRUE(session.done());
 }
@@ -179,13 +179,13 @@ TEST(GrpcResumableUploadSessionTest, SingleStreamForLargeChunks) {
 
   auto upload = session.UploadChunk({{payload}});
   EXPECT_STATUS_OK(upload);
-  EXPECT_EQ(size - 1, upload->last_committed_byte);
+  EXPECT_EQ(size, upload->committed_size.value_or(0));
   EXPECT_EQ(size, session.next_expected_byte());
   EXPECT_FALSE(session.done());
 
   upload = session.UploadFinalChunk({{payload}}, 2 * size, HashValues{});
   EXPECT_STATUS_OK(upload);
-  EXPECT_EQ(2 * size - 1, upload->last_committed_byte);
+  EXPECT_EQ(2 * size, upload->committed_size.value_or(0));
   EXPECT_EQ(2 * size, session.next_expected_byte());
   EXPECT_TRUE(session.done());
 }
@@ -235,7 +235,7 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
       .WillOnce([&](QueryResumableUploadRequest const& request) {
         EXPECT_EQ("test-upload-id", request.upload_session_url());
         return make_status_or(ResumableUploadResponse{
-            {}, size, {}, ResumableUploadResponse::kInProgress, {}});
+            {}, ResumableUploadResponse::kInProgress, size, {}, {}});
       });
 
   auto upload = session.UploadChunk({{payload}});
@@ -303,7 +303,7 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
       });
 
   ResumableUploadResponse const resume_response{
-      {}, 0, {}, ResumableUploadResponse::kInProgress, {}};
+      {}, ResumableUploadResponse::kInProgress, 0, {}, {}};
   EXPECT_CALL(*mock, QueryResumableUpload)
       .WillOnce([&](QueryResumableUploadRequest const& request) {
         EXPECT_EQ("test-upload-id", request.upload_session_url());
