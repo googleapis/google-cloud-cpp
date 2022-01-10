@@ -27,12 +27,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 /// Create a grpc::Status with a status code for transient errors.
-grpc::Status CreateTransientError() {
+grpc::Status GrpcTransientError() {
   return grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again");
 }
 
 /// Create a grpc::Status with a status code for permanent errors.
-grpc::Status CreatePermanentError() {
+grpc::Status GrpcPermanentError() {
   return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "failed");
 }
 
@@ -58,7 +58,7 @@ auto const kLimitedTimeTolerance = 10_ms;
  */
 void CheckLimitedTime(RPCRetryPolicy& tested) {
   google::cloud::testing_util::CheckPredicateBecomesFalse(
-      [&tested] { return tested.OnFailure(CreateTransientError()); },
+      [&tested] { return tested.OnFailure(GrpcTransientError()); },
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
       kLimitedTimeTolerance);
 }
@@ -85,8 +85,8 @@ TEST(LimitedTimeRetryPolicy, Simple) {
 TEST(LimitedTimeRetryPolicy, PermanentFailureCheck) {
   LimitedTimeRetryPolicy tested(kLimitedTimeTestPeriod);
   EXPECT_FALSE(tested.IsPermanentFailure(grpc::Status::OK));
-  EXPECT_FALSE(tested.IsPermanentFailure(CreateTransientError()));
-  EXPECT_TRUE(tested.IsPermanentFailure(CreatePermanentError()));
+  EXPECT_FALSE(tested.IsPermanentFailure(GrpcTransientError()));
+  EXPECT_TRUE(tested.IsPermanentFailure(GrpcPermanentError()));
 
   auto common = bigtable_internal::MakeCommonRetryPolicy<
       bigtable_admin::BigtableInstanceAdminRetryPolicy>(tested.clone());
@@ -109,7 +109,7 @@ TEST(LimitedTimeRetryPolicy, Clone) {
 /// @test Verify that non-retryable errors cause an immediate failure.
 TEST(LimitedTimeRetryPolicy, OnNonRetryable) {
   LimitedTimeRetryPolicy tested(10_ms);
-  EXPECT_FALSE(tested.OnFailure(CreatePermanentError()));
+  EXPECT_FALSE(tested.OnFailure(GrpcPermanentError()));
 
   auto common = bigtable_internal::MakeCommonRetryPolicy<
       bigtable_admin::BigtableInstanceAdminRetryPolicy>(tested.clone());
@@ -121,19 +121,19 @@ TEST(LimitedErrorCountRetryPolicy, Simple) {
   LimitedErrorCountRetryPolicy tested(3);
   EXPECT_FALSE(tested.IsExhausted());
   // Attempt 1
-  EXPECT_TRUE(tested.OnFailure(CreateTransientError()));
+  EXPECT_TRUE(tested.OnFailure(GrpcTransientError()));
   EXPECT_FALSE(tested.IsExhausted());
   // Attempt 2
-  EXPECT_TRUE(tested.OnFailure(CreateTransientError()));
+  EXPECT_TRUE(tested.OnFailure(GrpcTransientError()));
   EXPECT_FALSE(tested.IsExhausted());
   // Attempt 3
-  EXPECT_TRUE(tested.OnFailure(CreateTransientError()));
+  EXPECT_TRUE(tested.OnFailure(GrpcTransientError()));
   EXPECT_FALSE(tested.IsExhausted());
   // Attempt 4
-  EXPECT_FALSE(tested.OnFailure(CreateTransientError()));
+  EXPECT_FALSE(tested.OnFailure(GrpcTransientError()));
   EXPECT_TRUE(tested.IsExhausted());
   // Attempt 5
-  EXPECT_FALSE(tested.OnFailure(CreateTransientError()));
+  EXPECT_FALSE(tested.OnFailure(GrpcTransientError()));
   EXPECT_TRUE(tested.IsExhausted());
 
   auto common = bigtable_internal::MakeCommonRetryPolicy<
@@ -160,17 +160,17 @@ TEST(LimitedErrorCountRetryPolicy, Simple) {
 TEST(LimitedErrorCountRetryPolicy, Clone) {
   LimitedErrorCountRetryPolicy original(3);
   auto tested = original.clone();
-  EXPECT_TRUE(tested->OnFailure(CreateTransientError()));
-  EXPECT_TRUE(tested->OnFailure(CreateTransientError()));
-  EXPECT_TRUE(tested->OnFailure(CreateTransientError()));
-  EXPECT_FALSE(tested->OnFailure(CreateTransientError()));
-  EXPECT_FALSE(tested->OnFailure(CreateTransientError()));
+  EXPECT_TRUE(tested->OnFailure(GrpcTransientError()));
+  EXPECT_TRUE(tested->OnFailure(GrpcTransientError()));
+  EXPECT_TRUE(tested->OnFailure(GrpcTransientError()));
+  EXPECT_FALSE(tested->OnFailure(GrpcTransientError()));
+  EXPECT_FALSE(tested->OnFailure(GrpcTransientError()));
 }
 
 /// @test Verify that non-retryable errors cause an immediate failure.
 TEST(LimitedErrorCountRetryPolicy, OnNonRetryable) {
   LimitedErrorCountRetryPolicy tested(3);
-  EXPECT_FALSE(tested.OnFailure(CreatePermanentError()));
+  EXPECT_FALSE(tested.OnFailure(GrpcPermanentError()));
 
   auto common = bigtable_internal::MakeCommonRetryPolicy<
       bigtable_admin::BigtableInstanceAdminRetryPolicy>(tested.clone());

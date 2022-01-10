@@ -30,12 +30,15 @@ namespace {
 Status PermanentError() {
   return Status(StatusCode::kFailedPrecondition, "failed");
 }
+
 grpc::Status GrpcPermanentError() {
   return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "failed");
 }
+
 Status TransientError() {
   return Status(StatusCode::kUnavailable, "try again");
 }
+
 grpc::Status GrpcTransientError() {
   return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
 }
