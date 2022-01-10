@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_LOCK_GUARD_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_LOCK_GUARD_H
 
-#include "absl/base/thread_annotations.h"
 #include "google/cloud/version.h"
+#include "absl/base/thread_annotations.h"
 #include <mutex>
 
 namespace google {
