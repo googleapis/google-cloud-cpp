@@ -60,7 +60,7 @@ class PollingPolicy {
    * Return true if `status` represents a permanent error that cannot be
    * retried.
    */
-  virtual bool IsPermanentError(google::cloud::Status const& status) = 0;
+  virtual bool IsPermanentError(Status const& status) = 0;
 
   /**
    * Handle an RPC failure.
@@ -77,7 +77,7 @@ class PollingPolicy {
    *
    * @return true if the RPC operation should be retried.
    */
-  virtual bool OnFailure(google::cloud::Status const& status) = 0;
+  virtual bool OnFailure(Status const& status) = 0;
 
   /**
    * Return true if we cannot try again.
@@ -136,15 +136,15 @@ class GenericPollingPolicy : public PollingPolicy {
     backoff_clone_->Setup(context);
   }
 
-  bool IsPermanentError(google::cloud::Status const& status) override {
+  bool IsPermanentError(Status const& status) override {
     return RPCRetryPolicy::IsPermanentFailure(status);
   }
 
-  bool OnFailure(google::cloud::Status const& status) override {
+  bool OnFailure(Status const& status) override {
     return retry_clone_->OnFailure(status);
   }
 
-  bool Exhausted() override { return !OnFailure(google::cloud::Status()); }
+  bool Exhausted() override { return !OnFailure(Status()); }
 
   std::chrono::milliseconds WaitPeriod() override {
     return backoff_clone_->OnCompletion(grpc::Status::OK);

@@ -61,11 +61,10 @@ void CheckLimitedTime(RPCRetryPolicy& tested) {
       [&tested] { return tested.OnFailure(CreateTransientError()); },
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
       kLimitedTimeTolerance);
+}
 
-  // Verify that converting to a common policy does not change behavior
-  auto common = bigtable_internal::MakeCommonRetryPolicy<
-      bigtable_admin::BigtableInstanceAdminRetryPolicy>(tested.clone());
-
+void CheckLimitedTime(
+    std::unique_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy> common) {
   google::cloud::testing_util::CheckPredicateBecomesFalse(
       [&common] { return common->OnFailure(TransientError()); },
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
@@ -76,6 +75,10 @@ void CheckLimitedTime(RPCRetryPolicy& tested) {
 TEST(LimitedTimeRetryPolicy, Simple) {
   LimitedTimeRetryPolicy tested(kLimitedTimeTestPeriod);
   CheckLimitedTime(tested);
+
+  auto common = bigtable_internal::MakeCommonRetryPolicy<
+      bigtable_admin::BigtableInstanceAdminRetryPolicy>(tested.clone());
+  CheckLimitedTime(std::move(common));
 }
 
 /// @test A simple test for grpc::StatusCode::OK is not Permanent Error.
@@ -97,6 +100,10 @@ TEST(LimitedTimeRetryPolicy, Clone) {
   LimitedTimeRetryPolicy original(kLimitedTimeTestPeriod);
   auto tested = original.clone();
   CheckLimitedTime(*tested);
+
+  auto common = bigtable_internal::MakeCommonRetryPolicy<
+      bigtable_admin::BigtableInstanceAdminRetryPolicy>(original.clone());
+  CheckLimitedTime(common->clone());
 }
 
 /// @test Verify that non-retryable errors cause an immediate failure.
@@ -168,6 +175,41 @@ TEST(LimitedErrorCountRetryPolicy, OnNonRetryable) {
   auto common = bigtable_internal::MakeCommonRetryPolicy<
       bigtable_admin::BigtableInstanceAdminRetryPolicy>(tested.clone());
   EXPECT_FALSE(common->OnFailure(PermanentError()));
+}
+
+/**
+ * @test Verify that converting to a common policy exhibits best-effort
+ * `IsExhausted()` logic.
+ *
+ * This test simulates the conversion of a user-supplied
+ * `bigtable::RPCRetryPolicy`, which will not have an `IsExhausted()` method, to
+ * a common policy, which requires the method. If the policy fails without
+ * encountering a permanent error, we should say it has been exhausted.
+ *
+ * For context, the value of `IsExhausted()` is used to determine whether we can
+ * exit a loop at the start of an iteration, before making another request. The
+ * value also determines whether we report that the retry loop is exhausted, or
+ * if the retry loop encountered a permanent error.
+ */
+TEST(CommonRetryPolicy, IsExhaustedBestEffort) {
+  // This class is essentially a `LimitedErrorCountRetryPolicy(0)`. The
+  // important thing to note is that it does not override `IsExhausted()`.
+  class CustomRetryPolicy : public RPCRetryPolicy {
+   public:
+    std::unique_ptr<RPCRetryPolicy> clone() const override {
+      return absl::make_unique<CustomRetryPolicy>();
+    }
+    void Setup(grpc::ClientContext&) const override {}
+    bool OnFailure(Status const&) override { return false; }
+    // TODO(#2344) - remove ::grpc::Status version.
+    bool OnFailure(grpc::Status const&) override { return false; }
+  };
+
+  CustomRetryPolicy tested;
+  auto common = bigtable_internal::MakeCommonRetryPolicy<
+      bigtable_admin::BigtableInstanceAdminRetryPolicy>(tested.clone());
+  EXPECT_FALSE(common->OnFailure(TransientError()));
+  EXPECT_TRUE(common->IsExhausted());
 }
 
 /// @test Verify that certain known internal errors are retryable.

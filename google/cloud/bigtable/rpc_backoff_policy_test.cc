@@ -67,6 +67,16 @@ TEST(ExponentialBackoffRetryPolicy, Clone) {
   // Ensure the initial state of the policy is cloned, not the current state.
   tested = tested->clone();
   EXPECT_GE(10_ms, tested->OnCompletion(CreateTransientError()));
+
+  // Verify that converting to a common backoff policy preserves behavior.
+  auto common = bigtable_internal::MakeCommonBackoffPolicy(original.clone());
+  auto common_clone = common->clone();
+  EXPECT_GE(10_ms, common_clone->OnCompletion());
+  EXPECT_LE(10_ms, common_clone->OnCompletion());
+
+  // Ensure the initial state of the policy is cloned, not the current state.
+  common_clone = common_clone->clone();
+  EXPECT_GE(10_ms, common_clone->OnCompletion());
 }
 
 /// @test Test for testing randomness for 2 objects of
