@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLLING_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLLING_POLICY_H
 
+#include "google/cloud/internal/backoff_policy.h"
+#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include <chrono>
@@ -65,7 +67,7 @@ class PollingPolicy {
    * @return true if the failure should be treated as transient and the polling
    *     loop should continue.
    */
-  virtual bool OnFailure(google::cloud::Status const& status) = 0;
+  virtual bool OnFailure(Status const& status) = 0;
 
   /**
    * How long should the polling loop wait before trying again.
@@ -73,24 +75,43 @@ class PollingPolicy {
   virtual std::chrono::milliseconds WaitPeriod() = 0;
 };
 
+/**
+ * Construct a polling policy from existing Retry and Backoff policies.
+ *
+ * A polling policy can be built by composing a retry and backoff policy. For
+ * example, to create a polling policy that "retries N times, waiting a fixed
+ * period between retries" you could compose the "try N times" retry policy with
+ * the "wait a fixed period between retries" backoff policy.
+ *
+ * This class makes it easier to create such composed polling policies.
+ *
+ * @tparam Retry the retry policy used to limit the number of errors or the
+ *     total duration of the polling loop.
+ * @tparam Backoff the backoff policy used to control how often the
+ *     library polls.
+ */
 template <typename Retry, typename Backoff>
 class GenericPollingPolicy : public PollingPolicy {
  public:
   GenericPollingPolicy(Retry retry_policy, Backoff backoff_policy)
-      : retry_policy_(std::move(retry_policy)),
-        backoff_policy_(std::move(backoff_policy)) {}
+      : retry_prototype_(std::move(retry_policy)),
+        backoff_prototype_(std::move(backoff_policy)),
+        retry_clone_(maybe_deref(retry_prototype_).clone()),
+        backoff_clone_(maybe_deref(backoff_prototype_).clone()) {}
 
   //@{
   std::unique_ptr<PollingPolicy> clone() const override {
-    return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy(*this));
+    return std::unique_ptr<PollingPolicy>(
+        new GenericPollingPolicy<Retry, Backoff>(retry_prototype_,
+                                                 backoff_prototype_));
   }
 
-  bool OnFailure(google::cloud::Status const& status) override {
-    return maybe_deref(retry_policy_).OnFailure(status);
+  bool OnFailure(Status const& status) override {
+    return retry_clone_->OnFailure(status);
   }
 
   std::chrono::milliseconds WaitPeriod() override {
-    return maybe_deref(backoff_policy_).OnCompletion();
+    return backoff_clone_->OnCompletion();
   }
   //@}
 
@@ -104,8 +125,11 @@ class GenericPollingPolicy : public PollingPolicy {
     return *v;
   }
 
-  Retry retry_policy_;
-  Backoff backoff_policy_;
+  Retry retry_prototype_;
+  Backoff backoff_prototype_;
+
+  std::unique_ptr<internal::RetryPolicy> retry_clone_;
+  std::unique_ptr<internal::BackoffPolicy> backoff_clone_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
