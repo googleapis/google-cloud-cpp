@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Serverless VPC Access API][cloud-service-docs], a service to API for managing VPC access connectors.
+[Serverless VPC Access API][cloud-service-docs], a service to manage VPC access
+connectors.
 
 This library is **experimental**. Its APIS are subject to change without notice.
 
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/vpcaccess
+[cloud-service-docs]: https://cloud.google.com/vpc/docs/serverless-vpc-access
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-vpcaccess/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/vpcaccess
 
@@ -38,22 +39,23 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/vpcaccess/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/vpcaccess/vpc_access_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace vpcaccess = ::google::cloud::vpcaccess;
-  auto client = vpcaccess::Client(vpcaccess::MakeConnection(/* EDIT HERE */));
+  auto client = vpcaccess::VpcAccessServiceClient(
+      vpcaccess::MakeVpcAccessServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName()) {
+  auto const parent =
+      std::string("projects/") + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListConnectors(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

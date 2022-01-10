@@ -321,6 +321,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-vpcaccess",
+    deps = [
+        "//google/cloud/vpcaccess:google_cloud_cpp_vpcaccess",
+    ],
+)
+
+cc_library(
+    name = "experimental-vpcaccess_mocks",
+    deps = [
+        "//google/cloud/vpcaccess:google_cloud_cpp_vpcaccess_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-webrisk",
     deps = [
         "//google/cloud/webrisk:google_cloud_cpp_webrisk",
