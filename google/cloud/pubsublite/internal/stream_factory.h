@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_STREAM_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_STREAM_FACTORY_H
 
-#include "absl/functional/bind_front.h"
 #include "google/cloud/internal/async_read_write_stream_auth.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/version.h"
+#include "absl/functional/bind_front.h"
 #include <google/cloud/pubsublite/v1/cursor.grpc.pb.h>
 #include <google/cloud/pubsublite/v1/publisher.grpc.pb.h>
 #include <google/cloud/pubsublite/v1/subscriber.grpc.pb.h>
@@ -60,7 +60,7 @@ StreamFactory<Request, Response> AddClientMetadata(
 }
 
 template <typename Request, typename Response>
-inline ContextStreamFactory<Request, Response> AddAuthContext(
+ContextStreamFactory<Request, Response> AddAuthContext(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> const&
         auth,
     ContextStreamFactory<Request, Response> const& underlying) {
