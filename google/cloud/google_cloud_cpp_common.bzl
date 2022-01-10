@@ -52,6 +52,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/getenv.h",
     "internal/invoke_result.h",
     "internal/ios_flags_saver.h",
+    "internal/lock_guard.h",
     "internal/log_impl.h",
     "internal/non_constructible.h",
     "internal/pagination_range.h",
