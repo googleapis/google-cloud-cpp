@@ -46,9 +46,7 @@ which should give you a taste of the Access Context Manager API C++ client libra
   the program's console.
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc-streams` turns on tracing for streaming
-  gRPC calls, such as `Client::Read()`, `Client::ExecuteQuery()`, and
-  `Client::ProfileQuery()`. This can produce a lot of output, so use with
-  caution!
+  gRPC calls. This can produce a lot of output, so use with caution!
 
 - `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
   including whether messages will be output on multiple lines, or whether
@@ -84,17 +82,11 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/accesscontextmanager
+[cloud-service-docs]: https://cloud.google.com/access-context-manager
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
-[gcs-quickstart]: https://cloud.google.com/accesscontextmanager/docs/quickstarts 'Quickstarts'
-[resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
-[billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
-[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
-[gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
 [github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/accesscontextmanager/README%2Emd
-[github-install]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging%2Emd
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/accesscontextmanager/quickstart/README%2Emd
 
 */
