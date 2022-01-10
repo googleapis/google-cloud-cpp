@@ -45,9 +45,12 @@ io::log_h2 "Verifying installed directories"
 # links: . and ..). We only look at leaf directories, because obviously all
 # parent directories must also exist.
 mapfile -t actual_dirs < <(env -C "${INSTALL_PREFIX}" find -type d)
-# The micro generator populates a file with the expected directories generated
-# via `make install`. The list does not include hand-crafted libraries, which
-# we maintain here as a hard-coded list.
+# The micro generator populates `ci/etc/expected_install_directories` with the
+# expected directories generated via `make install`. This generated list does
+# not include:
+#   - hand-crafted libraries
+#   - directories with pure protos (without gRPC code)
+# We maintain those here as a hard-coded list.
 mapfile -t expected_dirs < <(cat ci/etc/expected_install_directories)
 expected_dirs+=(
   ./include/google/api
@@ -69,10 +72,7 @@ expected_dirs+=(
   ./include/google/cloud/internal
   ./include/google/cloud/pubsub
   ./include/google/cloud/pubsub/internal
-  # google/cloud/secretmanager/logging contains pure
-  # protos, no gRPC services. The generator does
-  # not update expected_install_directories in
-  # this case
+  # no gRPC services in google/cloud/secretmanager/logging
   ./include/google/cloud/secretmanager/logging
   ./include/google/cloud/secretmanager/logging/v1
   ./include/google/cloud/pubsub/mocks
@@ -87,17 +87,13 @@ expected_dirs+=(
   ./include/google/cloud/storage/testing
   ./include/google/cloud/texttospeech
   ./include/google/cloud/texttospeech/v1
-  # google/cloud/workflows/type contains pure
-  # protos, no gRPC services. The generator does
-  # not update expected_install_directories in
-  # this case
+  # no gRPC services in google/cloud/workflows/type.
   ./include/google/cloud/workflows/type
   ./include/google/devtools
   ./include/google/devtools/cloudtrace
   ./include/google/devtools/cloudtrace/v2
   ./include/google/iam/v1
-  # This contains pure protos. The generator does not
-  # updated expected_install_directories in this case.
+  # no gRPC services in google/identity/accesscontextmanager/type
   ./include/google/identity/accesscontextmanager/type
   ./include/google/logging/type
   ./include/google/longrunning
