@@ -40,6 +40,9 @@ StatusCode MapHttpCodeToStatus(long code) {  // NOLINT(google-runtime-int)
     return StatusCode::kOk;
   }
   if (code == HttpStatusCode::kResumeIncomplete) {
+    // TODO(#7876): Determine if this mapping is correct for all GCP services,
+    // not just GCS.
+
     // 308 - Resume Incomplete: this one is terrible. When performing a PUT
     // for a resumable upload this means "The client and server are out of sync
     // in this resumable upload, please reset". Unfortunately, during a
