@@ -585,7 +585,7 @@ TEST_F(RetryResumableUploadSessionTest, MissingRangeHeaderInUpload) {
   });
 
   // Simulate an upload that "succeeds", but returns a missing value for the
-  // committed size, this should trigger a reset.
+  // committed size. This should trigger a reset.
   EXPECT_CALL(*mock, UploadChunk).WillOnce([&](ConstBufferSequence const&) {
     return make_status_or(
         ResumableUploadResponse{"",

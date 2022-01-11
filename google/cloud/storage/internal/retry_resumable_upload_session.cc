@@ -62,20 +62,20 @@ StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadFinalChunk(
 // A description of resumable uploads can be found at:
 //     https://cloud.google.com/storage/docs/performing-resumable-uploads
 //
-// A description of the gRPC analog can be found in the proto file:
+// A description of the gRPC analog can be found in the proto file. Pay
+// particular attention to the documentation for `WriteObject()`,
+// `WriteObjectRequest`, `StartResumablewrite()` and `QueryResumableWrite()`:
 //    https://github.com/googleapis/googleapis/blob/master/google/storage/v2/storage.proto
 //
-// Particularly the documentation for `WriteObject()`, `WriteObjectRequest`,
-// `StartResumablewrite()` and `QueryResumableWrite()`.
-//
 // At a high level one starts a resumable upload by creating a "session". These
-// sessions are persistent, they survive disconnections from the service, one
+// sessions are persistent (they survive disconnections from the service). One
 // can even resume uploads after shutting down and restarting an application.
 // Their current state can be queried using a simple RPC (or a PUT request
 // without payload).
 //
-// Resumable uploads make progress by sending "chunks", a single PUT request in
-// REST-based transports, a client-side streaming RPC for gRPC-based transports.
+// Resumable uploads make progress by sending "chunks", either a single PUT
+// request in REST-based transports, or a client-side streaming RPC for
+// gRPC-based transports.
 //
 // Resumable uploads complete when the application sends the last bytes of the
 // object. In the client library we mostly start uploads without knowing the
@@ -152,14 +152,15 @@ RetryResumableUploadSession::UploadGenericChunk(char const* caller,
       continue;
     }
 
-    // Sometimes the upload completes in a regular `UploadChunk()` or event a
+    // While normally a `UploadFinalChunk()` call completes an upload, sometimes
+    // the upload can complete in a regular `UploadChunk()` or a
     // `ResetSession()` call. For example, the server can detect a completed
     // upload "early" if the application includes the X-Upload-Content-Length`
     // header.
     if (result->upload_state == ResumableUploadResponse::kDone) return result;
 
     // This indicates that the response was missing a `Range:` header, or that
-    // the range header was in the wrong format, either way, treat that as a
+    // the range header was in the wrong format. Either way, treat that as a
     // (transient) failure and start over.
     if (!result->committed_size.has_value()) {
       if (operation != &reset) {
