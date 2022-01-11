@@ -27,6 +27,62 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::Eq;
 
+class MapHttpCodeToStatusTest
+    : public ::testing::TestWithParam<std::pair<HttpStatusCode, StatusCode>> {
+ protected:
+};
+
+TEST_P(MapHttpCodeToStatusTest, CorrectMapping) {
+  EXPECT_THAT(GetParam().second, Eq(AsStatus(GetParam().first, "").code()));
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    MappingPairs, MapHttpCodeToStatusTest,
+    testing::Values(
+        std::make_pair(HttpStatusCode::kContinue, StatusCode::kOk),
+        std::make_pair(static_cast<HttpStatusCode>(102), StatusCode::kOk),
+        std::make_pair(HttpStatusCode::kOk, StatusCode::kOk),
+        std::make_pair(HttpStatusCode::kCreated, StatusCode::kOk),
+        std::make_pair(static_cast<HttpStatusCode>(202), StatusCode::kOk),
+        std::make_pair(static_cast<HttpStatusCode>(303), StatusCode::kUnknown),
+        std::make_pair(HttpStatusCode::kNotModified,
+                       StatusCode::kFailedPrecondition),
+        std::make_pair(HttpStatusCode::kResumeIncomplete,
+                       StatusCode::kFailedPrecondition),
+        std::make_pair(HttpStatusCode::kBadRequest,
+                       StatusCode::kInvalidArgument),
+        std::make_pair(HttpStatusCode::kUnauthorized,
+                       StatusCode::kUnauthenticated),
+        std::make_pair(HttpStatusCode::kForbidden,
+                       StatusCode::kPermissionDenied),
+        std::make_pair(HttpStatusCode::kNotFound, StatusCode::kNotFound),
+        std::make_pair(HttpStatusCode::kMethodNotAllowed,
+                       StatusCode::kPermissionDenied),
+        std::make_pair(static_cast<HttpStatusCode>(406),
+                       StatusCode::kInvalidArgument),
+        std::make_pair(HttpStatusCode::kConflict, StatusCode::kAborted),
+        std::make_pair(HttpStatusCode::kGone, StatusCode::kNotFound),
+        std::make_pair(HttpStatusCode::kLengthRequired,
+                       StatusCode::kInvalidArgument),
+        std::make_pair(HttpStatusCode::kPreconditionFailed,
+                       StatusCode::kFailedPrecondition),
+        std::make_pair(HttpStatusCode::kPayloadTooLarge,
+                       StatusCode::kOutOfRange),
+        std::make_pair(HttpStatusCode::kRequestRangeNotSatisfiable,
+                       StatusCode::kOutOfRange),
+        std::make_pair(HttpStatusCode::kTooManyRequests,
+                       StatusCode::kUnavailable),
+        std::make_pair(HttpStatusCode::kInternalServerError,
+                       StatusCode::kUnavailable),
+        std::make_pair(HttpStatusCode::kBadGateway, StatusCode::kUnavailable),
+        std::make_pair(HttpStatusCode::kServiceUnavailable,
+                       StatusCode::kUnavailable),
+        std::make_pair(static_cast<HttpStatusCode>(504),
+                       StatusCode::kInternal)),
+    [](testing::TestParamInfo<MapHttpCodeToStatusTest::ParamType> const& info) {
+      return std::to_string(std::get<0>(info.param));
+    });
+
 TEST(AsStatus, HttpStatusCodeIsOk) {
   auto status = AsStatus(HttpStatusCode::kOk, "");
   EXPECT_THAT(status, IsOk());
