@@ -12,6 +12,10 @@
 ./include/google/cloud/accesscontextmanager
 ./include/google/cloud/accesscontextmanager/internal
 ./include/google/cloud/accesscontextmanager/mocks
+./include/google/cloud/apigateway
+./include/google/cloud/apigateway/internal
+./include/google/cloud/apigateway/mocks
+./include/google/cloud/apigateway/v1
 ./include/google/cloud/assuredworkloads
 ./include/google/cloud/assuredworkloads/internal
 ./include/google/cloud/assuredworkloads/mocks
@@ -97,6 +101,7 @@
 ./lib64/cmake
 ./lib64/cmake/google_cloud_cpp_accessapproval
 ./lib64/cmake/google_cloud_cpp_accesscontextmanager
+./lib64/cmake/google_cloud_cpp_apigateway
 ./lib64/cmake/google_cloud_cpp_assuredworkloads
 ./lib64/cmake/google_cloud_cpp_bigquery
 ./lib64/cmake/google_cloud_cpp_billing
