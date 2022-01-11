@@ -68,10 +68,9 @@ class RetryResumableUploadSession : public ResumableUploadSession {
       char const* caller, ConstBufferSequence buffers,
       UploadChunkFunction upload);
 
-  // Reset the current session using previously cloned policies.
-  StatusOr<ResumableUploadResponse> ResetSession(RetryPolicy& retry_policy,
-                                                 BackoffPolicy& backoff_policy,
-                                                 Status last_status);
+  // Handle a response that uncommits some bytes
+  Status HandleUncommitError(char const* caller,
+                             ResumableUploadResponse const&);
 
   void AppendDebug(char const* action, std::uint64_t value);
 
@@ -82,6 +81,7 @@ class RetryResumableUploadSession : public ResumableUploadSession {
   };
 
   std::unique_ptr<ResumableUploadSession> session_;
+  std::uint64_t committed_size_ = 0;
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   std::mutex mu_;
