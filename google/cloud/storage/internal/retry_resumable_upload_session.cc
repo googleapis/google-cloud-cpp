@@ -127,6 +127,7 @@ RetryResumableUploadSession::UploadGenericChunk(char const* caller,
   // calls to `upload()`, but on a transient error we switch to calling
   // `ResetSession()` until there is a successful result.
   auto* operation = &upload;
+  auto const* name = "upload";
 
   // We need a long-lived object to bind the absl::FunctionRef to.
   auto call_reset = [this](ConstBufferSequence const&) {
@@ -137,7 +138,7 @@ RetryResumableUploadSession::UploadGenericChunk(char const* caller,
   while (!retry_policy->IsExhausted()) {
     auto const pre_operation_committed_size = committed_size_;
     auto result = (*operation)(buffers);
-    AppendDebug("upload", static_cast<std::uint64_t>(result.status().code()));
+    AppendDebug(name, static_cast<std::uint64_t>(result.status().code()));
     if (!result) {
       // On a failure we preserve the error, query if retry policy, backoff, and
       // switch to calling ResetSession().
@@ -149,6 +150,7 @@ RetryResumableUploadSession::UploadGenericChunk(char const* caller,
       auto delay = backoff_policy->OnCompletion();
       std::this_thread::sleep_for(delay);
       operation = &reset;
+      name  = "reset";
       continue;
     }
 
@@ -161,10 +163,11 @@ RetryResumableUploadSession::UploadGenericChunk(char const* caller,
 
     // This indicates that the response was missing a `Range:` header, or that
     // the range header was in the wrong format. Either way, treat that as a
-    // (transient) failure and start over.
+    // (transient) failure and query the current status to find out what to do
+    // next.
     if (!result->committed_size.has_value()) {
       if (operation != &reset) {
-        AppendDebug("loop", 0);
+        AppendDebug("missing-range-header-on-upload", 0);
         operation = &reset;
         continue;
       }
@@ -175,6 +178,7 @@ RetryResumableUploadSession::UploadGenericChunk(char const* caller,
 
     // With a successful operation, we can continue (or go back to) uploading.
     operation = &upload;
+    name = "upload";
 
     // This should not happen, it indicates an invalid sequence of responses
     // from the server.
