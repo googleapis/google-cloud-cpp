@@ -127,9 +127,8 @@ storage::internal::ResumableUploadResource{
 }
 ```
 
-That is, you need to re-order the fields **and** change increase the
-`value` to reflect the number of committed bytes vs. the index in the
-last committed byte.
+That is, you need to re-order the fields **and** increase the `value` to reflect
+the number of committed bytes vs. the index in the last committed byte.
 
 Changing the order of the fields was intentional. It will create a build
 failure, which is easier to detect and repair than a run-time error in

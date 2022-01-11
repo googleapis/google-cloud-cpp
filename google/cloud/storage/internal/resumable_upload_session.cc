@@ -29,7 +29,6 @@ StatusOr<std::uint64_t> ParseRangeHeader(std::string const& range) {
   // We expect a `Range:` header in the format described here:
   //    https://cloud.google.com/storage/docs/json_api/v1/how-tos/resumable-upload
   // that is the value should match `bytes=0-[0-9]+`:
-
   char const prefix[] = "bytes=0-";
   auto constexpr kPrefixLen = sizeof(prefix) - 1;
   if (range.rfind(prefix, 0) != 0) {
