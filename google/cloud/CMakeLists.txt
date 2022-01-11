@@ -609,6 +609,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
 endif ()
 
 if (GOOGLE_CLOUD_CPP_ENABLE_REST)
+    include(IncludeNlohmannJson)
     include(FindCurlWithTargets)
 
     # the library
@@ -624,10 +625,13 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/curl_wrappers.cc
         internal/curl_wrappers.h
         internal/rest_request.cc
-        internal/rest_request.h)
+        internal/rest_request.h
+        internal/rest_response.cc
+        internal/rest_response.h)
     target_link_libraries(
         google_cloud_cpp_rest_internal
-        PUBLIC absl::span google-cloud-cpp::common CURL::libcurl)
+        PUBLIC absl::span google-cloud-cpp::common CURL::libcurl
+               nlohmann_json::nlohmann_json)
     google_cloud_cpp_add_common_options(google_cloud_cpp_rest_internal)
     target_include_directories(
         google_cloud_cpp_rest_internal
@@ -676,7 +680,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
             internal/curl_handle_factory_test.cc
             internal/curl_handle_test.cc
             internal/curl_wrappers_test.cc
-            internal/rest_request_test.cc)
+            internal/rest_request_test.cc
+            internal/rest_response_test.cc)
 
         # Export the list of unit and integration tests so the Bazel BUILD file
         # can pick them up.
