@@ -150,7 +150,7 @@ RetryResumableUploadSession::UploadGenericChunk(char const* caller,
       auto delay = backoff_policy->OnCompletion();
       std::this_thread::sleep_for(delay);
       operation = &reset;
-      name  = "reset";
+      name = "reset";
       continue;
     }
 
