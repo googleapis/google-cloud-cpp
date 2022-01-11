@@ -23,6 +23,7 @@
 #include "google/cloud/logging/internal/logging_service_v2_stub.h"
 #include "google/cloud/logging/logging_service_v2_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -65,6 +66,11 @@ class LoggingServiceV2Connection {
 
   virtual StreamRange<std::string> ListLogs(
       google::logging::v2::ListLogsRequest request);
+
+  virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+      google::logging::v2::TailLogEntriesRequest,
+      google::logging::v2::TailLogEntriesResponse>>
+  AsyncTailLogEntries();
 };
 
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
