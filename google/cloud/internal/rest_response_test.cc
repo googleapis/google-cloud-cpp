@@ -29,7 +29,6 @@ using ::testing::Eq;
 
 class MapHttpCodeToStatusTest
     : public ::testing::TestWithParam<std::pair<HttpStatusCode, StatusCode>> {
- protected:
 };
 
 TEST_P(MapHttpCodeToStatusTest, CorrectMapping) {
