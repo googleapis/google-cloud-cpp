@@ -28,8 +28,7 @@ using ::testing::Contains;
 using ::testing::Eq;
 
 class MapHttpCodeToStatusTest
-    : public ::testing::TestWithParam<std::pair<HttpStatusCode, StatusCode>> {
-};
+    : public ::testing::TestWithParam<std::pair<HttpStatusCode, StatusCode>> {};
 
 TEST_P(MapHttpCodeToStatusTest, CorrectMapping) {
   EXPECT_THAT(GetParam().second, Eq(AsStatus(GetParam().first, "").code()));
