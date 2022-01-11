@@ -117,11 +117,10 @@ class AsyncStreamingReadWriteRpcAuth
 
     StreamFactory const factory;
     std::mutex mu;
-    std::unique_ptr<grpc::ClientContext>
-        initial_context;  // ABSL_GUARDED_BY(mu)
-    std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>>
-        stream;              // ABSL_GUARDED_BY(mu)
-    bool cancelled = false;  // ABSL_GUARDED_BY(mu)
+    std::unique_ptr<grpc::ClientContext> initial_context ABSL_GUARDED_BY(mu);
+    std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>> stream
+        ABSL_GUARDED_BY(mu);
+    bool cancelled ABSL_GUARDED_BY(mu) = false;
   };
 
   std::shared_ptr<GrpcAuthenticationStrategy> const auth_;
