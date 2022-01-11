@@ -50,9 +50,11 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace apigateway = ::google::cloud::apigateway;
-  auto client = apigateway::ApiGatewayServiceClient(apigateway::MakeApiGatewayServiceConnection());
+  auto client = apigateway::ApiGatewayServiceClient(
+      apigateway::MakeApiGatewayServiceConnection());
 
-  auto const parent = std::string("projects/") + argv[1] + "/locations/" + argv[2];
+  auto const parent =
+      std::string("projects/") + argv[1] + "/locations/" + argv[2];
   for (auto r : client.ListGateways(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
