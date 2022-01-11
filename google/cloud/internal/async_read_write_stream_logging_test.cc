@@ -102,7 +102,10 @@ TEST_F(StreamingReadRpcLoggingTest, ReadWithout) {
 
 TEST_F(StreamingReadRpcLoggingTest, Write) {
   auto mock = absl::make_unique<MockStream>();
-  EXPECT_CALL(*mock, Write).WillOnce([] { return make_ready_future(true); });
+  EXPECT_CALL(*mock, Write)
+      .WillOnce([](google::protobuf::Duration const&, grpc::WriteOptions) {
+        return make_ready_future(true);
+      });
   TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
   EXPECT_TRUE(
       stream.Write(google::protobuf::Duration{}, grpc::WriteOptions{}).get());
