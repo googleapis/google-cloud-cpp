@@ -13,11 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/polling_policy.h"
+#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 std::unique_ptr<PollingPolicy> DefaultPollingPolicy(
     internal::RPCPolicyParameters defaults) {
   return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy<>(defaults));
@@ -25,5 +27,35 @@ std::unique_ptr<PollingPolicy> DefaultPollingPolicy(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+std::unique_ptr<PollingPolicy> MakeCommonPollingPolicy(
+    std::unique_ptr<bigtable::PollingPolicy> policy) {
+  class CommonPollingPolicy : public PollingPolicy {
+   public:
+    explicit CommonPollingPolicy(std::unique_ptr<bigtable::PollingPolicy> impl)
+        : impl_(std::move(impl)) {}
+    ~CommonPollingPolicy() override = default;
+
+    std::unique_ptr<PollingPolicy> clone() const override {
+      return absl::make_unique<CommonPollingPolicy>(impl_->clone());
+    }
+    bool OnFailure(google::cloud::Status const& status) override {
+      return impl_->OnFailure(status);
+    }
+    std::chrono::milliseconds WaitPeriod() override {
+      return impl_->WaitPeriod();
+    }
+
+   private:
+    std::unique_ptr<bigtable::PollingPolicy> impl_;
+  };
+
+  return absl::make_unique<CommonPollingPolicy>(std::move(policy));
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
