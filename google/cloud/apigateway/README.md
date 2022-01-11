@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[API Gateway API][cloud-service-docs], a service to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+[API Gateway API][cloud-service-docs], a service to develop, deploy, secure, and
+manage APIs with a fully managed gateway.
 
 This library is **experimental**. Its APIS are subject to change without notice.
 
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/apigateway
+[cloud-service-docs]: https://cloud.google.com/api-gateway
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-apigateway/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/apigateway
 
@@ -38,23 +39,21 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/apigateway/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/apigateway/api_gateway_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace apigateway = ::google::cloud::apigateway;
-  auto client = apigateway::Client(
-      apigateway::MakeConnection(/* EDIT HERE */));
+  auto client = apigateway::ApiGatewayServiceClient(apigateway::MakeApiGatewayServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName()) {
+  auto const parent = std::string("projects/") + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListGateways(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
