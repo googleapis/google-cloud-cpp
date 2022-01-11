@@ -119,7 +119,7 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseOk) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   const StatusOr<ResumableUploadResponse> last_response(ResumableUploadResponse{
-      "upload url", 1, {}, ResumableUploadResponse::kInProgress, {}});
+      "upload url", ResumableUploadResponse::kInProgress, 1, {}, {}});
   EXPECT_CALL(*mock, last_response()).WillOnce(ReturnRef(last_response));
 
   LoggingResumableUploadSession session(std::move(mock));

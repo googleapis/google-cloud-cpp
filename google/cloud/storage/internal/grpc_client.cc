@@ -188,12 +188,9 @@ StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
 
   ResumableUploadResponse response;
   response.upload_state = ResumableUploadResponse::kInProgress;
-  // TODO(#6880) - cleanup the committed_byte vs. size thing
-  if (status->has_persisted_size() && status->persisted_size()) {
-    response.last_committed_byte =
+  if (status->has_persisted_size()) {
+    response.committed_size =
         static_cast<std::uint64_t>(status->persisted_size());
-  } else {
-    response.last_committed_byte = 0;
   }
   if (status->has_resource()) {
     response.payload =

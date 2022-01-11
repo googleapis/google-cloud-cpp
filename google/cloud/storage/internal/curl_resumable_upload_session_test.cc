@@ -55,7 +55,7 @@ MATCHER_P(MatchesPayload, value, "Checks whether payload matches a value") {
 
 TEST(CurlResumableUploadSessionTest, Simple) {
   auto mock = MockCurlClient::Create();
-  std::string test_url = "http://invalid.example.com/not-used-in-mock";
+  std::string test_url = "https://invalid.example.com/not-used-in-mock";
   ResumableUploadRequest request("test-bucket", "test-object");
   request.set_multiple_options(CustomHeader("x-test-custom", "custom-value"),
                                Fields("fields"), QuotaUser("quota-user"),
@@ -83,7 +83,7 @@ TEST(CurlResumableUploadSessionTest, Simple) {
         EXPECT_EQ(0, request.source_size());
         EXPECT_EQ(0, request.range_begin());
         return make_status_or(ResumableUploadResponse{
-            "", size - 1, {}, ResumableUploadResponse::kInProgress, {}});
+            "", ResumableUploadResponse::kInProgress, size, {}, {}});
       })
       .WillOnce([&](UploadChunkRequest const& request) {
         EXPECT_EQ(test_url, request.upload_session_url());
@@ -91,26 +91,26 @@ TEST(CurlResumableUploadSessionTest, Simple) {
         EXPECT_EQ(2 * size, request.source_size());
         EXPECT_EQ(size, request.range_begin());
         return make_status_or(ResumableUploadResponse{
-            "", 2 * size - 1, {}, ResumableUploadResponse::kDone, {}});
+            "", ResumableUploadResponse::kDone, 2 * size, {}, {}});
       });
 
   auto upload = session.UploadChunk({{payload}});
   EXPECT_STATUS_OK(upload);
-  EXPECT_EQ(size - 1, upload->last_committed_byte);
+  EXPECT_EQ(size, upload->committed_size.value_or(0));
   EXPECT_EQ(size, session.next_expected_byte());
   EXPECT_FALSE(session.done());
 
   upload = session.UploadFinalChunk({{payload}}, 2 * size, {});
   EXPECT_STATUS_OK(upload);
-  EXPECT_EQ(2 * size - 1, upload->last_committed_byte);
+  EXPECT_EQ(2 * size, upload->committed_size.value_or(0));
   EXPECT_EQ(2 * size, session.next_expected_byte());
   EXPECT_TRUE(session.done());
 }
 
 TEST(CurlResumableUploadSessionTest, Reset) {
   auto mock = MockCurlClient::Create();
-  std::string url1 = "http://invalid.example.com/not-used-in-mock-1";
-  std::string url2 = "http://invalid.example.com/not-used-in-mock-2";
+  std::string url1 = "https://invalid.example.com/not-used-in-mock-1";
+  std::string url2 = "https://invalid.example.com/not-used-in-mock-2";
   ResumableUploadRequest request("test-bucket", "test-object");
   request.set_multiple_options(CustomHeader("x-test-custom", "custom-value"),
                                Fields("fields"), QuotaUser("quota-user"),
@@ -125,14 +125,14 @@ TEST(CurlResumableUploadSessionTest, Reset) {
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce([&](UploadChunkRequest const&) {
         return make_status_or(ResumableUploadResponse{
-            "", size - 1, {}, ResumableUploadResponse::kInProgress, {}});
+            "", ResumableUploadResponse::kInProgress, size, {}, {}});
       })
       .WillOnce([&](UploadChunkRequest const&) {
         return StatusOr<ResumableUploadResponse>(
             AsStatus(HttpResponse{308, "uh oh", {}}));
       });
   const ResumableUploadResponse resume_response{
-      url2, 2 * size - 1, {}, ResumableUploadResponse::kInProgress, {}};
+      url2, ResumableUploadResponse::kInProgress, 2 * size, {}, {}};
   EXPECT_CALL(*mock, QueryResumableUpload)
       .WillOnce([&](QueryResumableUploadRequest const& request) {
         EXPECT_EQ(request.GetOption<CustomHeader>().value_or(""),
@@ -167,8 +167,8 @@ TEST(CurlResumableUploadSessionTest, Reset) {
 
 TEST(CurlResumableUploadSessionTest, SessionUpdatedInChunkUpload) {
   auto mock = MockCurlClient::Create();
-  std::string url1 = "http://invalid.example.com/not-used-in-mock-1";
-  std::string url2 = "http://invalid.example.com/not-used-in-mock-2";
+  std::string url1 = "https://invalid.example.com/not-used-in-mock-1";
+  std::string url2 = "https://invalid.example.com/not-used-in-mock-2";
   ResumableUploadRequest request("test-bucket", "test-object");
   CurlResumableUploadSession session(mock, request, url1);
 
@@ -179,11 +179,11 @@ TEST(CurlResumableUploadSessionTest, SessionUpdatedInChunkUpload) {
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce([&](UploadChunkRequest const&) {
         return make_status_or(ResumableUploadResponse{
-            "", size - 1, {}, ResumableUploadResponse::kInProgress, {}});
+            "", ResumableUploadResponse::kInProgress, size, {}, {}});
       })
       .WillOnce([&](UploadChunkRequest const&) {
         return make_status_or(ResumableUploadResponse{
-            url2, 2 * size - 1, {}, ResumableUploadResponse::kInProgress, {}});
+            url2, ResumableUploadResponse::kInProgress, 2 * size, {}, {}});
       });
 
   auto upload = session.UploadChunk({{payload}});
@@ -198,7 +198,7 @@ TEST(CurlResumableUploadSessionTest, SessionUpdatedInChunkUpload) {
 
 TEST(CurlResumableUploadSessionTest, Empty) {
   auto mock = MockCurlClient::Create();
-  std::string test_url = "http://invalid.example.com/not-used-in-mock";
+  std::string test_url = "https://invalid.example.com/not-used-in-mock";
   ResumableUploadRequest request("test-bucket", "test-object");
   CurlResumableUploadSession session(mock, request, test_url);
 
@@ -214,12 +214,12 @@ TEST(CurlResumableUploadSessionTest, Empty) {
         EXPECT_EQ(0, request.source_size());
         EXPECT_EQ(0, request.range_begin());
         return make_status_or(ResumableUploadResponse{
-            "", size, {}, ResumableUploadResponse::kDone, {}});
+            "", ResumableUploadResponse::kDone, size, {}, {}});
       });
 
   auto upload = session.UploadFinalChunk({{payload}}, size, {});
   EXPECT_STATUS_OK(upload);
-  EXPECT_EQ(size, upload->last_committed_byte);
+  EXPECT_EQ(size, upload->committed_size.value_or(0));
   EXPECT_EQ(size, session.next_expected_byte());
   EXPECT_TRUE(session.done());
 }
