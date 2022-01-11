@@ -60,6 +60,8 @@ INSTANTIATE_TEST_SUITE_P(
                        StatusCode::kPermissionDenied),
         std::make_pair(static_cast<HttpStatusCode>(406),
                        StatusCode::kInvalidArgument),
+        std::make_pair(HttpStatusCode::kRequestTimeout,
+                       StatusCode::kUnavailable),
         std::make_pair(HttpStatusCode::kConflict, StatusCode::kAborted),
         std::make_pair(HttpStatusCode::kGone, StatusCode::kNotFound),
         std::make_pair(HttpStatusCode::kLengthRequired,
@@ -77,8 +79,8 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_pair(HttpStatusCode::kBadGateway, StatusCode::kUnavailable),
         std::make_pair(HttpStatusCode::kServiceUnavailable,
                        StatusCode::kUnavailable),
-        std::make_pair(static_cast<HttpStatusCode>(504),
-                       StatusCode::kInternal)),
+        std::make_pair(static_cast<HttpStatusCode>(504), StatusCode::kInternal),
+        std::make_pair(static_cast<HttpStatusCode>(601), StatusCode::kUnknown)),
     [](testing::TestParamInfo<MapHttpCodeToStatusTest::ParamType> const& info) {
       return std::to_string(std::get<0>(info.param));
     });
