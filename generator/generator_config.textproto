@@ -185,6 +185,14 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Storage Transfer Service
+service {
+  service_proto_path: "google/storagetransfer/v1/transfer.proto"
+  product_path: "google/cloud/storagetransfer"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Talent
 service {
   service_proto_path: "google/cloud/talent/v4/company_service.proto"
@@ -221,6 +229,8 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+=======
+>>>>>>> 5d55c2d74 (feat(storagetransfer): generate library)
 # Tasks
 service {
   service_proto_path: "google/cloud/tasks/v2/cloudtasks.proto"
