@@ -83,7 +83,11 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/recommender/v1:recommender_proto" \
       "@com_google_googleapis//google/cloud/recommender/logging/v1:logging_proto"
   )"
-  ["resourcemanager"]="@com_google_googleapis//google/cloud/resourcemanager/v3:resourcemanager_proto"
+  ["resourcemanager"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/orgpolicy/v2:orgpolicy_cc_grpc" \
+      "@com_google_googleapis//google/cloud/resourcemanager/v3:resourcemanager_proto"
+  )"
   ["scheduler"]="@com_google_googleapis//google/cloud/scheduler/v1:scheduler_proto"
   ["secretmanager"]="$(
     printf ",%s" \
