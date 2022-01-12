@@ -13,6 +13,7 @@ google/cloud/bigtable/quickstart/
 google/cloud/billing/quickstart/
 google/cloud/datamigration/quickstart/
 google/cloud/iam/quickstart/
+google/cloud/iot/quickstart/
 google/cloud/kms/quickstart/
 google/cloud/logging/quickstart/
 google/cloud/pubsublite/quickstart/
