@@ -58,7 +58,6 @@ target_link_libraries(
            google-cloud-cpp::api_field_behavior_protos
            google-cloud-cpp::api_http_protos
            google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::cloud_recommender_v1_recommender_protos
            google-cloud-cpp::type_money_protos)
 
 file(

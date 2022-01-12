@@ -232,6 +232,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-recommender",
+    deps = [
+        "//google/cloud/recommender:google_cloud_cpp_recommender",
+    ],
+)
+
+cc_library(
+    name = "experimental-recommender_mocks",
+    deps = [
+        "//google/cloud/recommender:google_cloud_cpp_recommender_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-scheduler",
     deps = [
         "//google/cloud/scheduler:google_cloud_cpp_scheduler",

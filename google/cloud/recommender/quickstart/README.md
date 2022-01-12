@@ -1,6 +1,6 @@
-# HOWTO: using the Recommender API C++ client in your project
+# HOWTO: using the Recommender C++ client in your project
 
-This directory contains small examples showing how to use the Recommender API C++
+This directory contains small examples showing how to use the Recommender C++
 client library in your own project. These instructions assume that you have
 some experience as a C++ developer and that you have a working C++ toolchain
 (compiler, linker, etc.) installed on your platform.
@@ -28,9 +28,9 @@ steps in detail.
 
 ## Configuring authentication for the C++ Client Library
 
-Like most Google Cloud Platform (GCP) services, Recommender API requires that
-your application authenticates with the service before accessing any data. If
-you are not familiar with GCP authentication please take this opportunity to
+Like most Google Cloud Platform (GCP) services, the Recommender API requires
+that your application authenticates with the service before accessing any data.
+If you are not familiar with GCP authentication please take this opportunity to
 review the [Authentication Overview][authentication-quickstart]. This library
 uses the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to find the
 credentials file. For example:
@@ -157,7 +157,7 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
-[quickstart-link]: https://cloud.google.com/recommender/docs/quickstart
+[quickstart-link]: https://cloud.google.com/recommender/docs/how-to
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake

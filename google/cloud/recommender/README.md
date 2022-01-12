@@ -1,11 +1,12 @@
-# Recommender API C++ Client Library
+# Recommender C++ Client Library
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[Recommender API][cloud-service-docs], a service to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+This directory contains an idiomatic C++ client library for
+[Recommender][cloud-service], a service on Google Cloud that provides
+usage recommendations and insights for Cloud products and services.
 
-This library is **experimental**. Its APIS are subject to change without notice.
+This library is **experimental**. Its APIs are subject to change without notice.
 
 Please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -20,12 +21,13 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Recommender API][cloud-service-docs] service
+* Official documentation about the [Recommender][cloud-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/recommender
+[cloud-service]: https://cloud.google.com/recommender
+[cloud-service-docs]: https://cloud.google.com/recommender/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-recommender/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/recommender
 
@@ -38,23 +40,24 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/recommender/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/recommender/recommender_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 4) {
+    std::cerr << "Usage: " << argv[0]
+              << " project-id location-id recommender-id\n";
     return 1;
   }
 
   namespace recommender = ::google::cloud::recommender;
-  auto client = recommender::Client(
-      recommender::MakeConnection(/* EDIT HERE */));
+  auto client =
+      recommender::RecommenderClient(recommender::MakeRecommenderConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName()) {
+  auto const parent = std::string("projects/") + argv[1] + "/locations/" +
+                      argv[2] + "/recommenders/" + argv[3];
+  for (auto r : client.ListRecommendations(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

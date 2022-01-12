@@ -75,6 +75,9 @@ expected_dirs+=(
   ./include/google/cloud/internal
   ./include/google/cloud/pubsub
   ./include/google/cloud/pubsub/internal
+  # no gRPC services in google/cloud/recommender/logging
+  ./include/google/cloud/recommender/logging
+  ./include/google/cloud/recommender/logging/v1
   # no gRPC services in google/cloud/secretmanager/logging
   ./include/google/cloud/secretmanager/logging
   ./include/google/cloud/secretmanager/logging/v1
