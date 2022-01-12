@@ -12,24 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/eventarc/ EDIT HERE .h"
+#include "google/cloud/eventarc/eventarc_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace eventarc = ::google::cloud::eventarc;
-  auto client = eventarc::Client(eventarc::MakeConnection(/* EDIT HERE */));
+  auto client = eventarc::EventarcClient(eventarc::MakeEventarcConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName()) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent = project.FullName() + "/locations/" + argv[2];
+  for (auto t : client.ListTriggers(parent)) {
+    if (!t) throw std::runtime_error(t.status().message());
+    std::cout << t->DebugString() << "\n";
   }
 
   return 0;
