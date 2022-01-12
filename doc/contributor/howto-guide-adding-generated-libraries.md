@@ -190,9 +190,6 @@ reports.
 ci/cloudbuild/build.sh -t checkers-pr
 ```
 
-> :warning: This command might need to be run twice to format the quickstart
-> code within the README.
-
 ## Verify everything compiles
 
 ```shell
