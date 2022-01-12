@@ -321,6 +321,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-vmmigration",
+    deps = [
+        "//google/cloud/vmmigration:google_cloud_cpp_vmmigration",
+    ],
+)
+
+cc_library(
+    name = "experimental-vmmigration_mocks",
+    deps = [
+        "//google/cloud/vmmigration:google_cloud_cpp_vmmigration_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-vpcaccess",
     deps = [
         "//google/cloud/vpcaccess:google_cloud_cpp_vpcaccess",

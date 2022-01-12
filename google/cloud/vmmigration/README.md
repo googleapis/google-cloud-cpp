@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[VM Migration API][cloud-service-docs], a service to Use the Migrate for Compute Engine API to programmatically migrate workloads.
+[VM Migration API][cloud-service-docs], a service to programmatically migrate
+workloads to Google Compute Engine.
 
 This library is **experimental**. Its APIS are subject to change without notice.
 
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/vmmigration
+[cloud-service-docs]: https://cloud.google.com/migrate/compute-engine
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-vmmigration/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/vmmigration
 
@@ -38,23 +39,23 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/vmmigration/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/vmmigration/vm_migration_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace vmmigration = ::google::cloud::vmmigration;
   auto client =
-      vmmigration::Client(vmmigration::MakeConnection(/* EDIT HERE */));
+      vmmigration::VmMigrationClient(vmmigration::MakeVmMigrationConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName()) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListCloneJobs(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
