@@ -411,7 +411,7 @@ char const* const kServiceProto =
     "       body: \"*\"\n"
     "    };\n"
     "    option (google.api.method_signature) = \"name\";\n"
-    "    option (google.api.method_signature) = \"number,widget\";\n"
+    "    option (google.api.method_signature) = \"number, widget\";\n"
     "    option (google.api.method_signature) = \"toggle\";\n"
     "    option (google.api.method_signature) = \"name,title\";\n"
     "    option (google.api.method_signature) = \"name,swallow_types\";\n"

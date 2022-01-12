@@ -137,9 +137,10 @@ ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
             google::api::method_signature);
     google::protobuf::Descriptor const* input_type = method.get().input_type();
     for (auto const& extension : method_signature_extension) {
-      std::vector<std::string> parameters = absl::StrSplit(extension, ',');
-      for (auto const& parameter : parameters) {
-        if (parameter.empty()) continue;
+      std::vector<std::string> parameters =
+          absl::StrSplit(extension, ',', absl::SkipEmpty());
+      for (auto& parameter : parameters) {
+        absl::StripAsciiWhitespace(&parameter);
         auto path = IncludePathForWellKnownProtobufType(
             *input_type->FindFieldByName(parameter));
         if (path) include_paths.push_back(*path);
