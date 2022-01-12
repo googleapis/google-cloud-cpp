@@ -11,19 +11,26 @@ which libraries are based on gRPC.
 > as the description of the library. Adjust the ordering and/or fix the
 > documentation after the fact.
 
-## Set some useful variables
+## Set your working directory
+
+Go to whatever directory holds your clone of the project, for example:
 
 ```shell
 cd $HOME/google-cloud-cpp
+```
+
+## Set some useful variables
+
+```shell
 library=... # The name of your new library in the google-cloud-cpp repository
-path="google/cloud/${library}"  # The path in googleapis repo, may not start with google/cloud/
+subdir="google/cloud/${library}"  # The path in googleapis repo, may not start with google/cloud/
 ```
 
 ## Verify the C++ rules exist
 
 ```shell
 bazel --batch query --noshow_progress --noshow_loading_progress \
-    "kind(cc_library, @com_google_googleapis//${path}/...)"
+    "kind(cc_library, @com_google_googleapis//${subdir}/...)"
 ```
 
 If this fails, send a CL to add the rule. Wait until that is submitted and
@@ -50,14 +57,6 @@ index cdaa0bc9f..b0381d72d 100755
    ["spanner"]="$(
      printf ",%s" \
        "@com_google_googleapis//google/spanner/v1:spanner_proto" \
-```
-
-You can find out which proto rules exist in the relevant directory using:
-
-```shell
-bazel --batch query --noshow_progress --noshow_loading_progress \
-    "kind(cc_library, @com_google_googleapis//${path}/...)" | \
-    grep -v cc_proto
 ```
 
 ## Update the Generator Configuration
@@ -94,7 +93,6 @@ index ab033dde9..3753287d8 100644
 Create your first commit with purely hand-crafted changes
 
 ```shell
-cd $HOME/google-cloud-cpp
 git checkout -b feat-${library}-generate-library # Don't forget
 git commit -m"feat(${library}): generate library" external/ generator/
 ```
@@ -110,7 +108,6 @@ external/googleapis/update_libraries.sh
 Then run the micro-generator to create the scaffold and the C++ sources:
 
 ```shell
-cd $HOME/google-cloud-cpp
 mkdir -p "google/cloud/${library}"
 bazel_output_base="$(bazel info output_base)"
 bazel run \
@@ -149,7 +146,7 @@ inspiration.
 ## Potentially fix the bazel build
 
 The generated `BUILD.bazel` file may require manual editing. The scaffold will
-add one dependency from `@com_github_googleapis//${path}`, which might not be
+add one dependency from `@com_github_googleapis//${subdir}`, which might not be
 correct. You may need to modify that dependency and/or add additional
 dependencies for more complex libraries.
 
@@ -173,16 +170,13 @@ not always valid. Find the correct urls and update the links.
 
 ## Update the root files
 
-Manually edit `BUILD.bazel` to reference the new targets in
-`//google/cloud/${library}`. Initially prefix your targets with
-`:experimental-`.
+Manually edit the following files:
 
-Manually edit `.bazelignore` to include the newest
-`google/cloud/${library}/quickstart/` directory. The ubsan build fails
-otherwise.
-
-Manually edit `.codecov.yml` to exclude generated code from the code coverage
-reports.
+- `BUILD.bazel` to reference the new targets in `//google/cloud/${library}`.
+  Initially prefix your targets with `:experimental-`.
+- `.bazelignore` to include the newest `google/cloud/${library}/quickstart/`
+  directory. The ubsan build fails otherwise.
+- `.codecov.yml` to exclude generated code from the code coverage reports.
 
 ## Fix formatting nits
 
