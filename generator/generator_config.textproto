@@ -177,6 +177,14 @@ service {
   retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
 }
 
+# VM Migration
+service {
+  service_proto_path: "google/cloud/vmmigration/v1/vmmigration.proto"
+  product_path: "google/cloud/vmmigration"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Serverless VPC Access
 service {
   service_proto_path: "google/cloud/vpcaccess/v1/vpc_access.proto"
