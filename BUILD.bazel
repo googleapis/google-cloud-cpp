@@ -35,6 +35,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-apigateway",
+    deps = [
+        "//google/cloud/apigateway:google_cloud_cpp_apigateway",
+    ],
+)
+
+cc_library(
+    name = "experimental-apigateway_mocks",
+    deps = [
+        "//google/cloud/apigateway:google_cloud_cpp_apigateway_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-accesscontextmanager",
     deps = [
         "//google/cloud/accesscontextmanager:google_cloud_cpp_accesscontextmanager",
