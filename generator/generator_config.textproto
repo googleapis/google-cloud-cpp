@@ -148,6 +148,14 @@ service {
 
 }
 
+# Recommender
+service {
+  service_proto_path: "google/cloud/recommender/v1/recommender_service.proto"
+  product_path: "google/cloud/recommender"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # Scheduler
 service {
   service_proto_path: "google/cloud/scheduler/v1/cloudscheduler.proto"

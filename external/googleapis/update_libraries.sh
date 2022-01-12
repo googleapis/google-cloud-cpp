@@ -60,6 +60,11 @@ declare -A -r LIBRARIES=(
   ["monitoring"]="@com_google_googleapis//google/monitoring/v3:monitoring_proto"
   ["pubsub"]="@com_google_googleapis//google/pubsub/v1:pubsub_proto"
   ["pubsublite"]="@com_google_googleapis//google/cloud/pubsublite/v1:pubsublite_proto"
+  ["recommender"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/recommender/v1:recommender_proto" \
+      "@com_google_googleapis//google/cloud/recommender/logging/v1:logging_proto"
+  )"
   ["scheduler"]="@com_google_googleapis//google/cloud/scheduler/v1:scheduler_proto"
   ["secretmanager"]="$(
     printf ",%s" \
