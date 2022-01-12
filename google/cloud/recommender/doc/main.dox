@@ -1,9 +1,10 @@
 /*!
 
-@mainpage Recommender API C++ Client Library
+@mainpage Recommender C++ Client Library
 
-An idiomatic C++ client library for the [Recommender API][cloud-service-docs], a service
-to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+An idiomatic C++ client library for [Recommender][cloud-service-docs], a service
+on Google Cloud that provides usage recommendations and insights for Cloud
+products and services.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -14,7 +15,7 @@ dependencies, as well as how to compile the client library.
 
 ### Setting up your repo
 
-In order to use the Recommender API C++ client library from your own code,
+In order to use the Recommender C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
 C++ client libraries. In some cases your build system or package manager may
 need to download the libraries too. The Cloud C++ client libraries natively
@@ -32,7 +33,7 @@ cd google-cloud-cpp/google/cloud/recommender/quickstart
 
 The following shows the code that you'll run in the
 `google/cloud/recommender/quickstart/` directory,
-which should give you a taste of the Recommender API C++ client library API.
+which should give you a taste of the Recommender C++ client library API.
 
 @include quickstart.cc
 

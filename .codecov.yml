@@ -27,6 +27,7 @@ ignore:
   - "google/cloud/kms"
   - "google/cloud/logging"
   - "google/cloud/pubsublite"
+  - "google/cloud/recommender"
   - "google/cloud/resourcemanager"
   - "google/cloud/scheduler"
   - "google/cloud/secretmanager"

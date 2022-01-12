@@ -12,23 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/recommender/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/recommender/recommender_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 4) {
+    std::cerr << "Usage: " << argv[0]
+              << " project-id location-id recommender-id\n";
     return 1;
   }
 
   namespace recommender = ::google::cloud::recommender;
   auto client =
-      recommender::Client(recommender::MakeConnection(/* EDIT HERE */));
+      recommender::RecommenderClient(recommender::MakeRecommenderConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName()) {
+  auto const parent = std::string("projects/") + argv[1] + "/locations/" +
+                      argv[2] + "/recommenders/" + argv[3];
+  for (auto r : client.ListRecommendations(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
