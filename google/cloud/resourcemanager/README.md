@@ -53,9 +53,9 @@ int main(int argc, char* argv[]) try {
   auto client = resourcemanager::ProjectsClient(
       resourcemanager::MakeProjectsConnection());
 
-  for (auto r : client.ListProjects("folders/" + std::string(argv[1]))) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  for (auto p : client.ListProjects("folders/" + std::string(argv[1]))) {
+    if (!p) throw std::runtime_error(p.status().message());
+    std::cout << p->DebugString() << "\n";
   }
 
   return 0;
