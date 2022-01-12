@@ -9,6 +9,7 @@ iam
 kms
 logging
 pubsublite
+recommender
 scheduler
 secretmanager
 tasks

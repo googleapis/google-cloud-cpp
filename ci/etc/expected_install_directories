@@ -53,6 +53,10 @@
 ./include/google/cloud/pubsublite/internal
 ./include/google/cloud/pubsublite/mocks
 ./include/google/cloud/pubsublite/v1
+./include/google/cloud/recommender
+./include/google/cloud/recommender/internal
+./include/google/cloud/recommender/mocks
+./include/google/cloud/recommender/v1
 ./include/google/cloud/scheduler
 ./include/google/cloud/scheduler/internal
 ./include/google/cloud/scheduler/mocks
@@ -115,6 +119,7 @@
 ./lib64/cmake/google_cloud_cpp_kms
 ./lib64/cmake/google_cloud_cpp_logging
 ./lib64/cmake/google_cloud_cpp_pubsublite
+./lib64/cmake/google_cloud_cpp_recommender
 ./lib64/cmake/google_cloud_cpp_scheduler
 ./lib64/cmake/google_cloud_cpp_secretmanager
 ./lib64/cmake/google_cloud_cpp_tasks
