@@ -23,6 +23,12 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/identity/accesscontextmanager/v1:accesscontextmanager_proto"
   )"
   ["apigateway"]="@com_google_googleapis//google/cloud/apigateway/v1:apigateway_proto"
+  ["appengine"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/appengine/v1:appengine_cc_grpc" \
+      "@com_google_googleapis//google/appengine/logging/v1:logging_cc_grpc" \
+      "@com_google_googleapis//google/appengine/legacy:legacy_cc_grpc"
+  )"
   ["assuredworkloads"]="@com_google_googleapis//google/cloud/assuredworkloads/v1:assuredworkloads_proto"
   ["bigquery"]="$(
     printf ",%s" \
