@@ -2,10 +2,11 @@
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[Cloud Talent Solution API][cloud-service-docs], a service to Cloud Talent Solution provides the capability to create, read, update, and delete job postings, as well as search jobs based on keywords and filters.
+This directory contains an idiomatic C++ client library for
+[Cloud Talent Solution][cloud-service-docs], a suite of APIs that allow you to
+create and manage jobs and profiles in the talent industry.
 
-This library is **experimental**. Its APIS are subject to change without notice.
+This library is **experimental**. Its APIs are subject to change without notice.
 
 Please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/talent
+[cloud-service-docs]: https://cloud.google.com/solutions/talent-solution
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-talent/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/talent
 
@@ -38,25 +39,25 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/talent/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/talent/company_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id tenant-id\n";
     return 1;
   }
 
   namespace talent = ::google::cloud::talent;
-  auto client = talent::Client(
-      talent::MakeConnection(/* EDIT HERE */));
+  auto client =
+      talent::CompanyServiceClient(talent::MakeCompanyServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName()) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent =
+      std::string("projects/") + argv[1] + "/tenants/" + argv[2];
+  for (auto c : client.ListCompanies(parent)) {
+    if (!c) throw std::runtime_error(c.status().message());
+    std::cout << c->DebugString() << "\n";
   }
 
   return 0;

@@ -12,24 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/talent/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/talent/company_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id tenant-id\n";
     return 1;
   }
 
   namespace talent = ::google::cloud::talent;
-  auto client = talent::Client(talent::MakeConnection(/* EDIT HERE */));
+  auto client =
+      talent::CompanyServiceClient(talent::MakeCompanyServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName()) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent =
+      std::string("projects/") + argv[1] + "/tenants/" + argv[2];
+  for (auto c : client.ListCompanies(parent)) {
+    if (!c) throw std::runtime_error(c.status().message());
+    std::cout << c->DebugString() << "\n";
   }
 
   return 0;
