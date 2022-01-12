@@ -23,8 +23,8 @@ some experience as a C++ developer and that you have a working C++ toolchain
 ## Before you begin
 
 To run the quickstart examples you will need a working Google Cloud Platform
-(GCP) project. The [quickstart][quickstart-link] covers the necessary
-steps in detail.
+(GCP) project. The [configuring instructions][configuring-link] cover the
+necessary steps in detail.
 
 ## Configuring authentication for the C++ Client Library
 
@@ -157,7 +157,7 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
-[quickstart-link]: https://cloud.google.com/ids/docs/quickstart
+[configuring-link]: https://cloud.google.com/ids/docs/configuring-ids
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake

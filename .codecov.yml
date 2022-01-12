@@ -21,6 +21,7 @@ ignore:
   - "google/cloud/billing"
   - "google/cloud/datamigration"
   - "google/cloud/iam"
+  - "google/cloud/ids"
   - "google/cloud/kms"
   - "google/cloud/logging"
   - "google/cloud/pubsublite"
