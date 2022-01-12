@@ -42,6 +42,11 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/billing/v1:billing_proto" \
       "@com_google_googleapis//google/cloud/billing/budgets/v1:budgets_proto"
   )"
+  ["datamigration"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/clouddms/v1:clouddms_proto" \
+      "@com_google_googleapis//google/cloud/clouddms/logging/v1:logging_proto"
+  )"
   ["dialogflow"]="@com_google_googleapis//google/cloud/dialogflow/v2:dialogflow_proto"
   ["iam"]="$(
     printf ",%s" \

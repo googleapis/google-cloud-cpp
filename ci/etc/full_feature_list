@@ -3,6 +3,7 @@ accesscontextmanager
 assuredworkloads
 bigquery
 billing
+datamigration
 iam
 kms
 logging
