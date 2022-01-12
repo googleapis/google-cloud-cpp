@@ -185,6 +185,42 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Talent
+service {
+  service_proto_path: "google/cloud/talent/v4/company_service.proto"
+  product_path: "google/cloud/talent"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/talent/v4/completion_service.proto"
+  product_path: "google/cloud/talent"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/talent/v4/event_service.proto"
+  product_path: "google/cloud/talent"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/talent/v4/job_service.proto"
+  product_path: "google/cloud/talent"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/talent/v4/tenant_service.proto"
+  product_path: "google/cloud/talent"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # Tasks
 service {
   service_proto_path: "google/cloud/tasks/v2/cloudtasks.proto"

@@ -321,6 +321,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-talent",
+    deps = [
+        "//google/cloud/talent:google_cloud_cpp_talent",
+    ],
+)
+
+cc_library(
+    name = "experimental-talent_mocks",
+    deps = [
+        "//google/cloud/talent:google_cloud_cpp_talent_mocks",
+    ],
+)
+
+cc_library(
     name = "tasks",
     deps = [
         "//google/cloud/tasks:google_cloud_cpp_tasks",
