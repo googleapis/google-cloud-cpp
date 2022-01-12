@@ -6,7 +6,7 @@ This directory contains an idiomatic C++ client library for the
 [Access Context Manager API][cloud-service-docs], a service for setting
 attribute based access control on requests to GCP services.
 
-This library is **experimental**. Its APIS are subject to change without notice.
+This library is **experimental**. Its APIs are subject to change without notice.
 
 Please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
