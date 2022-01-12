@@ -11,6 +11,7 @@ logging
 pubsublite
 scheduler
 secretmanager
+storagetransfer
 talent
 tasks
 vmmigration

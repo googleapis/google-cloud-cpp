@@ -64,6 +64,9 @@
 ./include/google/cloud/spanner
 ./include/google/cloud/spanner/admin
 ./include/google/cloud/spanner/admin/internal
+./include/google/cloud/storagetransfer
+./include/google/cloud/storagetransfer/internal
+./include/google/cloud/storagetransfer/mocks
 ./include/google/cloud/talent
 ./include/google/cloud/talent/internal
 ./include/google/cloud/talent/mocks
@@ -110,6 +113,8 @@
 ./include/google/spanner/admin/database/v1
 ./include/google/spanner/admin/instance
 ./include/google/spanner/admin/instance/v1
+./include/google/storagetransfer
+./include/google/storagetransfer/v1
 ./lib64
 ./lib64/cmake
 ./lib64/cmake/google_cloud_cpp_accessapproval
@@ -125,6 +130,7 @@
 ./lib64/cmake/google_cloud_cpp_pubsublite
 ./lib64/cmake/google_cloud_cpp_scheduler
 ./lib64/cmake/google_cloud_cpp_secretmanager
+./lib64/cmake/google_cloud_cpp_storagetransfer
 ./lib64/cmake/google_cloud_cpp_talent
 ./lib64/cmake/google_cloud_cpp_tasks
 ./lib64/cmake/google_cloud_cpp_vmmigration
