@@ -62,6 +62,11 @@ bazel --batch query --noshow_progress --noshow_loading_progress \
 
 ## Update the Generator Configuration
 
+Determine the retryable status codes by looking in the service config JSON. For
+example, [here][retryable-status-codes].
+
+[retryable-status-codes]: https://github.com/googleapis/googleapis/blob/0fea253787a4f2769b97b0ed3a8f5b28ef17ffa7/google/cloud/secretmanager/v1/secretmanager_grpc_service_config.json#L77-L80
+
 Manually edit `generator/generator_config.textproto` and add the new service.
 For example:
 
@@ -117,11 +122,6 @@ bazel run \
   --scaffold="google/cloud/${library}"
 ```
 
-> :warning: the generated `BUILD.bazel` file may require manual editing for a
-> library that contains multiple services.  Generally the scaffold will only
-> add **one** dependency from `@com_github_googleapis//${path}`, where you may
-> need multiple dependencies for more complex libraries.
-
 ## Fix formatting of existing libraries and the generated code 
 
 ```shell
@@ -146,6 +146,13 @@ Likewise, for services using streaming operations you may need to implement the
 streaming `*Updater` function. Use `google/cloud/bigquery/streaming.cc` for
 inspiration.
 
+## Potentially fix the bazel build
+
+The generated `BUILD.bazel` file may require manual editing for a library that
+contains multiple services.  Generally the scaffold will only add **one**
+dependency from `@com_github_googleapis//${path}`. You may need to add
+additional dependencies for more complex libraries.
+
 ## Update the quickstart
 
 The generated quickstart will need some editing. Use a simple operation, maybe
@@ -160,6 +167,9 @@ were written by a robot:
 - `google/cloud/${library}/README.md`
 - `google/cloud/${library}/quickstart/README.md`
 - `google/cloud/${library}/doc/main.dox`
+
+The Cloud documentation links (`cloud.google.com/*/docs/*`) in these files are
+not always valid. Find the correct urls and update the links.
 
 ## Update the root files
 
@@ -180,10 +190,33 @@ reports.
 ci/cloudbuild/build.sh -t checkers-pr
 ```
 
+> :warning: This command might need to be run twice to format the quickstart
+> code within the README.
+
 ## Verify everything compiles
 
 ```shell
 ci/cloudbuild/build.sh -t cmake-install-pr
+```
+
+It is somewhat common for the build to fail due to expected install directories.
+If this happens, make an edit to `cmake-install.sh`. For example:
+
+```diff
+diff --git a/ci/cloudbuild/builds/cmake-install.sh b/ci/cloudbuild/builds/cmake-install.sh
+index c4ce00489..1858b48dc 100755
+--- a/ci/cloudbuild/builds/cmake-install.sh
++++ b/ci/cloudbuild/builds/cmake-install.sh
+@@ -73,6 +73,9 @@ expected_dirs+=(
+   ./include/google/cloud/pubsub
+   ./include/google/cloud/pubsub/internal
+   ./include/google/cloud/pubsub/mocks
++  # no gRPC services in google/cloud/secretmanager/logging
++  ./include/google/cloud/secretmanager/logging
++  ./include/google/cloud/secretmanager/logging/v1
+   ./include/google/cloud/spanner/admin/mocks
+   ./include/google/cloud/spanner/internal
+   ./include/google/cloud/spanner/mocks
 ```
 
 ## Commit these changes
