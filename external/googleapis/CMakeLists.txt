@@ -37,6 +37,7 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/api/resource.proto"
     "google/devtools/cloudtrace/v2/trace.proto"
     "google/devtools/cloudtrace/v2/tracing.proto"
+    "google/rpc/code.proto"
     "google/rpc/error_details.proto"
     "google/rpc/status.proto"
     "google/iam/v1/options.proto"
@@ -233,6 +234,7 @@ set(external_googleapis_installed_libraries_list
     google_cloud_cpp_iam_v1_options_protos
     google_cloud_cpp_iam_v1_policy_protos
     google_cloud_cpp_iam_v1_iam_policy_protos
+    google_cloud_cpp_rpc_code_protos
     google_cloud_cpp_rpc_error_details_protos
     google_cloud_cpp_rpc_status_protos
     google_cloud_cpp_type_calendar_period_protos
@@ -283,6 +285,7 @@ external_googleapis_add_library("google/type/postal_address.proto")
 external_googleapis_add_library("google/type/quaternion.proto")
 external_googleapis_add_library("google/type/timeofday.proto")
 
+external_googleapis_add_library("google/rpc/code.proto")
 external_googleapis_add_library("google/rpc/error_details.proto")
 external_googleapis_add_library("google/rpc/status.proto"
                                 rpc_error_details_protos)
