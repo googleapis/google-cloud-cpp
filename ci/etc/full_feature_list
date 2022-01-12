@@ -6,6 +6,7 @@ bigquery
 billing
 datamigration
 iam
+iot
 kms
 logging
 pubsublite
