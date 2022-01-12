@@ -12,6 +12,7 @@ iot
 kms
 logging
 pubsublite
+recommender
 resourcemanager
 scheduler
 secretmanager
