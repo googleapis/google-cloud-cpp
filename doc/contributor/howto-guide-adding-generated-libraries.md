@@ -148,10 +148,10 @@ inspiration.
 
 ## Potentially fix the bazel build
 
-The generated `BUILD.bazel` file may require manual editing for a library that
-contains multiple services.  Generally the scaffold will only add **one**
-dependency from `@com_github_googleapis//${path}`. You may need to add
-additional dependencies for more complex libraries.
+The generated `BUILD.bazel` file may require manual editing. The scaffold will
+add one dependency from `@com_github_googleapis//${path}`, which might not be
+correct. You may need to modify that dependency and/or add additional
+dependencies for more complex libraries.
 
 ## Update the quickstart
 
