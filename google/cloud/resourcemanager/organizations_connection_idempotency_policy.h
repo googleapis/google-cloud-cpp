@@ -35,27 +35,29 @@ class OrganizationsConnectionIdempotencyPolicy {
   virtual ~OrganizationsConnectionIdempotencyPolicy() = 0;
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<OrganizationsConnectionIdempotencyPolicy> clone() const = 0;
+  virtual std::unique_ptr<OrganizationsConnectionIdempotencyPolicy> clone()
+      const = 0;
 
-  virtual google::cloud::internal::Idempotency
-  GetOrganization(google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency GetOrganization(
+      google::cloud::resourcemanager::v3::GetOrganizationRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  SearchOrganizations(google::cloud::resourcemanager::v3::SearchOrganizationsRequest request) = 0;
+  virtual google::cloud::internal::Idempotency SearchOrganizations(
+      google::cloud::resourcemanager::v3::SearchOrganizationsRequest
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) = 0;
-
+  virtual google::cloud::internal::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 };
 
 std::unique_ptr<OrganizationsConnectionIdempotencyPolicy>
-    MakeDefaultOrganizationsConnectionIdempotencyPolicy();
+MakeDefaultOrganizationsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager

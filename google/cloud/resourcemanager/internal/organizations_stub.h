@@ -33,61 +33,68 @@ class OrganizationsStub {
  public:
   virtual ~OrganizationsStub() = 0;
 
-  virtual StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
-    grpc::ClientContext& context,
-    google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) = 0;
+  virtual StatusOr<google::cloud::resourcemanager::v3::Organization>
+  GetOrganization(
+      grpc::ClientContext& context,
+      google::cloud::resourcemanager::v3::GetOrganizationRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse> SearchOrganizations(
-    grpc::ClientContext& context,
-    google::cloud::resourcemanager::v3::SearchOrganizationsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::resourcemanager::v3::SearchOrganizationsResponse>
+  SearchOrganizations(
+      grpc::ClientContext& context,
+      google::cloud::resourcemanager::v3::SearchOrganizationsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-    grpc::ClientContext& context,
-    google::iam::v1::GetIamPolicyRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-    grpc::ClientContext& context,
-    google::iam::v1::SetIamPolicyRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-    grpc::ClientContext& context,
-    google::iam::v1::TestIamPermissionsRequest const& request) = 0;
-
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context,
+      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 };
 
 class DefaultOrganizationsStub : public OrganizationsStub {
  public:
   explicit DefaultOrganizationsStub(
-      std::unique_ptr<google::cloud::resourcemanager::v3::Organizations::StubInterface> grpc_stub)
+      std::unique_ptr<
+          google::cloud::resourcemanager::v3::Organizations::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::cloud::resourcemanager::v3::Organization>
-  GetOrganization(
-    grpc::ClientContext& client_context,
-    google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
+      grpc::ClientContext& client_context,
+      google::cloud::resourcemanager::v3::GetOrganizationRequest const& request)
+      override;
 
   StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse>
   SearchOrganizations(
-    grpc::ClientContext& client_context,
-    google::cloud::resourcemanager::v3::SearchOrganizationsRequest const& request) override;
+      grpc::ClientContext& client_context,
+      google::cloud::resourcemanager::v3::SearchOrganizationsRequest const&
+          request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(
-    grpc::ClientContext& client_context,
-    google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& client_context,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(
-    grpc::ClientContext& client_context,
-    google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext& client_context,
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(
-    grpc::ClientContext& client_context,
-    google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& client_context,
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::resourcemanager::v3::Organizations::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::cloud::resourcemanager::v3::Organizations::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

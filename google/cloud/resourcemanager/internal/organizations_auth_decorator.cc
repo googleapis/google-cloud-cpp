@@ -30,7 +30,8 @@ OrganizationsAuth::OrganizationsAuth(
     std::shared_ptr<OrganizationsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::resourcemanager::v3::Organization> OrganizationsAuth::GetOrganization(
+StatusOr<google::cloud::resourcemanager::v3::Organization>
+OrganizationsAuth::GetOrganization(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -38,9 +39,11 @@ StatusOr<google::cloud::resourcemanager::v3::Organization> OrganizationsAuth::Ge
   return child_->GetOrganization(context, request);
 }
 
-StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse> OrganizationsAuth::SearchOrganizations(
+StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse>
+OrganizationsAuth::SearchOrganizations(
     grpc::ClientContext& context,
-    google::cloud::resourcemanager::v3::SearchOrganizationsRequest const& request) {
+    google::cloud::resourcemanager::v3::SearchOrganizationsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SearchOrganizations(context, request);
@@ -62,7 +65,8 @@ StatusOr<google::iam::v1::Policy> OrganizationsAuth::SetIamPolicy(
   return child_->SetIamPolicy(context, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> OrganizationsAuth::TestIamPermissions(
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+OrganizationsAuth::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);

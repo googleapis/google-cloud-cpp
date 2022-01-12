@@ -39,24 +39,27 @@ class OrganizationsLogging : public OrganizationsStub {
                        std::set<std::string> components);
 
   StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
-    grpc::ClientContext& context,
-    google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) override;
+      grpc::ClientContext& context,
+      google::cloud::resourcemanager::v3::GetOrganizationRequest const& request)
+      override;
 
-  StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse> SearchOrganizations(
-    grpc::ClientContext& context,
-    google::cloud::resourcemanager::v3::SearchOrganizationsRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse>
+  SearchOrganizations(
+      grpc::ClientContext& context,
+      google::cloud::resourcemanager::v3::SearchOrganizationsRequest const&
+          request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-    grpc::ClientContext& context,
-    google::iam::v1::GetIamPolicyRequest const& request) override;
+      grpc::ClientContext& context,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-    grpc::ClientContext& context,
-    google::iam::v1::SetIamPolicyRequest const& request) override;
+      grpc::ClientContext& context,
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-    grpc::ClientContext& context,
-    google::iam::v1::TestIamPermissionsRequest const& request) override;
+      grpc::ClientContext& context,
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<OrganizationsStub> child_;

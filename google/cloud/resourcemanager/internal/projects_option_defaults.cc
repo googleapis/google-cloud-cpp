@@ -17,14 +17,14 @@
 // source: google/cloud/resourcemanager/v3/projects.proto
 
 #include "google/cloud/resourcemanager/internal/projects_option_defaults.h"
+#include "google/cloud/resourcemanager/projects_connection.h"
+#include "google/cloud/resourcemanager/projects_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/options.h"
-#include "google/cloud/resourcemanager/projects_connection.h"
-#include "google/cloud/resourcemanager/projects_options.h"
 #include <memory>
 
 namespace google {
@@ -39,7 +39,8 @@ auto constexpr kBackoffScaling = 2.0;
 Options ProjectsDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_PROJECTS_ENDPOINT");
-    options.set<EndpointOption>(env && !env->empty() ? *env : "cloudresourcemanager.googleapis.com");
+    options.set<EndpointOption>(
+        env && !env->empty() ? *env : "cloudresourcemanager.googleapis.com");
   }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
@@ -56,12 +57,14 @@ Options ProjectsDefaultOptions(Options options) {
   if (!options.has<resourcemanager::ProjectsRetryPolicyOption>()) {
     options.set<resourcemanager::ProjectsRetryPolicyOption>(
         resourcemanager::ProjectsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<resourcemanager::ProjectsBackoffPolicyOption>()) {
     options.set<resourcemanager::ProjectsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
   if (!options.has<resourcemanager::ProjectsPollingPolicyOption>()) {
     options.set<resourcemanager::ProjectsPollingPolicyOption>(
@@ -69,10 +72,12 @@ Options ProjectsDefaultOptions(Options options) {
             resourcemanager::ProjectsRetryPolicyOption::Type,
             resourcemanager::ProjectsBackoffPolicyOption::Type>(
             options.get<resourcemanager::ProjectsRetryPolicyOption>()->clone(),
-            options.get<resourcemanager::ProjectsBackoffPolicyOption>()->clone())
+            options.get<resourcemanager::ProjectsBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<resourcemanager::ProjectsConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<resourcemanager::ProjectsConnectionIdempotencyPolicyOption>()) {
     options.set<resourcemanager::ProjectsConnectionIdempotencyPolicyOption>(
         resourcemanager::MakeDefaultProjectsConnectionIdempotencyPolicy());
   }

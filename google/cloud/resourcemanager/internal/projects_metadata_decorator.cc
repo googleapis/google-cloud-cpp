@@ -27,10 +27,10 @@ namespace cloud {
 namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ProjectsMetadata::ProjectsMetadata(
-    std::shared_ptr<ProjectsStub> child)
+ProjectsMetadata::ProjectsMetadata(std::shared_ptr<ProjectsStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::resourcemanager::v3::Project>
 ProjectsMetadata::GetProject(
@@ -101,16 +101,14 @@ ProjectsMetadata::AsyncUndeleteProject(
   return child_->AsyncUndeleteProject(cq, std::move(context), request);
 }
 
-StatusOr<google::iam::v1::Policy>
-ProjectsMetadata::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> ProjectsMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   SetMetadata(context, "resource=" + request.resource());
   return child_->GetIamPolicy(context, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-ProjectsMetadata::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> ProjectsMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   SetMetadata(context, "resource=" + request.resource());
@@ -143,7 +141,7 @@ future<Status> ProjectsMetadata::AsyncCancelOperation(
 }
 
 void ProjectsMetadata::SetMetadata(grpc::ClientContext& context,
-                                        std::string const& request_params) {
+                                   std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   context.AddMetadata("x-goog-api-client", api_client_header_);
 }

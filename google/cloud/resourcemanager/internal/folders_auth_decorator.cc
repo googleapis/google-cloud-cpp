@@ -38,7 +38,8 @@ StatusOr<google::cloud::resourcemanager::v3::Folder> FoldersAuth::GetFolder(
   return child_->GetFolder(context, request);
 }
 
-StatusOr<google::cloud::resourcemanager::v3::ListFoldersResponse> FoldersAuth::ListFolders(
+StatusOr<google::cloud::resourcemanager::v3::ListFoldersResponse>
+FoldersAuth::ListFolders(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::ListFoldersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -46,7 +47,8 @@ StatusOr<google::cloud::resourcemanager::v3::ListFoldersResponse> FoldersAuth::L
   return child_->ListFolders(context, request);
 }
 
-StatusOr<google::cloud::resourcemanager::v3::SearchFoldersResponse> FoldersAuth::SearchFolders(
+StatusOr<google::cloud::resourcemanager::v3::SearchFoldersResponse>
+FoldersAuth::SearchFolders(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::SearchFoldersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -54,16 +56,16 @@ StatusOr<google::cloud::resourcemanager::v3::SearchFoldersResponse> FoldersAuth:
   return child_->SearchFolders(context, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-FoldersAuth::AsyncCreateFolder(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> FoldersAuth::AsyncCreateFolder(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -72,16 +74,16 @@ FoldersAuth::AsyncCreateFolder(
       });
 }
 
-future<StatusOr<google::longrunning::Operation>>
-FoldersAuth::AsyncUpdateFolder(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> FoldersAuth::AsyncUpdateFolder(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -90,16 +92,16 @@ FoldersAuth::AsyncUpdateFolder(
       });
 }
 
-future<StatusOr<google::longrunning::Operation>>
-FoldersAuth::AsyncMoveFolder(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> FoldersAuth::AsyncMoveFolder(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -108,16 +110,16 @@ FoldersAuth::AsyncMoveFolder(
       });
 }
 
-future<StatusOr<google::longrunning::Operation>>
-FoldersAuth::AsyncDeleteFolder(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> FoldersAuth::AsyncDeleteFolder(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -128,14 +130,15 @@ FoldersAuth::AsyncDeleteFolder(
 
 future<StatusOr<google::longrunning::Operation>>
 FoldersAuth::AsyncUndeleteFolder(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -160,7 +163,8 @@ StatusOr<google::iam::v1::Policy> FoldersAuth::SetIamPolicy(
   return child_->SetIamPolicy(context, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> FoldersAuth::TestIamPermissions(
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+FoldersAuth::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -168,16 +172,16 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse> FoldersAuth::TestIamPermis
   return child_->TestIamPermissions(context, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-FoldersAuth::AsyncGetOperation(
+future<StatusOr<google::longrunning::Operation>> FoldersAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -191,9 +195,10 @@ future<Status> FoldersAuth::AsyncCancelOperation(
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
         return child->AsyncCancelOperation(cq, *std::move(context), request);

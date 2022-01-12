@@ -27,10 +27,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::internal::Idempotency;
 
-ProjectsConnectionIdempotencyPolicy::~ProjectsConnectionIdempotencyPolicy() = default;
+ProjectsConnectionIdempotencyPolicy::~ProjectsConnectionIdempotencyPolicy() =
+    default;
 
 namespace {
-class DefaultProjectsConnectionIdempotencyPolicy : public ProjectsConnectionIdempotencyPolicy {
+class DefaultProjectsConnectionIdempotencyPolicy
+    : public ProjectsConnectionIdempotencyPolicy {
  public:
   ~DefaultProjectsConnectionIdempotencyPolicy() override = default;
 
@@ -39,66 +41,69 @@ class DefaultProjectsConnectionIdempotencyPolicy : public ProjectsConnectionIdem
     return absl::make_unique<DefaultProjectsConnectionIdempotencyPolicy>(*this);
   }
 
-  Idempotency
-  GetProject(google::cloud::resourcemanager::v3::GetProjectRequest const&) override {
+  Idempotency GetProject(
+      google::cloud::resourcemanager::v3::GetProjectRequest const&) override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  ListProjects(google::cloud::resourcemanager::v3::ListProjectsRequest) override {
+  Idempotency ListProjects(
+      google::cloud::resourcemanager::v3::ListProjectsRequest) override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  SearchProjects(google::cloud::resourcemanager::v3::SearchProjectsRequest) override {
+  Idempotency SearchProjects(
+      google::cloud::resourcemanager::v3::SearchProjectsRequest) override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  CreateProject(google::cloud::resourcemanager::v3::CreateProjectRequest const&) override {
+  Idempotency CreateProject(
+      google::cloud::resourcemanager::v3::CreateProjectRequest const&)
+      override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  UpdateProject(google::cloud::resourcemanager::v3::UpdateProjectRequest const&) override {
+  Idempotency UpdateProject(
+      google::cloud::resourcemanager::v3::UpdateProjectRequest const&)
+      override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  MoveProject(google::cloud::resourcemanager::v3::MoveProjectRequest const&) override {
+  Idempotency MoveProject(
+      google::cloud::resourcemanager::v3::MoveProjectRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  DeleteProject(google::cloud::resourcemanager::v3::DeleteProjectRequest const&) override {
+  Idempotency DeleteProject(
+      google::cloud::resourcemanager::v3::DeleteProjectRequest const&)
+      override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  UndeleteProject(google::cloud::resourcemanager::v3::UndeleteProjectRequest const&) override {
+  Idempotency UndeleteProject(
+      google::cloud::resourcemanager::v3::UndeleteProjectRequest const&)
+      override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) override {
+  Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const&) override {
+  Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) override {
+  Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
-
 };
 }  // namespace
 
 std::unique_ptr<ProjectsConnectionIdempotencyPolicy>
-    MakeDefaultProjectsConnectionIdempotencyPolicy() {
+MakeDefaultProjectsConnectionIdempotencyPolicy() {
   return absl::make_unique<DefaultProjectsConnectionIdempotencyPolicy>();
 }
 

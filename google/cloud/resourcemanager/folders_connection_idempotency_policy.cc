@@ -27,10 +27,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::internal::Idempotency;
 
-FoldersConnectionIdempotencyPolicy::~FoldersConnectionIdempotencyPolicy() = default;
+FoldersConnectionIdempotencyPolicy::~FoldersConnectionIdempotencyPolicy() =
+    default;
 
 namespace {
-class DefaultFoldersConnectionIdempotencyPolicy : public FoldersConnectionIdempotencyPolicy {
+class DefaultFoldersConnectionIdempotencyPolicy
+    : public FoldersConnectionIdempotencyPolicy {
  public:
   ~DefaultFoldersConnectionIdempotencyPolicy() override = default;
 
@@ -39,66 +41,66 @@ class DefaultFoldersConnectionIdempotencyPolicy : public FoldersConnectionIdempo
     return absl::make_unique<DefaultFoldersConnectionIdempotencyPolicy>(*this);
   }
 
-  Idempotency
-  GetFolder(google::cloud::resourcemanager::v3::GetFolderRequest const&) override {
+  Idempotency GetFolder(
+      google::cloud::resourcemanager::v3::GetFolderRequest const&) override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  ListFolders(google::cloud::resourcemanager::v3::ListFoldersRequest) override {
+  Idempotency ListFolders(
+      google::cloud::resourcemanager::v3::ListFoldersRequest) override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  SearchFolders(google::cloud::resourcemanager::v3::SearchFoldersRequest) override {
+  Idempotency SearchFolders(
+      google::cloud::resourcemanager::v3::SearchFoldersRequest) override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  CreateFolder(google::cloud::resourcemanager::v3::CreateFolderRequest const&) override {
+  Idempotency CreateFolder(
+      google::cloud::resourcemanager::v3::CreateFolderRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  UpdateFolder(google::cloud::resourcemanager::v3::UpdateFolderRequest const&) override {
+  Idempotency UpdateFolder(
+      google::cloud::resourcemanager::v3::UpdateFolderRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  MoveFolder(google::cloud::resourcemanager::v3::MoveFolderRequest const&) override {
+  Idempotency MoveFolder(
+      google::cloud::resourcemanager::v3::MoveFolderRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  DeleteFolder(google::cloud::resourcemanager::v3::DeleteFolderRequest const&) override {
+  Idempotency DeleteFolder(
+      google::cloud::resourcemanager::v3::DeleteFolderRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  UndeleteFolder(google::cloud::resourcemanager::v3::UndeleteFolderRequest const&) override {
+  Idempotency UndeleteFolder(
+      google::cloud::resourcemanager::v3::UndeleteFolderRequest const&)
+      override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) override {
+  Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const&) override {
+  Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) override {
+  Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
-
 };
 }  // namespace
 
 std::unique_ptr<FoldersConnectionIdempotencyPolicy>
-    MakeDefaultFoldersConnectionIdempotencyPolicy() {
+MakeDefaultFoldersConnectionIdempotencyPolicy() {
   return absl::make_unique<DefaultFoldersConnectionIdempotencyPolicy>();
 }
 

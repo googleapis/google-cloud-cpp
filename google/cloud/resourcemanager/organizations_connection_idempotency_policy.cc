@@ -27,48 +27,52 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::internal::Idempotency;
 
-OrganizationsConnectionIdempotencyPolicy::~OrganizationsConnectionIdempotencyPolicy() = default;
+OrganizationsConnectionIdempotencyPolicy::
+    ~OrganizationsConnectionIdempotencyPolicy() = default;
 
 namespace {
-class DefaultOrganizationsConnectionIdempotencyPolicy : public OrganizationsConnectionIdempotencyPolicy {
+class DefaultOrganizationsConnectionIdempotencyPolicy
+    : public OrganizationsConnectionIdempotencyPolicy {
  public:
   ~DefaultOrganizationsConnectionIdempotencyPolicy() override = default;
 
   /// Create a new copy of this object.
-  std::unique_ptr<OrganizationsConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultOrganizationsConnectionIdempotencyPolicy>(*this);
+  std::unique_ptr<OrganizationsConnectionIdempotencyPolicy> clone()
+      const override {
+    return absl::make_unique<DefaultOrganizationsConnectionIdempotencyPolicy>(
+        *this);
   }
 
-  Idempotency
-  GetOrganization(google::cloud::resourcemanager::v3::GetOrganizationRequest const&) override {
+  Idempotency GetOrganization(
+      google::cloud::resourcemanager::v3::GetOrganizationRequest const&)
+      override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  SearchOrganizations(google::cloud::resourcemanager::v3::SearchOrganizationsRequest) override {
+  Idempotency SearchOrganizations(
+      google::cloud::resourcemanager::v3::SearchOrganizationsRequest) override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) override {
+  Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const&) override {
+  Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) override {
+  Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
-
 };
 }  // namespace
 
 std::unique_ptr<OrganizationsConnectionIdempotencyPolicy>
-    MakeDefaultOrganizationsConnectionIdempotencyPolicy() {
+MakeDefaultOrganizationsConnectionIdempotencyPolicy() {
   return absl::make_unique<DefaultOrganizationsConnectionIdempotencyPolicy>();
 }
 

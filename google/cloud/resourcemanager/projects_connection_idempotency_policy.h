@@ -36,45 +36,50 @@ class ProjectsConnectionIdempotencyPolicy {
   virtual ~ProjectsConnectionIdempotencyPolicy() = 0;
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ProjectsConnectionIdempotencyPolicy> clone() const = 0;
+  virtual std::unique_ptr<ProjectsConnectionIdempotencyPolicy> clone()
+      const = 0;
 
-  virtual google::cloud::internal::Idempotency
-  GetProject(google::cloud::resourcemanager::v3::GetProjectRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency GetProject(
+      google::cloud::resourcemanager::v3::GetProjectRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  ListProjects(google::cloud::resourcemanager::v3::ListProjectsRequest request) = 0;
+  virtual google::cloud::internal::Idempotency ListProjects(
+      google::cloud::resourcemanager::v3::ListProjectsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  SearchProjects(google::cloud::resourcemanager::v3::SearchProjectsRequest request) = 0;
+  virtual google::cloud::internal::Idempotency SearchProjects(
+      google::cloud::resourcemanager::v3::SearchProjectsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  CreateProject(google::cloud::resourcemanager::v3::CreateProjectRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency CreateProject(
+      google::cloud::resourcemanager::v3::CreateProjectRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  UpdateProject(google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency UpdateProject(
+      google::cloud::resourcemanager::v3::UpdateProjectRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  MoveProject(google::cloud::resourcemanager::v3::MoveProjectRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency MoveProject(
+      google::cloud::resourcemanager::v3::MoveProjectRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  DeleteProject(google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency DeleteProject(
+      google::cloud::resourcemanager::v3::DeleteProjectRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  UndeleteProject(google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency UndeleteProject(
+      google::cloud::resourcemanager::v3::UndeleteProjectRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) = 0;
-
+  virtual google::cloud::internal::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 };
 
 std::unique_ptr<ProjectsConnectionIdempotencyPolicy>
-    MakeDefaultProjectsConnectionIdempotencyPolicy();
+MakeDefaultProjectsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager

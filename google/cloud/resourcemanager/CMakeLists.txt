@@ -16,10 +16,11 @@
 
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Cloud Resource Manager API C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud Resource Manager API")
+set(DOXYGEN_PROJECT_BRIEF
+    "A C++ Client Library for the Cloud Resource Manager API")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "resourcemanager_internal" "resourcemanager_testing"
-                            "examples")
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "resourcemanager_internal"
+                            "resourcemanager_testing" "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 # Creates the proto headers needed by doxygen.
@@ -40,7 +41,8 @@ endif ()
 
 include(CompileProtos)
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_resourcemanager_protos # cmake-format: sort
+    google_cloud_cpp_resourcemanager_protos
+    # cmake-format: sort
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/resourcemanager/v3/folders.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/resourcemanager/v3/organizations.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/resourcemanager/v3/projects.proto
@@ -48,24 +50,28 @@ google_cloud_cpp_grpcpp_library(
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/resourcemanager/v3/tag_keys.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/resourcemanager/v3/tag_values.proto
     PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(resourcemanager_protos)
-target_link_libraries(google_cloud_cpp_resourcemanager_protos PUBLIC #
-    google-cloud-cpp::api_annotations_protos
-    google-cloud-cpp::api_client_protos
-    google-cloud-cpp::api_field_behavior_protos
-    google-cloud-cpp::api_http_protos
-    google-cloud-cpp::api_resource_protos
-    google-cloud-cpp::iam_v1_iam_policy_protos
-    google-cloud-cpp::iam_v1_options_protos
-    google-cloud-cpp::iam_v1_policy_protos
-    google-cloud-cpp::longrunning_operations_protos
-    google-cloud-cpp::rpc_status_protos
-    google-cloud-cpp::type_expr_protos)
+target_link_libraries(
+    google_cloud_cpp_resourcemanager_protos
+    PUBLIC #
+           google-cloud-cpp::api_annotations_protos
+           google-cloud-cpp::api_client_protos
+           google-cloud-cpp::api_field_behavior_protos
+           google-cloud-cpp::api_http_protos
+           google-cloud-cpp::api_resource_protos
+           google-cloud-cpp::iam_v1_iam_policy_protos
+           google-cloud-cpp::iam_v1_options_protos
+           google-cloud-cpp::iam_v1_policy_protos
+           google-cloud-cpp::longrunning_operations_protos
+           google-cloud-cpp::rpc_status_protos
+           google-cloud-cpp::type_expr_protos)
 
-file(GLOB source_files
-     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-     "*.h" "*.cc" "internal/*.h" "internal/*.cc")
+file(
+    GLOB source_files
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    "*.h" "*.cc" "internal/*.h" "internal/*.cc")
 list(SORT source_files)
 add_library(google_cloud_cpp_resourcemanager ${source_files})
 target_include_directories(
@@ -81,24 +87,26 @@ google_cloud_cpp_add_common_options(google_cloud_cpp_resourcemanager)
 set_target_properties(
     google_cloud_cpp_resourcemanager
     PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-resourcemanager
-               VERSION "${PROJECT_VERSION}"
-               SOVERSION "${PROJECT_VERSION_MAJOR}")
+               VERSION "${PROJECT_VERSION}" SOVERSION
+                                            "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_resourcemanager
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-resourcemanager ALIAS google_cloud_cpp_resourcemanager)
+add_library(google-cloud-cpp::experimental-resourcemanager ALIAS
+            google_cloud_cpp_resourcemanager)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
-file(GLOB relative_mock_files
-     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-     "mocks/*.h")
+file(
+    GLOB relative_mock_files
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    "mocks/*.h")
 list(SORT relative_mock_files)
 set(mock_files)
 foreach (file IN LISTS relative_mock_files)
-  list(APPEND mock_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
+    list(APPEND mock_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
 endforeach ()
 add_library(google_cloud_cpp_resourcemanager_mocks INTERFACE)
 target_sources(google_cloud_cpp_resourcemanager_mocks INTERFACE ${mock_files})
@@ -129,7 +137,8 @@ install(
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
 install(
-    TARGETS google_cloud_cpp_resourcemanager google_cloud_cpp_resourcemanager_protos
+    TARGETS google_cloud_cpp_resourcemanager
+            google_cloud_cpp_resourcemanager_protos
     EXPORT google_cloud_cpp_resourcemanager-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
@@ -141,16 +150,18 @@ install(
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
 install(
-    TARGETS google_cloud_cpp_resourcemanager google_cloud_cpp_resourcemanager_protos
+    TARGETS google_cloud_cpp_resourcemanager
+            google_cloud_cpp_resourcemanager_protos
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development
             NAMELINK_ONLY
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
-google_cloud_cpp_install_proto_library_protos("google_cloud_cpp_resourcemanager_protos"
-                                              "${EXTERNAL_GOOGLEAPIS_SOURCE}")
-google_cloud_cpp_install_proto_library_headers("google_cloud_cpp_resourcemanager_protos")
+google_cloud_cpp_install_proto_library_protos(
+    "google_cloud_cpp_resourcemanager_protos" "${EXTERNAL_GOOGLEAPIS_SOURCE}")
+google_cloud_cpp_install_proto_library_headers(
+    "google_cloud_cpp_resourcemanager_protos")
 google_cloud_cpp_install_headers("google_cloud_cpp_resourcemanager"
                                  "include/google/cloud/resourcemanager")
 google_cloud_cpp_install_headers("google_cloud_cpp_resourcemanager_mocks"
@@ -161,10 +172,12 @@ set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(GOOGLE_CLOUD_PC_NAME "The Cloud Resource Manager API C++ Client Library")
-set(GOOGLE_CLOUD_PC_DESCRIPTION "Provides C++ APIs to use the Cloud Resource Manager API.")
+set(GOOGLE_CLOUD_PC_DESCRIPTION
+    "Provides C++ APIs to use the Cloud Resource Manager API.")
 set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_resourcemanager")
 string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common" " google_cloud_cpp_resourcemanager_protos")
+              " google_cloud_cpp_common"
+              " google_cloud_cpp_resourcemanager_protos")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/resourcemanager/config.pc.in"
@@ -176,7 +189,8 @@ install(
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
-configure_file("config.cmake.in" "google_cloud_cpp_resourcemanager-config.cmake" @ONLY)
+configure_file("config.cmake.in"
+               "google_cloud_cpp_resourcemanager-config.cmake" @ONLY)
 write_basic_package_version_file(
     "google_cloud_cpp_resourcemanager-config-version.cmake"
     VERSION ${PROJECT_VERSION}

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_PROJECTS_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_PROJECTS_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/resourcemanager/internal/projects_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -41,40 +41,49 @@ class ProjectsAuth : public ProjectsStub {
 
   StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
       grpc::ClientContext& context,
-      google::cloud::resourcemanager::v3::GetProjectRequest const& request) override;
+      google::cloud::resourcemanager::v3::GetProjectRequest const& request)
+      override;
 
-  StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse> ListProjects(
-      grpc::ClientContext& context,
-      google::cloud::resourcemanager::v3::ListProjectsRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse>
+  ListProjects(grpc::ClientContext& context,
+               google::cloud::resourcemanager::v3::ListProjectsRequest const&
+                   request) override;
 
-  StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse> SearchProjects(
+  StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse>
+  SearchProjects(
       grpc::ClientContext& context,
-      google::cloud::resourcemanager::v3::SearchProjectsRequest const& request) override;
+      google::cloud::resourcemanager::v3::SearchProjectsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateProject(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::CreateProjectRequest const& request) override;
+      google::cloud::resourcemanager::v3::CreateProjectRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateProject(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) override;
+      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncMoveProject(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::MoveProjectRequest const& request) override;
+      google::cloud::resourcemanager::v3::MoveProjectRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteProject(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) override;
+      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteProject(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) override;
+      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request)
+      override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext& context,
@@ -97,6 +106,7 @@ class ProjectsAuth : public ProjectsStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<ProjectsStub> child_;

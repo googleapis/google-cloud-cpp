@@ -38,7 +38,8 @@ StatusOr<google::cloud::resourcemanager::v3::Project> ProjectsAuth::GetProject(
   return child_->GetProject(context, request);
 }
 
-StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse> ProjectsAuth::ListProjects(
+StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse>
+ProjectsAuth::ListProjects(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::ListProjectsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -46,7 +47,8 @@ StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse> ProjectsAuth:
   return child_->ListProjects(context, request);
 }
 
-StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse> ProjectsAuth::SearchProjects(
+StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse>
+ProjectsAuth::SearchProjects(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::SearchProjectsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -56,14 +58,15 @@ StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse> ProjectsAut
 
 future<StatusOr<google::longrunning::Operation>>
 ProjectsAuth::AsyncCreateProject(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -74,14 +77,15 @@ ProjectsAuth::AsyncCreateProject(
 
 future<StatusOr<google::longrunning::Operation>>
 ProjectsAuth::AsyncUpdateProject(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -90,16 +94,16 @@ ProjectsAuth::AsyncUpdateProject(
       });
 }
 
-future<StatusOr<google::longrunning::Operation>>
-ProjectsAuth::AsyncMoveProject(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> ProjectsAuth::AsyncMoveProject(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -110,14 +114,15 @@ ProjectsAuth::AsyncMoveProject(
 
 future<StatusOr<google::longrunning::Operation>>
 ProjectsAuth::AsyncDeleteProject(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -128,14 +133,15 @@ ProjectsAuth::AsyncDeleteProject(
 
 future<StatusOr<google::longrunning::Operation>>
 ProjectsAuth::AsyncUndeleteProject(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -160,7 +166,8 @@ StatusOr<google::iam::v1::Policy> ProjectsAuth::SetIamPolicy(
   return child_->SetIamPolicy(context, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> ProjectsAuth::TestIamPermissions(
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ProjectsAuth::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -175,9 +182,10 @@ ProjectsAuth::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -191,9 +199,10 @@ future<Status> ProjectsAuth::AsyncCancelOperation(
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
         return child->AsyncCancelOperation(cq, *std::move(context), request);

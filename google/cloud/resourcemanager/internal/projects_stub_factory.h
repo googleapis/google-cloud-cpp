@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_PROJECTS_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_PROJECTS_STUB_FACTORY_H
 
+#include "google/cloud/resourcemanager/internal/projects_stub.h"
+#include "google/cloud/resourcemanager/projects_connection.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/resourcemanager/internal/projects_stub.h"
-#include "google/cloud/resourcemanager/projects_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 

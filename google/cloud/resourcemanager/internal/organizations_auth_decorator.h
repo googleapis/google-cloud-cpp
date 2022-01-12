@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_ORGANIZATIONS_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_ORGANIZATIONS_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/resourcemanager/internal/organizations_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -40,11 +40,14 @@ class OrganizationsAuth : public OrganizationsStub {
 
   StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
       grpc::ClientContext& context,
-      google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) override;
+      google::cloud::resourcemanager::v3::GetOrganizationRequest const& request)
+      override;
 
-  StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse> SearchOrganizations(
+  StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse>
+  SearchOrganizations(
       grpc::ClientContext& context,
-      google::cloud::resourcemanager::v3::SearchOrganizationsRequest const& request) override;
+      google::cloud::resourcemanager::v3::SearchOrganizationsRequest const&
+          request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext& context,

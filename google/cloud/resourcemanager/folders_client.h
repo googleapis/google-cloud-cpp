@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_FOLDERS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_FOLDERS_CLIENT_H
 
+#include "google/cloud/resourcemanager/folders_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iam_updater.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/resourcemanager/folders_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/iam_updater.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class FoldersClient {
  public:
-  explicit FoldersClient(std::shared_ptr<FoldersConnection> connection, Options options = {});
+  explicit FoldersClient(std::shared_ptr<FoldersConnection> connection,
+                         Options options = {});
   ~FoldersClient();
 
   //@{
@@ -95,13 +96,16 @@ class FoldersClient {
   /// @param name  Required. The resource name of the folder to retrieve.
   ///  Must be of the form `folders/{folder_id}`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.GetFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L322}
-  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.GetFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L322}
+  /// [google.cloud.resourcemanager.v3.Folder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  StatusOr<google::cloud::resourcemanager::v3::Folder>
-  GetFolder(std::string const& name, Options options = {});
+  StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
+      std::string const& name, Options options = {});
 
   ///
   /// Retrieves a folder identified by the supplied resource name.
@@ -110,67 +114,80 @@ class FoldersClient {
   /// The caller must have `resourcemanager.folders.get` permission on the
   /// identified folder.
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::GetFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L322}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::GetFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L322}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.GetFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L322}
-  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.GetFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L322}
+  /// [google.cloud.resourcemanager.v3.Folder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  StatusOr<google::cloud::resourcemanager::v3::Folder>
-  GetFolder(google::cloud::resourcemanager::v3::GetFolderRequest const& request, Options options = {});
+  StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
+      google::cloud::resourcemanager::v3::GetFolderRequest const& request,
+      Options options = {});
 
   ///
   /// Lists the folders that are direct descendants of supplied parent resource.
   /// `list()` provides a strongly consistent view of the folders underneath
   /// the specified parent resource.
-  /// `list()` returns folders sorted based upon the (ascending) lexical ordering
-  /// of their display_name.
-  /// The caller must have `resourcemanager.folders.list` permission on the
-  /// identified parent.
+  /// `list()` returns folders sorted based upon the (ascending) lexical
+  /// ordering of their display_name. The caller must have
+  /// `resourcemanager.folders.list` permission on the identified parent.
   ///
-  /// @param parent  Required. The resource name of the organization or folder whose folders are
+  /// @param parent  Required. The resource name of the organization or folder
+  /// whose folders are
   ///  being listed.
   ///  Must be of the form `folders/{folder_id}` or `organizations/{org_id}`.
   ///  Access to this method is controlled by checking the
   ///  `resourcemanager.folders.list` permission on the `parent`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.ListFoldersRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L334}
-  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.ListFoldersRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L334}
+  /// [google.cloud.resourcemanager.v3.Folder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  StreamRange<google::cloud::resourcemanager::v3::Folder>
-  ListFolders(std::string const& parent, Options options = {});
+  StreamRange<google::cloud::resourcemanager::v3::Folder> ListFolders(
+      std::string const& parent, Options options = {});
 
   ///
   /// Lists the folders that are direct descendants of supplied parent resource.
   /// `list()` provides a strongly consistent view of the folders underneath
   /// the specified parent resource.
-  /// `list()` returns folders sorted based upon the (ascending) lexical ordering
-  /// of their display_name.
-  /// The caller must have `resourcemanager.folders.list` permission on the
-  /// identified parent.
+  /// `list()` returns folders sorted based upon the (ascending) lexical
+  /// ordering of their display_name. The caller must have
+  /// `resourcemanager.folders.list` permission on the identified parent.
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::ListFoldersRequest,google/cloud/resourcemanager/v3/folders.proto#L334}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::ListFoldersRequest,google/cloud/resourcemanager/v3/folders.proto#L334}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.ListFoldersRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L334}
-  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.ListFoldersRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L334}
+  /// [google.cloud.resourcemanager.v3.Folder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  StreamRange<google::cloud::resourcemanager::v3::Folder>
-  ListFolders(google::cloud::resourcemanager::v3::ListFoldersRequest request, Options options = {});
+  StreamRange<google::cloud::resourcemanager::v3::Folder> ListFolders(
+      google::cloud::resourcemanager::v3::ListFoldersRequest request,
+      Options options = {});
 
   ///
   /// Search for folders that match specific filter criteria.
-  /// `search()` provides an eventually consistent view of the folders a user has
-  /// access to which meet the specified filter criteria.
+  /// `search()` provides an eventually consistent view of the folders a user
+  /// has access to which meet the specified filter criteria.
   ///
   /// This will only return folders on which the caller has the
   /// permission `resourcemanager.folders.get`.
   ///
-  /// @param query  Optional. Search criteria used to select the folders to return.
+  /// @param query  Optional. Search criteria used to select the folders to
+  /// return.
   ///  If no search criteria is specified then all accessible folders will be
   ///  returned.
   ///  Query expressions can be used to restrict results based upon displayName,
@@ -182,8 +199,8 @@ class FoldersClient {
   ///  | Field                   | Description                            |
   ///  |-------------------------|----------------------------------------|
   ///  | displayName             | Filters by displayName.                |
-  ///  | parent                  | Filters by parent (for example: folders/123). |
-  ///  | state, lifecycleState   | Filters by state.                      |
+  ///  | parent                  | Filters by parent (for example: folders/123).
+  ///  | | state, lifecycleState   | Filters by state.                      |
   ///  ```
   ///  Some example queries are:
   ///  * Query `displayName=Test*` returns Folder resources whose display name
@@ -197,31 +214,39 @@ class FoldersClient {
   ///  * Query `displayName=\\"Test String\\"` returns Folder resources with
   ///  display names that include both "Test" and "String".
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.SearchFoldersRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L373}
-  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.SearchFoldersRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L373}
+  /// [google.cloud.resourcemanager.v3.Folder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  StreamRange<google::cloud::resourcemanager::v3::Folder>
-  SearchFolders(std::string const& query, Options options = {});
+  StreamRange<google::cloud::resourcemanager::v3::Folder> SearchFolders(
+      std::string const& query, Options options = {});
 
   ///
   /// Search for folders that match specific filter criteria.
-  /// `search()` provides an eventually consistent view of the folders a user has
-  /// access to which meet the specified filter criteria.
+  /// `search()` provides an eventually consistent view of the folders a user
+  /// has access to which meet the specified filter criteria.
   ///
   /// This will only return folders on which the caller has the
   /// permission `resourcemanager.folders.get`.
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::SearchFoldersRequest,google/cloud/resourcemanager/v3/folders.proto#L373}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::SearchFoldersRequest,google/cloud/resourcemanager/v3/folders.proto#L373}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.SearchFoldersRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L373}
-  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.SearchFoldersRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L373}
+  /// [google.cloud.resourcemanager.v3.Folder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  StreamRange<google::cloud::resourcemanager::v3::Folder>
-  SearchFolders(google::cloud::resourcemanager::v3::SearchFoldersRequest request, Options options = {});
+  StreamRange<google::cloud::resourcemanager::v3::Folder> SearchFolders(
+      google::cloud::resourcemanager::v3::SearchFoldersRequest request,
+      Options options = {});
 
   ///
   /// Creates a folder in the resource hierarchy.
@@ -246,22 +271,27 @@ class FoldersClient {
   /// may be returned by the `CreateFolder` request, with status code
   /// `FAILED_PRECONDITION` and an error description. Other folder constraint
   /// violations will be communicated in the `Operation`, with the specific
-  /// `PreconditionFailure` returned in the details list in the `Operation.error`
-  /// field.
+  /// `PreconditionFailure` returned in the details list in the
+  /// `Operation.error` field.
   ///
   /// The caller must have `resourcemanager.folders.create` permission on the
   /// identified parent.
   ///
-  /// @param folder  Required. The folder being created, only the display name and parent will be
+  /// @param folder  Required. The folder being created, only the display name
+  /// and parent will be
   ///  consulted. All other fields will be ignored.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.CreateFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L428}
-  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.CreateFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L428}
+  /// [google.cloud.resourcemanager.v3.Folder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  CreateFolder(google::cloud::resourcemanager::v3::Folder const& folder, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> CreateFolder(
+      google::cloud::resourcemanager::v3::Folder const& folder,
+      Options options = {});
 
   ///
   /// Creates a folder in the resource hierarchy.
@@ -286,27 +316,34 @@ class FoldersClient {
   /// may be returned by the `CreateFolder` request, with status code
   /// `FAILED_PRECONDITION` and an error description. Other folder constraint
   /// violations will be communicated in the `Operation`, with the specific
-  /// `PreconditionFailure` returned in the details list in the `Operation.error`
-  /// field.
+  /// `PreconditionFailure` returned in the details list in the
+  /// `Operation.error` field.
   ///
   /// The caller must have `resourcemanager.folders.create` permission on the
   /// identified parent.
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::CreateFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L428}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::CreateFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L428}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.CreateFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L428}
-  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.CreateFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L428}
+  /// [google.cloud.resourcemanager.v3.Folder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  CreateFolder(google::cloud::resourcemanager::v3::CreateFolderRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> CreateFolder(
+      google::cloud::resourcemanager::v3::CreateFolderRequest const& request,
+      Options options = {});
 
   ///
   /// Updates a folder, changing its `display_name`.
   /// Changes to the folder `display_name` will be rejected if they violate
   /// either the `display_name` formatting rules or the naming constraints
-  /// described in the [CreateFolder][google.cloud.resourcemanager.v3.Folders.CreateFolder] documentation.
+  /// described in the
+  /// [CreateFolder][google.cloud.resourcemanager.v3.Folders.CreateFolder]
+  /// documentation.
   ///
   /// The folder's `display_name` must start and end with a letter or digit,
   /// may contain letters, digits, spaces, hyphens and underscores and can be
@@ -319,24 +356,31 @@ class FoldersClient {
   /// `PreconditionFailure` explaining this violation will be returned
   /// in the Status.details field.
   ///
-  /// @param folder  Required. The new definition of the Folder. It must include the `name` field, which
+  /// @param folder  Required. The new definition of the Folder. It must include
+  /// the `name` field, which
   ///  cannot be changed.
   /// @param update_mask  Required. Fields to be updated.
   ///  Only the `display_name` can be updated.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.UpdateFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L452}
-  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.UpdateFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L452}
+  /// [google.cloud.resourcemanager.v3.Folder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  UpdateFolder(google::cloud::resourcemanager::v3::Folder const& folder, google::protobuf::FieldMask const& update_mask, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
+      google::cloud::resourcemanager::v3::Folder const& folder,
+      google::protobuf::FieldMask const& update_mask, Options options = {});
 
   ///
   /// Updates a folder, changing its `display_name`.
   /// Changes to the folder `display_name` will be rejected if they violate
   /// either the `display_name` formatting rules or the naming constraints
-  /// described in the [CreateFolder][google.cloud.resourcemanager.v3.Folders.CreateFolder] documentation.
+  /// described in the
+  /// [CreateFolder][google.cloud.resourcemanager.v3.Folders.CreateFolder]
+  /// documentation.
   ///
   /// The folder's `display_name` must start and end with a letter or digit,
   /// may contain letters, digits, spaces, hyphens and underscores and can be
@@ -349,15 +393,20 @@ class FoldersClient {
   /// `PreconditionFailure` explaining this violation will be returned
   /// in the Status.details field.
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::UpdateFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L452}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::UpdateFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L452}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.UpdateFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L452}
-  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.UpdateFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L452}
+  /// [google.cloud.resourcemanager.v3.Folder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  UpdateFolder(google::cloud::resourcemanager::v3::UpdateFolderRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
+      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request,
+      Options options = {});
 
   ///
   /// Moves a folder under a new resource parent.
@@ -374,23 +423,28 @@ class FoldersClient {
   /// `FolderOperation` message as an aid to stateless clients.
   /// Folder moves will be rejected if they violate either the naming, height,
   /// or fanout constraints described in the
-  /// [CreateFolder][google.cloud.resourcemanager.v3.Folders.CreateFolder] documentation.
-  /// The caller must have `resourcemanager.folders.move` permission on the
-  /// folder's current and proposed new parent.
+  /// [CreateFolder][google.cloud.resourcemanager.v3.Folders.CreateFolder]
+  /// documentation. The caller must have `resourcemanager.folders.move`
+  /// permission on the folder's current and proposed new parent.
   ///
   /// @param name  Required. The resource name of the Folder to move.
   ///  Must be of the form folders/{folder_id}
-  /// @param destination_parent  Required. The resource name of the folder or organization which should be the
+  /// @param destination_parent  Required. The resource name of the folder or
+  /// organization which should be the
   ///  folder's new parent.
   ///  Must be of the form `folders/{folder_id}` or `organizations/{org_id}`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.MoveFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L469}
-  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.MoveFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L469}
+  /// [google.cloud.resourcemanager.v3.Folder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  MoveFolder(std::string const& name, std::string const& destination_parent, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
+      std::string const& name, std::string const& destination_parent,
+      Options options = {});
 
   ///
   /// Moves a folder under a new resource parent.
@@ -407,27 +461,34 @@ class FoldersClient {
   /// `FolderOperation` message as an aid to stateless clients.
   /// Folder moves will be rejected if they violate either the naming, height,
   /// or fanout constraints described in the
-  /// [CreateFolder][google.cloud.resourcemanager.v3.Folders.CreateFolder] documentation.
-  /// The caller must have `resourcemanager.folders.move` permission on the
-  /// folder's current and proposed new parent.
+  /// [CreateFolder][google.cloud.resourcemanager.v3.Folders.CreateFolder]
+  /// documentation. The caller must have `resourcemanager.folders.move`
+  /// permission on the folder's current and proposed new parent.
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::MoveFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L469}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::MoveFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L469}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.MoveFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L469}
-  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.MoveFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L469}
+  /// [google.cloud.resourcemanager.v3.Folder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  MoveFolder(google::cloud::resourcemanager::v3::MoveFolderRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
+      google::cloud::resourcemanager::v3::MoveFolderRequest const& request,
+      Options options = {});
 
   ///
   /// Requests deletion of a folder. The folder is moved into the
-  /// [DELETE_REQUESTED][google.cloud.resourcemanager.v3.Folder.State.DELETE_REQUESTED] state
-  /// immediately, and is deleted approximately 30 days later. This method may
-  /// only be called on an empty folder, where a folder is empty if it doesn't
-  /// contain any folders or projects in the [ACTIVE][google.cloud.resourcemanager.v3.Folder.State.ACTIVE] state.
-  /// If called on a folder in [DELETE_REQUESTED][google.cloud.resourcemanager.v3.Folder.State.DELETE_REQUESTED]
+  /// [DELETE_REQUESTED][google.cloud.resourcemanager.v3.Folder.State.DELETE_REQUESTED]
+  /// state immediately, and is deleted approximately 30 days later. This method
+  /// may only be called on an empty folder, where a folder is empty if it
+  /// doesn't contain any folders or projects in the
+  /// [ACTIVE][google.cloud.resourcemanager.v3.Folder.State.ACTIVE] state. If
+  /// called on a folder in
+  /// [DELETE_REQUESTED][google.cloud.resourcemanager.v3.Folder.State.DELETE_REQUESTED]
   /// state the operation will result in a no-op success.
   /// The caller must have `resourcemanager.folders.delete` permission on the
   /// identified folder.
@@ -435,77 +496,99 @@ class FoldersClient {
   /// @param name  Required. The resource name of the folder to be deleted.
   ///  Must be of the form `folders/{folder_id}`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.DeleteFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L503}
-  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.DeleteFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L503}
+  /// [google.cloud.resourcemanager.v3.Folder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  DeleteFolder(std::string const& name, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
+      std::string const& name, Options options = {});
 
   ///
   /// Requests deletion of a folder. The folder is moved into the
-  /// [DELETE_REQUESTED][google.cloud.resourcemanager.v3.Folder.State.DELETE_REQUESTED] state
-  /// immediately, and is deleted approximately 30 days later. This method may
-  /// only be called on an empty folder, where a folder is empty if it doesn't
-  /// contain any folders or projects in the [ACTIVE][google.cloud.resourcemanager.v3.Folder.State.ACTIVE] state.
-  /// If called on a folder in [DELETE_REQUESTED][google.cloud.resourcemanager.v3.Folder.State.DELETE_REQUESTED]
+  /// [DELETE_REQUESTED][google.cloud.resourcemanager.v3.Folder.State.DELETE_REQUESTED]
+  /// state immediately, and is deleted approximately 30 days later. This method
+  /// may only be called on an empty folder, where a folder is empty if it
+  /// doesn't contain any folders or projects in the
+  /// [ACTIVE][google.cloud.resourcemanager.v3.Folder.State.ACTIVE] state. If
+  /// called on a folder in
+  /// [DELETE_REQUESTED][google.cloud.resourcemanager.v3.Folder.State.DELETE_REQUESTED]
   /// state the operation will result in a no-op success.
   /// The caller must have `resourcemanager.folders.delete` permission on the
   /// identified folder.
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::DeleteFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L503}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::DeleteFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L503}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.DeleteFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L503}
-  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.DeleteFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L503}
+  /// [google.cloud.resourcemanager.v3.Folder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  DeleteFolder(google::cloud::resourcemanager::v3::DeleteFolderRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
+      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request,
+      Options options = {});
 
   ///
   /// Cancels the deletion request for a folder. This method may be called on a
-  /// folder in any state. If the folder is in the [ACTIVE][google.cloud.resourcemanager.v3.Folder.State.ACTIVE]
-  /// state the result will be a no-op success. In order to succeed, the folder's
-  /// parent must be in the [ACTIVE][google.cloud.resourcemanager.v3.Folder.State.ACTIVE] state. In addition,
-  /// reintroducing the folder into the tree must not violate folder naming,
-  /// height, and fanout constraints described in the
-  /// [CreateFolder][google.cloud.resourcemanager.v3.Folders.CreateFolder] documentation.
-  /// The caller must have `resourcemanager.folders.undelete` permission on the
-  /// identified folder.
+  /// folder in any state. If the folder is in the
+  /// [ACTIVE][google.cloud.resourcemanager.v3.Folder.State.ACTIVE] state the
+  /// result will be a no-op success. In order to succeed, the folder's parent
+  /// must be in the
+  /// [ACTIVE][google.cloud.resourcemanager.v3.Folder.State.ACTIVE] state. In
+  /// addition, reintroducing the folder into the tree must not violate folder
+  /// naming, height, and fanout constraints described in the
+  /// [CreateFolder][google.cloud.resourcemanager.v3.Folders.CreateFolder]
+  /// documentation. The caller must have `resourcemanager.folders.undelete`
+  /// permission on the identified folder.
   ///
   /// @param name  Required. The resource name of the folder to undelete.
   ///  Must be of the form `folders/{folder_id}`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.UndeleteFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L521}
-  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.UndeleteFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L521}
+  /// [google.cloud.resourcemanager.v3.Folder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  UndeleteFolder(std::string const& name, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
+      std::string const& name, Options options = {});
 
   ///
   /// Cancels the deletion request for a folder. This method may be called on a
-  /// folder in any state. If the folder is in the [ACTIVE][google.cloud.resourcemanager.v3.Folder.State.ACTIVE]
-  /// state the result will be a no-op success. In order to succeed, the folder's
-  /// parent must be in the [ACTIVE][google.cloud.resourcemanager.v3.Folder.State.ACTIVE] state. In addition,
-  /// reintroducing the folder into the tree must not violate folder naming,
-  /// height, and fanout constraints described in the
-  /// [CreateFolder][google.cloud.resourcemanager.v3.Folders.CreateFolder] documentation.
-  /// The caller must have `resourcemanager.folders.undelete` permission on the
-  /// identified folder.
+  /// folder in any state. If the folder is in the
+  /// [ACTIVE][google.cloud.resourcemanager.v3.Folder.State.ACTIVE] state the
+  /// result will be a no-op success. In order to succeed, the folder's parent
+  /// must be in the
+  /// [ACTIVE][google.cloud.resourcemanager.v3.Folder.State.ACTIVE] state. In
+  /// addition, reintroducing the folder into the tree must not violate folder
+  /// naming, height, and fanout constraints described in the
+  /// [CreateFolder][google.cloud.resourcemanager.v3.Folders.CreateFolder]
+  /// documentation. The caller must have `resourcemanager.folders.undelete`
+  /// permission on the identified folder.
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::UndeleteFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L521}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::UndeleteFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L521}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.UndeleteFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L521}
-  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.UndeleteFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L521}
+  /// [google.cloud.resourcemanager.v3.Folder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  UndeleteFolder(google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
+      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request,
+      Options options = {});
 
   ///
   /// Gets the access control policy for a folder. The returned policy may be
@@ -514,16 +597,20 @@ class FoldersClient {
   /// The caller must have `resourcemanager.folders.getIamPolicy` permission
   /// on the identified folder.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being requested.
+  /// @param resource  REQUIRED: The resource for which the policy is being
+  /// requested.
   ///  See the operation documentation for the appropriate value for this field.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// [google.iam.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(std::string const& resource, Options options = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options options = {});
 
   ///
   /// Gets the access control policy for a folder. The returned policy may be
@@ -532,15 +619,20 @@ class FoldersClient {
   /// The caller must have `resourcemanager.folders.getIamPolicy` permission
   /// on the identified folder.
   ///
-  /// @param request @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// @param request
+  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// [google.iam.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options options = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Sets the access control policy on a folder, replacing any existing policy.
@@ -549,20 +641,26 @@ class FoldersClient {
   /// The caller must have `resourcemanager.folders.setIamPolicy` permission
   /// on the identified folder.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being specified.
+  /// @param resource  REQUIRED: The resource for which the policy is being
+  /// specified.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param policy  REQUIRED: The complete policy to be applied to the `resource`. The size of
+  /// @param policy  REQUIRED: The complete policy to be applied to the
+  /// `resource`. The size of
   ///  the policy is limited to a few 10s of KB. An empty policy is a
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options options = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options options = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -585,8 +683,9 @@ class FoldersClient {
    *       - `FoldersBackoffPolicyOption`
    * @return google::iam::v1::Policy
    */
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options options = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
+                                                 IamUpdater const& updater,
+                                                 Options options = {});
 
   ///
   /// Sets the access control policy on a folder, replacing any existing policy.
@@ -595,15 +694,20 @@ class FoldersClient {
   /// The caller must have `resourcemanager.folders.setIamPolicy` permission
   /// on the identified folder.
   ///
-  /// @param request @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// @param request
+  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options options = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Returns permissions that a caller has on the specified folder.
@@ -612,20 +716,26 @@ class FoldersClient {
   ///
   /// There are no permissions required for making this API call.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy detail is being requested.
+  /// @param resource  REQUIRED: The resource for which the policy detail is
+  /// being requested.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param permissions  The set of permissions to check for the `resource`. Permissions with
+  /// @param permissions  The set of permissions to check for the `resource`.
+  /// Permissions with
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  /// @return
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
-  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  /// [google.iam.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
   ///
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options options = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      std::string const& resource, std::vector<std::string> const& permissions,
+      Options options = {});
 
   ///
   /// Returns permissions that a caller has on the specified folder.
@@ -634,15 +744,20 @@ class FoldersClient {
   ///
   /// There are no permissions required for making this API call.
   ///
-  /// @param request @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// @param request
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  /// @return
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
-  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  /// [google.iam.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
   ///
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options options = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options options = {});
 
  private:
   std::shared_ptr<FoldersConnection> connection_;

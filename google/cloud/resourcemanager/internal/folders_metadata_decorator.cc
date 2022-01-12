@@ -27,13 +27,12 @@ namespace cloud {
 namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-FoldersMetadata::FoldersMetadata(
-    std::shared_ptr<FoldersStub> child)
+FoldersMetadata::FoldersMetadata(std::shared_ptr<FoldersStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
-StatusOr<google::cloud::resourcemanager::v3::Folder>
-FoldersMetadata::GetFolder(
+StatusOr<google::cloud::resourcemanager::v3::Folder> FoldersMetadata::GetFolder(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::GetFolderRequest const& request) {
   SetMetadata(context, "name=" + request.name());
@@ -101,16 +100,14 @@ FoldersMetadata::AsyncUndeleteFolder(
   return child_->AsyncUndeleteFolder(cq, std::move(context), request);
 }
 
-StatusOr<google::iam::v1::Policy>
-FoldersMetadata::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> FoldersMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   SetMetadata(context, "resource=" + request.resource());
   return child_->GetIamPolicy(context, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-FoldersMetadata::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> FoldersMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   SetMetadata(context, "resource=" + request.resource());
@@ -143,7 +140,7 @@ future<Status> FoldersMetadata::AsyncCancelOperation(
 }
 
 void FoldersMetadata::SetMetadata(grpc::ClientContext& context,
-                                        std::string const& request_params) {
+                                  std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   context.AddMetadata("x-goog-api-client", api_client_header_);
 }

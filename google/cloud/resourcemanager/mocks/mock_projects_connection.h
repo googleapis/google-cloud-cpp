@@ -29,50 +29,63 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockProjectsConnection : public resourcemanager::ProjectsConnection {
  public:
-  MOCK_METHOD(StatusOr<google::cloud::resourcemanager::v3::Project>,
-  GetProject,
-  (google::cloud::resourcemanager::v3::GetProjectRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::resourcemanager::v3::Project>, GetProject,
+      (google::cloud::resourcemanager::v3::GetProjectRequest const& request),
+      (override));
 
   MOCK_METHOD(StreamRange<google::cloud::resourcemanager::v3::Project>,
-  ListProjects,
-  (google::cloud::resourcemanager::v3::ListProjectsRequest request), (override));
+              ListProjects,
+              (google::cloud::resourcemanager::v3::ListProjectsRequest request),
+              (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::resourcemanager::v3::Project>,
-  SearchProjects,
-  (google::cloud::resourcemanager::v3::SearchProjectsRequest request), (override));
+  MOCK_METHOD(
+      StreamRange<google::cloud::resourcemanager::v3::Project>, SearchProjects,
+      (google::cloud::resourcemanager::v3::SearchProjectsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
+      CreateProject,
+      (google::cloud::resourcemanager::v3::CreateProjectRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
+      UpdateProject,
+      (google::cloud::resourcemanager::v3::UpdateProjectRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
+      MoveProject,
+      (google::cloud::resourcemanager::v3::MoveProjectRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
+      DeleteProject,
+      (google::cloud::resourcemanager::v3::DeleteProjectRequest const& request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
-  CreateProject,
-  (google::cloud::resourcemanager::v3::CreateProjectRequest const& request), (override));
+              UndeleteProject,
+              (google::cloud::resourcemanager::v3::UndeleteProjectRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
-  UpdateProject,
-  (google::cloud::resourcemanager::v3::UpdateProjectRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
-  MoveProject,
-  (google::cloud::resourcemanager::v3::MoveProjectRequest const& request), (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
-  DeleteProject,
-  (google::cloud::resourcemanager::v3::DeleteProjectRequest const& request), (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
-  UndeleteProject,
-  (google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
-
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

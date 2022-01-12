@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_PROJECTS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_PROJECTS_CLIENT_H
 
+#include "google/cloud/resourcemanager/projects_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/resourcemanager/projects_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ProjectsClient {
  public:
-  explicit ProjectsClient(std::shared_ptr<ProjectsConnection> connection, Options options = {});
+  explicit ProjectsClient(std::shared_ptr<ProjectsConnection> connection,
+                          Options options = {});
   ~ProjectsClient();
 
   //@{
@@ -90,15 +91,19 @@ class ProjectsClient {
   /// The caller must have `resourcemanager.projects.get` permission
   /// for this project.
   ///
-  /// @param name  Required. The name of the project (for example, `projects/415104041262`).
+  /// @param name  Required. The name of the project (for example,
+  /// `projects/415104041262`).
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.GetProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L373}
-  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.GetProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L373}
+  /// [google.cloud.resourcemanager.v3.Project]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  StatusOr<google::cloud::resourcemanager::v3::Project>
-  GetProject(std::string const& name, Options options = {});
+  StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
+      std::string const& name, Options options = {});
 
   ///
   /// Retrieves the project identified by the specified `name` (for example,
@@ -107,15 +112,20 @@ class ProjectsClient {
   /// The caller must have `resourcemanager.projects.get` permission
   /// for this project.
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::GetProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L373}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::GetProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L373}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.GetProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L373}
-  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.GetProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L373}
+  /// [google.cloud.resourcemanager.v3.Project]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  StatusOr<google::cloud::resourcemanager::v3::Project>
-  GetProject(google::cloud::resourcemanager::v3::GetProjectRequest const& request, Options options = {});
+  StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
+      google::cloud::resourcemanager::v3::GetProjectRequest const& request,
+      Options options = {});
 
   ///
   /// Lists projects that are direct children of the specified folder or
@@ -125,17 +135,21 @@ class ProjectsClient {
   /// `display_name`. The caller must have `resourcemanager.projects.list`
   /// permission on the identified parent.
   ///
-  /// @param parent  Required. The name of the parent resource to list projects under.
+  /// @param parent  Required. The name of the parent resource to list projects
+  /// under.
   ///  For example, setting this field to 'folders/1234' would list all projects
   ///  directly under that folder.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.ListProjectsRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L386}
-  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.ListProjectsRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L386}
+  /// [google.cloud.resourcemanager.v3.Project]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  StreamRange<google::cloud::resourcemanager::v3::Project>
-  ListProjects(std::string const& parent, Options options = {});
+  StreamRange<google::cloud::resourcemanager::v3::Project> ListProjects(
+      std::string const& parent, Options options = {});
 
   ///
   /// Lists projects that are direct children of the specified folder or
@@ -145,19 +159,25 @@ class ProjectsClient {
   /// `display_name`. The caller must have `resourcemanager.projects.list`
   /// permission on the identified parent.
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::ListProjectsRequest,google/cloud/resourcemanager/v3/projects.proto#L386}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::ListProjectsRequest,google/cloud/resourcemanager/v3/projects.proto#L386}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.ListProjectsRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L386}
-  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.ListProjectsRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L386}
+  /// [google.cloud.resourcemanager.v3.Project]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  StreamRange<google::cloud::resourcemanager::v3::Project>
-  ListProjects(google::cloud::resourcemanager::v3::ListProjectsRequest request, Options options = {});
+  StreamRange<google::cloud::resourcemanager::v3::Project> ListProjects(
+      google::cloud::resourcemanager::v3::ListProjectsRequest request,
+      Options options = {});
 
   ///
-  /// Search for projects that the caller has both `resourcemanager.projects.get`
-  /// permission on, and also satisfy the specified query.
+  /// Search for projects that the caller has both
+  /// `resourcemanager.projects.get` permission on, and also satisfy the
+  /// specified query.
   ///
   /// This method returns projects in an unspecified order.
   ///
@@ -167,52 +187,56 @@ class ProjectsClient {
   /// retrieve the latest state of a project, use the
   /// [GetProject][google.cloud.resourcemanager.v3.Projects.GetProject] method.
   ///
-  /// @param query  Optional. A query string for searching for projects that the caller has
+  /// @param query  Optional. A query string for searching for projects that the
+  /// caller has
   ///  `resourcemanager.projects.get` permission to. If multiple fields are
   ///  included in the query, the it will return results that match any of the
   ///  fields. Some eligible fields are:
   ///  ```
-  ///  | Field                   | Description                                  |
+  ///  | Field                   | Description |
   ///  |-------------------------|----------------------------------------------|
-  ///  | displayName, name       | Filters by displayName.                      |
-  ///  | parent                  | Project's parent. (for example: folders/123,
-  ///  organizations/*) Prefer parent field over parent.type and parent.id. |
-  ///  | parent.type             | Parent's type: `folder` or `organization`.   |
-  ///  | parent.id               | Parent's id number (for example: 123)        |
-  ///  | id, projectId           | Filters by projectId.                        |
-  ///  | state, lifecycleState   | Filters by state.                            |
-  ///  | labels                  | Filters by label name or value.              |
-  ///  | labels.<key> (where *key* is the name of a label) | Filters by label
-  ///  name. |
+  ///  | displayName, name       | Filters by displayName. | | parent |
+  ///  Project's parent. (for example: folders/123, organizations/*) Prefer
+  ///  parent field over parent.type and parent.id. | | parent.type | Parent's
+  ///  type: `folder` or `organization`.   | | parent.id               |
+  ///  Parent's id number (for example: 123)        | | id, projectId | Filters
+  ///  by projectId.                        | | state, lifecycleState   |
+  ///  Filters by state.                            | | labels | Filters by
+  ///  label name or value.              | | labels.<key> (where *key* is the
+  ///  name of a label) | Filters by label name. |
   ///  ```
   ///  Search expressions are case insensitive.
   ///  Some examples queries:
   ///  ```
-  ///  | Query            | Description                                         |
+  ///  | Query            | Description |
   ///  |------------------|-----------------------------------------------------|
-  ///  | name:how*        | The project's name starts with "how".               |
-  ///  | name:Howl        | The project's name is `Howl` or `howl`.             |
-  ///  | name:HOWL        | Equivalent to above.                                |
-  ///  | NAME:howl        | Equivalent to above.                                |
-  ///  | labels.color:*   | The project has the label `color`.                  |
-  ///  | labels.color:red | The project's label `color` has the value `red`.    |
-  ///  | labels.color:red&nbsp;labels.size:big | The project's label `color` has
-  ///  the value `red` and its label `size` has the value `big`.                |
+  ///  | name:how*        | The project's name starts with "how". | | name:Howl
+  ///  | The project's name is `Howl` or `howl`.             | | name:HOWL |
+  ///  Equivalent to above.                                | | NAME:howl |
+  ///  Equivalent to above.                                | | labels.color:* |
+  ///  The project has the label `color`.                  | | labels.color:red
+  ///  | The project's label `color` has the value `red`.    | |
+  ///  labels.color:red&nbsp;labels.size:big | The project's label `color` has
+  ///  the value `red` and its label `size` has the value `big`. |
   ///  ```
-  ///  If no query is specified, the call will return projects for which the user
-  ///  has the `resourcemanager.projects.get` permission.
+  ///  If no query is specified, the call will return projects for which the
+  ///  user has the `resourcemanager.projects.get` permission.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L444}
-  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L444}
+  /// [google.cloud.resourcemanager.v3.Project]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  StreamRange<google::cloud::resourcemanager::v3::Project>
-  SearchProjects(std::string const& query, Options options = {});
+  StreamRange<google::cloud::resourcemanager::v3::Project> SearchProjects(
+      std::string const& query, Options options = {});
 
   ///
-  /// Search for projects that the caller has both `resourcemanager.projects.get`
-  /// permission on, and also satisfy the specified query.
+  /// Search for projects that the caller has both
+  /// `resourcemanager.projects.get` permission on, and also satisfy the
+  /// specified query.
   ///
   /// This method returns projects in an unspecified order.
   ///
@@ -222,21 +246,26 @@ class ProjectsClient {
   /// retrieve the latest state of a project, use the
   /// [GetProject][google.cloud.resourcemanager.v3.Projects.GetProject] method.
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::SearchProjectsRequest,google/cloud/resourcemanager/v3/projects.proto#L444}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::SearchProjectsRequest,google/cloud/resourcemanager/v3/projects.proto#L444}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L444}
-  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L444}
+  /// [google.cloud.resourcemanager.v3.Project]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  StreamRange<google::cloud::resourcemanager::v3::Project>
-  SearchProjects(google::cloud::resourcemanager::v3::SearchProjectsRequest request, Options options = {});
+  StreamRange<google::cloud::resourcemanager::v3::Project> SearchProjects(
+      google::cloud::resourcemanager::v3::SearchProjectsRequest request,
+      Options options = {});
 
   ///
   /// Request that a new project be created. The result is an `Operation` which
-  /// can be used to track the creation process. This process usually takes a few
-  /// seconds, but can sometimes take much longer. The tracking `Operation` is
-  /// automatically deleted after a few hours, so there is no need to call
+  /// can be used to track the creation process. This process usually takes a
+  /// few seconds, but can sometimes take much longer. The tracking `Operation`
+  /// is automatically deleted after a few hours, so there is no need to call
   /// `DeleteOperation`.
   ///
   /// @param project  Required. The Project to create.
@@ -247,30 +276,39 @@ class ProjectsClient {
   ///  the authorization credentials belong to an Organziation, the parent
   ///  will be set to that Organization.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.CreateProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L526}
-  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.CreateProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L526}
+  /// [google.cloud.resourcemanager.v3.Project]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  CreateProject(google::cloud::resourcemanager::v3::Project const& project, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> CreateProject(
+      google::cloud::resourcemanager::v3::Project const& project,
+      Options options = {});
 
   ///
   /// Request that a new project be created. The result is an `Operation` which
-  /// can be used to track the creation process. This process usually takes a few
-  /// seconds, but can sometimes take much longer. The tracking `Operation` is
-  /// automatically deleted after a few hours, so there is no need to call
+  /// can be used to track the creation process. This process usually takes a
+  /// few seconds, but can sometimes take much longer. The tracking `Operation`
+  /// is automatically deleted after a few hours, so there is no need to call
   /// `DeleteOperation`.
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::CreateProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L526}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::CreateProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L526}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.CreateProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L526}
-  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.CreateProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L526}
+  /// [google.cloud.resourcemanager.v3.Project]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  CreateProject(google::cloud::resourcemanager::v3::CreateProjectRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> CreateProject(
+      google::cloud::resourcemanager::v3::CreateProjectRequest const& request,
+      Options options = {});
 
   ///
   /// Updates the `display_name` and labels of the project identified by the
@@ -283,13 +321,17 @@ class ProjectsClient {
   /// @param project  Required. The new definition of the project.
   /// @param update_mask  Optional. An update mask to selectively update fields.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L562}
-  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L562}
+  /// [google.cloud.resourcemanager.v3.Project]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UpdateProject(google::cloud::resourcemanager::v3::Project const& project, google::protobuf::FieldMask const& update_mask, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
+      google::cloud::resourcemanager::v3::Project const& project,
+      google::protobuf::FieldMask const& update_mask, Options options = {});
 
   ///
   /// Updates the `display_name` and labels of the project identified by the
@@ -299,15 +341,20 @@ class ProjectsClient {
   /// The caller must have `resourcemanager.projects.update` permission for this
   /// project.
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::UpdateProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L562}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::UpdateProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L562}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L562}
-  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L562}
+  /// [google.cloud.resourcemanager.v3.Project]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UpdateProject(google::cloud::resourcemanager::v3::UpdateProjectRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
+      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request,
+      Options options = {});
 
   ///
   /// Move a project to another place in your resource hierarchy, under a new
@@ -325,15 +372,20 @@ class ProjectsClient {
   ///
   ///
   /// @param name  Required. The name of the project to move.
-  /// @param destination_parent  Required. The new parent to move the Project under.
+  /// @param destination_parent  Required. The new parent to move the Project
+  /// under.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.MoveProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L579}
-  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.MoveProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L579}
+  /// [google.cloud.resourcemanager.v3.Project]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  MoveProject(std::string const& name, std::string const& destination_parent, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
+      std::string const& name, std::string const& destination_parent,
+      Options options = {});
 
   ///
   /// Move a project to another place in your resource hierarchy, under a new
@@ -350,15 +402,20 @@ class ProjectsClient {
   ///
   ///
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::MoveProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L579}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::MoveProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L579}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.MoveProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L579}
-  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.MoveProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L579}
+  /// [google.cloud.resourcemanager.v3.Project]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  MoveProject(google::cloud::resourcemanager::v3::MoveProjectRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
+      google::cloud::resourcemanager::v3::MoveProjectRequest const& request,
+      Options options = {});
 
   ///
   /// Marks the project identified by the specified
@@ -369,7 +426,8 @@ class ProjectsClient {
   ///
   /// This method changes the Project's lifecycle state from
   /// [ACTIVE][google.cloud.resourcemanager.v3.Project.State.ACTIVE]
-  /// to [DELETE_REQUESTED][google.cloud.resourcemanager.v3.Project.State.DELETE_REQUESTED].
+  /// to
+  /// [DELETE_REQUESTED][google.cloud.resourcemanager.v3.Project.State.DELETE_REQUESTED].
   /// The deletion starts at an unspecified time,
   /// at which point the Project is no longer accessible.
   ///
@@ -391,18 +449,22 @@ class ProjectsClient {
   /// This method behaves idempotently, such that deleting a `DELETE_REQUESTED`
   /// project will not cause an error, but also won't do anything.
   ///
-  /// The caller must have `resourcemanager.projects.delete` permissions for this
-  /// project.
+  /// The caller must have `resourcemanager.projects.delete` permissions for
+  /// this project.
   ///
-  /// @param name  Required. The name of the Project (for example, `projects/415104041262`).
+  /// @param name  Required. The name of the Project (for example,
+  /// `projects/415104041262`).
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.DeleteProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L605}
-  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.DeleteProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L605}
+  /// [google.cloud.resourcemanager.v3.Project]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  DeleteProject(std::string const& name, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
+      std::string const& name, Options options = {});
 
   ///
   /// Marks the project identified by the specified
@@ -413,7 +475,8 @@ class ProjectsClient {
   ///
   /// This method changes the Project's lifecycle state from
   /// [ACTIVE][google.cloud.resourcemanager.v3.Project.State.ACTIVE]
-  /// to [DELETE_REQUESTED][google.cloud.resourcemanager.v3.Project.State.DELETE_REQUESTED].
+  /// to
+  /// [DELETE_REQUESTED][google.cloud.resourcemanager.v3.Project.State.DELETE_REQUESTED].
   /// The deletion starts at an unspecified time,
   /// at which point the Project is no longer accessible.
   ///
@@ -435,18 +498,23 @@ class ProjectsClient {
   /// This method behaves idempotently, such that deleting a `DELETE_REQUESTED`
   /// project will not cause an error, but also won't do anything.
   ///
-  /// The caller must have `resourcemanager.projects.delete` permissions for this
-  /// project.
+  /// The caller must have `resourcemanager.projects.delete` permissions for
+  /// this project.
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::DeleteProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L605}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::DeleteProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L605}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.DeleteProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L605}
-  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.DeleteProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L605}
+  /// [google.cloud.resourcemanager.v3.Project]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  DeleteProject(google::cloud::resourcemanager::v3::DeleteProjectRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
+      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request,
+      Options options = {});
 
   ///
   /// Restores the project identified by the specified
@@ -459,16 +527,20 @@ class ProjectsClient {
   /// The caller must have `resourcemanager.projects.undelete` permission for
   /// this project.
   ///
-  /// @param name  Required. The name of the project (for example, `projects/415104041262`).
+  /// @param name  Required. The name of the project (for example,
+  /// `projects/415104041262`).
   ///  Required.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
-  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
+  /// [google.cloud.resourcemanager.v3.Project]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UndeleteProject(std::string const& name, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
+      std::string const& name, Options options = {});
 
   ///
   /// Restores the project identified by the specified
@@ -481,44 +553,58 @@ class ProjectsClient {
   /// The caller must have `resourcemanager.projects.undelete` permission for
   /// this project.
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::UndeleteProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L624}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::UndeleteProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L624}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
-  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
+  /// [google.cloud.resourcemanager.v3.Project]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UndeleteProject(google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
+      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request,
+      Options options = {});
 
   ///
   /// Returns the IAM access control policy for the specified project.
   /// Permission is denied if the policy or the resource do not exist.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being requested.
+  /// @param resource  REQUIRED: The resource for which the policy is being
+  /// requested.
   ///  See the operation documentation for the appropriate value for this field.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// [google.iam.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(std::string const& resource, Options options = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options options = {});
 
   ///
   /// Returns the IAM access control policy for the specified project.
   /// Permission is denied if the policy or the resource do not exist.
   ///
-  /// @param request @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// @param request
+  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// [google.iam.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options options = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Sets the IAM access control policy for the specified project.
@@ -566,20 +652,26 @@ class ProjectsClient {
   ///
   /// + Calling this method requires enabling the App Engine Admin API.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being specified.
+  /// @param resource  REQUIRED: The resource for which the policy is being
+  /// specified.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param policy  REQUIRED: The complete policy to be applied to the `resource`. The size of
+  /// @param policy  REQUIRED: The complete policy to be applied to the
+  /// `resource`. The size of
   ///  the policy is limited to a few 10s of KB. An empty policy is a
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options options = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options options = {});
 
   ///
   /// Sets the IAM access control policy for the specified project.
@@ -627,46 +719,62 @@ class ProjectsClient {
   ///
   /// + Calling this method requires enabling the App Engine Admin API.
   ///
-  /// @param request @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// @param request
+  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options options = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Returns permissions that a caller has on the specified project.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy detail is being requested.
+  /// @param resource  REQUIRED: The resource for which the policy detail is
+  /// being requested.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param permissions  The set of permissions to check for the `resource`. Permissions with
+  /// @param permissions  The set of permissions to check for the `resource`.
+  /// Permissions with
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  /// @return
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
-  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  /// [google.iam.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
   ///
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options options = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      std::string const& resource, std::vector<std::string> const& permissions,
+      Options options = {});
 
   ///
   /// Returns permissions that a caller has on the specified project.
   ///
-  /// @param request @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// @param request
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  /// @return
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
-  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  /// [google.iam.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
   ///
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options options = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options options = {});
 
  private:
   std::shared_ptr<ProjectsConnection> connection_;
