@@ -6,6 +6,7 @@ bigquery
 billing
 datamigration
 iam
+ids
 kms
 logging
 pubsublite
