@@ -39,6 +39,10 @@
 ./include/google/cloud/datamigration
 ./include/google/cloud/datamigration/internal
 ./include/google/cloud/datamigration/mocks
+./include/google/cloud/eventarc
+./include/google/cloud/eventarc/internal
+./include/google/cloud/eventarc/mocks
+./include/google/cloud/eventarc/v1
 ./include/google/cloud/iam
 ./include/google/cloud/iam/internal
 ./include/google/cloud/iam/mocks
@@ -111,6 +115,7 @@
 ./lib64/cmake/google_cloud_cpp_bigquery
 ./lib64/cmake/google_cloud_cpp_billing
 ./lib64/cmake/google_cloud_cpp_datamigration
+./lib64/cmake/google_cloud_cpp_eventarc
 ./lib64/cmake/google_cloud_cpp_iam
 ./lib64/cmake/google_cloud_cpp_kms
 ./lib64/cmake/google_cloud_cpp_logging
