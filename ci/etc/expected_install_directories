@@ -64,6 +64,10 @@
 ./include/google/cloud/spanner
 ./include/google/cloud/spanner/admin
 ./include/google/cloud/spanner/admin/internal
+./include/google/cloud/talent
+./include/google/cloud/talent/internal
+./include/google/cloud/talent/mocks
+./include/google/cloud/talent/v4
 ./include/google/cloud/tasks
 ./include/google/cloud/tasks/internal
 ./include/google/cloud/tasks/mocks
@@ -117,6 +121,7 @@
 ./lib64/cmake/google_cloud_cpp_pubsublite
 ./lib64/cmake/google_cloud_cpp_scheduler
 ./lib64/cmake/google_cloud_cpp_secretmanager
+./lib64/cmake/google_cloud_cpp_talent
 ./lib64/cmake/google_cloud_cpp_tasks
 ./lib64/cmake/google_cloud_cpp_vpcaccess
 ./lib64/cmake/google_cloud_cpp_webrisk
