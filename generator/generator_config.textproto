@@ -229,8 +229,6 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
-=======
->>>>>>> 5d55c2d74 (feat(storagetransfer): generate library)
 # Tasks
 service {
   service_proto_path: "google/cloud/tasks/v2/cloudtasks.proto"
