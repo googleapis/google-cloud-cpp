@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Database Migration API][cloud-service-docs], a service to Manage Cloud Database Migration Service resources on Google Cloud Platform.
+[Database Migration API][cloud-service-docs], a service to simplify migrations
+to Cloud SQL.
 
 This library is **experimental**. Its APIS are subject to change without notice.
 
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/datamigration
+[cloud-service-docs]: https://cloud.google.com/database-migration
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-datamigration/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/datamigration
 
@@ -38,23 +39,23 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/datamigration/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/datamigration/data_migration_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace datamigration = ::google::cloud::datamigration;
-  auto client = datamigration::Client(
-      datamigration::MakeConnection(/* EDIT HERE */));
+  auto client = datamigration::DataMigrationServiceClient(
+      datamigration::MakeDataMigrationServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName()) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListMigrationJobs(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
