@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storagetransfer/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/storagetransfer/storage_transfer_client.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -24,11 +23,12 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace storagetransfer = ::google::cloud::storagetransfer;
-  auto client =
-      storagetransfer::Client(storagetransfer::MakeConnection(/* EDIT HERE */));
+  auto client = storagetransfer::StorageTransferServiceClient(
+      storagetransfer::MakeStorageTransferServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName()) {
+  ::google::storagetransfer::v1::ListTransferJobsRequest request;
+  request.set_filter("{\"projectId\": \"" + std::string{argv[1]} + "\"}");
+  for (auto r : client.ListTransferJobs(request)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

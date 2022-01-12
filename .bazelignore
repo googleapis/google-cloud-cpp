@@ -21,6 +21,7 @@ google/cloud/scheduler/quickstart/
 google/cloud/secretmanager/quickstart/
 google/cloud/spanner/quickstart/
 google/cloud/storage/quickstart/
+google/cloud/storagetransfer/quickstart/
 google/cloud/talent/quickstart/
 google/cloud/tasks/quickstart/
 google/cloud/vmmigration/quickstart/

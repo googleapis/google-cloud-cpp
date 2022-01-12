@@ -2,8 +2,9 @@
 
 @mainpage Storage Transfer API C++ Client Library
 
-An idiomatic C++ client library for the [Storage Transfer API][cloud-service-docs], a service
-to Transfers data from external data sources to a Google Cloud Storage bucket or between Google Cloud Storage buckets.
+An idiomatic C++ client library for the [Storage Transfer API][cloud-service-docs],
+a service to transfers data from external data sources to a Google Cloud Storage
+bucket or between Google Cloud Storage buckets.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +82,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/storagetransfer
+[cloud-service-docs]: https://cloud.google.com/storage-transfer
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

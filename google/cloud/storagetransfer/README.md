@@ -3,9 +3,11 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Storage Transfer API][cloud-service-docs], a service to Transfers data from external data sources to a Google Cloud Storage bucket or between Google Cloud Storage buckets.
+[Storage Transfer API][cloud-service-docs], a service to transfer data from
+external data sources to a Google Cloud Storage bucket or between Google Cloud
+Storage buckets.
 
-This library is **experimental**. Its APIS are subject to change without notice.
+This library is **experimental**. Its APIs are subject to change without notice.
 
 Please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -25,7 +27,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/storagetransfer
+[cloud-service-docs]: https://cloud.google.com/storage-transfer
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-storagetransfer/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/storagetransfer
 
@@ -38,8 +40,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/storagetransfer/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/storagetransfer/storage_transfer_client.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -50,11 +51,12 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace storagetransfer = ::google::cloud::storagetransfer;
-  auto client = storagetransfer::Client(
-      storagetransfer::MakeConnection(/* EDIT HERE */));
+  auto client = storagetransfer::StorageTransferServiceClient(
+      storagetransfer::MakeStorageTransferServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName()) {
+  ::google::storagetransfer::v1::ListTransferJobsRequest request;
+  request.set_filter("{\"projectId\": \"" + std::string{argv[1]} + "\"}");
+  for (auto r : client.ListTransferJobs(request)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
