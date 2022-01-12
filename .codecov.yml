@@ -29,6 +29,7 @@ ignore:
   - "google/cloud/spanner/admin"
   - "google/cloud/talent"
   - "google/cloud/tasks"
+  - "google/cloud/vmmigration"
   - "google/cloud/vpcaccess"
   - "google/cloud/webrisk"
   - "google/cloud/websecurityscanner"

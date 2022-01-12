@@ -23,6 +23,7 @@ google/cloud/spanner/quickstart/
 google/cloud/storage/quickstart/
 google/cloud/talent/quickstart/
 google/cloud/tasks/quickstart/
+google/cloud/vmmigration/quickstart/
 google/cloud/vpcaccess/quickstart/
 google/cloud/webrisk/quickstart/
 google/cloud/workflows/quickstart/

@@ -77,6 +77,7 @@ declare -A -r LIBRARIES=(
   ["talent"]="@com_google_googleapis//google/cloud/talent/v4:talent_proto"
   ["tasks"]="@com_google_googleapis//google/cloud/tasks/v2:tasks_proto"
   ["texttospeech"]="@com_google_googleapis//google/cloud/texttospeech/v1:texttospeech_proto"
+  ["vmmigration"]="@com_google_googleapis//google/cloud/vmmigration/v1:vmmigration_proto"
   ["vpcaccess"]="@com_google_googleapis//google/cloud/vpcaccess/v1:vpcaccess_proto"
   ["webrisk"]="@com_google_googleapis//google/cloud/webrisk/v1:webrisk_proto"
   ["websecurityscanner"]="@com_google_googleapis//google/cloud/websecurityscanner/v1:websecurityscanner_proto"
