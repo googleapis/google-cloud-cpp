@@ -79,22 +79,6 @@ time {
   typos
 }
 
-printf "%-30s" "Running markdown generators:" >&2
-time {
-  declare -A -r GENERATOR_MAP=(
-    ["ci/generate-markdown/generate-readme.sh"]="README.md"
-    ["ci/generate-markdown/generate-packaging.sh"]="doc/packaging.md"
-  )
-  for generator in "${!GENERATOR_MAP[@]}"; do
-    "${generator}" >"${GENERATOR_MAP[${generator}]}"
-  done
-
-  mapfile -t libraries < <(features::libraries)
-  for library in "${libraries[@]}"; do
-    ci/generate-markdown/update-library-readme.sh "${library}"
-  done
-}
-
 printf "%-30s" "Running check-include-guards:" >&2
 time {
   git ls-files -z | grep -zE '\.h$' |
@@ -190,6 +174,25 @@ printf "%-30s" "Running cmake-format:" >&2
 time {
   git ls-files -z | grep -zE '((^|/)CMakeLists\.txt|\.cmake)$' |
     xargs -P "$(nproc)" -n 1 -0 cmake-format -i
+}
+
+# The markdown generators run last. This is useful because as part of the
+# markdown generation we insert examples (such as quickstart programs) into
+# markdown files. It is nice if those examples are properly formatted.
+printf "%-30s" "Running markdown generators:" >&2
+time {
+  declare -A -r GENERATOR_MAP=(
+    ["ci/generate-markdown/generate-readme.sh"]="README.md"
+    ["ci/generate-markdown/generate-packaging.sh"]="doc/packaging.md"
+  )
+  for generator in "${!GENERATOR_MAP[@]}"; do
+    "${generator}" >"${GENERATOR_MAP[${generator}]}"
+  done
+
+  mapfile -t libraries < <(features::libraries)
+  for library in "${libraries[@]}"; do
+    ci/generate-markdown/update-library-readme.sh "${library}"
+  done
 }
 
 # Report the differences, which should break the build.
