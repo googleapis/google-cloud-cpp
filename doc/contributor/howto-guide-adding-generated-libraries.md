@@ -197,6 +197,7 @@ ci/cloudbuild/build.sh -t checkers-pr
 
 ```shell
 ci/cloudbuild/build.sh -t cmake-install-pr
+ci/cloudbuild/build.sh -t bazel-targets-pr
 ```
 
 It is somewhat common for the build to fail due to expected install directories.
