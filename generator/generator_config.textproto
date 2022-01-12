@@ -123,6 +123,14 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# IoT (Internet of Things)
+service {
+  service_proto_path: "google/cloud/iot/v1/device_manager.proto"
+  product_path: "google/cloud/iot"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # KMS
 service {
   service_proto_path: "google/cloud/kms/v1/service.proto"
