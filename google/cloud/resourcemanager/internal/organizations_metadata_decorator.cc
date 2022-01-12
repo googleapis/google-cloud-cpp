@@ -30,7 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 OrganizationsMetadata::OrganizationsMetadata(
     std::shared_ptr<OrganizationsStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::resourcemanager::v3::Organization>
 OrganizationsMetadata::GetOrganization(
@@ -43,21 +44,20 @@ OrganizationsMetadata::GetOrganization(
 StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse>
 OrganizationsMetadata::SearchOrganizations(
     grpc::ClientContext& context,
-    google::cloud::resourcemanager::v3::SearchOrganizationsRequest const& request) {
+    google::cloud::resourcemanager::v3::SearchOrganizationsRequest const&
+        request) {
   SetMetadata(context, {});
   return child_->SearchOrganizations(context, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-OrganizationsMetadata::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> OrganizationsMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   SetMetadata(context, "resource=" + request.resource());
   return child_->GetIamPolicy(context, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-OrganizationsMetadata::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> OrganizationsMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   SetMetadata(context, "resource=" + request.resource());

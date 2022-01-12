@@ -17,15 +17,15 @@
 // source: google/cloud/resourcemanager/v3/projects.proto
 
 #include "google/cloud/resourcemanager/internal/projects_stub_factory.h"
+#include "google/cloud/resourcemanager/internal/projects_auth_decorator.h"
+#include "google/cloud/resourcemanager/internal/projects_logging_decorator.h"
+#include "google/cloud/resourcemanager/internal/projects_metadata_decorator.h"
+#include "google/cloud/resourcemanager/internal/projects_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/resourcemanager/internal/projects_auth_decorator.h"
-#include "google/cloud/resourcemanager/internal/projects_logging_decorator.h"
-#include "google/cloud/resourcemanager/internal/projects_metadata_decorator.h"
-#include "google/cloud/resourcemanager/internal/projects_stub.h"
 #include <memory>
 
 namespace google {
@@ -33,30 +33,26 @@ namespace cloud {
 namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ProjectsStub>
-CreateDefaultProjectsStub(
+std::shared_ptr<ProjectsStub> CreateDefaultProjectsStub(
     google::cloud::CompletionQueue cq, Options const& options) {
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       std::move(cq), options);
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::resourcemanager::v3::Projects::NewStub(channel);
-  std::shared_ptr<ProjectsStub> stub =
-    std::make_shared<DefaultProjectsStub>(
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::resourcemanager::v3::Projects::NewStub(channel);
+  std::shared_ptr<ProjectsStub> stub = std::make_shared<DefaultProjectsStub>(
       std::move(service_grpc_stub),
       google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<ProjectsAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<ProjectsAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<ProjectsMetadata>(std::move(stub));
-  if (internal::Contains(
-      options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ProjectsLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
   }
   return stub;

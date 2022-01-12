@@ -38,43 +38,46 @@ class FoldersConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<FoldersConnectionIdempotencyPolicy> clone() const = 0;
 
-  virtual google::cloud::internal::Idempotency
-  GetFolder(google::cloud::resourcemanager::v3::GetFolderRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency GetFolder(
+      google::cloud::resourcemanager::v3::GetFolderRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  ListFolders(google::cloud::resourcemanager::v3::ListFoldersRequest request) = 0;
+  virtual google::cloud::internal::Idempotency ListFolders(
+      google::cloud::resourcemanager::v3::ListFoldersRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  SearchFolders(google::cloud::resourcemanager::v3::SearchFoldersRequest request) = 0;
+  virtual google::cloud::internal::Idempotency SearchFolders(
+      google::cloud::resourcemanager::v3::SearchFoldersRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  CreateFolder(google::cloud::resourcemanager::v3::CreateFolderRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency CreateFolder(
+      google::cloud::resourcemanager::v3::CreateFolderRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  UpdateFolder(google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency UpdateFolder(
+      google::cloud::resourcemanager::v3::UpdateFolderRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  MoveFolder(google::cloud::resourcemanager::v3::MoveFolderRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency MoveFolder(
+      google::cloud::resourcemanager::v3::MoveFolderRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  DeleteFolder(google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency DeleteFolder(
+      google::cloud::resourcemanager::v3::DeleteFolderRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  UndeleteFolder(google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency UndeleteFolder(
+      google::cloud::resourcemanager::v3::UndeleteFolderRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) = 0;
-
+  virtual google::cloud::internal::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 };
 
 std::unique_ptr<FoldersConnectionIdempotencyPolicy>
-    MakeDefaultFoldersConnectionIdempotencyPolicy();
+MakeDefaultFoldersConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager

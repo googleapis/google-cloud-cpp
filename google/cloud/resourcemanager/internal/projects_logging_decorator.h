@@ -36,67 +36,76 @@ class ProjectsLogging : public ProjectsStub {
  public:
   ~ProjectsLogging() override = default;
   ProjectsLogging(std::shared_ptr<ProjectsStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                  TracingOptions tracing_options,
+                  std::set<std::string> components);
 
   StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
-    grpc::ClientContext& context,
-    google::cloud::resourcemanager::v3::GetProjectRequest const& request) override;
+      grpc::ClientContext& context,
+      google::cloud::resourcemanager::v3::GetProjectRequest const& request)
+      override;
 
-  StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse> ListProjects(
-    grpc::ClientContext& context,
-    google::cloud::resourcemanager::v3::ListProjectsRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse>
+  ListProjects(grpc::ClientContext& context,
+               google::cloud::resourcemanager::v3::ListProjectsRequest const&
+                   request) override;
 
-  StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse> SearchProjects(
-    grpc::ClientContext& context,
-    google::cloud::resourcemanager::v3::SearchProjectsRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse>
+  SearchProjects(
+      grpc::ClientContext& context,
+      google::cloud::resourcemanager::v3::SearchProjectsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateProject(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::CreateProjectRequest const& request) override;
+      google::cloud::resourcemanager::v3::CreateProjectRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateProject(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) override;
+      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncMoveProject(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::MoveProjectRequest const& request) override;
+      google::cloud::resourcemanager::v3::MoveProjectRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteProject(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) override;
+      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteProject(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) override;
+      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request)
+      override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-    grpc::ClientContext& context,
-    google::iam::v1::GetIamPolicyRequest const& request) override;
+      grpc::ClientContext& context,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-    grpc::ClientContext& context,
-    google::iam::v1::SetIamPolicyRequest const& request) override;
+      grpc::ClientContext& context,
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-    grpc::ClientContext& context,
-    google::iam::v1::TestIamPermissionsRequest const& request) override;
+      grpc::ClientContext& context,
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::longrunning::GetOperationRequest const& request) override;
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::longrunning::CancelOperationRequest const& request) override;
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<ProjectsStub> child_;

@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_ORGANIZATIONS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_ORGANIZATIONS_CLIENT_H
 
+#include "google/cloud/resourcemanager/organizations_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/resourcemanager/organizations_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -60,7 +60,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class OrganizationsClient {
  public:
-  explicit OrganizationsClient(std::shared_ptr<OrganizationsConnection> connection, Options options = {});
+  explicit OrganizationsClient(
+      std::shared_ptr<OrganizationsConnection> connection,
+      Options options = {});
   ~OrganizationsClient();
 
   //@{
@@ -73,41 +75,54 @@ class OrganizationsClient {
 
   //@{
   // @name Equality
-  friend bool operator==(OrganizationsClient const& a, OrganizationsClient const& b) {
+  friend bool operator==(OrganizationsClient const& a,
+                         OrganizationsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(OrganizationsClient const& a, OrganizationsClient const& b) {
+  friend bool operator!=(OrganizationsClient const& a,
+                         OrganizationsClient const& b) {
     return !(a == b);
   }
   //@}
 
   ///
-  /// Fetches an organization resource identified by the specified resource name.
+  /// Fetches an organization resource identified by the specified resource
+  /// name.
   ///
-  /// @param name  Required. The resource name of the Organization to fetch. This is the organization's
+  /// @param name  Required. The resource name of the Organization to fetch.
+  /// This is the organization's
   ///  relative path in the API, formatted as "organizations/[organizationId]".
   ///  For example, "organizations/1234".
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
   ///
-  /// [google.cloud.resourcemanager.v3.GetOrganizationRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L170}
-  /// [google.cloud.resourcemanager.v3.Organization]: @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// [google.cloud.resourcemanager.v3.GetOrganizationRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L170}
+  /// [google.cloud.resourcemanager.v3.Organization]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
   ///
-  StatusOr<google::cloud::resourcemanager::v3::Organization>
-  GetOrganization(std::string const& name, Options options = {});
+  StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
+      std::string const& name, Options options = {});
 
   ///
-  /// Fetches an organization resource identified by the specified resource name.
+  /// Fetches an organization resource identified by the specified resource
+  /// name.
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::GetOrganizationRequest,google/cloud/resourcemanager/v3/organizations.proto#L170}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::GetOrganizationRequest,google/cloud/resourcemanager/v3/organizations.proto#L170}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
   ///
-  /// [google.cloud.resourcemanager.v3.GetOrganizationRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L170}
-  /// [google.cloud.resourcemanager.v3.Organization]: @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// [google.cloud.resourcemanager.v3.GetOrganizationRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L170}
+  /// [google.cloud.resourcemanager.v3.Organization]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
   ///
-  StatusOr<google::cloud::resourcemanager::v3::Organization>
-  GetOrganization(google::cloud::resourcemanager::v3::GetOrganizationRequest const& request, Options options = {});
+  StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
+      google::cloud::resourcemanager::v3::GetOrganizationRequest const& request,
+      Options options = {});
 
   ///
   /// Searches organization resources that are visible to the user and satisfy
@@ -118,7 +133,8 @@ class OrganizationsClient {
   /// Search will only return organizations on which the user has the permission
   /// `resourcemanager.organizations.get`
   ///
-  /// @param query  Optional. An optional query string used to filter the Organizations to return in
+  /// @param query  Optional. An optional query string used to filter the
+  /// Organizations to return in
   ///  the response. Query rules are case-insensitive.
   ///  ```
   ///  | Field            | Description                                |
@@ -134,10 +150,13 @@ class OrganizationsClient {
   ///  * Query `domain:google.com` returns Organization resources corresponding
   ///  to the domain `google.com`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
   ///
-  /// [google.cloud.resourcemanager.v3.SearchOrganizationsRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L183}
-  /// [google.cloud.resourcemanager.v3.Organization]: @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// [google.cloud.resourcemanager.v3.SearchOrganizationsRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L183}
+  /// [google.cloud.resourcemanager.v3.Organization]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Organization>
   SearchOrganizations(std::string const& query, Options options = {});
@@ -151,89 +170,119 @@ class OrganizationsClient {
   /// Search will only return organizations on which the user has the permission
   /// `resourcemanager.organizations.get`
   ///
-  /// @param request @googleapis_link{google::cloud::resourcemanager::v3::SearchOrganizationsRequest,google/cloud/resourcemanager/v3/organizations.proto#L183}
+  /// @param request
+  /// @googleapis_link{google::cloud::resourcemanager::v3::SearchOrganizationsRequest,google/cloud/resourcemanager/v3/organizations.proto#L183}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @return
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
   ///
-  /// [google.cloud.resourcemanager.v3.SearchOrganizationsRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L183}
-  /// [google.cloud.resourcemanager.v3.Organization]: @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// [google.cloud.resourcemanager.v3.SearchOrganizationsRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L183}
+  /// [google.cloud.resourcemanager.v3.Organization]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Organization>
-  SearchOrganizations(google::cloud::resourcemanager::v3::SearchOrganizationsRequest request, Options options = {});
+  SearchOrganizations(
+      google::cloud::resourcemanager::v3::SearchOrganizationsRequest request,
+      Options options = {});
 
   ///
-  /// Gets the access control policy for an organization resource. The policy may
-  /// be empty if no such policy or resource exists. The `resource` field should
-  /// be the organization's resource name, for example: "organizations/123".
+  /// Gets the access control policy for an organization resource. The policy
+  /// may be empty if no such policy or resource exists. The `resource` field
+  /// should be the organization's resource name, for example:
+  /// "organizations/123".
   ///
   /// Authorization requires the IAM permission
-  /// `resourcemanager.organizations.getIamPolicy` on the specified organization.
+  /// `resourcemanager.organizations.getIamPolicy` on the specified
+  /// organization.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being requested.
+  /// @param resource  REQUIRED: The resource for which the policy is being
+  /// requested.
   ///  See the operation documentation for the appropriate value for this field.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// [google.iam.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(std::string const& resource, Options options = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options options = {});
 
   ///
-  /// Gets the access control policy for an organization resource. The policy may
-  /// be empty if no such policy or resource exists. The `resource` field should
-  /// be the organization's resource name, for example: "organizations/123".
+  /// Gets the access control policy for an organization resource. The policy
+  /// may be empty if no such policy or resource exists. The `resource` field
+  /// should be the organization's resource name, for example:
+  /// "organizations/123".
   ///
   /// Authorization requires the IAM permission
-  /// `resourcemanager.organizations.getIamPolicy` on the specified organization.
+  /// `resourcemanager.organizations.getIamPolicy` on the specified
+  /// organization.
   ///
-  /// @param request @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// @param request
+  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// [google.iam.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options options = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Sets the access control policy on an organization resource. Replaces any
-  /// existing policy. The `resource` field should be the organization's resource
-  /// name, for example: "organizations/123".
+  /// existing policy. The `resource` field should be the organization's
+  /// resource name, for example: "organizations/123".
   ///
   /// Authorization requires the IAM permission
-  /// `resourcemanager.organizations.setIamPolicy` on the specified organization.
+  /// `resourcemanager.organizations.setIamPolicy` on the specified
+  /// organization.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being specified.
+  /// @param resource  REQUIRED: The resource for which the policy is being
+  /// specified.
   ///  See the operation documentation for the appropriate value for this field.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, Options options = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
+                                                 Options options = {});
 
   ///
   /// Sets the access control policy on an organization resource. Replaces any
-  /// existing policy. The `resource` field should be the organization's resource
-  /// name, for example: "organizations/123".
+  /// existing policy. The `resource` field should be the organization's
+  /// resource name, for example: "organizations/123".
   ///
   /// Authorization requires the IAM permission
-  /// `resourcemanager.organizations.setIamPolicy` on the specified organization.
+  /// `resourcemanager.organizations.setIamPolicy` on the specified
+  /// organization.
   ///
-  /// @param request @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// @param request
+  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @return
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options options = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request,
+      Options options = {});
 
   ///
   /// Returns the permissions that a caller has on the specified organization.
@@ -242,20 +291,26 @@ class OrganizationsClient {
   ///
   /// There are no permissions required for making this API call.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy detail is being requested.
+  /// @param resource  REQUIRED: The resource for which the policy detail is
+  /// being requested.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param permissions  The set of permissions to check for the `resource`. Permissions with
+  /// @param permissions  The set of permissions to check for the `resource`.
+  /// Permissions with
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  /// @return
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
-  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  /// [google.iam.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
   ///
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options options = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      std::string const& resource, std::vector<std::string> const& permissions,
+      Options options = {});
 
   ///
   /// Returns the permissions that a caller has on the specified organization.
@@ -264,15 +319,20 @@ class OrganizationsClient {
   ///
   /// There are no permissions required for making this API call.
   ///
-  /// @param request @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// @param request
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  /// @return
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
-  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  /// [google.iam.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// [google.iam.v1.TestIamPermissionsResponse]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
   ///
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options options = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options options = {});
 
  private:
   std::shared_ptr<OrganizationsConnection> connection_;

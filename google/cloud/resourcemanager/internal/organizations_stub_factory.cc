@@ -17,15 +17,15 @@
 // source: google/cloud/resourcemanager/v3/organizations.proto
 
 #include "google/cloud/resourcemanager/internal/organizations_stub_factory.h"
+#include "google/cloud/resourcemanager/internal/organizations_auth_decorator.h"
+#include "google/cloud/resourcemanager/internal/organizations_logging_decorator.h"
+#include "google/cloud/resourcemanager/internal/organizations_metadata_decorator.h"
+#include "google/cloud/resourcemanager/internal/organizations_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/resourcemanager/internal/organizations_auth_decorator.h"
-#include "google/cloud/resourcemanager/internal/organizations_logging_decorator.h"
-#include "google/cloud/resourcemanager/internal/organizations_metadata_decorator.h"
-#include "google/cloud/resourcemanager/internal/organizations_stub.h"
 #include <memory>
 
 namespace google {
@@ -33,28 +33,26 @@ namespace cloud {
 namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<OrganizationsStub>
-CreateDefaultOrganizationsStub(
+std::shared_ptr<OrganizationsStub> CreateDefaultOrganizationsStub(
     google::cloud::CompletionQueue cq, Options const& options) {
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       std::move(cq), options);
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::resourcemanager::v3::Organizations::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::resourcemanager::v3::Organizations::NewStub(channel);
   std::shared_ptr<OrganizationsStub> stub =
-    std::make_shared<DefaultOrganizationsStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultOrganizationsStub>(std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<OrganizationsAuth>(
-        std::move(auth), std::move(stub));
+    stub =
+        std::make_shared<OrganizationsAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<OrganizationsMetadata>(std::move(stub));
-  if (internal::Contains(
-      options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<OrganizationsLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
   }
   return stub;

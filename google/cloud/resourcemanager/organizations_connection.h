@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_ORGANIZATIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_ORGANIZATIONS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/resourcemanager/internal/organizations_retry_traits.h"
 #include "google/cloud/resourcemanager/internal/organizations_stub.h"
 #include "google/cloud/resourcemanager/organizations_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -34,11 +34,13 @@ namespace cloud {
 namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using OrganizationsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    resourcemanager_internal::OrganizationsRetryTraits>;
+using OrganizationsRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        resourcemanager_internal::OrganizationsRetryTraits>;
 
-using OrganizationsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    resourcemanager_internal::OrganizationsRetryTraits>;
+using OrganizationsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        resourcemanager_internal::OrganizationsRetryTraits>;
 
 using OrganizationsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -49,20 +51,22 @@ class OrganizationsConnection {
   virtual ~OrganizationsConnection() = 0;
 
   virtual StatusOr<google::cloud::resourcemanager::v3::Organization>
-  GetOrganization(google::cloud::resourcemanager::v3::GetOrganizationRequest const& request);
+  GetOrganization(
+      google::cloud::resourcemanager::v3::GetOrganizationRequest const&
+          request);
 
   virtual StreamRange<google::cloud::resourcemanager::v3::Organization>
-  SearchOrganizations(google::cloud::resourcemanager::v3::SearchOrganizationsRequest request);
+  SearchOrganizations(
+      google::cloud::resourcemanager::v3::SearchOrganizationsRequest request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
-
 };
 
 std::shared_ptr<OrganizationsConnection> MakeOrganizationsConnection(
@@ -79,9 +83,8 @@ namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<resourcemanager::OrganizationsConnection>
-MakeOrganizationsConnection(
-    std::shared_ptr<OrganizationsStub> stub,
-    Options options);
+MakeOrganizationsConnection(std::shared_ptr<OrganizationsStub> stub,
+                            Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_internal

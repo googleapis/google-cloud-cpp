@@ -17,14 +17,14 @@
 // source: google/cloud/resourcemanager/v3/folders.proto
 
 #include "google/cloud/resourcemanager/internal/folders_option_defaults.h"
+#include "google/cloud/resourcemanager/folders_connection.h"
+#include "google/cloud/resourcemanager/folders_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/options.h"
-#include "google/cloud/resourcemanager/folders_connection.h"
-#include "google/cloud/resourcemanager/folders_options.h"
 #include <memory>
 
 namespace google {
@@ -39,7 +39,8 @@ auto constexpr kBackoffScaling = 2.0;
 Options FoldersDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_FOLDERS_ENDPOINT");
-    options.set<EndpointOption>(env && !env->empty() ? *env : "cloudresourcemanager.googleapis.com");
+    options.set<EndpointOption>(
+        env && !env->empty() ? *env : "cloudresourcemanager.googleapis.com");
   }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
@@ -55,24 +56,25 @@ Options FoldersDefaultOptions(Options options) {
 
   if (!options.has<resourcemanager::FoldersRetryPolicyOption>()) {
     options.set<resourcemanager::FoldersRetryPolicyOption>(
-        resourcemanager::FoldersLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        resourcemanager::FoldersLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<resourcemanager::FoldersBackoffPolicyOption>()) {
     options.set<resourcemanager::FoldersBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
   if (!options.has<resourcemanager::FoldersPollingPolicyOption>()) {
     options.set<resourcemanager::FoldersPollingPolicyOption>(
-        GenericPollingPolicy<
-            resourcemanager::FoldersRetryPolicyOption::Type,
-            resourcemanager::FoldersBackoffPolicyOption::Type>(
+        GenericPollingPolicy<resourcemanager::FoldersRetryPolicyOption::Type,
+                             resourcemanager::FoldersBackoffPolicyOption::Type>(
             options.get<resourcemanager::FoldersRetryPolicyOption>()->clone(),
             options.get<resourcemanager::FoldersBackoffPolicyOption>()->clone())
             .clone());
   }
-  if (!options.has<resourcemanager::FoldersConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<resourcemanager::FoldersConnectionIdempotencyPolicyOption>()) {
     options.set<resourcemanager::FoldersConnectionIdempotencyPolicyOption>(
         resourcemanager::MakeDefaultFoldersConnectionIdempotencyPolicy());
   }

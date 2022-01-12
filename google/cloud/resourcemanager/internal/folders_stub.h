@@ -37,26 +37,30 @@ class FoldersStub {
   virtual ~FoldersStub() = 0;
 
   virtual StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
-    grpc::ClientContext& context,
-    google::cloud::resourcemanager::v3::GetFolderRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::resourcemanager::v3::GetFolderRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::resourcemanager::v3::ListFoldersResponse> ListFolders(
-    grpc::ClientContext& context,
-    google::cloud::resourcemanager::v3::ListFoldersRequest const& request) = 0;
+  virtual StatusOr<google::cloud::resourcemanager::v3::ListFoldersResponse>
+  ListFolders(grpc::ClientContext& context,
+              google::cloud::resourcemanager::v3::ListFoldersRequest const&
+                  request) = 0;
 
-  virtual StatusOr<google::cloud::resourcemanager::v3::SearchFoldersResponse> SearchFolders(
-    grpc::ClientContext& context,
-    google::cloud::resourcemanager::v3::SearchFoldersRequest const& request) = 0;
+  virtual StatusOr<google::cloud::resourcemanager::v3::SearchFoldersResponse>
+  SearchFolders(grpc::ClientContext& context,
+                google::cloud::resourcemanager::v3::SearchFoldersRequest const&
+                    request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateFolder(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::CreateFolderRequest const& request) = 0;
+      google::cloud::resourcemanager::v3::CreateFolderRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateFolder(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) = 0;
+      google::cloud::resourcemanager::v3::UpdateFolderRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncMoveFolder(
       google::cloud::CompletionQueue& cq,
@@ -66,24 +70,27 @@ class FoldersStub {
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteFolder(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) = 0;
+      google::cloud::resourcemanager::v3::DeleteFolderRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUndeleteFolder(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) = 0;
+      google::cloud::resourcemanager::v3::UndeleteFolderRequest const&
+          request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-    grpc::ClientContext& context,
-    google::iam::v1::GetIamPolicyRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-    grpc::ClientContext& context,
-    google::iam::v1::SetIamPolicyRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-    grpc::ClientContext& context,
-    google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context,
+      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -99,65 +106,69 @@ class FoldersStub {
 class DefaultFoldersStub : public FoldersStub {
  public:
   DefaultFoldersStub(
-      std::unique_ptr<google::cloud::resourcemanager::v3::Folders::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
-      : grpc_stub_(std::move(grpc_stub)),
-        operations_(std::move(operations)) {}
+      std::unique_ptr<
+          google::cloud::resourcemanager::v3::Folders::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations)
+      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
-  StatusOr<google::cloud::resourcemanager::v3::Folder>
-  GetFolder(
-    grpc::ClientContext& client_context,
-    google::cloud::resourcemanager::v3::GetFolderRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
+      grpc::ClientContext& client_context,
+      google::cloud::resourcemanager::v3::GetFolderRequest const& request)
+      override;
 
-  StatusOr<google::cloud::resourcemanager::v3::ListFoldersResponse>
-  ListFolders(
-    grpc::ClientContext& client_context,
-    google::cloud::resourcemanager::v3::ListFoldersRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::ListFoldersResponse> ListFolders(
+      grpc::ClientContext& client_context,
+      google::cloud::resourcemanager::v3::ListFoldersRequest const& request)
+      override;
 
   StatusOr<google::cloud::resourcemanager::v3::SearchFoldersResponse>
-  SearchFolders(
-    grpc::ClientContext& client_context,
-    google::cloud::resourcemanager::v3::SearchFoldersRequest const& request) override;
+  SearchFolders(grpc::ClientContext& client_context,
+                google::cloud::resourcemanager::v3::SearchFoldersRequest const&
+                    request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFolder(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::CreateFolderRequest const& request) override;
+      google::cloud::resourcemanager::v3::CreateFolderRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateFolder(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) override;
+      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncMoveFolder(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::MoveFolderRequest const& request) override;
+      google::cloud::resourcemanager::v3::MoveFolderRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFolder(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) override;
+      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteFolder(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) override;
+      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request)
+      override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(
-    grpc::ClientContext& client_context,
-    google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& client_context,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(
-    grpc::ClientContext& client_context,
-    google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext& client_context,
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(
-    grpc::ClientContext& client_context,
-    google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& client_context,
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -170,7 +181,8 @@ class DefaultFoldersStub : public FoldersStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::resourcemanager::v3::Folders::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::resourcemanager::v3::Folders::StubInterface>
+      grpc_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

@@ -32,51 +32,49 @@ ProjectsStub::~ProjectsStub() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::Project>
 DefaultProjectsStub::GetProject(
-  grpc::ClientContext& client_context,
-  google::cloud::resourcemanager::v3::GetProjectRequest const& request) {
-    google::cloud::resourcemanager::v3::Project response;
-    auto status =
-        grpc_stub_->GetProject(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::cloud::resourcemanager::v3::GetProjectRequest const& request) {
+  google::cloud::resourcemanager::v3::Project response;
+  auto status = grpc_stub_->GetProject(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse>
 DefaultProjectsStub::ListProjects(
-  grpc::ClientContext& client_context,
-  google::cloud::resourcemanager::v3::ListProjectsRequest const& request) {
-    google::cloud::resourcemanager::v3::ListProjectsResponse response;
-    auto status =
-        grpc_stub_->ListProjects(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::cloud::resourcemanager::v3::ListProjectsRequest const& request) {
+  google::cloud::resourcemanager::v3::ListProjectsResponse response;
+  auto status = grpc_stub_->ListProjects(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse>
 DefaultProjectsStub::SearchProjects(
-  grpc::ClientContext& client_context,
-  google::cloud::resourcemanager::v3::SearchProjectsRequest const& request) {
-    google::cloud::resourcemanager::v3::SearchProjectsResponse response;
-    auto status =
-        grpc_stub_->SearchProjects(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::cloud::resourcemanager::v3::SearchProjectsRequest const& request) {
+  google::cloud::resourcemanager::v3::SearchProjectsResponse response;
+  auto status = grpc_stub_->SearchProjects(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultProjectsStub::AsyncCreateProject(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
   return cq.MakeUnaryRpc(
       [this](grpc::ClientContext* context,
-             google::cloud::resourcemanager::v3::CreateProjectRequest const& request,
+             google::cloud::resourcemanager::v3::CreateProjectRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateProject(context, request, cq);
       },
@@ -85,12 +83,13 @@ DefaultProjectsStub::AsyncCreateProject(
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultProjectsStub::AsyncUpdateProject(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
   return cq.MakeUnaryRpc(
       [this](grpc::ClientContext* context,
-             google::cloud::resourcemanager::v3::UpdateProjectRequest const& request,
+             google::cloud::resourcemanager::v3::UpdateProjectRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateProject(context, request, cq);
       },
@@ -99,13 +98,14 @@ DefaultProjectsStub::AsyncUpdateProject(
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultProjectsStub::AsyncMoveProject(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
   return cq.MakeUnaryRpc(
-      [this](grpc::ClientContext* context,
-             google::cloud::resourcemanager::v3::MoveProjectRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::resourcemanager::v3::MoveProjectRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncMoveProject(context, request, cq);
       },
       request, std::move(context));
@@ -113,12 +113,13 @@ DefaultProjectsStub::AsyncMoveProject(
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultProjectsStub::AsyncDeleteProject(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
   return cq.MakeUnaryRpc(
       [this](grpc::ClientContext* context,
-             google::cloud::resourcemanager::v3::DeleteProjectRequest const& request,
+             google::cloud::resourcemanager::v3::DeleteProjectRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteProject(context, request, cq);
       },
@@ -127,55 +128,52 @@ DefaultProjectsStub::AsyncDeleteProject(
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultProjectsStub::AsyncUndeleteProject(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
   return cq.MakeUnaryRpc(
       [this](grpc::ClientContext* context,
-             google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request,
+             google::cloud::resourcemanager::v3::UndeleteProjectRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUndeleteProject(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultProjectsStub::GetIamPolicy(
-  grpc::ClientContext& client_context,
-  google::iam::v1::GetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        grpc_stub_->GetIamPolicy(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultProjectsStub::GetIamPolicy(
+    grpc::ClientContext& client_context,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultProjectsStub::SetIamPolicy(
-  grpc::ClientContext& client_context,
-  google::iam::v1::SetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        grpc_stub_->SetIamPolicy(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultProjectsStub::SetIamPolicy(
+    grpc::ClientContext& client_context,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->SetIamPolicy(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultProjectsStub::TestIamPermissions(
-  grpc::ClientContext& client_context,
-  google::iam::v1::TestIamPermissionsRequest const& request) {
-    google::iam::v1::TestIamPermissionsResponse response;
-    auto status =
-        grpc_stub_->TestIamPermissions(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status =
+      grpc_stub_->TestIamPermissions(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -196,13 +194,14 @@ future<Status> DefaultProjectsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  return cq.MakeUnaryRpc(
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+  return cq
+      .MakeUnaryRpc(
+          [this](grpc::ClientContext* context,
+                 google::longrunning::CancelOperationRequest const& request,
+                 grpc::CompletionQueue* cq) {
+            return operations_->AsyncCancelOperation(context, request, cq);
+          },
+          request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

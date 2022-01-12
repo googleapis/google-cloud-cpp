@@ -17,14 +17,14 @@
 // source: google/cloud/resourcemanager/v3/organizations.proto
 
 #include "google/cloud/resourcemanager/internal/organizations_option_defaults.h"
+#include "google/cloud/resourcemanager/organizations_connection.h"
+#include "google/cloud/resourcemanager/organizations_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/options.h"
-#include "google/cloud/resourcemanager/organizations_connection.h"
-#include "google/cloud/resourcemanager/organizations_options.h"
 #include <memory>
 
 namespace google {
@@ -39,7 +39,8 @@ auto constexpr kBackoffScaling = 2.0;
 Options OrganizationsDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_ORGANIZATIONS_ENDPOINT");
-    options.set<EndpointOption>(env && !env->empty() ? *env : "cloudresourcemanager.googleapis.com");
+    options.set<EndpointOption>(
+        env && !env->empty() ? *env : "cloudresourcemanager.googleapis.com");
   }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
@@ -56,15 +57,19 @@ Options OrganizationsDefaultOptions(Options options) {
   if (!options.has<resourcemanager::OrganizationsRetryPolicyOption>()) {
     options.set<resourcemanager::OrganizationsRetryPolicyOption>(
         resourcemanager::OrganizationsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<resourcemanager::OrganizationsBackoffPolicyOption>()) {
     options.set<resourcemanager::OrganizationsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<resourcemanager::OrganizationsConnectionIdempotencyPolicyOption>()) {
-    options.set<resourcemanager::OrganizationsConnectionIdempotencyPolicyOption>(
+  if (!options.has<
+          resourcemanager::OrganizationsConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        resourcemanager::OrganizationsConnectionIdempotencyPolicyOption>(
         resourcemanager::MakeDefaultOrganizationsConnectionIdempotencyPolicy());
   }
 

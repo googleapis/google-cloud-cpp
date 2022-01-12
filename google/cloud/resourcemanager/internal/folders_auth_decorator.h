@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_FOLDERS_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_FOLDERS_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/resourcemanager/internal/folders_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -41,40 +41,48 @@ class FoldersAuth : public FoldersStub {
 
   StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
       grpc::ClientContext& context,
-      google::cloud::resourcemanager::v3::GetFolderRequest const& request) override;
+      google::cloud::resourcemanager::v3::GetFolderRequest const& request)
+      override;
 
   StatusOr<google::cloud::resourcemanager::v3::ListFoldersResponse> ListFolders(
       grpc::ClientContext& context,
-      google::cloud::resourcemanager::v3::ListFoldersRequest const& request) override;
+      google::cloud::resourcemanager::v3::ListFoldersRequest const& request)
+      override;
 
-  StatusOr<google::cloud::resourcemanager::v3::SearchFoldersResponse> SearchFolders(
-      grpc::ClientContext& context,
-      google::cloud::resourcemanager::v3::SearchFoldersRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::SearchFoldersResponse>
+  SearchFolders(grpc::ClientContext& context,
+                google::cloud::resourcemanager::v3::SearchFoldersRequest const&
+                    request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFolder(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::CreateFolderRequest const& request) override;
+      google::cloud::resourcemanager::v3::CreateFolderRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateFolder(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) override;
+      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncMoveFolder(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::MoveFolderRequest const& request) override;
+      google::cloud::resourcemanager::v3::MoveFolderRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFolder(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) override;
+      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteFolder(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) override;
+      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request)
+      override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext& context,
@@ -97,6 +105,7 @@ class FoldersAuth : public FoldersStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<FoldersStub> child_;

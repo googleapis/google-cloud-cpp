@@ -27,28 +27,33 @@ namespace cloud {
 namespace resourcemanager_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MockOrganizationsConnection : public resourcemanager::OrganizationsConnection {
+class MockOrganizationsConnection
+    : public resourcemanager::OrganizationsConnection {
  public:
   MOCK_METHOD(StatusOr<google::cloud::resourcemanager::v3::Organization>,
-  GetOrganization,
-  (google::cloud::resourcemanager::v3::GetOrganizationRequest const& request), (override));
+              GetOrganization,
+              (google::cloud::resourcemanager::v3::GetOrganizationRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::resourcemanager::v3::Organization>,
-  SearchOrganizations,
-  (google::cloud::resourcemanager::v3::SearchOrganizationsRequest request), (override));
+  MOCK_METHOD(
+      StreamRange<google::cloud::resourcemanager::v3::Organization>,
+      SearchOrganizations,
+      (google::cloud::resourcemanager::v3::SearchOrganizationsRequest request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
-
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

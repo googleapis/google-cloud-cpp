@@ -28,10 +28,10 @@ namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 OrganizationsLogging::OrganizationsLogging(
-    std::shared_ptr<OrganizationsStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<OrganizationsStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::resourcemanager::v3::Organization>
@@ -40,26 +40,27 @@ OrganizationsLogging::GetOrganization(
     google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) {
-        return child_->GetOrganization(context, request);
-      },
+             google::cloud::resourcemanager::v3::GetOrganizationRequest const&
+                 request) { return child_->GetOrganization(context, request); },
       context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse>
 OrganizationsLogging::SearchOrganizations(
     grpc::ClientContext& context,
-    google::cloud::resourcemanager::v3::SearchOrganizationsRequest const& request) {
+    google::cloud::resourcemanager::v3::SearchOrganizationsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             google::cloud::resourcemanager::v3::SearchOrganizationsRequest const& request) {
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::resourcemanager::v3::SearchOrganizationsRequest const&
+              request) {
         return child_->SearchOrganizations(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-OrganizationsLogging::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> OrganizationsLogging::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -70,8 +71,7 @@ OrganizationsLogging::GetIamPolicy(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-OrganizationsLogging::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> OrganizationsLogging::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(

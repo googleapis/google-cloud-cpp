@@ -17,9 +17,9 @@
 // source: google/cloud/resourcemanager/v3/folders.proto
 
 #include "google/cloud/resourcemanager/folders_client.h"
+#include "google/cloud/resourcemanager/folders_options.h"
 #include "google/cloud/resourcemanager/internal/folders_option_defaults.h"
 #include <memory>
-#include "google/cloud/resourcemanager/folders_options.h"
 #include <thread>
 
 namespace google {
@@ -27,68 +27,92 @@ namespace cloud {
 namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-FoldersClient::FoldersClient(std::shared_ptr<FoldersConnection> connection, Options options) : connection_(std::move(connection)), options_(resourcemanager_internal::FoldersDefaultOptions(std::move(options))) {}
+FoldersClient::FoldersClient(std::shared_ptr<FoldersConnection> connection,
+                             Options options)
+    : connection_(std::move(connection)),
+      options_(
+          resourcemanager_internal::FoldersDefaultOptions(std::move(options))) {
+}
 FoldersClient::~FoldersClient() = default;
 
-StatusOr<google::cloud::resourcemanager::v3::Folder>
-FoldersClient::GetFolder(std::string const& name, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+StatusOr<google::cloud::resourcemanager::v3::Folder> FoldersClient::GetFolder(
+    std::string const& name, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::cloud::resourcemanager::v3::GetFolderRequest request;
   request.set_name(name);
   return connection_->GetFolder(request);
 }
 
-StatusOr<google::cloud::resourcemanager::v3::Folder>
-FoldersClient::GetFolder(google::cloud::resourcemanager::v3::GetFolderRequest const& request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+StatusOr<google::cloud::resourcemanager::v3::Folder> FoldersClient::GetFolder(
+    google::cloud::resourcemanager::v3::GetFolderRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetFolder(request);
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Folder>
 FoldersClient::ListFolders(std::string const& parent, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::cloud::resourcemanager::v3::ListFoldersRequest request;
   request.set_parent(parent);
   return connection_->ListFolders(request);
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Folder>
-FoldersClient::ListFolders(google::cloud::resourcemanager::v3::ListFoldersRequest request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+FoldersClient::ListFolders(
+    google::cloud::resourcemanager::v3::ListFoldersRequest request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->ListFolders(std::move(request));
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Folder>
 FoldersClient::SearchFolders(std::string const& query, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::cloud::resourcemanager::v3::SearchFoldersRequest request;
   request.set_query(query);
   return connection_->SearchFolders(request);
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Folder>
-FoldersClient::SearchFolders(google::cloud::resourcemanager::v3::SearchFoldersRequest request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+FoldersClient::SearchFolders(
+    google::cloud::resourcemanager::v3::SearchFoldersRequest request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->SearchFolders(std::move(request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::CreateFolder(google::cloud::resourcemanager::v3::Folder const& folder, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+FoldersClient::CreateFolder(
+    google::cloud::resourcemanager::v3::Folder const& folder, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::cloud::resourcemanager::v3::CreateFolderRequest request;
   *request.mutable_folder() = folder;
   return connection_->CreateFolder(request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::CreateFolder(google::cloud::resourcemanager::v3::CreateFolderRequest const& request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+FoldersClient::CreateFolder(
+    google::cloud::resourcemanager::v3::CreateFolderRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->CreateFolder(request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::UpdateFolder(google::cloud::resourcemanager::v3::Folder const& folder, google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+FoldersClient::UpdateFolder(
+    google::cloud::resourcemanager::v3::Folder const& folder,
+    google::protobuf::FieldMask const& update_mask, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::cloud::resourcemanager::v3::UpdateFolderRequest request;
   *request.mutable_folder() = folder;
   *request.mutable_update_mask() = update_mask;
@@ -96,14 +120,20 @@ FoldersClient::UpdateFolder(google::cloud::resourcemanager::v3::Folder const& fo
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::UpdateFolder(google::cloud::resourcemanager::v3::UpdateFolderRequest const& request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+FoldersClient::UpdateFolder(
+    google::cloud::resourcemanager::v3::UpdateFolderRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->UpdateFolder(request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::MoveFolder(std::string const& name, std::string const& destination_parent, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+FoldersClient::MoveFolder(std::string const& name,
+                          std::string const& destination_parent,
+                          Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::cloud::resourcemanager::v3::MoveFolderRequest request;
   request.set_name(name);
   request.set_destination_parent(destination_parent);
@@ -111,67 +141,84 @@ FoldersClient::MoveFolder(std::string const& name, std::string const& destinatio
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::MoveFolder(google::cloud::resourcemanager::v3::MoveFolderRequest const& request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+FoldersClient::MoveFolder(
+    google::cloud::resourcemanager::v3::MoveFolderRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->MoveFolder(request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersClient::DeleteFolder(std::string const& name, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::cloud::resourcemanager::v3::DeleteFolderRequest request;
   request.set_name(name);
   return connection_->DeleteFolder(request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::DeleteFolder(google::cloud::resourcemanager::v3::DeleteFolderRequest const& request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+FoldersClient::DeleteFolder(
+    google::cloud::resourcemanager::v3::DeleteFolderRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->DeleteFolder(request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersClient::UndeleteFolder(std::string const& name, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::cloud::resourcemanager::v3::UndeleteFolderRequest request;
   request.set_name(name);
   return connection_->UndeleteFolder(request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::UndeleteFolder(google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+FoldersClient::UndeleteFolder(
+    google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->UndeleteFolder(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-FoldersClient::GetIamPolicy(std::string const& resource, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+StatusOr<google::iam::v1::Policy> FoldersClient::GetIamPolicy(
+    std::string const& resource, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-FoldersClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+StatusOr<google::iam::v1::Policy> FoldersClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-FoldersClient::SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+StatusOr<google::iam::v1::Policy> FoldersClient::SetIamPolicy(
+    std::string const& resource, google::iam::v1::Policy const& policy,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
   *request.mutable_policy() = policy;
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-FoldersClient::SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options options) {
+StatusOr<google::iam::v1::Policy> FoldersClient::SetIamPolicy(
+    std::string const& resource, IamUpdater const& updater, Options options) {
   internal::CheckExpectedOptions<FoldersBackoffPolicyOption>(options, __func__);
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
-  auto backoff_policy = internal::CurrentOptions().get<FoldersBackoffPolicyOption>()->clone();
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  auto backoff_policy =
+      internal::CurrentOptions().get<FoldersBackoffPolicyOption>()->clone();
   for (;;) {
     auto recent = GetIamPolicy(resource);
     if (!recent) {
@@ -189,15 +236,19 @@ FoldersClient::SetIamPolicy(std::string const& resource, IamUpdater const& updat
   }
 }
 
-StatusOr<google::iam::v1::Policy>
-FoldersClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+StatusOr<google::iam::v1::Policy> FoldersClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-FoldersClient::TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+FoldersClient::TestIamPermissions(std::string const& resource,
+                                  std::vector<std::string> const& permissions,
+                                  Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
   *request.mutable_permissions() = {permissions.begin(), permissions.end()};
@@ -205,8 +256,11 @@ FoldersClient::TestIamPermissions(std::string const& resource, std::vector<std::
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-FoldersClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+FoldersClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->TestIamPermissions(request);
 }
 
