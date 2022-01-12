@@ -179,11 +179,11 @@ void SetMethodSignatureMethodVars(
   for (int i = 0; i < method_signature_extension.size(); ++i) {
     google::protobuf::Descriptor const* input_type = method.input_type();
     std::vector<std::string> parameters =
-        absl::StrSplit(method_signature_extension[i], ',');
+        absl::StrSplit(method_signature_extension[i], ',', absl::SkipEmpty());
     std::string method_signature;
     std::string method_request_setters;
     for (auto& parameter : parameters) {
-      if (parameter.empty()) continue;
+      absl::StripAsciiWhitespace(&parameter);
       google::protobuf::FieldDescriptor const* parameter_descriptor =
           input_type->FindFieldByName(parameter);
       if (parameter_descriptor->is_map()) {
@@ -324,9 +324,10 @@ std::string FormatApiMethodSignatureParameters(
       method.options().GetRepeatedExtension(google::api::method_signature);
   for (auto const& signature : method_signature_extension) {
     google::protobuf::Descriptor const* input_type = method.input_type();
-    std::vector<std::string> parameters = absl::StrSplit(signature, ',');
-    for (auto const& parameter : parameters) {
-      if (parameter.empty()) continue;
+    std::vector<std::string> parameters =
+        absl::StrSplit(signature, ',', absl::SkipEmpty());
+    for (auto& parameter : parameters) {
+      absl::StripAsciiWhitespace(&parameter);
       google::protobuf::FieldDescriptor const* parameter_descriptor =
           input_type->FindFieldByName(parameter);
       google::protobuf::SourceLocation loc;

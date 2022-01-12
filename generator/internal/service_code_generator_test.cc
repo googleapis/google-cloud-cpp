@@ -444,7 +444,7 @@ char const* const kMethodSignatureServiceProto =
     "service Service1 {\n"
     "  // Leading comments about rpc Method0.\n"
     "  rpc Method0(Bar) returns (Empty) {\n"
-    "    option (google.api.method_signature) = \"name\";\n"
+    "    option (google.api.method_signature) = \" name\";\n"
     "  }\n"
     "}\n";
 
