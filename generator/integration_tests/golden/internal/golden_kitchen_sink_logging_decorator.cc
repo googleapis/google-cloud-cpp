@@ -129,9 +129,11 @@ GoldenKitchenSinkLogging::DoNothing(
       context, request, __func__, tracing_options_);
 }
 
-std::unique_ptr<GoldenKitchenSinkStub::AsyncAppendRowsStream>
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+    google::test::admin::database::v1::AppendRowsRequest,
+    google::test::admin::database::v1::AppendRowsResponse>>
 GoldenKitchenSinkLogging::AsyncAppendRows(
-    google::cloud::CompletionQueue& cq,
+    google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context) {
   using LoggingStream =
      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<google::test::admin::database::v1::AppendRowsRequest, google::test::admin::database::v1::AppendRowsResponse>;

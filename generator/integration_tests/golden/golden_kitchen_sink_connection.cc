@@ -243,8 +243,8 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
       google::test::admin::database::v1::AppendRowsRequest,
       google::test::admin::database::v1::AppendRowsResponse>>
   AsyncAppendRows() override {
-    auto cq = background_->cq();
-    return stub_->AsyncAppendRows(cq, absl::make_unique<grpc::ClientContext>());
+    return stub_->AsyncAppendRows(
+        background_->cq(), absl::make_unique<grpc::ClientContext>());
   }
 
  private:

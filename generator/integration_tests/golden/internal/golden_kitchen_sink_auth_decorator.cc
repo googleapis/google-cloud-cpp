@@ -90,15 +90,17 @@ Status GoldenKitchenSinkAuth::DoNothing(
   return child_->DoNothing(context, request);
 }
 
-std::unique_ptr<GoldenKitchenSinkStub::AsyncAppendRowsStream>
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+    google::test::admin::database::v1::AppendRowsRequest,
+    google::test::admin::database::v1::AppendRowsResponse>>
 GoldenKitchenSinkAuth::AsyncAppendRows(
-    google::cloud::CompletionQueue& cq,
+    google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
     google::test::admin::database::v1::AppendRowsRequest, google::test::admin::database::v1::AppendRowsResponse>;
 
   auto child = child_;
-  auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) mutable {
+  auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->AsyncAppendRows(cq, std::move(ctx));
   };
   return absl::make_unique<StreamAuth>(

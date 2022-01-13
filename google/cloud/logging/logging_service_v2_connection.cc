@@ -245,8 +245,7 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
   AsyncTailLogEntries() override {
-    auto cq = background_->cq();
-    return stub_->AsyncTailLogEntries(cq,
+    return stub_->AsyncTailLogEntries(background_->cq(),
                                       absl::make_unique<grpc::ClientContext>());
   }
 

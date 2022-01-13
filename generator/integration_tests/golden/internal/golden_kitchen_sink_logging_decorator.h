@@ -67,8 +67,11 @@ class GoldenKitchenSinkLogging : public GoldenKitchenSinkStub {
     grpc::ClientContext& context,
     google::protobuf::Empty const& request) override;
 
-  std::unique_ptr<AsyncAppendRowsStream> AsyncAppendRows(
-      google::cloud::CompletionQueue& cq,
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+      google::test::admin::database::v1::AppendRowsRequest,
+      google::test::admin::database::v1::AppendRowsResponse>>
+  AsyncAppendRows(
+      google::cloud::CompletionQueue const& cq,
       std::unique_ptr<grpc::ClientContext> context) override;
 
  private:

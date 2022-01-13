@@ -88,9 +88,11 @@ GoldenKitchenSinkMetadata::DoNothing(
   return child_->DoNothing(context, request);
 }
 
-std::unique_ptr<GoldenKitchenSinkStub::AsyncAppendRowsStream>
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+      google::test::admin::database::v1::AppendRowsRequest,
+      google::test::admin::database::v1::AppendRowsResponse>>
 GoldenKitchenSinkMetadata::AsyncAppendRows(
-    google::cloud::CompletionQueue& cq,
+    google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context) {
   SetMetadata(*context, {});
   return child_->AsyncAppendRows(cq, std::move(context));

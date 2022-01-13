@@ -91,9 +91,11 @@ DefaultLoggingServiceV2Stub::ListLogs(
   return response;
 }
 
-std::unique_ptr<LoggingServiceV2Stub::AsyncTailLogEntriesStream>
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+    google::logging::v2::TailLogEntriesRequest,
+    google::logging::v2::TailLogEntriesResponse>>
 DefaultLoggingServiceV2Stub::AsyncTailLogEntries(
-    google::cloud::CompletionQueue& cq,
+    google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,

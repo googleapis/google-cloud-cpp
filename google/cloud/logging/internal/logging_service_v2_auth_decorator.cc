@@ -75,16 +75,18 @@ StatusOr<google::logging::v2::ListLogsResponse> LoggingServiceV2Auth::ListLogs(
   return child_->ListLogs(context, request);
 }
 
-std::unique_ptr<LoggingServiceV2Stub::AsyncTailLogEntriesStream>
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+    google::logging::v2::TailLogEntriesRequest,
+    google::logging::v2::TailLogEntriesResponse>>
 LoggingServiceV2Auth::AsyncTailLogEntries(
-    google::cloud::CompletionQueue& cq,
+    google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>;
 
   auto child = child_;
-  auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) mutable {
+  auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
     return child->AsyncTailLogEntries(cq, std::move(ctx));
   };
   return absl::make_unique<StreamAuth>(

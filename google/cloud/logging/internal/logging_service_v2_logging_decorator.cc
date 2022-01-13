@@ -96,9 +96,11 @@ LoggingServiceV2Logging::ListLogs(
       context, request, __func__, tracing_options_);
 }
 
-std::unique_ptr<LoggingServiceV2Stub::AsyncTailLogEntriesStream>
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+    google::logging::v2::TailLogEntriesRequest,
+    google::logging::v2::TailLogEntriesResponse>>
 LoggingServiceV2Logging::AsyncTailLogEntries(
-    google::cloud::CompletionQueue& cq,
+    google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context) {
   using LoggingStream =
       ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
