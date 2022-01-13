@@ -23,6 +23,7 @@ ignore:
   - "google/cloud/eventarc"
   - "google/cloud/iam"
   - "google/cloud/ids"
+  - "google/cloud/iot"
   - "google/cloud/kms"
   - "google/cloud/logging"
   - "google/cloud/pubsublite"

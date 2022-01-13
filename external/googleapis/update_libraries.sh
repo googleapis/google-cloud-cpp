@@ -60,6 +60,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/iam/admin/v1:admin_proto"
   )"
   ["ids"]="@com_google_googleapis//google/cloud/ids/v1:ids_cc_grpc"
+  ["iot"]="@com_google_googleapis//google/cloud/iot/v1:iot_cc_grpc"
   ["kms"]="@com_google_googleapis//google/cloud/kms/v1:kms_proto"
   ["logging_type"]="@com_google_googleapis//google/logging/type:type_proto"
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_proto"

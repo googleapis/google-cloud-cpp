@@ -15,6 +15,7 @@ google/cloud/datamigration/quickstart/
 google/cloud/eventarc/quickstart/
 google/cloud/iam/quickstart/
 google/cloud/ids/quickstart/
+google/cloud/iot/quickstart/
 google/cloud/kms/quickstart/
 google/cloud/logging/quickstart/
 google/cloud/pubsublite/quickstart/

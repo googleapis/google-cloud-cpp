@@ -52,6 +52,10 @@
 ./include/google/cloud/ids/internal
 ./include/google/cloud/ids/mocks
 ./include/google/cloud/ids/v1
+./include/google/cloud/iot
+./include/google/cloud/iot/internal
+./include/google/cloud/iot/mocks
+./include/google/cloud/iot/v1
 ./include/google/cloud/kms
 ./include/google/cloud/kms/internal
 ./include/google/cloud/kms/mocks
@@ -132,6 +136,7 @@
 ./lib64/cmake/google_cloud_cpp_eventarc
 ./lib64/cmake/google_cloud_cpp_iam
 ./lib64/cmake/google_cloud_cpp_ids
+./lib64/cmake/google_cloud_cpp_iot
 ./lib64/cmake/google_cloud_cpp_kms
 ./lib64/cmake/google_cloud_cpp_logging
 ./lib64/cmake/google_cloud_cpp_pubsublite
