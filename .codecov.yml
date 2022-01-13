@@ -22,6 +22,7 @@ ignore:
   - "google/cloud/datamigration"
   - "google/cloud/eventarc"
   - "google/cloud/iam"
+  - "google/cloud/ids"
   - "google/cloud/kms"
   - "google/cloud/logging"
   - "google/cloud/pubsublite"
