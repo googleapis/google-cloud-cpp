@@ -71,14 +71,20 @@ Status PrintMethod(google::protobuf::MethodDescriptor const& method,
                    std::vector<MethodPattern> const& patterns, char const* file,
                    int line);
 
-enum class MethodParameterStyle { kApiMethodSignature, kProtobufRequest };
 /**
  * Formats comments from the source .proto file into Doxygen compatible
  * function headers, including param and return lines as necessary.
  */
-std::string FormatMethodCommentsFromRpcComments(
+std::string FormatMethodCommentsMethodSignature(
     google::protobuf::MethodDescriptor const& method,
-    MethodParameterStyle parameter_style);
+    std::string const& signature);
+
+/**
+ * Formats comments from the source .proto file into Doxygen compatible
+ * function headers, including param and return lines as necessary.
+ */
+std::string FormatMethodCommentsProtobufRequest(
+    google::protobuf::MethodDescriptor const& method);
 
 struct ResourceRoutingInfo {
   std::string url_path;

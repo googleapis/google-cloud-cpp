@@ -336,6 +336,7 @@ char const* const kServiceProto =
     "import \"google/longrunning/operation.proto\";\n"
     "// Leading comments about message Foo.\n"
     "message Foo {\n"
+    "  // baz field$ comment.\n"
     "  string baz = 1;\n"
     "  // labels $field comment.\n"
     "  map<string, string> labels = 2;\n"
@@ -423,6 +424,7 @@ char const* const kServiceProto =
     "       get: \"/v1/{name=projects/*/instances/*/databases/*}\"\n"
     "    };\n"
     "    option (google.api.method_signature) = \"labels\";\n"
+    "    option (google.api.method_signature) = \"baz,labels\";\n"
     "  }\n"
     "  // Leading comments about rpc Method7.\n"
     "  rpc Method7(Bar) returns (google.longrunning.Operation) {\n"
@@ -493,32 +495,39 @@ TEST_F(CreateMethodVarsTest, FilesParseSuccessfully) {
   EXPECT_NE(nullptr, pool_.FindFileByName("google/foo/v1/service.proto"));
 }
 
-TEST_F(CreateMethodVarsTest,
-       FormatMethodCommentsFromRpcCommentsProtobufRequest) {
+TEST_F(CreateMethodVarsTest, FormatMethodCommentsProtobufRequest) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
-  EXPECT_THAT(FormatMethodCommentsFromRpcComments(
-                  *service_file_descriptor->service(0)->method(0),
-                  MethodParameterStyle::kProtobufRequest),
+  EXPECT_THAT(FormatMethodCommentsProtobufRequest(
+                  *service_file_descriptor->service(0)->method(0)),
               HasSubstr(R"""(  ///
   /// Leading comments about rpc Method0$$.
   ///
-  /// @param request @googleapis_link{google::protobuf::Bar,google/foo/v1/service.proto#L14}
+  /// @param request @googleapis_link{google::protobuf::Bar,google/foo/v1/service.proto#L15}
   /// @param options  Optional. Operation options.
   ///
 )"""));
 }
 
-TEST_F(CreateMethodVarsTest,
-       FormatMethodCommentsFromRpcCommentsApiMethodSignature) {
+TEST_F(CreateMethodVarsTest, FormatMethodCommentsMethodSignature) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
-  EXPECT_THAT(FormatMethodCommentsFromRpcComments(
-                  *service_file_descriptor->service(0)->method(6),
-                  MethodParameterStyle::kApiMethodSignature),
+  EXPECT_THAT(FormatMethodCommentsMethodSignature(
+                  *service_file_descriptor->service(0)->method(6), "labels"),
               HasSubstr(R"""(  ///
   /// Leading comments about rpc $$Method6.
   ///
+  /// @param labels  labels $$field comment.
+  /// @param options  Optional. Operation options.
+  ///
+)"""));
+  EXPECT_THAT(
+      FormatMethodCommentsMethodSignature(
+          *service_file_descriptor->service(0)->method(6), "baz,labels"),
+      HasSubstr(R"""(  ///
+  /// Leading comments about rpc $$Method6.
+  ///
+  /// @param baz  baz field$$ comment.
   /// @param labels  labels $$field comment.
   /// @param options  Optional. Operation options.
   ///
@@ -554,7 +563,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method0",
                              "method_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Empty,google/"
-                             "foo/v1/service.proto#L28}"),
+                             "foo/v1/service.proto#L29}"),
         // Method1
         MethodVarsTestValues("google.protobuf.Service.Method1", "method_name",
                              "Method1"),
@@ -567,7 +576,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method1",
                              "method_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Bar,google/"
-                             "foo/v1/service.proto#L14}"),
+                             "foo/v1/service.proto#L15}"),
         // Method2
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "longrunning_metadata_type",
@@ -596,7 +605,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "method_longrunning_deduced_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Bar,google/"
-                             "foo/v1/service.proto#L14}"),
+                             "foo/v1/service.proto#L15}"),
         // Method3
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "longrunning_metadata_type",
@@ -715,7 +724,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method7",
                              "method_longrunning_deduced_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Bar,google/"
-                             "foo/v1/service.proto#L14}")),
+                             "foo/v1/service.proto#L15}")),
     [](testing::TestParamInfo<CreateMethodVarsTest::ParamType> const& info) {
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
       return pieces.back() + "_" + info.param.vars_key;
