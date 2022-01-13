@@ -114,7 +114,7 @@ for library in "${!LIBRARIES[@]}"; do
         >>"external/googleapis/protodeps/${library}.deps" || true
   done
   for file in "${files[@]}"; do
-    sort -u "${file}" >"${file}.sorted"
+    LC_ALL=C sort -u "${file}" >"${file}.sorted"
     mv "${file}.sorted" "${file}"
   done
 done
