@@ -14,7 +14,6 @@
 
 #include "generator/integration_tests/golden/golden_kitchen_sink_connection.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/golden_kitchen_sink_options.h"
@@ -30,6 +29,7 @@ namespace {
 
 using ::google::cloud::golden_internal::MockGoldenKitchenSinkStub;
 using ::google::cloud::golden_internal::MockTailLogEntriesStreamingReadRpc;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
 using ::testing::ByMove;
 using ::testing::Contains;
@@ -296,6 +296,23 @@ TEST(GoldenKitchenSinkConnectionTest, ListServiceAccountKeysPermanentError) {
   ::google::test::admin::database::v1::ListServiceAccountKeysRequest request;
   auto response = conn->ListServiceAccountKeys(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+}
+
+TEST(GoldenKitchenSinkConnectionTest, AppendRowsError) {
+  auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
+  using ErrorStream =
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
+          google::test::admin::database::v1::AppendRowsRequest,
+          google::test::admin::database::v1::AppendRowsResponse>;
+  EXPECT_CALL(*mock, AsyncAppendRows).WillOnce([] {
+    return absl::make_unique<ErrorStream>(
+        Status{StatusCode::kUnavailable, "try-again"});
+  });
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto stream = conn->AsyncAppendRows();
+  ASSERT_FALSE(stream->Start().get());
+  auto status = stream->Finish().get();
+  EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable, "try-again"));
 }
 
 TEST(GoldenKitchenSinkConnectionTest, CheckExpectedOptions) {
