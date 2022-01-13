@@ -38,6 +38,7 @@ cc_library(
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
+        "@com_google_googleapis//google/cloud/eventarc/publishing/v1:publishing_cc_grpc",
         "@com_google_googleapis//google/cloud/eventarc/v1:eventarc_cc_grpc",
     ],
 )
