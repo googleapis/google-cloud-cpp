@@ -630,6 +630,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/curl_options.h
         internal/curl_wrappers.cc
         internal/curl_wrappers.h
+        internal/rest_options.h
         internal/rest_request.cc
         internal/rest_request.h
         internal/rest_response.cc
