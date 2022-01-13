@@ -274,6 +274,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-resourcemanager",
+    deps = [
+        "//google/cloud/resourcemanager:google_cloud_cpp_resourcemanager",
+    ],
+)
+
+cc_library(
+    name = "experimental-resourcemanager_mocks",
+    deps = [
+        "//google/cloud/resourcemanager:google_cloud_cpp_resourcemanager_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-scheduler",
     deps = [
         "//google/cloud/scheduler:google_cloud_cpp_scheduler",
