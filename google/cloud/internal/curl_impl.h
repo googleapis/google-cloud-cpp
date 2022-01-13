@@ -24,6 +24,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/types/span.h"
+#include <array>
 #include <utility>
 
 namespace google {
