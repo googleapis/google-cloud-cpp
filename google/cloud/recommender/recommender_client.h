@@ -232,19 +232,6 @@ class RecommenderClient {
   ///  https://cloud.google.com/about/locations/
   ///  RECOMMENDER_ID refers to supported recommenders:
   ///  https://cloud.google.com/recommender/docs/recommenders.
-  /// @param parent  Required. The container resource on which to execute the
-  /// request.
-  ///  Acceptable formats:
-  ///  1.
-  ///  "projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]",
-  ///  LOCATION here refers to GCP Locations:
-  ///  https://cloud.google.com/about/locations/
-  ///  RECOMMENDER_ID refers to supported recommenders:
-  ///  https://cloud.google.com/recommender/docs/recommenders.
-  /// @param filter  Filter expression to restrict the recommendations returned.
-  /// Supported
-  ///  filter fields: state_info.state
-  ///  Eg: `state_info.state:"DISMISSED" or state_info.state:"FAILED"
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
@@ -261,15 +248,6 @@ class RecommenderClient {
   /// Lists recommendations for a Cloud project. Requires the recommender.*.list
   /// IAM permission for the specified recommender.
   ///
-  /// @param parent  Required. The container resource on which to execute the
-  /// request.
-  ///  Acceptable formats:
-  ///  1.
-  ///  "projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]",
-  ///  LOCATION here refers to GCP Locations:
-  ///  https://cloud.google.com/about/locations/
-  ///  RECOMMENDER_ID refers to supported recommenders:
-  ///  https://cloud.google.com/recommender/docs/recommenders.
   /// @param parent  Required. The container resource on which to execute the
   /// request.
   ///  Acceptable formats:

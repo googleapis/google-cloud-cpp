@@ -50,6 +50,10 @@ int main(int argc, char* argv[]) try {
               << " project-id location-id recommender-id\n";
     return 1;
   }
+  // This quickstart does not attempt to validate the Recommender ID. The full
+  // list of Recommender IDs can be found here:
+  //
+  //     https://cloud.google.com/recommender/docs/recommenders#recommenders
 
   namespace recommender = ::google::cloud::recommender;
   auto client =
