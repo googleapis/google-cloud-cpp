@@ -1,10 +1,10 @@
 @com_google_googleapis//google/cloud/websecurityscanner/v1:crawled_url.proto
-@com_google_googleapis//google/cloud/websecurityscanner/v1:finding_addon.proto
 @com_google_googleapis//google/cloud/websecurityscanner/v1:finding.proto
+@com_google_googleapis//google/cloud/websecurityscanner/v1:finding_addon.proto
 @com_google_googleapis//google/cloud/websecurityscanner/v1:finding_type_stats.proto
-@com_google_googleapis//google/cloud/websecurityscanner/v1:scan_config_error.proto
 @com_google_googleapis//google/cloud/websecurityscanner/v1:scan_config.proto
-@com_google_googleapis//google/cloud/websecurityscanner/v1:scan_run_error_trace.proto
+@com_google_googleapis//google/cloud/websecurityscanner/v1:scan_config_error.proto
 @com_google_googleapis//google/cloud/websecurityscanner/v1:scan_run.proto
+@com_google_googleapis//google/cloud/websecurityscanner/v1:scan_run_error_trace.proto
 @com_google_googleapis//google/cloud/websecurityscanner/v1:scan_run_warning_trace.proto
 @com_google_googleapis//google/cloud/websecurityscanner/v1:web_security_scanner.proto
