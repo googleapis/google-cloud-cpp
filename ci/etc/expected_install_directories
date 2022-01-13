@@ -42,6 +42,8 @@
 ./include/google/cloud/eventarc
 ./include/google/cloud/eventarc/internal
 ./include/google/cloud/eventarc/mocks
+./include/google/cloud/eventarc/publishing
+./include/google/cloud/eventarc/publishing/v1
 ./include/google/cloud/eventarc/v1
 ./include/google/cloud/iam
 ./include/google/cloud/iam/internal
