@@ -318,51 +318,25 @@ std::string FormatClassCommentsFromServiceComments(
 }
 
 std::string FormatApiMethodSignatureParameters(
-    google::protobuf::MethodDescriptor const& method) {
-  std::vector<std::pair<std::string, std::string>> parameter_comments;
-  auto method_signature_extension =
-      method.options().GetRepeatedExtension(google::api::method_signature);
-  for (auto const& signature : method_signature_extension) {
-    google::protobuf::Descriptor const* input_type = method.input_type();
-    std::vector<std::string> parameters =
-        absl::StrSplit(signature, ',', absl::SkipEmpty());
-    for (auto& parameter : parameters) {
-      absl::StripAsciiWhitespace(&parameter);
-      google::protobuf::FieldDescriptor const* parameter_descriptor =
-          input_type->FindFieldByName(parameter);
-      google::protobuf::SourceLocation loc;
-      parameter_descriptor->GetSourceLocation(&loc);
-      parameter_comments.emplace_back(
-          parameter,
-          absl::StrReplaceAll(
-              EscapePrinterDelimiter(ChompByValue(loc.leading_comments)),
-              {{"\n\n", "\n  /// "}, {"\n", "\n  /// "}}));
-    }
-  }
-  std::string parameter_comment_string;
-  for (auto const& param : parameter_comments) {
-    parameter_comment_string +=
-        absl::StrFormat("  /// @param %s %s\n", param.first, param.second);
-  }
-
-  return parameter_comment_string;
-}
-
-std::string FormatProtobufRequestParameters(
-    google::protobuf::MethodDescriptor const& method) {
-  std::vector<std::pair<std::string, std::string>> parameter_comments;
+    google::protobuf::MethodDescriptor const& method,
+    std::string const& signature) {
+  std::string parameter_comments;
   google::protobuf::Descriptor const* input_type = method.input_type();
-  google::protobuf::SourceLocation loc;
-  input_type->GetSourceLocation(&loc);
-  std::string input_type_proto_file_name = input_type->file()->name();
-  parameter_comments.emplace_back("request", FormatDoxygenLink(*input_type));
-  std::string parameter_comment_string;
-  for (auto const& param : parameter_comments) {
-    parameter_comment_string +=
-        absl::StrFormat("  /// @param %s %s\n", param.first, param.second);
+  std::vector<std::string> parameters =
+      absl::StrSplit(signature, ',', absl::SkipEmpty());
+  for (auto& parameter : parameters) {
+    absl::StripAsciiWhitespace(&parameter);
+    google::protobuf::FieldDescriptor const* parameter_descriptor =
+        input_type->FindFieldByName(parameter);
+    google::protobuf::SourceLocation loc;
+    parameter_descriptor->GetSourceLocation(&loc);
+    auto comment = absl::StrReplaceAll(
+        EscapePrinterDelimiter(ChompByValue(loc.leading_comments)),
+        {{"\n\n", "\n  /// "}, {"\n", "\n  /// "}});
+    absl::StrAppendFormat(&parameter_comments, "  /// @param %s %s\n",
+                          parameter, std::move(comment));
   }
-
-  return parameter_comment_string;
+  return parameter_comments;
 }
 
 void SetRetryStatusCodeExpression(VarsDictionary& vars) {
@@ -426,27 +400,16 @@ absl::optional<ResourceRoutingInfo> ParseResourceRoutingHeader(
   return ResourceRoutingInfo{match[0], match[1], match[2], http_rule.body()};
 }
 
-std::string FormatMethodCommentsFromRpcComments(
+std::string FormatMethodComments(
     google::protobuf::MethodDescriptor const& method,
-    MethodParameterStyle parameter_style) {
-  google::protobuf::SourceLocation method_source_location;
-  if (!method.GetSourceLocation(&method_source_location) ||
-      method_source_location.leading_comments.empty()) {
-    GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
-                   << " no leading_comments to format";
-  }
-  std::string parameter_comment_string;
-  if (parameter_style == MethodParameterStyle::kApiMethodSignature) {
-    parameter_comment_string = FormatApiMethodSignatureParameters(method);
-  } else {
-    parameter_comment_string = FormatProtobufRequestParameters(method);
-  }
-  parameter_comment_string +=
-      absl::StrFormat("  /// @param options  Optional. Operation options.\n");
-
+    std::string const& variable_parameter_comments,
+    google::protobuf::SourceLocation const& method_source_location) {
   std::string doxygen_formatted_function_comments = absl::StrReplaceAll(
       EscapePrinterDelimiter(method_source_location.leading_comments),
       {{"\n", "\n  ///"}});
+
+  std::string options_comment =
+      absl::StrFormat("  /// @param options  Optional. Operation options.\n");
 
   std::string return_comment_string;
   if (IsLongrunningOperation(method)) {
@@ -482,7 +445,38 @@ std::string FormatMethodCommentsFromRpcComments(
 
   trailer += "  ///\n";
   return absl::StrCat("  ///\n  ///", doxygen_formatted_function_comments, "\n",
-                      parameter_comment_string, return_comment_string, trailer);
+                      variable_parameter_comments, options_comment,
+                      return_comment_string, trailer);
+}
+
+std::string FormatMethodCommentsMethodSignature(
+    google::protobuf::MethodDescriptor const& method,
+    std::string const& signature) {
+  google::protobuf::SourceLocation method_source_location;
+  if (!method.GetSourceLocation(&method_source_location) ||
+      method_source_location.leading_comments.empty()) {
+    GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
+                   << " no leading_comments to format";
+  }
+  auto parameter_comments =
+      FormatApiMethodSignatureParameters(method, signature);
+  return FormatMethodComments(method, std::move(parameter_comments),
+                              method_source_location);
+}
+
+std::string FormatMethodCommentsProtobufRequest(
+    google::protobuf::MethodDescriptor const& method) {
+  google::protobuf::SourceLocation method_source_location;
+  if (!method.GetSourceLocation(&method_source_location) ||
+      method_source_location.leading_comments.empty()) {
+    GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
+                   << " no leading_comments to format";
+  }
+  google::protobuf::Descriptor const* input_type = method.input_type();
+  auto parameter_comment = absl::StrFormat("  /// @param %s %s\n", "request",
+                                           FormatDoxygenLink(*input_type));
+  return FormatMethodComments(method, std::move(parameter_comment),
+                              method_source_location);
 }
 
 VarsDictionary CreateServiceVars(
