@@ -37,8 +37,7 @@ class MockStreamingReadRpc : public StreamingReadRpc<ResponseType> {
  public:
   ~MockStreamingReadRpc() override = default;
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD((absl::variant<Status, google::protobuf::Duration>), Read, (),
-              (override));
+  MOCK_METHOD((absl::variant<Status, ResponseType>), Read, (), (override));
   MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
