@@ -42,12 +42,14 @@
 ./include/google/cloud/eventarc
 ./include/google/cloud/eventarc/internal
 ./include/google/cloud/eventarc/mocks
-./include/google/cloud/eventarc/publishing
-./include/google/cloud/eventarc/publishing/v1
 ./include/google/cloud/eventarc/v1
 ./include/google/cloud/iam
 ./include/google/cloud/iam/internal
 ./include/google/cloud/iam/mocks
+./include/google/cloud/iot
+./include/google/cloud/iot/internal
+./include/google/cloud/iot/mocks
+./include/google/cloud/iot/v1
 ./include/google/cloud/kms
 ./include/google/cloud/kms/internal
 ./include/google/cloud/kms/mocks
@@ -127,6 +129,7 @@
 ./lib64/cmake/google_cloud_cpp_datamigration
 ./lib64/cmake/google_cloud_cpp_eventarc
 ./lib64/cmake/google_cloud_cpp_iam
+./lib64/cmake/google_cloud_cpp_iot
 ./lib64/cmake/google_cloud_cpp_kms
 ./lib64/cmake/google_cloud_cpp_logging
 ./lib64/cmake/google_cloud_cpp_pubsublite
