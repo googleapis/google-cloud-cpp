@@ -86,6 +86,17 @@ StreamRange<std::string> LoggingServiceV2Connection::ListLogs(
       });
 }
 
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+    google::logging::v2::TailLogEntriesRequest,
+    google::logging::v2::TailLogEntriesResponse>>
+LoggingServiceV2Connection::AsyncTailLogEntries() {
+  return absl::make_unique<
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
+          google::logging::v2::TailLogEntriesRequest,
+          google::logging::v2::TailLogEntriesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 namespace {
 class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
  public:
@@ -228,6 +239,15 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
           std::move(messages.begin(), messages.end(), result.begin());
           return result;
         });
+  }
+
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+      google::logging::v2::TailLogEntriesRequest,
+      google::logging::v2::TailLogEntriesResponse>>
+  AsyncTailLogEntries() override {
+    auto cq = background_->cq();
+    return stub_->AsyncTailLogEntries(cq,
+                                      absl::make_unique<grpc::ClientContext>());
   }
 
  private:

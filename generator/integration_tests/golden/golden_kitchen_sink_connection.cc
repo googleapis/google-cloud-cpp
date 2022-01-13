@@ -89,6 +89,17 @@ GoldenKitchenSinkConnection::DoNothing(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+    google::test::admin::database::v1::AppendRowsRequest,
+    google::test::admin::database::v1::AppendRowsResponse>>
+GoldenKitchenSinkConnection::AsyncAppendRows() {
+  return absl::make_unique<
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
+          google::test::admin::database::v1::AppendRowsRequest,
+          google::test::admin::database::v1::AppendRowsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 namespace {
 class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
  public:
@@ -226,6 +237,14 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
           return stub_->DoNothing(context, request);
         },
         request, __func__);
+  }
+
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+      google::test::admin::database::v1::AppendRowsRequest,
+      google::test::admin::database::v1::AppendRowsResponse>>
+  AsyncAppendRows() override {
+    auto cq = background_->cq();
+    return stub_->AsyncAppendRows(cq, absl::make_unique<grpc::ClientContext>());
   }
 
  private:
