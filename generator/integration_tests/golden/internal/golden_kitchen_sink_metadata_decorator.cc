@@ -88,6 +88,14 @@ GoldenKitchenSinkMetadata::DoNothing(
   return child_->DoNothing(context, request);
 }
 
+std::unique_ptr<GoldenKitchenSinkStub::AsyncAppendRowsStream>
+GoldenKitchenSinkMetadata::AsyncAppendRows(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  SetMetadata(*context, {});
+  return child_->AsyncAppendRows(cq, std::move(context));
+}
+
 void GoldenKitchenSinkMetadata::SetMetadata(grpc::ClientContext& context,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

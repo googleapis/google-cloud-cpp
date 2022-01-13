@@ -57,6 +57,10 @@ class LoggingServiceV2Metadata : public LoggingServiceV2Stub {
       grpc::ClientContext& context,
       google::logging::v2::ListLogsRequest const& request) override;
 
+  std::unique_ptr<AsyncTailLogEntriesStream> AsyncTailLogEntries(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);

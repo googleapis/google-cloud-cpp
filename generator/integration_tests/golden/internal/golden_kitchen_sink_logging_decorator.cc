@@ -17,6 +17,7 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_logging_decorator.h"
+#include "google/cloud/internal/async_read_write_stream_logging.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include "google/cloud/status_or.h"
@@ -126,6 +127,23 @@ GoldenKitchenSinkLogging::DoNothing(
         return child_->DoNothing(context, request);
       },
       context, request, __func__, tracing_options_);
+}
+
+std::unique_ptr<GoldenKitchenSinkStub::AsyncAppendRowsStream>
+GoldenKitchenSinkLogging::AsyncAppendRows(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  using LoggingStream =
+     ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<google::test::admin::database::v1::AppendRowsRequest, google::test::admin::database::v1::AppendRowsResponse>;
+
+  auto request_id = internal::RequestIdForLogging();
+  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  auto stream = child_->AsyncAppendRows(cq, std::move(context));
+  if (components_.count("rpc-streams") > 0) {
+    stream = absl::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

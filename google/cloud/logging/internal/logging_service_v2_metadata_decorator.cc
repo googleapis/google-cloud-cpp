@@ -73,6 +73,14 @@ LoggingServiceV2Metadata::ListLogs(
   return child_->ListLogs(context, request);
 }
 
+std::unique_ptr<LoggingServiceV2Stub::AsyncTailLogEntriesStream>
+LoggingServiceV2Metadata::AsyncTailLogEntries(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  SetMetadata(*context, {});
+  return child_->AsyncTailLogEntries(cq, std::move(context));
+}
+
 void LoggingServiceV2Metadata::SetMetadata(grpc::ClientContext& context,
                                            std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

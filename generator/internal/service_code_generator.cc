@@ -128,6 +128,13 @@ bool ServiceCodeGenerator::HasStreamingReadMethod() const {
                      });
 }
 
+bool ServiceCodeGenerator::HasBidirStreamingMethod() const {
+  return std::any_of(methods_.begin(), methods_.end(),
+                     [](google::protobuf::MethodDescriptor const& m) {
+                       return IsBidirStreaming(m);
+                     });
+}
+
 std::vector<std::string>
 ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
   std::vector<std::string> include_paths;
@@ -223,6 +230,12 @@ Status ServiceCodeGenerator::HeaderPrintMethod(
                      patterns, file, line);
 }
 
+void ServiceCodeGenerator::HeaderPrintMethod(
+    google::protobuf::MethodDescriptor const& method, char const* file,
+    int line, std::string const& text) {
+  header_.Print(line, file, MergeServiceAndMethodVars(method), text);
+}
+
 void ServiceCodeGenerator::CcPrint(std::string const& text) {
   cc_.Print(service_vars_, text);
 }
@@ -239,6 +252,12 @@ Status ServiceCodeGenerator::CcPrintMethod(
     std::vector<MethodPattern> const& patterns, char const* file, int line) {
   return PrintMethod(method, cc_, MergeServiceAndMethodVars(method), patterns,
                      file, line);
+}
+
+void ServiceCodeGenerator::CcPrintMethod(
+    google::protobuf::MethodDescriptor const& method, char const* file,
+    int line, std::string const& text) {
+  cc_.Print(line, file, MergeServiceAndMethodVars(method), text);
 }
 
 void ServiceCodeGenerator::GenerateLocalIncludes(

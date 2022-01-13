@@ -81,12 +81,16 @@ class ServiceCodeGenerator : public GeneratorInterface {
   Status HeaderPrintMethod(google::protobuf::MethodDescriptor const& method,
                            std::vector<MethodPattern> const& patterns,
                            char const* file, int line);
+  void HeaderPrintMethod(google::protobuf::MethodDescriptor const& method,
+                         char const* file, int line, std::string const& text);
 
   void CcPrint(std::string const& text);
   void CcPrint(std::vector<PredicatedFragment<void>> const& text);
   Status CcPrintMethod(google::protobuf::MethodDescriptor const& method,
                        std::vector<MethodPattern> const& patterns,
                        char const* file, int line);
+  void CcPrintMethod(google::protobuf::MethodDescriptor const& method,
+                     char const* file, int line, std::string const& text);
 
   /**
    * Determines if the service contains at least one method that returns a
@@ -116,6 +120,11 @@ class ServiceCodeGenerator : public GeneratorInterface {
    * response.
    */
   bool HasStreamingReadMethod() const;
+
+  /**
+   * Determines if the service contains at least one bidir streaming RPC
+   */
+  bool HasBidirStreamingMethod() const;
 
   /**
    * Determines if any of the method signatures has any Protocol Buffer

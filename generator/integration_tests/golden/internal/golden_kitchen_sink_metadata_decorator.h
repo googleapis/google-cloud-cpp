@@ -63,6 +63,10 @@ class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
     grpc::ClientContext& context,
     google::protobuf::Empty const& request) override;
 
+  std::unique_ptr<AsyncAppendRowsStream> AsyncAppendRows(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);

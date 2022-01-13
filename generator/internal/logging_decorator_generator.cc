@@ -71,6 +71,16 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
   // clang-format on
 
   for (auto const& method : methods()) {
+    if (IsBidirStreaming(method)) {
+      HeaderPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(  std::unique_ptr<Async$method_name$Stream> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+
+)""");
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern({{IsResponseTypeEmpty,
@@ -160,12 +170,15 @@ Status LoggingDecoratorGenerator::GenerateCc() {
   // clang-format on
 
   // includes
-  CcLocalIncludes({vars("logging_header_path"),
-                   "google/cloud/internal/log_wrapper.h",
-                   HasStreamingReadMethod()
-                       ? "google/cloud/internal/streaming_read_rpc_logging.h"
-                       : "",
-                   "google/cloud/status_or.h"});
+  CcLocalIncludes(
+      {vars("logging_header_path"), "google/cloud/internal/log_wrapper.h",
+       HasStreamingReadMethod()
+           ? "google/cloud/internal/streaming_read_rpc_logging.h"
+           : "",
+       HasBidirStreamingMethod()
+           ? "google/cloud/internal/async_read_write_stream_logging.h"
+           : "",
+       "google/cloud/status_or.h"});
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
   CcPrint("\n");
 
@@ -185,6 +198,29 @@ Status LoggingDecoratorGenerator::GenerateCc() {
 
   // logging decorator class member methods
   for (auto const& method : methods()) {
+    if (IsBidirStreaming(method)) {
+      CcPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(std::unique_ptr<$stub_class_name$::Async$method_name$Stream>
+$logging_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  using LoggingStream =
+     ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<$request_type$, $response_type$>;
+
+  auto request_id = internal::RequestIdForLogging();
+  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  auto stream = child_->Async$method_name$(cq, std::move(context));
+  if (components_.count("rpc-streams") > 0) {
+    stream = absl::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
+}
+
+)""");
+      continue;
+    }
     CcPrintMethod(
         method,
         {MethodPattern(

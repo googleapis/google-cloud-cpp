@@ -44,6 +44,11 @@ bool IsNonStreaming(google::protobuf::MethodDescriptor const& method);
 bool IsStreamingRead(google::protobuf::MethodDescriptor const& method);
 
 /**
+ * In a bidir streaming method both requests and responses are streamable.
+ */
+bool IsBidirStreaming(google::protobuf::MethodDescriptor const& method);
+
+/**
  * Determines if the given method is a long running operation.
  */
 bool IsLongrunningOperation(google::protobuf::MethodDescriptor const& method);
