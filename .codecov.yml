@@ -30,6 +30,7 @@ ignore:
   - "google/cloud/scheduler"
   - "google/cloud/secretmanager"
   - "google/cloud/spanner/admin"
+  - "google/cloud/storagetransfer"
   - "google/cloud/talent"
   - "google/cloud/tasks"
   - "google/cloud/vmmigration"

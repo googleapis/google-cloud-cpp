@@ -81,6 +81,7 @@ declare -A -r LIBRARIES=(
   )"
   ["speech"]="@com_google_googleapis//google/cloud/speech/v1:speech_proto"
   ["storage"]="@com_google_googleapis//google/storage/v2:storage_proto"
+  ["storagetransfer"]="@com_google_googleapis//google/storagetransfer/v1:storagetransfer_proto"
   ["talent"]="@com_google_googleapis//google/cloud/talent/v4:talent_proto"
   ["tasks"]="@com_google_googleapis//google/cloud/tasks/v2:tasks_proto"
   ["texttospeech"]="@com_google_googleapis//google/cloud/texttospeech/v1:texttospeech_proto"
