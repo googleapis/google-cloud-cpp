@@ -20,6 +20,7 @@
 #include "google/cloud/tracing_options.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/duration.pb.h>
+#include <google/protobuf/timestamp.pb.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -52,10 +53,10 @@ class StreamingReadRpcLoggingTest : public ::testing::Test {
   testing_util::ScopedLog log_;
 };
 
-using MockStream = MockAsyncStreamingReadWriteRpc<google::protobuf::Duration,
+using MockStream = MockAsyncStreamingReadWriteRpc<google::protobuf::Timestamp,
                                                   google::protobuf::Duration>;
 using TestedStream =
-    AsyncStreamingReadWriteRpcLogging<google::protobuf::Duration,
+    AsyncStreamingReadWriteRpcLogging<google::protobuf::Timestamp,
                                       google::protobuf::Duration>;
 
 TEST_F(StreamingReadRpcLoggingTest, Cancel) {
@@ -103,12 +104,12 @@ TEST_F(StreamingReadRpcLoggingTest, ReadWithout) {
 TEST_F(StreamingReadRpcLoggingTest, Write) {
   auto mock = absl::make_unique<MockStream>();
   EXPECT_CALL(*mock, Write)
-      .WillOnce([](google::protobuf::Duration const&, grpc::WriteOptions) {
+      .WillOnce([](google::protobuf::Timestamp const&, grpc::WriteOptions) {
         return make_ready_future(true);
       });
   TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
   EXPECT_TRUE(
-      stream.Write(google::protobuf::Duration{}, grpc::WriteOptions{}).get());
+      stream.Write(google::protobuf::Timestamp{}, grpc::WriteOptions{}).get());
   EXPECT_THAT(log_.ExtractLines(),
               Contains(AllOf(HasSubstr("Write"), HasSubstr("test-id"))));
 }
