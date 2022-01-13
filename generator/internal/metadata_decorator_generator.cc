@@ -65,6 +65,18 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
   // clang-format on
 
   for (auto const& method : methods()) {
+    if (IsStreamingWrite(method)) {
+      HeaderPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(  std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+      $request_type$,
+      $response_type$>>
+  $method_name$(
+      std::unique_ptr<grpc::ClientContext> context) override;
+
+)""");
+      continue;
+    }
     if (IsBidirStreaming(method)) {
       HeaderPrintMethod(
           method, __FILE__, __LINE__,
@@ -188,6 +200,21 @@ Status MetadataDecoratorGenerator::GenerateCc() {
 
   // metadata decorator class member methods
   for (auto const& method : methods()) {
+    if (IsStreamingWrite(method)) {
+      CcPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+    $request_type$,
+    $response_type$>>
+$metadata_class_name$::$method_name$(
+    std::unique_ptr<grpc::ClientContext> context) {
+  SetMetadata(*context, {});
+  return child_->$method_name$(std::move(context));
+}
+
+)""");
+      continue;
+    }
     if (IsBidirStreaming(method)) {
       CcPrintMethod(
           method, __FILE__, __LINE__,

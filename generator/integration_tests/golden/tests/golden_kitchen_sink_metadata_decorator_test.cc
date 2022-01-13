@@ -29,10 +29,13 @@ namespace {
 
 using ::google::cloud::golden_internal::MockGoldenKitchenSinkStub;
 using ::google::cloud::golden_internal::MockTailLogEntriesStreamingReadRpc;
+using ::google::cloud::golden_internal::MockWriteObjectStreamingWriteRpc;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsOk;
 using ::google::test::admin::database::v1::TailLogEntriesRequest;
 using ::google::test::admin::database::v1::TailLogEntriesResponse;
+using ::google::test::admin::database::v1::WriteObjectRequest;
+using ::google::test::admin::database::v1::WriteObjectResponse;
 using ::testing::Not;
 using ::testing::Return;
 
@@ -173,6 +176,33 @@ TEST_F(MetadataDecoratorTest, ListServiceAccountKeys) {
   request.set_name("projects/my-project/serviceAccounts/foo@bar.com");
   auto status = stub.ListServiceAccountKeys(context, request);
   EXPECT_EQ(TransientError(), status.status());
+}
+
+TEST_F(MetadataDecoratorTest, WriteObject) {
+  EXPECT_CALL(*mock_, WriteObject)
+      .WillOnce([this](std::unique_ptr<grpc::ClientContext> context) {
+        EXPECT_STATUS_OK(IsContextMDValid(
+            *context,
+            "google.test.admin.database.v1.GoldenKitchenSink.WriteObject",
+            expected_api_client_header_));
+
+        auto stream = absl::make_unique<MockWriteObjectStreamingWriteRpc>();
+        EXPECT_CALL(*stream, Write)
+            .WillOnce(Return(true))
+            .WillOnce(Return(false));
+        auto response = WriteObjectResponse{};
+        response.set_response("test-only");
+        EXPECT_CALL(*stream, Close).WillOnce(Return(make_status_or(response)));
+        return stream;
+      });
+
+  GoldenKitchenSinkMetadata stub(mock_);
+  auto stream = stub.WriteObject(absl::make_unique<grpc::ClientContext>());
+  EXPECT_TRUE(stream->Write(WriteObjectRequest{}, grpc::WriteOptions()));
+  EXPECT_FALSE(stream->Write(WriteObjectRequest{}, grpc::WriteOptions()));
+  auto response = stream->Close();
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->response(), "test-only");
 }
 
 }  // namespace

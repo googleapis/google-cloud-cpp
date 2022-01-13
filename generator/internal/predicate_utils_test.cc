@@ -215,6 +215,65 @@ TEST(PredicateUtilsTest, IsNonStreaming) {
       IsNonStreaming(*service_file_descriptor_lro->service(0)->method(3)));
 }
 
+TEST(PredicateUtilsTest, IsStreamingWrite) {
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Input" }
+    message_type { name: "Output" }
+    service {
+      name: "Service"
+      method {
+        name: "NonStreaming"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+      method {
+        name: "ClientStreaming"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+        client_streaming: true
+      }
+      method {
+        name: "ServerStreaming"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+        server_streaming: true
+      }
+      method {
+        name: "BidirectionalStreaming"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+        client_streaming: true
+        server_streaming: true
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  auto const* file_descriptor = pool.BuildFile(service_file);
+  auto const* service = file_descriptor->service(0);
+  struct Expected {
+    std::string name;
+    bool is_bir;
+  } methods[] = {
+      {"NonStreaming", false},
+      {"ClientStreaming", true},
+      {"ServerStreaming", false},
+      {"BidirectionalStreaming", false},
+  };
+  ASSERT_EQ(service->method_count(), sizeof(methods) / sizeof(methods[0]));
+  for (int i = 0; i != service->method_count(); ++i) {
+    ASSERT_EQ(service->method(i)->name(), methods[i].name);
+    ASSERT_EQ(IsStreamingWrite(*service->method(i)), methods[i].is_bir)
+        << "name=" << methods[i].name;
+  }
+}
+
 TEST(PredicateUtilsTest, IsBidirStreaming) {
   FileDescriptorProto service_file;
   /// @cond

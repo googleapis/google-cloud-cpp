@@ -21,6 +21,7 @@
 
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
+#include "google/cloud/internal/streaming_write_rpc.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <generator/integration_tests/test.grpc.pb.h>
@@ -71,6 +72,12 @@ class GoldenKitchenSinkStub {
       google::cloud::CompletionQueue const& cq,
       std::unique_ptr<grpc::ClientContext> context) = 0;
 
+ virtual std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+      google::test::admin::database::v1::WriteObjectRequest,
+      google::test::admin::database::v1::WriteObjectResponse>>
+  WriteObject(
+      std::unique_ptr<grpc::ClientContext> context) = 0;
+
 };
 
 class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
@@ -119,6 +126,12 @@ class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
       google::test::admin::database::v1::AppendRowsResponse>>
   AsyncAppendRows(
       google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+
+  std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+      google::test::admin::database::v1::WriteObjectRequest,
+      google::test::admin::database::v1::WriteObjectResponse>>
+  WriteObject(
       std::unique_ptr<grpc::ClientContext> context) override;
 
  private:

@@ -246,6 +246,27 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
               (override));
   MOCK_METHOD(AppendRowsAsyncInterface*, PrepareAsyncAppendRowsRaw,
               (::grpc::ClientContext*, ::grpc::CompletionQueue*), (override));
+
+  MOCK_METHOD((::grpc::ClientWriterInterface<
+                  ::google::test::admin::database::v1::WriteObjectRequest>*),
+              WriteObjectRaw,
+              (::grpc::ClientContext*,
+               ::google::test::admin::database::v1::WriteObjectResponse*),
+              (override));
+  MOCK_METHOD((::grpc::ClientAsyncWriterInterface<
+                  ::google::test::admin::database::v1::WriteObjectRequest>*),
+              AsyncWriteObjectRaw,
+              (::grpc::ClientContext*,
+               ::google::test::admin::database::v1::WriteObjectResponse*,
+               ::grpc::CompletionQueue*, void*),
+              (override));
+  MOCK_METHOD((::grpc::ClientAsyncWriterInterface<
+                  ::google::test::admin::database::v1::WriteObjectRequest>*),
+              PrepareAsyncWriteObjectRaw,
+              (::grpc::ClientContext*,
+               ::google::test::admin::database::v1::WriteObjectResponse*,
+               ::grpc::CompletionQueue*),
+              (override));
 };
 
 class GoldenKitchenSinkStubTest : public ::testing::Test {
@@ -368,6 +389,38 @@ TEST_F(GoldenKitchenSinkStubTest, ListServiceAccountKeys) {
   EXPECT_THAT(success, IsOk());
   auto failure = stub.ListServiceAccountKeys(context, request);
   EXPECT_EQ(failure.status(), TransientError());
+}
+
+class MockWriteObjectResponse
+    : public ::grpc::ClientWriterInterface<
+          google::test::admin::database::v1::WriteObjectRequest> {
+ public:
+  MOCK_METHOD(bool, Write,
+              (google::test::admin::database::v1::WriteObjectRequest const&,
+               grpc::WriteOptions),
+              (override));
+  MOCK_METHOD(bool, WritesDone, (), (override));
+  MOCK_METHOD(::grpc::Status, Finish, (), (override));
+};
+
+TEST_F(GoldenKitchenSinkStubTest, WriteObject) {
+  auto context = absl::make_unique<grpc::ClientContext>();
+  google::test::admin::database::v1::WriteObjectRequest request;
+  EXPECT_CALL(*grpc_stub_, WriteObjectRaw(context.get(), _))
+      .WillOnce([](::grpc::ClientContext*,
+                   ::google::test::admin::database::v1::WriteObjectResponse*) {
+        auto stream = absl::make_unique<MockWriteObjectResponse>();
+        EXPECT_CALL(*stream, Write).WillOnce(Return(true));
+        EXPECT_CALL(*stream, WritesDone).WillOnce(Return(true));
+        EXPECT_CALL(*stream, Finish).WillOnce(Return(grpc::Status::OK));
+        return stream.release();
+      });
+  DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
+  auto stream = stub.WriteObject(std::move(context));
+  EXPECT_TRUE(
+      stream->Write(google::test::admin::database::v1::WriteObjectRequest{},
+                    grpc::WriteOptions()));
+  EXPECT_THAT(stream->Close(), StatusIs(StatusCode::kOk));
 }
 
 }  // namespace

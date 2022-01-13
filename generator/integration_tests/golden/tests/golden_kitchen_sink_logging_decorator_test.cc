@@ -28,7 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::golden_internal::MockTailLogEntriesStreamingReadRpc;
+using ::google::cloud::golden_internal::MockWriteObjectStreamingWriteRpc;
 using ::google::cloud::testing_util::IsOk;
+using ::google::test::admin::database::v1::WriteObjectRequest;
+using ::google::test::admin::database::v1::WriteObjectResponse;
 using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::HasSubstr;
@@ -219,6 +222,31 @@ TEST_F(LoggingDecoratorTest, ListServiceAccountKeysError) {
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListServiceAccountKeys")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
+}
+
+TEST_F(LoggingDecoratorTest, WriteObject) {
+  EXPECT_CALL(*mock_, WriteObject)
+      .WillOnce([](std::unique_ptr<grpc::ClientContext>) {
+        auto stream = absl::make_unique<MockWriteObjectStreamingWriteRpc>();
+        EXPECT_CALL(*stream, Write)
+            .WillOnce(Return(true))
+            .WillOnce(Return(false));
+        auto response = WriteObjectResponse{};
+        response.set_response("test-only");
+        EXPECT_CALL(*stream, Close).WillOnce(Return(make_status_or(response)));
+        return stream;
+      });
+  GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
+  auto stream = stub.WriteObject(absl::make_unique<grpc::ClientContext>());
+  EXPECT_TRUE(stream->Write(WriteObjectRequest{}, grpc::WriteOptions()));
+  EXPECT_FALSE(stream->Write(WriteObjectRequest{}, grpc::WriteOptions()));
+  auto response = stream->Close();
+  ASSERT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->response(), "test-only");
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("WriteObject")));
 }
 
 }  // namespace

@@ -71,6 +71,18 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
   // clang-format on
 
   for (auto const& method : methods()) {
+    if (IsStreamingWrite(method)) {
+      HeaderPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(  std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+      $request_type$,
+      $response_type$>>
+   $method_name$(
+      std::unique_ptr<grpc::ClientContext> context) override;
+
+)""");
+      continue;
+    }
     if (IsBidirStreaming(method)) {
       HeaderPrintMethod(
           method, __FILE__, __LINE__,
@@ -178,6 +190,9 @@ Status LoggingDecoratorGenerator::GenerateCc() {
        HasStreamingReadMethod()
            ? "google/cloud/internal/streaming_read_rpc_logging.h"
            : "",
+       HasStreamingWriteMethod()
+           ? "google/cloud/internal/streaming_write_rpc_logging.h"
+           : "",
        HasBidirStreamingMethod()
            ? "google/cloud/internal/async_read_write_stream_logging.h"
            : "",
@@ -201,6 +216,30 @@ Status LoggingDecoratorGenerator::GenerateCc() {
 
   // logging decorator class member methods
   for (auto const& method : methods()) {
+    if (IsStreamingWrite(method)) {
+      CcPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+    $request_type$,
+    $response_type$>>
+$logging_class_name$::$method_name$(
+    std::unique_ptr<grpc::ClientContext> context) {
+  using LoggingStream = ::google::cloud::internal::StreamingWriteRpcLogging<
+      $request_type$, $response_type$>;
+
+  auto request_id = internal::RequestIdForLogging();
+  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  auto stream = child_->$method_name$(std::move(context));
+  if (components_.count("rpc-streams") > 0) {
+    stream = absl::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
+}
+
+)""");
+      continue;
+    }
     if (IsBidirStreaming(method)) {
       CcPrintMethod(
           method, __FILE__, __LINE__,
