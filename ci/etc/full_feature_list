@@ -5,6 +5,7 @@ assuredworkloads
 bigquery
 billing
 datamigration
+eventarc
 iam
 kms
 logging

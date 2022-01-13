@@ -20,6 +20,7 @@ ignore:
   - "google/cloud/bigtable/admin"
   - "google/cloud/billing"
   - "google/cloud/datamigration"
+  - "google/cloud/eventarc"
   - "google/cloud/iam"
   - "google/cloud/kms"
   - "google/cloud/logging"

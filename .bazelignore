@@ -12,6 +12,7 @@ google/cloud/bigquery/quickstart/
 google/cloud/bigtable/quickstart/
 google/cloud/billing/quickstart/
 google/cloud/datamigration/quickstart/
+google/cloud/eventarc/quickstart/
 google/cloud/iam/quickstart/
 google/cloud/kms/quickstart/
 google/cloud/logging/quickstart/

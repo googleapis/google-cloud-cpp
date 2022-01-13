@@ -105,6 +105,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Eventarc
+service {
+  service_proto_path: "google/cloud/eventarc/v1/eventarc.proto"
+  product_path: "google/cloud/eventarc"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable", "kUnknown"]
+}
+
 # IAM
 service {
   service_proto_path: "google/iam/credentials/v1/iamcredentials.proto"
