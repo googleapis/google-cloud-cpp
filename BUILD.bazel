@@ -181,6 +181,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-ids",
+    deps = [
+        "//google/cloud/ids:google_cloud_cpp_ids",
+    ],
+)
+
+cc_library(
+    name = "experimental-ids_mocks",
+    deps = [
+        "//google/cloud/ids:google_cloud_cpp_ids_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-iot",
     deps = [
         "//google/cloud/iot:google_cloud_cpp_iot",
