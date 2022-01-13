@@ -324,6 +324,21 @@ GrpcObjectRequestParser::ToProto(ReadObjectRangeRequest const& request) {
   return r;
 }
 
+google::storage::v2::GetObjectRequest GrpcObjectRequestParser::ToProto(
+    GetObjectMetadataRequest const& request) {
+  google::storage::v2::GetObjectRequest result;
+  SetGenerationConditions(result, request);
+  SetMetagenerationConditions(result, request);
+  SetCommonParameters(result, request);
+
+  result.set_bucket("projects/_/buckets/" + request.bucket_name());
+  result.set_object(request.object_name());
+  result.set_generation(request.GetOption<Generation>().value_or(0));
+  auto projection = request.GetOption<Projection>().value_or("");
+  if (projection == "full") result.mutable_read_mask()->add_paths("*");
+  return result;
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

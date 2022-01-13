@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,9 +15,12 @@
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include <crc32c/crc32c.h>
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 #include <vector>
 
 namespace google {
@@ -32,24 +35,39 @@ using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
-class GrpcServiceAccountIntegrationTest
+// When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
+// actually just run against the regular GCS REST API. That is fine.
+class GrpcObjectMetadataIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
-TEST_F(GrpcServiceAccountIntegrationTest, GetServiceAccount) {
+TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
   ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
                                 "metadata");
   // TODO(#7257) - restore gRPC integration tests against production
   if (!UsingEmulator()) GTEST_SKIP();
 
-  auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  ASSERT_THAT(project_id, Not(IsEmpty())) << "GOOGLE_CLOUD_PROJECT is not set";
+  auto const bucket_name =
+      GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
+  ASSERT_THAT(bucket_name, Not(IsEmpty()))
+      << "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME is not set";
 
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto response = client->GetServiceAccountForProject(project_id);
-  ASSERT_STATUS_OK(response);
-  EXPECT_THAT(response->email_address(), Not(IsEmpty()));
+  auto object_name = MakeRandomObjectName();
+
+  auto insert = client->InsertObject(bucket_name, object_name, LoremIpsum(),
+                                     IfGenerationMatch(0));
+  ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
+
+  auto get = client->GetObjectMetadata(bucket_name, object_name);
+  ASSERT_STATUS_OK(get);
+  auto sans_acls = [](ObjectMetadata meta) {
+    meta.set_acl({});
+    return meta;
+  };
+  EXPECT_EQ(sans_acls(*insert), sans_acls(*get));
 }
 
 }  // namespace
