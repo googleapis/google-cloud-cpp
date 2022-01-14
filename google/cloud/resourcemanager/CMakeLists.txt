@@ -43,6 +43,8 @@ include(CompileProtos)
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_resourcemanager_protos
     # cmake-format: sort
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/orgpolicy/v2/constraint.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/orgpolicy/v2/orgpolicy.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/resourcemanager/v3/folders.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/resourcemanager/v3/organizations.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/resourcemanager/v3/projects.proto
