@@ -44,6 +44,12 @@ bool IsNonStreaming(google::protobuf::MethodDescriptor const& method);
 bool IsStreamingRead(google::protobuf::MethodDescriptor const& method);
 
 /**
+ * Determines if the given method has a stream request and a non-stream
+ * response.
+ */
+bool IsStreamingWrite(google::protobuf::MethodDescriptor const& method);
+
+/**
  * In a bidir streaming method both requests and responses are streamable.
  */
 bool IsBidirStreaming(google::protobuf::MethodDescriptor const& method);

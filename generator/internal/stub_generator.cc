@@ -54,6 +54,8 @@ Status StubGenerator::GenerateHeader() {
        "google/cloud/status_or.h",
        HasStreamingReadMethod() ? "google/cloud/internal/streaming_read_rpc.h"
                                 : "",
+       HasStreamingWriteMethod() ? "google/cloud/internal/streaming_write_rpc.h"
+                                 : "",
        HasBidirStreamingMethod()
            ? "google/cloud/internal/async_read_write_stream_impl.h"
            : "",
@@ -79,6 +81,18 @@ Status StubGenerator::GenerateHeader() {
   // clang-format on
 
   for (auto const& method : methods()) {
+    if (IsStreamingWrite(method)) {
+      HeaderPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""( virtual std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+      $request_type$,
+      $response_type$>>
+  $method_name$(
+      std::unique_ptr<grpc::ClientContext> context) = 0;
+
+)""");
+      continue;
+    }
     if (IsBidirStreaming(method)) {
       HeaderPrintMethod(
           method, __FILE__, __LINE__,
@@ -187,6 +201,18 @@ Status StubGenerator::GenerateHeader() {
 
   for (auto const& method : methods()) {
     // emit methods
+    if (IsStreamingWrite(method)) {
+      HeaderPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(  std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+      $request_type$,
+      $response_type$>>
+  $method_name$(
+      std::unique_ptr<grpc::ClientContext> context) override;
+
+)""");
+      continue;
+    }
     if (IsBidirStreaming(method)) {
       HeaderPrintMethod(
           method, __FILE__, __LINE__,
@@ -318,6 +344,24 @@ Status StubGenerator::GenerateCc() {
 
   // default stub class member methods
   for (auto const& method : methods()) {
+    if (IsStreamingWrite(method)) {
+      CcPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+    $request_type$,
+    $response_type$>>
+Default$stub_class_name$::$method_name$(
+    std::unique_ptr<grpc::ClientContext> context) {
+  auto response = absl::make_unique<$response_type$>();
+  auto stream = grpc_stub_->$method_name$(context.get(), response.get());
+  return absl::make_unique<::google::cloud::internal::StreamingWriteRpcImpl<
+      $request_type$, $response_type$>>(
+    std::move(context), std::move(response), std::move(stream));
+}
+
+)""");
+      continue;
+    }
     if (IsBidirStreaming(method)) {
       CcPrintMethod(
           method, __FILE__, __LINE__,

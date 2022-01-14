@@ -122,6 +122,12 @@ class ServiceCodeGenerator : public GeneratorInterface {
   bool HasStreamingReadMethod() const;
 
   /**
+   * Determines if the service contains at least once rpc with a stream
+   * request.
+   */
+  bool HasStreamingWriteMethod() const;
+
+  /**
    * Determines if the service contains at least one bidir streaming RPC
    */
   bool HasBidirStreamingMethod() const;

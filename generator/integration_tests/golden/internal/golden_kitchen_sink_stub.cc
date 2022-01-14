@@ -131,6 +131,18 @@ DefaultGoldenKitchenSinkStub::AsyncAppendRows(
       });
 }
 
+std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+    google::test::admin::database::v1::WriteObjectRequest,
+    google::test::admin::database::v1::WriteObjectResponse>>
+DefaultGoldenKitchenSinkStub::WriteObject(
+    std::unique_ptr<grpc::ClientContext> context) {
+  auto response = absl::make_unique<google::test::admin::database::v1::WriteObjectResponse>();
+  auto stream = grpc_stub_->WriteObject(context.get(), response.get());
+  return absl::make_unique<::google::cloud::internal::StreamingWriteRpcImpl<
+      google::test::admin::database::v1::WriteObjectRequest, google::test::admin::database::v1::WriteObjectResponse>>(
+    std::move(context), std::move(response), std::move(stream));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
 }  // namespace cloud

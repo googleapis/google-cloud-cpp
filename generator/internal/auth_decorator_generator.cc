@@ -68,6 +68,15 @@ Status AuthDecoratorGenerator::GenerateHeader() {
 )""");
 
   for (auto const& method : methods()) {
+    if (IsStreamingWrite(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+      $request_type$,
+      $response_type$>> $method_name$(
+      std::unique_ptr<grpc::ClientContext> context) override;
+)""");
+      continue;
+    }
     if (IsBidirStreaming(method)) {
       HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
@@ -191,6 +200,22 @@ Status AuthDecoratorGenerator::GenerateCc() {
 
   // Auth decorator class member methods
   for (auto const& method : methods()) {
+    if (IsStreamingWrite(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+    $request_type$,
+    $response_type$>>
+$auth_class_name$::$method_name$(
+    std::unique_ptr<grpc::ClientContext> context) {
+  using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
+      $request_type$, $response_type$>;
+  auto status = auth_->ConfigureContext(*context);
+  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
+  return child_->$method_name$(std::move(context));
+}
+)""");
+      continue;
+    }
     if (IsBidirStreaming(method)) {
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<

@@ -20,6 +20,7 @@
 #include "google/cloud/internal/async_read_write_stream_logging.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
+#include "google/cloud/internal/streaming_write_rpc_logging.h"
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <memory>
@@ -141,6 +142,24 @@ GoldenKitchenSinkLogging::AsyncAppendRows(
   auto request_id = internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->AsyncAppendRows(cq, std::move(context));
+  if (components_.count("rpc-streams") > 0) {
+    stream = absl::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
+}
+
+std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+    google::test::admin::database::v1::WriteObjectRequest,
+    google::test::admin::database::v1::WriteObjectResponse>>
+GoldenKitchenSinkLogging::WriteObject(
+    std::unique_ptr<grpc::ClientContext> context) {
+  using LoggingStream = ::google::cloud::internal::StreamingWriteRpcLogging<
+      google::test::admin::database::v1::WriteObjectRequest, google::test::admin::database::v1::WriteObjectResponse>;
+
+  auto request_id = internal::RequestIdForLogging();
+  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  auto stream = child_->WriteObject(std::move(context));
   if (components_.count("rpc-streams") > 0) {
     stream = absl::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));

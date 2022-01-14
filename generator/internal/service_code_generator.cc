@@ -128,6 +128,13 @@ bool ServiceCodeGenerator::HasStreamingReadMethod() const {
                      });
 }
 
+bool ServiceCodeGenerator::HasStreamingWriteMethod() const {
+  return std::any_of(methods_.begin(), methods_.end(),
+                     [](google::protobuf::MethodDescriptor const& m) {
+                       return IsStreamingWrite(m);
+                     });
+}
+
 bool ServiceCodeGenerator::HasBidirStreamingMethod() const {
   return std::any_of(methods_.begin(), methods_.end(),
                      [](google::protobuf::MethodDescriptor const& m) {

@@ -80,6 +80,14 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
       (google::cloud::CompletionQueue const& cq,
            std::unique_ptr<grpc::ClientContext> context),
       (override));
+
+  MOCK_METHOD(
+      (std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+           ::google::test::admin::database::v1::WriteObjectRequest,
+           ::google::test::admin::database::v1::WriteObjectResponse>>),
+      WriteObject,
+      (std::unique_ptr<grpc::ClientContext> context),
+      (override));
 };
 
 class MockTailLogEntriesStreamingReadRpc
@@ -90,6 +98,14 @@ public:
   (override));
   MOCK_METHOD(internal::StreamingRpcMetadata, GetRequestMetadata, (),
   (const, override));
+};
+
+class MockWriteObjectStreamingWriteRpc
+    : public internal::StreamingWriteRpc<::google::test::admin::database::v1::WriteObjectRequest, ::google::test::admin::database::v1::WriteObjectResponse> {
+public:
+  MOCK_METHOD(void, Cancel, (), (override));
+  MOCK_METHOD(bool, Write, (::google::test::admin::database::v1::WriteObjectRequest const&, grpc::WriteOptions), (override));
+  MOCK_METHOD(StatusOr<::google::test::admin::database::v1::WriteObjectResponse>, Close, (), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

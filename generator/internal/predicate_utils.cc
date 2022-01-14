@@ -101,6 +101,10 @@ bool IsStreamingRead(google::protobuf::MethodDescriptor const& method) {
   return !method.client_streaming() && method.server_streaming();
 }
 
+bool IsStreamingWrite(google::protobuf::MethodDescriptor const& method) {
+  return method.client_streaming() && !method.server_streaming();
+}
+
 bool IsBidirStreaming(google::protobuf::MethodDescriptor const& method) {
   return method.client_streaming() && method.server_streaming();
 }

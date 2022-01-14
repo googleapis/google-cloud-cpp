@@ -107,6 +107,18 @@ GoldenKitchenSinkAuth::AsyncAppendRows(
     std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
+std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+    google::test::admin::database::v1::WriteObjectRequest,
+    google::test::admin::database::v1::WriteObjectResponse>>
+GoldenKitchenSinkAuth::WriteObject(
+    std::unique_ptr<grpc::ClientContext> context) {
+  using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
+      google::test::admin::database::v1::WriteObjectRequest, google::test::admin::database::v1::WriteObjectResponse>;
+  auto status = auth_->ConfigureContext(*context);
+  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
+  return child_->WriteObject(std::move(context));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
 }  // namespace cloud

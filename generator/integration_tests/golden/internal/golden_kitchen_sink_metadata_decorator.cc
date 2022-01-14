@@ -98,6 +98,15 @@ GoldenKitchenSinkMetadata::AsyncAppendRows(
   return child_->AsyncAppendRows(cq, std::move(context));
 }
 
+std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+    google::test::admin::database::v1::WriteObjectRequest,
+    google::test::admin::database::v1::WriteObjectResponse>>
+GoldenKitchenSinkMetadata::WriteObject(
+    std::unique_ptr<grpc::ClientContext> context) {
+  SetMetadata(*context, {});
+  return child_->WriteObject(std::move(context));
+}
+
 void GoldenKitchenSinkMetadata::SetMetadata(grpc::ClientContext& context,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

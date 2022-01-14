@@ -849,6 +849,9 @@ service GoldenKitchenSink {
   // A much simplified version of the AppendRows in google.cloud.bigquery.storage.v1.BigQueryWrite
   rpc AppendRows(stream AppendRowsRequest) returns (stream AppendRowsResponse) {
   }
+
+  // A much simplified version of the WriteObject method in google.storage.v2.Storage
+  rpc WriteObject(stream WriteObjectRequest) returns (WriteObjectResponse) {}
 }
 
 message AppendRowsRequest {
@@ -856,6 +859,14 @@ message AppendRowsRequest {
 }
 
 message AppendRowsResponse {
+  string response = 1;
+}
+
+message WriteObjectRequest {
+  string stream = 1;
+}
+
+message WriteObjectResponse {
   string response = 1;
 }
 
