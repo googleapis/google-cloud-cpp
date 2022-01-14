@@ -2,8 +2,10 @@
 
 @mainpage Cloud Video Intelligence API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Video Intelligence API][cloud-service-docs], a service
-to Detects objects, explicit content, and scene changes in videos. It also specifies the region for annotation and transcribes speech to text. Supports both asynchronous API and streaming API.
+An idiomatic C++ client library for the
+[Cloud Video Intelligence API][cloud-service-docs], a service to detect objects,
+explicit content, and scene changes in videos. It also specifies the region for
+annotation and transcribes speech to text.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +27,7 @@ your application. You can fetch the source from [GitHub][github-link] as normal:
 
 @code{.sh}
 git clone https://github.com/googleapis/google-cloud-cpp.git
-cd google-cloud-cpp/google/cloud/videointelligence/quickstart
+cd google-cloud-cpp/google/cloud/video-intelligence/quickstart
 @endcode
 
 @par Example: Quickstart

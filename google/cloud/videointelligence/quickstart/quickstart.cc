@@ -12,25 +12,56 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/videointelligence/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/videointelligence/video_intelligence_client.h"
+#include <google/protobuf/util/time_util.h>
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  auto constexpr kDefaultUri = "gs://cloud-samples-data/video/animals.mp4";
+  if (argc > 2) {
+    std::cerr << "Usage: " << argv[0] << " [video-uri]\n"
+              << "  The gcs-uri must be in gs://... format and must point to a"
+              << " MP4 video.\n"
+              << "It defaults to " << kDefaultUri << "\n";
     return 1;
   }
+  auto uri = std::string{argc == 2 ? argv[1] : kDefaultUri};
 
   namespace videointelligence = ::google::cloud::videointelligence;
-  auto client = videointelligence::Client(
-      videointelligence::MakeConnection(/* EDIT HERE */));
+  auto client = videointelligence::VideoIntelligenceServiceClient(
+      videointelligence::MakeVideoIntelligenceServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  using google::cloud::videointelligence::v1::Feature;
+  google::cloud::videointelligence::v1::AnnotateVideoRequest request;
+  request.set_input_uri(uri);
+  request.add_features(Feature::SPEECH_TRANSCRIPTION);
+  auto& config =
+      *request.mutable_video_context()->mutable_speech_transcription_config();
+  config.set_language_code("en-US");  // Adjust based
+  config.set_max_alternatives(1);  // We will just print the highest-confidence
+
+  auto future = client.AnnotateVideo(request);
+  std::cout << "Waiting for response";
+  auto const delay = std::chrono::seconds(5);
+  while (future.wait_for(delay) == std::future_status::timeout) {
+    std::cout << '.' << std::flush;
+  }
+  std::cout << "DONE\n";
+
+  auto response = future.get();
+  if (!response) throw std::runtime_error(response.status().message());
+
+  for (auto const& result : response->annotation_results()) {
+    using ::google::protobuf::util::TimeUtil;
+    std::cout << "Segment ["
+              << TimeUtil::ToString(result.segment().start_time_offset())
+              << ", " << TimeUtil::ToString(result.segment().end_time_offset())
+              << "]\n";
+    for (auto const& transcription : result.speech_transcriptions()) {
+      if (transcription.alternatives().empty()) continue;
+      std::cout << transcription.alternatives(0).transcript() << "\n";
+    }
   }
 
   return 0;
