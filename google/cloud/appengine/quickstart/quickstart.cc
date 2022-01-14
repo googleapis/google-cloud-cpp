@@ -12,22 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/appengine/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/appengine/services_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " app-id\n";
     return 1;
   }
 
   namespace appengine = ::google::cloud::appengine;
-  auto client = appengine::Client(appengine::MakeConnection(/* EDIT HERE */));
+  auto client = appengine::ServicesClient(appengine::MakeServicesConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  ::google::appengine::v1::ListServicesRequest request;
+  request.set_parent(std::string{"apps/"} + argv[1]);
+  for (auto r : client.ListServices(request)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

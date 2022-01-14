@@ -63,6 +63,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-appengine",
+    deps = [
+        "//google/cloud/appengine:google_cloud_cpp_appengine",
+    ],
+)
+
+cc_library(
+    name = "experimental-appengine_mocks",
+    deps = [
+        "//google/cloud/appengine:google_cloud_cpp_appengine_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-assuredworkloads",
     deps = [
         "//google/cloud/assuredworkloads:google_cloud_cpp_assuredworkloads",

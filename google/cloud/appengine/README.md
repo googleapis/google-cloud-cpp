@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[App Engine Admin API][cloud-service-docs], a service to Provisions and manages developers' App Engine applications.
+[App Engine Admin API][cloud-service-docs], a service to provision and manage
+App Engine applications.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/appengine
+[cloud-service-docs]: https://cloud.google.com/appengine/docs/admin-api
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-appengine/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/appengine
 
@@ -38,22 +39,22 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/appengine/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/appengine/services_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " app-id\n";
     return 1;
   }
 
   namespace appengine = ::google::cloud::appengine;
-  auto client = appengine::Client(appengine::MakeConnection(/* EDIT HERE */));
+  auto client = appengine::ServicesClient(appengine::MakeServicesConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  ::google::appengine::v1::ListServicesRequest request;
+  request.set_parent(std::string{"apps/"} + argv[1]);
+  for (auto r : client.ListServices(request)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
