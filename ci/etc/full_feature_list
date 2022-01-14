@@ -11,6 +11,7 @@ ids
 iot
 kms
 logging
+oslogin
 pubsublite
 resourcemanager
 scheduler

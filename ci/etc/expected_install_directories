@@ -63,6 +63,10 @@
 ./include/google/cloud/logging
 ./include/google/cloud/logging/internal
 ./include/google/cloud/logging/mocks
+./include/google/cloud/oslogin
+./include/google/cloud/oslogin/internal
+./include/google/cloud/oslogin/mocks
+./include/google/cloud/oslogin/v1
 ./include/google/cloud/pubsublite
 ./include/google/cloud/pubsublite/internal
 ./include/google/cloud/pubsublite/mocks
@@ -148,6 +152,7 @@
 ./lib64/cmake/google_cloud_cpp_iot
 ./lib64/cmake/google_cloud_cpp_kms
 ./lib64/cmake/google_cloud_cpp_logging
+./lib64/cmake/google_cloud_cpp_oslogin
 ./lib64/cmake/google_cloud_cpp_pubsublite
 ./lib64/cmake/google_cloud_cpp_resourcemanager
 ./lib64/cmake/google_cloud_cpp_scheduler
