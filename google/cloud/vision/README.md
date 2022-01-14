@@ -3,7 +3,10 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Vision API][cloud-service-docs], a service to Integrates Google Vision features, including image labeling, face, logo, and landmark detection, optical character recognition (OCR), and detection of explicit content, into applications.
+[Cloud Vision API][cloud-service-docs]. Integrate Google Vision
+features, including image labeling, face, logo, and landmark detection, optical
+character recognition (OCR), and detection of explicit content, into
+applications.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -38,25 +41,50 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/vision/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/vision/image_annotator_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  auto constexpr kDefaultUri =
+      "gs://cloud-samples-data/vision/label/wakeupcat.jpg";
+  if (argc > 2) {
+    std::cerr << "Usage: " << argv[0] << " [gcs-uri]\n"
+              << "  The gcs-uri must be in gs://... format. It defaults to "
+              << kDefaultUri << "\n";
     return 1;
   }
+  auto uri = std::string{argc == 2 ? argv[1] : kDefaultUri};
 
   namespace vision = ::google::cloud::vision;
-  auto client = vision::Client(vision::MakeConnection(/* EDIT HERE */));
+  auto client =
+      vision::ImageAnnotatorClient(vision::MakeImageAnnotatorConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  // Define the image we want to annotate
+  google::cloud::vision::v1::Image image;
+  image.mutable_source()->set_image_uri(uri);
+  // Create a request to annotate this image with Request text annotations for a
+  // file stored in GCS.
+  google::cloud::vision::v1::AnnotateImageRequest request;
+  *request.mutable_image() = std::move(image);
+  request.add_features()->set_type(
+      google::cloud::vision::v1::Feature::TEXT_DETECTION);
+
+  google::cloud::vision::v1::BatchAnnotateImagesRequest batch_request;
+  *batch_request.add_requests() = std::move(request);
+  auto batch = client.BatchAnnotateImages(batch_request);
+  if (!batch) throw std::runtime_error(batch.status().message());
+
+  // Find the longest annotation and print it
+  auto result = std::string{};
+  for (auto const& response : batch->responses()) {
+    for (auto const& annotation : response.text_annotations()) {
+      if (result.size() < annotation.description().size()) {
+        result = annotation.description();
+      }
+    }
   }
+  std::cout << "The image contains this text: " << result << "\n";
 
   return 0;
 } catch (std::exception const& ex) {

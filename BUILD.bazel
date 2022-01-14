@@ -433,6 +433,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-vision",
+    deps = [
+        "//google/cloud/vision:google_cloud_cpp_vision",
+    ],
+)
+
+cc_library(
+    name = "experimental-vision_mocks",
+    deps = [
+        "//google/cloud/vision:google_cloud_cpp_vision_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-vmmigration",
     deps = [
         "//google/cloud/vmmigration:google_cloud_cpp_vmmigration",
