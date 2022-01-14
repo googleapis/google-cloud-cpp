@@ -463,27 +463,27 @@ future<StatusOr<spanner_proto::ResultSet>> SessionPool::AsyncRefreshSession(
 Status SessionPool::HandleBatchCreateSessionsDone(
     std::shared_ptr<Channel> const& channel,
     StatusOr<spanner_proto::BatchCreateSessionsResponse> response) {
-  std::lock_guard<std::mutex> lk(mu_);
-  --create_calls_in_progress_;
-  if (!response.ok()) {
-    return response.status();
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    --create_calls_in_progress_;
+    if (!response.ok()) {
+      return response.status();
+    }
+    // Add sessions to the pool and update counters for `channel` and the pool.
+    auto const sessions_created = response->session_size();
+    channel->session_count += sessions_created;
+    total_sessions_ += sessions_created;
+    sessions_.reserve(sessions_.size() + sessions_created);
+    for (auto& session : *response->mutable_session()) {
+      sessions_.push_back(absl::make_unique<Session>(
+          std::move(*session.mutable_name()), channel, clock_));
+    }
+    // Shuffle the pool so we distribute returned sessions across channels.
+    std::shuffle(sessions_.begin(), sessions_.end(), random_generator_);
   }
-  // Add sessions to the pool and update counters for `channel` and the pool.
-  auto const sessions_created = response->session_size();
-  channel->session_count += sessions_created;
-  total_sessions_ += sessions_created;
-  sessions_.reserve(sessions_.size() + sessions_created);
-  for (auto& session : *response->mutable_session()) {
-    sessions_.push_back(absl::make_unique<Session>(
-        std::move(*session.mutable_name()), channel, clock_));
-  }
-  // Shuffle the pool so we distribute returned sessions across channels.
-  std::shuffle(sessions_.begin(), sessions_.end(), random_generator_);
 
   // Wake up anyone who was waiting for a `Session`.
-  mu_.unlock();
   cond_.notify_all();
-  mu_.lock();
   return Status();
 }
 
