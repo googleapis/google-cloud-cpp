@@ -54,11 +54,14 @@ Status MockConnectionGenerator::GenerateHeader() {
   if (!result.ok()) return result;
 
   // Abstract interface Connection base class
-  HeaderPrint(  // clang-format off
-    "\n"
-    "class $mock_connection_class_name$ : public $product_namespace$::$connection_class_name$ {\n"
-    " public:\n");
-  // clang-format on
+  HeaderPrint(R"""(
+class $mock_connection_class_name$ : public $product_namespace$::$connection_class_name$ {
+ public:)""");
+  // Avoid an unsightly blank line at the start of the mock class by not
+  // printing a newline after the `public:` access qualifier. While almost any
+  // class we generate will have some member functions, if there are none, we
+  // need that newline.
+  if (methods().empty() && async_methods().empty()) HeaderPrint("\n");
 
   for (auto const& method : methods()) {
     if (IsBidirStreaming(method)) {
