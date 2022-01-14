@@ -121,7 +121,7 @@ TEST_F(ScaffoldGenerator, LibraryName) {
 TEST_F(ScaffoldGenerator, Vars) {
   auto const vars = ScaffoldVars(path(), path(), service());
   EXPECT_THAT(
-      vars, AllOf(Contains(Pair("title", "Test Only API")),
+      vars, AllOf(Contains(Pair("title", "Test Only")),
                   Contains(Pair("description",
                                 "Provides a placeholder to write this test.")),
                   Contains(Pair("library", "test")),
@@ -157,7 +157,8 @@ TEST_F(ScaffoldGenerator, Readme) {
   GenerateReadme(os, vars);
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr(R"""(
-[cloud-service-docs]: https://cloud.google.com/test
+[cloud-service]: https://cloud.google.com/test
+[cloud-service-docs]: https://cloud.google.com/test/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-test/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/test
 )"""));
@@ -209,11 +210,11 @@ TEST_F(ScaffoldGenerator, DoxygenMainPage) {
   GenerateDoxygenMainPage(os, vars);
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr(R"""(
-An idiomatic C++ client library for the [Test Only API][cloud-service-docs], a service
+An idiomatic C++ client library for [Test Only][cloud-service], a service
 to Provides a placeholder to write this test.
 )"""));
   EXPECT_THAT(actual, HasSubstr(R"""(
-[cloud-service-docs]: https://cloud.google.com/test
+[cloud-service]: https://cloud.google.com/test
 )"""));
 }
 
@@ -224,7 +225,7 @@ TEST_F(ScaffoldGenerator, QuickstartReadme) {
   auto const actual = std::move(os).str();
   EXPECT_THAT(
       actual,
-      HasSubstr(R"""(# HOWTO: using the Test Only API C++ client in your project
+      HasSubstr(R"""(# HOWTO: using the Test Only C++ client in your project
 )"""));
 }
 

@@ -98,7 +98,11 @@ std::map<std::string, std::string> ScaffoldVars(
     if (!api.contains("directory")) continue;
     auto const directory = api["directory"].get<std::string>() + "/";
     if (service.service_proto_path().rfind(directory, 0) != 0) continue;
-    vars.emplace("title", api.value("title", ""));
+    // If the title ends in " API", strip the ending.
+    auto title = api.value("title", "");
+    auto pos = title.size() - std::strlen(" API");
+    if (pos > 0 && title.substr(pos) == " API") title = title.substr(0, pos);
+    vars.emplace("title", std::move(title));
     vars.emplace("description", api.value("description", ""));
     vars.emplace("directory", api.value("directory", ""));
   }
@@ -260,8 +264,8 @@ void GenerateReadme(std::ostream& os,
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[$title$][cloud-service-docs], a service to $description$
+This directory contains an idiomatic C++ client library for
+[$title$][cloud-service], a service to $description$
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -283,7 +287,8 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/$site_root$
+[cloud-service]: https://cloud.google.com/$site_root$
+[cloud-service-docs]: https://cloud.google.com/$site_root$/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-$library$/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/$library$
 
@@ -412,7 +417,7 @@ void GenerateCMakeLists(std::ostream& os,
 
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "$title$ C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the $title$")
+set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the $title$ service")
 set(DOXYGEN_PROJECT_NUMBER "$${PROJECT_VERSION} (Experimental)")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "$library$_internal" "$library$_testing"
                             "examples")
@@ -542,7 +547,7 @@ set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR $${PROJECT_VERSION_MAJOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR $${PROJECT_VERSION_MINOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH $${PROJECT_VERSION_PATCH})
 set(GOOGLE_CLOUD_PC_NAME "The $title$ C++ Client Library")
-set(GOOGLE_CLOUD_PC_DESCRIPTION "Provides C++ APIs to use the $title$.")
+set(GOOGLE_CLOUD_PC_DESCRIPTION "Provides C++ APIs to use the $title$ service.")
 set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_$library$")
 string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
               " google_cloud_cpp_common" " google_cloud_cpp_$library$_protos")
@@ -584,7 +589,7 @@ void GenerateDoxygenMainPage(
 
 @mainpage $title$ C++ Client Library
 
-An idiomatic C++ client library for the [$title$][cloud-service-docs], a service
+An idiomatic C++ client library for [$title$][cloud-service], a service
 to $description$
 
 This library is **experimental**. Its APIs are subject to change without notice.
@@ -663,7 +668,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/$site_root$
+[cloud-service]: https://cloud.google.com/$site_root$
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
