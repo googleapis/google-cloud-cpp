@@ -70,7 +70,7 @@ build:ubsan --cxxopt=-stdlib=libc++
 build:ubsan --linkopt=-stdlib=libc++
 build:ubsan --linkopt=-lc++
 build:ubsan --linkopt=-lc++abi
-# Perform thread safety checks in libc++ build modes
+# Perform thread safety checks in ubsan
 build:ubsan --copt=-D_LIBCPP_ENABLE_THREAD_SAFETY_ANNOTATIONS
 build:ubsan --copt=-DHAVE_THREAD_SAFETY_ATTRIBUTES  # Enable proper googlebench attributes
 build:ubsan --copt=-Wthread-safety
