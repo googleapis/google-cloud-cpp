@@ -30,6 +30,8 @@ build --enable_platform_specific_config=true
 # Error out on compiler warnings
 build --copt=-Werror
 build --copt=-Wall
+# Work around for warning in protobuf internals
+build --copt=-Wno-stringop-overflow
 
 # Clang Sanitizers, use with (for example):
 #
