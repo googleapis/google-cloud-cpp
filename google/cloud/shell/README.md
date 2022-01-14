@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Shell API][cloud-service-docs], a service to Allows users to start, configure, and connect to interactive shell sessions running in the cloud.
+[Cloud Shell API][cloud-service-docs], a service to allow users to start,
+configure, and connect to interactive shell sessions running in the cloud.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -38,25 +39,25 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/shell/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/shell/cloud_shell_client.h"
 #include <iostream>
 #include <stdexcept>
+#include <string>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " user\n";
     return 1;
   }
 
   namespace shell = ::google::cloud::shell;
-  auto client = shell::Client(shell::MakeConnection(/* EDIT HERE */));
+  auto client =
+      shell::CloudShellServiceClient(shell::MakeCloudShellServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
-  }
+  auto name = "users/" + std::string{argv[0]} + "/environments/default";
+  auto env = client.GetEnvironment(name);
+  if (!env) throw std::runtime_error(env.status().message());
+  std::cout << env->DebugString() << "\n";
 
   return 0;
 } catch (std::exception const& ex) {
