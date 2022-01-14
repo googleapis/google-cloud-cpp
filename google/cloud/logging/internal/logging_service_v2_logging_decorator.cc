@@ -107,7 +107,7 @@ LoggingServiceV2Logging::AsyncTailLogEntries(
           google::logging::v2::TailLogEntriesRequest,
           google::logging::v2::TailLogEntriesResponse>;
 
-  auto request_id = internal::RequestIdForLogging();
+  auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->AsyncTailLogEntries(cq, std::move(context));
   if (components_.count("rpc-streams") > 0) {

@@ -44,13 +44,13 @@ DefaultBigQueryReadStub::CreateReadSession(
   return response;
 }
 
-std::unique_ptr<internal::StreamingReadRpc<
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::bigquery::storage::v1::ReadRowsResponse>>
 DefaultBigQueryReadStub::ReadRows(
     std::unique_ptr<grpc::ClientContext> client_context,
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
   auto stream = grpc_stub_->ReadRows(client_context.get(), request);
-  return absl::make_unique<internal::StreamingReadRpcImpl<
+  return absl::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::cloud::bigquery::storage::v1::ReadRowsResponse>>(
       std::move(client_context), std::move(stream));
 }

@@ -111,7 +111,7 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
              IsLongrunningOperation),
          MethodPattern(
              {// clang-format off
-   {"  std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+   {"  std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
     "    $method_name$(\n"
     "    std::unique_ptr<grpc::ClientContext> context,\n"
     "    $request_type$ const& request) override;\n"
@@ -276,7 +276,7 @@ $metadata_class_name$::Async$method_name$(
          MethodPattern(
              {
                  // clang-format off
-   {"std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+   {"std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
     "$metadata_class_name$::$method_name$(\n"
     "    std::unique_ptr<grpc::ClientContext> context,\n"
     "    $request_type$ const& request) {\n"},

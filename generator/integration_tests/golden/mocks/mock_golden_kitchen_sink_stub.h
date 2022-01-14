@@ -91,7 +91,7 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
 };
 
 class MockTailLogEntriesStreamingReadRpc
-    : public internal::StreamingReadRpc<::google::test::admin::database::v1::TailLogEntriesResponse> {
+    : public google::cloud::internal::StreamingReadRpc<::google::test::admin::database::v1::TailLogEntriesResponse> {
 public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD((absl::variant<Status, ::google::test::admin::database::v1::TailLogEntriesResponse>), Read, (),

@@ -128,7 +128,7 @@ Status StubGenerator::GenerateHeader() {
              IsLongrunningOperation),
          MethodPattern(
              {// clang-format off
-   {"  virtual std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+   {"  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
     "  $method_name$(\n"
     "    std::unique_ptr<grpc::ClientContext> context,\n"
     "    $request_type$ const& request) = 0;\n"
@@ -248,7 +248,7 @@ Status StubGenerator::GenerateHeader() {
              IsLongrunningOperation),
          MethodPattern(
              {// clang-format off
-   {"  std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+   {"  std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
     "  $method_name$(\n"
     "    std::unique_ptr<grpc::ClientContext> client_context,\n"
     "    $request_type$ const& request) override;\n"
@@ -422,12 +422,12 @@ Default$stub_class_name$::Async$method_name$(
                        IsLongrunningOperation),
          MethodPattern(
              {// clang-format off
-   {"std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+   {"std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
     "Default$stub_class_name$::$method_name$(\n"
     "    std::unique_ptr<grpc::ClientContext> client_context,\n"
     "    $request_type$ const& request) {\n"
     "  auto stream = grpc_stub_->$method_name$(client_context.get(), request);\n"
-    "  return absl::make_unique<internal::StreamingReadRpcImpl<\n"
+    "  return absl::make_unique<google::cloud::internal::StreamingReadRpcImpl<\n"
     "      $response_type$>>(\n"
     "      std::move(client_context), std::move(stream));\n"
     "}\n\n"}},
