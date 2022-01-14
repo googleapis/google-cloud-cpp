@@ -118,7 +118,8 @@ class AsyncStreamingReadWriteRpcAuth
 
     StreamFactory const factory;
     std::mutex mu;
-    std::unique_ptr<grpc::ClientContext> initial_context GOOGLE_CLOUD_GUARDED_BY(mu);
+    std::unique_ptr<grpc::ClientContext> initial_context
+        GOOGLE_CLOUD_GUARDED_BY(mu);
     std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>> stream
         GOOGLE_CLOUD_GUARDED_BY(mu);
     bool cancelled GOOGLE_CLOUD_GUARDED_BY(mu) = false;

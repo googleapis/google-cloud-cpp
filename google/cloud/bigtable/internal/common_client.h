@@ -61,8 +61,8 @@ class OutstandingTimers
   std::mutex mu_;
   bool shutdown_ GOOGLE_CLOUD_GUARDED_BY(mu_) = false;
   std::uint64_t id_generator_ GOOGLE_CLOUD_GUARDED_BY(mu_) = 0;
-  std::unordered_map<std::uint64_t,
-                     future<void>> timers_ GOOGLE_CLOUD_GUARDED_BY(mu_);
+  std::unordered_map<std::uint64_t, future<void>> timers_
+      GOOGLE_CLOUD_GUARDED_BY(mu_);
   // Object of this class is owned by timers continuations, which means it
   // cannot have an owning reference to the `CompletionQueue` because  it would
   // otherwise create a risk of a deadlock on the completion queue destruction.

@@ -24,8 +24,10 @@
 #define GOOGLE_CLOUD_GUARDED_BY(mu) ABSL_GUARDED_BY(mu)
 #define GOOGLE_CLOUD_ACQUIRED_AFTER(...) ABSL_ACQUIRED_AFTER(__VA_ARGS__)
 #define GOOGLE_CLOUD_ACQUIRED_BEFORE(...) ABSL_ACQUIRED_BEFORE(__VA_ARGS__)
-#define GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(...) ABSL_EXCLUSIVE_LOCKS_REQUIRED(__VA_ARGS__)
-#define GOOGLE_CLOUD_SHARED_LOCKS_REQUIRED(...) ABSL_SHARED_LOCKS_REQUIRED(__VA_ARGS__)
+#define GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(...) \
+  ABSL_EXCLUSIVE_LOCKS_REQUIRED(__VA_ARGS__)
+#define GOOGLE_CLOUD_SHARED_LOCKS_REQUIRED(...) \
+  ABSL_SHARED_LOCKS_REQUIRED(__VA_ARGS__)
 #define GOOGLE_CLOUD_LOCKS_EXCLUDED(...) ABSL_LOCKS_EXCLUDED(__VA_ARGS__)
 #define GOOGLE_CLOUD_NO_THREAD_SAFETY_ANALYSIS ABSL_NO_THREAD_SAFETY_ANALYSIS
 
@@ -47,14 +49,16 @@ namespace internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // A condition_variable wait that plays nicely with thread annotations.
-inline void wait(std::condition_variable& cv, std::mutex& mu) GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu) {
+inline void wait(std::condition_variable& cv, std::mutex& mu)
+    GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu) {
   std::unique_lock<std::mutex> adopted{mu, std::adopt_lock};
   cv.wait(adopted);
   (void)adopted.release();
 }
 
 template <class Predicate>
-void wait(std::condition_variable& cv, std::mutex& mu, Predicate&& stop_waiting) GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu) {
+void wait(std::condition_variable& cv, std::mutex& mu, Predicate&& stop_waiting)
+    GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu) {
   std::unique_lock<std::mutex> adopted{mu, std::adopt_lock};
   cv.wait(adopted, std::forward<Predicate>(stop_waiting));
   (void)adopted.release();

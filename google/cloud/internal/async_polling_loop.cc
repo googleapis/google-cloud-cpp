@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_polling_loop.h"
-#include "google/cloud/internal/thread_annotations.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/thread_annotations.h"
 #include "google/cloud/log.h"
 #include <algorithm>
 #include <mutex>

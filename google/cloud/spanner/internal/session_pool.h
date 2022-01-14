@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SESSION_POOL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SESSION_POOL_H
 
-#include "google/cloud/internal/thread_annotations.h"
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/internal/channel.h"
@@ -27,6 +26,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/thread_annotations.h"
 #include "google/cloud/status_or.h"
 #include "absl/container/fixed_array.h"
 #include <google/spanner/v1/spanner.pb.h>
@@ -131,17 +131,19 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   // Called when a thread needs to wait for a `Session` to become available.
   // @p specifies the condition to wait for.
   template <typename Predicate>
-  void Wait(Predicate&& p)  GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu_) {
+  void Wait(Predicate&& p) GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu_) {
     ++num_waiting_for_session_;
     internal::wait(cond_, mu_, std::forward<Predicate>(p));
     --num_waiting_for_session_;
   }
 
-  Status Grow(int sessions_to_create, WaitForSessionAllocation wait) GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu_);
-  StatusOr<std::vector<CreateCount>> ComputeCreateCounts(
-      int sessions_to_create) GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu_);
+  Status Grow(int sessions_to_create, WaitForSessionAllocation wait)
+      GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu_);
+  StatusOr<std::vector<CreateCount>> ComputeCreateCounts(int sessions_to_create)
+      GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu_);
   Status CreateSessions(std::vector<CreateCount> const& create_counts,
-                        WaitForSessionAllocation wait) GOOGLE_CLOUD_LOCKS_EXCLUDED(mu_);
+                        WaitForSessionAllocation wait)
+      GOOGLE_CLOUD_LOCKS_EXCLUDED(mu_);
   Status CreateSessionsSync(std::shared_ptr<Channel> const& channel,
                             std::map<std::string, std::string> const& labels,
                             int num_sessions) GOOGLE_CLOUD_LOCKS_EXCLUDED(mu_);
@@ -192,8 +194,8 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   int num_waiting_for_session_ GOOGLE_CLOUD_GUARDED_BY(mu_) = 0;
 
   // Lower bound on all `sessions_[i]->last_use_time()` values.
-  Session::Clock::time_point last_use_time_lower_bound_ GOOGLE_CLOUD_GUARDED_BY(mu_) =
-      clock_->Now();  // GUARDED_BY(mu_)
+  Session::Clock::time_point last_use_time_lower_bound_
+      GOOGLE_CLOUD_GUARDED_BY(mu_) = clock_->Now();  // GUARDED_BY(mu_)
 
   future<void> current_timer_;
 
@@ -202,7 +204,8 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   // n.b. `FixedArray` iterators are never invalidated.
   using ChannelVec = absl::FixedArray<std::shared_ptr<Channel>>;
   ChannelVec channels_ GOOGLE_CLOUD_GUARDED_BY(mu_);
-  ChannelVec::iterator next_dissociated_stub_channel_ GOOGLE_CLOUD_GUARDED_BY(mu_);
+  ChannelVec::iterator next_dissociated_stub_channel_
+      GOOGLE_CLOUD_GUARDED_BY(mu_);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
