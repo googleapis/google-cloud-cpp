@@ -25,12 +25,16 @@ namespace testing {
 
 class MockStorageStub : public internal::StorageStub {
  public:
-  MOCK_METHOD(std::unique_ptr<ReadObjectStream>, ReadObject,
+  MOCK_METHOD(std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+                  google::storage::v2::ReadObjectResponse>>,
+              ReadObject,
               (std::unique_ptr<grpc::ClientContext>,
                google::storage::v2::ReadObjectRequest const&),
               (override));
-  MOCK_METHOD(std::unique_ptr<WriteObjectStream>, WriteObject,
-              (std::unique_ptr<grpc::ClientContext>), (override));
+  MOCK_METHOD((std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
+                   google::storage::v2::WriteObjectRequest,
+                   google::storage::v2::WriteObjectResponse>>),
+              WriteObject, (std::unique_ptr<grpc::ClientContext>), (override));
   MOCK_METHOD(StatusOr<google::storage::v2::StartResumableWriteResponse>,
               StartResumableWrite,
               (grpc::ClientContext&,
@@ -43,7 +47,9 @@ class MockStorageStub : public internal::StorageStub {
               (override));
 };
 
-class MockInsertStream : public internal::StorageStub::WriteObjectStream {
+class MockInsertStream : public google::cloud::internal::StreamingWriteRpc<
+                             google::storage::v2::WriteObjectRequest,
+                             google::storage::v2::WriteObjectResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(bool, Write,
@@ -54,7 +60,8 @@ class MockInsertStream : public internal::StorageStub::WriteObjectStream {
               (override));
 };
 
-class MockObjectMediaStream : public internal::StorageStub::ReadObjectStream {
+class MockObjectMediaStream : public google::cloud::internal::StreamingReadRpc<
+                                  google::storage::v2::ReadObjectResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   using ReadResultType =

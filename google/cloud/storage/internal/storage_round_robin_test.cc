@@ -51,17 +51,20 @@ std::vector<std::shared_ptr<StorageStub>> AsPlainStubs(
   return std::vector<std::shared_ptr<StorageStub>>(mocks.begin(), mocks.end());
 }
 
-std::unique_ptr<StorageStub::ReadObjectStream> MakeReadObjectStream(
-    std::unique_ptr<grpc::ClientContext>,
-    google::storage::v2::ReadObjectRequest const&) {
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::storage::v2::ReadObjectResponse>>
+MakeReadObjectStream(std::unique_ptr<grpc::ClientContext>,
+                     google::storage::v2::ReadObjectRequest const&) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::storage::v2::ReadObjectResponse>;
   return absl::make_unique<ErrorStream>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
 }
 
-std::unique_ptr<StorageStub::WriteObjectStream> MakeInsertStream(
-    std::unique_ptr<grpc::ClientContext>) {
+std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
+    google::storage::v2::WriteObjectRequest,
+    google::storage::v2::WriteObjectResponse>>
+MakeInsertStream(std::unique_ptr<grpc::ClientContext>) {
   using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;
@@ -69,7 +72,7 @@ std::unique_ptr<StorageStub::WriteObjectStream> MakeInsertStream(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
 }
 
-TEST(StorageAuthTest, ReadObject) {
+TEST(StorageRoundRobinTest, ReadObject) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
@@ -89,7 +92,7 @@ TEST(StorageAuthTest, ReadObject) {
   }
 }
 
-TEST(StorageAuthTest, WriteObject) {
+TEST(StorageRoundRobinTest, WriteObject) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
@@ -106,7 +109,7 @@ TEST(StorageAuthTest, WriteObject) {
   }
 }
 
-TEST(StorageAuthTest, StartResumableWrite) {
+TEST(StorageRoundRobinTest, StartResumableWrite) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
@@ -125,7 +128,7 @@ TEST(StorageAuthTest, StartResumableWrite) {
   }
 }
 
-TEST(StorageAuthTest, QueryWriteStatus) {
+TEST(StorageRoundRobinTest, QueryWriteStatus) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {

@@ -20,14 +20,18 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-std::unique_ptr<StorageStub::ReadObjectStream> StorageRoundRobin::ReadObject(
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::storage::v2::ReadObjectResponse>>
+StorageRoundRobin::ReadObject(
     std::unique_ptr<grpc::ClientContext> context,
     google::storage::v2::ReadObjectRequest const& request) {
   return Child()->ReadObject(std::move(context), request);
 }
 
-std::unique_ptr<StorageStub::WriteObjectStream> StorageRoundRobin::WriteObject(
-    std::unique_ptr<grpc::ClientContext> context) {
+std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
+    google::storage::v2::WriteObjectRequest,
+    google::storage::v2::WriteObjectResponse>>
+StorageRoundRobin::WriteObject(std::unique_ptr<grpc::ClientContext> context) {
   return Child()->WriteObject(std::move(context));
 }
 

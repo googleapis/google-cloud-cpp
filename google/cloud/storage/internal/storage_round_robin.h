@@ -32,12 +32,15 @@ class StorageRoundRobin : public StorageStub {
       : children_(std::move(children)) {}
   ~StorageRoundRobin() override = default;
 
-  std::unique_ptr<ReadObjectStream> ReadObject(
-      std::unique_ptr<grpc::ClientContext> context,
-      google::storage::v2::ReadObjectRequest const& request) override;
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::storage::v2::ReadObjectResponse>>
+  ReadObject(std::unique_ptr<grpc::ClientContext> context,
+             google::storage::v2::ReadObjectRequest const& request) override;
 
-  std::unique_ptr<WriteObjectStream> WriteObject(
-      std::unique_ptr<grpc::ClientContext> context) override;
+  std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
+      google::storage::v2::WriteObjectRequest,
+      google::storage::v2::WriteObjectResponse>>
+  WriteObject(std::unique_ptr<grpc::ClientContext> context) override;
 
   StatusOr<google::storage::v2::StartResumableWriteResponse>
   StartResumableWrite(
