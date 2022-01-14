@@ -110,7 +110,6 @@ class GoldenThingAdminConnection {
 
   virtual future<Status>
   AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request);
-
 };
 
 std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(

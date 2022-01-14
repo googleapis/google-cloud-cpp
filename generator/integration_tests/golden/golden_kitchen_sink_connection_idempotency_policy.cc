@@ -68,7 +68,6 @@ class DefaultGoldenKitchenSinkConnectionIdempotencyPolicy : public GoldenKitchen
   DoNothing(google::protobuf::Empty const&) override {
     return Idempotency::kIdempotent;
   }
-
 };
 }  // namespace
 
