@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) try {
   auto client =
       shell::CloudShellServiceClient(shell::MakeCloudShellServiceConnection());
 
-  auto name = "users/" + std::string{argv[0]} + "/environments/default";
+  auto const name = "users/" + std::string{argv[1]} + "/environments/default";
   auto env = client.GetEnvironment(name);
   if (!env) throw std::runtime_error(env.status().message());
   std::cout << env->DebugString() << "\n";
