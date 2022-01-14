@@ -176,7 +176,14 @@ service {
   product_path: "google/cloud/pubsublite"
   initial_copyright_year: "2021"
   retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
+}
 
+# Recommender
+service {
+  service_proto_path: "google/cloud/recommender/v1/recommender_service.proto"
+  product_path: "google/cloud/recommender"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
 # Resource Manager

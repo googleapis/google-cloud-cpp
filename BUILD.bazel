@@ -274,6 +274,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-recommender",
+    deps = [
+        "//google/cloud/recommender:google_cloud_cpp_recommender",
+    ],
+)
+
+cc_library(
+    name = "experimental-recommender_mocks",
+    deps = [
+        "//google/cloud/recommender:google_cloud_cpp_recommender_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-resourcemanager",
     deps = [
         "//google/cloud/resourcemanager:google_cloud_cpp_resourcemanager",

@@ -20,6 +20,7 @@ google/cloud/kms/quickstart/
 google/cloud/logging/quickstart/
 google/cloud/pubsublite/quickstart/
 google/cloud/pubsub/quickstart/
+google/cloud/recommender/quickstart/
 google/cloud/resourcemanager/quickstart/
 google/cloud/scheduler/quickstart/
 google/cloud/secretmanager/quickstart/
