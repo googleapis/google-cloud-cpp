@@ -106,6 +106,22 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Composer
+service {
+  service_proto_path: "google/cloud/orchestration/airflow/service/v1/environments.proto"
+  additional_proto_files: [ "google/cloud/orchestration/airflow/service/v1/operations.proto" ]
+  product_path: "google/cloud/composer"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/orchestration/airflow/service/v1/image_versions.proto"
+  product_path: "google/cloud/composer"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Database Migration
 service {
   service_proto_path: "google/cloud/clouddms/v1/clouddms.proto"
