@@ -107,6 +107,7 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
     retry_code1_ = "GoldenKitchenSink.kInternal";
     retry_code2_ = "kUnavailable";
     retry_code3_ = "GoldenThingAdmin.kDeadlineExceeded";
+    additional_proto_file_ = "generator/integration_tests/backup.proto";
 
     std::vector<std::string> args;
     // empty arg keeps first real arg from being ignored.
@@ -128,7 +129,12 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
     args.emplace_back("--cpp_codegen_opt=retry_status_code=" + retry_code1_);
     args.emplace_back("--cpp_codegen_opt=retry_status_code=" + retry_code2_);
     args.emplace_back("--cpp_codegen_opt=retry_status_code=" + retry_code3_);
+    args.emplace_back("--cpp_codegen_opt=additional_proto_file=" +
+                      additional_proto_file_);
     args.emplace_back("generator/integration_tests/test.proto");
+    // It's redundant to add backup.proto as it's imported by test.proto, but
+    // it lets us test the additional_proto_file flag.
+    args.emplace_back("generator/integration_tests/backup.proto");
 
     std::vector<char const*> c_args;
     c_args.reserve(args.size());
@@ -156,6 +162,7 @@ class GeneratorIntegrationTest : public testing::TestWithParam<std::string> {
   std::string retry_code1_;
   std::string retry_code2_;
   std::string retry_code3_;
+  std::string additional_proto_file_;
 };
 
 TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {

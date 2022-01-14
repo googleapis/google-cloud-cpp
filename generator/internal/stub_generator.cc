@@ -58,6 +58,9 @@ Status StubGenerator::GenerateHeader() {
            ? "google/cloud/internal/async_read_write_stream_impl.h"
            : "",
        "google/cloud/version.h"});
+  std::vector<std::string> additional_pb_header_paths =
+      absl::StrSplit(vars("additional_pb_header_paths"), absl::ByChar(','));
+  HeaderSystemIncludes(additional_pb_header_paths);
   HeaderSystemIncludes(
       {vars("proto_grpc_header_path"),
        HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",

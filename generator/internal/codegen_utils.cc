@@ -134,6 +134,12 @@ void ProcessArgRetryGrpcStatusCode(
                   command_line_args);
 }
 
+void ProcessArgAdditionalProtoFiles(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  ProcessRepeated("additional_proto_file", "additional_proto_files",
+                  command_line_args);
+}
+
 }  // namespace
 
 std::string CurrentCopyrightYear() {
@@ -226,6 +232,7 @@ ProcessCommandLineArgs(std::string const& parameters) {
   ProcessArgEmulatorEndpointEnvVar(command_line_args);
   ProcessArgGenerateAsyncRpc(command_line_args);
   ProcessArgRetryGrpcStatusCode(command_line_args);
+  ProcessArgAdditionalProtoFiles(command_line_args);
   return command_line_args;
 }
 

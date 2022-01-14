@@ -36,6 +36,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Return;
@@ -175,12 +176,25 @@ TEST_F(CreateServiceVarsTest, RetryStatusCodeExpressionNotFound) {
   EXPECT_TRUE(iter == service_vars_.end());
 }
 
-TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
+TEST_F(CreateServiceVarsTest, AdditionalGrpcHeaderPathsEmpty) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/cloud/frobber/v1/frobber.proto");
   service_vars_ = CreateServiceVars(
       *service_file_descriptor->service(0),
       {std::make_pair("product_path", "google/cloud/frobber/")});
+  auto iter = service_vars_.find("additional_pb_header_paths");
+  EXPECT_TRUE(iter != service_vars_.end());
+  EXPECT_THAT(iter->second, Eq(""));
+}
+
+TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/cloud/frobber/v1/frobber.proto");
+  service_vars_ = CreateServiceVars(
+      *service_file_descriptor->service(0),
+      {std::make_pair("product_path", "google/cloud/frobber/"),
+       std::make_pair("additional_proto_files",
+                      "google/cloud/add1.proto,google/cloud/add2.proto")});
   auto iter = service_vars_.find(GetParam().first);
   EXPECT_TRUE(iter != service_vars_.end());
   EXPECT_THAT(iter->second, HasSubstr(GetParam().second));
@@ -189,6 +203,8 @@ TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
 INSTANTIATE_TEST_SUITE_P(
     ServiceVars, CreateServiceVarsTest,
     testing::Values(
+        std::make_pair("additional_pb_header_paths",
+                       "google/cloud/add1.pb.h,google/cloud/add2.pb.h"),
         std::make_pair("class_comment_block",
                        "///\n/// Leading comments about service "
                        "FrobberService.\n/// $Delimiter escapes$ $\n///"),

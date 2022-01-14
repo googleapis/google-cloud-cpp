@@ -364,6 +364,21 @@ void SetRetryStatusCodeExpression(VarsDictionary& vars) {
   vars["retry_status_code_expression"] = retry_status_code_expression;
 }
 
+std::string FormatAdditionalPbHeaderPaths(VarsDictionary& vars) {
+  std::vector<std::string> additional_pb_header_paths;
+  auto iter = vars.find("additional_proto_files");
+  if (iter != vars.end()) {
+    std::vector<std::string> additional_proto_files =
+        absl::StrSplit(iter->second, absl::ByChar(','));
+    for (auto& file : additional_proto_files) {
+      absl::StripAsciiWhitespace(&file);
+      additional_pb_header_paths.push_back(
+          absl::StrCat(absl::StripSuffix(file, ".proto"), ".pb.h"));
+    }
+  }
+  return absl::StrJoin(additional_pb_header_paths, ",");
+}
+
 }  // namespace
 
 absl::optional<ResourceRoutingInfo> ParseResourceRoutingHeader(
@@ -483,6 +498,7 @@ VarsDictionary CreateServiceVars(
     google::protobuf::ServiceDescriptor const& descriptor,
     std::vector<std::pair<std::string, std::string>> const& initial_values) {
   VarsDictionary vars(initial_values.begin(), initial_values.end());
+  vars["additional_pb_header_paths"] = FormatAdditionalPbHeaderPaths(vars);
   vars["class_comment_block"] =
       FormatClassCommentsFromServiceComments(descriptor);
   vars["client_class_name"] = absl::StrCat(descriptor.name(), "Client");
