@@ -135,8 +135,8 @@ class CurlHandle {
     return AsStatus(e, __func__);
   }
 
-  /// Gets the HTTP response code, or an error.
-  StatusOr<std::int32_t> GetResponseCode();
+  /// Gets the HTTP response code.
+  std::int32_t GetResponseCode();
 
   /**
    * Gets a string identifying the peer.
