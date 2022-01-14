@@ -31,11 +31,6 @@ build --enable_platform_specific_config=true
 build --copt=-Werror
 build --copt=-Wall
 
-# Perform thread safety checks in libc++ build modes
-build --copt=-D_LIBCPP_ENABLE_THREAD_SAFETY_ANNOTATIONS
-build --copt=-DHAVE_THREAD_SAFETY_ATTRIBUTES  # Enable proper googlebench attributes
-build --copt=-Wthread-safety
-
 # Clang Sanitizers, use with (for example):
 #
 # --client_env=CXX=clang++ --client_env=CC=clang --config asan
@@ -75,6 +70,10 @@ build:ubsan --cxxopt=-stdlib=libc++
 build:ubsan --linkopt=-stdlib=libc++
 build:ubsan --linkopt=-lc++
 build:ubsan --linkopt=-lc++abi
+# Perform thread safety checks in libc++ build modes
+build:ubsan --copt=-D_LIBCPP_ENABLE_THREAD_SAFETY_ANNOTATIONS
+build:ubsan --copt=-DHAVE_THREAD_SAFETY_ATTRIBUTES  # Enable proper googlebench attributes
+build:ubsan --copt=-Wthread-safety
 
 # --config xsan: Runs misc. sanitizers that aren't covered elsewhere.
 build:xsan --strip=never
