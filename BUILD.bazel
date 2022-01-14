@@ -344,6 +344,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-shell",
+    deps = [
+        "//google/cloud/shell:google_cloud_cpp_shell",
+    ],
+)
+
+cc_library(
+    name = "experimental-shell_mocks",
+    deps = [
+        "//google/cloud/shell:google_cloud_cpp_shell_mocks",
+    ],
+)
+
+cc_library(
     name = "spanner",
     deps = [
         "//google/cloud/spanner:google_cloud_cpp_spanner",

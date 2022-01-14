@@ -31,6 +31,7 @@ ignore:
   - "google/cloud/resourcemanager"
   - "google/cloud/scheduler"
   - "google/cloud/secretmanager"
+  - "google/cloud/shell"
   - "google/cloud/spanner/admin"
   - "google/cloud/storagetransfer"
   - "google/cloud/talent"

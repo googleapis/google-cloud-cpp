@@ -24,6 +24,7 @@ google/cloud/recommender/quickstart/
 google/cloud/resourcemanager/quickstart/
 google/cloud/scheduler/quickstart/
 google/cloud/secretmanager/quickstart/
+google/cloud/shell/quickstart/
 google/cloud/spanner/quickstart/
 google/cloud/storage/quickstart/
 google/cloud/storagetransfer/quickstart/

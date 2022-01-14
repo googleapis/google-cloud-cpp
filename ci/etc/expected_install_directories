@@ -83,6 +83,10 @@
 ./include/google/cloud/secretmanager/internal
 ./include/google/cloud/secretmanager/mocks
 ./include/google/cloud/secretmanager/v1
+./include/google/cloud/shell
+./include/google/cloud/shell/internal
+./include/google/cloud/shell/mocks
+./include/google/cloud/shell/v1
 ./include/google/cloud/spanner
 ./include/google/cloud/spanner/admin
 ./include/google/cloud/spanner/admin/internal
@@ -157,6 +161,7 @@
 ./lib64/cmake/google_cloud_cpp_resourcemanager
 ./lib64/cmake/google_cloud_cpp_scheduler
 ./lib64/cmake/google_cloud_cpp_secretmanager
+./lib64/cmake/google_cloud_cpp_shell
 ./lib64/cmake/google_cloud_cpp_storagetransfer
 ./lib64/cmake/google_cloud_cpp_talent
 ./lib64/cmake/google_cloud_cpp_tasks
