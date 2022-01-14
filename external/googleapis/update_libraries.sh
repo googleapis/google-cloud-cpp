@@ -65,6 +65,11 @@ declare -A -r LIBRARIES=(
   ["logging_type"]="@com_google_googleapis//google/logging/type:type_proto"
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_proto"
   ["monitoring"]="@com_google_googleapis//google/monitoring/v3:monitoring_proto"
+  ["oslogin"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/oslogin/v1:oslogin_cc_grpc" \
+      "@com_google_googleapis//google/cloud/oslogin/common:common_cc_grpc"
+  )"
   ["pubsub"]="@com_google_googleapis//google/pubsub/v1:pubsub_proto"
   ["pubsublite"]="@com_google_googleapis//google/cloud/pubsublite/v1:pubsublite_proto"
   ["resourcemanager"]="@com_google_googleapis//google/cloud/resourcemanager/v3:resourcemanager_proto"

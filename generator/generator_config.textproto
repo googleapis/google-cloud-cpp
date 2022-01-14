@@ -170,6 +170,14 @@ service {
   retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
 }
 
+# OS Login
+service {
+  service_proto_path: "google/cloud/oslogin/v1/oslogin.proto"
+  product_path: "google/cloud/oslogin"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # Pub/Sub Lite
 service {
   service_proto_path: "google/cloud/pubsublite/v1/admin.proto"
