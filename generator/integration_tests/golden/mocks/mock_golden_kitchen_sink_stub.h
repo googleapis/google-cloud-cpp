@@ -72,7 +72,14 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
        ::google::protobuf::Empty const&),
       (override));
 
-  MOCK_METHOD(std::unique_ptr<GoldenKitchenSinkStub::AsyncAppendRowsStream>, AsyncAppendRows, (google::cloud::CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context), (override));
+  MOCK_METHOD(
+      (std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+           ::google::test::admin::database::v1::AppendRowsRequest,
+           ::google::test::admin::database::v1::AppendRowsResponse>>),
+      AsyncAppendRows,
+      (google::cloud::CompletionQueue const& cq,
+           std::unique_ptr<grpc::ClientContext> context),
+      (override));
 };
 
 class MockTailLogEntriesStreamingReadRpc

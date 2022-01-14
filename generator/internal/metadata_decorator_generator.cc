@@ -68,8 +68,11 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
     if (IsBidirStreaming(method)) {
       HeaderPrintMethod(
           method, __FILE__, __LINE__,
-          R"""(  std::unique_ptr<Async$method_name$Stream> Async$method_name$(
-      google::cloud::CompletionQueue& cq,
+          R"""(  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+      $request_type$,
+      $response_type$>>
+  Async$method_name$(
+      google::cloud::CompletionQueue const& cq,
       std::unique_ptr<grpc::ClientContext> context) override;
 
 )""");
@@ -188,9 +191,11 @@ Status MetadataDecoratorGenerator::GenerateCc() {
     if (IsBidirStreaming(method)) {
       CcPrintMethod(
           method, __FILE__, __LINE__,
-          R"""(std::unique_ptr<$stub_class_name$::Async$method_name$Stream>
+          R"""(std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+      $request_type$,
+      $response_type$>>
 $metadata_class_name$::Async$method_name$(
-    google::cloud::CompletionQueue& cq,
+    google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context) {
   SetMetadata(*context, {});
   return child_->Async$method_name$(cq, std::move(context));

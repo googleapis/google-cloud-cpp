@@ -118,9 +118,11 @@ DefaultGoldenKitchenSinkStub::DoNothing(
     return google::cloud::Status();
 }
 
-std::unique_ptr<GoldenKitchenSinkStub::AsyncAppendRowsStream>
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+    google::test::admin::database::v1::AppendRowsRequest,
+    google::test::admin::database::v1::AppendRowsResponse>>
 DefaultGoldenKitchenSinkStub::AsyncAppendRows(
-    google::cloud::CompletionQueue& cq,
+    google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<google::test::admin::database::v1::AppendRowsRequest, google::test::admin::database::v1::AppendRowsResponse>(
       cq, std::move(context),

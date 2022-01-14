@@ -395,8 +395,8 @@ $connection_class_name$::Async$method_name$(
       $request_type$,
       $response_type$>>
   Async$method_name$() override {
-    auto cq = background_->cq();
-    return stub_->Async$method_name$(cq, absl::make_unique<grpc::ClientContext>());
+    return stub_->Async$method_name$(
+        background_->cq(), absl::make_unique<grpc::ClientContext>());
   }
 
 )""");
