@@ -144,6 +144,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-composer",
+    deps = [
+        "//google/cloud/composer:google_cloud_cpp_composer",
+    ],
+)
+
+cc_library(
+    name = "experimental-composer_mocks",
+    deps = [
+        "//google/cloud/composer:google_cloud_cpp_composer_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-datamigration",
     deps = [
         "//google/cloud/datamigration:google_cloud_cpp_datamigration",

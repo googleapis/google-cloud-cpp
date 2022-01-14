@@ -12,24 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/composer/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/composer/environments_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace composer = ::google::cloud::composer;
-  auto client = composer::Client(composer::MakeConnection(/* EDIT HERE */));
+  auto client =
+      composer::EnvironmentsClient(composer::MakeEnvironmentsConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent =
+      std::string("projects/") + argv[0] + "/locations/" + argv[1];
+  for (auto e : client.ListEnvironments(parent)) {
+    if (!e) throw std::runtime_error(e.status().message());
+    std::cout << e->DebugString() << "\n";
   }
 
   return 0;

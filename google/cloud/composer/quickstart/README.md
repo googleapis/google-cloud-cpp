@@ -1,6 +1,6 @@
-# HOWTO: using the Cloud Composer API C++ client in your project
+# HOWTO: using the Cloud Composer C++ client in your project
 
-This directory contains small examples showing how to use the Cloud Composer API C++
+This directory contains small examples showing how to use the Cloud Composer C++
 client library in your own project. These instructions assume that you have
 some experience as a C++ developer and that you have a working C++ toolchain
 (compiler, linker, etc.) installed on your platform.
@@ -28,7 +28,7 @@ steps in detail.
 
 ## Configuring authentication for the C++ Client Library
 
-Like most Google Cloud Platform (GCP) services, Cloud Composer API requires that
+Like most Google Cloud Platform (GCP) services, Cloud Composer requires that
 your application authenticates with the service before accessing any data. If
 you are not familiar with GCP authentication please take this opportunity to
 review the [Authentication Overview][authentication-quickstart]. This library
