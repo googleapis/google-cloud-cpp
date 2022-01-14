@@ -15,6 +15,7 @@ ignore:
   - "google/cloud/accessapproval"
   - "google/cloud/accesscontextmanager"
   - "google/cloud/apigateway"
+  - "google/cloud/appengine"
   - "google/cloud/assuredworkloads"
   - "google/cloud/bigquery"
   - "google/cloud/bigtable/admin"

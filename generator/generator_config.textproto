@@ -38,6 +38,15 @@ service {
   retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
 
+# App Engine Admin
+service {
+  service_proto_path: "google/appengine/v1/appengine.proto"
+  additional_proto_files: [ "google/appengine/v1/operation.proto" ]
+  product_path: "google/cloud/appengine"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Assured Workloads
 service {
   service_proto_path: "google/cloud/assuredworkloads/v1/assuredworkloads.proto"
