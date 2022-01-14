@@ -54,7 +54,6 @@ class GoldenKitchenSinkConnectionIdempotencyPolicy {
 
   virtual google::cloud::internal::Idempotency
   DoNothing(google::protobuf::Empty const& request) = 0;
-
 };
 
 std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>

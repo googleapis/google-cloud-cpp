@@ -91,7 +91,6 @@ class GoldenThingAdminConnectionIdempotencyPolicy {
 
   virtual google::cloud::internal::Idempotency
   LongRunningWithoutRouting(google::test::admin::database::v1::RestoreDatabaseRequest const& request) = 0;
-
 };
 
 std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy>

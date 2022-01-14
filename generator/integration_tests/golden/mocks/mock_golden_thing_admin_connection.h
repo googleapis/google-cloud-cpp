@@ -29,6 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockGoldenThingAdminConnection : public golden::GoldenThingAdminConnection {
  public:
+
   MOCK_METHOD(StreamRange<google::test::admin::database::v1::Database>,
   ListDatabases,
   (google::test::admin::database::v1::ListDatabasesRequest request), (override));
@@ -108,7 +109,6 @@ class MockGoldenThingAdminConnection : public golden::GoldenThingAdminConnection
   MOCK_METHOD(future<Status>,
   AsyncDropDatabase,
   (google::test::admin::database::v1::DropDatabaseRequest const& request), (override));
-
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

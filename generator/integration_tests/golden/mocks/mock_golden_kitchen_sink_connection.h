@@ -29,6 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockGoldenKitchenSinkConnection : public golden::GoldenKitchenSinkConnection {
  public:
+
   MOCK_METHOD(StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>,
   GenerateAccessToken,
   (google::test::admin::database::v1::GenerateAccessTokenRequest const& request), (override));
@@ -61,7 +62,6 @@ class MockGoldenKitchenSinkConnection : public golden::GoldenKitchenSinkConnecti
       ::google::cloud::internal::AsyncStreamingReadWriteRpc<
           google::test::admin::database::v1::AppendRowsRequest, google::test::admin::database::v1::AppendRowsResponse>>),
       AsyncAppendRows, (), (override));
-
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

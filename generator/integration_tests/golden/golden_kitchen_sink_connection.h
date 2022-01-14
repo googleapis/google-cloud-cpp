@@ -78,7 +78,6 @@ class GoldenKitchenSinkConnection {
       google::test::admin::database::v1::AppendRowsRequest,
       google::test::admin::database::v1::AppendRowsResponse>>
   AsyncAppendRows();
-
 };
 
 std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(

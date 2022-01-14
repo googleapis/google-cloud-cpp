@@ -73,12 +73,11 @@ class GoldenKitchenSinkStub {
       google::cloud::CompletionQueue const& cq,
       std::unique_ptr<grpc::ClientContext> context) = 0;
 
- virtual std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+  virtual std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
       google::test::admin::database::v1::WriteObjectRequest,
       google::test::admin::database::v1::WriteObjectResponse>>
   WriteObject(
       std::unique_ptr<grpc::ClientContext> context) = 0;
-
 };
 
 class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {

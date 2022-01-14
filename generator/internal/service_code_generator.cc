@@ -205,19 +205,24 @@ void ServiceCodeGenerator::CcSystemIncludes(
 }
 
 Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {
+  HeaderPrint("\n");
   return OpenNamespaces(header_, ns_type);
 }
 
 void ServiceCodeGenerator::HeaderCloseNamespaces() {
-  CloseNamespaces(header_);
   HeaderPrint("\n");
+  CloseNamespaces(header_);
 }
 
 Status ServiceCodeGenerator::CcOpenNamespaces(NamespaceType ns_type) {
+  CcPrint("\n");
   return OpenNamespaces(cc_, ns_type);
 }
 
-void ServiceCodeGenerator::CcCloseNamespaces() { CloseNamespaces(cc_); }
+void ServiceCodeGenerator::CcCloseNamespaces() {
+  CcPrint("\n");
+  CloseNamespaces(cc_);
+}
 
 void ServiceCodeGenerator::HeaderPrint(std::string const& text) {
   header_.Print(service_vars_, text);
@@ -300,7 +305,6 @@ Status ServiceCodeGenerator::OpenNamespaces(Printer& p, NamespaceType ns_type) {
       p.Print("namespace $namespace$ {\n", "namespace", nspace);
     }
   }
-  p.Print("\n");
   return {};
 }
 
