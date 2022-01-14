@@ -68,6 +68,8 @@
 ./include/google/cloud/logging
 ./include/google/cloud/logging/internal
 ./include/google/cloud/logging/mocks
+./include/google/cloud/orgpolicy
+./include/google/cloud/orgpolicy/v2
 ./include/google/cloud/oslogin
 ./include/google/cloud/oslogin/common
 ./include/google/cloud/oslogin/internal
