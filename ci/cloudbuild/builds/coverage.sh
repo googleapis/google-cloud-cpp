@@ -26,6 +26,9 @@ export CXX=g++
 mapfile -t args < <(bazel::common_args)
 args+=("--instrumentation_filter=/google/cloud[/:],/generator[/:]")
 args+=("--instrument_test_targets")
+# We need to build with gcc which has many more warnings of dubious
+# value in -Wall
+args+=("--copt=-Wno-all")
 bazel coverage "${args[@]}" --test_tag_filters=-integration-test ...
 GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
 mapfile -t integration_args < <(integration::bazel_args)
