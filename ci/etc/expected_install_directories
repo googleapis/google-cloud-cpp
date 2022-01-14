@@ -41,6 +41,9 @@
 ./include/google/cloud/billing/v1
 ./include/google/cloud/clouddms
 ./include/google/cloud/clouddms/v1
+./include/google/cloud/composer
+./include/google/cloud/composer/internal
+./include/google/cloud/composer/mocks
 ./include/google/cloud/datamigration
 ./include/google/cloud/datamigration/internal
 ./include/google/cloud/datamigration/mocks
@@ -68,6 +71,10 @@
 ./include/google/cloud/logging
 ./include/google/cloud/logging/internal
 ./include/google/cloud/logging/mocks
+./include/google/cloud/orchestration
+./include/google/cloud/orchestration/airflow
+./include/google/cloud/orchestration/airflow/service
+./include/google/cloud/orchestration/airflow/service/v1
 ./include/google/cloud/orgpolicy
 ./include/google/cloud/orgpolicy/v2
 ./include/google/cloud/oslogin
@@ -169,6 +176,7 @@
 ./lib64/cmake/google_cloud_cpp_assuredworkloads
 ./lib64/cmake/google_cloud_cpp_bigquery
 ./lib64/cmake/google_cloud_cpp_billing
+./lib64/cmake/google_cloud_cpp_composer
 ./lib64/cmake/google_cloud_cpp_datamigration
 ./lib64/cmake/google_cloud_cpp_eventarc
 ./lib64/cmake/google_cloud_cpp_iam
