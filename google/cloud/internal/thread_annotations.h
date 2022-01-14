@@ -46,8 +46,8 @@
 
 namespace google {
 namespace cloud {
-namespace internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace internal {
 
 // A condition_variable wait that plays nicely with thread annotations.
 inline void wait(std::condition_variable& cv, std::mutex& mu)
@@ -65,8 +65,8 @@ void wait(std::condition_variable& cv, std::mutex& mu, Predicate&& stop_waiting)
   (void)adopted.release();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
