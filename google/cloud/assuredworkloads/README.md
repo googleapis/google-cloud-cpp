@@ -1,9 +1,9 @@
-# Assured Workloads API C++ Client Library
+# Assured Workloads C++ Client Library
 
 :construction:
 
 This directory contains an idiomatic C++ client library for
-[Assured Workloads API][cloud-service-docs], a service to accelerate your path
+[Assured Workloads][cloud-service], a service to accelerate your path
 to running more secure and compliant workloads on Google Cloud.
 
 This library is **experimental**. Its APIs are subject to change without notice.
@@ -21,12 +21,13 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Assured Workloads API][cloud-service-docs] service
+* Official documentation about the [Assured Workloads][cloud-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/assured-workloads
+[cloud-service]: https://cloud.google.com/assured-workloads
+[cloud-service-docs]: https://cloud.google.com/assured-workloads/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-assuredworkloads/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/assuredworkloads
 

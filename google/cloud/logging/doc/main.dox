@@ -1,9 +1,9 @@
 /*!
 
-@mainpage Cloud Logging API C++ Client Library
+@mainpage Cloud Logging C++ Client Library
 
 An idiomatic C++ client library for
-[Cloud Logging API](https://cloud.google.com/logging/), a service that writes
+[Cloud Logging](https://cloud.google.com/logging/), a service that writes
 log entries and manages your Cloud Logging configuration.
 
 This library is **experimental**. Its APIs are subject to change without notice.
@@ -16,7 +16,7 @@ the client library.
 
 ### Setting up your repo
 
-In order to use the Cloud Logging API C++ client library from your own code,
+In order to use the Cloud Logging C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
 C++ client libraries. In some cases your build system or package manager may
 need to download the libraries too. The Cloud C++ client libraries natively
@@ -34,7 +34,7 @@ cd google-cloud-cpp/google/cloud/logging/quickstart
 
 The following shows the code that you'll run in the
 `google/cloud/logging/quickstart/` directory,
-which should give you a taste of the Cloud Logging API C++ client library API.
+which should give you a taste of the Cloud Logging C++ client library API.
 
 @include quickstart.cc
 

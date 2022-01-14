@@ -1,9 +1,9 @@
 /*!
 
-@mainpage Pub/Sub Lite API C++ Client Library
+@mainpage Pub/Sub Lite C++ Client Library
 
 An idiomatic C++ client library for
-[Pub/Sub Lite API](https://cloud.google.com/pubsublite/),  a high-volume
+[Pub/Sub Lite](https://cloud.google.com/pubsublite/),  a high-volume
 messaging service built for very low cost of operation by offering zonal storage
 and pre-provisioned capacity.
 
@@ -17,7 +17,7 @@ the client library.
 
 ### Setting up your repo
 
-In order to use the Pub/Sub Lite API C++ client library from your own code,
+In order to use the Pub/Sub Lite C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
 C++ client libraries. In some cases your build system or package manager may
 need to download the libraries too. The Cloud C++ client libraries natively
@@ -35,7 +35,7 @@ cd google-cloud-cpp/google/cloud/pubsublite/quickstart
 
 The following shows the code that you'll run in the
 `google/cloud/pubsublite/quickstart/` directory,
-which should give you a taste of the Pub/Sub Lite API C++ client library API.
+which should give you a taste of the Pub/Sub Lite C++ client library API.
 
 @include quickstart.cc
 

@@ -1,9 +1,9 @@
-# Cloud IDS API C++ Client Library
+# Cloud IDS C++ Client Library
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[Cloud Intrusion Detection System (IDS) API][cloud-service-docs], a
+This directory contains an idiomatic C++ client library for
+[Cloud Intrusion Detection System (IDS)][cloud-service], a
 service to detect malware, spyware, command-and-control attacks, and
 other network-based threats. Its security efficacy is industry leading,
 built with Palo Alto Networks technologies. When you use this product,
@@ -25,12 +25,13 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Cloud IDS API][cloud-service-docs] service
+* Official documentation about the [Cloud IDS][cloud-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/ids
+[cloud-service]: https://cloud.google.com/ids
+[cloud-service-docs]: https://cloud.google.com/ids/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-ids/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/ids
 

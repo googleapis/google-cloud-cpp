@@ -1,9 +1,9 @@
-# Workflow Executions API C++ Client Library
+# Workflow Executions C++ Client Library
 
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Workflows API][cloud-service-docs], a service to orchestrate and automate
+[Workflows][cloud-service], a service to orchestrate and automate
 Google Cloud and HTTP-based API services with serverless workflows.
 
 This library is **experimental**. Its APIs are subject to change without notice.
@@ -21,12 +21,13 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Workflow Executions API][cloud-service-docs] service
+* Official documentation about the [Workflow Executions][cloud-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/workflows
+[cloud-service]: https://cloud.google.com/workflows
+[cloud-service-docs]: https://cloud.google.com/workflows/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-workflows/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/workflows
 

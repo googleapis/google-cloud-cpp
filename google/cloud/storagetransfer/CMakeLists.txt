@@ -15,8 +15,9 @@
 # ~~~
 
 include(GoogleapisConfig)
-set(DOXYGEN_PROJECT_NAME "Storage Transfer API C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Storage Transfer API")
+set(DOXYGEN_PROJECT_NAME "Storage Transfer C++ Client")
+set(DOXYGEN_PROJECT_BRIEF
+    "A C++ Client Library for the Storage Transfer service")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "storagetransfer_internal"
                             "storagetransfer_testing" "examples")
@@ -164,9 +165,9 @@ google_cloud_cpp_install_headers("google_cloud_cpp_storagetransfer_mocks"
 set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(GOOGLE_CLOUD_PC_NAME "The Storage Transfer API C++ Client Library")
+set(GOOGLE_CLOUD_PC_NAME "The Storage Transfer C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
-    "Provides C++ APIs to use the Storage Transfer API.")
+    "Provides C++ APIs to use the Storage Transfer service.")
 set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_storagetransfer")
 string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
               " google_cloud_cpp_common"

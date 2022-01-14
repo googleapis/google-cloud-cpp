@@ -1,8 +1,8 @@
 /*!
 
-@mainpage Access Context Manager API C++ Client Library
+@mainpage Access Context Manager C++ Client Library
 
-An idiomatic C++ client library for the [Access Context Manager API][cloud-service-docs], a service
+An idiomatic C++ client library for [Access Context Manager][cloud-service-docs], a service
 for setting attribute based access control on requests to GCP services.
 
 This library is **experimental**. Its APIs are subject to change without notice.
@@ -15,7 +15,7 @@ the client library.
 
 ### Setting up your repo
 
-In order to use the Access Context Manager API C++ client library from your own code,
+In order to use the Access Context Manager C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
 C++ client libraries. In some cases your build system or package manager may
 need to download the libraries too. The Cloud C++ client libraries natively
@@ -33,7 +33,7 @@ cd google-cloud-cpp/google/cloud/accesscontextmanager/quickstart
 
 The following shows the code that you'll run in the
 `google/cloud/accesscontextmanager/quickstart/` directory,
-which should give you a taste of the Access Context Manager API C++ client library API.
+which should give you a taste of the Access Context Manager C++ client library API.
 
 @include quickstart.cc
 

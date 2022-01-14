@@ -1,9 +1,9 @@
-# Cloud Shell API C++ Client Library
+# Cloud Shell C++ Client Library
 
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Shell API][cloud-service-docs], a service to allow users to start,
+[Cloud Shell][cloud-service], a service to allow users to start,
 configure, and connect to interactive shell sessions running in the cloud.
 
 This library is **experimental**. Its APIs are subject to change without notice.
@@ -21,12 +21,13 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Cloud Shell API][cloud-service-docs] service
+* Official documentation about the [Cloud Shell][cloud-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/shell
+[cloud-service]: https://cloud.google.com/shell
+[cloud-service-docs]: https://cloud.google.com/shell/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-shell/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/shell
 

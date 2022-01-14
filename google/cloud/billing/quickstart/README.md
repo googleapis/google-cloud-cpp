@@ -1,6 +1,6 @@
-# HOWTO: using the Cloud Billing API C++ client in your project
+# HOWTO: using the Cloud Billing C++ client in your project
 
-This directory contains small examples showing how to use the Cloud Billing API C++
+This directory contains small examples showing how to use the Cloud Billing C++
 client library in your own project. These instructions assume that you have
 some experience as a C++ developer and that you have a working C++ toolchain
 (compiler, linker, etc.) installed on your platform.

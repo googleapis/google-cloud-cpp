@@ -1,6 +1,6 @@
 /*!
 
-@mainpage Cloud Scheduler API C++ Client Library
+@mainpage Cloud Scheduler C++ Client Library
 
 An idiomatic C++ client library for
 [Cloud Scheduler](https://cloud.google.com/scheduler/), a service that
@@ -16,7 +16,7 @@ the client library.
 
 ### Setting up your repo
 
-In order to use the Cloud Scheduler API C++ client library from your own code,
+In order to use the Cloud Scheduler C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
 C++ client libraries. In some cases your build system or package manager may
 need to download the libraries too. The Cloud C++ client libraries natively
@@ -34,7 +34,7 @@ cd google-cloud-cpp/google/cloud/scheduler/quickstart
 
 The following shows the code that you'll run in the
 `google/cloud/scheduler/quickstart/` directory,
-which should give you a taste of the Cloud Scheduler API C++ client library API.
+which should give you a taste of the Cloud Scheduler C++ client library API.
 
 @include quickstart.cc
 

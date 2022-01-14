@@ -1,9 +1,9 @@
-# Cloud Key Management Service (KMS) API C++ Client Library
+# Cloud Key Management Service (KMS) C++ Client Library
 
 :construction:
 
 This directory contains an idiomatic C++ client library for
-[Cloud Key Management Service (KMS)][cloud-service-docs], a service that manages
+[Cloud Key Management Service (KMS)][cloud-service], a service that manages
 keys and performs cryptographic operations in a central cloud service, for
 direct use by other cloud resources and applications.
 
@@ -22,12 +22,13 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Cloud Key Management Service (KMS) API][cloud-service-docs] service
+* Official documentation about the [Cloud Key Management Service (KMS)][cloud-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/kms
+[cloud-service]: https://cloud.google.com/kms
+[cloud-service-docs]: https://cloud.google.com/kms/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-kms/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/kms
 

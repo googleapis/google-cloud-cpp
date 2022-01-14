@@ -1,7 +1,7 @@
-# Cloud Tasks API C++ Client Library
+# Cloud Tasks C++ Client Library
 
 This directory contains an idiomatic C++ client library for
-[Cloud Tasks API][cloud-service-root], a service that manages the
+[Cloud Tasks][cloud-service], a service that manages the
 execution of large numbers of distributed requests.
 
 While this library is **GA**, please note that the Google Cloud C++
@@ -17,12 +17,12 @@ client libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Documentation
 
-* Official documentation about the [Cloud Tasks API][cloud-service-docs] service
+* Official documentation about the [Cloud Tasks][cloud-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-root]: https://cloud.google.com/tasks
+[cloud-service]: https://cloud.google.com/tasks
 [cloud-service-docs]: https://cloud.google.com/tasks/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-tasks/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/tasks

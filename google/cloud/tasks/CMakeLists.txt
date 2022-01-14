@@ -15,8 +15,8 @@
 # ~~~
 
 include(GoogleapisConfig)
-set(DOXYGEN_PROJECT_NAME "Cloud Tasks API C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud Tasks API")
+set(DOXYGEN_PROJECT_NAME "Cloud Tasks C++ Client")
+set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud Tasks service")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "tasks_internal" "tasks_testing"
                             "examples")
@@ -167,8 +167,9 @@ google_cloud_cpp_install_headers("google_cloud_cpp_tasks_mocks"
 set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(GOOGLE_CLOUD_PC_NAME "The Cloud Tasks API C++ Client Library")
-set(GOOGLE_CLOUD_PC_DESCRIPTION "Provides C++ APIs to access Cloud Tasks API.")
+set(GOOGLE_CLOUD_PC_NAME "The Cloud Tasks C++ Client Library")
+set(GOOGLE_CLOUD_PC_DESCRIPTION
+    "Provides C++ APIs to access the Cloud Tasks service.")
 set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_tasks")
 string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
               " google_cloud_cpp_common" " google_cloud_cpp_tasks_protos")

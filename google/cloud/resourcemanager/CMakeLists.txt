@@ -15,9 +15,9 @@
 # ~~~
 
 include(GoogleapisConfig)
-set(DOXYGEN_PROJECT_NAME "Cloud Resource Manager API C++ Client")
+set(DOXYGEN_PROJECT_NAME "Cloud Resource Manager C++ Client")
 set(DOXYGEN_PROJECT_BRIEF
-    "A C++ Client Library for the Cloud Resource Manager API")
+    "A C++ Client Library for the Cloud Resource Manager service")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "resourcemanager_internal"
                             "resourcemanager_testing" "examples")
@@ -173,9 +173,9 @@ google_cloud_cpp_install_headers("google_cloud_cpp_resourcemanager_mocks"
 set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(GOOGLE_CLOUD_PC_NAME "The Cloud Resource Manager API C++ Client Library")
+set(GOOGLE_CLOUD_PC_NAME "The Cloud Resource Manager C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
-    "Provides C++ APIs to use the Cloud Resource Manager API.")
+    "Provides C++ APIs to use the Cloud Resource Manager service.")
 set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_resourcemanager")
 string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
               " google_cloud_cpp_common"

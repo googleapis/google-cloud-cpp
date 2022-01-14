@@ -3,7 +3,7 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for
-[Web Risk][cloud-service-docs], a service to detect malicious URLs on your
+[Web Risk][cloud-service], a service to detect malicious URLs on your
 website and in client applications.
 
 This library is **experimental**. Its APIs are subject to change without notice.
@@ -26,7 +26,8 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/web-risk
+[cloud-service]: https://cloud.google.com/web-risk
+[cloud-service-docs]: https://cloud.google.com/web-risk/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-webrisk/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/webrisk
 

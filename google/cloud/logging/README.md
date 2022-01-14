@@ -3,8 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for interacting with
-[Cloud Logging](https://cloud.google.com/logging/),
-a service for real-time log management and analysis at scale.
+[Cloud Logging][cloud-service], a service for real-time log management and
+analysis at scale.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -26,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-root]: https://cloud.google.com/logging
+[cloud-service]: https://cloud.google.com/logging
 [cloud-service-docs]: https://cloud.google.com/logging/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-logging/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/logging

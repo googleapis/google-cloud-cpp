@@ -1,6 +1,6 @@
 /*!
 
-@mainpage Web Security Scanner API C++ Client Library
+@mainpage Web Security Scanner C++ Client Library
 
 An idiomatic C++ client library for
 [Web Security Scanner](https://cloud.google.com/security-command-center/), a
@@ -17,7 +17,7 @@ the client library.
 
 ### Setting up your repo
 
-In order to use the Web Security Scanner API C++ client library from your own code,
+In order to use the Web Security Scanner C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
 C++ client libraries. In some cases your build system or package manager may
 need to download the libraries too. The Cloud C++ client libraries natively
@@ -35,7 +35,7 @@ cd google-cloud-cpp/google/cloud/websecurityscanner/quickstart
 
 The following shows the code that you'll run in the
 `google/cloud/websecurityscanner/quickstart/` directory,
-which should give you a taste of the Web Security Scanner API C++ client library API.
+which should give you a taste of the Web Security Scanner C++ client library API.
 
 @include quickstart.cc
 

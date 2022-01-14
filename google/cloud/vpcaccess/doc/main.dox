@@ -1,9 +1,9 @@
 /*!
 
-@mainpage Serverless VPC Access API C++ Client Library
+@mainpage Serverless VPC Access C++ Client Library
 
-An idiomatic C++ client library for the [Serverless VPC Access API][cloud-service-docs], a service
-to API for managing VPC access connectors.
+An idiomatic C++ client library for the [Serverless VPC Access][cloud-service-docs], a service
+for managing VPC access connectors.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -14,7 +14,7 @@ dependencies, as well as how to compile the client library.
 
 ### Setting up your repo
 
-In order to use the Serverless VPC Access API C++ client library from your own code,
+In order to use the Serverless VPC Access C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
 C++ client libraries. In some cases your build system or package manager may
 need to download the libraries too. The Cloud C++ client libraries natively
@@ -32,7 +32,7 @@ cd google-cloud-cpp/google/cloud/vpcaccess/quickstart
 
 The following shows the code that you'll run in the
 `google/cloud/vpcaccess/quickstart/` directory,
-which should give you a taste of the Serverless VPC Access API C++ client library API.
+which should give you a taste of the Serverless VPC Access C++ client library API.
 
 @include quickstart.cc
 

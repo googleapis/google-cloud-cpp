@@ -12,8 +12,8 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-# This file shows how to use the Workflow Executions API C++ client library from
-# a larger CMake project.
+# This file shows how to use the Workflow Executions C++ client library from a
+# larger CMake project.
 
 cmake_minimum_required(VERSION 3.5)
 project(google-cloud-cpp-workflows-quickstart CXX)

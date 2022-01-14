@@ -15,8 +15,8 @@
 # ~~~
 
 include(GoogleapisConfig)
-set(DOXYGEN_PROJECT_NAME "Secret Manager API C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Secret Manager API")
+set(DOXYGEN_PROJECT_NAME "Secret Manager C++ Client")
+set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Secret Manager service")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "secretmanager_internal"
                             "secretmanager_testing" "examples")
@@ -169,9 +169,9 @@ google_cloud_cpp_install_headers("google_cloud_cpp_secretmanager_mocks"
 set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(GOOGLE_CLOUD_PC_NAME "The Secret Manager API C++ Client Library")
+set(GOOGLE_CLOUD_PC_NAME "The Secret Manager C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
-    "Provides C++ APIs to access Secret Manager API.")
+    "Provides C++ APIs to access the Secret Manager service.")
 set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_secretmanager")
 string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
               " google_cloud_cpp_common"

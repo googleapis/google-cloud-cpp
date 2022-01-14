@@ -1,9 +1,9 @@
-# Storage Transfer API C++ Client Library
+# Storage Transfer C++ Client Library
 
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Storage Transfer API][cloud-service-docs], a service to transfer data from
+[Storage Transfer Service][cloud-service], a service to transfer data from
 external data sources to a Google Cloud Storage bucket or between Google Cloud
 Storage buckets.
 
@@ -22,12 +22,13 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Storage Transfer API][cloud-service-docs] service
+* Official documentation about the [Storage Transfer Service][cloud-service-docs]
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/storage-transfer
+[cloud-service]: https://cloud.google.com/storage-transfer
+[cloud-service-docs]: https://cloud.google.com/storage-transfer/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-storagetransfer/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/storagetransfer
 

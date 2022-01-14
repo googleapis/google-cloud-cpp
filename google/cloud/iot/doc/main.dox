@@ -1,9 +1,9 @@
 /*!
 
-@mainpage Cloud IoT API C++ Client Library
+@mainpage Cloud IoT C++ Client Library
 
-An idiomatic C++ client library for the
-[Cloud IoT API][cloud-service-docs], a service to register and manage IoT
+An idiomatic C++ client library for
+[Cloud IoT][cloud-service-docs], a service to register and manage IoT
 (Internet of Things) devices that connect to the Google Cloud Platform.
 
 This library is **experimental**. Its APIs are subject to change without notice.
@@ -15,7 +15,7 @@ dependencies, as well as how to compile the client library.
 
 ### Setting up your repo
 
-In order to use the Cloud IoT API C++ client library from your own code,
+In order to use the Cloud IoT C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
 C++ client libraries. In some cases your build system or package manager may
 need to download the libraries too. The Cloud C++ client libraries natively
@@ -33,7 +33,7 @@ cd google-cloud-cpp/google/cloud/iot/quickstart
 
 The following shows the code that you'll run in the
 `google/cloud/iot/quickstart/` directory,
-which should give you a taste of the Cloud IoT API C++ client library API.
+which should give you a taste of the Cloud IoT C++ client library API.
 
 @include quickstart.cc
 

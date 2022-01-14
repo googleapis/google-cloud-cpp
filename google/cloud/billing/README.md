@@ -1,9 +1,9 @@
-# Cloud Billing Budget API C++ Client Library
+# Cloud Billing C++ Client Library
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[Cloud Billing API][cloud-service-docs], a service that interacts with billing
+This directory contains an idiomatic C++ client library for
+[Cloud Billing][cloud-service], a service that interacts with billing
 accounts, billing budgets, and billing catalogs.
 
 This library is **experimental**. Its APIs are subject to change without notice.
@@ -21,12 +21,13 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Cloud Billing Budget API][cloud-service-docs] service
+* Official documentation about the [Cloud Billing][cloud-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/billing
+[cloud-service]: https://cloud.google.com/billing
+[cloud-service-docs]: https://cloud.google.com/billing/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-billing/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/billing
 

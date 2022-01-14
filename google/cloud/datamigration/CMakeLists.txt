@@ -15,8 +15,9 @@
 # ~~~
 
 include(GoogleapisConfig)
-set(DOXYGEN_PROJECT_NAME "Database Migration API C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Database Migration API")
+set(DOXYGEN_PROJECT_NAME "Database Migration C++ Client")
+set(DOXYGEN_PROJECT_BRIEF
+    "A C++ Client Library for the Database Migration service")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "datamigration_internal"
                             "datamigration_testing" "examples")
@@ -161,9 +162,9 @@ google_cloud_cpp_install_headers("google_cloud_cpp_datamigration_mocks"
 set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(GOOGLE_CLOUD_PC_NAME "The Database Migration API C++ Client Library")
+set(GOOGLE_CLOUD_PC_NAME "The Database Migration C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
-    "Provides C++ APIs to use the Database Migration API.")
+    "Provides C++ APIs to use the Database Migration service.")
 set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_datamigration")
 string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
               " google_cloud_cpp_common"

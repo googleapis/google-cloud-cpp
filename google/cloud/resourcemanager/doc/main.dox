@@ -1,12 +1,12 @@
 /*!
 
-@mainpage Cloud Resource Manager API C++ Client Library
+@mainpage Cloud Resource Manager C++ Client Library
 
 An idiomatic C++ client library for
 [Resource Manager][cloud-product], a GCP product to hierarchically manage
 resources by project, folder, and organization.
 
-This library is **experimental**. Its APIs are subject to change without notice.
+This library is **experimental**. Itss are subject to change without notice.
 
 This library requires a C++11 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The [README][github-readme]
@@ -33,7 +33,7 @@ cd google-cloud-cpp/google/cloud/resourcemanager/quickstart
 
 The following shows the code that you'll run in the
 `google/cloud/resourcemanager/quickstart/` directory,
-which should give you a taste of the Cloud Resource Manager API C++ client library API.
+which should give you a taste of the Cloud Resource Manager C++ client library.
 
 @include quickstart.cc
 

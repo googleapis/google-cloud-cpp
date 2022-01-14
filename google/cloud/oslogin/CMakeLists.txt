@@ -15,8 +15,8 @@
 # ~~~
 
 include(GoogleapisConfig)
-set(DOXYGEN_PROJECT_NAME "Cloud OS Login API C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud OS Login API")
+set(DOXYGEN_PROJECT_NAME "Cloud OS Login C++ Client")
+set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud OS Login service")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "oslogin_internal" "oslogin_testing"
                             "examples")
@@ -158,9 +158,9 @@ google_cloud_cpp_install_headers("google_cloud_cpp_oslogin_mocks"
 set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(GOOGLE_CLOUD_PC_NAME "The Cloud OS Login API C++ Client Library")
+set(GOOGLE_CLOUD_PC_NAME "The Cloud OS Login C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
-    "Provides C++ APIs to use the Cloud OS Login API.")
+    "Provides C++ APIs to use the Cloud OS Login service.")
 set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_oslogin")
 string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
               " google_cloud_cpp_common" " google_cloud_cpp_oslogin_protos")

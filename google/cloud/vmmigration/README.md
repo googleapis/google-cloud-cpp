@@ -1,9 +1,9 @@
-# VM Migration API C++ Client Library
+# VM Migration C++ Client Library
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[VM Migration API][cloud-service-docs], a service to programmatically migrate
+This directory contains an idiomatic C++ client library for
+[VM Migration][cloud-service], a service to programmatically migrate
 workloads to Google Compute Engine.
 
 This library is **experimental**. Its APIs are subject to change without notice.
@@ -21,12 +21,13 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [VM Migration API][cloud-service-docs] service
+* Official documentation about the [VM Migration][cloud-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/migrate/compute-engine
+[cloud-service]: https://cloud.google.com/migrate/compute-engine
+[cloud-service-docs]: https://cloud.google.com/migrate/compute-engine/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-vmmigration/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/vmmigration
 

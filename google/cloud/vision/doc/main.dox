@@ -1,8 +1,8 @@
 /*!
 
-@mainpage Cloud Vision API C++ Client Library
+@mainpage Cloud Vision C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Vision API][cloud-service-docs].
+An idiomatic C++ client library for [Cloud Vision][cloud-service-docs].
 Integrate Google Vision features, including image labeling, face, logo, and
 landmark detection, optical character recognition (OCR), and detection of
 explicit content, into applications.
@@ -16,7 +16,7 @@ dependencies, as well as how to compile the client library.
 
 ### Setting up your repo
 
-In order to use the Cloud Vision API C++ client library from your own code,
+In order to use the Cloud Vision C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
 C++ client libraries. In some cases your build system or package manager may
 need to download the libraries too. The Cloud C++ client libraries natively
@@ -34,7 +34,7 @@ cd google-cloud-cpp/google/cloud/vision/quickstart
 
 The following shows the code that you'll run in the
 `google/cloud/vision/quickstart/` directory,
-which should give you a taste of the Cloud Vision API C++ client library API.
+which should give you a taste of the Cloud Vision C++ client library API.
 
 @include quickstart.cc
 

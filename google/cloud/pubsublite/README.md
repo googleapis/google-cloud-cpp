@@ -3,7 +3,7 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for
-[Cloud Pub/Sub Lite][cloud-service-root], a high-volume
+[Cloud Pub/Sub Lite][cloud-service], a high-volume
 messaging service built for very low cost of operation by offering zonal storage
 and pre-provisioned capacity.
 
@@ -27,7 +27,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-root]: https://cloud.google.com/pubsub/lite
+[cloud-service]: https://cloud.google.com/pubsub/lite
 [cloud-service-docs]: https://cloud.google.com/pubsub/lite/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-pubsublite/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/pubsublite

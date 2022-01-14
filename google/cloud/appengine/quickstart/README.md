@@ -28,7 +28,7 @@ steps in detail.
 
 ## Configuring authentication for the C++ Client Library
 
-Like most Google Cloud Platform (GCP) services, App Engine Admin API requires that
+Like most Google Cloud Platform (GCP) services, the App Engine Admin API requires that
 your application authenticates with the service before accessing any data. If
 you are not familiar with GCP authentication please take this opportunity to
 review the [Authentication Overview][authentication-quickstart]. This library

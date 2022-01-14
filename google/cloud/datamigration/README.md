@@ -1,9 +1,9 @@
-# Database Migration API C++ Client Library
+# Database Migration C++ Client Library
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[Database Migration API][cloud-service-docs], a service to simplify migrations
+This directory contains an idiomatic C++ client library for
+[Database Migration][cloud-service], a service to simplify migrations
 to Cloud SQL.
 
 This library is **experimental**. Its APIS are subject to change without notice.
@@ -21,12 +21,13 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Database Migration API][cloud-service-docs] service
+* Official documentation about the [Database Migration][cloud-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/database-migration
+[cloud-service]: https://cloud.google.com/database-migration
+[cloud-service-docs]: https://cloud.google.com/database-migration/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-datamigration/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/datamigration
 

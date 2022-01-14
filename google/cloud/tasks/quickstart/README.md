@@ -1,6 +1,6 @@
-# HOWTO: using the Cloud Tasks API C++ client in your project
+# HOWTO: using the Cloud Tasks C++ client in your project
 
-This directory contains small examples showing how to use the Cloud Tasks API C++
+This directory contains small examples showing how to use the Cloud Tasks C++
 client library in your own project. These instructions assume that you have
 some experience as a C++ developer and that you have a working C++ toolchain
 (compiler, linker, etc.) installed on your platform.

@@ -1,9 +1,9 @@
-# Cloud Scheduler API C++ Client Library
+# Cloud Scheduler C++ Client Library
 
 :construction:
 
 This directory contains an idiomatic C++ client library for
-[Cloud Scheduler][cloud-service-docs], a service that creates and manages jobs
+[Cloud Scheduler][cloud-service], a service that creates and manages jobs
 run on a regular recurring schedule.
 
 This library is **experimental**. Its APIs are subject to change without notice.
@@ -21,12 +21,13 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Cloud Scheduler API][cloud-service-docs] service
+* Official documentation about the [Cloud Scheduler][cloud-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/scheduler
+[cloud-service]: https://cloud.google.com/scheduler
+[cloud-service-docs]: https://cloud.google.com/scheduler/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-scheduler/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/scheduler
 

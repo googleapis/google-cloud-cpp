@@ -12,7 +12,7 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-# This file shows how to use the Cloud IDS API C++ client library from a larger
+# This file shows how to use the Cloud IDS C++ client library from a larger
 # CMake project.
 
 cmake_minimum_required(VERSION 3.5)

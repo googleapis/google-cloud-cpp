@@ -1,8 +1,8 @@
 /*!
 
-@mainpage Storage Transfer API C++ Client Library
+@mainpage Storage Transfer C++ Client Library
 
-An idiomatic C++ client library for the [Storage Transfer API][cloud-service-docs],
+An idiomatic C++ client library for [Storage Transfer][cloud-service-docs],
 a service to transfers data from external data sources to a Google Cloud Storage
 bucket or between Google Cloud Storage buckets.
 
@@ -15,7 +15,7 @@ dependencies, as well as how to compile the client library.
 
 ### Setting up your repo
 
-In order to use the Storage Transfer API C++ client library from your own code,
+In order to use the Storage Transfer C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
 C++ client libraries. In some cases your build system or package manager may
 need to download the libraries too. The Cloud C++ client libraries natively
@@ -33,7 +33,7 @@ cd google-cloud-cpp/google/cloud/storagetransfer/quickstart
 
 The following shows the code that you'll run in the
 `google/cloud/storagetransfer/quickstart/` directory,
-which should give you a taste of the Storage Transfer API C++ client library API.
+which should give you a taste of the Storage Transfer C++ client library API.
 
 @include quickstart.cc
 

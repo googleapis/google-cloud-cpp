@@ -1,9 +1,9 @@
-# Cloud Talent Solution API C++ Client Library
+# Cloud Talent Solution C++ Client Library
 
 :construction:
 
 This directory contains an idiomatic C++ client library for
-[Cloud Talent Solution][cloud-service-docs], a suite of APIs that allow you to
+[Cloud Talent Solution][cloud-service], a suite of APIs that allow you to
 create and manage jobs and profiles in the talent industry.
 
 This library is **experimental**. Its APIs are subject to change without notice.
@@ -21,12 +21,13 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Cloud Talent Solution API][cloud-service-docs] service
+* Official documentation about the [Cloud Talent Solution][cloud-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/solutions/talent-solution
+[cloud-service]: https://cloud.google.com/solutions/talent-solution
+[cloud-service-docs]: https://cloud.google.com/solutions/talent-solution/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-talent/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/talent
 

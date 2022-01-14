@@ -1,7 +1,7 @@
-# Secret Manager API C++ Client Library
+# Secret Manager C++ Client Library
 
 This directory contains an idiomatic C++ client library for
-[Secret Manager API][cloud-service-root], a service that
+[Secret Manager][cloud-service], a service that
 stores sensitive data such as API keys, passwords, and certificates.
 Provides convenience while improving security.
 
@@ -18,12 +18,12 @@ client libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Documentation
 
-* Official documentation about the [Secret Manager API][cloud-service-docs] service
+* Official documentation about the [Secret Manager][cloud-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-root]: https://cloud.google.com/secret-manager
+[cloud-service]: https://cloud.google.com/secret-manager
 [cloud-service-docs]: https://cloud.google.com/secret-manager/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-secretmanager/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/secretmanager

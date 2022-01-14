@@ -1,9 +1,9 @@
-# Access Context Manager API C++ Client Library
+# Access Context Manager C++ Client Library
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[Access Context Manager API][cloud-service-docs], a service for setting
+This directory contains an idiomatic C++ client library for
+[Access Context Manager][cloud-service], a service for setting
 attribute based access control on requests to GCP services.
 
 This library is **experimental**. Its APIs are subject to change without notice.
@@ -21,12 +21,13 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Access Context Manager API][cloud-service-docs] service
+* Official documentation about the [Access Context Manager][cloud-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/access-context-manager
+[cloud-service]: https://cloud.google.com/access-context-manager
+[cloud-service-docs]: https://cloud.google.com/access-context-manager/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-accesscontextmanager/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/accesscontextmanager
 

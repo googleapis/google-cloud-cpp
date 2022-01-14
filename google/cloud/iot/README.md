@@ -1,9 +1,9 @@
-# Cloud IoT API C++ Client Library
+# Cloud IoT C++ Client Library
 
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud IoT API][cloud-service-docs], a service to register and manage IoT
+[Cloud IoT][cloud-service], a service to register and manage IoT
 (Internet of Things) devices that connect to the Google Cloud Platform.
 
 This library is **experimental**. Its APIs are subject to change without notice.
@@ -21,12 +21,13 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Cloud IoT API][cloud-service-docs] service
+* Official documentation about the [Cloud IoT][cloud-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/iot
+[cloud-service]: https://cloud.google.com/solutions/iot
+[cloud-service-docs]: https://cloud.google.com/iot/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-iot/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/iot
 

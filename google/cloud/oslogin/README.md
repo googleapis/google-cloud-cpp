@@ -1,9 +1,9 @@
-# Cloud OS Login API C++ Client Library
+# Cloud OS Login C++ Client Library
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[Cloud OS Login API][cloud-service-docs], a service you can use to manage
+This directory contains an idiomatic C++ client library for
+[Cloud OS Login][cloud-service], a service you can use to manage
 access to your VM instances using IAM roles.
 
 This library is **experimental**. Its APIs are subject to change without notice.
@@ -21,12 +21,13 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Cloud OS Login API][cloud-service-docs] service
+* Official documentation about the [Cloud OS Login][cloud-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/oslogin
+[cloud-service]: https://cloud.google.com/oslogin
+[cloud-service-docs]: https://cloud.google.com/oslogin/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-oslogin/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/oslogin
 

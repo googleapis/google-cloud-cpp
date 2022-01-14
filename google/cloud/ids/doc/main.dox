@@ -1,9 +1,9 @@
 /*!
 
-@mainpage Cloud IDS API C++ Client Library
+@mainpage Cloud IDS C++ Client Library
 
-An idiomatic C++ client library for the
-[Cloud Intrusion Detection System (IDS) API][cloud-service-docs], a
+An idiomatic C++ client library for
+[Cloud Intrusion Detection System (IDS)][cloud-service-docs], a
 service to detect malware, spyware, command-and-control attacks, and
 other network-based threats. Its security efficacy is industry leading,
 built with Palo Alto Networks technologies. When you use this product,
@@ -19,7 +19,7 @@ dependencies, as well as how to compile the client library.
 
 ### Setting up your repo
 
-In order to use the Cloud IDS API C++ client library from your own code,
+In order to use the Cloud IDS C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
 C++ client libraries. In some cases your build system or package manager may
 need to download the libraries too. The Cloud C++ client libraries natively
@@ -37,7 +37,7 @@ cd google-cloud-cpp/google/cloud/ids/quickstart
 
 The following shows the code that you'll run in the
 `google/cloud/ids/quickstart/` directory,
-which should give you a taste of the Cloud IDS API C++ client library API.
+which should give you a taste of the Cloud IDS C++ client library API.
 
 @include quickstart.cc
 

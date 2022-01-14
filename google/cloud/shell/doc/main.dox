@@ -1,8 +1,8 @@
 /*!
 
-@mainpage Cloud Shell API C++ Client Library
+@mainpage Cloud Shell C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Shell API][cloud-service-docs],
+An idiomatic C++ client library for [Cloud Shell][cloud-service-docs],
 a service to allow users to start, configure, and connect to interactive shell
 sessions running in the cloud.
 
@@ -15,7 +15,7 @@ dependencies, as well as how to compile the client library.
 
 ### Setting up your repo
 
-In order to use the Cloud Shell API C++ client library from your own code,
+In order to use the Cloud Shell C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
 C++ client libraries. In some cases your build system or package manager may
 need to download the libraries too. The Cloud C++ client libraries natively
@@ -33,7 +33,7 @@ cd google-cloud-cpp/google/cloud/shell/quickstart
 
 The following shows the code that you'll run in the
 `google/cloud/shell/quickstart/` directory,
-which should give you a taste of the Cloud Shell API C++ client library API.
+which should give you a taste of the Cloud Shell C++ client library API.
 
 @include quickstart.cc
 
