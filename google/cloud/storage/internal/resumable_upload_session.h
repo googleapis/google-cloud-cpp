@@ -89,13 +89,14 @@ class ResumableUploadSession {
 
 struct ResumableUploadResponse {
   enum UploadState { kInProgress, kDone };
+
   static StatusOr<ResumableUploadResponse> FromHttpResponse(
       HttpResponse response);
 
   std::string upload_session_url;
-  std::uint64_t last_committed_byte;
-  absl::optional<google::cloud::storage::ObjectMetadata> payload;
   UploadState upload_state;
+  absl::optional<std::uint64_t> committed_size;
+  absl::optional<google::cloud::storage::ObjectMetadata> payload;
   std::string annotations;
 };
 

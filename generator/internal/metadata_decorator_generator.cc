@@ -65,6 +65,31 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
   // clang-format on
 
   for (auto const& method : methods()) {
+    if (IsStreamingWrite(method)) {
+      HeaderPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(  std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+      $request_type$,
+      $response_type$>>
+  $method_name$(
+      std::unique_ptr<grpc::ClientContext> context) override;
+
+)""");
+      continue;
+    }
+    if (IsBidirStreaming(method)) {
+      HeaderPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+      $request_type$,
+      $response_type$>>
+  Async$method_name$(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+
+)""");
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern({{IsResponseTypeEmpty,
@@ -86,7 +111,7 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
              IsLongrunningOperation),
          MethodPattern(
              {// clang-format off
-   {"  std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+   {"  std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
     "    $method_name$(\n"
     "    std::unique_ptr<grpc::ClientContext> context,\n"
     "    $request_type$ const& request) override;\n"
@@ -175,6 +200,37 @@ Status MetadataDecoratorGenerator::GenerateCc() {
 
   // metadata decorator class member methods
   for (auto const& method : methods()) {
+    if (IsStreamingWrite(method)) {
+      CcPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+    $request_type$,
+    $response_type$>>
+$metadata_class_name$::$method_name$(
+    std::unique_ptr<grpc::ClientContext> context) {
+  SetMetadata(*context, {});
+  return child_->$method_name$(std::move(context));
+}
+
+)""");
+      continue;
+    }
+    if (IsBidirStreaming(method)) {
+      CcPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+      $request_type$,
+      $response_type$>>
+$metadata_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  SetMetadata(*context, {});
+  return child_->Async$method_name$(cq, std::move(context));
+}
+
+)""");
+      continue;
+    }
     CcPrintMethod(
         method,
         {MethodPattern(
@@ -220,7 +276,7 @@ $metadata_class_name$::Async$method_name$(
          MethodPattern(
              {
                  // clang-format off
-   {"std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+   {"std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
     "$metadata_class_name$::$method_name$(\n"
     "    std::unique_ptr<grpc::ClientContext> context,\n"
     "    $request_type$ const& request) {\n"},

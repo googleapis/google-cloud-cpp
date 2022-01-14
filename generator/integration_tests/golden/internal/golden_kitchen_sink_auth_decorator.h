@@ -54,7 +54,7 @@ class GoldenKitchenSinkAuth : public GoldenKitchenSinkStub {
       grpc::ClientContext& context,
       google::test::admin::database::v1::ListLogsRequest const& request) override;
 
-  std::unique_ptr<internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
   TailLogEntries(
       std::unique_ptr<grpc::ClientContext> context,
       google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
@@ -66,6 +66,18 @@ class GoldenKitchenSinkAuth : public GoldenKitchenSinkStub {
   Status DoNothing(
       grpc::ClientContext& context,
       google::protobuf::Empty const& request) override;
+
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+      google::test::admin::database::v1::AppendRowsRequest,
+      google::test::admin::database::v1::AppendRowsResponse>>
+  AsyncAppendRows(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+
+  std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+      google::test::admin::database::v1::WriteObjectRequest,
+      google::test::admin::database::v1::WriteObjectResponse>> WriteObject(
+      std::unique_ptr<grpc::ClientContext> context) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

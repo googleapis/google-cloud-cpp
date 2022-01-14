@@ -54,7 +54,15 @@ Status StubGenerator::GenerateHeader() {
        "google/cloud/status_or.h",
        HasStreamingReadMethod() ? "google/cloud/internal/streaming_read_rpc.h"
                                 : "",
+       HasStreamingWriteMethod() ? "google/cloud/internal/streaming_write_rpc.h"
+                                 : "",
+       HasBidirStreamingMethod()
+           ? "google/cloud/internal/async_read_write_stream_impl.h"
+           : "",
        "google/cloud/version.h"});
+  std::vector<std::string> additional_pb_header_paths =
+      absl::StrSplit(vars("additional_pb_header_paths"), absl::ByChar(','));
+  HeaderSystemIncludes(additional_pb_header_paths);
   HeaderSystemIncludes(
       {vars("proto_grpc_header_path"),
        HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
@@ -73,6 +81,31 @@ Status StubGenerator::GenerateHeader() {
   // clang-format on
 
   for (auto const& method : methods()) {
+    if (IsStreamingWrite(method)) {
+      HeaderPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""( virtual std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+      $request_type$,
+      $response_type$>>
+  $method_name$(
+      std::unique_ptr<grpc::ClientContext> context) = 0;
+
+)""");
+      continue;
+    }
+    if (IsBidirStreaming(method)) {
+      HeaderPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(  virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+      $request_type$,
+      $response_type$>>
+  Async$method_name$(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context) = 0;
+
+)""");
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern(
@@ -95,7 +128,7 @@ Status StubGenerator::GenerateHeader() {
              IsLongrunningOperation),
          MethodPattern(
              {// clang-format off
-   {"  virtual std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+   {"  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
     "  $method_name$(\n"
     "    std::unique_ptr<grpc::ClientContext> context,\n"
     "    $request_type$ const& request) = 0;\n"
@@ -168,6 +201,31 @@ Status StubGenerator::GenerateHeader() {
 
   for (auto const& method : methods()) {
     // emit methods
+    if (IsStreamingWrite(method)) {
+      HeaderPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(  std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+      $request_type$,
+      $response_type$>>
+  $method_name$(
+      std::unique_ptr<grpc::ClientContext> context) override;
+
+)""");
+      continue;
+    }
+    if (IsBidirStreaming(method)) {
+      HeaderPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+      $request_type$,
+      $response_type$>>
+  Async$method_name$(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+
+)""");
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern({{IsResponseTypeEmpty,
@@ -190,7 +248,7 @@ Status StubGenerator::GenerateHeader() {
              IsLongrunningOperation),
          MethodPattern(
              {// clang-format off
-   {"  std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+   {"  std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
     "  $method_name$(\n"
     "    std::unique_ptr<grpc::ClientContext> client_context,\n"
     "    $request_type$ const& request) override;\n"
@@ -286,6 +344,43 @@ Status StubGenerator::GenerateCc() {
 
   // default stub class member methods
   for (auto const& method : methods()) {
+    if (IsStreamingWrite(method)) {
+      CcPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+    $request_type$,
+    $response_type$>>
+Default$stub_class_name$::$method_name$(
+    std::unique_ptr<grpc::ClientContext> context) {
+  auto response = absl::make_unique<$response_type$>();
+  auto stream = grpc_stub_->$method_name$(context.get(), response.get());
+  return absl::make_unique<::google::cloud::internal::StreamingWriteRpcImpl<
+      $request_type$, $response_type$>>(
+    std::move(context), std::move(response), std::move(stream));
+}
+
+)""");
+      continue;
+    }
+    if (IsBidirStreaming(method)) {
+      CcPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+    $request_type$,
+    $response_type$>>
+Default$stub_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  return google::cloud::internal::MakeStreamingReadWriteRpc<$request_type$, $response_type$>(
+      cq, std::move(context),
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsync$method_name$(context, cq);
+      });
+}
+
+)""");
+      continue;
+    }
     CcPrintMethod(
         method,
         {MethodPattern(
@@ -327,12 +422,12 @@ Default$stub_class_name$::Async$method_name$(
                        IsLongrunningOperation),
          MethodPattern(
              {// clang-format off
-   {"std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+   {"std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
     "Default$stub_class_name$::$method_name$(\n"
     "    std::unique_ptr<grpc::ClientContext> client_context,\n"
     "    $request_type$ const& request) {\n"
     "  auto stream = grpc_stub_->$method_name$(client_context.get(), request);\n"
-    "  return absl::make_unique<internal::StreamingReadRpcImpl<\n"
+    "  return absl::make_unique<google::cloud::internal::StreamingReadRpcImpl<\n"
     "      $response_type$>>(\n"
     "      std::move(client_context), std::move(stream));\n"
     "}\n\n"}},

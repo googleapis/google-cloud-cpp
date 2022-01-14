@@ -36,10 +36,10 @@ ctest_args=("$@")
 cd "${BINARY_DIR}"
 start_emulator
 
-# GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME is automatically created, but we
-# need to create the *DESTINATION_BUCKET_NAME too. Note that when the
-# `storage_bucket_samples` binary is missing the examples that use said bucket
-# are missing too.
+# Create the test buckets in the emulator:
+printf '{"name": "%s"}' "${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}" |
+  curl -X POST -H "Content-Type: application/json" --data-binary @- \
+    "${CLOUD_STORAGE_EMULATOR_ENDPOINT}/storage/v1/b?project=${GOOGLE_CLOUD_PROJECT}"
 printf '{"name": "%s"}' "${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}" |
   curl -s -X POST -H "Content-Type: application/json" --data-binary @- \
     "${CLOUD_STORAGE_EMULATOR_ENDPOINT}/storage/v1/b?project=${GOOGLE_CLOUD_PROJECT}"

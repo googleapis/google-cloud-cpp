@@ -64,7 +64,7 @@ GoldenKitchenSinkMetadata::ListLogs(
   return child_->ListLogs(context, request);
 }
 
-std::unique_ptr<internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
 GoldenKitchenSinkMetadata::TailLogEntries(
     std::unique_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::TailLogEntriesRequest const& request) {
@@ -86,6 +86,25 @@ GoldenKitchenSinkMetadata::DoNothing(
     google::protobuf::Empty const& request) {
   SetMetadata(context, {});
   return child_->DoNothing(context, request);
+}
+
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+      google::test::admin::database::v1::AppendRowsRequest,
+      google::test::admin::database::v1::AppendRowsResponse>>
+GoldenKitchenSinkMetadata::AsyncAppendRows(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  SetMetadata(*context, {});
+  return child_->AsyncAppendRows(cq, std::move(context));
+}
+
+std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+    google::test::admin::database::v1::WriteObjectRequest,
+    google::test::admin::database::v1::WriteObjectResponse>>
+GoldenKitchenSinkMetadata::WriteObject(
+    std::unique_ptr<grpc::ClientContext> context) {
+  SetMetadata(*context, {});
+  return child_->WriteObject(std::move(context));
 }
 
 void GoldenKitchenSinkMetadata::SetMetadata(grpc::ClientContext& context,

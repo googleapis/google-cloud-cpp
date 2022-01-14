@@ -90,6 +90,52 @@
 
 ## v1.36.0 - TBD
 
+### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
+
+**BREAKING CHANGE:** with this release any use of the
+`storage::internal::ResumableUploadResponse` type require changes. Applications
+should have little need for this type, outside mocks, so the changes should not
+affect production code.
+
+Nevertheless, we apologize for the inconvenience, and while we would have
+preferred to avoid breaking changes, it was inevitable to introduce some
+breaking changes to fix a data loss bug (see [#7835]).
+
+If you are affected by this change, you will need to change your tests following
+this guide. Any place where you return a `ResumableUploadResponse` needs to
+change from:
+
+```cc
+storage::internal::ResumableUploadResource{
+  /*upload_session_url=*/std::string{"typically-unused"},
+  /*last_committed_byte=*/std::uint64_t{value},
+  /*payload=*/absl::nullopt, // or some gcs::ObjectMetadata value
+  /*upload_state=*/ResumableUploadResponse::kInProgress, // or kDone
+  /*annotations=*/std::string{"typically-unused"}
+}
+```
+
+to:
+
+```cc
+storage::internal::ResumableUploadResource{
+  /*upload_session_url=*/std::string{"typically-unused"},
+  /*upload_state=*/ResumableUploadResponse::kInProgress, // or kDone
+  /*committed_size=*/value + 1, // or absl::nullopt
+  /*payload=*/absl::nullopt, // or some gcs::ObjectMetadata value
+  /*annotations=*/std::string{"typically-unused"}
+}
+```
+
+That is, you need to re-order the fields **and** increase the `value` to reflect
+the number of committed bytes vs. the index in the last committed byte.
+
+Changing the order of the fields was intentional. It will create a build
+failure, which is easier to detect and repair than a run-time error in
+your tests.
+
+[#7835]: https://github.com/googleapis/google-cloud-cpp/issues/7835
+
 ## v1.35.0 - 2022-01
 
 ### New GA Libraries

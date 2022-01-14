@@ -42,7 +42,7 @@ BigQueryReadMetadata::CreateReadSession(
   return child_->CreateReadSession(context, request);
 }
 
-std::unique_ptr<internal::StreamingReadRpc<
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::bigquery::storage::v1::ReadRowsResponse>>
 BigQueryReadMetadata::ReadRows(
     std::unique_ptr<grpc::ClientContext> context,

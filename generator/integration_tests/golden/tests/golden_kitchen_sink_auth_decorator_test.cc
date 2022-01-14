@@ -27,10 +27,14 @@ namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::golden_internal::MockWriteObjectStreamingWriteRpc;
 using ::google::cloud::internal::StreamingReadRpcError;
 using ::google::cloud::testing_util::MakeTypicalMockAuth;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::test::admin::database::v1::WriteObjectRequest;
+using ::google::test::admin::database::v1::WriteObjectResponse;
 using ::testing::IsNull;
+using ::testing::Return;
 
 // The general pattern of these test is to make two requests, both of which
 // return an error. The first one because the auth strategy fails, the second
@@ -151,6 +155,34 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, ListServiceAccountKeys) {
   auto auth_success = under_test.ListServiceAccountKeys(ctx, request);
   EXPECT_THAT(ctx.credentials(), Not(IsNull()));
   EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(GoldenKitchenSinkAuthDecoratorTest, WriteObject) {
+  auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
+  EXPECT_CALL(*mock, WriteObject)
+      .WillOnce([](std::unique_ptr<grpc::ClientContext>) {
+        auto stream = absl::make_unique<MockWriteObjectStreamingWriteRpc>();
+        EXPECT_CALL(*stream, Write)
+            .WillOnce(Return(true))
+            .WillOnce(Return(false));
+        EXPECT_CALL(*stream, Close)
+            .WillOnce(Return(StatusOr<WriteObjectResponse>(
+                Status(StatusCode::kPermissionDenied, "uh-oh"))));
+        return stream;
+      });
+
+  auto under_test = GoldenKitchenSinkAuth(MakeTypicalMockAuth(), mock);
+  auto stream =
+      under_test.WriteObject(absl::make_unique<grpc::ClientContext>());
+  EXPECT_FALSE(stream->Write(WriteObjectRequest{}, grpc::WriteOptions()));
+  auto response = stream->Close();
+  EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument));
+
+  stream = under_test.WriteObject(absl::make_unique<grpc::ClientContext>());
+  EXPECT_TRUE(stream->Write(WriteObjectRequest{}, grpc::WriteOptions()));
+  EXPECT_FALSE(stream->Write(WriteObjectRequest{}, grpc::WriteOptions()));
+  response = stream->Close();
+  EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
 }
 
 }  // namespace

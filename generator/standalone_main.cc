@@ -219,7 +219,15 @@ int main(int argc, char** argv) {
     for (auto const& gen_async_rpc : service.gen_async_rpcs()) {
       args.emplace_back("--cpp_codegen_opt=gen_async_rpc=" + gen_async_rpc);
     }
+    for (auto const& additional_proto_file : service.additional_proto_files()) {
+      args.emplace_back("--cpp_codegen_opt=additional_proto_file=" +
+                        additional_proto_file);
+    }
     args.emplace_back(service.service_proto_path());
+    for (auto const& additional_proto_file : service.additional_proto_files()) {
+      args.emplace_back(additional_proto_file);
+    }
+
     GCP_LOG(INFO) << "Generating service code using: "
                   << absl::StrJoin(args, ";") << "\n";
 

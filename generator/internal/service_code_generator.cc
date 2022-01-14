@@ -128,6 +128,20 @@ bool ServiceCodeGenerator::HasStreamingReadMethod() const {
                      });
 }
 
+bool ServiceCodeGenerator::HasStreamingWriteMethod() const {
+  return std::any_of(methods_.begin(), methods_.end(),
+                     [](google::protobuf::MethodDescriptor const& m) {
+                       return IsStreamingWrite(m);
+                     });
+}
+
+bool ServiceCodeGenerator::HasBidirStreamingMethod() const {
+  return std::any_of(methods_.begin(), methods_.end(),
+                     [](google::protobuf::MethodDescriptor const& m) {
+                       return IsBidirStreaming(m);
+                     });
+}
+
 std::vector<std::string>
 ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
   std::vector<std::string> include_paths;
@@ -137,9 +151,10 @@ ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
             google::api::method_signature);
     google::protobuf::Descriptor const* input_type = method.get().input_type();
     for (auto const& extension : method_signature_extension) {
-      std::vector<std::string> parameters = absl::StrSplit(extension, ',');
-      for (auto const& parameter : parameters) {
-        if (parameter.empty()) continue;
+      std::vector<std::string> parameters =
+          absl::StrSplit(extension, ',', absl::SkipEmpty());
+      for (auto& parameter : parameters) {
+        absl::StripAsciiWhitespace(&parameter);
         auto path = IncludePathForWellKnownProtobufType(
             *input_type->FindFieldByName(parameter));
         if (path) include_paths.push_back(*path);
@@ -222,6 +237,12 @@ Status ServiceCodeGenerator::HeaderPrintMethod(
                      patterns, file, line);
 }
 
+void ServiceCodeGenerator::HeaderPrintMethod(
+    google::protobuf::MethodDescriptor const& method, char const* file,
+    int line, std::string const& text) {
+  header_.Print(line, file, MergeServiceAndMethodVars(method), text);
+}
+
 void ServiceCodeGenerator::CcPrint(std::string const& text) {
   cc_.Print(service_vars_, text);
 }
@@ -238,6 +259,12 @@ Status ServiceCodeGenerator::CcPrintMethod(
     std::vector<MethodPattern> const& patterns, char const* file, int line) {
   return PrintMethod(method, cc_, MergeServiceAndMethodVars(method), patterns,
                      file, line);
+}
+
+void ServiceCodeGenerator::CcPrintMethod(
+    google::protobuf::MethodDescriptor const& method, char const* file,
+    int line, std::string const& text) {
+  cc_.Print(line, file, MergeServiceAndMethodVars(method), text);
 }
 
 void ServiceCodeGenerator::GenerateLocalIncludes(

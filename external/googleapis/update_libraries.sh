@@ -22,6 +22,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/identity/accesscontextmanager/type:type_proto" \
       "@com_google_googleapis//google/identity/accesscontextmanager/v1:accesscontextmanager_proto"
   )"
+  ["apigateway"]="@com_google_googleapis//google/cloud/apigateway/v1:apigateway_proto"
   ["assuredworkloads"]="@com_google_googleapis//google/cloud/assuredworkloads/v1:assuredworkloads_proto"
   ["bigquery"]="$(
     printf ",%s" \
@@ -42,18 +43,36 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/billing/v1:billing_proto" \
       "@com_google_googleapis//google/cloud/billing/budgets/v1:budgets_proto"
   )"
+  ["datamigration"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/clouddms/v1:clouddms_proto" \
+      "@com_google_googleapis//google/cloud/clouddms/logging/v1:logging_proto"
+  )"
   ["dialogflow"]="@com_google_googleapis//google/cloud/dialogflow/v2:dialogflow_proto"
+  ["eventarc"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/eventarc/v1:eventarc_cc_grpc" \
+      "@com_google_googleapis//google/cloud/eventarc/publishing/v1:publishing_cc_grpc"
+  )"
   ["iam"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/iam/credentials/v1:credentials_proto" \
       "@com_google_googleapis//google/iam/admin/v1:admin_proto"
   )"
+  ["ids"]="@com_google_googleapis//google/cloud/ids/v1:ids_cc_grpc"
+  ["iot"]="@com_google_googleapis//google/cloud/iot/v1:iot_cc_grpc"
   ["kms"]="@com_google_googleapis//google/cloud/kms/v1:kms_proto"
   ["logging_type"]="@com_google_googleapis//google/logging/type:type_proto"
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_proto"
   ["monitoring"]="@com_google_googleapis//google/monitoring/v3:monitoring_proto"
   ["pubsub"]="@com_google_googleapis//google/pubsub/v1:pubsub_proto"
   ["pubsublite"]="@com_google_googleapis//google/cloud/pubsublite/v1:pubsublite_proto"
+  ["recommender"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/recommender/v1:recommender_proto" \
+      "@com_google_googleapis//google/cloud/recommender/logging/v1:logging_proto"
+  )"
+  ["resourcemanager"]="@com_google_googleapis//google/cloud/resourcemanager/v3:resourcemanager_proto"
   ["scheduler"]="@com_google_googleapis//google/cloud/scheduler/v1:scheduler_proto"
   ["secretmanager"]="$(
     printf ",%s" \
@@ -68,8 +87,12 @@ declare -A -r LIBRARIES=(
   )"
   ["speech"]="@com_google_googleapis//google/cloud/speech/v1:speech_proto"
   ["storage"]="@com_google_googleapis//google/storage/v2:storage_proto"
+  ["storagetransfer"]="@com_google_googleapis//google/storagetransfer/v1:storagetransfer_proto"
+  ["talent"]="@com_google_googleapis//google/cloud/talent/v4:talent_proto"
   ["tasks"]="@com_google_googleapis//google/cloud/tasks/v2:tasks_proto"
   ["texttospeech"]="@com_google_googleapis//google/cloud/texttospeech/v1:texttospeech_proto"
+  ["vmmigration"]="@com_google_googleapis//google/cloud/vmmigration/v1:vmmigration_proto"
+  ["vpcaccess"]="@com_google_googleapis//google/cloud/vpcaccess/v1:vpcaccess_proto"
   ["webrisk"]="@com_google_googleapis//google/cloud/webrisk/v1:webrisk_proto"
   ["websecurityscanner"]="@com_google_googleapis//google/cloud/websecurityscanner/v1:websecurityscanner_proto"
   ["workflows"]="$(
@@ -105,7 +128,7 @@ for library in "${!LIBRARIES[@]}"; do
         >>"external/googleapis/protodeps/${library}.deps" || true
   done
   for file in "${files[@]}"; do
-    sort -u "${file}" >"${file}.sorted"
+    LC_ALL=C sort -u "${file}" >"${file}.sorted"
     mv "${file}.sorted" "${file}"
   done
 done

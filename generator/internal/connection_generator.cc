@@ -56,6 +56,9 @@ Status ConnectionGenerator::GenerateHeader() {
        HasStreamingReadMethod() || HasPaginatedMethod()
            ? "google/cloud/stream_range.h"
            : "",
+       HasBidirStreamingMethod()
+           ? "google/cloud/internal/async_read_write_stream_impl.h"
+           : "",
        "google/cloud/version.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
@@ -75,7 +78,7 @@ Status ConnectionGenerator::GenerateHeader() {
     "using $limited_error_count_retry_policy_name$ =\n"
     "    ::google::cloud::internal::LimitedErrorCountRetryPolicy<\n"
     "        $product_internal_namespace$::$retry_traits_name$>;\n\n"
-    //  clang-format on
+                // clang-format on
   );
 
   // streaming updater functions
@@ -88,7 +91,7 @@ Status ConnectionGenerator::GenerateHeader() {
     "    $response_type$ const& response,\n"
     "    $request_type$& request);\n\n"}
      }, IsStreamingRead)},
-                // clang-format on
+             // clang-format on
         __FILE__, __LINE__);
   }
 
@@ -101,6 +104,17 @@ Status ConnectionGenerator::GenerateHeader() {
   // clang-format on
 
   for (auto const& method : methods()) {
+    if (IsBidirStreaming(method)) {
+      HeaderPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(  virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+      $request_type$,
+      $response_type$>>
+  Async$method_name$();
+
+)""");
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern(
@@ -228,6 +242,23 @@ Status ConnectionGenerator::GenerateCc() {
   // clang-format on
 
   for (auto const& method : methods()) {
+    if (IsBidirStreaming(method)) {
+      CcPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+    $request_type$,
+    $response_type$>>
+$connection_class_name$::Async$method_name$() {
+  return absl::make_unique<
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
+          $request_type$,
+          $response_type$>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+)""");
+      continue;
+    }
     CcPrintMethod(
         method,
         {MethodPattern(
@@ -357,6 +388,20 @@ $connection_class_name$::Async$method_name$(
   //  clang-format on
 
   for (auto const& method : methods()) {
+    if (IsBidirStreaming(method)) {
+      CcPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+      $request_type$,
+      $response_type$>>
+  Async$method_name$() override {
+    return stub_->Async$method_name$(
+        background_->cq(), absl::make_unique<grpc::ClientContext>());
+  }
+
+)""");
+      continue;
+    }
     CcPrintMethod(
         method,
         {MethodPattern(

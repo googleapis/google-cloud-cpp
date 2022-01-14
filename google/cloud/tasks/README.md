@@ -1,7 +1,5 @@
 # Cloud Tasks API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for
 [Cloud Tasks API][cloud-service-root], a service that manages the
 execution of large numbers of distributed requests.

@@ -17,6 +17,7 @@
 // source: google/logging/v2/logging.proto
 
 #include "google/cloud/logging/internal/logging_service_v2_auth_decorator.h"
+#include "google/cloud/internal/async_read_write_stream_auth.h"
 #include <google/logging/v2/logging.grpc.pb.h>
 #include <memory>
 
@@ -72,6 +73,24 @@ StatusOr<google::logging::v2::ListLogsResponse> LoggingServiceV2Auth::ListLogs(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListLogs(context, request);
+}
+
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+    google::logging::v2::TailLogEntriesRequest,
+    google::logging::v2::TailLogEntriesResponse>>
+LoggingServiceV2Auth::AsyncTailLogEntries(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
+      google::logging::v2::TailLogEntriesRequest,
+      google::logging::v2::TailLogEntriesResponse>;
+
+  auto child = child_;
+  auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncTailLogEntries(cq, std::move(ctx));
+  };
+  return absl::make_unique<StreamAuth>(
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

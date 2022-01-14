@@ -449,7 +449,7 @@ void CreateBucketAsyncTurbo(google::cloud::storage::Client client,
 
 void SetRpoAsyncTurbo(google::cloud::storage::Client client,
                       std::vector<std::string> const& argv) {
-  // [START storage_set_turbo_replication_async_turbo]
+  // [START storage_set_rpo_async_turbo]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
@@ -460,13 +460,13 @@ void SetRpoAsyncTurbo(google::cloud::storage::Client client,
 
     std::cout << "RPO is set to 'ASYNC_TURBO' for " << updated->name() << "\n";
   }
-  // [END storage_set_turbo_replication_async_turbo]
+  // [END storage_set_rpo_async_turbo]
   (std::move(client), argv.at(0));
 }
 
 void SetRpoDefault(google::cloud::storage::Client client,
                    std::vector<std::string> const& argv) {
-  // [START storage_set_turbo_replication_default]
+  // [START storage_set_rpo_default]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
@@ -477,13 +477,13 @@ void SetRpoDefault(google::cloud::storage::Client client,
 
     std::cout << "RPO is set to 'default' for " << updated->name() << "\n";
   }
-  // [END storage_set_turbo_replication_default]
+  // [END storage_set_rpo_default]
   (std::move(client), argv.at(0));
 }
 
 void GetRpo(google::cloud::storage::Client client,
             std::vector<std::string> const& argv) {
-  // [START storage_get_turbo_replication]
+  // [START storage_get_rpo]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
@@ -493,7 +493,7 @@ void GetRpo(google::cloud::storage::Client client,
     std::cout << "RPO is " << metadata->rpo() << " for bucket "
               << metadata->name() << "\n";
   }
-  // [END storage_get_turbo_replication]
+  // [END storage_get_rpo]
   (std::move(client), argv.at(0));
 }
 

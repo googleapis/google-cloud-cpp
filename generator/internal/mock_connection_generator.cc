@@ -60,6 +60,16 @@ Status MockConnectionGenerator::GenerateHeader() {
   // clang-format on
 
   for (auto const& method : methods()) {
+    if (IsBidirStreaming(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__,
+                        R"""(  MOCK_METHOD((std::unique_ptr<
+      ::google::cloud::internal::AsyncStreamingReadWriteRpc<
+          $request_type$, $response_type$>>),
+      Async$method_name$, (), (override));
+
+)""");
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern(

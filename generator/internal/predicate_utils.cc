@@ -101,6 +101,14 @@ bool IsStreamingRead(google::protobuf::MethodDescriptor const& method) {
   return !method.client_streaming() && method.server_streaming();
 }
 
+bool IsStreamingWrite(google::protobuf::MethodDescriptor const& method) {
+  return method.client_streaming() && !method.server_streaming();
+}
+
+bool IsBidirStreaming(google::protobuf::MethodDescriptor const& method) {
+  return method.client_streaming() && method.server_streaming();
+}
+
 bool IsLongrunningOperation(google::protobuf::MethodDescriptor const& method) {
   return method.output_type()->full_name() == "google.longrunning.Operation";
 }

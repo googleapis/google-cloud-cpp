@@ -73,11 +73,9 @@ void CurlResumableUploadSession::Update(
     // value. In this case we update the next expected byte using the chunk
     // size, as we know the upload was successful.
     next_expected_ += chunk_size;
-  } else if (result->last_committed_byte != 0) {
-    next_expected_ = result->last_committed_byte + 1;
   } else {
     // Nothing has been committed on the server side yet, keep resending.
-    next_expected_ = 0;
+    next_expected_ = result->committed_size.value_or(0);
   }
   if (session_id_.empty() && !result->upload_session_url.empty()) {
     session_id_ = result->upload_session_url;

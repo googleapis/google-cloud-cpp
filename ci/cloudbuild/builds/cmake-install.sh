@@ -66,12 +66,18 @@ expected_dirs+=(
   ./include/google/cloud/bigquery/v2
   ./include/google/cloud/bigtable/admin/mocks
   ./include/google/cloud/bigtable/internal
+  # no RPC services in google/cloud/clouddms
+  ./include/google/cloud/clouddms/logging
+  ./include/google/cloud/clouddms/logging/v1
   ./include/google/cloud/dialogflow
   ./include/google/cloud/dialogflow/v2
   ./include/google/cloud/grpc_utils
   ./include/google/cloud/internal
   ./include/google/cloud/pubsub
   ./include/google/cloud/pubsub/internal
+  # no gRPC services in google/cloud/recommender/logging
+  ./include/google/cloud/recommender/logging
+  ./include/google/cloud/recommender/logging/v1
   # no gRPC services in google/cloud/secretmanager/logging
   ./include/google/cloud/secretmanager/logging
   ./include/google/cloud/secretmanager/logging/v1

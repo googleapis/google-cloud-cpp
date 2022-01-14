@@ -17,6 +17,7 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_auth_decorator.h"
+#include "google/cloud/internal/async_read_write_stream_auth.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <memory>
 
@@ -62,7 +63,7 @@ StatusOr<google::test::admin::database::v1::ListLogsResponse> GoldenKitchenSinkA
   return child_->ListLogs(context, request);
 }
 
-std::unique_ptr<internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
 GoldenKitchenSinkAuth::TailLogEntries(
    std::unique_ptr<grpc::ClientContext> context,
    google::test::admin::database::v1::TailLogEntriesRequest const& request) {
@@ -87,6 +88,35 @@ Status GoldenKitchenSinkAuth::DoNothing(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DoNothing(context, request);
+}
+
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+    google::test::admin::database::v1::AppendRowsRequest,
+    google::test::admin::database::v1::AppendRowsResponse>>
+GoldenKitchenSinkAuth::AsyncAppendRows(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
+    google::test::admin::database::v1::AppendRowsRequest, google::test::admin::database::v1::AppendRowsResponse>;
+
+  auto child = child_;
+  auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncAppendRows(cq, std::move(ctx));
+  };
+  return absl::make_unique<StreamAuth>(
+    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+}
+
+std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+    google::test::admin::database::v1::WriteObjectRequest,
+    google::test::admin::database::v1::WriteObjectResponse>>
+GoldenKitchenSinkAuth::WriteObject(
+    std::unique_ptr<grpc::ClientContext> context) {
+  using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
+      google::test::admin::database::v1::WriteObjectRequest, google::test::admin::database::v1::WriteObjectResponse>;
+  auto status = auth_->ConfigureContext(*context);
+  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
+  return child_->WriteObject(std::move(context));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

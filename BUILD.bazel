@@ -35,6 +35,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-apigateway",
+    deps = [
+        "//google/cloud/apigateway:google_cloud_cpp_apigateway",
+    ],
+)
+
+cc_library(
+    name = "experimental-apigateway_mocks",
+    deps = [
+        "//google/cloud/apigateway:google_cloud_cpp_apigateway_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-accesscontextmanager",
     deps = [
         "//google/cloud/accesscontextmanager:google_cloud_cpp_accesscontextmanager",
@@ -59,6 +73,29 @@ cc_library(
     name = "experimental-assuredworkloads_mocks",
     deps = [
         "//google/cloud/assuredworkloads:google_cloud_cpp_assuredworkloads_mocks",
+    ],
+)
+
+cc_library(
+    name = "bigquery",
+    deps = [
+        "//google/cloud/bigquery:google_cloud_cpp_bigquery",
+    ],
+)
+
+cc_library(
+    name = "bigquery-mocks",
+    deprecation = "please use //:bigquery_mocks instead.",
+    tags = ["manual"],
+    deps = [
+        "//google/cloud/bigquery:google_cloud_cpp_bigquery_mocks",
+    ],
+)
+
+cc_library(
+    name = "bigquery_mocks",
+    deps = [
+        "//google/cloud/bigquery:google_cloud_cpp_bigquery_mocks",
     ],
 )
 
@@ -89,6 +126,113 @@ cc_library(
     name = "experimental-billing_mocks",
     deps = [
         "//google/cloud/billing:google_cloud_cpp_billing_mocks",
+    ],
+)
+
+cc_library(
+    name = "experimental-datamigration",
+    deps = [
+        "//google/cloud/datamigration:google_cloud_cpp_datamigration",
+    ],
+)
+
+cc_library(
+    name = "experimental-datamigration_mocks",
+    deps = [
+        "//google/cloud/datamigration:google_cloud_cpp_datamigration_mocks",
+    ],
+)
+
+cc_library(
+    name = "experimental-eventarc",
+    deps = [
+        "//google/cloud/eventarc:google_cloud_cpp_eventarc",
+    ],
+)
+
+cc_library(
+    name = "experimental-eventarc_mocks",
+    deps = [
+        "//google/cloud/eventarc:google_cloud_cpp_eventarc_mocks",
+    ],
+)
+
+cc_library(
+    name = "iam",
+    deps = [
+        "//google/cloud/iam:google_cloud_cpp_iam",
+    ],
+)
+
+cc_library(
+    name = "iam-mocks",
+    deprecation = "please use //:iam_mocks instead.",
+    tags = ["manual"],
+    deps = [
+        "//google/cloud/iam:google_cloud_cpp_iam_mocks",
+    ],
+)
+
+cc_library(
+    name = "iam_mocks",
+    deps = [
+        "//google/cloud/iam:google_cloud_cpp_iam_mocks",
+    ],
+)
+
+cc_library(
+    name = "experimental-ids",
+    deps = [
+        "//google/cloud/ids:google_cloud_cpp_ids",
+    ],
+)
+
+cc_library(
+    name = "experimental-ids_mocks",
+    deps = [
+        "//google/cloud/ids:google_cloud_cpp_ids_mocks",
+    ],
+)
+
+cc_library(
+    name = "experimental-iot",
+    deps = [
+        "//google/cloud/iot:google_cloud_cpp_iot",
+    ],
+)
+
+cc_library(
+    name = "experimental-iot_mocks",
+    deps = [
+        "//google/cloud/iot:google_cloud_cpp_iot_mocks",
+    ],
+)
+
+cc_library(
+    name = "experimental-kms",
+    deps = [
+        "//google/cloud/kms:google_cloud_cpp_kms",
+    ],
+)
+
+cc_library(
+    name = "experimental-kms_mocks",
+    deps = [
+        "//google/cloud/kms:google_cloud_cpp_kms_mocks",
+    ],
+)
+
+cc_library(
+    name = "experimental-logging",
+    deps = [
+        "//google/cloud/logging:google_cloud_cpp_logging",
+    ],
+)
+
+cc_library(
+    name = "experimental-logging_mocks",
+    deps = [
+        "//google/cloud/logging:google_cloud_cpp_logging_mocks",
     ],
 )
 
@@ -126,6 +270,34 @@ cc_library(
     tags = ["manual"],
     deps = [
         "//google/cloud/pubsub:google_cloud_cpp_pubsub",
+    ],
+)
+
+cc_library(
+    name = "experimental-recommender",
+    deps = [
+        "//google/cloud/recommender:google_cloud_cpp_recommender",
+    ],
+)
+
+cc_library(
+    name = "experimental-recommender_mocks",
+    deps = [
+        "//google/cloud/recommender:google_cloud_cpp_recommender_mocks",
+    ],
+)
+
+cc_library(
+    name = "experimental-resourcemanager",
+    deps = [
+        "//google/cloud/resourcemanager:google_cloud_cpp_resourcemanager",
+    ],
+)
+
+cc_library(
+    name = "experimental-resourcemanager_mocks",
+    deps = [
+        "//google/cloud/resourcemanager:google_cloud_cpp_resourcemanager_mocks",
     ],
 )
 
@@ -219,76 +391,30 @@ cc_library(
 )
 
 cc_library(
-    name = "iam",
+    name = "storagetransfer",
     deps = [
-        "//google/cloud/iam:google_cloud_cpp_iam",
+        "//google/cloud/storagetransfer:google_cloud_cpp_storagetransfer",
     ],
 )
 
 cc_library(
-    name = "iam-mocks",
-    deprecation = "please use //:iam_mocks instead.",
-    tags = ["manual"],
+    name = "storagetransfer_mocks",
     deps = [
-        "//google/cloud/iam:google_cloud_cpp_iam_mocks",
+        "//google/cloud/storagetransfer:google_cloud_cpp_storagetransfer_mocks",
     ],
 )
 
 cc_library(
-    name = "iam_mocks",
+    name = "experimental-talent",
     deps = [
-        "//google/cloud/iam:google_cloud_cpp_iam_mocks",
+        "//google/cloud/talent:google_cloud_cpp_talent",
     ],
 )
 
 cc_library(
-    name = "experimental-kms",
+    name = "experimental-talent_mocks",
     deps = [
-        "//google/cloud/kms:google_cloud_cpp_kms",
-    ],
-)
-
-cc_library(
-    name = "experimental-kms_mocks",
-    deps = [
-        "//google/cloud/kms:google_cloud_cpp_kms_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-logging",
-    deps = [
-        "//google/cloud/logging:google_cloud_cpp_logging",
-    ],
-)
-
-cc_library(
-    name = "experimental-logging_mocks",
-    deps = [
-        "//google/cloud/logging:google_cloud_cpp_logging_mocks",
-    ],
-)
-
-cc_library(
-    name = "bigquery",
-    deps = [
-        "//google/cloud/bigquery:google_cloud_cpp_bigquery",
-    ],
-)
-
-cc_library(
-    name = "bigquery-mocks",
-    deprecation = "please use //:bigquery_mocks instead.",
-    tags = ["manual"],
-    deps = [
-        "//google/cloud/bigquery:google_cloud_cpp_bigquery_mocks",
-    ],
-)
-
-cc_library(
-    name = "bigquery_mocks",
-    deps = [
-        "//google/cloud/bigquery:google_cloud_cpp_bigquery_mocks",
+        "//google/cloud/talent:google_cloud_cpp_talent_mocks",
     ],
 )
 
@@ -317,6 +443,34 @@ cc_library(
     name = "experimental-tasks_mocks",
     deps = [
         "//google/cloud/tasks:google_cloud_cpp_tasks_mocks",
+    ],
+)
+
+cc_library(
+    name = "experimental-vmmigration",
+    deps = [
+        "//google/cloud/vmmigration:google_cloud_cpp_vmmigration",
+    ],
+)
+
+cc_library(
+    name = "experimental-vmmigration_mocks",
+    deps = [
+        "//google/cloud/vmmigration:google_cloud_cpp_vmmigration_mocks",
+    ],
+)
+
+cc_library(
+    name = "experimental-vpcaccess",
+    deps = [
+        "//google/cloud/vpcaccess:google_cloud_cpp_vpcaccess",
+    ],
+)
+
+cc_library(
+    name = "experimental-vpcaccess_mocks",
+    deps = [
+        "//google/cloud/vpcaccess:google_cloud_cpp_vpcaccess_mocks",
     ],
 )
 

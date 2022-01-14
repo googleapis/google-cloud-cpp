@@ -263,7 +263,7 @@ void GenerateReadme(std::ostream& os,
 This directory contains an idiomatic C++ client library for the
 [$title$][cloud-service-docs], a service to $description$
 
-This library is **experimental**. Its APIS are subject to change without notice.
+This library is **experimental**. Its APIs are subject to change without notice.
 
 Please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -590,10 +590,9 @@ to $description$
 This library is **experimental**. Its APIs are subject to change without notice.
 
 This library requires a C++11 compiler. It is supported (and tested) on multiple
-Linux distributions, as well as Windows and macOS. The
-[README][github-readme] on [GitHub][github-link] provides detailed
-instructions to install the necessary dependencies, as well as how to compile
-the client library.
+Linux distributions, as well as Windows and macOS. The [README][github-readme]
+on [GitHub][github-link] provides detailed instructions to install the necessary
+dependencies, as well as how to compile the client library.
 
 ### Setting up your repo
 
@@ -628,9 +627,7 @@ which should give you a taste of the $title$ C++ client library API.
   the program's console.
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc-streams` turns on tracing for streaming
-  gRPC calls, such as `Client::Read()`, `Client::ExecuteQuery()`, and
-  `Client::ProfileQuery()`. This can produce a lot of output, so use with
-  caution!
+  gRPC calls. This can produce a lot of output, so use with caution!
 
 - `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
   including whether messages will be output on multiple lines, or whether
@@ -668,15 +665,9 @@ can override the default policies.
 
 [cloud-service-docs]: https://cloud.google.com/$site_root$
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
-[gcs-quickstart]: https://cloud.google.com/$site_root$/docs/quickstarts 'Quickstarts'
-[resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
-[billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
-[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
-[gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
 [github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/$library$/README%2Emd
-[github-install]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging%2Emd
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/$library$/quickstart/README%2Emd
 
 */
@@ -893,7 +884,7 @@ int main(int argc, char* argv[]) try {
       $library$::MakeConnection(/* EDIT HERE */));
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName()) {
+  for (auto r : client.List/*EDIT HERE*/(project.FullName())) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

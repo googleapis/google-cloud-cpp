@@ -118,54 +118,43 @@ Status ClientGenerator::GenerateHeader() {
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
-      std::string method_string =
+      std::string const method_string =
           absl::StrCat("  $method_name$($method_signature", i,
                        "$Options options = {});\n\n");
+      std::string const signature = method_signature_extension[i];
       HeaderPrintMethod(
           method,
           {MethodPattern(
-               {
-                   {FormatMethodCommentsFromRpcComments(
-                       method, MethodParameterStyle::kApiMethodSignature)},
-                   {IsResponseTypeEmpty,
-                    // clang-format off
+               {{FormatMethodCommentsMethodSignature(method, signature)},
+                {IsResponseTypeEmpty,
+                 // clang-format off
                    "  Status\n",
                    "  StatusOr<$response_type$>\n"},
-                  {method_string}
-                   // clang-format on
-               },
+                // clang-format on
+                {method_string}},
                All(IsNonStreaming, Not(IsLongrunningOperation),
                    Not(IsPaginated))),
            MethodPattern(
-               {
-                   {FormatMethodCommentsFromRpcComments(
-                       method, MethodParameterStyle::kApiMethodSignature)},
-                   {IsResponseTypeEmpty,
-                    // clang-format off
+               {{FormatMethodCommentsMethodSignature(method, signature)},
+                {IsResponseTypeEmpty,
+                 // clang-format off
                     "  future<Status>\n",
                     "  future<StatusOr<$longrunning_deduced_response_type$>>\n"},
-                   {method_string}
-                   // clang-format on
-               },
+                // clang-format on
+                {method_string}},
                All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),
            MethodPattern(
                {
-                   // clang-format off
-                   {FormatMethodCommentsFromRpcComments(
-                     method, MethodParameterStyle::kApiMethodSignature)},
+                   {FormatMethodCommentsMethodSignature(method, signature)},
                    {"  StreamRange<$range_output_type$>\n"},
                    {method_string},
-                   // clang-format on
                },
                All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
            MethodPattern(
                {
-                   // clang-format off
-                   {FormatMethodCommentsFromRpcComments(
-                     method, MethodParameterStyle::kApiMethodSignature)},
+                   {FormatMethodCommentsMethodSignature(method, signature)},
                    {"  StreamRange<$response_type$>\n"},
                    {method_string},
-                   // clang-format on
                },
                IsStreamingRead)},
           __FILE__, __LINE__);
@@ -211,8 +200,7 @@ Status ClientGenerator::GenerateHeader() {
         method,
         {MethodPattern(
              {
-                 {FormatMethodCommentsFromRpcComments(
-                     method, MethodParameterStyle::kProtobufRequest)},
+                 {FormatMethodCommentsProtobufRequest(method)},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  Status\n",
@@ -225,8 +213,7 @@ Status ClientGenerator::GenerateHeader() {
                  Not(IsPaginated))),
          MethodPattern(
              {
-                 {FormatMethodCommentsFromRpcComments(
-                     method, MethodParameterStyle::kProtobufRequest)},
+                 {FormatMethodCommentsProtobufRequest(method)},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  future<Status>\n",
@@ -238,9 +225,8 @@ Status ClientGenerator::GenerateHeader() {
              All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),
          MethodPattern(
              {
+                 {FormatMethodCommentsProtobufRequest(method)},
                  // clang-format off
-                 {FormatMethodCommentsFromRpcComments(
-        method, MethodParameterStyle::kProtobufRequest)},
    {"  StreamRange<$range_output_type$>\n"
     "  $method_name$($request_type$ request, Options options = {});\n\n"},
                  // clang-format on
@@ -248,9 +234,8 @@ Status ClientGenerator::GenerateHeader() {
              All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
          MethodPattern(
              {
+                 {FormatMethodCommentsProtobufRequest(method)},
                  // clang-format off
-                 {FormatMethodCommentsFromRpcComments(
-        method, MethodParameterStyle::kProtobufRequest)},
    {"  StreamRange<$response_type$>\n"
     "  $method_name$($request_type$ const& request, Options options = {});\n\n"},
                  // clang-format on
@@ -263,22 +248,20 @@ Status ClientGenerator::GenerateHeader() {
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
-      std::string method_string =
+      std::string const method_string =
           absl::StrCat("  Async$method_name$($method_signature", i,
                        "$Options options = {});\n\n");
+      std::string const signature = method_signature_extension[i];
       HeaderPrintMethod(
           method,
           {MethodPattern(
-              {
-                  {FormatMethodCommentsFromRpcComments(
-                      method, MethodParameterStyle::kApiMethodSignature)},
-                  {IsResponseTypeEmpty,
-                   // clang-format off
+              {{FormatMethodCommentsMethodSignature(method, signature)},
+               {IsResponseTypeEmpty,
+                // clang-format off
                    "  future<Status>\n",
                    "  future<StatusOr<$response_type$>>\n"},
-                  {method_string}
-                  // clang-format on
-              },
+               // clang-format on
+               {method_string}},
               All(IsNonStreaming, Not(IsLongrunningOperation),
                   Not(IsPaginated)))},
           __FILE__, __LINE__);
@@ -287,8 +270,7 @@ Status ClientGenerator::GenerateHeader() {
         method,
         {MethodPattern(
             {
-                {FormatMethodCommentsFromRpcComments(
-                    method, MethodParameterStyle::kProtobufRequest)},
+                {FormatMethodCommentsProtobufRequest(method)},
                 {IsResponseTypeEmpty,
                  // clang-format off
     "  future<Status>\n",

@@ -172,7 +172,7 @@ class ParallelUploadTest
     EXPECT_CALL(res, next_expected_byte()).WillRepeatedly(Return(0));
     EXPECT_CALL(res, UploadChunk)
         .WillRepeatedly(Return(make_status_or(ResumableUploadResponse{
-            "fake-url", 0, {}, ResumableUploadResponse::kInProgress, {}})));
+            "fake-url", ResumableUploadResponse::kInProgress, 0, {}, {}})));
     EXPECT_CALL(res, UploadFinalChunk)
         .WillRepeatedly(Return(std::move(status)));
     AddNewExpectation(object_name, resumable_session_id);
@@ -204,18 +204,18 @@ class ParallelUploadTest
             EXPECT_THAT(content, ElementsAre(ConstBuffer(*expected_content)));
             return make_status_or(
                 ResumableUploadResponse{"fake-url",
+                                        ResumableUploadResponse::kDone,
                                         0,
                                         MockObject(object_name, generation),
-                                        ResumableUploadResponse::kDone,
                                         {}});
           });
     } else {
       EXPECT_CALL(res, UploadFinalChunk)
           .WillOnce(Return(make_status_or(
               ResumableUploadResponse{"fake-url",
+                                      ResumableUploadResponse::kDone,
                                       0,
                                       MockObject(object_name, generation),
-                                      ResumableUploadResponse::kDone,
                                       {}})));
     }
     AddNewExpectation(object_name, resumable_session_id);

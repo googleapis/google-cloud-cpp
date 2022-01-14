@@ -66,14 +66,11 @@ class RPCBackoffPolicy {
    * @return true the delay before trying the operation again.
    * @param status the status returned by the last RPC operation.
    */
-  virtual std::chrono::milliseconds OnCompletion(
-      google::cloud::Status const& status) = 0;
+  virtual std::chrono::milliseconds OnCompletion(Status const& status) = 0;
   // TODO(#2344) - remove ::grpc::Status version.
   virtual std::chrono::milliseconds OnCompletion(grpc::Status const& s) = 0;
 
-  std::chrono::milliseconds OnCompletion() {
-    return OnCompletion(google::cloud::Status{});
-  }
+  std::chrono::milliseconds OnCompletion() { return OnCompletion(Status{}); }
 };
 
 /// Return an instance of the default RPCBackoffPolicy.
@@ -98,8 +95,7 @@ class ExponentialBackoffPolicy : public RPCBackoffPolicy {
 
   std::unique_ptr<RPCBackoffPolicy> clone() const override;
   void Setup(grpc::ClientContext& context) const override;
-  std::chrono::milliseconds OnCompletion(
-      google::cloud::Status const& status) override;
+  std::chrono::milliseconds OnCompletion(Status const& status) override;
   // TODO(#2344) - remove ::grpc::Status version.
   std::chrono::milliseconds OnCompletion(grpc::Status const& status) override;
 
@@ -113,6 +109,14 @@ class ExponentialBackoffPolicy : public RPCBackoffPolicy {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+std::unique_ptr<internal::BackoffPolicy> MakeCommonBackoffPolicy(
+    std::unique_ptr<bigtable::RPCBackoffPolicy> policy);
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

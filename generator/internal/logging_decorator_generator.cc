@@ -71,6 +71,31 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
   // clang-format on
 
   for (auto const& method : methods()) {
+    if (IsStreamingWrite(method)) {
+      HeaderPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(  std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+      $request_type$,
+      $response_type$>>
+   $method_name$(
+      std::unique_ptr<grpc::ClientContext> context) override;
+
+)""");
+      continue;
+    }
+    if (IsBidirStreaming(method)) {
+      HeaderPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+      $request_type$,
+      $response_type$>>
+  Async$method_name$(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+
+)""");
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {MethodPattern({{IsResponseTypeEmpty,
@@ -92,7 +117,7 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
              IsLongrunningOperation),
          MethodPattern(
              {// clang-format off
-   {"  std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+   {"  std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
     "  $method_name$(\n"
     "    std::unique_ptr<grpc::ClientContext> context,\n"
     "    $request_type$ const& request) override;\n"
@@ -160,12 +185,18 @@ Status LoggingDecoratorGenerator::GenerateCc() {
   // clang-format on
 
   // includes
-  CcLocalIncludes({vars("logging_header_path"),
-                   "google/cloud/internal/log_wrapper.h",
-                   HasStreamingReadMethod()
-                       ? "google/cloud/internal/streaming_read_rpc_logging.h"
-                       : "",
-                   "google/cloud/status_or.h"});
+  CcLocalIncludes(
+      {vars("logging_header_path"), "google/cloud/internal/log_wrapper.h",
+       HasStreamingReadMethod()
+           ? "google/cloud/internal/streaming_read_rpc_logging.h"
+           : "",
+       HasStreamingWriteMethod()
+           ? "google/cloud/internal/streaming_write_rpc_logging.h"
+           : "",
+       HasBidirStreamingMethod()
+           ? "google/cloud/internal/async_read_write_stream_logging.h"
+           : "",
+       "google/cloud/status_or.h"});
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
   CcPrint("\n");
 
@@ -185,6 +216,55 @@ Status LoggingDecoratorGenerator::GenerateCc() {
 
   // logging decorator class member methods
   for (auto const& method : methods()) {
+    if (IsStreamingWrite(method)) {
+      CcPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+    $request_type$,
+    $response_type$>>
+$logging_class_name$::$method_name$(
+    std::unique_ptr<grpc::ClientContext> context) {
+  using LoggingStream = ::google::cloud::internal::StreamingWriteRpcLogging<
+      $request_type$, $response_type$>;
+
+  auto request_id = google::cloud::internal::RequestIdForLogging();
+  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  auto stream = child_->$method_name$(std::move(context));
+  if (components_.count("rpc-streams") > 0) {
+    stream = absl::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
+}
+
+)""");
+      continue;
+    }
+    if (IsBidirStreaming(method)) {
+      CcPrintMethod(
+          method, __FILE__, __LINE__,
+          R"""(std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+    $request_type$,
+    $response_type$>>
+$logging_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  using LoggingStream =
+     ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<$request_type$, $response_type$>;
+
+  auto request_id = google::cloud::internal::RequestIdForLogging();
+  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  auto stream = child_->Async$method_name$(cq, std::move(context));
+  if (components_.count("rpc-streams") > 0) {
+    stream = absl::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
+}
+
+)""");
+      continue;
+    }
     CcPrintMethod(
         method,
         {MethodPattern(
@@ -224,23 +304,27 @@ $logging_class_name$::Async$method_name$(
                        IsLongrunningOperation),
          MethodPattern(
              {// clang-format off}
-              {"std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+              {"std::unique_ptr<google::cloud::internal::StreamingReadRpc<$"
+               "response_type$>>\n"
                "$logging_class_name$::$method_name$(\n"
                "    std::unique_ptr<grpc::ClientContext> context,\n"
                "    $request_type$ const& request) {\n"
                "  return google::cloud::internal::LogWrapper(\n"
                "      [this](std::unique_ptr<grpc::ClientContext> context,\n"
                "             $request_type$ const& request) ->\n"
-               "      std::unique_ptr<internal::StreamingReadRpc<\n"
+               "      "
+               "std::unique_ptr<google::cloud::internal::StreamingReadRpc<\n"
                "          $response_type$>> {\n"
                "        auto stream = "
                "child_->$method_name$(std::move(context), request);\n"
                "        if (components_.count(\"rpc-streams\") > 0) {\n"
                "          stream = "
-               "absl::make_unique<internal::StreamingReadRpcLogging<\n"
+               "absl::make_unique<google::cloud::internal::"
+               "StreamingReadRpcLogging<\n"
                "             $response_type$>>(\n"
                "               std::move(stream), tracing_options_,\n"
-               "               internal::RequestIdForLogging());\n"
+               "               "
+               "google::cloud::internal::RequestIdForLogging());\n"
                "        }\n"
                "        return stream;\n"
                "      },\n"

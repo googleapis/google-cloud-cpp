@@ -82,12 +82,12 @@ DefaultGoldenKitchenSinkStub::ListLogs(
     return response;
 }
 
-std::unique_ptr<internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
 DefaultGoldenKitchenSinkStub::TailLogEntries(
     std::unique_ptr<grpc::ClientContext> client_context,
     google::test::admin::database::v1::TailLogEntriesRequest const& request) {
   auto stream = grpc_stub_->TailLogEntries(client_context.get(), request);
-  return absl::make_unique<internal::StreamingReadRpcImpl<
+  return absl::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::test::admin::database::v1::TailLogEntriesResponse>>(
       std::move(client_context), std::move(stream));
 }
@@ -116,6 +116,31 @@ DefaultGoldenKitchenSinkStub::DoNothing(
       return google::cloud::MakeStatusFromRpcError(status);
     }
     return google::cloud::Status();
+}
+
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+    google::test::admin::database::v1::AppendRowsRequest,
+    google::test::admin::database::v1::AppendRowsResponse>>
+DefaultGoldenKitchenSinkStub::AsyncAppendRows(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  return google::cloud::internal::MakeStreamingReadWriteRpc<google::test::admin::database::v1::AppendRowsRequest, google::test::admin::database::v1::AppendRowsResponse>(
+      cq, std::move(context),
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncAppendRows(context, cq);
+      });
+}
+
+std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+    google::test::admin::database::v1::WriteObjectRequest,
+    google::test::admin::database::v1::WriteObjectResponse>>
+DefaultGoldenKitchenSinkStub::WriteObject(
+    std::unique_ptr<grpc::ClientContext> context) {
+  auto response = absl::make_unique<google::test::admin::database::v1::WriteObjectResponse>();
+  auto stream = grpc_stub_->WriteObject(context.get(), response.get());
+  return absl::make_unique<::google::cloud::internal::StreamingWriteRpcImpl<
+      google::test::admin::database::v1::WriteObjectRequest, google::test::admin::database::v1::WriteObjectResponse>>(
+    std::move(context), std::move(response), std::move(stream));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

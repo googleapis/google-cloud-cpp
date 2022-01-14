@@ -62,11 +62,11 @@ def google_cloud_cpp_deps():
     if "com_google_benchmark" not in native.existing_rules():
         http_archive(
             name = "com_google_benchmark",
-            strip_prefix = "benchmark-1.6.0",
+            strip_prefix = "benchmark-1.6.1",
             urls = [
-                "https://github.com/google/benchmark/archive/v1.6.0.tar.gz",
+                "https://github.com/google/benchmark/archive/v1.6.1.tar.gz",
             ],
-            sha256 = "1f71c72ce08d2c1310011ea6436b31e39ccab8c2db94186d26657d41747c85d6",
+            sha256 = "6132883bc8c9b0df5375b16ab520fac1a85dc9e4cf5be59480448ece74b278d4",
         )
 
     # Load the googleapis dependency.
@@ -93,11 +93,11 @@ def google_cloud_cpp_deps():
     if "com_google_protobuf" not in native.existing_rules():
         http_archive(
             name = "com_google_protobuf",
-            strip_prefix = "protobuf-3.19.2",
+            strip_prefix = "protobuf-3.19.3",
             urls = [
-                "https://github.com/protocolbuffers/protobuf/archive/v3.19.2.tar.gz",
+                "https://github.com/protocolbuffers/protobuf/archive/v3.19.3.tar.gz",
             ],
-            sha256 = "4dd35e788944b7686aac898f77df4e9a54da0ca694b8801bd6b2a9ffc1b3085e",
+            sha256 = "390191a0d7884b3e52bb812c440ad1497b9d484241f37bb8e2ccc8c2b72d6c36",
         )
 
     # Load BoringSSL, this is used by gRPC, but as I write this (2021-06-03, circa gRPC-1.37.1), the version used by

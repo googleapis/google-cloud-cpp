@@ -24,6 +24,32 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+namespace {
+StatusOr<std::uint64_t> ParseRangeHeader(std::string const& range) {
+  // We expect a `Range:` header in the format described here:
+  //    https://cloud.google.com/storage/docs/json_api/v1/how-tos/resumable-upload
+  // that is the value should match `bytes=0-[0-9]+`:
+  char const prefix[] = "bytes=0-";
+  auto constexpr kPrefixLen = sizeof(prefix) - 1;
+  if (range.rfind(prefix, 0) != 0) {
+    return Status(
+        StatusCode::kInternal,
+        "cannot parse Range header in resumable upload response, value=" +
+            range);
+  }
+  char const* buffer = range.data() + kPrefixLen;
+  char* endptr;
+  auto constexpr kBytesBase = 10;
+  auto last = std::strtoll(buffer, &endptr, kBytesBase);
+  if (buffer != endptr && *endptr == '\0' && 0 <= last) {
+    return last;
+  }
+  return Status(
+      StatusCode::kInternal,
+      "cannot parse Range header in resumable upload response, value=" + range);
+}
+}  // namespace
+
 StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
     HttpResponse response) {
   ResumableUploadResponse result;
@@ -33,55 +59,24 @@ StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
   } else {
     result.upload_state = kInProgress;
   }
-  result.last_committed_byte = 0;
   result.annotations += "code=" + std::to_string(response.status_code);
   // For the JSON API, the payload contains the object resource when the upload
   // is finished. In that case, we try to parse it.
   if (result.upload_state == kDone && !response.payload.empty()) {
     auto contents = ObjectMetadataParser::FromString(response.payload);
-    if (!contents) {
-      return std::move(contents).status();
-    }
+    if (!contents) return std::move(contents).status();
     result.payload = *std::move(contents);
   }
   if (response.headers.find("location") != response.headers.end()) {
     result.upload_session_url = response.headers.find("location")->second;
   }
   auto r = response.headers.find("range");
-  if (r == response.headers.end()) {
-    std::ostringstream os;
-    os << __func__ << "() missing range header in resumable upload response"
-       << ", response=" << response;
-    result.annotations += " " + std::move(os).str();
-    return result;
-  }
-  // We expect a `Range:` header in the format described here:
-  //    https://cloud.google.com/storage/docs/json_api/v1/how-tos/resumable-upload
-  // that is the value should match `bytes=0-[0-9]+`:
-  std::string const& range = r->second;
-  result.annotations += " range=" + range;
+  if (r == response.headers.end()) return result;
 
-  char const prefix[] = "bytes=0-";
-  auto constexpr kPrefixLen = sizeof(prefix) - 1;
-  if (range.rfind(prefix, 0) != 0) {
-    std::ostringstream os;
-    os << __func__ << "() cannot parse range: header in resumable upload"
-       << " response, header=" << range << ", response=" << response;
-    result.annotations += " " + std::move(os).str();
-    return result;
-  }
-  char const* buffer = range.data() + kPrefixLen;
-  char* endptr;
-  auto constexpr kBytesBase = 10;
-  auto last = std::strtoll(buffer, &endptr, kBytesBase);
-  if (buffer != endptr && *endptr == '\0' && 0 <= last) {
-    result.last_committed_byte = static_cast<std::uint64_t>(last);
-  } else {
-    std::ostringstream os;
-    os << __func__ << "() cannot parse range: header in resumable upload"
-       << " response, header=" << range << ", response=" << response;
-    result.annotations += " " + std::move(os).str();
-  }
+  result.annotations += " range=" + r->second;
+  auto last_committed_byte = ParseRangeHeader(r->second);
+  if (!last_committed_byte) return std::move(last_committed_byte).status();
+  result.committed_size = *last_committed_byte + 1;
 
   return result;
 }
@@ -89,7 +84,7 @@ StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
 bool operator==(ResumableUploadResponse const& lhs,
                 ResumableUploadResponse const& rhs) {
   return lhs.upload_session_url == rhs.upload_session_url &&
-         lhs.last_committed_byte == rhs.last_committed_byte &&
+         lhs.committed_size == rhs.committed_size &&
          lhs.payload == rhs.payload && lhs.upload_state == rhs.upload_state;
 }
 
@@ -99,18 +94,23 @@ bool operator!=(ResumableUploadResponse const& lhs,
 }
 
 std::ostream& operator<<(std::ostream& os, ResumableUploadResponse const& r) {
+  char const* state = r.upload_state == ResumableUploadResponse::kDone
+                          ? "kDone"
+                          : "kInProgress";
   os << "ResumableUploadResponse={upload_session_url=" << r.upload_session_url
-     << ", last_committed_byte=" << r.last_committed_byte << ", payload=";
+     << ", upload_state=" << state << ", committed_size=";
+  if (r.committed_size.has_value()) {
+    os << *r.committed_size;
+  } else {
+    os << "{}";
+  }
+  os << ", payload=";
   if (r.payload.has_value()) {
     os << *r.payload;
   } else {
     os << "{}";
   }
-  return os << ", upload_state="
-            << (r.upload_state == ResumableUploadResponse::kDone
-                    ? "kDone"
-                    : "kInProgress")
-            << ", annotations=" << r.annotations << "}";
+  return os << ", annotations=" << r.annotations << "}";
 }
 
 }  // namespace internal

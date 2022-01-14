@@ -77,7 +77,7 @@ RUN curl -sSL https://github.com/google/googletest/archive/release-1.11.0.tar.gz
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/benchmark
-RUN curl -sSL https://github.com/google/benchmark/archive/v1.6.0.tar.gz | \
+RUN curl -sSL https://github.com/google/benchmark/archive/v1.6.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE="Release" \
@@ -116,7 +116,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.5.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/protobuf
-RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.19.2.tar.gz | \
+RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.19.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \

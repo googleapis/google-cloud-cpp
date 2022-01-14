@@ -76,10 +76,12 @@ class TestGenerator : public ServiceCodeGenerator {
                              {{"header_path_key", "header_path"}}, {},
                              context) {}
 
+  using ServiceCodeGenerator::HasBidirStreamingMethod;
   using ServiceCodeGenerator::HasLongrunningMethod;
   using ServiceCodeGenerator::HasMessageWithMapField;
   using ServiceCodeGenerator::HasPaginatedMethod;
   using ServiceCodeGenerator::HasStreamingReadMethod;
+  using ServiceCodeGenerator::HasStreamingWriteMethod;
   using ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes;
 
   Status GenerateHeader() override { return {}; }
@@ -444,7 +446,7 @@ char const* const kMethodSignatureServiceProto =
     "service Service1 {\n"
     "  // Leading comments about rpc Method0.\n"
     "  rpc Method0(Bar) returns (Empty) {\n"
-    "    option (google.api.method_signature) = \"name\";\n"
+    "    option (google.api.method_signature) = \" name\";\n"
     "  }\n"
     "}\n";
 
@@ -589,6 +591,162 @@ TEST_F(StreamingReadTest, HasStreamingReadFalse) {
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(1), generator_context.get());
   EXPECT_FALSE(g.HasStreamingReadMethod());
+}
+
+TEST(ServiceCodeGeneratorTest, HasWriteStreaming) {
+  auto constexpr kBidirStreamingServiceProto = R"""(
+syntax = "proto3";
+package google.protobuf;
+// Leading comments about message Foo.
+message Foo {
+  string baz = 1;
+  map<string, string> labels = 2;
+}
+// Leading comments about message Empty.
+message Bar {
+  int32 x = 1;
+}
+
+// This service has a streaming write RPC.
+service Service0 {
+  // Leading comments about rpc Method0.
+  rpc Method0(Foo) returns (stream Bar) {
+  }
+  // Leading comments about rpc Method1.
+  rpc Method1(stream Foo) returns (Bar) {
+  }
+  // Leading comments about rpc Method2.
+  rpc Method2(stream Foo) returns (stream Bar) {
+  }
+  // Leading comments about rpc Method3.
+  rpc Method3(Foo) returns (Bar) {
+  }
+}
+
+// This service has client-streaming (aka streaming-reads) and bidir-streaming
+// (aka streaming-read-write) RPCs, but does not have streaming write RPCs.
+service Service1 {
+  // Leading comments about rpc Method0.
+  rpc Method0(Foo) returns (stream Bar) {
+  }
+  // Leading comments about rpc Method1.
+  rpc Method1(stream Foo) returns (stream Bar) {
+  }
+  // Leading comments about rpc Method2.
+  rpc Method2(Foo) returns (Bar) {
+  }
+}
+)""";
+
+  StringSourceTree source_tree(std::map<std::string, std::string>{
+      {"google/cloud/foo/streaming.proto", kBidirStreamingServiceProto}});
+  google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db(
+      &source_tree);
+  google::protobuf::SimpleDescriptorDatabase simple_db;
+  FileDescriptorProto file_proto;
+  // we need descriptor.proto to be accessible by the pool
+  // since our test file imports it
+  FileDescriptorProto::descriptor()->file()->CopyTo(&file_proto);
+  simple_db.Add(file_proto);
+  google::protobuf::MergedDescriptorDatabase merged_db(&simple_db,
+                                                       &source_tree_db);
+  AbortingErrorCollector collector;
+  DescriptorPool pool(&merged_db, &collector);
+
+  FileDescriptor const* service_file_descriptor =
+      pool.FindFileByName("google/cloud/foo/streaming.proto");
+
+  auto generator_context = absl::make_unique<MockGeneratorContext>();
+  EXPECT_CALL(*generator_context, Open("header_path"))
+      .Times(2)
+      .WillRepeatedly(
+          [](std::string const&) { return new MockZeroCopyOutputStream(); });
+
+  TestGenerator g_service_0(service_file_descriptor->service(0),
+                            generator_context.get());
+  EXPECT_TRUE(g_service_0.HasStreamingWriteMethod());
+
+  TestGenerator g_service_1(service_file_descriptor->service(1),
+                            generator_context.get());
+  EXPECT_FALSE(g_service_1.HasStreamingWriteMethod());
+}
+
+TEST(ServiceCodeGeneratorTest, HasBidirStreaming) {
+  auto constexpr kBidirStreamingServiceProto = R"""(
+syntax = "proto3";
+package google.protobuf;
+// Leading comments about message Foo.
+message Foo {
+  string baz = 1;
+  map<string, string> labels = 2;
+}
+// Leading comments about message Empty.
+message Bar {
+  int32 x = 1;
+}
+
+// This service has a bidir streaming RPC.
+service Service0 {
+  // Leading comments about rpc Method0.
+  rpc Method0(Foo) returns (stream Bar) {
+  }
+  // Leading comments about rpc Method1.
+  rpc Method1(stream Foo) returns (Bar) {
+  }
+  // Leading comments about rpc Method2.
+  rpc Method2(stream Foo) returns (stream Bar) {
+  }
+  // Leading comments about rpc Method3.
+  rpc Method3(Foo) returns (Bar) {
+  }
+}
+
+// This service has client-streaming (aka streaming-writes) and server-streaming
+// (aka streaming-write) RPCs, but does not have bidir-streaming RPCs.
+service Service1 {
+  // Leading comments about rpc Method0.
+  rpc Method0(stream Foo) returns (Bar) {
+  }
+  // Leading comments about rpc Method1.
+  rpc Method1(Foo) returns (stream Bar) {
+  }
+  // Leading comments about rpc Method2.
+  rpc Method2(Foo) returns (Bar) {
+  }
+}
+)""";
+
+  StringSourceTree source_tree(std::map<std::string, std::string>{
+      {"google/cloud/foo/streaming.proto", kBidirStreamingServiceProto}});
+  google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db(
+      &source_tree);
+  google::protobuf::SimpleDescriptorDatabase simple_db;
+  FileDescriptorProto file_proto;
+  // we need descriptor.proto to be accessible by the pool
+  // since our test file imports it
+  FileDescriptorProto::descriptor()->file()->CopyTo(&file_proto);
+  simple_db.Add(file_proto);
+  google::protobuf::MergedDescriptorDatabase merged_db(&simple_db,
+                                                       &source_tree_db);
+  AbortingErrorCollector collector;
+  DescriptorPool pool(&merged_db, &collector);
+
+  FileDescriptor const* service_file_descriptor =
+      pool.FindFileByName("google/cloud/foo/streaming.proto");
+
+  auto generator_context = absl::make_unique<MockGeneratorContext>();
+  EXPECT_CALL(*generator_context, Open("header_path"))
+      .Times(2)
+      .WillRepeatedly(
+          [](std::string const&) { return new MockZeroCopyOutputStream(); });
+
+  TestGenerator g_service_0(service_file_descriptor->service(0),
+                            generator_context.get());
+  EXPECT_TRUE(g_service_0.HasBidirStreamingMethod());
+
+  TestGenerator g_service_1(service_file_descriptor->service(1),
+                            generator_context.get());
+  EXPECT_FALSE(g_service_1.HasBidirStreamingMethod());
 }
 
 }  // namespace
