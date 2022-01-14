@@ -2,9 +2,9 @@
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[Cloud Resource Manager API][cloud-service-docs], a service to create, read, and
-update metadata for Google Cloud Platform resource containers.
+This directory contains an idiomatic C++ client library for
+[Resource Manager][cloud-product], a GCP product to hierarchically manage
+resources by project, folder, and organization.
 
 This library is **experimental**. Its APIS are subject to change without notice.
 
@@ -21,12 +21,13 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Cloud Resource Manager API][cloud-service-docs] service
+* Official documentation about the [Cloud Resource Manager][cloud-service-docs] service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/resource-manager
+[cloud-product]: https://cloud.google.com/resource-manager
+[cloud-service-docs]: https://cloud.google.com/resource-manager/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-resourcemanager/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/resourcemanager
 
