@@ -322,6 +322,21 @@ service {
   retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
 }
 
+# Vision
+service {
+  service_proto_path: "google/cloud/vision/v1/image_annotator.proto"
+  product_path: "google/cloud/vision"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/vision/v1/product_search_service.proto"
+  product_path: "google/cloud/vision"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # VM Migration
 service {
   service_proto_path: "google/cloud/vmmigration/v1/vmmigration.proto"
