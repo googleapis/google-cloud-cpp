@@ -19,6 +19,7 @@ google/cloud/ids/quickstart/
 google/cloud/iot/quickstart/
 google/cloud/kms/quickstart/
 google/cloud/logging/quickstart/
+google/cloud/oslogin/quickstart/
 google/cloud/pubsublite/quickstart/
 google/cloud/pubsub/quickstart/
 google/cloud/recommender/quickstart/

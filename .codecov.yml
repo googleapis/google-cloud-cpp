@@ -27,6 +27,7 @@ ignore:
   - "google/cloud/iot"
   - "google/cloud/kms"
   - "google/cloud/logging"
+  - "google/cloud/oslogin"
   - "google/cloud/pubsublite"
   - "google/cloud/recommender"
   - "google/cloud/resourcemanager"
