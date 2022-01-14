@@ -350,6 +350,7 @@ void SessionPool::Release(std::unique_ptr<Session> session) {
   if (num_waiting_for_session_ > 0) {
     mu_.unlock();
     cond_.notify_one();
+    mu_.lock();
   }
 }
 
@@ -482,6 +483,7 @@ Status SessionPool::HandleBatchCreateSessionsDone(
   // Wake up anyone who was waiting for a `Session`.
   mu_.unlock();
   cond_.notify_all();
+  mu_.lock();
   return Status();
 }
 
