@@ -212,6 +212,15 @@ service {
 }
 
 service {
+  # This service is very closely related to `Resource Manager`, in fact, both are
+  # documented under the same product https://cloud.google.com/resource-manager
+  service_proto_path: "google/cloud/orgpolicy/v2/orgpolicy.proto"
+  product_path: "google/cloud/resourcemanager"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/resourcemanager/v3/organizations.proto"
   product_path: "google/cloud/resourcemanager"
   initial_copyright_year: "2022"
