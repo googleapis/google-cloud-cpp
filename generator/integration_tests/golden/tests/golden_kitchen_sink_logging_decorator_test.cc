@@ -247,6 +247,36 @@ TEST_F(LoggingDecoratorTest, WriteObject) {
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("WriteObject")));
+  // The calls in the stream are not logged by default
+  EXPECT_THAT(log_lines, Not(Contains(HasSubstr("Write("))));
+  EXPECT_THAT(log_lines, Not(Contains(HasSubstr("Close("))));
+}
+
+TEST_F(LoggingDecoratorTest, WriteObjectFullTracing) {
+  EXPECT_CALL(*mock_, WriteObject)
+      .WillOnce([](std::unique_ptr<grpc::ClientContext>) {
+        auto stream = absl::make_unique<MockWriteObjectStreamingWriteRpc>();
+        EXPECT_CALL(*stream, Write)
+            .WillOnce(Return(true))
+            .WillOnce(Return(false));
+        auto response = WriteObjectResponse{};
+        response.set_response("test-only");
+        EXPECT_CALL(*stream, Close).WillOnce(Return(make_status_or(response)));
+        return stream;
+      });
+  GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
+  auto stream = stub.WriteObject(absl::make_unique<grpc::ClientContext>());
+  EXPECT_TRUE(stream->Write(WriteObjectRequest{}, grpc::WriteOptions()));
+  EXPECT_FALSE(stream->Write(WriteObjectRequest{}, grpc::WriteOptions()));
+  auto response = stream->Close();
+  ASSERT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->response(), "test-only");
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("WriteObject")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("Write(")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("Close(")));
 }
 
 }  // namespace
