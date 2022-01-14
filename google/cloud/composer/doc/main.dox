@@ -1,9 +1,9 @@
 /*!
 
-@mainpage Cloud Composer API C++ Client Library
+@mainpage Cloud Composer C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Composer API][cloud-service-docs], a service
-to Manages Apache Airflow environments on Google Cloud Platform.
+An idiomatic C++ client library for [Cloud Composer][cloud-service-docs], a service
+that manages Apache Airflow environments on Google Cloud Platform.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -14,7 +14,7 @@ dependencies, as well as how to compile the client library.
 
 ### Setting up your repo
 
-In order to use the Cloud Composer API C++ client library from your own code,
+In order to use the Cloud Composer C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
 C++ client libraries. In some cases your build system or package manager may
 need to download the libraries too. The Cloud C++ client libraries natively
@@ -32,7 +32,7 @@ cd google-cloud-cpp/google/cloud/composer/quickstart
 
 The following shows the code that you'll run in the
 `google/cloud/composer/quickstart/` directory,
-which should give you a taste of the Cloud Composer API C++ client library API.
+which should give you a taste of the Cloud Composer C++ client library API.
 
 @include quickstart.cc
 

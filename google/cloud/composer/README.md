@@ -1,9 +1,10 @@
-# Cloud Composer API C++ Client Library
+# Cloud Composer C++ Client Library
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[Cloud Composer API][cloud-service-docs], a service to Manages Apache Airflow environments on Google Cloud Platform.
+This directory contains an idiomatic C++ client library for
+[Cloud Composer][cloud-service], a service that manages Apache Airflow
+environments on Google Cloud Platform.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +26,8 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/composer
+[cloud-service]: https://cloud.google.com/composer
+[cloud-service-docs]: https://cloud.google.com/composer/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-composer/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/composer
 
@@ -38,24 +40,25 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/composer/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/composer/environments_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace composer = ::google::cloud::composer;
-  auto client = composer::Client(composer::MakeConnection(/* EDIT HERE */));
+  auto client =
+      composer::EnvironmentsClient(composer::MakeEnvironmentsConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent =
+      std::string("projects/") + argv[0] + "/locations/" + argv[1];
+  for (auto e : client.ListEnvironments(parent)) {
+    if (!e) throw std::runtime_error(e.status().message());
+    std::cout << e->DebugString() << "\n";
   }
 
   return 0;
