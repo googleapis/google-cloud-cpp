@@ -17,6 +17,7 @@
 
 #include "google/cloud/version.h"
 #include "absl/base/thread_annotations.h"
+#include <condition_variable>
 #include <mutex>
 
 #ifdef _LIBCPP_HAS_THREAD_SAFETY_ANNOTATIONS
