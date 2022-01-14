@@ -237,6 +237,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-oslogin",
+    deps = [
+        "//google/cloud/oslogin:google_cloud_cpp_oslogin",
+    ],
+)
+
+cc_library(
+    name = "experimental-oslogin_mocks",
+    deps = [
+        "//google/cloud/oslogin:google_cloud_cpp_oslogin_mocks",
+    ],
+)
+
+cc_library(
     name = "pubsub",
     deps = [
         "//google/cloud/pubsub:google_cloud_cpp_pubsub",

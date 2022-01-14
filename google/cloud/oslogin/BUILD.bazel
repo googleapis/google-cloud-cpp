@@ -38,6 +38,7 @@ cc_library(
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
+        "@com_google_googleapis//google/cloud/oslogin/common:common_cc_grpc",
         "@com_google_googleapis//google/cloud/oslogin/v1:oslogin_cc_grpc",
     ],
 )

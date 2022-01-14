@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud OS Login API][cloud-service-docs], a service to You can use OS Login to manage access to your VM instances using IAM roles.
+[Cloud OS Login API][cloud-service-docs], a service you can use to manage
+access to your VM instances using IAM roles.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -38,25 +39,25 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/oslogin/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/oslogin/os_login_client.h"
 #include <iostream>
 #include <stdexcept>
+#include <string>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " user\n";
     return 1;
   }
 
   namespace oslogin = ::google::cloud::oslogin;
-  auto client = oslogin::Client(oslogin::MakeConnection(/* EDIT HERE */));
+  auto client =
+      oslogin::OsLoginServiceClient(oslogin::MakeOsLoginServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
-  }
+  auto const name = "users/" + std::string{argv[1]};
+  auto lp = client.GetLoginProfile(name);
+  if (!lp) throw std::runtime_error(lp.status().message());
+  std::cout << lp->DebugString() << "\n";
 
   return 0;
 } catch (std::exception const& ex) {
