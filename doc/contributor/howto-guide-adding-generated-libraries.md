@@ -119,7 +119,7 @@ bazel run \
   --scaffold="google/cloud/${library}"
 ```
 
-## Fix formatting of existing libraries and the generated code 
+## Fix formatting of existing libraries and the generated code
 
 ```shell
 git add "google/cloud/${library}"
