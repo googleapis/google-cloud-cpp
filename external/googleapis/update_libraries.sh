@@ -74,6 +74,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/secretmanager/v1:secretmanager_proto" \
       "@com_google_googleapis//google/cloud/secretmanager/logging/v1:logging_proto"
   )"
+  ["shell"]="@com_google_googleapis//google/cloud/shell/v1:shell_cc_grpc"
   ["spanner"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/spanner/v1:spanner_proto" \

@@ -217,6 +217,14 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Shell
+service {
+  service_proto_path: "google/cloud/shell/v1/cloudshell.proto"
+  product_path: "google/cloud/shell"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable", "kUnknown"]
+}
+
 # Spanner
 service {
   service_proto_path: "google/spanner/admin/database/v1/spanner_database_admin.proto"
