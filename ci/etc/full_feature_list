@@ -5,6 +5,7 @@ appengine
 assuredworkloads
 bigquery
 billing
+composer
 datamigration
 eventarc
 iam
