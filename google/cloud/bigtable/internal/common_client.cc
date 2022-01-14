@@ -81,6 +81,7 @@ void OutstandingTimers::RegisterTimer(future<void> fut) {
   if (shutdown_) {
     mu_.unlock();
     fut.cancel();
+    mu_.lock();
     return;
   }
 
