@@ -32,23 +32,13 @@ endif ()
 
 # Once the bigtable_client package is found, define new targets.
 add_executable(populate_data populate_data_main.cc)
-target_link_libraries(
-	populate_data
-	google-cloud-cpp::bigtable
-	absl::strings
-	absl::time
-	)
+target_link_libraries(populate_data google-cloud-cpp::bigtable absl::strings
+                      absl::time)
 
 set(PROTO ${CMAKE_CURRENT_SOURCE_DIR}/strategy.proto)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTO})
 
-add_executable(backtesting backtesting_main.cc ${PROTO_SRCS} ${PROTO_HDRS})
-target_link_libraries(
-	backtesting
-	google-cloud-cpp::bigtable
-	absl::strings
-	absl::time
-	protobuf::libprotobuf
-	)
-
+add_executable(backtesting ${PROTO_HDRS} ${PROTO_SRCS} backtesting_main.cc)
+target_link_libraries(backtesting google-cloud-cpp::bigtable absl::strings
+                      absl::time protobuf::libprotobuf)

@@ -85,12 +85,12 @@ std::chrono::milliseconds PrepareTimestamp(absl::Time const time) {
 
 void CommitBulk(cbt::Table* table, cbt::BulkMutation* bulk_mutation) {
   std::cout << "Committing bulk mutation size " << bulk_mutation->size()
-            << std::endl;
+            << "\n";
   std::vector<cbt::FailedMutation> failures =
       table->BulkApply(std::move(*bulk_mutation));
 
   if (!failures.empty()) {
-    std::cerr << failures.size() << " of the mutations in the bulk failed. \n";
+    std::cerr << failures.size() << " of the mutations in the bulk failed.\n";
   }
 
   // After the BulkApply() the bulk_mutation is discarded. Reinitialize.
@@ -103,7 +103,7 @@ void CommitBulk(cbt::Table* table, cbt::BulkMutation* bulk_mutation) {
 int main(int argc, char* argv[]) {
   if (argc != 5) {
     std::cerr << "Usage: populate_data <data_filepath> "
-              << "<project_id> <instance_id> <table_id> \n";
+              << "<project_id> <instance_id> <table_id>\n";
     return 1;
   }
 
@@ -114,7 +114,7 @@ int main(int argc, char* argv[]) {
   std::string const table_id = argv[4];
   if (data_filepath.empty() || project_id.empty() || instance_id.empty() ||
       table_id.empty()) {
-    std::cerr << "Please specify necessary parameters. \n";
+    std::cerr << "Please specify necessary parameters.\n";
     return 1;
   }
 
@@ -130,7 +130,7 @@ int main(int argc, char* argv[]) {
 
   // Prepare the cloud bigtable.
   cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id);
-  std::cout << "table name" << table.table_name() << std::endl;
+  std::cout << "table name" << table.table_name() << "\n";
   cbt::BulkMutation bulk_mutation;
   int num_row_mutation = 0, num_cell_mutation = 0;
 
@@ -151,8 +151,7 @@ int main(int argc, char* argv[]) {
     std::string time_error;
     if (!absl::ParseTime("%Y-%m-%d", *split_ptr, &time, &time_error)) {
       // Skip the header.
-      std::cout << "Can't parse the line: " << line << "; Continue."
-                << std::endl;
+      std::cout << "Can't parse the line: " << line << "; Continue.\n";
       continue;
     }
     std::string const row_key = PrepareRowKey(ticker, time);
@@ -207,11 +206,10 @@ int main(int argc, char* argv[]) {
   CommitBulk(&table, &bulk_mutation);
 
   std::cout << "BigTable populated with data from file: " << data_filepath
-            << std::endl
-            << "Total num of row mutations: " << num_row_mutation << std::endl
-            << "Total num of cell mutations: " << num_cell_mutation
-            << std::endl;
-  std::cout << "Total time used: " << absl::Now() - start_time << std::endl;
+            << "\n"
+            << "Total num of row mutations: " << num_row_mutation << "\n"
+            << "Total num of cell mutations: " << num_cell_mutation << "\n"
+            << "Total time used: " << absl::Now() - start_time << "\n";
 
   return 0;
 }

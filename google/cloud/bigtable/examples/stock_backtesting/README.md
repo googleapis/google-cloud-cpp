@@ -32,7 +32,8 @@ the data, and populate it into a Bigtable table.
 
 ```console
 $ cd $HOME/google-cloud-cpp/google/cloud/bigtable/examples/stock_backtesting
-$ bazel run populate_data <path_to_input_file> <project_id> <instance_id> <table_id>
+(build the binary by CMake or Bazel)
+$ populate_data <path_to_input_file> <project_id> <instance_id> <table_id>
 ```
 And the program will print out some running details such as how many
 rows/mutations were populated, the time consumed, etc.
@@ -63,7 +64,8 @@ historical signals, and calculate the profit and losses.
 
 ```console
 $ cd $HOME/google-cloud-cpp/google/cloud/bigtable/examples/stock_backtesting
-$ bazel run backtesting <path_to_strategy_file> <ticker> <YYYY-mm-dd(start_date)> <YYYY-mm-dd(end_date)> <project_id> <instance_id> <table_id>
+(build the binary by CMake or Bazel)
+$ backtesting <path_to_strategy_file> <ticker> <YYYY-mm-dd(start_date)> <YYYY-mm-dd(end_date)> <project_id> <instance_id> <table_id>
 ```
 The program will report errors if strategy is not defined correctly, the
 start/end date is out of range, etc; otherwise it reports the end status at

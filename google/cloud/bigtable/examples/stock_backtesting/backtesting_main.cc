@@ -130,11 +130,9 @@ void CalculateProfit(
 
   // At the last day of the backtesting period, we evaluate the total value of
   // our investment, and calculate the profit.
-  std::cout << "Shares in hand: " << shares << " @ " << base_it->second
-            << std::endl;
-  std::cout << "Money in hand: " << wallet << std::endl;
-  std::cout << "Total profit: " << shares * base_it->second + wallet
-            << std::endl;
+  std::cout << "Shares in hand: " << shares << " @ " << base_it->second << "\n"
+            << "Money in hand: " << wallet << "\n"
+            << "Total profit: " << shares * base_it->second + wallet << "\n";
 }
 
 }  // namespace
@@ -143,7 +141,7 @@ int main(int argc, char* argv[]) {
   if (argc != 8) {
     std::cerr
         << "Usage: backtesting <strategy_filepath> <ticker> "
-        << "<start_date> <end_date> <project_id> <instance_id> <table_id> \n";
+        << "<start_date> <end_date> <project_id> <instance_id> <table_id>\n";
     return 1;
   }
 
@@ -159,7 +157,7 @@ int main(int argc, char* argv[]) {
   if (strategy_filepath.empty() || ticker.empty() || start_date_str.empty() ||
       end_date_str.empty() || project_id.empty() || instance_id.empty() ||
       table_id.empty()) {
-    std::cerr << "Please specify necessary parameters. \n";
+    std::cerr << "Please specify necessary parameters.\n";
     return 1;
   }
 
@@ -168,18 +166,18 @@ int main(int argc, char* argv[]) {
       !absl::ParseCivilTime(end_date_str, &end_date)) {
     std::cerr << "Can't parse the dates: " << start_date_str << " and "
               << end_date_str
-              << ". Both should be in the formart of YYYY-mm-dd \n";
+              << ". Both should be in the formart of YYYY-mm-dd\n";
     return 1;
   }
   if (!absl::ParseCivilTime(kMinStartDate, &min_start_date) ||
       !absl::ParseCivilTime(kMaxEndDate, &max_end_date)) {
-    std::cerr << "Can't parse the backtesting window. \n";
+    std::cerr << "Can't parse the backtesting window.\n";
     return 1;
   }
   if (start_date < min_start_date || end_date > max_end_date ||
       start_date >= end_date) {
     std::cerr << "Backtesting only supports time window [" << min_start_date
-              << ", " << max_end_date << ") \n";
+              << ", " << max_end_date << ")\n";
     return 1;
   }
 
@@ -192,7 +190,7 @@ int main(int argc, char* argv[]) {
   std::string input_str(std::istreambuf_iterator<char>{input_file}, {});
   cbt::examples::Strategy strategy;
   if (!google::protobuf::TextFormat::ParseFromString(input_str, &strategy)) {
-    std::cerr << "Can't parse the input strategy. \n";
+    std::cerr << "Can't parse the input strategy.\n";
     return 1;
   }
 
@@ -209,7 +207,7 @@ int main(int argc, char* argv[]) {
   for (auto const& row_key : row_keys) {
     auto result = table.ReadRow(row_key, filter).value();
     if (!result.first) {
-      std::cerr << "Error in reading row key: " << row_key << "; continue. \n";
+      std::cerr << "Error in reading row key: " << row_key << "; continue.\n";
       continue;
     }
 
