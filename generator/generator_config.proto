@@ -53,6 +53,11 @@ message ServiceConfiguration {
   // does not provide good application-level concepts (consider chunking for
   // rows or values).
   bool omit_client = 11;
+
+  // If additional proto files are needed that aren't imported by the service
+  // file, add them using this field. This typically happens when an annotation
+  // lists a type that is not defined in any of the imported proto files.
+  repeated string additional_proto_files = 12;
 }
 
 message GeneratorConfiguration {

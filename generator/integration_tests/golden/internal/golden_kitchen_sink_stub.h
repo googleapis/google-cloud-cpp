@@ -23,6 +23,7 @@
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <generator/integration_tests/backup.pb.h>
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <memory>
 
