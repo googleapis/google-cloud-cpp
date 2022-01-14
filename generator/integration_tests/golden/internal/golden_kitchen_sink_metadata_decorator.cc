@@ -64,7 +64,7 @@ GoldenKitchenSinkMetadata::ListLogs(
   return child_->ListLogs(context, request);
 }
 
-std::unique_ptr<internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
 GoldenKitchenSinkMetadata::TailLogEntries(
     std::unique_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::TailLogEntriesRequest const& request) {

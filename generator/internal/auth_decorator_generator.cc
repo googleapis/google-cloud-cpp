@@ -111,7 +111,7 @@ Status AuthDecoratorGenerator::GenerateHeader() {
 )"""}},
                        IsLongrunningOperation),
          MethodPattern({{R"""(
-  std::unique_ptr<internal::StreamingReadRpc<$response_type$>>
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
   $method_name$(
       std::unique_ptr<grpc::ClientContext> context,
       $request_type$ const& request) override;
@@ -274,7 +274,7 @@ $auth_class_name$::Async$method_name$(
 )"""}},
                        IsLongrunningOperation),
          MethodPattern({{R"""(
-std::unique_ptr<internal::StreamingReadRpc<$response_type$>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
 $auth_class_name$::$method_name$(
    std::unique_ptr<grpc::ClientContext> context,
    $request_type$ const& request) {

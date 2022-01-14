@@ -160,7 +160,7 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
   EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
   EXPECT_CALL(*mock_, TailLogEntries)
       .WillOnce(Return(ByMove(
-          std::unique_ptr<internal::StreamingReadRpc<
+          std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               google::test::admin::database::v1::TailLogEntriesResponse>>(
               mock_response.release()))));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
@@ -180,7 +180,7 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcWithRpcStreams) {
   EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
   EXPECT_CALL(*mock_, TailLogEntries)
       .WillOnce(Return(ByMove(
-          std::unique_ptr<internal::StreamingReadRpc<
+          std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               google::test::admin::database::v1::TailLogEntriesResponse>>(
               mock_response.release()))));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});

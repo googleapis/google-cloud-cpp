@@ -117,7 +117,7 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
              IsLongrunningOperation),
          MethodPattern(
              {// clang-format off
-   {"  std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+   {"  std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
     "  $method_name$(\n"
     "    std::unique_ptr<grpc::ClientContext> context,\n"
     "    $request_type$ const& request) override;\n"
@@ -227,7 +227,7 @@ $logging_class_name$::$method_name$(
   using LoggingStream = ::google::cloud::internal::StreamingWriteRpcLogging<
       $request_type$, $response_type$>;
 
-  auto request_id = internal::RequestIdForLogging();
+  auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->$method_name$(std::move(context));
   if (components_.count("rpc-streams") > 0) {
@@ -252,7 +252,7 @@ $logging_class_name$::Async$method_name$(
   using LoggingStream =
      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<$request_type$, $response_type$>;
 
-  auto request_id = internal::RequestIdForLogging();
+  auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->Async$method_name$(cq, std::move(context));
   if (components_.count("rpc-streams") > 0) {
@@ -304,23 +304,27 @@ $logging_class_name$::Async$method_name$(
                        IsLongrunningOperation),
          MethodPattern(
              {// clang-format off}
-              {"std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+              {"std::unique_ptr<google::cloud::internal::StreamingReadRpc<$"
+               "response_type$>>\n"
                "$logging_class_name$::$method_name$(\n"
                "    std::unique_ptr<grpc::ClientContext> context,\n"
                "    $request_type$ const& request) {\n"
                "  return google::cloud::internal::LogWrapper(\n"
                "      [this](std::unique_ptr<grpc::ClientContext> context,\n"
                "             $request_type$ const& request) ->\n"
-               "      std::unique_ptr<internal::StreamingReadRpc<\n"
+               "      "
+               "std::unique_ptr<google::cloud::internal::StreamingReadRpc<\n"
                "          $response_type$>> {\n"
                "        auto stream = "
                "child_->$method_name$(std::move(context), request);\n"
                "        if (components_.count(\"rpc-streams\") > 0) {\n"
                "          stream = "
-               "absl::make_unique<internal::StreamingReadRpcLogging<\n"
+               "absl::make_unique<google::cloud::internal::"
+               "StreamingReadRpcLogging<\n"
                "             $response_type$>>(\n"
                "               std::move(stream), tracing_options_,\n"
-               "               internal::RequestIdForLogging());\n"
+               "               "
+               "google::cloud::internal::RequestIdForLogging());\n"
                "        }\n"
                "        return stream;\n"
                "      },\n"

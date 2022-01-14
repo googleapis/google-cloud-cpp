@@ -53,7 +53,7 @@ class GoldenKitchenSinkStub {
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListLogsRequest const& request) = 0;
 
-  virtual std::unique_ptr<internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
+  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
   TailLogEntries(
     std::unique_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::TailLogEntriesRequest const& request) = 0;
@@ -107,7 +107,7 @@ class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
     grpc::ClientContext& client_context,
     google::test::admin::database::v1::ListLogsRequest const& request) override;
 
-  std::unique_ptr<internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
   TailLogEntries(
     std::unique_ptr<grpc::ClientContext> client_context,
     google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
