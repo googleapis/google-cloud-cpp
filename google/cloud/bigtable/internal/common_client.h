@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/connection_options.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/internal/thread_annotations.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -58,14 +59,14 @@ class OutstandingTimers
  private:
   void DeregisterTimer(std::uint64_t id);
   std::mutex mu_;
-  bool shutdown_ = false;           // GUARDED_BY(mu_)
-  std::uint64_t id_generator_ = 0;  // GUARDED_BY(mu_)
+  bool shutdown_ GOOGLE_CLOUD_GUARDED_BY(mu_) = false;
+  std::uint64_t id_generator_ GOOGLE_CLOUD_GUARDED_BY(mu_) = 0;
   std::unordered_map<std::uint64_t,
-                     future<void>> timers_;  // GUARDED_BY(mu_)
+                     future<void>> timers_ GOOGLE_CLOUD_GUARDED_BY(mu_);
   // Object of this class is owned by timers continuations, which means it
   // cannot have an owning reference to the `CompletionQueue` because  it would
   // otherwise create a risk of a deadlock on the completion queue destruction.
-  std::weak_ptr<CompletionQueue> weak_cq_;  // GUARDED_BY(mu_)
+  const std::weak_ptr<CompletionQueue> weak_cq_;
 };
 
 /**
@@ -155,16 +156,16 @@ class CommonClient {
 
   /// Return the next Stub to make a call.
   StubPtr Stub() {
-    std::unique_lock<std::mutex> lk(mu_);
-    CheckConnections(lk);
+    std::lock_guard<std::mutex> lk(mu_);
+    CheckConnections();
     auto stub = stubs_[GetIndex()];
     return stub;
   }
 
   /// Return the next Channel to make a call.
   ChannelPtr Channel() {
-    std::unique_lock<std::mutex> lk(mu_);
-    CheckConnections(lk);
+    std::lock_guard<std::mutex> lk(mu_);
+    CheckConnections();
     auto channel = channels_[GetIndex()];
     return channel;
   }
@@ -175,7 +176,7 @@ class CommonClient {
 
  private:
   /// Make sure the connections exit, and create them if needed.
-  void CheckConnections(std::unique_lock<std::mutex>& lk) {
+  void CheckConnections() GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu_) {
     if (!stubs_.empty()) {
       return;
     }
@@ -189,14 +190,14 @@ class CommonClient {
     // only opens one socket per destination+attributes combo, we artificially
     // introduce attributes in the implementation of CreateChannelPool() to
     // create one socket per element in the pool.
-    lk.unlock();
+    mu_.unlock();
     auto channels = CreateChannelPool();
     std::vector<StubPtr> tmp;
     std::transform(channels.begin(), channels.end(), std::back_inserter(tmp),
                    [](std::shared_ptr<grpc::Channel> ch) {
                      return Interface::NewStub(ch);
                    });
-    lk.lock();
+    mu_.lock();
     if (stubs_.empty()) {
       channels.swap(channels_);
       tmp.swap(stubs_);
@@ -205,10 +206,10 @@ class CommonClient {
       // Some other thread created the pool and saved it in `stubs_`. The work
       // in this thread was superfluous. We release the lock while clearing the
       // channels to minimize contention.
-      lk.unlock();
+      mu_.unlock();
       tmp.clear();
       channels.clear();
-      lk.lock();
+      mu_.lock();
     }
   }
 

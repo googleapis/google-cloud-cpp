@@ -96,7 +96,6 @@ add_library(
     internal/getenv.h
     internal/invoke_result.h
     internal/ios_flags_saver.h
-    internal/lock_guard.h
     internal/log_impl.cc
     internal/log_impl.h
     internal/non_constructible.h
@@ -114,6 +113,7 @@ add_library(
     internal/status_payload_keys.h
     internal/strerror.cc
     internal/strerror.h
+    internal/thread_annotations.h
     internal/throw_delegate.cc
     internal/throw_delegate.h
     internal/tuple.h

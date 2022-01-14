@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/internal/port_platform.h"
+#include "google/cloud/internal/thread_annotations.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -59,14 +60,14 @@ class Client {
     read_timestamp_ = read_timestamp;
     session_id_ = std::move(session_id);
     txn_id_ = std::move(txn_id);
-    std::unique_lock<std::mutex> lock(mu_);
+    std::lock_guard<std::mutex> lock(mu_);
     valid_visits_ = 0;
   }
 
   // Return the number of valid visitations made to the transaction during a
   // completed set of `Read()` calls.
   int ValidVisits() {
-    std::unique_lock<std::mutex> lock(mu_);
+    std::lock_guard<std::mutex> lock(mu_);
     return valid_visits_;
   }
 
@@ -102,8 +103,8 @@ class Client {
   std::string session_id_;
   std::string txn_id_;
   std::mutex mu_;
-  std::int64_t begin_seqno_{0};  // GUARDED_BY(mu_)
-  int valid_visits_;             // GUARDED_BY(mu_)
+  std::int64_t begin_seqno_ GOOGLE_CLOUD_GUARDED_BY(mu_) = 0;
+  int valid_visits_ GOOGLE_CLOUD_GUARDED_BY(mu_);
 };
 
 // Transaction callback.  Normally we would use the TransactionSelector
@@ -121,7 +122,7 @@ ResultSet Client::Read(SessionHolder& session,
   bool fail_with_throw = false;
   EXPECT_THAT(tag, IsEmpty());
   if (!selector) {
-    std::unique_lock<std::mutex> lock(mu_);
+    std::lock_guard<std::mutex> lock(mu_);
     switch (mode_) {
       case Mode::kReadSucceeds:  // visits never valid
       case Mode::kReadFailsAndTxnRemainsBegin:
@@ -139,7 +140,7 @@ ResultSet Client::Read(SessionHolder& session,
       auto const& proto = selector->begin().read_only().read_timestamp();
       if (spanner::MakeTimestamp(proto).value() == read_timestamp_ &&
           seqno > 0) {
-        std::unique_lock<std::mutex> lock(mu_);
+        std::lock_guard<std::mutex> lock(mu_);
         switch (mode_) {
           case Mode::kReadSucceeds:  // first visit valid
             if (valid_visits_ == 0) ++valid_visits_;
@@ -171,7 +172,7 @@ ResultSet Client::Read(SessionHolder& session,
     if (selector->id() == txn_id_) {
       EXPECT_THAT(session, NotNull());
       EXPECT_EQ(session_id_, session->session_name());
-      std::unique_lock<std::mutex> lock(mu_);
+      std::lock_guard<std::mutex> lock(mu_);
       switch (mode_) {
         case Mode::kReadSucceeds:  // non-initial visits valid
           if (valid_visits_ != 0 && seqno > begin_seqno_) ++valid_visits_;

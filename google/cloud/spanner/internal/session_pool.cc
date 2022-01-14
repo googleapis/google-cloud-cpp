@@ -79,8 +79,8 @@ SessionPool::SessionPool(spanner::Database db,
 void SessionPool::Initialize() {
   auto const min_sessions = opts_.get<spanner::SessionPoolMinSessionsOption>();
   if (min_sessions > 0) {
-    std::unique_lock<std::mutex> lk(mu_);
-    (void)Grow(lk, min_sessions, WaitForSessionAllocation::kWait);
+    std::lock_guard<std::mutex> lk(mu_);
+    (void)Grow(min_sessions, WaitForSessionAllocation::kWait);
   }
   ScheduleBackgroundWork(std::chrono::seconds(5));
 }
@@ -123,10 +123,10 @@ void SessionPool::DoBackgroundWork() {
 // Ensure the pool size conforms to what was specified in the `SessionOptions`,
 // creating or deleting sessions as necessary.
 void SessionPool::MaintainPoolSize() {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> lk(mu_);
   auto const min_sessions = opts_.get<spanner::SessionPoolMinSessionsOption>();
   if (create_calls_in_progress_ == 0 && total_sessions_ < min_sessions) {
-    Grow(lk, total_sessions_ - min_sessions, WaitForSessionAllocation::kNoWait);
+    Grow(total_sessions_ - min_sessions, WaitForSessionAllocation::kNoWait);
   }
 }
 
@@ -139,7 +139,7 @@ void SessionPool::RefreshExpiringSessions() {
   auto refresh_limit =
       now - opts_.get<spanner::SessionPoolKeepAliveIntervalOption>();
   {
-    std::unique_lock<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> lk(mu_);
     if (last_use_time_lower_bound_ <= refresh_limit) {
       last_use_time_lower_bound_ = now;
       for (auto const& session : sessions_) {
@@ -175,8 +175,7 @@ void SessionPool::RefreshExpiringSessions() {
  * TODO(#4029) eliminate the `wait` parameter and do all creation
  * asynchronously. The main obstacle is making existing tests pass.
  */
-Status SessionPool::Grow(std::unique_lock<std::mutex>& lk,
-                         int sessions_to_create,
+Status SessionPool::Grow(int sessions_to_create,
                          WaitForSessionAllocation wait) {
   auto create_counts = ComputeCreateCounts(sessions_to_create);
   if (!create_counts.ok()) {
@@ -186,9 +185,9 @@ Status SessionPool::Grow(std::unique_lock<std::mutex>& lk,
 
   // Create all the sessions without the lock held (the lock will be
   // reacquired independently when the remote calls complete).
-  lk.unlock();
+  mu_.unlock();
   Status status = CreateSessions(*create_counts, wait);
-  lk.lock();
+  mu_.lock();
   return status;
 }
 
@@ -264,7 +263,7 @@ Status SessionPool::CreateSessions(
 }
 
 StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> lk(mu_);
   for (;;) {
     if (!sessions_.empty()) {
       // return the most recently used session.
@@ -287,7 +286,7 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
           spanner::ActionOnExhaustion::kFail) {
         return Status(StatusCode::kResourceExhausted, "session pool exhausted");
       }
-      Wait(lk, [this] {
+      Wait([this]() GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu_) {
         return !sessions_.empty() || total_sessions_ < max_pool_size_;
       });
       continue;
@@ -300,7 +299,7 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
     // simultaneous calls if additional sessions are needed. We can also use the
     // number of waiters in the `sessions_to_create` calculation below.
     if (create_calls_in_progress_ > 0) {
-      Wait(lk, [this] {
+      Wait([this]() GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu_) {
         return !sessions_.empty() || create_calls_in_progress_ == 0;
       });
       continue;
@@ -310,7 +309,7 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
     // one for the `Session` this caller is waiting for.
     auto const min_sessions =
         opts_.get<spanner::SessionPoolMinSessionsOption>();
-    auto status = Grow(lk, min_sessions + 1, WaitForSessionAllocation::kWait);
+    auto status = Grow(min_sessions + 1, WaitForSessionAllocation::kWait);
     if (!status.ok()) {
       return status;
     }
@@ -326,7 +325,7 @@ std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session) {
   // Sessions that were created for partitioned Reads/Queries do not have
   // their own channel/stub; return a stub to use by round-robining between
   // the channels.
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> lk(mu_);
   auto stub = (*next_dissociated_stub_channel_)->stub;
   if (++next_dissociated_stub_channel_ == channels_.end()) {
     next_dissociated_stub_channel_ = channels_.begin();
@@ -335,7 +334,7 @@ std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session) {
 }
 
 void SessionPool::Release(std::unique_ptr<Session> session) {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> lk(mu_);
   if (session->is_bad()) {
     // Once we have support for background processing, we may want to signal
     // that to replenish this bad session.
@@ -349,7 +348,7 @@ void SessionPool::Release(std::unique_ptr<Session> session) {
   session->update_last_use_time();
   sessions_.push_back(std::move(session));
   if (num_waiting_for_session_ > 0) {
-    lk.unlock();
+    mu_.unlock();
     cond_.notify_one();
   }
 }
@@ -463,7 +462,7 @@ future<StatusOr<spanner_proto::ResultSet>> SessionPool::AsyncRefreshSession(
 Status SessionPool::HandleBatchCreateSessionsDone(
     std::shared_ptr<Channel> const& channel,
     StatusOr<spanner_proto::BatchCreateSessionsResponse> response) {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> lk(mu_);
   --create_calls_in_progress_;
   if (!response.ok()) {
     return response.status();
@@ -481,7 +480,7 @@ Status SessionPool::HandleBatchCreateSessionsDone(
   std::shuffle(sessions_.begin(), sessions_.end(), random_generator_);
 
   // Wake up anyone who was waiting for a `Session`.
-  lk.unlock();
+  mu_.unlock();
   cond_.notify_all();
   return Status();
 }

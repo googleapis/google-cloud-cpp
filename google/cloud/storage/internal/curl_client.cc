@@ -1377,7 +1377,7 @@ std::string CurlClient::PickBoundary(std::string const& text_to_avoid) {
   auto generate_candidate = [this](int n) {
     static auto const* const kChars = new std::string(
         "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-    std::unique_lock<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> lk(mu_);
     return google::cloud::internal::Sample(generator_, n, *kChars);
   };
   constexpr int kCandidateInitialSize = 16;

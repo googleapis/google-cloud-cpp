@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_DEFAULT_COMPLETION_QUEUE_IMPL_H
 
 #include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/internal/thread_annotations.h"
 #include "google/cloud/version.h"
 #include <atomic>
 #include <chrono>
@@ -60,7 +61,7 @@ class DefaultCompletionQueueImpl
 
   /// Atomically add a new operation to the completion queue and start it.
   void StartOperation(std::shared_ptr<AsyncGrpcOperation> op,
-                      absl::FunctionRef<void(void*)> start) override;
+                      absl::FunctionRef<void(void*)> start) GOOGLE_CLOUD_LOCKS_EXCLUDED(mu_) override;
 
   /// The underlying gRPC completion queue.
   grpc::CompletionQueue& cq() override;
@@ -72,9 +73,8 @@ class DefaultCompletionQueueImpl
 
  private:
   /// Start an operation with the lock already held.
-  void StartOperation(std::unique_lock<std::mutex> lk,
-                      std::shared_ptr<AsyncGrpcOperation> op,
-                      absl::FunctionRef<void(void*)> start);
+  void StartOperationLockHeld(std::shared_ptr<AsyncGrpcOperation> op,
+                      absl::FunctionRef<void(void*)> start) GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu_);
 
   /// Return the asynchronous operation associated with @p tag.
   std::shared_ptr<AsyncGrpcOperation> FindOperation(void* tag);
@@ -95,7 +95,7 @@ class DefaultCompletionQueueImpl
 
   void DrainRunAsyncLoop();
   void DrainRunAsyncOnIdle();
-  void WakeUpRunAsyncThread(std::unique_lock<std::mutex> lk);
+  void WakeUpRunAsyncThread() GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu_);
 
   class WakeUpRunAsyncLoop;
   class WakeUpRunAsyncOnIdle;
@@ -105,9 +105,9 @@ class DefaultCompletionQueueImpl
   std::size_t thread_pool_size_ = 0;
   std::size_t run_async_pool_size_ = 0;
   std::deque<std::unique_ptr<internal::RunAsyncBase>> run_async_queue_;
-  bool shutdown_{false};  // GUARDED_BY(mu_)
+  bool shutdown_ GOOGLE_CLOUD_GUARDED_BY(mu_) = false;
   std::unordered_map<void*, std::shared_ptr<AsyncGrpcOperation>>
-      pending_ops_;  // GUARDED_BY(mu_)
+      pending_ops_ GOOGLE_CLOUD_GUARDED_BY(mu_);
   // This member acts as a ref counter. When it drops to 0, it calls
   // `cq_.Shutdown()`. Look into `StartOperation` for why it is necessary.
   std::shared_ptr<void> shutdown_guard_;

@@ -403,6 +403,7 @@ cc_library(
             "-DHAVE_LIBZ",
             "-DHAVE_ZLIB_H",
             "-Wno-string-plus-int",
+            "-Wno-deprecated-declarations",
         ],
     }) + select({
         ":macos": [

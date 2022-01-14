@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_polling_loop.h"
+#include "google/cloud/internal/thread_annotations.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/log.h"
 #include <algorithm>
@@ -62,7 +63,7 @@ class AsyncPollingLoopImpl
   void DoCancel() {
     google::longrunning::CancelOperationRequest request;
     {
-      std::unique_lock<std::mutex> lk(mu_);
+      std::lock_guard<std::mutex> lk(mu_);
       if (op_name_.empty()) {
         delayed_cancel_ = true;  // Wait for OnStart() to set `op_name_`.
         return;
@@ -88,7 +89,7 @@ class AsyncPollingLoopImpl
                    << op->name();
     bool do_cancel = false;
     {
-      std::unique_lock<std::mutex> lk(mu_);
+      std::lock_guard<std::mutex> lk(mu_);
       std::swap(delayed_cancel_, do_cancel);
       op_name_ = std::move(*op->mutable_name());
     }
@@ -111,7 +112,7 @@ class AsyncPollingLoopImpl
     if (!t) return promise_.set_value(std::move(t).status());
     google::longrunning::GetOperationRequest request;
     {
-      std::unique_lock<std::mutex> lk(mu_);
+      std::lock_guard<std::mutex> lk(mu_);
       request.set_name(op_name_);
     }
     auto self = shared_from_this();
@@ -140,7 +141,7 @@ class AsyncPollingLoopImpl
       return promise_.set_value(std::move(op).status());
     }
     if (op) {
-      std::unique_lock<std::mutex> lk(mu_);
+      std::lock_guard<std::mutex> lk(mu_);
       op_name_ = std::move(*op->mutable_name());
     }
     return Wait();
@@ -159,8 +160,8 @@ class AsyncPollingLoopImpl
   // `delayed_cancel_` and `op_name_`, in contrast, are also used from
   // `DoCancel()`, which is called asynchronously, so they need locking.
   std::mutex mu_;
-  bool delayed_cancel_;  // GUARDED_BY(mu_)
-  std::string op_name_;  // GUARDED_BY(mu_)
+  bool delayed_cancel_ GOOGLE_CLOUD_GUARDED_BY(mu_);
+  std::string op_name_ GOOGLE_CLOUD_GUARDED_BY(mu_);
 };
 
 future<StatusOr<Operation>> AsyncPollingLoop(

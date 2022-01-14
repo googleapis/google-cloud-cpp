@@ -204,7 +204,7 @@ void DefaultCompletionQueueImpl::CancelAll() {
   // need the lock because canceling might trigger calls that invalidate the
   // iterators.
   auto pending = [this] {
-    std::unique_lock<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> lk(mu_);
     return pending_ops_;
   }();
   for (auto& kv : pending) {
@@ -231,27 +231,28 @@ DefaultCompletionQueueImpl::MakeRelativeTimer(
 
 void DefaultCompletionQueueImpl::RunAsync(
     std::unique_ptr<internal::RunAsyncBase> function) {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> lk(mu_);
   run_async_queue_.push_back(std::move(function));
-  WakeUpRunAsyncThread(std::move(lk));
-}
-
-void DefaultCompletionQueueImpl::StartOperation(
-    std::shared_ptr<AsyncGrpcOperation> op,
-    absl::FunctionRef<void(void*)> start) {
-  StartOperation(std::unique_lock<std::mutex>(mu_), std::move(op),
-                 std::move(start));
+  WakeUpRunAsyncThread();
 }
 
 grpc::CompletionQueue& DefaultCompletionQueueImpl::cq() { return cq_; }
 
 void DefaultCompletionQueueImpl::StartOperation(
-    std::unique_lock<std::mutex> lk, std::shared_ptr<AsyncGrpcOperation> op,
+    std::shared_ptr<AsyncGrpcOperation> op,
+    absl::FunctionRef<void(void*)> start) {
+  std::lock_guard<std::mutex> lk{mu_};
+  StartOperationLockHeld(std::move(op), start);
+}
+
+void DefaultCompletionQueueImpl::StartOperationLockHeld(
+    std::shared_ptr<AsyncGrpcOperation> op,
     absl::FunctionRef<void(void*)> start) {
   void* tag = op.get();
   if (shutdown_) {
-    lk.unlock();
+    mu_.unlock();
     op->Notify(/*ok=*/false);
+    mu_.lock();
     return;
   }
   auto ins = pending_ops_.emplace(tag, std::move(op));
@@ -263,9 +264,9 @@ void DefaultCompletionQueueImpl::StartOperation(
     // reaction to trying to schedule some operation on a shut down completion
     // queue is an assertion.
     auto shutdown_guard = shutdown_guard_;
-    lk.unlock();
-
+    mu_.unlock();
     start(tag);
+    mu_.lock();
     return;
   }
   std::ostringstream os;
@@ -298,42 +299,41 @@ void DefaultCompletionQueueImpl::ForgetOperation(void* tag) {
 }
 
 void DefaultCompletionQueueImpl::DrainRunAsyncLoop() {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> lk(mu_);
   while (!run_async_queue_.empty() && !shutdown_) {
     auto f = std::move(run_async_queue_.front());
     run_async_queue_.pop_front();
-    lk.unlock();
+    mu_.unlock();
     f->exec();
-    lk.lock();
+    mu_.lock();
   }
   --run_async_pool_size_;
 }
 
 void DefaultCompletionQueueImpl::DrainRunAsyncOnIdle() {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> lk(mu_);
   if (run_async_queue_.empty()) return;
   auto f = std::move(run_async_queue_.front());
   run_async_queue_.pop_front();
-  lk.unlock();
+  mu_.unlock();
   f->exec();
-  lk.lock();
+  mu_.lock();
   if (run_async_queue_.empty()) {
     --run_async_pool_size_;
     return;
   }
   auto op = std::make_shared<WakeUpRunAsyncOnIdle>(shared_from_this());
-  StartOperation(std::move(lk), op, [&](void* tag) { op->Set(cq(), tag); });
+  StartOperationLockHeld(op, [&](void* tag) { op->Set(cq(), tag); });
 }
 
-void DefaultCompletionQueueImpl::WakeUpRunAsyncThread(
-    std::unique_lock<std::mutex> lk) {
+void DefaultCompletionQueueImpl::WakeUpRunAsyncThread() {
   if (run_async_queue_.empty() || shutdown_) return;
   if (thread_pool_size_ <= 1) {
     if (run_async_pool_size_ > 0) return;
     ++run_async_pool_size_;
     run_async_pool_hwm_ = (std::max)(run_async_pool_hwm_, run_async_pool_size_);
     auto op = std::make_shared<WakeUpRunAsyncOnIdle>(shared_from_this());
-    StartOperation(std::move(lk), op, [&](void* tag) { op->Set(cq(), tag); });
+    StartOperationLockHeld(op, [&](void* tag) { op->Set(cq(), tag); });
     return;
   }
   // Always leave one thread for I/O
@@ -341,7 +341,7 @@ void DefaultCompletionQueueImpl::WakeUpRunAsyncThread(
   auto op = std::make_shared<WakeUpRunAsyncLoop>(shared_from_this());
   ++run_async_pool_size_;
   run_async_pool_hwm_ = (std::max)(run_async_pool_hwm_, run_async_pool_size_);
-  StartOperation(std::move(lk), op, [&](void* tag) { op->Set(cq(), tag); });
+  StartOperationLockHeld(op, [&](void* tag) { op->Set(cq(), tag); });
 }
 
 }  // namespace internal

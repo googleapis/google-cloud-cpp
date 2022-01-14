@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SESSION_POOL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SESSION_POOL_H
 
+#include "google/cloud/internal/thread_annotations.h"
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/internal/channel.h"
@@ -130,24 +131,23 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   // Called when a thread needs to wait for a `Session` to become available.
   // @p specifies the condition to wait for.
   template <typename Predicate>
-  void Wait(std::unique_lock<std::mutex>& lk, Predicate&& p) {
+  void Wait(Predicate&& p)  GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu_) {
     ++num_waiting_for_session_;
-    cond_.wait(lk, std::forward<Predicate>(p));
+    internal::wait(cond_, mu_, std::forward<Predicate>(p));
     --num_waiting_for_session_;
   }
 
-  Status Grow(std::unique_lock<std::mutex>& lk, int sessions_to_create,
-              WaitForSessionAllocation wait);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
+  Status Grow(int sessions_to_create, WaitForSessionAllocation wait) GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu_);
   StatusOr<std::vector<CreateCount>> ComputeCreateCounts(
-      int sessions_to_create);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
+      int sessions_to_create) GOOGLE_CLOUD_EXCLUSIVE_LOCKS_REQUIRED(mu_);
   Status CreateSessions(std::vector<CreateCount> const& create_counts,
-                        WaitForSessionAllocation wait);  // LOCKS_EXCLUDED(mu_)
+                        WaitForSessionAllocation wait) GOOGLE_CLOUD_LOCKS_EXCLUDED(mu_);
   Status CreateSessionsSync(std::shared_ptr<Channel> const& channel,
                             std::map<std::string, std::string> const& labels,
-                            int num_sessions);  // LOCKS_EXCLUDED(mu_)
+                            int num_sessions) GOOGLE_CLOUD_LOCKS_EXCLUDED(mu_);
   void CreateSessionsAsync(std::shared_ptr<Channel> const& channel,
                            std::map<std::string, std::string> const& labels,
-                           int num_sessions);  // LOCKS_EXCLUDED(mu_)
+                           int num_sessions) GOOGLE_CLOUD_LOCKS_EXCLUDED(mu_);
 
   SessionHolder MakeSessionHolder(std::unique_ptr<Session> session,
                                   bool dissociate_from_pool);
@@ -186,13 +186,13 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
 
   std::mutex mu_;
   std::condition_variable cond_;
-  std::vector<std::unique_ptr<Session>> sessions_;  // GUARDED_BY(mu_)
-  int total_sessions_ = 0;                          // GUARDED_BY(mu_)
-  int create_calls_in_progress_ = 0;                // GUARDED_BY(mu_)
-  int num_waiting_for_session_ = 0;                 // GUARDED_BY(mu_)
+  std::vector<std::unique_ptr<Session>> sessions_ GOOGLE_CLOUD_GUARDED_BY(mu_);
+  int total_sessions_ GOOGLE_CLOUD_GUARDED_BY(mu_) = 0;
+  int create_calls_in_progress_ GOOGLE_CLOUD_GUARDED_BY(mu_) = 0;
+  int num_waiting_for_session_ GOOGLE_CLOUD_GUARDED_BY(mu_) = 0;
 
   // Lower bound on all `sessions_[i]->last_use_time()` values.
-  Session::Clock::time_point last_use_time_lower_bound_ =
+  Session::Clock::time_point last_use_time_lower_bound_ GOOGLE_CLOUD_GUARDED_BY(mu_) =
       clock_->Now();  // GUARDED_BY(mu_)
 
   future<void> current_timer_;
@@ -201,8 +201,8 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   // the constructor runs.
   // n.b. `FixedArray` iterators are never invalidated.
   using ChannelVec = absl::FixedArray<std::shared_ptr<Channel>>;
-  ChannelVec channels_;                                 // GUARDED_BY(mu_)
-  ChannelVec::iterator next_dissociated_stub_channel_;  // GUARDED_BY(mu_)
+  ChannelVec channels_ GOOGLE_CLOUD_GUARDED_BY(mu_);
+  ChannelVec::iterator next_dissociated_stub_channel_ GOOGLE_CLOUD_GUARDED_BY(mu_);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

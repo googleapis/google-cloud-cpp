@@ -21,6 +21,7 @@
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/internal/thread_annotations.h"
 #include <mutex>
 #include <string>
 
@@ -235,7 +236,7 @@ class CurlClient : public RawClient,
   bool const xml_enabled_;
 
   std::mutex mu_;
-  google::cloud::internal::DefaultPRNG generator_;  // GUARDED_BY(mu_);
+  google::cloud::internal::DefaultPRNG generator_ GOOGLE_CLOUD_GUARDED_BY(mu_);
 
   std::shared_ptr<CurlHandleFactory> storage_factory_;
   std::shared_ptr<CurlHandleFactory> upload_factory_;

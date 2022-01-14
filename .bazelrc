@@ -27,6 +27,15 @@ build --experimental_convenience_symlinks=ignore
 # Use host-OS-specific config lines from bazelrc files.
 build --enable_platform_specific_config=true
 
+# Error out on compiler warnings
+build --copt=-Werror
+build --copt=-Wall
+
+# Perform thread safety checks in libc++ build modes
+build --copt=-D_LIBCPP_ENABLE_THREAD_SAFETY_ANNOTATIONS
+build --copt=-DHAVE_THREAD_SAFETY_ATTRIBUTES  # Enable proper googlebench attributes
+build --copt=-Wthread-safety
+
 # Clang Sanitizers, use with (for example):
 #
 # --client_env=CXX=clang++ --client_env=CC=clang --config asan
@@ -38,6 +47,7 @@ build:asan --copt=-Og
 build:asan --copt=-g
 build:asan --copt=-fsanitize=address
 build:asan --copt=-fno-omit-frame-pointer
+build:asan --copt=-Wno-macro-redefined  # Asan sets _FORTIFY_SOURCE=0, macos sets _FORTIFY_SOURCE=1
 build:asan --linkopt=-fsanitize=address
 build:asan --action_env=ASAN_OPTIONS=detect_leaks=1:color=always
 build:asan --action_env=LSAN_OPTIONS=report_objects=1

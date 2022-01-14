@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_READ_WRITE_STREAM_AUTH_H
 
 #include "google/cloud/internal/async_read_write_stream_impl.h"
-#include "google/cloud/internal/lock_guard.h"
+#include "google/cloud/internal/thread_annotations.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <functional>
@@ -56,18 +56,18 @@ class AsyncStreamingReadWriteRpcAuth
   }
 
   future<absl::optional<Response>> Read() override {
-    internal::LockGuard g{state_->mu};
+    std::lock_guard<std::mutex> g{state_->mu};
     return state_->stream->Read();
   }
 
   future<bool> Write(Request const& request,
                      grpc::WriteOptions options) override {
-    internal::LockGuard g{state_->mu};
+    std::lock_guard<std::mutex> g{state_->mu};
     return state_->stream->Write(request, std::move(options));
   }
 
   future<bool> WritesDone() override {
-    internal::LockGuard g{state_->mu};
+    std::lock_guard<std::mutex> g{state_->mu};
     return state_->stream->WritesDone();
   }
 
@@ -84,13 +84,13 @@ class AsyncStreamingReadWriteRpcAuth
               Status(StatusCode::kInternal, "Stream is not yet started."))) {}
 
     std::unique_ptr<grpc::ClientContext> ReleaseInitialContext() {
-      internal::LockGuard g{mu};
+      std::lock_guard<std::mutex> g{mu};
       return std::move(initial_context);
     }
 
     future<bool> OnStart(
         StatusOr<std::unique_ptr<grpc::ClientContext>> context) {
-      internal::LockGuard g{mu};
+      std::lock_guard<std::mutex> g{mu};
       if (cancelled) return make_ready_future(false);
       if (context) {
         stream = factory(*std::move(context));
@@ -103,13 +103,13 @@ class AsyncStreamingReadWriteRpcAuth
     }
 
     future<Status> Finish() {
-      internal::LockGuard g{mu};
+      std::lock_guard<std::mutex> g{mu};
       cancelled = true;  // ensure stream is not recreated after Finish
       return stream->Finish();
     }
 
     void Cancel() {
-      internal::LockGuard g{mu};
+      std::lock_guard<std::mutex> g{mu};
       if (cancelled) return;
       cancelled = true;
       if (initial_context) initial_context->TryCancel();
@@ -118,10 +118,10 @@ class AsyncStreamingReadWriteRpcAuth
 
     StreamFactory const factory;
     std::mutex mu;
-    std::unique_ptr<grpc::ClientContext> initial_context ABSL_GUARDED_BY(mu);
+    std::unique_ptr<grpc::ClientContext> initial_context GOOGLE_CLOUD_GUARDED_BY(mu);
     std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>> stream
-        ABSL_GUARDED_BY(mu);
-    bool cancelled ABSL_GUARDED_BY(mu) = false;
+        GOOGLE_CLOUD_GUARDED_BY(mu);
+    bool cancelled GOOGLE_CLOUD_GUARDED_BY(mu) = false;
   };
 
   std::shared_ptr<GrpcAuthenticationStrategy> const auth_;

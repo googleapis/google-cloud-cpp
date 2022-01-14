@@ -77,9 +77,9 @@ void ScheduleChannelRefresh(
 }
 
 void OutstandingTimers::RegisterTimer(future<void> fut) {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> lk(mu_);
   if (shutdown_) {
-    lk.unlock();
+    mu_.unlock();
     fut.cancel();
     return;
   }
@@ -101,7 +101,7 @@ void OutstandingTimers::RegisterTimer(future<void> fut) {
 }
 
 void OutstandingTimers::DeregisterTimer(std::uint64_t id) {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> lk(mu_);
   // `CancelAll` might have emptied the `timers_` map, so `id` might not point
   // to a valid timer, but it's OK.
   timers_.erase(id);
