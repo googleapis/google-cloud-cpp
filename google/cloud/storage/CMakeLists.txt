@@ -342,7 +342,9 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/storage_round_robin.cc
         internal/storage_round_robin.h
         internal/storage_stub.cc
-        internal/storage_stub.h)
+        internal/storage_stub.h
+        internal/storage_stub_factory.cc
+        internal/storage_stub_factory.h)
     target_link_libraries(
         google_cloud_cpp_storage_grpc
         PUBLIC google-cloud-cpp::storage
@@ -600,7 +602,8 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
             internal/grpc_resumable_upload_session_test.cc
             internal/grpc_resumable_upload_session_url_test.cc
             internal/storage_auth_test.cc
-            internal/storage_round_robin_test.cc)
+            internal/storage_round_robin_test.cc
+            internal/storage_stub_factory_test.cc)
 
         foreach (fname ${storage_client_grpc_unit_tests})
             google_cloud_cpp_add_executable(target "storage" "${fname}")
