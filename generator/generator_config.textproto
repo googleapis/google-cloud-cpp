@@ -212,6 +212,30 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/pubsublite/v1/cursor.proto"
+  product_path: "google/cloud/pubsublite"
+  initial_copyright_year: "2022"
+  omit_client: true
+  omit_connection: true
+}
+
+service {
+  service_proto_path: "google/cloud/pubsublite/v1/publisher.proto"
+  product_path: "google/cloud/pubsublite"
+  initial_copyright_year: "2022"
+  omit_client: true
+  omit_connection: true
+}
+
+service {
+  service_proto_path: "google/cloud/pubsublite/v1/subscriber.proto"
+  product_path: "google/cloud/pubsublite"
+  initial_copyright_year: "2022"
+  omit_client: true
+  omit_connection: true
+}
+
+service {
   service_proto_path: "google/cloud/pubsublite/v1/topic_stats.proto"
   product_path: "google/cloud/pubsublite"
   initial_copyright_year: "2022"
