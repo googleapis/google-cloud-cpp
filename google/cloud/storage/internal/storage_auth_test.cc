@@ -32,17 +32,20 @@ using ::testing::IsNull;
 using ::testing::Not;
 using ::testing::Return;
 
-std::unique_ptr<StorageStub::ReadObjectStream> MakeObjectMediaStream(
-    std::unique_ptr<grpc::ClientContext>,
-    google::storage::v2::ReadObjectRequest const&) {
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::storage::v2::ReadObjectResponse>>
+MakeObjectMediaStream(std::unique_ptr<grpc::ClientContext>,
+                      google::storage::v2::ReadObjectRequest const&) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::storage::v2::ReadObjectResponse>;
   return absl::make_unique<ErrorStream>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
 }
 
-std::unique_ptr<StorageStub::WriteObjectStream> MakeInsertStream(
-    std::unique_ptr<grpc::ClientContext>) {
+std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
+    google::storage::v2::WriteObjectRequest,
+    google::storage::v2::WriteObjectResponse>>
+MakeInsertStream(std::unique_ptr<grpc::ClientContext>) {
   using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;

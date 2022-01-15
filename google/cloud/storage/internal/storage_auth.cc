@@ -20,9 +20,10 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-std::unique_ptr<StorageStub::ReadObjectStream> StorageAuth::ReadObject(
-    std::unique_ptr<grpc::ClientContext> context,
-    google::storage::v2::ReadObjectRequest const& request) {
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::storage::v2::ReadObjectResponse>>
+StorageAuth::ReadObject(std::unique_ptr<grpc::ClientContext> context,
+                        google::storage::v2::ReadObjectRequest const& request) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::storage::v2::ReadObjectResponse>;
   auto status = auth_->ConfigureContext(*context);
@@ -30,8 +31,10 @@ std::unique_ptr<StorageStub::ReadObjectStream> StorageAuth::ReadObject(
   return child_->ReadObject(std::move(context), request);
 }
 
-std::unique_ptr<StorageStub::WriteObjectStream> StorageAuth::WriteObject(
-    std::unique_ptr<grpc::ClientContext> context) {
+std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
+    google::storage::v2::WriteObjectRequest,
+    google::storage::v2::WriteObjectResponse>>
+StorageAuth::WriteObject(std::unique_ptr<grpc::ClientContext> context) {
   using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;
