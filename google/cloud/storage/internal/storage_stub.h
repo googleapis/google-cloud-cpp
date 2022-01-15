@@ -19,7 +19,7 @@
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
 #include "google/cloud/status_or.h"
-#include <google/storage/v2/storage.pb.h>
+#include <google/storage/v2/storage.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
 
 namespace google {
@@ -52,8 +52,34 @@ class StorageStub {
       google::storage::v2::QueryWriteStatusRequest const& request) = 0;
 };
 
-std::shared_ptr<StorageStub> MakeDefaultStorageStub(
-    std::shared_ptr<grpc::Channel> channel);
+class DefaultStorageStub : public StorageStub {
+ public:
+  explicit DefaultStorageStub(
+      std::unique_ptr<google::storage::v2::Storage::StubInterface> grpc_stub)
+      : grpc_stub_(std::move(grpc_stub)) {}
+
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::storage::v2::ReadObjectResponse>>
+  ReadObject(std::unique_ptr<grpc::ClientContext> context,
+             google::storage::v2::ReadObjectRequest const& request) override;
+
+  std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
+      google::storage::v2::WriteObjectRequest,
+      google::storage::v2::WriteObjectResponse>>
+  WriteObject(std::unique_ptr<grpc::ClientContext> context) override;
+
+  StatusOr<google::storage::v2::StartResumableWriteResponse>
+  StartResumableWrite(
+      grpc::ClientContext& context,
+      google::storage::v2::StartResumableWriteRequest const& request) override;
+
+  StatusOr<google::storage::v2::QueryWriteStatusResponse> QueryWriteStatus(
+      grpc::ClientContext& context,
+      google::storage::v2::QueryWriteStatusRequest const& request) override;
+
+ private:
+  std::unique_ptr<google::storage::v2::Storage::StubInterface> grpc_stub_;
+};
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
