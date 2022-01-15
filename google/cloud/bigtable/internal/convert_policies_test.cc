@@ -56,130 +56,127 @@ TEST(ConvertPolicies, TableAdmin) {
       options.has<bigtable_admin::BigtableTableAdminPollingPolicyOption>());
 }
 
+class MockRetryPolicy : public RPCRetryPolicy {
+ public:
+  MOCK_METHOD(std::unique_ptr<RPCRetryPolicy>, clone, (), (const, override));
+  MOCK_METHOD(void, Setup, (grpc::ClientContext&), (const, override));
+  MOCK_METHOD(bool, OnFailure, (grpc::Status const& status), (override));
+  MOCK_METHOD(bool, OnFailure, (Status const& status), (override));
+};
+
+class MockBackoffPolicy : public RPCBackoffPolicy {
+ public:
+  MOCK_METHOD(std::unique_ptr<RPCBackoffPolicy>, clone, (), (const, override));
+  MOCK_METHOD(void, Setup, (grpc::ClientContext&), (const, override));
+  MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (Status const&),
+              (override));
+  MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (grpc::Status const&),
+              (override));
+};
+
+class MockPollingPolicy : public PollingPolicy {
+ public:
+  MOCK_METHOD(std::unique_ptr<PollingPolicy>, clone, (), (const));
+  MOCK_METHOD(void, Setup, (grpc::ClientContext&), (override));
+  //    MOCK_METHOD(bool, IsPermanentError, (grpc::Status const&), (override));
+  MOCK_METHOD(bool, IsPermanentError, (Status const&), (override));
+  //    MOCK_METHOD(bool, OnFailure, (grpc::Status const&), (override));
+  MOCK_METHOD(bool, OnFailure, (Status const&), (override));
+  MOCK_METHOD(bool, Exhausted, (), (override));
+  MOCK_METHOD(std::chrono::milliseconds, WaitPeriod, (), (override));
+};
+
 /**
- * This test uses custom policies to ensure that:
+ * This test converts policies into options, then invokes the `GrpcSetupOption`
+ * twice. It checks that:
  *
- * 1. The retry and backokff `Setup()` function is called by invoking the
- *    `GrpcSetupOption` and not the `GrpcSetupPollOption`.
- *
- * 2. The polling `Setup()` function is called by invoking the
- *    `GrpcSetupPollOption` and not the `GrpcSetupOption`.
- *
- * 3. `GrpcSetupOption` and `GrpcSetupPollOption` use the initial state of the
- *    policies to setup the `grpc::ClientContext`.
+ *   - `clone()` is called twice for both the retry and backoff policies.
+ *   - `Setup()` is never called more than once by a clone.
+ *   - The polling policy is untouched.
  */
-TEST(ConvertPolicies, GrpcSetup) {
-  class RetryWithSetup : public RPCRetryPolicy {
-   public:
-    explicit RetryWithSetup(bool* called) : called_(called) {
-      *called_ = false;
-    }
-    std::unique_ptr<RPCRetryPolicy> clone() const override {
-      return absl::make_unique<RetryWithSetup>(called_);
-    }
-    void Setup(grpc::ClientContext&) const override {
-      EXPECT_FALSE(*called_)
-          << "GrpcSetupOption is not using the retry policy's initial state to "
-             "configure the context";
-      *called_ = true;
-    }
-    bool OnFailure(Status const&) override { return false; }
-    bool OnFailure(grpc::Status const&) override { return false; }
+TEST(ConvertPolicies, GrpcSetupOption) {
+  auto mock_r = std::make_shared<MockRetryPolicy>();
+  auto mock_b = std::make_shared<MockBackoffPolicy>();
+  auto mock_p = std::make_shared<MockPollingPolicy>();
 
-   private:
-    bool* called_;
-  };
+  EXPECT_CALL(*mock_r, Setup).Times(0);
+  EXPECT_CALL(*mock_b, Setup).Times(0);
+  EXPECT_CALL(*mock_p, Setup).Times(0);
 
-  class BackoffWithSetup : public RPCBackoffPolicy {
-   public:
-    explicit BackoffWithSetup(bool* called) : called_(called) {
-      *called_ = false;
-    }
-    std::unique_ptr<RPCBackoffPolicy> clone() const override {
-      return absl::make_unique<BackoffWithSetup>(called_);
-    }
-    void Setup(grpc::ClientContext&) const override {
-      EXPECT_FALSE(*called_)
-          << "GrpcSetupOption is not using the backoff policy's initial state "
-             "to configure the context";
-      *called_ = true;
-    }
-    std::chrono::milliseconds OnCompletion(Status const&) override {
-      return {};
-    };
-    std::chrono::milliseconds OnCompletion(grpc::Status const&) override {
-      return {};
-    }
+  EXPECT_CALL(*mock_r, clone)
+      .WillOnce([]() {
+        auto clone = absl::make_unique<MockRetryPolicy>();
+        EXPECT_CALL(*clone, Setup).Times(1);
+        return clone;
+      })
+      .WillOnce([]() {
+        auto clone = absl::make_unique<MockRetryPolicy>();
+        EXPECT_CALL(*clone, Setup).Times(1);
+        return clone;
+      });
+  EXPECT_CALL(*mock_b, clone)
+      .WillOnce([]() {
+        auto clone = absl::make_unique<MockBackoffPolicy>();
+        EXPECT_CALL(*clone, Setup).Times(1);
+        return clone;
+      })
+      .WillOnce([]() {
+        auto clone = absl::make_unique<MockBackoffPolicy>();
+        EXPECT_CALL(*clone, Setup).Times(1);
+        return clone;
+      });
+  EXPECT_CALL(*mock_p, clone).Times(0);
 
-   private:
-    bool* called_;
-  };
+  auto options =
+      bigtable_internal::MakeGrpcSetupOptions(mock_r, mock_b, mock_p);
 
-  class PollingWithSetup : public PollingPolicy {
-   public:
-    explicit PollingWithSetup(bool* called) : called_(called) {
-      *called_ = false;
-    }
-    std::unique_ptr<PollingPolicy> clone() const override {
-      return absl::make_unique<PollingWithSetup>(called_);
-    }
-    void Setup(grpc::ClientContext&) override {
-      EXPECT_FALSE(*called_)
-          << "GrpcSetupPollOption is not using the polling policy's initial "
-             "state to configure the context";
-      *called_ = true;
-    }
-    bool IsPermanentError(grpc::Status const&) override { return false; }
-    bool IsPermanentError(Status const&) override { return false; }
-    bool OnFailure(grpc::Status const&) override { return false; }
-    bool OnFailure(Status const&) override { return false; }
-    bool Exhausted() override { return false; }
-    std::chrono::milliseconds WaitPeriod() override { return {}; }
-
-   private:
-    bool* called_;
-  };
-
-  grpc::ClientContext context;
-  bool retry_called = false;
-  bool backoff_called = false;
-  bool polling_called = false;
-
-  auto r = std::make_shared<RetryWithSetup>(&retry_called);
-  auto b = std::make_shared<BackoffWithSetup>(&backoff_called);
-  auto p = std::make_shared<PollingWithSetup>(&polling_called);
-  auto options = bigtable_internal::MakeGrpcSetupOptions(
-      std::move(r), std::move(b), std::move(p));
   EXPECT_TRUE(options.has<google::cloud::internal::GrpcSetupOption>());
   EXPECT_TRUE(options.has<google::cloud::internal::GrpcSetupPollOption>());
 
-  // Verify that Setup has not been called for any of the policies.
-  EXPECT_FALSE(retry_called);
-  EXPECT_FALSE(backoff_called);
-  EXPECT_FALSE(polling_called);
-
-  // Use `GrpcSetupOption`
+  grpc::ClientContext context;
   google::cloud::internal::ConfigureContext(context, options);
-
-  EXPECT_TRUE(retry_called);
-  EXPECT_TRUE(backoff_called);
-  EXPECT_FALSE(polling_called);
-
-  // Verify that we only ever use the policies' initial setups
   google::cloud::internal::ConfigureContext(context, options);
+}
 
-  // Reset the flags
-  retry_called = false;
-  backoff_called = false;
+/**
+ * This test converts policies into options, then invokes the
+ * `GrpcSetupPollOption` twice. It checks that:
+ *
+ *   - `clone()` is called twice for the polling policy.
+ *   - `Setup()` is never called more than once by a clone.
+ *   - Both the retry and backoff policies are untouched.
+ */
+TEST(ConvertPolicies, GrpcSetupPollOption) {
+  auto mock_r = std::make_shared<MockRetryPolicy>();
+  auto mock_b = std::make_shared<MockBackoffPolicy>();
+  auto mock_p = std::make_shared<MockPollingPolicy>();
 
-  // Use `GrpcSetupPollOption`
+  EXPECT_CALL(*mock_r, Setup).Times(0);
+  EXPECT_CALL(*mock_b, Setup).Times(0);
+  EXPECT_CALL(*mock_p, Setup).Times(0);
+
+  EXPECT_CALL(*mock_r, clone).Times(0);
+  EXPECT_CALL(*mock_b, clone).Times(0);
+  EXPECT_CALL(*mock_p, clone)
+      .WillOnce([]() {
+        auto clone = absl::make_unique<MockPollingPolicy>();
+        EXPECT_CALL(*clone, Setup).Times(1);
+        return clone;
+      })
+      .WillOnce([]() {
+        auto clone = absl::make_unique<MockPollingPolicy>();
+        EXPECT_CALL(*clone, Setup).Times(1);
+        return clone;
+      });
+
+  auto options =
+      bigtable_internal::MakeGrpcSetupOptions(mock_r, mock_b, mock_p);
+
+  EXPECT_TRUE(options.has<google::cloud::internal::GrpcSetupOption>());
+  EXPECT_TRUE(options.has<google::cloud::internal::GrpcSetupPollOption>());
+
+  grpc::ClientContext context;
   google::cloud::internal::ConfigurePollContext(context, options);
-
-  EXPECT_FALSE(retry_called);
-  EXPECT_FALSE(backoff_called);
-  EXPECT_TRUE(polling_called);
-
-  // Verify that we only ever use the policy's initial setup
   google::cloud::internal::ConfigurePollContext(context, options);
 }
 
