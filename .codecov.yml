@@ -32,6 +32,7 @@ ignore:
   - "google/cloud/pubsublite"
   - "google/cloud/recommender"
   - "google/cloud/resourcemanager"
+  - "google/cloud/retail"
   - "google/cloud/scheduler"
   - "google/cloud/secretmanager"
   - "google/cloud/shell"

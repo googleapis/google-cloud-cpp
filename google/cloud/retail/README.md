@@ -3,7 +3,9 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Retail API][cloud-service-docs], a service to Cloud Retail service enables customers to build end-to-end personalized recommendation systems without requiring a high level of expertise in machine learning, recommendation system, or Google Cloud.
+[Retail API][cloud-service-docs]; Cloud Retail service enables customers to
+build end-to-end personalized recommendation systems without requiring a high
+level of expertise in machine learning, recommendation system, or Google Cloud.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +27,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/retail
+[cloud-service-docs]: https://cloud.google.com/retail/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-retail/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/retail
 
@@ -38,22 +40,23 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/retail/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/retail/catalog_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace retail = ::google::cloud::retail;
-  auto client = retail::Client(retail::MakeConnection(/* EDIT HERE */));
+  auto client =
+      retail::CatalogServiceClient(retail::MakeCatalogServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const location =
+      "projects/" + std::string(argv[1]) + "/locations/" + std::string(argv[2]);
+  for (auto r : client.ListCatalogs(location)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

@@ -2,8 +2,10 @@
 
 @mainpage Retail API C++ Client Library
 
-An idiomatic C++ client library for the [Retail API][cloud-service-docs], a service
-to Cloud Retail service enables customers to build end-to-end personalized recommendation systems without requiring a high level of expertise in machine learning, recommendation system, or Google Cloud.
+An idiomatic C++ client library for the [Retail API][cloud-service-docs]. Cloud
+Retail service enables customers to build end-to-end personalized recommendation
+systems without requiring a high level of expertise in machine learning,
+recommendation system, or Google Cloud.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +83,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/retail
+[cloud-service-docs]: https://cloud.google.com/retail/docs
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

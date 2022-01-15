@@ -25,6 +25,7 @@ google/cloud/pubsublite/quickstart/
 google/cloud/pubsub/quickstart/
 google/cloud/recommender/quickstart/
 google/cloud/resourcemanager/quickstart/
+google/cloud/retail/quickstart/
 google/cloud/scheduler/quickstart/
 google/cloud/secretmanager/quickstart/
 google/cloud/shell/quickstart/
