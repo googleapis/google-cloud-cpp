@@ -94,8 +94,6 @@ expected_dirs+=(
   ./include/google/cloud/spanner/mocks
   ./include/google/cloud/speech
   ./include/google/cloud/speech/v1
-  ./include/google/cloud/storage
-  ./include/google/cloud/storage/internal
   ./include/google/cloud/storage/oauth2
   ./include/google/cloud/storage/testing
   ./include/google/cloud/texttospeech
@@ -115,8 +113,6 @@ expected_dirs+=(
   ./include/google/pubsub/v1
   ./include/google/rpc
   ./include/google/spanner/v1
-  ./include/google/storage
-  ./include/google/storage/v2
   ./include/google/type
   ./lib64/cmake/bigtable_client
   ./lib64/cmake/google_cloud_cpp_bigtable
@@ -126,7 +122,6 @@ expected_dirs+=(
   ./lib64/cmake/google_cloud_cpp_pubsub
   ./lib64/cmake/google_cloud_cpp_rest_internal
   ./lib64/cmake/google_cloud_cpp_spanner
-  ./lib64/cmake/google_cloud_cpp_storage
   ./lib64/cmake/googleapis
   ./lib64/cmake/pubsub_client
   ./lib64/cmake/spanner_client
