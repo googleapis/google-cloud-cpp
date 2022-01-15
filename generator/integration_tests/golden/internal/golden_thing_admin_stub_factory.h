@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_GOLDEN_THING_ADMIN_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_GOLDEN_THING_ADMIN_STUB_FACTORY_H
 
-#include "generator/integration_tests/golden/golden_thing_admin_connection.h"
 #include "generator/integration_tests/golden/internal/golden_thing_admin_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
