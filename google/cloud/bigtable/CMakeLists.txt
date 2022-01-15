@@ -156,6 +156,8 @@ add_library(
     internal/client_options_defaults.h
     internal/common_client.cc
     internal/common_client.h
+    internal/convert_policies.cc
+    internal/convert_policies.h
     internal/defaults.cc
     internal/defaults.h
     internal/google_bytes_traits.cc
@@ -312,6 +314,7 @@ if (BUILD_TESTING)
         internal/async_row_sampler_test.cc
         internal/bulk_mutator_test.cc
         internal/common_client_test.cc
+        internal/convert_policies_test.cc
         internal/defaults_test.cc
         internal/google_bytes_traits_test.cc
         internal/logging_admin_client_test.cc
