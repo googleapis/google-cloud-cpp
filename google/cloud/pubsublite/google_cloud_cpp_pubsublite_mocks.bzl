@@ -18,6 +18,7 @@
 
 google_cloud_cpp_pubsublite_mocks_hdrs = [
     "mocks/mock_admin_connection.h",
+    "mocks/mock_topic_stats_connection.h",
 ]
 
 google_cloud_cpp_pubsublite_mocks_srcs = [
