@@ -28,7 +28,7 @@
 // `TRACE_STATE()` macro is only needed by the library developers when
 // troubleshooting this class.
 #define TRACE_STATE()                                                       \
-  GCP_LOG(TRACE) << __func__ << "(), buffer_size_=" << buffer_size_         \
+  GCP_LOG(TRACE) << __func__ << "(), buffer_.size()=" << buffer_.size()     \
                  << ", buffer_offset_=" << buffer_offset_                   \
                  << ", spill_.max_size()=" << spill_.max_size()             \
                  << ", spill_offset_=" << spill_offset_                     \
@@ -76,7 +76,7 @@ void PopFrontBytes(std::vector<absl::Span<char const>>& s, std::size_t count) {
   }
 }
 
-const char* HttpMethodAsChar(CurlImpl::HttpMethod method) {
+char const* HttpMethodAsChar(CurlImpl::HttpMethod method) {
   switch (method) {
     case CurlImpl::HttpMethod::kDelete:
       return "DELETE";
@@ -172,8 +172,7 @@ CurlImpl::CurlImpl(CurlHandle handle,
       multi_(factory_->CreateMultiHandle()),
       in_multi_(false),
       paused_(false),
-      buffer_(nullptr),
-      buffer_size_(0),
+      buffer_({nullptr, 0}),
       buffer_offset_(0),
       spill_offset_(0),
       options_(std::move(options)) {
@@ -182,10 +181,9 @@ CurlImpl::CurlImpl(CurlHandle handle,
 }
 
 void CurlImpl::CleanupHandles() {
-  if (!multi_ != !handle_.handle_) {
+  if (!multi_ != !handle_.handle_)
     GCP_LOG(FATAL) << "handles are inconsistent, multi_=" << multi_.get()
                    << ", handle_.handle_=" << handle_.handle_.get();
-  }
   if (curl_closed_ || !multi_) return;
 
   if (paused_) {
@@ -257,7 +255,7 @@ std::size_t CurlImpl::WriteAllBytesToSpillBuffer(void* ptr, std::size_t size,
 
 std::size_t CurlImpl::WriteToBuffer(void* ptr, std::size_t size,
                                     std::size_t nmemb) {
-  if (buffer_offset_ >= buffer_size_) {
+  if (buffer_offset_ >= buffer_.size()) {
     TRACE_STATE()
         << " buffer_offset_ >= buffer_size_ *** PAUSING HANDLE *** << \n";
     paused_ = true;
@@ -266,7 +264,7 @@ std::size_t CurlImpl::WriteToBuffer(void* ptr, std::size_t size,
 
   // Use the spill buffer first, if there is any...
   DrainSpillBuffer();
-  std::size_t free = buffer_size_ - buffer_offset_;
+  std::size_t free = buffer_.size() - buffer_offset_;
   if (free == 0) {
     TRACE_STATE()
         << " (buffer_size_ - buffer_offset_) == 0 *** PAUSING HANDLE *** \n";
@@ -278,7 +276,7 @@ std::size_t CurlImpl::WriteToBuffer(void* ptr, std::size_t size,
 
   // Copy the full contents of `ptr` into the application buffer.
   if (size * nmemb < free) {
-    std::memcpy(buffer_ + buffer_offset_, ptr, size * nmemb);
+    std::memcpy(buffer_.data() + buffer_offset_, ptr, size * nmemb);
     buffer_offset_ += size * nmemb;
     TRACE_STATE() << ", copy full"
                   << ", n=" << size * nmemb << "\n";
@@ -286,7 +284,7 @@ std::size_t CurlImpl::WriteToBuffer(void* ptr, std::size_t size,
   }
 
   // Copy as much as possible from `ptr` into the application buffer.
-  std::memcpy(buffer_ + buffer_offset_, ptr, free);
+  std::memcpy(buffer_.data() + buffer_offset_, ptr, free);
   buffer_offset_ += free;
   spill_offset_ = size * nmemb - free;
   // The rest goes into the spill buffer.
@@ -317,7 +315,7 @@ std::size_t CurlImpl::WriteCallback(void* ptr, std::size_t size,
   // spill buffer will be the first returned to the user on attempts to read
   // the payload. Only after the spill buffer has been emptied will we read more
   // from handle_.
-  if (buffer_size_ == 0) {
+  if (buffer_.empty()) {
     return WriteAllBytesToSpillBuffer(ptr, size, nmemb);
   }
   return WriteToBuffer(ptr, size, nmemb);
@@ -339,7 +337,7 @@ void CurlImpl::SetHeader(const std::pair<std::string, std::string>& header) {
 }
 
 void CurlImpl::SetHeaders(RestRequest const& request) {
-  // TODO(sdhart): this seems expensive to have to call curl_slist_append per
+  // TODO(#7957): this seems expensive to have to call curl_slist_append per
   //  header. Look to see if libcurl has a mechanism to add multiple headers
   //  at once.
   for (auto const& header : request.headers()) {
@@ -385,7 +383,7 @@ void CurlImpl::OnTransferDone() {
   //   if not.
   // if the option is not supported then we cannot use HTTP at all in libcurl
   // and the whole library would be unusable.
-  http_code_ = handle_.GetResponseCode().value();
+  http_code_ = handle_.GetResponseCode();
 
   // Capture the peer (the HTTP server), used for troubleshooting.
   received_headers_.emplace(":curl-peer", handle_.GetPeer());
@@ -407,24 +405,22 @@ Status CurlImpl::OnTransferError(Status status) {
   // a bad state. Release the handle, but do not return it to the pool.
   CleanupHandles();
   auto handle = std::move(handle_);
-  if (factory_) {
-    // While the handle is suspect, there is probably nothing wrong with the
-    // CURLM* handle, that just represents a local resource, such as data
-    // structures for `epoll(7)` or `select(2)`
-    factory_->CleanupMultiHandle(std::move(multi_));
-  }
+  // While the handle is suspect, there is probably nothing wrong with the
+  // CURLM* handle, that just represents a local resource, such as data
+  // structures for `epoll(7)` or `select(2)`
+  if (factory_) factory_->CleanupMultiHandle(std::move(multi_));
   return status;
 }
 
 void CurlImpl::DrainSpillBuffer() {
   handle_.FlushDebug(__func__);
-  std::size_t free = buffer_size_ - buffer_offset_;
+  std::size_t free = buffer_.size() - buffer_offset_;
   auto copy_count = (std::min)(free, spill_offset_);
   TRACE_STATE() << ", drain n=" << copy_count << " from spill\n";
   std::copy(spill_.data(), spill_.data() + copy_count,
-            buffer_ + buffer_offset_);
+            buffer_.data() + buffer_offset_);
   buffer_offset_ += copy_count;
-  // TODO(sdhart): Consider making the spill buffer a circular buffer and then
+  // TODO(#7958): Consider making the spill buffer a circular buffer and then
   // we could remove this memmove step.
   std::memmove(spill_.data(), spill_.data() + copy_count,
                spill_.size() - copy_count);
@@ -455,10 +451,7 @@ Status CurlImpl::PerformWorkUntil(absl::FunctionRef<bool()> predicate) {
 
 StatusOr<int> CurlImpl::PerformWork() {
   TRACE_STATE() << "\n";
-  if (!in_multi_) {
-    return 0;
-  }
-
+  if (!in_multi_) return 0;
   // Block while there is work to do, apparently newer versions of libcurl do
   // not need this loop and curl_multi_perform() blocks until there is no more
   // work, but is it pretty harmless to keep here.
@@ -513,15 +506,9 @@ StatusOr<int> CurlImpl::PerformWork() {
       // Ignore errors when closing the handle. They are expected because
       // libcurl may have received a block of data, but the WriteCallback()
       // (see above) tells libcurl that it cannot receive more data.
-      if (closing_) {
-        continue;
-      }
-      if (!status.ok()) {
-        return status;
-      }
-      if (!multi_remove_status.ok()) {
-        return multi_remove_status;
-      }
+      if (closing_) continue;
+      if (!status.ok()) return status;
+      if (!multi_remove_status.ok()) return multi_remove_status;
     }
   }
   TRACE_STATE() << ", running_handles=" << running_handles << "\n";
@@ -537,9 +524,7 @@ Status CurlImpl::WaitForHandles(int& repeats) {
   TRACE_STATE() << ", numfds=" << numfds << ", result=" << result
                 << ", repeats=" << repeats << "\n";
   Status status = AsStatus(result, __func__);
-  if (!status.ok()) {
-    return status;
-  }
+  if (!status.ok()) return status;
   // The documentation for curl_multi_wait() recommends sleeping if it returns
   // numfds == 0 more than once in a row :shrug:
   //    https://curl.haxx.se/libcurl/c/curl_multi_wait.html
@@ -554,9 +539,7 @@ Status CurlImpl::WaitForHandles(int& repeats) {
 }
 
 Status CurlImpl::AsStatus(CURLMcode result, char const* where) {
-  if (result == CURLM_OK) {
-    return Status();
-  }
+  if (result == CURLM_OK) return Status();
   std::ostringstream os;
   os << where << "(): unexpected error code in curl_multi_*, [" << result
      << "]=" << curl_multi_strerror(result);
@@ -572,18 +555,15 @@ StatusOr<std::size_t> CurlImpl::Read(absl::Span<char> buf) {
 
 StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> buf) {
   TRACE_STATE() << "begin\n";
-  buffer_ = buf.data();
+  buffer_ = {buf.data(), buf.size()};
   buffer_offset_ = 0;
-  buffer_size_ = buf.size();
   // Before calling `Wait()` copy any data from the spill buffer into the
   // application buffer. It is possible that `Wait()` will never call
   // `WriteCallback()`, for example, because the Read() or Peek() closed the
   // connection, but if there is any data left in the spill buffer we need
   // to return it.
   DrainSpillBuffer();
-  if (curl_closed_) {
-    return buffer_offset_;
-  }
+  if (curl_closed_) return buffer_offset_;
 
   handle_.SetOption(CURLOPT_WRITEFUNCTION, &CurlRequestWrite);
   handle_.SetOption(CURLOPT_WRITEDATA, this);
@@ -599,13 +579,13 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> buf) {
   }
 
   Status status;
-  if (buffer_size_ == 0) {
+  if (buffer_.empty()) {
     status = PerformWorkUntil([this] {
       return curl_closed_ || paused_ || spill_offset_ >= spill_.max_size();
     });
   } else {
     status = PerformWorkUntil([this] {
-      return curl_closed_ || paused_ || buffer_offset_ >= buffer_size_;
+      return curl_closed_ || paused_ || buffer_offset_ >= buffer_.size();
     });
   }
 
@@ -641,12 +621,12 @@ Status CurlImpl::MakeRequestImpl() {
   handle_.SetOption(CURLOPT_TCP_KEEPALIVE, 1L);
 
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
-  if (error != CURLM_OK) {
-    // This indicates that we are using the API incorrectly, the application
-    // can not recover from these problems, raising an exception is the
-    // "Right Thing"[tm] here.
+
+  // This indicates that we are using the API incorrectly, the application
+  // can not recover from these problems, raising an exception is the
+  // "Right Thing"[tm] here.
+  if (error != CURLM_OK)
     google::cloud::internal::ThrowStatus(AsStatus(error, __func__));
-  }
   in_multi_ = true;
 
   // This call to Read should send the request, get the response, and thus make
@@ -686,11 +666,10 @@ Status CurlImpl::MakeRequest(CurlImpl::HttpMethod method,
     handle_.SetOption(CURLOPT_LOW_SPEED_TIME, timeout);
   }
 
-  if (method == HttpMethod::kDelete || payload.empty()) {
+  if (method == HttpMethod::kDelete || payload.empty())
     return MakeRequestImpl();
-  }
 
-  // TODO(sdhart): add support for multi-Span POST
+  // TODO(#7955): add support for multi-Span POST
   if (method == HttpMethod::kPost) {
     if (payload.size() == 1) {
       handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload[0].size());

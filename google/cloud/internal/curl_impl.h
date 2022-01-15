@@ -150,8 +150,7 @@ class CurlImpl {
   bool paused_;
 
   // Track the usage of the buffer provided to Read.
-  char* buffer_;
-  std::size_t buffer_size_;
+  absl::Span<char> buffer_;
   std::size_t buffer_offset_;
 
   // libcurl(1) will never pass a block larger than CURLOPT_BUFFERSIZE to the
