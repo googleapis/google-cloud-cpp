@@ -33,10 +33,12 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 
-// All the tests have nearly identical structure. They create a stub pointing to
-// an invalid endpoint. The stubs have full decorators. We expect that they
-// will result in a call to a service.  Getting a kUnavailable error is the
-// expected result.
+// The point of these tests is to verify that the `CreateStorageStub` factory
+// function injects the right decorators. We do this by observing the
+// side-effects of these decorators. All the tests have nearly identical
+// structure. They create a stub pointing to an invalid endpoint, then make one
+// RPC which fails. Then observe the side-effects.
+// TODO(#7963) - change description as the test improves.
 
 std::shared_ptr<StorageStub> CreateTestStub(CompletionQueue cq) {
   auto credentials = google::cloud::MakeAccessTokenCredentials(
