@@ -23,12 +23,9 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 Options MakeGrpcSetupOptions(
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<bigtable::RPCRetryPolicy> retry,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<bigtable::RPCBackoffPolicy> backoff,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<bigtable::PollingPolicy> polling) {
+    std::shared_ptr<bigtable::RPCRetryPolicy> const& retry,
+    std::shared_ptr<bigtable::RPCBackoffPolicy> const& backoff,
+    std::shared_ptr<bigtable::PollingPolicy> const& polling) {
   auto setup = [retry, backoff](grpc::ClientContext& context) {
     retry->clone()->Setup(context);
     backoff->clone()->Setup(context);
@@ -42,12 +39,9 @@ Options MakeGrpcSetupOptions(
 }
 
 Options MakeInstanceAdminOptions(
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<bigtable::RPCRetryPolicy> retry,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<bigtable::RPCBackoffPolicy> backoff,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<bigtable::PollingPolicy> polling) {
+    std::shared_ptr<bigtable::RPCRetryPolicy> const& retry,
+    std::shared_ptr<bigtable::RPCBackoffPolicy> const& backoff,
+    std::shared_ptr<bigtable::PollingPolicy> const& polling) {
   return MakeGrpcSetupOptions(retry, backoff, polling)
       .set<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>(
           MakeCommonRetryPolicy<
@@ -59,12 +53,9 @@ Options MakeInstanceAdminOptions(
 }
 
 Options MakeTableAdminOptions(
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<bigtable::RPCRetryPolicy> retry,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<bigtable::RPCBackoffPolicy> backoff,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<bigtable::PollingPolicy> polling) {
+    std::shared_ptr<bigtable::RPCRetryPolicy> const& retry,
+    std::shared_ptr<bigtable::RPCBackoffPolicy> const& backoff,
+    std::shared_ptr<bigtable::PollingPolicy> const& polling) {
   return MakeGrpcSetupOptions(retry, backoff, polling)
       .set<bigtable_admin::BigtableTableAdminRetryPolicyOption>(
           MakeCommonRetryPolicy<bigtable_admin::BigtableTableAdminRetryPolicy>(

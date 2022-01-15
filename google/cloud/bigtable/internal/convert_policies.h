@@ -50,19 +50,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *     ...
  */
 Options MakeGrpcSetupOptions(
-    std::shared_ptr<bigtable::RPCRetryPolicy> retry,
-    std::shared_ptr<bigtable::RPCBackoffPolicy> backoff,
-    std::shared_ptr<bigtable::PollingPolicy> polling);
+    std::shared_ptr<bigtable::RPCRetryPolicy> const& retry,
+    std::shared_ptr<bigtable::RPCBackoffPolicy> const& backoff,
+    std::shared_ptr<bigtable::PollingPolicy> const& polling);
 
 Options MakeInstanceAdminOptions(
-    std::shared_ptr<bigtable::RPCRetryPolicy> retry,
-    std::shared_ptr<bigtable::RPCBackoffPolicy> backoff,
-    std::shared_ptr<bigtable::PollingPolicy> polling);
+    std::shared_ptr<bigtable::RPCRetryPolicy> const& retry,
+    std::shared_ptr<bigtable::RPCBackoffPolicy> const& backoff,
+    std::shared_ptr<bigtable::PollingPolicy> const& polling);
 
 Options MakeTableAdminOptions(
-    std::shared_ptr<bigtable::RPCRetryPolicy> retry,
-    std::shared_ptr<bigtable::RPCBackoffPolicy> backoff,
-    std::shared_ptr<bigtable::PollingPolicy> polling);
+    std::shared_ptr<bigtable::RPCRetryPolicy> const& retry,
+    std::shared_ptr<bigtable::RPCBackoffPolicy> const& backoff,
+    std::shared_ptr<bigtable::PollingPolicy> const& polling);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
