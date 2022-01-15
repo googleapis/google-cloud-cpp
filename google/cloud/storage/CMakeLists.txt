@@ -339,6 +339,8 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/hybrid_client.h
         internal/storage_auth_decorator.cc
         internal/storage_auth_decorator.h
+        internal/storage_logging_decorator.cc
+        internal/storage_logging_decorator.h
         internal/storage_round_robin.cc
         internal/storage_round_robin.h
         internal/storage_stub.cc
