@@ -36,7 +36,6 @@ google_cloud_cpp_pubsublite_hdrs = [
     "internal/topic_stats_retry_traits.h",
     "internal/topic_stats_stub.h",
     "internal/topic_stats_stub_factory.h",
-    "mocks/mock_topic_stats_connection.h",
     "topic_stats_client.h",
     "topic_stats_connection.h",
     "topic_stats_connection_idempotency_policy.h",

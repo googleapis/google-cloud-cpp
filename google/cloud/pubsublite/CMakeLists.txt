@@ -99,7 +99,6 @@ add_library(
     internal/topic_stats_stub.h
     internal/topic_stats_stub_factory.cc
     internal/topic_stats_stub_factory.h
-    mocks/mock_topic_stats_connection.h
     topic_stats_client.cc
     topic_stats_client.h
     topic_stats_connection.cc
@@ -140,7 +139,8 @@ create_bazel_config(google_cloud_cpp_pubsublite YEAR "2021")
 add_library(google_cloud_cpp_pubsublite_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_pubsublite_mocks
-    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_admin_connection.h)
+    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_admin_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_topic_stats_connection.h)
 target_link_libraries(
     google_cloud_cpp_pubsublite_mocks
     INTERFACE google-cloud-cpp::experimental-pubsublite GTest::gmock_main
