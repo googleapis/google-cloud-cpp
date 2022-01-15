@@ -54,6 +54,18 @@ message ServiceConfiguration {
   // rows or values).
   bool omit_client = 11;
 
+  // If set, the `*Connection` class and its helpers are not generated. This
+  // is useful in services where the `*Connection` requires very custom code,
+  // for example:
+  // * Storage already had a hand-crafted analog to the `*Connection` class.
+  // * Pub/Sub Lite, where we think the generated `*Stub` classes are useful,
+  //   but the `*Connection` requires custom algorithms.
+  // * Anything that requires a custom resume algorithm for streaming RPCs.
+  //
+  // In most cases one would want to set `omit_client` to true if this flag
+  // is also set.
+  bool omit_connection = 13;
+
   // If additional proto files are needed that aren't imported by the service
   // file, add them using this field. This typically happens when an annotation
   // lists a type that is not defined in any of the imported proto files.
