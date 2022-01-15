@@ -12,6 +12,7 @@ google/cloud/assuredworkloads/quickstart/
 google/cloud/bigquery/quickstart/
 google/cloud/bigtable/quickstart/
 google/cloud/billing/quickstart/
+google/cloud/composer/quickstart/
 google/cloud/datamigration/quickstart/
 google/cloud/eventarc/quickstart/
 google/cloud/iam/quickstart/
