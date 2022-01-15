@@ -78,6 +78,8 @@ expected_dirs+=(
   ./include/google/cloud/dialogflow/v2
   ./include/google/cloud/grpc_utils
   ./include/google/cloud/internal
+  # no RPC services in google/cloud/oslogin/common
+  ./include/google/cloud/oslogin/common
   ./include/google/cloud/pubsub
   ./include/google/cloud/pubsub/internal
   # no gRPC services in google/cloud/recommender/logging

@@ -69,7 +69,6 @@
 ./include/google/cloud/logging/internal
 ./include/google/cloud/logging/mocks
 ./include/google/cloud/oslogin
-./include/google/cloud/oslogin/common
 ./include/google/cloud/oslogin/internal
 ./include/google/cloud/oslogin/mocks
 ./include/google/cloud/oslogin/v1
