@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/grpc_plugin.h"
-#include "google/cloud/storage/internal/storage_auth.h"
+#include "google/cloud/storage/internal/storage_auth_decorator.h"
 #include "google/cloud/storage/internal/storage_round_robin.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
