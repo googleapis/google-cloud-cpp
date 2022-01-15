@@ -26,6 +26,7 @@
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include <google/cloud/tasks/v2/cloudtasks.grpc.pb.h>
 #include <memory>
 
 namespace google {

@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_INTERNAL_COMPLETION_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_INTERNAL_COMPLETION_STUB_FACTORY_H
 
-#include "google/cloud/talent/completion_connection.h"
 #include "google/cloud/talent/internal/completion_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"

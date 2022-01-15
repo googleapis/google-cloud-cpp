@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_INTERNAL_ACCESS_CONTEXT_MANAGER_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_INTERNAL_ACCESS_CONTEXT_MANAGER_STUB_FACTORY_H
 
-#include "google/cloud/accesscontextmanager/access_context_manager_connection.h"
 #include "google/cloud/accesscontextmanager/internal/access_context_manager_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"

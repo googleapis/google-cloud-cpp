@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INTERNAL_DATABASE_ADMIN_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INTERNAL_DATABASE_ADMIN_STUB_FACTORY_H
 
-#include "google/cloud/spanner/admin/database_admin_connection.h"
 #include "google/cloud/spanner/admin/internal/database_admin_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"

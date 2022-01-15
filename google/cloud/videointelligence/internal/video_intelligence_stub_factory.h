@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_INTERNAL_VIDEO_INTELLIGENCE_STUB_FACTORY_H
 
 #include "google/cloud/videointelligence/internal/video_intelligence_stub.h"
-#include "google/cloud/videointelligence/video_intelligence_connection.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"

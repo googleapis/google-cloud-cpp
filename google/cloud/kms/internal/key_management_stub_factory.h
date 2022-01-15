@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INTERNAL_KEY_MANAGEMENT_STUB_FACTORY_H
 
 #include "google/cloud/kms/internal/key_management_stub.h"
-#include "google/cloud/kms/key_management_connection.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"

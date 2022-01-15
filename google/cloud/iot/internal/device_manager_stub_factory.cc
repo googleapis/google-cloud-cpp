@@ -26,6 +26,7 @@
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include <google/cloud/iot/v1/device_manager.grpc.pb.h>
 #include <memory>
 
 namespace google {

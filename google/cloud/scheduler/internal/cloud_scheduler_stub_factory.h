@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_INTERNAL_CLOUD_SCHEDULER_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_INTERNAL_CLOUD_SCHEDULER_STUB_FACTORY_H
 
-#include "google/cloud/scheduler/cloud_scheduler_connection.h"
 #include "google/cloud/scheduler/internal/cloud_scheduler_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"

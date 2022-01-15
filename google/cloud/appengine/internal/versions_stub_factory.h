@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_INTERNAL_VERSIONS_STUB_FACTORY_H
 
 #include "google/cloud/appengine/internal/versions_stub.h"
-#include "google/cloud/appengine/versions_connection.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"

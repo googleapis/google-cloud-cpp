@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_INTERNAL_IMAGE_VERSIONS_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_INTERNAL_IMAGE_VERSIONS_STUB_FACTORY_H
 
-#include "google/cloud/composer/image_versions_connection.h"
 #include "google/cloud/composer/internal/image_versions_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"

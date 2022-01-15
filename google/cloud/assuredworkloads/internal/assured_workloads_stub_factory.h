@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_INTERNAL_ASSURED_WORKLOADS_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_INTERNAL_ASSURED_WORKLOADS_STUB_FACTORY_H
 
-#include "google/cloud/assuredworkloads/assured_workloads_connection.h"
 #include "google/cloud/assuredworkloads/internal/assured_workloads_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"

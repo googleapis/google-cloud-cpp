@@ -26,6 +26,7 @@
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include <google/iam/admin/v1/iam.grpc.pb.h>
 #include <memory>
 
 namespace google {

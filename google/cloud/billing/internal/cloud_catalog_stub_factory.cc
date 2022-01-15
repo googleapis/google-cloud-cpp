@@ -26,6 +26,7 @@
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include <google/cloud/billing/v1/cloud_catalog.grpc.pb.h>
 #include <memory>
 
 namespace google {

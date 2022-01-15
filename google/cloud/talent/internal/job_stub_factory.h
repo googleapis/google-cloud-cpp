@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_INTERNAL_JOB_STUB_FACTORY_H
 
 #include "google/cloud/talent/internal/job_stub.h"
-#include "google/cloud/talent/job_connection.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"

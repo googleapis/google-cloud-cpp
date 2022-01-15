@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_INTERNAL_VPC_ACCESS_STUB_FACTORY_H
 
 #include "google/cloud/vpcaccess/internal/vpc_access_stub.h"
-#include "google/cloud/vpcaccess/vpc_access_connection.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"

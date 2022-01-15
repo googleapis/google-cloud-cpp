@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_INTERNAL_EVENTARC_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_INTERNAL_EVENTARC_STUB_FACTORY_H
 
-#include "google/cloud/eventarc/eventarc_connection.h"
 #include "google/cloud/eventarc/internal/eventarc_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"

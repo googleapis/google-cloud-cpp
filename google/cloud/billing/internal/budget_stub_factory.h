@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_INTERNAL_BUDGET_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_INTERNAL_BUDGET_STUB_FACTORY_H
 
-#include "google/cloud/billing/budget_connection.h"
 #include "google/cloud/billing/internal/budget_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"

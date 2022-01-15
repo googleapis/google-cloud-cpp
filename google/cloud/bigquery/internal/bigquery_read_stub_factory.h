@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_BIGQUERY_READ_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_BIGQUERY_READ_STUB_FACTORY_H
 
-#include "google/cloud/bigquery/bigquery_read_connection.h"
 #include "google/cloud/bigquery/internal/bigquery_read_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"

@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_INTERNAL_ENVIRONMENTS_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_INTERNAL_ENVIRONMENTS_STUB_FACTORY_H
 
-#include "google/cloud/composer/environments_connection.h"
 #include "google/cloud/composer/internal/environments_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"

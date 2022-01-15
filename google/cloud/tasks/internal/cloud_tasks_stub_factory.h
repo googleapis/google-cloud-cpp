@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TASKS_INTERNAL_CLOUD_TASKS_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TASKS_INTERNAL_CLOUD_TASKS_STUB_FACTORY_H
 
-#include "google/cloud/tasks/cloud_tasks_connection.h"
 #include "google/cloud/tasks/internal/cloud_tasks_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"

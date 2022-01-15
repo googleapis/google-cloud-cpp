@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_INTERNAL_IDS_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_INTERNAL_IDS_STUB_FACTORY_H
 
-#include "google/cloud/ids/ids_connection.h"
 #include "google/cloud/ids/internal/ids_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
