@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/storage_auth_decorator.h"
+#include "google/cloud/storage/internal/storage_logging_decorator.h"
 #include "google/cloud/storage/internal/storage_round_robin.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -95,6 +96,13 @@ std::shared_ptr<StorageStub> CreateStorageStub(
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<StorageAuth>(std::move(auth), std::move(stub));
+  }
+  if (google::cloud::internal::Contains(options.get<TracingComponentsOption>(),
+                                        "rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
+    stub = std::make_shared<StorageLogging>(
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        options.get<TracingComponentsOption>());
   }
   return stub;
 }

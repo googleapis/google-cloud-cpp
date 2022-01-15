@@ -16,6 +16,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
@@ -27,10 +28,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::Contains;
+using ::testing::HasSubstr;
 
-// All the tests have nearly identical structure. They create a stub pointing to
-// an invalid endpoint. Getting a kUnavailable error is the expected result.
+// The point of these tests is to verify that the `CreateStorageStub` factory
+// function injects the right decorators. We do this by observing the
+// side-effects of these decorators. All the tests have nearly identical
+// structure. They create a stub pointing to an invalid endpoint, then make one
+// RPC which fails. Then observe the side-effects.
+// TODO(#7963) - change description as the test improves.
 
 std::shared_ptr<StorageStub> CreateTestStub(CompletionQueue cq) {
   auto credentials = google::cloud::MakeAccessTokenCredentials(
@@ -44,6 +52,7 @@ std::shared_ptr<StorageStub> CreateTestStub(CompletionQueue cq) {
 }
 
 TEST(StorageStubFactory, ReadObject) {
+  ScopedLog log;
   CompletionQueue cq;
   auto stub = CreateTestStub(cq);
   auto stream = stub->ReadObject(absl::make_unique<grpc::ClientContext>(),
@@ -51,32 +60,39 @@ TEST(StorageStubFactory, ReadObject) {
   auto read = stream->Read();
   ASSERT_TRUE(absl::holds_alternative<Status>(read));
   EXPECT_THAT(absl::get<Status>(read), StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("ReadObject")));
 }
 
 TEST(StorageStubFactory, WriteObject) {
+  ScopedLog log;
   CompletionQueue cq;
   auto stub = CreateTestStub(cq);
   auto stream = stub->WriteObject(absl::make_unique<grpc::ClientContext>());
   auto close = stream->Close();
   EXPECT_THAT(close, StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("WriteObject")));
 }
 
 TEST(StorageStubFactory, StartResumableWrite) {
+  ScopedLog log;
   CompletionQueue cq;
   auto stub = CreateTestStub(cq);
   grpc::ClientContext context;
   auto response = stub->StartResumableWrite(
       context, google::storage::v2::StartResumableWriteRequest{});
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("StartResumableWrite")));
 }
 
 TEST(StorageStubFactory, QueryWriteStatus) {
+  ScopedLog log;
   CompletionQueue cq;
   auto stub = CreateTestStub(cq);
   grpc::ClientContext context;
   auto response = stub->QueryWriteStatus(
       context, google::storage::v2::QueryWriteStatusRequest{});
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("QueryWriteStatus")));
 }
 
 }  // namespace
