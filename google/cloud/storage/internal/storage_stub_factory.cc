@@ -78,25 +78,31 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
 
 }  // namespace
 
-std::shared_ptr<StorageStub> CreateStorageStub(
-    google::cloud::CompletionQueue cq, Options const& options) {
-  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
-      std::move(cq), options);
-
+std::shared_ptr<StorageStub> CreateStorageStubRoundRobin(
+    Options const& options,
+    std::function<std::shared_ptr<StorageStub>(int)> child_factory) {
   std::vector<std::shared_ptr<StorageStub>> children(
       (std::max)(1, options.get<GrpcNumChannelsOption>()));
   int id = 0;
-  std::generate(children.begin(), children.end(), [&id, &auth, options] {
-    auto channel = CreateGrpcChannel(*auth, options, id++);
-    return MakeDefaultStorageStub(std::move(channel));
-  });
+  std::generate(children.begin(), children.end(),
+                [&id, &child_factory] { return child_factory(id++); });
+  return std::make_shared<StorageRoundRobin>(std::move(children));
+}
 
-  std::shared_ptr<StorageStub> stub =
-      std::make_shared<StorageRoundRobin>(std::move(children));
-
+std::shared_ptr<StorageStub> CreateDecoratedStubs(
+    google::cloud::CompletionQueue cq, Options const& options,
+    BaseStorageStubFactory const& base_factory) {
+  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
+      std::move(cq), options);
+  auto child_factory = [base_factory, &auth, options](int id) {
+    auto channel = CreateGrpcChannel(*auth, options, id);
+    return base_factory(std::move(channel));
+  };
+  auto stub = CreateStorageStubRoundRobin(options, std::move(child_factory));
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<StorageAuth>(std::move(auth), std::move(stub));
   }
+  // TODO(#7963) - add additional decorators here
   if (google::cloud::internal::Contains(options.get<TracingComponentsOption>(),
                                         "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
@@ -105,6 +111,14 @@ std::shared_ptr<StorageStub> CreateStorageStub(
         options.get<TracingComponentsOption>());
   }
   return stub;
+}
+
+std::shared_ptr<StorageStub> CreateStorageStub(
+    google::cloud::CompletionQueue cq, Options const& options) {
+  return CreateDecoratedStubs(std::move(cq), options,
+                              [](std::shared_ptr<grpc::Channel> c) {
+                                return MakeDefaultStorageStub(std::move(c));
+                              });
 }
 
 }  // namespace internal
