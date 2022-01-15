@@ -149,11 +149,20 @@ void CurlHandle::SetSocketCallback(SocketOptions const& options) {
   SetOption(CURLOPT_SOCKOPTFUNCTION, &CurlSetSocketOptions);
 }
 
-StatusOr<std::int32_t> CurlHandle::GetResponseCode() {
+std::int32_t CurlHandle::GetResponseCode() {
   long code;  // NOLINT(google-runtime-int)
+  // Retrieve the response code for a closed stream. The only way this call can
+  // fail indicates a bug in our code (or corrupted memory), the documentation
+  // for CURLINFO_RESPONSE_CODE:
+  //   https://curl.haxx.se/libcurl/c/CURLINFO_RESPONSE_CODE.html
+  // says:
+  //   Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION
+  //   if not.
+  // If the option is not supported then we cannot use HTTP at all in libcurl
+  // and the whole library would be unusable.
   auto e = curl_easy_getinfo(handle_.get(), CURLINFO_RESPONSE_CODE, &code);
   if (e == CURLE_OK) return static_cast<std::int32_t>(code);
-  return AsStatus(e, __func__);
+  google::cloud::internal::ThrowStatus(AsStatus(e, __func__));
 }
 
 std::string CurlHandle::GetPeer() {
