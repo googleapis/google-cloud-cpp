@@ -489,6 +489,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-videointelligence",
+    deps = [
+        "//google/cloud/videointelligence:google_cloud_cpp_videointelligence",
+    ],
+)
+
+cc_library(
+    name = "experimental-videointelligence_mocks",
+    deps = [
+        "//google/cloud/videointelligence:google_cloud_cpp_videointelligence_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-vision",
     deps = [
         "//google/cloud/vision:google_cloud_cpp_vision",

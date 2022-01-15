@@ -331,6 +331,14 @@ service {
   retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
 }
 
+# Video Intelligence
+service {
+  service_proto_path: "google/cloud/videointelligence/v1/video_intelligence.proto"
+  product_path: "google/cloud/videointelligence"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # Vision
 service {
   service_proto_path: "google/cloud/vision/v1/image_annotator.proto"
