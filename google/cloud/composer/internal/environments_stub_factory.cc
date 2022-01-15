@@ -26,6 +26,7 @@
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include <google/cloud/orchestration/airflow/service/v1/environments.grpc.pb.h>
 #include <memory>
 
 namespace google {

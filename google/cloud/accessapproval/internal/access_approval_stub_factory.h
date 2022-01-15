@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_INTERNAL_ACCESS_APPROVAL_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_INTERNAL_ACCESS_APPROVAL_STUB_FACTORY_H
 
-#include "google/cloud/accessapproval/access_approval_connection.h"
 #include "google/cloud/accessapproval/internal/access_approval_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"

@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_INTERNAL_API_GATEWAY_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_INTERNAL_API_GATEWAY_STUB_FACTORY_H
 
-#include "google/cloud/apigateway/api_gateway_connection.h"
 #include "google/cloud/apigateway/internal/api_gateway_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"

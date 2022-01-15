@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGETRANSFER_INTERNAL_STORAGE_TRANSFER_STUB_FACTORY_H
 
 #include "google/cloud/storagetransfer/internal/storage_transfer_stub.h"
-#include "google/cloud/storagetransfer/storage_transfer_connection.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"

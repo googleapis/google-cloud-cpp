@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_INTERNAL_WEB_SECURITY_SCANNER_STUB_FACTORY_H
 
 #include "google/cloud/websecurityscanner/internal/web_security_scanner_stub.h"
-#include "google/cloud/websecurityscanner/web_security_scanner_connection.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"

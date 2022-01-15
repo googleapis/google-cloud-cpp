@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_ORG_POLICY_STUB_FACTORY_H
 
 #include "google/cloud/resourcemanager/internal/org_policy_stub.h"
-#include "google/cloud/resourcemanager/org_policy_connection.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"

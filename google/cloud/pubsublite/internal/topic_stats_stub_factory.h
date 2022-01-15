@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_STATS_STUB_FACTORY_H
 
 #include "google/cloud/pubsublite/internal/topic_stats_stub.h"
-#include "google/cloud/pubsublite/topic_stats_connection.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"

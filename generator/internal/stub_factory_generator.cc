@@ -44,7 +44,7 @@ Status StubFactoryGenerator::GenerateHeader() {
 
   // includes
   HeaderPrint("\n");
-  HeaderLocalIncludes({vars("connection_header_path"), vars("stub_header_path"),
+  HeaderLocalIncludes({vars("stub_header_path"),
                        "google/cloud/completion_queue.h",
                        "google/cloud/credentials.h",
                        "google/cloud/internal/unified_grpc_credentials.h",
@@ -83,7 +83,7 @@ Status StubFactoryGenerator::GenerateCc() {
                    "google/cloud/grpc_options.h",
                    "google/cloud/internal/algorithm.h",
                    "google/cloud/options.h", "google/cloud/log.h"});
-  CcSystemIncludes({"memory"});
+  CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

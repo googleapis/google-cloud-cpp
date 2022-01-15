@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_GOLDEN_KITCHEN_SINK_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_GOLDEN_KITCHEN_SINK_STUB_FACTORY_H
 
-#include "generator/integration_tests/golden/golden_kitchen_sink_connection.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"

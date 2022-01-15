@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAMIGRATION_INTERNAL_DATA_MIGRATION_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAMIGRATION_INTERNAL_DATA_MIGRATION_STUB_FACTORY_H
 
-#include "google/cloud/datamigration/data_migration_connection.h"
 #include "google/cloud/datamigration/internal/data_migration_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"

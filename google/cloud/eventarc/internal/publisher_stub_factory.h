@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_INTERNAL_PUBLISHER_STUB_FACTORY_H
 
 #include "google/cloud/eventarc/internal/publisher_stub.h"
-#include "google/cloud/eventarc/publisher_connection.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"

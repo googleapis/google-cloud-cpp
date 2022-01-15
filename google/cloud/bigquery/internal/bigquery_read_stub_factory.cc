@@ -26,6 +26,7 @@
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include <google/cloud/bigquery/storage/v1/storage.grpc.pb.h>
 #include <memory>
 
 namespace google {

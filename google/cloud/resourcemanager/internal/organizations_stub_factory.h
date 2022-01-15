@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_ORGANIZATIONS_STUB_FACTORY_H
 
 #include "google/cloud/resourcemanager/internal/organizations_stub.h"
-#include "google/cloud/resourcemanager/organizations_connection.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"

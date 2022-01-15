@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_INTERNAL_DOMAIN_MAPPINGS_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_INTERNAL_DOMAIN_MAPPINGS_STUB_FACTORY_H
 
-#include "google/cloud/appengine/domain_mappings_connection.h"
 #include "google/cloud/appengine/internal/domain_mappings_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
