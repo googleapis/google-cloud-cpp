@@ -3,7 +3,7 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Video Intelligence API][cloud-service-docs], a service to detect objects,
+[Cloud Video Intelligence API][cloud-service], a service to detect objects,
 explicit content, and scene changes in videos. It also specifies the region for
 annotation and transcribes speech to text.
 
@@ -27,7 +27,8 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/video-intelligence
+[cloud-service]: https://cloud.google.com/video-intelligence
+[cloud-service-docs]: https://cloud.google.com/video-intelligence/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-videointelligence/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/videointelligence
 
