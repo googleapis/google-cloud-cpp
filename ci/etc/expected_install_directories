@@ -71,7 +71,6 @@
 ./include/google/cloud/orgpolicy
 ./include/google/cloud/orgpolicy/v2
 ./include/google/cloud/oslogin
-./include/google/cloud/oslogin/common
 ./include/google/cloud/oslogin/internal
 ./include/google/cloud/oslogin/mocks
 ./include/google/cloud/oslogin/v1
