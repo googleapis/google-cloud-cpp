@@ -8,6 +8,7 @@ google/cloud/accessapproval/quickstart/
 google/cloud/accesscontextmanager/quickstart/
 google/cloud/apigateway/quickstart/
 google/cloud/appengine/quickstart/
+google/cloud/asset/quickstart/
 google/cloud/assuredworkloads/quickstart/
 google/cloud/bigquery/quickstart/
 google/cloud/bigtable/quickstart/

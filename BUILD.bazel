@@ -77,6 +77,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-asset",
+    deps = [
+        "//google/cloud/asset:google_cloud_cpp_asset",
+    ],
+)
+
+cc_library(
+    name = "experimental-asset_mocks",
+    deps = [
+        "//google/cloud/asset:google_cloud_cpp_asset_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-assuredworkloads",
     deps = [
         "//google/cloud/assuredworkloads:google_cloud_cpp_assuredworkloads",
