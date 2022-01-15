@@ -652,19 +652,38 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     std::vector<std::pair<std::string, std::string>> const& vars) {
   std::vector<std::unique_ptr<GeneratorInterface>> code_generators;
   VarsDictionary service_vars = CreateServiceVars(*service, vars);
-  auto found = service_vars.find("omit_client");
-  if (found == service_vars.end() || found->second != "true") {
+  auto const omit_client = service_vars.find("omit_client");
+  if (omit_client == service_vars.end() || omit_client->second != "true") {
     code_generators.push_back(absl::make_unique<ClientGenerator>(
         service, service_vars, CreateMethodVars(*service, service_vars),
         context));
   }
+  auto const omit_connection = service_vars.find("omit_connection");
+  if (omit_connection == service_vars.end() ||
+      omit_connection->second != "true") {
+    code_generators.push_back(absl::make_unique<ConnectionGenerator>(
+        service, service_vars, CreateMethodVars(*service, service_vars),
+        context));
+    code_generators.push_back(absl::make_unique<IdempotencyPolicyGenerator>(
+        service, service_vars, CreateMethodVars(*service, service_vars),
+        context));
+    code_generators.push_back(absl::make_unique<MockConnectionGenerator>(
+        service, service_vars, CreateMethodVars(*service, service_vars),
+        context));
+    code_generators.push_back(absl::make_unique<OptionDefaultsGenerator>(
+        service, service_vars, CreateMethodVars(*service, service_vars),
+        context));
+    code_generators.push_back(absl::make_unique<OptionsGenerator>(
+        service, service_vars, CreateMethodVars(*service, service_vars),
+        context));
+    if (service_vars.find("retry_status_code_expression") !=
+        service_vars.end()) {
+      code_generators.push_back(absl::make_unique<RetryTraitsGenerator>(
+          service, service_vars, CreateMethodVars(*service, service_vars),
+          context));
+    }
+  }
   code_generators.push_back(absl::make_unique<AuthDecoratorGenerator>(
-      service, service_vars, CreateMethodVars(*service, service_vars),
-      context));
-  code_generators.push_back(absl::make_unique<ConnectionGenerator>(
-      service, service_vars, CreateMethodVars(*service, service_vars),
-      context));
-  code_generators.push_back(absl::make_unique<IdempotencyPolicyGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<LoggingDecoratorGenerator>(
@@ -673,20 +692,6 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   code_generators.push_back(absl::make_unique<MetadataDecoratorGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
-  code_generators.push_back(absl::make_unique<MockConnectionGenerator>(
-      service, service_vars, CreateMethodVars(*service, service_vars),
-      context));
-  code_generators.push_back(absl::make_unique<OptionDefaultsGenerator>(
-      service, service_vars, CreateMethodVars(*service, service_vars),
-      context));
-  code_generators.push_back(absl::make_unique<OptionsGenerator>(
-      service, service_vars, CreateMethodVars(*service, service_vars),
-      context));
-  if (service_vars.find("retry_status_code_expression") != service_vars.end()) {
-    code_generators.push_back(absl::make_unique<RetryTraitsGenerator>(
-        service, service_vars, CreateMethodVars(*service, service_vars),
-        context));
-  }
   code_generators.push_back(absl::make_unique<StubGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));

@@ -296,6 +296,14 @@ TEST(ProcessCommandLineArgs, ProcessOmitClient) {
   EXPECT_THAT(*result, Contains(Pair("omit_client", "true")));
 }
 
+TEST(ProcessCommandLineArgs, ProcessOmitConnection) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/spanner/"
+      ",omit_connection=true");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, Contains(Pair("omit_connection", "true")));
+}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud
