@@ -29,6 +29,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/appengine/logging/v1:logging_cc_grpc" \
       "@com_google_googleapis//google/appengine/legacy:legacy_cc_grpc"
   )"
+  ["asset"]="@com_google_googleapis//google/cloud/asset/v1:asset_proto"
   ["assuredworkloads"]="@com_google_googleapis//google/cloud/assuredworkloads/v1:assuredworkloads_proto"
   ["bigquery"]="$(
     printf ",%s" \
