@@ -683,6 +683,13 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
           context));
     }
   }
+  auto const omit_stub_factory = service_vars.find("omit_stub_factory");
+  if (omit_stub_factory == service_vars.end() ||
+      omit_stub_factory->second != "true") {
+    code_generators.push_back(absl::make_unique<StubFactoryGenerator>(
+        service, service_vars, CreateMethodVars(*service, service_vars),
+        context));
+  }
   code_generators.push_back(absl::make_unique<AuthDecoratorGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
@@ -693,9 +700,6 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<StubGenerator>(
-      service, service_vars, CreateMethodVars(*service, service_vars),
-      context));
-  code_generators.push_back(absl::make_unique<StubFactoryGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   return code_generators;
