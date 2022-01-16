@@ -23,8 +23,23 @@ source module ci/cloudbuild/builds/lib/integration.sh
 export CC=gcc
 export CXX=g++
 
+# Explicitly list the patterns that match hand-crafted code. Excluding the
+# generated code results in a longer list and more maintenance.
+instrumented_patterns=(
+  "/google/cloud:"
+  "/google/cloud/testing_util:"
+  "/google/cloud/bigtable[/:]"
+  "/google/cloud/examples[/:]"
+  "/google/cloud/pubsub[/:]"
+  "/google/cloud/spanner[/:]"
+  "/google/cloud/storage[/:]"
+  "/generator[/:]"
+)
+instrumentation_filter="$(printf ",%s" "${instrumented_patterns[@]}")"
+instrumentation_filter="${instrumentation_filter:1}"
+
 mapfile -t args < <(bazel::common_args)
-args+=("--instrumentation_filter=/google/cloud[/:],/generator[/:]")
+args+=("--instrumentation_filter=${instrumentation_filter}")
 args+=("--instrument_test_targets")
 bazel coverage "${args[@]}" --test_tag_filters=-integration-test ...
 GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
