@@ -70,6 +70,12 @@ message ServiceConfiguration {
   // file, add them using this field. This typically happens when an annotation
   // lists a type that is not defined in any of the imported proto files.
   repeated string additional_proto_files = 12;
+
+  // If set, the factory function for the `*Stub` class and its decorators is
+  // not generated. This is useful if the library requires a custom set of
+  // decorators, for example, Storage requires a round-robin decorator to get
+  // good performance.
+  bool omit_stub_factory = 14;
 }
 
 message GeneratorConfiguration {

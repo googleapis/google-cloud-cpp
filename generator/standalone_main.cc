@@ -215,6 +215,9 @@ int main(int argc, char** argv) {
     if (service.omit_connection()) {
       args.emplace_back("--cpp_codegen_opt=omit_connection=true");
     }
+    if (service.omit_stub_factory()) {
+      args.emplace_back("--cpp_codegen_opt=omit_stub_factory=true");
+    }
     args.emplace_back("--cpp_codegen_opt=service_endpoint_env_var=" +
                       service.service_endpoint_env_var());
     args.emplace_back("--cpp_codegen_opt=emulator_endpoint_env_var=" +
