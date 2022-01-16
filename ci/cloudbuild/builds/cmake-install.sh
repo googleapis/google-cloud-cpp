@@ -102,7 +102,6 @@ expected_dirs+=(
   ./include/google/cloud/texttospeech/v1
   # no gRPC services in google/cloud/workflows/type.
   ./include/google/cloud/workflows/type
-  ./include/google/devtools
   ./include/google/devtools/cloudtrace
   ./include/google/devtools/cloudtrace/v2
   ./include/google/iam/v1

@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Artifact Registry API][cloud-service-docs], a service to Store and manage build artifacts in a scalable and integrated service built on Google infrastructure.
+[Artifact Registry API][cloud-service-docs]. Store and manage build
+artifacts in a scalable and integrated service built on Google infrastructure.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/artifactregistry
+[cloud-service-docs]: https://cloud.google.com/artifact-registry
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-artifactregistry/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/artifactregistry
 
@@ -38,23 +39,23 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/artifactregistry/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/artifactregistry/artifact_registry_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace artifactregistry = ::google::cloud::artifactregistry;
-  auto client = artifactregistry::Client(
-      artifactregistry::MakeConnection(/* EDIT HERE */));
+  auto client = artifactregistry::ArtifactRegistryClient(
+      artifactregistry::MakeArtifactRegistryConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListRepositories(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

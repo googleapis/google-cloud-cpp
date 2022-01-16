@@ -77,6 +77,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-artifactregistry",
+    deps = [
+        "//google/cloud/artifactregistry:google_cloud_cpp_artifactregistry",
+    ],
+)
+
+cc_library(
+    name = "experimental-artifactregistry_mocks",
+    deps = [
+        "//google/cloud/artifactregistry:google_cloud_cpp_artifactregistry_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-assuredworkloads",
     deps = [
         "//google/cloud/assuredworkloads:google_cloud_cpp_assuredworkloads",
