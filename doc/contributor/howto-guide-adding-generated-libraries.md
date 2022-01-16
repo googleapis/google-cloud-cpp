@@ -174,8 +174,6 @@ Manually edit the following files:
 
 - `BUILD.bazel` to reference the new targets in `//google/cloud/${library}`.
   Initially prefix your targets with `:experimental-`.
-- `.bazelignore` to include the newest `google/cloud/${library}/quickstart/`
-  directory. The ubsan build fails otherwise.
 
 ## Fix formatting nits
 
