@@ -1,0 +1,3 @@
+@com_google_googleapis//google/devtools/artifactregistry/v1:artifact.proto
+@com_google_googleapis//google/devtools/artifactregistry/v1:repository.proto
+@com_google_googleapis//google/devtools/artifactregistry/v1:service.proto
