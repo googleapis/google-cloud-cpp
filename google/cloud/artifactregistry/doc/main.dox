@@ -2,8 +2,9 @@
 
 @mainpage Artifact Registry API C++ Client Library
 
-An idiomatic C++ client library for the [Artifact Registry API][cloud-service-docs], a service
-to Store and manage build artifacts in a scalable and integrated service built on Google infrastructure.
+An idiomatic C++ client library for the [Artifact Registry API][cloud-service-docs];
+store and manage build artifacts in a scalable and integrated service built on
+Google infrastructure.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
