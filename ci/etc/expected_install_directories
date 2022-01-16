@@ -21,6 +21,9 @@
 ./include/google/cloud/appengine
 ./include/google/cloud/appengine/internal
 ./include/google/cloud/appengine/mocks
+./include/google/cloud/artifactregistry
+./include/google/cloud/artifactregistry/internal
+./include/google/cloud/artifactregistry/mocks
 ./include/google/cloud/assuredworkloads
 ./include/google/cloud/assuredworkloads/internal
 ./include/google/cloud/assuredworkloads/mocks
@@ -149,6 +152,9 @@
 ./include/google/cloud/workflows/internal
 ./include/google/cloud/workflows/mocks
 ./include/google/cloud/workflows/v1
+./include/google/devtools
+./include/google/devtools/artifactregistry
+./include/google/devtools/artifactregistry/v1
 ./include/google/iam
 ./include/google/iam/admin
 ./include/google/iam/admin/v1
@@ -173,6 +179,7 @@
 ./lib64/cmake/google_cloud_cpp_accesscontextmanager
 ./lib64/cmake/google_cloud_cpp_apigateway
 ./lib64/cmake/google_cloud_cpp_appengine
+./lib64/cmake/google_cloud_cpp_artifactregistry
 ./lib64/cmake/google_cloud_cpp_assuredworkloads
 ./lib64/cmake/google_cloud_cpp_bigquery
 ./lib64/cmake/google_cloud_cpp_billing
