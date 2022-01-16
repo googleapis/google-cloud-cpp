@@ -209,6 +209,9 @@ endfunction ()
 set(external_googleapis_installed_libraries_list
     google_cloud_cpp_bigtable_protos
     google_cloud_cpp_cloud_bigquery_protos
+    google_cloud_cpp_cloud_orgpolicy_v1_orgpolicy_protos
+    google_cloud_cpp_cloud_osconfig_v1_osconfig_protos
+    google_cloud_cpp_identity_accesscontextmanager_v1_accesscontextmanager_protos
     google_cloud_cpp_cloud_speech_protos
     google_cloud_cpp_cloud_texttospeech_protos
     google_cloud_cpp_iam_protos
@@ -315,6 +318,72 @@ external_googleapis_add_library(
     "google/devtools/cloudtrace/v2/tracing.proto"
     devtools_cloudtrace_v2_trace_protos api_annotations_protos
     api_client_protos api_field_behavior_protos rpc_status_protos)
+
+google_cloud_cpp_load_protolist(cloud_orgpolicy_list "protolists/orgpolicy.list")
+google_cloud_cpp_load_protodeps(cloud_orgpolicy_deps "protodeps/orgpolicy.deps")
+google_cloud_cpp_grpcpp_library(
+    google_cloud_cpp_cloud_orgpolicy_v1_orgpolicy_protos ${cloud_orgpolicy_list}
+    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    "${PROTO_INCLUDE_DIR}")
+external_googleapis_set_version_and_alias(cloud_orgpolicy_v1_orgpolicy_protos)
+target_link_libraries(google_cloud_cpp_cloud_orgpolicy_v1_orgpolicy_protos
+                      PUBLIC ${cloud_orgpolicy_deps})
+
+google_cloud_cpp_load_protolist(cloud_osconfig_list "protolists/osconfig.list")
+google_cloud_cpp_load_protodeps(cloud_osconfig_deps "protodeps/osconfig.deps")
+google_cloud_cpp_grpcpp_library(
+    google_cloud_cpp_cloud_osconfig_v1_osconfig_protos ${cloud_osconfig_list}
+    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    "${PROTO_INCLUDE_DIR}")
+external_googleapis_set_version_and_alias(cloud_osconfig_v1_osconfig_protos)
+target_link_libraries(google_cloud_cpp_cloud_osconfig_v1_osconfig_protos
+                      PUBLIC ${cloud_osconfig_deps})
+
+google_cloud_cpp_grpcpp_library(
+    google_cloud_cpp_accesscontextmanager_protos
+    # cmake-format: sort
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/identity/accesscontextmanager/type/device_resources.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/identity/accesscontextmanager/v1/access_context_manager.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/identity/accesscontextmanager/v1/access_level.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/identity/accesscontextmanager/v1/access_policy.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/identity/accesscontextmanager/v1/service_perimeter.proto
+    PROTO_PATH_DIRECTORIES
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    "${PROTO_INCLUDE_DIR}")
+external_googleapis_set_version_and_alias(accesscontextmanager_protos)
+target_link_libraries(
+    google_cloud_cpp_accesscontextmanager_protos
+    PUBLIC #
+           google-cloud-cpp::api_annotations_protos
+           google-cloud-cpp::api_client_protos
+           google-cloud-cpp::api_field_behavior_protos
+           google-cloud-cpp::api_http_protos
+           google-cloud-cpp::api_resource_protos
+           google-cloud-cpp::longrunning_operations_protos
+           google-cloud-cpp::rpc_status_protos
+           google-cloud-cpp::type_expr_protos)
+
+#google_cloud_cpp_load_protolist(cloud_accesscontextmanager_list "protolists/accesscontextmanager.list")
+#google_cloud_cpp_load_protodeps(cloud_accesscontextmanager_deps "protodeps/accesscontextmanager.deps")
+#google_cloud_cpp_grpcpp_library(
+#    google_cloud_cpp_identity_accesscontextmanager_v1_accesscontextmanager_protos ${cloud_accesscontextmanager_list}
+#    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+#    "${PROTO_INCLUDE_DIR}")
+#external_googleapis_set_version_and_alias(identity_accesscontextmanager_v1_accesscontextmanager_protos)
+#target_link_libraries(google_cloud_cpp_identity_accesscontextmanager_v1_accesscontextmanager_protos
+#                      PUBLIC ${cloud_accesscontextmanager_deps})
+#
+#google_cloud_cpp_load_protolist(cloud_accesscontextmanager_TYP_list "protolists/accesscontextmanager.list")
+#google_cloud_cpp_load_protodeps(cloud_accesscontextmanager_deps "protodeps/accesscontextmanager.deps")
+#google_cloud_cpp_grpcpp_library(
+#    google_cloud_cpp_identity_accesscontextmanager_v1_accesscontextmanager_protos ${cloud_accesscontextmanager_list}
+#    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+#    "${PROTO_INCLUDE_DIR}")
+#external_googleapis_set_version_and_alias(identity_accesscontextmanager_v1_accesscontextmanager_protos)
+#target_link_libraries(google_cloud_cpp_identity_accesscontextmanager_v1_accesscontextmanager_protos
+#                      PUBLIC ${cloud_accesscontextmanager_deps})
+
 
 google_cloud_cpp_load_protolist(cloud_bigquery_list "protolists/bigquery.list")
 google_cloud_cpp_load_protodeps(cloud_bigquery_deps "protodeps/bigquery.deps")

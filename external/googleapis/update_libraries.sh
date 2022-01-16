@@ -73,6 +73,8 @@ declare -A -r LIBRARIES=(
   ["logging_type"]="@com_google_googleapis//google/logging/type:type_proto"
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_proto"
   ["monitoring"]="@com_google_googleapis//google/monitoring/v3:monitoring_proto"
+  ["orgpolicy"]="@com_google_googleapis//google/cloud/orgpolicy/v2:orgpolicy_proto"
+  ["osconfig"]="@com_google_googleapis//google/cloud/osconfig/v1:osconfig_proto"
   ["oslogin"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/oslogin/v1:oslogin_cc_grpc" \
