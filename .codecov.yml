@@ -5,44 +5,7 @@ coverage:
     project: off
     patch: off
 
-# Ignoring paths (see https://docs.codecov.com/docs/ignoring-paths)
-#
-# Ignore generated code, produced using...
-#   awk '/product_path:/ { print "  -", $2; }' \
-#     generator/generator_config.textproto | sort -u
-#
+# Ignore generated code that lives with handcrafted code.
 ignore:
-  - "google/cloud/accessapproval"
-  - "google/cloud/accesscontextmanager"
-  - "google/cloud/apigateway"
-  - "google/cloud/appengine"
-  - "google/cloud/assuredworkloads"
-  - "google/cloud/bigquery"
   - "google/cloud/bigtable/admin"
-  - "google/cloud/billing"
-  - "google/cloud/composer"
-  - "google/cloud/datamigration"
-  - "google/cloud/eventarc"
-  - "google/cloud/iam"
-  - "google/cloud/ids"
-  - "google/cloud/iot"
-  - "google/cloud/kms"
-  - "google/cloud/logging"
-  - "google/cloud/oslogin"
-  - "google/cloud/pubsublite"
-  - "google/cloud/recommender"
-  - "google/cloud/resourcemanager"
-  - "google/cloud/scheduler"
-  - "google/cloud/secretmanager"
-  - "google/cloud/shell"
   - "google/cloud/spanner/admin"
-  - "google/cloud/storagetransfer"
-  - "google/cloud/talent"
-  - "google/cloud/tasks"
-  - "google/cloud/videointelligence"
-  - "google/cloud/vision"
-  - "google/cloud/vmmigration"
-  - "google/cloud/vpcaccess"
-  - "google/cloud/webrisk"
-  - "google/cloud/websecurityscanner"
-  - "google/cloud/workflows"

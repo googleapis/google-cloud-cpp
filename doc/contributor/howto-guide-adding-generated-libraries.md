@@ -176,7 +176,6 @@ Manually edit the following files:
   Initially prefix your targets with `:experimental-`.
 - `.bazelignore` to include the newest `google/cloud/${library}/quickstart/`
   directory. The ubsan build fails otherwise.
-- `.codecov.yml` to exclude generated code from the code coverage reports.
 
 ## Fix formatting nits
 
