@@ -447,14 +447,14 @@ cc_library(
 )
 
 cc_library(
-    name = "storagetransfer",
+    name = "experimental-storagetransfer",
     deps = [
         "//google/cloud/storagetransfer:google_cloud_cpp_storagetransfer",
     ],
 )
 
 cc_library(
-    name = "storagetransfer_mocks",
+    name = "experimental-storagetransfer_mocks",
     deps = [
         "//google/cloud/storagetransfer:google_cloud_cpp_storagetransfer_mocks",
     ],
