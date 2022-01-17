@@ -22,9 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 class StorageRoundRobin : public StorageStub {
  public:
@@ -58,9 +57,8 @@ class StorageRoundRobin : public StorageStub {
   std::size_t current_ = 0;
 };
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 

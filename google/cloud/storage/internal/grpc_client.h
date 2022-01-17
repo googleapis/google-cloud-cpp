@@ -25,6 +25,13 @@
 
 namespace google {
 namespace cloud {
+
+namespace storage_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class StorageStub;
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace storage_internal
+
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
@@ -36,8 +43,6 @@ namespace internal {
  */
 Options DefaultOptionsGrpc(Options = {});
 
-class StorageStub;
-
 class GrpcClient : public RawClient,
                    public std::enable_shared_from_this<GrpcClient> {
  public:
@@ -46,7 +51,7 @@ class GrpcClient : public RawClient,
 
   // This is used to create a client from a mocked StorageStub.
   static std::shared_ptr<GrpcClient> CreateMock(
-      std::shared_ptr<StorageStub> stub, Options opts = {});
+      std::shared_ptr<storage_internal::StorageStub> stub, Options opts = {});
 
   ~GrpcClient() override = default;
 
@@ -183,13 +188,14 @@ class GrpcClient : public RawClient,
 
  protected:
   explicit GrpcClient(Options opts);
-  explicit GrpcClient(std::shared_ptr<StorageStub> stub, Options opts);
+  explicit GrpcClient(std::shared_ptr<storage_internal::StorageStub> stub,
+                      Options opts);
 
  private:
   Options options_;
   ClientOptions backwards_compatibility_options_;
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<StorageStub> stub_;
+  std::shared_ptr<google::cloud::storage_internal::StorageStub> stub_;
 };
 
 }  // namespace internal

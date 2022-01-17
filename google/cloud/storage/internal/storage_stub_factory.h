@@ -24,9 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 using BaseStorageStubFactory =
     std::function<std::shared_ptr<StorageStub>(std::shared_ptr<grpc::Channel>)>;
@@ -44,9 +43,8 @@ std::shared_ptr<StorageStub> CreateDecoratedStubs(
 std::shared_ptr<StorageStub> CreateStorageStub(
     google::cloud::CompletionQueue cq, Options const& options);
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -24,9 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 class StorageLogging : public StorageStub {
  public:
@@ -60,9 +59,8 @@ class StorageLogging : public StorageStub {
   std::set<std::string> components_;
 };  // StorageLogging
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -23,7 +23,7 @@ namespace cloud {
 namespace storage {
 namespace testing {
 
-class MockStorageStub : public internal::StorageStub {
+class MockStorageStub : public storage_internal::StorageStub {
  public:
   MOCK_METHOD(std::unique_ptr<google::cloud::internal::StreamingReadRpc<
                   google::storage::v2::ReadObjectResponse>>,
