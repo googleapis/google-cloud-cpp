@@ -41,7 +41,7 @@ using ::testing::Return;
 // The point of these tests is to verify that the `CreateStorageStub` factory
 // function injects the right decorators. We do this by observing the
 // side effects of these decorators. All the tests have nearly identical
-// structure. They create a fully decorated stub, configured to round-robing
+// structure. They create a fully decorated stub, configured to round-robin
 // over kTestChannel mocks.  The first mock expects a call, the remaining mocks
 // expect no calls.  Some of these side effects can only be verified as part of
 // the first mock.
