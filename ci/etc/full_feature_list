@@ -14,6 +14,7 @@ ids
 iot
 kms
 logging
+notebooks
 oslogin
 pubsublite
 recommender

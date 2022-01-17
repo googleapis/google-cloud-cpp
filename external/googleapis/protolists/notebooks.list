@@ -1,0 +1,9 @@
+@com_google_googleapis//google/cloud/notebooks/v1:environment.proto
+@com_google_googleapis//google/cloud/notebooks/v1:event.proto
+@com_google_googleapis//google/cloud/notebooks/v1:execution.proto
+@com_google_googleapis//google/cloud/notebooks/v1:instance.proto
+@com_google_googleapis//google/cloud/notebooks/v1:instance_config.proto
+@com_google_googleapis//google/cloud/notebooks/v1:managed_service.proto
+@com_google_googleapis//google/cloud/notebooks/v1:runtime.proto
+@com_google_googleapis//google/cloud/notebooks/v1:schedule.proto
+@com_google_googleapis//google/cloud/notebooks/v1:service.proto
