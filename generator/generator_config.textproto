@@ -195,6 +195,22 @@ service {
   retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
 }
 
+# Notebooks
+service {
+  service_proto_path: "google/cloud/notebooks/v1/service.proto"
+  product_path: "google/cloud/notebooks"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/notebooks/v1/managed_service.proto"
+  additional_proto_files: [ "google/cloud/notebooks/v1/service.proto" ]
+  product_path: "google/cloud/notebooks"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # OS Login
 service {
   service_proto_path: "google/cloud/oslogin/v1/oslogin.proto"
