@@ -20,6 +20,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
@@ -30,6 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
@@ -78,6 +80,10 @@ TEST(StorageStubFactory, ReadObject) {
                          google::storage::v2::ReadObjectRequest const&) {
               // Verify the Auth decorator is present
               EXPECT_THAT(context->credentials(), NotNull());
+              // Verify the Metadata decorator is present
+              EXPECT_STATUS_OK(IsContextMDValid(
+                  *context, "google.storage.v2.Storage.ReadObject",
+                  google::cloud::internal::ApiClientHeader("generator")));
               auto stream = absl::make_unique<testing::MockObjectMediaStream>();
               EXPECT_CALL(*stream, Read)
                   .WillOnce(
@@ -113,6 +119,10 @@ TEST(StorageStubFactory, WriteObject) {
             .WillOnce([](std::unique_ptr<grpc::ClientContext> context) {
               // Verify the Auth decorator is present
               EXPECT_THAT(context->credentials(), NotNull());
+              // Verify the Metadata decorator is present
+              EXPECT_STATUS_OK(IsContextMDValid(
+                  *context, "google.storage.v2.Storage.WriteObject",
+                  google::cloud::internal::ApiClientHeader("generator")));
               auto stream = absl::make_unique<testing::MockInsertStream>();
               EXPECT_CALL(*stream, Close)
                   .WillOnce(
@@ -149,6 +159,10 @@ TEST(StorageStubFactory, StartResumableWrite) {
                    google::storage::v2::StartResumableWriteRequest const&) {
                   // Verify the Auth decorator is present
                   EXPECT_THAT(context.credentials(), NotNull());
+                  // Verify the Metadata decorator is present
+                  EXPECT_STATUS_OK(IsContextMDValid(
+                      context, "google.storage.v2.Storage.StartResumableWrite",
+                      google::cloud::internal::ApiClientHeader("generator")));
                   return StatusOr<
                       google::storage::v2::StartResumableWriteResponse>(
                       Status(StatusCode::kUnavailable, "nothing here"));
@@ -182,6 +196,10 @@ TEST(StorageStubFactory, QueryWriteStatus) {
                          google::storage::v2::QueryWriteStatusRequest const&) {
               // Verify the Auth decorator is present
               EXPECT_THAT(context.credentials(), NotNull());
+              // Verify the Metadata decorator is present
+              EXPECT_STATUS_OK(IsContextMDValid(
+                  context, "google.storage.v2.Storage.QueryWriteStatus",
+                  google::cloud::internal::ApiClientHeader("generator")));
               return StatusOr<google::storage::v2::QueryWriteStatusResponse>(
                   Status(StatusCode::kUnavailable, "nothing here"));
             });
