@@ -57,7 +57,6 @@ build:ubsan --strip=never
 build:ubsan --copt=-Og
 build:ubsan --copt=-g
 build:ubsan --copt=-fsanitize=undefined
-build:ubsan --copt=-fno-sanitize=vptr
 build:ubsan --copt=-fno-omit-frame-pointer
 build:ubsan --linkopt=-fsanitize=undefined
 build:ubsan --linkopt=-fsanitize-link-c++-runtime

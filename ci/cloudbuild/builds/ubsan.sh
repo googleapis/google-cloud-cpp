@@ -23,8 +23,13 @@ source module ci/cloudbuild/builds/lib/integration.sh
 export CC=clang
 export CXX=clang++
 
+# With UBSAN builds we need to ignore the `quickstart` programs, see:
+#   https://github.com/bazelbuild/bazel/issues/11122
+deleted_packages="$(find google/cloud -type d -name quickstart | xargs printf ",%s")"
+
 mapfile -t args < <(bazel::common_args)
 args+=("--config=ubsan")
+args+=("--deleted_packages=${deleted_packages:1}")
 bazel test "${args[@]}" --test_tag_filters=-integration-test ...
 
 mapfile -t integration_args < <(integration::bazel_args)
