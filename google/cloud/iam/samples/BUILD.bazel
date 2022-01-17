@@ -42,7 +42,7 @@ load(":iam_client_mock_samples.bzl", "iam_client_mock_samples")
     srcs = [test],
     deps = [
         "//:iam",
-        "//:iam-mocks",
+        "//:iam_mocks",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
