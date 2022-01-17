@@ -265,6 +265,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-notebooks",
+    deps = [
+        "//google/cloud/notebooks:google_cloud_cpp_notebooks",
+    ],
+)
+
+cc_library(
+    name = "experimental-notebooks_mocks",
+    deps = [
+        "//google/cloud/notebooks:google_cloud_cpp_notebooks_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-oslogin",
     deps = [
         "//google/cloud/oslogin:google_cloud_cpp_oslogin",

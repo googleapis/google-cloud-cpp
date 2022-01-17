@@ -2,8 +2,9 @@
 
 @mainpage Notebooks API C++ Client Library
 
-An idiomatic C++ client library for the [Notebooks API][cloud-service-docs], a service
-to Notebooks API is used to manage notebook resources in Google Cloud.
+An idiomatic C++ client library for the [Notebooks API][cloud-service-docs].
+Use this API to programmatically manage notebooks in Google Cloud. Learn
+more about notebooks at the [Vertex AI Workbench] site.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +82,8 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/notebooks
+[cloud-service-docs]: https://cloud.google.com/vertex-ai/docs/workbench
+[Vertex AI Workbench]: https://cloud.google.com/vertex-ai-workbench
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

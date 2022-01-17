@@ -3,7 +3,9 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Notebooks API][cloud-service-docs], a service to Notebooks API is used to manage notebook resources in Google Cloud.
+[Notebooks API][cloud-service-docs]. Use this API to programmatically manage
+notebooks in Google Cloud. Learn more about notebooks at the
+[Vertex AI Workbench] site.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -26,6 +28,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 * Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-service-docs]: https://cloud.google.com/notebooks
+[Vertex AI Workbench]: https://cloud.google.com/vertex-ai-workbench
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-notebooks/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/notebooks
 
@@ -38,22 +41,23 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/notebooks/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/notebooks/managed_notebook_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace notebooks = ::google::cloud::notebooks;
-  auto client = notebooks::Client(notebooks::MakeConnection(/* EDIT HERE */));
+  auto client = notebooks::ManagedNotebookServiceClient(
+      notebooks::MakeManagedNotebookServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListRuntimes(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
