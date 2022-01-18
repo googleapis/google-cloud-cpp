@@ -7,6 +7,7 @@ assuredworkloads
 automl
 bigquery
 billing
+cloudbuild
 composer
 datamigration
 eventarc
