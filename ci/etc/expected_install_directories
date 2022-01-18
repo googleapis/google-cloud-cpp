@@ -126,6 +126,10 @@
 ./include/google/cloud/tasks/internal
 ./include/google/cloud/tasks/mocks
 ./include/google/cloud/tasks/v2
+./include/google/cloud/translate
+./include/google/cloud/translate/internal
+./include/google/cloud/translate/mocks
+./include/google/cloud/translate/v3
 ./include/google/cloud/videointelligence
 ./include/google/cloud/videointelligence/internal
 ./include/google/cloud/videointelligence/mocks
@@ -206,6 +210,7 @@
 ./lib64/cmake/google_cloud_cpp_storagetransfer
 ./lib64/cmake/google_cloud_cpp_talent
 ./lib64/cmake/google_cloud_cpp_tasks
+./lib64/cmake/google_cloud_cpp_translate
 ./lib64/cmake/google_cloud_cpp_videointelligence
 ./lib64/cmake/google_cloud_cpp_vision
 ./lib64/cmake/google_cloud_cpp_vmmigration
