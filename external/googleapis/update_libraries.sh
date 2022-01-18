@@ -53,6 +53,7 @@ declare -A -r LIBRARIES=(
   )"
   ["cloudbuild"]="@com_google_googleapis//google/devtools/cloudbuild/v1:cloudbuild_cc_grpc"
   ["composer"]="@com_google_googleapis//google/cloud/orchestration/airflow/service/v1:service_cc_grpc"
+  ["container"]="@com_google_googleapis//google/container/v1:container_cc_grpc"
   ["datamigration"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/clouddms/v1:clouddms_cc_grpc" \

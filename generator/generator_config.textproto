@@ -163,6 +163,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Container
+service {
+  service_proto_path: "google/container/v1/cluster_service.proto"
+  product_path: "google/cloud/container"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # Database Migration
 service {
   service_proto_path: "google/cloud/clouddms/v1/clouddms.proto"
