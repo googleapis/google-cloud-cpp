@@ -242,6 +242,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-container",
+    deps = [
+        "//google/cloud/container:google_cloud_cpp_container",
+    ],
+)
+
+cc_library(
+    name = "experimental-container_mocks",
+    deps = [
+        "//google/cloud/container:google_cloud_cpp_container_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-containeranalysis",
     deps = [
         "//google/cloud/containeranalysis:google_cloud_cpp_containeranalysis",
