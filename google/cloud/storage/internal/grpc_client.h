@@ -195,7 +195,7 @@ class GrpcClient : public RawClient,
   Options options_;
   ClientOptions backwards_compatibility_options_;
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<google::cloud::storage_internal::StorageStub> stub_;
+  std::shared_ptr<storage_internal::StorageStub> stub_;
 };
 
 }  // namespace internal
