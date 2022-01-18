@@ -33,13 +33,8 @@ bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
 # TODO(#5821): The generator should run clang-format on its output files itself
 # so we don't need this extra step.
 io::log_h2 "Formatting generated code"
-find google/cloud -path google/cloud/examples -prune -o \
-  -path google/cloud/grpc_utils -prune -o \
-  -path google/cloud/internal -prune -o \
-  -path google/cloud/pubsub -prune -o \
-  -path google/cloud/storage -prune -o \
-  -path google/cloud/testing_util -prune -o \
-  \( -name '*.cc' -o -name '*.h' \) -exec clang-format -i {} \;
+git ls-files -z | grep -zE '\.(cc|h)$' |
+  xargs -P "$(nproc)" -n 1 -0 clang-format -i
 
 # This build should fail if any generated files differ from what was checked
 # in. We only look in the google/ directory so that the build doesn't fail if
