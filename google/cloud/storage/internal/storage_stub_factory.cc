@@ -27,10 +27,10 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
+
 auto constexpr kDirectPathConfig = R"json({
     "loadBalancingConfig": [{
       "grpclb": {
@@ -123,8 +123,7 @@ std::shared_ptr<StorageStub> CreateStorageStub(
       });
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

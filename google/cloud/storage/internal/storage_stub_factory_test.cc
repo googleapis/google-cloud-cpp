@@ -26,11 +26,13 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
+using ::google::cloud::storage::testing::MockInsertStream;
+using ::google::cloud::storage::testing::MockObjectMediaStream;
+using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
@@ -74,7 +76,7 @@ TEST(StorageStubFactory, ReadObject) {
   MockFactory factory;
   EXPECT_CALL(factory, Call)
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
-        auto mock = std::make_shared<testing::MockStorageStub>();
+        auto mock = std::make_shared<MockStorageStub>();
         EXPECT_CALL(*mock, ReadObject)
             .WillOnce([](std::unique_ptr<grpc::ClientContext> context,
                          google::storage::v2::ReadObjectRequest const&) {
@@ -84,7 +86,7 @@ TEST(StorageStubFactory, ReadObject) {
               EXPECT_STATUS_OK(IsContextMDValid(
                   *context, "google.storage.v2.Storage.ReadObject",
                   google::cloud::internal::ApiClientHeader("generator")));
-              auto stream = absl::make_unique<testing::MockObjectMediaStream>();
+              auto stream = absl::make_unique<MockObjectMediaStream>();
               EXPECT_CALL(*stream, Read)
                   .WillOnce(
                       Return(Status(StatusCode::kUnavailable, "nothing here")));
@@ -95,7 +97,7 @@ TEST(StorageStubFactory, ReadObject) {
   EXPECT_CALL(factory, Call)
       .Times(kTestChannels - 1)
       .WillRepeatedly([](std::shared_ptr<grpc::Channel> const&) {
-        return std::make_shared<testing::MockStorageStub>();
+        return std::make_shared<MockStorageStub>();
       });
 
   ScopedLog log;
@@ -114,7 +116,7 @@ TEST(StorageStubFactory, WriteObject) {
   MockFactory factory;
   EXPECT_CALL(factory, Call)
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
-        auto mock = std::make_shared<testing::MockStorageStub>();
+        auto mock = std::make_shared<MockStorageStub>();
         EXPECT_CALL(*mock, WriteObject)
             .WillOnce([](std::unique_ptr<grpc::ClientContext> context) {
               // Verify the Auth decorator is present
@@ -123,7 +125,7 @@ TEST(StorageStubFactory, WriteObject) {
               EXPECT_STATUS_OK(IsContextMDValid(
                   *context, "google.storage.v2.Storage.WriteObject",
                   google::cloud::internal::ApiClientHeader("generator")));
-              auto stream = absl::make_unique<testing::MockInsertStream>();
+              auto stream = absl::make_unique<MockInsertStream>();
               EXPECT_CALL(*stream, Close)
                   .WillOnce(
                       Return(StatusOr<google::storage::v2::WriteObjectResponse>(
@@ -135,7 +137,7 @@ TEST(StorageStubFactory, WriteObject) {
   EXPECT_CALL(factory, Call)
       .Times(kTestChannels - 1)
       .WillRepeatedly([](std::shared_ptr<grpc::Channel> const&) {
-        return std::make_shared<testing::MockStorageStub>();
+        return std::make_shared<MockStorageStub>();
       });
 
   ScopedLog log;
@@ -152,7 +154,7 @@ TEST(StorageStubFactory, StartResumableWrite) {
   MockFactory factory;
   EXPECT_CALL(factory, Call)
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
-        auto mock = std::make_shared<testing::MockStorageStub>();
+        auto mock = std::make_shared<MockStorageStub>();
         EXPECT_CALL(*mock, StartResumableWrite)
             .WillOnce(
                 [](grpc::ClientContext& context,
@@ -172,7 +174,7 @@ TEST(StorageStubFactory, StartResumableWrite) {
   EXPECT_CALL(factory, Call)
       .Times(kTestChannels - 1)
       .WillRepeatedly([](std::shared_ptr<grpc::Channel> const&) {
-        return std::make_shared<testing::MockStorageStub>();
+        return std::make_shared<MockStorageStub>();
       });
 
   ScopedLog log;
@@ -190,7 +192,7 @@ TEST(StorageStubFactory, QueryWriteStatus) {
   MockFactory factory;
   EXPECT_CALL(factory, Call)
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
-        auto mock = std::make_shared<testing::MockStorageStub>();
+        auto mock = std::make_shared<MockStorageStub>();
         EXPECT_CALL(*mock, QueryWriteStatus)
             .WillOnce([](grpc::ClientContext& context,
                          google::storage::v2::QueryWriteStatusRequest const&) {
@@ -208,7 +210,7 @@ TEST(StorageStubFactory, QueryWriteStatus) {
   EXPECT_CALL(factory, Call)
       .Times(kTestChannels - 1)
       .WillRepeatedly([](std::shared_ptr<grpc::Channel> const&) {
-        return std::make_shared<testing::MockStorageStub>();
+        return std::make_shared<MockStorageStub>();
       });
 
   ScopedLog log;
@@ -222,8 +224,7 @@ TEST(StorageStubFactory, QueryWriteStatus) {
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

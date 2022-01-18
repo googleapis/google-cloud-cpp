@@ -77,7 +77,7 @@ std::shared_ptr<GrpcClient> GrpcClient::Create(Options opts) {
 }
 
 std::shared_ptr<GrpcClient> GrpcClient::CreateMock(
-    std::shared_ptr<StorageStub> stub, Options opts) {
+    std::shared_ptr<storage_internal::StorageStub> stub, Options opts) {
   return std::shared_ptr<GrpcClient>(
       new GrpcClient(std::move(stub), DefaultOptionsGrpc(std::move(opts))));
 }
@@ -87,9 +87,10 @@ GrpcClient::GrpcClient(Options opts)
       backwards_compatibility_options_(
           MakeBackwardsCompatibleClientOptions(options_)),
       background_(MakeBackgroundThreadsFactory(options_)()),
-      stub_(CreateStorageStub(background_->cq(), options_)) {}
+      stub_(storage_internal::CreateStorageStub(background_->cq(), options_)) {}
 
-GrpcClient::GrpcClient(std::shared_ptr<StorageStub> stub, Options opts)
+GrpcClient::GrpcClient(std::shared_ptr<storage_internal::StorageStub> stub,
+                       Options opts)
     : options_(std::move(opts)),
       backwards_compatibility_options_(
           MakeBackwardsCompatibleClientOptions(options_)),
