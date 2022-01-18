@@ -395,6 +395,14 @@ service {
   retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
 }
 
+# Translate
+service {
+  service_proto_path: "google/cloud/translate/v3/translation_service.proto"
+  product_path: "google/cloud/translate"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # Video Intelligence
 service {
   service_proto_path: "google/cloud/videointelligence/v1/video_intelligence.proto"
