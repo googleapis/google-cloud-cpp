@@ -213,5 +213,5 @@ index c4ce00489..1858b48dc 100755
 
 ```shell
 git commit -m"Manually update READMEs, quickstart, and top-level stuff" \
-   "google/cloud/${library}" BUILD.bazel ci 
+   "google/cloud/${library}" BUILD.bazel ci
 ```
