@@ -46,17 +46,17 @@ index cdaa0bc9f..b0381d72d 100755
 --- a/external/googleapis/update_libraries.sh
 +++ b/external/googleapis/update_libraries.sh
 @@ -40,6 +40,11 @@ declare -A -r LIBRARIES=(
-   ["logging"]="@com_google_googleapis//google/logging/v2:logging_proto"
-   ["monitoring"]="@com_google_googleapis//google/monitoring/v3:monitoring_proto"
-   ["pubsub"]="@com_google_googleapis//google/pubsub/v1:pubsub_proto"
+   ["logging"]="@com_google_googleapis//google/logging/v2:logging_cc_grpc"
+   ["monitoring"]="@com_google_googleapis//google/monitoring/v3:monitoring_cc_grpc"
+   ["pubsub"]="@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc"
 +  ["secretmanager"]="$(
 +    printf ",%s" \
-+      "@com_google_googleapis//google/cloud/secretmanager/v1:secretmanager_proto" \
-+      "@com_google_googleapis//google/cloud/secretmanager/logging/v1:logging_proto"
++      "@com_google_googleapis//google/cloud/secretmanager/v1:secretmanager_cc_grpc" \
++      "@com_google_googleapis//google/cloud/secretmanager/logging/v1:logging_cc_grpc"
 +  )"
    ["spanner"]="$(
      printf ",%s" \
-       "@com_google_googleapis//google/spanner/v1:spanner_proto" \
+       "@com_google_googleapis//google/spanner/v1:spanner_cc_grpc" \
 ```
 
 ## Update the Generator Configuration
@@ -184,12 +184,13 @@ ci/cloudbuild/build.sh -t checkers-pr
 ## Verify everything compiles
 
 ```shell
+bazel build //google/cloud/${library}/...
 ci/cloudbuild/build.sh -t cmake-install-pr
-ci/cloudbuild/build.sh -t bazel-targets-pr
 ```
 
-It is somewhat common for the build to fail due to expected install directories.
-If this happens, make an edit to `cmake-install.sh`. For example:
+It is somewhat common for the `cmake-install` build to fail due to expected
+install directories. If this happens, make an edit to `cmake-install.sh`. For
+example:
 
 ```diff
 diff --git a/ci/cloudbuild/builds/cmake-install.sh b/ci/cloudbuild/builds/cmake-install.sh
@@ -212,6 +213,5 @@ index c4ce00489..1858b48dc 100755
 
 ```shell
 git commit -m"Manually update READMEs, quickstart, and top-level stuff" \
-  "google/cloud/${library}" \
-  BUILD.bazel .codecov.yml .bazelignore
+   "google/cloud/${library}" BUILD.bazel ci
 ```
