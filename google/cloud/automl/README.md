@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud AutoML API][cloud-service-docs], a service to Train high-quality custom machine learning models with minimum effort and machine learning expertise.
+[Cloud AutoML API][cloud-service-docs], a service to train high-quality custom
+machine learning models with minimum effort and machine learning expertise.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -38,24 +39,24 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/automl/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/automl/auto_ml_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace automl = ::google::cloud::automl;
-  auto client = automl::Client(automl::MakeConnection(/* EDIT HERE */));
+  auto client = automl::AutoMlClient(automl::MakeAutoMlConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto m : client.ListModels(parent)) {
+    if (!m) throw std::runtime_error(m.status().message());
+    std::cout << m->DebugString() << "\n";
   }
 
   return 0;

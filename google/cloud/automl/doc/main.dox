@@ -2,8 +2,9 @@
 
 @mainpage Cloud AutoML API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud AutoML API][cloud-service-docs], a service
-to Train high-quality custom machine learning models with minimum effort and machine learning expertise.
+An idiomatic C++ client library for the [Cloud AutoML API][cloud-service-docs],
+a service to train high-quality custom machine learning models with minimum
+effort and machine learning expertise.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
