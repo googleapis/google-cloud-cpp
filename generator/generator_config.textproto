@@ -129,6 +129,14 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Cloud Build
+service {
+  service_proto_path: "google/devtools/cloudbuild/v1/cloudbuild.proto"
+  product_path: "google/cloud/cloudbuild"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # Composer
 service {
   service_proto_path: "google/cloud/orchestration/airflow/service/v1/environments.proto"
