@@ -101,12 +101,14 @@ int WriteInstallDirectories(
          Parents("./include/" + Dirname(service.service_proto_path()))) {
       install_directories.push_back(p);
     }
-    // Bigtable and Spanner use a custom path for generated code.
     auto const lib = google::cloud::generator_internal::LibraryName(service);
-    if (lib != "admin") {
+    // Bigtable and Spanner use a custom path for generated code.
+    if (lib == "admin") continue;
+    // Services without a connection do not create mocks.
+    if (!service.omit_connection()) {
       install_directories.push_back("./include/" + product_path + "/mocks");
-      install_directories.push_back("./lib64/cmake/google_cloud_cpp_" + lib);
     }
+    install_directories.push_back("./lib64/cmake/google_cloud_cpp_" + lib);
   }
   std::sort(install_directories.begin(), install_directories.end());
   auto end =
