@@ -23,68 +23,50 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-namespace {
 
-class StorageStubImpl : public StorageStub {
- public:
-  explicit StorageStubImpl(
-      std::unique_ptr<google::storage::v2::Storage::StubInterface> impl)
-      : impl_(std::move(impl)) {}
-  ~StorageStubImpl() override = default;
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::storage::v2::ReadObjectResponse>>
+DefaultStorageStub::ReadObject(
+    std::unique_ptr<grpc::ClientContext> context,
+    google::storage::v2::ReadObjectRequest const& request) {
+  using ::google::cloud::internal::StreamingReadRpcImpl;
+  auto stream = grpc_stub_->ReadObject(context.get(), request);
+  return absl::make_unique<
+      StreamingReadRpcImpl<google::storage::v2::ReadObjectResponse>>(
+      std::move(context), std::move(stream));
+}
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-      google::storage::v2::ReadObjectResponse>>
-  ReadObject(std::unique_ptr<grpc::ClientContext> context,
-             google::storage::v2::ReadObjectRequest const& request) override {
-    using ::google::cloud::internal::StreamingReadRpcImpl;
-    auto stream = impl_->ReadObject(context.get(), request);
-    return absl::make_unique<
-        StreamingReadRpcImpl<google::storage::v2::ReadObjectResponse>>(
-        std::move(context), std::move(stream));
-  }
+std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
+    google::storage::v2::WriteObjectRequest,
+    google::storage::v2::WriteObjectResponse>>
+DefaultStorageStub::WriteObject(std::unique_ptr<grpc::ClientContext> context) {
+  using ::google::cloud::internal::StreamingWriteRpcImpl;
+  using ResponseType = ::google::storage::v2::WriteObjectResponse;
+  using RequestType = ::google::storage::v2::WriteObjectRequest;
+  auto response = absl::make_unique<ResponseType>();
+  auto stream = grpc_stub_->WriteObject(context.get(), response.get());
+  return absl::make_unique<StreamingWriteRpcImpl<RequestType, ResponseType>>(
+      std::move(context), std::move(response), std::move(stream));
+}
 
-  std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
-      google::storage::v2::WriteObjectRequest,
-      google::storage::v2::WriteObjectResponse>>
-  WriteObject(std::unique_ptr<grpc::ClientContext> context) override {
-    using ::google::cloud::internal::StreamingWriteRpcImpl;
-    using ResponseType = ::google::storage::v2::WriteObjectResponse;
-    using RequestType = ::google::storage::v2::WriteObjectRequest;
-    auto response = absl::make_unique<ResponseType>();
-    auto stream = impl_->WriteObject(context.get(), response.get());
-    return absl::make_unique<StreamingWriteRpcImpl<RequestType, ResponseType>>(
-        std::move(context), std::move(response), std::move(stream));
-  }
+StatusOr<google::storage::v2::StartResumableWriteResponse>
+DefaultStorageStub::StartResumableWrite(
+    grpc::ClientContext& context,
+    google::storage::v2::StartResumableWriteRequest const& request) {
+  google::storage::v2::StartResumableWriteResponse response;
+  auto status = grpc_stub_->StartResumableWrite(&context, request, &response);
+  if (!status.ok()) return MakeStatusFromRpcError(status);
+  return response;
+}
 
-  StatusOr<google::storage::v2::StartResumableWriteResponse>
-  StartResumableWrite(
-      grpc::ClientContext& context,
-      google::storage::v2::StartResumableWriteRequest const& request) override {
-    google::storage::v2::StartResumableWriteResponse response;
-    auto status = impl_->StartResumableWrite(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
-  StatusOr<google::storage::v2::QueryWriteStatusResponse> QueryWriteStatus(
-      grpc::ClientContext& context,
-      google::storage::v2::QueryWriteStatusRequest const& request) override {
-    google::storage::v2::QueryWriteStatusResponse response;
-    auto status = impl_->QueryWriteStatus(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
- private:
-  std::unique_ptr<google::storage::v2::Storage::StubInterface> impl_;
-};
-
-}  // namespace
-
-std::shared_ptr<StorageStub> MakeDefaultStorageStub(
-    std::shared_ptr<grpc::Channel> channel) {
-  return std::make_shared<StorageStubImpl>(
-      google::storage::v2::Storage::NewStub(std::move(channel)));
+StatusOr<google::storage::v2::QueryWriteStatusResponse>
+DefaultStorageStub::QueryWriteStatus(
+    grpc::ClientContext& context,
+    google::storage::v2::QueryWriteStatusRequest const& request) {
+  google::storage::v2::QueryWriteStatusResponse response;
+  auto status = grpc_stub_->QueryWriteStatus(&context, request, &response);
+  if (!status.ok()) return MakeStatusFromRpcError(status);
+  return response;
 }
 
 }  // namespace internal

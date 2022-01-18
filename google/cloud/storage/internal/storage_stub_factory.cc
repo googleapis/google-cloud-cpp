@@ -116,10 +116,11 @@ std::shared_ptr<StorageStub> CreateDecoratedStubs(
 
 std::shared_ptr<StorageStub> CreateStorageStub(
     google::cloud::CompletionQueue cq, Options const& options) {
-  return CreateDecoratedStubs(std::move(cq), options,
-                              [](std::shared_ptr<grpc::Channel> c) {
-                                return MakeDefaultStorageStub(std::move(c));
-                              });
+  return CreateDecoratedStubs(
+      std::move(cq), options, [](std::shared_ptr<grpc::Channel> c) {
+        return std::make_shared<DefaultStorageStub>(
+            google::storage::v2::Storage::NewStub(std::move(c)));
+      });
 }
 
 }  // namespace internal
