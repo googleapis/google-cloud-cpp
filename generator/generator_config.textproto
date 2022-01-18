@@ -171,6 +171,14 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# IAM Policy Troubleshooter
+service {
+  service_proto_path: "google/cloud/policytroubleshooter/v1/checker.proto"
+  product_path: "google/cloud/policytroubleshooter"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # IDS (Cloud Intrusion Detection System)
 service {
   service_proto_path: "google/cloud/ids/v1/ids.proto"
