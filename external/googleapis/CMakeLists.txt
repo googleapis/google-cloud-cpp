@@ -25,6 +25,7 @@ set(EXTERNAL_GOOGLEAPIS_SOURCE
 
 set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/api/http.proto"
+    "google/api/httpbody.proto"
     "google/api/annotations.proto"
     "google/api/auth.proto"
     "google/api/client.proto"
@@ -217,6 +218,7 @@ set(external_googleapis_installed_libraries_list
     google_cloud_cpp_storage_protos
     google_cloud_cpp_longrunning_operations_protos
     google_cloud_cpp_api_http_protos
+    google_cloud_cpp_api_httpbody_protos
     google_cloud_cpp_api_annotations_protos
     google_cloud_cpp_api_auth_protos
     google_cloud_cpp_api_client_protos
@@ -255,6 +257,7 @@ set(external_googleapis_installed_libraries_list
     google_cloud_cpp_type_timeofday_protos)
 
 external_googleapis_add_library("google/api/http.proto")
+external_googleapis_add_library("google/api/httpbody.proto")
 external_googleapis_add_library("google/api/metric.proto"
                                 api_launch_stage_protos api_label_protos)
 external_googleapis_add_library("google/api/monitored_resource.proto"
@@ -523,6 +526,7 @@ string(
            " google_cloud_cpp_api_client_protos"
            " google_cloud_cpp_api_field_behavior_protos"
            " google_cloud_cpp_api_http_protos"
+           " google_cloud_cpp_api_httpbody_protos"
            " google_cloud_cpp_rpc_status_protos"
            " google_cloud_cpp_rpc_error_details_protos"
            " google_cloud_cpp_type_expr_protos"
