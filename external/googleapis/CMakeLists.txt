@@ -526,7 +526,6 @@ string(
            " google_cloud_cpp_api_client_protos"
            " google_cloud_cpp_api_field_behavior_protos"
            " google_cloud_cpp_api_http_protos"
-           " google_cloud_cpp_api_httpbody_protos"
            " google_cloud_cpp_rpc_status_protos"
            " google_cloud_cpp_rpc_error_details_protos"
            " google_cloud_cpp_type_expr_protos"
