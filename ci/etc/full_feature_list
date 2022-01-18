@@ -9,6 +9,7 @@ bigquery
 billing
 cloudbuild
 composer
+container
 datamigration
 dlp
 eventarc
