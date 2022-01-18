@@ -12,6 +12,7 @@ binaryauthorization
 channel
 cloudbuild
 composer
+container
 containeranalysis
 datamigration
 debugger

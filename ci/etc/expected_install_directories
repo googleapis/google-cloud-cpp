@@ -73,6 +73,9 @@
 ./include/google/cloud/composer
 ./include/google/cloud/composer/internal
 ./include/google/cloud/composer/mocks
+./include/google/cloud/container
+./include/google/cloud/container/internal
+./include/google/cloud/container/mocks
 ./include/google/cloud/containeranalysis
 ./include/google/cloud/containeranalysis/internal
 ./include/google/cloud/containeranalysis/mocks
@@ -275,6 +278,8 @@
 ./include/google/cloud/workflows/internal
 ./include/google/cloud/workflows/mocks
 ./include/google/cloud/workflows/v1
+./include/google/container
+./include/google/container/v1
 ./include/google/devtools
 ./include/google/devtools/artifactregistry
 ./include/google/devtools/artifactregistry/v1
@@ -331,6 +336,7 @@
 ./lib64/cmake/google_cloud_cpp_channel
 ./lib64/cmake/google_cloud_cpp_cloudbuild
 ./lib64/cmake/google_cloud_cpp_composer
+./lib64/cmake/google_cloud_cpp_container
 ./lib64/cmake/google_cloud_cpp_containeranalysis
 ./lib64/cmake/google_cloud_cpp_datamigration
 ./lib64/cmake/google_cloud_cpp_debugger
