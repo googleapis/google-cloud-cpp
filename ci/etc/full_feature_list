@@ -4,6 +4,7 @@ apigateway
 appengine
 artifactregistry
 assuredworkloads
+automl
 bigquery
 billing
 composer
