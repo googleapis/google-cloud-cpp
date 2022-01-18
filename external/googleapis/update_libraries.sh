@@ -110,6 +110,7 @@ declare -A -r LIBRARIES=(
   ["talent"]="@com_google_googleapis//google/cloud/talent/v4:talent_proto"
   ["tasks"]="@com_google_googleapis//google/cloud/tasks/v2:tasks_proto"
   ["texttospeech"]="@com_google_googleapis//google/cloud/texttospeech/v1:texttospeech_proto"
+  ["translate"]="@com_google_googleapis//google/cloud/translate/v3:translation_cc_grpc"
   ["videointelligence"]="@com_google_googleapis//google/cloud/videointelligence/v1:videointelligence_cc_grpc"
   ["vision"]="@com_google_googleapis//google/cloud/vision/v1:vision_cc_grpc"
   ["vmmigration"]="@com_google_googleapis//google/cloud/vmmigration/v1:vmmigration_proto"
