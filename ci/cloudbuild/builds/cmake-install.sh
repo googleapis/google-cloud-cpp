@@ -134,9 +134,6 @@ expected_dirs+=(
   ./lib64/pkgconfig
 )
 
-# Assume a successful exit. Any test can set this to 1 to indicate failure.
-exit_code=0
-
 # Fails on any difference between the expected vs actually installed dirs.
 discrepancies="$(comm -3 \
   <(printf "%s\n" "${expected_dirs[@]}" | sort) \
@@ -144,7 +141,7 @@ discrepancies="$(comm -3 \
 if [[ -n "${discrepancies}" ]]; then
   io::log "Found install discrepancies: expected vs actual"
   echo "${discrepancies}"
-  exit_code=1
+  exit 1
 fi
 
 io::log_h2 "Validating installed pkg-config files"
@@ -158,7 +155,7 @@ while IFS= read -r -d '' pc; do
     echo "---"
     cat "${pc}"
     echo "---"
-    exit_code=1
+    exit 1
   fi
 done < <(find "${INSTALL_PREFIX}" -name '*.pc' -print0)
 
@@ -170,7 +167,7 @@ allow_re="\.(h|inc|proto|cmake|pc|a|so|so\.${version}|so\.${version_major})\$"
 while IFS= read -r -d '' f; do
   if ! grep -qP "${allow_re}" <<<"${f}"; then
     echo "File with unexpected suffix installed: ${f}"
-    exit_code=1
+    exit 1
   fi
 done < <(find "${INSTALL_PREFIX}" -type f -print0)
 
@@ -201,4 +198,5 @@ rm -rf "${INSTALL_PREFIX:?}"/{include,lib64}
 cmake --install cmake-out --component google_cloud_cpp_runtime
 quickstart::run_cmake_and_make "${INSTALL_PREFIX}"
 
-exit "${exit_code}"
+# Be a little more explicit because we often run this manually
+io::log_h1 "SUCCESS"
