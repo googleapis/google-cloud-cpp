@@ -46,8 +46,8 @@ this library.
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id caPool-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
@@ -55,10 +55,9 @@ int main(int argc, char* argv[]) try {
   auto client = privateca::CertificateAuthorityServiceClient(
       privateca::MakeCertificateAuthorityServiceConnection());
 
-  auto const ca_pool = "projects/" + std::string(argv[1]) + "/locations/" +
-                       std::string(argv[2]) + "/caPools/" +
-                       std::string(argv[3]);
-  for (auto r : client.ListCertificates(ca_pool)) {
+  auto const ca_pool =
+      "projects/" + std::string(argv[1]) + "/locations/" + std::string(argv[2]);
+  for (auto r : client.ListCaPools(ca_pool)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
