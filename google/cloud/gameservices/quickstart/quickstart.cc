@@ -17,7 +17,7 @@
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
+  if (argc != 4) {
     std::cerr << "Usage: " << argv[0] << " project-id location-id realm-id\n";
     return 1;
   }
