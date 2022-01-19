@@ -455,6 +455,14 @@ service {
   retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
 }
 
+# Text-to-Speech
+service {
+  service_proto_path: "google/cloud/texttospeech/v1/cloud_tts.proto"
+  product_path: "google/cloud/texttospeech"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # TPU
 service {
   service_proto_path: "google/cloud/tpu/v1/cloud_tpu.proto"
