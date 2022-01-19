@@ -228,6 +228,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-gameservices",
+    deps = [
+        "//google/cloud/gameservices:google_cloud_cpp_gameservices",
+    ],
+)
+
+cc_library(
+    name = "experimental-gameservices_mocks",
+    deps = [
+        "//google/cloud/gameservices:google_cloud_cpp_gameservices_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-gkehub",
     deps = [
         "//google/cloud/gkehub:google_cloud_cpp_gkehub",

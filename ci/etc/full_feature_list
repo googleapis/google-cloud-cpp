@@ -12,6 +12,7 @@ composer
 datamigration
 eventarc
 gkehub
+gameservices
 iam
 ids
 iot

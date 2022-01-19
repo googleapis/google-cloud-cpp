@@ -67,6 +67,11 @@
 ./include/google/cloud/gkehub/internal
 ./include/google/cloud/gkehub/mocks
 ./include/google/cloud/gkehub/v1
+./include/google/cloud/gameservices
+./include/google/cloud/gameservices/internal
+./include/google/cloud/gameservices/mocks
+./include/google/cloud/gaming
+./include/google/cloud/gaming/v1
 ./include/google/cloud/iam
 ./include/google/cloud/iam/internal
 ./include/google/cloud/iam/mocks
@@ -231,6 +236,7 @@
 ./lib64/cmake/google_cloud_cpp_composer
 ./lib64/cmake/google_cloud_cpp_datamigration
 ./lib64/cmake/google_cloud_cpp_eventarc
+./lib64/cmake/google_cloud_cpp_gameservices
 ./lib64/cmake/google_cloud_cpp_gkehub
 ./lib64/cmake/google_cloud_cpp_iam
 ./lib64/cmake/google_cloud_cpp_ids
