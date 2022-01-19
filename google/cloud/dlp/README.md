@@ -4,7 +4,7 @@
 
 This directory contains an idiomatic C++ client library for the
 [Cloud Data Loss Prevention (DLP) API][cloud-service-docs], a service that
-orovides methods for detection, risk analysis, and de-identification of
+provides methods for detection, risk analysis, and de-identification of
 privacy-sensitive fragments in text, images, and Google Cloud Platform storage
 repositories.
 
