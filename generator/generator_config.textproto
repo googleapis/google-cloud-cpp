@@ -161,6 +161,15 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Data Loss Prevention
+service {
+  service_proto_path: "google/privacy/dlp/v2/dlp.proto"
+  product_path: "google/cloud/dlp"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
+
 # Eventarc
 service {
   service_proto_path: "google/cloud/eventarc/v1/eventarc.proto"

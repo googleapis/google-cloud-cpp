@@ -59,6 +59,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/clouddms/logging/v1:logging_cc_grpc"
   )"
   ["dialogflow"]="@com_google_googleapis//google/cloud/dialogflow/v2:dialogflow_cc_grpc"
+  ["dlp"]="@com_google_googleapis//google/privacy/dlp/v2:dlp_cc_grpc"
   ["eventarc"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/eventarc/v1:eventarc_cc_grpc" \
