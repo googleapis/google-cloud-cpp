@@ -440,6 +440,14 @@ service {
   retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
 }
 
+# TPU
+service {
+  service_proto_path: "google/cloud/tpu/v1/cloud_tpu.proto"
+  product_path: "google/cloud/tpu"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Translate
 service {
   service_proto_path: "google/cloud/translate/v3/translation_service.proto"

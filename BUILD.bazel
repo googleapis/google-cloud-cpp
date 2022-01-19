@@ -545,6 +545,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-tpu",
+    deps = [
+        "//google/cloud/tpu:google_cloud_cpp_tpu",
+    ],
+)
+
+cc_library(
+    name = "experimental-tpu_mocks",
+    deps = [
+        "//google/cloud/tpu:google_cloud_cpp_tpu_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-translate",
     deps = [
         "//google/cloud/translate:google_cloud_cpp_translate",
