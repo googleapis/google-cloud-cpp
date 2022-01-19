@@ -75,7 +75,7 @@ service {
   service_proto_path: "google/cloud/automl/v1/prediction_service.proto"
   product_path: "google/cloud/automl"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # BigQuery
