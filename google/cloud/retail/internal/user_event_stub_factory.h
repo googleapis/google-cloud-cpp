@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_INTERNAL_USER_EVENT_STUB_FACTORY_H
 
 #include "google/cloud/retail/internal/user_event_stub.h"
-#include "google/cloud/retail/user_event_connection.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"

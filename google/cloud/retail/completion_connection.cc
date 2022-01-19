@@ -72,8 +72,8 @@ class CompletionServiceConnectionImpl : public CompletionServiceConnection {
   StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
       google::cloud::retail::v2::CompleteQueryRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CompleteQuery(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CompleteQuery(request),
         [this](grpc::ClientContext& context,
                google::cloud::retail::v2::CompleteQueryRequest const& request) {
           return stub_->CompleteQuery(context, request);
@@ -108,12 +108,46 @@ class CompletionServiceConnectionImpl : public CompletionServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::retail::v2::ImportCompletionDataResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ImportCompletionData(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ImportCompletionData(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<CompletionServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CompletionServiceRetryPolicyOption>()) {
+      return options.get<CompletionServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CompletionServiceBackoffPolicyOption>()) {
+      return options.get<CompletionServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CompletionServicePollingPolicyOption>()) {
+      return options.get<CompletionServicePollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CompletionServiceConnectionIdempotencyPolicyOption>()) {
+      return options.get<CompletionServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_internal::CompletionServiceStub> stub_;
   std::unique_ptr<CompletionServiceRetryPolicy const> retry_policy_prototype_;

@@ -72,11 +72,10 @@ class SearchServiceConnectionImpl : public SearchServiceConnection {
       google::cloud::retail::v2::SearchRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<SearchServiceRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->Search(request);
+    auto retry =
+        std::shared_ptr<SearchServiceRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->Search(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>>(
@@ -101,6 +100,32 @@ class SearchServiceConnectionImpl : public SearchServiceConnection {
   }
 
  private:
+  std::unique_ptr<SearchServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<SearchServiceRetryPolicyOption>()) {
+      return options.get<SearchServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<SearchServiceBackoffPolicyOption>()) {
+      return options.get<SearchServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<SearchServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<SearchServiceConnectionIdempotencyPolicyOption>()) {
+      return options.get<SearchServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_internal::SearchServiceStub> stub_;
   std::unique_ptr<SearchServiceRetryPolicy const> retry_policy_prototype_;
