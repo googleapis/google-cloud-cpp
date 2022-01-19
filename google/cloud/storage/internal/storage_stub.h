@@ -54,6 +54,10 @@ class StorageStub {
   QueryWriteStatus(
       grpc::ClientContext& context,
       google::storage::v2::QueryWriteStatusRequest const& request) = 0;
+
+  virtual StatusOr<google::storage::v2::ServiceAccount> GetServiceAccount(
+      grpc::ClientContext& context,
+      google::storage::v2::GetServiceAccountRequest const& request) = 0;
 };
 
 class DefaultStorageStub : public StorageStub {
@@ -80,6 +84,10 @@ class DefaultStorageStub : public StorageStub {
   StatusOr<google::storage::v2::QueryWriteStatusResponse> QueryWriteStatus(
       grpc::ClientContext& client_context,
       google::storage::v2::QueryWriteStatusRequest const& request) override;
+
+  StatusOr<google::storage::v2::ServiceAccount> GetServiceAccount(
+      grpc::ClientContext& client_context,
+      google::storage::v2::GetServiceAccountRequest const& request) override;
 
  private:
   std::unique_ptr<google::storage::v2::Storage::StubInterface> grpc_stub_;
