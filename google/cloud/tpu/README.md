@@ -2,8 +2,9 @@
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[Cloud TPU API][cloud-service-docs], a service to TPU API provides customers with access to Google TPU technology.
+This directory contains an idiomatic C++ client library for
+[Cloud TPU][cloud-service], a service that provides customers with access to
+Google TPU technology.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +26,8 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/tpu
+[cloud-service]: https://cloud.google.com/tpu
+[cloud-service-docs]: https://cloud.google.com/tpu/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-tpu/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/tpu
 
@@ -38,24 +40,25 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/tpu/ EDIT HERE .h"
+#include "google/cloud/tpu/tpu_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace tpu = ::google::cloud::tpu;
-  auto client = tpu::Client(tpu::MakeConnection(/* EDIT HERE */));
+  auto client = tpu::TpuClient(tpu::MakeTpuConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent = project.FullName() + "/locations/" + argv[2];
+  for (auto n : client.ListNodes(parent)) {
+    if (!n) throw std::runtime_error(n.status().message());
+    std::cout << n->DebugString() << "\n";
   }
 
   return 0;

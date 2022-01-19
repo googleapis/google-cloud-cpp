@@ -2,8 +2,8 @@
 
 @mainpage Cloud TPU API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud TPU API][cloud-service-docs], a service
-to TPU API provides customers with access to Google TPU technology.
+An idiomatic C++ client library for [Cloud TPU][cloud-service], a service
+that provides customers with access to Google TPU technology.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +81,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/tpu
+[cloud-service]: https://cloud.google.com/tpu
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
