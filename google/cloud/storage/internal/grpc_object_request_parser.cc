@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_object_request_parser.h"
+#include "google/cloud/storage/internal/grpc_common_request_params.h"
 #include "google/cloud/storage/internal/grpc_object_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
 #include "google/cloud/storage/internal/openssl_util.h"
@@ -72,14 +73,6 @@ void SetPredefinedDefaultObjectAcl(GrpcRequest& request,
   if (req.template HasOption<PredefinedDefaultObjectAcl>()) {
     request.set_predefined_default_object_acl(
         ToProto(req.template GetOption<PredefinedDefaultObjectAcl>()));
-  }
-}
-
-template <typename GrpcRequest, typename StorageRequest>
-void SetCommonParameters(GrpcRequest& request, StorageRequest const& req) {
-  if (req.template HasOption<UserProject>()) {
-    request.mutable_common_request_params()->set_user_project(
-        req.template GetOption<UserProject>().value());
   }
 }
 
