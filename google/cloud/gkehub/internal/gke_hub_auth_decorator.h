@@ -41,7 +41,8 @@ class GkeHubAuth : public GkeHubStub {
 
   StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse> ListMemberships(
       grpc::ClientContext& context,
-      google::cloud::gkehub::v1::ListMembershipsRequest const& request) override;
+      google::cloud::gkehub::v1::ListMembershipsRequest const& request)
+      override;
 
   StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse> ListFeatures(
       grpc::ClientContext& context,
@@ -58,7 +59,8 @@ class GkeHubAuth : public GkeHubStub {
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMembership(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::CreateMembershipRequest const& request) override;
+      google::cloud::gkehub::v1::CreateMembershipRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFeature(
       google::cloud::CompletionQueue& cq,
@@ -68,7 +70,8 @@ class GkeHubAuth : public GkeHubStub {
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteMembership(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::DeleteMembershipRequest const& request) override;
+      google::cloud::gkehub::v1::DeleteMembershipRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeature(
       google::cloud::CompletionQueue& cq,
@@ -78,16 +81,19 @@ class GkeHubAuth : public GkeHubStub {
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateMembership(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::UpdateMembershipRequest const& request) override;
+      google::cloud::gkehub::v1::UpdateMembershipRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateFeature(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::gkehub::v1::UpdateFeatureRequest const& request) override;
 
-  StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse> GenerateConnectManifest(
+  StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
+  GenerateConnectManifest(
       grpc::ClientContext& context,
-      google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request) override;
+      google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -98,6 +104,7 @@ class GkeHubAuth : public GkeHubStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<GkeHubStub> child_;

@@ -3,7 +3,8 @@
 @mainpage GKE Hub C++ Client Library
 
 An idiomatic C++ client library for the [GKE Hub][cloud-service-docs], a service
-to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+to handle the registration of many Kubernetes clusters to Google Cloud, and the\
+management of multi-cluster features over those clusters.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 

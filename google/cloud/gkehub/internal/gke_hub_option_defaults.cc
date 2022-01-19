@@ -17,10 +17,10 @@
 // source: google/cloud/gkehub/v1/service.proto
 
 #include "google/cloud/gkehub/internal/gke_hub_option_defaults.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/connection_options.h"
 #include "google/cloud/gkehub/gke_hub_connection.h"
 #include "google/cloud/gkehub/gke_hub_options.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
@@ -39,7 +39,8 @@ auto constexpr kBackoffScaling = 2.0;
 Options GkeHubDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_GKE_HUB_ENDPOINT");
-    options.set<EndpointOption>(env && !env->empty() ? *env : "gkehub.googleapis.com");
+    options.set<EndpointOption>(env && !env->empty() ? *env
+                                                     : "gkehub.googleapis.com");
   }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
@@ -55,19 +56,18 @@ Options GkeHubDefaultOptions(Options options) {
 
   if (!options.has<gkehub::GkeHubRetryPolicyOption>()) {
     options.set<gkehub::GkeHubRetryPolicyOption>(
-        gkehub::GkeHubLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        gkehub::GkeHubLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());
   }
   if (!options.has<gkehub::GkeHubBackoffPolicyOption>()) {
     options.set<gkehub::GkeHubBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
   if (!options.has<gkehub::GkeHubPollingPolicyOption>()) {
     options.set<gkehub::GkeHubPollingPolicyOption>(
-        GenericPollingPolicy<
-            gkehub::GkeHubRetryPolicyOption::Type,
-            gkehub::GkeHubBackoffPolicyOption::Type>(
+        GenericPollingPolicy<gkehub::GkeHubRetryPolicyOption::Type,
+                             gkehub::GkeHubBackoffPolicyOption::Type>(
             options.get<gkehub::GkeHubRetryPolicyOption>()->clone(),
             options.get<gkehub::GkeHubBackoffPolicyOption>()->clone())
             .clone());

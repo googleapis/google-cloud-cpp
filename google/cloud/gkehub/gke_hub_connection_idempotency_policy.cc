@@ -27,10 +27,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::internal::Idempotency;
 
-GkeHubConnectionIdempotencyPolicy::~GkeHubConnectionIdempotencyPolicy() = default;
+GkeHubConnectionIdempotencyPolicy::~GkeHubConnectionIdempotencyPolicy() =
+    default;
 
 namespace {
-class DefaultGkeHubConnectionIdempotencyPolicy : public GkeHubConnectionIdempotencyPolicy {
+class DefaultGkeHubConnectionIdempotencyPolicy
+    : public GkeHubConnectionIdempotencyPolicy {
  public:
   ~DefaultGkeHubConnectionIdempotencyPolicy() override = default;
 
@@ -39,65 +41,66 @@ class DefaultGkeHubConnectionIdempotencyPolicy : public GkeHubConnectionIdempote
     return absl::make_unique<DefaultGkeHubConnectionIdempotencyPolicy>(*this);
   }
 
-  Idempotency
-  ListMemberships(google::cloud::gkehub::v1::ListMembershipsRequest) override {
+  Idempotency ListMemberships(
+      google::cloud::gkehub::v1::ListMembershipsRequest) override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  ListFeatures(google::cloud::gkehub::v1::ListFeaturesRequest) override {
+  Idempotency ListFeatures(
+      google::cloud::gkehub::v1::ListFeaturesRequest) override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  GetMembership(google::cloud::gkehub::v1::GetMembershipRequest const&) override {
+  Idempotency GetMembership(
+      google::cloud::gkehub::v1::GetMembershipRequest const&) override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  GetFeature(google::cloud::gkehub::v1::GetFeatureRequest const&) override {
+  Idempotency GetFeature(
+      google::cloud::gkehub::v1::GetFeatureRequest const&) override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  CreateMembership(google::cloud::gkehub::v1::CreateMembershipRequest const&) override {
+  Idempotency CreateMembership(
+      google::cloud::gkehub::v1::CreateMembershipRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  CreateFeature(google::cloud::gkehub::v1::CreateFeatureRequest const&) override {
+  Idempotency CreateFeature(
+      google::cloud::gkehub::v1::CreateFeatureRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  DeleteMembership(google::cloud::gkehub::v1::DeleteMembershipRequest const&) override {
+  Idempotency DeleteMembership(
+      google::cloud::gkehub::v1::DeleteMembershipRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  DeleteFeature(google::cloud::gkehub::v1::DeleteFeatureRequest const&) override {
+  Idempotency DeleteFeature(
+      google::cloud::gkehub::v1::DeleteFeatureRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  UpdateMembership(google::cloud::gkehub::v1::UpdateMembershipRequest const&) override {
+  Idempotency UpdateMembership(
+      google::cloud::gkehub::v1::UpdateMembershipRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  UpdateFeature(google::cloud::gkehub::v1::UpdateFeatureRequest const&) override {
+  Idempotency UpdateFeature(
+      google::cloud::gkehub::v1::UpdateFeatureRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  GenerateConnectManifest(google::cloud::gkehub::v1::GenerateConnectManifestRequest const&) override {
+  Idempotency GenerateConnectManifest(
+      google::cloud::gkehub::v1::GenerateConnectManifestRequest const&)
+      override {
     return Idempotency::kIdempotent;
   }
 };
 }  // namespace
 
 std::unique_ptr<GkeHubConnectionIdempotencyPolicy>
-    MakeDefaultGkeHubConnectionIdempotencyPolicy() {
+MakeDefaultGkeHubConnectionIdempotencyPolicy() {
   return absl::make_unique<DefaultGkeHubConnectionIdempotencyPolicy>();
 }
 

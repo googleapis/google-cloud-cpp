@@ -40,27 +40,32 @@ endif ()
 
 include(CompileProtos)
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_gkehub_protos # cmake-format: sort
+    google_cloud_cpp_gkehub_protos
+    # cmake-format: sort
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/gkehub/v1/configmanagement/configmanagement.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/gkehub/v1/multiclusteringress/multiclusteringress.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/gkehub/v1/feature.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/gkehub/v1/membership.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/gkehub/v1/service.proto
     PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(gkehub_protos)
-target_link_libraries(google_cloud_cpp_gkehub_protos PUBLIC #
-    google-cloud-cpp::api_annotations_protos
-    google-cloud-cpp::api_client_protos
-    google-cloud-cpp::api_field_behavior_protos
-    google-cloud-cpp::api_http_protos
-    google-cloud-cpp::api_resource_protos
-    google-cloud-cpp::longrunning_operations_protos
-    google-cloud-cpp::rpc_status_protos)
+target_link_libraries(
+    google_cloud_cpp_gkehub_protos
+    PUBLIC #
+           google-cloud-cpp::api_annotations_protos
+           google-cloud-cpp::api_client_protos
+           google-cloud-cpp::api_field_behavior_protos
+           google-cloud-cpp::api_http_protos
+           google-cloud-cpp::api_resource_protos
+           google-cloud-cpp::longrunning_operations_protos
+           google-cloud-cpp::rpc_status_protos)
 
-file(GLOB source_files
-     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-     "*.h" "*.cc" "internal/*.h" "internal/*.cc")
+file(
+    GLOB source_files
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    "*.h" "*.cc" "internal/*.h" "internal/*.cc")
 list(SORT source_files)
 add_library(google_cloud_cpp_gkehub ${source_files})
 target_include_directories(
@@ -76,8 +81,8 @@ google_cloud_cpp_add_common_options(google_cloud_cpp_gkehub)
 set_target_properties(
     google_cloud_cpp_gkehub
     PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-gkehub
-               VERSION "${PROJECT_VERSION}"
-               SOVERSION "${PROJECT_VERSION_MAJOR}")
+               VERSION "${PROJECT_VERSION}" SOVERSION
+                                            "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_gkehub
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
@@ -87,13 +92,14 @@ add_library(google-cloud-cpp::experimental-gkehub ALIAS google_cloud_cpp_gkehub)
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
-file(GLOB relative_mock_files
-     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-     "mocks/*.h")
+file(
+    GLOB relative_mock_files
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    "mocks/*.h")
 list(SORT relative_mock_files)
 set(mock_files)
 foreach (file IN LISTS relative_mock_files)
-  list(APPEND mock_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
+    list(APPEND mock_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
 endforeach ()
 add_library(google_cloud_cpp_gkehub_mocks INTERFACE)
 target_sources(google_cloud_cpp_gkehub_mocks INTERFACE ${mock_files})

@@ -27,10 +27,10 @@ namespace cloud {
 namespace gkehub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-GkeHubMetadata::GkeHubMetadata(
-    std::shared_ptr<GkeHubStub> child)
+GkeHubMetadata::GkeHubMetadata(std::shared_ptr<GkeHubStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse>
 GkeHubMetadata::ListMemberships(
@@ -48,16 +48,14 @@ GkeHubMetadata::ListFeatures(
   return child_->ListFeatures(context, request);
 }
 
-StatusOr<google::cloud::gkehub::v1::Membership>
-GkeHubMetadata::GetMembership(
+StatusOr<google::cloud::gkehub::v1::Membership> GkeHubMetadata::GetMembership(
     grpc::ClientContext& context,
     google::cloud::gkehub::v1::GetMembershipRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetMembership(context, request);
 }
 
-StatusOr<google::cloud::gkehub::v1::Feature>
-GkeHubMetadata::GetFeature(
+StatusOr<google::cloud::gkehub::v1::Feature> GkeHubMetadata::GetFeature(
     grpc::ClientContext& context,
     google::cloud::gkehub::v1::GetFeatureRequest const& request) {
   SetMetadata(context, "name=" + request.name());
@@ -144,7 +142,7 @@ future<Status> GkeHubMetadata::AsyncCancelOperation(
 }
 
 void GkeHubMetadata::SetMetadata(grpc::ClientContext& context,
-                                        std::string const& request_params) {
+                                 std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   context.AddMetadata("x-goog-api-client", api_client_header_);
 }

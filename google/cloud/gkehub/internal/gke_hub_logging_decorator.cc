@@ -27,11 +27,11 @@ namespace cloud {
 namespace gkehub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-GkeHubLogging::GkeHubLogging(
-    std::shared_ptr<GkeHubStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+GkeHubLogging::GkeHubLogging(std::shared_ptr<GkeHubStub> child,
+                             TracingOptions tracing_options,
+                             std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse>
@@ -58,8 +58,7 @@ GkeHubLogging::ListFeatures(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::gkehub::v1::Membership>
-GkeHubLogging::GetMembership(
+StatusOr<google::cloud::gkehub::v1::Membership> GkeHubLogging::GetMembership(
     grpc::ClientContext& context,
     google::cloud::gkehub::v1::GetMembershipRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -70,8 +69,7 @@ GkeHubLogging::GetMembership(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::gkehub::v1::Feature>
-GkeHubLogging::GetFeature(
+StatusOr<google::cloud::gkehub::v1::Feature> GkeHubLogging::GetFeature(
     grpc::ClientContext& context,
     google::cloud::gkehub::v1::GetFeatureRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -84,13 +82,14 @@ GkeHubLogging::GetFeature(
 
 future<StatusOr<google::longrunning::Operation>>
 GkeHubLogging::AsyncCreateMembership(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
-             google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::unique_ptr<grpc::ClientContext> context,
+          google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
         return child_->AsyncCreateMembership(cq, std::move(context), request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
@@ -98,9 +97,9 @@ GkeHubLogging::AsyncCreateMembership(
 
 future<StatusOr<google::longrunning::Operation>>
 GkeHubLogging::AsyncCreateFeature(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::unique_ptr<grpc::ClientContext> context,
@@ -112,13 +111,14 @@ GkeHubLogging::AsyncCreateFeature(
 
 future<StatusOr<google::longrunning::Operation>>
 GkeHubLogging::AsyncDeleteMembership(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
-             google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::unique_ptr<grpc::ClientContext> context,
+          google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
         return child_->AsyncDeleteMembership(cq, std::move(context), request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
@@ -126,9 +126,9 @@ GkeHubLogging::AsyncDeleteMembership(
 
 future<StatusOr<google::longrunning::Operation>>
 GkeHubLogging::AsyncDeleteFeature(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::unique_ptr<grpc::ClientContext> context,
@@ -140,13 +140,14 @@ GkeHubLogging::AsyncDeleteFeature(
 
 future<StatusOr<google::longrunning::Operation>>
 GkeHubLogging::AsyncUpdateMembership(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
-             google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::unique_ptr<grpc::ClientContext> context,
+          google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
         return child_->AsyncUpdateMembership(cq, std::move(context), request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
@@ -154,9 +155,9 @@ GkeHubLogging::AsyncUpdateMembership(
 
 future<StatusOr<google::longrunning::Operation>>
 GkeHubLogging::AsyncUpdateFeature(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::unique_ptr<grpc::ClientContext> context,
@@ -172,7 +173,8 @@ GkeHubLogging::GenerateConnectManifest(
     google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request) {
+             google::cloud::gkehub::v1::GenerateConnectManifestRequest const&
+                 request) {
         return child_->GenerateConnectManifest(context, request);
       },
       context, request, __func__, tracing_options_);

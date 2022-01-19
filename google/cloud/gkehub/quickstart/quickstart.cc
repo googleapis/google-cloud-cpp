@@ -12,23 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/gkehub/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/gkehub/gke_hub_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace gkehub = ::google::cloud::gkehub;
-  auto client = gkehub::Client(
-      gkehub::MakeConnection(/* EDIT HERE */));
+  auto client = gkehub::GkeHubClient(gkehub::MakeGkeHubConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName())) {
+  auto const location =
+      "projects/" + std::string(argv[0]) + "/locations/" + std::string(argv[1]);
+  for (auto r : client.ListMemberships(location)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
