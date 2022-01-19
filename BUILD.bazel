@@ -363,6 +363,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-privateca",
+    deps = [
+        "//google/cloud/privateca:google_cloud_cpp_privateca",
+    ],
+)
+
+cc_library(
+    name = "experimental-privateca_mocks",
+    deps = [
+        "//google/cloud/privateca:google_cloud_cpp_privateca_mocks",
+    ],
+)
+
+cc_library(
     name = "pubsub",
     deps = [
         "//google/cloud/pubsub:google_cloud_cpp_pubsub",

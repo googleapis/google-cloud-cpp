@@ -2,8 +2,11 @@
 
 @mainpage Certificate Authority API C++ Client Library
 
-An idiomatic C++ client library for the [Certificate Authority API][cloud-service-docs], a service
-to The Certificate Authority Service API is a highly-available, scalable service that enables you to simplify and automate the management of private certificate authorities (CAs) while staying in control of your private keys.
+An idiomatic C++ client library for the
+[Certificate Authority API][cloud-service-docs], a service
+to The Certificate Authority Service API is a highly-available, scalable service
+that enables you to simplify and automate the management of private certificate
+authorities (CAs) while staying in control of your private keys.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +84,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/privateca
+[cloud-service-docs]: https://cloud.google.com/certificate-authority-service/docs
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

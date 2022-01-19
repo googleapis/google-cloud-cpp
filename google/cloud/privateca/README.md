@@ -3,7 +3,10 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Certificate Authority API][cloud-service-docs], a service to The Certificate Authority Service API is a highly-available, scalable service that enables you to simplify and automate the management of private certificate authorities (CAs) while staying in control of your private keys.
+[Certificate Authority API][cloud-service-docs]. The Certificate Authority
+Service API is a highly-available, scalable service that enables you to simplify
+and automate the management of private certificate authorities (CAs) while
+staying in control of your private keys.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +28,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/privateca
+[cloud-service-docs]: https://cloud.google.com/certificate-authority-service/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-privateca/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/privateca
 
@@ -38,22 +41,24 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/privateca/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/privateca/certificate_authority_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " project-id location-id caPool-id\n";
     return 1;
   }
 
   namespace privateca = ::google::cloud::privateca;
-  auto client = privateca::Client(privateca::MakeConnection(/* EDIT HERE */));
+  auto client = privateca::CertificateAuthorityServiceClient(
+      privateca::MakeCertificateAuthorityServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const ca_pool = "projects/" + std::string(argv[1]) + "/locations/" +
+                       std::string(argv[2]) + "/caPools/" +
+                       std::string(argv[3]);
+  for (auto r : client.ListCertificates(ca_pool)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

@@ -12,22 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/privateca/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/privateca/certificate_authority_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " project-id location-id caPool-id\n";
     return 1;
   }
 
   namespace privateca = ::google::cloud::privateca;
-  auto client = privateca::Client(privateca::MakeConnection(/* EDIT HERE */));
+  auto client = privateca::CertificateAuthorityServiceClient(
+      privateca::MakeCertificateAuthorityServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const ca_pool = "projects/" + std::string(argv[1]) + "/locations/" +
+                       std::string(argv[2]) + "/caPools/" +
+                       std::string(argv[3]);
+  for (auto r : client.ListCertificates(ca_pool)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
