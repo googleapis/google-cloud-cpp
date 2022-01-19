@@ -63,13 +63,13 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/eventarc/v1:eventarc_cc_grpc" \
       "@com_google_googleapis//google/cloud/eventarc/publishing/v1:publishing_cc_grpc"
   )"
+  ["gameservices"]="@com_google_googleapis//google/cloud/gaming/v1:gaming_cc_grpc"
   ["gkehub"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/gkehub/v1:gkehub_cc_grpc" \
       "@com_google_googleapis//google/cloud/gkehub/v1/multiclusteringress:multiclusteringres_cc_grpc" \
       "@com_google_googleapis//google/cloud/gkehub/v1/configmanagement:configmanagement_cc_grpc"
   )"
-  ["gameservices"]="@com_google_googleapis//google/cloud/gaming/v1:gaming_cc_grpc"
   ["iam"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/iam/credentials/v1:credentials_cc_grpc" \

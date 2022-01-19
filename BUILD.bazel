@@ -221,9 +221,8 @@ cc_library(
 )
 
 cc_library(
-    name = "experimental-gameservices-mocks",
+    name = "experimental-gameservices_mocks",
     deprecation = "please use //:gameservices_mocks instead.",
-    tags = ["manual"],
     deps = [
         "//google/cloud/gameservices:google_cloud_cpp_gameservices_mocks",
     ],
