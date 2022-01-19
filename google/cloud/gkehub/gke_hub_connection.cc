@@ -149,11 +149,9 @@ class GkeHubConnectionImpl : public GkeHubConnection {
       google::cloud::gkehub::v1::ListMembershipsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<GkeHubRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListMemberships(request);
+    auto retry = std::shared_ptr<GkeHubRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListMemberships(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::gkehub::v1::Membership>>(
@@ -182,11 +180,9 @@ class GkeHubConnectionImpl : public GkeHubConnection {
       google::cloud::gkehub::v1::ListFeaturesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<GkeHubRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListFeatures(request);
+    auto retry = std::shared_ptr<GkeHubRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListFeatures(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::gkehub::v1::Feature>>(
@@ -214,8 +210,8 @@ class GkeHubConnectionImpl : public GkeHubConnection {
   StatusOr<google::cloud::gkehub::v1::Membership> GetMembership(
       google::cloud::gkehub::v1::GetMembershipRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetMembership(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetMembership(request),
         [this](grpc::ClientContext& context,
                google::cloud::gkehub::v1::GetMembershipRequest const& request) {
           return stub_->GetMembership(context, request);
@@ -226,8 +222,8 @@ class GkeHubConnectionImpl : public GkeHubConnection {
   StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
       google::cloud::gkehub::v1::GetFeatureRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetFeature(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetFeature(request),
         [this](grpc::ClientContext& context,
                google::cloud::gkehub::v1::GetFeatureRequest const& request) {
           return stub_->GetFeature(context, request);
@@ -260,9 +256,9 @@ class GkeHubConnectionImpl : public GkeHubConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::gkehub::v1::Membership>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateMembership(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateMembership(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
@@ -288,9 +284,9 @@ class GkeHubConnectionImpl : public GkeHubConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::gkehub::v1::Feature>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateFeature(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateFeature(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
@@ -318,9 +314,9 @@ class GkeHubConnectionImpl : public GkeHubConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::gkehub::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteMembership(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteMembership(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
@@ -346,9 +342,9 @@ class GkeHubConnectionImpl : public GkeHubConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::gkehub::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteFeature(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteFeature(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
@@ -376,9 +372,9 @@ class GkeHubConnectionImpl : public GkeHubConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::gkehub::v1::Membership>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateMembership(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateMembership(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
@@ -404,9 +400,9 @@ class GkeHubConnectionImpl : public GkeHubConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::gkehub::v1::Feature>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateFeature(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateFeature(request), polling_policy(),
+        __func__);
   }
 
   StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
@@ -414,8 +410,8 @@ class GkeHubConnectionImpl : public GkeHubConnection {
       google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GenerateConnectManifest(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GenerateConnectManifest(request),
         [this](grpc::ClientContext& context,
                google::cloud::gkehub::v1::GenerateConnectManifestRequest const&
                    request) {
@@ -425,6 +421,38 @@ class GkeHubConnectionImpl : public GkeHubConnection {
   }
 
  private:
+  std::unique_ptr<GkeHubRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GkeHubRetryPolicyOption>()) {
+      return options.get<GkeHubRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GkeHubBackoffPolicyOption>()) {
+      return options.get<GkeHubBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GkeHubPollingPolicyOption>()) {
+      return options.get<GkeHubPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<GkeHubConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GkeHubConnectionIdempotencyPolicyOption>()) {
+      return options.get<GkeHubConnectionIdempotencyPolicyOption>()->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<gkehub_internal::GkeHubStub> stub_;
   std::unique_ptr<GkeHubRetryPolicy const> retry_policy_prototype_;
