@@ -109,7 +109,7 @@ Status ConnectionGenerator::GenerateHeader() {
     if (IsBidirStreaming(method)) {
       HeaderPrintMethod(method, __FILE__, __LINE__,
                         R"""(
-  virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
   Async$method_name$();
@@ -241,7 +241,7 @@ Status ConnectionGenerator::GenerateCc() {
     if (IsBidirStreaming(method)) {
       CcPrintMethod(method, __FILE__, __LINE__,
                     R"""(
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     $request_type$,
     $response_type$>>
 $connection_class_name$::Async$method_name$() {
@@ -386,7 +386,7 @@ $connection_class_name$::Async$method_name$(
     if (IsBidirStreaming(method)) {
       CcPrintMethod(method, __FILE__, __LINE__,
                     R"""(
-  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
   Async$method_name$() override {

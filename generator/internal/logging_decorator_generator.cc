@@ -85,7 +85,7 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
     if (IsBidirStreaming(method)) {
       HeaderPrintMethod(method, __FILE__, __LINE__,
                         R"""(
-  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
   Async$method_name$(
@@ -238,7 +238,7 @@ $logging_class_name$::$method_name$(
     if (IsBidirStreaming(method)) {
       CcPrintMethod(method, __FILE__, __LINE__,
                     R"""(
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     $request_type$,
     $response_type$>>
 $logging_class_name$::Async$method_name$(
