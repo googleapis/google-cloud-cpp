@@ -137,8 +137,8 @@ class TranslationServiceConnectionImpl : public TranslationServiceConnection {
       google::cloud::translation::v3::TranslateTextRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->TranslateText(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->TranslateText(request),
         [this](grpc::ClientContext& context,
                google::cloud::translation::v3::TranslateTextRequest const&
                    request) { return stub_->TranslateText(context, request); },
@@ -149,8 +149,8 @@ class TranslationServiceConnectionImpl : public TranslationServiceConnection {
   DetectLanguage(google::cloud::translation::v3::DetectLanguageRequest const&
                      request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DetectLanguage(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DetectLanguage(request),
         [this](grpc::ClientContext& context,
                google::cloud::translation::v3::DetectLanguageRequest const&
                    request) { return stub_->DetectLanguage(context, request); },
@@ -162,8 +162,8 @@ class TranslationServiceConnectionImpl : public TranslationServiceConnection {
       google::cloud::translation::v3::GetSupportedLanguagesRequest const&
           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetSupportedLanguages(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetSupportedLanguages(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::translation::v3::GetSupportedLanguagesRequest const&
@@ -178,8 +178,8 @@ class TranslationServiceConnectionImpl : public TranslationServiceConnection {
       google::cloud::translation::v3::TranslateDocumentRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->TranslateDocument(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->TranslateDocument(request),
         [this](grpc::ClientContext& context,
                google::cloud::translation::v3::TranslateDocumentRequest const&
                    request) {
@@ -214,9 +214,9 @@ class TranslationServiceConnectionImpl : public TranslationServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::translation::v3::BatchTranslateResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->BatchTranslateText(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->BatchTranslateText(request), polling_policy(),
+        __func__);
   }
 
   future<
@@ -248,9 +248,9 @@ class TranslationServiceConnectionImpl : public TranslationServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::translation::v3::BatchTranslateDocumentResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->BatchTranslateDocument(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->BatchTranslateDocument(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
@@ -278,20 +278,19 @@ class TranslationServiceConnectionImpl : public TranslationServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::translation::v3::Glossary>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateGlossary(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateGlossary(request), polling_policy(),
+        __func__);
   }
 
   StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
       google::cloud::translation::v3::ListGlossariesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<TranslationServiceRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListGlossaries(request);
+    auto retry =
+        std::shared_ptr<TranslationServiceRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListGlossaries(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::translation::v3::Glossary>>(
@@ -321,8 +320,8 @@ class TranslationServiceConnectionImpl : public TranslationServiceConnection {
       google::cloud::translation::v3::GetGlossaryRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetGlossary(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetGlossary(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::translation::v3::GetGlossaryRequest const& request) {
@@ -356,12 +355,46 @@ class TranslationServiceConnectionImpl : public TranslationServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::translation::v3::DeleteGlossaryResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteGlossary(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteGlossary(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<TranslationServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<TranslationServiceRetryPolicyOption>()) {
+      return options.get<TranslationServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<TranslationServiceBackoffPolicyOption>()) {
+      return options.get<TranslationServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<TranslationServicePollingPolicyOption>()) {
+      return options.get<TranslationServicePollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<TranslationServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<TranslationServiceConnectionIdempotencyPolicyOption>()) {
+      return options.get<TranslationServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<translate_internal::TranslationServiceStub> stub_;
   std::unique_ptr<TranslationServiceRetryPolicy const> retry_policy_prototype_;

@@ -222,16 +222,16 @@ class AutoMlConnectionImpl : public AutoMlConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::automl::v1::Dataset>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateDataset(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateDataset(request), polling_policy(),
+        __func__);
   }
 
   StatusOr<google::cloud::automl::v1::Dataset> GetDataset(
       google::cloud::automl::v1::GetDatasetRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetDataset(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetDataset(request),
         [this](grpc::ClientContext& context,
                google::cloud::automl::v1::GetDatasetRequest const& request) {
           return stub_->GetDataset(context, request);
@@ -243,11 +243,9 @@ class AutoMlConnectionImpl : public AutoMlConnection {
       google::cloud::automl::v1::ListDatasetsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<AutoMlRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListDatasets(request);
+    auto retry = std::shared_ptr<AutoMlRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListDatasets(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::automl::v1::Dataset>>(
@@ -275,8 +273,8 @@ class AutoMlConnectionImpl : public AutoMlConnection {
   StatusOr<google::cloud::automl::v1::Dataset> UpdateDataset(
       google::cloud::automl::v1::UpdateDatasetRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateDataset(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateDataset(request),
         [this](grpc::ClientContext& context,
                google::cloud::automl::v1::UpdateDatasetRequest const& request) {
           return stub_->UpdateDataset(context, request);
@@ -307,9 +305,9 @@ class AutoMlConnectionImpl : public AutoMlConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::automl::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteDataset(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteDataset(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
@@ -335,9 +333,8 @@ class AutoMlConnectionImpl : public AutoMlConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::automl::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ImportData(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ImportData(request), polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
@@ -363,17 +360,16 @@ class AutoMlConnectionImpl : public AutoMlConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::automl::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ExportData(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ExportData(request), polling_policy(), __func__);
   }
 
   StatusOr<google::cloud::automl::v1::AnnotationSpec> GetAnnotationSpec(
       google::cloud::automl::v1::GetAnnotationSpecRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetAnnotationSpec(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetAnnotationSpec(request),
         [this](grpc::ClientContext& context,
                google::cloud::automl::v1::GetAnnotationSpecRequest const&
                    request) {
@@ -405,16 +401,15 @@ class AutoMlConnectionImpl : public AutoMlConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::automl::v1::Model>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateModel(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateModel(request), polling_policy(), __func__);
   }
 
   StatusOr<google::cloud::automl::v1::Model> GetModel(
       google::cloud::automl::v1::GetModelRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetModel(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetModel(request),
         [this](grpc::ClientContext& context,
                google::cloud::automl::v1::GetModelRequest const& request) {
           return stub_->GetModel(context, request);
@@ -426,11 +421,9 @@ class AutoMlConnectionImpl : public AutoMlConnection {
       google::cloud::automl::v1::ListModelsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<AutoMlRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListModels(request);
+    auto retry = std::shared_ptr<AutoMlRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListModels(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::automl::v1::Model>>(
@@ -478,16 +471,15 @@ class AutoMlConnectionImpl : public AutoMlConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::automl::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteModel(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteModel(request), polling_policy(), __func__);
   }
 
   StatusOr<google::cloud::automl::v1::Model> UpdateModel(
       google::cloud::automl::v1::UpdateModelRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateModel(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateModel(request),
         [this](grpc::ClientContext& context,
                google::cloud::automl::v1::UpdateModelRequest const& request) {
           return stub_->UpdateModel(context, request);
@@ -518,9 +510,8 @@ class AutoMlConnectionImpl : public AutoMlConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::automl::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeployModel(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeployModel(request), polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
@@ -546,9 +537,9 @@ class AutoMlConnectionImpl : public AutoMlConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::automl::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UndeployModel(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UndeployModel(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
@@ -574,17 +565,16 @@ class AutoMlConnectionImpl : public AutoMlConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::automl::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ExportModel(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ExportModel(request), polling_policy(), __func__);
   }
 
   StatusOr<google::cloud::automl::v1::ModelEvaluation> GetModelEvaluation(
       google::cloud::automl::v1::GetModelEvaluationRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetModelEvaluation(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetModelEvaluation(request),
         [this](grpc::ClientContext& context,
                google::cloud::automl::v1::GetModelEvaluationRequest const&
                    request) {
@@ -597,11 +587,9 @@ class AutoMlConnectionImpl : public AutoMlConnection {
       google::cloud::automl::v1::ListModelEvaluationsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<AutoMlRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListModelEvaluations(request);
+    auto retry = std::shared_ptr<AutoMlRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListModelEvaluations(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::automl::v1::ModelEvaluation>>(
@@ -628,6 +616,38 @@ class AutoMlConnectionImpl : public AutoMlConnection {
   }
 
  private:
+  std::unique_ptr<AutoMlRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AutoMlRetryPolicyOption>()) {
+      return options.get<AutoMlRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AutoMlBackoffPolicyOption>()) {
+      return options.get<AutoMlBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AutoMlPollingPolicyOption>()) {
+      return options.get<AutoMlPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<AutoMlConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AutoMlConnectionIdempotencyPolicyOption>()) {
+      return options.get<AutoMlConnectionIdempotencyPolicyOption>()->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<automl_internal::AutoMlStub> stub_;
   std::unique_ptr<AutoMlRetryPolicy const> retry_policy_prototype_;

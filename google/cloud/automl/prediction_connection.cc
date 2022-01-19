@@ -72,8 +72,8 @@ class PredictionServiceConnectionImpl : public PredictionServiceConnection {
   StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
       google::cloud::automl::v1::PredictRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->Predict(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->Predict(request),
         [this](grpc::ClientContext& context,
                google::cloud::automl::v1::PredictRequest const& request) {
           return stub_->Predict(context, request);
@@ -104,12 +104,46 @@ class PredictionServiceConnectionImpl : public PredictionServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::automl::v1::BatchPredictResult>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->BatchPredict(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->BatchPredict(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<PredictionServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<PredictionServiceRetryPolicyOption>()) {
+      return options.get<PredictionServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<PredictionServiceBackoffPolicyOption>()) {
+      return options.get<PredictionServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<PredictionServicePollingPolicyOption>()) {
+      return options.get<PredictionServicePollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<PredictionServiceConnectionIdempotencyPolicyOption>()) {
+      return options.get<PredictionServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<automl_internal::PredictionServiceStub> stub_;
   std::unique_ptr<PredictionServiceRetryPolicy const> retry_policy_prototype_;

@@ -151,11 +151,9 @@ class TpuConnectionImpl : public TpuConnection {
       google::cloud::tpu::v1::ListNodesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry =
-        std::shared_ptr<TpuRetryPolicy const>(retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListNodes(request);
+    auto retry = std::shared_ptr<TpuRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListNodes(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::tpu::v1::Node>>(
@@ -181,8 +179,8 @@ class TpuConnectionImpl : public TpuConnection {
   StatusOr<google::cloud::tpu::v1::Node> GetNode(
       google::cloud::tpu::v1::GetNodeRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetNode(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetNode(request),
         [this](grpc::ClientContext& context,
                google::cloud::tpu::v1::GetNodeRequest const& request) {
           return stub_->GetNode(context, request);
@@ -213,9 +211,8 @@ class TpuConnectionImpl : public TpuConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::tpu::v1::Node>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateNode(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateNode(request), polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::tpu::v1::Node>> DeleteNode(
@@ -241,9 +238,8 @@ class TpuConnectionImpl : public TpuConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::tpu::v1::Node>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteNode(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteNode(request), polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::tpu::v1::Node>> ReimageNode(
@@ -269,9 +265,8 @@ class TpuConnectionImpl : public TpuConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::tpu::v1::Node>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ReimageNode(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ReimageNode(request), polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::tpu::v1::Node>> StopNode(
@@ -297,9 +292,8 @@ class TpuConnectionImpl : public TpuConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::tpu::v1::Node>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->StopNode(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->StopNode(request), polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::tpu::v1::Node>> StartNode(
@@ -325,20 +319,17 @@ class TpuConnectionImpl : public TpuConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::tpu::v1::Node>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->StartNode(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->StartNode(request), polling_policy(), __func__);
   }
 
   StreamRange<google::cloud::tpu::v1::TensorFlowVersion> ListTensorFlowVersions(
       google::cloud::tpu::v1::ListTensorFlowVersionsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry =
-        std::shared_ptr<TpuRetryPolicy const>(retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListTensorFlowVersions(request);
+    auto retry = std::shared_ptr<TpuRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListTensorFlowVersions(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::tpu::v1::TensorFlowVersion>>(
@@ -368,8 +359,8 @@ class TpuConnectionImpl : public TpuConnection {
       google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetTensorFlowVersion(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetTensorFlowVersion(request),
         [this](grpc::ClientContext& context,
                google::cloud::tpu::v1::GetTensorFlowVersionRequest const&
                    request) {
@@ -382,11 +373,9 @@ class TpuConnectionImpl : public TpuConnection {
       google::cloud::tpu::v1::ListAcceleratorTypesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry =
-        std::shared_ptr<TpuRetryPolicy const>(retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListAcceleratorTypes(request);
+    auto retry = std::shared_ptr<TpuRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListAcceleratorTypes(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::tpu::v1::AcceleratorType>>(
@@ -415,8 +404,8 @@ class TpuConnectionImpl : public TpuConnection {
       google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetAcceleratorType(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetAcceleratorType(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request) {
@@ -426,6 +415,38 @@ class TpuConnectionImpl : public TpuConnection {
   }
 
  private:
+  std::unique_ptr<TpuRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<TpuRetryPolicyOption>()) {
+      return options.get<TpuRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<TpuBackoffPolicyOption>()) {
+      return options.get<TpuBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<TpuPollingPolicyOption>()) {
+      return options.get<TpuPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<TpuConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<TpuConnectionIdempotencyPolicyOption>()) {
+      return options.get<TpuConnectionIdempotencyPolicyOption>()->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<tpu_internal::TpuStub> stub_;
   std::unique_ptr<TpuRetryPolicy const> retry_policy_prototype_;

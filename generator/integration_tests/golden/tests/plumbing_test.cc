@@ -25,6 +25,7 @@ namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::testing::AtLeast;
 using ::testing::Return;
 using ms = std::chrono::milliseconds;
 
@@ -53,7 +54,9 @@ TEST(PlumbingTest, RetryLoopUsesPerCallPolicies) {
     auto clone = absl::make_unique<MockRetryPolicy>();
     // We will just say the policy is never exhausted, and use a permanent error
     // to break out of the loop.
-    EXPECT_CALL(*clone, IsExhausted).WillRepeatedly(Return(false));
+    EXPECT_CALL(*clone, IsExhausted)
+        .Times(AtLeast(1))
+        .WillRepeatedly(Return(false));
     EXPECT_CALL(*clone, OnFailureImpl);
     return clone;
   });
