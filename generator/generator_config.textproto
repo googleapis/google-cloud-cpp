@@ -410,7 +410,6 @@ service {
     "UpdateObject",
     "ListObjects",
     "RewriteObject",
-    "GetServiceAccount",
     "CreateHmacKey",
     "DeleteHmacKey",
     "GetHmacKey",
