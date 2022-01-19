@@ -2,8 +2,10 @@
 
 @mainpage Policy Troubleshooter API C++ Client Library
 
-An idiomatic C++ client library for the [Policy Troubleshooter API][cloud-service-docs], a service
-to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+An idiomatic C++ client library for the
+[Policy Troubleshooter][cloud-service-docs], a service that makes it easier to
+understand why a user has access to a resource or doesn't have permission to
+call an API.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +83,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/policytroubleshooter
+[cloud-service-docs]: https://cloud.google.com/iam/docs/troubleshooting-access
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

@@ -3,7 +3,9 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Policy Troubleshooter API][cloud-service-docs], a service to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+[Policy Troubleshooter][cloud-service-docs], a service that makes it easier to
+understand why a user has access to a resource or doesn't have permission to
+call an API.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +27,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/policytroubleshooter
+[cloud-service-docs]: https://cloud.google.com/iam/docs/troubleshooting-access
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-policytroubleshooter/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/policytroubleshooter
 
@@ -38,26 +40,29 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/policytroubleshooter/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/policytroubleshooter/iam_checker_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 4) {
+    std::cerr << "Usage: " << argv[0] << " principal resource-name"
+              << " permission\n";
     return 1;
   }
 
   namespace policytroubleshooter = ::google::cloud::policytroubleshooter;
-  auto client = policytroubleshooter::Client(
-      policytroubleshooter::MakeConnection(/* EDIT HERE */));
+  auto client = policytroubleshooter::IamCheckerClient(
+      policytroubleshooter::MakeIamCheckerConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
-  }
+  policytroubleshooter::v1::TroubleshootIamPolicyRequest request;
+  auto& access_tuple = *request.mutable_access_tuple();
+  access_tuple.set_principal(argv[1]);
+  access_tuple.set_full_resource_name(argv[2]);
+  access_tuple.set_permission(argv[3]);
+  auto const response = client.TroubleshootIamPolicy(request);
+  if (!response) throw std::runtime_error(response.status().message());
+  std::cout << response->DebugString() << "\n";
 
   return 0;
 } catch (std::exception const& ex) {

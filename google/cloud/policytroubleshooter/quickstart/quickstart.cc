@@ -12,26 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/policytroubleshooter/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/policytroubleshooter/iam_checker_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 4) {
+    std::cerr << "Usage: " << argv[0] << " principal resource-name"
+              << " permission\n";
     return 1;
   }
 
   namespace policytroubleshooter = ::google::cloud::policytroubleshooter;
-  auto client = policytroubleshooter::Client(
-      policytroubleshooter::MakeConnection(/* EDIT HERE */));
+  auto client = policytroubleshooter::IamCheckerClient(
+      policytroubleshooter::MakeIamCheckerConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
-  }
+  policytroubleshooter::v1::TroubleshootIamPolicyRequest request;
+  auto& access_tuple = *request.mutable_access_tuple();
+  access_tuple.set_principal(argv[1]);
+  access_tuple.set_full_resource_name(argv[2]);
+  access_tuple.set_permission(argv[3]);
+  auto const response = client.TroubleshootIamPolicy(request);
+  if (!response) throw std::runtime_error(response.status().message());
+  std::cout << response->DebugString() << "\n";
 
   return 0;
 } catch (std::exception const& ex) {

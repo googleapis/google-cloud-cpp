@@ -307,6 +307,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-policytroubleshooter",
+    deps = [
+        "//google/cloud/policytroubleshooter:google_cloud_cpp_policytroubleshooter",
+    ],
+)
+
+cc_library(
+    name = "experimental-policytroubleshooter_mocks",
+    deps = [
+        "//google/cloud/policytroubleshooter:google_cloud_cpp_policytroubleshooter_mocks",
+    ],
+)
+
+cc_library(
     name = "pubsub",
     deps = [
         "//google/cloud/pubsub:google_cloud_cpp_pubsub",
