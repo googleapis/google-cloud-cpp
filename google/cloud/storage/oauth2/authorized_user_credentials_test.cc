@@ -308,10 +308,14 @@ TEST_F(AuthorizedUserCredentialsTest, ParseUsesImplicitDefaultTokenUri) {
 
 /// @test Verify that invalid contents result in a readable error.
 TEST_F(AuthorizedUserCredentialsTest, ParseInvalidContentsFails) {
-  std::string config = R"""( not-a-valid-json-string })""";
+  EXPECT_THAT(ParseAuthorizedUserCredentials(
+                  R"""( not-a-valid-json-string })""", "test-as-a-source"),
+              StatusIs(Not(StatusCode::kOk),
+                       AllOf(HasSubstr("Invalid AuthorizedUserCredentials"),
+                             HasSubstr("test-as-a-source"))));
 
-  auto info = ParseAuthorizedUserCredentials(config, "test-as-a-source");
-  EXPECT_THAT(info,
+  EXPECT_THAT(ParseAuthorizedUserCredentials(
+                  R"""("valid-json-but-not-an-object")""", "test-as-a-source"),
               StatusIs(Not(StatusCode::kOk),
                        AllOf(HasSubstr("Invalid AuthorizedUserCredentials"),
                              HasSubstr("test-as-a-source"))));
@@ -357,9 +361,8 @@ TEST_F(AuthorizedUserCredentialsTest, ParseMissingFieldFails) {
   }
 }
 
-/// @test Parsing a refresh response with missing fields results in failure.
-TEST_F(AuthorizedUserCredentialsTest,
-       ParseAuthorizedUserRefreshResponseMissingFields) {
+/// @test Parsing an invalid refresh response results in failure.
+TEST_F(AuthorizedUserCredentialsTest, ParseAuthorizedUserRefreshResponseError) {
   std::string r1 = R"""({})""";
   // Does not have access_token.
   std::string r2 = R"""({
@@ -378,6 +381,12 @@ TEST_F(AuthorizedUserCredentialsTest,
   status = ParseAuthorizedUserRefreshResponse(HttpResponse{400, r2, {}},
                                               FakeClock::now());
   EXPECT_THAT(status,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("Could not find all required fields")));
+
+  EXPECT_THAT(ParseAuthorizedUserRefreshResponse(
+                  HttpResponse{400, R"js("valid-json-but-not-an-object)js", {}},
+                  FakeClock::now()),
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("Could not find all required fields")));
 }

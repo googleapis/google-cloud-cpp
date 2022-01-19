@@ -33,7 +33,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri) {
   auto credentials = nlohmann::json::parse(content, nullptr, false);
-  if (credentials.is_discarded()) {
+  if (!credentials.is_object()) {
     return Status(StatusCode::kInvalidArgument,
                   "Invalid ServiceAccountCredentials,"
                   "parsing failed on data loaded from " +

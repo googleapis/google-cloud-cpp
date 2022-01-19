@@ -24,7 +24,7 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri) {
   auto credentials = nlohmann::json::parse(content, nullptr, false);
-  if (credentials.is_discarded()) {
+  if (!credentials.is_object()) {
     return Status(
         StatusCode::kInvalidArgument,
         "Invalid AuthorizedUserCredentials, parsing failed on data from " +
@@ -64,7 +64,7 @@ ParseAuthorizedUserRefreshResponse(
     storage::internal::HttpResponse const& response,
     std::chrono::system_clock::time_point now) {
   auto access_token = nlohmann::json::parse(response.payload, nullptr, false);
-  if (access_token.is_discarded() || access_token.count("access_token") == 0 ||
+  if (!access_token.is_object() || access_token.count("access_token") == 0 ||
       access_token.count("expires_in") == 0 ||
       access_token.count("id_token") == 0 ||
       access_token.count("token_type") == 0) {
