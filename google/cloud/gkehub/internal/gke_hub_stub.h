@@ -36,23 +36,26 @@ class GkeHubStub {
  public:
   virtual ~GkeHubStub() = 0;
 
-  virtual StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse> ListMemberships(
-    grpc::ClientContext& context,
-    google::cloud::gkehub::v1::ListMembershipsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse>
+  ListMemberships(
+      grpc::ClientContext& context,
+      google::cloud::gkehub::v1::ListMembershipsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse> ListFeatures(
-    grpc::ClientContext& context,
-    google::cloud::gkehub::v1::ListFeaturesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse>
+  ListFeatures(
+      grpc::ClientContext& context,
+      google::cloud::gkehub::v1::ListFeaturesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::gkehub::v1::Membership> GetMembership(
-    grpc::ClientContext& context,
-    google::cloud::gkehub::v1::GetMembershipRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::gkehub::v1::GetMembershipRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
-    grpc::ClientContext& context,
-    google::cloud::gkehub::v1::GetFeatureRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::gkehub::v1::GetFeatureRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateMembership(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateMembership(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::gkehub::v1::CreateMembershipRequest const& request) = 0;
@@ -62,7 +65,8 @@ class GkeHubStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::gkehub::v1::CreateFeatureRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteMembership(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteMembership(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::gkehub::v1::DeleteMembershipRequest const& request) = 0;
@@ -72,7 +76,8 @@ class GkeHubStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::gkehub::v1::DeleteFeatureRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateMembership(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateMembership(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::gkehub::v1::UpdateMembershipRequest const& request) = 0;
@@ -82,9 +87,11 @@ class GkeHubStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::gkehub::v1::UpdateFeatureRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse> GenerateConnectManifest(
-    grpc::ClientContext& context,
-    google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request) = 0;
+  virtual StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
+  GenerateConnectManifest(
+      grpc::ClientContext& context,
+      google::cloud::gkehub::v1::GenerateConnectManifestRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -100,35 +107,34 @@ class GkeHubStub {
 class DefaultGkeHubStub : public GkeHubStub {
  public:
   DefaultGkeHubStub(
-      std::unique_ptr<google::cloud::gkehub::v1::GkeHub::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
-      : grpc_stub_(std::move(grpc_stub)),
-        operations_(std::move(operations)) {}
+      std::unique_ptr<google::cloud::gkehub::v1::GkeHub::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations)
+      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
-  StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse>
-  ListMemberships(
-    grpc::ClientContext& client_context,
-    google::cloud::gkehub::v1::ListMembershipsRequest const& request) override;
+  StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse> ListMemberships(
+      grpc::ClientContext& client_context,
+      google::cloud::gkehub::v1::ListMembershipsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse>
-  ListFeatures(
-    grpc::ClientContext& client_context,
-    google::cloud::gkehub::v1::ListFeaturesRequest const& request) override;
+  StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse> ListFeatures(
+      grpc::ClientContext& client_context,
+      google::cloud::gkehub::v1::ListFeaturesRequest const& request) override;
 
-  StatusOr<google::cloud::gkehub::v1::Membership>
-  GetMembership(
-    grpc::ClientContext& client_context,
-    google::cloud::gkehub::v1::GetMembershipRequest const& request) override;
+  StatusOr<google::cloud::gkehub::v1::Membership> GetMembership(
+      grpc::ClientContext& client_context,
+      google::cloud::gkehub::v1::GetMembershipRequest const& request) override;
 
-  StatusOr<google::cloud::gkehub::v1::Feature>
-  GetFeature(
-    grpc::ClientContext& client_context,
-    google::cloud::gkehub::v1::GetFeatureRequest const& request) override;
+  StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
+      grpc::ClientContext& client_context,
+      google::cloud::gkehub::v1::GetFeatureRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMembership(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::CreateMembershipRequest const& request) override;
+      google::cloud::gkehub::v1::CreateMembershipRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFeature(
       google::cloud::CompletionQueue& cq,
@@ -138,7 +144,8 @@ class DefaultGkeHubStub : public GkeHubStub {
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteMembership(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::DeleteMembershipRequest const& request) override;
+      google::cloud::gkehub::v1::DeleteMembershipRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeature(
       google::cloud::CompletionQueue& cq,
@@ -148,7 +155,8 @@ class DefaultGkeHubStub : public GkeHubStub {
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateMembership(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::UpdateMembershipRequest const& request) override;
+      google::cloud::gkehub::v1::UpdateMembershipRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateFeature(
       google::cloud::CompletionQueue& cq,
@@ -157,8 +165,9 @@ class DefaultGkeHubStub : public GkeHubStub {
 
   StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
   GenerateConnectManifest(
-    grpc::ClientContext& client_context,
-    google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request) override;
+      grpc::ClientContext& client_context,
+      google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

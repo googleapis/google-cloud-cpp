@@ -3,7 +3,9 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[GKE Hub][cloud-service-docs], a service to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+[GKE Hub][cloud-service-docs], a service to handle the registration of many
+Kubernetes clusters to Google Cloud, and the management of multi-cluster
+features over those clusters.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +27,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/gkehub
+[cloud-service-docs]: https://cloud.google.com/kubernetes-engine/docs/
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-gkehub/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/gkehub
 
@@ -38,23 +40,22 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/gkehub/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/gkehub/gke_hub_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace gkehub = ::google::cloud::gkehub;
-  auto client = gkehub::Client(
-      gkehub::MakeConnection(/* EDIT HERE */));
+  auto client = gkehub::GkeHubClient(gkehub::MakeGkeHubConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName())) {
+  auto const location =
+      "projects/" + std::string(argv[0]) + "/locations/" + std::string(argv[1]);
+  for (auto r : client.ListMemberships(location)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

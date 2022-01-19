@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_GKE_HUB_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_GKE_HUB_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/gkehub/gke_hub_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -75,7 +75,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class GkeHubClient {
  public:
-  explicit GkeHubClient(std::shared_ptr<GkeHubConnection> connection, Options options = {});
+  explicit GkeHubClient(std::shared_ptr<GkeHubConnection> connection,
+                        Options options = {});
   ~GkeHubClient();
 
   //@{
@@ -99,56 +100,74 @@ class GkeHubClient {
   ///
   /// Lists Memberships in a given project and location.
   ///
-  /// @param parent  Required. The parent (project and location) where the Memberships will be listed.
+  /// @param parent  Required. The parent (project and location) where the
+  /// Memberships will be listed.
   ///  Specified in the format `projects/*/locations/*`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L33}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L33}
   ///
-  /// [google.cloud.gkehub.v1.ListMembershipsRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L183}
-  /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L33}
+  /// [google.cloud.gkehub.v1.ListMembershipsRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L183}
+  /// [google.cloud.gkehub.v1.Membership]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L33}
   ///
-  StreamRange<google::cloud::gkehub::v1::Membership>
-  ListMemberships(std::string const& parent, Options options = {});
+  StreamRange<google::cloud::gkehub::v1::Membership> ListMemberships(
+      std::string const& parent, Options options = {});
 
   ///
   /// Lists Memberships in a given project and location.
   ///
-  /// @param request @googleapis_link{google::cloud::gkehub::v1::ListMembershipsRequest,google/cloud/gkehub/v1/service.proto#L183}
+  /// @param request
+  /// @googleapis_link{google::cloud::gkehub::v1::ListMembershipsRequest,google/cloud/gkehub/v1/service.proto#L183}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L33}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L33}
   ///
-  /// [google.cloud.gkehub.v1.ListMembershipsRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L183}
-  /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L33}
+  /// [google.cloud.gkehub.v1.ListMembershipsRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L183}
+  /// [google.cloud.gkehub.v1.Membership]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L33}
   ///
-  StreamRange<google::cloud::gkehub::v1::Membership>
-  ListMemberships(google::cloud::gkehub::v1::ListMembershipsRequest request, Options options = {});
+  StreamRange<google::cloud::gkehub::v1::Membership> ListMemberships(
+      google::cloud::gkehub::v1::ListMembershipsRequest request,
+      Options options = {});
 
   ///
   /// Lists Features in a given project and location.
   ///
-  /// @param parent  The parent (project and location) where the Features will be listed.
+  /// @param parent  The parent (project and location) where the Features will
+  /// be listed.
   ///  Specified in the format `projects/*/locations/*`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L35}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L35}
   ///
-  /// [google.cloud.gkehub.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L425}
-  /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L35}
+  /// [google.cloud.gkehub.v1.ListFeaturesRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L425}
+  /// [google.cloud.gkehub.v1.Feature]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L35}
   ///
-  StreamRange<google::cloud::gkehub::v1::Feature>
-  ListFeatures(std::string const& parent, Options options = {});
+  StreamRange<google::cloud::gkehub::v1::Feature> ListFeatures(
+      std::string const& parent, Options options = {});
 
   ///
   /// Lists Features in a given project and location.
   ///
-  /// @param request @googleapis_link{google::cloud::gkehub::v1::ListFeaturesRequest,google/cloud/gkehub/v1/service.proto#L425}
+  /// @param request
+  /// @googleapis_link{google::cloud::gkehub::v1::ListFeaturesRequest,google/cloud/gkehub/v1/service.proto#L425}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L35}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L35}
   ///
-  /// [google.cloud.gkehub.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L425}
-  /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L35}
+  /// [google.cloud.gkehub.v1.ListFeaturesRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L425}
+  /// [google.cloud.gkehub.v1.Feature]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L35}
   ///
-  StreamRange<google::cloud::gkehub::v1::Feature>
-  ListFeatures(google::cloud::gkehub::v1::ListFeaturesRequest request, Options options = {});
+  StreamRange<google::cloud::gkehub::v1::Feature> ListFeatures(
+      google::cloud::gkehub::v1::ListFeaturesRequest request,
+      Options options = {});
 
   ///
   /// Gets the details of a Membership.
@@ -156,26 +175,34 @@ class GkeHubClient {
   /// @param name  Required. The Membership resource name in the format
   ///  `projects/*/locations/*/memberships/*`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L33}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L33}
   ///
-  /// [google.cloud.gkehub.v1.GetMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L245}
-  /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L33}
+  /// [google.cloud.gkehub.v1.GetMembershipRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L245}
+  /// [google.cloud.gkehub.v1.Membership]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L33}
   ///
-  StatusOr<google::cloud::gkehub::v1::Membership>
-  GetMembership(std::string const& name, Options options = {});
+  StatusOr<google::cloud::gkehub::v1::Membership> GetMembership(
+      std::string const& name, Options options = {});
 
   ///
   /// Gets the details of a Membership.
   ///
-  /// @param request @googleapis_link{google::cloud::gkehub::v1::GetMembershipRequest,google/cloud/gkehub/v1/service.proto#L245}
+  /// @param request
+  /// @googleapis_link{google::cloud::gkehub::v1::GetMembershipRequest,google/cloud/gkehub/v1/service.proto#L245}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L33}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L33}
   ///
-  /// [google.cloud.gkehub.v1.GetMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L245}
-  /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L33}
+  /// [google.cloud.gkehub.v1.GetMembershipRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L245}
+  /// [google.cloud.gkehub.v1.Membership]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L33}
   ///
-  StatusOr<google::cloud::gkehub::v1::Membership>
-  GetMembership(google::cloud::gkehub::v1::GetMembershipRequest const& request, Options options = {});
+  StatusOr<google::cloud::gkehub::v1::Membership> GetMembership(
+      google::cloud::gkehub::v1::GetMembershipRequest const& request,
+      Options options = {});
 
   ///
   /// Gets details of a single Feature.
@@ -183,26 +210,34 @@ class GkeHubClient {
   /// @param name  The Feature resource name in the format
   ///  `projects/*/locations/*/features/*`
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L35}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L35}
   ///
-  /// [google.cloud.gkehub.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L475}
-  /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L35}
+  /// [google.cloud.gkehub.v1.GetFeatureRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L475}
+  /// [google.cloud.gkehub.v1.Feature]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L35}
   ///
-  StatusOr<google::cloud::gkehub::v1::Feature>
-  GetFeature(std::string const& name, Options options = {});
+  StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
+      std::string const& name, Options options = {});
 
   ///
   /// Gets details of a single Feature.
   ///
-  /// @param request @googleapis_link{google::cloud::gkehub::v1::GetFeatureRequest,google/cloud/gkehub/v1/service.proto#L475}
+  /// @param request
+  /// @googleapis_link{google::cloud::gkehub::v1::GetFeatureRequest,google/cloud/gkehub/v1/service.proto#L475}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L35}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L35}
   ///
-  /// [google.cloud.gkehub.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L475}
-  /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L35}
+  /// [google.cloud.gkehub.v1.GetFeatureRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L475}
+  /// [google.cloud.gkehub.v1.Feature]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L35}
   ///
-  StatusOr<google::cloud::gkehub::v1::Feature>
-  GetFeature(google::cloud::gkehub::v1::GetFeatureRequest const& request, Options options = {});
+  StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
+      google::cloud::gkehub::v1::GetFeatureRequest const& request,
+      Options options = {});
 
   ///
   /// Creates a new Membership.
@@ -211,10 +246,12 @@ class GkeHubClient {
   /// To register other clusters, follow the instructions at
   /// https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster.
   ///
-  /// @param parent  Required. The parent (project and location) where the Memberships will be created.
+  /// @param parent  Required. The parent (project and location) where the
+  /// Memberships will be created.
   ///  Specified in the format `projects/*/locations/*`.
   /// @param resource  Required. The membership to create.
-  /// @param membership_id  Required. Client chosen ID for the membership. `membership_id` must be a valid RFC
+  /// @param membership_id  Required. Client chosen ID for the membership.
+  /// `membership_id` must be a valid RFC
   ///  1123 compliant DNS label:
   ///    1. At most 63 characters in length
   ///    2. It must consist of lower case alphanumeric characters or `-`
@@ -222,13 +259,18 @@ class GkeHubClient {
   ///  Which can be expressed as the regex: `[a-z0-9]([-a-z0-9]*[a-z0-9])?`,
   ///  with a maximum length of 63 characters.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L33}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L33}
   ///
-  /// [google.cloud.gkehub.v1.CreateMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L257}
-  /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L33}
+  /// [google.cloud.gkehub.v1.CreateMembershipRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L257}
+  /// [google.cloud.gkehub.v1.Membership]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L33}
   ///
-  future<StatusOr<google::cloud::gkehub::v1::Membership>>
-  CreateMembership(std::string const& parent, google::cloud::gkehub::v1::Membership const& resource, std::string const& membership_id, Options options = {});
+  future<StatusOr<google::cloud::gkehub::v1::Membership>> CreateMembership(
+      std::string const& parent,
+      google::cloud::gkehub::v1::Membership const& resource,
+      std::string const& membership_id, Options options = {});
 
   ///
   /// Creates a new Membership.
@@ -237,44 +279,60 @@ class GkeHubClient {
   /// To register other clusters, follow the instructions at
   /// https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster.
   ///
-  /// @param request @googleapis_link{google::cloud::gkehub::v1::CreateMembershipRequest,google/cloud/gkehub/v1/service.proto#L257}
+  /// @param request
+  /// @googleapis_link{google::cloud::gkehub::v1::CreateMembershipRequest,google/cloud/gkehub/v1/service.proto#L257}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L33}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L33}
   ///
-  /// [google.cloud.gkehub.v1.CreateMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L257}
-  /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L33}
+  /// [google.cloud.gkehub.v1.CreateMembershipRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L257}
+  /// [google.cloud.gkehub.v1.Membership]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L33}
   ///
-  future<StatusOr<google::cloud::gkehub::v1::Membership>>
-  CreateMembership(google::cloud::gkehub::v1::CreateMembershipRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::gkehub::v1::Membership>> CreateMembership(
+      google::cloud::gkehub::v1::CreateMembershipRequest const& request,
+      Options options = {});
 
   ///
   /// Adds a new Feature.
   ///
-  /// @param parent  The parent (project and location) where the Feature will be created.
+  /// @param parent  The parent (project and location) where the Feature will be
+  /// created.
   ///  Specified in the format `projects/*/locations/*`.
   /// @param resource  The Feature resource to create.
   /// @param feature_id  The ID of the feature to create.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L35}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L35}
   ///
-  /// [google.cloud.gkehub.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L482}
-  /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L35}
+  /// [google.cloud.gkehub.v1.CreateFeatureRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L482}
+  /// [google.cloud.gkehub.v1.Feature]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L35}
   ///
-  future<StatusOr<google::cloud::gkehub::v1::Feature>>
-  CreateFeature(std::string const& parent, google::cloud::gkehub::v1::Feature const& resource, std::string const& feature_id, Options options = {});
+  future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
+      std::string const& parent,
+      google::cloud::gkehub::v1::Feature const& resource,
+      std::string const& feature_id, Options options = {});
 
   ///
   /// Adds a new Feature.
   ///
-  /// @param request @googleapis_link{google::cloud::gkehub::v1::CreateFeatureRequest,google/cloud/gkehub/v1/service.proto#L482}
+  /// @param request
+  /// @googleapis_link{google::cloud::gkehub::v1::CreateFeatureRequest,google/cloud/gkehub/v1/service.proto#L482}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L35}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L35}
   ///
-  /// [google.cloud.gkehub.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L482}
-  /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L35}
+  /// [google.cloud.gkehub.v1.CreateFeatureRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L482}
+  /// [google.cloud.gkehub.v1.Feature]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L35}
   ///
-  future<StatusOr<google::cloud::gkehub::v1::Feature>>
-  CreateFeature(google::cloud::gkehub::v1::CreateFeatureRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
+      google::cloud::gkehub::v1::CreateFeatureRequest const& request,
+      Options options = {});
 
   ///
   /// Removes a Membership.
@@ -286,10 +344,13 @@ class GkeHubClient {
   /// @param name  Required. The Membership resource name in the format
   ///  `projects/*/locations/*/memberships/*`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::OperationMetadata,google/cloud/gkehub/v1/service.proto#L572}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::OperationMetadata,google/cloud/gkehub/v1/service.proto#L572}
   ///
-  /// [google.cloud.gkehub.v1.DeleteMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L298}
-  /// [google.cloud.gkehub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L572}
+  /// [google.cloud.gkehub.v1.DeleteMembershipRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L298}
+  /// [google.cloud.gkehub.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L572}
   ///
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
   DeleteMembership(std::string const& name, Options options = {});
@@ -301,15 +362,21 @@ class GkeHubClient {
   /// To unregister other clusters, follow the instructions at
   /// https://cloud.google.com/anthos/multicluster-management/connect/unregistering-a-cluster.
   ///
-  /// @param request @googleapis_link{google::cloud::gkehub::v1::DeleteMembershipRequest,google/cloud/gkehub/v1/service.proto#L298}
+  /// @param request
+  /// @googleapis_link{google::cloud::gkehub::v1::DeleteMembershipRequest,google/cloud/gkehub/v1/service.proto#L298}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::OperationMetadata,google/cloud/gkehub/v1/service.proto#L572}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::OperationMetadata,google/cloud/gkehub/v1/service.proto#L572}
   ///
-  /// [google.cloud.gkehub.v1.DeleteMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L298}
-  /// [google.cloud.gkehub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L572}
+  /// [google.cloud.gkehub.v1.DeleteMembershipRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L298}
+  /// [google.cloud.gkehub.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L572}
   ///
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-  DeleteMembership(google::cloud::gkehub::v1::DeleteMembershipRequest const& request, Options options = {});
+  DeleteMembership(
+      google::cloud::gkehub::v1::DeleteMembershipRequest const& request,
+      Options options = {});
 
   ///
   /// Removes a Feature.
@@ -317,62 +384,80 @@ class GkeHubClient {
   /// @param name  The Feature resource name in the format
   ///  `projects/*/locations/*/features/*`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::OperationMetadata,google/cloud/gkehub/v1/service.proto#L572}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::OperationMetadata,google/cloud/gkehub/v1/service.proto#L572}
   ///
-  /// [google.cloud.gkehub.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L510}
-  /// [google.cloud.gkehub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L572}
+  /// [google.cloud.gkehub.v1.DeleteFeatureRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L510}
+  /// [google.cloud.gkehub.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L572}
   ///
-  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-  DeleteFeature(std::string const& name, Options options = {});
+  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
+      std::string const& name, Options options = {});
 
   ///
   /// Removes a Feature.
   ///
-  /// @param request @googleapis_link{google::cloud::gkehub::v1::DeleteFeatureRequest,google/cloud/gkehub/v1/service.proto#L510}
+  /// @param request
+  /// @googleapis_link{google::cloud::gkehub::v1::DeleteFeatureRequest,google/cloud/gkehub/v1/service.proto#L510}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::OperationMetadata,google/cloud/gkehub/v1/service.proto#L572}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::OperationMetadata,google/cloud/gkehub/v1/service.proto#L572}
   ///
-  /// [google.cloud.gkehub.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L510}
-  /// [google.cloud.gkehub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L572}
+  /// [google.cloud.gkehub.v1.DeleteFeatureRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L510}
+  /// [google.cloud.gkehub.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L572}
   ///
-  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-  DeleteFeature(google::cloud::gkehub::v1::DeleteFeatureRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
+      google::cloud::gkehub::v1::DeleteFeatureRequest const& request,
+      Options options = {});
 
   ///
   /// Updates an existing Membership.
   ///
   /// @param name  Required. The Membership resource name in the format
   ///  `projects/*/locations/*/memberships/*`.
-  /// @param resource  Required. Only fields specified in update_mask are updated.
-  ///  If you specify a field in the update_mask but don't specify its value here
-  ///  that field will be deleted.
-  ///  If you are updating a map field, set the value of a key to null or empty
-  ///  string to delete the key from the map. It's not possible to update a key's
-  ///  value to the empty string.
-  ///  If you specify the update_mask to be a special path "*", fully replaces all
+  /// @param resource  Required. Only fields specified in update_mask are
+  /// updated.
+  ///  If you specify a field in the update_mask but don't specify its value
+  ///  here that field will be deleted. If you are updating a map field, set the
+  ///  value of a key to null or empty string to delete the key from the map.
+  ///  It's not possible to update a key's value to the empty string. If you
+  ///  specify the update_mask to be a special path "*", fully replaces all
   ///  user-modifiable fields to match `resource`.
   /// @param update_mask  Required. Mask of fields to update.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L33}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L33}
   ///
-  /// [google.cloud.gkehub.v1.UpdateMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L325}
-  /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L33}
+  /// [google.cloud.gkehub.v1.UpdateMembershipRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L325}
+  /// [google.cloud.gkehub.v1.Membership]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L33}
   ///
-  future<StatusOr<google::cloud::gkehub::v1::Membership>>
-  UpdateMembership(std::string const& name, google::cloud::gkehub::v1::Membership const& resource, google::protobuf::FieldMask const& update_mask, Options options = {});
+  future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
+      std::string const& name,
+      google::cloud::gkehub::v1::Membership const& resource,
+      google::protobuf::FieldMask const& update_mask, Options options = {});
 
   ///
   /// Updates an existing Membership.
   ///
-  /// @param request @googleapis_link{google::cloud::gkehub::v1::UpdateMembershipRequest,google/cloud/gkehub/v1/service.proto#L325}
+  /// @param request
+  /// @googleapis_link{google::cloud::gkehub::v1::UpdateMembershipRequest,google/cloud/gkehub/v1/service.proto#L325}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L33}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L33}
   ///
-  /// [google.cloud.gkehub.v1.UpdateMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L325}
-  /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L33}
+  /// [google.cloud.gkehub.v1.UpdateMembershipRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L325}
+  /// [google.cloud.gkehub.v1.Membership]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L33}
   ///
-  future<StatusOr<google::cloud::gkehub::v1::Membership>>
-  UpdateMembership(google::cloud::gkehub::v1::UpdateMembershipRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
+      google::cloud::gkehub::v1::UpdateMembershipRequest const& request,
+      Options options = {});
 
   ///
   /// Updates an existing Feature.
@@ -380,35 +465,44 @@ class GkeHubClient {
   /// @param name  The Feature resource name in the format
   ///  `projects/*/locations/*/features/*`.
   /// @param resource  Only fields specified in update_mask are updated.
-  ///  If you specify a field in the update_mask but don't specify its value here
-  ///  that field will be deleted.
-  ///  If you are updating a map field, set the value of a key to null or empty
-  ///  string to delete the key from the map. It's not possible to update a key's
-  ///  value to the empty string.
-  ///  If you specify the update_mask to be a special path "*", fully replaces all
+  ///  If you specify a field in the update_mask but don't specify its value
+  ///  here that field will be deleted. If you are updating a map field, set the
+  ///  value of a key to null or empty string to delete the key from the map.
+  ///  It's not possible to update a key's value to the empty string. If you
+  ///  specify the update_mask to be a special path "*", fully replaces all
   ///  user-modifiable fields to match `resource`.
   /// @param update_mask  Mask of fields to update.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L35}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L35}
   ///
-  /// [google.cloud.gkehub.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L537}
-  /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L35}
+  /// [google.cloud.gkehub.v1.UpdateFeatureRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L537}
+  /// [google.cloud.gkehub.v1.Feature]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L35}
   ///
-  future<StatusOr<google::cloud::gkehub::v1::Feature>>
-  UpdateFeature(std::string const& name, google::cloud::gkehub::v1::Feature const& resource, google::protobuf::FieldMask const& update_mask, Options options = {});
+  future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
+      std::string const& name,
+      google::cloud::gkehub::v1::Feature const& resource,
+      google::protobuf::FieldMask const& update_mask, Options options = {});
 
   ///
   /// Updates an existing Feature.
   ///
-  /// @param request @googleapis_link{google::cloud::gkehub::v1::UpdateFeatureRequest,google/cloud/gkehub/v1/service.proto#L537}
+  /// @param request
+  /// @googleapis_link{google::cloud::gkehub::v1::UpdateFeatureRequest,google/cloud/gkehub/v1/service.proto#L537}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L35}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L35}
   ///
-  /// [google.cloud.gkehub.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L537}
-  /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L35}
+  /// [google.cloud.gkehub.v1.UpdateFeatureRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L537}
+  /// [google.cloud.gkehub.v1.Feature]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L35}
   ///
-  future<StatusOr<google::cloud::gkehub::v1::Feature>>
-  UpdateFeature(google::cloud::gkehub::v1::UpdateFeatureRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
+      google::cloud::gkehub::v1::UpdateFeatureRequest const& request,
+      Options options = {});
 
   ///
   /// Generates the manifest for deployment of the GKE connect agent.
@@ -416,15 +510,21 @@ class GkeHubClient {
   /// **This method is used internally by Google-provided libraries.**
   /// Most clients should not need to call this method directly.
   ///
-  /// @param request @googleapis_link{google::cloud::gkehub::v1::GenerateConnectManifestRequest,google/cloud/gkehub/v1/service.proto#L362}
+  /// @param request
+  /// @googleapis_link{google::cloud::gkehub::v1::GenerateConnectManifestRequest,google/cloud/gkehub/v1/service.proto#L362}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gkehub::v1::GenerateConnectManifestResponse,google/cloud/gkehub/v1/service.proto#L398}
+  /// @return
+  /// @googleapis_link{google::cloud::gkehub::v1::GenerateConnectManifestResponse,google/cloud/gkehub/v1/service.proto#L398}
   ///
-  /// [google.cloud.gkehub.v1.GenerateConnectManifestRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L362}
-  /// [google.cloud.gkehub.v1.GenerateConnectManifestResponse]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L398}
+  /// [google.cloud.gkehub.v1.GenerateConnectManifestRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L362}
+  /// [google.cloud.gkehub.v1.GenerateConnectManifestResponse]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L398}
   ///
   StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
-  GenerateConnectManifest(google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request, Options options = {});
+  GenerateConnectManifest(
+      google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request,
+      Options options = {});
 
  private:
   std::shared_ptr<GkeHubConnection> connection_;

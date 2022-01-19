@@ -30,7 +30,8 @@ GkeHubAuth::GkeHubAuth(
     std::shared_ptr<GkeHubStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse> GkeHubAuth::ListMemberships(
+StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse>
+GkeHubAuth::ListMemberships(
     grpc::ClientContext& context,
     google::cloud::gkehub::v1::ListMembershipsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -38,7 +39,8 @@ StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse> GkeHubAuth::ListMem
   return child_->ListMemberships(context, request);
 }
 
-StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse> GkeHubAuth::ListFeatures(
+StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse>
+GkeHubAuth::ListFeatures(
     grpc::ClientContext& context,
     google::cloud::gkehub::v1::ListFeaturesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -64,14 +66,15 @@ StatusOr<google::cloud::gkehub::v1::Feature> GkeHubAuth::GetFeature(
 
 future<StatusOr<google::longrunning::Operation>>
 GkeHubAuth::AsyncCreateMembership(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -80,16 +83,16 @@ GkeHubAuth::AsyncCreateMembership(
       });
 }
 
-future<StatusOr<google::longrunning::Operation>>
-GkeHubAuth::AsyncCreateFeature(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> GkeHubAuth::AsyncCreateFeature(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -100,14 +103,15 @@ GkeHubAuth::AsyncCreateFeature(
 
 future<StatusOr<google::longrunning::Operation>>
 GkeHubAuth::AsyncDeleteMembership(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -116,16 +120,16 @@ GkeHubAuth::AsyncDeleteMembership(
       });
 }
 
-future<StatusOr<google::longrunning::Operation>>
-GkeHubAuth::AsyncDeleteFeature(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> GkeHubAuth::AsyncDeleteFeature(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -136,14 +140,15 @@ GkeHubAuth::AsyncDeleteFeature(
 
 future<StatusOr<google::longrunning::Operation>>
 GkeHubAuth::AsyncUpdateMembership(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -152,16 +157,16 @@ GkeHubAuth::AsyncUpdateMembership(
       });
 }
 
-future<StatusOr<google::longrunning::Operation>>
-GkeHubAuth::AsyncUpdateFeature(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> GkeHubAuth::AsyncUpdateFeature(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -170,7 +175,8 @@ GkeHubAuth::AsyncUpdateFeature(
       });
 }
 
-StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse> GkeHubAuth::GenerateConnectManifest(
+StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
+GkeHubAuth::GenerateConnectManifest(
     grpc::ClientContext& context,
     google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -178,16 +184,16 @@ StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse> GkeHubAuth:
   return child_->GenerateConnectManifest(context, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-GkeHubAuth::AsyncGetOperation(
+future<StatusOr<google::longrunning::Operation>> GkeHubAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -201,9 +207,10 @@ future<Status> GkeHubAuth::AsyncCancelOperation(
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
         return child->AsyncCancelOperation(cq, *std::move(context), request);

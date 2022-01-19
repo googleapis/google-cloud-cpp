@@ -17,11 +17,11 @@
 // source: google/cloud/gkehub/v1/service.proto
 
 #include "google/cloud/gkehub/internal/gke_hub_stub_factory.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/gkehub/internal/gke_hub_auth_decorator.h"
 #include "google/cloud/gkehub/internal/gke_hub_logging_decorator.h"
 #include "google/cloud/gkehub/internal/gke_hub_metadata_decorator.h"
 #include "google/cloud/gkehub/internal/gke_hub_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
@@ -34,30 +34,25 @@ namespace cloud {
 namespace gkehub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<GkeHubStub>
-CreateDefaultGkeHubStub(
+std::shared_ptr<GkeHubStub> CreateDefaultGkeHubStub(
     google::cloud::CompletionQueue cq, Options const& options) {
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       std::move(cq), options);
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
   auto service_grpc_stub = google::cloud::gkehub::v1::GkeHub::NewStub(channel);
-  std::shared_ptr<GkeHubStub> stub =
-    std::make_shared<DefaultGkeHubStub>(
+  std::shared_ptr<GkeHubStub> stub = std::make_shared<DefaultGkeHubStub>(
       std::move(service_grpc_stub),
       google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<GkeHubAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<GkeHubAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<GkeHubMetadata>(std::move(stub));
-  if (internal::Contains(
-      options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<GkeHubLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
   }
   return stub;
