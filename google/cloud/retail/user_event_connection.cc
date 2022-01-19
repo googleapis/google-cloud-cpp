@@ -94,8 +94,8 @@ class UserEventServiceConnectionImpl : public UserEventServiceConnection {
       google::cloud::retail::v2::WriteUserEventRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->WriteUserEvent(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->WriteUserEvent(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::retail::v2::WriteUserEventRequest const& request) {
@@ -108,8 +108,8 @@ class UserEventServiceConnectionImpl : public UserEventServiceConnection {
       google::cloud::retail::v2::CollectUserEventRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CollectUserEvent(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CollectUserEvent(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::retail::v2::CollectUserEventRequest const& request) {
@@ -143,9 +143,9 @@ class UserEventServiceConnectionImpl : public UserEventServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::retail::v2::PurgeUserEventsResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->PurgeUserEvents(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->PurgeUserEvents(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
@@ -173,9 +173,9 @@ class UserEventServiceConnectionImpl : public UserEventServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::retail::v2::ImportUserEventsResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ImportUserEvents(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ImportUserEvents(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
@@ -203,12 +203,46 @@ class UserEventServiceConnectionImpl : public UserEventServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::retail::v2::RejoinUserEventsResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->RejoinUserEvents(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->RejoinUserEvents(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<UserEventServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<UserEventServiceRetryPolicyOption>()) {
+      return options.get<UserEventServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<UserEventServiceBackoffPolicyOption>()) {
+      return options.get<UserEventServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<UserEventServicePollingPolicyOption>()) {
+      return options.get<UserEventServicePollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<UserEventServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<UserEventServiceConnectionIdempotencyPolicyOption>()) {
+      return options.get<UserEventServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_internal::UserEventServiceStub> stub_;
   std::unique_ptr<UserEventServiceRetryPolicy const> retry_policy_prototype_;

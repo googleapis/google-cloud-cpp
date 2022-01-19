@@ -61,8 +61,8 @@ class PredictionServiceConnectionImpl : public PredictionServiceConnection {
   StatusOr<google::cloud::retail::v2::PredictResponse> Predict(
       google::cloud::retail::v2::PredictRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->Predict(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->Predict(request),
         [this](grpc::ClientContext& context,
                google::cloud::retail::v2::PredictRequest const& request) {
           return stub_->Predict(context, request);
@@ -71,6 +71,32 @@ class PredictionServiceConnectionImpl : public PredictionServiceConnection {
   }
 
  private:
+  std::unique_ptr<PredictionServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<PredictionServiceRetryPolicyOption>()) {
+      return options.get<PredictionServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<PredictionServiceBackoffPolicyOption>()) {
+      return options.get<PredictionServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<PredictionServiceConnectionIdempotencyPolicyOption>()) {
+      return options.get<PredictionServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_internal::PredictionServiceStub> stub_;
   std::unique_ptr<PredictionServiceRetryPolicy const> retry_policy_prototype_;

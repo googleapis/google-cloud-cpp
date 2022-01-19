@@ -88,11 +88,10 @@ class CatalogServiceConnectionImpl : public CatalogServiceConnection {
       google::cloud::retail::v2::ListCatalogsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<CatalogServiceRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListCatalogs(request);
+    auto retry =
+        std::shared_ptr<CatalogServiceRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListCatalogs(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::retail::v2::Catalog>>(
@@ -120,8 +119,8 @@ class CatalogServiceConnectionImpl : public CatalogServiceConnection {
   StatusOr<google::cloud::retail::v2::Catalog> UpdateCatalog(
       google::cloud::retail::v2::UpdateCatalogRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateCatalog(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateCatalog(request),
         [this](grpc::ClientContext& context,
                google::cloud::retail::v2::UpdateCatalogRequest const& request) {
           return stub_->UpdateCatalog(context, request);
@@ -133,8 +132,8 @@ class CatalogServiceConnectionImpl : public CatalogServiceConnection {
       google::cloud::retail::v2::SetDefaultBranchRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SetDefaultBranch(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->SetDefaultBranch(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::retail::v2::SetDefaultBranchRequest const& request) {
@@ -147,8 +146,8 @@ class CatalogServiceConnectionImpl : public CatalogServiceConnection {
   GetDefaultBranch(google::cloud::retail::v2::GetDefaultBranchRequest const&
                        request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetDefaultBranch(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetDefaultBranch(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::retail::v2::GetDefaultBranchRequest const& request) {
@@ -158,6 +157,32 @@ class CatalogServiceConnectionImpl : public CatalogServiceConnection {
   }
 
  private:
+  std::unique_ptr<CatalogServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CatalogServiceRetryPolicyOption>()) {
+      return options.get<CatalogServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CatalogServiceBackoffPolicyOption>()) {
+      return options.get<CatalogServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<CatalogServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CatalogServiceConnectionIdempotencyPolicyOption>()) {
+      return options.get<CatalogServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_internal::CatalogServiceStub> stub_;
   std::unique_ptr<CatalogServiceRetryPolicy const> retry_policy_prototype_;
