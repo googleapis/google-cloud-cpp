@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/cloudbuild/ EDIT HERE .h"
+#include "google/cloud/cloudbuild/cloud_build_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -24,10 +24,12 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace cloudbuild = ::google::cloud::cloudbuild;
-  auto client = cloudbuild::Client(cloudbuild::MakeConnection(/* EDIT HERE */));
+  auto client =
+      cloudbuild::CloudBuildClient(cloudbuild::MakeCloudBuildConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const filter = "";  // Any filter expression
+  for (auto r : client.ListBuilds(project.FullName(), filter)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

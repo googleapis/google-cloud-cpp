@@ -2,8 +2,9 @@
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[Cloud Build API][cloud-service-docs], a service to Creates and manages builds on Google Cloud Platform.
+This directory contains an idiomatic C++ client library for the [Cloud Build
+API][cloud-service-docs], a service that executes your builds on Google Cloud
+Platform's infrastructure.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -38,7 +39,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/cloudbuild/ EDIT HERE .h"
+#include "google/cloud/cloudbuild/cloud_build_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -50,10 +51,12 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace cloudbuild = ::google::cloud::cloudbuild;
-  auto client = cloudbuild::Client(cloudbuild::MakeConnection(/* EDIT HERE */));
+  auto client =
+      cloudbuild::CloudBuildClient(cloudbuild::MakeCloudBuildConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const filter = "";  // Any filter expression
+  for (auto r : client.ListBuilds(project.FullName(), filter)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

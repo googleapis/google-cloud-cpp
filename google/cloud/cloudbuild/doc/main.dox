@@ -2,8 +2,8 @@
 
 @mainpage Cloud Build API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Build API][cloud-service-docs], a service
-to Creates and manages builds on Google Cloud Platform.
+An idiomatic C++ client library for the [Cloud Build API][cloud-service-docs],
+a service that executes your builds on Google Cloud Platform's infrastructure.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
