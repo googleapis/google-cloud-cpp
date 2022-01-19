@@ -105,6 +105,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-automl",
+    deps = [
+        "//google/cloud/automl:google_cloud_cpp_automl",
+    ],
+)
+
+cc_library(
+    name = "experimental-automl_mocks",
+    deps = [
+        "//google/cloud/automl:google_cloud_cpp_automl_mocks",
+    ],
+)
+
+cc_library(
     name = "bigquery",
     deps = [
         "//google/cloud/bigquery:google_cloud_cpp_bigquery",

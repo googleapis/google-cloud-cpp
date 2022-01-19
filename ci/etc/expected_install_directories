@@ -28,6 +28,10 @@
 ./include/google/cloud/assuredworkloads/internal
 ./include/google/cloud/assuredworkloads/mocks
 ./include/google/cloud/assuredworkloads/v1
+./include/google/cloud/automl
+./include/google/cloud/automl/internal
+./include/google/cloud/automl/mocks
+./include/google/cloud/automl/v1
 ./include/google/cloud/bigquery
 ./include/google/cloud/bigquery/internal
 ./include/google/cloud/bigquery/mocks
@@ -201,6 +205,7 @@
 ./lib64/cmake/google_cloud_cpp_appengine
 ./lib64/cmake/google_cloud_cpp_artifactregistry
 ./lib64/cmake/google_cloud_cpp_assuredworkloads
+./lib64/cmake/google_cloud_cpp_automl
 ./lib64/cmake/google_cloud_cpp_bigquery
 ./lib64/cmake/google_cloud_cpp_billing
 ./lib64/cmake/google_cloud_cpp_composer
