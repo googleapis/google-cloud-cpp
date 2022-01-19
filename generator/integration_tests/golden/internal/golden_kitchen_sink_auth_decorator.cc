@@ -90,7 +90,7 @@ Status GoldenKitchenSinkAuth::DoNothing(
   return child_->DoNothing(context, request);
 }
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::test::admin::database::v1::AppendRowsRequest,
     google::test::admin::database::v1::AppendRowsResponse>>
 GoldenKitchenSinkAuth::AsyncAppendRows(
