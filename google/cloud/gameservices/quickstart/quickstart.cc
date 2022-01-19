@@ -12,23 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/gameservices/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/gameservices/game_server_clusters_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " project-id location-id realm-id\n";
     return 1;
   }
 
   namespace gameservices = ::google::cloud::gameservices;
-  auto client =
-      gameservices::Client(gameservices::MakeConnection(/* EDIT HERE */));
+  auto client = gameservices::GameServerClustersServiceClient(
+      gameservices::MakeGameServerClustersServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const realm = "projects/" + std::string(argv[1]) + "/locations/" +
+                     std::string(argv[2]) + "/realms/" + std::string(argv[3]);
+  for (auto r : client.ListGameServerClusters(realm)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

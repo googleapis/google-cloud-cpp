@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Game Services API][cloud-service-docs], a service to Deploy and manage infrastructure for global multiplayer gaming experiences.
+[Game Services API][cloud-service-docs], a service to deploy and manage
+infrastructure for global multiplayer gaming experiences.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/gameservices
+[cloud-service-docs]: https://cloud.google.com/game-servers/docs/
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-gameservices/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/gameservices
 
@@ -38,23 +39,23 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/gameservices/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/gameservices/game_server_clusters_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " project-id location-id realm-id\n";
     return 1;
   }
 
   namespace gameservices = ::google::cloud::gameservices;
-  auto client =
-      gameservices::Client(gameservices::MakeConnection(/* EDIT HERE */));
+  auto client = gameservices::GameServerClustersServiceClient(
+      gameservices::MakeGameServerClustersServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const realm = "projects/" + std::string(argv[1]) + "/locations/" +
+                     std::string(argv[2]) + "/realms/" + std::string(argv[3]);
+  for (auto r : client.ListGameServerClusters(realm)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
