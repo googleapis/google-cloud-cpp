@@ -176,6 +176,35 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Game Services
+service {
+  service_proto_path: "google/cloud/gaming/v1/game_server_clusters_service.proto"
+  product_path: "google/cloud/gameservices"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/gaming/v1/game_server_configs_service.proto"
+  product_path: "google/cloud/gameservices"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/gaming/v1/game_server_deployments_service.proto"
+  product_path: "google/cloud/gameservices"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/gaming/v1/realms_service.proto"
+  product_path: "google/cloud/gameservices"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # IAM
 service {
   service_proto_path: "google/iam/credentials/v1/iamcredentials.proto"
