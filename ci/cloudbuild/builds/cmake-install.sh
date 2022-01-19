@@ -96,8 +96,6 @@ expected_dirs+=(
   ./include/google/cloud/speech/v1
   ./include/google/cloud/storage/oauth2
   ./include/google/cloud/storage/testing
-  ./include/google/cloud/texttospeech
-  ./include/google/cloud/texttospeech/v1
   # no gRPC services in google/cloud/workflows/type.
   ./include/google/cloud/workflows/type
   ./include/google/devtools/cloudtrace

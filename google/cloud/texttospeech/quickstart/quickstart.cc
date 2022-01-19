@@ -12,26 +12,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/texttospeech/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/texttospeech/text_to_speech_client.h"
 #include <iostream>
 #include <stdexcept>
 
+auto constexpr kText = R"""(
+Four score and seven years ago our fathers brought forth on this
+continent, a new nation, conceived in Liberty, and dedicated to
+the proposition that all men are created equal.)""";
+
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 1) {
+    std::cerr << "Usage: " << argv[0] << "\n";
     return 1;
   }
 
   namespace texttospeech = ::google::cloud::texttospeech;
-  auto client =
-      texttospeech::Client(texttospeech::MakeConnection(/* EDIT HERE */));
+  auto client = texttospeech::TextToSpeechClient(
+      texttospeech::MakeTextToSpeechConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
-  }
+  google::cloud::texttospeech::v1::SynthesisInput input;
+  input.set_text(kText);
+  google::cloud::texttospeech::v1::VoiceSelectionParams voice;
+  voice.set_language_code("en-US");
+  google::cloud::texttospeech::v1::AudioConfig audio;
+  audio.set_audio_encoding(google::cloud::texttospeech::v1::LINEAR16);
+
+  auto response = client.SynthesizeSpeech(input, voice, audio);
+  if (!response) throw std::runtime_error(response.status().message());
+  // Normally one would play the results (response->audio_content()) over some
+  // audio device, for this quickstart, we just print some information.
+  auto constexpr kWavHeaderSize = 48;
+  auto constexpr kBytesPerSample = 2;  // we asked for LINEAR16
+  auto const sample_count =
+      (response->audio_content().size() - kWavHeaderSize) / kBytesPerSample;
+  std::cout << "The audio has " << sample_count << " samples\n";
 
   return 0;
 } catch (std::exception const& ex) {

@@ -559,6 +559,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-texttospeech",
+    deps = [
+        "//google/cloud/texttospeech:google_cloud_cpp_texttospeech",
+    ],
+)
+
+cc_library(
+    name = "experimental-texttospeech_mocks",
+    deps = [
+        "//google/cloud/texttospeech:google_cloud_cpp_texttospeech_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-tpu",
     deps = [
         "//google/cloud/tpu:google_cloud_cpp_tpu",
